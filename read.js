@@ -139,7 +139,7 @@
     paint();
     return bar;
   }
-  /* A Sapling-style "Read aloud: on / off" switch. When on, onRead is called whenever the page changes. */
+  /* A Sprout-style "Read aloud: on / off" switch. When on, onRead is called whenever the page changes. */
   function toggle(opts) {
     var key = opts.key || 'gg_read_on';
     var on = false; try { on = localStorage.getItem(key) === '1'; } catch (e) {}

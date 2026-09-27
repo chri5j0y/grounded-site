@@ -6,7 +6,7 @@
   var ic = {
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#4A5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-6 14-15 14z"/><path d="M5 19l8.5-8.5"/></svg>',
-    sapling: '<svg viewBox="4 6 102 70"><defs><clipPath id="gn-sun"><path d="M0 0H110V72H100Q55 62 10 72H0Z"/></clipPath></defs><circle cx="55" cy="72" r="33" fill="#FFD23F" clip-path="url(#gn-sun)"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 52 55 36" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 56C41 56 34 46 37 36C48 36 55 44 55 56Z" fill="#6CCB3A" stroke="#1F5C0E" stroke-width="2"/><path d="M55 46C68 45 74 35 72 24C61 24 55 33 55 46Z" fill="#A5E072" stroke="#1F5C0E" stroke-width="2"/><circle cx="55" cy="36" r="5" fill="#FF6B6B"/></svg>',
+    sprout: '<svg viewBox="4 6 102 70"><defs><clipPath id="gn-sun"><path d="M0 0H110V72H100Q55 62 10 72H0Z"/></clipPath></defs><circle cx="55" cy="72" r="33" fill="#FFD23F" clip-path="url(#gn-sun)"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 52 55 36" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 56C41 56 34 46 37 36C48 36 55 44 55 56Z" fill="#6CCB3A" stroke="#1F5C0E" stroke-width="2"/><path d="M55 46C68 45 74 35 72 24C61 24 55 33 55 46Z" fill="#A5E072" stroke="#1F5C0E" stroke-width="2"/><circle cx="55" cy="36" r="5" fill="#FF6B6B"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
@@ -17,11 +17,11 @@
       { id: 'garden', title: 'Tending the Garden', desc: 'A 12-week practice for whole health', href: 'https://garden.growwithgrounded.com/', icon: ic.leaf, bg: '#E3EFD6' }
     ] },
     { name: 'For kids and families', items: [
-      { id: 'sapling', title: 'Sapling', desc: 'A gentle checkup for kids, grades K to 5', href: 'https://sapling.growwithgrounded.com/', icon: ic.sapling, bg: '#D8F3FF' }
+      { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: 'https://sprout.growwithgrounded.com/', icon: ic.sprout, bg: '#D8F3FF' }
     ] },
     { name: 'When Life Changes', items: [
       { id: 'lc-adult', title: 'For your own life', desc: 'Guides for 50+ hard seasons, for you or someone you help', href: 'https://soultree.growwithgrounded.com/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' },
-      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for 50+ hard talks with children', href: 'https://sapling.growwithgrounded.com/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' }
+      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for 50+ hard talks with children', href: 'https://sprout.growwithgrounded.com/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' }
     ] },
     { name: 'For practitioners', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'Private training and resources, access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
@@ -31,7 +31,7 @@
   function here() {
     var h = location.hostname, p = location.pathname, hash = location.hash || '';
     if (h.indexOf('soultree.') === 0) return /^#life/.test(hash) ? 'lc-adult' : 'soultree';
-    if (h.indexOf('sapling.') === 0) return /^#(life|talk)/.test(hash) ? 'lc-kids' : 'sapling';
+    if (h.indexOf('sprout.') === 0) return /^#(life|talk)/.test(hash) ? 'lc-kids' : 'sprout';
     if (h.indexOf('garden.') === 0) return 'garden';
     if (p.indexOf('/field-guide') === 0) return 'field';
     return '';
