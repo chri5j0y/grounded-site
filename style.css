@@ -211,3 +211,50 @@ h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:29px;line-he
 .pillar p{flex:1;}
 .pillar .text-link{align-self:flex-start;margin-top:14px;font-size:17px;}
 .story-intro .lead{margin-bottom:16px;}
+
+/* ================= GOLDEN HOUR ================= */
+:root{ --bg:#FBF6EC; --bg-deep:#F5EBD8; --line:#EBDFC6; --clay:#C9703F; --sage:#6F8F5B; --honey:#C98A3E; }
+@media (prefers-color-scheme: dark){ :root{ --clay:#E0906A; --sage:#9DB883; --honey:#E8A955; } }
+body{background-image:none;}
+.hero{background:
+    repeating-radial-gradient(circle at 50% 30%, rgba(255,255,255,0) 0 21px, rgba(255,246,222,0.12) 22px 23.5px, rgba(255,255,255,0) 25px 33px),
+    radial-gradient(ellipse 70% 60% at 50% 30%, #F6D07E 0%, #EAB25A 26%, #D99A44 52%, #C18436 76%, #A56F28 100%);}
+.hero::before{display:none;}
+.hero .tagline,.hero .hero-sub{text-shadow:0 1px 14px rgba(90,50,0,.35);}
+.hero-tree,.hero-word{filter:drop-shadow(0 2px 10px rgba(90,50,0,.25));}
+.news-band{background:repeating-radial-gradient(circle at 85% 50%, rgba(255,255,255,0) 0 21px, rgba(255,246,222,0.12) 22px 23.5px, rgba(255,255,255,0) 25px 33px),radial-gradient(ellipse 80% 120% at 85% 50%, #EDBE69 0%, #D39A48 40%, #B07830 75%, #8B5E1A 100%) !important;}
+.news-band::before{display:none !important;}
+section{padding:84px 0;}
+section + section{border-top:none;}
+section:nth-of-type(even):not(.hero):not(.news-band){background:#FFFFFF;}
+@media (prefers-color-scheme: dark){ section:nth-of-type(even):not(.hero):not(.news-band){background:#231D16;} }
+.card{border-color:var(--line);box-shadow:0 8px 24px rgba(139,94,26,.07);}
+/* section colors */
+#ceremonies .eyebrow,.cer-card .eyebrow{color:var(--clay);}
+.cer-card{border-top:4px solid var(--clay);}
+.cer-list li::before{background:var(--clay);}
+#tools .eyebrow,.tool-group{color:var(--sage);}
+#tools .card.tool{border-top:4px solid var(--sage);}
+#stories .eyebrow{color:var(--gold);}
+#stories .card{border-top:4px solid var(--honey);}
+#mission .grid-3 .card:nth-child(1){border-top:4px solid var(--honey);}
+#mission .grid-3 .card:nth-child(2){border-top:4px solid var(--sage);}
+#mission .grid-3 .card:nth-child(3){border-top:4px solid var(--clay);}
+/* founders band */
+.founders-band .fb-in{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;}
+.fb-faces{display:flex;}
+.fb-faces img{width:132px;height:132px;border-radius:50%;object-fit:cover;border:5px solid var(--bg);box-shadow:0 8px 22px rgba(139,94,26,.18);}
+.fb-faces img + img{margin-left:-26px;}
+.founders-band p{max-width:620px;color:var(--ink-soft);margin-bottom:20px;}
+@media(max-width:720px){ .founders-band .fb-in{grid-template-columns:1fr;text-align:center;} .fb-faces{justify-content:center;} .founders-band p{margin-left:auto;margin-right:auto;} }
+/* our story: smaller photos */
+.story-intro{grid-template-columns:1.35fr .65fr;}
+.wedding-photo{max-width:380px;justify-self:end;}
+.story-kicker{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:var(--gold);margin:-4px 0 14px;}
+.founder{gap:12px;}
+.founder-head{display:flex;align-items:center;gap:18px;}
+.founder-head img{width:104px;height:104px;aspect-ratio:1;border-radius:50%;object-fit:cover;flex:none;border:4px solid var(--bg-deep);}
+.founder img{aspect-ratio:auto;}
+.beliefs ul{margin-top:6px;}
+@media(max-width:820px){ .wedding-photo{justify-self:center;} }
+.story-intro p + p{margin-top:14px;}
