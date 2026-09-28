@@ -19,7 +19,8 @@
 
 // Email links, assembled here so spam bots can't easily read the address
 (function () {
-  const address = 'joy2serve' + '@' + 'gmail' + '.' + 'com';
+  // EMAIL: set up hello@growwithgrounded.com in Cloudflare Email Routing before uploading this file.
+  const address = 'hello' + '@' + 'growwithgrounded' + '.' + 'com';
   document.querySelectorAll('.email-link').forEach(a => {
     const subject = a.getAttribute('data-subject');
     a.href = 'mailto:' + address + (subject ? '?subject=' + encodeURIComponent(subject) : '');
@@ -40,3 +41,14 @@ document.querySelectorAll('.preview-btn').forEach(btn => {
 });
 
 document.querySelectorAll('.year').forEach(el => { el.textContent = new Date().getFullYear(); });
+
+// CALL OR TEXT: when your local number is ready, type it between the quotes, for example '320-555-0123'.
+// Every "Call or text" line on the site appears automatically once a number is here.
+const PHONE = '';
+if (PHONE) {
+  document.querySelectorAll('.call-text').forEach(el => {
+    const digits = PHONE.replace(/[^0-9]/g, '');
+    el.innerHTML = 'Call or text <a class="text-link" href="sms:+1' + digits + '">' + PHONE + '</a>. Grieving? A text is always okay.';
+    el.hidden = false;
+  });
+}

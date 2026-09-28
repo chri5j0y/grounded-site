@@ -9,6 +9,8 @@
     sprout: '<svg viewBox="4 6 102 70"><defs><clipPath id="gn-sun"><path d="M0 0H110V72H100Q55 62 10 72H0Z"/></clipPath></defs><circle cx="55" cy="72" r="33" fill="#FFD23F" clip-path="url(#gn-sun)"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 52 55 36" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 56C41 56 34 46 37 36C48 36 55 44 55 56Z" fill="#6CCB3A" stroke="#1F5C0E" stroke-width="2"/><path d="M55 46C68 45 74 35 72 24C61 24 55 33 55 46Z" fill="#A5E072" stroke="#1F5C0E" stroke-width="2"/><circle cx="55" cy="36" r="5" fill="#FF6B6B"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
+    sapling: '<svg viewBox="4 -5 102 81"><circle cx="55" cy="34" r="27" fill="#F2B33D"/><path d="M10 72Q55 50 100 72Q55 62 10 72Z" fill="#4DB36E"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 42 55 14" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M43 36.5C32 36.5 27 29 29 21.5C37 21.5 43 27.5 43 36.5Z" fill="#7ED3A0" stroke="#123F2E" stroke-width="2"/><path d="M67 31.5C76 30.8 80 23.4 79 16C71 16 67 22 67 31.5Z" fill="#2F9E6B" stroke="#123F2E" stroke-width="2"/><circle cx="55" cy="14" r="6" fill="#FF6B6B"/></svg>',
+    heartwood: '<svg viewBox="0 0 24 24" fill="none" stroke="#6B2E22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
@@ -17,11 +19,14 @@
       { id: 'garden', title: 'Tending the Garden', desc: 'A 12-week practice for whole health', href: 'https://garden.growwithgrounded.com/', icon: ic.leaf, bg: '#E3EFD6' }
     ] },
     { name: 'For kids and families', items: [
-      { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: 'https://sprout.growwithgrounded.com/', icon: ic.sprout, bg: '#D8F3FF' }
+      { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: 'https://sprout.growwithgrounded.com/', icon: ic.sprout, bg: '#D8F3FF' },
+      { id: 'sapling', title: 'Sapling', desc: 'A checkup for grades 6 to 8', href: 'https://sapling.growwithgrounded.com/', icon: ic.sapling, bg: '#DDF0EC' },
+      { id: 'heartwood', title: 'Heartwood', desc: 'For grades 9 to 12', icon: ic.heartwood, bg: '#F3E1D8', soon: true }
     ] },
     { name: 'When Life Changes', items: [
       { id: 'lc-adult', title: 'For your own life', desc: 'Guides for 50+ hard seasons, for you or someone you help', href: 'https://soultree.growwithgrounded.com/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' },
-      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for 50+ hard talks with children', href: 'https://sprout.growwithgrounded.com/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' }
+      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for 50+ hard talks with children', href: 'https://sprout.growwithgrounded.com/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
+      { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for 40 hard talks, grades 6 to 8', href: 'https://sapling.growwithgrounded.com/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' }
     ] },
     { name: 'For practitioners', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'Private training and resources, access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
@@ -33,6 +38,7 @@
     if (h.indexOf('soultree.') === 0) return /^#life/.test(hash) ? 'lc-adult' : 'soultree';
     if (h.indexOf('sprout.') === 0) return /^#(life|talk)/.test(hash) ? 'lc-kids' : 'sprout';
     if (h.indexOf('garden.') === 0) return 'garden';
+    if (h.indexOf('sapling.') === 0) return /^#life/.test(hash) ? 'lc-ms' : 'sapling';
     if (p.indexOf('/field-guide') === 0) return 'field';
     return '';
   }
@@ -53,6 +59,8 @@
     '.gn-tool b{display:flex;align-items:center;gap:6px;font-weight:600;font-size:15.5px;line-height:1.25;}' +
     '.gn-tool small{display:block;font-size:13px;line-height:1.35;color:#5B6A73;margin-top:1px;}' +
     '.gn-tag{font-size:11px;font-weight:600;color:#fff;background:#8B5E1A;border-radius:999px;padding:1px 8px;white-space:nowrap;}' +
+    '.gn-soon{display:flex;gap:12px;align-items:center;padding:8px;border-radius:12px;opacity:.72;cursor:default;font-size:15px;}' +
+    '.gn-tag-soon{background:#6B2E22;}' +
     '.gn-lock{display:inline-flex;color:#8B5E1A;}' +
     '.gn-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #EADFC6;margin-top:12px;padding-top:10px;}' +
     'a.gn-all{font-family:Barlow,system-ui,sans-serif !important;font-weight:600 !important;font-size:14px !important;color:#8B5E1A !important;text-transform:none !important;letter-spacing:0 !important;padding:0 !important;border:none !important;border-bottom:1px solid currentColor !important;border-radius:0 !important;text-decoration:none !important;}' +
@@ -115,13 +123,14 @@
       panel.innerHTML = '<button type="button" class="gn-back">&#8592; Menu</button><div class="gn-grid">' +
         GN_GROUPS.map(function (g) {
           return '<div class="gn-group"><h4>' + g.name + '</h4>' + g.items.map(function (t) {
+            if (t.soon) return '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
             var isHere = t.id === cur;
             return '<a class="gn-tool' + (isHere ? ' gn-here' : '') + '" href="' + t.href + '"' + (isHere ? ' aria-current="page"' : '') + '>' +
               '<span class="gn-ic" style="background:' + t.bg + ';color:' + (t.color || '#8B5E1A') + '">' + t.icon + '</span>' +
               '<span><b>' + t.title + (t.locked ? ' <span class="gn-lock" title="Access code required">' + ic.lock + '</span>' : '') + (isHere ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
           }).join('') + '</div>';
         }).join('') +
-        '</div><div class="gn-foot"><a class="gn-all" href="' + HOME + '/#tools">See all tools</a></div>';
+        '</div><div class="gn-foot"><a class="gn-all" href="' + HOME + '/tools.html">See all tools</a></div>';
       panel.querySelector('.gn-back').onclick = function () { closePanel(); btn.focus(); };
     }
     render();
