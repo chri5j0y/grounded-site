@@ -594,7 +594,7 @@ function start(){
 }
 function tabsFor(){
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []),['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []),['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : (stOpen() ? [['soultree','Soul Tree','tree']] : []);
   if (TIER === 'owner') t.push(['owner','Owner','key']);
   return t;
 }
@@ -1094,7 +1094,9 @@ function vOwner(){
   ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
     <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here.${live.has(shown.id) ? '' : ' It starts working once you upload codes.js.'}</p>
     <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="own-hide">Done</button></div></div>` : ''}
-  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Open the Field Guide on a device that already had the Staff code, add the Owner code there, and finish setup. After that, every Owner device opens everything.</p></div>`
+  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Owner device opens everything from now on.</p>
+    <label class="f" for="own-sc">Staff code</label><input type="password" id="own-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
+    <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="own-addstaff">Add Staff Access</button></div>`
     : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish setup</h3><p class="muted">One time only. This links the Owner code to the Staff and Field libraries, so an Owner code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="own-setup">Finish Setup</button></div>` : ''}
   ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to upload</h3><p class="muted">${Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
     <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="own-discard">Discard These Changes</button></div></div>` : ''}
@@ -1182,7 +1184,7 @@ function vST(){
    <div><label class="f" for="st-nt">Who they are</label><select id="st-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
    <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="st-new">${icon('plus')} Add Person</button><button class="btn btn-line" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>
-  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
    ${list.length ? list.map(c => { const last = stVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(stTypeName(c.st.type))}</span>${stHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${stVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>
   <div class="card st-me"><div class="spread"><div><h3>My own tree</h3><p class="muted">${esc(S.meNote)}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="st-me">Start My Tree</button>`}</div></div>
   <div class="card"><h3>Move sessions from public Soul Tree</h3><p class="muted">${esc(S.importNote)}</p>
@@ -1726,6 +1728,10 @@ document.addEventListener('click', async e => {
       const d = ensureDraft(); d.codes.codes = d.codes.codes.filter(x => x.id !== v); DATA.owner.saved = DATA.owner.saved.filter(x => x.id !== v);
       await relink(d); await persist(); if (V.show === v) V.show = null; render(); break; }
     case 'own-rot': await rotateLevel(v); break;
+    case 'own-addstaff': { const code = $('#own-sc').value; if (!code.trim()){ $('#own-sc').focus(); return; }
+      toast('One moment...'); let r = null; try { r = await resolveCode(code); } catch(err){}
+      if (!r || r.tier !== 'staff') return alert("That's not the Staff code. It's the Field Guide code you used before levels.");
+      KEYS = Object.assign({}, KEYS, {staff: r.k}); useLevels(await openLevels(TIER, KEYS)); await persist(); render(); toast('Staff access added. Now tap Finish Setup.'); break; }
     case 'upd-dl': await downloadForEdit($('#upd-lvl').value); break;
     case 'upd-seal': await sealUpdate(); break;
     case 'upd-cancel': V.upd = null; render(); break;
