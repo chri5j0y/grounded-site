@@ -298,6 +298,38 @@ h3{font-size:calc(28px * var(--scale));}
 .swap-btn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:none;border:0;padding:4px 0;cursor:pointer;font-family:'Barlow',sans-serif;font-size:calc(14px * var(--scale));font-weight:600;color:var(--ink-soft);}
 .swap-btn svg{width:16px;height:16px;}
 .swap-btn:hover{color:var(--part);}
+.p-actions{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;}
+.pick-tag{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:color-mix(in srgb,var(--part) 14%,transparent);color:var(--part);font-size:calc(12.5px * var(--scale));font-weight:700;vertical-align:1px;}
+.practice:has(.howto[open]) .check{align-self:start;margin-top:4px;}
+.howto{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;}
+.howto summary{display:inline-flex;align-items:center;gap:6px;cursor:pointer;list-style:none;font-family:'Barlow',sans-serif;font-size:calc(14px * var(--scale));font-weight:600;color:var(--part);padding:4px 0;}
+.howto summary::-webkit-details-marker{display:none;}
+.howto summary svg{width:16px;height:16px;}
+.howto[open] summary{margin-bottom:6px;}
+.howto-body{font-size:calc(16px * var(--scale));line-height:1.55;color:var(--ink-soft);}
+.howto-body strong{color:var(--ink);font-weight:600;}
+.howto-body ol{margin:8px 0 10px 1.3em;padding:0;}
+.howto-body li{margin:4px 0;padding-left:2px;}
+.howto-body li::marker{color:var(--part);font-weight:700;font-family:'Barlow',sans-serif;}
+.lib-tools{display:grid;gap:12px;margin-bottom:26px;}
+.lib-search{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 16px;max-width:560px;}
+.lib-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.lib-search svg{width:20px;height:20px;color:var(--ink-soft);flex:none;}
+.lib-search input{flex:1;min-width:0;border:0;background:none;padding:14px 0;font:inherit;font-family:'Barlow',sans-serif;font-size:calc(17px * var(--scale));color:var(--ink);outline:none;}
+.lib-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.lib-count{font-size:calc(15px * var(--scale));margin-bottom:6px;}
+.lib-group{margin-top:22px;}
+.lib-head{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:calc(26px * var(--scale));color:var(--part);margin-bottom:12px;}
+.lib-head svg{width:26px;height:26px;}
+.lib-head span{font-family:'Barlow',sans-serif;font-size:calc(14px * var(--scale));font-weight:600;color:var(--ink-soft);}
+.lib-card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--part);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow);}
+.lib-card + .lib-card{margin-top:10px;}
+.lib-card .p-actions{margin-top:12px;}
+.lib-yours{display:inline-flex;align-items:center;gap:6px;font-family:'Barlow',sans-serif;font-weight:600;font-size:calc(14px * var(--scale));color:var(--part);}
+.lib-yours svg{width:16px;height:16px;}
+.lib-age{margin-left:10px;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-soft);font-size:calc(12.5px * var(--scale));font-weight:600;}
+.lib-empty{text-align:center;max-width:560px;}
+.lib-empty p{margin:6px 0 14px;}
 .weekly-nudge{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px;border-left:5px solid var(--gold);flex-wrap:wrap;}
 .wq{padding-top:14px;border-top:1px solid var(--line);}
 .wq .p-part{color:var(--part);}
@@ -522,6 +554,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 </footer>
 
 <script src="/grove/data.js"></script>
+<script src="/grove/library.js"></script>
 <script src="/shared/gg-care.js"></script>
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-profiles.js"></script>
@@ -629,7 +662,10 @@ const ICON = {
  image:`<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M3.5 16l5-4.5 4 3.5 3-2.5 5 4"/><circle cx="15.5" cy="9" r="1.6"/>`,
  people:`<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16.4 14.2c2.6.2 4.6 2.6 4.6 5.3"/>`,
  menu:`<path d="M4 7h16M4 12h16M4 17h16"/>`,
- back:`<path d="M15 5l-7 7 7 7"/>`
+ back:`<path d="M15 5l-7 7 7 7"/>`,
+ library:`<path d="M4.5 5.5c2.6-1 5-.8 7.5.8v13.2c-2.5-1.6-4.9-1.8-7.5-.8z"/><path d="M19.5 5.5c-2.6-1-5-.8-7.5.8v13.2c2.5-1.6 4.9-1.8 7.5-.8z"/>`,
+ search:`<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>`,
+ how:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/>`
 };
 function icon(name, cls){ return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]||''}</svg>`; }
 
@@ -796,7 +832,7 @@ function groveSceneSVG(o){
 // =====================================================================
 const STORE = 'the-grove-v1';
 const OLD_STORE = 'tending-the-garden-v1';   // before the rename; moved once, then erased
-const blankGrove = () => ({ parts:[], kind:'grove', scenery:'forest', checkins:{}, level:'gentle', start:null, watered:{}, lingers:{}, journal:{}, quiz:{}, notes:'', done:{}, age:'adult', who:'me', plant:null, plant2:null, weekly:{}, swap:{}, safety:null });
+const blankGrove = () => ({ parts:[], kind:'grove', scenery:'forest', checkins:{}, level:'gentle', start:null, watered:{}, lingers:{}, journal:{}, quiz:{}, notes:'', done:{}, age:'adult', who:'me', plant:null, plant2:null, weekly:{}, swap:{}, pins:{}, safety:null });
 const freshS = () => ({ mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:(typeof S!=='undefined'&&S.scale)||1, self:blankGrove(), people:[], dismissed:{}, q:null });
 let S = { mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:1, self:blankGrove(), people:[], dismissed:{}, q:null };
 let LEGACY = false;   // a grove saved on this device before Grounded profiles
@@ -813,6 +849,7 @@ function toParts(list){ const out = []; (list||[]).forEach(id => { const k = PAR
 function migrateGrove(G){
   if (G.beds){ G.parts = toParts(G.beds.concat(G.parts||[])); delete G.beds; }
   G.parts = toParts(G.parts); G.checkins = G.checkins || {};
+  G.pins = Object.fromEntries(Object.entries(G.pins || {}).filter(([k, v]) => PART[k] && LIB_BY_KEY[v] && LIB_BY_KEY[v].part === k));
   if (!TREE_KINDS.some(k => k.id === G.kind)) G.kind = 'grove';
   if (G.kind !== 'grove' && !isUnlocked(G, TREE_KINDS.find(k => k.id === G.kind), 'kinds')) G.kind = 'grove';
   if (G.scenery !== 'forest' && !isUnlocked(G, SCENERY.find(k => k.id === G.scenery), 'scenery')) G.scenery = 'forest';
@@ -957,8 +994,8 @@ const weekDates = wi => Array.from({length:7}, (_,i) => addDays(wi.roundStart, i
 const $ = s => document.querySelector(s);
 function setScale(){ document.documentElement.style.setProperty('--scale', S.scale); $('#size-btn').textContent = S.scale > 1.2 ? 'A' : 'A+'; $('#size-btn').setAttribute('aria-label', 'Text size, now ' + (S.scale===1?'normal':S.scale<1.2?'larger':'largest')); }
 function tabsFor(){ return S.mode === 'self'
-  ? [['today',"Today's Practices",'today'],['week','This week','week'],['tree','My tree','tree'],['journal','Journal','journal'],['guide','Guide','guide']].concat(!viewingFamily() && familyIds().length ? [['family','Family','grove']] : [])
-  : [['people','Trees','people'],['tree','Six parts','tree'],['guide','Guide','guide']]; }
+  ? [['today',"Today's Practices",'today'],['library','Library','library'],['week','This week','week'],['tree','My tree','tree'],['journal','Journal','journal'],['guide','Guide','guide']].concat(!viewingFamily() && familyIds().length ? [['family','Family','grove']] : [])
+  : [['people','Trees','people'],['tree','Six parts','tree'],['library','Library','library'],['guide','Guide','guide']]; }
 function renderTabs(){
   const t = tabsFor(); if (!t.some(x => x[0]===S.tab)) S.tab = t[0][0];
   $('#tabs').innerHTML = t.map(([id,label,ic]) => `<button class="tab" role="tab" aria-selected="${S.tab===id}" data-tab="${id}">${icon(ic)}${label}</button>`).join('');
@@ -972,7 +1009,7 @@ function render(){
   if (!document.getElementById('g-prof-note')) v.insertAdjacentHTML('beforebegin', '<div id="g-prof-note"></div>');
   renderProfileNote();
   v.innerHTML = S.mode === 'practitioner' && S.tab === 'people' ? viewPeople()
-    : (famStrip() + ({ today:viewToday, week:viewWeek, tree:viewTree, journal:viewJournal, guide:viewGuide, family:viewFamily }[S.tab] || viewToday)());
+    : (famStrip() + ({ today:viewToday, library:viewLibrary, week:viewWeek, tree:viewTree, journal:viewJournal, guide:viewGuide, family:viewFamily }[S.tab] || viewToday)());
   $('#hero-cta').textContent = S.self.start ? 'Go to today' : 'Tend Your Grove';
 }
 
@@ -1132,10 +1169,26 @@ function practiceObj(G, bedId, idx, season){ const p = PRACTICES[bedId][idx], ki
   let t = kid ? p[3] : p[0], b = kid ? p[4] : p[1];
   if (b === 'LV'){ const L = LEVEL_MOVE[G.level||'gentle'][season]; t = L.t; b = L.b; }
   return { idx, n:p[0], t, b, s: kid ? p[5] : p[2] }; }
+// ---------- the practice library ----------
+// A practice picked from the library takes that part's place on Today until
+// it's changed. It stays through new seasons and checkups.
+const LIB_NAME = {}; LIBRARY.forEach(it => { if (!it.isNew) LIB_NAME[it.strand + '|' + it.name] = it; });
+const libItem = (sid, name) => LIB_NAME[sid + '|' + name] || null;
+function pinnedItem(G, partId){ const k = (G.pins || {})[partId], it = k && LIB_BY_KEY[k];
+  return it && it.part === partId && libFits(it, G.age) ? it : null; }
+function libPractice(G, it, season){ const kid = isKid(G.age);
+  if (!it.isNew) return practiceObj(G, it.strand, it.idx, season);
+  return { idx:null, n:it.name, t: kid ? it.kidName : it.name, b: kid ? it.kidText : it.text, s: kid ? it.kidBusy : it.busy }; }
+const picksNote = G => G.parts.some(k => pinnedItem(G, k)) ? ' Your picks come with you.' : '';
+function howHTML(G, it){ if (!it || !it.how) return '';
+  const h = it.how, kid = isKid(G.age) && h.length >= 6, w = kid ? h[3] : h[0], st = kid ? h[4] : h[1], hd = kid ? h[5] : h[2];
+  return `<details class="howto"><summary>${icon('how')}Show me how</summary><div class="howto-body"><p><strong>Why it helps.</strong> ${esc(w)}</p><ol>${st.split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><strong>If it's hard.</strong> ${esc(hd)}</p></div></details>`; }
 function practiceFor(G, partId, season, dayType, week){
   if (week == null){ const wi = weekInfo(G); week = wi ? wi.week : 1; }
-  const sid = strandFor(G, partId), o = Object.assign(practiceObj(G, sid, pickIdx(G, sid, season, week), season), { strand: sid });
-  if (sid === 'body' && dayType === 'rest') return Object.assign({}, o, { t:'Rest day', b: isKid(G.age) ? BODY_REST_KID : BODY_REST });
+  const pin = pinnedItem(G, partId), sid = pin ? pin.strand : strandFor(G, partId);
+  const o = pin ? Object.assign(libPractice(G, pin, season), { strand: sid, pin: pin.key })
+    : Object.assign(practiceObj(G, sid, pickIdx(G, sid, season, week), season), { strand: sid });
+  if (sid === 'body' && dayType === 'rest' && !(pin && pin.isNew)) return Object.assign({}, o, { t:'Rest day', b: isKid(G.age) ? BODY_REST_KID : BODY_REST });
   if (dayType === 'busy') return Object.assign({}, o, { t: o.t + (isKid(G.age) ? ', quick version' : ', short version'), b: o.s });
   return o;
 }
@@ -1184,9 +1237,11 @@ function practiceCard(G, id, season){
   if (sid==='body' || sid==='nourish') extra = kid ? '' : `<p class="note care">${sid==='body' ? 'Not medical advice. Check with your doctor if you have a health condition. Joint pain means stop.' : 'Everyone\'s needs are different. If you manage a health condition, or food has been hard for you, a doctor or dietitian can help you shape this.'}</p>`;
   if (sid==='mind') extra = kid ? `<p class="note care">If you ever feel unsafe, or so sad you want to hurt yourself, tell a grown-up right away.</p>` : `<p class="note care">If you're in crisis or thinking about ending your life, call or text <a href="tel:988">988</a> any time (US).</p>`;
   if (sid==='spirit' && G.age==='adult') extra = `<p class="note">Want a deeper look at your spiritual health? <a href="${SOUL_TREE_URL}" target="_blank" rel="noopener">Take the free Soul Tree checkup</a>.</p>`;
-  const on = isDone(G, id);
-  return `<article class="practice ${on?'is-done':''}" style="--part:${pt.color}"><div class="p-icon">${icon(id)}</div><div><div class="p-part">${esc(strandName(sid))}</div><h4 class="p-title">${p.t}</h4><p class="p-body">${p.b}</p>${extra}
-    <button class="swap-btn" data-act="swap" data-v="${id}">${icon('swap')}Try a different one</button></div>${checkBtn(G, id, p.t)}</article>`;
+  const on = isDone(G, id), pin = p.pin ? LIB_BY_KEY[p.pin] : null, it = pin || libItem(sid, p.n);
+  const change = pin ? `<button class="swap-btn" data-act="unpin" data-v="${id}">${icon('back')}Go back to the season's practice</button>`
+    : `<button class="swap-btn" data-act="swap" data-v="${id}">${icon('swap')}Try a different one</button>`;
+  return `<article class="practice ${on?'is-done':''}" style="--part:${pt.color}"><div class="p-icon">${icon(id)}</div><div><div class="p-part">${esc(strandName(sid))}${pin ? '<span class="pick-tag">Your pick</span>' : ''}</div><h4 class="p-title">${p.t}</h4><p class="p-body">${p.b}</p>${extra}
+    ${howHTML(G, it)}<div class="p-actions">${change}<button class="swap-btn" data-act="lib-open" data-v="${id}">${icon('library')}Browse the library</button></div></div>${checkBtn(G, id, p.t)}</article>`;
 }
 function anchorCard(which){ const a = ANCHORS[which], G = S.self, key = 'anchor-'+which, on = isDone(G, key);
   return `<article class="practice ${on?'is-done':''}" style="--part:var(--gold)"><div class="p-icon">${icon(which==='morning'?'morning':'evening')}</div><div><div class="p-part">Every day</div><h4 class="p-title">${a.t}</h4><p class="p-body">${S.dayType==='busy'?a.s:a.b}</p></div>${checkBtn(G, key, a.t)}</article>`; }
@@ -1224,12 +1279,12 @@ function viewToday(){
   if (G.safety && G.safety.flag && G.age !== 'adult' && !G.safety.seen) top += `<div class="banner care-banner"><h3>A safety answer needs a grown-up</h3><p>In the planting quiz, an answer about safety or deep sadness asked for a grown-up's attention.${G.age==='sprout'?'':' For teens, the answer itself stays private.'} Please check in, and show the Calm card if it helps.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="calm-for">Calm card</button><button class="btn btn-ghost btn-sm" data-act="safety-seen">I checked in</button></div></div>`;
   const fresh = recentInbox()[0], due = checkinDue(G, wi);
   if (fresh) top += `<div class="banner"><h3>A new check-in from ${TOOL_NAMES[fresh.from]||'another Grounded tool'}</h3><p>${viewingFamily()?'This check-in is from '+nice(fresh.date,{month:'long',day:'numeric'})+'.':'You checked in on '+nice(fresh.date,{month:'long',day:'numeric'})+'.'} Use it to refresh ${mine}: the answers that match fill in, you finish the rest, and choose the parts to tend next. Days tended, visitors, and your journal stay just as they are.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="q-refresh">Refresh my tree</button><button class="btn btn-ghost btn-sm" data-act="inbox-skip" data-v="${esc(fresh.from)}">Not now</button></div></div>`;
-  else if (due) top += `<div class="banner gold"><h3>${due.full ? 'Twelve weeks of tending. Time for a full checkup.' : 'A new season. Time to check on your tree.'}</h3><p>${due.full ? 'Look at what grew. A full checkup shows where your tree is now, and your answers come back here to shape the next twelve weeks.' : sea.name + ' begins. A short check-in shows how each part of your tree is doing, and the answers come back here to shape this season\'s practices.'}</p><div class="tools-row" style="justify-content:flex-start">${checkinLink(G, due.full, checkinLabel(G, due.full))}<button class="btn btn-ghost btn-sm" data-act="checkin-later" data-v="${esc(due.key)}">Not now</button></div></div>`;
+  else if (due) top += `<div class="banner gold"><h3>${due.full ? 'Twelve weeks of tending. Time for a full checkup.' : 'A new season. Time to check on your tree.'}</h3><p>${due.full ? 'Look at what grew. A full checkup shows where your tree is now, and your answers come back here to shape the next twelve weeks.' : sea.name + ' begins. A short check-in shows how each part of your tree is doing, and the answers come back here to shape this season\'s practices.'}${picksNote(G)}</p><div class="tools-row" style="justify-content:flex-start">${checkinLink(G, due.full, checkinLabel(G, due.full))}<button class="btn btn-ghost btn-sm" data-act="checkin-later" data-v="${esc(due.key)}">Not now</button></div></div>`;
   else if (wi.done) top += `<div class="banner gold"><h3>Your tree is in full bloom</h3><p>Twelve weeks of tending. Print your journal as a keepsake, save an image of your tree, and keep going with the practices that became yours.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="print-grew">${icon('print')}Print What Grew</button><button class="btn btn-ghost btn-sm" data-act="save-image">${icon('image')}Save my tree</button></div></div>`;
   else if (S.justPlanted) top += `<div class="banner welcome"><h3>Your tree is planted</h3><p>Here's how each day works:</p>
      <ol class="welcome-steps"><li><strong>Do today's practices.</strong> They're just below your tree, in the order of your day.</li><li><strong>Check them off</strong> as you go, even the small ones.</li><li><strong>Tend Your Grove</strong> at the end. Then come back tomorrow and watch your tree grow.</li></ol>
      <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="jump">Show me today's practices</button><button class="btn btn-ghost btn-sm" data-act="welcome-done">Got it</button></div></div>`;
-  else if ([1,5,9].includes(wi.week) && wi.round===1 && !wi.before && !S.dismissed[wi.season+G.start]) top += `<div class="banner"><h3>${wi.week===1?'Planting begins':sea.name+' begins'}</h3><p>${sea.line}${wi.week>1?' Save an image of how far your tree has come.':''}</p><div class="tools-row" style="justify-content:flex-start">${wi.week>1?`<button class="btn btn-light btn-sm" data-act="save-image">${icon('image')}Save my tree</button>`:''}<button class="btn btn-ghost btn-sm" data-act="dismiss" data-v="${wi.season+G.start}">Got it</button></div></div>`;
+  else if ([1,5,9].includes(wi.week) && wi.round===1 && !wi.before && !S.dismissed[wi.season+G.start]) top += `<div class="banner"><h3>${wi.week===1?'Planting begins':sea.name+' begins'}</h3><p>${sea.line}${wi.week>1?' Save an image of how far your tree has come.':''}${wi.week>1?picksNote(G):''}</p><div class="tools-row" style="justify-content:flex-start">${wi.week>1?`<button class="btn btn-light btn-sm" data-act="save-image">${icon('image')}Save my tree</button>`:''}<button class="btn btn-ghost btn-sm" data-act="dismiss" data-v="${wi.season+G.start}">Got it</button></div></div>`;
   if (canLinger(wi)) top += `<div class="banner"><h3>Week ${wi.week} wraps up ${wi.day===7?'today':'tomorrow'}</h3><p>If this week's practices aren't settled yet, stay a little longer. Your tree simply waits. Nothing is lost.</p><button class="btn btn-ghost btn-sm" data-act="linger">Stay in Week ${wi.week} another week</button></div>`;
   const needWeekly = G.age === 'heartwood' && !wi.before && wi.week >= 2 && !weeklyDone(G, wi.week);
   const where = wi.before ? `Your tree starts growing <em>${nice(G.start)}</em>` : `<em>${sea.name}</em>, Week ${wi.week}${wi.rounds>1?` <span class="muted">(round ${wi.round})</span>`:''}, Day ${wi.day}`;
@@ -1261,7 +1316,7 @@ function viewToday(){
   <div style="margin-top:28px">${storyCard(wi.week, G)}</div>
   <div class="card" style="margin-top:18px"><h3>Keep it going</h3>
    <div class="grid-2" style="margin-top:12px;align-items:end">
-    <div><label class="lbl" for="remind">Daily reminder time</label><div style="display:flex;gap:10px"><input type="time" id="remind" value="${S.remind}" style="max-width:160px"><button class="btn btn-line btn-sm" data-act="ics">${icon('calendar')}Add to my calendar</button></div></div>
+    <div><label class="lbl" for="remind">Daily reminder time</label><div style="display:flex;gap:10px;flex-wrap:wrap"><input type="time" id="remind" value="${S.remind}" style="max-width:160px"><button class="btn btn-line btn-sm" data-act="ics">${icon('calendar')}Add to my calendar</button></div></div>
     <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="print-week" data-who="self">${icon('print')}Print this week</button><button class="btn btn-line btn-sm" data-act="save-image">${icon('image')}Save my tree</button></div>
    </div><p class="note">The calendar file adds a daily "Tend Your Grove" reminder to your phone or computer calendar for the next twelve weeks.</p></div>`;
 }
@@ -1367,6 +1422,39 @@ function viewJournal(){
 // =====================================================================
 // GUIDE
 // =====================================================================
+// =====================================================================
+// PRACTICE LIBRARY
+// =====================================================================
+let LIB = { q:'', part:'all', busy:false };   // on screen only, never saved
+function libCard(G, it){
+  const wi = weekInfo(G), season = wi && !wi.before ? wi.season : 'planting', kid = isKid(G.age), p = libPractice(G, it, season);
+  const title = it.isNew ? p.t : (kid ? it.kidName : it.name), body = LIB.busy ? p.s : p.b, pt = PART[it.part];
+  let act = '';
+  if (S.mode === 'self' && G.start){
+    const mine = (G.pins || {})[it.part] === it.key && G.parts.includes(it.part);
+    act = mine ? `<span class="lib-yours">${icon('check')}Your ${pt.name} practice</span><button class="swap-btn" data-act="unpin" data-v="${it.part}">${icon('back')}Go back to the season's practice</button>`
+      : `<button class="btn btn-line btn-sm" data-act="pin" data-v="${it.key}">${G.parts.includes(it.part) ? 'Make this my ' + pt.name + ' practice' : 'Tend ' + pt.name + ' with this practice'}</button>`;
+  }
+  return `<article class="lib-card" style="--part:${pt.color}">${it.part === 'leaves' || it.ages === 'teenOnly' ? `<div class="p-part">${it.part === 'leaves' ? esc(STRAND[it.strand].name) : ''}${it.ages === 'teenOnly' ? '<span class="lib-age">Teens</span>' : ''}</div>` : ''}<h4 class="p-title">${esc(title)}</h4><p class="p-body">${LIB.busy ? '<strong>Busy day:</strong> ' : ''}${body}</p>${howHTML(G, it)}${act ? `<div class="p-actions">${act}</div>` : ''}</article>`;
+}
+function libResultsHTML(){
+  const G = S.self, list = libSearch(LIB.q, G.age).filter(it => LIB.part === 'all' || it.part === LIB.part);
+  if (!list.length) return `<div class="card lib-empty"><h3>${LIB.q ? 'Nothing matches &ldquo;' + esc(LIB.q) + '&rdquo;' : 'Nothing here yet'}</h3><p class="muted">Try a shorter word, like sleep, worry, or thanks, or look at every part.</p><button class="btn btn-line btn-sm" data-act="lib-clear">Show every practice</button></div>`;
+  const order = LIB.q.trim() ? [...new Set(list.map(it => it.part))].map(id => PART[id]) : PARTS.filter(pt => list.some(it => it.part === pt.id));
+  return `<p class="lib-count ui muted" aria-live="polite">${plural(list.length, 'practice', 'practices')}</p>` + order.map(pt =>
+    `<section class="lib-group" style="--part:${pt.color}"><h3 class="lib-head">${icon(pt.id)}${pt.name}<span>${pt.sub}</span></h3>${list.filter(it => it.part === pt.id).map(it => libCard(G, it)).join('')}</section>`).join('');
+}
+function viewLibrary(){
+  const G = S.self, kid = isKid(G.age);
+  const lede = kid ? 'Every practice in The Grove, with how to do it.'
+    : S.mode === 'self' && G.start ? 'Every practice in The Grove, with how to do it. Make any one yours, and it takes that part\'s place on Today until you change it.'
+    : 'Every practice in The Grove, with how to do it.' + (S.mode === 'self' ? ' Plant your tree to make any of them yours.' : '');
+  return `<div class="section-head"><h2>Practice library</h2><p>${lede}</p></div>
+  <div class="lib-tools"><label class="lib-search">${icon('search')}<input id="lib-q" type="search" placeholder="Search: sleep, worry, thanks" aria-label="Search practices" value="${esc(LIB.q)}" autocomplete="off" enterkeyhint="search"></label>
+   <div class="lib-chips" role="group" aria-label="Show practices for">${[['all','All parts']].concat(PARTS.map(pt => [pt.id, pt.name])).map(([v,l]) => `<button class="chip" aria-pressed="${LIB.part===v}" data-act="lib-part" data-v="${v}">${l}</button>`).join('')}</div>
+   <div class="lib-chips"><button class="chip" aria-pressed="${LIB.busy}" data-act="lib-busy">Busy day versions</button></div></div>
+  <div id="lib-results">${libResultsHTML()}</div>`;
+}
 function viewGuide(){
   const sec = [['how','How it works'],['rhythm','Daily rhythm'],['examen','Evening examen'],['meditation','Meditation'],['writing','Writing'],['sound','Sound'],['carry','If you carry a lot'],['data','Your data']];
   return `<div class="section-head"><h2>The guide</h2><p>Everything behind the practices, in one place.</p></div>
@@ -1376,7 +1464,7 @@ function viewGuide(){
    <div class="step"><div><h4>Tend</h4><p>Each day, do your practices and tap Tend Your Grove. One tap. A missed day never harms your tree. It waits, and the next tap picks up where you left off. Days tended bring visitors, new kinds of trees, and new scenery.</p></div></div>
    <div class="step"><div><h4>Grow through the seasons</h4><p>Planting (Weeks 1 to 4) breaks ground. Rooting (Weeks 5 to 8) goes deeper. Blooming (Weeks 9 to 12) shows what grew. Each week has a theme, a story, one reflection question, and a new practice for each part you tend. At the end of each season, check on your tree with your check-in tool: Sprout, Sapling, or Soul Tree. High schoolers check in here each week until Heartwood is ready. After twelve weeks, a full checkup shows how your tree grew. If a week isn't settled, stay in it a little longer.</p></div></div>
    <div class="step"><div><h4>Check in, then tend</h4><p>Your check-in tools are for noticing how you're doing. The Grove is where daily practice happens. When you finish a check-in, tap Tend Your Grove on your results and the answers come here, locked in your profile, to refresh the parts you tend.</p></div></div>
-  </div><p class="note">Full days get the whole practice. Busy days get a short version that still counts. Rest days swap training for a slow walk and give you room for the quieter parts of your tree.</p></div>
+  </div><p class="note">Tap <strong>Show me how</strong> on any practice for the steps. The <strong>Library</strong> tab holds every practice in The Grove: search it, and make any practice yours for a part of your tree. Full days get the whole practice. Busy days get a short version that still counts. Rest days swap training for a slow walk and give you room for the quieter parts of your tree.</p></div>
   <div class="card" id="g-rhythm"><h3>The daily rhythm</h3>
    <p style="margin-top:8px"><strong>Morning.</strong> <span class="muted">The first hour shapes the day. Sit for one minute before coffee or your phone. Then your morning practices: movement, stillness, gratitude. The morning isn't preparation for your day. It's the soil your day grows from.</span></p>
    <p style="margin-top:10px"><strong>Midday.</strong> <span class="muted">The hinge of the day. Even twenty minutes here changes the afternoon: a slow meal, a walk, a message to someone, a page of writing.</span></p>
@@ -1587,7 +1675,7 @@ function rainNow(){
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab],[data-act],[data-mode]'); if (!t) return;
   if (t.dataset.mode){ S.mode = t.dataset.mode; S.tab = S.mode==='self'?'today':'people'; openPerson = null; adding = null; save(); render(); return; }
-  if (t.dataset.tab && !t.dataset.act){ e.preventDefault(); S.tab = t.dataset.tab; if (S.mode==='practitioner' && !['people','tree','guide'].includes(S.tab)){ S.mode='self'; } save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
+  if (t.dataset.tab && !t.dataset.act){ e.preventDefault(); S.tab = t.dataset.tab; if (S.mode==='practitioner' && !['people','tree','library','guide'].includes(S.tab)){ S.mode='self'; } save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
   const a = t.dataset.act, v = t.dataset.v, G = S.self;
   if (a === 'q-plant' && window.GGP && !GGP.active() && !LEGACY){
     GGP.require({ reason:'Your tree saves in a private Grounded profile, so you can come back to it every day. It stays on this device, locked with a passcode only you know.', age: Q && Q.age }).then(ok => { if (ok) { const b = document.querySelector('[data-act="q-plant"]'); if (b) b.click(); } });
@@ -1633,6 +1721,14 @@ document.addEventListener('click', e => {
     case 'swap': { const wi = weekInfo(G); if (!wi) return; const sid = strandFor(G, v), list = seasonIdx(sid, wi.season), cur = pickIdx(G, sid, wi.season, wi.week);
       G.swap = G.swap || {}; G.swap[sid+'-'+wi.week] = list[(list.indexOf(cur)+1) % list.length]; const y = window.scrollY; save(); render(); window.scrollTo(0, y); return; }
     case 'water': water(); return;
+    case 'lib-open': LIB = { q:'', part: PART[v] ? v : 'all', busy: S.dayType === 'busy' }; S.tab = 'library'; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return;
+    case 'lib-part': case 'lib-busy': case 'lib-clear': { if (a === 'lib-part') LIB.part = v; else if (a === 'lib-busy') LIB.busy = !LIB.busy; else { LIB.q = ''; LIB.part = 'all'; }
+      const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+    case 'pin': { const it = LIB_BY_KEY[v]; if (!it || !G.start || !libFits(it, G.age)) return;
+      if (!G.parts.includes(it.part)) G.parts = PARTS.map(b => b.id).filter(id => G.parts.includes(id) || id === it.part);
+      G.pins = G.pins || {}; G.pins[it.part] = it.key; S.tab = 'today'; save(); render();
+      requestAnimationFrame(() => { const el = $('#practices'); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); }); return; }
+    case 'unpin': { if (G.pins) delete G.pins[v]; const y = window.scrollY; save(); render(); window.scrollTo(0, y); return; }
     case 'jump': e.preventDefault(); { const el = $('#practices'); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); } return;
     case 'welcome-done': S.justPlanted = false; break;
     case 'check': { G.done = G.done || {}; const d = G.done[today()] = G.done[today()] || {}, on = !isDone(G, v); if (on) d[v] = true; else delete d[v];
@@ -1673,6 +1769,7 @@ document.addEventListener('click', e => {
 let saveTimer;
 document.addEventListener('input', e => {
   const t = e.target;
+  if (t.id === 'lib-q'){ LIB.q = t.value; const r = $('#lib-results'); if (r) r.innerHTML = libResultsHTML(); return; }
   if (t.dataset.journal){ S.self.journal[t.dataset.journal] = t.value; flag('sf'+t.dataset.journal); }
   else if (t.dataset.pnote){ const P = S.people.find(p => p.id===t.dataset.pnote); if (P) P.notes = t.value; flag('sfp'); }
   else if (t.id === 'remind'){ S.remind = t.value; }
