@@ -87,7 +87,7 @@ h3{font-size:calc(28px * var(--scale));}
 .site-nav a[aria-current="page"]{color:var(--gold);}
 .size-btn,.menu-btn{font-family:'Barlow',sans-serif;border:1px solid var(--line);background:var(--card);border-radius:10px;height:40px;min-width:44px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink);}
 .menu-btn{display:none;align-items:center;justify-content:center;}
-@media (max-width:1080px){
+@media (max-width:1360px){
   .menu-btn{display:inline-flex;margin-left:auto;}
   .site-nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 16px 16px;box-shadow:var(--shadow);}
   .site-nav.open{display:flex;}
@@ -95,6 +95,8 @@ h3{font-size:calc(28px * var(--scale));}
 }
 @media (max-width:620px){ .brand-tool{font-size:20px;} .brand-sep{font-size:22px;} .brand-tree{height:38px;} .topbar-in{gap:8px;padding:0 14px;min-height:60px;} }
 @media (max-width:560px){ .brand .brand-word{display:none;} .seg button{padding:10px 14px;} }
+@media (max-width:430px){ .brand-sep{display:none;} .brand-tool{font-size:17px;} .topbar-in{gap:6px;padding:0 10px;} }
+@media (max-width:370px){ .brand .brand-tree{display:none;} .brand-tool{font-size:16px;} .topbar-in{gap:4px;padding:0 8px;} .size-btn{min-width:38px;} }
 
 /* ---------- HERO ---------- */
 .hero{position:relative;overflow:hidden;color:var(--cream);background:radial-gradient(ellipse 70% 60% at 50% 18%,#3E5E43 0%,transparent 70%),linear-gradient(180deg,#223829 0%,#2C4632 45%,#253B2A 100%);}
@@ -441,7 +443,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
   <nav class="foot-links" aria-label="Footer">
     <a href="https://growwithgrounded.com">Home</a><a href="https://growwithgrounded.com/stories">Stories</a><a href="https://growwithgrounded.com/ceremonies">Ceremonies</a><a href="https://growwithgrounded.com/soul-tree/">Soul Tree</a><a href="#top">Tending the Garden</a><a href="https://growwithgrounded.com/sprout/">Sprout</a>
     <a href="https://growwithgrounded.com/our-story">Our Story</a><a href="https://growwithgrounded.com/#work">Work With Us</a><a href="https://growwithgrounded.com/#contact">Contact</a>
-    <a href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a>
+    <a href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a><a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a>
   </nav>
   <p class="privacy">Free, from the makers of Grounded. Everything you enter stays on your device. Nothing is collected. This is a wellness practice, not medical care.</p>
   <p class="copyright">&copy; <span id="year"></span> Chris Joy. All rights reserved. Sprout&trade;, Sapling&trade;, Soul Tree&trade;, Tending the Garden&trade;, and Grounded&trade; are trademarks of Chris Joy. The content, framework, and practices of Tending the Garden may not be copied or redistributed without permission.</p>
@@ -449,6 +451,8 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 
 <script src="/garden/data.js"></script>
 <script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-avatars.js"></script>
+<script src="/shared/gg-profiles.js"></script>
 <script>
 // =====================================================================
 // GROUNDED LINKS . update addresses here in one place
@@ -691,14 +695,48 @@ function sceneSVG(o){
 // =====================================================================
 const STORE = 'tending-the-garden-v1';
 const blankGarden = () => ({ beds:[], level:'gentle', start:null, watered:{}, lingers:{}, journal:{}, quiz:{}, notes:'', done:{}, age:'adult', who:'me', plant:null, plant2:null, weekly:{}, swap:{}, safety:null });
+const freshS = () => ({ mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:(typeof S!=='undefined'&&S.scale)||1, self:blankGarden(), people:[], dismissed:{}, q:null });
 let S = { mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:1, self:blankGarden(), people:[], dismissed:{}, q:null };
+let LEGACY = false;   // a garden saved on this device before Grounded profiles
+let gOwner = null;    // the profile this garden belongs to
 let Q = null;            // quiz in progress
 let openPerson = null;   // practitioner detail
 let adding = null;       // practitioner add form
 function migrate(){ S.self = Object.assign(blankGarden(), S.self||{}); S.people = (S.people||[]).map(p => Object.assign(blankGarden(), p)); S.dismissed = S.dismissed || {};
   if (S.q && S.q.steps) Q = S.q; }
-function load(){ try { const r = localStorage.getItem(STORE); if (r) S = Object.assign(S, JSON.parse(r)); } catch(e){} migrate(); }
-function save(){ S.q = Q; try { localStorage.setItem(STORE, JSON.stringify(S)); } catch(e){} }
+function load(){ try { const r = localStorage.getItem(STORE); if (r) { S = Object.assign(S, JSON.parse(r)); LEGACY = true; } } catch(e){} migrate(); }
+// Saving: into the open Grounded profile (locked), or the old spot for a garden that hasn't moved in yet.
+// With neither, nothing is kept until a profile is opened.
+function save(){ S.q = Q;
+  const a = window.GGP && GGP.active();
+  if (a && gOwner === a.id) { GGP.setData(a.id, 'garden', JSON.parse(JSON.stringify(S))); GGP.save(a.id); return; }
+  if (LEGACY && !gOwner) { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch(e){} } }
+// ---------- Grounded profiles ----------
+function gardenSync(type){
+  const a = window.GGP && GGP.active();
+  if (!a){ if (gOwner){ gOwner = null; S = freshS(); Q = null; openPerson = null; adding = null; load(); render(); } else renderProfileNote(); return; }
+  const d = GGP.data(a.id), mine = d && d.garden && d.garden.self;
+  if (gOwner === a.id){ if (type === 'data' && mine){ S = Object.assign(freshS(), JSON.parse(JSON.stringify(d.garden))); Q = null; migrate(); render(); } else renderProfileNote(); return; }
+  const fromGuest = !gOwner, hasWork = !!(S.self.start || Q || S.people.length);
+  if (mine){ S = Object.assign(freshS(), JSON.parse(JSON.stringify(d.garden))); Q = null; migrate(); gOwner = a.id; render(); return; }
+  let adopt = false;
+  if (fromGuest && hasWork){
+    adopt = LEGACY ? confirm('Move the garden saved on this device into ' + a.name + '\'s profile? It will be locked with ' + a.name + '\'s passcode from now on.') : true;
+  }
+  if (adopt){
+    if (LEGACY){ try { localStorage.removeItem(STORE); } catch(e){} LEGACY = false; if (window.GGCare && GGCare.rename) GGCare.rename('me', a.id); }
+  } else { const keep = Q && fromGuest && !LEGACY ? Q : null; S = freshS(); Q = keep; }
+  gOwner = a.id; S.self.who = a.id; if (Q && Q.mode === 'plant' && !Q.age) Q.age = a.age;
+  save(); render();
+}
+function renderProfileNote(){
+  const el = document.getElementById('g-prof-note'); if (!el) return;
+  const a = window.GGP && GGP.active();
+  if (a) { el.innerHTML = ''; return; }
+  el.innerHTML = LEGACY
+    ? `<div class="banner"><h3>Your garden is moving into a Grounded profile</h3><p>Open or create your profile, and this garden moves in, locked with your own passcode. Until then it stays on this device, unlocked.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="prof-open">Open or create my profile</button></div></div>`
+    : `<p class="note" style="margin-bottom:14px">Your garden saves in a private Grounded profile, locked with your own passcode, on this device only. <button class="text-btn" data-act="prof-open">Open or create a profile</button> so your answers save as you go.</p>`;
+}
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const strip = s => String(s).replace(/<[^>]+>/g,'');
 
@@ -749,6 +787,8 @@ function setSeason(){ const wi = weekInfo(S.self); document.body.dataset.season 
 function render(){
   renderTabs(); setSeason();
   const v = $('#view');
+  if (!document.getElementById('g-prof-note')) v.insertAdjacentHTML('beforebegin', '<div id="g-prof-note"></div>');
+  renderProfileNote();
   v.innerHTML = S.mode === 'practitioner' && S.tab === 'people' ? viewPeople()
     : ({ today:viewToday, week:viewWeek, beds:viewBeds, journal:viewJournal, guide:viewGuide }[S.tab] || viewToday)();
   $('#hero-cta').textContent = S.self.start ? 'Go to today' : 'Plant your garden';
@@ -764,11 +804,12 @@ function bedScore(ans, bedId){ const a = (ans||{})[bedId] || [], q = QS[bedId]; 
 function scoresOf(ans){ return Object.fromEntries(BEDS.map(b => [b.id, bedScore(ans, b.id)])); }
 const TOOL_NAMES = { 'soul-tree':'Soul Tree', sprout:'Sprout', sapling:'Sapling', heartwood:'Heartwood' };
 const safetyGroup = age => isKid(age) ? 'kid' : age === 'adult' ? 'grown' : 'teen';
-function recentInbox(){ const cut = addDays(today(), -60); return GC.inbox('me').filter(x => x.date >= cut && x.answers && Object.keys(x.answers).length); }
+function recentInbox(){ const cut = addDays(today(), -60); return GC.inbox(whoOf(S.self)).filter(x => x.date >= cut && x.answers && Object.keys(x.answers).length); }
 
 // ---------- quiz steps ----------
 function newQuiz(mode){ const G = S.self;
-  const q = { mode, i:0, age: mode==='plant' ? null : (G.age||'adult'), ans:{}, pre:{}, safe:{}, level: mode==='plant' ? null : G.level, picks:null, sugg:null, start:'today', inbox: recentInbox().length > 0 };
+  const pa = window.GGP && GGP.active();
+  const q = { mode, i:0, age: mode==='plant' ? (pa ? pa.age : null) : (G.age||'adult'), ans:{}, pre:{}, safe:{}, level: mode==='plant' ? null : G.level, picks:null, sugg:null, start:'today', inbox: recentInbox().length > 0 };
   q.steps = quizSteps(q); return q; }
 function quizSteps(q){ const s = ['intro']; if (q.inbox) s.push('prefill');
   BEDS.forEach((b,i) => { s.push('bed:'+b.id); if (i === 3 && isKid(q.age)) s.push('break'); });
@@ -1269,6 +1310,10 @@ document.addEventListener('click', e => {
   if (t.dataset.mode){ S.mode = t.dataset.mode; S.tab = S.mode==='self'?'today':'people'; openPerson = null; adding = null; save(); render(); return; }
   if (t.dataset.tab && !t.dataset.act){ e.preventDefault(); S.tab = t.dataset.tab; if (S.mode==='practitioner' && !['people','beds','guide'].includes(S.tab)){ S.mode='self'; } save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
   const a = t.dataset.act, v = t.dataset.v, G = S.self;
+  if (a === 'q-plant' && window.GGP && !GGP.active() && !LEGACY){
+    GGP.require({ reason:'Your garden saves in a private Grounded profile, so you can come back to it every day. It stays on this device, locked with a passcode only you know.', age: Q && Q.age }).then(ok => { if (ok) { const b = document.querySelector('[data-act="q-plant"]'); if (b) b.click(); } });
+    return; }
+  if (a === 'prof-open'){ if (window.GGP) GGP.require(); return; }
   switch (a){
     case 'q-age': Q.age = v; Q.steps = quizSteps(Q); break;
     case 'q-next': Q.i = Math.min(Q.steps.length-1, Q.i+1); save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return;
@@ -1292,7 +1337,7 @@ document.addEventListener('click', e => {
     case 'q-pick': { const i = Q.picks.indexOf(v); if (i >= 0) Q.picks.splice(i,1); else Q.picks.push(v); break; }
     case 'q-start': Q.start = v; break;
     case 'q-plant': { G.beds = BEDS.map(b=>b.id).filter(id => Q.picks.includes(id)); G.age = Q.age || 'adult'; G.level = Q.level || G.level || 'gentle';
-      G.plant = { date:today(), age:G.age, ans:Q.ans }; G.safety = { date:today(), flag:safetyFlag(Q) }; if (Q.used) GC.dismiss(Q.used, 'me');
+      G.plant = { date:today(), age:G.age, ans:Q.ans }; G.safety = { date:today(), flag:safetyFlag(Q) }; if (Q.used) GC.dismiss(Q.used, whoOf(G));
       if (Q.mode !== 'update'){ G.start = startDateFrom(Q.start); S.justPlanted = true; S.dismissed['planting'+G.start] = true; }
       Q = null; S.tab = 'today'; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
     case 'q-update': Q = newQuiz('update'); S.mode = 'self'; S.tab = 'today'; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return;
@@ -1362,6 +1407,7 @@ $('#size-btn').addEventListener('click', () => { S.scale = S.scale === 1 ? 1.12 
 $('#menu-btn').addEventListener('click', () => { const open = $('#site-menu').classList.toggle('open'); $('#menu-btn').setAttribute('aria-expanded', open); });
 $('#hero-cta').addEventListener('click', () => { S.mode = 'self'; S.tab = 'today'; render(); $('#app').scrollIntoView({behavior:'smooth'}); });
 setScale(); render();
+if (window.GGP){ GGP.on(gardenSync); GGP.ready.then(() => gardenSync('ready')); }
 
 </script>
 <script>

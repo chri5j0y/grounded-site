@@ -10,6 +10,8 @@
                                                 answers use Garden ids: {"hope.3": 4}
    GGCare.inbox(who)                            recent handoffs, newest first
    GGCare.dismiss(from, who)                    remove a handoff once used
+   GGCare.rename(from, to)                      move check-offs to a new name
+   GGCare.forget(who)                           erase one person's check-offs
    ===================================================================== */
 (function () {
   var KEY = 'gg-shared-v1';
@@ -50,6 +52,21 @@
       var list = read().inbox || [];
       if (who) { var w = whoKey(who); list = list.filter(function (x) { return x.who === w; }); }
       return list.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    },
+    rename: function (from, to) {
+      var d = read(), a = whoKey(from), b = whoKey(to); d.care = d.care || {};
+      if (a === b || !d.care[a]) return;
+      var dest = d.care[b] = d.care[b] || {};
+      Object.keys(d.care[a]).forEach(function (day) { dest[day] = Object.assign(dest[day] || {}, d.care[a][day]); });
+      delete d.care[a];
+      (d.inbox || []).forEach(function (x) { if (x.who === a) x.who = b; });
+      write(d);
+    },
+    forget: function (who) {
+      var d = read(), w = whoKey(who);
+      if (d.care) delete d.care[w];
+      d.inbox = (d.inbox || []).filter(function (x) { return x.who !== w; });
+      write(d);
     },
     dismiss: function (from, who) {
       var d = read(); var w = whoKey(who);

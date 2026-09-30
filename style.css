@@ -41,7 +41,7 @@ a{color:inherit;}
 .site-menu a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--ink-soft);padding:10px 11px;border-radius:8px;white-space:nowrap;}
 .site-menu a:hover,.site-menu a.current{color:var(--gold);}
 .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);width:46px;height:42px;cursor:pointer;align-items:center;justify-content:center;}
-@media(max-width:880px){
+@media(max-width:980px){
   .menu-btn{display:flex;}
   .site-menu{display:none;position:absolute;left:0;right:0;top:100%;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:8px 16px 16px;box-shadow:0 12px 24px rgba(0,0,0,0.12);}
   .site-menu.open{display:flex;}

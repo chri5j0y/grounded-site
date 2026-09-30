@@ -641,7 +641,7 @@ details.signs-details summary{font-size:15px;}
 .menu-btn,.size-btn{display:flex;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);height:42px;cursor:pointer;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;}
 .menu-btn{display:none;width:46px;}
 .size-btn{min-width:54px;padding:0 10px;}
-@media(max-width:980px){
+@media(max-width:1180px){
   .menu-btn{display:flex;}
   .site-menu{display:none;position:absolute;left:0;right:0;top:100%;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:8px 16px 16px;box-shadow:0 12px 24px rgba(0,0,0,0.12);}
   .site-menu.open{display:flex;}
@@ -1067,13 +1067,15 @@ html.ts-2 main{zoom:1.25;}
   <nav class="foot-links" aria-label="Footer">
     <a class="text-link" href="https://growwithgrounded.com/">Home</a><a class="text-link" href="https://growwithgrounded.com/stories.html">Stories</a><a class="text-link" href="https://growwithgrounded.com/ceremonies.html">Ceremonies</a><a class="text-link" href="https://growwithgrounded.com/support.html">Support</a><a class="text-link" href="https://growwithgrounded.com/our-story.html">Our Story</a><a class="text-link" href="https://growwithgrounded.com/#contact">Contact</a>
     <a class="text-link" href="https://growwithgrounded.com/tools.html">Free tools</a><a class="text-link" href="#" onclick="setMode('client', document.querySelector('.mode-btn'));window.scrollTo({top:0,behavior:'smooth'});return false;">Soul Tree</a><a class="text-link" href="https://growwithgrounded.com/garden/">Tending the Garden</a><a class="text-link" href="https://growwithgrounded.com/sprout/">Sprout</a><a class="text-link" href="https://growwithgrounded.com/sapling/">Sapling</a>
-    <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a>
+    <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a><a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a>
   </nav>
   <p class="footer-privacy">Your answers stay in your browser. Nothing you enter here is sent to Grounded or anyone else.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Chris Joy. All rights reserved. Grow With Grounded&trade;, Sprout&trade;, Sapling&trade;, Heartwood&trade;, Soul Tree&trade;, Tending the Garden&trade;, and Grounded&trade; are trademarks of Chris Joy. Soul Tree and its content, framework, and practices may not be copied, reproduced, or redistributed without permission.</p>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js"></script>
+<script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-profiles.js"></script>
 <script>
 const DOMAIN_DEFS = [
   {
@@ -2931,156 +2933,59 @@ function openPersonalFilePicker() {
 
 
 // =====================================================================
-// PROFILES (2026): optional, encrypted with each person's passcode, kept on this device
+// PROFILES: Grounded profiles, shared by every page (/shared/gg-profiles.js)
+// Soul Tree keeps its checkups in the profile's locked vault under "soulTree".
+// Older Soul Tree profiles move in the first time they are opened.
 // =====================================================================
-const PROF_LIST = 'soul-tree:profiles';
-const PROF_DATA = 'soul-tree:p:';
-let PROF = null; // { id, name, key, until, data:{ avatar, history } }
-const b64 = u8 => btoa(String.fromCharCode.apply(null, Array.from(u8)));
-const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-function profList() { try { return JSON.parse(localStorage.getItem(PROF_LIST)) || []; } catch (e) { return []; } }
-function setProfList(l) { localStorage.setItem(PROF_LIST, JSON.stringify(l)); }
-async function profDerive(pass, salt) {
-  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
-  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+let PROF = null; // { id, name, avatar }
+function profSync() {
+  const a = window.GGP && GGP.active();
+  if (a) {
+    const d = GGP.data(a.id, 'soulTree'); if (!Array.isArray(d.history)) d.history = [];
+    PROF = { id: a.id, name: a.name, avatar: a.avatar, age: a.age };
+    window.personalHistory = d.history.slice(); personalHistory = window.personalHistory;
+    window.personalFileLoaded = true;
+  } else if (PROF) {
+    PROF = null;
+    window.personalHistory = []; personalHistory = window.personalHistory;
+    window.personalFileLoaded = false; window.currentClientEntry = null;
+  }
+  renderProfileBar(); renderSaveBox(); renderProgress();
 }
-async function profSeal(key, obj) {
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(JSON.stringify(obj))));
-  return { iv: b64(iv), ct: b64(ct) };
-}
-async function profOpen(key, box) {
-  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(box.iv) }, key, unb64(box.ct));
-  return JSON.parse(new TextDecoder().decode(pt));
-}
-function profIdb() { return new Promise((res, rej) => { const r = indexedDB.open('soul-tree-session', 1); r.onupgradeneeded = () => r.result.createObjectStore('s'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
-async function sessPut(v) { try { const db = await profIdb(); await new Promise((res, rej) => { const t = db.transaction('s', 'readwrite'); t.objectStore('s').put(v, 'cur'); t.oncomplete = res; t.onerror = () => rej(t.error); }); } catch (e) {} }
-async function sessGet() { try { const db = await profIdb(); return await new Promise(res => { const q = db.transaction('s', 'readonly').objectStore('s').get('cur'); q.onsuccess = () => res(q.result || null); q.onerror = () => res(null); }); } catch (e) { return null; } }
-async function sessClear() { try { const db = await profIdb(); await new Promise(res => { const t = db.transaction('s', 'readwrite'); t.objectStore('s').delete('cur'); t.oncomplete = res; t.onerror = res; }); } catch (e) {} }
-
 async function profPersist() {
-  if (!PROF) return;
-  PROF.data.history = personalHistory;
-  const box = await profSeal(PROF.key, PROF.data);
-  localStorage.setItem(PROF_DATA + PROF.id, JSON.stringify(box));
+  if (!PROF || !window.GGP) return;
+  GGP.data(PROF.id, 'soulTree').history = JSON.parse(JSON.stringify(personalHistory));
+  await GGP.save(PROF.id);
 }
-function profActivate(p, key, data, until) {
-  PROF = { id: p.id, name: p.name, key, until, data: Object.assign({ avatar: '', history: [] }, data) };
-  window.personalHistory = PROF.data.history.slice();
-  personalHistory = window.personalHistory;
-  window.personalFileLoaded = true;
-  renderProfileBar(); renderSaveBox(); renderProgress();
-}
-async function profLock(silent) {
-  PROF = null; await sessClear();
-  window.personalHistory = []; personalHistory = window.personalHistory;
-  window.personalFileLoaded = false; window.currentClientEntry = null;
-  renderProfileBar(); renderSaveBox(); renderProgress();
-  if (!silent) { showToast('Locked. Your profile is safe on this device.'); showView('client-intro', document.querySelectorAll('#client-nav .nav-btn')[0]); }
-}
-setInterval(() => { if (PROF && PROF.until && Date.now() > PROF.until) profLock(); }, 15000);
-
+function profLock() { if (window.GGP) GGP.lock().then(() => showToast('Locked. Your profile is safe on this device.')); }
 function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   if (PROF) {
-    const t = new Date(PROF.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
-    bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="profPicture()" aria-label="Change your picture">${GGAv.html(PROF.data.avatar, PROF.name, 40)}</button>
-      <div class="pbar-who"><strong>${escapeHtml(PROF.name)}</strong><span>Saving to this device. Unlocked until ${t}.</span></div>
-      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="profBackup()">Download backup</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div></div>`;
+    const a = GGP.active(), t = new Date(a.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+    const young = a.age !== 'adult' ? `<div class="pbar-who" style="flex-basis:100%"><span>Soul Tree is written for grown-ups. ${a.age === 'sprout' ? '<a href="/sprout/">Sprout</a> is made for kids.' : a.age === 'sapling' ? '<a href="/sapling/">Sapling</a> is made for middle schoolers.' : 'Tending the Garden has wording made for teens.'}</span></div>` : '';
+    bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGP.manage()" aria-label="Manage your profile">${GGAv.html(a.avatar, a.name, 40)}</button>
+      <div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Saving to your Grounded profile on this device. Unlocked until ${t}.</span></div>
+      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGP.backup()">Download backup</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${young}</div>`;
   } else {
-    const n = profList().length;
-    bar.innerHTML = `<div class="pbar pbar-off"><div class="pbar-who"><strong>${n ? 'Welcome back' : 'Save your progress on this device'}</strong><span>${n ? 'Open your profile to see your tree grow over time.' : 'Create a private profile, locked with your own passcode. Or skip it and save to a file.'}</span></div>
+    const n = window.GGP ? GGP.list().length + (JSON.parse(localStorage.getItem('soul-tree:profiles') || '[]')).length : 0;
+    bar.innerHTML = `<div class="pbar pbar-off"><div class="pbar-who"><strong>${n ? 'Welcome back' : 'Save your progress on this device'}</strong><span>${n ? 'Open your Grounded profile to see your tree grow over time.' : 'Create a private Grounded profile, locked with your own passcode. It works across every Grounded tool.'}</span></div>
       <div class="pbar-act">${n ? '<button type="button" class="btn btn-primary btn-sm" onclick="profUnlockDialog()">Open my profile</button>' : ''}<button type="button" class="btn ${n ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="profCreateDialog()">Create a profile</button></div></div>`;
   }
 }
-function profDialog(inner, onSubmit) {
-  const back = document.createElement('div'); back.className = 'calm-back'; back.id = 'prof-dialog';
-  back.innerHTML = `<form class="calm-box prof-box" role="dialog" aria-modal="true" aria-labelledby="prof-title">${inner}
-    <p class="prof-msg" role="alert" id="prof-msg"></p>
-    <div class="calm-row" style="gap:8px;"><button type="button" class="btn btn-secondary" id="prof-cancel">Cancel</button><button type="submit" class="btn btn-primary" id="prof-go">Continue</button></div></form>`;
-  document.body.appendChild(back);
-  const close = () => back.remove();
-  back.querySelector('#prof-cancel').onclick = close;
-  back.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  back.querySelector('form').addEventListener('submit', async e => {
-    e.preventDefault();
-    const go = back.querySelector('#prof-go'); go.disabled = true; back.querySelector('#prof-msg').textContent = 'One moment...';
-    try { const ok = await onSubmit(back); if (ok !== false) close(); } catch (err) { back.querySelector('#prof-msg').textContent = err.message || 'Something went wrong.'; }
-    go.disabled = false;
-  });
-  const f = back.querySelector('input,select'); if (f) f.focus();
-  return back;
-}
-const HOURS_FIELD = `<label for="prof-h">Stay unlocked on this device for</label><select id="prof-h"><option value="1">1 hour</option><option value="8" selected>8 hours</option><option value="24">24 hours</option></select>`;
 function profCreateDialog() {
-  profDialog(`<h2 id="prof-title">Create a private profile</h2>
-    <p>Your checkups, care plans, and reflections will save on this device, locked with a passcode only you know.</p>
-    <label for="prof-name">Your first name or a nickname</label><input id="prof-name" maxlength="30" autocomplete="off" required>
-    <label for="prof-p1">Choose a passcode, at least 6 characters</label><input id="prof-p1" type="password" minlength="6" autocomplete="new-password" required>
-    <label for="prof-p2">Type it again</label><input id="prof-p2" type="password" minlength="6" autocomplete="new-password" required>
-    ${HOURS_FIELD}
-    <p class="prof-warn"><strong>Please remember your passcode.</strong> It never leaves this device, so no one, including us, can recover it. Download a backup now and then.</p>`, async back => {
-    const name = back.querySelector('#prof-name').value.trim(), p1 = back.querySelector('#prof-p1').value, p2 = back.querySelector('#prof-p2').value;
-    if (!name) throw new Error('Add a name first.');
-    if (p1.length < 6) throw new Error('Your passcode needs at least 6 characters.');
-    if (p1 !== p2) throw new Error('The two passcodes don\'t match.');
-    const salt = crypto.getRandomValues(new Uint8Array(16)), key = await profDerive(p1, salt);
-    const p = { id: Date.now().toString(36), name, salt: b64(salt) };
-    const list = profList(); list.push(p); setProfList(list);
-    const hist = personalHistory.slice(); if (window.currentClientEntry && !hist.some(e => e.id === currentClientEntry.id)) { currentClientEntry.carePlan = collectCarePlan('client'); hist.push(JSON.parse(JSON.stringify(currentClientEntry))); }
-    const until = Date.now() + (+back.querySelector('#prof-h').value) * 3600000;
-    profActivate(p, key, { avatar: '', history: hist }, until);
-    await profPersist(); await sessPut({ id: p.id, key, until });
-    showToast('Your profile is ready.');
-    setTimeout(profPicture, 300);
-  });
+  if (!window.GGP) return;
+  GGP.createDialog({ age: 'adult', reason: window.currentClientEntry ? 'Your checkup, care plan, and reflections will save to your profile, locked with a passcode only you know.' : '' }).then(ok => { if (ok && window.currentClientEntry) setTimeout(savePersonalFile, 50); });
 }
 function profUnlockDialog() {
-  const list = profList();
-  profDialog(`<h2 id="prof-title">Open your profile</h2>
-    <label for="prof-who">Who are you?</label><select id="prof-who">${list.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('')}</select>
-    <label for="prof-pass">Passcode</label><input id="prof-pass" type="password" autocomplete="current-password" required>
-    ${HOURS_FIELD}
-    <p class="prof-small"><button type="button" class="text-btn" onclick="profDeleteDialog()">Remove a profile from this device</button></p>`, async back => {
-    const p = profList().find(x => x.id === back.querySelector('#prof-who').value);
-    const box = JSON.parse(localStorage.getItem(PROF_DATA + p.id) || 'null');
-    const key = await profDerive(back.querySelector('#prof-pass').value, unb64(p.salt));
-    let data; try { data = await profOpen(key, box); } catch (e) { throw new Error('That passcode didn\'t work. Try again.'); }
-    const until = Date.now() + (+back.querySelector('#prof-h').value) * 3600000;
-    profActivate(p, key, data, until); await sessPut({ id: p.id, key, until });
-    showToast(`Welcome back, ${p.name}.`);
-  });
+  if (!window.GGP) return;
+  GGP.openDialog().then(ok => { if (ok && window.currentClientEntry) setTimeout(savePersonalFile, 50); });
 }
-function profDeleteDialog() {
-  const d = document.getElementById('prof-dialog'); if (d) d.remove();
-  const list = profList();
-  profDialog(`<h2 id="prof-title">Remove a profile</h2>
-    <p>This erases the profile and everything saved in it from this device. It can't be undone unless you have a backup.</p>
-    <label for="prof-who">Profile</label><select id="prof-who">${list.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('')}</select>
-    <label for="prof-pass">Its passcode, to confirm</label><input id="prof-pass" type="password" required>`, async back => {
-    const p = profList().find(x => x.id === back.querySelector('#prof-who').value);
-    const key = await profDerive(back.querySelector('#prof-pass').value, unb64(p.salt));
-    try { await profOpen(key, JSON.parse(localStorage.getItem(PROF_DATA + p.id))); } catch (e) { throw new Error('That passcode didn\'t work.'); }
-    localStorage.removeItem(PROF_DATA + p.id); setProfList(profList().filter(x => x.id !== p.id));
-    if (PROF && PROF.id === p.id) await profLock(true);
-    renderProfileBar(); showToast('Profile removed.');
-  });
-}
-function profPicture() {
-  if (!PROF) return;
-  GGAv.pick({ value: PROF.data.avatar, name: PROF.name, photo: true, prefer: 'friendly', onPick: async v => { PROF.data.avatar = v; await profPersist(); renderProfileBar(); } });
-}
-function profBackup() {
-  if (!PROF) return;
-  downloadJSON({ app: 'soul-tree', type: 'personal', version: 2, name: PROF.name, savedAt: new Date().toISOString(), entries: personalHistory }, `soul-tree-${PROF.name.replace(/[^\w-]/g, '')}-backup-${new Date().toISOString().split('T')[0]}.json`);
-  showToast('Backup downloaded. It is not locked, so keep it somewhere private.');
-}
+function profBackup() { if (window.GGP) GGP.backup(); }
+function profPicture() { if (window.GGP) GGP.manage(); }
 async function profResume() {
-  const ss = await sessGet(); if (!ss) { renderProfileBar(); return; }
-  const p = profList().find(x => x.id === ss.id);
-  if (!p || !(ss.until > Date.now())) { await sessClear(); renderProfileBar(); return; }
-  try { const data = await profOpen(ss.key, JSON.parse(localStorage.getItem(PROF_DATA + p.id))); profActivate(p, ss.key, data, ss.until); }
-  catch (e) { await sessClear(); renderProfileBar(); }
+  if (!window.GGP) { renderProfileBar(); return; }
+  GGP.on(type => { if (type === 'change' || type === 'data' || type === 'ready') profSync(); });
+  await GGP.ready; profSync();
 }
 
 function savePersonalFile() {
@@ -3156,10 +3061,11 @@ function renderSaveBox() {
   box.innerHTML = `
     <div class="save-box">
       <div class="save-box-title">Save your results</div>
-      <p>Your results are not stored anywhere, so save them to a file before you leave. Next time, load that file on the My Progress page to see how you have grown.</p>
+      <p>Nothing is stored until you choose to save. A Grounded profile keeps your checkups on this device, locked with your own passcode, so you can see your tree grow over time. Or download them to a file you keep yourself.</p>
       <p style="margin-top:8px;"><strong>${status}</strong></p>
       <div class="btn-row">
-        <button class="btn btn-primary" onclick="savePersonalFile()">Save My Results</button>
+        <button class="btn btn-primary" onclick="profCreateDialog()">Save to a private profile</button>
+        <button class="btn btn-secondary" onclick="savePersonalFile()">Download to a file instead</button>
         ${personalFileLoaded ? '' : '<button class="btn btn-secondary" onclick="openPersonalFilePicker()">Load My File</button>'}
       </div>
     </div>`;
