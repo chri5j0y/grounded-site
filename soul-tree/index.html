@@ -822,6 +822,39 @@ html.ts-2 main{zoom:1.25;}
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--hero-seam:#F3E6CC;--leaf-accent:#6F8A56;}:root:not([data-theme="light"]) .hero{background:radial-gradient(ellipse 60% 70% at 30% 45%, #3A2B1F 0%, #2E2319 60%, #241C15 100%);color:#F3E6CC;}:root:not([data-theme="light"]) .hero-wordmark,:root:not([data-theme="light"]) .hero-wordmark .dot,:root:not([data-theme="light"]) .hero-tagline{color:#F3E6CC;}:root:not([data-theme="light"]) .mode-btn.active{background:#D9A847;color:#1F1A14;}}
 :root[data-theme="dark"]{--hero-seam:#F3E6CC;--leaf-accent:#6F8A56;}:root[data-theme="dark"] .hero{background:radial-gradient(ellipse 60% 70% at 30% 45%, #3A2B1F 0%, #2E2319 60%, #241C15 100%);color:#F3E6CC;}:root[data-theme="dark"] .hero-wordmark,:root[data-theme="dark"] .hero-wordmark .dot,:root[data-theme="dark"] .hero-tagline{color:#F3E6CC;}:root[data-theme="dark"] .mode-btn.active{background:#D9A847;color:#1F1A14;}
+
+/* ===== 2026 checkup questions ===== */
+.q-stem{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;margin:0 0 14px;color:var(--ink);}
+.q-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;margin-bottom:10px;}
+.q-card.answered{border-color:var(--domain-color, var(--gold));}
+.q-text{margin:0 0 10px;font-size:17px;line-height:1.45;display:flex;gap:10px;}
+.q-num{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--domain-color, var(--gold));min-width:14px;}
+.q-opts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;}
+.q-opts button{font:inherit;font-size:14px;font-weight:600;padding:9px 4px;border-radius:9px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;line-height:1.2;}
+.q-opts button[aria-pressed="true"]{background:var(--domain-color, var(--gold));border-color:var(--domain-color, var(--gold));color:#fff;}
+.q-opts button[data-v="unsure"],.q-opts button[data-v="skip"]{color:var(--ink-soft);}
+.q-opts button[data-v="unsure"][aria-pressed="true"],.q-opts button[data-v="skip"][aria-pressed="true"]{color:#fff;}
+@media (max-width:560px){.q-opts{grid-template-columns:repeat(2,minmax(0,1fr));}.q-opts button:last-child{grid-column:span 2;}}
+.sit-with{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);}
+.sit-with .opt{font-weight:500;text-transform:none;letter-spacing:0;}
+.safe-wrap{margin:6px 0 10px;}
+.safe-lead{color:var(--ink-soft);margin:0 0 12px;}
+.safe-wrap .q-opts{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:560px){.safe-wrap .q-opts{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.safe-help{margin:6px 0 0;}
+.text-btn{background:none;border:none;padding:0;font:inherit;color:var(--gold);font-weight:600;text-decoration:underline;cursor:pointer;}
+.quick-part{margin-bottom:6px;}
+.quick-label{font-weight:700;font-size:14px;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin:10px 0 6px;}
+.quick-tag{font-size:11px;font-weight:700;background:var(--bg-deep, #F2ECE0);border-radius:999px;padding:2px 8px;margin-left:6px;}
+.calm-back{position:fixed;inset:0;background:rgba(20,16,12,.6);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;}
+.calm-box{background:var(--card);color:var(--ink);border-radius:18px;max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:22px;border-top:6px solid #5F7D48;box-shadow:0 20px 50px rgba(0,0,0,.3);}
+.calm-box h2{font-family:'Cormorant Garamond',serif;font-size:26px;margin:0 0 6px;}
+.calm-list{list-style:none;padding:0;margin:14px 0;display:flex;flex-direction:column;gap:10px;}
+.calm-list li{font-size:16px;line-height:1.45;}
+.calm-list b{display:block;}
+.calm-list a{color:var(--gold);font-weight:700;}
+.calm-first{order:-1;background:var(--bg-deep,#F2ECE0);border-radius:10px;padding:8px 10px;}
+.calm-row{display:flex;justify-content:flex-end;}
 </style>
 </head>
 <body>
@@ -892,12 +925,13 @@ html.ts-2 main{zoom:1.25;}
 
   <div class="btn-row" style="margin-top:32px;">
     <button class="btn btn-primary" onclick="startCheckup()">Begin Your Checkup</button>
+    <button class="btn btn-secondary" onclick="startQuick()">Quick Check-in, 2 minutes</button>
     <button class="btn btn-secondary" onclick="showView('client-progress', document.querySelectorAll('#client-nav .nav-btn')[4])">Returning? Load My File</button>
   </div>
 </div>
 
 <div class="view" id="client-assess">
-  <p class="lead" style="margin-bottom:18px;">We start at the roots and climb. For each part, move the slider from 1 (depleted) to 10 (thriving), and use the reflection space to name your actual resources.</p>
+  <p class="lead" style="margin-bottom:18px;">We start at the roots and climb. Each part has nine short questions about the past two weeks. Answer honestly, not how you wish things were. There are no wrong answers, and "Not sure" is always okay. At the end of each part, there's an optional space to sit with a deeper question.</p>
   <div class="step-progress" id="step-progress"></div>
   <div id="step-container"></div>
 </div>
@@ -1799,7 +1833,213 @@ function signsHtml(d) {
     </div>`;
 }
 
+
+// =====================================================================
+// CHECKUP QUESTIONS (2026): 9 per part, "how often in the past two weeks"
+// r: reverse scored (often means this part needs care). c: context only, not scored.
+// =====================================================================
+const Q_STEM = 'In the past two weeks, how often have you...';
+const Q_OPTS = [['rarely', 'Rarely', 0], ['sometimes', 'Sometimes', 1], ['often', 'Often', 2], ['always', 'Almost always', 3], ['unsure', 'Not sure', null]];
+const QUESTIONS = {
+  holy: [
+    { t: 'Felt connected to something larger than yourself, like God, the Holy, nature, or love?' },
+    { t: 'Had a spiritual practice, of any kind, that fed you?' },
+    { t: 'Found comfort or strength in your faith or spirit during a hard moment?' },
+    { t: 'Felt far from God or the sacred, or felt let down by it?', r: 1 },
+    { t: 'Felt hurt by a church, a religious community, or people of faith?', r: 1 },
+    { t: 'Felt free to bring your honest questions and doubts?' },
+    { t: 'Felt a deep inner peace, even for a moment?' },
+    { t: 'Noticed awe or wonder in ordinary life?' },
+    { t: 'Carried guilt or shame that felt heavy on your spirit?', r: 1 }
+  ],
+  meaning: [
+    { t: 'Felt that your life matters?' },
+    { t: "Had a clear sense of what you're living for?" },
+    { t: 'Found yourself searching for meaning or purpose?', c: 1 },
+    { t: 'Lived in line with what you value most?' },
+    { t: 'Felt called to something, paid or unpaid?' },
+    { t: 'Found meaning in your daily work or roles?' },
+    { t: 'Given something good to the people who come after you?' },
+    { t: "Carried something you did, saw, or couldn't prevent that goes against your values?", r: 1 },
+    { t: 'Felt that your life story makes sense, even with its hard chapters?' }
+  ],
+  mind: [
+    { t: 'Been kind to yourself when you struggled?' },
+    { t: 'Been hard on yourself, with a harsh inner voice?', r: 1 },
+    { t: "Remembered that others struggle too, and you're not alone in it?" },
+    { t: 'Been able to name a strong feeling and ride it out?' },
+    { t: 'Gotten stuck replaying problems over and over?', r: 1 },
+    { t: 'Felt able to meet the stress in front of you?' },
+    { t: 'Been fully present in what you were doing?' },
+    { t: 'Felt worn out from caring for others?', r: 1 },
+    { t: 'Carried other people\'s pain home with you?', r: 1 }
+  ],
+  community: [
+    { t: 'Had at least one person you can be fully yourself with?' },
+    { t: 'Felt lonely?', r: 1 },
+    { t: 'Felt that you belong to a group or community?' },
+    { t: 'Felt warmth and safety in your closest relationships?' },
+    { t: 'Asked for help when you needed it?' },
+    { t: 'Offered support or kindness to someone else?' },
+    { t: 'Felt strain or conflict in an important relationship?', r: 1 },
+    { t: 'Been able to let go of resentment, without excusing harm?' },
+    { t: 'Felt safe with the people you live with?', home: 1 }
+  ],
+  body: [
+    { t: 'Gotten enough restful sleep?' },
+    { t: 'Moved your body in ways you enjoy?' },
+    { t: 'Eaten in ways that nourish you, without guilt or strict rules?' },
+    { t: 'Used alcohol or other substances to get through hard feelings?', r: 1 },
+    { t: 'Felt drained by your phone or screens?', r: 1 },
+    { t: 'Lived with pain or illness that shaped your days?', c: 1 },
+    { t: 'Taken unhurried rest, with nothing to get done?' },
+    { t: 'Spent time outdoors or in nature?' },
+    { t: 'Listened to what your body was telling you?' }
+  ],
+  hope: [
+    { t: 'Been able to picture a good future?' },
+    { t: 'Had energy to work toward what you hope for?' },
+    { t: 'Found a way forward when something blocked your path?' },
+    { t: 'Expected good things to come?' },
+    { t: "Noticed and savored things you're grateful for?" },
+    { t: 'Had moments of joy or delight?' },
+    { t: 'Seen new strength or growth come out of something hard?' },
+    { t: 'Felt glad simply to be alive?' },
+    { t: "Held on to hope, even when you couldn't know how things would turn out?" }
+  ]
+};
+const QUICK_Q = {
+  holy: 'Felt connected to something larger than yourself?',
+  meaning: 'Felt that your life matters?',
+  mind: 'Been kind to yourself when you struggled?',
+  community: 'Felt close to people who care about you?',
+  body: 'Taken good care of your body?',
+  hope: 'Held on to hope?'
+};
+let ST_ANS = {}, ST_SAFE = {}, ST_QUICK = false;
+
+function partScore(key, answers) {
+  const qs = QUESTIONS[key]; let sum = 0, n = 0;
+  qs.forEach((q, i) => {
+    const a = answers[i]; if (q.c || a == null) return;
+    const opt = Q_OPTS.find(o => o[0] === a); if (!opt || opt[2] === null) return;
+    sum += q.r ? 3 - opt[2] : opt[2]; n++;
+  });
+  return n ? Math.max(1, Math.min(10, Math.round(1 + 9 * (sum / n) / 3))) : 5;
+}
+function ensureScoreFields() {
+  if (document.getElementById('st-scores')) return;
+  const h = document.createElement('div'); h.id = 'st-scores'; h.hidden = true;
+  h.innerHTML = ALL_DOMAINS.map(d => `<input type="range" min="1" max="10" value="5" id="client-${d.key}-slider" tabindex="-1" aria-hidden="true"><span id="client-${d.key}-display">5</span>`).join('');
+  document.body.appendChild(h);
+}
+function setSlider(mode, key, v) {
+  if (mode === 'client') ensureScoreFields();
+  const el = document.getElementById(`${mode}-${key}-slider`); if (el) el.value = v;
+  const dp = document.getElementById(`${mode}-${key}-display`); if (dp) dp.textContent = v;
+}
+function answerQ(key, i, val) {
+  ST_ANS[key] = ST_ANS[key] || {};
+  ST_ANS[key][i] = val;
+  document.querySelectorAll(`[data-q="${key}-${i}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
+  if (QUESTIONS[key]) setSlider('client', key, partScore(key, ST_ANS[key]));
+  if (QUESTIONS[key] && QUESTIONS[key][i] && QUESTIONS[key][i].home && ['rarely', 'sometimes', 'unsure'].includes(val)) ST_SAFE.home = true;
+  const card = document.querySelector(`[data-q="${key}-${i}"]`);
+  if (card) card.classList.add('answered');
+}
+function questionHtml(key, i, text, extraClass) {
+  const cur = (ST_ANS[key] || {})[i];
+  return `<div class="q-card${cur ? ' answered' : ''} ${extraClass || ''}" data-q="${key}-${i}" role="radiogroup" aria-label="${escapeHtml(text)}">
+    <p class="q-text"><span class="q-num">${typeof i === 'number' ? i + 1 : ''}</span>${escapeHtml(text)}</p>
+    <div class="q-opts">${Q_OPTS.map(o => `<button type="button" data-v="${o[0]}" aria-pressed="${cur === o[0]}" onclick="answerQ('${key}', ${typeof i === 'number' ? i : `'${i}'`}, '${o[0]}')">${o[1]}</button>`).join('')}</div>
+  </div>`;
+}
+function questionsBlock(d) {
+  return `<p class="q-stem">${Q_STEM}</p>` + QUESTIONS[d.key].map((q, i) => questionHtml(d.key, i, q.t)).join('');
+}
+
+// ---------- safety ----------
+const SAFE_OPTS = [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', "I'd rather not say"]];
+function safetyHtml() {
+  const o1 = (ST_SAFE.opener || ''), o2 = (ST_SAFE.direct || '');
+  return `<div class="safe-wrap">
+    <p class="safe-lead">Two last questions. They're here because we care, and your answers stay on this device.</p>
+    <div class="q-card${o1 ? ' answered' : ''}" data-s="opener" role="radiogroup" aria-label="Hopeless or a burden">
+      <p class="q-text">Some seasons are heavy. In the past two weeks, how often have you felt hopeless, or like a burden to others?</p>
+      <div class="q-opts">${Q_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o1 === x[0]}" onclick="answerSafe('opener','${x[0]}')">${x[1]}</button>`).join('')}</div>
+    </div>
+    <div class="q-card${o2 ? ' answered' : ''}" data-s="direct" role="radiogroup" aria-label="Thoughts of ending your life">
+      <p class="q-text">In the past two weeks, have you had thoughts of ending your life or hurting yourself?</p>
+      <div class="q-opts">${SAFE_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o2 === x[0]}" onclick="answerSafe('direct','${x[0]}')">${x[1]}</button>`).join('')}</div>
+    </div>
+    <p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now?</button></p>
+  </div>`;
+}
+function answerSafe(which, val) {
+  ST_SAFE[which] = val;
+  document.querySelectorAll(`[data-s="${which}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
+  const c = document.querySelector(`[data-s="${which}"]`); if (c) c.classList.add('answered');
+  if ((which === 'direct' && val !== 'no') || (which === 'opener' && (val === 'often' || val === 'always'))) showCalm();
+}
+function showCalm() {
+  if (document.getElementById('calm-card')) return;
+  const home = ST_SAFE.home;
+  const wrap = document.createElement('div');
+  wrap.id = 'calm-card'; wrap.className = 'calm-back';
+  wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
+    <h2 id="calm-title">You matter, and you don't have to carry this alone.</h2>
+    <p>If you're thinking about suicide or feel unsafe, reach out now. Someone will listen.</p>
+    <ul class="calm-list">
+      <li><b>988 Suicide and Crisis Lifeline</b><a href="tel:988">Call 988</a> or <a href="sms:988">text 988</a>, any time. Veterans, call 988 and press 1.</li>
+      <li><b>Crisis Text Line in Minnesota</b><a href="sms:741741?&body=MN">Text MN to 741741</a></li>
+      <li><b>Minnesota mobile crisis</b><a href="tel:274747">Call **CRISIS (274747)</a> from a cell phone</li>
+      <li><b>Central Minnesota, 24 hours</b><a href="tel:13202535555">320-253-5555</a></li>
+      ${home ? '' : ''}<li${home ? ' class="calm-first"' : ''}><b>National Domestic Violence Hotline</b><a href="tel:18007997233">1-800-799-7233</a>, or text START to 88788</li>
+      <li><b>SAMHSA National Helpline</b><a href="tel:18006624357">1-800-662-4357</a>, for substance use and mental health help</li>
+      <li><b>In immediate danger?</b><a href="tel:911">Call 911</a></li>
+    </ul>
+    <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
+  </div>`;
+  document.body.appendChild(wrap);
+  wrap.addEventListener('click', e => { if (e.target === wrap) closeCalm(); });
+  document.addEventListener('keydown', calmKey);
+  const b = wrap.querySelector('button'); if (b) b.focus();
+}
+function calmKey(e) { if (e.key === 'Escape') closeCalm(); }
+function closeCalm() { const c = document.getElementById('calm-card'); if (c) c.remove(); document.removeEventListener('keydown', calmKey); }
+
+// ---------- quick check-in ----------
+function startQuick() {
+  ST_QUICK = true; ST_ANS = {}; ST_SAFE = {};
+  const container = document.getElementById('step-container');
+  container.innerHTML = `<section class="step-panel active" id="step-quick">
+    <div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title">Quick check-in</h2><div class="step-domain">One question for each part of your tree</div></div></div>
+    <p class="q-stem">${Q_STEM}</p>
+    ${ALL_DOMAINS.map(d => `<div class="quick-part" style="--domain-color:${d.color};"><div class="quick-label" style="color:${d.color};">${partIcon(d, 20)} ${d.part}</div>${questionHtml('quick_' + d.key, 0, QUICK_Q[d.key])}</div>`).join('')}
+    ${safetyHtml()}
+    <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="startCheckup()">Take the full checkup instead</button><button class="btn btn-primary" onclick="finishQuick()">See My Tree</button></div>
+  </section>`;
+  document.getElementById('step-progress').innerHTML = '';
+  showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
+  scrollToViewTop('client-assess', true, true);
+}
+function finishQuick() {
+  ALL_DOMAINS.forEach(d => {
+    const a = (ST_ANS['quick_' + d.key] || {})[0];
+    const opt = Q_OPTS.find(o => o[0] === a);
+    setSlider('client', d.key, opt && opt[2] !== null ? Math.round(1 + 9 * opt[2] / 3) : 5);
+    const n = document.getElementById(`client-${d.key}-notes`); if (n) n.value = '';
+  });
+  calculateResults('client');
+}
+
 function sliderCardHtml(d, mode, withHeader) {
+  if (mode === 'client') return `
+    <div class="domain-card q-domain" style="--domain-color:${d.color};border-left-color:${d.color};">
+      ${questionsBlock(d)}
+      <div class="sit-with"><div class="step-label">Sit with this <span class="opt">(optional)</span></div><p class="domain-prompt">${d.prompt}</p>
+      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you'd like. It stays on this device." style="--domain-color:${d.color};"></textarea></div>
+    </div>`;
   return `
     <div class="domain-card" style="--domain-color:${d.color};border-left-color:${d.color};">
       <div class="domain-header">
@@ -1850,10 +2090,15 @@ function renderCheckup() {
       <div class="btn-row step-nav">
         ${i > 0 ? `<button class="btn btn-secondary" onclick="goToStep(${i - 1})">Back</button>` : '<span></span>'}
         ${next ? `<button class="btn btn-primary" onclick="goToStep(${i + 1})">Next: ${next.part}</button>`
-               : `<button class="btn btn-primary" onclick="calculateResults('client')">See My Tree</button>`}
+               : `<button class="btn btn-primary" onclick="goToStep(${i + 1})">Almost done</button>`}
       </div>
     </section>`;
-  }).join('');
+  }).join('') + `
+    <section class="step-panel" id="step-${ALL_DOMAINS.length}">
+      <div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title">Before you see your tree</h2></div></div>
+      ${safetyHtml()}
+      <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="goToStep(${ALL_DOMAINS.length - 1})">Back</button><button class="btn btn-primary" onclick="calculateResults('client')">See My Tree</button></div>
+    </section>`;
   renderStepProgress();
   goToStep(0, true);
 }
@@ -1885,6 +2130,7 @@ function scrollToViewTop(id, smooth, always) {
 }
 
 function startCheckup() {
+  if (ST_QUICK || !document.getElementById('step-0')) { ST_QUICK = false; ST_ANS = {}; ST_SAFE = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckup(); }
   showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
   goToStep(0);
 }
@@ -2037,8 +2283,10 @@ function calculateResults(mode) {
   const isClient = mode === 'client';
   const scores = {}, reflections = {};
   ALL_DOMAINS.forEach(d => {
+    if (isClient) ensureScoreFields();
     scores[d.key] = parseInt(document.getElementById(`${prefix}-${d.key}-slider`).value, 10);
-    reflections[d.key] = document.getElementById(`${prefix}-${d.key}-notes`).value;
+    const notes = document.getElementById(`${prefix}-${d.key}-notes`);
+    reflections[d.key] = notes ? notes.value : '';
   });
   const total = Object.values(scores).reduce((a, b) => a + b, 0);
   const reminder = isClient
@@ -2079,7 +2327,7 @@ function calculateResults(mode) {
     document.getElementById('client-results-content').innerHTML = html;
     window.lastClientScores = scores;
     window.lastClientReflections = reflections;
-    window.currentClientEntry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], scores, reflections, total, carePlan: {} };
+    window.currentClientEntry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], scores, reflections, total, carePlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
     showView('client-results', document.querySelectorAll('#client-nav .nav-btn')[2]);
     renderCarePlanBuilder('client');
     renderSaveBox();
@@ -2532,7 +2780,7 @@ function renderHistoryChartAndTable(container, history, personal) {
   ALL_DOMAINS.forEach(d => tableHtml += `<th>${d.part}</th>`);
   tableHtml += `</tr></thead><tbody>`;
   history.forEach(s => {
-    tableHtml += `<tr><td>${escapeHtml(s.date)}</td><td><strong>${s.total}/${MAX_TOTAL}</strong></td>`;
+    tableHtml += `<tr><td>${escapeHtml(s.date)}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}</td><td><strong>${s.total}/${MAX_TOTAL}</strong></td>`;
     ALL_DOMAINS.forEach(d => tableHtml += `<td>${s.scores[d.key]}</td>`);
     tableHtml += `</tr>`;
   });
