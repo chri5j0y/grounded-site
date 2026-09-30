@@ -22,9 +22,9 @@
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Sprout', sub: 'Checkup for kids, grades K to 5, with guides for 50+ hard talks', href: '/sprout/', keys: 'kids children elementary kindergarten k 5 checkup check in feelings tree critters' },
-    { title: 'Sapling', sub: 'Checkup for grades 6 to 8, with 40 guides for hard talks', href: '/sapling/', keys: 'middle school middle schooler preteen tween teen 6th 7th 8th grade checkup check in' },
-    { title: 'Soul Tree', sub: 'Checkup for adults, from root to fruit, with guides for 50+ hard seasons', href: '/soul-tree/', keys: 'adult grown up spiritual health wellbeing checkup check in assessment care plan chaplain caregiver practitioner' },
+    { title: 'Sprout', sub: 'Checkup for kids, grades K to 5, with guides for 60 hard talks', href: '/sprout/', keys: 'kids children elementary kindergarten k 5 checkup check in feelings tree critters' },
+    { title: 'Sapling', sub: 'Checkup for grades 6 to 8, with 49 guides for hard talks', href: '/sapling/', keys: 'middle school middle schooler preteen tween teen 6th 7th 8th grade checkup check in' },
+    { title: 'Soul Tree', sub: 'Checkup for adults, from root to fruit, with guides for 60+ hard seasons', href: '/soul-tree/', keys: 'adult grown up spiritual health wellbeing checkup check in assessment care plan chaplain caregiver practitioner' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove garden tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide' },
     { title: 'Heartwood', sub: 'Checkup for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },
@@ -50,7 +50,7 @@
     divorce: 'divorce homes', divorced: 'divorce', separated: 'divorce separation', custody: 'divorce homes', twohomes: 'divorce homes',
     anxious: 'anxiety worry', anxiety: 'anxiety worry', worried: 'worry anxiety', worry: 'worry anxiety', panic: 'anxiety panic worry', nervous: 'worry anxiety nervous', scared: 'worry fear scared',
     depressed: 'sadness depressed', depression: 'sadness depressed depression', sad: 'sadness sad', lonely: 'loneliness lonely alone',
-    nudes: 'pictures secrets', sexting: 'pictures secrets', sextortion: 'pictures secrets', porn: 'pictures secrets',
+    nudes: 'pictures secrets', sexting: 'pictures secrets', sextortion: 'pictures secrets', porn: 'pornography pictures secrets', pornography: 'pornography pictures secrets', explicit: 'pornography pictures',
     tiktok: 'phone screens', instagram: 'phone screens', snapchat: 'phone chats', gaming: 'gaming screens', screentime: 'screen screens phone',
     chatbot: 'ai chatbot', chatgpt: 'ai chatbot', ai: 'ai chatbot',
     dementia: 'dementia alzheimer memory', alzheimers: 'dementia alzheimer memory', cancer: 'cancer diagnosis illness sick', diagnosis: 'diagnosis illness sick', sick: 'sick illness',
@@ -58,19 +58,30 @@
     dog: 'pet', cat: 'pet', insomnia: 'sleep', cantsleep: 'sleep', pray: 'prayer pray', breathing: 'breath breathe', breathe: 'breath breathe',
     jail: 'incarcerated prison jail', prison: 'incarcerated prison jail', fired: 'job', laidoff: 'job',
     moving: 'moving move', newschool: 'starting changing', puberty: 'changing', esteem: 'comparing confidence different',
-    angry: 'anger angry blowup meltdown escalating', mad: 'anger mad meltdown', selfharm: 'harm hurting suicide wanting', panicattack: 'panic anxiety', stepmom: 'stepfamily', stepdad: 'stepfamily', stepparent: 'stepfamily'
+    anorexia: 'eating disorder', anorexic: 'eating disorder', bulimia: 'eating disorder', bulimic: 'eating disorder', binge: 'eating disorder binge', bingeing: 'eating disorder binge', binging: 'eating disorder binge',
+    purging: 'eating disorder purging', arfid: 'eating arfid', picky: 'eating picky food', diet: 'eating dieting weight', dieting: 'eating dieting weight', weight: 'eating weight', noteating: 'eating disorder food', eatingdisorder: 'eating disorder', food: 'food eating',
+    crash: 'accident crash', wreck: 'accident crash wreck', collision: 'accident crash', caraccident: 'accident crash', concussion: 'concussion accident', injured: 'injury injured accident', injury: 'injury accident', er: 'accident injury hospital', icu: 'accident injury hospital',
+    adhd: 'adhd attention', focus: 'attention focus adhd', distracted: 'attention distracted adhd', hyperactive: 'attention hyperactive adhd', impulsive: 'attention impulsive adhd',
+    dyslexia: 'dyslexia learning', learningdisability: 'learning dyslexia attention', iep: 'iep 504 learning', '504': 'iep 504 learning', homework: 'homework grades learning attention',
+    lie: 'lying lies', lies: 'lying lies', lied: 'lying lies', liar: 'lying liar', steal: 'stealing taking', stealing: 'stealing taking', stole: 'stealing taking', steals: 'stealing taking', shoplifting: 'stealing shoplifting', sneaking: 'sneaking lying',
+    gamble: 'gambling', gambling: 'gambling', betting: 'gambling betting', bet: 'gambling betting', bets: 'gambling betting', sportsbetting: 'gambling betting sports', lootbox: 'gambling loot', casino: 'gambling casino', lottery: 'gambling lottery', parlay: 'gambling betting', draftkings: 'gambling betting', fanduel: 'gambling betting',
+    bedwetting: 'bedwetting', enuresis: 'bedwetting', pullups: 'bedwetting',
+    college: 'college graduation', graduation: 'graduation college leaving', dorm: 'college dorm', homesick: 'college leaving homesick', leavinghome: 'college sibling graduation', movingout: 'college sibling moving',
+    angry: 'anger angry blowup meltdown escalating', mad: 'anger mad meltdown', selfharm: 'harm hurting suicide wanting cutting', selfinjury: 'harm hurting cutting', panicattack: 'panic anxiety', stepmom: 'stepfamily', stepdad: 'stepfamily', stepparent: 'stepfamily'
   };
   var PHRASES = [
     [/blow(ing|s)? up|blew up/g, 'blowup'], [/freak(ing|ed|s)? out/g, 'freakout'], [/losing it|lost it/g, 'losingit'], [/out of control/g, 'outofcontrol'],
     [/calm(ing)? (them |him |her |me )?down/g, 'calmdown'], [/de[\s-]?escalat\w*/g, 'deescalate'], [/picked on|picking on/g, 'pickedon'], [/end of life/g, 'endoflife'],
     [/two homes/g, 'twohomes'], [/screen time/g, 'screentime'], [/can'?t sleep|trouble sleeping/g, 'cantsleep'], [/laid off|lay ?off/g, 'laidoff'],
-    [/new school/g, 'newschool'], [/e[\s-]?cig\w*/g, 'ecig'], [/alzheimer'?s/g, 'alzheimers'], [/school shooting/g, 'shooting'], [/self[\s-]?harm\w*|cutting|cut (my|him|her|them)sel\w*/g, 'selfharm'], [/panic attacks?/g, 'panicattack'], [/self[\s-]?esteem/g, 'esteem']
+    [/new school/g, 'newschool'], [/e[\s-]?cig\w*/g, 'ecig'], [/alzheimer'?s/g, 'alzheimers'], [/school shooting/g, 'shooting'], [/self[\s-]?harm\w*|cutting|cut (my|him|her|them)sel\w*/g, 'selfharm'], [/panic attacks?/g, 'panicattack'], [/self[\s-]?esteem/g, 'esteem'],
+    [/self[\s-]?injur\w*/g, 'selfinjury'], [/burn(ing|ed|s)? (my|him|her|them)sel\w*/g, 'selfharm'],
+    [/learning (disabilit|difference)\w*/g, 'learningdisability'], [/sports ?betting|sports ?bets?/g, 'sportsbetting'], [/loot ?box(es)?/g, 'lootbox'], [/wet(s|ting)? the bed|pee(s|ing)? (in )?the bed|bed ?wetting/g, 'bedwetting'], [/pull[\s-]?ups/g, 'pullups'], [/leaving home|leave home|leaves home/g, 'leavinghome'], [/moving out|moves out|moved out/g, 'movingout'], [/eating disorders?/g, 'eatingdisorder'], [/not eating|won'?t eat|stopped eating|refus\w* to eat/g, 'noteating'], [/car (accident|crash|wreck)s?/g, 'caraccident'], [/head injur\w*/g, 'concussion']
   ];
-  var STOP = ' a an and are about as at be but by can do does for from get how i if in into is it its me my of on or our should so some that the their them they this to up we what when where who why will with you your talk talking tell telling help helping deal dealing handle handling kid kids child children son daughter student students teen teens teenager adult adults someone somebody person people ';
+  var STOP = ' a an and are about as at be but by can do does for from get how i if in into is it its me my of on or our should so some that the their them they this to up we what when where who why will with you your talk talking tell telling help helping deal dealing handle handling kid kids child children son daughter student students teen teens teenager adult adults someone somebody person people keeps keep always cant wont just really ';
   var AGE_HINT = [[/\b(kid|kids|child|children|little|elementary|kindergarten|preschool)\b/, 'k5'], [/\b(teen|teens|teenager|middle|preteen|tween|6th|7th|8th)\b/, 'ms'], [/\b(adult|adults|husband|wife|spouse|partner|mom|dad|parent|coworker|patient|myself)\b/, 'ad']];
 
   /* ---------- crisis words ---------- */
-  var CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
+  var CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
   var ABUSE = /abuse|abused|molest|rape|assault|touched me|hits me|hitting me|beat(s|ing)? me|domestic/;
 
   /* ---------- helpers ---------- */
@@ -92,8 +103,8 @@
       s.onload = ok; s.onerror = ok; document.head.appendChild(s);
     });
   }
-  function add(o) {
-    o.nTitle = norm(o.title); o.nKeys = norm(o.keys || ''); o.nLead = norm((o.lead || []).join(' ') + ' ' + (o.sub || '')); o.nBody = norm(o.body || '');
+  function add(o) {   // titles also match with hyphens joined, so "Self-harm" matches "selfharm"
+    o.nTitle = norm(o.title + ' ' + String(o.title).replace(/(\w)-(\w)/g, '$1$2')); o.nKeys = norm(o.keys || ''); o.nLead = norm((o.lead || []).join(' ') + ' ' + (o.sub || '')); o.nBody = norm(o.body || '');
     ITEMS.push(o);
   }
   function build() {
@@ -115,7 +126,7 @@
       var sa = window.SAPLING_GUIDES;
       if (sa) sa.groups.forEach(function (g) { g.topics.forEach(function (t) {
         if (!t.quick) return;
-        add({ type: 'talk', age: 'ms', ageLabel: 'Grades 6 to 8', title: t.title, sub: g.name, keys: '', lead: t.quick, quick: t.quick,
+        add({ type: 'talk', age: 'ms', ageLabel: 'Grades 6 to 8', title: t.title, sub: g.name, keys: t.keys || '', lead: t.quick, quick: t.quick,
           body: (t.talk || []).concat(t.say || []).join(' '), href: '/sapling/#talk=' + encodeURIComponent(t.id), from: 'Sapling' });
       }); });
       var so = window.SOULTREE_GUIDES;

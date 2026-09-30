@@ -1526,7 +1526,7 @@ function grownNoteHTML(info, name) {
   if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
   if (info.skipped.length) h += `<p><b>Skipped:</b> ${info.skipped.map(p => p.name).join(', ')}. A skip can be a quiet signal too. You might gently ask about it later.</p>`;
   if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the care plan going.</p>`;
-  return h + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for more than 50 hard talks.</p>`;
+  return h + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 60 hard talks.</p>`;
 }
 function thenNowHTML(prev, cur, name) {
   if (!prev) return '';
@@ -2250,7 +2250,7 @@ function renderGuide() {
     </ul>
 
     <h3 class="grown" id="g-changes">When life changes</h3>
-    <p>Big changes shake a child's whole tree: loss, illness, divorce, moves, scary news, and more. Sprout has a full section called <b>When Life Changes</b> with more than 50 guides for parents, guardians, and teachers. Each has a quick reference and a full <b>Talking it through</b> guide with what to say, questions kids ask, and when to get more help.</p>
+    <p>Big changes shake a child's whole tree: loss, illness, divorce, moves, scary news, and more. Sprout has a full section called <b>When Life Changes</b> with 60 guides for parents, guardians, and teachers. Each has a quick reference and a full <b>Talking it through</b> guide with what to say, questions kids ask, and when to get more help.</p>
     <p class="no-print"><button class="soft-btn" onclick="go('life')">Open When Life Changes</button></p>
 
     <h3 class="grown" id="g-reach">When to reach out</h3>
