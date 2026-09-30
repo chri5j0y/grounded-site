@@ -201,6 +201,36 @@ label.f{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;
 .docfield{margin-top:8px;}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--umber);color:#FFF8EC;padding:12px 20px;border-radius:30px;z-index:120;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.3);}
 
+/* ---------- orientation ---------- */
+.or-bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:12px;}
+.or-bar i{display:block;height:100%;background:var(--gold);}
+.hello .or-bar{background:rgba(244,235,218,.18);}
+.hello .or-bar i{background:#D9A847;}
+.or-step{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;margin-bottom:10px;}
+.or-step:hover:not([disabled]){border-color:var(--gold);}
+.or-step[disabled]{cursor:default;opacity:.55;}
+.or-step .n{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;flex:none;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;}
+.or-step.done .n{background:var(--gold);color:#fff;}
+.or-step.done .n svg{width:18px;height:18px;}
+.or-step b{font-family:'Cormorant Garamond',serif;font-size:calc(22px * var(--scale));display:block;line-height:1.2;}
+.or-step small{color:var(--ink-soft);font-size:14px;}
+.or-step .arr{margin-left:auto;color:var(--gold);font-size:24px;}
+.lesson{max-width:680px;}
+.lesson h2{font-family:'Cormorant Garamond',serif;font-size:calc(25px * var(--scale));margin-top:26px;line-height:1.2;}
+.lesson p{margin-top:10px;line-height:1.65;font-size:calc(17.5px * var(--scale));}
+.lesson .lead{font-family:'Cormorant Garamond',serif;font-size:calc(23px * var(--scale));line-height:1.4;margin-top:4px;}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px;cursor:pointer;line-height:1.5;font-size:calc(17px * var(--scale));}
+.opt:hover{border-color:var(--gold-soft);}
+.opt[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));}
+.or-scen{font-family:'Cormorant Garamond',serif;font-size:calc(23px * var(--scale));line-height:1.4;}
+.or-rev{border-top:1px solid var(--line);padding-top:14px;margin-top:14px;}
+.or-rev:first-child{border-top:0;margin-top:0;padding-top:0;}
+.or-rev .mark{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;font-size:13px;text-transform:uppercase;}
+.or-rev .mark.ok{color:var(--sage);}
+.or-rev .mark.miss{color:var(--danger);}
+.pill svg{width:14px;height:14px;flex:none;}
+.or-score{font-family:'Cormorant Garamond',serif;font-size:calc(44px * var(--scale));line-height:1;}
+
 /* ---------- training ---------- */
 .lv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
 @media(max-width:640px){ .lv{grid-template-columns:1fr;} }
@@ -374,7 +404,7 @@ async function enter(inner){
   const v2 = inner.v === 2;
   const keys = v2 ? Object.assign({}, inner.keys || {}) : {staff: inner.libKey};
   TIER = v2 ? inner.tier : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
-  DATA = Object.assign(blankData(), inner.data); DATA.owner = Object.assign({saved:[], draft:null}, DATA.owner || {});
+  DATA = Object.assign(blankData(), inner.data); DATA.owner = Object.assign({saved:[], draft:null}, DATA.owner || {}); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
   // Changes made in the Access manager on this device are now live: pick up the new keys.
   const d = DATA.owner.draft;
   if (d && d.stamp && d.stamp === CODES.stamp){ Object.assign(keys, d.keys || {}); if (d.newIds && d.newIds[TIER]) CODEID = d.newIds[TIER]; DATA.owner.draft = null; setTimeout(() => toast('Your Access manager changes are live.'), 900); }
@@ -386,7 +416,7 @@ async function enter(inner){
 // ---------------- state ----------------
 let LIB = null, OWN = null, FLD = null, TIER = null, KEYS = {}, CODEID = null, DATA = null, USERKEY = null, VSALT = null;
 let V = {tab:'home'}, RUN = null, lastAct = Date.now(), saveT = null, runTimer = null;
-const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, owner:{saved:[], draft:null}});
+const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, orient:{lessons:{}, last:null, pass:null, signed:null, staff:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, owner:{saved:[], draft:null}});
 const touch = o => { if (o) o.u = Date.now(); return o; };
 
 function readVault(){ try { return JSON.parse(localStorage.getItem(VAULT_KEY)); } catch(e){ return null; } }
@@ -525,7 +555,7 @@ function start(){
   if (DATA.draft && LIB) { setTimeout(() => { if (confirm('You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  if (TIER === 'field') return [['home','Home','home']];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : OR() ? [['home','Home','home'],['orient','Orientation','cap']] : [['home','Home','home']];
   const t = LIB ? [['home','Home','home'],['guides','Guides','book'],['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
   return t;
@@ -533,9 +563,9 @@ function tabsFor(){
 const notice = () => ((LIB || OWN || FLD || {}).brand || {}).notice || '';
 function render(){
   const tabs = tabsFor();
-  if (V.tab !== 'settings' && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
+  if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -767,6 +797,7 @@ function docForm(d){
 function vTraining(){
   const T = LIB.training, P = DATA.training.progress, svcs = [['first','First conversation'],['eol','End-of-life support'],['vigil','Vigil sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual counseling'],['grief','Grief & caregiver'],['speaking','Speaking']];
   return `<div class="page-head"><div class="eyebrow">Training &middot; Proprietary and confidential</div><h1>Learning the Grounded way</h1></div>
+  ${OR() ? orStatusCard() : ''}
   <div class="card"><p class="purpose">${esc(T.welcome)}</p></div>
   <div class="card"><h3>Our values</h3>${T.values.map(v => `<p style="margin-top:10px"><b style="font-family:'Cormorant Garamond',serif;font-size:21px">${esc(v[0])}</b><br><span class="muted">${esc(v[1])}</span></p>`).join('')}</div>
   <div class="card"><h3>Core skills</h3><ul class="checklist" style="margin-top:8px">${T.competencies.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
@@ -793,9 +824,160 @@ function vSafety(){
 function vFieldHome(){
   const w = FLD.welcome;
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
+  ${orStatusCard()}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
+}
+
+// ---------------- ORIENTATION ----------------
+// Lives in the Field library (FLD.orientation). Everyone who opens Field sees it. Field users must finish it
+// before anything else opens. Staff and Owner also get the Staff section (LIB.orientationStaff).
+// Renew yearly, and again whenever FLD.orientation.version goes up (retake the scenarios, sign again).
+const OR = () => (FLD && FLD.orientation) || null;
+const addYear = s => { const [y,m,d] = s.split('-').map(Number); const t = new Date(y + 1, m-1, d); return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; };
+const orLessonsDone = () => OR().lessons.every(l => DATA.orient.lessons[l.id]);
+const orStaffSec = () => (TIER !== 'field' && LIB && LIB.orientationStaff) || null;
+function orState(){
+  const O = OR(), D = DATA.orient, t = today(), S = orStaffSec();
+  const fresh = (x, v) => !!(x && x.v === v && addYear(x.date) >= t);
+  const lessons = orLessonsDone(), pass = fresh(D.pass, O.version), signed = pass && fresh(D.signed, O.version);
+  const staff = !S || fresh(D.staff, S.version);
+  const complete = lessons && pass && signed && staff;
+  const dates = [D.pass, D.signed, S ? D.staff : null].filter(Boolean).map(x => x.date);
+  const renewBy = complete ? addYear(dates.slice().sort()[0]) : null;
+  const doneOn = complete ? dates.slice().sort().pop() : null;
+  const renewing = !complete && !!(D.pass || D.signed);
+  const changed = renewing && !!((D.pass && D.pass.v !== O.version) || (D.signed && D.signed.v !== O.version));
+  const total = O.lessons.length + 2 + (S ? 1 : 0);
+  const done = O.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0) + (S && staff ? 1 : 0);
+  const dueSoon = complete && addDays(today(), 30) >= renewBy;
+  return {lessons, pass, signed, staff, complete, renewBy, doneOn, renewing, changed, total, done, dueSoon};
+}
+const orBar = (a, b) => `<div class="or-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${b}" aria-valuenow="${a}" aria-label="Progress"><i style="width:${Math.round(a / b * 100)}%"></i></div>`;
+function orStatusCard(){
+  if (!OR()) return '';
+  const s = orState();
+  if (s.complete){
+    const soon = s.dueSoon;
+    return `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><div class="spread"><div><span class="pill sage">${icon('check')} Orientation complete</span><p class="muted" style="margin-top:8px">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.${soon ? ' Renewal is open now: retake the scenarios and sign the agreement again.' : ''}</p></div></div>
+     <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-cert">${icon('print')} Print Certificate</button><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Print Agreement</button><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="or-home">${soon ? 'Renew Now' : 'Review Orientation'}</button></div></div>`;
+  }
+  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>${s.renewing ? 'Time to renew Orientation' : 'Field Guide Orientation'}</h3><p class="muted">${s.renewing ? 'Retake the scenarios and sign the agreement again.' : `${s.done} of ${s.total} steps done.`}</p>${orBar(s.done, s.total)}
+   <button class="btn btn-gold btn-sm" style="margin-top:12px" data-act="or-home">${s.done ? 'Continue' : 'Start'} Orientation</button></div>`;
+}
+function vOrient(){
+  if (!OR()) return `<div class="card"><p>Orientation isn't available on this device yet.</p></div>`;
+  if (V.lesson !== undefined) return vLesson(V.lesson);
+  if (V.staff) return vStaffSection();
+  if (V.quiz) return V.quiz.done ? vQuizResult() : vQuizQ();
+  if (V.sign) return vSign();
+  const O = OR(), D = DATA.orient, s = orState(), S = orStaffSec();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${O.quiz.items.length}` : !s.lessons ? 'Opens after all six lessons' : D.last && D.last.v === O.version ? `Last try: ${D.last.score} of ${O.quiz.items.length}. You need ${O.quiz.pass}.` : `You need ${O.quiz.pass} of ${O.quiz.items.length}. Retake as often as you like.`;
+  const aSub = s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios';
+  const hero = s.complete ? ['Orientation complete', `You're all set. Renew by ${nice(s.renewBy)}.`]
+    : s.renewing ? ['Time to renew Orientation', s.changed ? 'Our standards have changed since you last signed. Retake the scenarios and sign the agreement again. The lessons are here if you want a refresher.' : "It's been a year. Retake the scenarios and sign the agreement again. The lessons are here if you want a refresher."]
+    : ['Welcome. Let\'s get you started.', esc(O.intro[0])];
+  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade; Orientation</div><h1>${hero[0]}</h1><p>${hero[1]}</p>${orBar(s.done, s.total)}</div>
+  ${s.complete ? orStatusCard() : ''}
+  ${s.changed && O.changes && O.changes.length ? `<div class="card"><h3>What changed</h3><ul class="checklist" style="margin-top:8px">${O.changes.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
+  ${!s.complete && !s.renewing ? `<div class="card">${O.intro.slice(1).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>` : ''}
+  <h3 style="margin:22px 0 10px">Six lessons</h3>
+  ${O.lessons.map((l,i) => step('or-lesson', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  <h3 style="margin:22px 0 10px">Practice scenarios</h3>
+  ${step('or-quiz', null, 7, s.pass, `${O.quiz.items.length} real-world scenarios`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('or-go-sign', null, 8, s.signed, O.agreement.title, aSub, !s.pass)}
+  ${S ? `<h3 style="margin:22px 0 10px">Staff section</h3>${step('or-staff', null, 9, s.staff, S.title, s.staff ? `Read ${nice(D.staff.date)}` : `About ${S.minutes} minutes. For Staff and Owner only.`, false)}` : ''}`;
+}
+function lessonBody(L){
+  return `<div class="lesson"><h1>${esc(L.title)}</h1><p class="lead">${esc(L.lead)}</p>
+    ${L.parts.map(pt => `<h2>${esc(pt.h)}</h2>${pt.p.map(t => `<p>${esc(t)}</p>`).join('')}`).join('')}
+    <div class="card" style="margin-top:24px;border-left:4px solid var(--gold)"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${L.remember.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div></div>`;
+}
+function vLesson(i){
+  const L = OR().lessons[i], n = OR().lessons.length, read = !!DATA.orient.lessons[L.id];
+  return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
+  ${lessonBody(L)}
+  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="or-read" data-v="${i}">Mark as Read</button>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="or-lesson" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="or-lesson" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="or-home">Back to Orientation</button>` : ''}</div>`;
+}
+function vStaffSection(){
+  const S = orStaffSec(), s = orState();
+  return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Staff section &middot; About ${S.minutes} minutes</div></div>
+  ${lessonBody(S)}
+  <div class="row" style="margin-top:18px">${s.staff ? `<span class="pill sage">${icon('check')} Read ${nice(DATA.orient.staff.date)}</span>` : `<button class="btn btn-gold" data-act="or-staff-read">Mark as Read</button>`}</div>`;
+}
+function orShuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function orNewQuiz(){
+  const items = OR().quiz.items;
+  return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false};
+}
+function vQuizQ(){
+  const Q = V.quiz, items = OR().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="or-pick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="or-prev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'or-finish' : 'or-next'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function orFinish(){
+  const O = OR(), Q = V.quiz, items = O.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length;
+  DATA.orient.last = {v:O.version, date:today(), score};
+  if (score >= O.quiz.pass) DATA.orient.pass = {v:O.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vQuizResult(){
+  const O = OR(), Q = V.quiz, items = O.quiz.items, n = items.length, ok = Q.score >= O.quiz.pass, st = orState(), signed = st.signed && !(st.dueSoon && DATA.orient.signed.date < DATA.orient.pass.date);
+  return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${O.quiz.pass} of ${n}.`}</h2>
+   <p class="muted" style="margin-top:6px">${ok ? (signed ? 'Your agreement is already signed for this version.' : 'The last step is the agreement.') : 'Look over the answers below, review any lessons you need, and try again. The scenarios come in a new order each time.'}</p>
+   <div class="row" style="margin-top:14px">${ok ? (signed ? `<button class="btn btn-gold" data-act="or-home">Back to Orientation</button>` : `<button class="btn btn-gold" data-act="or-go-sign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="or-quiz">Try Again</button><button class="btn btn-line" data-act="or-home">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = O.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vSign(){
+  const A = OR().agreement, s = orState(), D = DATA.orient, showSigned = s.signed && !(s.dueSoon && D.signed.date < D.pass.date);
+  if (!s.pass) return `<button class="linkbtn" data-act="or-home">Back to Orientation</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first. Then the agreement opens here.</p></div>`;
+  return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${showSigned ? `<p><span class="pill sage">${icon('check')} Signed</span></p><p style="margin-top:8px">Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Print Agreement</button></div>`
+   : `<label class="f" for="or-name">Your full name</label><input type="text" id="or-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="or-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="or-sign">Sign Agreement</button>`}</div>`;
+}
+function orSign(){
+  const name = $('#or-name').value.trim(); if (!name){ $('#or-name').focus(); return; }
+  if (!$('#or-ok').checked) return alert('Check the box to show you agree, then sign.');
+  const id = 'GFG-' + Array.from(crypto.getRandomValues(new Uint8Array(4)), b => b.toString(36).padStart(2, '0')).join('').toUpperCase().slice(0, 7);
+  DATA.orient.signed = {v:OR().version, date:today(), name, id};
+  save(); const done = orState().complete;
+  go(TIER === 'field' && done ? 'home' : 'orient');
+  toast(done ? 'Signed. Orientation is complete.' : 'Signed.');
+}
+function orPrintCert(){
+  const s = orState(), D = DATA.orient; if (!s.complete) return;
+  printNow(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(D.signed.name)}</div>
+    <p>has completed <b>Grounded Field Guide&trade; Orientation</b>${orStaffSec() ? ', including the Staff section,' : ''}<br>and has agreed to serve with presence, honesty, and care.</p>
+    <p style="margin-top:6mm">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.<br>Certificate ${esc(D.signed.id || '')}, Orientation version ${OR().version}</p>
+    <div class="pr-sign" style="margin-top:14mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Orientation Certificate');
+}
+function orPrintAgreement(){
+  const A = OR().agreement, D = DATA.orient.signed;
+  printNow(ph('User agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title);
 }
 
 // ---------------- OWNER: Access manager, pricing, playbook ----------------
@@ -881,7 +1063,7 @@ function vOwner(){
   <div class="card"><h3>Make a code</h3>
    <label class="f" for="own-kind">Kind</label><select id="own-kind"><option value="org">Organization (Field)</option><option value="field">Individual (Field)</option><option value="staff">Staff</option><option value="owner">Owner</option></select>
    <label class="f" for="own-label">Name</label><input type="text" id="own-label" placeholder="Organization or person">
-   <label class="f" for="own-ends">Ends</label><input type="date" id="own-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. Field codes don't go out until Orientation is ready.</p>
+   <label class="f" for="own-ends">Ends</label><input type="date" id="own-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. New Field users go through Orientation before anything else opens.</p>
    <button class="btn btn-gold" style="margin-top:12px" data-act="own-make">Make Code</button></div>
   <div class="card"><h3>Rotate a level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Field for the yearly change.</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="own-rot" data-v="field">Rotate Field</button><button class="btn btn-line btn-sm" data-act="own-rot" data-v="staff">Rotate Staff</button><button class="btn btn-line btn-sm" data-act="own-rot" data-v="owner">Rotate Owner</button></div>
@@ -890,7 +1072,7 @@ function vOwner(){
    <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
-  <div class="card"><h3>What Field users see</h3>${FLD ? `<p class="muted">${esc(FLD.welcome.title)}.</p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+  <div class="card"><h3>What Field users see</h3>${FLD ? `<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
 }
 
 // ---------------- SETTINGS ----------------
@@ -999,6 +1181,10 @@ function mergeData(cur, inc){
   const tp = inc.training && inc.training.progress || {};
   Object.entries(tp).forEach(([k,v]) => { if (v && !out.training.progress[k]) out.training.progress[k] = v; });
   if (inc.training && inc.training.agreed && !out.training.agreed) out.training.agreed = inc.training.agreed;
+  const io = inc.orient || {}; out.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, out.orient || {});
+  Object.entries(io.lessons || {}).forEach(([k,v]) => { if (v && !out.orient.lessons[k]) out.orient.lessons[k] = v; });
+  const newer = (a, b) => !a ? b : !b ? a : ((b.v||0) > (a.v||0) || ((b.v||0) === (a.v||0) && (b.date||'') > (a.date||''))) ? b : a;
+  ['last','pass','signed','staff'].forEach(k => { out.orient[k] = newer(out.orient[k], io[k]) || null; });
   if (!out.settings.referrals && inc.settings && inc.settings.referrals) out.settings.referrals = inc.settings.referrals;
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
   return {data:out, stats};
@@ -1059,6 +1245,22 @@ document.addEventListener('click', async e => {
     case 'print-guide': printGuide(G(v)); break;
     case 'print-agreement': printAgreement(); break;
     case 'print-cert': printCert(); break;
+    case 'or-home': go('orient'); break;
+    case 'or-lesson': go('orient', {lesson:+v}); break;
+    case 'or-read': { const L = OR().lessons, i = +v; DATA.orient.lessons[L[i].id] = today(); save();
+      const next = L.findIndex((x, j) => j > i && !DATA.orient.lessons[x.id]);
+      if (next >= 0) go('orient', {lesson:next}); else { go('orient'); toast(orLessonsDone() ? 'All six lessons read. Scenarios are open.' : 'Lesson marked as read.'); } break; }
+    case 'or-staff': go('orient', {staff:1}); break;
+    case 'or-staff-read': DATA.orient.staff = {v: LIB.orientationStaff.version, date: today()}; save(); go('orient'); toast('Staff section done.'); break;
+    case 'or-quiz': go('orient', {quiz: orNewQuiz()}); break;
+    case 'or-pick': V.quiz.ans[V.quiz.order[V.quiz.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=or-next],[data-act=or-finish]'); if (nb) nb.disabled = false; } break;
+    case 'or-next': if (V.quiz.ans[V.quiz.order[V.quiz.i]] === undefined) return; V.quiz.i++; render(); break;
+    case 'or-prev': if (V.quiz.i > 0){ V.quiz.i--; render(); } break;
+    case 'or-finish': orFinish(); break;
+    case 'or-sign': orSign(); break;
+    case 'or-go-sign': go('orient', {sign:1}); break;
+    case 'or-print-cert': orPrintCert(); break;
+    case 'or-print-agree': orPrintAgreement(); break;
     case 'own-hide': V.show = null; render(); break;
     case 'own-show': V.show = v; render(); break;
     case 'own-setup': { const d = ensureDraft(); await relink(d); await persist(); render(); toast('Setup is ready to upload.'); break; }
