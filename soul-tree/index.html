@@ -855,6 +855,18 @@ html.ts-2 main{zoom:1.25;}
 .calm-list a{color:var(--gold);font-weight:700;}
 .calm-first{order:-1;background:var(--bg-deep,#F2ECE0);border-radius:10px;padding:8px 10px;}
 .calm-row{display:flex;justify-content:flex-end;}
+
+/* ===== 2026 care plan library ===== */
+.pm-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.pm-tag{font-size:11px;font-weight:600;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--ink-soft);background:var(--bg);}
+.pm-ev{color:#fff;border-color:transparent;}
+.pm-ev-W{background:#3F6B4A;}.pm-ev-S{background:#5F7D48;}.pm-ev-E{background:#7D6B57;}.pm-ev-T{background:#8B5E1A;}
+.shelf{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;}
+.shelf summary{cursor:pointer;font-weight:700;color:var(--domain-color, var(--gold));}
+.shelf ul{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px;}
+.shelf li{display:flex;flex-direction:column;font-size:15px;}
+.shelf li span{color:var(--ink-soft);font-size:14px;}
+.guide-src{font-size:14px;}
 </style>
 </head>
 <body>
@@ -1579,6 +1591,251 @@ const GUIDES = {
   "story": "Total Bliss"
  }
 };
+/* Soul Tree care plan library, 2026.
+   META: [name] -> [discipline, time, evidence, source url or ''] for every practice.
+   NEW: new practices per part: [name, one-line description].
+   G: Learn more guides for new practices: why, today, build, hard, vary (optional). */
+const EV = { W: 'Well studied', S: 'Some evidence', E: 'Early research', T: 'Rooted in tradition' };
+const DISC = { C: 'Contemplative and prayer', B: 'Body and breath', R: 'Relationships', W: 'Writing and creativity', S: 'Service and generosity', L: 'Study and learning', N: 'Nature', Z: 'Rest and sabbath' };
+const SRC = {
+  awe: 'https://ggia.berkeley.edu/practice/awe_walk',
+  cp: 'https://www.contemplativeoutreach.org/centering-prayer-method/',
+  lectio: 'https://www.contemplativeoutreach.org/lectio-divina-contemplation/',
+  examen: 'https://www.jesuits.org/spirituality/the-ignatian-examen/',
+  sc: 'https://self-compassion.org/',
+  lk: 'https://pubmed.ncbi.nlm.nih.gov/26579061/',
+  tgt: 'https://greatergood.berkeley.edu/article/item/four_great_gratitude_strategies',
+  gl: 'https://ggia.berkeley.edu/practice/gratitude_letter',
+  bps: 'https://www.tandfonline.com/doi/abs/10.1080/17439760.2020.1716052',
+  ex: 'https://bmj.com/content/384/bmj-2023-075847',
+  nat: 'https://www.nature.com/articles/s41598-019-44097-3',
+  sleep: 'https://aasm.org/cdc-publishes-new-estimates-of-u-s-adult-sleep-duration/',
+  val: 'https://www.va.gov/WHOLEHEALTHLIBRARY/docs/Values.pdf',
+  act: 'https://psychwire.com/free-resources/clinical-tools/resource-1gm0b9r/act-made-simple-extra-bits',
+  ew: 'https://www.researchgate.net/publication/349908406_Effects_of_expressive_writing_on_depressive_symptoms-A_meta-analysis',
+  meaning: 'http://www.michaelfsteger.com/?page_id=13',
+  conn: 'https://committoconnect.org/the-surgeon-generals-advisory/',
+  proqol: 'https://proqol.org/'
+};
+const META = {
+  holy: {
+    'Prayer': ['C', '5 min', 'T', ''], 'Centering Prayer': ['C', '20+ min', 'T', SRC.cp], 'Examen': ['C', '10 min', 'T', SRC.examen],
+    'Scripture': ['L', '15 min', 'T', SRC.lectio], 'Awe Walk': ['N', '15 min', 'E', SRC.awe], 'Breath Prayer': ['C', '2 min', 'T', ''],
+    'Lament': ['W', '10 min', 'T', ''], 'Ritual': ['C', '10 min', 'T', ''], 'Worship': ['C', 'Varies', 'T', ''],
+    'Sabbath Hour': ['Z', '60 min', 'T', ''], 'Sit Spot': ['N', '10 min', 'T', ''], 'Mealtime Blessing': ['C', '2 min', 'T', ''],
+    'Spiritual Direction': ['R', '60 min', 'T', ''], 'Teach': ['S', 'Varies', 'T', ''], 'Tithe': ['S', 'Varies', 'T', '']
+  },
+  meaning: {
+    'Journal Often': ['W', '10 min', 'S', ''], 'Create Stuff': ['W', '20+ min', 'E', ''], 'Plan the Future': ['W', '15 min', 'S', SRC.bps],
+    'Get Counseling': ['R', '60 min', 'W', ''], 'Keep Learning': ['L', '20+ min', 'E', ''], 'Write Your Story': ['W', '20+ min', 'E', ''],
+    'Values Sort': ['W', '15 min', 'S', SRC.val], 'Legacy Letter': ['W', '20+ min', 'E', ''], 'Purpose Statement': ['W', '15 min', 'E', SRC.meaning],
+    'Mentor Someone': ['S', 'Varies', 'E', ''], 'Job Crafting': ['L', '10 min', 'E', ''], 'Moral Repair Letter': ['W', '20+ min', 'E', ''],
+    'Stand-For Card': ['W', '10 min', 'E', SRC.act], 'Meaning Walk': ['N', '20+ min', 'E', ''], 'Expressive Writing': ['W', '20+ min', 'S', SRC.ew]
+  },
+  mind: {
+    'Music': ['B', '10 min', 'S', ''], 'Meditation': ['B', '10 min', 'W', ''], 'Playing': ['Z', '20+ min', 'E', ''],
+    'Mindfulness': ['B', '5 min', 'W', ''], 'Reading': ['L', '20+ min', 'E', ''], 'Thinking': ['W', '10 min', 'E', ''],
+    'Self-Compassion Break': ['C', '5 min', 'S', SRC.sc], 'Soothing Touch': ['B', '2 min', 'E', SRC.sc], 'Slow Exhale': ['B', '2 min', 'S', ''],
+    'Body Scan': ['B', '10 min', 'S', ''], 'Leaves on a Stream': ['C', '5 min', 'S', SRC.act], 'Worry Window': ['W', '15 min', 'E', ''],
+    'Kind Voice Letter': ['W', '10 min', 'S', SRC.sc], 'Name It': ['B', '2 min', 'E', ''], 'Micro-Rest': ['Z', '2 min', 'E', SRC.proqol]
+  },
+  community: {
+    'Family': ['R', 'Varies', 'W', SRC.conn], 'Friends': ['R', 'Varies', 'W', SRC.conn], 'Neighbors': ['R', 'Varies', 'S', ''],
+    'Clubs': ['R', 'Varies', 'S', ''], 'Colleagues': ['R', 'Varies', 'S', ''], 'Faith': ['R', 'Varies', 'S', ''],
+    'Loving-Kindness': ['C', '10 min', 'S', SRC.lk], 'Gratitude Letter': ['W', '20+ min', 'E', SRC.gl], 'One Reach-Out a Day': ['R', '2 min', 'E', ''],
+    'Shared Meal': ['R', '60 min', 'E', ''], 'Ask for Help': ['R', '5 min', 'E', ''], 'Active Listening': ['R', '10 min', 'E', ''],
+    'Forgiveness Reflection': ['W', '15 min', 'S', ''], 'Repair a Rupture': ['R', 'Varies', 'E', ''], 'Support Group': ['R', '60 min', 'S', '']
+  },
+  body: {
+    'Breathe': ['B', '2 min', 'S', ''], 'Food': ['B', 'Varies', 'S', ''], 'Sleep': ['Z', 'Nightly', 'W', SRC.sleep],
+    'Medicine': ['B', 'Varies', 'W', ''], 'Movement': ['B', '20+ min', 'W', SRC.ex], 'Chakras': ['C', '10 min', 'T', ''],
+    'Walk or Jog': ['B', '20+ min', 'W', SRC.ex], 'Yoga': ['B', '20+ min', 'W', SRC.ex], 'Strength Training': ['B', '20+ min', 'W', SRC.ex],
+    'Two Hours Outdoors': ['N', 'Weekly', 'S', SRC.nat], 'Stretch Break': ['B', '5 min', 'E', ''], 'Tai Chi': ['B', '20+ min', 'S', ''],
+    'Screen-Free Evening': ['Z', 'Evening', 'E', ''], 'Alcohol-Free Week': ['B', '1 week', 'E', ''], 'Morning Daylight': ['N', '10 min', 'E', '']
+  },
+  hope: {
+    'Volunteer': ['S', 'Varies', 'S', ''], 'Pay It Forward': ['S', '5 min', 'E', ''], 'Be Generous': ['S', 'Varies', 'S', ''],
+    'Provide Care': ['S', 'Varies', 'E', ''], 'Inspire Hope': ['R', 'Varies', 'E', ''], 'Make Peace': ['R', 'Varies', 'E', ''],
+    'Capture the Moment': ['W', '5 min', 'E', ''], 'Three Good Things': ['W', '5 min', 'S', SRC.tgt], 'Best Possible Self': ['W', '20+ min', 'S', SRC.bps],
+    'Hope Map': ['W', '15 min', 'E', ''], 'Savoring Walk': ['N', '10 min', 'E', ''], 'Joy List': ['W', '5 min', 'E', ''],
+    'Tiny Next Step': ['W', '5 min', 'E', ''], 'Growth Reflection': ['W', '15 min', 'E', ''], 'Something to Look Forward To': ['Z', '5 min', 'E', '']
+  }
+};
+const NEW = {
+  holy: [
+    ['Centering Prayer', 'Sit in silence with one sacred word, returning to it whenever your mind wanders.'],
+    ['Examen', 'At day\'s end, look back for where you felt most alive and most drained.'],
+    ['Awe Walk', 'A slow walk looking for something vast, beautiful, or surprising.'],
+    ['Breath Prayer', 'A short phrase prayed on the in-breath and the out-breath.'],
+    ['Lament', 'Tell the sacred honestly what hurts, even your anger. That is prayer too.'],
+    ['Sabbath Hour', 'One hour a week with nothing to produce and nothing to fix.'],
+    ['Sit Spot', 'Return to the same outdoor spot and simply notice what changes.'],
+    ['Mealtime Blessing', 'Pause before eating to give thanks for the food and the hands behind it.'],
+    ['Spiritual Direction', 'Meet with a spiritual director or chaplain to listen for the sacred in your life.']
+  ],
+  meaning: [
+    ['Values Sort', 'Choose the handful of values that matter most to you right now.'],
+    ['Legacy Letter', 'Write the people you love about what you hope they carry forward.'],
+    ['Purpose Statement', 'Draft one or two sentences about what you\'re living for.'],
+    ['Mentor Someone', 'Pass on something you know to someone coming up behind you.'],
+    ['Job Crafting', 'Reshape one part of your work or daily role toward what matters to you.'],
+    ['Moral Repair Letter', 'Write about something that still weighs on your conscience, ideally with a counselor or chaplain.'],
+    ['Stand-For Card', 'Write what you stand for on a small card and keep it with you.'],
+    ['Meaning Walk', 'Walk with one question: what am I living for right now?'],
+    ['Expressive Writing', 'Write your deepest thoughts about a hard experience, 15 minutes a day for a few days.']
+  ],
+  mind: [
+    ['Self-Compassion Break', 'Name the pain, remember you\'re not alone, and offer yourself kindness.'],
+    ['Soothing Touch', 'A hand on your heart or cheek, the way you\'d comfort a friend.'],
+    ['Slow Exhale', 'Breathe out longer than you breathe in, a few times, to settle your body.'],
+    ['Body Scan', 'Move your attention slowly from head to toe, noticing without fixing.'],
+    ['Leaves on a Stream', 'Picture each thought on a leaf floating by, and let it go.'],
+    ['Worry Window', 'Give worries a set 15 minutes a day, and postpone them outside it.'],
+    ['Kind Voice Letter', 'Write to yourself about a struggle, the way a wise friend would.'],
+    ['Name It', 'Put a feeling into one word. Naming it helps it settle.'],
+    ['Micro-Rest', 'Two quiet minutes between tasks or visits, before carrying the next thing.']
+  ],
+  community: [
+    ['Loving-Kindness', 'Silently wish well to yourself, someone you love, and gradually wider.'],
+    ['Gratitude Letter', 'Write a letter to someone you never properly thanked, and consider reading it to them.'],
+    ['One Reach-Out a Day', 'A short text, call, or note to someone each day.'],
+    ['Shared Meal', 'Eat with someone once a week, with phones away.'],
+    ['Ask for Help', 'Ask one person for one specific kind of help.'],
+    ['Active Listening', 'Listen to understand, not to fix, and reflect back what you heard.'],
+    ['Forgiveness Reflection', 'Loosen resentment\'s grip on you, without excusing harm or reopening a door.'],
+    ['Repair a Rupture', 'Take one honest step toward mending a strained relationship, if it\'s safe.'],
+    ['Support Group', 'Join a group of people walking through something similar.']
+  ],
+  body: [
+    ['Walk or Jog', 'Twenty minutes or more, at a pace that feels good.'],
+    ['Yoga', 'Gentle movement and breath, from a class, a video, or your living room floor.'],
+    ['Strength Training', 'Simple strength work, like squats or bands, a few times a week.'],
+    ['Two Hours Outdoors', 'About two hours a week outside, in one visit or many short ones.'],
+    ['Stretch Break', 'Five minutes of gentle stretching, anywhere.'],
+    ['Tai Chi', 'Slow, flowing movements that calm the body and steady balance.'],
+    ['Screen-Free Evening', 'Put screens away an hour before bed.'],
+    ['Alcohol-Free Week', 'Try one week without alcohol, and notice how you feel.'],
+    ['Morning Daylight', 'Ten minutes of morning daylight to steady your body\'s clock.']
+  ],
+  hope: [
+    ['Three Good Things', 'Each night, write three things that went well and why.'],
+    ['Best Possible Self', 'Write about your life going as well as it realistically could.'],
+    ['Hope Map', 'Map a goal, a few paths to it, the obstacles, and what gives you energy.'],
+    ['Savoring Walk', 'A walk where you slow down and soak in every good thing you notice.'],
+    ['Joy List', 'A running list of small things that bring you joy.'],
+    ['Tiny Next Step', 'Name the smallest possible step toward something you hope for, and take it.'],
+    ['Growth Reflection', 'Ask gently what strength a hard season has shown you, if you\'re ready.'],
+    ['Something to Look Forward To', 'Plan one small good thing to look forward to this week.']
+  ]
+};
+const G = {
+  'holy|Centering Prayer': { why: 'Sitting in silence with a single word trains your attention to rest in the sacred instead of chasing every thought. People have practiced it for centuries.', today: 'Choose a short sacred word, like peace, love, or a name for God. Sit comfortably for five minutes, eyes closed. When thoughts come, gently return to the word.', build: 'Work up to 20 minutes, once or twice a day. Same time and place helps it become a home you return to.', hard: 'A wandering mind is not failure. Each gentle return is the practice itself.', vary: 'If God language doesn\'t fit, use a word like stillness, breath, or here.' },
+  'holy|Examen': { why: 'Looking back over your day with gratitude helps you notice where life and love showed up, and where you drifted from them.', today: 'Tonight, take ten minutes. Recall one moment you felt most alive and one you felt most drained. Give thanks for the first, and ask what the second is teaching you.', build: 'Make it a nightly habit, perhaps in bed. Over weeks, patterns will show you what to do more of and less of.', hard: 'If a day felt empty, start with one small thing you\'re thankful for, like warm water or a kind word.', vary: 'This comes from Ignatian spirituality, and it works as a simple reflection without prayer language too.' },
+  'holy|Awe Walk': { why: 'Awe, the feeling of being in the presence of something vast, quiets worry and helps you feel part of something larger. In one study, weekly awe walks lifted joy and lowered daily distress.', today: 'Take a 15-minute walk somewhere with sky, trees, or water. Walk slowly and look for one thing that makes you say wow.', build: 'Walk once a week, in new places or familiar ones seen with fresh eyes. Notice small wonders too: frost, birdsong, light.', hard: 'If you can\'t get outside, look up at the sky from a window, or watch a nature film with full attention.' },
+  'holy|Breath Prayer': { why: 'Short prayers matched to the breath carry the sacred into ordinary moments, and slow breathing calms the body at the same time.', today: 'Choose a phrase with two halves, like "Be still / and know," or "Here I am / held by love." Say the first half breathing in, the second breathing out. Repeat for two minutes.', build: 'Use it at red lights, before hard conversations, or at a bedside.', hard: 'If words feel empty today, simply breathe and let the breath be the prayer.', vary: 'Any two-part phrase works, like "I am / here" or "Let go / let be."' },
+  'holy|Lament': { why: 'Sacred traditions are full of honest complaint. Bringing hurt and anger to the sacred, instead of hiding them, can keep a relationship with the holy alive through hard seasons.', today: 'Write or speak a lament: what hurts, what you\'re angry about, what you wish were different. End with whatever you can honestly say, even "I\'m still here."', build: 'Read a lament psalm or poem, and write your own in its shape.', hard: 'If you fear your anger is wrong, remember that honesty is a form of trust.', vary: 'Without faith language, write a letter to life, or to the universe.' },
+  'holy|Sabbath Hour': { why: 'Rest with no productivity is an ancient rhythm, and it gives the soul room to catch up with the body.', today: 'Choose one hour this week. Put away work, chores, and screens. Do only restful, life-giving things: a walk, a nap, a long meal, music.', build: 'Grow it toward a half day or a full day of rest each week, with a simple opening and closing ritual, like lighting a candle.', hard: 'If an hour feels impossible, start with 15 minutes. Rest is a skill you build.' },
+  'holy|Sit Spot': { why: 'Returning to one place in nature over time helps you notice slow changes and feel rooted in the world around you.', today: 'Find a spot outside, or by a window, where you can sit. Spend ten minutes noticing sounds, light, and small movements.', build: 'Return weekly through the seasons. Keep a line or two in a notebook about what you notice.', hard: 'In Minnesota winters, a window seat counts. So does a warm coat and five minutes.' },
+  'holy|Mealtime Blessing': { why: 'A moment of thanks before eating turns an ordinary meal into a small ritual of gratitude and connection.', today: 'Before your next meal, pause. Give thanks for the food, the earth, and the hands that brought it to you.', build: 'Make it part of shared meals. Let others take turns offering the blessing.', hard: 'If praying aloud feels awkward, a silent breath of thanks is enough.', vary: 'A simple "We\'re grateful for this food and for each other" works for any table.' },
+  'holy|Spiritual Direction': { why: 'A spiritual director or chaplain listens with you for the sacred in your life, without an agenda, which helps you hear what you can\'t hear alone.', today: 'Ask a pastor, chaplain, or local retreat center about spiritual directors near you, including ones who welcome any faith or none.', build: 'Many people meet monthly. Bring whatever is alive or heavy in you.', hard: 'If cost is a barrier, ask about sliding scales. Many directors offer them.' },
+  'meaning|Values Sort': { why: 'Knowing your values gives you a compass for choices, big and small. Values work is at the heart of acceptance and commitment therapy.', today: 'Read a values list and circle ten that matter most. Narrow them to your top three.', build: 'Each week, pick one value and do one small thing that honors it.', hard: 'If you can\'t choose, ask: what makes me angry when it\'s missing? That often points to a value.' },
+  'meaning|Legacy Letter': { why: 'Writing what you hope to pass on clarifies what matters most, and gives the people you love something precious.', today: 'Write a few lines to someone you love about a lesson, a hope, or a blessing you want them to carry.', build: 'Add to it over time. Some people write one for each person they love.', hard: 'If it feels heavy or final, remember a legacy letter is about living, and it can be written at any age.' },
+  'meaning|Purpose Statement': { why: 'A clear sense of purpose is one of the strongest supports for well-being, and naming it makes it easier to live.', today: 'Finish this sentence a few ways: "I\'m here to..." Keep the version that feels most true.', build: 'Read it each morning and let it shape one choice that day.', hard: 'If nothing comes, you may be in a season of searching. That\'s normal and healthy. Try again in a month.' },
+  'meaning|Mentor Someone': { why: 'Giving to the next generation builds meaning and a sense that your life reaches beyond you.', today: 'Think of someone younger or newer who could use what you know. Offer an hour, a coffee, or a phone call.', build: 'Meet regularly, or join a mentoring program through work, a school, or a faith community.', hard: 'If you doubt you have anything to offer, remember that listening well is a gift in itself.' },
+  'meaning|Job Crafting': { why: 'Small changes in how you do your work can make it more meaningful, even when the job itself doesn\'t change.', today: 'Name one task you do that helps someone. Spend ten minutes doing it with that person in mind.', build: 'Shift a little time toward the parts of your work that matter most to you.', hard: 'If work feels meaningless right now, look for meaning in the people beside you.' },
+  'meaning|Moral Repair Letter': { why: 'Moral injury, carrying something that goes against your values, heals slowly through honest telling, making amends where possible, and being heard.', today: 'Write what happened and what you wish had been different. Keep it private.', build: 'Share it with a chaplain, counselor, or trusted person. Consider one act of repair or service.', hard: 'This can stir up deep pain. Go slowly, and please don\'t carry it alone. A chaplain or counselor can walk with you.' },
+  'meaning|Stand-For Card': { why: 'A small reminder of what you stand for helps you act on your values when life gets noisy.', today: 'On a card, write three things you stand for. Keep it in your wallet or on your mirror.', build: 'When a hard choice comes, pull out the card and ask which choice honors it.', hard: 'Your card can change as you grow.' },
+  'meaning|Meaning Walk': { why: 'Walking helps the mind wander toward big questions, and movement lifts mood.', today: 'Walk for 20 minutes with one question: what am I living for right now?', build: 'Walk with a new question each week, and jot down what comes.', hard: 'If no answers come, that\'s fine. The question itself is doing its work.' },
+  'meaning|Expressive Writing': { why: 'Writing honestly about a hard experience can help you make sense of it. Research shows modest, short-term benefits for some people.', today: 'Write for 15 minutes about your deepest thoughts and feelings about something hard. Don\'t worry about spelling or grammar.', build: 'Write three or four days in a row, then stop and see how you feel.', hard: 'It\'s common to feel a bit worse at first. If it becomes overwhelming, stop, and consider writing with a counselor\'s support instead.' },
+  'mind|Self-Compassion Break': { why: 'Treating yourself with the kindness you\'d offer a friend is linked to less anxiety and more resilience. Self-compassion programs show solid benefits in studies.', today: 'When something hurts, say to yourself: "This is hard. Everyone struggles sometimes. May I be kind to myself right now."', build: 'Use it every time you notice your inner critic. It gets more natural with practice.', hard: 'If kindness toward yourself feels strange at first, that\'s common. Keep going gently.' },
+  'mind|Soothing Touch': { why: 'Gentle touch, even your own, can calm the body\'s stress response.', today: 'Place a hand on your heart, or cup your cheek, and breathe slowly for a minute.', build: 'Pair it with the self-compassion break when stress rises.', hard: 'If touch feels uncomfortable, try holding a warm mug or a soft blanket instead.' },
+  'mind|Slow Exhale': { why: 'Breathing out longer than you breathe in tells your nervous system it\'s safe to settle.', today: 'Breathe in for a count of four, out for six. Do it five times.', build: 'Use it before sleep, before hard conversations, or in the car.', hard: 'If counting feels stressful, simply make each breath out a little slower than the last.' },
+  'mind|Body Scan': { why: 'Moving attention through the body helps you notice and release tension, and it can help with sleep.', today: 'Lie down. Slowly move your attention from your head to your toes, noticing each part without trying to change it.', build: 'Try it at bedtime for a week. Guided recordings can help.', hard: 'If attention to the body brings up distress or pain, keep your eyes open, or focus only on your hands and feet.' },
+  'mind|Leaves on a Stream': { why: 'This exercise from acceptance and commitment therapy helps you step back from thoughts instead of getting caught in them.', today: 'Picture a stream with leaves floating by. For five minutes, place each thought on a leaf and watch it drift away.', build: 'Use it when a thought keeps looping, like a worry or a harsh judgment.', hard: 'If you get swept away by a thought, that\'s normal. Just notice, and set it on the next leaf.' },
+  'mind|Worry Window': { why: 'Setting aside a time to worry can shrink how much worry spills into the rest of your day.', today: 'Choose a 15-minute window. When worries come outside it, jot them down and save them for the window.', build: 'During the window, sort worries into ones you can act on and ones you can release.', hard: 'If worries feel urgent, act on what you can, and ask for help with the rest.' },
+  'mind|Kind Voice Letter': { why: 'Writing to yourself in a kind, wise voice helps quiet the inner critic.', today: 'Think of a struggle. Write yourself a short letter as a loving friend would: understanding, honest, and warm.', build: 'Reread it when the critic gets loud.', hard: 'If kind words feel false, start with what you\'d say to someone you love in the same spot.' },
+  'mind|Name It': { why: 'Putting a feeling into words can help it settle. Researchers sometimes call it affect labeling.', today: 'When a strong feeling comes, pause and name it in one word: sad, afraid, angry, lonely, tired.', build: 'Check in with yourself three times a day by naming what you feel.', hard: 'If you\'re not sure what you feel, "a lot" or "mixed" counts.' },
+  'mind|Micro-Rest': { why: 'Short pauses between demands help prevent burnout, especially for caregivers and helping professionals.', today: 'Between two tasks or visits, take two minutes: breathe, stretch, or look out a window.', build: 'Build micro-rests into your day, like after each patient, class, or meeting.', hard: 'If there\'s truly no time, even three slow breaths count.' },
+  'community|Loving-Kindness': { why: 'Wishing others well, silently, is linked to more positive emotions and connection.', today: 'Sit quietly. Wish well to yourself, then someone you love, then someone neutral: "May you be safe, may you be well."', build: 'Slowly widen the circle to someone difficult, and eventually to all people.', hard: 'If wishing a difficult person well feels too hard, stay with people you love for now.' },
+  'community|Gratitude Letter': { why: 'Writing to thank someone meaningfully brought one of the biggest short-term boosts in happiness in early research.', today: 'Write to someone who made a difference in your life and never got a proper thank you. Be specific.', build: 'If you can, read it to them in person or on a call.', hard: 'If the person has died, write it anyway. Read it at their grave, or keep it close.' },
+  'community|One Reach-Out a Day': { why: 'Small, regular contact keeps relationships alive and eases loneliness over time.', today: 'Send one short message to someone: "Thinking of you."', build: 'Keep a list of people to reach out to, and work through it.', hard: 'If reaching out feels scary, start with someone who you know will be glad to hear from you.' },
+  'community|Shared Meal': { why: 'Eating together is one of the oldest ways humans build closeness.', today: 'Invite someone to share a meal this week, even something simple.', build: 'Make it a weekly rhythm with family, friends, or neighbors.', hard: 'If hosting feels like too much, a potluck or coffee counts.' },
+  'community|Ask for Help': { why: 'Accepting support is a strength. It also lets others show they care.', today: 'Name one specific thing you need help with, and ask one person.', build: 'Keep a short list of what others can do for you, so when people offer, you can answer.', hard: 'If asking feels like being a burden, remember how good it feels when you help someone.' },
+  'community|Active Listening': { why: 'Feeling truly heard is one of the deepest human needs, and listening well strengthens every relationship.', today: 'In one conversation today, listen without planning your reply. Reflect back what you heard.', build: 'Ask one more question than usual in your conversations.', hard: 'If you find yourself fixing, pause and ask, "Do you want advice, or just someone to listen?"' },
+  'community|Forgiveness Reflection': { why: 'Letting go of resentment can lift a heavy burden from you. Forgiveness never requires excusing harm or reconnecting with someone unsafe.', today: 'Write about a hurt you carry, and what holding it costs you. Then write what you might release, just for you.', build: 'Forgiveness often happens in layers. Return to this as you\'re ready.', hard: 'If someone hurt you badly, forgiveness can wait. Your safety comes first. A counselor or chaplain can help.' },
+  'community|Repair a Rupture': { why: 'Relationships grow stronger when people repair after hard moments.', today: 'Think of one strained relationship. Consider a small step, like an honest apology or a kind message.', build: 'Repair is a process. Keep taking small steps if it\'s safe and mutual.', hard: 'Repair isn\'t right when a relationship is unsafe. Protect yourself first.' },
+  'community|Support Group': { why: 'Being with people who understand your experience eases loneliness and offers practical wisdom.', today: 'Look for a local or online group for what you\'re walking through: grief, caregiving, recovery, or a diagnosis.', build: 'Try a group three times before deciding if it fits.', hard: 'If groups feel intimidating, start by listening. You don\'t have to share.' },
+  'body|Walk or Jog': { why: 'Walking or jogging showed one of the strongest effects on low mood in a large 2024 review of exercise studies.', today: 'Walk for 20 minutes at a pace that feels good.', build: 'Aim for most days of the week, adding intensity if it feels right.', hard: 'If your body limits you, a short, slow walk still counts. Check with your doctor about what\'s safe for you.' },
+  'body|Yoga': { why: 'Yoga combines movement, breath, and attention, and it showed strong benefits for mood in recent research.', today: 'Try a 15-minute gentle yoga video.', build: 'Practice two or three times a week, or join a class.', hard: 'Choose chair or gentle yoga if you have limits. Stop any pose that hurts.' },
+  'body|Strength Training': { why: 'Strength training supports mood, bones, and independence as we age.', today: 'Do a few squats, wall push-ups, or band exercises.', build: 'Two or three sessions a week, gradually adding challenge.', hard: 'Start light, and ask a professional if you have injuries or health concerns.' },
+  'body|Two Hours Outdoors': { why: 'People who spent about two hours a week in nature reported better health and well-being in a large study.', today: 'Spend 20 minutes outside today, at a park, trail, or even your yard.', build: 'Add it up across the week toward two hours, in whatever pieces work.', hard: 'In bad weather or with limited mobility, a porch, a window, or a garden bed can help.' },
+  'body|Stretch Break': { why: 'Gentle stretching eases tension and reminds your body it\'s cared for.', today: 'Stand up and stretch for five minutes: arms, neck, back, legs.', build: 'Set a reminder to stretch every few hours.', hard: 'Stretch gently. It should never hurt.' },
+  'body|Tai Chi': { why: 'Tai chi\'s slow movements calm the mind and help with balance, especially as we age.', today: 'Try a beginner tai chi video for 15 minutes.', build: 'Practice a few times a week, or find a local class.', hard: 'Tai chi can be done seated if balance is a concern.' },
+  'body|Screen-Free Evening': { why: 'Screens before bed make it harder to fall asleep, and a calmer evening supports rest.', today: 'Put screens away an hour before bed. Read, talk, or stretch instead.', build: 'Charge your phone outside the bedroom.', hard: 'If an hour feels impossible, start with 20 minutes.' },
+  'body|Alcohol-Free Week': { why: 'Taking a break from alcohol lets you notice its effect on your sleep, mood, and stress.', today: 'Choose a week to go alcohol-free, and plan something else for the times you usually drink.', build: 'Notice how you sleep and feel. Let that guide your next choice.', hard: 'If stopping is harder than expected, that\'s important to know. The SAMHSA Helpline, 1-800-662-4357, is free and confidential.' },
+  'body|Morning Daylight': { why: 'Morning light helps set your body\'s clock, which supports sleep and energy.', today: 'Spend ten minutes in morning daylight, outside or by a bright window.', build: 'Make it part of your morning routine.', hard: 'In dark Minnesota winters, the brightest window you have still helps.' },
+  'hope|Three Good Things': { why: 'Writing down three good things and why they happened is one of the most tested gratitude practices.', today: 'Tonight, write three things that went well today and why.', build: 'Keep it up for a week, then see how you feel.', hard: 'On hard days, the good things can be tiny: a warm drink, a kind word.' },
+  'hope|Best Possible Self': { why: 'Imagining a future where things go well lifts mood and optimism, with small but real effects in research.', today: 'Write for 15 minutes about your life a few years from now, going as well as it realistically could.', build: 'Return to it every few weeks and let it guide one small step.', hard: 'If it makes your present feel worse, write about a best possible next month instead.' },
+  'hope|Hope Map': { why: 'Hope grows from having a goal, paths toward it, and the energy to keep going.', today: 'Write one goal. Draw three paths to it, one obstacle for each, and one thing that gives you energy.', build: 'Update your map as paths open or close.', hard: 'If every path feels blocked, ask someone to brainstorm with you.' },
+  'hope|Savoring Walk': { why: 'Slowing down to notice good things strengthens positive feelings.', today: 'Take a ten-minute walk and notice as many good things as you can: a smell, a color, a sound.', build: 'Try it weekly, in different places.', hard: 'If nothing feels good, notice what is neutral and calm.' },
+  'hope|Joy List': { why: 'A list of small joys makes them easier to find again on hard days.', today: 'Write five small things that bring you joy.', build: 'Add to it whenever you notice joy. Read it when you need a lift.', hard: 'If joy feels far away, list things you used to enjoy.' },
+  'hope|Tiny Next Step': { why: 'Small steps build momentum, and momentum builds hope.', today: 'Pick something you hope for. Name the smallest step toward it, and take it today.', build: 'Take one tiny step each day or week.', hard: 'If even a small step feels like too much, make it smaller.' },
+  'hope|Growth Reflection': { why: 'Many people find new strength or meaning after hardship. Noticing it can help, but it\'s never required.', today: 'If you\'re ready, write about one strength a hard season has shown you.', build: 'Return to it as time passes. Growth often shows up later.', hard: 'Not yet is a valid answer. Growth isn\'t owed to anyone, and grief is not a lesson.' },
+  'hope|Something to Look Forward To': { why: 'Having something good ahead of you lifts mood now.', today: 'Plan one small good thing this week: a coffee, a walk, a call.', build: 'Keep one thing on the calendar to look forward to each week.', hard: 'If planning feels hard, ask someone to plan something with you.' }
+};
+const SHELF = {
+  holy: [
+    ['Contemplative Outreach', 'https://www.contemplativeoutreach.org/', 'Centering prayer and lectio divina, with free guides.'],
+    ['The Ignatian Examen', 'https://www.jesuits.org/spirituality/the-ignatian-examen/', 'The five steps of the daily examen.'],
+    ['Awe Walk, Greater Good in Action', 'https://ggia.berkeley.edu/practice/awe_walk', 'A free, research-based awe practice.'],
+    ['Awe, by Dacher Keltner', '', 'A book on the science of wonder.'],
+    ['The Awakened Brain, by Lisa Miller', '', 'A book on spirituality and resilience.'],
+    ['A chaplain or spiritual director', '', 'Ask a local hospital, hospice, or retreat center.']
+  ],
+  meaning: [
+    ['Values handout, VA Whole Health', 'https://www.va.gov/WHOLEHEALTHLIBRARY/docs/Values.pdf', 'A free guide to naming your values.'],
+    ['Free ACT resources, Russ Harris', 'https://psychwire.com/free-resources/clinical-tools/resource-1gm0b9r/act-made-simple-extra-bits', 'Worksheets on values and meaning.'],
+    ['Michael Steger on meaning', 'http://www.michaelfsteger.com/?page_id=13', 'Research on meaning and purpose.'],
+    ["Man's Search for Meaning, by Viktor Frankl", '', 'A classic on meaning through suffering.']
+  ],
+  mind: [
+    ['Self-compassion practices', 'https://self-compassion.org/', 'Free guided practices from Kristin Neff.'],
+    ['Self-Compassion, by Kristin Neff', '', 'A book on being kind to yourself.'],
+    ['ProQOL', 'https://proqol.org/', 'A free self-check for helpers and caregivers.'],
+    ['NAMI Minnesota', 'https://namimn.org/', 'Mental health education and support groups.']
+  ],
+  community: [
+    ['Commit to Connect', 'https://committoconnect.org/the-surgeon-generals-advisory/', 'Resources on loneliness and connection.'],
+    ['NAMI Minnesota support groups', 'https://namimn.org/', 'Free groups for people and families.'],
+    ['Minnesota 211', 'https://www.211unitedway.org/', 'Call 211 to find local groups and help.'],
+    ['National Domestic Violence Hotline', 'https://www.thehotline.org/', '1-800-799-7233, or text START to 88788.']
+  ],
+  body: [
+    ['Sleep guidance, CDC and AASM', 'https://aasm.org/cdc-publishes-new-estimates-of-u-s-adult-sleep-duration/', 'How much sleep adults need.'],
+    ['Exercise and mood, BMJ 2024', 'https://bmj.com/content/384/bmj-2023-075847', 'The large review behind the movement practices.'],
+    ['Two hours in nature', 'https://www.nature.com/articles/s41598-019-44097-3', 'The study behind the two-hours-outdoors goal.'],
+    ['SAMHSA National Helpline', 'https://www.samhsa.gov/find-help/helplines/national-helpline', '1-800-662-4357, free and confidential.']
+  ],
+  hope: [
+    ['Greater Good in Action', 'https://ggia.berkeley.edu/', 'Free gratitude, hope, and savoring practices.'],
+    ['Gratitude Letter', 'https://ggia.berkeley.edu/practice/gratitude_letter', 'Step-by-step instructions.'],
+    ['988 Suicide and Crisis Lifeline', 'https://988lifeline.org/', 'Call or text 988, any time.']
+  ]
+};
+
+Object.assign(GUIDES, G);
+DOMAIN_DEFS.forEach(d => {
+  const have = new Set(d.restore.map(r => r[0]));
+  (NEW[d.key] || []).forEach(r => { if (!have.has(r[0])) d.restore.push(r); });
+});
+function practiceMeta(key, name) {
+  const m = (META[key] || {})[name]; if (!m) return '';
+  return `<span class="pm-tags"><span class="pm-tag">${DISC[m[0]]}</span><span class="pm-tag">${m[1]}</span><span class="pm-tag pm-ev pm-ev-${m[2]}">${EV[m[2]]}</span></span>`;
+}
+function shelfHtml(key) {
+  const list = SHELF[key] || []; if (!list.length) return '';
+  return `<details class="shelf"><summary>Resource shelf</summary><ul>${list.map(r => `<li>${r[1] ? `<a class="text-link" href="${r[1]}" target="_blank" rel="noopener">${r[0]}</a>` : `<strong>${r[0]}</strong>`}<span>${r[2]}</span></li>`).join('')}</ul></details>`;
+}
 
 function guideHtml(key, name, withStory) {
   const g = GUIDES[key + '|' + name];
@@ -1587,6 +1844,9 @@ function guideHtml(key, name, withStory) {
     <p><strong>Try it today.</strong> ${g.today}</p>
     <p><strong>Build it.</strong> ${g.build}</p>
     <p><strong>If it's hard.</strong> ${g.hard}</p>`;
+  if (g.vary) s += `<p><strong>For different beliefs.</strong> ${g.vary}</p>`;
+  const m = (META[key] || {})[name];
+  if (m && m[3]) s += `<p class="guide-src"><a class="text-link" href="${m[3]}" target="_blank" rel="noopener">Learn more at the source</a></p>`;
   if (false && withStory && g.story) {
     const st = findStory(g.story);
     if (st) s += `<p><strong>From Grounded.</strong> <a class="text-link" href="${st.url || GROUNDED_URL}" target="_blank" rel="noopener">${st.title}</a></p>`;
@@ -2159,13 +2419,14 @@ function renderCarePlanBuilder(mode) {
           <div class="practice-item">
             <label class="practice-option">
               <input type="checkbox" name="cp-${mode}-${d.key}" value="${r[0]}" onchange="enforcePracticeLimit(this,'${mode}','${d.key}')">
-              <span class="practice-option-text"><strong>${r[0]}.</strong> ${r[1]}</span>
+              <span class="practice-option-text"><strong>${r[0]}.</strong> ${r[1]}${practiceMeta(d.key, r[0])}</span>
             </label>
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0], mode === 'client')}</div>
           </div>`).join('')}
-        <div class="practice-limit-note">Select up to 3. Or write your own below.</div>
+        <div class="practice-limit-note">Choose up to 3, or write your own below. Tap "How to do this" on any practice to learn more.</div>
         <input type="text" class="practice-custom" id="cp-${mode}-${d.key}-custom" aria-label="${d.part} custom practice" placeholder="Your own practice or next step...">
+        ${shelfHtml(d.key)}
       </div>
     </div>`).join('');
   document.getElementById(generateRowId).style.display = 'flex';
