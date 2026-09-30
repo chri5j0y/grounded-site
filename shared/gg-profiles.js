@@ -21,7 +21,7 @@
      GGP.active()                  the unlocked profile, or null
      GGP.openIds()                 ids you can read now (the active one, plus
                                    kids a grown-up can open)
-     GGP.data(id, 'garden')        that tool's saved object (edit it, then save)
+     GGP.data(id, 'grove')         that tool's saved object (edit it, then save)
      GGP.save(id)                  lock and store it again
      GGP.shared(id) / setShared(id, obj)
      GGP.require({ reason, age })  promise: true once someone is unlocked
@@ -36,7 +36,7 @@
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
     { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Soul Tree', href: '/soul-tree/' },
-    { id: 'heartwood', name: 'High school', who: 'Grades 9 to 12', tool: 'Tending the Garden', href: '/garden/' },
+    { id: 'heartwood', name: 'High school', who: 'Grades 9 to 12', tool: 'The Grove', href: '/grove/' },
     { id: 'sapling', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Sapling', href: '/sapling/' },
     { id: 'sprout', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Sprout', href: '/sprout/' }
   ];
@@ -84,8 +84,10 @@
   function readVault(id, raw) {
     var box = null; try { box = JSON.parse(localStorage.getItem(BOX + id)); } catch (e) {}
     if (!box) return Promise.resolve(blankVault());
-    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return Object.assign(blankVault(), JSON.parse(dec.decode(b))); });
+    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameGarden(Object.assign(blankVault(), JSON.parse(dec.decode(b)))); });
   }
+  // The old garden tool is now The Grove. A saved garden moves to the new key once.
+  function renameGarden(v) { if (v.garden && !v.grove) v.grove = v.garden; delete v.garden; return v; }
   function writeVault(id, raw, data) {
     return rawKey(raw).then(function (k) { return seal(k, enc.encode(JSON.stringify(data))); }).then(function (box) { localStorage.setItem(BOX + id, JSON.stringify(box)); });
   }
@@ -757,7 +759,7 @@
     if (p) {
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
-      html += link('/garden/', 'My garden');
+      html += link('/grove/', 'My grove');
       if (p.age !== 'heartwood') html += link(a.href, 'My ' + a.tool + ' check-in');
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage my profile');
@@ -766,7 +768,7 @@
       html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacySoulTree().length;
-      html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, garden, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
+      html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
       if (n) html += item('open', 'Open a profile');
       html += item('create', 'Create a profile') + item('restore', 'Restore a backup') + link('/privacy.html#profiles', 'How profiles work');
     }
@@ -863,11 +865,11 @@
     var p = cur && getP(cur.id);
     if (!isHome) return;
     if (!p) { if (box) box.remove(); return; }
-    var v = vaultNow(), chips = [], g = v.garden && v.garden.self;
+    var v = vaultNow(), chips = [], g = v.grove && v.grove.self;
     if (g && g.start) {
       var sd = g.start.split('-').map(Number), days = Math.floor((new Date().setHours(0, 0, 0, 0) - new Date(sd[0], sd[1] - 1, sd[2]).getTime()) / 864e5);
-      chips.push(['/garden/', days < 0 ? 'Your garden starts soon' : days >= 84 ? 'Your garden has bloomed' : 'Week ' + (Math.floor(days / 7) + 1) + ' of your garden']);
-    } else chips.push(['/garden/', 'Plant your garden']);
+      chips.push(['/grove/', days < 0 ? 'Your tree starts growing soon' : days >= 84 ? 'Your tree is in full bloom' : 'Week ' + (Math.floor(days / 7) + 1) + ' in The Grove']);
+    } else chips.push(['/grove/', 'Tend Your Grove']);
     var h = (v.soulTree && v.soulTree.history) || [];
     if (h.length) { var last = h[h.length - 1]; chips.push(['/soul-tree/', 'Last Soul Tree checkup: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
     else if (p.age !== 'heartwood') { var a = AGE[p.age]; chips.push([a.href, 'Take a ' + a.tool + ' check-in']); }
@@ -892,9 +894,9 @@
     data: function (id, tool) { id = id || (cur && cur.id); if (!open[id]) return null; var d = open[id].data; if (!tool) return d; if (!d[tool] || typeof d[tool] !== 'object') d[tool] = {}; return d[tool]; },
     setData: function (id, tool, obj) { id = id || (cur && cur.id); if (!open[id]) return false; open[id].data[tool] = obj; return true; },
     save: save,
-    shared: function (id) { var p = getP(id); return p ? (p.shared || {}) : {}; },
+    shared: function (id) { var p = getP(id); if (!p) return {}; var s = p.shared || {}; if (s.garden && !s.grove) s = Object.assign({}, s, { grove: s.garden }); return s; },
     setAvatar: function (id, v) { var p = getP(id); if (!p || !open[id]) return false; p.avatar = v || ''; putP(p); paintAll(); return true; },
-    setShared: function (id, obj) { var p = getP(id); if (!p || !open[id]) return false; p.shared = Object.assign(p.shared || {}, obj); putP(p); return true; },
+    setShared: function (id, obj) { var p = getP(id); if (!p || !open[id]) return false; p.shared = Object.assign(p.shared || {}, obj); delete p.shared.garden; putP(p); return true; },
     on: function (fn) { subs.push(fn); }, off: function (fn) { subs = subs.filter(function (x) { return x !== fn; }); },
     lock: lock, openDialog: openDialog, createDialog: createDialog, manage: manage, backup: backup, restore: restore, toast: toast,
     require: function (opt) {

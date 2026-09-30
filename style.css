@@ -138,7 +138,7 @@ h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:29px;line-he
 .tool-art{text-align:center;}
 .tool-tree{width:100%;max-width:200px;height:auto;}
 .tool .btn{margin-top:16px;}
-.garden-art{width:150px;height:150px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:var(--bg-deep);color:var(--sage);}
+.grove-art{width:150px;height:150px;border-radius:28px;margin:0 auto;overflow:hidden;}
 
 /* ---------- ABOUT ---------- */
 .about{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:center;}
@@ -448,9 +448,10 @@ section:nth-of-type(even):not(.news-band){background:var(--alt);}
 a.tool-mini:hover{border-color:var(--gold);}
 .tool-mini.soon{opacity:.75;}
 .tool-soon{opacity:.85;}
-.sapling-art,.heartwood-art{width:180px;height:180px;border-radius:24px;display:grid;place-items:center;}
+.sapling-art,.heartwood-art,.oldgrowth-art{width:180px;height:180px;border-radius:24px;display:grid;place-items:center;}
 .sapling-art{background:#1F6F74;}
 .heartwood-art{background:#F3E1D8;}
+.oldgrowth-art{background:#ECE6DE;}
 .urgent-line{font-weight:600;}
 .contact-email,.contact-sub{margin:14px 0 0;font-size:17px;color:var(--ink-soft);}
 .call-text{margin:14px 0 0;font-size:17px;}

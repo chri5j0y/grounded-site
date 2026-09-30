@@ -9,9 +9,9 @@
    GGCare.isChecked(who, practiceName, date)   true if done in any tool
    GGCare.days(who)                             dates with any check-off, oldest first
    GGCare.daysTended(who)                       how many of those dates
-   GGCare.send({from, who, name, age, answers}) hand check-in answers to Garden
+   GGCare.send({from, who, name, age, answers}) hand check-in answers to The Grove
                                                 who is a profile id that is open now
-                                                answers use Garden ids: {"hope.3": 4}
+                                                answers use Grove strand ids: {"hope.3": 4}
                                                 returns true once it is locked away
    GGCare.inbox(who)                            recent handoffs, newest first
                                                 (empty unless that profile is open)

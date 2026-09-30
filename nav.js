@@ -18,6 +18,8 @@
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
     sapling: '<svg viewBox="4 -5 102 81"><circle cx="55" cy="34" r="27" fill="#F2B33D"/><path d="M10 72Q55 50 100 72Q55 62 10 72Z" fill="#4DB36E"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 42 55 14" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M43 36.5C32 36.5 27 29 29 21.5C37 21.5 43 27.5 43 36.5Z" fill="#7ED3A0" stroke="#123F2E" stroke-width="2"/><path d="M67 31.5C76 30.8 80 23.4 79 16C71 16 67 22 67 31.5Z" fill="#2F9E6B" stroke="#123F2E" stroke-width="2"/><circle cx="55" cy="14" r="6" fill="#FF6B6B"/></svg>',
+    grove: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F3325" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/></svg>',
+    oldgrowth: '<svg viewBox="0 0 24 24" fill="none" stroke="#7A6A58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21c.6-4 .8-8 .6-12M14 21c-.4-4-.2-7 1-10"/><path d="M10.6 9L6 5M11 11L7.5 10M15 11l3.5-4M16 9.5l3 .5"/><circle cx="6" cy="5" r="1.2"/><circle cx="18.5" cy="7" r="1.2"/><path d="M4 21h16"/></svg>',
     heartwood: '<svg viewBox="0 0 24 24" fill="none" stroke="#6B2E22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
@@ -26,10 +28,11 @@
       { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: HOME + '/sprout/', icon: ic.sprout, bg: '#D8F3FF' },
       { id: 'sapling', title: 'Sapling', desc: 'A checkup for grades 6 to 8', href: HOME + '/sapling/', icon: ic.sapling, bg: '#DDF0EC' },
       { id: 'heartwood', title: 'Heartwood', desc: 'For grades 9 to 12', icon: ic.heartwood, bg: '#F3E1D8', soon: true },
-      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part checkup for adults', href: HOME + '/soul-tree/', icon: ic.tree, bg: '#F1E6CC' }
+      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part checkup for adults', href: HOME + '/soul-tree/', icon: ic.tree, bg: '#F1E6CC' },
+      { id: 'oldgrowth', title: 'Old Growth', desc: 'For the last season of life', icon: ic.oldgrowth, bg: '#ECE6DE', soon: true }
     ] },
     { name: 'Practice', items: [
-      { id: 'garden', title: 'Tending the Garden', desc: 'A 12-week practice where every checkup takes root', href: HOME + '/garden/', icon: ic.leaf, bg: '#E3EFD6' }
+      { id: 'grove', title: 'The Grove', desc: 'Daily practice for every tree, all ages and stages', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
     ] },
     { name: 'Hard Talks', items: [
       { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/sprout/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
@@ -48,7 +51,7 @@
     if (p.indexOf('/soul-tree') === 0 || h.indexOf('soultree.') === 0) return life ? 'lc-adult' : 'soultree';
     if (p.indexOf('/sprout') === 0 || h.indexOf('sprout.') === 0) return life ? 'lc-kids' : 'sprout';
     if (p.indexOf('/sapling') === 0 || h.indexOf('sapling.') === 0) return life ? 'lc-ms' : 'sapling';
-    if (p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'garden';
+    if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     return '';
   }

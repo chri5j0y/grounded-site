@@ -1,4 +1,4 @@
-/* Grounded read-aloud engine, shared by Stories, Soul Tree, and Tending the Garden.
+/* Grounded read-aloud engine, shared by Stories, Soul Tree, and The Grove.
    Picks the most natural voice on each device (quality first, with a gentle preference for a
    male or female voice), lets people choose a voice, and plays a recorded audio file when one exists. */
 (function () {
