@@ -40,6 +40,16 @@ document.querySelectorAll('.preview-btn').forEach(btn => {
   });
 });
 
+// A link to one story (stories.html#story-birth-plan) opens its preview
+(function(){
+  const id = decodeURIComponent(location.hash || '').slice(1);
+  if (!/^story-/.test(id)) return;
+  const card = document.getElementById(id); if (!card) return;
+  const btn = card.querySelector('.preview-btn');
+  if (btn && btn.getAttribute('aria-expanded') !== 'true') btn.click();
+  setTimeout(() => card.scrollIntoView(), 0);
+})();
+
 document.querySelectorAll('.year').forEach(el => { el.textContent = new Date().getFullYear(); });
 
 // CALL OR TEXT: when your local number is ready, type it between the quotes, for example '320-555-0123'.

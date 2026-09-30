@@ -24,7 +24,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="/fonts/fonts.css">
-<link rel="stylesheet" href="style.css?v=20261001">
+<link rel="stylesheet" href="style.css?v=20261002">
 <style>
 /* Why Grounded exists */
 .why-story{max-width:760px;}
@@ -280,6 +280,14 @@ body.bro-open{overflow:hidden;}
     <div class="eyebrow">Tools</div>
     <h2>Tools for life's thresholds.</h2>
     <p class="lead">Free tools built from real chaplain work, for every age and stage. They help people build spiritual and emotional resilience, so when life gets hard, there is something to hold onto. Free. No account. We never collect your answers. They are not therapy or medical care.</p>
+    <form class="site-search" id="site-search" role="search" autocomplete="off">
+      <label class="ss-label" for="ss-q">Find help fast</label>
+      <p class="ss-hint">Hard talks, daily practices, tools, and stories, for every age. Your search stays on your device.</p>
+      <div class="ss-field"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="ss-q" type="search" placeholder="Try: vaping, a meltdown, grief" enterkeyhint="search" spellcheck="false"></div>
+      <div class="ss-try" role="group" aria-label="Try a search"><button type="button" data-try="vaping">Vaping</button><button type="button" data-try="bullying">Bullying</button><button type="button" data-try="meltdown">A meltdown</button><button type="button" data-try="someone died">Someone died</button><button type="button" data-try="lockdown">Lockdown drills</button><button type="button" data-try="can't sleep">Can't sleep</button></div>
+      <p class="ss-status" id="ss-status" aria-live="polite"></p>
+      <div id="ss-results"></div>
+    </form>
     <h3 class="tool-group">Check-ins</h3>
     <p class="tool-group-sub">A checkup for every age. Each one shows where someone is right now, and each one flows into The Grove.</p>
     <div class="grid-1">
@@ -433,6 +441,7 @@ body.bro-open{overflow:hidden;}
   <p class="copyright">&copy; <span class="year"></span> Chris Joy. All rights reserved. Grow With Grounded&trade;, Sprout&trade;, Sapling&trade;, Heartwood&trade;, Soul Tree&trade;, The Grove&trade;, and Grounded&trade; are trademarks of Chris Joy.</p>
 </div></footer>
 <script src="site.js"></script>
+<script src="search.js?v=20261002" defer></script>
 <script src="nav.js" defer></script>
 </body>
 </html>

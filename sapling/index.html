@@ -1619,8 +1619,15 @@ function renderGuide(opts){
 const yr = $('copyright-year'); if (yr) yr.textContent = new Date().getFullYear();
 renderHome();
 if (window.GGP){ GGP.on(() => saplingRefresh()); GGP.ready.then(() => saplingRefresh()); }
-if (/^#(life|talk)/.test(location.hash)) go('life');
-window.addEventListener('hashchange', () => { if (/^#(life|talk)/.test(location.hash)) go('life'); });
+/* Deep links: #life opens the guides, #talk=topic opens one guide */
+function lifeFromHash(){
+  const h = decodeURIComponent(location.hash || '');
+  if (!/^#(life|talk)/.test(h)) return;
+  const id = h.startsWith('#talk=') ? h.slice(6) : null;
+  if (id && guidesData().groups.some(g => g.topics.some(t => t.id === id))) go('guide', {id}); else go('life');
+}
+lifeFromHash();
+window.addEventListener('hashchange', lifeFromHash);
 
 </script>
 <script src="https://growwithgrounded.com/read.js" defer></script>

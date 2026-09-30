@@ -1791,7 +1791,17 @@ $('#size-btn').addEventListener('click', () => { S.scale = S.scale === 1 ? 1.12 
 $('#menu-btn').addEventListener('click', () => { const open = $('#site-menu').classList.toggle('open'); $('#menu-btn').setAttribute('aria-expanded', open); });
 $('#hero-cta').addEventListener('click', () => { S.mode = 'self'; S.tab = 'today'; render(); $('#app').scrollIntoView({behavior:'smooth'}); });
 setScale(); render();
-if (window.GGP){ GGP.on(groveSync); GGP.ready.then(() => groveSync('ready')); }
+/* Deep link from the site-wide search: #library opens the Library, #library=words searches it */
+function libFromHash(){
+  const h = decodeURIComponent(location.hash || '');
+  if (!/^#library(=|$)/.test(h)) return;
+  LIB = { q: h.startsWith('#library=') ? h.slice(9) : '', part:'all', busy:false };
+  S.mode = 'self'; S.tab = 'library'; render();
+  const a = $('#app'); if (a) a.scrollIntoView();
+}
+libFromHash();
+window.addEventListener('hashchange', libFromHash);
+if (window.GGP){ GGP.on(groveSync); GGP.ready.then(() => { groveSync('ready'); libFromHash(); }); }
 
 </script>
 <script>
