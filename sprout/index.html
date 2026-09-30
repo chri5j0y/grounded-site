@@ -2406,6 +2406,25 @@ function thenNowHTML(prev, cur, name) {
     </div>
     <ul class="tn-lines">${lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`;
 }
+/* ---------- send to the garden ----------
+   Sprout is for checking in. Tending the Garden is for daily practice.
+   Each part's weather goes to one matching Garden question, inside the child's
+   own locked profile. Sun, cloud, rain -> 5, 3, 1 (Garden's kid scale). */
+const SPROUT_TO_GARDEN = { holy: 'spirit.6', meaning: 'create.2', mind: 'mind.0', community: 'connect.1', body: 'body.2', hope: 'hope.0' };
+function sproutGardenAns(ans) { const v = { sun: 5, cloud: 3, rain: 1 }, out = {}; PARTS.forEach(p => { const a = (ans || {})[p.key]; if (a && v[a.w]) out[SPROUT_TO_GARDEN[p.key]] = v[a.w]; }); return out; }
+function gardenKid() { const k = loadKids()[kidId(S.name)]; return k && k._pid && window.GGP && window.GGCare && GGP.isOpen(k._pid) ? k : null; }
+function gardenBtnHTML(rec) {
+  const k = gardenKid(); if (!k || !Object.keys(sproutGardenAns(rec.answers)).length) return '';
+  const label = S.mode === 'grown' ? `Send to ${esc(k.name)}'s garden` : 'Send to my garden';
+  return `<button class="soft-btn" id="garden-send" data-rec="${esc(rec.id)}" onclick="sendSproutGarden()">${label}</button>`;
+}
+function sendSproutGarden() {
+  const k = gardenKid(), btn = $('garden-send'); if (!k || !btn) return;
+  const rec = (k.checkups || []).find(c => c.id === btn.dataset.rec); if (!rec) return;
+  if (!GGCare.send({ from: 'sprout', who: k._pid, name: k.name, age: 'sprout', answers: sproutGardenAns(rec.answers) })) { toast('Open the profile first, then send again.'); return; }
+  btn.outerHTML = `<a class="soft-btn" href="/garden/?who=${encodeURIComponent(k._pid)}">Open ${esc(k.name)}'s garden</a>`;
+  toast(`Sent to ${k.name}'s garden.`);
+}
 function renderResults(rec, lastKey) {
   const info = concernInfo(rec.answers, rec.grade);
   const name = S.name;
@@ -2436,6 +2455,7 @@ function renderResults(rec, lastKey) {
         <div class="action-row">
           <button class="big-btn" onclick="openPlan(false)">Make my care plan</button>
           <button class="soft-btn" onclick="openTree(kidId(S.name), 'today')">Go to my tree</button>
+          ${gardenBtnHTML(rec)}
           ${S.mode === 'grown' ? '<button class="soft-btn" onclick="nextChild()">Start with the next child</button>' : ''}
         </div>
       </div>
@@ -2749,6 +2769,7 @@ function tapDo(ev, actId) {
   plan.log[day] = on ? log.concat(actId) : log.filter(x => x !== actId);
   if (!plan.log[day].length) delete plan.log[day];
   saveKids(kids);
+  if (kid._pid && window.GGCare) { const act = ACTIVITIES.find(a => a.id === actId); GGCare.check(kid._pid, act ? act.title : actId, day, on); }
   const btn = document.querySelector(`[data-do="${actId}"]`);
   if (btn) btn.setAttribute('aria-pressed', on);
   const total = plan.acts.length;

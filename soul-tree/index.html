@@ -2595,7 +2595,7 @@ function calculateResults(mode) {
     <div class="btn-row">
       <button class="btn btn-primary" onclick="showView('${prefix}-careplan', document.querySelectorAll('#${isClient ? 'client' : 'practitioner'}-nav .nav-btn')[3])">Build ${isClient ? 'My' : 'the'} Care Plan</button>
     </div>
-    ${isClient ? '<div id="client-save-box"></div>' + inviteHtml(total) : ''}`;
+    ${isClient ? '<div id="client-save-box"></div><div id="client-garden-box"></div>' + inviteHtml(total) : ''}`;
 
   const goToCarePlanPart = key => {
     showView(`${prefix}-careplan`, document.querySelectorAll(`#${isClient ? 'client' : 'practitioner'}-nav .nav-btn`)[3]);
@@ -2607,11 +2607,12 @@ function calculateResults(mode) {
     document.getElementById('client-results-content').innerHTML = html;
     window.lastClientScores = scores;
     window.lastClientReflections = reflections;
+    window.stGardenAns = stGardenFrom(); window.stGardenSent = false;
     window.currentClientEntry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], scores, reflections, total, carePlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
     showView('client-results', document.querySelectorAll('#client-nav .nav-btn')[2]);
     renderCarePlanBuilder('client');
     if (PROF) { const c = JSON.parse(JSON.stringify(currentClientEntry)); personalHistory.push(c); sortEntries(personalHistory); profPersist(); }
-    renderSaveBox();
+    renderSaveBox(); renderGardenBox();
     renderProgress();
   } else {
     document.getElementById('prac-results-content').innerHTML = html;
@@ -2950,7 +2951,7 @@ function profSync() {
     window.personalHistory = []; personalHistory = window.personalHistory;
     window.personalFileLoaded = false; window.currentClientEntry = null;
   }
-  renderProfileBar(); renderSaveBox(); renderProgress();
+  renderProfileBar(); renderSaveBox(); renderGardenBox(); renderProgress();
 }
 async function profPersist() {
   if (!PROF || !window.GGP) return;
@@ -3043,6 +3044,47 @@ function loadPersonalFile(input) {
     }
   };
   reader.readAsText(file);
+}
+
+// =====================================================================
+// SEND TO MY GARDEN
+// Soul Tree is for checking in. Tending the Garden is for daily practice.
+// Matching answers go to Garden inside the person's own locked profile.
+// Map: Soul Tree part.question index -> Garden bed.question index. Both ask about
+// the past two weeks. Rarely, Sometimes, Often, Almost always -> 2, 3, 4, 5.
+// "Not sure" and context-only questions are never sent.
+// =====================================================================
+const ST_TO_GARDEN = {
+  'holy.0': 'spirit.1', 'holy.1': 'spirit.0', 'holy.2': 'spirit.5', 'holy.6': 'spirit.6', 'holy.7': 'spirit.3',
+  'meaning.0': 'create.2',
+  'mind.0': 'mind.5', 'mind.2': 'mind.3', 'mind.3': 'mind.2', 'mind.4': 'mind.0', 'mind.5': 'mind.6',
+  'community.0': 'connect.3', 'community.1': 'connect.2', 'community.2': 'connect.7', 'community.4': 'connect.5', 'community.6': 'connect.6',
+  'body.0': 'rest.0', 'body.1': 'body.0', 'body.2': 'nourish.6', 'body.6': 'rest.3', 'body.7': 'body.3', 'body.8': 'body.5',
+  'hope.0': 'hope.6', 'hope.1': 'hope.4', 'hope.3': 'hope.1', 'hope.4': 'hope.2'
+};
+const ST_QUICK_TO_GARDEN = { holy: 'spirit.1', meaning: 'create.2', mind: 'mind.5', community: 'connect.1', body: 'body.5', hope: 'hope.1' };
+function stGardenFrom() {
+  const out = {}, val = a => { const o = Q_OPTS.find(x => x[0] === a); return o && o[2] !== null ? o[2] + 2 : null; };
+  if (ST_QUICK) Object.keys(ST_QUICK_TO_GARDEN).forEach(k => { const v = val((ST_ANS['quick_' + k] || {})[0]); if (v) out[ST_QUICK_TO_GARDEN[k]] = v; });
+  else Object.keys(ST_TO_GARDEN).forEach(k => { const [d, i] = k.split('.'); const v = val((ST_ANS[d] || {})[i]); if (v) out[ST_TO_GARDEN[k]] = v; });
+  return out;
+}
+function renderGardenBox() {
+  const box = document.getElementById('client-garden-box'); if (!box) return;
+  const ans = window.stGardenAns || {}, n = Object.keys(ans).length;
+  if (!n || !window.GGCare) { box.innerHTML = ''; return; }
+  if (window.stGardenSent) {
+    box.innerHTML = `<div class="save-box"><div class="save-box-title">Sent to your garden</div><p>${n} matching answer${n !== 1 ? 's are' : ' is'} waiting in Tending the Garden, locked in your profile. Garden fills them in and you finish the rest.</p><div class="btn-row"><a class="btn btn-primary" href="/garden/">Open my garden</a></div></div>`;
+    return;
+  }
+  box.innerHTML = `<div class="save-box"><div class="save-box-title">Tend it every day in the Garden</div><p>Soul Tree is for checking in. Tending the Garden turns what you noticed into small daily practices. Send your ${n} matching answer${n !== 1 ? 's' : ''} there, locked in your profile the whole way.</p><div class="btn-row"><button class="btn btn-primary" onclick="sendToGarden()">Send to my garden</button></div></div>`;
+}
+async function sendToGarden() {
+  if (!window.GGP || !window.GGCare) return;
+  if (!GGP.active()) { const ok = await GGP.require({ age: 'adult', reason: 'Your answers travel to your garden inside your own profile, locked with a passcode only you know.' }); if (!ok) return; }
+  const a = GGP.active(); if (!a) return;
+  if (GGCare.send({ from: 'soul-tree', who: a.id, name: a.name, age: a.age, answers: window.stGardenAns || {} })) { window.stGardenSent = true; renderGardenBox(); showToast('Sent to your garden.'); }
+  else showToast('Open your profile first, then send again.');
 }
 
 function renderSaveBox() {

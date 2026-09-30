@@ -130,6 +130,7 @@ h3{font-size:calc(28px * var(--scale));}
 
 /* ---------- MODE + TABS ---------- */
 .mode-row{display:flex;justify-content:center;margin:34px 0 18px;}
+.mode-row[hidden]{display:none;}
 .seg{display:inline-flex;background:var(--bg-deep);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;}
 .seg button{white-space:nowrap;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;font-size:calc(15px * var(--scale));font-weight:700;border:0;background:transparent;border-radius:999px;padding:10px 20px;cursor:pointer;color:var(--ink-soft);}
 .seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow);}
@@ -346,6 +347,20 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .person h3{margin-bottom:4px;}
 .bed-dots{display:flex;gap:6px;margin-top:10px;}
 .bed-dots i{width:14px;height:14px;border-radius:50%;background:var(--bed);}
+/* ---------- family ---------- */
+.fam-list{display:grid;gap:16px;}
+.fam-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;align-items:start;}
+.fam-pic{grid-row:span 2;line-height:0;}
+.fam-row h3{font-size:calc(25px * var(--scale));margin:0;}
+.fam-meta{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));color:var(--ink-soft);margin:2px 0 0;}
+.fam-stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.fam-row .bed-dots{margin-top:12px;flex-wrap:wrap;}
+.fam-act{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;}
+.fam-alert{grid-column:1/-1;border-radius:14px;padding:16px 18px;margin-top:12px;color:#FFF8EC;background:linear-gradient(135deg,#6E3A2C,#8B4A36);font-family:'Barlow',sans-serif;font-size:calc(16px * var(--scale));line-height:1.55;}
+.fam-alert .tools-row{justify-content:flex-start;margin-top:10px;}
+.fam-strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:14px 18px;}
+.fam-strip p{flex:1 1 200px;margin:0;font-family:'Barlow',sans-serif;font-size:calc(16px * var(--scale));}
+@media (max-width:420px){ .fam-row{grid-template-columns:minmax(0,1fr);} .fam-pic{grid-row:auto;} }
 .log-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
 .log-day{font-family:'Barlow',sans-serif;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 10px;min-width:62px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);}
 .log-day[aria-pressed="true"]{background:var(--sage);border-color:var(--sage);color:#fff;}
@@ -698,7 +713,9 @@ const blankGarden = () => ({ beds:[], level:'gentle', start:null, watered:{}, li
 const freshS = () => ({ mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:(typeof S!=='undefined'&&S.scale)||1, self:blankGarden(), people:[], dismissed:{}, q:null });
 let S = { mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:1, self:blankGarden(), people:[], dismissed:{}, q:null };
 let LEGACY = false;   // a garden saved on this device before Grounded profiles
-let gOwner = null;    // the profile this garden belongs to
+let gOwner = null;    // the profile whose garden is on screen
+let gHome = null;     // the unlocked profile (a grown-up may be looking at a child's garden)
+let PENDING_WHO = (new URLSearchParams(location.search)).get('who'); // ?who=<profile id> opens a family member's garden
 let Q = null;            // quiz in progress
 let openPerson = null;   // practitioner detail
 let adding = null;       // practitioner add form
@@ -708,17 +725,20 @@ function load(){ try { const r = localStorage.getItem(STORE); if (r) { S = Objec
 // Saving: into the open Grounded profile (locked), or the old spot for a garden that hasn't moved in yet.
 // With neither, nothing is kept until a profile is opened.
 function save(){ S.q = Q;
-  const a = window.GGP && GGP.active();
-  if (a && gOwner === a.id) { GGP.setData(a.id, 'garden', JSON.parse(JSON.stringify(S))); GGP.save(a.id); return; }
+  if (gOwner && window.GGP && GGP.isOpen(gOwner)) { GGP.setData(gOwner, 'garden', JSON.parse(JSON.stringify(S))); publishShared(); GGP.save(gOwner); return; }
   if (LEGACY && !gOwner) { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch(e){} } }
 // ---------- Grounded profiles ----------
-function gardenSync(type){
+function gardenSync0(type){
   const a = window.GGP && GGP.active();
-  if (!a){ if (gOwner){ gOwner = null; S = freshS(); Q = null; openPerson = null; adding = null; load(); render(); } else renderProfileNote(); return; }
+  if (!a){ gHome = null; if (gOwner){ gOwner = null; S = freshS(); Q = null; openPerson = null; adding = null; load(); render(); } else renderProfileNote(); return; }
+  if (gOwner && gOwner !== a.id && gHome === a.id){   // looking at a family member's garden
+    if (GGP.isOpen(gOwner)){ if (type === 'data'){ loadGarden(gOwner); render(); } else renderProfileNote(); return; }
+    loadGarden(a.id); gHome = a.id; render(); return;
+  }
   const d = GGP.data(a.id), mine = d && d.garden && d.garden.self;
   if (gOwner === a.id){ if (type === 'data' && mine){ S = Object.assign(freshS(), JSON.parse(JSON.stringify(d.garden))); Q = null; migrate(); render(); } else renderProfileNote(); return; }
   const fromGuest = !gOwner, hasWork = !!(S.self.start || Q || S.people.length);
-  if (mine){ S = Object.assign(freshS(), JSON.parse(JSON.stringify(d.garden))); Q = null; migrate(); gOwner = a.id; render(); return; }
+  if (mine){ S = Object.assign(freshS(), JSON.parse(JSON.stringify(d.garden))); Q = null; migrate(); gOwner = a.id; gHome = a.id; render(); return; }
   let adopt = false;
   if (fromGuest && hasWork){
     adopt = LEGACY ? confirm('Move the garden saved on this device into ' + a.name + '\'s profile? It will be locked with ' + a.name + '\'s passcode from now on.') : true;
@@ -726,8 +746,65 @@ function gardenSync(type){
   if (adopt){
     if (LEGACY){ try { localStorage.removeItem(STORE); } catch(e){} LEGACY = false; if (window.GGCare && GGCare.rename) GGCare.rename('me', a.id); }
   } else { const keep = Q && fromGuest && !LEGACY ? Q : null; S = freshS(); Q = keep; }
-  gOwner = a.id; S.self.who = a.id; if (Q && Q.mode === 'plant' && !Q.age) Q.age = a.age;
+  gOwner = a.id; gHome = a.id; S.self.who = a.id; if (Q && Q.mode === 'plant' && !Q.age) Q.age = a.age;
   save(); render();
+}
+function gardenSync(type){
+  gardenSync0(type);
+  const a = window.GGP && GGP.active();
+  if (PENDING_WHO && a && gHome === a.id && gOwner === a.id){ const w = PENDING_WHO; PENDING_WHO = null;
+    if (w !== a.id && familyIds().includes(w) && canOpen(w)) openFamily(w); }
+}
+// Load one profile's garden onto the screen.
+function loadGarden(id){
+  const d = GGP.data(id), g = d && d.garden;
+  if (g && g.self) S = Object.assign(freshS(), JSON.parse(JSON.stringify(g)));
+  else { S = freshS(); S.self.who = id; const p = GGP.get(id); if (p) S.self.age = p.age; }
+  Q = null; openPerson = null; adding = null; migrate(); gOwner = id;
+}
+// ---------- family ----------
+// Everyone a grown-up agreed for on this device. Kids and middle schoolers open with the
+// grown-up's passcode. High schoolers stay private: only their shared progress shows.
+function famAdult(){ const a = window.GGP && GGP.active(); return a && a.age === 'adult' && gHome === a.id ? a : null; }
+function familyIds(){ const a = famAdult(); if (!a) return [];
+  const order = { sprout:1, sapling:2, heartwood:3 };
+  return GGP.list().filter(p => p.id !== a.id && p.age !== 'adult' && (p.grown||[]).includes(a.id)).sort((x,y) => (order[x.age]||9) - (order[y.age]||9)).map(p => p.id); }
+const viewingFamily = () => !!(gHome && gOwner && gOwner !== gHome);
+const canOpen = id => { const p = GGP.get(id); return !!(p && p.age !== 'heartwood' && GGP.isOpen(id)); };
+function daysTended(id, G){ const set = new Set(Object.keys((G && G.watered) || {}).filter(k => k <= today())); GC.days(id).forEach(d => set.add(d)); return set.size; }
+function famSeen(){ const d = GGP.data(gHome, 'family'); d.seen = d.seen || {}; return d.seen; }
+function famInfo(id){
+  const p = GGP.get(id); if (!p) return null;
+  let G = null, sh = null;
+  if (id === gOwner) G = S.self;
+  else if (canOpen(id)){ const d = GGP.data(id); if (d && d.garden && d.garden.self) G = Object.assign(blankGarden(), d.garden.self); }
+  else if (p.age === 'heartwood') sh = GGP.shared(id).garden || null;
+  const wi = G && G.start ? weekInfo(G) : null;
+  const r = { p, open: id === gHome || canOpen(id), private: p.age === 'heartwood',
+    planted: G ? !!G.start : !!(sh && sh.planted), beds: G ? G.beds : ((sh && sh.beds) || []),
+    days: G ? daysTended(id, G) : sh ? (sh.days || 0) : GC.days(id).length,
+    bf: G ? (G.start ? butterflies(G) : 0) : sh ? (sh.butterflies || 0) : 0,
+    week: wi ? wi : null, shWeek: sh ? sh.week : 0, updated: sh ? sh.updated : null, flag: null, kidSeen: false };
+  if (p.age !== 'adult'){ r.flag = G ? (G.safety && G.safety.flag ? G.safety.date : null) : sh ? (sh.flag || null) : null; r.kidSeen = !!(G && G.safety && G.safety.seen); }
+  return r;
+}
+function famAlerts(){ if (!famAdult()) return []; const seen = famSeen();
+  return familyIds().map(famInfo).filter(r => r && r.flag && !r.kidSeen && seen[r.p.id] !== r.flag); }
+function markChecked(id){
+  const r = famInfo(id); if (!r || !r.flag) return;
+  famSeen()[id] = r.flag; GGP.save(gHome);
+  if (canOpen(id)){ if (id === gOwner){ if (S.self.safety) S.self.safety.seen = true; save(); }
+    else { const d = GGP.data(id); if (d.garden && d.garden.self && d.garden.self.safety){ d.garden.self.safety.seen = true; GGP.save(id); } } }
+}
+function openFamily(id){ if (!canOpen(id)) return; save(); loadGarden(id); S.mode = 'self'; S.tab = 'today'; render(); $('#app').scrollIntoView({behavior:'smooth'}); }
+function goHome(){ if (!gHome) return; save(); loadGarden(gHome); S.mode = 'self'; S.tab = 'family'; render(); $('#app').scrollIntoView({behavior:'smooth'}); }
+// High schoolers share simple progress with the grown-ups who agreed: beds, days tended,
+// butterflies, and the date of a safety flag. Never answers, notes, or journal.
+function publishShared(){
+  const p = GGP.get(gOwner); if (!p || p.age !== 'heartwood') return;
+  const G = S.self, wi = G.start ? weekInfo(G) : null;
+  GGP.setShared(gOwner, { garden: { planted: !!G.start, beds: G.beds.slice(), days: daysTended(gOwner, G), butterflies: G.start ? butterflies(G) : 0,
+    week: wi && !wi.before ? (wi.done ? 13 : wi.week) : 0, flag: G.safety && G.safety.flag ? G.safety.date : null, updated: today() } });
 }
 function renderProfileNote(){
   const el = document.getElementById('g-prof-note'); if (!el) return;
@@ -776,7 +853,7 @@ const weekDates = wi => Array.from({length:7}, (_,i) => addDays(wi.roundStart, i
 const $ = s => document.querySelector(s);
 function setScale(){ document.documentElement.style.setProperty('--scale', S.scale); $('#size-btn').textContent = S.scale > 1.2 ? 'A' : 'A+'; $('#size-btn').setAttribute('aria-label', 'Text size, now ' + (S.scale===1?'normal':S.scale<1.2?'larger':'largest')); }
 function tabsFor(){ return S.mode === 'self'
-  ? [['today',"Today's Practices",'today'],['week','This week','week'],['beds','Beds','beds'],['journal','Journal','journal'],['guide','Guide','guide']]
+  ? [['today',"Today's Practices",'today'],['week','This week','week'],['beds','Beds','beds'],['journal','Journal','journal'],['guide','Guide','guide']].concat(!viewingFamily() && familyIds().length ? [['family','Family','people']] : [])
   : [['people','Gardens','people'],['beds','Beds','beds'],['guide','Guide','guide']]; }
 function renderTabs(){
   const t = tabsFor(); if (!t.some(x => x[0]===S.tab)) S.tab = t[0][0];
@@ -785,12 +862,13 @@ function renderTabs(){
 }
 function setSeason(){ const wi = weekInfo(S.self); document.body.dataset.season = S.mode==='self' && wi ? wi.season : 'planting'; }
 function render(){
+  const mr = document.querySelector('.mode-row'); if (mr) mr.hidden = viewingFamily();
   renderTabs(); setSeason();
   const v = $('#view');
   if (!document.getElementById('g-prof-note')) v.insertAdjacentHTML('beforebegin', '<div id="g-prof-note"></div>');
   renderProfileNote();
   v.innerHTML = S.mode === 'practitioner' && S.tab === 'people' ? viewPeople()
-    : ({ today:viewToday, week:viewWeek, beds:viewBeds, journal:viewJournal, guide:viewGuide }[S.tab] || viewToday)();
+    : (famStrip() + ({ today:viewToday, week:viewWeek, beds:viewBeds, journal:viewJournal, guide:viewGuide, family:viewFamily }[S.tab] || viewToday)());
   $('#hero-cta').textContent = S.self.start ? 'Go to today' : 'Plant your garden';
 }
 
@@ -808,7 +886,7 @@ function recentInbox(){ const cut = addDays(today(), -60); return GC.inbox(whoOf
 
 // ---------- quiz steps ----------
 function newQuiz(mode){ const G = S.self;
-  const pa = window.GGP && GGP.active();
+  const pa = window.GGP && (gOwner ? GGP.get(gOwner) : GGP.active());
   const q = { mode, i:0, age: mode==='plant' ? (pa ? pa.age : null) : (G.age||'adult'), ans:{}, pre:{}, safe:{}, level: mode==='plant' ? null : G.level, picks:null, sugg:null, start:'today', inbox: recentInbox().length > 0 };
   q.steps = quizSteps(q); return q; }
 function quizSteps(q){ const s = ['intro']; if (q.inbox) s.push('prefill');
@@ -835,11 +913,13 @@ function viewQuiz(){
     <div class="quiz-nav" style="justify-content:center"><button class="btn btn-gold" data-act="q-resume">Keep going</button></div></div></div>`;
 
   if (st === 'intro'){
-    const title = q.mode === 'retake' ? 'See how your garden grew' : q.mode === 'update' ? 'The new planting quiz' : 'Plant your garden';
+    const title = q.mode === 'retake' ? 'See how your garden grew' : q.refresh ? 'Refresh your beds' : q.mode === 'update' ? 'The new planting quiz' : 'Plant your garden';
     const lead = q.mode === 'retake' ? 'The same questions you answered at the start. At the end you\'ll see your first answers and your answers now, side by side.'
+      : q.refresh ? 'Your check-in fills in the answers that match. Finish the rest, then choose your beds again. Your days, butterflies, and journal stay just as they are.'
       : 'Eight short pages, one for each bed, eight questions each. Answer for how things really are, not how you wish they were. At the end you\'ll see which beds could use the most care, and you choose where to start.';
     const ages = q.mode === 'retake' ? '' : `<label class="lbl" style="text-align:left">Who is this garden for?</label><div class="age-pick">${AGES.map(a => `<button class="level" aria-pressed="${q.age===a.id}" data-act="q-age" data-v="${a.id}"><strong>${a.name}</strong><span>${a.who}</span></button>`).join('')}</div>`;
-    const kidNote = kid ? `<p class="note">For younger kids, a grown-up can read each question aloud. There's a break halfway, and answers save as you go.</p>` : '';
+    const kidNote = (kid ? `<p class="note">For younger kids, a grown-up can read each question aloud. There's a break halfway, and answers save as you go.</p>` : '')
+      + (window.GGP && gOwner && (GGP.get(gOwner)||{}).age === 'heartwood' ? `<p class="note">Your answers and journal stay private to you. The grown-up on your profile sees how your garden is growing: your beds, days tended, and butterflies. If a safety answer asks for help, they see a simple note to check in with you, never the answer.</p>` : '');
     return `<div class="quiz card"><div class="quiz-bed" style="--bed:var(--sage)"><div class="big-icon">${icon('beds')}</div><h2>${title}</h2>
       <p class="muted" style="margin-top:8px">${lead}</p></div>${ages}${kidNote}
       <div class="quiz-nav">${cancel}${nextBtn(!!q.age, 'Begin')}</div></div>`;
@@ -952,7 +1032,7 @@ function gardenScene(G, opts){
 }
 const weekTheme = (G, k) => isKid(G.age) ? KID_WEEK[k-1].theme : WEEKS[k-1].theme;
 const weekQ = (G, k) => isKid(G.age) ? KID_WEEK[k-1].q : WEEKS[k-1].q;
-const GC = window.GGCare || { check(){}, isChecked(){ return false; }, inbox(){ return []; }, dismiss(){} };
+const GC = window.GGCare || { check(){}, isChecked(){ return false; }, inbox(){ return []; }, dismiss(){}, days(){ return []; } };
 const whoOf = G => G.who || 'me';
 
 // =====================================================================
@@ -995,7 +1075,9 @@ function viewToday(){
   const wi = weekInfo(G), sea = SEASONS[wi.season], wateredToday = !!G.watered[today()], kid = isKid(G.age);
   let top = '';
   if (G.safety && G.safety.flag && G.age !== 'adult' && !G.safety.seen) top += `<div class="banner care-banner"><h3>A safety answer needs a grown-up</h3><p>In the planting quiz, an answer about safety or deep sadness asked for a grown-up's attention.${G.age==='sprout'?'':' For teens, the answer itself stays private.'} Please check in with them today, calmly and kindly. If they talked about hurting themselves or not wanting to be alive, stay with them and call or text 988.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="calm-for">See help lines</button><button class="btn btn-ghost btn-sm" data-act="safety-seen">I've checked in with them</button></div></div>`;
-  if (wi.done) top += `<div class="banner gold"><h3>Your garden is in full bloom</h3><p>Twelve weeks of tending. Look at what grew. Print your journal as a keepsake, save an image of your garden, and keep going with the practices that became yours.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="print-grew">${icon('print')}Print What Grew</button><button class="btn btn-line btn-sm" data-act="save-image">${icon('image')}Save my garden image</button><a class="btn btn-line btn-sm" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Keep growing with Grounded.</a></div></div>`;
+  const fresh = recentInbox()[0];
+  if (fresh) top += `<div class="banner"><h3>A new check-in from ${TOOL_NAMES[fresh.from]||'another Grounded tool'}</h3><p>${viewingFamily()?'This check-in is from '+nice(fresh.date,{month:'long',day:'numeric'})+'.':'You checked in on '+nice(fresh.date,{month:'long',day:'numeric'})+'.'} Use it to refresh the beds: the answers that match are filled in, the rest take a few minutes, and you choose the beds again. Days, butterflies, and the journal stay just as they are.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="q-refresh">Refresh my beds</button><button class="btn btn-ghost btn-sm" data-act="inbox-skip" data-v="${esc(fresh.from)}">Not now</button></div></div>`;
+  else if (wi.done) top += `<div class="banner gold"><h3>Your garden is in full bloom</h3><p>Twelve weeks of tending. Look at what grew. Print your journal as a keepsake, save an image of your garden, and keep going with the practices that became yours.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="print-grew">${icon('print')}Print What Grew</button><button class="btn btn-line btn-sm" data-act="save-image">${icon('image')}Save my garden image</button><a class="btn btn-line btn-sm" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Keep growing with Grounded.</a></div></div>`;
   else if (S.justPlanted) top += `<div class="banner welcome"><h3>Your garden is planted</h3><p>Here's how each day works:</p>
      <ol class="welcome-steps"><li><strong>Do today's practices.</strong> They're just below your garden, in the order of your day.</li><li><strong>Check them off</strong> as you go, even the small ones.</li><li><strong>Water your garden</strong> at the end. Then come back tomorrow and watch it grow.</li></ol>
      <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="jump">Show me today's practices</button><button class="btn btn-ghost btn-sm" data-act="welcome-done">Got it</button></div></div>`;
@@ -1169,6 +1251,45 @@ function viewGuide(){
 // =====================================================================
 // PRACTITIONER
 // =====================================================================
+const famAv = (p, size) => window.GGAv ? GGAv.html(p.avatar || '', p.name || '', size) : `<span style="display:inline-grid;place-items:center;width:${size}px;height:${size}px;border-radius:50%;background:var(--sage-soft);color:var(--sage-deep);font:600 ${Math.round(size*.45)}px Barlow,sans-serif">${esc(String(p.name||'?').charAt(0).toUpperCase())}</span>`;
+const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
+const listNames = a => a.length < 2 ? (a[0]||'') : a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
+// A strip above the view: whose garden this is, or a family safety alert on Today.
+function famStrip(){
+  if (!window.GGP) return '';
+  if (viewingFamily()){ const p = GGP.get(gOwner); if (!p) return '';
+    return `<div class="card fam-strip">${famAv(p, 44)}<p><strong>You're in ${esc(p.name)}'s garden.</strong> Changes save to ${esc(p.name)}'s profile.</p><button class="btn btn-line btn-sm" data-act="fam-home">${icon('back')}Back to my garden</button></div>`; }
+  if (S.tab !== 'today' || S.mode !== 'self') return '';
+  const al = famAlerts(); if (!al.length) return '';
+  const names = al.map(r => esc(r.p.name));
+  return `<div class="banner care-banner"><h3>${al.length === 1 ? 'A check-in from ' + names[0] + ' asked for a grown-up' : 'Check-ins from ' + listNames(names) + ' asked for a grown-up'}</h3><p>A safety answer asked for a grown-up's attention. Please check in today, calmly and kindly.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-tab="family">See Family</button></div></div>`;
+}
+function viewFamily(){
+  const a = famAdult(); if (!a || viewingFamily()){ S.tab = 'today'; return viewToday(); }
+  const seen = famSeen(), rows = [a.id].concat(familyIds()).map(famInfo).filter(Boolean);
+  return `<div class="section-head"><h2>Your family's gardens</h2><p>Everyone you agreed for on this device. Open a child's garden to tend it with them. High schoolers keep their gardens private, so you see how they're growing, never their answers or journal.</p></div>
+  <div class="fam-list">${rows.map(r => famRowHTML(r, seen, a)).join('')}</div>`;
+}
+function famRowHTML(r, seen, a){
+  const p = r.p, me = p.id === a.id, n = esc(p.name), wi = r.week;
+  let status;
+  if (!r.planted) status = 'No garden yet';
+  else if (wi) status = wi.before ? 'Starts ' + nice(wi.roundStart || today(), {month:'short', day:'numeric'}) : wi.done ? 'Twelve weeks complete' : SEASONS[wi.season].name + ', Week ' + wi.week;
+  else status = r.shWeek === 13 ? 'Twelve weeks complete' : r.shWeek ? 'Week ' + r.shWeek : 'Planted';
+  const meta = (me ? 'You' : GGP.ageName(p.age)) + '. ' + status + '.' + (r.private && r.updated ? ' Updated ' + nice(r.updated, {month:'short', day:'numeric'}) + '.' : '');
+  const stats = r.planted || r.days ? `<div class="fam-stats"><span class="pill">${plural(r.days, 'day tended', 'days tended')}</span>${r.planted ? `<span class="pill">${plural(r.bf, 'butterfly', 'butterflies')}</span>` : ''}</div>` : '';
+  const beds = r.beds.length ? `<div class="bed-dots" role="img" aria-label="Beds: ${esc(r.beds.map(b => BED[b] ? BED[b].name : b).join(', '))}">${r.beds.filter(b => BED[b]).map(b => `<i style="--bed:${BED[b].color}" title="${esc(BED[b].name)}"></i>`).join('')}</div>` : '';
+  let alert = '';
+  if (r.flag && !r.kidSeen && seen[p.id] !== r.flag) alert = `<div class="fam-alert"><strong>${n}'s check-in asked for a grown-up</strong> on ${nice(r.flag, {month:'long', day:'numeric'})}.${r.private ? ' The answer stays private to them.' : ''} Check in with ${n} today, calmly and kindly. If they talked about hurting themselves or not wanting to be alive, stay with them and call or text 988.
+    <div class="tools-row"><button class="btn btn-light btn-sm" data-act="fam-calm" data-v="${esc(p.id)}">Calm card</button><button class="btn btn-ghost btn-sm" data-act="fam-seen" data-v="${esc(p.id)}">I checked in</button></div></div>`;
+  else if (r.flag) alert = `<p class="note" style="grid-column:1/-1">You checked in with ${n} after a safety answer on ${nice(r.flag, {month:'long', day:'numeric'})}.</p>`;
+  let act = '';
+  if (me) act = `<button class="btn btn-line btn-sm" data-tab="today">Go to my garden</button>`;
+  else if (r.open) act = `<button class="btn btn-gold btn-sm" data-act="fam-open" data-v="${esc(p.id)}">${r.planted ? 'Open ' + n + "'s garden" : 'Plant ' + n + "'s garden"}</button>`;
+  else if (r.private) act = `<span class="fam-meta">${n}'s answers and journal stay private.</span>`;
+  else act = `<span class="fam-meta">Open ${n}'s profile once to see their garden here.</span>`;
+  return `<div class="card fam-row"><div class="fam-pic">${famAv(p, 56)}</div><div><h3>${n}</h3><p class="fam-meta">${meta}</p></div><div>${stats}${beds}</div>${alert}<div class="fam-act">${act}</div></div>`;
+}
 function viewPeople(){
   if (adding) return viewAdd();
   if (openPerson) { const P = S.people.find(p => p.id === openPerson); if (P) return viewPerson(P); openPerson = null; }
@@ -1324,12 +1445,18 @@ document.addEventListener('click', e => {
       const y = window.scrollY; save(); render(); window.scrollTo(0, y); if (alarm) showCalm(g); return; }
     case 'calm': showCalm(); return;
     case 'calm-for': showCalm(safetyGroup(G.age)); return;
-    case 'safety-seen': if (G.safety) G.safety.seen = true; break;
+    case 'safety-seen': if (G.safety) G.safety.seen = true; if (viewingFamily() && G.safety && G.safety.flag){ famSeen()[gOwner] = G.safety.date; GGP.save(gHome); } break;
+    case 'q-refresh': Q = newQuiz('update'); Q.refresh = true; S.mode = 'self'; S.tab = 'today'; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return;
+    case 'inbox-skip': GC.dismiss(v, whoOf(G)); render(); return;
+    case 'fam-open': openFamily(v); return;
+    case 'fam-home': goHome(); return;
+    case 'fam-seen': markChecked(v); render(); return;
+    case 'fam-calm': { const fp = GGP.get(v); if (fp) showCalm(safetyGroup(fp.age)); return; }
     case 'q-prefill': { const en = recentInbox()[0];
       if (en){ Object.entries(en.answers).forEach(([key,val]) => { const [bd, qi] = key.split('.'); if (!QS[bd] || !QS[bd][+qi]) return; let x = Math.max(1, Math.min(5, Math.round(+val) || 0)); if (!x) return;
         if (isKid(Q.age)) x = x <= 2 ? 1 : x >= 4 ? 5 : 3; (Q.ans[bd] = Q.ans[bd] || [])[+qi] = x; (Q.pre[bd] = Q.pre[bd] || [])[+qi] = true; }); Q.used = en.from; }
       Q.i++; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
-    case 'q-fresh': Q.i++; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return;
+    case 'q-fresh': { const en = recentInbox()[0]; if (en) GC.dismiss(en.from, whoOf(G)); } Q.i++; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return;
     case 'q-later': Q.i++; Q.paused = true; break;
     case 'q-resume': Q.paused = false; break;
     case 'q-cancel': Q = null; break;

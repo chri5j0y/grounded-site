@@ -1179,6 +1179,7 @@ function tick(key){
   if (i >= 0){ s.log[d].splice(i,1); delete s.hist[d][key]; s.leaves = Math.max(0,(s.leaves||0)-1); }
   else { s.log[d].push(key); const it = planItems(s).find(x => x.key === key); if (it) s.hist[d][key] = {text:it.text, part:it.part}; s.leaves = (s.leaves||0)+1; toast('A new leaf on your tree.'); }
   save(); renderDash();
+  if (s._pid && window.GGCare){ const h = (s.hist[d]||{})[key], it = planItems(s).find(x => x.key === key); GGCare.check(s._pid, (h && h.text) || (it && it.text) || key, d, i < 0); }
 }
 function setStyle(k){ const s=me(); s.style=k; save(); renderDash(); }
 function setTheme(k){ const s=me(); s.theme=k; save(); renderDash(); }
@@ -1258,6 +1259,39 @@ function finishCheckup(){
   renderResult(ring);
   if (safetyFlag) showCalm({final:true});
 }
+/* ---------- send to the garden ----------
+   Sapling is for checking in. Tending the Garden is for daily practice.
+   Matching answers go to Garden inside the student's own locked profile.
+   Map per grade: part.question index -> Garden bed.question index.
+   Yeah most of the time, Sometimes, Not really -> 5, 3, 1. "Not sure" and
+   safety questions are never sent. */
+const SAP_TO_GARDEN = {
+  6: { 'roots.0':'spirit.6', 'roots.1':'spirit.3', 'roots.2':'spirit.5', 'roots.3':'create.2', 'trunk.0':'create.3', 'trunk.2':'create.6',
+       'bark.0':'mind.5', 'bark.1':'mind.0', 'branches.0':'connect.3', 'branches.1':'connect.0', 'branches.2':'connect.7',
+       'leaves.0':'rest.0', 'leaves.1':'body.7', 'leaves.2':'body.5', 'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'hope.2', 'fruit.3':'hope.6' },
+  7: { 'roots.0':'spirit.1', 'roots.2':'spirit.5', 'trunk.0':'create.3', 'bark.0':'mind.5', 'bark.1':'mind.0',
+       'branches.0':'connect.3', 'branches.2':'connect.0', 'leaves.0':'rest.0', 'leaves.1':'body.0', 'leaves.2':'body.2',
+       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'spirit.2', 'fruit.3':'hope.6' },
+  8: { 'roots.1':'spirit.5', 'roots.2':'spirit.0', 'roots.3':'spirit.1', 'trunk.0':'create.3', 'trunk.2':'create.2',
+       'bark.0':'mind.0', 'bark.2':'mind.5', 'branches.2':'connect.7', 'leaves.0':'rest.0', 'leaves.1':'body.5', 'leaves.3':'body.2',
+       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.3':'hope.6' }
+};
+function sapGardenAns(ring){
+  const map = SAP_TO_GARDEN[ring.grade] || {}, v = { yes:5, some:3, no:1 }, out = {};
+  Object.keys(map).forEach(k => { const [p, i] = k.split('.'); const a = ((ring.answers||{})[p]||[])[+i]; if (v[a]) out[map[k]] = v[a]; });
+  return out;
+}
+function sapGardenBtn(ring){
+  const s = me(); if (!s || !s._pid || !window.GGP || !window.GGCare || !GGP.isOpen(s._pid) || !Object.keys(sapGardenAns(ring)).length) return '';
+  const a = GGP.active(), label = a && a.id !== s._pid ? `Send to ${esc(s.name)}'s garden` : 'Send to my garden';
+  return `<button class="btn ghost" id="garden-send" onclick="sapSendGarden('${esc(ring.id)}')">${label}</button>`;
+}
+function sapSendGarden(id){
+  const s = me(), ring = s && s.rings.find(r => r.id === id), btn = $('garden-send'); if (!ring || !btn) return;
+  if (!GGCare.send({ from:'sapling', who:s._pid, name:s.name, age:'sapling', answers:sapGardenAns(ring) })){ toast('Open the profile first, then send again.'); return; }
+  btn.outerHTML = `<a class="btn ghost" href="/garden/?who=${encodeURIComponent(s._pid)}">Open ${esc(s.name)}'s garden</a>`;
+  toast('Sent to the garden.');
+}
 function renderResult(ring){
   const s = me(), prev = s.rings[s.rings.length-2];
   $('view-checkup').innerHTML = `
@@ -1265,7 +1299,7 @@ function renderResult(ring){
     <p class="lede">${prev ? 'Here is how each part compares to your last ring.' : 'Your first ring. Here is where each part of your tree is starting.'} Three new leaves, too.</p>
     <div class="status-grid">${PARTS.map(p=>statusCell(ring,prev,p.key)).join('')}</div>
     <div class="note">Sapling suggests caring for <b>${lowestTwo(ring).map(k=>PART[k].name).join(' and ')}</b> this week. You can pick practices for any part.</div>
-    <div class="row"><button class="btn" onclick="go('plan')">${s.plan ? 'Update my care plan' : 'Make my care plan'}</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="go('dash')">Back to my tree</button></div>`;
+    <div class="row"><button class="btn" onclick="go('plan')">${s.plan ? 'Update my care plan' : 'Make my care plan'}</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="go('dash')">Back to my tree</button>${sapGardenBtn(ring)}</div>`;
   toTop(true);
 }
 
