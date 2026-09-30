@@ -14,31 +14,33 @@
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
-    { name: 'For you', items: [
-      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part checkup for the health of your soul', href: 'https://soultree.growwithgrounded.com/', icon: ic.tree, bg: '#F1E6CC' },
-      { id: 'garden', title: 'Tending the Garden', desc: 'A 12-week practice for whole health', href: 'https://garden.growwithgrounded.com/', icon: ic.leaf, bg: '#E3EFD6' }
+    { name: 'Check-ins', items: [
+      { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: HOME + '/sprout/', icon: ic.sprout, bg: '#D8F3FF' },
+      { id: 'sapling', title: 'Sapling', desc: 'A checkup for grades 6 to 8', href: HOME + '/sapling/', icon: ic.sapling, bg: '#DDF0EC' },
+      { id: 'heartwood', title: 'Heartwood', desc: 'For grades 9 to 12', icon: ic.heartwood, bg: '#F3E1D8', soon: true },
+      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part checkup for adults', href: HOME + '/soul-tree/', icon: ic.tree, bg: '#F1E6CC' }
     ] },
-    { name: 'For kids and families', items: [
-      { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: 'https://sprout.growwithgrounded.com/', icon: ic.sprout, bg: '#D8F3FF' },
-      { id: 'sapling', title: 'Sapling', desc: 'A checkup for grades 6 to 8', href: 'https://sapling.growwithgrounded.com/', icon: ic.sapling, bg: '#DDF0EC' },
-      { id: 'heartwood', title: 'Heartwood', desc: 'For grades 9 to 12', icon: ic.heartwood, bg: '#F3E1D8', soon: true }
+    { name: 'Practice', items: [
+      { id: 'garden', title: 'Tending the Garden', desc: 'A 12-week practice where every checkup takes root', href: HOME + '/garden/', icon: ic.leaf, bg: '#E3EFD6' }
     ] },
-    { name: 'When Life Changes', items: [
-      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for 50+ hard seasons, for you or someone you help', href: 'https://soultree.growwithgrounded.com/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' },
-      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for 50+ hard talks with children', href: 'https://sprout.growwithgrounded.com/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
-      { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for 40 hard talks, grades 6 to 8', href: 'https://sapling.growwithgrounded.com/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' }
+    { name: 'Hard Talks', items: [
+      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/sprout/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
+      { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for hard talks, grades 6 to 8', href: HOME + '/sapling/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' },
+      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/soul-tree/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' }
     ] },
-    { name: 'For practitioners', items: [
-      { id: 'field', title: 'Grounded Field Guide', desc: 'Private training and resources, access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
+    { name: 'For professionals', items: [
+      { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
     ] }
   ];
 
+
   function here() {
     var h = location.hostname, p = location.pathname, hash = location.hash || '';
-    if (h.indexOf('soultree.') === 0) return /^#life/.test(hash) ? 'lc-adult' : 'soultree';
-    if (h.indexOf('sprout.') === 0) return /^#(life|talk)/.test(hash) ? 'lc-kids' : 'sprout';
-    if (h.indexOf('garden.') === 0) return 'garden';
-    if (h.indexOf('sapling.') === 0) return /^#life/.test(hash) ? 'lc-ms' : 'sapling';
+    var life = /^#(life|talk)/.test(hash);
+    if (p.indexOf('/soul-tree') === 0 || h.indexOf('soultree.') === 0) return life ? 'lc-adult' : 'soultree';
+    if (p.indexOf('/sprout') === 0 || h.indexOf('sprout.') === 0) return life ? 'lc-kids' : 'sprout';
+    if (p.indexOf('/sapling') === 0 || h.indexOf('sapling.') === 0) return life ? 'lc-ms' : 'sapling';
+    if (p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'garden';
     if (p.indexOf('/field-guide') === 0) return 'field';
     return '';
   }

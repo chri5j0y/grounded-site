@@ -1,20 +1,12 @@
-GROW WITH GROUNDED: site update
-Upload everything in this folder to the growwithgrounded.com repo, replacing the old files.
+GROW WITH GROUNDED: one home for every tool (Phase 1)
 
-NEW PAGES: support.html, rates.html, tools.html
+Upload everything in this folder to the main site repo (the one with CNAME growwithgrounded.com),
+replacing what's there. New folders:
+  sprout/  sapling/  soul-tree/  garden/   the tools, now at growwithgrounded.com/<name>/
+  shared/                                  profile pictures, shared by every tool
+  fonts/                                   our own copy of the fonts, so nothing goes to Google
+  move-in.html                             receives saved progress from the old addresses
+  privacy.html                             the Privacy page, linked in every footer
 
-BEFORE YOU UPLOAD (important)
-1. Set up hello@growwithgrounded.com in Cloudflare Email Routing first. The site now sends every email link
-   and the contact form to hello@. Until forwarding is set up, messages to that address won't arrive.
-   (To switch back temporarily, see the EMAIL line at the top of site.js and the ADDRESS line in index.html
-   and support.html.)
-2. Contact form: when your Formspree address is ready, paste it into FORM_ENDPOINT in index.html
-   and support.html. Until then, the form opens a ready-to-send email.
-
-WHEN YOU'RE READY
-- Call or text: type your local number into PHONE at the bottom of site.js, and every "Call or text" line appears.
-- Portrait: save the new photo of you both as kayti-chris.jpg and change chris-kayti-wedding.jpg in the
-  "Who we are" section of index.html (look for the PORTRAIT note).
-- Kind words: the hidden section on the homepage is ready for three short named notes (see the note above it).
-
-nav.js is shared by every Grounded site, so Sapling and Heartwood (coming soon) appear in the Tools menu everywhere at once.
+After this is live, update the four old tool repos (sprout, sapling, soultree, garden)
+with the files in old-addresses.zip. See the README inside each folder.
