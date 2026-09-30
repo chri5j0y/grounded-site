@@ -285,6 +285,36 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .lock-ask b{color:#F4EBDA;} .lock-ask span{font-size:14px;color:rgba(244,235,218,.7);}
 .lock-ask .btn{align-self:flex-start;margin-top:4px;text-decoration:none;}
 .btn-ghost{background:transparent;border:1px solid rgba(217,168,71,.7);color:#E6D3A6;}
+/* ---------- soul tree guide ---------- */
+.grid > .card + .card{margin-top:0;}
+.st-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#C07A34 0%,#A5601E 45%,#6E3E14 100%);}
+.st-visits{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:10px;}
+.st-visits .qbtn[disabled]{opacity:.45;cursor:not-allowed;}
+.st-q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px;}
+.st-q p{font-size:calc(18px * var(--scale));line-height:1.45;}
+.st-n{display:inline-block;min-width:26px;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--gold);}
+.st-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.st-opts .chip{padding:9px 14px;min-height:42px;}
+.st-ph{border-left:6px solid var(--pc);padding-left:12px;}
+.st-ph small,.st-qh small{font-family:'Barlow',sans-serif;font-size:15px;font-weight:500;color:var(--ink-soft);}
+.st-qp{border-left:4px solid var(--pc);background:var(--card);border-radius:0 14px 14px 0;padding:12px 14px;margin-top:14px;box-shadow:var(--shadow);}
+.st-qp .st-q{border:0;padding:0;background:none;margin-top:6px;}
+.st-qh{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:calc(22px * var(--scale));}
+.st-lf{margin-top:8px;font-size:calc(15.5px * var(--scale));color:var(--ink-soft);}
+.st-lf summary{cursor:pointer;color:var(--gold);font-weight:600;}
+.st-lf ul{margin:6px 0 0 18px;}
+.st-protocol{border-left:4px solid var(--danger);}
+.st-private{border-left:4px solid var(--sage);}
+.st-me{border-left:4px solid var(--sage);}
+.st-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+.st-ringwrap{display:flex;gap:16px;align-items:center;margin-top:8px;}
+.st-rings{width:150px;height:150px;flex:none;}
+@media(max-width:480px){ .st-ringwrap{flex-direction:column;align-items:flex-start;} }
+.st-bar-row{display:grid;grid-template-columns:minmax(120px,190px) 1fr auto;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line);}
+.st-bar-row:first-of-type{border-top:0;}
+.st-bar{height:10px;border-radius:6px;background:var(--bg-deep);overflow:hidden;}
+.st-bar i{display:block;height:100%;border-radius:6px;}
+@media(max-width:520px){ .st-bar-row{grid-template-columns:1fr auto;} .st-bar{grid-column:1 / -1;order:3;} }
 .codeshow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(22px * var(--scale));letter-spacing:.5px;margin:10px 0;word-break:break-word;}
 </style>
 <style>
@@ -406,10 +436,17 @@ async function enter(inner){
   TIER = v2 ? inner.tier : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
   DATA = Object.assign(blankData(), inner.data); DATA.owner = Object.assign({saved:[], draft:null}, DATA.owner || {}); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
   // Changes made in the Access manager on this device are now live: pick up the new keys.
+  // Clears once every file it made is on the site: codes.js (if codes changed) and each library it resealed.
   const d = DATA.owner.draft;
-  if (d && d.stamp && d.stamp === CODES.stamp){ Object.assign(keys, d.keys || {}); if (d.newIds && d.newIds[TIER]) CODEID = d.newIds[TIER]; DATA.owner.draft = null; setTimeout(() => toast('Your Access manager changes are live.'), 900); }
+  if (d){
+    const libs = Object.entries(d.libs || {}), codesLive = !d.stamp || d.stamp === CODES.stamp, libsLive = libs.every(([l, b]) => BOX[l] && b && BOX[l].iv === b.iv);
+    if ((d.stamp || libs.length) && codesLive && libsLive){ Object.assign(keys, d.keys || {}); if (d.newIds && d.newIds[TIER]) CODEID = d.newIds[TIER]; DATA.owner.draft = null; setTimeout(() => toast('Your Owner tab changes are live.'), 900); }
+  }
   KEYS = keys;
   useLevels(await openLevels(TIER, keys));
+  // An Owner device shows library updates waiting to upload, so they can be tried before they go live.
+  const dd = DATA.owner.draft;
+  if (TIER === 'owner' && dd && dd.libs) for (const [l, b] of Object.entries(dd.libs)){ const pl = await tryOpen(b, Object.assign({}, KEYS, dd.keys || {})[l]); if (pl){ if (l === 'owner') OWN = pl; else if (l === 'staff') LIB = pl; else FLD = pl; } }
   return v2 ? 'ok' : 'upgrade';
 }
 
@@ -536,7 +573,7 @@ function resetDevice(){
   localStorage.removeItem(VAULT_KEY); sessClear(); lockScreen('access', 'This device has been reset.');
 }
 function lock(){
-  if (DATA && RUN) { DATA.draft = RUN; persist(); }
+  if (DATA && RUN && !RUN.demo) { DATA.draft = RUN; persist(); }
   clearInterval(runTimer); RUN = null;
   LIB = null; OWN = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
   $('#view').innerHTML = ''; $('#runner').innerHTML = ''; $('#runner').classList.add('hide'); closeMenu();
@@ -552,11 +589,12 @@ function start(){
   if (SESS_UNTIL) setTimeout(() => toast('Unlocked until ' + untilText() + '.'), 400);
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
   V = {tab: tabsFor()[0][0]}; render();
-  if (DATA.draft && LIB) { setTimeout(() => { if (confirm('You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); openRunner(); } else { DATA.draft = null; save(); } }, 200); }
+  const dr = DATA.draft, st = dr && dr.kind === 'st';
+  if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st) stOpenRun(); else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : OR() ? [['home','Home','home'],['orient','Orientation','cap']] : [['home','Home','home']];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'],['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []),['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
   return t;
 }
@@ -565,7 +603,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -598,6 +636,7 @@ const IC = {
  safety:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16v.5"/>',
  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+ tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
@@ -612,20 +651,20 @@ const SERVICE_NAMES = {all:'Any service', eol:'End-of-life support', officiant:'
 function vHome(){
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   const due = [];
-  DATA.clients.forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f, i}); }));
+  DATA.clients.filter(c => !stIsMe(c)).forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f, i}); }));
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
-  const recent = DATA.sessions.slice().sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
+  const recent = DATA.sessions.filter(s => !stIsMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
   const quick = [['first-conversation','Free first conversation','30 minutes'],['eol-first-visit','End-of-life first visit','60 to 90 minutes'],['vigil','Vigil sitting','Up to 8 hours'],['funeral-interview','Funeral family interview','60 to 90 minutes'],['wedding-interview','Wedding couple interview','60 to 90 minutes'],['counsel-first','Counseling first session','60 minutes'],['grief-first','Grief first session','60 minutes'],['debrief','After-session debrief','5 to 10 minutes']];
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="soultree"><span class="qi">${icon('tree')}</span><span><b>Soul Tree visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups this week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
     <div class="card"><h3>Recent sessions</h3>
-      ${recent.length ? recent.map(s => { const c = CL(s.clientId), g = G(s.guideId); return `<div class="list-row"><div class="lr-main"><b>${esc(c ? c.name : 'No person')}</b> <span class="muted">${esc(g ? g.title : '')}</span><br><small class="muted">${nice(s.date)}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No sessions yet. Start one above.</p>'}</div>
+      ${recent.length ? recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(c ? c.name : 'No person')}</b> <span class="muted">${esc(sessTitle(s))}</span><br><small class="muted">${nice(s.date)}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No sessions yet. Start one above.</p>'}</div>
   </div>
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>In a crisis?</b> <span class="muted">Open the Crisis Protocol, or call now.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="guide" data-v="crisis">Crisis Protocol</button><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
 }
@@ -725,7 +764,7 @@ function saveRun(){
 function vClients(){
   if (V.client) { const c = CL(V.client); if (c) return vClient(c); }
   const q = (V.q||'').toLowerCase(), f = V.filter || 'active';
-  const list = DATA.clients.filter(c => (f === 'all' || c.status === f) && (!q || (c.name+' '+(c.service||'')).toLowerCase().includes(q))).sort((a,b) => (b.last||'').localeCompare(a.last||''));
+  const list = DATA.clients.filter(c => !stIsMe(c) && (f === 'all' || c.status === f) && (!q || (c.name+' '+(c.service||'')).toLowerCase().includes(q))).sort((a,b) => (b.last||'').localeCompare(a.last||''));
   return `<div class="page-head spread"><div><div class="eyebrow">Records</div><h1>People</h1><p>Encrypted on this device only. Use first names or initials.</p></div><button class="btn btn-gold" data-act="new-client">${icon('plus')} Add Person</button></div>
   <div class="row" style="margin-bottom:14px"><input type="text" id="cq" placeholder="Search" value="${esc(V.q||'')}" style="max-width:320px">
    ${[['active','Active'],['follow-up','Following up'],['closed','Closed'],['all','All']].map(([v,l]) => `<button class="chip" aria-pressed="${f===v}" data-act="cfilter" data-v="${v}">${l}</button>`).join('')}</div>
@@ -738,6 +777,7 @@ function vClient(c){
   return `<button class="btn btn-line btn-sm" data-act="back-clients">${icon('back')} All people</button>
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
+  ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Soul Tree Guide</b> <span class="muted">Rings, care plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Details</h3>
@@ -753,7 +793,7 @@ function vClient(c){
     <div class="grid g2" style="margin-top:10px"><input type="date" id="nfd"><input type="text" id="nft" placeholder="What to do"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>
     <h3 style="margin-top:22px">Sessions</h3>
-    ${ss.length ? ss.map(s => `<div class="list-row"><div class="lr-main"><b>${esc((G(s.guideId)||{}).title||'Session')}</b><br><small class="muted">${nice(s.date)} &middot; ${s.minutes||0} min${s.fee ? ' &middot; ' + esc(s.fee) : ''} ${s.paid ? '<span class="pill sage">Paid</span>' : (s.fee && !/free/i.test(s.fee) ? '<span class="pill warn">Unpaid</span>' : '')}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted">No sessions yet.</p>'}
+    ${ss.length ? ss.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sessTitle(s))}</b><br><small class="muted">${nice(s.date)} &middot; ${s.minutes||0} min${s.fee ? ' &middot; ' + esc(s.fee) : ''} ${s.paid ? '<span class="pill sage">Paid</span>' : (s.fee && !/free/i.test(s.fee) ? '<span class="pill warn">Unpaid</span>' : '')}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted">No sessions yet.</p>'}
    </div></div>
   <div class="row" style="margin-top:14px"><button class="btn btn-danger btn-sm" data-act="del-client" data-v="${c.id}">Delete This Record</button></div>`;
 }
@@ -825,6 +865,7 @@ function vFieldHome(){
   const w = FLD.welcome;
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
+  ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="soultree">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
@@ -1014,7 +1055,7 @@ async function makeCode(kind, label, ends){
   return {code, e};
 }
 async function rotateLevel(tier){
-  const plain = tier === 'owner' ? OWN : tier === 'staff' ? LIB : FLD;
+  const plain = await pendingPlain(tier);
   if (!plain) return alert("This device can't open the " + LEVEL_NAME[tier] + ' library, so it can\'t rotate it.');
   const warn = {owner:'Rotate the Owner code? The current Owner code stops working once you upload. Kayti (and any other Owner device) types the new Owner code once.',
     staff:'Rotate the Staff code? The current Staff code, including the one from before levels, stops working once you upload. Every Staff device types the new Staff code once. Use this when someone leaves.',
@@ -1048,14 +1089,14 @@ function vOwner(){
   const legacyLive = BOX.staff && BOX.staff.salt && !(d && d.libs.staff);
   const shown = V.show ? saved(V.show) : null;
   const pr = OWN.pricing, pb = OWN.playbook;
-  const fileRows = d ? ['codes', ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="own-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
+  const fileRows = d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="own-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
   return `<div class="page-head"><div class="eyebrow">Owner &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>
   ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
     <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here.${live.has(shown.id) ? '' : ' It starts working once you upload codes.js.'}</p>
     <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="own-hide">Done</button></div></div>` : ''}
   ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Open the Field Guide on a device that already had the Staff code, add the Owner code there, and finish setup. After that, every Owner device opens everything.</p></div>`
     : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish setup</h3><p class="muted">One time only. This links the Owner code to the Staff and Field libraries, so an Owner code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="own-setup">Finish Setup</button></div>` : ''}
-  ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to upload</h3><p class="muted">Nothing changes for anyone until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
+  ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to upload</h3><p class="muted">${Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
     <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="own-discard">Discard These Changes</button></div></div>` : ''}
   <div class="card"><h3>Access codes</h3><p class="muted">A code is only used once, to set up a device. After that, each person unlocks with their own passcode.</p>
    <div style="margin-top:8px">${list.map(e => { const ended = e.ends && e.ends < today(), sv = saved(e.id); return `<div class="list-row"><div class="lr-main"><b>${esc(e.label)}</b> <span class="pill">${esc(LEVEL_NAME[e.kind || e.tier])}</span>${live.has(e.id) ? '' : ' <span class="pill warn">Not uploaded yet</span>'}${ended ? ' <span class="pill warn">Ended</span>' : ''}<br><small class="muted">Made ${nice(e.made)} &middot; ${e.ends ? 'ends ' + nice(e.ends) : 'no end date'}</small></div><div class="row">${sv ? `<button class="btn btn-line btn-sm" data-act="own-show" data-v="${e.id}">Show</button>` : ''}<button class="btn btn-line btn-sm" data-act="own-remove" data-v="${e.id}">Remove</button></div></div>`; }).join('')}
@@ -1068,11 +1109,419 @@ function vOwner(){
   <div class="card"><h3>Rotate a level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Field for the yearly change.</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="own-rot" data-v="field">Rotate Field</button><button class="btn btn-line btn-sm" data-act="own-rot" data-v="staff">Rotate Staff</button><button class="btn btn-line btn-sm" data-act="own-rot" data-v="owner">Rotate Owner</button></div>
    <p class="muted" style="font-size:14px;margin-top:10px">Removing a code stops it from setting up new devices and ends it on devices that already use it. For a clean break, rotate the level too.</p></div>
+  ${vUpdateCard()}
   <div class="card"><h3>Private pricing</h3><p class="muted">${esc(pr.intro)}</p>
    <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
-  <div class="card"><h3>What Field users see</h3>${FLD ? `<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+}
+
+// ---------------- SOUL TREE GUIDE ----------------
+// Wording lives in the Field library (FLD.soulTreeGuide), so it is sealed and edited through Update a Library.
+// People are ordinary People records with a .st profile. Visits are sessions with kind 'st', so backups merge them.
+// Staff and Owner always see it. Field users see it once FLD.soulTreeGuide.open.field is on and Orientation is done.
+const STG = () => (FLD && FLD.soulTreeGuide) || null;
+const stOpen = () => !!STG() && (TIER !== 'field' || !!(STG().open && STG().open.field && (!OR() || orState().complete)));
+const stPart = k => STG().parts.find(p => p.key === k);
+const stIsMe = c => !!(c && c.st && c.st.type === 'me');
+const stPeople = () => DATA.clients.filter(c => c.st && c.st.type !== 'me');
+const stMe = () => DATA.clients.find(stIsMe);
+const stVisits = id => DATA.sessions.filter(s => s.kind === 'st' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const stTypeName = t => t === 'me' ? 'Me' : ((STG().people.find(x => x[0] === t) || [])[1] || 'Person');
+const stVisitName = k => (STG().visits.find(x => x[0] === k) || [])[1] || 'Visit';
+const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Needs care';
+const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
+const stConsentName = h => h === 'before' ? 'Recorded before import' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
+const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined');
+const sessTitle = s => s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : ((G(s.guideId) || {}).title || 'Session');
+function stQuestions(visit, set, key){ return set === 'staff' ? STG().staffQuestions[key] : stPart(key).questions; }
+function stScore(run){
+  const out = {}, sc = STG().scale;
+  STG().parts.forEach(p => {
+    const k = p.key;
+    if (run.visit === 'open'){ const im = STG().impressions.find(x => x[0] === (run.impr||{})[k]); out[k] = im ? im[2] : null; return; }
+    if (run.visit === 'quick'){ const o = sc.find(x => x[0] === ((run.ans||{})[k]||{})[0]); out[k] = o && o[2] !== null ? Math.round(1 + 9 * o[2] / 3) : null; return; }
+    let sum = 0, n = 0;
+    stQuestions(run.visit, run.set, k).forEach((q, i) => { const o = sc.find(x => x[0] === ((run.ans||{})[k]||{})[i]); if (q.c || !o || o[2] === null) return; sum += q.r ? 3 - o[2] : o[2]; n++; });
+    out[k] = n ? Math.max(1, Math.min(10, Math.round(1 + 9 * (sum / n) / 3))) : null;
+  });
+  return out;
+}
+const stAvg = sc => { const v = Object.values(sc || {}).filter(x => x != null); return v.length ? v.reduce((a,b) => a + b, 0) / v.length : null; };
+const mins = n => n + (n === 1 ? ' minute' : ' minutes');
+const stSafetyFlag = sf => !!sf && !sf.notAsked && ((sf.direct && sf.direct !== 'no') || ['often','always'].includes(sf.opener));
+
+// ----- rings: one for each full or quick visit, oldest in the middle -----
+function stRings(c){
+  const vs = stVisits(c.id).filter(s => s.visit !== 'open' && stAvg(s.scores) != null).reverse();
+  const n = vs.length, R = 76, cx = 90;
+  const col = a => a >= 8 ? '#4A5D3A' : a >= 5 ? '#8B5E1A' : '#A8542E';
+  const rings = vs.map((s, i) => { const r = 16 + (R - 16) * (n === 1 ? 1 : i / (n - 1)); return `<circle cx="${cx}" cy="${cx}" r="${r.toFixed(1)}" fill="none" stroke="${col(stAvg(s.scores))}" stroke-width="${n > 8 ? 3 : 5}" opacity="${(0.55 + 0.45 * (i + 1) / n).toFixed(2)}"><title>${esc(nice(s.date))}: ${stLevel(Math.round(stAvg(s.scores)))}</title></circle>`; }).join('');
+  return `<svg class="st-rings" viewBox="0 0 180 180" role="img" aria-label="${n} ring${n === 1 ? '' : 's'}"><circle cx="${cx}" cy="${cx}" r="${R + 8}" fill="color-mix(in srgb,var(--gold) 7%,transparent)" stroke="var(--ink)" stroke-width="1.2"/>${rings}<circle cx="${cx}" cy="${cx}" r="7" fill="var(--ink)"/></svg>`;
+}
+function stPartTable(c){
+  const vs = stVisits(c.id).filter(s => stAvg(s.scores) != null).slice(0, 4);
+  if (!vs.length) return '<p class="muted" style="margin-top:8px">No scored visits yet. Each full visit or quick check-in adds a ring.</p>';
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}</th>`).join('')}</tr>
+   ${STG().parts.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const v = (s.scores||{})[p.key]; return `<td>${v == null ? '<span class="muted">&middot;</span>' : `<span class="pill ${stLvlCls(v)}">${stLevel(v)}</span>`}</td>`; }).join('')}</tr>`).join('')}</table></div>`;
+}
+
+// ----- views -----
+function vST(){
+  if (!STG()) return `<div class="card"><p>Soul Tree Guide isn't on this device yet.</p></div>`;
+  if (V.stc) { const c = CL(V.stc); if (c) return vSTConsent(c); }
+  if (V.stv) return vSTVisit();
+  if (V.stp) { const c = CL(V.stp); if (c) return vSTPerson(c); }
+  const S = STG(), list = stPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), me = stMe();
+  const local = stLocalCount();
+  return `<div class="hello st-hello"><div class="eyebrow" style="color:#E0A85C">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
+  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
+  <div class="card"><h3>Someone new</h3>
+   <div class="grid g2"><div><label class="f" for="st-nn">Code or initials</label><input type="text" id="st-nn" autocomplete="off" placeholder="R.M. or Room 12"></div>
+   <div><label class="f" for="st-nt">Who they are</label><select id="st-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="st-new">${icon('plus')} Add Person</button><button class="btn btn-line" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>
+  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = stVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(stTypeName(c.st.type))}</span>${stHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${stVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>
+  <div class="card st-me"><div class="spread"><div><h3>My own tree</h3><p class="muted">${esc(S.meNote)}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="st-me">Start My Tree</button>`}</div></div>
+  <div class="card"><h3>Move sessions from public Soul Tree</h3><p class="muted">${esc(S.importNote)}</p>
+   <div class="row" style="margin-top:10px">${local ? `<button class="btn btn-line btn-sm" data-act="st-imp-local">Move ${local} ${local === 1 ? 'Person' : 'People'} From This Browser</button>` : '<span class="muted" style="font-size:15px">None found in this browser.</span>'}
+   <label class="btn btn-line btn-sm" style="cursor:pointer">From a Practitioner Backup File<input type="file" id="st-imp-file" accept=".json,application/json" hidden></label></div></div>`;
+}
+function vSTConsent(c){
+  const C = STG().consent, cur = c.st.consent || {};
+  return `<button class="linkbtn" data-act="st-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
+  <div class="card step-card"><div class="blk say"><div class="lab">Say</div><ul><li>${esc(C.say)}</li></ul></div></div>
+  <div class="card"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${C.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card"><h3>Record it</h3>
+   ${C.how.map(h => `<label class="cb"><input type="radio" name="st-ch" value="${h[0]}" ${cur.how === h[0] ? 'checked' : ''}> ${esc(h[1])}</label>`).join('')}
+   <label class="f" for="st-cby">If someone else gave consent, who (relationship only)</label><input type="text" id="st-cby" value="${esc(cur.by||'')}" placeholder="Daughter, healthcare agent">
+   <label class="f" for="st-cd">Date</label><input type="date" id="st-cd" value="${esc(cur.date || today())}" style="max-width:220px">
+   <button class="btn btn-gold" style="margin-top:14px" data-act="st-consent-save" data-v="${c.id}">Save Consent</button></div>`;
+}
+function vSTPerson(c){
+  const S = STG(), me = stIsMe(c), vs = stVisits(c.id), ok = stHasConsent(c), con = c.st.consent;
+  const latest = vs.find(s => s.plan && Object.values(s.plan).some(a => a && a.length)) || null;
+  return `<button class="linkbtn" data-tab="soultree">Back to Soul Tree Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(stTypeName(c.st.type))}</div><h1>${esc(c.name)}</h1></div>
+   <div class="row">${me ? '<span class="pill sage">Private</span>' : con ? `<span class="pill ${con.how === 'declined' ? 'warn' : 'sage'}">${esc(stConsentName(con.how))} ${con.date ? nice(con.date) : ''}</span>` : '<span class="pill warn">Consent needed</span>'}</div></div>
+  ${!me && !ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Ask first'}</h3><p class="muted">${con && con.how === 'declined' ? 'Visits stay off. If they change their mind, record it here.' : 'Explain what this is and ask before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="st-consent" data-v="${c.id}">${con ? 'Update Consent' : 'Consent'}</button></div>` : ''}
+  <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="st-start" data-v="${v[0]}" data-c="${c.id}" ${ok ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
+   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Skip anything that doesn\'t fit.</p>' : ''}</div>
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Rings</h3><div class="st-ringwrap">${stRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(s => s.visit !== 'open' && stAvg(s.scores) != null).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust needs care.</p></div>${stPartTable(c)}</div>
+   <div class="card"><h3>Care plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
+    <h3 style="margin-top:20px">Follow-ups</h3>
+    ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-stfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(stVisitName(s.visit))}</b>${s.imported ? ' <span class="pill">Imported</span>' : ''}${stSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="st-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Details</h3>
+   <label class="f">Code or initials</label><input type="text" data-stc="name" value="${esc(c.name)}">
+   ${me ? '' : `<label class="f">Who they are</label><select data-stc="type">${S.people.map(p => `<option value="${p[0]}" ${p[0] === c.st.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select>
+   <label class="f">Status</label><select data-stc="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v === c.status ? 'selected' : ''}>${l}</option>`).join('')}</select>`}
+   <div class="grid g2" style="margin-top:10px"><input type="date" id="st-fd" aria-label="Follow-up date"><input type="text" id="st-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="st-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>${me ? '' : `<button class="btn btn-line btn-sm" data-act="st-consent" data-v="${c.id}">Update Consent</button>`}<button class="btn btn-danger btn-sm" data-act="st-del" data-v="${c.id}">Delete This Record</button></div></div>`;
+}
+function stPlanList(s){
+  const rows = STG().parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? `<p style="margin-top:8px"><span class="st-dot" style="background:${p.color}"></span><b>${esc(p.part)}:</b> ${a.map(esc).join(', ')}</p>` : ''; }).join('');
+  return (rows || '<p class="muted" style="margin-top:8px">No practices chosen.</p>') + (s.custom ? `<p style="margin-top:8px"><b>Also:</b> ${esc(s.custom)}</p>` : '');
+}
+function stFindVisit(){ return V.stv === 'demo' ? (V.stDemo || null) : DATA.sessions.find(x => x.id === V.stv) || null; }
+function vSTVisit(){
+  const s = stFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
+  const demo = V.stv === 'demo', c = demo ? s.person : CL(s.clientId), me = stIsMe(c), S = STG(), sf = s.safety || {};
+  const back = demo ? `<button class="linkbtn" data-tab="soultree">Back to Soul Tree Guide</button>` : `<button class="linkbtn" data-act="st-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
+  return `${back}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Print the handout or copy the note to see how they look.</span></div>' : ''}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'staff' ? ' &middot; Staff questions' : ''}</div><h1>${esc(stVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.imported ? ' &middot; Moved from public Soul Tree' : ''}</p></div>
+  <div class="card"><h3>The six parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
+  ${s.imported ? '' : `<div class="card" ${stSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(stSafetyText(sf))}</p></div>`}
+  ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
+   ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
+   ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
+  <div class="card"><h3>Care plan</h3>${stPlanList(s)}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
+  ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
+  ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
+  <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="st-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="st-print-note">${icon('print')} Print Visit Note</button>`}
+   <button class="btn btn-line" data-act="st-print-hand">${icon('print')} Print Handout</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="st-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+}
+function stSafetyText(sf){
+  if (!sf || (!sf.direct && !sf.notAsked)) return 'Not recorded.';
+  if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
+  const o = (STG().scale.find(x => x[0] === sf.opener) || [])[1], d = (STG().safety.directOpts.find(x => x[0] === sf.direct) || [])[1];
+  const flag = stSafetyFlag(sf);
+  return (flag ? 'Positive screen. ' : 'Negative screen. ') + (o ? 'Hopeless or a burden: ' + o + '. ' : '') + (d ? 'Thoughts of ending life or self-harm: ' + d + '.' : '') + (flag ? ' Actions: ' + ((sf.actions||[]).join(', ') || 'none recorded') + '.' : '');
+}
+function stNote(s, c){
+  const S = STG(), L = [];
+  L.push('Soul Tree visit: ' + stVisitName(s.visit) + (s.set === 'staff' ? ' (staff questions)' : '') + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Person: ' + (c ? c.name : '') + ' (' + stTypeName(c ? c.st.type : '') + ')');
+  const con = c && c.st.consent; if (con) L.push('Consent: ' + stConsentName(con.how) + (con.by ? ' by ' + con.by : '') + (con.date ? ', ' + nice(con.date) : ''));
+  L.push('', 'How they are doing:');
+  S.parts.forEach(p => { const v = (s.scores||{})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (s.visit === 'open' && v == null ? 'not talked about' : stLevel(v).toLowerCase() + (v != null && s.visit !== 'open' ? ' (' + v + ' of 10)' : ''))); });
+  if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
+  if ((s.did||[]).length) L.push('Interventions: ' + s.did.join(', ') + '.');
+  if (!s.imported) L.push('Safety: ' + stSafetyText(s.safety));
+  const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
+  if (plan.length || s.custom) L.push('', 'Plan: ' + [...plan, s.custom].filter(Boolean).join('; ') + '.');
+  if ((s.refs||[]).length) L.push('Referrals: ' + s.refs.join(', ') + '.');
+  if (s.fdate) L.push('Follow-up: ' + nice(s.fdate) + (s.ftext ? ', ' + s.ftext : '') + '.');
+  if (s.summary) L.push('', 'Summary: ' + s.summary);
+  return L.join('\n');
+}
+function stPrintNote(s, c){
+  printNow(ph('Confidential visit note') + `<h1>Soul Tree visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(stNote(s, c))}</p>` + pf(), 'Soul Tree visit note');
+}
+function stPrintHandout(s){
+  const S = STG(), H = S.handout;
+  const parts = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; if (!a.length) return ''; return `<div class="pr-step" style="border-left-color:${p.color}"><h3>${esc(p.part)}: ${esc(p.hand)}</h3><ul>${a.map(n => { const pr = p.practices.find(x => x.name === n); return `<li><b>${esc(n)}.</b> ${esc(pr ? pr.how : '')}</li>`; }).join('')}</ul></div>`; }).join('');
+  printNow(ph('For you') + `<h1>${esc(H.title)}</h1><p><i>${esc(H.lead)}</i></p>
+    <h2>Six parts of your tree</h2><ul>${S.parts.map(p => `<li><b>${esc(p.part)}:</b> ${esc(p.hand)}</li>`).join('')}</ul>
+    <h2>Ways to tend it</h2>${parts || '<p>Pick one part of your tree, and do one small thing for it this week.</p>'}${s.custom ? `<p><b>Also:</b> ${esc(s.custom)}</p>` : ''}
+    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>
+    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}` + `<div class="pr-foot">Soul Tree&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title);
+}
+
+// ----- the visit runner -----
+function startST(visit, cid){ stStart(visit, cid, false); }
+function stStart(visit, cid, demo){
+  const S = STG(), c = demo ? {id:'demo', name:S.demo.name, st:{type:S.demo.type, consent:{how:'verbal', date:today()}}} : CL(cid);
+  if (!c) return;
+  if (!demo && !stHasConsent(c)) return go('soultree', {stc:c.id});
+  const type = c.st.type;
+  RUN = {kind:'st', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set:(visit === 'full' && type === 'staff') ? 'staff' : 'standard',
+    stem:type === 'patient' ? 'patient' : (visit === 'full' && type === 'staff') ? 'staff' : 'standard', started:Date.now(), step:0,
+    ans:{}, impr:{}, pn:{}, safety:{opener:'', direct:'', notAsked:false, reason:'', reasonText:'', actions:[]}, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
+  stOpenRun();
+}
+const stSteps = r => ['open', ...(r.visit === 'full' ? STG().parts.map(p => 'p:' + p.key) : [r.visit === 'quick' ? 'quick' : 'talk']), 'safety', 'close', 'plan'];
+function stOpenRun(){ $('#runner').classList.remove('hide'); stDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
+function stKeep(){ if (RUN && !RUN.demo){ DATA.draft = RUN; save(); } }
+const stChip = (act, attrs, on, label) => `<button type="button" class="chip" data-act="${act}" ${attrs} aria-pressed="${!!on}">${esc(label)}</button>`;
+function stQ(k, i, text){
+  const cur = ((RUN.ans||{})[k]||{})[i];
+  return `<div class="st-q"><p>${i === 'q' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}</p><div class="st-opts" role="group" aria-label="${esc(text)}">${STG().scale.map(o => stChip('st-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div></div>`;
+}
+function stDraw(){
+  const S = STG(), steps = stSteps(RUN), st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), n = steps.length;
+  const pct = Math.round(RUN.step / (n - 1) * 100);
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if (st === 'open'){
+    const v = S.visits.find(x => x[0] === RUN.visit);
+    body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])}</h2><p class="purpose">${esc(v[3])}</p>
+     <div class="card step-card" style="margin-top:14px">${blk('Say', S.openers.say, 'say')}<div class="tipbox">${esc(S.openers.tip)}</div></div>
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}${RUN.set === 'staff' ? '<p class="muted" style="margin-top:12px">Using the staff question set.</p>' : ''}`;
+  } else if (st.startsWith('p:')){
+    const p = stPart(st.slice(2)), qs = stQuestions(RUN.visit, RUN.set, p.key);
+    body = `<div class="run-step-n">Part ${S.parts.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
+     <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.aloud], 'say')}<p class="muted" style="margin-top:8px"><b>Ask:</b> "${esc(S.stems[RUN.stem])}"</p></div>
+     ${qs.map((q, i) => stQ(p.key, i, q.t)).join('')}
+     <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
+     <label class="f" for="st-pn">Your notes (private)</label><textarea id="st-pn" data-stpn="${p.key}" style="min-height:80px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key]||'')}</textarea>`;
+  } else if (st === 'quick'){
+    body = `<div class="run-step-n">Six quick questions</div><h2 class="run-step-t">One for each part</h2><p class="muted">Read each one aloud. Let them answer in their own words, then tap.</p>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${stQ(p.key, 0, p.quick).replace('<span class="st-n">1</span>', '')}<details class="st-lf"><summary>Listen for</summary><ul>${p.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details></div>`).join('')}
+     <label class="f" for="st-pq">Your notes (private)</label><textarea id="st-pq" data-stf="priv" style="min-height:80px">${esc(RUN.priv)}</textarea>`;
+  } else if (st === 'talk'){
+    body = `<div class="run-step-n">Open conversation</div><h2 class="run-step-t">Follow where they lead</h2><p class="muted">Use any of these, in any order. After, mark how each part seemed to you.</p>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${blk('Ask', [p.aloud, ...p.open], 'say')}
+      <details class="st-lf"><summary>Listen for</summary><ul>${p.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>
+      <div class="st-opts" role="group" aria-label="${esc(p.part)}">${S.impressions.map(o => stChip('st-impr', `data-k="${p.key}" data-v="${o[0]}"`, RUN.impr[p.key] === o[0], o[1])).join('')}</div>
+      <textarea data-stpn="${p.key}" style="min-height:64px;margin-top:10px" placeholder="Your notes (private)" aria-label="${esc(p.part)} notes">${esc(RUN.pn[p.key]||'')}</textarea></div>`).join('')}`;
+  } else if (st === 'safety'){
+    const F = S.safety, sf = RUN.safety, flag = stSafetyFlag(sf);
+    body = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
+     <div class="card step-card">${blk('Say', [F.say], 'say')}</div>
+     <div class="st-q"><p>${esc(F.opener)}</p><div class="st-opts" role="group" aria-label="Hopeless or a burden">${S.scale.map(o => stChip('st-safe', `data-k="opener" data-v="${o[0]}"`, sf.opener === o[0], o[1])).join('')}</div></div>
+     <div class="st-q"><p>${esc(F.direct)}</p><div class="st-opts" role="group" aria-label="Thoughts of ending life">${F.directOpts.map(o => stChip('st-safe', `data-k="direct" data-v="${o[0]}"`, sf.direct === o[0], o[1])).join('')}</div></div>
+     <div class="tipbox">${esc(F.note)}</div>
+     ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+       <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div>
+       <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('st-tog', `data-g="actions" data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
+     <label class="cb" style="margin-top:16px"><input type="checkbox" data-stsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
+     ${sf.notAsked ? `<select data-stsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-stsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  } else if (st === 'close'){
+    body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
+     ${S.tags.map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('st-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
+     <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${S.did.map(t => stChip('st-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
+     <label class="f" for="st-sum">Summary for the visit note</label><textarea id="st-sum" data-stf="summary" placeholder="A few plain lines your team can read">${esc(RUN.summary)}</textarea>
+     ${RUN.visit === 'quick' ? '' : `<label class="f" for="st-priv">Private notes</label><textarea id="st-priv" data-stf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`}`;
+  } else {
+    body = `<div class="run-step-n">Care plan</div><h2 class="run-step-t">Choose one or two small things</h2><p class="muted">Choose together. Less is more. These go on the handout.</p>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.hand)}</small></div><div class="st-opts">${p.practices.map(pr => stChip('st-plan', `data-k="${p.key}" data-v="${esc(pr.name)}"`, (RUN.plan[p.key]||[]).includes(pr.name), pr.name)).join('')}</div></div>`).join('')}
+     <label class="f" for="st-cu">Anything else</label><input type="text" id="st-cu" data-stf="custom" value="${esc(RUN.custom)}" placeholder="Call her sister Sunday">
+     ${stIsMe(c) ? '' : `<h4 style="margin-top:18px">Referrals</h4><div class="st-opts">${S.referrals.map(t => stChip('st-tog', `data-g="refs" data-v="${esc(t)}"`, RUN.refs.includes(t), t)).join('')}</div>`}
+     ${RUN.demo ? '' : `<div class="grid g2"><div><label class="f" for="st-fd2">Follow-up date</label><input type="date" id="st-fd2" data-stf="fdate" value="${esc(RUN.fdate)}"></div><div><label class="f" for="st-ft2">Follow-up note</label><input type="text" id="st-ft2" data-stf="ftext" value="${esc(RUN.ftext)}" placeholder="Visit again"></div></div>`}`;
+  }
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(stVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span><button class="bar-btn" data-act="st-pause" aria-label="Close">&times;</button></div></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="run-body" id="run-body"><div class="wrap">${body}</div></div>
+    <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="st-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
+    ${st === 'plan' ? `<button class="btn btn-gold" data-act="st-save">${icon('check')} ${RUN.demo ? 'Finish Demo' : 'Save Visit'}</button>` : `<button class="btn btn-gold" data-act="st-next">${st === 'open' ? 'Begin' : 'Next'} &rsaquo;</button>`}</div></div>`;
+  tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
+}
+function stNext(){
+  const st = stSteps(RUN)[RUN.step], sf = RUN.safety;
+  if (st === 'safety' && !sf.notAsked && !sf.direct) return alert('Ask the second safety question, or check "I didn\'t ask these today" and say why.');
+  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
+  if (st === 'safety' && stSafetyFlag(sf) && !sf.actions.length && !confirm('This is a positive screen. You haven\'t marked what you did. Go on anyway?')) return;
+  RUN.step++; stKeep(); stDraw();
+}
+function stSaveRun(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  const s = {id:r.id, u:Date.now(), kind:'st', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)),
+    visit:r.visit, set:r.set, ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, scores:stScore(r),
+    safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext};
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ s.person = c; V = {tab:'soultree', stv:'demo', stDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  DATA.sessions.push(s); DATA.draft = null;
+  if (c){ touch(c); c.last = today(); if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
+  save(); go('soultree', {stv:s.id}); toast('Visit saved.');
+}
+function stPause(){
+  if (RUN.demo){ if (!confirm('Close the demo?')) return; }
+  else if (!confirm('Close this visit? Your notes are kept, and you can pick it up again next time you open the Field Guide.')) return;
+  if (!RUN.demo){ DATA.draft = RUN; save(); toast('Visit paused.'); }
+  clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+}
+function stToggle(t){
+  const on = t.getAttribute('aria-pressed') !== 'true';
+  const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
+  if (a === 'st-ans'){ const i = t.dataset.i; RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][i] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
+  else if (a === 'st-impr'){ RUN.impr[k] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
+  else if (a === 'st-safe'){ RUN.safety[k] = v; stKeep(); const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; return; }
+  else if (a === 'st-plan'){ const arr = RUN.plan[k] = RUN.plan[k] || []; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
+  else if (a === 'st-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
+  stKeep();
+}
+
+// ----- moving sessions from public Soul Tree -----
+function stLocalCodes(){ try { const ix = JSON.parse(localStorage.getItem('soul-tree:client-index') || '[]'); return Array.isArray(ix) ? ix : []; } catch(e){ return []; } }
+function stLocalCount(){ return stLocalCodes().length; }
+async function stImport(clients){
+  let people = 0, visits = 0;
+  for (const [code, hist] of Object.entries(clients || {})){
+    if (!Array.isArray(hist) || !hist.length) continue;
+    let c = DATA.clients.find(x => x.st && x.st.importCode === code);
+    if (!c){ c = {id:uid(), u:Date.now(), name:code, service:'Soul Tree', status:'active', followups:[], created:today(), st:{type:'community', consent:{how:'before', date:hist[0].date || today()}, importCode:code}}; DATA.clients.push(c); people++; }
+    for (const h of hist){
+      const id = 'imp' + await sha12(code + '|' + (h.savedAt || '') + '|' + (h.date || ''));
+      if (DATA.sessions.some(x => x.id === id) || (DATA.deleted && DATA.deleted.sessions && DATA.deleted.sessions[id])) continue;
+      const plan = {}; let custom = [];
+      Object.entries(h.carePlan || {}).forEach(([k, v]) => { if (v && v.selected && v.selected.length) plan[k] = v.selected.slice(); if (v && v.custom) custom.push(v.custom); });
+      const scores = {}; STG().parts.forEach(p => { const x = (h.scores || {})[p.key]; scores[p.key] = typeof x === 'number' ? x : null; });
+      DATA.sessions.push({id, u:Date.now(), kind:'st', imported:true, clientId:c.id, date:h.date || today(), minutes:0, visit:'full', set:'standard', scores, plan, custom:custom.join('; '),
+        summary:[h.referral ? 'Referral: ' + h.referral : '', h.narrative || ''].filter(Boolean).join('\n'), tags:[], did:[], refs:[], safety:null});
+      visits++;
+      if (!c.last || (h.date || '') > c.last) c.last = h.date;
+    }
+    touch(c);
+  }
+  await persist(); render();
+  toast(visits ? `Moved ${visits} visit${visits === 1 ? '' : 's'}${people ? ` for ${people} new ${people === 1 ? 'person' : 'people'}` : ''}. Set who each person is.` : 'Nothing new to move.');
+}
+async function stImportLocal(){
+  const codes = stLocalCodes(), out = {};
+  codes.forEach(code => { try { out[code] = JSON.parse(localStorage.getItem('soul-tree:client:' + code) || '[]'); } catch(e){} });
+  if (!confirm(`Move ${codes.length} ${codes.length === 1 ? 'person' : 'people'} from public Soul Tree on this browser into the Field Guide? They'll be encrypted here. The public copy stays until you remove it in Soul Tree's Practitioner mode.`)) return;
+  await stImport(out);
+}
+async function stImportFile(file){
+  try { const d = JSON.parse(await file.text()); if (d.app !== 'soul-tree' || !d.clients) throw 0; await stImport(d.clients); }
+  catch(e){ alert("That isn't a Soul Tree Practitioner backup. In public Soul Tree, open Practitioner mode and download a backup there."); }
+}
+
+// ----- Owner: turn Soul Tree Guide on or off for Field users (through Update a Library) -----
+function stFieldRow(){
+  const S = STG();
+  if (!S) return `<p class="muted">Soul Tree Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Soul Tree Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="st-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+}
+async function stSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.soulTreeGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.soulTreeGuide.open = Object.assign({}, next.soulTreeGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title: on ? 'Open Soul Tree Guide to Field users' : 'Close Soul Tree Guide to Field users', note:'', rows:[['Replaces', 'soulTreeGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+
+// ---------------- OWNER: update a library ----------------
+// Library edits never need a code in chat. Download for Editing gives a plain copy to send to a chat.
+// Update a Library takes the file a chat gives back (a whole library, or a patch that sets named
+// sections), shows what will change, and seals it here with that level's current key. The sealed file
+// joins "Ready to upload". Keys and codes never leave this device.
+const LEVELS = ['field','staff','owner'];
+async function sha12(t){ const h = await crypto.subtle.digest('SHA-256', enc.encode(t)); return Array.from(new Uint8Array(h)).slice(0, 6).map(b => b.toString(16).padStart(2, '0')).join(''); }
+const pendingBox = lvl => { const d = DATA.owner.draft; return (d && d.libs && d.libs[lvl]) || BOX[lvl]; };
+async function pendingPlain(lvl){
+  const d = DATA.owner.draft, k = effKeys()[lvl];
+  if (d && d.libs && d.libs[lvl]) return await tryOpen(d.libs[lvl], k);
+  return lvl === 'owner' ? OWN : lvl === 'staff' ? LIB : FLD;
+}
+function pathGet(o, path){ return path.split('.').reduce((a, k) => (a && typeof a === 'object') ? a[k] : undefined, o); }
+function pathSet(o, path, val){ const ks = path.split('.'); let a = o; ks.slice(0, -1).forEach(k => { if (!a[k] || typeof a[k] !== 'object') a[k] = {}; a = a[k]; }); a[ks[ks.length - 1]] = val; }
+function pathDel(o, path){ const ks = path.split('.'); const a = pathGet(o, ks.slice(0, -1).join('.')) ; const t = ks.length > 1 ? a : o; if (t && typeof t === 'object') delete t[ks[ks.length - 1]]; }
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+async function downloadForEdit(lvl){
+  const plain = await pendingPlain(lvl);
+  if (!plain) return alert("This device can't open the " + LEVEL_NAME[lvl] + ' library.');
+  const rev = plain._rev || 0, base = await sha12(pendingBox(lvl).ct);
+  const file = {_gfg:'library-edit', level:lvl, rev, base, made:today(),
+    warning:'Plain, readable copy for editing in a chat. Never upload this file to the website. Delete it when the edit is done.', data:plain};
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(file, null, 1)], {type:'application/json'}));
+  a.download = lvl + '-library-rev' + rev + '-EDIT-do-not-upload.json'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  toast('Downloaded. Never upload it to the site.');
+}
+async function readUpdate(file){
+  let f; try { const txt = await file.text(); if (/window\.GFG_/.test(txt)) return alert("That's a sealed library file for the site. Choose the update file a chat gave you instead (it ends in .json)."); f = JSON.parse(txt); } catch(e){ return alert("That file couldn't be read. Choose the .json update file from the chat."); }
+  if (!f || !['library-edit','library-patch'].includes(f._gfg) || !LEVELS.includes(f.level)) return alert("That isn't a Field Guide library update.");
+  const lvl = f.level, cur = await pendingPlain(lvl);
+  if (!cur) return alert("This device can't open the " + LEVEL_NAME[lvl] + ' library, so it can\'t update it. See "Finish setup."');
+  const next = JSON.parse(JSON.stringify(cur)), rows = [], warns = [];
+  if (f._gfg === 'library-edit'){
+    if (!f.data || typeof f.data !== 'object' || Array.isArray(f.data)) return alert('That update file is empty.');
+    Object.keys(next).forEach(k => delete next[k]); Object.assign(next, JSON.parse(JSON.stringify(f.data)));
+    const keys = new Set([...Object.keys(cur), ...Object.keys(next)].filter(k => k[0] !== '_'));
+    keys.forEach(k => { if (!(k in cur)) rows.push(['Adds', k]); else if (!(k in next)) rows.push(['Removes', k]); else if (!same(cur[k], next[k])) rows.push(['Changes', k]); });
+    if (rows.some(r => r[0] === 'Removes')) warns.push('This removes whole sections. Make sure that was meant.');
+    if (f.base && f.base !== await sha12(pendingBox(lvl).ct)) warns.push('This file was made from an older copy of the library. Anything changed since then will be undone. If you are not sure, download a fresh copy for editing and redo the change.');
+  } else {
+    Object.entries(f.set || {}).forEach(([path, val]) => { const had = pathGet(cur, path); if (!same(had, val)) rows.push([had === undefined ? 'Adds' : 'Replaces', path]); pathSet(next, path, JSON.parse(JSON.stringify(val))); });
+    (f.remove || []).forEach(path => { if (pathGet(cur, path) !== undefined){ rows.push(['Removes', path]); pathDel(next, path); } });
+  }
+  if (!rows.length) return alert('Nothing in that file is different from the library as it stands. Nothing to do.');
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl, title: f.title || (f._gfg === 'library-edit' ? 'Edited library' : 'Library update'), note: f.note || '', rows, warns, from: cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+async function sealUpdate(){
+  const U = V.upd; if (!U) return;
+  const d = ensureDraft(), k = effKeys()[U.lvl];
+  if (!k) return alert("This device can't open that library.");
+  const box = await seal(await rawKey(k), U.next);
+  // The pre-levels Staff code opens the Staff library through its salt. Keep it while the key is unchanged.
+  if (!d.keys[U.lvl] && BOX[U.lvl] && BOX[U.lvl].salt) box.salt = BOX[U.lvl].salt;
+  d.libs[U.lvl] = box;
+  if (U.lvl === 'owner') OWN = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
+  V.upd = null; await persist(); render(); toast('Sealed. It is in "Ready to upload."');
+}
+function vUpdateCard(){
+  const U = V.upd;
+  const pick = `<div class="card"><h3>Update a library</h3><p class="muted">For wording changes and new material from a chat. Keys and codes never leave this device.</p>
+   <p style="margin-top:10px"><b>To change wording that's already there:</b> download a copy for editing and send it to the chat. It's a plain, readable file, so never upload it to the site, and delete it when you're done.</p>
+   <div class="row" style="margin-top:8px"><select id="upd-lvl" style="max-width:220px" aria-label="Library">${LEVELS.map(l => `<option value="${l}">${LEVEL_NAME[l]} library</option>`).join('')}</select><button class="btn btn-line btn-sm" data-act="upd-dl">Download for Editing</button></div>
+   <p style="margin-top:14px"><b>When a chat gives you an update file:</b> choose it here. You'll see what changes before anything is sealed.</p>
+   <div class="row" style="margin-top:8px"><label class="btn btn-gold btn-sm" style="cursor:pointer">Choose Update File<input type="file" id="upd-file" accept=".json,application/json" hidden></label></div></div>`;
+  if (!U) return pick;
+  return `<div class="card" id="upd-card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${LEVEL_NAME[U.lvl]} library &middot; revision ${U.from} to ${U.from + 1}</div><h3>${esc(U.title)}</h3>
+   ${U.note ? `<p class="muted" style="margin-top:4px">${esc(U.note)}</p>` : ''}
+   <div style="margin-top:8px">${U.rows.map(r => `<div class="list-row"><div class="lr-main"><span class="pill ${r[0] === 'Removes' ? 'warn' : 'gold'}">${r[0]}</span> <b>${esc(r[1])}</b></div></div>`).join('')}</div>
+   ${U.warns.map(w => `<p class="tipbox" style="border-left:3px solid var(--danger)">${esc(w)}</p>`).join('')}
+   <p class="muted" style="margin-top:10px">Sealing adds lib-${U.lvl}.js to "Ready to upload." Nothing changes for anyone until you upload it.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="upd-seal">Seal It</button><button class="btn btn-line" data-act="upd-cancel">Cancel</button></div></div>`;
 }
 
 // ---------------- SETTINGS ----------------
@@ -1125,6 +1574,7 @@ function printGuide(g){
     + (g.after ? `<h2>After the session</h2><ul>${g.after.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') + pf(), g.title);
 }
 function printSession(s){
+  if (s && s.kind === 'st') return stPrintNote(s, CL(s.clientId));
   const g = G(s.guideId) || {steps:[], title:'Session'}, c = s.clientId ? CL(s.clientId) : null;
   printNow(ph('Confidential session note') + `<h1>${esc(g.title)}</h1><p>${c ? esc(c.name) + ' &middot; ' : ''}${nice(s.date)} &middot; ${s.minutes||0} minutes</p>
     <h2>Summary</h2><p style="white-space:pre-wrap">${esc(s.summary||'')}</p><h2>Next steps</h2><p style="white-space:pre-wrap">${esc(s.next||'')}</p>
@@ -1230,7 +1680,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -1276,6 +1726,30 @@ document.addEventListener('click', async e => {
       const d = ensureDraft(); d.codes.codes = d.codes.codes.filter(x => x.id !== v); DATA.owner.saved = DATA.owner.saved.filter(x => x.id !== v);
       await relink(d); await persist(); if (V.show === v) V.show = null; render(); break; }
     case 'own-rot': await rotateLevel(v); break;
+    case 'upd-dl': await downloadForEdit($('#upd-lvl').value); break;
+    case 'upd-seal': await sealUpdate(); break;
+    case 'upd-cancel': V.upd = null; render(); break;
+    case 'st-field': await stSetField(v === 'on'); break;
+    case 'st-new': { const n = $('#st-nn').value.trim(); if (!n){ $('#st-nn').focus(); return; } const c = {id:uid(), u:Date.now(), name:n, service:'Soul Tree', status:'active', followups:[], created:today(), st:{type:$('#st-nt').value, consent:null}}; DATA.clients.push(c); save(); go('soultree', {stc:c.id}); break; }
+    case 'st-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), st:{type:'me'}}; DATA.clients.push(c); save(); go('soultree', {stp:c.id}); break; }
+    case 'st-open': { const c = CL(v); if (!c) return; if (!c.st){ c.st = {type:'community', consent:null}; touch(c); save(); } go('soultree', {stp:v}); break; }
+    case 'st-consent': go('soultree', {stc:v}); break;
+    case 'st-consent-save': { const c = CL(v), h = (document.querySelector('input[name=st-ch]:checked') || {}).value; if (!h) return alert('Choose how consent was given, or Declined.'); c.st.consent = {how:h, by:$('#st-cby').value.trim(), date:$('#st-cd').value || today()}; touch(c); save(); go('soultree', {stp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); break; }
+    case 'st-start': startST(v, t.dataset.c); break;
+    case 'st-demo': stStart('quick', null, true); break;
+    case 'st-next': stNext(); break;
+    case 'st-prev': if (RUN && RUN.step > 0){ RUN.step--; stKeep(); stDraw(); } break;
+    case 'st-save': stSaveRun(); break;
+    case 'st-pause': stPause(); break;
+    case 'st-ans': case 'st-impr': case 'st-safe': case 'st-plan': case 'st-tog': if (RUN) stToggle(t); break;
+    case 'st-visit': go('soultree', {stv:v}); break;
+    case 'st-copy-note': { const s = stFindVisit(); if (s) copy(stNote(s, V.stv === 'demo' ? s.person : CL(s.clientId))); break; }
+    case 'st-print-note': { const s = stFindVisit(); if (s) stPrintNote(s, V.stv === 'demo' ? s.person : CL(s.clientId)); break; }
+    case 'st-print-hand': { const s = stFindVisit(); if (s) stPrintHandout(s); break; }
+    case 'st-del-visit': if (confirm('Delete this visit?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('soultree', {stp:s.clientId}); else go('soultree'); } break;
+    case 'st-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('soultree'); } break;
+    case 'st-add-fu': { const c = CL(v), d = $('#st-fd').value, tx = $('#st-ft').value.trim(); if (!d){ $('#st-fd').focus(); return; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); break; }
+    case 'st-imp-local': await stImportLocal(); break;
     case 'own-dl': download(v === 'codes' ? 'codes.js' : 'lib-' + v + '.js', draftFile(v)); break;
     case 'own-discard': {
       if (!confirm('Discard every change that hasn\'t been uploaded? Codes made since then will be forgotten.')) return;
@@ -1290,6 +1764,12 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('input', e => {
   const t = e.target; if (!DATA) return;
+  if (RUN && RUN.kind === 'st'){
+    if (t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
+    if (t.dataset.stpn){ RUN.pn[t.dataset.stpn] = t.value; stKeep(); return; }
+    if (t.dataset.stsafe === 'reasonText'){ RUN.safety.reasonText = t.value; stKeep(); return; }
+  }
+  if (t.dataset.stc === 'name' && V.stp){ const c = CL(V.stp); c.name = t.value; touch(c); save(); return; }
   if (RUN && t.dataset.note !== undefined){ RUN.notes[t.dataset.note] = t.value; DATA.draft = RUN; save(); return; }
   if (RUN && t.dataset.f){ RUN[t.dataset.f] = t.value; DATA.draft = RUN; save(); return; }
   if (t.dataset.c && V.client){ const c = CL(V.client); c[t.dataset.c] = t.value; touch(c); save(); return; }
@@ -1299,6 +1779,11 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
+  if (RUN && RUN.kind === 'st' && t.dataset.stsafe){ const k = t.dataset.stsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; stKeep(); if (k === 'notAsked'){ const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; } return; }
+  if (RUN && RUN.kind === 'st' && t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
+  if (t.dataset.stc && V.stp){ const c = CL(V.stp); if (t.dataset.stc === 'type') c.st.type = t.value; else c[t.dataset.stc] = t.value; touch(c); save(); if (t.tagName === 'SELECT') render(); return; }
+  if (t.dataset.stfu !== undefined && V.stp){ const c = CL(V.stp); c.followups[+t.dataset.stfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); return; }
+  if (t.id === 'st-imp-file' && t.files[0]){ const f = t.files[0]; t.value = ''; stImportFile(f); return; }
   if (RUN && t.dataset.prep !== undefined){ RUN.prep[t.dataset.prep] = t.checked; t.closest('.tick').classList.toggle('done', t.checked); DATA.draft = RUN; save(); return; }
   if (RUN && t.dataset.after !== undefined){ RUN.after[t.dataset.after] = t.checked; t.closest('.tick').classList.toggle('done', t.checked); DATA.draft = RUN; save(); return; }
   if (RUN && t.dataset.fb){ RUN[t.dataset.fb] = t.checked; DATA.draft = RUN; save(); return; }
@@ -1310,6 +1795,7 @@ document.addEventListener('change', e => {
   if (t.dataset.actCb === 'agree' && t.checked){ DATA.training.agreed = today(); save(); render(); return; }
   if (t.dataset.set){ DATA.settings[t.dataset.set] = t.value; save(); return; }
   if (t.id === 'imp' && t.files[0]) importBackup(t.files[0]);
+  if (t.id === 'upd-file' && t.files[0]){ const f = t.files[0]; t.value = ''; readUpdate(f); }
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden && DATA) persist(); });
 
