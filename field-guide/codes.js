@@ -3,7 +3,7 @@
 // Made and changed by the Access manager (Owner tab). Replace this whole file with the one it downloads.
 window.GFG_CODES = {
  "v": 1,
- "stamp": "a7bb9c77c06c",
+ "stamp": "muoqvj9ltrngi",
  "salt": "YDaHLbQgDd0HU0BbtgF6Cg==",
  "codes": [
   {
@@ -19,8 +19,16 @@ window.GFG_CODES = {
  ],
  "links": {
   "owner>field": {
-   "iv": "HGj/0t6Y8ngODfuC",
-   "ct": "9b7f5tOSJp6E/ZMyUP44wFESBO4JFdcBWxADHHCb8h84UwSyhDWetHVUc8XCnSs9dFNohRQXg/l/sRNPnzWsQ8HoHgC+"
+   "iv": "EqqnEz9e/L2q55fD",
+   "ct": "pCMQFNzCw+DzD3oaF7CDL8XFTV37vTDiZm1tC7X7Ysf3kJJ/NVZ2stnPBY55K+7cVdjbYbc4hDvvW1Ntr6BHcQg4t/w="
+  },
+  "owner>staff": {
+   "iv": "rlXokXHBrOD9xs8I",
+   "ct": "drjDbwO5EkRKXN1KhanwcNZjo0+OX+nVv4JjYG5FmuX+CqTHW7Ta/poIeT0wfs2RdxO5xdJLmLINGq2OW/HZJ/X9i0w="
+  },
+  "staff>field": {
+   "iv": "NweidGzFhIRZ0Dsk",
+   "ct": "2fNRhc3kDbKDPBHMJ0xwiSuylsvbl8j7B/AdJkQlVhdVRSYiSo962t4AexoJ/t/ozyrY9jhbAah4tA6tfmzzY/gu3tg="
   }
  }
 };
