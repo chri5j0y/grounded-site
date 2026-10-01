@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
+<script src="/shared/gg-app.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -807,6 +808,8 @@ a.big-btn{text-decoration:none;}
 
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-pdf.js"></script>
+<script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js"></script>
 <script src="/sprout/guides.js"></script>
 <script src="/sprout/checkup.js"></script>
@@ -1673,8 +1676,19 @@ function sproutGroveAns(ans) { const v = { sun: 5, cloud: 3, rain: 1 }, out = {}
 function groveKid() { const k = loadKids()[kidId(S.name)]; return k && k._pid && window.GGP && window.GGCare && GGP.isOpen(k._pid) ? k : null; }
 function groveBtnHTML(rec) {
   const k = groveKid(), label = S.mode === 'grown' && k ? `Tend ${esc(k.name)}'s Grove` : 'Tend Your Grove';
-  if (!k || !Object.keys(sproutGroveAns(rec.answers)).length) return `<a class="big-btn" href="/grove/">${label}</a>`;
-  return `<button class="big-btn" id="grove-send" data-rec="${esc(rec.id)}" onclick="sendSproutGrove()">${label}</button>`;
+  const has = Object.keys(sproutGroveAns(rec.answers)).length > 0;
+  const phone = has ? `<button class="soft-btn" onclick="sproutToPhone('${esc(rec.id)}')">Send to Another Phone</button>` : '';
+  // In the Sprout app, The Grove is its own app: one tap opens it with these answers.
+  if (window.GGApp && GGApp.native && has) return `<button class="big-btn" onclick="sproutToPhone('${esc(rec.id)}', true)">${label}</button>`;
+  if (!k || !has) return `<a class="big-btn" href="/grove/">${label}</a>${phone}`;
+  return `<button class="big-btn" id="grove-send" data-rec="${esc(rec.id)}" onclick="sendSproutGrove()">${label}</button>${phone}`;
+}
+// The Grove on another phone, or the Grove app on this one. Only Grove answers travel: never the safety step.
+function sproutToPhone(recId, app) {
+  const k = loadKids()[kidId(S.name)]; if (!k || !window.GGApp) return;
+  const rec = (k.checkups || []).find(c => c.id === recId) || k.checkups[k.checkups.length - 1]; if (!rec) return;
+  const entry = { from: 'sprout', name: k.name, age: 'sprout', date: rec.date, answers: sproutGroveAns(rec.answers) };
+  if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
 }
 function sendSproutGrove() {
   const k = groveKid(), btn = $('grove-send'); if (!k || !btn) return;
@@ -2162,7 +2176,12 @@ function newCheckupFor(id) {
   toast('Check the grade, then start the checkup.');
 }
 
-/* ---------- printout ---------- */
+/* ---------- printout ----------
+   App-ready: every sheet can be a real PDF for the share sheet (text, email, save), with Print as a backup. */
+function ggSheet(title, file, el, printFn, note) {
+  if (!window.GGApp || !el) { printFn(); return; }
+  GGApp.sheet({ title, file, note, print: printFn, blocks: () => ggPdfFromEl(el, { eyebrow: 'Sprout by Grounded', foot: 'Sprout(TM) by Grounded. growwithgrounded.com' }) });
+}
 function showPrint() {
   const kid = loadKids()[S.kid];
   if (!kid || !kid.plan) return;
@@ -2179,7 +2198,7 @@ function renderPrint(kid) {
   const nextStr = fmtKey(addDays(plan.end, 1), { weekday: 'long', month: 'long', day: 'numeric' });
   $('view-print').innerHTML = `
     <div class="action-row no-print" style="margin:0 0 18px;justify-content:center">
-      <button class="big-btn" onclick="printPlan()">Print my care plan</button>
+      <button class="big-btn" onclick="printPlan()">Save or print my care plan</button>
       <button class="soft-btn" onclick="openTree('${esc(S.kid)}','tree')">Back to my tree</button>
     </div>
     <article class="sheet" aria-label="Care plan">
@@ -2197,6 +2216,10 @@ function renderPrint(kid) {
     </article>`;
 }
 function printPlan() {
+  const kid = loadKids()[S.kid], el = document.querySelector('#view-print .sheet');
+  ggSheet(kid ? kid.name + "'s care plan" : 'Care plan', 'sprout-care-plan.pdf', el, printPlanNow, 'The PDF has the coloring chart and lines. Print keeps the tree picture too.');
+}
+function printPlanNow() {
   document.body.classList.add('print-plan');
   window.print();
   setTimeout(() => document.body.classList.remove('print-plan'), 800);
@@ -2312,7 +2335,7 @@ function renderGuide() {
   $('view-guide').innerHTML = `<div class="guide">
     <h2 class="grown">The grown-up guide</h2>
     <p class="lead">Sprout&trade; is a gentle checkup for kids in grades K to 5. It helps children notice how they are growing inside and gives them small, doable ways to grow stronger. This guide is for parents, guardians, and teachers.</p>
-    <div class="action-row no-print" style="margin-top:0"><button class="soft-btn" onclick="printGuide()">Print this guide</button></div>
+    <div class="action-row no-print" style="margin-top:0"><button class="soft-btn" onclick="printGuide()">Save or print this guide</button></div>
     <nav class="guide-toc no-print" aria-label="Guide sections">
       <a href="#g-what">What Sprout is</a><a href="#g-how">How it works</a><a href="#g-talk">Talking about answers</a><a href="#g-parts">The six parts</a><a href="#g-parents">For parents and guardians</a><a href="#g-teachers">For teachers</a><a href="#g-changes">When life changes</a><a href="#g-reach">When to reach out</a><a href="#g-sources">Sources</a>
     </nav>
@@ -2411,6 +2434,9 @@ function renderGuide() {
   </div>`;
 }
 function printGuide() {
+  ggSheet('The grown-up guide', 'sprout-grown-up-guide.pdf', document.querySelector('#view-guide .guide') || $('view-guide'), printGuideNow);
+}
+function printGuideNow() {
   document.body.classList.add('print-guide');
   window.print();
   setTimeout(() => document.body.classList.remove('print-guide'), 800);
@@ -2485,7 +2511,7 @@ function openTalk(id, from) {
   $('view-talk').innerHTML = `<article class="talk" style="--rc:${r.color}">
     <div class="action-row no-print" style="margin:0 0 14px">
       <button class="link-btn" onclick="${LIFE.from === 'tree' ? "go('tree')" : "go('life')"}">${LIFE.from === 'tree' ? 'Back to the tree' : 'Back to all guides'}</button>
-      <button class="soft-btn" style="margin-left:auto" onclick="printTalk()">Print this guide</button>
+      <button class="soft-btn" style="margin-left:auto" onclick="printTalk()">Save or print this guide</button>
     </div>
     <span class="ring-tag">${esc(r.name)}</span>
     <h2>${esc(t.title)}</h2>
@@ -2510,6 +2536,10 @@ function openTalk(id, from) {
   go('talk');
 }
 function printTalk() {
+  const h = document.querySelector('#view-talk h2');
+  ggSheet(h ? h.textContent : 'Talking it through', 'sprout-' + (h ? h.textContent : 'guide').toLowerCase().replace(/['\u2019]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.pdf', document.querySelector('#view-talk .talk'), printTalkNow);
+}
+function printTalkNow() {
   document.body.classList.add('print-talk');
   window.print();
   setTimeout(() => document.body.classList.remove('print-talk'), 800);
@@ -2525,6 +2555,6 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
-<script src="https://growwithgrounded.com/nav.js" defer></script>
+<script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>

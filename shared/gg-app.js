@@ -1,0 +1,349 @@
+/* =====================================================================
+   GROUNDED APP FOUNDATION (gg-app.js)
+   One shared layer so every Grounded tool works the same way on the
+   website today and inside its own phone app later (Capacitor).
+   Load it first, before the tool's own scripts. On the website nothing
+   about saved records changes: same keys, same browser storage.
+
+   Storage
+     GGStore.get(key) / set(key, text) / remove(key)
+     GGStore.json(key, fallback) / setJSON(key, value)
+     On the website: asks the browser to keep this site's storage
+     (navigator.storage.persist) so it isn't cleared to save space.
+     In an app: every write is also copied into the phone's own
+     permanent storage (Capacitor Preferences). If the phone ever
+     clears the web storage, the app puts everything back on start.
+
+   Links
+     In an app, outside links open the phone's own browser, and tel:,
+     sms:, and mailto: open the dialer, messages, and mail. Links to a
+     Grounded tool that isn't inside this app open the website instead.
+
+   Files
+     GGApp.share(blob, name, title)  the share sheet (text, email, save,
+                                     print); downloads on a desktop
+     GGApp.sheet({ title, file, blocks, print })
+                                     asks "Save or share PDF" or "Print".
+                                     In an app it goes straight to the PDF.
+
+   Sending a check-in to The Grove (separate apps, or another phone)
+     GGApp.handoff.code(entry)       entry {from, name, age, answers}
+     GGApp.handoff.url(entry)        a link to The Grove with the answers
+                                     after the #, the part of a link a
+                                     browser never sends to any server
+     GGApp.handoff.send(entry)       one tap: opens The Grove app on this
+                                     phone when it's there, otherwise
+                                     shows a QR code for another phone
+     GGApp.handoff.pending()         The Grove: a check-in waiting, or null
+     GGApp.handoff.clear()
+
+   Daily reminders (scheduled on the phone, nothing sent to a server)
+     GGApp.remind.can()              true inside an app
+     GGApp.remind.get(id)            {on, time}
+     GGApp.remind.set(id, {on, time, title, body})
+   ===================================================================== */
+(function () {
+  if (window.GGApp) return;
+
+  var CAP = window.Capacitor;
+  var NATIVE = !!(CAP && CAP.isNativePlatform && CAP.isNativePlatform());
+  var PLATFORM = NATIVE && CAP.getPlatform ? CAP.getPlatform() : 'web';
+  var CFG = window.GG_APP_CONFIG || {};          // written by the app build: {app, tools:[...], pages:[...]}
+  var P = function (name) { return NATIVE && CAP.Plugins ? CAP.Plugins[name] : null; };
+  var SITE = 'https://growwithgrounded.com';
+  var TOOLS = ['sprout', 'sapling', 'soul-tree', 'grove', 'field-guide'];
+  var SCHEMES = { 'sprout': 'grounded-sprout', 'sapling': 'grounded-sapling', 'soul-tree': 'grounded-soultree', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
+
+  document.documentElement.classList.add(NATIVE ? 'gg-native' : 'gg-web');
+  if (NATIVE) document.documentElement.classList.add('gg-' + PLATFORM);
+
+  // Phone-first: on touch screens, small header buttons and footer links get a full 44px tap area.
+  (function () {
+    var st = document.createElement('style'); st.id = 'ggx-touch';
+    st.textContent = '@media (pointer:coarse){.ggp-btn,.gg-theme{min-width:44px;min-height:44px}' +
+      '.site-footer a{display:inline-block;padding-top:8px;padding-bottom:8px}' +
+      '.link-btn,.text-btn{min-height:44px}.btn,.gg-rbtn,.gg-rvoice select,select{min-height:44px}}';
+    (document.head || document.documentElement).appendChild(st);
+  })();
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  /* ---------------- STORAGE ---------------- */
+  var LS = null; try { LS = window.localStorage; LS.getItem('gg-probe'); } catch (e) { LS = null; }
+  var MIRROR = 'ls:';
+  var PREFS = P('Preferences');
+
+  if (NATIVE && LS && PREFS) {
+    // Copy every write into the phone's permanent storage too.
+    var sp = Storage.prototype, setI = sp.setItem, remI = sp.removeItem, clr = sp.clear;
+    sp.setItem = function (k, v) { setI.call(this, k, v); if (this === LS) { try { PREFS.set({ key: MIRROR + k, value: String(v) }); } catch (e) {} } };
+    sp.removeItem = function (k) { remI.call(this, k); if (this === LS) { try { PREFS.remove({ key: MIRROR + k }); } catch (e) {} } };
+    sp.clear = function () { var keys = []; if (this === LS) for (var i = 0; i < LS.length; i++) keys.push(LS.key(i)); clr.call(this); if (this === LS) keys.forEach(function (k) { try { PREFS.remove({ key: MIRROR + k }); } catch (e) {} }); };
+    // On start: put back anything the phone cleared, then mirror anything not yet copied.
+    var restoring = false;
+    try { restoring = sessionStorage.getItem('gg-restored') === '1'; } catch (e) {}
+    PREFS.keys().then(function (r) {
+      var keys = (r && r.keys) || [], missing = 0, jobs = [];
+      keys.forEach(function (pk) {
+        if (pk.indexOf(MIRROR) !== 0) return;
+        var k = pk.slice(MIRROR.length);
+        if (LS.getItem(k) !== null) return;
+        jobs.push(PREFS.get({ key: pk }).then(function (g) { if (g && g.value != null) { setI.call(LS, k, g.value); missing++; } }));
+      });
+      return Promise.all(jobs).then(function () {
+        for (var i = 0; i < LS.length; i++) { var k = LS.key(i); if (keys.indexOf(MIRROR + k) < 0) { try { PREFS.set({ key: MIRROR + k, value: LS.getItem(k) }); } catch (e) {} } }
+        if (missing && !restoring) { try { sessionStorage.setItem('gg-restored', '1'); } catch (e) {} location.reload(); }
+      });
+    }).catch(function () {});
+  } else if (LS && navigator.storage && navigator.storage.persist) {
+    // Website: ask the browser to keep this site's saved records.
+    try { navigator.storage.persisted().then(function (on) { if (!on) navigator.storage.persist().catch(function () {}); }).catch(function () {}); } catch (e) {}
+  }
+
+  window.GGStore = {
+    get: function (k) { try { return LS ? LS.getItem(k) : null; } catch (e) { return null; } },
+    set: function (k, v) { try { if (LS) { LS.setItem(k, String(v)); return true; } } catch (e) {} return false; },
+    remove: function (k) { try { if (LS) LS.removeItem(k); } catch (e) {} },
+    json: function (k, fb) { try { var v = JSON.parse(LS.getItem(k)); return v == null ? fb : v; } catch (e) { return fb; } },
+    setJSON: function (k, v) { return this.set(k, JSON.stringify(v)); },
+    keys: function () { var o = []; try { for (var i = 0; i < LS.length; i++) o.push(LS.key(i)); } catch (e) {} return o; }
+  };
+
+  /* ---------------- LINKS ---------------- */
+  function toolOf(url) {
+    var m = /^\/([a-z-]+)\//.exec(url.pathname || '');
+    return m && TOOLS.indexOf(m[1]) >= 0 ? m[1] : null;
+  }
+  function openOutside(href) {
+    var B = P('Browser'), L = P('AppLauncher');
+    if (/^(tel|sms|mailto):/i.test(href)) {             // the phone's own dialer, messages, or mail
+      if (L) { L.openUrl({ url: href }).catch(function () { location.href = href; }); return; }
+      location.href = href; return;
+    }
+    if (B && /^https?:/i.test(href)) { B.open({ url: href }).catch(function () { window.open(href, '_blank'); }); return; }
+    window.open(href, '_system');
+  }
+  // Another Grounded tool: its own app when it's on this phone, otherwise the website.
+  function openTool(t, web) {
+    var L = P('AppLauncher'), sc = SCHEMES[t];
+    if (!L || !sc) { openOutside(web); return; }
+    L.canOpenUrl({ url: sc + '://' }).then(function (r) { if (r && r.value) return L.openUrl({ url: sc + '://open' }); openOutside(web); }).catch(function () { openOutside(web); });
+  }
+  if (NATIVE) {
+    document.addEventListener('click', function (ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+      if (!a || ev.defaultPrevented) return;
+      var href = a.getAttribute('href') || '';
+      if (/^(tel|sms|mailto):/i.test(href)) { ev.preventDefault(); openOutside(href); return; }
+      if (!/^https?:/i.test(a.href)) return;
+      var u; try { u = new URL(a.href); } catch (e) { return; }
+      var ours = u.host === location.host || /(^|\.)growwithgrounded\.com$/.test(u.hostname);
+      if (ours) {
+        var t = toolOf(u), mine = (CFG.tools || []);
+        if (t && mine.indexOf(t) >= 0) {           // part of this app: stay inside it
+          if (u.host !== location.host) { ev.preventDefault(); location.href = u.pathname + u.search + u.hash; }
+          return;
+        }
+        if (u.host === location.host && !t) {        // a page in the app bundle stays; a website page opens the browser
+          var pages = CFG.pages || null, path = u.pathname.replace(/\/index\.html$/, '/');
+          if (!pages || pages.indexOf(path) >= 0 || /\.(pdf|png|jpe?g|svg|json|js|css)$/i.test(path)) return;
+          ev.preventDefault(); openOutside(SITE + u.pathname + u.search); return;
+        }
+        ev.preventDefault();
+        if (t) openTool(t, SITE + u.pathname + u.search); else openOutside(SITE + u.pathname + u.search);
+        return;
+      }
+      ev.preventDefault(); openOutside(a.href);
+    }, true);
+  }
+
+  /* ---------------- SMALL DIALOG ---------------- */
+  var CSS = '.ggx-back{position:fixed;inset:0;z-index:2147483000;background:rgba(28,18,10,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}' +
+    '@media(min-width:600px){.ggx-back{align-items:center}}' +
+    '.ggx{background:#FAF7F2;color:#2C1810;border-radius:20px;max-width:440px;width:100%;padding:24px 22px 18px;font-family:Barlow,system-ui,sans-serif;font-size:17px;line-height:1.45;box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:calc(100vh - 32px);overflow:auto}' +
+    '.ggx h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;font-weight:600;margin:0 0 6px;line-height:1.15}' +
+    '.ggx p{margin:0 0 12px;color:#4A3B30}.ggx .ggx-btns{display:flex;flex-direction:column;gap:10px;margin-top:16px}' +
+    '.ggx button{min-height:50px;border-radius:14px;font:600 17px Barlow,system-ui,sans-serif;cursor:pointer;border:2px solid #8B5E1A;padding:10px 16px}' +
+    '.ggx .ggx-main{background:#8B5E1A;color:#fff}.ggx .ggx-line{background:transparent;color:#8B5E1A}.ggx .ggx-quiet{border-color:transparent;background:transparent;color:#66564A;min-height:44px}' +
+    '.ggx button:focus-visible{outline:3px solid #2C6E8F;outline-offset:2px}.ggx .ggx-qr{background:#fff;border-radius:14px;padding:14px;margin:6px auto 12px;max-width:260px}.ggx .ggx-qr svg{display:block;width:100%;height:auto}' +
+    '.ggx .ggx-small{font-size:14px;color:#66564A}' +
+    '[data-theme=dark] .ggx{background:#241A13;color:#F3EADB}[data-theme=dark] .ggx p{color:#D9CBB5}[data-theme=dark] .ggx .ggx-small,[data-theme=dark] .ggx .ggx-quiet{color:#BFAF98}[data-theme=dark] .ggx .ggx-line{color:#E2B66E;border-color:#E2B66E}' +
+    '@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .ggx{background:#241A13;color:#F3EADB}:root:not([data-theme=light]) .ggx p{color:#D9CBB5}:root:not([data-theme=light]) .ggx .ggx-small,:root:not([data-theme=light]) .ggx .ggx-quiet{color:#BFAF98}:root:not([data-theme=light]) .ggx .ggx-line{color:#E2B66E;border-color:#E2B66E}}';
+  function styleOnce() { if (document.getElementById('ggx-css')) return; var s = document.createElement('style'); s.id = 'ggx-css'; s.textContent = CSS; document.head.appendChild(s); }
+  // dialog({title, html, buttons:[{t, kind:'main'|'line'|'quiet', fn}]}) returns a close function.
+  function dialog(o) {
+    styleOnce();
+    var back = document.createElement('div'); back.className = 'ggx-back';
+    var prev = document.activeElement;
+    back.innerHTML = '<div class="ggx" role="dialog" aria-modal="true" aria-labelledby="ggx-t"><h2 id="ggx-t">' + esc(o.title) + '</h2>' + (o.html || '') +
+      '<div class="ggx-btns">' + (o.buttons || []).map(function (b, i) { return '<button type="button" class="ggx-' + (b.kind || 'line') + '" data-i="' + i + '">' + esc(b.t) + '</button>'; }).join('') + '</div></div>';
+    function close() { back.remove(); document.removeEventListener('keydown', key); if (prev && prev.focus) try { prev.focus(); } catch (e) {} }
+    function key(e) { if (e.key === 'Escape') close(); }
+    back.addEventListener('click', function (e) {
+      if (e.target === back) { close(); return; }
+      var b = e.target.closest('button[data-i]'); if (!b) return;
+      var f = o.buttons[+b.dataset.i]; close(); if (f && f.fn) f.fn();
+    });
+    document.addEventListener('keydown', key);
+    document.body.appendChild(back);
+    var first = back.querySelector('button'); if (first) first.focus();
+    return close;
+  }
+  function toast(msg) {
+    if (typeof window.toast === 'function') { try { window.toast(msg); return; } catch (e) {} }
+    if (typeof window.showToast === 'function') { try { window.showToast(msg); return; } catch (e) {} }
+    styleOnce();
+    var t = document.createElement('div');
+    t.setAttribute('role', 'status');
+    t.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:#2C1810;color:#fff;padding:12px 18px;border-radius:12px;font:500 16px Barlow,system-ui,sans-serif;z-index:2147483001;max-width:90vw';
+    t.textContent = msg; document.body.appendChild(t); setTimeout(function () { t.remove(); }, 3200);
+  }
+
+  /* ---------------- FILES ---------------- */
+  function b64(blob) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(String(r.result).split(',')[1]); }; r.onerror = rej; r.readAsDataURL(blob); }); }
+  function share(blob, name, title) {
+    var FS = P('Filesystem'), SH = P('Share');
+    if (FS && SH) {
+      return b64(blob).then(function (data) { return FS.writeFile({ path: name, data: data, directory: 'CACHE' }); })
+        .then(function (w) { return SH.share({ title: title || name, files: [w.uri], dialogTitle: title || name }); })
+        .catch(function (e) { if (e && /cancel/i.test(String(e.message || e))) return; toast('That file could not be shared. Try again.'); });
+    }
+    try {
+      var f = new File([blob], name, { type: blob.type || 'application/pdf' });
+      if (navigator.canShare && navigator.canShare({ files: [f] }) && (navigator.maxTouchPoints > 0)) {
+        return navigator.share({ files: [f], title: title || name }).catch(function (e) { if (e && e.name !== 'AbortError') download(blob, name); });
+      }
+    } catch (e) {}
+    download(blob, name); return Promise.resolve();
+  }
+  function download(blob, name) {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast('Saved as ' + name + '.');
+  }
+  // sheet({title, file, blocks: () => [...] , print: () => {}}): PDF for the share sheet, Print as a backup.
+  function sheet(o) {
+    function pdf() {
+      if (!window.ggPdf) { if (o.print) o.print(); return; }
+      var bl; try { bl = typeof o.blocks === 'function' ? o.blocks() : o.blocks; } catch (e) { bl = null; }
+      if (!bl || !bl.length) { if (o.print) o.print(); return; }
+      share(window.ggPdf(bl), o.file || 'grounded.pdf', o.title);
+    }
+    if (NATIVE || !o.print) { pdf(); return; }
+    dialog({ title: o.title || 'Save or print', html: '<p>Save it as a PDF to keep, text, or email, or print it now.</p>' + (o.note ? '<p class="ggx-small">' + esc(o.note) + '</p>' : ''),
+      buttons: [{ t: 'Save or Share PDF', kind: 'main', fn: pdf }, { t: 'Print', kind: 'line', fn: o.print }, { t: 'Cancel', kind: 'quiet' }] });
+  }
+
+  /* ---------------- HANDOFF TO THE GROVE ---------------- */
+  var FROM = { 'sprout': 'Sprout', 'sapling': 'Sapling', 'soul-tree': 'Soul Tree' };
+  var AGES = ['sprout', 'sapling', 'heartwood', 'adult'];
+  function enc64(s) { return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  function dec64(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return decodeURIComponent(escape(atob(s))); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function today() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  // Only these fields travel, and only in this shape.
+  function clean(e) {
+    if (!e || !FROM[e.from]) return null;
+    var ans = {}, n = 0;
+    Object.keys(e.answers || e.a || {}).forEach(function (k) {
+      var v = +(e.answers || e.a)[k];
+      if (/^[a-z]{2,12}\.\d{1,2}$/.test(k) && v >= 1 && v <= 5 && n < 60) { ans[k] = Math.round(v); n++; }
+    });
+    if (!n) return null;
+    var age = AGES.indexOf(e.age) >= 0 ? e.age : 'adult';
+    var dd = String(e.date || e.d || ''), date = today();
+    if (/^\d{4}-\d\d-\d\d$/.test(dd)) date = dd;
+    else if (/^\d{4}-\d\d-\d\dT/.test(dd)) { var x = new Date(dd); if (!isNaN(x)) date = x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()); }
+    return { from: e.from, name: String(e.name || e.n || '').replace(/[<>]/g, '').slice(0, 40), age: age, date: date, answers: ans };
+  }
+  function code(entry) {
+    var c = clean(entry); if (!c) return '';
+    return 'g1.' + enc64(JSON.stringify({ f: c.from, n: c.name, g: c.age, d: c.date, a: c.answers }));
+  }
+  function unpack(s) {
+    try {
+      if (!/^g1\./.test(s)) return null;
+      var j = JSON.parse(dec64(s.slice(3)));
+      return clean({ from: j.f, name: j.n, age: j.g, date: j.d, answers: j.a });
+    } catch (e) { return null; }
+  }
+  var PEND = 'gg-handoff-in';
+  function takeHash(h) {
+    var m = /[#&]gg-in=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;
+    var c = unpack(m[1]);
+    if (c) { try { sessionStorage.setItem(PEND, JSON.stringify(c)); } catch (e) {} }
+    return true;
+  }
+  // The Grove reads a check-in from its own link, then wipes it from the address bar right away.
+  if (takeHash(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  var APP = P('App');
+  if (APP && APP.addListener) {
+    APP.addListener('appUrlOpen', function (d) {
+      var u = (d && d.url) || '';
+      if (takeHash(u.slice(u.indexOf('#')))) { try { window.dispatchEvent(new CustomEvent('gg-handoff')); } catch (e) {} }
+    });
+  }
+  function url(entry) { var c = code(entry); return c ? SITE + '/grove/#gg-in=' + c : ''; }
+  function qrDialog(entry, why) {
+    var link = url(entry); if (!link) { toast('There is nothing to send yet.'); return; }
+    var svg = '';
+    try { if (window.GGQR) svg = window.GGQR.svg(link); } catch (e) { svg = ''; }
+    var who = entry.name ? esc(entry.name) + "'s" : 'These';
+    dialog({
+      title: 'Send to The Grove',
+      html: (why ? '<p>' + esc(why) + '</p>' : '') +
+        (svg ? '<div class="ggx-qr" aria-label="QR code for The Grove">' + svg + '</div><p>Scan this with the phone or tablet that has The Grove. ' + who + ' answers travel inside the code, phone to phone.</p>' : '<p>Copy the link and open it on the phone or tablet that has The Grove.</p>') +
+        '<p class="ggx-small">Nothing is uploaded. The answers ride after the # in the link, the part a browser never sends to any server, and The Grove asks before adding them to anyone\'s tree.</p>',
+      buttons: [{ t: 'Copy the Link', kind: svg ? 'line' : 'main', fn: function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(function () { toast('Link copied.'); }, function () { toast('Copy did not work on this device.'); });
+        else toast('Copy did not work on this device.');
+      } }, { t: 'Done', kind: 'quiet' }]
+    });
+  }
+  // One tap: The Grove app on this phone if it's there, otherwise a QR code.
+  function send(entry) {
+    var c = code(entry); if (!c) { toast('There is nothing to send yet.'); return Promise.resolve(false); }
+    var L = P('AppLauncher');
+    if (NATIVE && L && CFG.app !== 'grove') {
+      var target = SCHEMES.grove + '://in#gg-in=' + c;
+      return L.canOpenUrl({ url: SCHEMES.grove + '://' }).then(function (r) {
+        if (r && r.value) return L.openUrl({ url: target }).then(function () { return true; });
+        qrDialog(entry, 'The Grove app isn\'t on this phone. Get The Grove, or send these answers to another phone.'); return false;
+      }).catch(function () { qrDialog(entry); return false; });
+    }
+    qrDialog(entry); return Promise.resolve(false);
+  }
+
+  /* ---------------- DAILY REMINDERS ---------------- */
+  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, sprout: 1002, sapling: 1003, 'soul-tree': 1004 };
+  var remind = {
+    can: function () { return !!P('LocalNotifications'); },
+    get: function (id) { var all = GGStore.json(RKEY, {}); return all[id] || { on: false, time: '07:00' }; },
+    set: function (id, o) {
+      var all = GGStore.json(RKEY, {}), cur = all[id] || {};
+      var r = { on: !!o.on, time: /^\d\d:\d\d$/.test(o.time || '') ? o.time : (cur.time || '07:00'), title: String(o.title || cur.title || 'Grounded'), body: String(o.body || cur.body || '') };
+      all[id] = r; GGStore.setJSON(RKEY, all);
+      var LN = P('LocalNotifications'); if (!LN) return Promise.resolve(false);
+      var nid = RID[id] || 1099;
+      return LN.cancel({ notifications: [{ id: nid }] }).catch(function () {}).then(function () {
+        if (!r.on) return false;
+        return LN.requestPermissions().then(function (p) {
+          if (!p || p.display !== 'granted') { toast('Reminders are off for this app in your phone\'s settings.'); return false; }
+          var hm = r.time.split(':');
+          return LN.schedule({ notifications: [{ id: nid, title: r.title, body: r.body, schedule: { on: { hour: +hm[0], minute: +hm[1] }, allowWhileIdle: true } }] }).then(function () { return true; });
+        });
+      });
+    }
+  };
+
+  window.GGApp = {
+    native: NATIVE, platform: PLATFORM, app: CFG.app || null, config: CFG,
+    store: window.GGStore, share: share, download: download, sheet: sheet, dialog: dialog, toast: toast, esc: esc, open: openOutside,
+    handoff: {
+      code: code, url: url, send: send, qr: qrDialog, unpack: unpack,
+      pending: function () { try { return clean(JSON.parse(sessionStorage.getItem(PEND))); } catch (e) { return null; } },
+      clear: function () { try { sessionStorage.removeItem(PEND); } catch (e) {} },
+      fromName: function (f) { return FROM[f] || 'another Grounded tool'; }
+    },
+    remind: remind
+  };
+})();

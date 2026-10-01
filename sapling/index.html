@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
+<script src="/shared/gg-app.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -367,6 +368,8 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-pdf.js"></script>
+<script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js"></script>
 <script src="checkup.js"></script>
 <script>
@@ -1352,8 +1355,18 @@ function sapGroveAns(ring){
 }
 function sapGroveBtn(ring){
   const s = me(), a = window.GGP && GGP.active(), label = s && a && s._pid && a.id !== s._pid ? `Tend ${esc(s.name)}'s Grove` : 'Tend Your Grove';
-  if (!s || !s._pid || !window.GGP || !window.GGCare || !GGP.isOpen(s._pid) || !Object.keys(sapGroveAns(ring)).length) return `<a class="btn" href="/grove/">${label}</a>`;
-  return `<button class="btn" id="grove-send" onclick="sapSendGrove('${esc(ring.id)}')">${label}</button>`;
+  const has = !!s && Object.keys(sapGroveAns(ring)).length > 0;
+  const phone = has ? `<button class="btn ghost" onclick="sapToPhone('${esc(ring.id)}')">Send to Another Phone</button>` : '';
+  // In the Sapling app, The Grove is its own app: one tap opens it with these answers.
+  if (window.GGApp && GGApp.native && has) return `<button class="btn" onclick="sapToPhone('${esc(ring.id)}', true)">${label}</button>`;
+  if (!s || !s._pid || !window.GGP || !window.GGCare || !GGP.isOpen(s._pid) || !has) return `<a class="btn" href="/grove/">${label}</a>${phone}`;
+  return `<button class="btn" id="grove-send" onclick="sapSendGrove('${esc(ring.id)}')">${label}</button>${phone}`;
+}
+// The Grove on another phone, or the Grove app on this one. Never the safety answers or the optional question.
+function sapToPhone(id, app){
+  const s = me(), ring = s && s.rings.find(r => r.id === id); if (!ring || !window.GGApp) return;
+  const entry = { from:'sapling', name:s.name, age:'sapling', date:ring.date, answers:sapGroveAns(ring) };
+  if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
 }
 function sapSendGrove(id){
   const s = me(), ring = s && s.rings.find(r => r.id === id), btn = $('grove-send'); if (!ring || !btn) return;
@@ -1744,7 +1757,7 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="https://growwithgrounded.com/read.js" defer></script>
-<script src="https://growwithgrounded.com/nav.js" defer></script>
+<script src="/read.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js';document.head.appendChild(s)"></script>
+<script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>

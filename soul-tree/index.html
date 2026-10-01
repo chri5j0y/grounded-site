@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
+<script src="/shared/gg-app.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -999,6 +1000,8 @@ html.ts-2 main{zoom:1.25;}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-pdf.js"></script>
+<script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js"></script>
 <script src="/soul-tree/guides.js"></script>
 <script>
@@ -2424,7 +2427,7 @@ function generateCarePlanDoc(mode) {
       </div>
     </div>
     <div class="btn-row no-print">
-      <button class="btn btn-secondary" onclick="printCarePlan('${sheetId}')">Print or Save as PDF</button>
+      <button class="btn btn-secondary" onclick="printCarePlan('${sheetId}')">Save or Print My Plan</button>
       ${isClient ? '<button class="btn btn-secondary" onclick="savePersonalFile()">Save My Results</button>' : ''}
     </div>
     ${isClient ? `<p class="soft-invite no-print">Want company while you keep this plan? <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Grounded.</a> sends a new story every Wednesday.</p>
@@ -2569,7 +2572,16 @@ function enforcePracticeLimit(el, mode, key) {
   }
 }
 
+// App-ready: a real PDF for the share sheet (text, email, save), with Print as a backup.
 function printCarePlan(sheetId) {
+  const sheet = document.getElementById(sheetId);
+  if (!sheet) return;
+  if (!window.GGApp) { printCarePlanNow(sheetId); return; }
+  const guide = /lc-article/.test(sheetId), h = sheet.querySelector('h2,h1,.care-plan-title');
+  GGApp.sheet({ title: guide ? (h ? h.textContent : 'This guide') : 'Soul Tree care plan', file: guide ? 'soul-tree-guide.pdf' : 'soul-tree-care-plan.pdf', print: () => printCarePlanNow(sheetId),
+    blocks: () => ggPdfFromEl(sheet, { rows: '.care-plan-domain-header', eyebrow: 'Soul Tree by Grounded', foot: 'Soul Tree(TM) by Grounded. growwithgrounded.com' }) });
+}
+function printCarePlanNow(sheetId) {
   document.querySelectorAll('.print-target').forEach(el => el.classList.remove('print-target'));
   const sheet = document.getElementById(sheetId);
   if (!sheet) return;
@@ -2860,9 +2872,17 @@ function renderGroveBox() {
     box.innerHTML = `<div class="save-box"><div class="save-box-title">On its way to The Grove</div><p>${n} matching answer${n !== 1 ? 's are' : ' is'} waiting in The Grove, locked in your profile. The Grove fills them in and you finish the rest.</p><div class="btn-row"><a class="btn btn-primary" href="/grove/">Open The Grove</a></div></div>`;
     return;
   }
-  box.innerHTML = `<div class="save-box"><div class="save-box-title">Tend your tree every day in The Grove</div><p>Soul Tree is for checking in. The Grove turns what you noticed into small daily practices. Send your ${n} matching answer${n !== 1 ? 's' : ''} there, locked in your profile the whole way.</p><div class="btn-row"><button class="btn btn-primary" onclick="sendToGrove()">Tend Your Grove</button></div></div>`;
+  box.innerHTML = `<div class="save-box"><div class="save-box-title">Tend your tree every day in The Grove</div><p>Soul Tree is for checking in. The Grove turns what you noticed into small daily practices. Send your ${n} matching answer${n !== 1 ? 's' : ''} there, locked in your profile the whole way.</p><div class="btn-row"><button class="btn btn-primary" onclick="sendToGrove()">Tend Your Grove</button>${window.GGApp && !GGApp.native ? '<button class="btn btn-secondary" onclick="stToPhone()">Send to Another Phone</button>' : ''}</div></div>`;
+}
+// The Grove on another phone, or the Grove app on this one. Only the matching Grove answers travel.
+function stToPhone(app) {
+  const ans = window.stGroveAns || {}; if (!Object.keys(ans).length || !window.GGApp) return;
+  const a = window.GGP && GGP.active(), nm = (document.getElementById('client-save-name') || {}).value || '';
+  const entry = { from: 'soul-tree', name: (a && a.name) || nm.trim(), age: (a && a.age) || 'adult', answers: ans };
+  if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
 }
 async function sendToGrove() {
+  if (window.GGApp && GGApp.native) { stToPhone(true); return; }   // in the Soul Tree app, The Grove is its own app
   if (!window.GGP || !window.GGCare) return;
   if (!GGP.active()) { const ok = await GGP.require({ age: 'adult', reason: 'Your answers travel to The Grove inside your own profile, locked with a passcode only you know.' }); if (!ok) return; }
   const a = GGP.active(); if (!a) return;
@@ -3102,7 +3122,7 @@ function lcDetail(mode, t) {
   return `<article class="lc-article" id="${mode}-lc-article" style="--rc:${r.color}">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px">
       <button class="lc-back" onclick="lcClose('${mode}')">Back to all guides</button>
-      <button class="btn btn-secondary" onclick="printCarePlan('${mode}-lc-article')">Print this guide</button>
+      <button class="btn btn-secondary" onclick="printCarePlan('${mode}-lc-article')">Save or Print This Guide</button>
     </div>
     <span class="lc-tag">${lcEsc(r.name)}</span>
     <h2>${lcEsc(t.title)}</h2>
@@ -3183,7 +3203,7 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="https://growwithgrounded.com/read.js" defer></script>
-<script src="https://growwithgrounded.com/nav.js" defer></script>
+<script src="/read.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js';document.head.appendChild(s)"></script>
+<script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>

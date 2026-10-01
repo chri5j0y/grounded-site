@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
+<script src="/shared/gg-app.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -456,6 +457,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
   .water-btn{font-size:16px;padding:14px 20px 14px 16px;}
 }
 
+.remind-on{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:600;cursor:pointer}.remind-on input{width:22px;height:22px;accent-color:var(--gold,#8B5E1A)}
 </style>
 </head>
 <body data-season="planting">
@@ -545,6 +547,8 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 <script src="/grove/library.js"></script>
 <script src="/shared/grove-scene.js"></script>
 <script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-pdf.js"></script>
+<script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-profiles.js"></script>
 <script>
@@ -814,6 +818,7 @@ function renderTabs(){
 }
 function setSeason(){ const wi = weekInfo(S.self); document.body.dataset.season = S.mode==='self' && wi ? wi.season : 'planting'; }
 function render(){
+  setTimeout(handoffCheck, 0);
   renderTabs(); setSeason();
   const v = $('#view');
   if (!document.getElementById('g-prof-note')) v.insertAdjacentHTML('beforebegin', '<div id="g-prof-note"></div>');
@@ -1125,9 +1130,9 @@ function viewToday(){
   <div style="margin-top:28px">${storyCard(wi.week, G)}</div>
   <div class="card" style="margin-top:18px"><h3>Keep it going</h3>
    <div class="grid-2" style="margin-top:12px;align-items:end">
-    <div><label class="lbl" for="remind">Daily reminder time</label><div style="display:flex;gap:10px;flex-wrap:wrap"><input type="time" id="remind" value="${S.remind}" style="max-width:160px"><button class="btn btn-line btn-sm" data-act="ics">${icon('calendar')}Add to my calendar</button></div></div>
+    <div><label class="lbl" for="remind">Daily reminder time</label><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><input type="time" id="remind" value="${S.remind}" style="max-width:160px">${remindCan() ? `<label class="remind-on"><input type="checkbox" id="remind-on" ${remindOn() ? 'checked' : ''}> Remind me every day</label>` : `<button class="btn btn-line btn-sm" data-act="ics">${icon('calendar')}Add to my calendar</button>`}</div></div>
     <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="print-week" data-who="self">${icon('print')}Print this week</button><button class="btn btn-line btn-sm" data-act="save-image">${icon('image')}Save my tree</button></div>
-   </div><p class="note">The calendar file adds a daily "Tend Your Grove" reminder to your phone or computer calendar for the next twelve weeks.</p></div>`;
+   </div><p class="note">${remindCan() ? 'A gentle reminder at this time each day, set on this phone. It only says it\'s time to tend your tree, never what your practices are.' : 'The calendar file adds a daily "Tend Your Grove" reminder to your phone or computer calendar for the next twelve weeks.'}</p></div>`;
 }
 // =====================================================================
 // WEEKLY CHECK-IN
@@ -1365,7 +1370,14 @@ function careExport(){
 // =====================================================================
 // PRINT, CALENDAR, IMAGE, BACKUP
 // =====================================================================
+// App-ready: every printout can be a real PDF for the share sheet (text, email, save), with Print as a backup.
 function printDoc(title, body){
+  if (!window.GGApp || !window.ggPdfFromHTML){ printDocNow(title, body); return; }
+  const name = title.split(',')[0].trim();
+  GGApp.sheet({ title: name, file: 'the-grove-' + name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') + '.pdf', print: () => printDocNow(title, body),
+    blocks: () => ggPdfFromHTML(body.replace(/<div class="hd">[\s\S]*?<\/div><\/div>/, ''), { eyebrow: 'The Grove by Grounded', foot: 'The Grove(TM), a free whole health practice from Grounded. growwithgrounded.com' }) });
+}
+function printDocNow(title, body){
   const f = document.createElement('iframe'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0'; document.body.appendChild(f);
   const d = f.contentWindow.document;
   d.open(); d.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title><style>
@@ -1555,15 +1567,56 @@ document.addEventListener('input', e => {
   const t = e.target;
   if (t.id === 'lib-q'){ LIB.q = t.value; const r = $('#lib-results'); if (r) r.innerHTML = libResultsHTML(); return; }
   if (t.dataset.journal){ S.self.journal[t.dataset.journal] = t.value; flag('sf'+t.dataset.journal); }
-  else if (t.id === 'remind'){ S.remind = t.value; }
+  else if (t.id === 'remind'){ S.remind = t.value; if (remindOn()) remindSet(true); }
   else return;
   clearTimeout(saveTimer); saveTimer = setTimeout(save, 300);
 });
 function flag(id){ const f = document.getElementById(id); if (!f) return; f.classList.add('show'); clearTimeout(f._t); f._t = setTimeout(() => f.classList.remove('show'), 1200); }
 document.addEventListener('change', e => {
+  if (e.target.id === 'remind-on'){ remindSet(e.target.checked); return; }
   if (e.target.id !== 'restore') return; const file = e.target.files[0]; if (!file) return;
   const r = new FileReader(); r.onload = () => { try { const j = JSON.parse(r.result); if ((j.app !== 'the-grove' && j.app !== 'tending-the-garden') || !j.data) throw 0; S = Object.assign(S, j.data); Q = null; migrate(); save(); render(); alert('Your garden is restored.'); } catch(err){ alert('That file is not a Tending the Garden backup.'); } }; r.readAsText(file);
 });
+
+// ---------- daily reminders, in the app (scheduled on the phone, nothing sent anywhere) ----------
+// The words stay general on purpose: a lock screen never shows someone's practices or answers.
+const remindCan = () => !!(window.GGApp && GGApp.remind.can());
+const remindOn = () => remindCan() && GGApp.remind.get('grove').on;
+function remindSet(on){
+  if (!remindCan()) return;
+  GGApp.remind.set('grove', { on, time: S.remind || '07:00', title: 'Tend Your Grove', body: 'A few small practices are waiting for your tree today.' })
+    .then(ok => { if (on && ok) GGApp.toast('Reminder set for ' + niceTime(S.remind || '07:00') + ' each day.'); if (!on) GGApp.toast('Daily reminder off.'); const c = document.getElementById('remind-on'); if (c) c.checked = remindOn(); });
+}
+function niceTime(t){ const [h, m] = t.split(':').map(Number); return (h % 12 || 12) + ':' + String(m).padStart(2,'0') + (h < 12 ? ' AM' : ' PM'); }
+
+// ---------- a check-in from another phone, or from the Sprout, Sapling, or Soul Tree app ----------
+// It arrives in the link after the # (never sent to a server). Nothing is added until someone picks whose tree it's for.
+let HANDOFF_SHOWN = false, HANDOFF_READY = !window.GGP || !GGP.ready;
+function handoffCheck(){
+  if (HANDOFF_SHOWN || !window.GGApp) return;
+  if (!HANDOFF_READY){ HANDOFF_READY = true; GGP.ready.then(() => setTimeout(handoffCheck, 50), () => setTimeout(handoffCheck, 50)); return; }
+  const h = GGApp.handoff.pending(); if (!h) return;
+  HANDOFF_SHOWN = true;
+  const from = GGApp.handoff.fromName(h.from), who = h.name ? esc(h.name) + "'s" : 'Some';
+  const intro = `<p>${who} answers from ${from}, ${nice(h.date,{month:'long',day:'numeric'})}, are ready to refresh a tree here. Answers that match fill in, and you finish the rest.</p>`;
+  const P = window.GGP, ids = P && window.GGCare ? P.openIds() : [];
+  const people = ids.map(id => P.get(id)).filter(Boolean).sort((a, b) => (b.name.toLowerCase() === (h.name||'').toLowerCase()) - (a.name.toLowerCase() === (h.name||'').toLowerCase()));
+  const drop = { t: "Don't Add These", kind: 'quiet', fn: () => { GGApp.handoff.clear(); GGApp.toast('Those answers were not added.'); } };
+  if (!people.length){
+    GGApp.dialog({ title: 'A check-in arrived', html: intro + '<p>Open the profile these answers belong to, then choose its tree.</p>',
+      buttons: [{ t: 'Open a Profile', kind: 'main', fn: () => { HANDOFF_SHOWN = false; if (P && P.openDialog) P.openDialog(); } }, { t: 'Not Now', kind: 'line', fn: () => { HANDOFF_SHOWN = false; } }, drop] });
+    return;
+  }
+  GGApp.dialog({ title: 'A check-in arrived', html: intro + '<p>Whose tree is it for?</p>',
+    buttons: people.slice(0, 4).map((pp, i) => ({ t: 'Add to ' + pp.name + "'s Tree", kind: i ? 'line' : 'main', fn: () => {
+      if (!GGCare.send({ from: h.from, who: pp.id, name: h.name || pp.name, age: h.age, answers: h.answers })){ HANDOFF_SHOWN = false; GGApp.toast('Open that profile first, then try again.'); return; }
+      GGApp.handoff.clear();
+      const act = P.active();
+      if (act && act.id === pp.id){ render(); GGApp.toast('Added to ' + pp.name + "'s tree."); }
+      else location.href = '/grove/?who=' + encodeURIComponent(pp.id);
+    } })).concat([drop]) });
+}
+window.addEventListener('gg-handoff', () => { HANDOFF_SHOWN = false; handoffCheck(); });
 
 // ---------- boot ----------
 load();
@@ -1608,7 +1661,7 @@ if (window.GGP){ GGP.on(groveSync); GGP.ready.then(() => { groveSync('ready'); l
   });
 })();
 </script>
-<script src="https://growwithgrounded.com/read.js" defer></script>
-<script src="https://growwithgrounded.com/nav.js" defer></script>
+<script src="/read.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js';document.head.appendChild(s)"></script>
+<script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>
