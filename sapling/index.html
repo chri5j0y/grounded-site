@@ -226,6 +226,11 @@ h3{font-family:var(--sans);font-weight:700;font-size:20px;}
 .status b{display:block;}
 .status .s{font-size:14px;font-weight:700;}
 .s-up{color:var(--leaf);} .s-steady{color:var(--ink-soft);} .s-care{color:var(--bud);}
+.status .tend{display:block;margin-top:4px;font-weight:500;}
+.answers-list li.hard{font-weight:700;}
+.earlier{border-left:4px solid var(--line);padding:6px 10px;margin:8px 0;}
+.switch-row{display:flex;gap:12px;align-items:flex-start;}
+.switch-row input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--hero);}
 .rings-wrap{display:grid;grid-template-columns:minmax(220px,340px) 1fr;gap:20px;align-items:start;}
 @media(max-width:760px){.rings-wrap{grid-template-columns:1fr;}}
 .rings-svg{width:100%;height:auto;max-width:340px;display:block;margin:0 auto;}
@@ -363,10 +368,14 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-care.js"></script>
 <script src="/shared/gg-profiles.js"></script>
+<script src="checkup.js"></script>
 <script>
-/* Sapling by Grounded content. Questions: [text, grown-up follow-up, flag]. flag = true means "Not really" or "Not sure" shows the calm card.
+/* Sapling by Grounded content.
+   The checkup questions live in checkup.js (window.SAPLING_CHECKUP), on the Grounded tree standard.
+   QUESTIONS_V0 below is the earlier bank, kept only to show rings saved before the standard.
+   Earlier format: [text, grown-up follow-up, flag]. flag = true meant "Not really" or "Not sure" showed the calm card.
    Practices: [style, minutes, text]. Styles: move, write, quiet, connect. */
-const QUESTIONS = {
+const QUESTIONS_V0 = {
   6: {
     roots: [
       ["Is there a place where you feel calm and peaceful?", "If they name a place, ask: \"What does it feel like when you're there?\""],
@@ -872,6 +881,8 @@ const PARTS = [
   {key:'fruit', name:'Fruit', sub:'Hope', about:'Looking forward, being thankful, and believing things can get better.'}
 ];
 const PART = Object.fromEntries(PARTS.map(p => [p.key, p]));
+/* Sapling's part keys and the shared tree standard keys used in checkup.js */
+const CK_KEY = {roots:'holy', trunk:'meaning', bark:'mind', branches:'community', leaves:'body', fruit:'hope'};
 const ICONS = {
   roots:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
   trunk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21c1.5-5 2-11 2-18h4c0 7 .5 13 2 18"/><path d="M5 21h14"/><path d="M11 10c1 .5 1.5 1.5 1 3"/></svg>',
@@ -883,13 +894,12 @@ const ICONS = {
 };
 const pcolor = k => `var(--p-${k})`;
 const STYLE_NAMES = {move:'Move', write:'Write or draw', quiet:'Quiet', connect:'Connect'};
-const ANSWERS = [['yes','Yeah, most of the time',3],['some','Sometimes',2],['no','Not really',1],['unsure','Not sure',null]];
+const CK = window.SAPLING_CHECKUP;
+const ANSWERS = CK.answers;
 const ANS = Object.fromEntries(ANSWERS.map(a => [a[0], a]));
-const SAFETY_Q = [
-  'Is anyone hurting you, or making you feel unsafe at home, at school, or online?',
-  'Sometimes when life is really hard, people think about hurting themselves or not wanting to be alive. Have you had thoughts like that lately?'
-];
-const SAFETY_A = [['yes','Yes'],['no','No'],['unsure','Not sure']];
+const SAFETY_Q = CK.safety.questions.map(q => q[0]);
+const SAFETY_KIND = CK.safety.questions.map(q => q[1]);
+const SAFETY_A = CK.safety.answers;
 const TREE_STYLES = [
   {key:'sapling', name:'Sapling', need:0},
   {key:'birch', name:'Birch', need:10},
@@ -1024,26 +1034,62 @@ function cycleTextSize(){ document.body.classList.remove('ts-1','ts-2'); textSiz
 function applyTheme(s){ document.body.classList.remove('theme-winter','theme-autumn','theme-dusk'); if (s && s.theme && s.theme !== 'lake') document.body.classList.add('theme-'+s.theme); }
 
 /* ---------- scoring ---------- */
-function partAvg(ring, key){
-  const vals = (ring.answers[key]||[]).map(a => a && ANS[a] ? ANS[a][2] : null).filter(v => v != null);
-  return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
+/* Rings on the standard carry std (CK.version). Earlier rings have no std:
+   they keep their own questions (QUESTIONS_V0) and are never compared with newer ones. */
+const isStd = ring => !!ring && ring.std === CK.version;
+const sameStd = (a, b) => !!a && !!b && (a.std || 0) === (b.std || 0);
+/* The questions a checkup asked. sens = the optional sensitive question was turned on. */
+function qsFor(grade, key, sens){
+  const qs = ((CK.questions[String(grade)] || {})[CK_KEY[key]] || []).slice();
+  const x = sens && CK.sensitive[String(grade)];
+  if (x && x[0] === CK_KEY[key] && qs[x[1]]) qs[x[1]] = x[2];
+  return qs;
 }
-function level(v){ if (v == null) return ['Not sure yet','s-steady']; if (v >= 2.5) return ['Strong','s-up']; if (v >= 1.75) return ['Growing','s-steady']; return ['Needs care','s-care']; }
+const ringQs = (ring, key) => isStd(ring) ? qsFor(ring.grade, key, ring.sens) : ((QUESTIONS_V0[ring.grade] || {})[key] || []);
+const ringQa = (ring, key) => { const a = (ring.answers || {})[key]; return Array.isArray(a) ? a : ((a && a.qa) || []); };
+/* One part's score on the shared 1 to 10 scale. Reverse questions count backward. "Not sure" doesn't count. */
+function partScore(grade, key, qa, sens){
+  let sum = 0, n = 0;
+  qsFor(grade, key, sens).forEach((q, i) => {
+    const a = ANS[(qa || [])[i]]; if (!a || a[2] == null) return;
+    const v = q[2] === 'r' ? 4 - a[2] : a[2];
+    sum += (v - 1) / 2; n++;
+  });
+  return n ? Math.round(1 + 9 * sum / n) : null;
+}
+/* Earlier rings: the old 1 to 3 average, put on the same 1 to 10 line only to show that ring's own level. */
+function legacyScore(ring, key){
+  const vals = ringQa(ring, key).map(a => a && ANS[a] ? ANS[a][2] : null).filter(v => v != null);
+  return vals.length ? Math.round(1 + 9 * ((vals.reduce((a,b)=>a+b,0)/vals.length) - 1) / 2) : null;
+}
+const ringScore = (ring, key) => !ring ? null : isStd(ring) ? (((ring.answers || {})[key] || {}).score ?? null) : legacyScore(ring, key);
+const LEVEL_CLS = {strong:'s-up', steady:'s-steady', care:'s-care'};
+function levelOf(sc){ if (sc == null) return null; const l = CK.levels.find(x => sc >= x[2]) || CK.levels[CK.levels.length-1]; return [l[1], LEVEL_CLS[l[0]], l[0]]; }
+function level(sc){ return levelOf(sc) || ['Not sure yet','s-steady','none']; }
+/* Up, down, or the same, only between rings on the same standard. Two points on the 1 to 10 line counts as a change. */
 function trend(ring, prev, key){
-  const a = partAvg(ring,key), b = prev ? partAvg(prev,key) : null;
+  if (!sameStd(ring, prev) || !isStd(ring)) return null;
+  const a = ringScore(ring, key), b = ringScore(prev, key);
   if (a == null || b == null) return null;
-  if (a - b >= 0.25) return ['Growing','s-up','\u25B2'];
-  if (b - a >= 0.25) return ['Needs care','s-care','\u25BC'];
-  return ['Steady','s-steady','\u25CF'];
+  if (a - b >= 2) return ['Grew','s-up','\u25B2'];
+  if (b - a >= 2) return ['Dipped','s-care','\u25BC'];
+  return ['Same','s-steady','\u25CF'];
 }
-function statusCell(ring, prev, key){
-  const p = PART[key], t = trend(ring, prev, key), l = level(partAvg(ring,key));
-  const lab = t ? `<span class="s ${t[1]}">${t[2]} ${t[0]}</span>` : `<span class="s ${l[1]}">${l[0]}</span>`;
-  return `<div class="status" style="border-left:5px solid ${pcolor(key)}"><b>${p.name}</b><span class="muted small">${p.sub}</span><br>${lab}</div>`;
+function statusCell(ring, prev, key, grown){
+  const p = PART[key], sc = ringScore(ring, key), l = level(sc), t = trend(ring, prev, key);
+  return `<div class="status" style="border-left:5px solid ${pcolor(key)}"><b>${p.name}</b><span class="muted small">${p.sub}</span><br><span class="s ${l[1]}">${l[0]}</span>${grown && sc != null ? ` <span class="muted small">${sc} of 10</span>` : ''}${t ? ` <span class="s ${t[1]} small">${t[2]} ${t[0]}</span>` : ''}${l[2] === 'care' ? '<span class="tend muted small">This is a part to tend, not a grade.</span>' : ''}</div>`;
 }
 function lowestTwo(ring){
-  return PARTS.map(p => [p.key, partAvg(ring,p.key) ?? 1.5]).sort((a,b)=>a[1]-b[1]).slice(0,2).map(x=>x[0]);
+  return PARTS.map(p => [p.key, ringScore(ring, p.key) ?? 5.5]).sort((a,b)=>a[1]-b[1]).slice(0,2).map(x=>x[0]);
 }
+/* Flagged answers on a standard ring: a flag question answered "Yeah, most of the time" or "Sometimes". */
+function ringFlags(ring){
+  if (!isStd(ring)) return [];
+  const out = [];
+  PARTS.forEach(p => ringQs(ring, p.key).forEach((q, i) => { const a = ringQa(ring, p.key)[i]; if (q[3] && (a === 'yes' || a === 'some')) out.push({part:p.key, i, type:q[3], q:q[0], ans:ANS[a][1]}); }));
+  return out;
+}
+const ringSafe = ring => (ring.safety || []).map((v, i) => ({v, i})).filter(x => x.v === 'yes' || x.v === 'unsure');
 
 /* ---------- tree drawing ---------- */
 function rng(seed){ let s = seed; return () => (s = (s*16807) % 2147483647) / 2147483647; }
@@ -1187,31 +1233,38 @@ function setTheme(k){ const s=me(); s.theme=k; save(); renderDash(); }
 /* ---------- checkup ---------- */
 function startCheckup(){
   const s = me();
-  s.draft = {step:'intro', page:0, mode:'self', grade:s.grade, answers:{}, safety:[null,null], flags:[], started:new Date().toISOString()};
+  const sens = !!s.askSens && !!CK.sensitive[String(s.grade)];
+  s.draft = {step:'intro', page:0, mode:'self', grade:s.grade, std:CK.version, sens, answers:{}, safety:SAFETY_Q.map(() => null), flags:[], started:new Date().toISOString()};
   save(); go('checkup');
 }
 function renderCheckup(){
   const s = me(); if (!s || !s.draft){ go('dash'); return; }
   applyTheme(s);
+  // A checkup started before the questions were updated starts fresh on the new questions.
+  if (s.draft.std !== CK.version){
+    const mode = s.draft.mode || 'self', sens = !!s.askSens && !!CK.sensitive[String(s.grade)];
+    s.draft = {step:'intro', page:0, mode, grade:s.grade, std:CK.version, sens, answers:{}, safety:SAFETY_Q.map(() => null), flags:[], started:new Date().toISOString()};
+    save(); toast('Sapling\'s questions were updated, so this checkup starts fresh.');
+  }
   const d = s.draft, v = $('view-checkup');
   const prog = `<div class="progress" aria-hidden="true">${PARTS.map((p,i)=>`<span class="${d.step==='parts'&&i===d.page?'now':((d.step==='parts'&&i<d.page)||d.step==='safety'?'done':'')}"></span>`).join('')}<span class="${d.step==='safety'?'now':''}"></span></div>`;
   if (d.step === 'intro'){
     v.innerHTML = `
       <button class="back" onclick="go('dash')">&larr; Back</button>
       <h2>Before you start</h2>
-      <div class="note"><b>This is yours, and your grown-up can see it too.</b> That's so they can help, not to grade you. There are no wrong answers. "Not sure" is always okay.</div>
+      <div class="note"><b>This is yours, and your grown-up can see it too.</b> That's so they can help, not to grade you. There are no wrong answers. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Needs care.</div>
       <div class="panel">
         <h3>How are you doing this checkup?</h3>
         <div class="seg" role="group" aria-label="Checkup mode"><button aria-pressed="${d.mode==='self'}" onclick="setMode('self')">On my own</button><button aria-pressed="${d.mode==='grown'}" onclick="setMode('grown')">With a grown-up</button></div>
         <p class="muted small" style="margin-top:10px">${d.mode==='grown' ? 'Your grown-up will see a gold note with a question to talk about after each answer.' : 'Read each question and pick what fits best.'}</p>
         <p style="margin:14px 0 0"><button class="say-btn" aria-pressed="${readOn}" onclick="toggleRead()">Read aloud: ${readOn?'on':'off'}</button></p>
       </div>
-      <p class="muted">Grade ${d.grade} questions. Six parts, four questions each, then two short safety questions.</p>
+      <p class="muted">Grade ${d.grade} questions. Six parts, four questions each, then ${SAFETY_Q.length === 2 ? 'two' : SAFETY_Q.length} short safety questions.</p>
       <button class="btn" onclick="toStep('parts')">Let's go</button>`;
     return;
   }
   if (d.step === 'parts'){
-    const p = PARTS[d.page], qs = QUESTIONS[d.grade][p.key], ans = d.answers[p.key] || [];
+    const p = PARTS[d.page], qs = qsFor(d.grade, p.key, d.sens), ans = d.answers[p.key] || [];
     v.innerHTML = `${prog}
       <div class="part-head" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><div><b>${p.name}</b><span>${p.sub}, part ${d.page+1} of 6</span></div></div>
       <p class="muted">${p.about}</p>
@@ -1225,8 +1278,8 @@ function renderCheckup(){
   }
   if (d.step === 'safety'){
     v.innerHTML = `${prog}
-      <h2>Two last questions</h2>
-      <div class="note">These help make sure you're safe. There's no wrong answer, and you can skip if you want.</div>
+      <h2>${SAFETY_Q.length === 2 ? 'Two last questions' : 'Last questions'}</h2>
+      <div class="note">${esc(CK.safety.intro)}</div>
       ${SAFETY_Q.map((q,i)=>`<div class="q"><p class="qt">${q}</p><div class="answers" role="group" aria-label="${esc(q)}">${SAFETY_A.map(a=>`<button class="ans" aria-pressed="${d.safety[i]===a[0]}" onclick="safety(${i},'${a[0]}')">${a[1]}</button>`).join('')}</div></div>`).join('')}
       <div class="row"><button class="btn ghost" onclick="toStep('parts',5)">Back</button><button class="btn" onclick="finishCheckup()">Finish and add my ring</button></div>`;
     if (readOn) say(SAFETY_Q[0]);
@@ -1237,15 +1290,22 @@ function setMode(m){ me().draft.mode = m; save(); renderCheckup(); }
 function toggleRead(){ readOn = !readOn; if (!readOn) hush(); renderCheckup(); }
 function toStep(step, page){ const d = me().draft; d.step = step; if (page != null) d.page = page; else if (step==='parts' && d.page==null) d.page = 0; save(); renderCheckup(); toTop(true); }
 function answer(i, a){
-  const s = me(), d = s.draft, p = PARTS[d.page], q = QUESTIONS[d.grade][p.key][i];
+  const s = me(), d = s.draft, p = PARTS[d.page], qs = qsFor(d.grade, p.key, d.sens), q = qs[i];
   d.answers[p.key] = d.answers[p.key] || [null,null,null,null];
+  const before = d.answers[p.key][i];
   d.answers[p.key][i] = a; save();
-  const worrying = q[2] && (a === 'no' || a === 'unsure');
+  /* A flag question (alone, bullied, losing hope) answered yes or sometimes is marked for the grown-up.
+     The calm card opens right away for "Yeah, most of the time," and for "Sometimes" on bullied or losing hope. */
+  const flagged = q[3] && (a === 'yes' || a === 'some');
+  const calmFor = x => !!q[3] && (x === 'yes' || (x === 'some' && q[3] !== 'alone'));
+  const calm = calmFor(a), calmBefore = calmFor(before);
   const fkey = p.key+':'+i;
-  if (worrying && !d.flags.includes(fkey)){ d.flags.push(fkey); save(); renderCheckup(); showCalm({during:true}); return; }
-  if (!worrying) d.flags = d.flags.filter(f => f !== fkey);
+  const was = d.flags.includes(fkey);
+  if (!flagged) d.flags = d.flags.filter(f => f !== fkey);
+  else if (!was) d.flags.push(fkey);
   save(); renderCheckup();
-  const next = $('q-'+(i+1)); if (readOn && next) say(QUESTIONS[d.grade][p.key][i+1][0]);
+  if (calm && !calmBefore){ showCalm({during:true}); return; }
+  const next = $('q-'+(i+1)); if (readOn && next) say(qs[i+1][0]);
 }
 function nextPage(){ const d = me().draft; if (d.page < 5){ d.page++; save(); renderCheckup(); toTop(true); } else toStep('safety'); }
 function prevPage(){ const d = me().draft; if (d.page > 0){ d.page--; save(); renderCheckup(); toTop(true); } else toStep('intro'); }
@@ -1253,8 +1313,11 @@ function pauseCheckup(){ toast('Saved. You can pick up where you left off.'); go
 function safety(i, a){ const d = me().draft; d.safety[i] = d.safety[i] === a ? null : a; save(); renderCheckup(); if (readOn && i===0) say(SAFETY_Q[1]); }
 function finishCheckup(){
   const s = me(), d = s.draft;
-  const safetyFlag = d.safety.some(a => a !== 'no');
-  const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, mode:d.mode, answers:d.answers, safety:d.safety, flags:d.flags.slice(), safetyFlag, flagged: safetyFlag || d.flags.length>0};
+  const answers = {};
+  PARTS.forEach(p => { const qa = (d.answers[p.key] || [null,null,null,null]).slice(); answers[p.key] = {qa, score: partScore(d.grade, p.key, qa, d.sens)}; });
+  const safetyFlag = d.safety.some(a => a === 'yes' || a === 'unsure');
+  const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, std:CK.version, sens:!!d.sens, mode:d.mode, answers, safety:d.safety.slice(), flags:d.flags.slice(), safetyFlag};
+  ring.flagged = safetyFlag || ringFlags(ring).length > 0;
   s.rings.push(ring); s.draft = null; s.leaves = (s.leaves||0)+3; save();   // each checkup: one ring, three leaves
   renderResult(ring);
   if (safetyFlag) showCalm({final:true});
@@ -1262,23 +1325,29 @@ function finishCheckup(){
 /* ---------- Tend Your Grove ----------
    Sapling is for checking in. The Grove is for daily practice.
    Matching answers go to The Grove inside the student's own locked profile.
-   Map per grade: part.question index -> Grove strand.question index.
-   Yeah most of the time, Sometimes, Not really -> 5, 3, 1. "Not sure" and
-   safety questions are never sent. */
+   Map per grade: part.question index -> Grove strand.question index. Each pair
+   says the same thing the same way round, so the value is simply how often:
+   Yeah most of the time, Sometimes, Not really -> 5, 3, 1.
+   Never sent: "Not sure," safety questions, and the optional sensitive question. */
 const SAP_TO_GROVE = {
-  6: { 'roots.0':'spirit.6', 'roots.1':'spirit.3', 'roots.2':'spirit.5', 'roots.3':'create.2', 'trunk.0':'create.3', 'trunk.2':'create.6',
-       'bark.0':'mind.5', 'bark.1':'mind.0', 'branches.0':'connect.3', 'branches.1':'connect.0', 'branches.2':'connect.7',
-       'leaves.0':'rest.0', 'leaves.1':'body.7', 'leaves.2':'body.5', 'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'hope.2', 'fruit.3':'hope.6' },
-  7: { 'roots.0':'spirit.1', 'roots.2':'spirit.5', 'trunk.0':'create.3', 'bark.0':'mind.5', 'bark.1':'mind.0',
-       'branches.0':'connect.3', 'branches.2':'connect.0', 'leaves.0':'rest.0', 'leaves.1':'body.0', 'leaves.2':'body.2',
-       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'spirit.2', 'fruit.3':'hope.6' },
-  8: { 'roots.1':'spirit.5', 'roots.2':'spirit.0', 'roots.3':'spirit.1', 'trunk.0':'create.3', 'trunk.2':'create.2',
-       'bark.0':'mind.0', 'bark.2':'mind.5', 'branches.2':'connect.7', 'leaves.0':'rest.0', 'leaves.1':'body.5', 'leaves.3':'body.2',
-       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.3':'hope.6' }
+  6: { 'roots.0':'spirit.6', 'roots.1':'spirit.1', 'roots.2':'create.2', 'trunk.0':'create.4', 'trunk.2':'create.6',
+       'bark.0':'mind.0', 'bark.1':'mind.5', 'bark.2':'mind.2', 'branches.0':'connect.3', 'branches.1':'connect.0', 'branches.2':'connect.2',
+       'leaves.0':'rest.0', 'leaves.1':'body.0', 'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'hope.2', 'fruit.3':'hope.3' },
+  7: { 'roots.0':'spirit.3', 'roots.1':'spirit.5', 'roots.2':'create.2', 'trunk.0':'create.3', 'trunk.2':'create.6', 'trunk.3':'create.5',
+       'bark.0':'mind.0', 'bark.1':'mind.5', 'branches.2':'connect.2', 'leaves.0':'rest.0', 'leaves.1':'body.0', 'leaves.2':'nourish.7',
+       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'hope.6', 'fruit.3':'hope.3' },
+  8: { 'roots.0':'spirit.6', 'roots.1':'spirit.1', 'trunk.0':'create.3', 'trunk.1':'create.6', 'trunk.2':'create.2',
+       'bark.0':'mind.0', 'bark.1':'mind.5', 'bark.2':'mind.2', 'branches.2':'connect.2', 'leaves.0':'rest.0', 'leaves.1':'body.2', 'leaves.2':'rest.2',
+       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.3':'hope.3' }
 };
 function sapGroveAns(ring){
-  const map = SAP_TO_GROVE[ring.grade] || {}, v = { yes:5, some:3, no:1 }, out = {};
-  Object.keys(map).forEach(k => { const [p, i] = k.split('.'); const a = ((ring.answers||{})[p]||[])[+i]; if (v[a]) out[map[k]] = v[a]; });
+  if (!isStd(ring)) return {};
+  const map = SAP_TO_GROVE[ring.grade] || {}, v = { yes:5, some:3, no:1 }, out = {}, sx = ring.sens && CK.sensitive[String(ring.grade)];
+  Object.keys(map).forEach(k => {
+    const [p, i] = k.split('.');
+    if (sx && CK_KEY[p] === sx[0] && +i === sx[1]) return;   // the sensitive question never leaves Sapling
+    const a = ringQa(ring, p)[+i]; if (v[a]) out[map[k]] = v[a];
+  });
   return out;
 }
 function sapGroveBtn(ring){
@@ -1292,11 +1361,13 @@ function sapSendGrove(id){
   location.href = '/grove/?who=' + encodeURIComponent(s._pid);
 }
 function renderResult(ring){
-  const s = me(), prev = s.rings[s.rings.length-2];
+  const s = me(), prev = s.rings[s.rings.length-2], cmp = sameStd(ring, prev) ? prev : null;
+  const strong = PARTS.filter(p => (levelOf(ringScore(ring, p.key)) || [])[2] === 'strong').map(p => p.name);
   $('view-checkup').innerHTML = `
     <h2>A new ring for your tree</h2>
-    <p class="lede">${prev ? 'Here is how each part compares to your last ring.' : 'Your first ring. Here is where each part of your tree is starting.'} Three new leaves, too.</p>
-    <div class="status-grid">${PARTS.map(p=>statusCell(ring,prev,p.key)).join('')}</div>
+    <p class="lede">${cmp ? 'Here is how each part of your tree is doing, and how it compares to your last ring.' : prev ? 'Here is how each part of your tree is doing. Your earlier rings used different questions, so this ring starts fresh.' : 'Your first ring. Here is where each part of your tree is starting.'} Three new leaves, too.</p>
+    <div class="status-grid">${PARTS.map(p=>statusCell(ring,cmp,p.key,false)).join('')}</div>
+    ${strong.length ? `<p class="muted">Growing strong: ${strong.join(', ')}.</p>` : ''}
     <div class="note">Sapling suggests caring for <b>${lowestTwo(ring).map(k=>PART[k].name).join(' and ')}</b>. Daily practice happens in The Grove: tap Tend Your Grove and your answers go there, locked in your profile, to shape your practices.</div>
     <div class="row">${sapGroveBtn(ring)}<button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="go('dash')">Back to my tree</button></div>`;
   toTop(true);
@@ -1331,7 +1402,7 @@ function closeCalm(){ $('overlay-root').innerHTML=''; document.removeEventListen
 
 /* ---------- care plan ---------- */
 const MAX_PER_PART = 3;
-const PART_GUIDES = {roots:['faith','death','identity'], trunk:['identity','grades','cut','startms'], bark:['compare','looks','grades','news'], branches:['friends','leftout','bullying','friendhurting'], leaves:['sleep','body','vaping','phone'], fruit:['divorce','moving','disaster','news']};
+const PART_GUIDES = {roots:['faith','death','identity'], trunk:['identity','grades','cut','startms'], bark:['compare','grades','phone','news'], branches:['friends','leftout','bullying','crush'], leaves:['sleep','looks','eating','vaping'], fruit:['divorce','moving','disaster','news']};
 function guideTitle(id){ let t = id; guidesData().groups.forEach(g => g.topics.forEach(x => { if (x.id === id) t = x.title; })); return t; }
 function guideLinks(k){ return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
 function learnHTML(g, k, idx){
@@ -1483,15 +1554,36 @@ function ringsSVG(s, sel, clickFn){
   return `<svg class="rings-svg" viewBox="0 0 320 320" role="img" aria-label="Tree rings, ${n} checkups">${g}</svg>`;
 }
 function ringDetail(s, i, grown){
-  const ring = s.rings[i], prev = s.rings[i-1];
+  const ring = s.rings[i], prev = s.rings[i-1], cmp = sameStd(ring, prev) ? prev : null;
   if (!ring) return '';
+  const std = isStd(ring), name = esc(s.name);
   let h = `<h3>Ring ${i+1}: grade ${ring.grade}, ${fmtDate(ring.date)}</h3>
     <p class="muted small">${ring.mode==='grown'?'Done with a grown-up':'Done on their own'}${ring.flagged && grown ? ' <span class="marker">Worth a check-in</span>' : ''}</p>
-    <div class="status-grid">${PARTS.map(p=>statusCell(ring,prev,p.key)).join('')}</div>`;
+    ${std ? '' : `<p class="earlier muted small">An earlier checkup, from before Sapling's questions were updated. ${grown ? 'Its levels are shown for this ring only and are not compared with newer rings.' : 'It is not compared with newer rings.'}</p>`}
+    <div class="status-grid">${PARTS.map(p=>statusCell(ring,cmp,p.key,grown)).join('')}</div>`;
   if (grown){
-    h += `<details class="panel"><summary><b>See answers</b></summary><ul class="answers-list">`;
-    PARTS.forEach(p => (QUESTIONS[ring.grade][p.key]||[]).forEach((q,qi)=>{ const a = (ring.answers[p.key]||[])[qi]; h += `<li><span>${esc(q[0])}</span>${a?ANS[a][1]:'No answer'}${ring.flags.includes(p.key+':'+qi)?' <span class="marker">Worth a check-in</span>':''}</li>`; }));
-    SAFETY_Q.forEach((q,qi)=>{ const a = ring.safety[qi]; h += `<li><span>${esc(q)}</span>${a ? SAFETY_A.find(x=>x[0]===a)[1] : 'Skipped'}${a!=='no'?' <span class="marker">Worth a check-in</span>':''}</li>`; });
+    const flags = ringFlags(ring), safe = ringSafe(ring);
+    if (std && (flags.length || safe.length)){
+      h += `<div class="note"><b>Please check in with ${name}.</b>`;
+      safe.forEach(x => { h += `<p>${name} answered "${x.v === 'yes' ? 'Yes' : 'Not sure'}" to "${esc(SAFETY_Q[x.i])}"</p>`; });
+      if (safe.some(x => SAFETY_KIND[x.i] === 'self')) h += `<p>If ${name} talks about wanting to die or hurting themselves, stay with them. Call or text 988, the Suicide and Crisis Lifeline, any time. If they are in danger right now, call 911.</p>`;
+      if (safe.some(x => SAFETY_KIND[x.i] === 'safe')) h += `<p>If someone is hurting ${name}, report it to your county child protection agency or the police. Teachers, counselors, and other mandated reporters should follow their own reporting steps. Childhelp, 1-800-422-4453, can help you figure out who to call.</p>`;
+      flags.forEach(f => {
+        const said = `${name} answered "${esc(f.ans)}" to "${esc(f.q)}"`;
+        if (f.type === 'bully') h += `<p>${said}. Listen first and ask what has been happening. Save any messages, then work with the school. <a href="#" onclick="go('guide',{id:'bullying'});return false">Read the bullying guide</a></p>`;
+        if (f.type === 'alone') h += `<p>${said}. Extra closeness this week, like one-on-one time, a walk, or a drive together, can make a real difference. <a href="#" onclick="go('guide',{id:'leftout'});return false">Read the Being left out guide</a></p>`;
+        if (f.type === 'hope') h += `<p>${said}. Most of the time this means a student feels worn out or sad, but please ask gently how they are feeling. If they ever talk about wanting to die or hurting themselves, call or text 988 any time, or call 911 in an emergency.</p>`;
+      });
+      h += `</div>`;
+    }
+    h += `<details class="panel"><summary><b>See every answer</b></summary><p class="muted small">Answers that may need care are in bold.</p><ul class="answers-list">`;
+    PARTS.forEach(p => ringQs(ring, p.key).forEach((q,qi)=>{
+      const a = ringQa(ring, p.key)[qi], an = ANS[a];
+      const hard = std ? (an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1)) : (an && an[2] === 1);
+      const mark = std ? (q[3] && (a === 'yes' || a === 'some')) : (ring.flags || []).includes(p.key+':'+qi);
+      h += `<li${hard ? ' class="hard"' : ''}><span>${esc(q[0])}</span>${an ? an[1] : 'No answer'}${mark ? ' <span class="marker">Worth a check-in</span>' : ''}</li>`;
+    }));
+    SAFETY_Q.forEach((q,qi)=>{ const a = (ring.safety||[])[qi]; const worry = std ? (a === 'yes' || a === 'unsure') : a !== 'no'; h += `<li${worry ? ' class="hard"' : ''}><span>${esc(q)}</span>${a ? SAFETY_A.find(x=>x[0]===a)[1] : 'Skipped'}${worry && a ? ' <span class="marker">Worth a check-in</span>' : ''}</li>`; });
     h += `</ul></details>`;
     if (ring.flagged) h += `<div class="note"><b>How to start the check-in.</b> Pick a calm, private moment. Say what you noticed without alarm: "I saw some of your answers and I care about how you're doing." Listen more than you talk. Thank them for being honest. If anything points to someone hurting them or thoughts of not wanting to be alive, stay with them and use the calm card resources together, or call 988. Teachers should follow their school's reporting and crisis steps.</div>`;
   }
@@ -1523,18 +1615,22 @@ function renderGrown(){
       <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it.</p>
     </div>
     <div class="panel"><h3>How Sapling works</h3>
-      <p>Each checkup has 24 questions, four for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Sapling suggests two parts to care for, and Tend Your Grove carries the answers to The Grove, where daily practice happens. Each checkup adds a growth ring and three leaves, and rings compare each part to the last checkup: growing, steady, or needs care. There are no scores and no grades.</p>
+      <p>Each checkup has 24 questions, four for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Sapling suggests two parts to care for, and Tend Your Grove carries the answers to The Grove, where daily practice happens. Each checkup adds a growth ring and three leaves.</p>
+      <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Needs care (1 to 4). Students see the levels too, with a reminder that a part needing care is a part to tend, not a grade. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
+      <p>Sapling follows the Grounded tree standard, the same one behind Sprout, Soul Tree, and the tools to come, so every checkup measures the same six parts the same way, written for each grade.</p>
     </div>
     <div class="panel"><h3>What you can see</h3>
       <p>Grown-ups can see every answer, and students are told that plainly before they start: "This is yours, and your grown-up can see it too. That's so they can help, not to grade you." Kids answer more honestly when they know up front.</p>
     </div>
     <div class="panel"><h3>Safety and the calm card</h3>
-      <p>A few gentle questions and two direct safety questions at the end watch for worrying answers. When one comes up, the student sees a calm card right away with safe people to talk to and helplines they can call or text on their own, and you see a "Worth a check-in" marker on that ring.</p>
+      <p>Every grade has gentle questions about feeling lonely or left out, being bullied, and losing hope, plus two direct safety questions at the end. When a student answers one of them in a worrying way, you see a "Worth a check-in" marker on that ring, with what they said and what to do next. The student sees a calm card right away with safe people to talk to and helplines they can call or text on their own. For loneliness, the calm card opens when the answer is "Yeah, most of the time," since feeling left out sometimes is common at this age, but you still see every "Sometimes."</p>
       <p>Sapling is not a screening tool and cannot follow up on its own. If an answer worries you, stay calm, listen, and use the resources below. Teachers should follow their school's reporting and crisis steps.</p>
       <button class="btn ghost small" onclick="showCalm()">See the calm card</button>
     </div>
     <div class="panel"><h3>Why each part matters</h3>
       <p><b>Roots (Holy).</b> Research from Lisa Miller at Columbia University finds that a sense of being held by something greater is one of the strongest protections young people have in hard seasons, and early adolescence is when that spiritual life often wakes up. <a class="src" href="https://www.tc.columbia.edu/faculty/lfm14/" target="_blank" rel="noopener">Teachers College</a></p>
+      <p>Faith can also hurt. A 2023 review of studies on young people found that spiritual well-being protects against depression, while spiritual struggle, like feeling abandoned or punished by God, adds to it. So Roots asks whether the sacred is a comfort or a weight. It never asks what a student believes, and a student of any faith, or none, can be strong here. <a class="src" href="https://link.springer.com/article/10.1186/s12888-023-05091-2" target="_blank" rel="noopener">BMC Psychiatry</a></p>
+      <p><b>Friends, crushes, and being offered things.</b> Sapling never asks a student to say whether they date, who they like, or whether they have used anything. It asks whether they would know what to do and who to tell. CDC's Dating Matters program teaches 11 to 14 year olds healthy relationship skills before dating starts, beginning with friendships in sixth grade. <a class="src" href="https://www.cdc.gov/intimate-partner-violence/php/datingmatters" target="_blank" rel="noopener">CDC</a></p>
       <p><b>Branches (Community).</b> Search Institute in Minneapolis finds that relationships where adults express care, challenge growth, provide support, share power, and expand possibilities help young people thrive. Middle school is when "share power" starts to matter most. <a class="src" href="https://searchinstitute.org/developmental-relationships" target="_blank" rel="noopener">Search Institute</a></p>
       <p><b>Leaves (Body).</b> Sleep experts endorsed by the American Academy of Pediatrics recommend 9 to 12 hours a night for ages 6 to 12 and 8 to 10 hours for ages 13 to 18, and keeping phones out of the bedroom at night. <a class="src" href="https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx" target="_blank" rel="noopener">HealthyChildren.org</a></p>
       <p><b>Bark (Mind).</b> The American Psychological Association advises that social media not crowd out sleep or activity, and that kids limit comparison, especially around looks. <a class="src" href="https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use" target="_blank" rel="noopener">APA health advisory</a></p>
@@ -1562,9 +1658,27 @@ function renderGStudent(){
   $('view-gstudent').innerHTML = `<button class="back" onclick="go('grown')">&larr; All students</button>
     <div class="me-row">${GGAv.html(s.avatar, s.name, 56)}<div><h2 style="margin:0">${esc(s.name)}</h2><p class="muted" style="margin:0">Grade ${s.grade}, ${s.leaves||0} leaves</p></div></div>
     ${n ? `<div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickGRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickGRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}${r.flagged?' <span class="marker">Worth a check-in</span>':''}</button>`).join('')}</div></div><div>${ringDetail(s, sel, true)}</div></div>` : '<p class="muted">No checkups yet.</p>'}
+    ${sensPanel(s)}
     <div class="panel"><h3>Care plan</h3>${items.length ? PARTS.filter(p => items.some(i => i.part === p.key)).map(p => `<p style="margin:10px 0 2px;color:${pcolor(p.key)};font-weight:700">${p.name} <span class="muted small">${p.sub}</span>${stuckParts(s).includes(p.key) ? ' <span class="marker">Tricky this week</span>' : ''}</p><ul style="margin-top:0">${items.filter(i => i.part === p.key).map(it => `<li>${esc(it.text)}</li>`).join('')}</ul>${guideLinks(p.key)}`).join('') : '<p class="muted">No care plan yet.</p>'}</div>
     <details class="panel"><summary><b>Practice history</b></summary><div style="margin-top:10px">${historyHTML(s)}</div></details>
     <div class="row"><button class="btn ghost small" onclick="removeStudent('${s.id}')">Remove this student from this device</button></div>`;
+}
+/* The optional question about being offered a vape or other substances (grades 7 and 8).
+   Off unless a grown-up turns it on. For a saved student, only a grown-up profile can change it. */
+function canSetSens(s){ if (!s._pid || !window.GGP) return true; const a = GGP.active(); return !!(a && a.age === 'adult'); }
+function sensPanel(s){
+  const on = !!s.askSens, can = canSetSens(s), g7 = CK.sensitive['7'][2][0], g8 = CK.sensitive['8'][2][0];
+  return `<div class="panel"><h3>Optional question</h3>
+    <p>In grades 7 and 8, Sapling can ask one more question about being offered a vape or other substances. It is off unless you turn it on. When it is on, it takes the place of the question about knowing how to get out of it, so every part still has four questions. It never asks whether a student has used anything, and the answer never leaves Sapling.</p>
+    <p class="muted small">Grade 7: "${esc(g7)}"<br>Grade 8: "${esc(g8)}"</p>
+    <p class="muted small">At school, questions like this can need a parent's written permission first. If you are a teacher or counselor, follow your school's rules before turning it on.</p>
+    <label class="switch-row"><input type="checkbox" ${on ? 'checked' : ''} ${can ? '' : 'disabled'} onchange="setSens(this.checked)"><span><b>Ask the optional question</b><br><span class="muted small">${on ? (s.grade === 6 ? 'On. Grade 6 never gets it, so it starts in grade 7.' : 'On. It starts with the next checkup.') : 'Off.'}</span></span></label>
+    ${can ? '' : `<p class="muted small">Only a grown-up who agreed for ${esc(s.name)} can change this. Open your own grown-up profile first.</p>`}
+  </div>`;
+}
+function setSens(on){
+  const s = me(); if (!s || !canSetSens(s)){ renderGStudent(); return; }
+  s.askSens = !!on; save(); renderGStudent(); toast(on ? 'The optional question is on for the next checkup.' : 'The optional question is off.');
 }
 function removeStudent(id){
   const s = student(id); if (!s) return;
