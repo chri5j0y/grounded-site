@@ -481,6 +481,44 @@ body.cd-noscroll{overflow:hidden;}
 .pls-end{break-inside:avoid;}
 .pls-foot{margin-top:4mm;font-size:7.4pt;color:#6B5A4D;text-align:center;border-top:.5pt solid #DDD0B8;padding-top:2mm;}
 .codeshow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(22px * var(--scale));letter-spacing:.5px;margin:10px 0;word-break:break-word;}
+
+/* ---------- sprout guide ---------- */
+.sp-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#3F5A2C 0%,#2C3F20 55%,#1F2D17 100%);}
+.sp-chip{display:inline-flex;align-items:center;gap:8px;}
+.sp-chip svg{width:26px;height:18px;flex:0 0 auto;}
+.sp-tip{font-size:calc(14.5px * var(--scale));}
+.sp-seen{margin-top:10px;}
+.sp-stopbar{display:flex;justify-content:flex-end;margin-bottom:6px;}
+.sp-mk{display:inline-block;margin-left:4px;font-weight:700;color:var(--ink-soft);}
+.sp-mk.up{color:#4A7A2E;} .sp-mk.down{color:var(--danger);}
+.sp-lvrow{display:grid;grid-template-columns:minmax(150px,1fr) auto;gap:4px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);}
+.sp-lvrow:first-of-type{border-top:0;}
+.sp-src{grid-column:1/-1;font-size:13.5px;}
+.sp-box{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);}
+.sp-box input{margin-top:4px;width:20px;height:20px;flex:0 0 auto;accent-color:var(--gold);}
+.sp-every summary{cursor:pointer;}
+.sp-rep{z-index:95;}
+.sp-repbtn{color:var(--danger);}
+.sp-kid{position:fixed;inset:0;z-index:100;background:#FFF9EC;color:#243746;display:flex;align-items:stretch;justify-content:center;font-family:'Fredoka','Barlow',sans-serif;}
+.sp-kid-in{width:100%;max-width:720px;display:flex;flex-direction:column;gap:18px;padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));}
+.sp-kid-top{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.sp-kid-part{font-weight:600;font-size:22px;color:#fff;background:var(--pc,#4FA82E);padding:6px 16px;border-radius:30px;}
+.sp-kid-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;}
+.sp-kid-dots i{width:10px;height:10px;border-radius:50%;background:#E3D9C4;}
+.sp-kid-dots i.on{background:var(--pc,#4FA82E);} .sp-kid-dots i.cur{background:#243746;}
+.sp-kid-q{font-size:clamp(26px,6vw,40px);line-height:1.25;font-weight:500;margin-top:10px;}
+.sp-kid-say{align-self:flex-start;border:2px solid #243746;background:#fff;border-radius:30px;padding:8px 16px;font:inherit;font-size:18px;cursor:pointer;color:#243746;}
+.sp-kid-ans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto;}
+.sp-kid-a{display:flex;flex-direction:column;align-items:center;gap:8px;border:3px solid #243746;background:#fff;border-radius:22px;padding:16px 8px;font:inherit;font-size:20px;color:#243746;cursor:pointer;min-height:110px;}
+.sp-kid-a svg{width:56px;height:40px;}
+.sp-kid-a[aria-pressed="true"]{background:var(--pc,#4FA82E);color:#fff;border-color:var(--pc,#4FA82E);}
+.sp-kid-foot{display:flex;justify-content:space-between;align-items:center;}
+.sp-kid-nav,.sp-kid-stop,.sp-kid-back{border:2px solid #243746;background:#fff;border-radius:30px;padding:10px 18px;font:inherit;font-size:17px;color:#243746;cursor:pointer;}
+.sp-kid-stop{border-color:#C8303F;color:#C8303F;}
+.sp-kid-done{font-size:clamp(28px,7vw,44px);font-weight:500;text-align:center;margin:auto 0 0;}
+.sp-kid-back{align-self:center;margin-bottom:auto;font-size:15px;}
+.sp-rep-in{display:flex;flex-direction:column;flex:1;min-height:0;}
+.sp-rep-in .run-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 </style>
 <style>
 .gg-sitenav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:8px 18px;font-size:14px;background:rgba(139,94,26,.08);border-bottom:1px solid rgba(139,94,26,.18);}
@@ -741,7 +779,7 @@ function resetDevice(){
 }
 function lock(){
   if (DATA && RUN && !RUN.demo) { DATA.draft = RUN; persist(); }
-  clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose();
+  clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose(); spKidClose(); spRepClose();
   LIB = null; OWN = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
   $('#view').innerHTML = ''; $('#runner').innerHTML = ''; $('#runner').classList.add('hide'); closeMenu();
   lockScreen('unlock');
@@ -757,10 +795,14 @@ function start(){
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
   V = {tab: tabsFor()[0][0]}; render();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
+  if (dr && dr.kind === 'sp'){
+    if (SPG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sprout visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); spLoad(); let n = 0; const go2 = () => { if (SC) spOpenRun(); else if (SC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sprout questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
+    return;
+  }
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st) stOpenRun(); else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  const gt = [...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
+  const gt = [...(spOpen() ? [['sprout','Sprout','sprout']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
   const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
@@ -771,7 +813,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST, grove:vGV, talks:vHT};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST, sprout:vSP, grove:vGV, talks:vHT};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -804,6 +846,7 @@ const IC = {
  safety:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16v.5"/>',
  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+ sprout:'<path d="M12 21v-9"/><path d="M12 12c0-4 3-6.5 7.5-6.5 0 4.2-3 6.5-7.5 6.5z"/><path d="M12 14.5c0-3.2-2.6-5.3-6.3-5.3 0 3.3 2.6 5.3 6.3 5.3z"/>',
  tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
@@ -823,13 +866,13 @@ function vHome(){
   const due = [];
   DATA.clients.filter(c => !stIsMe(c)).forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f, i}); }));
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
-  const recent = DATA.sessions.filter(s => !stIsMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
+  const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !stIsMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
   const quick = [['first-conversation','Free first conversation','30 minutes'],['eol-first-visit','End-of-life first visit','60 to 90 minutes'],['vigil','Vigil sitting','Up to 8 hours'],['funeral-interview','Funeral family interview','60 to 90 minutes'],['wedding-interview','Wedding couple interview','60 to 90 minutes'],['counsel-first','Counseling first session','60 minutes'],['grief-first','Grief first session','60 minutes'],['debrief','After-session debrief','5 to 10 minutes']];
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="soultree"><span class="qi">${icon('tree')}</span><span><b>Soul Tree visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="soultree"><span class="qi">${icon('tree')}</span><span><b>Soul Tree visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="sprout"><span class="qi">${icon('sprout')}</span><span><b>Sprout visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups this week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -947,6 +990,7 @@ function vClient(c){
   return `<button class="btn btn-line btn-sm" data-act="back-clients">${icon('back')} All people</button>
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
+  ${spPersonCard(c)}
   ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Soul Tree Guide</b> <span class="muted">Rings, care plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
@@ -1036,6 +1080,7 @@ function vFieldHome(){
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="soultree">${icon('tree')} Open</button></div></div>` : ''}
+  ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sprout">${icon('sprout')} Open</button></div></div>` : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
   ${fieldDue()}
@@ -1298,7 +1343,8 @@ function vOwner(){
    <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
-  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
+  ${FLD ? spOwnerCard() : ''}`;
 }
 
 // ---------------- SOUL TREE GUIDE ----------------
@@ -1318,7 +1364,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined');
-const sessTitle = s => s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'sp' ? 'Sprout: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'spr' ? 'Sprout: report record' : s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
 function stQuestions(visit, set, key){ return set === 'staff' ? STG().staffQuestions[key] : stPart(key).questions; }
 function stScore(run){
   const out = {}, sc = STG().scale;
@@ -1976,6 +2022,792 @@ function gvAct(a, v, t){
   return false;
 }
 
+// ---------------- SPROUT GUIDE ----------------
+// Wording lives in the Field library (FLD.sproutGuide). Questions come from the public sprout/checkup.js,
+// read in their own scope, so Sprout and Sprout Guide always ask the same thing.
+// A child is an ordinary People record with a .sp profile. Visits are sessions with kind 'sp'. Report records
+// are sessions with kind 'spr', kept apart from visits so they are never printed or copied.
+// Staff and Owner always see the tab. Field users see it once sproutGuide.open.field is on and Orientation is done.
+// Everyone takes the Sprout training (DATA.spmod) before a real visit. Demo visits are always open.
+const SPG = () => (FLD && FLD.sproutGuide) || null;
+const spOpen = () => !!SPG() && (TIER !== 'field' || !!(SPG().open && SPG().open.field && (!OR() || orState().complete)));
+const SP_LV = ['care','steady','strong'];
+const spLvName = k => (((SPG() || {}).levels || {}).names || []).concat([]).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
+const spLvCls = k => k === 'strong' ? 'sage' : k === 'steady' ? 'gold' : k === 'care' ? 'warn' : '';
+const spLvOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
+const spPart = k => SPG().parts.find(p => p.key === k);
+const spK2 = g => ['K','1','2'].includes(String(g));
+const spBand = g => spK2(g) ? 'k2' : 'g35';
+const spPeople = () => DATA.clients.filter(c => c.sp);
+const spVisits = id => DATA.sessions.filter(s => s.kind === 'sp' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
+const SP_GRADES = ['K','1','2','3','4','5'];
+
+// ----- the question bank, read from the public sprout/checkup.js -----
+let SC = null, SC_WAIT = null, SC_FAIL = false;
+function spLoad(){
+  if (SC || SC_WAIT) return;
+  SC_FAIL = false;
+  SC_WAIT = fetch('../sprout/checkup.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SPROUT_CHECKUP || !w.SPROUT_CHECKUP.questions) throw 0; SC = w.SPROUT_CHECKUP; SC_WAIT = null; if (DATA && V.tab === 'sprout') render(); })
+    .catch(() => { SC_WAIT = null; SC_FAIL = true; if (DATA && V.tab === 'sprout') render(); });
+}
+function spNeedData(){
+  if (SC) return '';
+  spLoad();
+  return SC_FAIL ? `<div class="card"><h3>The Sprout questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Sprout questions...</p></div>`;
+}
+const spQs = (grade, key) => ((SC.questions[grade] || {})[key]) || [];
+const spAns = k => SC.answers.find(a => a[0] === k) || null;
+const spIdx = run => run.visit === 'full' ? [0,1,2,3] : [0];
+const spHard = (q, a) => q[2] === 'r' ? (a === 'yes' || a === 'some') : a === 'no';
+const spFlagged = (q, a) => !!q[3] && (a === 'yes' || a === 'some');
+function spChildScore(grade, key, qa, idxs){
+  let sum = 0, n = 0; const qs = spQs(grade, key);
+  idxs.forEach(i => { const q = qs[i], a = spAns((qa || {})[i]); if (!q || !a || a[2] == null) return; const v = q[2] === 'r' ? 4 - a[2] : a[2]; sum += (v - 1) / 2; n++; });
+  return n ? Math.round(1 + 9 * sum / n) : null;
+}
+const spSeenScore = v => { const o = SPG().seen.find(x => x[0] === v); return o ? o[2] : null; };
+const spGvScore = v => { const o = SPG().grownView.answers.find(x => x[0] === v); return o && o[2] != null ? Math.round(1 + 9 * (o[2] - 1) / 2) : null; };
+// Three sources: the child's answers (counts twice), what the guide saw, the grown-up's view.
+// The grown-up's view never sets a level alone. Two steps apart is Mixed signals.
+function spSuggest(run, key){
+  const child = spChildScore(run.grade, key, (run.ans || {})[key], spIdx(run)), seen = spSeenScore((run.seen || {})[key]), grown = spGvScore(((run.gv || {}).ans || {})[key]);
+  const src = [[child, 2], [seen, 1], [grown, 1]].filter(x => x[0] != null);
+  if (child == null && seen == null) return {child, seen, grown, sug:'none', mixed:false};
+  const avg = src.reduce((a, x) => a + x[0] * x[1], 0) / src.reduce((a, x) => a + x[1], 0);
+  const ix = src.map(x => SP_LV.indexOf(spLvOf(x[0])));
+  return {child, seen, grown, sug:spLvOf(Math.round(avg)), mixed: Math.max(...ix) - Math.min(...ix) >= 2};
+}
+const spStepGap = (a, b) => (a === 'none' || b === 'none') ? (a === b ? 0 : 2) : Math.abs(SP_LV.indexOf(a) - SP_LV.indexOf(b));
+function spPrevLevel(c, s, key){
+  const prev = spVisits(c.id).filter(v => v.id !== s.id && v.std === s.std && v.levels && (v.date < s.date || (v.date === s.date && (v.u||0) < (s.u||0))))[0];
+  const a = prev && prev.levels[key] && prev.levels[key].pick, b = s.levels && s.levels[key] && s.levels[key].pick;
+  if (!a || !b || a === 'none' || b === 'none') return '';
+  const d = SP_LV.indexOf(b) - SP_LV.indexOf(a);
+  return d > 0 ? '<span class="sp-mk up" title="Up since last visit">&uarr;</span>' : d < 0 ? '<span class="sp-mk down" title="Down since last visit">&darr;</span>' : '<span class="sp-mk" title="Same as last visit">=</span>';
+}
+
+// ----- permission -----
+function spConsentOk(c){
+  const con = c && c.sp && c.sp.consent;
+  if (!con || con.status !== 'ok') return false;
+  if (con.how === 'form') return con.v === SPG().consent.version && SPG().consent.boxes.every(b => (con.boxes || []).includes(b[0])) && !!con.name;
+  return !!con.how;
+}
+function spConsentLine(c){
+  const con = c.sp.consent, C = SPG().consent;
+  if (!con) return '<span class="pill warn">Permission needed</span>';
+  if (con.status === 'declined') return '<span class="pill warn">Said no for now</span>';
+  if (con.status === 'withdrawn') return '<span class="pill warn">Visits stopped</span>';
+  if (con.how === 'form' && con.v !== C.version) return '<span class="pill warn">Ask again: form updated</span>';
+  return `<span class="pill sage">${esc(((C.how.find(x => x[0] === con.how) || [])[1]) || 'Permission')}${con.date ? ' ' + nice(con.date) : ''}</span>`;
+}
+
+// ----- training (separate from Orientation, gates real visits for everyone) -----
+const SPM = () => SPG() && SPG().module;
+function spmData(){ DATA.spmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.spmod || {}); return DATA.spmod; }
+function spmState(){
+  const M = SPM(), D = spmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const spReady = () => spmState().complete;
+function vSPM(){
+  const M = SPM(), D = spmData(), s = spmState();
+  if (V.spml !== undefined) return vSPMLesson(V.spml);
+  if (V.spq) return V.spq.done ? vSPMResult() : vSPMQ();
+  if (V.sps) return vSPMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-act="sp-home">Back to Sprout Guide</button>
+  <div class="hello sp-hello" style="margin-top:14px"><div class="eyebrow" style="color:#9BD27A">Sprout Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => step('sp-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  <h3 style="margin:22px 0 10px">Practice scenarios</h3>
+  ${step('sp-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with kids`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('sp-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sp-mprint">${icon('print')} Print Agreement</button></div>` : ''}`;
+}
+function vSPMLesson(i){
+  const M = SPM(), L = M.lessons[i], n = M.lessons.length, read = !!spmData().lessons[L.id];
+  return `<button class="linkbtn" data-act="sp-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
+  ${lessonBody(L)}
+  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="sp-mread" data-v="${i}">Mark as Read</button>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="sp-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="sp-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="sp-mhome">Back to training</button>` : ''}</div>`;
+}
+function spmNewQuiz(){ const items = SPM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vSPMQ(){
+  const Q = V.spq, items = SPM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="sp-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="sp-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="sp-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'sp-mfinish' : 'sp-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function spmFinish(){
+  const M = SPM(), Q = V.spq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = spmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vSPMResult(){
+  const M = SPM(), Q = V.spq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = spmState();
+  return `<button class="linkbtn" data-act="sp-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="sp-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="sp-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="sp-mq">Try Again</button><button class="btn btn-line" data-act="sp-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vSPMSign(){
+  const A = SPM().agreement, s = spmState(), D = spmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="sp-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="sp-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="spm-name">Your full name</label><input type="text" id="spm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="spm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="sp-msigned">Sign Agreement</button>`}</div>`;
+}
+function spmPrint(){
+  const A = SPM().agreement, D = spmData().signed;
+  printNow(ph('Sprout Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title);
+}
+
+// ----- reporting contact and county -----
+function spContact(){ const o = (SPG().report || {}).contact || {}, m = DATA.settings.spContact || {}; return {who: m.who || o.who || '', phone: m.phone || o.phone || '', step: m.step || o.step || '', mine: !!(m.who || m.phone || m.step)}; }
+const spCounty = id => (SPG().report.counties || []).find(x => x.id === id) || null;
+const spTel = p => 'tel:' + String(p || '').replace(/[^0-9+]/g, '');
+// Minnesota legal holidays (Minn. Stat. 645.44), counted on the day itself, not moved. That keeps a due date early, never late.
+function spHolidays(y){
+  const nth = (m, wd, n) => { const d = new Date(y, m, 1); const off = (wd - d.getDay() + 7) % 7; return new Date(y, m, 1 + off + 7 * (n - 1)); };
+  const last = (m, wd) => { const d = new Date(y, m + 1, 0); return new Date(y, m, d.getDate() - ((d.getDay() - wd + 7) % 7)); };
+  const k = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return new Set([new Date(y,0,1), nth(0,1,3), nth(1,1,3), last(4,1), new Date(y,5,19), new Date(y,6,4), nth(8,1,1), nth(9,1,2), new Date(y,10,11), nth(10,4,4), new Date(y,11,25)].map(k));
+}
+// 72 hours, not counting weekends and holidays: walk forward hour by hour, counting only hours on working days.
+function spDue(at){
+  const d = new Date(at); if (isNaN(d)) return null;
+  let left = 72; const hol = {};
+  const isOff = t => { const y = t.getFullYear(); hol[y] = hol[y] || spHolidays(y); const key = `${y}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; return t.getDay() === 0 || t.getDay() === 6 || hol[y].has(key); };
+  const t = new Date(d);
+  while (left > 0){ t.setHours(t.getHours() + 1); if (!isOff(new Date(t.getTime() - 1))) left--; }
+  return t;
+}
+const spDT = d => d ? d.toLocaleString(undefined, {weekday:'short', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) : '';
+const spDKey = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+// ----- the report panel: one overlay, used during a visit or from a child's page -----
+let REP = null;
+function spRepOpen(cid, visitId, raised){
+  const c = cid ? CL(cid) : null, st = DATA.settings.spState || 'MN', cty = DATA.settings.spCounty || 'stearns';
+  const now = new Date(); now.setSeconds(0, 0);
+  REP = {cid:cid || null, visitId:visitId || null, demo: !!(RUN && RUN.kind === 'sp' && RUN.demo), name: c ? c.name : (RUN && RUN.person ? RUN.person.name : ''), state:st, county:cty,
+    raised: raised || '', words:'', what:'', at: new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16), how:'phone', agency:'', ref:'', written:'', made:false};
+  spRepDraw();
+}
+function spRepClose(){ const el = $('#sp-rep'); if (el) el.remove(); REP = null; document.body.classList.remove('cd-noscroll'); }
+function spRepDraw(){
+  const R = SPG().report, mn = R.mn, k = spContact(), r = REP, ct = spCounty(r.county), own = DATA.settings.spOwnCounty || {};
+  const call = (num, label, cls) => num ? `<a class="btn ${cls || 'btn-line'} btn-sm" href="${spTel(num)}">${icon('phone')} ${esc(label)} ${esc(num)}</a>` : '';
+  const county = r.state !== 'MN' ? '' : r.county === 'other' ? `<div class="card"><h4>Somewhere else in Minnesota</h4><p class="muted" style="margin-top:6px">Find the county or Tribal Nation where the child lives on the state's list, and save it here for next time.</p>
+      <div class="row" style="margin-top:8px"><a class="btn btn-line btn-sm" href="${esc(mn.list)}" target="_blank" rel="noopener">${icon('link')} ${esc(mn.listName)}</a></div>
+      <div class="grid g2" style="margin-top:10px"><div><label class="f" for="sp-oc-n">County or Tribal Nation</label><input type="text" id="sp-oc-n" value="${esc(own.name || '')}"></div><div><label class="f" for="sp-oc-p">Phone</label><input type="tel" id="sp-oc-p" value="${esc(own.phone || '')}"></div>
+      <div><label class="f" for="sp-oc-a">After hours</label><input type="tel" id="sp-oc-a" value="${esc(own.after || '')}"></div><div><label class="f" for="sp-oc-u">Web page</label><input type="url" id="sp-oc-u" value="${esc(own.url || '')}"></div></div>
+      <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-oc-save">Save as My County</button>
+      ${own.name ? `<div class="row" style="margin-top:10px">${call(own.phone, own.name, 'btn-gold')}${call(own.after, 'After hours')}${own.url ? `<a class="btn btn-line btn-sm" href="${esc(own.url)}" target="_blank" rel="noopener">${icon('link')} Web page</a>` : ''}</div>` : ''}</div>`
+    : ct ? `<div class="card"><h4>${esc(ct.agency)}</h4><p class="muted" style="margin-top:4px">${esc(ct.hours)}</p>
+      <div class="row" style="margin-top:10px">${call(ct.phone, 'Call', 'btn-gold')}${ct.after && ct.after !== ct.phone ? call(ct.after, 'After hours') : ''}${ct.form ? `<a class="btn btn-line btn-sm" href="${esc(ct.form)}" target="_blank" rel="noopener">${icon('link')} Online report</a>` : ''}<a class="btn btn-line btn-sm" href="${esc(ct.url)}" target="_blank" rel="noopener">${icon('link')} County page</a></div>
+      ${ct.afterNote ? `<p class="muted" style="font-size:14px;margin-top:8px">After hours: ${esc(ct.afterNote)}.</p>` : ''}${ct.note ? `<p class="muted" style="font-size:14px;margin-top:6px">${esc(ct.note)}</p>` : ''}
+      <p class="muted" style="font-size:13px;margin-top:6px">Checked ${nice(R.checked)}.</p></div>` : '';
+  const due = r.state === 'MN' && r.how !== 'online' && r.at ? spDue(r.at) : null;
+  const html = `<div class="sp-rep-in"><div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(R.title)}</b><small>${esc(r.name)}${r.demo ? ' &middot; demo, nothing is saved' : ''}</small></div><button class="bar-btn" data-act="sp-rep-close" aria-label="Close">&times;</button></div></div>
+   <div class="run-body"><div class="wrap">
+    <div class="row" style="margin-top:4px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line" href="${spTel(R.childhelp)}">Childhelp ${esc(R.childhelp)}</a></div>
+    <p class="muted" style="margin-top:10px">${esc(R.lead)}</p>
+    ${k.who || k.phone || k.step ? `<div class="card" style="border-left:4px solid var(--gold)"><h4>Your reporting contact</h4><p style="margin-top:6px">${esc(k.who)}${k.phone ? ' &middot; ' + esc(k.phone) : ''}</p>${k.step ? `<p class="muted" style="margin-top:6px">${esc(k.step)}</p>` : ''}${k.phone ? `<div class="row" style="margin-top:8px">${call(k.phone, 'Call', 'btn-line')}</div>` : ''}</div>` : ''}
+    <div class="card"><h4>In the moment</h4><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+    <h3 style="margin-top:18px">Where to report</h3>
+    <div class="st-opts">${stChip('sp-rep-state', 'data-v="MN"', r.state === 'MN', 'Minnesota')}${stChip('sp-rep-state', 'data-v="other"', r.state !== 'MN', 'Another state')}</div>
+    ${r.state === 'MN' ? `<label class="f" for="sp-rep-cty">County or Tribal Nation where the child lives</label><select id="sp-rep-cty" data-sprep="county" style="max-width:420px">${R.counties.map(x => `<option value="${x.id}" ${x.id === r.county ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}<option value="other" ${r.county === 'other' ? 'selected' : ''}>${own.name ? esc(own.name) + ' (my county)' : 'Somewhere else in Minnesota'}</option></select>
+      ${county}
+      <details class="st-lf" open><summary>${esc(mn.title)}</summary><p class="muted" style="font-size:14px;margin-top:6px">${esc(mn.cite)}</p><ul style="margin-top:6px">${mn.rules.map(x => `<li>${esc(x)}</li>`).join('')}</ul><p style="margin-top:8px">${esc(mn.privilege)}</p><p class="muted" style="margin-top:8px">${esc(mn.bill)}</p><p class="muted" style="margin-top:8px">${esc(mn.childCare)}</p></details>`
+     : `<div class="card"><h4>${esc(R.outside.title)}</h4>${R.outside.lines.map(x => `<p style="margin-top:6px">${esc(x)}</p>`).join('')}<div class="row" style="margin-top:10px"><a class="btn btn-line btn-sm" href="${esc(R.outside.list)}" target="_blank" rel="noopener">${icon('link')} ${esc(R.outside.listName)}</a>${call(R.childhelp, 'Childhelp', 'btn-line')}</div></div>`}
+    <h3 style="margin-top:22px">Record the report</h3><p class="muted" style="font-size:14px">${esc(R.recordNote)}</p>
+    <h4 style="margin-top:12px">Who raised it</h4><div class="st-opts">${R.raised.map(o => stChip('sp-rep-raised', `data-v="${o[0]}"`, r.raised === o[0], o[1])).join('')}</div>
+    <label class="f" for="sp-rep-w">Their exact words</label><textarea id="sp-rep-w" data-sprep="words" placeholder="Write it the way they said it">${esc(r.words)}</textarea>
+    <label class="f" for="sp-rep-x">What you saw or heard</label><textarea id="sp-rep-x" data-sprep="what" style="min-height:70px">${esc(r.what)}</textarea>
+    <div class="grid g2"><div><label class="f" for="sp-rep-at">When you reported</label><input type="datetime-local" id="sp-rep-at" data-sprep="at" value="${esc(r.at)}"></div>
+     <div><label class="f" for="sp-rep-ag">Agency</label><input type="text" id="sp-rep-ag" data-sprep="agency" value="${esc(r.agency || (r.state === 'MN' && ct ? ct.agency : r.county === 'other' ? own.name || '' : ''))}"></div>
+     <div><label class="f" for="sp-rep-ref">Reference number</label><input type="text" id="sp-rep-ref" data-sprep="ref" value="${esc(r.ref)}"></div>
+     <div><label class="f" for="sp-rep-wr">Written report sent (if done)</label><input type="date" id="sp-rep-wr" data-sprep="written" value="${esc(r.written)}"></div></div>
+    <h4 style="margin-top:12px">How you reported</h4><div class="st-opts">${R.how.map(o => stChip('sp-rep-how', `data-v="${o[0]}"`, r.how === o[0], o[1])).join('')}</div>
+    ${due ? `<div class="tipbox" style="margin-top:12px"><b>Written report due by ${esc(spDT(due))}</b> (72 hours, not counting weekends and holidays).${r.county === 'mlband' ? ' The Mille Lacs Band asks for it within 48 hours, so file sooner.' : ''} Saving adds a follow-up.</div>` : ''}
+    <div class="row" style="margin-top:16px;margin-bottom:30px"><button class="btn btn-gold" data-act="sp-rep-save">${icon('check')} ${r.demo ? 'Finish (demo, not saved)' : 'Save Report Record'}</button><button class="btn btn-line" data-act="sp-rep-close">Close</button></div>
+   </div></div></div>`;
+  let el = $('#sp-rep');
+  if (!el){ el = document.createElement('div'); el.id = 'sp-rep'; el.className = 'sp-rep runner'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', R.title); document.body.appendChild(el); }
+  const y = el.querySelector('.run-body') ? el.querySelector('.run-body').scrollTop : 0;
+  el.innerHTML = html; const b = el.querySelector('.run-body'); if (b) b.scrollTop = y;
+}
+function spRepSave(){
+  const r = REP; if (!r) return;
+  if (!r.raised) return alert('Choose who raised it.');
+  if (r.demo){ spRepClose(); toast('Demo. Nothing was saved.'); return; }
+  const ct = spCounty(r.county), own = DATA.settings.spOwnCounty || {};
+  const due = r.state === 'MN' && r.how !== 'online' && r.at && !r.written ? spDue(r.at) : null;
+  const s = {id:uid(), u:Date.now(), kind:'spr', clientId:r.cid, visitId:r.visitId, date:today(), raised:r.raised, words:r.words, what:r.what, at:r.at, how:r.how,
+    state:r.state, county:r.state === 'MN' ? (r.county === 'other' ? own.name || 'Other' : (ct ? ct.name : '')) : 'Outside Minnesota', agency:r.agency || (ct ? ct.agency : ''), ref:r.ref, written:r.written, due: due ? due.toISOString() : ''};
+  DATA.sessions.push(s);
+  const c = r.cid ? CL(r.cid) : null;
+  if (c && due){ (c.followups = c.followups || []).push({date:spDKey(due), text:'Written report due (Sprout report record)', done:false}); touch(c); }
+  if (RUN && RUN.kind === 'sp' && !RUN.demo){ RUN.reports = RUN.reports || []; RUN.reports.push(s.id); spKeep(); }
+  save(); spRepClose(); toast('Report record saved. It stays encrypted here.');
+  if (!RUN) render();
+}
+function vSPReport(s){
+  const c = CL(s.clientId), R = SPG().report, name = x => ((R.raised.find(o => o[0] === x) || [])[1] || x), how = x => ((R.how.find(o => o[0] === x) || [])[1] || x);
+  return `<button class="linkbtn" data-act="sp-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'Sprout Guide')}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Report record &middot; ${nice(s.date)}</div><h1>${esc(c ? c.name : '')}</h1><p class="muted">${esc(R.recordNote)}</p></div>
+  <div class="card st-private"><p><b>Who raised it:</b> ${esc(name(s.raised))}</p>
+   ${s.words ? `<p style="margin-top:8px"><b>Their exact words:</b></p><p style="white-space:pre-wrap">${esc(s.words)}</p>` : ''}
+   ${s.what ? `<p style="margin-top:8px"><b>What you saw or heard:</b></p><p style="white-space:pre-wrap">${esc(s.what)}</p>` : ''}
+   <p style="margin-top:8px"><b>Reported:</b> ${s.at ? esc(spDT(new Date(s.at))) : 'Not recorded'} by ${esc(how(s.how))}</p>
+   <p style="margin-top:6px"><b>To:</b> ${esc(s.agency || s.county || '')}</p>
+   <p style="margin-top:6px"><b>Reference number:</b> ${esc(s.ref || 'None recorded')}</p>
+   <p style="margin-top:6px"><b>Written report:</b> ${s.written ? 'Sent ' + nice(s.written) : s.due ? 'Due by ' + esc(spDT(new Date(s.due))) : 'Not needed or not recorded'}</p></div>
+  <div class="card"><label class="f" for="spr-ref">Update the reference number</label><input type="text" id="spr-ref" value="${esc(s.ref || '')}">
+   <label class="f" for="spr-wr">Written report sent</label><input type="date" id="spr-wr" value="${esc(s.written || '')}" style="max-width:220px">
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-rec-upd" data-v="${s.id}">Save</button><button class="btn btn-danger btn-sm" data-act="sp-rec-del" data-v="${s.id}">Delete</button></div></div>`;
+}
+
+// ----- views -----
+function vSP(){
+  if (SPG()) spLoad();
+  if (!SPG()) return `<div class="card"><p>Sprout Guide isn't on this device yet.</p></div>`;
+  if (V.spm) return vSPM();
+  if (V.sprec){ const s = DATA.sessions.find(x => x.id === V.sprec); if (s) return vSPReport(s); }
+  if (V.spc){ const c = CL(V.spc); if (c) return vSPConsent(c); }
+  if (V.spv) return vSPVisit();
+  if (V.spp){ const c = CL(V.spp); if (c) return vSPPerson(c); }
+  const S = SPG(), list = spPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = spmState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
+  return `<div class="hello sp-hello"><div class="eyebrow" style="color:#9BD27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
+  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Sprout training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sp-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Sprout training' : 'Start with the Sprout training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
+  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
+  <div class="card"><h3>A child</h3>
+   <div class="grid g2"><div><label class="f" for="sp-nn">First name or nickname</label><input type="text" id="sp-nn" autocomplete="off" placeholder="Mia"></div>
+   <div><label class="f" for="sp-ng">Grade</label><select id="sp-ng">${SP_GRADES.map(g => `<option value="${g}">${spGradeName(g)}</option>`).join('')}</select></div>
+   <div><label class="f" for="sp-nr">Their grown-up (relationship)</label><input type="text" id="sp-nr" placeholder="Mom, Grandpa, foster dad"></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sp-new">${icon('plus')} Add Child</button>${m.complete ? `<button class="btn btn-line" data-act="sp-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>
+  <div class="card"><div class="spread"><h3>Children</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = spVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(spGradeName(c.sp.grade))}</span> ${spConsentOk(c) ? '' : spConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${spVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a child above.</p>'}</div>
+  <div class="card"><h3>Reporting</h3><p class="muted">Before your first visit, know who you would call. The Report a concern button is on every visit screen.</p>
+   <label class="f" for="sp-st">Where you serve</label><select id="sp-st" data-spset="spState" style="max-width:320px"><option value="MN" ${(DATA.settings.spState || 'MN') === 'MN' ? 'selected' : ''}>Minnesota</option><option value="other" ${DATA.settings.spState === 'other' ? 'selected' : ''}>Another state</option></select>
+   ${(DATA.settings.spState || 'MN') === 'MN' ? `<label class="f" for="sp-cty">Your usual county</label><select id="sp-cty" data-spset="spCounty" style="max-width:420px">${S.report.counties.map(x => `<option value="${x.id}" ${x.id === cty ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}<option value="other" ${cty === 'other' ? 'selected' : ''}>${own.name ? esc(own.name) + ' (my county)' : 'Somewhere else in Minnesota'}</option></select>` : ''}
+   <h4 style="margin-top:14px">Your reporting contact</h4><p class="muted" style="font-size:14px">${k.mine ? 'Your own.' : 'Set by Grounded for everyone. You can change it for yourself.'}</p>
+   <div class="grid g2"><div><label class="f" for="sp-k-who">Who to call</label><input type="text" id="sp-k-who" value="${esc(k.who)}" placeholder="My supervisor"></div><div><label class="f" for="sp-k-ph">Phone</label><input type="tel" id="sp-k-ph" value="${esc(k.phone)}"></div></div>
+   <label class="f" for="sp-k-step">Your organization's step</label><input type="text" id="sp-k-step" value="${esc(k.step)}" placeholder="Tell my supervisor the same day">
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sp-k-save">Save My Contact</button>${k.mine ? '<button class="btn btn-line btn-sm" data-act="sp-k-reset">Use Grounded\'s</button>' : ''}<button class="btn btn-line btn-sm" data-act="sp-rep-new">Open the Reporting Card</button></div></div>
+  ${TIER !== 'field' && spReports().length ? `<p class="muted" style="font-size:14px;margin-top:10px">${spReports().length} report record${spReports().length === 1 ? '' : 's'} on this device, kept with each child.</p>` : ''}`;
+}
+function vSPConsent(c){
+  const C = SPG().consent, cur = c.sp.consent || {}, how = V.spch || (cur.status === 'ok' ? cur.how : 'form'), boxes = cur.how === 'form' && cur.v === C.version ? (cur.boxes || []) : [];
+  return `<button class="linkbtn" data-act="sp-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)} &middot; ${esc(spGradeName(c.sp.grade))}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
+  ${cur.how === 'form' && cur.v && cur.v !== C.version ? `<div class="card" style="border-left:4px solid var(--gold)"><p>${esc(C.newVersion)}</p></div>` : ''}
+  <div class="card"><h3>How it was given</h3><div class="st-opts">${C.how.map(h => stChip('sp-ch', `data-v="${h[0]}"`, how === h[0], h[1])).join('')}</div></div>
+  ${how === 'form' ? `<div class="card sp-form"><p>${esc(C.formIntro)}</p><p style="margin-top:10px"><b>Please check each box.</b></p>
+    ${C.boxes.map(b => `<label class="cb sp-box"><input type="checkbox" data-spbox="${b[0]}" ${boxes.includes(b[0]) ? 'checked' : ''}> <span>${esc(b[1])}</span></label>`).join('')}</div>` :
+    `<div class="card"><p class="muted">${esc(how === 'file' ? C.fileNote : C.verbalNote)}</p>${how === 'file' ? `<label class="f" for="sp-cw">Where it is kept</label><input type="text" id="sp-cw" value="${esc(cur.where || '')}" placeholder="School office, hospice chart">` : ''}
+    <label class="f" for="sp-cn">${how === 'file' ? 'Notes' : 'What you explained'}</label><input type="text" id="sp-cn" value="${esc(cur.note || '')}"></div>`}
+  <div class="card"><div class="grid g2"><div><label class="f" for="sp-cnm">${how === 'form' ? 'Grown-up types their name' : 'Who gave permission (name)'}</label><input type="text" id="sp-cnm" autocomplete="off" value="${esc(cur.status === 'ok' ? cur.name || '' : '')}"></div>
+   <div><label class="f" for="sp-crl">Relationship to ${esc(c.name)}</label><select id="sp-crl">${C.rels.map(r => `<option ${cur.rel === r ? 'selected' : ''}>${esc(r)}</option>`).join('')}</select></div>
+   <div><label class="f" for="sp-cdt">Date</label><input type="date" id="sp-cdt" value="${esc(cur.status === 'ok' && cur.date ? cur.date : today())}"></div></div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sp-consent-save" data-v="${c.id}">${icon('check')} Save Permission</button>${spConsentOk(c) ? `<button class="btn btn-line" data-act="sp-consent-pdf" data-v="${c.id}">${icon('print')} Save PDF or Print</button>` : ''}</div>
+   ${spConsentOk(c) && c.sp.consent.how === 'form' ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(C.pdfNote)}</p>` : ''}</div>
+  <div class="card"><div class="row"><button class="btn btn-line btn-sm" data-act="sp-consent-no" data-v="${c.id}">They Said No for Now</button><button class="btn btn-line btn-sm" data-act="sp-consent-stop" data-v="${c.id}">They Stopped Sprout Visits</button></div></div>`;
+}
+function spConsentPrint(c){
+  const C = SPG().consent, con = c.sp.consent;
+  const mark = on => on ? '&#9745;' : '&#9744;';
+  printNow(ph('Permission for Sprout visits') + `<h1>${esc(C.title)}</h1><p>${esc(C.formIntro)}</p>
+    <h2>Child</h2><p>${esc(c.name)}, ${esc(spGradeName(c.sp.grade))}</p>
+    ${con.how === 'form' ? `<h2>Agreed</h2>${C.boxes.map(b => `<p>${mark((con.boxes || []).includes(b[0]))} ${esc(b[1])}</p>`).join('')}`
+      : `<h2>How permission was given</h2><p>${esc((C.how.find(x => x[0] === con.how) || [])[1] || '')}${con.where ? ': ' + esc(con.where) : ''}</p>${con.note ? `<p>${esc(con.note)}</p>` : ''}`}
+    <div class="pr-sign"><div>${esc(con.name || '')}, ${esc(con.rel || '')}${con.how === 'form' ? ' (typed name)' : ''}</div><div>${nice(con.date)}</div></div>
+    <p style="margin-top:6mm"><i>Guide: ${esc(DATA.settings.name || '')}. Recorded in the Grounded Field Guide, form version ${C.version}.</i></p>` + pf(), 'Sprout permission');
+}
+function spLevelTable(c){
+  const vs = spVisits(c.id).filter(s => s.levels).slice(0, 4);
+  if (!vs.length) return '<p class="muted" style="margin-top:8px">No levels yet. They come at the end of each visit.</p>';
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}</th>`).join('')}</tr>
+   ${SPG().parts.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const L = (s.levels || {})[p.key]; return `<td>${L ? `<span class="pill ${spLvCls(L.pick)}">${esc(spLvName(L.pick))}</span>${spPrevLevel(c, s, p.key)}${L.mixed ? ' <span class="pill" title="Mixed signals">Mixed</span>' : ''}` : '<span class="muted">&middot;</span>'}</td>`; }).join('')}</tr>`).join('')}</table></div>
+   ${vs.some(s => s.std !== SC_STD()) ? '<p class="muted" style="font-size:14px;margin-top:6px">Visits on an earlier standard are not compared with newer ones.</p>' : ''}`;
+}
+const SC_STD = () => SC ? SC.version : 1;
+function vSPPerson(c){
+  const S = SPG(), vs = spVisits(c.id), ok = spConsentOk(c), ready = spReady(), reps = spReports(c.id);
+  return `<button class="linkbtn" data-tab="sprout">Back to Sprout Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(spGradeName(c.sp.grade))}${c.sp.rel ? ' &middot; grown-up: ' + esc(c.sp.rel) : ''}</div><h1>${esc(c.name)}</h1></div><div class="row">${spConsentLine(c)}</div></div>
+  ${!ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Permission first</h3><p class="muted">${c.sp.consent && c.sp.consent.status === 'declined' ? esc(S.consent.declined) : c.sp.consent && c.sp.consent.status === 'withdrawn' ? esc(S.consent.withdrawn) : 'A parent or legal guardian gives permission before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sp-consent" data-v="${c.id}">Permission Form</button></div>` : ''}
+  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Sprout training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sp-mhome">Open Training</button></div>` : ''}
+  <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sp-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Levels</h3>${spLevelTable(c)}</div>
+   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-spfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+    <div class="grid g2" style="margin-top:10px"><input type="date" id="sp-fd" aria-label="Follow-up date"><input type="text" id="sp-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
+    <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(spVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Share with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.std && s.std !== SC_STD() ? ' &middot; earlier standard' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sp-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card st-private"><div class="spread"><h3>Report records</h3><button class="btn btn-line btn-sm" data-act="sp-rep-for" data-v="${c.id}">Report a Concern</button></div><p class="muted" style="font-size:14px">${esc(S.report.recordNote)}</p>
+   ${reps.length ? reps.map(r => `<div class="list-row"><div class="lr-main"><b>${nice(r.date)}</b> <span class="muted">${esc(r.agency || r.county || '')}</span>${r.due && !r.written ? ' <span class="pill warn">Written report due</span>' : ''}</div><button class="btn btn-line btn-sm" data-act="sp-rec" data-v="${r.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">None.</p>'}</div>
+  <div class="card"><h3>Details</h3>
+   <label class="f">First name or nickname</label><input type="text" data-spc="name" value="${esc(c.name)}">
+   <div class="grid g2"><div><label class="f">Grade</label><select data-spc="grade">${SP_GRADES.map(g => `<option value="${g}" ${g === c.sp.grade ? 'selected' : ''}>${spGradeName(g)}</option>`).join('')}</select></div>
+   <div><label class="f">Their grown-up (relationship)</label><input type="text" data-spc="rel" value="${esc(c.sp.rel || '')}"></div></div>
+   <label class="f">Status</label><select data-spc="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v === c.status ? 'selected' : ''}>${l}</option>`).join('')}</select>
+   <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="sp-consent" data-v="${c.id}">Permission Form</button><button class="btn btn-danger btn-sm" data-act="sp-del" data-v="${c.id}">Delete This Record</button></div></div>`;
+}
+const spSafeFlag = sf => !!sf && !sf.notAsked && (sf.safe === 'yes' || sf.safe === 'unsure' || sf.self === 'yes' || sf.self === 'unsure' || (sf.listen || []).length > 0);
+function spSafetyText(sf){
+  if (!sf) return 'Not recorded.';
+  if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
+  const A = SPG().safety.answers, an = x => ((A.find(o => o[0] === x) || [])[1] || 'not recorded');
+  return (spSafeFlag(sf) ? 'Concern noted. ' : 'No concern noted. ') + 'Feeling safe: ' + an(sf.safe) + '.' + (sf.self !== undefined && sf.self !== '' ? ' Wishing they weren\'t alive or hurting themselves: ' + an(sf.self) + '.' : '') + ((sf.listen || []).length ? ' Noticed: ' + sf.listen.join(', ') + '.' : '') + ((sf.actions || []).length ? ' Actions: ' + sf.actions.join(', ') + '.' : '');
+}
+function spFindVisit(){ return V.spv === 'demo' ? (V.spDemo || null) : DATA.sessions.find(x => x.id === V.spv) || null; }
+function vSPVisit(){
+  const s = spFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
+  if (!SC && s.visit !== 'nottoday') { const w = spNeedData(); if (w) return w; }
+  const demo = V.spv === 'demo', c = demo ? s.person : CL(s.clientId), S = SPG();
+  const back = demo ? `<button class="linkbtn" data-tab="sprout">Back to Sprout Guide</button>` : `<button class="linkbtn" data-act="sp-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'child')}</button>`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}`;
+  const idxs = s.visit === 'full' ? [0,1,2,3] : [0], room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
+  const reps = demo ? [] : spReports(c ? c.id : null).filter(r => r.visitId === s.id);
+  return `${back}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(spGradeName(s.grade))}${s.std !== SC_STD() ? ' &middot; earlier standard' : ''}</div><h1>${esc(spVisitName(s.visit))}</h1>
+   <p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; the child stopped the visit' : ''}</p></div>
+  <div class="card"><p><b>Child's yes:</b> Yes &middot; <b>Room:</b> ${esc(((room.where.find(o => o[0] === (s.room || {}).where) || [])[1]) || '')}${((s.room || {}).who || []).length ? ' (' + s.room.who.map(w => ((room.who.find(o => o[0] === w) || [])[1] || w)).join(', ') + ')' : ''} &middot; <b>Screen:</b> ${esc(scr)}</p>
+   ${s.topic && s.topic.deck ? `<p style="margin-top:6px"><b>Topic:</b> ${esc(cdDeckName(s.topic.deck))}${(s.topic.used || []).length ? ', ' + s.topic.used.length + ' cards used' : ''}</p>` : ''}</div>
+  <div class="card"><h3>Levels</h3>${S.parts.map(p => { const L = (s.levels || {})[p.key] || {}; return `<div class="sp-lvrow"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span>
+    <span class="row" style="gap:6px"><span class="pill ${spLvCls(L.pick)}">${esc(spLvName(L.pick || 'none'))}</span>${c && !demo ? spPrevLevel(c, s, p.key) : ''}${L.mixed ? `<span class="pill">${esc(S.levels.mixed)}</span>` : ''}</span>
+    <small class="muted sp-src">Child: ${L.child == null ? 'no answers' : esc(spLvName(spLvOf(L.child)))} &middot; Saw: ${esc(((S.seen.find(o => o[0] === (s.seen || {})[p.key]) || [])[1]) || 'not marked')} &middot; Grown-up: ${L.grown == null ? 'not asked' : esc(spLvName(spLvOf(L.grown)))}${L.pick !== L.sug ? ' &middot; suggested ' + esc(spLvName(L.sug)) + (L.why ? ', changed because: ' + esc(L.why) : '') : ''}</small></div>`; }).join('')}</div>
+  ${(s.flags || []).length ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(S.goodbye.flagTitle)}</h3><ul style="margin-top:6px">${s.flags.map(f => `<li>${esc(f.q)} <b>${esc((spAns(f.a) || [])[1] || f.a)}</b></li>`).join('')}</ul><p class="muted" style="margin-top:6px">${s.told === 'told' ? 'Shared with the grown-up.' : s.told === 'concern' ? 'Not shared: the worry is about the grown-up.' : 'Not marked as shared.'}</p></div>` : ''}
+  <details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
+   ${S.parts.map(p => { const qs = spQs(s.grade, p.key), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${idxs.map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i][0])} ${qa[i] ? (spHard(qs[i], qa[i]) ? `<b>${esc((spAns(qa[i]) || [])[1])}</b>` : esc((spAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}${((s.gv || {}).ans || {})[p.key] ? `<p class="muted" style="margin-top:4px">Grown-up: ${esc(((S.grownView.answers.find(o => o[0] === s.gv.ans[p.key]) || [])[1]) || '')}${(s.gv.words || {})[p.key] ? ', "' + esc(s.gv.words[p.key]) + '"' : ''}</p>` : ''}`; }).join('')}</details>
+  <div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(spSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
+  ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}</div>` : ''}
+  ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
+  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sp-print-home">${icon('print')} Take-Home Sheet</button><button class="btn btn-line" data-act="sp-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+}
+function spNote(s, c){
+  const S = SPG(), L = [];
+  L.push('Sprout visit: ' + spVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Child: ' + (c ? c.name : '') + ' (' + spGradeName(s.grade) + ')');
+  const con = c && c.sp && c.sp.consent; if (con && con.status === 'ok') L.push('Permission: ' + (((S.consent.how.find(x => x[0] === con.how) || [])[1]) || '') + (con.rel ? ', ' + con.rel : '') + (con.date ? ', ' + nice(con.date) : ''));
+  L.push("Child's yes: yes. Room: " + (((S.room.where.find(o => o[0] === (s.room || {}).where) || [])[1]) || 'not recorded') + '.');
+  if (s.stopped) L.push('The child stopped the visit, and it was honored.');
+  L.push('', 'Levels:');
+  S.parts.forEach(p => { const x = (s.levels || {})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (x ? spLvName(x.pick).toLowerCase() + (x.mixed ? ', mixed signals' : '') : 'not scored')); });
+  if ((s.flags || []).length) L.push('', 'Answers shared with the grown-up: ' + s.flags.length + (s.told === 'concern' ? ' (not shared: the worry is about the grown-up)' : '') + '.');
+  L.push('Safety: ' + spSafetyText(s.safety));
+  if ((s.tryh || []).length) L.push('Try at home: ' + s.tryh.join(', ') + '.');
+  return L.join('\n');
+}
+function spPrintHome(s, c){
+  const S = SPG(), H = S.takeHome, band = spBand(s.grade), name = c ? c.name : '';
+  const strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong');
+  const tries = (s.tryh || []).map(t => { for (const p of S.parts){ const it = (S.tryHome[p.key] || []).find(x => x[0] === t); if (it) return [p, it]; } return null; }).filter(Boolean);
+  const talk = s.told === 'concern' || !s.talkHome ? [] : (s.flags || []);
+  printNow(ph('For your family') + `<h1>${esc(H.title)}</h1><p>${esc(name)}${name ? ', ' : ''}${nice(s.date)}</p>
+    <h2>${esc(H.did)}</h2><p>${esc(spVisitName(s.visit))}${s.topic && s.topic.deck ? ' about ' + esc(cdDeckName(s.topic.deck).toLowerCase()) : ''}. We looked at the six parts of ${esc(name || 'your child')}'s tree: ${S.parts.map(p => p.part.toLowerCase()).join(', ')}.${s.stopped ? ' We stopped when they wanted to, and that was the right thing to do.' : ''}</p>
+    ${s.share ? `<h2>${esc(H.share)}</h2><p>${esc(s.share)}</p>` : ''}
+    ${strong.length ? `<h2>${esc(H.strong)}</h2><p>${strong.map(p => `<b>${esc(p.part)}</b> (${esc(p.name.toLowerCase())})`).join(', ')}</p>` : ''}
+    ${talk.length ? `<h2>${esc(H.talk)}</h2>${talk.map(f => `<p>When asked "${esc(f.q)}" ${esc(name || 'your child')} said "${esc(((spAns(f.a) || [])[1] || '').toLowerCase())}." ${f.flag === 'hope' ? 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away.' : 'Ask gently about it, and listen.'}</p>`).join('')}` : ''}
+    ${tries.length ? `<h2>${esc(H.try)}</h2>${tries.map(([p, it]) => `<p><b>${esc(it[0])}</b> (${esc(p.part)}): ${esc(band === 'k2' ? it[1] : it[2])}</p>`).join('')}` : ''}
+    <h2>${esc(H.help)}</h2><ul>${H.helpLines.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <p><b>If someone is in danger, call 911. For a mental health crisis, call or text 988.</b></p>
+    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>` + `<div class="pr-foot">Sprout&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title);
+}
+
+// ----- the visit runner -----
+function spStart(visit, cid, demo){
+  const S = SPG();
+  if (!SC){ spLoad(); return toast('Loading the Sprout questions. Try again in a moment.'); }
+  const c = demo ? {id:'demo', name:S.demo.name, sp:{grade:S.demo.grade, rel:'Mom', consent:{status:'ok', how:'verbal', date:today()}}} : CL(cid);
+  if (!c) return;
+  if (!demo && !spConsentOk(c)) return go('sprout', {spc:c.id});
+  if (!demo && !spReady()) return go('sprout', {spm:1});
+  RUN = {kind:'sp', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sp.grade, std:SC.version, started:Date.now(), step:0,
+    screen:'guide', room:{where:'', who:[]}, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:spK2(c.sp.grade),
+    safety:{safe:'', self:'', listen:[], notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[], topic:{deck:'', used:[]}, share:'', tryh:[], told:'', talkHome:true, priv:'', pn:{}, stopped:false};
+  spOpenRun();
+}
+function spSteps(r){
+  const parts = SPG().parts.map(p => 'p:' + p.key);
+  if (r.stopped) return ['start', ...(r.gvWhen === 'before' ? ['gv'] : []), 'levels', 'goodbye'];
+  return ['start', ...(r.gvWhen === 'before' ? ['gv'] : []), ...(r.visit === 'topic' ? ['topic'] : []), ...(r.visit === 'full' ? parts : ['quick']), ...(r.gvWhen === 'after' ? ['gv'] : []), 'safety', 'levels', 'goodbye'];
+}
+function spOpenRun(){ $('#runner').classList.remove('hide'); spDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
+function spKeep(){ if (RUN && RUN.kind === 'sp' && !RUN.demo){ DATA.draft = RUN; save(); } }
+const SP_BAR = {
+  yes:'<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="currentColor"/><rect x="28" y="2" width="8" height="24" rx="2" fill="currentColor"/></svg>',
+  some:'<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="currentColor"/><rect x="28" y="2" width="8" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  no:'<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="28" y="2" width="8" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  unsure:'<svg viewBox="0 0 40 28" aria-hidden="true"><path d="M15 9a5 5 0 1 1 7 4.6c-1.4.6-2 1.5-2 3V18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="24" r="2" fill="currentColor"/></svg>'
+};
+function spQ(key, i, q){
+  const cur = ((RUN.ans || {})[key] || {})[i];
+  return `<div class="st-q"><p>${RUN.visit === 'full' ? `<span class="st-n">${i + 1}</span>` : ''}${esc(q[0])}${q[2] === 'r' ? ' <span class="pill" title="Yes is the hard answer here">reverse</span>' : ''}</p>
+   <div class="st-opts" role="group" aria-label="${esc(q[0])}">${SC.answers.map(o => `<button type="button" class="chip sp-chip" data-act="sp-ans" data-k="${key}" data-i="${i}" data-v="${o[0]}" aria-pressed="${cur === o[0]}">${SP_BAR[o[0]] || ''}${esc(o[1])}</button>`).join('')}</div>
+   <div class="tipbox sp-tip"><b>Tip:</b> ${esc(q[1])}</div></div>`;
+}
+const spSeenRow = key => `<div class="sp-seen"><span class="muted" style="font-size:14px">What you saw</span><div class="st-opts">${SPG().seen.map(o => stChip('sp-seen', `data-k="${key}" data-v="${o[0]}"`, RUN.seen[key] === o[0], o[1])).join('')}</div></div>`;
+function spDraw(){
+  const S = SPG(), steps = spSteps(RUN), st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), band = spBand(RUN.grade), n = steps.length;
+  const pct = Math.round(RUN.step / (n - 1) * 100);
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if (st === 'start'){
+    const R = S.room, Y = S.childYes, v = S.visits.find(x => x[0] === RUN.visit);
+    body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])} with ${esc(c ? c.name : '')}</h2><p class="purpose">${esc(spGradeName(RUN.grade))}. ${esc(v[3])}</p>
+     <div class="card"><h3>${esc(R.title)}</h3><p class="muted">${esc(R.lead)}</p><div class="st-opts">${R.where.map(o => stChip('sp-room', `data-v="${o[0]}"`, RUN.room.where === o[0], o[1])).join('')}</div>
+      <h4 style="margin-top:12px">Also here</h4><div class="st-opts">${R.who.map(o => stChip('sp-who', `data-v="${o[0]}"`, RUN.room.who.includes(o[0]), o[1])).join('')}</div>
+      <div class="tipbox">${esc(R.concern)}</div></div>
+     <div class="card"><h3>${esc(S.grownView.title)}</h3><p class="muted">${esc(S.grownView.lead)}</p><div class="st-opts">${S.grownView.when.map(o => stChip('sp-gvwhen', `data-v="${o[0]}"`, RUN.gvWhen === o[0], o[1])).join('')}</div></div>
+     <div class="card"><h3>${esc(S.screen.title)}</h3><div class="st-opts">${S.screen.opts.map(o => stChip('sp-screen', `data-v="${o[0]}"`, RUN.screen === o[0], o[1])).join('')}</div><p class="muted" style="font-size:14px;margin-top:8px">${esc((S.screen.opts.find(o => o[0] === RUN.screen) || [])[2] || '')}</p>
+      ${RUN.screen === 'shared' ? `<label class="cb" style="margin-top:8px"><input type="checkbox" data-spread="1" ${RUN.read ? 'checked' : ''}> Read questions aloud on the child's screen</label>` : ''}</div>
+     <div class="card step-card">${blk('Ask the child', [Y.say[band]], 'say')}<div class="tipbox">${esc(Y.tip)}</div>
+      <div class="st-opts" style="margin-top:12px">${stChip('sp-yes', 'data-v="yes"', RUN.yes === 'yes', 'Yes')}${stChip('sp-yes', 'data-v="no"', RUN.yes === 'no', 'Not today')}</div>
+      ${RUN.yes === 'no' ? `<p style="margin-top:10px">${esc(Y.notToday)}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sp-nottoday">${RUN.demo ? 'End the Demo' : 'Record Not Today and Close'}</button>` : ''}</div>
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}`;
+  } else if (st === 'gv'){
+    const G = S.grownView;
+    body = `<div class="run-step-n">${esc(G.title)}</div><h2 class="run-step-t">Ask the grown-up</h2><p class="muted">${esc(G.lead)}</p><div class="tipbox">${esc(G.tip)}</div>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div><div class="st-q"><p>${esc(G.q[band][p.key])}</p>
+      <div class="st-opts">${G.answers.map(o => stChip('sp-gv', `data-k="${p.key}" data-v="${o[0]}"`, RUN.gv.ans[p.key] === o[0], o[1])).join('')}</div>
+      <input type="text" data-spgw="${p.key}" value="${esc(RUN.gv.words[p.key] || '')}" placeholder="A few words (optional)" style="margin-top:8px" aria-label="${esc(p.part)}: the grown-up's words"></div></div>`).join('')}
+     <button class="btn btn-line btn-sm" style="margin-top:14px" data-act="sp-rep-gv">${icon('shield')} ${esc(G.concern)}</button>`;
+  } else if (st === 'topic'){
+    const decks = (CDG() ? CDG().decks : []).filter(d => d.sprout && Object.keys(d.sprout).length), d = RUN.topic.deck ? cdDeck(RUN.topic.deck) : null;
+    body = `<div class="run-step-n">Topic visit</div><h2 class="run-step-t">Cards for a hard topic</h2><p class="muted">Pick the deck. Use one or two cards for each part, in any order. Tap the ones you used.</p>
+     <label class="f" for="sp-deck">Topic</label><select id="sp-deck" data-spdeck="1" style="max-width:420px"><option value="">Choose a topic</option>${decks.map(x => `<option value="${x.id}" ${x.id === RUN.topic.deck ? 'selected' : ''}>${esc(x.title)}</option>`).join('')}</select>
+     ${d ? `<p class="muted" style="margin-top:8px">${esc(d.blurb || '')}</p>${S.parts.map(p => { const gk = ST2GV[p.key], list = (d.sprout || {})[gk] || []; return list.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${list.map((cd, i) => stChip('sp-card', `data-v="${gk}:${i}"`, RUN.topic.used.includes(gk + ':' + i), cdTxt(cd))).join('')}</div></div>` : ''; }).join('')}
+      <details class="st-lf"><summary>${esc(CDG().heavy || 'If something heavy comes up')}</summary><p class="muted" style="margin-top:6px">${esc(CDG().heavyNote || '')}</p></details>` : ''}
+     <label class="f" for="sp-tpn">Your notes (private)</label><textarea id="sp-tpn" data-spf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
+  } else if (st.startsWith('p:')){
+    const p = spPart(st.slice(2)), qs = spQs(RUN.grade, p.key);
+    body = `<div class="run-step-n">Part ${S.parts.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
+     <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.say[band]], 'say')}
+      <details class="st-lf"><summary>Warm up (optional)</summary><div class="st-opts" style="margin-top:8px">${p.warm.map((w, i) => stChip('sp-warm', `data-k="${p.key}" data-v="${i}"`, (RUN.warm[p.key] || []).includes(i), w[band])).join('')}</div></details></div>
+     ${RUN.screen === 'shared' ? `<button class="btn btn-gold" style="margin-top:12px" data-act="sp-kid" data-v="${p.key}">${icon('play')} ${esc(S.screen.handTo)}</button>` : ''}
+     ${[0,1,2,3].map(i => qs[i] ? spQ(p.key, i, qs[i]) : '').join('')}
+     ${spSeenRow(p.key)}
+     <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
+     <label class="f" for="sp-pn">Your notes (private)</label><textarea id="sp-pn" data-sppn="${p.key}" style="min-height:70px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key] || '')}</textarea>`;
+  } else if (st === 'quick'){
+    body = `<div class="run-step-n">${RUN.visit === 'topic' ? 'Quick check-in' : 'Six quick questions'}</div><h2 class="run-step-t">One for each part</h2><p class="muted">Read each one aloud. Let them answer in their own words, then tap.</p>
+     ${RUN.screen === 'shared' ? `<button class="btn btn-gold" style="margin-top:12px" data-act="sp-kid" data-v="all">${icon('play')} ${esc(S.screen.handTo)}</button>` : ''}
+     ${S.parts.map(p => { const q = spQs(RUN.grade, p.key)[0]; return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${q ? spQ(p.key, 0, q) : ''}${spSeenRow(p.key)}</div>`; }).join('')}
+     <label class="f" for="sp-pq">Your notes (private)</label><textarea id="sp-pq" data-spf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
+  } else if (st === 'safety'){
+    const F = S.safety, sf = RUN.safety, older = !spK2(RUN.grade), sq = SC.safety, q1 = (older ? sq.older : sq.young)[0], q2 = older ? sq.older[1] : null, flag = spSafeFlag(sf);
+    body = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
+     <div class="card step-card">${blk('Say', [F.say[band]], 'say')}${blk('Ask, then listen', F.open[band], 'say')}</div>
+     <div class="st-q"><p>${esc(q1[0])}</p><div class="st-opts">${F.answers.map(o => stChip('sp-safe', `data-k="safe" data-v="${o[0]}"`, sf.safe === o[0], o[1])).join('')}</div></div>
+     ${q2 ? `<div class="st-q"><p>${esc(q2[0])}</p><div class="st-opts">${F.answers.map(o => stChip('sp-safe', `data-k="self" data-v="${o[0]}"`, sf.self === o[0], o[1])).join('')}</div></div>`
+      : `<div class="st-q"><p><b>Listen for</b> <span class="muted">(kindergarten to grade 2). Tap anything you noticed.</span></p><div class="st-opts">${F.listenFor.map(x => stChip('sp-listen', `data-v="${esc(x)}"`, sf.listen.includes(x), x)).join('')}</div></div>`}
+     <div class="tipbox">${esc(F.note)}</div>
+     ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+       <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="sp-rep-run">${icon('shield')} Report a Concern</button></div>
+       <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('sp-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
+     <label class="cb" style="margin-top:16px"><input type="checkbox" data-spsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
+     ${sf.notAsked ? `<select data-spsafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-spsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  } else if (st === 'levels'){
+    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(S.levels.lead)} The safety step never changes a level.</p>
+     ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} stopped the visit. Mark only what you have. "${esc(S.levels.notEnough)}" is fine.</div>` : ''}
+     ${S.parts.map(p => { const g = spSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug, needWhy = spStepGap(pick, g.sug) >= 2;
+       return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>
+        <p class="muted" style="font-size:14px;margin-top:4px">Child: ${g.child == null ? 'no answers' : esc(spLvName(spLvOf(g.child)))} &middot; Saw: ${esc(((S.seen.find(o => o[0] === RUN.seen[p.key]) || [])[1]) || 'not marked')} &middot; Grown-up: ${g.grown == null ? 'not asked' : esc(spLvName(spLvOf(g.grown)))}</p>
+        <p style="margin-top:6px">Suggested: <span class="pill ${spLvCls(g.sug)}">${esc(spLvName(g.sug))}</span>${g.mixed ? ` <span class="pill">${esc(S.levels.mixed)}</span>` : ''}</p>
+        <div class="st-opts">${S.levels.names.map(o => stChip('sp-lv', `data-k="${p.key}" data-v="${o[0]}"`, pick === o[0], o[1])).join('')}</div>
+        ${needWhy ? `<input type="text" data-splw="${p.key}" value="${esc(cur.why || '')}" placeholder="${esc(S.levels.why)}" style="margin-top:8px" aria-label="${esc(p.part)}: why the change">` : ''}</div>`; }).join('')}`;
+  } else {
+    const G = S.goodbye, flags = spFlags(RUN);
+    body = `<div class="run-step-n">Goodbye</div><h2 class="run-step-t">Wrap up</h2>
+     <div class="card step-card">${blk('Say', [G.say[band]], 'say')}${blk('Ask', [G.shareQ], 'say')}</div>
+     <label class="f" for="sp-share">Something ${esc(c ? c.name : 'they')} chose to share (goes on the take-home sheet)</label><input type="text" id="sp-share" data-spf="share" value="${esc(RUN.share)}">
+     ${flags.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:14px"><h3>${esc(G.flagTitle)}</h3><p class="muted">${esc(G.flagLead)}</p><ul style="margin-top:6px">${flags.map(f => `<li>${esc(f.q)} <b>${esc((spAns(f.a) || [])[1])}</b></li>`).join('')}</ul>
+       <div class="st-opts">${stChip('sp-told', 'data-v="told"', RUN.told === 'told', 'I told the grown-up')}${stChip('sp-told', 'data-v="concern"', RUN.told === 'concern', 'Not shared: the worry is about them')}</div>
+       ${RUN.told === 'concern' ? `<p style="margin-top:8px">${esc(S.room.concern)}</p><button class="btn btn-line btn-sm" style="margin-top:8px" data-act="sp-rep-run">${icon('shield')} Report a Concern</button>` : `<label class="cb" style="margin-top:10px"><input type="checkbox" data-sptalk="1" ${RUN.talkHome ? 'checked' : ''}> Also put these on the take-home sheet</label>`}</div>` : ''}
+     <h4 style="margin-top:16px">${esc(S.takeHome.try)} <span class="muted" style="font-weight:400">(pick one or two)</span></h4>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${(S.tryHome[p.key] || []).map(t => stChip('sp-try', `data-v="${esc(t[0])}"`, RUN.tryh.includes(t[0]), t[0])).join('')}</div></div>`).join('')}
+     <label class="f" for="sp-priv">Private notes</label><textarea id="sp-priv" data-spf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`;
+  }
+  const last = st === 'goodbye';
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(spVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span><button class="bar-btn sp-repbtn" data-act="sp-rep-run" aria-label="Report a concern" title="Report a concern">${icon('shield')}</button><button class="bar-btn" data-act="sp-pause" aria-label="Close">&times;</button></div></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="run-body" id="run-body"><div class="wrap">${st !== 'start' && !RUN.stopped && !last && st !== 'levels' ? `<div class="sp-stopbar"><button class="btn btn-line btn-sm" data-act="sp-stop">${esc(S.stop.btn)}</button></div>` : ''}${body}</div></div>
+    <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="sp-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
+    ${last ? `<button class="btn btn-gold" data-act="sp-save">${icon('check')} ${RUN.demo ? 'Finish Demo' : 'Save Visit'}</button>` : `<button class="btn btn-gold" data-act="sp-next" ${st === 'start' && RUN.yes === 'no' ? 'disabled style="opacity:.4"' : ''}>${st === 'start' ? 'Begin' : 'Next'} &rsaquo;</button>`}</div></div>`;
+  tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
+}
+function spFlags(run){
+  const out = [], idxs = spIdx(run);
+  SPG().parts.forEach(p => { const qs = spQs(run.grade, p.key), qa = (run.ans || {})[p.key] || {}; idxs.forEach(i => { const q = qs[i]; if (q && spFlagged(q, qa[i])) out.push({part:p.key, q:q[0], a:qa[i], flag:q[3]}); }); });
+  return out;
+}
+function spNext(){
+  const steps = spSteps(RUN), st = steps[RUN.step], sf = RUN.safety;
+  if (st === 'start'){
+    if (!RUN.room.where) return alert('A grown-up must be in the room, or within sight with the door open, before the visit starts. Mark which.');
+    if (RUN.yes !== 'yes') return alert('Ask the child first. The visit starts only with their yes.');
+  }
+  if (st === 'topic' && !RUN.topic.deck) return alert('Choose a topic, or go back and pick a different visit.');
+  if (st === 'safety' && !sf.notAsked && !sf.safe) return alert('Ask the safety question, or check "I didn\'t ask these today" and say why.');
+  if (st === 'safety' && !sf.notAsked && !spK2(RUN.grade) && !sf.self) return alert('Ask the second safety question, or check "I didn\'t ask these today" and say why.');
+  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
+  if (st === 'safety' && spSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
+  if (st === 'levels'){
+    for (const p of SPG().parts){ const g = spSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug; if (spStepGap(pick, g.sug) >= 2 && !(cur.why || '').trim()) return alert(p.part + ': you changed the level by two steps. Add a quick reason.'); }
+  }
+  RUN.step++; spKeep(); spDraw();
+}
+function spStop(fromKid){
+  if (!fromKid && !confirm('Stop the visit now? That is always okay.')) return;
+  spKidClose();
+  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = SPG().safety.notAskedReasons[0];
+  RUN.step = spSteps(RUN).indexOf('levels'); spKeep(); spDraw();
+  toast(SPG().stop.say);
+}
+function spSaveRun(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId), levels = {};
+  SPG().parts.forEach(p => { const g = spSuggest(r, p.key), cur = r.lv[p.key] || {}; levels[p.key] = {child:g.child, seen:g.seen, grown:g.grown, sug:g.sug, mixed:g.mixed, pick:cur.pick || g.sug, why:cur.why || ''}; });
+  const s = {id:r.id, u:Date.now(), kind:'sp', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, grade:r.grade, visit:r.visit, screen:r.screen,
+    room:r.room, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety, topic:r.visit === 'topic' ? r.topic : null,
+    flags:spFlags(r), told:r.told, talkHome:r.talkHome, share:r.share, tryh:r.tryh, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || []};
+  spKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ s.person = c; V = {tab:'sprout', spv:'demo', spDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  DATA.sessions.push(s); DATA.draft = null;
+  if (c){ touch(c); c.last = today(); }
+  save(); go('sprout', {spv:s.id}); toast('Visit saved.');
+}
+function spNotToday(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ go('sprout'); toast('Demo ended. "Not today" is always honored.'); return; }
+  DATA.sessions.push({id:r.id, u:Date.now(), kind:'sp', clientId:r.clientId, date:today(), minutes:0, std:r.std, grade:r.grade, visit:'nottoday', room:r.room, yes:'no'});
+  DATA.draft = null; if (c){ touch(c); c.last = today(); }
+  save(); go('sprout', {spp:r.clientId}); toast('"Not today" recorded. Thank them.');
+}
+function spPause(){
+  if (RUN.demo){ if (!confirm('Close the demo?')) return; }
+  else if (!confirm('Close this visit? Your notes are kept, and you can pick it up again next time you open the Field Guide.')) return;
+  if (!RUN.demo){ DATA.draft = RUN; save(); toast('Visit paused.'); }
+  spKidClose(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+}
+function spToggle(t){
+  const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v, on = t.getAttribute('aria-pressed') !== 'true';
+  const one = () => t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t));
+  const flip = arr => { const i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); t.setAttribute('aria-pressed', i < 0); };
+  const redraw = () => { spKeep(); const y = $('#run-body').scrollTop; spDraw(); $('#run-body').scrollTop = y; };
+  switch(a){
+    case 'sp-ans': RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][t.dataset.i] = v; one(); break;
+    case 'sp-seen': RUN.seen[k] = RUN.seen[k] === v ? '' : v; if (RUN.seen[k]) one(); else t.setAttribute('aria-pressed', false); break;
+    case 'sp-gv': RUN.gv.ans[k] = v; one(); break;
+    case 'sp-room': RUN.room.where = v; one(); break;
+    case 'sp-who': flip(RUN.room.who); break;
+    case 'sp-gvwhen': RUN.gvWhen = v; return redraw();
+    case 'sp-screen': RUN.screen = v; return redraw();
+    case 'sp-yes': RUN.yes = v; return redraw();
+    case 'sp-warm': { const arr = RUN.warm[k] = RUN.warm[k] || [], i = arr.indexOf(+v); if (i >= 0) arr.splice(i, 1); else arr.push(+v); t.setAttribute('aria-pressed', i < 0); break; }
+    case 'sp-card': flip(RUN.topic.used); break;
+    case 'sp-safe': RUN.safety[k] = v; return redraw();
+    case 'sp-listen': flip(RUN.safety.listen); return redraw();
+    case 'sp-act': flip(RUN.safety.actions); break;
+    case 'sp-lv': RUN.lv[k] = Object.assign({}, RUN.lv[k], {pick:v}); return redraw();
+    case 'sp-told': RUN.told = v; return redraw();
+    case 'sp-try': flip(RUN.tryh); break;
+  }
+  spKeep();
+}
+
+// ----- the child's screen: questions and picture answers only. Everything else stays hidden. -----
+let KID = null;
+function spSay(text){ if (!('speechSynthesis' in window)) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.rate = 0.88; u.pitch = 1.05; speechSynthesis.speak(u); } catch(e){} }
+function spKidOpen(which){
+  const keys = which === 'all' ? SPG().parts.map(p => p.key) : [which], list = [];
+  keys.forEach(k => spIdx(RUN).forEach(i => { const q = spQs(RUN.grade, k)[i]; if (q) list.push({k, i, q}); }));
+  KID = {list, n:0, done:false}; spKidDraw();
+}
+function spKidClose(){ const el = $('#sp-kid'); if (el) el.remove(); KID = null; try { speechSynthesis.cancel(); } catch(e){} }
+function spKidDraw(){
+  const S = SPG(); let el = $('#sp-kid');
+  if (!el){ el = document.createElement('div'); el.id = 'sp-kid'; el.className = 'sp-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Sprout questions'); document.body.appendChild(el); }
+  if (KID.done){
+    el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(S.screen.kidDone)}</div><button class="sp-kid-back" data-act="sp-kid-back">${esc(S.screen.back)}</button></div>`;
+    if (RUN.read) spSay(S.screen.kidDone); return;
+  }
+  const it = KID.list[KID.n], p = spPart(it.k), cur = ((RUN.ans[it.k] || {})[it.i]);
+  el.innerHTML = `<div class="sp-kid-in" style="--pc:${p.color}"><div class="sp-kid-top"><span class="sp-kid-part">${esc(p.part)}</span><span class="sp-kid-dots">${KID.list.map((_, j) => `<i class="${j < KID.n ? 'on' : j === KID.n ? 'cur' : ''}"></i>`).join('')}</span></div>
+    <div class="sp-kid-q">${esc(it.q[0])}</div>
+    <button class="sp-kid-say" data-act="sp-kid-say" aria-label="Read it to me">&#128264; Read it to me</button>
+    <div class="sp-kid-ans">${SC.answers.map(o => `<button class="sp-kid-a" data-act="sp-kid-a" data-v="${o[0]}" aria-pressed="${cur === o[0]}">${SP_BAR[o[0]] || ''}<span>${esc(o[1])}</span></button>`).join('')}</div>
+    <div class="sp-kid-foot">${KID.n > 0 ? '<button class="sp-kid-nav" data-act="sp-kid-prev">&lsaquo; Back</button>' : '<span></span>'}<button class="sp-kid-stop" data-act="sp-kid-stop">${esc(S.stop.btn)}</button></div></div>`;
+  if (RUN.read) spSay(it.q[0]);
+}
+function spKidAnswer(v){
+  const it = KID.list[KID.n]; RUN.ans[it.k] = RUN.ans[it.k] || {}; RUN.ans[it.k][it.i] = v; spKeep();
+  if (KID.n < KID.list.length - 1) KID.n++; else KID.done = true;
+  setTimeout(spKidDraw, 180);
+}
+
+// ----- moving between screens -----
+function spAct(a, v, t){
+  switch(a){
+    case 'sp-retry': SC_FAIL = false; spLoad(); render(); return true;
+    case 'sp-home': go('sprout'); return true;
+    case 'sp-mhome': go('sprout', {spm:1}); return true;
+    case 'sp-ml': go('sprout', {spm:1, spml:+v}); return true;
+    case 'sp-mread': { const L = SPM().lessons, i = +v; spmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !spmData().lessons[x.id]); if (nx >= 0) go('sprout', {spm:1, spml:nx}); else { go('sprout', {spm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sp-mq': go('sprout', {spm:1, spq:spmNewQuiz()}); return true;
+    case 'sp-mpick': V.spq.ans[V.spq.order[V.spq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sp-mnext],[data-act=sp-mfinish]'); if (nb) nb.disabled = false; } return true;
+    case 'sp-mnext': if (V.spq.ans[V.spq.order[V.spq.i]] === undefined) return true; V.spq.i++; render(); return true;
+    case 'sp-mprev': if (V.spq.i > 0){ V.spq.i--; render(); } return true;
+    case 'sp-mfinish': spmFinish(); return true;
+    case 'sp-msign': go('sprout', {spm:1, sps:1}); return true;
+    case 'sp-msigned': { const nm = $('#spm-name').value.trim(); if (!nm){ $('#spm-name').focus(); return true; } if (!$('#spm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
+      spmData().signed = {v:SPM().version, date:today(), name:nm}; save(); go('sprout', {spm:1}); toast(spReady() ? 'Signed. Sprout visits are open.' : 'Signed.'); return true; }
+    case 'sp-mprint': spmPrint(); return true;
+    case 'sp-new': { const n = $('#sp-nn').value.trim(); if (!n){ $('#sp-nn').focus(); return true; }
+      const c = {id:uid(), u:Date.now(), name:n, service:'Sprout', status:'active', followups:[], created:today(), sp:{grade:$('#sp-ng').value, rel:$('#sp-nr').value.trim(), consent:null}};
+      DATA.clients.push(c); save(); go('sprout', {spc:c.id}); return true; }
+    case 'sp-open': { const c = CL(v); if (!c){ go('sprout'); return true; } if (!c.sp){ c.sp = {grade:'K', rel:'', consent:null}; touch(c); save(); } go('sprout', {spp:v}); return true; }
+    case 'sp-consent': V.spch = null; go('sprout', {spc:v}); return true;
+    case 'sp-ch': V.spch = v; { const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
+    case 'sp-consent-save': { const c = CL(v), C = SPG().consent, how = V.spch || (c.sp.consent && c.sp.consent.status === 'ok' ? c.sp.consent.how : 'form'), name = $('#sp-cnm').value.trim();
+      const boxes = Array.from(document.querySelectorAll('[data-spbox]')).filter(x => x.checked).map(x => x.dataset.spbox);
+      if (how === 'form' && boxes.length < C.boxes.length){ alert('Every box needs to be checked before the form can be saved.'); return true; }
+      if (!name){ $('#sp-cnm').focus(); alert(how === 'form' ? 'The grown-up types their name to sign.' : 'Add who gave permission.'); return true; }
+      c.sp.consent = {status:'ok', how, name, rel:$('#sp-crl').value, date:$('#sp-cdt').value || today(), v:C.version, boxes:how === 'form' ? boxes : [], where:how === 'file' ? ($('#sp-cw') || {}).value || '' : '', note:how !== 'form' ? ($('#sp-cn') || {}).value || '' : ''};
+      touch(c); save(); V.spch = null; go('sprout', {spc:c.id}); toast('Permission saved.'); return true; }
+    case 'sp-consent-pdf': { const c = CL(v); if (c && spConsentOk(c)) spConsentPrint(c); return true; }
+    case 'sp-consent-no': case 'sp-consent-stop': { const c = CL(v); if (!c || !confirm(a === 'sp-consent-no' ? 'Record that they said no for now? Visits stay off.' : 'Record that they stopped Sprout visits? Visits stay off unless they give permission again.')) return true;
+      c.sp.consent = {status:a === 'sp-consent-no' ? 'declined' : 'withdrawn', date:today()}; touch(c); save(); go('sprout', {spp:c.id}); return true; }
+    case 'sp-start': spStart(v, t.dataset.c, false); return true;
+    case 'sp-demo': spStart('quick', null, true); return true;
+    case 'sp-next': spNext(); return true;
+    case 'sp-prev': if (RUN && RUN.step > 0){ RUN.step--; spKeep(); spDraw(); } return true;
+    case 'sp-save': spSaveRun(); return true;
+    case 'sp-pause': spPause(); return true;
+    case 'sp-stop': if (RUN) spStop(false); return true;
+    case 'sp-kid-stop': if (RUN && KID){ KID.stopped = true; const el = $('#sp-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(SPG().stop.say)}</div><button class="sp-kid-back" data-act="sp-kid-stopped">${esc(SPG().screen.back)}</button></div>`; if (RUN.read) spSay(SPG().stop.say); } return true;
+    case 'sp-kid-stopped': spStop(true); return true;
+    case 'sp-nottoday': spNotToday(); return true;
+    case 'sp-kid': spKidOpen(v); return true;
+    case 'sp-kid-a': spKidAnswer(v); return true;
+    case 'sp-kid-prev': if (KID && KID.n > 0){ KID.n--; spKidDraw(); } return true;
+    case 'sp-kid-say': if (KID && !KID.done) spSay(KID.list[KID.n].q[0]); return true;
+    case 'sp-kid-back': spKidClose(); { const y = $('#run-body').scrollTop; spDraw(); $('#run-body').scrollTop = y; } return true;
+    case 'sp-ans': case 'sp-seen': case 'sp-gv': case 'sp-room': case 'sp-who': case 'sp-gvwhen': case 'sp-screen': case 'sp-yes': case 'sp-warm': case 'sp-card': case 'sp-safe': case 'sp-listen': case 'sp-act': case 'sp-lv': case 'sp-told': case 'sp-try':
+      if (RUN && RUN.kind === 'sp') spToggle(t); return true;
+    case 'sp-rep-run': if (RUN) spRepOpen(RUN.clientId, RUN.id, ''); return true;
+    case 'sp-rep-gv': if (RUN) spRepOpen(RUN.clientId, RUN.id, 'grownup'); return true;
+    case 'sp-rep-for': spRepOpen(v, null, ''); return true;
+    case 'sp-rep-new': spRepOpen(null, null, ''); return true;
+    case 'sp-rep-close': spRepClose(); return true;
+    case 'sp-rep-save': spRepSave(); return true;
+    case 'sp-rep-state': if (REP){ REP.state = v; DATA.settings.spState = v; save(); spRepDraw(); } return true;
+    case 'sp-rep-raised': if (REP){ REP.raised = v; spRepDraw(); } return true;
+    case 'sp-rep-how': if (REP){ REP.how = v; spRepDraw(); } return true;
+    case 'sp-oc-save': { const o = {name:$('#sp-oc-n').value.trim(), phone:$('#sp-oc-p').value.trim(), after:$('#sp-oc-a').value.trim(), url:$('#sp-oc-u').value.trim()}; if (!o.name){ $('#sp-oc-n').focus(); return true; }
+      if (o.url && !/^https?:\/\//.test(o.url)) o.url = 'https://' + o.url; DATA.settings.spOwnCounty = o; DATA.settings.spCounty = 'other'; save(); if (REP) spRepDraw(); toast('Saved as your county.'); return true; }
+    case 'sp-k-save': DATA.settings.spContact = {who:$('#sp-k-who').value.trim(), phone:$('#sp-k-ph').value.trim(), step:$('#sp-k-step').value.trim()}; save(); render(); toast('Saved for you.'); return true;
+    case 'sp-k-reset': delete DATA.settings.spContact; save(); render(); return true;
+    case 'sp-visit': go('sprout', {spv:v}); return true;
+    case 'sp-rec': go('sprout', {sprec:v}); return true;
+    case 'sp-rec-upd': { const s = DATA.sessions.find(x => x.id === v); if (!s) return true; s.ref = $('#spr-ref').value.trim(); s.written = $('#spr-wr').value; touch(s);
+      const c = CL(s.clientId); if (c && s.written) (c.followups || []).forEach(f => { if (!f.done && /Written report due/.test(f.text || '')) { f.done = true; touch(c); } });
+      save(); render(); toast('Saved.'); return true; }
+    case 'sp-rec-del': if (confirm('Delete this report record? It cannot be undone.')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sprout', s && s.clientId ? {spp:s.clientId} : {}); } return true;
+    case 'sp-print-home': { const s = spFindVisit(); if (s) spPrintHome(s, V.spv === 'demo' ? s.person : CL(s.clientId)); return true; }
+    case 'sp-copy-note': { const s = spFindVisit(); if (s) copy(spNote(s, V.spv === 'demo' ? s.person : CL(s.clientId))); return true; }
+    case 'sp-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sprout', s ? {spp:s.clientId} : {}); } return true;
+    case 'sp-del': if (confirm('Delete this child and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('sprout'); } return true;
+    case 'sp-add-fu': { const c = CL(v), d = $('#sp-fd').value, tx = $('#sp-ft').value.trim(); if (!d){ $('#sp-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
+    case 'sp-field': spSetField(v === 'on'); return true;
+    case 'sp-own-contact': spSetContact(); return true;
+    case 'sp-own-checked': spSetChecked(); return true;
+  }
+  return false;
+}
+// Typing and choosing. Returns true when handled.
+function spInput(t, ev){
+  if (REP && t.dataset.sprep){ REP[t.dataset.sprep] = t.value; if (ev === 'change' && ['county','at'].includes(t.dataset.sprep)){ if (t.dataset.sprep === 'county'){ DATA.settings.spCounty = t.value; REP.agency = ''; save(); } spRepDraw(); } return true; }
+  if (t.dataset.spset && ev === 'change'){ DATA.settings[t.dataset.spset] = t.value; save(); render(); return true; }
+  if (RUN && RUN.kind === 'sp'){
+    if (t.dataset.spf){ RUN[t.dataset.spf] = t.value; spKeep(); return true; }
+    if (t.dataset.sppn){ RUN.pn[t.dataset.sppn] = t.value; spKeep(); return true; }
+    if (t.dataset.spgw){ RUN.gv.words[t.dataset.spgw] = t.value; spKeep(); return true; }
+    if (t.dataset.splw){ RUN.lv[t.dataset.splw] = Object.assign({}, RUN.lv[t.dataset.splw], {why:t.value}); spKeep(); return true; }
+    if (t.dataset.spdeck && ev === 'change'){ RUN.topic = {deck:t.value, used:[]}; spKeep(); spDraw(); return true; }
+    if (t.dataset.spread && ev === 'change'){ RUN.read = t.checked; spKeep(); return true; }
+    if (t.dataset.sptalk && ev === 'change'){ RUN.talkHome = t.checked; spKeep(); return true; }
+    if (t.dataset.spsafe){ const k = t.dataset.spsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; spKeep(); if (k === 'notAsked' && ev === 'change'){ const y = $('#run-body').scrollTop; spDraw(); $('#run-body').scrollTop = y; } return true; }
+  }
+  if (t.dataset.spc && V.spp){ const c = CL(V.spp); if (!c) return true; if (t.dataset.spc === 'name' || t.dataset.spc === 'status') c[t.dataset.spc] = t.value; else c.sp[t.dataset.spc] = t.value; touch(c); save(); if (ev === 'change' && t.tagName === 'SELECT') render(); return true; }
+  if (t.dataset.spfu !== undefined && V.spp && ev === 'change'){ const c = CL(V.spp); c.followups[+t.dataset.spfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); return true; }
+  return false;
+}
+
+// ----- Owner: open to Field users, the reporting contact everyone starts with, and the yearly recheck -----
+function spOwnerCard(){
+  const S = SPG();
+  if (!S) return `<div class="card"><h3>Sprout Guide</h3><p class="muted">Sprout Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
+  const on = !!(S.open && S.open.field), R = S.report, k = R.contact || {}, due = addYear(R.checked), soon = addDays(today(), 30) >= due;
+  return `<div class="card" ${soon ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Sprout Guide</h3>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Sprout training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sp-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
+   <h4 style="margin-top:14px">Reporting info</h4><p class="muted" style="margin-top:4px">Last checked ${nice(R.checked)}. ${soon ? `<b style="color:var(--danger)">Recheck by ${nice(due)}:</b> county numbers, after hours lines, online forms, and the law.` : `Recheck by ${nice(due)}.`}</p>
+   <div class="row" style="margin-top:8px"><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="sp-own-checked">Mark Rechecked Today</button></div>
+   <h4 style="margin-top:14px">Your reporting contact, for everyone</h4><p class="muted" style="font-size:14px">Each person can change it for themselves.</p>
+   <div class="grid g2"><div><label class="f" for="spo-who">Who to call</label><input type="text" id="spo-who" value="${esc(k.who || '')}" placeholder="Grounded: Chris Joy"></div><div><label class="f" for="spo-ph">Phone</label><input type="tel" id="spo-ph" value="${esc(k.phone || '')}"></div></div>
+   <label class="f" for="spo-step">Organization step</label><input type="text" id="spo-step" value="${esc(k.step || '')}" placeholder="Tell your supervisor the same day">
+   <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-own-contact">Update for Everyone</button></div>`;
+}
+async function spLibUpdate(title, path, fn){
+  const cur = await pendingPlain('field'); if (!cur || !cur.sproutGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); fn(next.sproutGuide);
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+function spSetField(on){ spLibUpdate(on ? 'Open Sprout Guide to Field users' : 'Close Sprout Guide to Field users', 'sproutGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
+function spSetContact(){ const k = {who:$('#spo-who').value.trim(), phone:$('#spo-ph').value.trim(), step:$('#spo-step').value.trim()}; spLibUpdate('Sprout Guide reporting contact', 'sproutGuide.report.contact', g => { g.report.contact = k; }); }
+function spSetChecked(){ if (!confirm('Mark the reporting info as rechecked today? Only do this after checking the county numbers, links, and law.')) return; spLibUpdate('Sprout Guide reporting info rechecked', 'sproutGuide.report.checked', g => { g.report.checked = today(); }); }
+function spPersonCard(c){ return c.sp && spOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sprout Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''; }
+
 // ---------------- HARD TALKS ----------------
 // Every hard conversation, for every life stage, side by side. The topic map, helper notes, and wording
 // live in the Field library (FLD.hardTalks). The guides themselves are read from the public
@@ -2211,6 +3043,7 @@ function htRecordCard(T, stages){
 function htPersonOpen(c){
   if (!c) return '';
   if (TIER !== 'field' && LIB) return `<button class="btn btn-line btn-sm" data-act="open-client" data-v="${c.id}">Open Their Record</button>`;
+  if (c.sp && spOpen()) return `<button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.st && stOpen()) return `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.gv && gvOpen()) return `<button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">Open Their Record</button>`;
   return '';
@@ -3005,6 +3838,9 @@ function mergeData(cur, inc){
   Object.entries(io.lessons || {}).forEach(([k,v]) => { if (v && !out.orient.lessons[k]) out.orient.lessons[k] = v; });
   const newer = (a, b) => !a ? b : !b ? a : ((b.v||0) > (a.v||0) || ((b.v||0) === (a.v||0) && (b.date||'') > (a.date||''))) ? b : a;
   ['last','pass','signed','staff'].forEach(k => { out.orient[k] = newer(out.orient[k], io[k]) || null; });
+  const im = inc.spmod || {}; out.spmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.spmod || {});
+  Object.entries(im.lessons || {}).forEach(([k,v]) => { if (v && !out.spmod.lessons[k]) out.spmod.lessons[k] = v; });
+  ['last','pass','signed'].forEach(k => { out.spmod[k] = newer(out.spmod[k], im[k]) || null; });
   if (!out.settings.referrals && inc.settings && inc.settings.referrals) out.settings.referrals = inc.settings.referrals;
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
   return {data:out, stats};
@@ -3029,6 +3865,7 @@ document.addEventListener('click', async e => {
   const a = t.dataset.act, v = t.dataset.v;
   if (a && a.startsWith('gv-') && gvAct(a, v, t)) return;
   if (a && a.startsWith('ht-') && htAct(a, v, t)) return;
+  if (a && a.startsWith('sp-') && spAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
@@ -3052,7 +3889,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('sprout', {spv:s.id}); break; } if (s && s.kind === 'spr'){ go('sprout', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -3140,6 +3977,7 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('input', e => {
   const t = e.target; if (!DATA) return;
+  if (spInput(t, 'input')) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
   if (t.dataset.plf === 'name' && PS){ PS.name = t.value; return; }
@@ -3163,6 +4001,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
+  if (spInput(t, 'change')) return;
   if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
   if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
   if (t.dataset.cddeck){ cdAct('ht-cdeck', t.value || 'tree', t); return; }
