@@ -568,7 +568,7 @@
         };
       }
       function legacyOpen(d, lp) {
-        d.show('<h2 id="ggp-title">Welcome back, ' + esc(lp.name) + '</h2><p>Your Soul Tree profile is moving into Grounded profiles, so it works across every Grounded tool. Your checkups come with you, still locked with the same passcode.</p>' +
+        d.show('<h2 id="ggp-title">Welcome back, ' + esc(lp.name) + '</h2><p>Your Soul Tree profile is moving into Grounded profiles, so it works across every Grounded tool. Your check-ins come with you, still locked with the same passcode.</p>' +
           '<label class="ggp-l" for="ggp-pass">Your Soul Tree passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">' + HOURS('ggp-h') +
           '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Move my profile</button></div>');
@@ -871,7 +871,7 @@
       chips.push(['/grove/', days < 0 ? 'Your tree starts growing soon' : days >= 84 ? 'Your tree is in full bloom' : 'Week ' + (Math.floor(days / 7) + 1) + ' in The Grove']);
     } else chips.push(['/grove/', 'Tend Your Grove']);
     var h = (v.soulTree && v.soulTree.history) || [];
-    if (h.length) { var last = h[h.length - 1]; chips.push(['/soul-tree/', 'Last Soul Tree checkup: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
+    if (h.length) { var last = h[h.length - 1]; chips.push(['/soul-tree/', 'Last Soul Tree check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
     else if (p.age !== 'heartwood') { var a = AGE[p.age]; chips.push([a.href, 'Take a ' + a.tool + ' check-in']); }
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';

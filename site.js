@@ -21,9 +21,12 @@
 (function () {
   // EMAIL: set up hello@growwithgrounded.com in Cloudflare Email Routing before uploading this file.
   const address = 'hello' + '@' + 'growwithgrounded' + '.' + 'com';
+  const at = user => user + '@' + 'growwithgrounded' + '.' + 'com';
   document.querySelectorAll('.email-link').forEach(a => {
     const subject = a.getAttribute('data-subject');
-    a.href = 'mailto:' + address + (subject ? '?subject=' + encodeURIComponent(subject) : '');
+    const who = at(a.getAttribute('data-user') || 'hello');
+    a.href = 'mailto:' + who + (subject ? '?subject=' + encodeURIComponent(subject) : '');
+    a.querySelectorAll('[data-fill]').forEach(el => { el.textContent = who; });
   });
   const text = document.getElementById('email-text');
   if (text) text.textContent = address;

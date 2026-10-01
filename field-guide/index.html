@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -22,14 +24,12 @@
   --scale:1; --shadow:0 1px 0 rgba(42,28,18,.05),0 10px 26px rgba(42,28,18,.08);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .12 0 0 0 0 .06 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-@media (prefers-color-scheme: dark){
-  :root{--bg:#18120D; --bg-deep:#110D09; --card:#231A13; --ink:#F2EADC; --ink-soft:#BFB09A; --line:#3A2E23; --gold:#D9A847; --gold-deep:#E6BA62; --gold-soft:#D9A847; --sage:#A9B7C0; --danger:#E0806C; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.35);}
-}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#18120D; --bg-deep:#110D09; --card:#231A13; --ink:#F2EADC; --ink-soft:#BFB09A; --line:#3A2E23; --gold:#D9A847; --gold-deep:#E6BA62; --gold-soft:#D9A847; --sage:#A9B7C0; --danger:#E0806C; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.35);}}:root[data-theme="dark"]{--bg:#18120D; --bg-deep:#110D09; --card:#231A13; --ink:#F2EADC; --ink-soft:#BFB09A; --line:#3A2E23; --gold:#D9A847; --gold-deep:#E6BA62; --gold-soft:#D9A847; --sage:#A9B7C0; --danger:#E0806C; --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 26px rgba(0,0,0,.35);}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-text-size-adjust:100%;}
 body{font-family:'Barlow',system-ui,sans-serif;font-size:calc(18px * var(--scale));line-height:1.6;color:var(--ink);background:var(--bg);min-height:100vh;
   background-image:repeating-linear-gradient(180deg,transparent 0 31px,rgba(139,94,26,.07) 31px 32px),var(--grain);background-attachment:fixed;}
-@media (prefers-color-scheme: dark){ body{background-image:repeating-linear-gradient(180deg,transparent 0 31px,rgba(217,168,71,.05) 31px 32px),var(--grain);} }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background-image:repeating-linear-gradient(180deg,transparent 0 31px,rgba(217,168,71,.05) 31px 32px),var(--grain);}}:root[data-theme="dark"] body{background-image:repeating-linear-gradient(180deg,transparent 0 31px,rgba(217,168,71,.05) 31px 32px),var(--grain);}
 button,input,select,textarea{font:inherit;color:inherit;}
 a{color:var(--gold);}
 :focus-visible{outline:3px solid var(--gold-soft);outline-offset:2px;border-radius:6px;}
@@ -66,7 +66,7 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .btn svg{width:20px;height:20px;flex:none;}
 .btn-gold{background:var(--gold);color:#fff;}
 .btn-gold:hover{background:var(--gold-deep);}
-@media (prefers-color-scheme: dark){ .btn-gold{color:#1A130D;} }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-gold{color:#1A130D;}}:root[data-theme="dark"] .btn-gold{color:#1A130D;}
 .lock .btn-gold{background:#D9A847;color:#2E2118;}
 .btn-line{background:var(--card);border-color:var(--line);color:var(--ink);}
 .btn-line:hover{border-color:var(--gold);}
@@ -118,11 +118,11 @@ main{padding:26px 0 90px;}
 .pill.sage{background:color-mix(in srgb,var(--sage) 18%,transparent);color:var(--sage);}
 .pill.warn{background:color-mix(in srgb,var(--danger) 14%,transparent);color:var(--danger);}
 .confirm{display:inline;background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold-deep);font-weight:600;border-radius:6px;padding:0 5px;}
-@media (prefers-color-scheme: dark){ .confirm{color:var(--gold);} }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .confirm{color:var(--gold);}}:root[data-theme="dark"] .confirm{color:var(--gold);}
 .sub-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
 .chip{border:1px solid var(--line);background:var(--card);border-radius:30px;padding:9px 15px;cursor:pointer;font-weight:600;font-size:calc(15px * var(--scale));color:var(--ink-soft);}
 .chip[aria-pressed="true"]{background:var(--umber);border-color:var(--umber);color:#F4EBDA;}
-@media (prefers-color-scheme: dark){ .chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1A130D;} }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1A130D;}}:root[data-theme="dark"] .chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1A130D;}
 
 /* ---------- home ---------- */
 .hello{padding:24px;border-radius:18px;color:#F4EBDA;background:radial-gradient(ellipse 80% 120% at 85% 20%,#5A4130 0%,#3A2A1D 55%,#2E2118 100%);position:relative;isolation:isolate;overflow:hidden;margin-bottom:18px;}
@@ -355,7 +355,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .ht-grid > .card + .card{margin-top:0;}
 .ht-stage{border-top:6px solid var(--sc);}
 .ht-sname{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:15px;color:var(--sc);}
-@media (prefers-color-scheme: dark){ .ht-sname{filter:brightness(1.7) saturate(.8);} }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ht-sname{filter:brightness(1.7) saturate(.8);}}:root[data-theme="dark"] .ht-sname{filter:brightness(1.7) saturate(.8);}
 .ht-gt{margin-top:10px;}
 .ht-pick{margin-top:10px;}
 .ht-pick .chip{padding:7px 12px;font-size:14px;}
@@ -368,7 +368,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .cd-band b{font-size:17px;} .cd-band small{opacity:.88;letter-spacing:1px;font-size:13px;}
 .cd-kind:empty{display:none;}
 .cd-kind{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--pc);padding:16px 20px 0;}
-@media (prefers-color-scheme: dark){ .cd-kind,.pl-pname{filter:brightness(1.7) saturate(.8);} }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cd-kind,:root:not([data-theme="light"]) .pl-pname{filter:brightness(1.7) saturate(.8);}}:root[data-theme="dark"] .cd-kind,:root[data-theme="dark"] .pl-pname{filter:brightness(1.7) saturate(.8);}
 .cd-text{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:calc(28px * var(--scale));line-height:1.2;padding:8px 20px 20px;flex:1;display:flex;align-items:center;}
 .cd-foot{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--ink-soft);padding:10px 20px;border-top:1px solid var(--line);}
 .cd-stage{margin-top:18px;}
@@ -549,9 +549,10 @@ body.cd-noscroll{overflow:hidden;}
   <p class="lock-notice"><a class="lock-home" href="../index.html">Back to Grow With Grounded</a> &nbsp; <a class="lock-home" href="../privacy.html">Privacy</a> <a class="lock-home" href="../terms.html">Terms</a><br>&copy; 2026 Chris Joy / Grounded.&trade; Proprietary and confidential. For authorized Grounded practitioners only.</p>
 </section>
 <div id="app" class="hide">
-<nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../stories.html">Stories</a><a href="../ceremonies.html">Ceremonies</a><a href="../support.html">Support</a><a href="../tools.html">Tools</a><a href="../our-story.html">Our Story</a><a href="../privacy.html">Privacy</a> <a href="../terms.html">Terms</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
+<nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../thresholds.html">Thresholds</a><a href="../tools.html">Tools</a><a href="../stories.html">Stories</a><a href="../our-story.html">Our Story</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
   <header class="bar"><div class="bar-in">
     <a class="brand" href="#" data-tab="home" aria-label="Field Guide home"><svg class="b-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><svg class="b-word" viewBox="0 0 6024 772" aria-hidden="true"><use href="#g-word"/></svg><span class="b-sep">/</span><span class="b-name">Field Guide<sup>&trade;</sup></span></a>
+    <button class="bar-btn fg-theme" type="button" aria-label="Switch to dark mode"></button>
     <button class="bar-btn" data-menu="tools" aria-label="Tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span class="lbl">Tools</span></button>
     <button class="bar-btn" data-menu="me" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
@@ -4867,6 +4868,26 @@ else (async () => {
 })();
 })();
 
+</script>
+<script>
+/* Light and dark toggle (session 20): same saved choice as the rest of the site */
+(function(){
+  var root = document.documentElement, KEY = 'gg_theme', b = document.querySelector('.fg-theme'); if (!b) return;
+  var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+  var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>';
+  function eff(){ var a = root.getAttribute('data-theme'); if (a === 'light' || a === 'dark') return a; return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+  function paint(){ var d = eff() === 'dark'; b.innerHTML = d ? SUN : MOON; b.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); b.title = d ? 'Light mode' : 'Dark mode'; }
+  b.addEventListener('click', function(){
+    var t = eff() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', t); root.style.colorScheme = t;
+    try { localStorage.setItem(KEY, t); } catch (e) {}
+    var dom = /(^|\.)growwithgrounded\.com$/.test(location.hostname) ? '; Domain=.growwithgrounded.com' : '';
+    document.cookie = KEY + '=' + t + '; Path=/; Max-Age=31536000; SameSite=Lax' + dom;
+    paint();
+  });
+  if (window.matchMedia) { try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint); } catch (e) {} }
+  paint();
+})();
 </script>
 </body>
 </html>

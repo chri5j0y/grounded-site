@@ -532,3 +532,9 @@ a.ss-row::after{content:'';position:absolute;right:13px;top:22px;width:8px;heigh
 .ss-crisis p{margin-top:4px;}
 .ss-crisis a{color:inherit;font-weight:700;}
 @media (max-width:600px){.site-search{padding:20px 16px 16px;}.ss-label{font-size:27px;}.ss-field{padding:0 14px;}.ss-field input{font-size:17px;}}
+
+/* ---------- Grow With Grounded name (session 20) ---------- */
+.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:26px;line-height:1;color:var(--gold);white-space:nowrap;letter-spacing:.2px;}
+.foot-name{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:30px;line-height:1.1;color:var(--ink);margin-top:8px;}
+@media (max-width:600px){.rate-table td:last-child{white-space:normal !important;}}
+@media (max-width:520px){.brand{gap:8px;}.brand-name{font-size:19px;white-space:normal;max-width:96px;line-height:1.02;}}

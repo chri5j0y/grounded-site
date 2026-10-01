@@ -20,16 +20,18 @@
     sapling: '<svg viewBox="4 -5 102 81"><circle cx="55" cy="34" r="27" fill="#F2B33D"/><path d="M10 72Q55 50 100 72Q55 62 10 72Z" fill="#4DB36E"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 42 55 14" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M43 36.5C32 36.5 27 29 29 21.5C37 21.5 43 27.5 43 36.5Z" fill="#7ED3A0" stroke="#123F2E" stroke-width="2"/><path d="M67 31.5C76 30.8 80 23.4 79 16C71 16 67 22 67 31.5Z" fill="#2F9E6B" stroke="#123F2E" stroke-width="2"/><circle cx="55" cy="14" r="6" fill="#FF6B6B"/></svg>',
     grove: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F3325" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/></svg>',
     oldgrowth: '<svg viewBox="0 0 24 24" fill="none" stroke="#7A6A58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21c.6-4 .8-8 .6-12M14 21c-.4-4-.2-7 1-10"/><path d="M10.6 9L6 5M11 11L7.5 10M15 11l3.5-4M16 9.5l3 .5"/><circle cx="6" cy="5" r="1.2"/><circle cx="18.5" cy="7" r="1.2"/><path d="M4 21h16"/></svg>',
+    eldertree: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E6233" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c-1.5-1.6-3.5-2.2-5.5-2"/><path d="M12 14c1.6-1.6 3.6-2.1 5.6-1.8"/><path d="M5 10.5a3 3 0 0 1 2.5-4.6A4.5 4.5 0 0 1 16 5.6a3 3 0 0 1 3 4.9"/><circle cx="8" cy="13.6" r=".9"/><circle cx="9.6" cy="14.6" r=".9"/><circle cx="16" cy="14.4" r=".9"/><path d="M5 21h14"/></svg>',
     heartwood: '<svg viewBox="0 0 24 24" fill="none" stroke="#6B2E22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
     { name: 'Check-ins', items: [
-      { id: 'sprout', title: 'Sprout', desc: 'A gentle checkup for kids, grades K to 5', href: HOME + '/sprout/', icon: ic.sprout, bg: '#D8F3FF' },
-      { id: 'sapling', title: 'Sapling', desc: 'A checkup for grades 6 to 8', href: HOME + '/sapling/', icon: ic.sapling, bg: '#DDF0EC' },
+      { id: 'sprout', title: 'Sprout', desc: 'A gentle check-in for kids, grades K to 5', href: HOME + '/sprout/', icon: ic.sprout, bg: '#D8F3FF' },
+      { id: 'sapling', title: 'Sapling', desc: 'A check-in for grades 6 to 8', href: HOME + '/sapling/', icon: ic.sapling, bg: '#DDF0EC' },
       { id: 'heartwood', title: 'Heartwood', desc: 'For grades 9 to 12', icon: ic.heartwood, bg: '#F3E1D8', soon: true },
-      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part checkup for adults', href: HOME + '/soul-tree/', icon: ic.tree, bg: '#F1E6CC' },
-      { id: 'oldgrowth', title: 'Old Growth', desc: 'For the last season of life', icon: ic.oldgrowth, bg: '#ECE6DE', soon: true }
+      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part check-in for adults', href: HOME + '/soul-tree/', icon: ic.tree, bg: '#F1E6CC' },
+      { id: 'eldertree', title: 'Elder Tree', desc: 'For seniors', icon: ic.eldertree, bg: '#EAE5D2', soon: true },
+      { id: 'oldgrowth', title: 'Old Growth', desc: 'For hospice', icon: ic.oldgrowth, bg: '#ECE6DE', soon: true }
     ] },
     { name: 'Practice', items: [
       { id: 'grove', title: 'The Grove', desc: 'Daily practice for every tree, all ages and stages', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
