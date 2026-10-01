@@ -1170,7 +1170,7 @@ function addStudent(tryOnly){
   GGP.createDialog({ age:'sapling', name, carry:{ sapling:{ student:c } }, reason:'Your tree saves in your own Middle school profile, locked with a passcode only you know. The grown-ups who agree can open it too, so they can help.' })
     .then(ok => { if (!ok) return; DB = load(); const now = DB.students.find(x => x._pid && x.name.toLowerCase() === name.toLowerCase()); if (now) openStudent(now.id); else go('students'); });
 }
-function openStudent(id){ CUR = id; go('dash'); }
+function openStudent(id){ CUR = id; go('dash'); setTimeout(visitCheck, 0); }
 function changePic(){ const s = me(); if (!s) return; GGAv.pick({ value: s.avatar, name: s.name, photo: true, prefer: 'friendly', onPick: v => { s.avatar = v; save(); renderDash(); toast(v ? 'Picture saved.' : 'Using your initials.'); } }); }
 
 /* ---------- dashboard ---------- */
@@ -1199,6 +1199,7 @@ function renderDash(){
       <div>
         <div class="me-row"><button class="me-pic" onclick="changePic()" aria-label="Change your picture">${GGAv.html(s.avatar, s.name, 56)}<span>Change</span></button><h2>Hi, ${esc(s.name)}</h2></div>
         <p class="muted" style="margin-top:-4px">Grade ${s.grade} <button class="btn ghost small" style="margin-left:6px" onclick="changeGrade()">Change grade</button></p>
+        ${visitCardsHTML(s)}
         <div class="panel">
           ${s.draft ? `<h3>You're partway through a check-in</h3><p class="muted">Pick up right where you left off.</p><button class="btn" onclick="go('checkup')">Continue check-in</button>`
             : `<h3>${s.rings.length ? 'Ready for a new ring?' : 'Start your first check-in'}</h3><p class="muted">${last ? 'Your last check-in was '+fmtDate(last.date)+'.' : 'About 8 to 10 minutes. There are no wrong answers.'}</p><button class="btn" onclick="startCheckup()">Start check-in</button>`}
@@ -1215,6 +1216,59 @@ function renderDash(){
       </div>
     </div>`;
 }
+/* ---------- a card from a Sapling Guide visit ----------
+   A guide's QR or link carries only a first name, the date, what's growing strong, and what the student chose
+   to try. It lands on the student's own tree, for them. No levels, notes, safety answers, the optional question,
+   or anyone else's name ever travel. Grown-up pages never show it. */
+const CK_PART = Object.fromEntries(Object.entries(CK_KEY).map(([k, v]) => [v, k]));
+const vPart = k => PART[CK_PART[k]];
+function visitCardHTML(st, v, i){
+  const strong = (v.s || []).map(vPart).filter(Boolean);
+  return `<p class="muted small" style="margin:0 0 6px">${fmtDate(v.d + 'T12:00')}</p>
+    ${strong.length ? `<p><b>What's growing strong:</b> ${strong.map(p => esc(p.name) + ' (' + esc(p.sub.toLowerCase()) + ')').join(', ')}</p>` : ''}
+    ${(v.t || []).length ? `<p style="margin-top:8px"><b>Something you want to try:</b></p><ul style="margin:4px 0 0;padding-left:20px">${v.t.map(t => `<li><b>${esc(t[1])}</b>${t[2] ? ': ' + esc(t[2]) : ''}</li>`).join('')}</ul>` : ''}
+    <div class="row" style="margin-top:10px"><button class="btn ghost small" onclick="removeVisitCard('${st.id}', ${i})">Remove this card</button></div>`;
+}
+function visitCardsHTML(st){
+  const list = st.visitCards || []; if (!list.length) return '';
+  const newest = list.length - 1;
+  return `<div class="panel" style="border-left:5px solid var(--gold,#8B5E1A)"><h3>From your visit</h3>${visitCardHTML(st, list[newest], newest)}
+    ${list.length > 1 ? `<details style="margin-top:12px"><summary>Earlier visits (${list.length - 1})</summary>${list.slice(0, -1).map((v, i) => `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">${visitCardHTML(st, v, i)}</div>`).reverse().join('')}</details>` : ''}
+    <p class="muted small" style="margin-top:12px">Just for you. If this phone is shared, anyone who can open your tree can see these cards.</p></div>`;
+}
+function removeVisitCard(id, i){
+  const st = student(id); if (!st || !st.visitCards || !st.visitCards[i]) return;
+  if (!confirm('Remove this card from your tree?')) return;
+  st.visitCards.splice(i, 1); if (!st.visitCards.length) delete st.visitCards;
+  save(); renderDash(); toast('Card removed.');
+}
+let VISIT_SHOWN = false;
+function visitCheck(){
+  if (VISIT_SHOWN || !window.GGApp || !GGApp.visit) return;
+  const v = GGApp.visit.pending(); if (!v) return;
+  VISIT_SHOWN = true;
+  const intro = `<p>${v.n ? esc(v.n) + ', here' : 'Here'} is a card from your Sapling visit on ${fmtDate(v.d + 'T12:00')}: what's growing strong and what you want to try. It goes on your own tree, just for you.</p>
+    <p class="ggx-small">If this phone is shared with family, anyone who can open your tree can see it. You can remove it any time.</p>`;
+  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); toast('The card was not added.'); } };
+  const nm = (v.n || '').toLowerCase();
+  const people = DB.students.slice().sort((a, b) => (b.name.toLowerCase().split(/\s+/)[0] === nm) - (a.name.toLowerCase().split(/\s+/)[0] === nm));
+  if (!people.length){
+    GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your tree first, or add yourself, then this card will ask again.</p>',
+      buttons: [{ t: 'Open My Tree', kind: 'main', fn: () => { VISIT_SHOWN = false; go('students'); } }, { t: 'Not Now', kind: 'line', fn: () => { VISIT_SHOWN = false; } }, drop] });
+    return;
+  }
+  GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Whose tree is it for?</p>',
+    buttons: people.slice(0, 4).map((pick, i) => ({ t: 'Add to ' + pick.name + "'s Tree", kind: i ? 'line' : 'main', fn: () => {
+      const st = student(pick.id); if (!st){ VISIT_SHOWN = false; toast('Open that tree first, then try again.'); return; }   // the list may have reloaded since the card arrived
+      const card = { d: v.d, s: v.s, t: v.t }, same = JSON.stringify(card);
+      st.visitCards = st.visitCards || [];
+      if (!st.visitCards.some(x => JSON.stringify({ d: x.d, s: x.s, t: x.t }) === same)) st.visitCards.push(Object.assign({ added: today() }, card));
+      if (st.visitCards.length > 12) st.visitCards = st.visitCards.slice(-12);
+      GGApp.visit.clear(); save(); openStudent(st.id); toast('Added to your tree.');
+    } })).concat([{ t: 'My Name Isn\'t Here', kind: 'line', fn: () => { VISIT_SHOWN = false; go('students'); } }, drop]) });
+}
+window.addEventListener('gg-visit', () => { VISIT_SHOWN = false; visitCheck(); });
+
 function changeGrade(){
   const s = me(); const g = prompt('Which grade are you in? Type 6, 7, or 8.', s.grade);
   if (g === null) return; const n = parseInt(g,10);
@@ -1744,7 +1798,7 @@ function renderGuide(opts){
 /* ---------- start ---------- */
 const yr = $('copyright-year'); if (yr) yr.textContent = new Date().getFullYear();
 renderHome();
-if (window.GGP){ GGP.on(() => saplingRefresh()); GGP.ready.then(() => saplingRefresh()); }
+if (window.GGP){ GGP.on(() => { saplingRefresh(); VISIT_SHOWN = false; visitCheck(); }); GGP.ready.then(() => { saplingRefresh(); visitCheck(); }, () => visitCheck()); } else setTimeout(visitCheck, 0);
 /* Deep links: #life opens the guides, #talk=topic opens one guide */
 function lifeFromHash(){
   const h = decodeURIComponent(location.hash || '');

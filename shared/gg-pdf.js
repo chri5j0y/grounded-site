@@ -10,18 +10,26 @@
                              lines {n}        lines to write on
                              box   {h}        an empty box to draw in
                              sign  {t}        a signature line with a label
+                          page             start a new page
+                          qr    {url, t}   a QR code (needs gg-qr.js) with a label and the address
+                          cards {cards:[{head, sub, kind, t, left, right, color}], backs, foot}
+                                           playing-card size cards, nine to a page, with dashed
+                                           cut lines; backs adds a mirrored backs page after each
+                                           (for printing two sided, flip on the long edge)
                           c: an optional text color, like '#8B5E1A'
    ggSheetBlocks(model)   a sheet model {eyebrow, title, sub, sec:[{h, p:[], li:[]}],
                           after:[], close, foot} as blocks
    ggSheetHTML(model)     the same model as print HTML
    ggPdfFromEl(el, opts)  reads a sheet already on the page into blocks
-   ggPdfFromHTML(html, opts)   the same, from an HTML string
+   ggPdfFromHTML(html, opts)   the same, from an HTML string. Marks it understands:
+                          data-pdf-k="h1" (or any block kind) on an element, data-pdf-page,
+                          data-pdf-qr="https://..." with its label as the element's text
                           opts {eyebrow, foot}
    ===================================================================== */
 (function () {
   var W = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
   function text(s) {
-    s = String(s == null ? '' : s).replace(/[\u2018\u2019\u02BC]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/\u2026/g, '...').replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\u2122/g, '\x99').replace(/\u2022/g, '\x95').replace(/\u00A0/g, ' ').replace(/\u2713|\u2714/g, 'x');
+    s = String(s == null ? '' : s).replace(/[\u2018\u2019\u02BC]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/\u2026/g, '...').replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\u2122/g, '\x99').replace(/\u2022/g, '\x95').replace(/\u00A0/g, ' ').replace(/\u2713|\u2714/g, 'x').replace(/\u2611|\u2612/g, '[x]').replace(/\u2610/g, '[  ]');
     return Array.from(s.normalize('NFC')).map(function (ch) { var c = ch.charCodeAt(0); return c <= 255 ? ch : (ch.normalize('NFKD').replace(/[^\x00-\xFF]/g, '')[0] || ''); }).join('');
   }
   function width(s, size, bold) { var w = 0; for (var i = 0; i < s.length; i++) { var c = s.charCodeAt(i); w += (c >= 32 && c <= 126 ? W[c - 32] : c === 0x99 ? 1000 : 556); } return w * size / 1000 * (bold ? 1.07 : 1); }
@@ -29,6 +37,12 @@
   function rgb(hex, fb) {
     var m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim()); if (!m) return fb;
     var n = parseInt(m[1], 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255].map(function (v) { return +v.toFixed(3); });
+  }
+  function wrap(s, size, bold, max) {
+    var lines = [], cur = '';
+    String(s).split(/\s+/).filter(Boolean).forEach(function (w) { var tr = cur ? cur + ' ' + w : w; if (width(tr, size, bold) <= max || !cur) cur = tr; else { lines.push(cur); cur = w; } });
+    if (cur) lines.push(cur);
+    return lines;
   }
   function fit(s, size, bold, max) { if (width(s, size, bold) <= max) return s; while (s.length > 1 && width(s + '...', size, bold) > max) s = s.slice(0, -1); return s + '...'; }
 
@@ -43,9 +57,80 @@
     function rect(x, yy, w, h, stroke, fill) { ops.push((fill ? fill.join(' ') + ' rg ' : '') + (stroke ? stroke.join(' ') + ' RG 0.6 w ' : '') + x.toFixed(1) + ' ' + yy.toFixed(1) + ' ' + w.toFixed(1) + ' ' + h.toFixed(1) + ' re ' + (fill && stroke ? 'B' : fill ? 'f' : 'S')); }
     function hline(x1, x2, yy, col) { ops.push(col.join(' ') + ' RG 0.6 w ' + x1.toFixed(1) + ' ' + yy.toFixed(1) + ' m ' + x2.toFixed(1) + ' ' + yy.toFixed(1) + ' l S'); }
 
+    function at(txt, x, yy, f, size, col) { var k = y; y = yy; line(txt, x, f, size, col); y = k; }
+    // Nine playing-card size cards to a page (2.44 by 3.4 inches), dashed cut lines, optional mirrored backs.
+    function cards(bk) {
+      var list = bk.cards || [], CW = 176, CH = 245, X0 = (PW - 3 * CW) / 2, YT = PH - 18, cfoot = text(bk.foot || '');
+      function cuts() {
+        ops.push('0.7 0.7 0.7 RG 0.5 w [3 3] 0 d');
+        for (var i = 0; i <= 3; i++) { var x = X0 + i * CW; ops.push(x.toFixed(1) + ' ' + (YT - 3 * CH - 10).toFixed(1) + ' m ' + x.toFixed(1) + ' ' + (YT + 10).toFixed(1) + ' l S'); }
+        for (var j = 0; j <= 3; j++) { var yy = YT - j * CH; ops.push((X0 - 10).toFixed(1) + ' ' + yy.toFixed(1) + ' m ' + (X0 + 3 * CW + 10).toFixed(1) + ' ' + yy.toFixed(1) + ' l S'); }
+        ops.push('[] 0 d');
+      }
+      function face(c, x, top) {
+        var col = rgb(c.color, GOLD), head = text(c.head), sub = text(c.sub), kind = text(c.kind), t = text(c.t);
+        rect(x + 8, top - 42, CW - 16, 34, null, col);
+        at(fit(head, 12, true, CW - 32), x + 16, top - 24, 'F2', 12, [1, 1, 1]);
+        if (sub) at(fit(sub, 8, false, CW - 32), x + 16, top - 36, 'F1', 8, [1, 1, 1]);
+        if (kind) at(fit(kind, 8, true, CW - 32), x + 16, top - 58, 'F2', 8, SOFT);
+        var size = t.length > 95 ? 11 : 12.5, ls;
+        while (true) { ls = wrap(t, size, false, CW - 32); if (ls.length * size * 1.3 <= CH - 108 || size <= 8) break; size -= 0.5; }
+        ls.forEach(function (l, i) { at(fit(l, size, false, CW - 32), x + 16, top - 76 - i * size * 1.3, 'F1', size, INK); });
+        var lf = fit(text(c.left || ''), 7.5, false, (CW - 32) / 2), rt = fit(text(c.right || ''), 7.5, false, (CW - 32) / 2);
+        if (lf) at(lf, x + 16, top - CH + 16, 'F1', 7.5, SOFT);
+        if (rt) at(rt, x + CW - 16 - width(rt, 7.5, false), top - CH + 16, 'F1', 7.5, SOFT);
+      }
+      function back(c, x, top) {
+        var col = rgb(c.color, GOLD), head = text(c.head), sub = text(c.sub), bl = text(c.backLine || '');
+        ops.push(col.join(' ') + ' RG 3 w ' + (x + 12).toFixed(1) + ' ' + (top - CH + 12).toFixed(1) + ' ' + (CW - 24).toFixed(1) + ' ' + (CH - 24).toFixed(1) + ' re S');
+        var hw = width(head, 18, true); at(head, x + (CW - hw) / 2, top - CH / 2 + 8, 'F2', 18, col);
+        if (sub) { var sw = width(sub, 10, false); at(sub, x + (CW - sw) / 2, top - CH / 2 - 10, 'F1', 10, SOFT); }
+        if (bl) { bl = fit(bl, 7.5, false, CW - 36); at(bl, x + (CW - width(bl, 7.5, false)) / 2, top - CH + 24, 'F1', 7.5, SOFT); }
+      }
+      if (ops.length) newPage();
+      for (var p = 0; p < list.length; p += 9) {
+        var nine = list.slice(p, p + 9);
+        cuts();
+        nine.forEach(function (c, i) { face(c, X0 + (i % 3) * CW, YT - Math.floor(i / 3) * CH); });
+        ops.cardFoot = cfoot; newPage();
+        if (bk.backs) {
+          cuts();
+          nine.forEach(function (c, i) { var row = Math.floor(i / 3), colm = 2 - (i % 3); back(c, X0 + colm * CW, YT - row * CH); });
+          ops.cardFoot = ''; newPage();
+        }
+      }
+    }
+    function qr(bk) {
+      var mx = null; try { if (window.GGQR && window.GGQR.matrix && bk.url) mx = window.GGQR.matrix(bk.url); } catch (e) { mx = null; }
+      // Dense codes (long links) print bigger so a phone camera can read them. A link that carries data after the #
+      // shows only its address part as text; the code itself has the whole link.
+      var sz = Math.max(60, Math.min(170, bk.size || (mx ? Math.max(96, mx.length * 2.3) : 96))), lbl = text(bk.t || ''), u = text(String(bk.url || '').replace(/^https?:\/\//, '').replace(/#.*$/, ''));
+      var tw = mx ? TW - sz - 18 : TW, tx = mx ? M + sz + 18 : M, ll = wrap(lbl, 10, false, tw), ul = wrap(u.replace(/\//g, '/ '), 8, false, tw).map(function (s) { return s.replace(/\/ /g, '/'); });
+      var need = Math.max(mx ? sz : 0, ll.length * 14 + ul.length * 11) + 16;
+      room(need); y -= 8; var top = y;
+      if (mx) {
+        var n = mx.length, cell = sz / n;
+        for (var r = 0; r < n; r++) {
+          var run = -1;
+          for (var c = 0; c <= n; c++) {
+            var on = c < n && mx[r][c];
+            if (on && run < 0) run = c;
+            if (!on && run >= 0) { ops.push('0 0 0 rg ' + (M + run * cell).toFixed(2) + ' ' + (top - (r + 1) * cell).toFixed(2) + ' ' + ((c - run) * cell + 0.05).toFixed(2) + ' ' + (cell + 0.05).toFixed(2) + ' re f'); run = -1; }
+          }
+        }
+      }
+      var yy = top - 10;
+      ll.forEach(function (l) { at(l, tx, yy, 'F1', 10, INK); yy -= 14; });
+      ul.forEach(function (l) { at(l, tx, yy, 'F1', 8, SOFT); yy -= 11; });
+      y = Math.min(top - (mx ? sz : 0), yy) - 12;
+    }
+
     (blocks || []).forEach(function (bk) {
       if (!bk) return;
       if (bk.k === 'foot') { foot = text(bk.t); return; }
+      if (bk.k === 'page') { if (ops.length) newPage(); return; }
+      if (bk.k === 'cards') { cards(bk); return; }
+      if (bk.k === 'qr') { qr(bk); return; }
       if (bk.k === 'grid') {
         var head = (bk.head || []).map(text), rows = bk.rows || [], n = Math.max(head.length, rows.reduce(function (a, r) { return Math.max(a, r.length); }, 0));
         if (!n) return;
@@ -93,7 +178,8 @@
       f2 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'), f3 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>');
     var kids = pages.map(function (o, n) {
       var ft = (foot ? foot + '   ' : '') + 'Page ' + (n + 1) + ' of ' + pages.length;
-      var body = o.concat(['BT 0.45 0.42 0.4 rg /F1 8 Tf ' + M + ' ' + (M - 24) + ' Td (' + escp(fit(ft, 8, false, TW)) + ') Tj ET']).join('\n');
+      if (o.cardFoot != null) ft = (o.cardFoot ? o.cardFoot + '   ' : '') + 'Page ' + (n + 1) + ' of ' + pages.length;
+      var body = o.concat(['BT 0.45 0.42 0.4 rg /F1 8 Tf ' + (o.cardFoot != null ? 42 : M) + ' ' + (o.cardFoot != null ? 22 : M - 24) + ' Td (' + escp(fit(ft, 8, false, o.cardFoot != null ? PW - 84 : TW)) + ') Tj ET']).join('\n');
       var c = add('<< /Length ' + body.length + ' >>\nstream\n' + body + '\nendstream');
       return add('<< /Type /Page /Parent ' + pgs + ' 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /Font << /F1 ' + f1 + ' 0 R /F2 ' + f2 + ' 0 R /F3 ' + f3 + ' 0 R >> >> /Contents ' + c + ' 0 R >>');
     });
@@ -157,6 +243,9 @@
     function walk(el) {
       var tag = el.nodeName.toUpperCase();
       if (SKIP.test(tag) || el.hidden || el.getAttribute('aria-hidden') === 'true' || (el.classList && el.classList.contains('no-print'))) return;
+      if (el.hasAttribute && el.hasAttribute('data-pdf-page')) { out.push({ k: 'page' }); return; }
+      if (el.hasAttribute && el.hasAttribute('data-pdf-k')) { var tk = txtOf(el); if (tk) out.push({ k: el.getAttribute('data-pdf-k'), t: tk, c: colorOf(el) }); return; }
+      if (el.hasAttribute && el.hasAttribute('data-pdf-qr')) { out.push({ k: 'qr', url: el.getAttribute('data-pdf-qr'), t: txtOf(el) }); return; }
       if (opts.rows && el.matches && el.matches(opts.rows)) { var parts = Array.prototype.map.call(el.children, txtOf).filter(Boolean); if (parts.length) out.push({ k: 'h2', t: parts.join('   '), c: colorOf(el.querySelector('[style*="color"]') || el) }); return; }
       if (el.matches && el.matches(FOOT)) { var ft = txtOf(el); if (ft) out.push({ k: 'i', t: ft }); return; }
       if (tag === 'H1' || (el.matches && el.matches('.sheet-title,.care-plan-title'))) { push(hadH1 ? 'h2' : 'h1', el); hadH1 = true; return; }

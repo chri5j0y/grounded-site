@@ -1,5 +1,5 @@
 /* Grounded Field Guide: QR codes for handouts, made on this device. Nothing is sent anywhere.
-   GGQR.svg(text) returns an SVG QR code. Built on Project Nayuki's QR Code generator (MIT License),
+   GGQR.svg(text) returns an SVG QR code; GGQR.matrix(text) the same code as rows of true/false. Built on Project Nayuki's QR Code generator (MIT License),
    whose notice follows. */
 /* 
  * QR Code generator library (TypeScript)
@@ -868,5 +868,11 @@ function svg(text, opt){
   for (var y = 0; y < qr.size; y++) for (var x = 0; x < qr.size; x++) if (qr.getModule(x, y)) d.push('M' + (x + b) + ',' + (y + b) + 'h1v1h-1z');
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + n + ' ' + n + '" shape-rendering="crispEdges" role="img" aria-label="' + (opt.label || 'QR code').replace(/[<>"&]/g, '') + '"' + (opt.cls ? ' class="' + opt.cls + '"' : '') + '><rect width="100%" height="100%" fill="#FFFFFF"/><path d="' + d.join('') + '" fill="#000000"/></svg>';
 }
-window.GGQR = { svg: svg };
+// matrix(text): the same code as rows of true/false (dark/light), no border. Used by gg-pdf.js to draw a QR in a PDF.
+function matrix(text){
+  var qr = qrcodegen.QrCode.encodeText(String(text), qrcodegen.QrCode.Ecc.MEDIUM), rows = [];
+  for (var y = 0; y < qr.size; y++){ var r = []; for (var x = 0; x < qr.size; x++) r.push(!!qr.getModule(x, y)); rows.push(r); }
+  return rows;
+}
+window.GGQR = { svg: svg, matrix: matrix };
 })();

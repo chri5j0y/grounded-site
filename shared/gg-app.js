@@ -37,6 +37,16 @@
      GGApp.handoff.pending()         The Grove: a check-in waiting, or null
      GGApp.handoff.clear()
 
+   A card from a Sapling Guide visit, into the student's own Sapling tree
+     GGApp.visit.url(card)           card {n first name, d date, s strong parts, t tries}
+                                     a link to Sapling with the card after the #
+     GGApp.visit.pending()           Sapling: a card waiting, or null
+     GGApp.visit.clear()
+
+   Inside an app, the website's menus are hidden: no site menu, Tools
+   panel, or footer links except Privacy and Terms (they open in the
+   phone's browser). Lock now stays in the Field Guide.
+
    Daily reminders (scheduled on the phone, nothing sent to a server)
      GGApp.remind.can()              true inside an app
      GGApp.remind.get(id)            {on, time}
@@ -63,6 +73,14 @@
     st.textContent = '@media (pointer:coarse){.ggp-btn,.gg-theme{min-width:44px;min-height:44px}' +
       '.site-footer a{display:inline-block;padding-top:8px;padding-bottom:8px}' +
       '.link-btn,.text-btn{min-height:44px}.btn,.gg-rbtn,.gg-rvoice select,select{min-height:44px}}';
+    (document.head || document.documentElement).appendChild(st);
+  })();
+
+  // Inside an app: hide the website's menus. Privacy and Terms stay, and open in the phone's browser.
+  if (NATIVE) (function () {
+    var st = document.createElement('style'); st.id = 'ggx-app';
+    st.textContent = '.menu-btn,.site-menu,.gn-tools-btn,.gn-panel,.gn-menu-sub,.lock-home[href*="index"],.foot-links a:not([href*="privacy"]):not([href*="terms"]),.gg-sitenav a:not([href*="privacy"]):not([href*="terms"]){display:none!important}' +
+      '.topbar .brand,.site-footer .foot-brand{pointer-events:none}';
     (document.head || document.documentElement).appendChild(st);
   })();
 
@@ -266,20 +284,56 @@
       return clean({ from: j.f, name: j.n, age: j.g, date: j.d, answers: j.a });
     } catch (e) { return null; }
   }
-  var PEND = 'gg-handoff-in';
+  var PEND = 'gg-handoff-in', VPEND = 'gg-visit-in';
   function takeHash(h) {
     var m = /[#&]gg-in=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;
     var c = unpack(m[1]);
     if (c) { try { sessionStorage.setItem(PEND, JSON.stringify(c)); } catch (e) {} }
     return true;
   }
-  // The Grove reads a check-in from its own link, then wipes it from the address bar right away.
-  if (takeHash(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+
+  /* ---------------- A CARD FROM A SAPLING GUIDE VISIT ----------------
+     Only a first name, the date, strong part names, and what the student chose to try. Never levels,
+     notes, safety answers, the optional question, or a guide's or grown-up's name. */
+  var VPARTS = ['holy', 'meaning', 'mind', 'community', 'body', 'hope'];
+  function vclean(v) {
+    if (!v || typeof v !== 'object') return null;
+    var name = String(v.n || '').replace(/[<>]/g, '').trim().split(/\s+/)[0] || '';
+    var d = String(v.d || ''); if (!/^\d{4}-\d\d-\d\d$/.test(d)) return null;
+    var strong = []; (Array.isArray(v.s) ? v.s : []).forEach(function (k) { if (VPARTS.indexOf(k) >= 0 && strong.indexOf(k) < 0) strong.push(k); });
+    var tries = []; (Array.isArray(v.t) ? v.t : []).forEach(function (t) {
+      if (!Array.isArray(t) || tries.length >= 4 || VPARTS.indexOf(t[0]) < 0) return;
+      var a = String(t[1] || '').replace(/[<>]/g, '').slice(0, 60), b = String(t[2] || '').replace(/[<>]/g, '').slice(0, 240);
+      if (a) tries.push([t[0], a, b]);
+    });
+    if (!strong.length && !tries.length) return null;
+    return { n: name.slice(0, 30), d: d, s: strong, t: tries };
+  }
+  function vcode(v) { var c = vclean(v); return c ? 'v1.' + enc64(JSON.stringify(c)) : ''; }
+  function vunpack(s) { try { if (!/^v1\./.test(s)) return null; return vclean(JSON.parse(dec64(s.slice(3)))); } catch (e) { return null; } }
+  function vurl(v) { var c = vcode(v); return c ? SITE + '/sapling/#gg-visit=' + c : ''; }
+  function takeVisit(h) {
+    var m = /[#&]gg-visit=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;
+    var c = vunpack(m[1]);
+    if (c) { try { sessionStorage.setItem(VPEND, JSON.stringify(c)); } catch (e) {} }
+    return true;
+  }
+
+  // The Grove (or Sapling) reads what arrived in its own link, then wipes it from the address bar right away.
+  if (takeHash(location.hash) | takeVisit(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  // A link opened while the page is already open (same tab) only changes the part after the #.
+  window.addEventListener('hashchange', function () {
+    var h = location.hash, a = takeHash(h), v = takeVisit(h);
+    if (!a && !v) return;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    try { if (a) window.dispatchEvent(new CustomEvent('gg-handoff')); if (v) window.dispatchEvent(new CustomEvent('gg-visit')); } catch (e) {}
+  });
   var APP = P('App');
   if (APP && APP.addListener) {
     APP.addListener('appUrlOpen', function (d) {
-      var u = (d && d.url) || '';
-      if (takeHash(u.slice(u.indexOf('#')))) { try { window.dispatchEvent(new CustomEvent('gg-handoff')); } catch (e) {} }
+      var u = (d && d.url) || '', h = u.slice(u.indexOf('#'));
+      if (takeHash(h)) { try { window.dispatchEvent(new CustomEvent('gg-handoff')); } catch (e) {} }
+      if (takeVisit(h)) { try { window.dispatchEvent(new CustomEvent('gg-visit')); } catch (e) {} }
     });
   }
   function url(entry) { var c = code(entry); return c ? SITE + '/grove/#gg-in=' + c : ''; }
@@ -343,6 +397,11 @@
       pending: function () { try { return clean(JSON.parse(sessionStorage.getItem(PEND))); } catch (e) { return null; } },
       clear: function () { try { sessionStorage.removeItem(PEND); } catch (e) {} },
       fromName: function (f) { return FROM[f] || 'another Grounded tool'; }
+    },
+    visit: {
+      code: vcode, url: vurl, unpack: vunpack,
+      pending: function () { try { return vclean(JSON.parse(sessionStorage.getItem(VPEND))); } catch (e) { return null; } },
+      clear: function () { try { sessionStorage.removeItem(VPEND); } catch (e) {} }
     },
     remind: remind
   };

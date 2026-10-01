@@ -562,6 +562,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
 <script src="../shared/gg-app.js"></script>
+<script src="../shared/gg-pdf.js"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
 <script>
@@ -920,7 +921,7 @@ function vGuide(g){
   return `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}</h1></div>
   <div class="card"><p class="purpose">${mark(g.purpose)}</p>
-    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${g.id}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${g.id}">${icon('print')} Print Guide</button></div></div>
+    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${g.id}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${g.id}">${icon('print')} Save or Print Guide</button></div></div>
   ${g.prep && g.prep.length ? `<div class="card"><h3>Before you begin</h3><ul class="checklist" style="margin-top:8px">${g.prep.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${g.steps.map((s,i) => `<div class="card step-card"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)} ${s.m ? `<span class="min">about ${s.m} min</span>` : ''}</h4>${stepHTML(s,i)}</div>`).join('')}
   ${g.after && g.after.length ? `<div class="card"><h3>After the session</h3><ul class="checklist" style="margin-top:8px">${g.after.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
@@ -1034,7 +1035,7 @@ function vSession(s){
   <div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary||'No summary.')}</p><h4 style="margin-top:14px">Next steps</h4><p style="white-space:pre-wrap">${esc(s.next||'None noted.')}</p></div>
   <div class="card"><h3>Step notes</h3>${g.steps.map((st,i) => s.notes && s.notes[i] ? `<h4 style="margin-top:12px">${esc(st.t)}</h4><p style="white-space:pre-wrap">${esc(s.notes[i])}</p>` : '').join('') || '<p class="muted">No step notes.</p>'}</div>
   <div class="card"><div class="spread"><div><b>Fee:</b> ${esc(s.fee||'None')} ${s.grace ? '<span class="pill sage">Grace or reduced</span>' : ''}</div><label class="cb"><input type="checkbox" data-sp="${s.id}" ${s.paid?'checked':''}> Paid</label></div></div>
-  <div class="row" style="margin-top:14px"><button class="btn btn-line" data-act="print-session" data-v="${s.id}">${icon('print')} Print Session Note</button><button class="btn btn-danger btn-sm" data-act="del-session" data-v="${s.id}">Delete</button></div>`;
+  <div class="row" style="margin-top:14px"><button class="btn btn-line" data-act="print-session" data-v="${s.id}">${icon('print')} Save or Print Session Note</button><button class="btn btn-danger btn-sm" data-act="del-session" data-v="${s.id}">Delete</button></div>`;
 }
 
 // ---------------- LIBRARY ----------------
@@ -1060,7 +1061,7 @@ function docForm(d){
   return `<button class="btn btn-line btn-sm" data-act="lib" data-v="docs">${icon('back')} All documents</button>
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(d.for)}</div><h1>${esc(d.title)}</h1><p>Fill it in here and print, or print it blank to fill by hand. What you type here isn't saved.</p></div>
   <form id="docf">${d.sections.map((s,si) => `<div class="card"><h3>${esc(s[0])}</h3>${s[1].map((f,fi) => `<label class="f" for="df${si}_${fi}">${esc(f[0])}</label>${f[1] === 'area' ? `<textarea id="df${si}_${fi}" data-df="${si}_${fi}"></textarea>` : `<input type="text" id="df${si}_${fi}" data-df="${si}_${fi}">`}`).join('')}</div>`).join('')}</form>
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="print-doc" data-v="${d.id}">${icon('print')} Print</button><button class="btn btn-line" data-act="print-doc-blank" data-v="${d.id}">${icon('print')} Print Blank</button></div>`;
+  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="print-doc" data-v="${d.id}">${icon('print')} Save or Print</button><button class="btn btn-line" data-act="print-doc-blank" data-v="${d.id}">${icon('print')} Save or Print Blank</button></div>`;
 }
 
 // ---------------- TRAINING ----------------
@@ -1077,7 +1078,7 @@ function vTraining(){
   <div class="card"><h3>Practice scenarios</h3><p class="muted">Role-play these with Chris or another practitioner. Swap roles, then talk about what you noticed.</p>${T.scenarios.map((s,i) => `<p style="margin-top:12px"><b>${i+1}. ${esc(s[0])}.</b> ${esc(s[1])}</p>`).join('')}</div>
   <div class="card"><h3>Practitioner agreement</h3><ul class="checklist" style="margin-top:8px">${T.agreement.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
    ${DATA.training.agreed ? `<p class="pill sage" style="margin-top:10px">Agreed ${nice(DATA.training.agreed)}</p>` : `<label class="cb"><input type="checkbox" data-act-cb="agree"> I have read and agree to the practitioner agreement.</label>`}
-   <div class="row" style="margin-top:12px"><button class="btn btn-line" data-act="print-agreement">${icon('print')} Print Agreement to Sign</button><button class="btn btn-line" data-act="print-cert">${icon('print')} Print Certificate</button></div></div>`;
+   <div class="row" style="margin-top:12px"><button class="btn btn-line" data-act="print-agreement">${icon('print')} Save or Print Agreement to Sign</button><button class="btn btn-line" data-act="print-cert">${icon('print')} Save or Print Certificate</button></div></div>`;
 }
 
 // ---------------- SAFETY ----------------
@@ -1146,7 +1147,7 @@ function orStatusCard(){
   if (s.complete){
     const soon = s.dueSoon;
     return `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><div class="spread"><div><span class="pill sage">${icon('check')} Orientation complete</span><p class="muted" style="margin-top:8px">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.${soon ? ' Renewal is open now: retake the scenarios and sign the agreement again.' : ''}</p></div></div>
-     <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-cert">${icon('print')} Print Certificate</button><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Print Agreement</button><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="or-home">${soon ? 'Renew Now' : 'Review Orientation'}</button></div></div>`;
+     <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-cert">${icon('print')} Save or Print Certificate</button><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Save or Print Agreement</button><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="or-home">${soon ? 'Renew Now' : 'Review Orientation'}</button></div></div>`;
   }
   return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>${s.renewing ? 'Time to renew Orientation' : 'Field Guide Orientation'}</h3><p class="muted">${s.renewing ? 'Retake the scenarios and sign the agreement again.' : `${s.done} of ${s.total} steps done.`}</p>${orBar(s.done, s.total)}
    <button class="btn btn-gold btn-sm" style="margin-top:12px" data-act="or-home">${s.done ? 'Continue' : 'Start'} Orientation</button></div>`;
@@ -1238,7 +1239,7 @@ function vSign(){
   return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
   <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
-  <div class="card">${showSigned ? `<p><span class="pill sage">${icon('check')} Signed</span></p><p style="margin-top:8px">Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Print Agreement</button></div>`
+  <div class="card">${showSigned ? `<p><span class="pill sage">${icon('check')} Signed</span></p><p style="margin-top:8px">Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Save or Print Agreement</button></div>`
    : `<label class="f" for="or-name">Your full name</label><input type="text" id="or-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
    <label class="cb"><input type="checkbox" id="or-ok"> I have read this agreement and I agree to it.</label>
    <button class="btn btn-gold" style="margin-top:8px" data-act="or-sign">Sign Agreement</button>`}</div>`;
@@ -1254,15 +1255,15 @@ function orSign(){
 }
 function orPrintCert(){
   const s = orState(), D = DATA.orient; if (!s.complete) return;
-  printNow(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(D.signed.name)}</div>
+  fgSheet(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(D.signed.name)}</div>
     <p>has completed <b>Grounded Field Guide&trade; Orientation</b>${orStaffSec() ? ', including the Staff section,' : ''}<br>and has agreed to serve with presence, honesty, and care.</p>
     <p style="margin-top:6mm">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.<br>Certificate ${esc(D.signed.id || '')}, Orientation version ${OR().version}</p>
-    <div class="pr-sign" style="margin-top:14mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Orientation Certificate');
+    <div class="pr-sign" style="margin-top:14mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Orientation Certificate', {file:'orientation-certificate', date:s.doneOn});
 }
 function orPrintAgreement(){
   const A = OR().agreement, D = DATA.orient.signed;
-  printNow(ph('User agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title);
+  fgSheet(ph('User agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'orientation-agreement'});
 }
 
 // ---------------- OWNER: Access manager, pricing, playbook ----------------
@@ -1493,8 +1494,8 @@ function vSTVisit(){
   <div class="card"><h3>Care plan</h3>${stPlanList(s)}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
   ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
   ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="st-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="st-print-note">${icon('print')} Print Visit Note</button>`}
-   <button class="btn btn-line" data-act="st-print-hand">${icon('print')} Print Handout</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="st-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="st-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="st-print-note">${icon('print')} Save or Print Visit Note</button>`}
+   <button class="btn btn-line" data-act="st-print-hand">${icon('print')} Save or Print Handout</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="st-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 function stSafetyText(sf){
   if (!sf || (!sf.direct && !sf.notAsked)) return 'Not recorded.';
@@ -1521,16 +1522,16 @@ function stNote(s, c){
   return L.join('\n');
 }
 function stPrintNote(s, c){
-  printNow(ph('Confidential visit note') + `<h1>Soul Tree visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(stNote(s, c))}</p>` + pf(), 'Soul Tree visit note');
+  fgSheet(ph('Confidential visit note') + `<h1>Soul Tree visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(stNote(s, c))}</p>` + pf(), 'Soul Tree visit note', {file:'soul-tree-visit-note', date:s.date, confidential:true});
 }
 function stPrintHandout(s){
   const S = STG(), H = S.handout;
   const parts = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; if (!a.length) return ''; return `<div class="pr-step" style="border-left-color:${p.color}"><h3>${esc(p.part)}: ${esc(p.hand)}</h3><ul>${a.map(n => { const pr = p.practices.find(x => x.name === n); return `<li><b>${esc(n)}.</b> ${esc(pr ? pr.how : '')}</li>`; }).join('')}</ul></div>`; }).join('');
-  printNow(ph('For you') + `<h1>${esc(H.title)}</h1><p><i>${esc(H.lead)}</i></p>
+  fgSheet(ph('For you') + `<h1>${esc(H.title)}</h1><p><i>${esc(H.lead)}</i></p>
     <h2>Six parts of your tree</h2><ul>${S.parts.map(p => `<li><b>${esc(p.part)}:</b> ${esc(p.hand)}</li>`).join('')}</ul>
     <h2>Ways to tend it</h2>${parts || '<p>Pick one part of your tree, and do one small thing for it this week.</p>'}${s.custom ? `<p><b>Also:</b> ${esc(s.custom)}</p>` : ''}
     <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>
-    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}` + `<div class="pr-foot">Soul Tree&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title);
+    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}` + `<div class="pr-foot">Soul Tree&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'soul-tree-handout', date:s.date});
 }
 
 // ----- the visit runner -----
@@ -1888,7 +1889,7 @@ function vGVTree(c){
    ${(T.parts || []).map(part).join('')}
    <div class="gv-prac" style="--pc:#8B5E1A"><div class="gv-pl">Evening</div><b>${esc(GD.ANCHORS.evening.t)}</b><p>${esc(GD.ANCHORS.evening.b)}</p></div>
    ${!kid ? `<p class="muted" style="font-size:15px;margin-top:10px">This week's story: <a href="${esc(wk.story.url)}" target="_blank" rel="noopener">${esc(wk.story.title)}</a>. &ldquo;${esc(wk.story.line)}&rdquo;</p>` : ''}
-   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="gv-print-week" data-v="${c.id}">${icon('print')} Print This Week's Sheet</button><button class="btn btn-line" data-act="gv-print-grew" data-v="${c.id}">${icon('print')} Print What Grew</button>${nudge ? '' : stBtn}</div></div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="gv-print-week" data-v="${c.id}">${icon('print')} Save or Print This Week's Sheet</button><button class="btn btn-line" data-act="gv-print-grew" data-v="${c.id}">${icon('print')} Save or Print What Grew</button>${nudge ? '' : stBtn}</div></div>
   <div class="card st-private" style="margin-top:14px"><h3>Private notes</h3><p class="muted" style="font-size:14px">${esc(S.notesNote)}</p><textarea data-gvn="1" aria-label="Private notes">${esc(T.notes || '')}</textarea></div>
   <div class="card" style="margin-top:14px"><h3>The twelve weeks</h3>${Array.from({length:12}, (_, i) => { const kk = i + 1, st = wi.done || kk < k ? 'done' : kk === k && !wi.before ? 'now' : '';
     return `<div class="list-row"><div class="lr-main"><small class="muted">Week ${kk}, ${GV_SEASON[gvSeasonOf(kk)]}</small><br><b>${esc(gvTheme(T, kk))}</b>${(T.journal || {})[kk] ? ' <span class="pill sage">Shared</span>' : ''}</div>${st === 'now' ? '<span class="pill gold">This week</span>' : ''}</div>`; }).join('')}</div>
@@ -1914,23 +1915,23 @@ const gvStrip = s => String(s == null ? '' : s).replace(/<[^>]+>/g, '');
 function gvPrintWeek(c){
   const S = GVG(), T = c.gv, wi = gvWeek(T), k = wi.week, kid = GD.isKid(T.age), wk = GD.WEEKS[k-1], days = gvWeekDates(wi);
   const rows = (T.parts || []).map(id => { const p = gvPractice(T, id, wi); return `<div class="pr-step" style="border-left-color:${GD.PART[id].color}"><h3>${esc(GD.strandName(p.strand))}: ${esc(p.t)}</h3><p>${esc(gvStrip(p.b))}</p><p><i>Busy day: ${esc(gvStrip(p.s))}</i></p></div>`; }).join('');
-  printNow(ph('For you') + `<p>For ${esc(c.name)}</p><h1>Week ${k}: ${esc(gvTheme(T, k))}</h1><p>${GV_SEASON[wi.season]}, ${nice(days[0])} to ${nice(days[6])}</p>
+  fgSheet(ph('For you') + `<p>For ${esc(c.name)}</p><h1>Week ${k}: ${esc(gvTheme(T, k))}</h1><p>${GV_SEASON[wi.season]}, ${nice(days[0])} to ${nice(days[6])}</p>
     ${kid ? '' : `<p><i>${esc(wk.intro)}</i></p>`}<h2>Every day</h2>
     <div class="pr-step"><h3>Morning: ${esc(GD.ANCHORS.morning.t)}</h3><p>${esc(GD.ANCHORS.morning.b)}</p></div>${rows}<div class="pr-step"><h3>Evening: ${esc(GD.ANCHORS.evening.t)}</h3><p>${esc(GD.ANCHORS.evening.b)}</p></div>
     <h2>Days tended</h2><table class="gv-pt"><tr>${days.map(d => `<th>${new Date(d + 'T12:00').toLocaleDateString(undefined, {weekday:'short', month:'numeric', day:'numeric'})}</th>`).join('')}</tr><tr>${days.map(d => `<td>${(T.watered || {})[d] ? '&#10003;' : ''}</td>`).join('')}</tr></table>
     <h2>This week's question</h2><p>${esc(gvQ(T, k))}</p><div class="pr-field area"><div class="v"></div></div>
     ${kid ? '' : `<h2>This week's story</h2><p><b>${esc(wk.story.title)}.</b> &ldquo;${esc(wk.story.line)}&rdquo; Read it free at ${esc(wk.story.url.replace('https://', ''))}</p>`}
     <h2>Help any time</h2>${S.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}
-    <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'The Grove, Week ' + k);
+    <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'The Grove, Week ' + k, {file:'grove-week-' + k, date:days[0]});
 }
 function gvPrintGrew(c){
   const S = GVG(), T = c.gv, wi = gvWeek(T);
   const ent = Array.from({length:12}, (_, i) => (T.journal || {})[i + 1] ? `<div class="pr-step"><h3>Week ${i + 1}: ${esc(gvTheme(T, i + 1))}</h3><p><i>${esc(gvQ(T, i + 1))}</i></p><p style="white-space:pre-wrap">${esc(T.journal[i + 1])}</p></div>` : '').join('');
-  printNow(ph('For you') + `<h1>What Grew</h1><p>${esc(c.name.replace(/\.+$/, ''))}. Started ${nice(T.start)}. ${gvDaysText(T)}. ${wi.done ? 'Twelve weeks complete.' : 'Through Week ' + wi.week + '.'}</p>
+  fgSheet(ph('For you') + `<h1>What Grew</h1><p>${esc(c.name.replace(/\.+$/, ''))}. Started ${nice(T.start)}. ${gvDaysText(T)}. ${wi.done ? 'Twelve weeks complete.' : 'Through Week ' + wi.week + '.'}</p>
     <div class="gv-print-tree">${gvScene(c, {uid:'gvp' + c.id})}</div>
     <h2>The parts they tended</h2><p>${(T.parts || []).map(p => esc(GD.PART[p].name)).join(', ')}</p>
     <h2>In their words</h2>${ent || '<p>Nothing written yet.</p>'}
-    <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'What Grew');
+    <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'What Grew', {file:'grove-what-grew'});
 }
 
 // ----- Soul Tree person page: their Grove tree, or plant one from their visit -----
@@ -2154,7 +2155,7 @@ function vSPM(){
   ${step('sp-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with kids`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('sp-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
-  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sp-mprint">${icon('print')} Print Agreement</button></div>` : ''}`;
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sp-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
 }
 function vSPMLesson(i){
   const M = SPM(), L = M.lessons[i], n = M.lessons.length, read = !!spmData().lessons[L.id];
@@ -2208,8 +2209,8 @@ function vSPMSign(){
 }
 function spmPrint(){
   const A = SPM().agreement, D = spmData().signed;
-  printNow(ph('Sprout Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title);
+  fgSheet(ph('Sprout Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'sprout-guide-agreement'});
 }
 
 // ----- reporting contact and county -----
@@ -2371,12 +2372,12 @@ function vSPConsent(c){
 function spConsentPrint(c){
   const C = SPG().consent, con = c.sp.consent;
   const mark = on => on ? '&#9745;' : '&#9744;';
-  printNow(ph('Permission for Sprout visits') + `<h1>${esc(C.title)}</h1><p>${esc(C.formIntro)}</p>
+  fgSheet(ph('Permission for Sprout visits') + `<h1>${esc(C.title)}</h1><p>${esc(C.formIntro)}</p>
     <h2>Child</h2><p>${esc(c.name)}, ${esc(spGradeName(c.sp.grade))}</p>
     ${con.how === 'form' ? `<h2>Agreed</h2>${C.boxes.map(b => `<p>${mark((con.boxes || []).includes(b[0]))} ${esc(b[1])}</p>`).join('')}`
       : `<h2>How permission was given</h2><p>${esc((C.how.find(x => x[0] === con.how) || [])[1] || '')}${con.where ? ': ' + esc(con.where) : ''}</p>${con.note ? `<p>${esc(con.note)}</p>` : ''}`}
     <div class="pr-sign"><div>${esc(con.name || '')}, ${esc(con.rel || '')}${con.how === 'form' ? ' (typed name)' : ''}</div><div>${nice(con.date)}</div></div>
-    <p style="margin-top:6mm"><i>Guide: ${esc(DATA.settings.name || '')}. Recorded in the Grounded Field Guide, form version ${C.version}.</i></p>` + pf(), 'Sprout permission');
+    <p style="margin-top:6mm"><i>Guide: ${esc(DATA.settings.name || '')}. Recorded in the Grounded Field Guide, form version ${C.version}.</i></p>` + pf(), 'Sprout permission', {file:'sprout-permission', date:con.date});
 }
 function spLevelTable(c){
   const vs = spVisits(c.id).filter(s => s.levels).slice(0, 4);
@@ -2460,7 +2461,7 @@ function spPrintHome(s, c){
   const strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong');
   const tries = (s.tryh || []).map(t => { for (const p of S.parts){ const it = (S.tryHome[p.key] || []).find(x => x[0] === t); if (it) return [p, it]; } return null; }).filter(Boolean);
   const talk = s.told === 'concern' || !s.talkHome ? [] : (s.flags || []);
-  printNow(ph('For your family') + `<h1>${esc(H.title)}</h1><p>${esc(name)}${name ? ', ' : ''}${nice(s.date)}</p>
+  fgSheet(ph('For your family') + `<h1>${esc(H.title)}</h1><p>${esc(name)}${name ? ', ' : ''}${nice(s.date)}</p>
     <h2>${esc(H.did)}</h2><p>${esc(spVisitName(s.visit))}${s.topic && s.topic.deck ? ' about ' + esc(cdDeckName(s.topic.deck).toLowerCase()) : ''}. We looked at the six parts of ${esc(name || 'your child')}'s tree: ${S.parts.map(p => p.part.toLowerCase()).join(', ')}.${s.stopped ? ' We stopped when they wanted to, and that was the right thing to do.' : ''}</p>
     ${s.share ? `<h2>${esc(H.share)}</h2><p>${esc(s.share)}</p>` : ''}
     ${strong.length ? `<h2>${esc(H.strong)}</h2><p>${strong.map(p => `<b>${esc(p.part)}</b> (${esc(p.name.toLowerCase())})`).join(', ')}</p>` : ''}
@@ -2468,7 +2469,7 @@ function spPrintHome(s, c){
     ${tries.length ? `<h2>${esc(H.try)}</h2>${tries.map(([p, it]) => `<p><b>${esc(it[0])}</b> (${esc(p.part)}): ${esc(band === 'k2' ? it[1] : it[2])}</p>`).join('')}` : ''}
     <h2>${esc(H.help)}</h2><ul>${H.helpLines.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <p><b>If someone is in danger, call 911. For a mental health crisis, call or text 988.</b></p>
-    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>` + `<div class="pr-foot">Sprout&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title);
+    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>` + `<div class="pr-foot">Sprout&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'sprout-take-home', date:s.date});
 }
 
 // ----- the visit runner -----
@@ -2828,59 +2829,9 @@ function spSetChecked(){ if (!confirm('Mark the reporting info as rechecked toda
 function spPersonCard(c){ return c.sp && spOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sprout Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''; }
 
 // ---------------- PDF FILES FOR THE SHARE SHEET ----------------
-// App-ready: sheets a family or school will keep are made as real PDF files, then handed to the device's share sheet
-// (text, email, save, print). Desktop browsers without a share sheet download the file instead. Nothing is uploaded.
-// Plain text only, in Helvetica, so it works offline and needs no library. Blocks: [{k, t}] where k is one of
-// eyebrow, h1, sub, h2, p, li, b, i, foot.
-const GGPDF_W = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
-function ggPdfText(s){
-  s = String(s == null ? '' : s).replace(/[\u2018\u2019\u02BC]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/\u2026/g, '...').replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\u2122/g, '\x99').replace(/\u2022/g, '\x95').replace(/\u00A0/g, ' ');
-  return Array.from(s.normalize('NFC')).map(ch => { const c = ch.charCodeAt(0); return c <= 255 ? ch : (ch.normalize('NFKD').replace(/[^\x00-\xFF]/g, '')[0] || '?'); }).join('');
-}
-function ggPdfWidth(s, size, bold){ let w = 0; for (const ch of s){ const c = ch.charCodeAt(0); w += (c >= 32 && c <= 126 ? GGPDF_W[c - 32] : c === 0x99 ? 1000 : 556); } return w * size / 1000 * (bold ? 1.07 : 1); }
-function ggPdfEsc(s){ let o = ''; for (const ch of s){ const c = ch.charCodeAt(0); o += ch === '\\' || ch === '(' || ch === ')' ? '\\' + ch : c > 126 || c < 32 ? '\\' + c.toString(8).padStart(3, '0') : ch; } return o; }
-function ggPdf(blocks){
-  const PW = 612, PH = 792, M = 60, TW = PW - 2 * M;
-  const ST = {eyebrow:[9,'F2',[0.545,0.369,0.102],6], h1:[21,'F2',[0.545,0.369,0.102],8], sub:[11,'F1',[0.35,0.3,0.27],14], h2:[13,'F2',[0.173,0.094,0.063],4], p:[11,'F1',[0.173,0.094,0.063],8], li:[11,'F1',[0.173,0.094,0.063],3], b:[11,'F2',[0.173,0.094,0.063],8], i:[10,'F3',[0.35,0.3,0.27],8], foot:[8,'F1',[0.45,0.42,0.4],0]};
-  const pages = []; let ops = [], y = PH - M, foot = '';
-  const newPage = () => { if (ops.length) pages.push(ops); ops = []; y = PH - M; };
-  const line = (txt, x, f, size, col) => ops.push(`BT ${col.join(' ')} rg /${f} ${size} Tf ${x.toFixed(1)} ${y.toFixed(1)} Td (${ggPdfEsc(txt)}) Tj ET`);
-  blocks.forEach(bk => {
-    const s = ST[bk.k] || ST.p, t = ggPdfText(bk.t);
-    if (bk.k === 'foot'){ foot = t; return; }
-    const size = s[0], lh = size * 1.38, ind = bk.k === 'li' ? 16 : 0, bold = s[1] === 'F2';
-    if (bk.k === 'h2') y -= 8;
-    const words = t.split(/\s+/).filter(Boolean), lines = []; let cur = '';
-    words.forEach(w => { const tr = cur ? cur + ' ' + w : w; if (ggPdfWidth(tr, size, bold) <= TW - ind || !cur) cur = tr; else { lines.push(cur); cur = w; } });
-    if (cur) lines.push(cur);
-    if (bk.k === 'h2' && y - lh * 3 < M + 20) newPage();
-    lines.forEach((ln, j) => {
-      if (y - lh < M + 20) newPage();
-      y -= lh;
-      if (bk.k === 'li' && j === 0) line('\x95', M + 4, 'F1', size, s[2]);
-      line(ln, M + ind, s[1], size, s[2]);
-    });
-    y -= s[3];
-  });
-  newPage();
-  const objs = [], add = o => { objs.push(o); return objs.length; };
-  const cat = add(''), pgs = add(''), f1 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'),
-    f2 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'), f3 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>');
-  const kids = pages.map((o, n) => {
-    const ft = (foot ? foot + '   ' : '') + 'Page ' + (n + 1) + ' of ' + pages.length;
-    const body = o.concat([`BT 0.45 0.42 0.4 rg /F1 8 Tf ${M} ${M - 24} Td (${ggPdfEsc(ft)}) Tj ET`]).join('\n');
-    const c = add(`<< /Length ${body.length} >>\nstream\n${body}\nendstream`);
-    return add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R /F3 ${f3} 0 R >> >> /Contents ${c} 0 R >>`);
-  });
-  objs[cat - 1] = `<< /Type /Catalog /Pages ${pgs} 0 R >>`;
-  objs[pgs - 1] = `<< /Type /Pages /Kids [${kids.map(k => k + ' 0 R').join(' ')}] /Count ${kids.length} >>`;
-  let out = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n'; const offs = [];
-  objs.forEach((o, i) => { offs.push(out.length); out += `${i + 1} 0 obj\n${o}\nendobj\n`; });
-  const xr = out.length;
-  out += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + offs.map(n => String(n).padStart(10, '0') + ' 00000 n \n').join('') + `trailer\n<< /Size ${objs.length + 1} /Root ${cat} 0 R >>\nstartxref\n${xr}\n%%EOF`;
-  const bytes = new Uint8Array(out.length); for (let i = 0; i < out.length; i++) bytes[i] = out.charCodeAt(i) & 255;
-  return new Blob([bytes], {type:'application/pdf'});
-}
+// App-ready: every sheet is a real PDF file, made on the device with the shared ../shared/gg-pdf.js (ggPdf, ggSheetBlocks,
+// ggSheetHTML, ggPdfFromHTML), then handed to the device's share sheet (text, email, save, print). Desktop browsers
+// without a share sheet download it. Nothing is uploaded. Print stays as a web backup (fgSheet below).
 async function ggShare(blob, name, title){
   if (window.GGApp) return GGApp.share(blob, name, title);   // one share path for every tool, and the phone's own share sheet in the app
   try {
@@ -2890,18 +2841,6 @@ async function ggShare(blob, name, title){
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('Saved as ' + name + '.');
 }
-// A sheet model {eyebrow, title, sub, sec:[{h, p:[], li:[]}], after:[], close, foot} as PDF blocks, or as print HTML.
-function ggSheetBlocks(m){
-  const b = [{k:'eyebrow', t:m.eyebrow || 'Grounded'}, {k:'h1', t:m.title}];
-  if (m.sub) b.push({k:'sub', t:m.sub});
-  (m.sec || []).forEach(s => { b.push({k:'h2', t:s.h}); (s.p || []).forEach(t => b.push({k:'p', t})); (s.li || []).forEach(t => b.push({k:'li', t})); });
-  (m.after || []).forEach(t => b.push({k:'b', t}));
-  if (m.close) b.push({k:'i', t:m.close});
-  if (m.foot) b.push({k:'foot', t:m.foot});
-  return b;
-}
-const ggSheetHTML = m => `<h1>${esc(m.title)}</h1>${m.sub ? `<p>${esc(m.sub)}</p>` : ''}${(m.sec || []).map(s => `<h2>${esc(s.h)}</h2>${(s.p || []).map(t => `<p>${esc(t)}</p>`).join('')}${(s.li || []).length ? `<ul>${s.li.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}`).join('')}${(m.after || []).map(t => `<p><b>${esc(t)}</b></p>`).join('')}${m.close ? `<p style="margin-top:4mm"><i>${esc(m.close)}</i></p>` : ''}${m.foot ? `<div class="pr-foot">${esc(m.foot)}</div>` : ''}`;
-
 // ---------------- SAPLING GUIDE ----------------
 // Guided Sapling visits with students in grades 6 to 8. Wording lives in the Field library (FLD.saplingGuide).
 // Questions come from the public sapling/checkup.js, read in their own scope, so Sapling and Sapling Guide always ask
@@ -3020,7 +2959,7 @@ function vSAM(){
   ${step('sa-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with middle schoolers`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('sa-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
-  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sa-mprint">${icon('print')} Print Agreement</button></div>` : ''}`;
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sa-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
 }
 function vSAMLesson(i){
   const M = SAM(), L = M.lessons[i], n = M.lessons.length, read = !!samData().lessons[L.id];
@@ -3074,8 +3013,8 @@ function vSAMSign(){
 }
 function samPrint(){
   const A = SAM().agreement, D = samData().signed;
-  printNow(ph('Sapling Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title);
+  fgSheet(ph('Sapling Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'sapling-guide-agreement'});
 }
 
 // ----- views -----
@@ -3198,7 +3137,7 @@ function vSAVisit(){
   <div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(saSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${s.seenSheet ? 'The student saw the take-home sheet.' : 'Not marked as seen by the student.'}${Object.values(s.hide || {}).some(Boolean) ? ' They left some things out.' : ''}</p></div>` : ''}
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="sa-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="sa-copy-pdf">${icon('copy')} Student Copy PDF</button>` : ''}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="sa-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="sa-copy-pdf">${icon('copy')} Student Copy PDF</button><button class="btn btn-line" data-act="sa-copy-qr">${icon('tree')} Send to My Sapling</button>` : ''}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 // The visit note: levels, flag count, safety summary. Never answer words, the grown-up's name, or the optional question.
 function saNote(s, c){
@@ -3244,6 +3183,28 @@ function saCopyModel(s, c){
   return {eyebrow:'Just for you', title:K.title, sub:K.lead + ' ' + nice(s.date), sec, close:K.close, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
 }
 const saFile = (kind, s) => 'sapling-' + kind + '-' + (s.date || today()) + '.pdf';
+// The student's own copy can drop a "From your visit" card into their own Sapling tree, by QR or link. It carries only
+// their first name, the date, what's growing strong, and what they chose to try: never levels, notes, the safety step,
+// the optional question, or the guide's or grown-up's name. Student only: nothing goes to the grown-up this way.
+function saVisitCard(s, c){
+  const S = SAG(), strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong').map(p => p.key);
+  return {n:String((c && c.name) || '').trim().split(/\s+/)[0] || '', d:s.date || today(), s:strong, t:saTries(s).map(([p, it]) => [p.key, it[0], it[1]])};
+}
+const saVisitUrl = (s, c) => window.GGApp && GGApp.visit ? GGApp.visit.url(saVisitCard(s, c)) : '';
+const SA_QR_SAY = 'Scan this with your own phone to put this card on your Sapling tree.';
+function saCopyBlocks(s, c){
+  const b = ggSheetBlocks(saCopyModel(s, c)), u = saVisitUrl(s, c);
+  if (u){ const f = b.findIndex(x => x.k === 'foot'); b.splice(f < 0 ? b.length : f, 0, {k:'h2', t:'Keep it on your tree'}, {k:'qr', url:u, t:SA_QR_SAY + ' It carries only your first name, the date, what\'s growing strong, and what you want to try.'}); }
+  return b;
+}
+function saCopyQR(s, c){
+  const u = saVisitUrl(s, c);
+  if (!u) return toast('There is nothing to send yet. Pick something to try, or mark a part as strong.');
+  const svg = window.GGQR ? GGQR.svg(u, {label:'QR code for the student\'s Sapling tree'}) : '';
+  GGApp.dialog({title:'Send to My Sapling', html:(svg ? `<div class="ggx-qr">${svg}</div>` : '') + `<p>${esc(SA_QR_SAY)} It opens Sapling and asks whose tree it's for.</p>
+    <p class="ggx-small">Only the student's first name, the date, what's growing strong, and what they want to try. No levels, notes, or answers. If their phone is shared with family, anyone who can open their tree can see it, and they can remove it any time.</p>`,
+    buttons:[{t:'Done', kind:'main'}]});
+}
 
 // ----- the visit runner -----
 function saStart(visit, cid, demo){
@@ -3566,7 +3527,8 @@ function saAct(a, v, t){
     case 'sa-rec': go('sapling', {sarec:v}); return true;
     case 'sa-home-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)))), saFile('take-home', s), SAG().takeHome.title); return true; }
     case 'sa-home-print': { const s = saFindVisit(); if (s){ const m = saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
-    case 'sa-copy-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(saCopyModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)))), saFile('my-copy', s), SAG().studentCopy.title); return true; }
+    case 'sa-copy-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(saCopyBlocks(s, V.sav === 'demo' ? s.person : CL(s.clientId))), saFile('my-copy', s), SAG().studentCopy.title); return true; }
+    case 'sa-copy-qr': { const s = saFindVisit(); if (s) saCopyQR(s, V.sav === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'sa-copy-note': { const s = saFindVisit(); if (s) copy(saNote(s, V.sav === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'sa-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sapling', s ? {sap:s.clientId} : {}); } return true;
     case 'sa-del': if (confirm('Delete this student and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('sapling'); } return true;
@@ -3812,7 +3774,7 @@ function vHTTopic(T){
      <h3 class="ht-gt">${esc(r.g.title)}</h3>
      ${r.src === 'soultree' && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
      ${x || (r.src === 'soultree' && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
-     <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
+     <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
   const faithOn = !!DATA.settings.htFaith;
@@ -3827,7 +3789,7 @@ function vHTTopic(T){
    <p class="muted" style="font-size:14px">${esc((H.faith || {}).note || '')}</p>
    ${have.length > 1 ? `<h4 style="margin-top:16px">Family pack</h4><p class="muted" style="font-size:15px">One page for each stage you choose, for one family. Each page uses the guide picked above.</p>
    <div class="row" style="margin-top:8px">${have.map(({st}) => `<button class="chip" aria-pressed="${pk.includes(st.id)}" data-act="ht-pk" data-v="${esc(st.id)}">${esc(st.name)}</button>`).join('')}</div>
-   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-pack" ${pk.length ? '' : 'disabled'}>${icon('print')} Print Family Pack</button></div>` : ''}</div>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-pack" ${pk.length ? '' : 'disabled'}>${icon('print')} Save or Print Family Pack</button></div>` : ''}</div>
   ${cdTopicCard(T)}
   ${htRecordCard(T, have.map(x => x.st))}`;
 }
@@ -3909,7 +3871,7 @@ function htPageHTML(T, stIds, r){
    <h1>${esc(r.g.title)}</h1>${notes.map(n => `<p class="ht-note">${esc(n)}</p>`).join('')}
    <div class="ht-cols">${secs.map(sec).join('')}</div>
    <div class="ht-foot"><div class="ht-help"><h2>Help any time</h2>${help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}<div class="ht-from">${esc(O.from || 'Shared by')}:</div></div>
-    ${qr ? `<div class="ht-qr">${qr}<small>${esc(O.scan || 'Scan to read the full guide')}<br>${esc(short).replace(/\//g, '/<wbr>')}</small></div>` : `<div class="ht-qr"><small>${esc(O.scan || 'Read the full guide')}<br>${esc(short).replace(/\//g, '/<wbr>')}</small></div>`}</div>
+    ${qr ? `<div class="ht-qr" data-url="${esc(url)}" data-label="${esc(O.scan || 'Scan to read the full guide')}">${qr}<small>${esc(O.scan || 'Scan to read the full guide')}<br>${esc(short).replace(/\//g, '/<wbr>')}</small></div>` : `<div class="ht-qr"><small>${esc(O.scan || 'Read the full guide')}<br>${esc(short).replace(/\//g, '/<wbr>')}</small></div>`}</div>
    <div class="ht-tm">${esc(HT_TM[r.src])}&trade; is a trademark of Chris Joy. ${esc(O.close || 'growwithgrounded.com')}</div></section>`;
 }
 // Pages for the chosen stages. Two stages that use the same guide share one page.
@@ -3927,7 +3889,7 @@ async function htPrint(T, stIds, title){
   const lim = 248 * 96 / 25.4 * .98;
   box.querySelectorAll('.ht-page').forEach(p => { for (const s of [10, 9.6, 9.2, 8.8, 8.4, 8]){ p.style.fontSize = s + 'pt'; if (p.scrollHeight <= lim) break; } });
   const html = box.innerHTML; box.remove();
-  printNow(html, title);
+  fgSheet(html, title, {file:'hard-talks-handout'});
 }
 
 // ----- Owner: open or close Hard Talks to Field users (through Update a Library) -----
@@ -4133,12 +4095,12 @@ function vCards(){
    <p class="muted" style="font-size:14px">Off shows a nature version of every card that mentions God or prayer. It's the same switch as the handouts.</p>
    <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-cdraw">Draw a Card</button><button class="btn btn-gold btn-sm" data-act="ht-cwalk">${icon('tree')} Walk the Tree</button></div></div>
   <div id="cd-live">${stage}</div>
-  ${kept.length ? `<div class="card" style="margin-top:14px"><div class="spread"><h3>Kept cards</h3><div class="row"><button class="btn btn-line btn-sm" data-act="ht-cprintkept">${icon('print')} Print These</button><button class="btn btn-line btn-sm" data-act="ht-cclear">Clear</button></div></div>
+  ${kept.length ? `<div class="card" style="margin-top:14px"><div class="spread"><h3>Kept cards</h3><div class="row"><button class="btn btn-line btn-sm" data-act="ht-cprintkept">${icon('print')} Save or Print These</button><button class="btn btn-line btn-sm" data-act="ht-cclear">Clear</button></div></div>
    ${kept.map((r, i) => `<div class="list-row"><div class="lr-main"><span class="cd-dot" style="--pc:${esc(cdSlotColor(r.k))}"></span><b>${esc(cdTxt(cdCard(r)))}</b><br><small class="muted">${esc(cdSlotName(r.k))} &middot; ${esc(cdStageDef(r.stage).name)} &middot; ${esc(cdDeckName(r.deck))}</small></div><button class="btn btn-line btn-sm" data-act="ht-cunkeep" data-v="${i}" aria-label="Remove">Remove</button></div>`).join('')}</div>` : ''}
   <div class="card" style="margin-top:14px"><h3>Print a deck</h3><p class="muted" style="font-size:15px">${esc(C.printNote || '')}</p>
    <p style="margin-top:8px"><b>${esc(st.name)}, ${esc(cdDeckName(S.deck))}:</b> ${cdPrintList().length} cards from the parts chosen above.</p>
    <label class="cb" style="margin-top:8px"><input type="checkbox" data-cdbacks="1" ${S.backs ? 'checked' : ''}> Include card backs</label>
-   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-cprint" ${cdPrintList().length ? '' : 'disabled'}>${icon('print')} Print Deck</button></div></div>`;
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-cprint" ${cdPrintList().length ? '' : 'disabled'}>${icon('print')} Save or Print Deck</button></div></div>`;
 }
 function cdPrintList(){
   const S = cdState();
@@ -4157,7 +4119,10 @@ function cdPrint(list, title, backs){
       pages.push(`<section class="cd-sheet"><div class="cd-grid">${cells.join('')}</div><div class="cd-sfoot">${esc(C.printFoot || '')}</div></section>`);
     }
   }
-  printNow(`<style>@page{size:letter;margin:9mm 12mm 9mm;}</style>` + pages.join(''), title);
+  // The PDF draws the same cards itself: nine to a page, playing-card size, dashed cut lines, mirrored backs.
+  const blocks = () => [{k:'cards', backs:!!backs, foot:(C.printFoot || '') + ' Grounded Field Guide.', cards:list.map(r => { const card = cdCard(r), t = cdTxt(card), st = cdStageDef(r.stage), pt = cdPart(r.k);
+    return {head:cdSlotName(r.k), sub:pt ? pt.sub : '', kind:cdKindName(t), t, left:st.name, right:cdDeckName(r.deck), color:cdSlotColor(r.k), backLine:st.name + ', ' + (C.back || 'Hard Talks')}; })}];
+  fgSheet(`<style>@page{size:letter;margin:9mm 12mm 9mm;}</style>` + pages.join(''), title, {file:'hard-talks-cards', blocks});
 }
 // Full screen: one big card, tap for the next one. Escape closes.
 function cdFull(){
@@ -4312,7 +4277,7 @@ function vPlans(){
   <div class="card" style="margin-top:14px"><h3>Save and print</h3>
    <label class="f" for="pl-name">Name this plan</label><input type="text" id="pl-name" data-plf="name" value="${esc(S.name)}" placeholder="${esc(B.title)}" autocomplete="off">
    <p class="muted" style="font-size:14px;margin-top:6px">Use a topic or a group name, never a person's full name.</p>
-   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-psave">${S.id ? 'Save Changes' : 'Save Plan'}</button><button class="btn btn-gold btn-sm" data-act="ht-pprint">${icon('print')} Print Leader Sheet</button><button class="btn btn-line btn-sm" data-act="ht-pcards">${icon('print')} Print These Cards</button></div></div>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-psave">${S.id ? 'Save Changes' : 'Save Plan'}</button><button class="btn btn-gold btn-sm" data-act="ht-pprint">${icon('print')} Save or Print Leader Sheet</button><button class="btn btn-line btn-sm" data-act="ht-pcards">${icon('print')} Save or Print These Cards</button></div></div>
   ${plRecordCard(B)}`;
 }
 // ----- leader sheet -----
@@ -4336,7 +4301,7 @@ function plPrint(){
    <div class="pls-end"><div class="pls-two"><div class="pls-box pls-heavy"><h2>${esc((P.heavy || {}).title || 'If something heavy comes up')}</h2><ul>${((P.heavy || {}).lines || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
     <div class="pls-box"><h2>${esc(P.after || 'After the session')}</h2><ul>${(F.after || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul><div class="pls-lines"><span>Follow-up:</span></div></div></div>
    <div class="pls-foot">If someone is in danger, call 911. For a mental health crisis, call or text 988. ${esc(notice())}</div></div></section>`;
-  printNow(html, B.title + ', Leader Sheet');
+  fgSheet(html, B.title + ', Leader Sheet', {file:'leader-sheet'});
 }
 function plCardsList(){ return plBuild(plState()).steps.filter(s => s.kind === 'part').flatMap(s => s.cards.map(c => ({stage:c.stage, deck:c.deck, k:c.k, i:c.i}))); }
 // ----- saved plans and records -----
@@ -4564,39 +4529,78 @@ function printNow(html, title){
   window.addEventListener('afterprint', done);
   setTimeout(() => { if (id !== PRINT_ID) return; window.print(); setTimeout(() => { if (id === PRINT_ID && document.body.classList.contains('print-mode')) done(); }, 1500); }, 60);
 }
+// Save or share a sheet as a PDF, with Print as the web backup (in the app it goes straight to the PDF).
+// o: {file, date, confidential, blocks, note}. File names never carry a person's name: only the sheet and the date.
+const FG_CONF = "This file isn't encrypted. Anyone who has it can read it, so keep it somewhere private and share it only when you need to.";
+const fgSlug = t => String(t || 'sheet').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48) || 'sheet';
+const fgFile = (kind, date) => fgSlug(kind) + '-' + (/^\d{4}-\d\d-\d\d/.test(date || '') ? date.slice(0, 10) : today()) + '.pdf';
+function fgSheet(html, title, o = {}){
+  const print = () => printNow(html, title);
+  if (!window.GGApp || !window.ggPdf) return print();
+  GGApp.sheet({title, file: fgFile(o.file || title, o.date), note: o.confidential ? FG_CONF : (o.note || ''), print,
+    blocks: () => o.blocks ? o.blocks() : fgBlocks(html, o)});
+}
+// Turns a print sheet into PDF blocks: the sheet header becomes the small line on top, blank form fields get lines
+// to write on, signature lines stay signature lines, and every page carries a short footer.
+function fgBlocks(html, o = {}){
+  const d = new DOMParser().parseFromString('<!DOCTYPE html><body>' + html + '</body>', 'text/html'), b = d.body;
+  const mk = (tag, k, t) => { const e = d.createElement(tag); if (k) e.setAttribute('data-pdf-k', k); if (t != null) e.textContent = t; return e; };
+  b.querySelectorAll('style').forEach(x => x.remove());
+  b.querySelectorAll('.ht-page,.cd-sheet,.pl-print').forEach((pg, i) => { if (i){ const br = d.createElement('div'); br.setAttribute('data-pdf-page', ''); pg.before(br); } });
+  b.querySelectorAll('.pr-head,.ht-head').forEach(h => { const r = h.querySelector('.r'); const t = r ? Array.from(r.childNodes).filter(n => n.nodeType === 3).map(n => n.nodeValue.trim()).filter(Boolean).join(': ') : ''; h.replaceWith(mk('div', 'eyebrow', t)); });
+  b.querySelectorAll('.pr-field').forEach(f => {
+    const l = f.querySelector('.l'), v = f.querySelector('.v'), frag = d.createDocumentFragment(), val = v ? v.textContent.trim() : '';
+    if (l && l.textContent.trim()) frag.append(mk('div', 'b', l.textContent.trim()));
+    if (val) frag.append(mk('p', 'p', val));
+    else { const ln = d.createElement('div'); ln.className = 'write-lines'; for (let i = 0; i < (f.classList.contains('area') ? 5 : 1); i++) ln.append(d.createElement('span')); frag.append(ln); }
+    f.replaceWith(frag);
+  });
+  b.querySelectorAll('.pr-sign').forEach(sg => { const frag = d.createDocumentFragment(); Array.from(sg.children).forEach(c => { const e = d.createElement('div'); e.className = 'sign-line'; e.textContent = c.textContent.trim(); frag.append(e); }); sg.replaceWith(frag); });
+  b.querySelectorAll('.pr-cert .name,.ht-page h1').forEach(n => n.setAttribute('data-pdf-k', 'h1'));
+  b.querySelectorAll('.ht-from').forEach(n => { n.setAttribute('data-pdf-k', 'b'); const ln = d.createElement('div'); ln.className = 'write-lines'; ln.append(d.createElement('span')); n.after(ln); });
+  b.querySelectorAll('[style*="pre-wrap"]').forEach(el => { const frag = d.createDocumentFragment(); el.textContent.split('\n').forEach(t => { if (t.trim()) frag.append(mk('p', /^\s/.test(t) ? 'li' : 'p', t.trim())); }); el.replaceWith(frag); });
+  b.querySelectorAll('.pls-h').forEach(n => { const k = Array.from(n.children).map(c => c.textContent.trim()).filter(Boolean); n.textContent = k[0] + (k.length > 1 ? ' (' + k.slice(1).join(', ') + ')' : ''); n.setAttribute('data-pdf-k', 'h2'); });
+  b.querySelectorAll('.pls-meta').forEach(n => n.setAttribute('data-pdf-k', 'sub'));
+  b.querySelectorAll('.pr-foot,.pls-foot,.ht-tm,.cd-sfoot').forEach(n => n.setAttribute('data-pdf-k', 'i'));
+  b.querySelectorAll('.ht-qr').forEach(q => { const u = q.getAttribute('data-url'); if (!u){ q.remove(); return; } const e = d.createElement('div'); e.setAttribute('data-pdf-qr', u); e.textContent = q.getAttribute('data-label') || 'Scan to read the full guide'; q.replaceWith(e); });
+  const out = ggPdfFromEl(b, {foot: o.foot || (o.confidential ? 'Confidential. This file is not encrypted.' : 'Grounded Field Guide. growwithgrounded.com')});
+  if (o.confidential){ const h = out.findIndex(x => x.k === 'h1'); out.splice(h + 1, 0, {k:'i', t:'Confidential. ' + FG_CONF}); }
+  return out;
+}
 const ph = right => `<div class="pr-head">${logo('t').replace('<svg', '<svg class="t"')}${logo('w').replace('<svg', '<svg class="w"')}<div class="r">Grounded Field Guide&trade;<br>${esc(right)}</div></div>`;
 const pf = () => `<div class="pr-foot">${esc(notice())}</div>`;
 function printDoc(d, filled){
   const val = (si,fi) => { const el = document.querySelector(`[data-df="${si}_${fi}"]`); return filled && el ? el.value : ''; };
-  printNow(ph(d.for) + `<h1>${esc(d.title)}</h1>` + d.sections.map((s,si) => `<h2>${esc(s[0])}</h2>${s[1].map((f,fi) => { const v = val(si,fi); return `<div class="pr-field ${f[1]}"><div class="l">${esc(f[0])}</div><div class="v ${v?'filled':''}">${esc(v)}</div></div>`; }).join('')}`).join('') + pf(), d.title);
+  fgSheet(ph(d.for) + `<h1>${esc(d.title)}</h1>` + d.sections.map((s,si) => `<h2>${esc(s[0])}</h2>${s[1].map((f,fi) => { const v = val(si,fi); return `<div class="pr-field ${f[1]}"><div class="l">${esc(f[0])}</div><div class="v ${v?'filled':''}">${esc(v)}</div></div>`; }).join('')}`).join('') + pf(), d.title, {file:d.title});
 }
 function printGuide(g){
   const L = (lab, a, cls) => a && a.length ? `<p><b>${lab}:</b></p><ul>${a.map(x => `<li class="${cls||''}">${esc(x)}</li>`).join('')}</ul>` : '';
-  printNow(ph('Session guide') + `<h1>${esc(g.title)}</h1><p><i>${esc(g.purpose)}</i></p><p><b>Length:</b> ${esc(g.length)}</p>`
+  fgSheet(ph('Session guide') + `<h1>${esc(g.title)}</h1><p><i>${esc(g.purpose)}</i></p><p><b>Length:</b> ${esc(g.length)}</p>`
     + (g.prep ? `<h2>Before you begin</h2><ul>${g.prep.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
     + `<h2>Steps</h2>` + g.steps.map((s,i) => `<div class="pr-step"><h3>${i+1}. ${esc(s.t)}${s.m ? ` (about ${s.m} min)` : ''}</h3>${L('Say', s.say, 'pr-say')}${L('Ask', s.ask)}${L('Do', s.do)}${s.tip ? `<p><i>${esc(s.tip)}</i></p>` : ''}</div>`).join('')
-    + (g.after ? `<h2>After the session</h2><ul>${g.after.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') + pf(), g.title);
+    + (g.after ? `<h2>After the session</h2><ul>${g.after.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') + pf(), g.title, {file:g.title});
 }
 function printSession(s){
+  if (!s || s.kind === 'spr') return toast('Report records stay encrypted on this device. They are never printed or saved as a file.');
   if (s && s.kind === 'st') return stPrintNote(s, CL(s.clientId));
   const g = G(s.guideId) || {steps:[], title:'Session'}, c = s.clientId ? CL(s.clientId) : null;
-  printNow(ph('Confidential session note') + `<h1>${esc(g.title)}</h1><p>${c ? esc(c.name) + ' &middot; ' : ''}${nice(s.date)} &middot; ${s.minutes||0} minutes</p>
+  fgSheet(ph('Confidential session note') + `<h1>${esc(g.title)}</h1><p>${c ? esc(c.name) + ' &middot; ' : ''}${nice(s.date)} &middot; ${s.minutes||0} minutes</p>
     <h2>Summary</h2><p style="white-space:pre-wrap">${esc(s.summary||'')}</p><h2>Next steps</h2><p style="white-space:pre-wrap">${esc(s.next||'')}</p>
     <h2>Step notes</h2>${g.steps.map((st,i) => s.notes && s.notes[i] ? `<h3>${esc(st.t)}</h3><p style="white-space:pre-wrap">${esc(s.notes[i])}</p>` : '').join('')}
-    <h2>Fee</h2><p>${esc(s.fee||'None')}${s.paid ? ', paid' : ''}${s.grace ? ', grace spot or reduced rate' : ''}</p>` + pf(), 'Session note');
+    <h2>Fee</h2><p>${esc(s.fee||'None')}${s.paid ? ', paid' : ''}${s.grace ? ', grace spot or reduced rate' : ''}</p>` + pf(), 'Session note', {file:'session-note', date:s.date, confidential:true});
 }
 function printAgreement(){
   const T = LIB.training, n = DATA.settings.name || '';
-  printNow(ph('Practitioner agreement') + `<h1>Grounded Practitioner Agreement</h1><p>Proprietary and confidential.</p><ul>${T.agreement.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+  fgSheet(ph('Practitioner agreement') + `<h1>Grounded Practitioner Agreement</h1><p>Proprietary and confidential.</p><ul>${T.agreement.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <p style="margin-top:6mm"><i>This is a plain-language starting point. Have an attorney review it before use.</i></p>
-    <div class="pr-sign"><div>Practitioner${n ? ': ' + esc(n) : ''}</div><div>Date</div></div><div class="pr-sign"><div>Chris Joy, Grounded.</div><div>Date</div></div>` + pf(), 'Grounded Practitioner Agreement');
+    <div class="pr-sign"><div>Practitioner${n ? ': ' + esc(n) : ''}</div><div>Date</div></div><div class="pr-sign"><div>Chris Joy, Grounded.</div><div>Date</div></div>` + pf(), 'Grounded Practitioner Agreement', {file:'practitioner-agreement'});
 }
 function printCert(){
   const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null) return;
   const svc = prompt('Service completed (for example: End-of-life support):', '') || 'the Grounded way';
-  printNow(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(n)}</div>
+  fgSheet(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(n)}</div>
     <p>has completed training in <b>${esc(svc)}</b><br>through the Grounded Field Guide&trade;, and is ready to serve with presence, honesty, and care.</p>
-    <div class="pr-sign" style="margin-top:18mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Certificate');
+    <div class="pr-sign" style="margin-top:18mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Certificate', {file:'certificate'});
 }
 
 // ---------------- helpers ----------------
