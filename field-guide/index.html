@@ -361,6 +361,52 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .ht-pick .chip{padding:7px 12px;font-size:14px;}
 .ht-none{margin-top:12px;font-size:15px;}
 .ht-card{border-left:4px solid var(--gold);}
+/* ---------- Hard Talks: cards and plans ---------- */
+.ht-subtabs{margin:0 0 14px;}
+.cd{--pc:#8B5E1A;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);color:var(--ink);}
+.cd-band{background:var(--pc);color:#fff;padding:10px 18px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase;}
+.cd-band b{font-size:17px;} .cd-band small{opacity:.88;letter-spacing:1px;font-size:13px;}
+.cd-kind:empty{display:none;}
+.cd-kind{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--pc);padding:16px 20px 0;}
+@media (prefers-color-scheme: dark){ .cd-kind,.pl-pname{filter:brightness(1.7) saturate(.8);} }
+.cd-text{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:calc(28px * var(--scale));line-height:1.2;padding:8px 20px 20px;flex:1;display:flex;align-items:center;}
+.cd-foot{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--ink-soft);padding:10px 20px;border-top:1px solid var(--line);}
+.cd-stage{margin-top:18px;}
+.cd-big{max-width:580px;margin:0 auto;min-height:290px;}
+.cd-big .cd-text{font-size:calc(32px * var(--scale));}
+.cd-acts{justify-content:center;margin-top:14px;}
+.cd-pass{text-align:center;font-size:14px;margin-top:8px;}
+.cd-done{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;margin-top:10px;color:var(--gold);}
+.cd-heavy{max-width:580px;margin:12px auto 0;}
+.cd-heavy summary{cursor:pointer;color:var(--danger);font-weight:600;text-align:center;font-size:15px;}
+.cd-walk{display:flex;align-items:center;gap:14px;max-width:580px;margin:0 auto 12px;}
+.cd-tree{width:78px;height:78px;flex:none;}
+.cd-wname{font-family:'Cormorant Garamond',serif;font-size:28px;display:block;line-height:1.1;}
+.chip.cd-pchip[aria-pressed="true"]{background:var(--pc);border-color:var(--pc);color:#fff;}
+.cd-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--pc);margin-right:8px;vertical-align:middle;}
+#cd-full{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow:auto;}
+.cdf-in{width:min(920px,100%);}
+.cd-huge{min-height:62vh;}
+.cd-huge .cd-band{padding:16px 26px;} .cd-huge .cd-band b{font-size:22px;}
+.cd-huge .cd-kind{font-size:16px;padding:22px 28px 0;}
+.cd-huge .cd-text{font-size:clamp(30px,5.6vw,62px);justify-content:center;text-align:center;padding:16px 28px 28px;}
+.cdf-acts{justify-content:center;margin-top:18px;}
+body.cd-noscroll{overflow:hidden;}
+.pl-flow{margin-top:6px;}
+.pl-step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:12px;box-shadow:var(--shadow);}
+.pl-part{--pc:#8B5E1A;border-left:6px solid var(--pc);}
+.pl-safety{border-left:6px solid var(--danger);}
+.pl-safety ul,.pl-ul{padding-left:22px;margin-top:6px;} .pl-ul li,.pl-safety li{margin-top:4px;}
+.pl-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.pl-pname{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--pc);}
+.pl-bridge{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:calc(20px * var(--scale));line-height:1.3;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--line);}
+.pl-say{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:calc(21px * var(--scale));line-height:1.32;margin-top:8px;}
+.pl-card{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:10px;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--pc) 10%,transparent);}
+.pl-card b{display:block;font-family:'Cormorant Garamond',serif;font-size:calc(22px * var(--scale));line-height:1.25;}
+.pl-card .linkbtn{flex:none;font-size:14px;margin-top:2px;}
+.pl-kind{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.pl-prac{margin-top:12px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px;}
+.pl-listen{margin-top:10px;font-size:15px;color:var(--ink-soft);}
 /* Hard Talks handouts. #ht-measure is an offscreen copy used to size each page to fit before printing. */
 #ht-measure{position:absolute;left:-10000px;top:0;width:178mm;visibility:hidden;pointer-events:none;background:#fff;}
 .ht-page{font-size:10pt;line-height:1.38;color:#2A1C12;font-family:'Barlow',sans-serif;}
@@ -386,6 +432,54 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .ht-page .ht-tm{margin-top:2mm;font-size:7.5pt;color:#6B5A4D;text-align:center;}
 #print-root .ht-page{break-after:page;}
 #print-root .ht-page:last-child{break-after:auto;}
+/* cards on paper: nine to a page, cut lines, backs mirrored for long edge flipping */
+#print-root .cd-sheet{break-after:page;}
+#print-root .cd-sheet:last-child{break-after:auto;}
+.cd-grid{display:grid;grid-template-columns:repeat(3,61.5mm);grid-auto-rows:84mm;justify-content:center;border-top:.3mm dashed #B9AC96;border-left:.3mm dashed #B9AC96;width:max-content;margin:0 auto;}
+.cd.cd-p{border:0;border-right:.3mm dashed #B9AC96;border-bottom:.3mm dashed #B9AC96;border-radius:0;box-shadow:none;background:#fff;color:#2A1C12;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.cd-p .cd-band{padding:2.6mm 3.6mm;font-size:8pt;letter-spacing:1.2pt;} .cd-p .cd-band b{font-size:9.5pt;} .cd-p .cd-band small{font-size:7pt;}
+.cd-p .cd-kind{padding:3mm 3.6mm 0;font-size:6.8pt;}
+.cd-p .cd-text{font-size:17pt;line-height:1.18;padding:1.5mm 4mm 2mm;}
+.cd-p.cd-long .cd-text{font-size:14.5pt;}
+.cd-p .cd-foot{font-size:6.3pt;padding:1.8mm 3.6mm;border-top:.3mm solid #E5DAC6;color:#6B5A4D;}
+.cd-back.cd-p{background:#fff;color:var(--pc);align-items:center;justify-content:center;text-align:center;gap:1.5mm;box-shadow:inset 0 0 0 3.5mm #fff,inset 0 0 0 4.6mm var(--pc);}
+.cd-back .t{width:20mm;height:auto;color:var(--pc);margin-bottom:2mm;}
+.cd-back b{font-family:'Barlow Condensed',sans-serif;font-size:14pt;letter-spacing:2pt;text-transform:uppercase;}
+.cd-back small{font-size:8pt;letter-spacing:1pt;text-transform:uppercase;opacity:.9;}
+.cd-back span{font-size:7pt;letter-spacing:.8pt;text-transform:uppercase;color:#6B5A4D;margin-top:3mm;}
+.cd-blank{background:#fff;}
+.cd-sfoot{text-align:center;font-size:7pt;color:#6B5A4D;margin-top:1.6mm;}
+/* leader sheet */
+.pl-print{font-family:'Barlow',sans-serif;color:#2A1C12;font-size:9.6pt;line-height:1.4;}
+.pl-print .ht-head{display:flex;align-items:center;gap:3.5mm;border-bottom:1.5pt solid #8B5E1A;padding-bottom:2.5mm;margin-bottom:3mm;}
+.pl-print .ht-head .t{height:11mm;width:auto;color:#8B5E1A;} .pl-print .ht-head .w{height:4mm;width:auto;color:#2A1C12;}
+.pl-print .ht-head .r{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:8.5pt;letter-spacing:1.4pt;text-transform:uppercase;color:#6B5A4D;text-align:right;line-height:1.35;}
+#print-root .pl-print h1{font-family:'Cormorant Garamond',serif;font-size:21pt;line-height:1.1;margin:0 0 1mm;}
+#print-root .pl-print h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:8.6pt;letter-spacing:1pt;text-transform:uppercase;color:#8B5E1A;border:0;margin:0 0 1mm;padding:0;}
+#print-root .pl-print p,#print-root .pl-print li{font-size:9.4pt;margin:0 0 .8mm;}
+#print-root .pl-print ul,#print-root .pl-print ol{padding-left:4.5mm;margin:0;}
+#print-root .pls-meta{color:#6B5A4D;font-size:9pt;}
+.pls-box{border:.5pt solid #DDD0B8;border-radius:2mm;padding:2.4mm 3mm;margin-top:3mm;break-inside:avoid;}
+.pls-two{display:grid;grid-template-columns:1fr 1fr;gap:3mm;}
+.pls-two > .pls-box:only-child{grid-column:1 / -1;}
+.pls{--pc:#B9AC96;border-left:1.2mm solid var(--pc);padding:1.2mm 0 1.2mm 3mm;margin-top:3mm;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.pls.pls-part:has(.pls-prac){break-inside:auto;}
+.pls-h,.pls-bridge,.pls-say{break-after:avoid;}
+.pls-prac{break-inside:avoid;}
+.pls-safety{--pc:#A33D2A;} .pls-heavy{border-color:#A33D2A;}
+.pls-h{display:flex;gap:2mm;align-items:baseline;}
+.pls-h b{font-family:'Barlow Condensed',sans-serif;font-size:11pt;letter-spacing:1.2pt;text-transform:uppercase;color:var(--pc);}
+.pls:not(.pls-part):not(.pls-safety) .pls-h b{color:#2A1C12;}
+.pls-h span{color:#6B5A4D;font-size:8.6pt;} .pls-h i{margin-left:auto;font-style:normal;font-size:8.4pt;color:#6B5A4D;}
+#print-root .pls-say{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5pt;line-height:1.28;}
+#print-root .pls-cards li,#print-root .pls-say-l li{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:12pt;line-height:1.25;}
+#print-root .pls-bridge{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10.5pt;color:#6B5A4D;margin-bottom:1mm;}
+#print-root .pls-listen{font-size:8.8pt;color:#4A3A2E;}
+.pls-prac{background:#F6F0E4;border-radius:1.5mm;padding:1.5mm 2.2mm;margin:1mm 0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+#print-root .pls-prac,#print-root .pls-prac li{font-size:8.8pt;}
+.pls-lines span{display:block;border-bottom:.5pt solid #9C8F7E;padding-bottom:6mm;margin-top:2mm;font-size:8.4pt;color:#6B5A4D;}
+.pls-end{break-inside:avoid;}
+.pls-foot{margin-top:4mm;font-size:7.4pt;color:#6B5A4D;text-align:center;border-top:.5pt solid #DDD0B8;padding-top:2mm;}
 .codeshow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(22px * var(--scale));letter-spacing:.5px;margin:10px 0;word-break:break-word;}
 </style>
 <style>
@@ -526,7 +620,7 @@ async function enter(inner){
 // ---------------- state ----------------
 let LIB = null, OWN = null, FLD = null, TIER = null, KEYS = {}, CODEID = null, DATA = null, USERKEY = null, VSALT = null;
 let V = {tab:'home'}, RUN = null, lastAct = Date.now(), saveT = null, runTimer = null;
-const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, orient:{lessons:{}, last:null, pass:null, signed:null, staff:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, owner:{saved:[], draft:null}});
+const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, orient:{lessons:{}, last:null, pass:null, signed:null, staff:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, owner:{saved:[], draft:null}, plans:[]});
 const touch = o => { if (o) o.u = Date.now(); return o; };
 
 function readVault(){ try { return JSON.parse(localStorage.getItem(VAULT_KEY)); } catch(e){ return null; } }
@@ -647,7 +741,7 @@ function resetDevice(){
 }
 function lock(){
   if (DATA && RUN && !RUN.demo) { DATA.draft = RUN; persist(); }
-  clearInterval(runTimer); RUN = null;
+  clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose();
   LIB = null; OWN = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
   $('#view').innerHTML = ''; $('#runner').innerHTML = ''; $('#runner').classList.add('hide'); closeMenu();
   lockScreen('unlock');
@@ -2039,13 +2133,22 @@ function htListHTML(){
 }
 
 // ----- views -----
+function htHello(){ const H = HTG(); return `<div class="hello ht-hello"><div class="eyebrow" style="color:#E8C987">Grounded Field Guide&trade;</div><h1>${esc(H.title)}</h1><p>${esc(H.lead)}</p></div>`; }
+function htSubTabs(){
+  if (!CDG()) return '';
+  const v = V.htv || 'topics';
+  return `<div class="sub-tabs ht-subtabs" role="tablist" aria-label="Hard Talks">${[['topics','Topics'],['cards','Cards'],['plans','Plans']].map(([k, l]) => `<button class="chip" role="tab" aria-selected="${v === k}" aria-pressed="${v === k}" data-act="ht-view" data-v="${k}">${l}</button>`).join('')}</div>`;
+}
 function vHT(){
   const H = HTG(); if (!H) return `<div class="card"><p>Hard Talks isn't on this device yet.</p></div>`;
-  const wait = htNeedData(); if (wait) return wait;
+  // Cards need nothing from the site, so they work even when the guides can't load.
+  if (V.htv === 'cards' && CDG() && !V.htt && !V.htrec) return htHello() + htSubTabs() + vCards();
+  const wait = htNeedData(); if (wait) return (CDG() && !V.htt && !V.htrec ? htHello() + htSubTabs() : '') + wait;
   if (V.htrec){ const s = DATA.sessions.find(x => x.id === V.htrec && x.kind === 'ht'); if (s) return vHTRec(s); }
   if (V.htt){ const T = htTopic(V.htt); if (T) return vHTTopic(T); }
+  if (V.htv === 'plans' && PLG()) return htHello() + htSubTabs() + vPlans();
   const recent = htRecs().slice(0, 5);
-  return `<div class="hello ht-hello"><div class="eyebrow" style="color:#E8C987">Grounded Field Guide&trade;</div><h1>${esc(H.title)}</h1><p>${esc(H.lead)}</p></div>
+  return `${htHello()}${htSubTabs()}
   <div class="card">${(H.intro || []).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="ht-legend">${(H.stages || []).map(st => `<span><i class="${st.soon ? 'soon' : 'on'}" style="--sc:${esc(st.color)}"></i>${esc(st.name)} <small class="muted">${esc(st.ages)}${st.soon ? ', coming soon' : ''}</small></span>`).join('')}</div></div>
   ${htCrisisCard(false)}
@@ -2053,7 +2156,7 @@ function vHT(){
    <div class="row" style="margin-top:12px"><button class="chip" aria-pressed="${!V.htg}" data-act="ht-group" data-v="">All</button>${(H.groups || []).map(g => `<button class="chip" aria-pressed="${V.htg === g.key}" data-act="ht-group" data-v="${esc(g.key)}">${esc(g.name)}</button>`).join('')}</div></div>
   <div id="ht-list">${htListHTML()}</div>
   ${recent.length ? `<div class="card" style="margin-top:18px"><h3>Recently shared</h3>${recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Hard Talk')}</b> <span class="muted">${esc(c ? c.name : 'Record removed')}</span><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`; }).join('')}</div>` : ''}
-  ${TIER !== 'field' ? htCheckCard() : ''}`;
+  ${TIER !== 'field' ? htCheckCard() + cdCheckCard() : ''}`;
 }
 function vHTTopic(T){
   const H = HTG(), stages = (H.stages || []).map(st => ({st, refs: htStage(T, st)}));
@@ -2085,6 +2188,7 @@ function vHTTopic(T){
    ${have.length > 1 ? `<h4 style="margin-top:16px">Family pack</h4><p class="muted" style="font-size:15px">One page for each stage you choose, for one family. Each page uses the guide picked above.</p>
    <div class="row" style="margin-top:8px">${have.map(({st}) => `<button class="chip" aria-pressed="${pk.includes(st.id)}" data-act="ht-pk" data-v="${esc(st.id)}">${esc(st.name)}</button>`).join('')}</div>
    <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-pack" ${pk.length ? '' : 'disabled'}>${icon('print')} Print Family Pack</button></div>` : ''}</div>
+  ${cdTopicCard(T)}
   ${htRecordCard(T, have.map(x => x.st))}`;
 }
 function htForm(){ return {cid:'', nn:'', nt:'family', stages:(V.htSeen || []).slice(), hand:(V.htPrinted || []).slice(), date:today(), fdate:'', ftext:''}; }
@@ -2113,10 +2217,11 @@ function htPersonOpen(c){
 }
 function vHTRec(s){
   const c = CL(s.clientId), T = htTopic(s.topic);
-  const hand = (s.hand || []).map(k => k === 'pack' ? 'Family pack' : (htStageDef(k) ? htStageDef(k).name + ' handout' : k));
+  const hand = (s.hand || []).map(k => k === 'pack' ? 'Family pack' : k === 'plan' ? 'Session plan' : (htStageDef(k) ? htStageDef(k).name + ' handout' : k));
+  const pl = s.plan && PLG() ? plFmt(s.plan.fmt) : null;
   return `<button class="linkbtn" data-act="ht-home">Back to Hard Talks</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>${esc(s.topicTitle || 'Hard Talk')}</h1><p>${esc(c ? c.name : 'Record removed')}</p></div>
-  <div class="card"><p><b>Stages talked through:</b> ${esc(htStageNames(s.stages) || 'None noted')}</p><p style="margin-top:8px"><b>Handouts given:</b> ${esc(hand.join(', ') || 'None')}</p>
+  <div class="card"><p><b>Stages talked through:</b> ${esc(htStageNames(s.stages) || 'None noted')}</p><p style="margin-top:8px"><b>Handouts given:</b> ${esc(hand.join(', ') || 'None')}</p>${pl ? `<p style="margin-top:8px"><b>Session plan:</b> ${esc(pl.name)}, ${s.plan.min} minutes${s.plan.focus && cdPart(s.plan.focus) ? ', focus on ' + esc(cdPart(s.plan.focus).name) : ''}</p>` : ''}
    <p class="muted" style="font-size:14px;margin-top:10px">Hard Talks records keep the topic, stages, handouts, and date. Follow-ups live on their record.</p></div>
   <div class="row" style="margin-top:14px">${T ? `<button class="btn btn-gold btn-sm" data-act="ht-topic" data-v="${esc(T.id)}">Open the Topic</button>` : ''}${htPersonOpen(c)}<button class="btn btn-danger btn-sm" data-act="ht-del" data-v="${s.id}">Delete</button></div>`;
 }
@@ -2244,8 +2349,449 @@ function htAct(a, v, t){
     case 'ht-del': if (confirm('Delete this Hard Talks record? Follow-ups on their record stay.')){ DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('talks'); toast('Deleted.'); } return true;
     case 'ht-field': htSetField(v === 'on'); return true;
   }
+  return cdAct(a, v, t);
+}
+
+// ---------------- HARD TALKS: CARDS AND PLANS ----------------
+// Conversation cards and session plans live in the Field library (FLD.hardTalks.cards and
+// FLD.hardTalks.plans), so they open whenever Hard Talks does. Cards: tree cards for each live age
+// (Sprout, Sapling, Soul Tree), plus topic decks that attach to Hard Talks topics by guide id.
+// Plans walk the tree once, roots to fruit: arrive, six parts, close. Each part has a line to say,
+// cards, and what to listen for, with a spoken bridge to the next part. A Grove practice sits at
+// its own part (read from grove/library.js). Saved plans stay encrypted on this device (DATA.plans).
+// "Add to their record" saves a session with kind 'ht' and a plan field. Never what was said.
+const CDG = () => (HTG() && HTG().cards) || null;
+const PLG = () => (HTG() && HTG().plans) || null;
+const CD_AGES = ['sprout','sapling','soultree'];
+const CD_SRC = {sprout:'sprout', sapling:'sapling', soultree:'soultree'};
+const cdFaith = () => !!(DATA && DATA.settings.htFaith);
+const cdTxt = c => c == null ? '' : typeof c === 'string' ? c : (cdFaith() ? c.t : (c.n || c.t));
+const cdKind = s => /\.\.\.$/.test(s) ? 'finish' : /^(Show me|Draw|Point)\b/.test(s) ? 'show' : 'q';
+const cdKindName = s => cdKind(s) === 'q' ? '' : (((CDG() || {}).kinds || {})[cdKind(s)] || '');
+const cdPart = id => ((CDG() || {}).parts || []).find(p => p.id === id) || null;
+const cdStageDef = id => (HTG().stages || []).find(s => s.id === id) || {id, name:id, color:'#8B5E1A', ages:''};
+const cdStages = () => CD_AGES.map(cdStageDef);
+const cdDeck = id => (CDG().decks || []).find(d => d.id === id) || null;
+const cdDeckName = id => id === 'tree' ? (CDG().treeName || 'Tree cards') : ((cdDeck(id) || {}).title || 'Cards');
+const cdSlotName = k => k === 'warm' ? (CDG().warmName || 'Warm up') : k === 'close' ? (CDG().closeName || 'Closing') : ((cdPart(k) || {}).name || k);
+const cdSlotColor = k => (cdPart(k) || {}).color || '#8B5E1A';
+// The cards for one stage, deck, and part (or warm and close, which always come from the tree deck).
+function cdPool(stage, deck, k){
+  const C = CDG(); if (!C) return [];
+  if (k === 'warm' || k === 'close' || deck === 'tree' || !deck) return ((C.base || {})[stage] || {})[k] || [];
+  const d = cdDeck(deck); return (d && d[stage] && d[stage][k]) || ((C.base || {})[stage] || {})[k] || [];
+}
+// Safety topics never get topic cards (cards.guideOnly lists their guide ids).
+function cdGuideOnly(T){
+  if (!T) return false; if (T.crisis || T.abuse) return true;
+  const G = (CDG() || {}).guideOnly || {};
+  return (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => (G[r.src] || []).includes(r.id)));
+}
+function cdDeckFor(T){
+  if (!T || !CDG() || cdGuideOnly(T)) return null;
+  return (CDG().decks || []).find(d => (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => ((d.guides || {})[r.src] || []).includes(r.id)))) || null;
+}
+// Small seeded shuffle, so a plan's cards stay put until someone redraws one.
+function cdRand(seed){ let h = 1779033703 ^ String(seed).length; for (let i = 0; i < String(seed).length; i++){ h = Math.imul(h ^ String(seed).charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; }
+  return () => { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; }
+function cdShuffle(n, seed){ const r = seed == null ? Math.random : cdRand(seed), a = Array.from({length:n}, (_, i) => i); for (let i = n - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ----- one card, on screen or on paper -----
+function cdFace(card, k, stage, deck, cls){
+  const s = cdTxt(card), pt = cdPart(k), st = cdStageDef(stage);
+  return `<div class="cd ${cls || ''}" style="--pc:${esc(cdSlotColor(k))}"><div class="cd-band"><b>${esc(cdSlotName(k))}</b>${pt ? `<small>${esc(pt.sub)}</small>` : ''}</div>
+   <div class="cd-kind">${esc(cdKindName(s))}</div><div class="cd-text">${esc(s)}</div>
+   <div class="cd-foot"><span>${esc(st.name)}</span><span>${esc(cdDeckName(deck))}</span></div></div>`;
+}
+function cdBack(k, stage){
+  const pt = cdPart(k), st = cdStageDef(stage);
+  return `<div class="cd cd-back" style="--pc:${esc(cdSlotColor(k))}">${logo('t').replace('<svg', '<svg class="t"')}<b>${esc(cdSlotName(k))}</b>${pt ? `<small>${esc(pt.sub)}</small>` : ''}<span>${esc(st.name)} &middot; ${esc(CDG().back || 'Hard Talks')}</span></div>`;
+}
+
+// ----- state for the Cards view (kept while the Field Guide is open) -----
+let CS = null;
+function cdState(){
+  if (!CS) CS = {stage:'soultree', deck:'tree', parts:['roots','trunk','bark','branches','leaves','fruit'], mode:null, cur:null, kept:[], q:{}, walk:null, backs:true};
+  if (CS.deck !== 'tree' && !(cdDeck(CS.deck) || {})[CS.stage]) CS.deck = 'tree';
+  return CS;
+}
+const cdSlots = () => CS.deck === 'tree' ? ['warm', ...GV_PARTS, 'close'] : GV_PARTS.slice();
+function cdDraw(){
+  const S = cdState(), ks = cdSlots().filter(k => S.parts.includes(k)); if (!ks.length) return null;
+  const key = [S.stage, S.deck, ks.join('.')].join('|');
+  let q = S.q[key];
+  if (!q || !q.length){
+    const all = ks.flatMap(k => cdPool(S.stage, S.deck, k).map((c, i) => ({k, i})));
+    q = cdShuffle(all.length).map(i => all[i]);
+    if (S.q[key] !== undefined) toast("That's the whole deck. Shuffling it again.");
+    if (S.cur && q.length > 1 && q[0].k === S.cur.k && q[0].i === S.cur.i) q.push(q.shift());
+    S.q[key] = q;
+  }
+  const r = q.shift(); return {stage:S.stage, deck:S.deck, k:r.k, i:r.i};
+}
+const cdCard = r => r ? cdPool(r.stage, r.deck, r.k)[r.i] : null;
+function cdWalkStep(i){
+  const S = cdState(), W = S.walk, k = W.steps[i], pool = cdPool(S.stage, S.deck, k);
+  let n = Math.floor(Math.random() * pool.length); const last = W.cards[i];
+  if (last && pool.length > 1 && last.i === n) n = (n + 1) % pool.length;
+  W.cards[i] = {stage:S.stage, deck:(k === 'warm' || k === 'close') ? 'tree' : S.deck, k, i:n};
+}
+function cdWalkStart(){
+  const S = cdState(), steps = ['warm', ...GV_PARTS, 'close'];
+  S.walk = {steps, i:0, cards:[]}; steps.forEach((k, i) => cdWalkStep(i)); S.mode = 'walk';
+}
+// A little tree that fills in, part by part, as the walk goes up.
+function cdTree(done){
+  const P = GV_PARTS.map(cdPart), on = k => done.includes(k);
+  const dot = (k, x, y, r) => { const p = cdPart(k); return `<circle cx="${x}" cy="${y}" r="${r}" fill="${on(k) ? esc(p.color) : 'none'}" stroke="${esc(p.color)}" stroke-width="2"/>`; };
+  return `<svg class="cd-tree" viewBox="0 0 120 120" role="img" aria-label="${esc(P.filter(p => on(p.id)).map(p => p.name).join(', ') || 'Not started')}">
+   <path d="M60 96 V58 M60 70 L44 56 M60 66 L78 52" stroke="var(--ink-soft)" stroke-width="3" fill="none" stroke-linecap="round"/>
+   <path d="M60 96 q-10 8 -22 10 M60 96 q10 8 22 10 M60 96 v12" stroke="var(--ink-soft)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+   ${dot('roots', 60, 110, 7)}${dot('trunk', 60, 80, 7)}${dot('bark', 72, 88, 5.5)}${dot('branches', 40, 52, 8)}${dot('leaves', 82, 46, 9)}${dot('fruit', 60, 28, 9)}</svg>`;
+}
+function cdHeavy(){ return `<details class="cd-heavy"><summary>${esc(CDG().heavy || 'If something heavy comes up')}</summary><p class="muted" style="margin:6px 0 0">${esc(CDG().heavyNote || '')}</p>${htCrisisCard(false)}</details>`; }
+
+function vCards(){
+  const C = CDG(); if (!C) return `<div class="card"><p>Conversation cards aren't on this device yet.</p></div>`;
+  const S = cdState(), st = cdStageDef(S.stage);
+  const decks = (C.decks || []).filter(d => d[S.stage]);
+  const slots = cdSlots(), faith = cdFaith();
+  let stage = '';
+  if (S.mode === 'draw' && S.cur){
+    stage = `<div class="cd-stage">${cdFace(cdCard(S.cur), S.cur.k, S.cur.stage, S.cur.deck, 'cd-big')}
+     <div class="row cd-acts"><button class="btn btn-gold" data-act="ht-cnext">Next Card</button><button class="btn btn-line btn-sm" data-act="ht-ckeep">${(S.kept || []).some(x => x.k === S.cur.k && x.i === S.cur.i && x.deck === S.cur.deck && x.stage === S.cur.stage) ? icon('check') + ' Kept' : 'Keep This One'}</button><button class="btn btn-line btn-sm" data-act="ht-cfull">Full Screen</button><button class="btn btn-line btn-sm" data-act="ht-cstop">Done</button></div>
+     <p class="muted cd-pass">${esc(C.pass || '')}</p>${cdHeavy()}</div>`;
+  } else if (S.mode === 'walk' && S.walk){
+    const W = S.walk, k = W.steps[W.i], done = W.steps.slice(0, W.i + 1).filter(x => GV_PARTS.includes(x)), last = W.i === W.steps.length - 1;
+    stage = `<div class="cd-stage"><div class="cd-walk">${cdTree(done)}<div><div class="eyebrow">Step ${W.i + 1} of ${W.steps.length}</div><b class="cd-wname">${esc(cdSlotName(k))}</b></div></div>
+     ${cdFace(cdCard(W.cards[W.i]), k, S.stage, W.cards[W.i].deck, 'cd-big')}
+     <div class="row cd-acts">${W.i ? `<button class="btn btn-line btn-sm" data-act="ht-cwback">${icon('back')} Back</button>` : ''}<button class="btn btn-line btn-sm" data-act="ht-cwagain">Another ${esc(cdSlotName(k))} Card</button>${last ? `<button class="btn btn-gold" data-act="ht-cstop">Finish</button>` : `<button class="btn btn-gold" data-act="ht-cwnext">Next: ${esc(cdSlotName(W.steps[W.i + 1]))}</button>`}<button class="btn btn-line btn-sm" data-act="ht-cfull">Full Screen</button></div>
+     ${last ? `<p class="cd-done">You walked the whole tree, roots to fruit.</p>` : `<p class="muted cd-pass">${esc(C.pass || '')}</p>`}${cdHeavy()}</div>`;
+  }
+  const kept = S.kept || [];
+  return `<div class="card"><h3>${esc(C.title)}</h3><p class="muted" style="font-size:16px">${esc(C.lead || '')}</p>${(C.intro || []).map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}</div>
+  <div class="card" style="margin-top:14px">
+   <label class="f" style="margin-top:0">Who it's for</label><div class="row">${cdStages().map(s => `<button class="chip" aria-pressed="${S.stage === s.id}" data-act="ht-cstage" data-v="${esc(s.id)}">${esc(s.name)} <small class="muted">${esc(s.ages || '')}</small></button>`).join('')}</div>
+   <label class="f">Deck</label><div class="row"><button class="chip" aria-pressed="${S.deck === 'tree'}" data-act="ht-cdeck" data-v="tree">${esc(C.treeName || 'Tree cards')}</button>${decks.map(d => `<button class="chip" aria-pressed="${S.deck === d.id}" data-act="ht-cdeck" data-v="${esc(d.id)}">${esc(d.title)}</button>`).join('')}</div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.deck === 'tree' ? (C.treeBlurb || '') : (cdDeck(S.deck) || {}).blurb || '')}</p>
+   <label class="f">Parts of the tree</label><div class="row">${slots.map(k => `<button class="chip cd-pchip" style="--pc:${esc(cdSlotColor(k))}" aria-pressed="${S.parts.includes(k)}" data-act="ht-cpart" data-v="${esc(k)}">${esc(cdSlotName(k))}</button>`).join('')}</div>
+   <label class="cb" style="margin-top:12px"><input type="checkbox" data-htfaith="1" ${faith ? 'checked' : ''}> Faith wording on the cards</label>
+   <p class="muted" style="font-size:14px">Off shows a nature version of every card that mentions God or prayer. It's the same switch as the handouts.</p>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-cdraw">Draw a Card</button><button class="btn btn-gold btn-sm" data-act="ht-cwalk">${icon('tree')} Walk the Tree</button></div></div>
+  <div id="cd-live">${stage}</div>
+  ${kept.length ? `<div class="card" style="margin-top:14px"><div class="spread"><h3>Kept cards</h3><div class="row"><button class="btn btn-line btn-sm" data-act="ht-cprintkept">${icon('print')} Print These</button><button class="btn btn-line btn-sm" data-act="ht-cclear">Clear</button></div></div>
+   ${kept.map((r, i) => `<div class="list-row"><div class="lr-main"><span class="cd-dot" style="--pc:${esc(cdSlotColor(r.k))}"></span><b>${esc(cdTxt(cdCard(r)))}</b><br><small class="muted">${esc(cdSlotName(r.k))} &middot; ${esc(cdStageDef(r.stage).name)} &middot; ${esc(cdDeckName(r.deck))}</small></div><button class="btn btn-line btn-sm" data-act="ht-cunkeep" data-v="${i}" aria-label="Remove">Remove</button></div>`).join('')}</div>` : ''}
+  <div class="card" style="margin-top:14px"><h3>Print a deck</h3><p class="muted" style="font-size:15px">${esc(C.printNote || '')}</p>
+   <p style="margin-top:8px"><b>${esc(st.name)}, ${esc(cdDeckName(S.deck))}:</b> ${cdPrintList().length} cards from the parts chosen above.</p>
+   <label class="cb" style="margin-top:8px"><input type="checkbox" data-cdbacks="1" ${S.backs ? 'checked' : ''}> Include card backs</label>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-cprint" ${cdPrintList().length ? '' : 'disabled'}>${icon('print')} Print Deck</button></div></div>`;
+}
+function cdPrintList(){
+  const S = cdState();
+  return cdSlots().filter(k => S.parts.includes(k)).flatMap(k => cdPool(S.stage, S.deck, k).map((c, i) => ({stage:S.stage, deck:(k === 'warm' || k === 'close') ? 'tree' : S.deck, k, i})));
+}
+// Nine cards to a page, cut lines, and (optionally) a backs page after each, mirrored for long edge flipping.
+function cdPrint(list, title, backs){
+  if (!list.length) return;
+  const C = CDG(), pages = [];
+  for (let p = 0; p < list.length; p += 9){
+    const nine = list.slice(p, p + 9);
+    pages.push(`<section class="cd-sheet"><div class="cd-grid">${nine.map(r => cdFace(cdCard(r), r.k, r.stage, r.deck, 'cd-p' + (cdTxt(cdCard(r)).length > 95 ? ' cd-long' : ''))).join('')}</div><div class="cd-sfoot">${esc(C.printFoot || '')} &nbsp; ${esc(notice())}</div></section>`);
+    if (backs){
+      const cells = Array(9).fill('<div class="cd cd-p cd-blank"></div>');
+      nine.forEach((r, i) => { const row = Math.floor(i / 3), col = i % 3; cells[row * 3 + (2 - col)] = cdBack(r.k, r.stage).replace('class="cd cd-back"', 'class="cd cd-back cd-p"'); });
+      pages.push(`<section class="cd-sheet"><div class="cd-grid">${cells.join('')}</div><div class="cd-sfoot">${esc(C.printFoot || '')}</div></section>`);
+    }
+  }
+  printNow(`<style>@page{size:letter;margin:9mm 12mm 9mm;}</style>` + pages.join(''), title);
+}
+// Full screen: one big card, tap for the next one. Escape closes.
+function cdFull(){
+  const S = cdState(), r = S.mode === 'walk' && S.walk ? S.walk.cards[S.walk.i] : S.cur; if (!r) return;
+  let el = $('#cd-full'); if (!el){ el = document.createElement('div'); el.id = 'cd-full'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Card, full screen'); document.body.appendChild(el); }
+  const walk = S.mode === 'walk', last = walk && S.walk.i === S.walk.steps.length - 1;
+  el.innerHTML = `<div class="cdf-in">${cdFace(cdCard(r), r.k, r.stage, r.deck, 'cd-huge')}
+   <div class="row cdf-acts">${walk && S.walk.i ? `<button class="btn btn-line" data-act="ht-cwback" data-full="1">${icon('back')} Back</button>` : ''}${last ? '' : `<button class="btn btn-gold" data-act="${walk ? 'ht-cwnext' : 'ht-cnext'}" data-full="1">${walk ? 'Next: ' + esc(cdSlotName(S.walk.steps[S.walk.i + 1])) : 'Next Card'}</button>`}<button class="btn btn-line" data-act="ht-cfullx">Close</button></div></div>`;
+  el.classList.remove('hide'); document.body.classList.add('cd-noscroll');
+  const b = el.querySelector('.btn-gold') || el.querySelector('[data-act="ht-cfullx"]'); if (b) b.focus();
+}
+function cdFullClose(){ const el = $('#cd-full'); if (el){ el.remove(); } document.body.classList.remove('cd-noscroll'); const l = $('#cd-live'); if (l) l.scrollIntoView({block:'nearest'}); }
+function cdLive(){ htKeep(); if ($('#cd-full')) cdFull(); }
+
+// ---------------- SESSION PLANS ----------------
+let PS = null;
+function plNew(over){ return Object.assign({fmt:'one', min:45, stages:['soultree'], topic:'', gi:0, focus:'', ppart:'', pkey:'', seed:uid(), off:{}, name:'', id:null}, over || {}); }
+function plState(){ if (!PS) PS = plNew(); return PS; }
+const plFmt = id => (PLG().formats || []).find(f => f.id === id) || PLG().formats[0];
+const plLine = x => cdTxt(x);
+const plAgeKey = st => st === 'soultree' ? 'adult' : st;
+function plStages(S){
+  const order = CD_AGES, sel = order.filter(x => (S.stages || []).includes(x));
+  const list = sel.length ? sel : ['soultree'];
+  if (S.fmt !== 'family') return {main: list[0], older: null, all: [list[0]]};
+  return {main: list[0], older: list.length > 1 ? list[list.length - 1] : null, all: list};
+}
+// Minutes for each step. Open and close come from the format and length; the rest goes to the six
+// parts, with the focus part getting double and the practice's part a little extra.
+function plTimes(S, F, safety){
+  const L = (F.lengths || {})[S.min] || {open:4, close:4}, pp = plPracticePart(S);
+  const left = Math.max(12, S.min - L.open - L.close - (safety ? 3 : 0));
+  const w = GV_PARTS.map(k => 1 + (k === S.focus ? 1 : 0) + (pp && k === pp ? .6 : 0)), sum = w.reduce((a, b) => a + b, 0);
+  const m = w.map(x => Math.max(1, Math.round(left * x / sum)));
+  let diff = left - m.reduce((a, b) => a + b, 0), j = GV_PARTS.indexOf(S.focus || 'bark');
+  while (diff){ const d = diff > 0 ? 1 : -1; if (m[j] + d >= 1) { m[j] += d; diff -= d; } j = (j + 1) % 6; }
+  return {open:L.open, close:L.close, safety: safety ? 3 : 0, parts: Object.fromEntries(GV_PARTS.map((k, i) => [k, m[i]])), note: (S.focus ? L.noteFocus : L.note) || L.note || ''};
+}
+const plPracticePart = S => S.ppart === 'none' ? '' : (S.ppart || S.focus || 'bark');
+function plPractices(S){
+  const pp = plPracticePart(S); if (!pp || !GD) return [];
+  const age = plAgeKey(plStages(S).main);
+  return GD.LIBRARY.filter(it => it.part === pp && GD.libFits(it, age));
+}
+function plPractice(S){
+  const list = plPractices(S); if (!list.length) return null;
+  const it = list.find(x => x.key === S.pkey) || list[cdShuffle(list.length, S.seed + '|p|' + plPracticePart(S))[0]];
+  const kid = plStages(S).main === 'sprout', h = it.how || [], useKid = kid && h.length >= 6;
+  const text = kid ? it.kidText : (it.text === 'LV' ? it.busy : it.text);
+  return {key: it.key, name: kid ? it.kidName : it.name, text: text === 'LV' ? (kid ? it.kidBusy : it.busy) : text, why: useKid ? h[3] : h[0], steps: String((useKid ? h[4] : h[1]) || '').split('|').filter(Boolean), hard: useKid ? h[5] : h[2]};
+}
+// Card slots per part: 30 minutes one, 45 one (two at the focus), 60 two (three at the focus).
+function plCount(S, k){ const f = k === S.focus; return S.min <= 30 ? 1 : S.min <= 45 ? (f ? 2 : 1) : (f ? 3 : 2); }
+function plCards(S, k, deck){
+  const ST = plStages(S), n = plCount(S, k), out = [], used = {};
+  for (let j = 0; j < n; j++){
+    const older = S.fmt === 'family' && ST.older && j === 1;
+    const stage = older ? ST.older : ST.main, dk = deck && deck[stage] ? deck.id : 'tree', pool = cdPool(stage, dk, k);
+    if (!pool.length) continue;
+    const key = stage + '|' + dk, order = cdShuffle(pool.length, S.seed + '|' + k + '|' + key), tk = used[key] = used[key] || [];
+    let p = (j + n * (+(S.off[k + '-' + j] || 0))) % order.length, guard = 0;
+    while (tk.includes(order[p]) && guard++ < order.length) p = (p + 1) % order.length;
+    tk.push(order[p]);
+    out.push({j, stage, deck:dk, k, i:order[p], older, card:pool[order[p]]});
+  }
+  return out;
+}
+function plRefs(T, stage){ const st = T && HD ? (HTG().stages || []).find(s => s.id === stage) : null; return st ? htStage(T, st) : []; }
+function plFromGuide(T, stage, gi){
+  const refs = plRefs(T, stage); if (!refs.length) return null;
+  const r = refs[Math.min(+gi || 0, refs.length - 1)], g = r.g;
+  const say = r.src === 'sprout' ? g.start : r.src === 'sapling' ? g.say : ((g.helper || {}).say);
+  const avoid = r.src === 'soultree' ? ((g.helper || {}).avoid) : g.avoid;
+  return {title: g.title, link: htLink(r), say: (say || []).slice(0, 3).map(htPlain), avoid: (avoid || []).slice(0, 3).map(htPlain)};
+}
+function plBuild(S){
+  const P = PLG(), F = plFmt(S.fmt), ST = plStages(S), T = S.topic ? htTopic(S.topic) : null;
+  const guideOnly = cdGuideOnly(T), deck = cdDeckFor(T), times = plTimes(S, F, guideOnly);
+  const voice = S.fmt === 'family' ? 'sprout' : ST.main, key = S.fmt === 'family' ? 'all' : ST.main;
+  const br = (P.bridges || {})[voice] || [], prac = plPractice(S), pp = plPracticePart(S);
+  const steps = [{kind:'open', name:'Arrive', min:times.open, say:((F.open || {})[key] || []).map(plLine)}];
+  GV_PARTS.forEach((k, i) => {
+    const pd = ((P.parts || {})[k] || {})[voice] || {};
+    steps.push({kind:'part', k, name: cdPart(k).name, sub: cdPart(k).sub, min: times.parts[k], bridge: br[i] || '', say: plLine(pd.say), listen: pd.listen || '', cards: plCards(S, k, deck), practice: pp === k ? prac : null, focus: S.focus === k});
+  });
+  if (guideOnly){ const sf = (P.safety || {})[ST.main] || {}; steps.push({kind:'safety', name:(P.safety || {}).title || 'Safety step', min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || []}); }
+  steps.push({kind:'close', name:'Close', min:times.close, bridge: br[6] || '', say:((F.close || {})[key] || []).map(plLine)});
+  let at = 0; steps.forEach(s => { s.at = at; at += s.min; });
+  const title = (S.name || '').trim() || (T ? T.title : 'The whole tree') + ', ' + F.name.toLowerCase();
+  return {title, F, T, ST, deck, guideOnly, steps, note: times.note, min: S.min,
+    guides: T ? ST.all.map(s => plFromGuide(T, s, s === ST.main ? S.gi : 0)).filter(Boolean) : [], helper: T ? T.helper || '' : ''};
+}
+const plClock = m => m + ' min';
+const plAt = m => 'Minute ' + m;
+function plCardHTML(c, edit){
+  const s = cdTxt(c.card);
+  return `<div class="pl-card" style="--pc:${esc(cdSlotColor(c.k))}"><div><span class="pl-kind">${esc(cdKindName(s))}${c.older ? ' &middot; ' + esc((PLG().cardsFor || {}).older || 'For the older ones') : ''}${c.deck !== 'tree' ? ' &middot; ' + esc(cdDeckName(c.deck)) : ''}</span><b>${esc(s)}</b></div>${edit ? `<button class="linkbtn" data-act="ht-predraw" data-v="${esc(c.k + '-' + c.j)}">Different card</button>` : ''}</div>`;
+}
+function plPracticeHTML(p, edit){
+  const P = PLG();
+  if (!p) return GD ? '' : `<div class="pl-prac"><p class="muted">${GD_FAIL ? "The Grove's practices didn't load. Check the connection." : "Loading a Grove practice..."}</p></div>`;
+  return `<div class="pl-prac"><div class="spread"><div class="eyebrow">${esc(P.practiceTitle || 'Try it together')}</div>${edit ? `<button class="linkbtn" data-act="ht-pprac">Different practice</button>` : ''}</div>
+   <b>${esc(p.name)}</b><p style="margin-top:4px">${esc(p.text)}</p>${p.steps.length ? `<ol class="gv-steps">${p.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : ''}${p.hard ? `<p class="muted" style="font-size:15px"><b>If it's hard.</b> ${esc(p.hard)}</p>` : ''}</div>`;
+}
+function plStepHTML(s, edit){
+  if (s.kind === 'part') return `<div class="pl-step pl-part" style="--pc:${esc(cdSlotColor(s.k))}">
+   ${s.bridge ? `<p class="pl-bridge">${esc(s.bridge)}</p>` : ''}
+   <div class="pl-head"><div><span class="pl-pname">${esc(s.name)}</span> <small class="muted">${esc(s.sub)}</small>${s.focus ? ' <span class="pill gold">Focus</span>' : ''}</div><small class="muted">${plAt(s.at)} &middot; ${plClock(s.min)}</small></div>
+   <p class="pl-say">${esc(s.say)}</p>${s.cards.map(c => plCardHTML(c, edit)).join('')}
+   ${s.practice !== null || (edit && !GD) ? plPracticeHTML(s.practice, edit) : ''}
+   <p class="pl-listen"><b>Listen for.</b> ${esc(s.listen)}</p></div>`;
+  if (s.kind === 'safety') return `<div class="pl-step pl-safety"><div class="pl-head"><b>${esc(s.name)}</b><small class="muted">${plAt(s.at)} &middot; ${plClock(s.min)}</small></div>${s.say.map(t => `<p class="pl-say">${esc(t)}</p>`).join('')}<ul>${s.todo.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>`;
+  return `<div class="pl-step pl-${s.kind}">${s.bridge ? `<p class="pl-bridge">${esc(s.bridge)}</p>` : ''}<div class="pl-head"><b>${esc(s.name)}</b><small class="muted">${plAt(s.at)} &middot; ${plClock(s.min)}</small></div>${s.say.map(t => `<p class="pl-say">${esc(t)}</p>`).join('')}</div>`;
+}
+function plGuideHTML(B){
+  if (!B.guides.length && !B.helper) return '';
+  const P = PLG();
+  return `<div class="card ht-helper"><h3>${esc(P.fromGuide || 'From the guide')}</h3>${B.helper ? `<p style="margin-top:6px">${esc(B.helper)}</p>` : ''}
+   ${B.guides.map(g => `<p style="margin-top:10px"><b>${esc(g.title)}</b> <a href="${esc(g.link)}" target="_blank" rel="noopener">${icon('link')}</a></p>${g.say.length ? `<div class="blk say"><div class="lab">Words that help</div><ul>${g.say.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}${g.avoid.length ? `<div class="blk"><div class="lab">Try not to</div><ul>${g.avoid.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}`).join('')}
+   <p class="muted" style="font-size:14px;margin-top:8px">${esc(P.fromGuideNote || '')}</p></div>`;
+}
+function vPlans(){
+  const P = PLG(); if (!P || !CDG()) return `<div class="card"><p>Session plans aren't on this device yet.</p></div>`;
+  gvLoad();
+  const S = plState(), F = plFmt(S.fmt), ST = plStages(S), B = plBuild(S), saved = (DATA.plans || []).slice().sort((a, b) => (b.u || 0) - (a.u || 0));
+  const groups = (HTG().groups || []).map(g => ({g, ts:(HTG().topics || []).filter(T => T.group === g.key)})).filter(x => x.ts.length);
+  const opt = T => `<option value="${esc(T.id)}" ${S.topic === T.id ? 'selected' : ''}>${esc(T.title)}${cdDeckFor(T) ? ' (has cards)' : ''}</option>`;
+  const pp = plPracticePart(S);
+  return `<div class="card"><h3>${esc(P.title)}</h3><p class="muted" style="font-size:16px">${esc(P.lead || '')}</p>${(P.intro || []).map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}</div>
+  ${saved.length ? `<div class="card" style="margin-top:14px"><h3>Saved plans</h3>${saved.map(p => `<div class="list-row"><div class="lr-main"><b>${esc(p.name || 'Plan')}</b><br><small class="muted">${esc(plFmt(p.fmt).name)}, ${p.min} minutes${p.id === S.id ? ' &middot; open now' : ''}</small></div><div class="row"><button class="btn btn-line btn-sm" data-act="ht-popen" data-v="${esc(p.id)}">Open</button><button class="btn btn-danger btn-sm" data-act="ht-pdel" data-v="${esc(p.id)}">Delete</button></div></div>`).join('')}</div>` : ''}
+  <div class="card" style="margin-top:14px">
+   <div class="spread"><h3>Build a plan</h3>${S.id ? `<button class="linkbtn" data-act="ht-pnew">Start a new plan</button>` : ''}</div>
+   <label class="f">Who's in the room</label><div class="row">${(P.formats || []).map(f => `<button class="chip" aria-pressed="${S.fmt === f.id}" data-act="ht-pfmt" data-v="${esc(f.id)}">${esc(f.name)}</button>`).join('')}</div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc(F.blurb || '')}</p>
+   <label class="f">How long</label><div class="row">${[30, 45, 60].map(m => `<button class="chip" aria-pressed="${S.min === m}" data-act="ht-pmin" data-v="${m}">${m} minutes</button>`).join('')}</div>
+   <label class="f">${S.fmt === 'family' ? 'Ages in the room (choose all that fit)' : 'Age'}</label><div class="row">${cdStages().map(s => `<button class="chip" aria-pressed="${ST.all.includes(s.id)}" data-act="ht-page" data-v="${esc(s.id)}">${esc(s.name)} <small class="muted">${esc(s.ages || '')}</small></button>`).join('')}</div>
+   <label class="f" for="pl-topic">Topic</label><select id="pl-topic" data-plf="topic"><option value="">${esc(P.noTopic || 'No topic, just the tree')}</option>${groups.map(x => `<optgroup label="${esc(x.g.name)}">${x.ts.map(opt).join('')}</optgroup>`).join('')}</select>
+   ${B.T && plRefs(B.T, ST.main).length > 1 ? `<label class="f">Which guide</label><div class="row">${plRefs(B.T, ST.main).map((r, i) => `<button class="chip" aria-pressed="${(+S.gi || 0) === i}" data-act="ht-pgi" data-v="${i}">${esc(r.g.title)}</button>`).join('')}</div>` : ''}
+   ${B.T ? `<p class="muted" style="font-size:14px;margin-top:6px">${B.guideOnly ? esc(CDG().guideOnlyNote || '') : B.deck ? 'Uses the ' + esc(B.deck.title) + ' cards.' : 'No topic cards yet, so this uses the tree cards.'}</p>` : ''}
+   <label class="f">Focus part (gets more time and an extra card)</label><div class="row"><button class="chip" aria-pressed="${!S.focus}" data-act="ht-pfocus" data-v="">None</button>${GV_PARTS.map(k => `<button class="chip cd-pchip" style="--pc:${esc(cdSlotColor(k))}" aria-pressed="${S.focus === k}" data-act="ht-pfocus" data-v="${k}">${esc(cdPart(k).name)}</button>`).join('')}</div>
+   <label class="f">Grove practice at</label><div class="row">${GV_PARTS.map(k => `<button class="chip cd-pchip" style="--pc:${esc(cdSlotColor(k))}" aria-pressed="${pp === k}" data-act="ht-ppart" data-v="${k}">${esc(cdPart(k).name)}</button>`).join('')}<button class="chip" aria-pressed="${!pp}" data-act="ht-ppart" data-v="none">No practice</button></div>
+   <label class="cb" style="margin-top:12px"><input type="checkbox" data-htfaith="1" ${cdFaith() ? 'checked' : ''}> Faith wording (prayer and blessing lines, faith cards)</label></div>
+  <div class="pl-sheet" id="pl-sheet">
+   <div class="page-head" style="margin-top:22px"><div class="eyebrow">${esc(F.name)} &middot; ${S.min} minutes &middot; ${esc(ST.all.map(x => cdStageDef(x).name).join(', '))}</div><h2>${esc(B.title)}</h2>${B.note ? `<p>${esc(B.note)}</p>` : ''}</div>
+   ${B.guideOnly ? htCrisisCard(!!(B.T && B.T.abuse)) : ''}
+   ${plGuideHTML(B)}
+   <div class="card" style="margin-top:14px"><h3>${esc(P.before || 'Before you start')}</h3><ul class="pl-ul">${(F.before || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+   <div class="pl-flow">${B.steps.map(s => plStepHTML(s, true)).join('')}</div>
+   <div class="card ht-crisis"><h3>${esc((P.heavy || {}).title || 'If something heavy comes up')}</h3><ul class="pl-ul">${((P.heavy || {}).lines || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+   <div class="card" style="margin-top:14px"><h3>${esc(P.after || 'After the session')}</h3><ul class="pl-ul">${(F.after || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Save and print</h3>
+   <label class="f" for="pl-name">Name this plan</label><input type="text" id="pl-name" data-plf="name" value="${esc(S.name)}" placeholder="${esc(B.title)}" autocomplete="off">
+   <p class="muted" style="font-size:14px;margin-top:6px">Use a topic or a group name, never a person's full name.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ht-psave">${S.id ? 'Save Changes' : 'Save Plan'}</button><button class="btn btn-gold btn-sm" data-act="ht-pprint">${icon('print')} Print Leader Sheet</button><button class="btn btn-line btn-sm" data-act="ht-pcards">${icon('print')} Print These Cards</button></div></div>
+  ${plRecordCard(B)}`;
+}
+// ----- leader sheet -----
+function plPrint(){
+  const S = plState(), B = plBuild(S), P = PLG(), F = B.F;
+  const step = s => {
+    if (s.kind === 'part') return `<div class="pls pls-part" style="--pc:${esc(cdSlotColor(s.k))}">${s.bridge ? `<p class="pls-bridge">${esc(s.bridge)}</p>` : ''}
+     <div class="pls-h"><b>${esc(s.name)}</b> <span>${esc(s.sub)}${s.focus ? ', focus' : ''}</span><i>${plAt(s.at)}, ${plClock(s.min)}</i></div>
+     <p class="pls-say">${esc(s.say)}</p><ul class="pls-cards">${s.cards.map(c => { const t = cdTxt(c.card); return `<li>${esc(t)}${c.older ? ` <small>(${esc((P.cardsFor || {}).older || 'For the older ones')})</small>` : ''}</li>`; }).join('')}</ul>
+     ${s.practice ? `<div class="pls-prac"><b>${esc(P.practiceTitle || 'Try it together')}: ${esc(s.practice.name)}.</b> ${esc(s.practice.text)}${s.practice.steps.length ? `<ol>${s.practice.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : ''}</div>` : ''}
+     <p class="pls-listen"><b>Listen for.</b> ${esc(s.listen)}</p></div>`;
+    if (s.kind === 'safety') return `<div class="pls pls-safety"><div class="pls-h"><b>${esc(s.name)}</b><i>${plAt(s.at)}, ${plClock(s.min)}</i></div>${s.say.map(t => `<p class="pls-say">${esc(t)}</p>`).join('')}<ul>${s.todo.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>`;
+    return `<div class="pls">${s.bridge ? `<p class="pls-bridge">${esc(s.bridge)}</p>` : ''}<div class="pls-h"><b>${esc(s.name)}</b><i>${plAt(s.at)}, ${plClock(s.min)}</i></div>${s.say.map(t => `<p class="pls-say">${esc(t)}</p>`).join('')}</div>`;
+  };
+  const html = `<section class="pl-print"><div class="ht-head">${logo('t').replace('<svg', '<svg class="t"')}${logo('w').replace('<svg', '<svg class="w"')}<div class="r">Session Plan<br>Leader sheet</div></div>
+   <h1>${esc(B.title)}</h1><p class="pls-meta">${esc(F.name)}, ${B.min} minutes, ${esc(B.ST.all.map(x => cdStageDef(x).name).join(', '))}${B.deck ? ', ' + esc(B.deck.title) + ' cards' : ''}. ${esc(B.note)}</p>
+   ${B.helper ? `<div class="pls-box"><h2>For the helper</h2><p>${esc(B.helper)}</p></div>` : ''}
+   <div class="pls-two"><div class="pls-box"><h2>${esc(P.before || 'Before you start')}</h2><ul>${(F.before || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+    ${B.guides.length ? `<div class="pls-box"><h2>${esc(P.fromGuide || 'From the guide')}</h2>${B.guides.map(g => `<p><b>${esc(g.title)}</b> <small>${esc(g.link.replace(/^https?:\/\//, ''))}</small></p>${g.say.length ? `<ul class="pls-say-l">${g.say.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}${g.avoid.length ? `<p><b>Try not to:</b> ${esc(g.avoid.join(' '))}</p>` : ''}`).join('')}</div>` : ''}</div>
+   <div class="pls-flow">${B.steps.map(step).join('')}</div>
+   <div class="pls-end"><div class="pls-two"><div class="pls-box pls-heavy"><h2>${esc((P.heavy || {}).title || 'If something heavy comes up')}</h2><ul>${((P.heavy || {}).lines || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
+    <div class="pls-box"><h2>${esc(P.after || 'After the session')}</h2><ul>${(F.after || []).map(t => `<li>${esc(t)}</li>`).join('')}</ul><div class="pls-lines"><span>Follow-up:</span></div></div></div>
+   <div class="pls-foot">If someone is in danger, call 911. For a mental health crisis, call or text 988. ${esc(notice())}</div></div></section>`;
+  printNow(html, B.title + ', Leader Sheet');
+}
+function plCardsList(){ return plBuild(plState()).steps.filter(s => s.kind === 'part').flatMap(s => s.cards.map(c => ({stage:c.stage, deck:c.deck, k:c.k, i:c.i}))); }
+// ----- saved plans and records -----
+function plSave(){
+  const S = plState(), B = plBuild(S); DATA.plans = DATA.plans || [];
+  const rec = {id: S.id || uid(), u: Date.now(), name: (S.name || '').trim() || B.title, fmt: S.fmt, min: S.min, stages: plStages(S).all, topic: S.topic, gi: S.gi || 0, focus: S.focus, ppart: S.ppart, pkey: S.pkey, seed: S.seed, off: Object.assign({}, S.off), created: today()};
+  const i = DATA.plans.findIndex(p => p.id === rec.id); if (i >= 0){ rec.created = DATA.plans[i].created || rec.created; DATA.plans[i] = rec; } else DATA.plans.push(rec);
+  S.id = rec.id; S.name = rec.name; save(); htKeep(); toast('Plan saved on this device.');
+}
+function plRecordCard(B){
+  const P = PLG(), R = P.record || {}, F = V.plf || (V.plf = {cid:'', nn:'', nt:'family', date:today(), fdate:'', ftext:''});
+  const people = DATA.clients.filter(c => !stIsMe(c) && c.status !== 'closed').sort((a,b) => String(a.name).localeCompare(String(b.name)));
+  const types = STG() ? STG().people : null;
+  return `<div class="card" id="pl-recc" style="margin-top:14px"><h3>${esc(R.title || 'Add to their record')}</h3><p class="muted" style="font-size:15px">${esc(R.note || '')}</p>
+   <label class="f" for="pl-who">Who</label><select id="pl-who" data-plr="cid"><option value="">Choose someone</option>${people.map(c => `<option value="${c.id}" ${F.cid === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}<option value="new" ${F.cid === 'new' ? 'selected' : ''}>Someone new</option></select>
+   ${F.cid === 'new' ? `<div class="grid g2"><div><label class="f" for="pl-nn">Code or initials</label><input type="text" id="pl-nn" data-plr="nn" value="${esc(F.nn)}" autocomplete="off" placeholder="R.M., the Lees, or Tuesday group"></div>
+     ${types ? `<div><label class="f" for="pl-nt">Who they are</label><select id="pl-nt" data-plr="nt">${types.map(p => `<option value="${esc(p[0])}" ${F.nt === p[0] ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select></div>` : ''}</div>
+     <p class="muted" style="font-size:14px;margin-top:6px">${esc(((HTG().record || {}).privacy) || '')}</p>` : ''}
+   <div class="grid g2"><div><label class="f" for="pl-d">Date</label><input type="date" id="pl-d" data-plr="date" value="${esc(F.date)}"></div><div></div></div>
+   <label class="f">Follow-up, if you want one</label><div class="grid g2"><input type="date" data-plr="fdate" value="${esc(F.fdate)}" aria-label="Follow-up date"><input type="text" data-plr="ftext" value="${esc(F.ftext)}" placeholder="What to do" aria-label="Follow-up note"></div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="ht-prec">Save to Their Record</button></div></div>`;
+}
+function plRecord(){
+  const F = V.plf, S = plState(), B = plBuild(S); if (!F) return;
+  let c = null;
+  if (F.cid === 'new'){
+    const n = (F.nn || '').trim(); if (!n){ const el = $('#pl-nn'); if (el) el.focus(); return alert('Add a code or initials first.'); }
+    c = {id:uid(), u:Date.now(), name:n.slice(0, 40), service:'Hard Talks', status:'active', followups:[], created:today()};
+    if (STG()) c.st = {type: F.nt || 'family', consent:null};
+    DATA.clients.push(c);
+  } else c = CL(F.cid);
+  if (!c) return alert('Choose who this was with.');
+  const date = F.date || today(), ST = plStages(S);
+  DATA.sessions.push({id:uid(), u:Date.now(), kind:'ht', clientId:c.id, date, minutes:S.min, topic: B.T ? B.T.id : '', topicTitle: B.title, stages: ST.all, hand: ['plan'], plan: {fmt:S.fmt, min:S.min, focus:S.focus || '', deck: B.deck ? B.deck.id : 'tree'}});
+  if (F.fdate) (c.followups = c.followups || []).push({date:F.fdate, text:(F.ftext || '').trim() || 'Follow up on ' + B.title, done:false});
+  if (!c.last || date > c.last) c.last = date;
+  touch(c); save(); V.plf = null; htKeep(); toast('Saved to ' + c.name + "'s record.");
+}
+// ----- Staff and Owner: which topics still need cards -----
+function cdCheckCard(){
+  const C = CDG(); if (!C || !HD) return '';
+  const H = HTG(), need = [], only = [], bad = [];
+  (H.topics || []).forEach(T => { if (cdGuideOnly(T)) only.push(T.title); else if (!cdDeckFor(T)) need.push(T.title); });
+  (C.decks || []).forEach(d => Object.entries(d.guides || {}).forEach(([src, ids]) => ids.forEach(id => { if (!htGuide(src, id)) bad.push(d.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
+  const have = (H.topics || []).length - need.length - only.length;
+  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>Card check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. ${have} topics have their own cards, ${only.length} stay guide only, ${need.length} use the tree cards for now. Send this to a chat for the next batch.</p>
+   ${need.length ? `<p style="margin-top:8px"><b>Topics without cards yet:</b> ${esc(need.join('; '))}</p>` : ''}
+   ${bad.length ? `<p style="margin-top:8px"><b>Deck guides not found:</b> ${esc(bad.join('; '))}</p>` : ''}
+   <p class="muted" style="font-size:14px;margin-top:8px">Heartwood and Old Growth cards wait until those tools are ready.</p></div>`;
+}
+// ----- topic page: cards and plans for this topic -----
+function cdTopicCard(T){
+  if (!CDG()) return '';
+  const d = cdDeckFor(T), only = cdGuideOnly(T);
+  return `<div class="card" style="margin-top:14px"><h3>Cards and plans</h3>
+   <p class="muted" style="font-size:15px;margin-top:4px">${only ? esc(CDG().guideOnlyNote || '') : d ? esc(d.title) + ' has its own cards for ' + esc(CD_AGES.filter(a => d[a]).map(a => cdStageDef(a).name).join(', ')) + '.' : "This topic doesn't have its own cards yet. The tree cards work for it."}</p>
+   <div class="row" style="margin-top:12px">${only ? '' : `<button class="btn btn-line btn-sm" data-act="ht-tcards" data-v="${esc(T.id)}">Draw Cards</button>`}<button class="btn btn-gold btn-sm" data-act="ht-tplan" data-v="${esc(T.id)}">Plan a Session</button></div></div>`;
+}
+// ----- actions -----
+function cdAct(a, v, t){
+  const S = cdState();
+  switch(a){
+    case 'ht-view': V.htv = v; V.htt = null; V.htrec = null; htKeepTop(); return true;
+    case 'ht-cstage': S.stage = v; S.mode = null; cdState(); htKeep(); return true;
+    case 'ht-cdeck': S.deck = v; S.mode = null; if (v !== 'tree') S.parts = S.parts.filter(k => GV_PARTS.includes(k)); if (!S.parts.length) S.parts = GV_PARTS.slice(); htKeep(); return true;
+    case 'ht-cpart': { const i = S.parts.indexOf(v); if (i >= 0) S.parts.splice(i, 1); else S.parts.push(v); htKeep(); return true; }
+    case 'ht-cdraw': { const r = cdDraw(); if (!r){ alert('Choose at least one part of the tree.'); return true; } S.cur = r; S.mode = 'draw'; cdLive(); cdScroll(); return true; }
+    case 'ht-cnext': { const r = cdDraw(); if (r) S.cur = r; cdLive(); return true; }
+    case 'ht-cwalk': cdWalkStart(); cdLive(); cdScroll(); return true;
+    case 'ht-cwnext': if (S.walk && S.walk.i < S.walk.steps.length - 1) S.walk.i++; cdLive(); return true;
+    case 'ht-cwback': if (S.walk && S.walk.i > 0) S.walk.i--; cdLive(); return true;
+    case 'ht-cwagain': if (S.walk) cdWalkStep(S.walk.i); cdLive(); return true;
+    case 'ht-cstop': S.mode = null; S.walk = null; S.cur = null; cdFullClose(); htKeep(); return true;
+    case 'ht-ckeep': { const r = S.cur; if (r && !S.kept.some(x => x.k === r.k && x.i === r.i && x.deck === r.deck && x.stage === r.stage)) S.kept.push(Object.assign({}, r)); cdLive(); return true; }
+    case 'ht-cunkeep': S.kept.splice(+v, 1); htKeep(); return true;
+    case 'ht-cclear': S.kept = []; htKeep(); return true;
+    case 'ht-cfull': cdFull(); return true;
+    case 'ht-cfullx': cdFullClose(); return true;
+    case 'ht-cprint': cdPrint(cdPrintList(), cdStageDef(S.stage).name + ', ' + cdDeckName(S.deck), S.backs); return true;
+    case 'ht-cprintkept': cdPrint(S.kept.slice(), 'Kept cards', S.backs); return true;
+    case 'ht-tcards': { const T = htTopic(v), d = cdDeckFor(T); V = {tab:'talks', htv:'cards', htq:V.htq, htg:V.htg}; S.deck = d ? d.id : 'tree'; S.mode = null; S.parts = GV_PARTS.slice(); render(); return true; }
+    case 'ht-tplan': { const st = (V.htSeen || [])[0]; PS = plNew({topic: v, stages: CD_AGES.includes(st) ? [st] : ['soultree']}); V = {tab:'talks', htv:'plans', htq:V.htq, htg:V.htg}; render(); return true; }
+    // plans
+    case 'ht-pfmt': { const P = plState(); P.fmt = v; if (v !== 'family') P.stages = [plStages(P).main]; htKeep(); return true; }
+    case 'ht-pmin': plState().min = +v; htKeep(); return true;
+    case 'ht-page': { const P = plState(); P.gi = 0; if (P.fmt === 'family'){ const i = P.stages.indexOf(v); if (i >= 0 && P.stages.length > 1) P.stages.splice(i, 1); else if (i < 0) P.stages.push(v); } else P.stages = [v]; htKeep(); return true; }
+    case 'ht-pfocus': plState().focus = v; htKeep(); return true;
+    case 'ht-pgi': plState().gi = +v; htKeep(); return true;
+    case 'ht-ppart': { const P = plState(); P.ppart = v; P.pkey = ''; htKeep(); return true; }
+    case 'ht-predraw': { const P = plState(); P.off[v] = (+(P.off[v] || 0)) + 1; htKeep(); return true; }
+    case 'ht-pprac': { const P = plState(), list = plPractices(P); if (list.length > 1){ const cur = plPractice(P), i = list.findIndex(x => x.key === (cur || {}).key); P.pkey = list[(i + 1) % list.length].key; } htKeep(); return true; }
+    case 'ht-psave': plSave(); return true;
+    case 'ht-pprint': plPrint(); return true;
+    case 'ht-pcards': cdPrint(plCardsList(), plBuild(plState()).title + ', Cards', cdState().backs); return true;
+    case 'ht-pnew': PS = plNew(); V.plf = null; htKeepTop(); return true;
+    case 'ht-popen': { const p = (DATA.plans || []).find(x => x.id === v); if (p){ PS = plNew(Object.assign({}, p, {off: Object.assign({}, p.off || {})})); V.plf = null; htKeepTop(); } return true; }
+    case 'ht-pdel': if (confirm('Delete this saved plan? Records already saved stay.')){ DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.plans = DATA.deleted.plans || {}; DATA.deleted.plans[v] = Date.now(); DATA.plans = (DATA.plans || []).filter(x => x.id !== v); if (PS && PS.id === v) PS.id = null; save(); htKeep(); toast('Deleted.'); } return true;
+    case 'ht-prec': plRecord(); return true;
+  }
   return false;
 }
+function htKeepTop(){ render(); }
+function cdScroll(){ setTimeout(() => { const el = $('#cd-live'); if (el) el.scrollIntoView({block:'start', behavior:'smooth'}); }, 30); }
+document.addEventListener('keydown', e => {
+  if (!$('#cd-full')) return;
+  if (e.key === 'Escape'){ e.preventDefault(); cdFullClose(); return; }
+  if (e.key === 'ArrowRight' || (e.key === ' ' && e.target.tagName !== 'BUTTON')){ const b = $('#cd-full .btn-gold'); if (b){ e.preventDefault(); b.click(); } }
+  if (e.key === 'ArrowLeft'){ const b = $('#cd-full [data-act="ht-cwback"]'); if (b){ e.preventDefault(); b.click(); } }
+});
 
 // ---------------- OWNER: update a library ----------------
 // Library edits never need a code in chat. Download for Editing gives a plain copy to send to a chat.
@@ -2430,6 +2976,12 @@ function mergeData(cur, inc){
     if (i < 0){ out.sessions.push(is); stats.added++; return; }
     if ((is.u || 0) > (out.sessions[i].u || 0)){ out.sessions[i] = is; stats.updated++; }
   });
+  // Saved session plans: newest copy wins; deleted ones stay deleted.
+  out.deleted.plans = out.deleted.plans || {};
+  Object.entries(del.plans || {}).forEach(([id,ts]) => { out.deleted.plans[id] = Math.max(out.deleted.plans[id] || 0, ts); });
+  out.plans = out.plans || [];
+  (inc.plans || []).forEach(ip => { const i = out.plans.findIndex(x => x.id === ip.id); if (i < 0){ out.plans.push(ip); stats.added++; } else if ((ip.u || 0) > (out.plans[i].u || 0)){ out.plans[i] = ip; stats.updated++; } });
+  out.plans = out.plans.filter(x => !(out.deleted.plans[x.id] && out.deleted.plans[x.id] >= (x.u || 0)));
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));
   const tp = inc.training && inc.training.progress || {};
@@ -2576,6 +3128,8 @@ document.addEventListener('input', e => {
   const t = e.target; if (!DATA) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
+  if (t.dataset.plf === 'name' && PS){ PS.name = t.value; return; }
+  if (t.dataset.plr && V.plf && t.tagName !== 'SELECT'){ V.plf[t.dataset.plr] = t.value; return; }
   if (RUN && RUN.kind === 'st'){
     if (t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
     if (t.dataset.stpn){ RUN.pn[t.dataset.stpn] = t.value; stKeep(); return; }
@@ -2595,7 +3149,10 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
-  if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); return; }
+  if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
+  if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
+  if (t.dataset.plf === 'topic' && PS){ PS.topic = t.value; PS.off = {}; PS.gi = 0; htKeep(); return; }
+  if (t.dataset.plr && V.plf){ V.plf[t.dataset.plr] = t.value; if (t.id === 'pl-who') htKeep(); return; }
   if (t.dataset.htf && V.htf){ V.htf[t.dataset.htf] = t.value; if (t.id === 'ht-who') htKeep(); return; }
   if (RUN && RUN.kind === 'st' && t.dataset.stsafe){ const k = t.dataset.stsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; stKeep(); if (k === 'notAsked'){ const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; } return; }
   if (RUN && RUN.kind === 'st' && t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
