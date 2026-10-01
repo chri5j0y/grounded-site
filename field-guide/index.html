@@ -2387,9 +2387,20 @@ function cdGuideOnly(T){
   const G = (CDG() || {}).guideOnly || {};
   return (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => (G[r.src] || []).includes(r.id)));
 }
+// A deck names the topics it belongs to (d.topics), so two topics that share a guide never trade
+// cards. Decks from before that field fall back to matching by guide id.
 function cdDeckFor(T){
   if (!T || !CDG() || cdGuideOnly(T)) return null;
-  return (CDG().decks || []).find(d => (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => ((d.guides || {})[r.src] || []).includes(r.id)))) || null;
+  const D = CDG().decks || [];
+  return D.find(d => (d.topics || []).includes(T.id))
+    || D.find(d => !d.topics && (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => ((d.guides || {})[r.src] || []).includes(r.id))))
+    || null;
+}
+// The Hard Talks group a deck sits in, for the deck picker.
+function cdDeckGroup(d){
+  const ts = HTG().topics || [];
+  const T = ts.find(t => (d.topics || []).includes(t.id)) || ts.find(t => cdDeckFor(t) === d);
+  return T ? T.group : '';
 }
 // Small seeded shuffle, so a plan's cards stay put until someone redraws one.
 function cdRand(seed){ let h = 1779033703 ^ String(seed).length; for (let i = 0; i < String(seed).length; i++){ h = Math.imul(h ^ String(seed).charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; }
@@ -2472,7 +2483,8 @@ function vCards(){
   return `<div class="card"><h3>${esc(C.title)}</h3><p class="muted" style="font-size:16px">${esc(C.lead || '')}</p>${(C.intro || []).map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}</div>
   <div class="card" style="margin-top:14px">
    <label class="f" style="margin-top:0">Who it's for</label><div class="row">${cdStages().map(s => `<button class="chip" aria-pressed="${S.stage === s.id}" data-act="ht-cstage" data-v="${esc(s.id)}">${esc(s.name)} <small class="muted">${esc(s.ages || '')}</small></button>`).join('')}</div>
-   <label class="f">Deck</label><div class="row"><button class="chip" aria-pressed="${S.deck === 'tree'}" data-act="ht-cdeck" data-v="tree">${esc(C.treeName || 'Tree cards')}</button>${decks.map(d => `<button class="chip" aria-pressed="${S.deck === d.id}" data-act="ht-cdeck" data-v="${esc(d.id)}">${esc(d.title)}</button>`).join('')}</div>
+   <label class="f" for="cd-deck">Deck</label><select id="cd-deck" data-cddeck="1"><option value="tree" ${S.deck === 'tree' ? 'selected' : ''}>${esc(C.treeName || 'Tree cards')}</option>${(HTG().groups || []).map(g => { const ds = decks.filter(d => cdDeckGroup(d) === g.key); return ds.length ? `<optgroup label="${esc(g.name)}">${ds.map(d => `<option value="${esc(d.id)}" ${S.deck === d.id ? 'selected' : ''}>${esc(d.title)}</option>`).join('')}</optgroup>` : ''; }).join('')}${(() => { const ds = decks.filter(d => !(HTG().groups || []).some(g => g.key === cdDeckGroup(d))); return ds.length ? `<optgroup label="Other">${ds.map(d => `<option value="${esc(d.id)}" ${S.deck === d.id ? 'selected' : ''}>${esc(d.title)}</option>`).join('')}</optgroup>` : ''; })()}</select>
+   <p class="muted" style="font-size:14px;margin-top:6px">${decks.length} topic decks for ${esc(st.name)}.</p>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.deck === 'tree' ? (C.treeBlurb || '') : (cdDeck(S.deck) || {}).blurb || '')}</p>
    <label class="f">Parts of the tree</label><div class="row">${slots.map(k => `<button class="chip cd-pchip" style="--pc:${esc(cdSlotColor(k))}" aria-pressed="${S.parts.includes(k)}" data-act="ht-cpart" data-v="${esc(k)}">${esc(cdSlotName(k))}</button>`).join('')}</div>
    <label class="cb" style="margin-top:12px"><input type="checkbox" data-htfaith="1" ${faith ? 'checked' : ''}> Faith wording on the cards</label>
@@ -2727,10 +2739,12 @@ function cdCheckCard(){
   const H = HTG(), need = [], only = [], bad = [];
   (H.topics || []).forEach(T => { if (cdGuideOnly(T)) only.push(T.title); else if (!cdDeckFor(T)) need.push(T.title); });
   (C.decks || []).forEach(d => Object.entries(d.guides || {}).forEach(([src, ids]) => ids.forEach(id => { if (!htGuide(src, id)) bad.push(d.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
+  const claim = {};
+  (C.decks || []).forEach(d => (d.topics || []).forEach(id => { if (!htTopic(id)) bad.push(d.title + ': topic "' + id + '"'); else if (claim[id]) bad.push(d.title + ' and ' + claim[id] + ' both claim "' + htTopic(id).title + '"'); else claim[id] = d.title; }));
   const have = (H.topics || []).length - need.length - only.length;
   return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>Card check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. ${have} topics have their own cards, ${only.length} stay guide only, ${need.length} use the tree cards for now. Send this to a chat for the next batch.</p>
    ${need.length ? `<p style="margin-top:8px"><b>Topics without cards yet:</b> ${esc(need.join('; '))}</p>` : ''}
-   ${bad.length ? `<p style="margin-top:8px"><b>Deck guides not found:</b> ${esc(bad.join('; '))}</p>` : ''}
+   ${bad.length ? `<p style="margin-top:8px"><b>Deck problems:</b> ${esc(bad.join('; '))}</p>` : ''}
    <p class="muted" style="font-size:14px;margin-top:8px">Heartwood and Old Growth cards wait until those tools are ready.</p></div>`;
 }
 // ----- topic page: cards and plans for this topic -----
@@ -3151,6 +3165,7 @@ document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
   if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
   if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
+  if (t.dataset.cddeck){ cdAct('ht-cdeck', t.value || 'tree', t); return; }
   if (t.dataset.plf === 'topic' && PS){ PS.topic = t.value; PS.off = {}; PS.gi = 0; htKeep(); return; }
   if (t.dataset.plr && V.plf){ V.plf[t.dataset.plr] = t.value; if (t.id === 'pl-who') htKeep(); return; }
   if (t.dataset.htf && V.htf){ V.htf[t.dataset.htf] = t.value; if (t.id === 'ht-who') htKeep(); return; }
