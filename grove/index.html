@@ -545,7 +545,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 <script src="/grove/data.js"></script>
 <script src="/grove/library.js"></script>
 <script src="/shared/grove-scene.js"></script>
-<script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-growth.js"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-avatars.js"></script>
@@ -701,7 +701,7 @@ function groveSync0(type){
     adopt = LEGACY ? confirm('Move the tree saved on this device into ' + a.name + '\'s profile? It will be locked with ' + a.name + '\'s passcode from now on.') : true;
   }
   if (adopt){
-    if (LEGACY){ try { localStorage.removeItem(STORE); } catch(e){} LEGACY = false; if (window.GGCare && GGCare.rename) GGCare.rename('me', a.id); }
+    if (LEGACY){ try { localStorage.removeItem(STORE); } catch(e){} LEGACY = false; if (window.GGGrowth && GGGrowth.rename) GGGrowth.rename('me', a.id); }
   } else { const keep = Q && fromGuest && !LEGACY ? Q : null; S = freshS(); Q = keep; }
   gOwner = a.id; gHome = a.id; S.self.who = a.id; if (Q && Q.mode === 'plant' && !Q.age) Q.age = a.age;
   save(); render();
@@ -984,7 +984,7 @@ function practiceObj(G, bedId, idx, season){ const p = PRACTICES[bedId][idx], ki
   return { idx, n:p[0], t, b, s: kid ? p[5] : p[2] }; }
 // ---------- the practice library ----------
 // A practice picked from the library takes that part's place on Today until
-// it's changed. It stays through new seasons and checkups.
+// it's changed. It stays through new seasons and checkins.
 const LIB_NAME = {}; LIBRARY.forEach(it => { if (!it.isNew) LIB_NAME[it.strand + '|' + it.name] = it; });
 const libItem = (sid, name) => LIB_NAME[sid + '|' + name] || null;
 function pinnedItem(G, partId){ const k = (G.pins || {})[partId], it = k && LIB_BY_KEY[k];
@@ -1025,7 +1025,7 @@ function groveScene(G, opts){
 }
 const weekTheme = (G, k) => isKid(G.age) ? KID_WEEK[k-1].theme : WEEKS[k-1].theme;
 const weekQ = (G, k) => isKid(G.age) ? KID_WEEK[k-1].q : WEEKS[k-1].q;
-const GC = window.GGCare || { check(){}, isChecked(){ return false; }, inbox(){ return []; }, dismiss(){}, days(){ return []; } };
+const GC = window.GGGrowth || { check(){}, isChecked(){ return false; }, inbox(){ return []; }, dismiss(){}, days(){ return []; } };
 const whoOf = G => G.who || 'me';
 
 // =====================================================================
@@ -1598,7 +1598,7 @@ function handoffCheck(){
   HANDOFF_SHOWN = true;
   const from = GGApp.handoff.fromName(h.from), who = h.name ? esc(h.name) + "'s" : 'Some';
   const intro = `<p>${who} answers from ${from}, ${nice(h.date,{month:'long',day:'numeric'})}, are ready to refresh a tree here. Answers that match fill in, and you finish the rest.</p>`;
-  const P = window.GGP, ids = P && window.GGCare ? P.openIds() : [];
+  const P = window.GGP, ids = P && window.GGGrowth ? P.openIds() : [];
   const people = ids.map(id => P.get(id)).filter(Boolean).sort((a, b) => (b.name.toLowerCase() === (h.name||'').toLowerCase()) - (a.name.toLowerCase() === (h.name||'').toLowerCase()));
   const drop = { t: "Don't Add These", kind: 'quiet', fn: () => { GGApp.handoff.clear(); GGApp.toast('Those answers were not added.'); } };
   if (!people.length){
@@ -1608,7 +1608,7 @@ function handoffCheck(){
   }
   GGApp.dialog({ title: 'A check-in arrived', html: intro + '<p>Whose tree is it for?</p>',
     buttons: people.slice(0, 4).map((pp, i) => ({ t: 'Add to ' + pp.name + "'s Tree", kind: i ? 'line' : 'main', fn: () => {
-      if (!GGCare.send({ from: h.from, who: pp.id, name: h.name || pp.name, age: h.age, answers: h.answers })){ HANDOFF_SHOWN = false; GGApp.toast('Open that profile first, then try again.'); return; }
+      if (!GGGrowth.send({ from: h.from, who: pp.id, name: h.name || pp.name, age: h.age, answers: h.answers })){ HANDOFF_SHOWN = false; GGApp.toast('Open that profile first, then try again.'); return; }
       GGApp.handoff.clear();
       const act = P.active();
       if (act && act.id === pp.id){ render(); GGApp.toast('Added to ' + pp.name + "'s tree."); }

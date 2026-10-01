@@ -615,7 +615,7 @@
     Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
     var wasActive = cur && cur.id === id;
     dropP(id); delete open[id];
-    if (window.GGCare && GGCare.forget) GGCare.forget(id);
+    if (window.GGGrowth && GGGrowth.forget) GGGrowth.forget(id);
     return wasActive ? lock() : Promise.resolve(emit('change'));
   }
   function manage(id) {

@@ -24,7 +24,7 @@
   var TOOLS = [
     { title: 'Sprout', sub: 'Check-in for kids, grades K to 5, with guides for 60 hard talks', href: '/sprout/', keys: 'kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
     { title: 'Sapling', sub: 'Check-in for grades 6 to 8, with 49 guides for hard talks', href: '/sapling/', keys: 'middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
-    { title: 'Soul Tree', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/soul-tree/', keys: 'adult grown up spiritual health wellbeing check-in check in checkup assessment care plan' },
+    { title: 'Soul Tree', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/soul-tree/', keys: 'adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove garden tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice soul tree guide grove guide' },
     { title: 'Heartwood', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },

@@ -212,8 +212,8 @@
   /* ---------- reading a sheet that's already on the page ---------- */
   var INLINE = /^(A|B|STRONG|I|EM|SPAN|SMALL|SUP|SUB|BR|ABBR|CODE|MARK|U|S|LABEL|TIME|Q|CITE)$/;
   var SKIP = /^(SVG|SCRIPT|STYLE|BUTTON|INPUT|SELECT|TEXTAREA|IMG|CANVAS|VIDEO|AUDIO|IFRAME|NOSCRIPT|TEMPLATE|DIALOG)$/;
-  var SMALL = '.sm,.muted,.sheet-sub,.care-plan-meta,.meta,.tracker-label,.next-date,.sub';
-  var FOOT = '.tm-line,.ft,.care-plan-footer,.talk-note,.sheet-brand,.pr-foot,.made-by';
+  var SMALL = '.sm,.muted,.sheet-sub,.growth-plan-meta,.meta,.tracker-label,.next-date,.sub';
+  var FOOT = '.tm-line,.ft,.growth-plan-footer,.talk-note,.sheet-brand,.pr-foot,.made-by';
   function clean(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
   function txtOf(el) {
     var out = '';
@@ -248,7 +248,7 @@
       if (el.hasAttribute && el.hasAttribute('data-pdf-qr')) { out.push({ k: 'qr', url: el.getAttribute('data-pdf-qr'), t: txtOf(el) }); return; }
       if (opts.rows && el.matches && el.matches(opts.rows)) { var parts = Array.prototype.map.call(el.children, txtOf).filter(Boolean); if (parts.length) out.push({ k: 'h2', t: parts.join('   '), c: colorOf(el.querySelector('[style*="color"]') || el) }); return; }
       if (el.matches && el.matches(FOOT)) { var ft = txtOf(el); if (ft) out.push({ k: 'i', t: ft }); return; }
-      if (tag === 'H1' || (el.matches && el.matches('.sheet-title,.care-plan-title'))) { push(hadH1 ? 'h2' : 'h1', el); hadH1 = true; return; }
+      if (tag === 'H1' || (el.matches && el.matches('.sheet-title,.growth-plan-title'))) { push(hadH1 ? 'h2' : 'h1', el); hadH1 = true; return; }
       if (tag === 'H2' || tag === 'H3') { push('h2', el); return; }
       if (/^H[4-6]$/.test(tag)) { push('b', el); return; }
       if (tag === 'TABLE') {

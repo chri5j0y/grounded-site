@@ -550,5 +550,5 @@ const CHECKIN = {
  sprout:   { tool:"Sprout",    href:"/sprout/",    season:"/sprout/",            full:"/sprout/" },
  sapling:  { tool:"Sapling",   href:"/sapling/",   season:"/sapling/",           full:"/sapling/" },
  heartwood:{ tool:"The Grove", href:null,          season:null,                  full:null },
- adult:    { tool:"Soul Tree", href:"/soul-tree/", season:"/soul-tree/#quick",   full:"/soul-tree/#checkup" }
+ adult:    { tool:"Soul Tree", href:"/soul-tree/", season:"/soul-tree/#quick",   full:"/soul-tree/#checkin" }
 };

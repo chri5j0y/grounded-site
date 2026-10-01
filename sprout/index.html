@@ -291,9 +291,9 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .grown-note p:last-child{margin:0;}
 .link-btn{background:none;border:none;padding:0;color:var(--gold);font-weight:600;border-bottom:1px solid currentColor;}
 
-/* Checkup */
-.checkup{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start;}
-@media(max-width:820px){ .checkup{grid-template-columns:1fr;} .tree-panel{order:-1;} }
+/* Checkin */
+.checkin{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start;}
+@media(max-width:820px){ .checkin{grid-template-columns:1fr;} .tree-panel{order:-1;} }
 .tree-panel{position:sticky;top:12px;background:var(--card);border:3px solid var(--outline);border-radius:26px;padding:12px 12px 14px;text-align:center;}
 @media(max-width:820px){ .tree-panel{position:static;padding:8px;} .tree-panel .tree-svg{max-width:170px;} }
 .tree-panel-name{font-family:var(--kid);font-size:18px;color:var(--ink-soft);margin:2px 0 0;}
@@ -378,7 +378,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .tn-lines li{margin:4px 0;}
 .action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;align-items:center;}
 
-/* Care plan */
+/* Growth plan */
 .plan-intro{max-width:680px;}
 .act-group{margin-top:22px;}
 .act-group h3{display:flex;align-items:center;gap:10px;font-family:var(--kid);font-weight:500;font-size:22px;margin:0 0 10px;}
@@ -403,7 +403,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .plan-bar .big-btn{margin-left:auto;}
 .plan-error{width:100%;margin:0;color:var(--p-hope);font-size:15px;min-height:1em;}
 
-/* Printable care plan */
+/* Printable growth plan */
 .sheet{background:#fff;color:#233440;border:2px solid var(--line);border-radius:26px;padding:28px;max-width:780px;margin:0 auto;}
 .sheet-top{display:flex;gap:18px;align-items:center;border-bottom:2px dashed #E6DCC4;padding-bottom:14px;}
 .sheet-top .tree-svg{width:130px;flex:none;}
@@ -746,7 +746,7 @@ a.big-btn{text-decoration:none;}
       <div class="grade-row" role="group" aria-labelledby="grade-label" id="grade-row"></div>
 
       <p class="form-error" id="start-error" role="alert"></p>
-      <div class="start-row"><button class="big-btn" onclick="startCheckup()">Start my check-in</button></div>
+      <div class="start-row"><button class="big-btn" onclick="startCheckin()">Start my check-in</button></div>
     </div>
 
     <div class="welcome-side">
@@ -769,8 +769,8 @@ a.big-btn{text-decoration:none;}
   </div>
 </section>
 
-<section class="view" id="view-checkup" aria-live="polite">
-  <div class="checkup">
+<section class="view" id="view-checkin" aria-live="polite">
+  <div class="checkin">
     <div>
       <div class="dots" id="dots"></div>
       <div id="step"></div>
@@ -806,12 +806,12 @@ a.big-btn{text-decoration:none;}
 </footer>
 
 <script src="/shared/gg-avatars.js"></script>
-<script src="/shared/gg-care.js"></script>
+<script src="/shared/gg-growth.js"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js"></script>
 <script src="/sprout/guides.js"></script>
-<script src="/sprout/checkup.js"></script>
+<script src="/sprout/checkin.js"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -1091,7 +1091,7 @@ const CRITTERS = [
   { key: 'lady', name: 'Ladybug', need: 'Finish 1 whole day', days: 1 },
   { key: 'butterfly', name: 'Butterfly', need: 'Finish 3 days', days: 3 },
   { key: 'bird', name: 'Bird and nest', need: 'Finish 7 days', days: 7 },
-  { key: 'bunny', name: 'Bunny', need: 'Finish your care plan', days: null }
+  { key: 'bunny', name: 'Bunny', need: 'Finish your growth plan', days: null }
 ];
 const CRITTER_ART = {
   lady: '<ellipse cx="0" cy="1" rx="8" ry="7" fill="#E63946"/><path d="M0 -6V8" stroke="#243746" stroke-width="1.6"/><circle cx="0" cy="-7" r="4" fill="#243746"/><circle cx="-4" cy="0" r="1.6" fill="#243746"/><circle cx="4" cy="2" r="1.6" fill="#243746"/><circle cx="-3" cy="4.5" r="1.4" fill="#243746"/><circle cx="3.5" cy="-2.5" r="1.4" fill="#243746"/>',
@@ -1110,8 +1110,8 @@ const TOPICS = (window.SPROUT_GUIDES || {}).topics || [];
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const partBy = key => PARTS.find(p => p.key === key);
-/* ---------- the checkup bank (sprout/checkup.js) ---------- */
-const CK = window.SPROUT_CHECKUP;
+/* ---------- the checkin bank (sprout/checkin.js) ---------- */
+const CK = window.SPROUT_CHECKIN;
 const GRADE_KEYS = CK.grades.map(g => g[0]);
 const isK2 = g => g === 'k2' || g === 'K' || g === '1' || g === '2';
 const gradeData = (p, grade) => isK2(grade) ? p.k2 : p.g35;
@@ -1167,7 +1167,7 @@ function changeKidPic(id) {
 }
 /* Grounded profiles: each child's tree lives in their own Kids profile, locked with a picture
    code and openable by the grown-ups who agreed for them. Trees saved on this device before
-   profiles stay here, unlocked, until a grown-up moves each one into a profile. A checkup done
+   profiles stay here, unlocked, until a grown-up moves each one into a profile. A checkin done
    without a profile is kept only until the page closes. */
 let GUEST = {};
 function profKids() { return window.GGP ? GGP.openIds().map(id => GGP.get(id)).filter(p => p && p.age === 'sprout') : []; }
@@ -1177,7 +1177,7 @@ function loadKids() {
   Object.keys(kids).forEach(id => { kids[id]._legacy = true; });
   profKids().forEach(p => {
     const d = GGP.data(p.id, 'sprout');
-    const k = Object.assign({ checkups: [] }, JSON.parse(JSON.stringify(d.kid || {})));
+    const k = Object.assign({ checkins: [] }, JSON.parse(JSON.stringify(d.kid || {})));
     k.name = p.name; k.avatar = p.avatar; k._pid = p.id; delete k._legacy;
     kids[kidId(p.name)] = k;
   });
@@ -1186,16 +1186,27 @@ function loadKids() {
   return kids;
 }
 function kidToSave(k) { const c = JSON.parse(JSON.stringify(k)); delete c._pid; delete c._legacy; return c; }
+// Old name, kept only to bring records saved before the check-in rename forward.
+const OLD_CI = 'check' + 'ups', OLD_CI_ID = 'check' + 'upId';
+function moveOldCheckins(k) {
+  if (!k || typeof k !== 'object') return k;
+  if (Array.isArray(k[OLD_CI])) { k.checkins = (k.checkins || []).concat(k[OLD_CI]); }
+  delete k[OLD_CI];
+  const fix = p => { if (p && p[OLD_CI_ID] !== undefined) { if (p.checkinId === undefined) p.checkinId = p[OLD_CI_ID]; delete p[OLD_CI_ID]; } };
+  fix(k.plan); (k.pastPlans || []).forEach(fix);
+  return k;
+}
 function migrateKid(k) {
-  if (!k.checkups) k.checkups = [];
+  moveOldCheckins(k);
+  if (!k.checkins) k.checkins = [];
   if (!k.pastPlans) k.pastPlans = [];
-  const last = k.checkups[k.checkups.length - 1];
+  const last = k.checkins[k.checkins.length - 1];
   if (!k.grade && last) k.grade = last.grade;
   if (k.plan === undefined) {
     k.plan = null;
     if (last && last.plan && last.plan.acts) {
       const start = dkey(new Date(last.plan.made || last.date));
-      k.plan = { acts: last.plan.acts.slice(), weeks: last.plan.weeks || 2, start, end: addDays(start, (last.plan.weeks || 2) * 7 - 1), checkupId: last.id, log: {} };
+      k.plan = { acts: last.plan.acts.slice(), weeks: last.plan.weeks || 2, start, end: addDays(start, (last.plan.weeks || 2) * 7 - 1), checkinId: last.id, log: {} };
     }
   }
   return k;
@@ -1349,7 +1360,7 @@ function renderPeek() {
   const blurbs = { holy: 'Feeling safe and loved', meaning: 'What makes you you', mind: 'Big feelings', community: 'Your people', body: 'Sleep, food, and play', hope: 'Looking forward' };
   $('peek-list').innerHTML = PARTS.map(p => `<li>${dot(p)}<span><b>${p.name}</b>${blurbs[p.key]}</span></li>`).join('');
 }
-function startCheckup() {
+function startCheckin() {
   const name = $('kid-name').value.trim();
   if (!name) { $('start-error').textContent = 'Type your first name to start.'; $('kid-name').focus(); return; }
   if (!S.grade) { $('start-error').textContent = 'Pick your grade to start.'; return; }
@@ -1357,9 +1368,9 @@ function startCheckup() {
   S.step = 0; S.answers = {}; S.done = []; S.picks = []; S.weeks = 2; S.recordId = null; S.safety = []; S.inSafety = false;
   S.readAloud = isK2(S.grade);
   const kid = loadKids()[kidId(S.name)];
-  const last = kid && kid.checkups.length ? kid.checkups[kid.checkups.length - 1] : null;
+  const last = kid && kid.checkins.length ? kid.checkins[kid.checkins.length - 1] : null;
   S.prior = last && last.std === CK.version ? last : null;
-  go('checkup');
+  go('checkin');
   renderStep(true);
 }
 
@@ -1447,7 +1458,7 @@ function sprout(containerId, key) {
   }));
 }
 
-/* ---------- checkup ---------- */
+/* ---------- checkin ---------- */
 function treeLive(sproutKey) {
   $('dots').innerHTML = PARTS.map((q, i) => {
     const done = S.done.includes(q.key);
@@ -1566,7 +1577,7 @@ function renderSafety(first, sproutKey) {
     </div>`).join('')}</div>
     <div class="step-nav">
       <button class="soft-btn" onclick="prevStep()">Back</button>
-      <button class="soft-btn" onclick="finishCheckup(S.lastKey)">Skip</button>
+      <button class="soft-btn" onclick="finishCheckin(S.lastKey)">Skip</button>
       <button class="big-btn" onclick="safetyDone()">See my tree</button>
       <p class="step-error" id="step-error" role="alert"></p>
     </div>`;
@@ -1581,20 +1592,20 @@ function pickSafe(i, v) {
 function safetyDone() {
   const n = safetyFor(S.grade).length;
   for (let i = 0; i < n; i++) if (!S.safety[i]) { $('step-error').textContent = 'Answer each question, or tap Skip.'; return; }
-  finishCheckup(S.lastKey);
+  finishCheckin(S.lastKey);
 }
 
 /* ---------- results ---------- */
-function finishCheckup(lastKey) {
+function finishCheckin(lastKey) {
   const kids = loadKids();
   const id = kidId(S.name);
-  if (!kids[id]) kids[id] = migrateKid({ name: S.name, checkups: [] });
+  if (!kids[id]) kids[id] = migrateKid({ name: S.name, checkins: [] });
   kids[id].name = S.name;
   kids[id].grade = S.grade;
   hush(); S.inSafety = false;
   const safety = safetyFor(S.grade).map((q, i) => S.safety[i] || null);
   const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, std: CK.version, mode: S.mode, answers: JSON.parse(JSON.stringify(S.answers)), safety, safetyFlag: safety.some(a => a === 'yes' || a === 'unsure'), plan: null };
-  kids[id].checkups.push(rec);
+  kids[id].checkins.push(rec);
   saveKids(kids);
   S.recordId = rec.id;
   renderResults(rec, lastKey);
@@ -1644,7 +1655,7 @@ function grownNoteHTML(info, name, rec) {
   if (rec && rec.std === CK.version) h += `<p><b>Levels:</b> ${PARTS.map(p => { const lv = levelOf((rec.answers[p.key] || {}).score); return `${p.name} ${lv ? lv[1] : 'skipped'}`; }).join(', ')}.</p>`;
   else if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
   if (info.skipped.length) h += `<p><b>Skipped:</b> ${info.skipped.map(p => p.name).join(', ')}. A skip can be a quiet signal too. You might gently ask about it later.</p>`;
-  if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the care plan going.</p>`;
+  if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the growth plan going.</p>`;
   return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 60 hard talks.</p>`;
 }
 function thenNowHTML(prev, cur, name) {
@@ -1672,7 +1683,7 @@ function thenNowHTML(prev, cur, name) {
    own locked profile. Sun, cloud, rain -> 5, 3, 1 (The Grove's kid scale). */
 const SPROUT_TO_GROVE = { holy: 'spirit.6', meaning: 'create.2', mind: 'mind.0', community: 'connect.1', body: 'body.2', hope: 'hope.0' };
 function sproutGroveAns(ans) { const v = { sun: 5, cloud: 3, rain: 1 }, out = {}; PARTS.forEach(p => { const a = (ans || {})[p.key]; if (a && v[a.w]) out[SPROUT_TO_GROVE[p.key]] = v[a.w]; }); return out; }
-function groveKid() { const k = loadKids()[kidId(S.name)]; return k && k._pid && window.GGP && window.GGCare && GGP.isOpen(k._pid) ? k : null; }
+function groveKid() { const k = loadKids()[kidId(S.name)]; return k && k._pid && window.GGP && window.GGGrowth && GGP.isOpen(k._pid) ? k : null; }
 function groveBtnHTML(rec) {
   const k = groveKid(), label = S.mode === 'grown' && k ? `Tend ${esc(k.name)}'s Grove` : 'Tend Your Grove';
   const has = Object.keys(sproutGroveAns(rec.answers)).length > 0;
@@ -1685,14 +1696,14 @@ function groveBtnHTML(rec) {
 // The Grove on another phone, or the Grove app on this one. Only Grove answers travel: never the safety step.
 function sproutToPhone(recId, app) {
   const k = loadKids()[kidId(S.name)]; if (!k || !window.GGApp) return;
-  const rec = (k.checkups || []).find(c => c.id === recId) || k.checkups[k.checkups.length - 1]; if (!rec) return;
+  const rec = (k.checkins || []).find(c => c.id === recId) || k.checkins[k.checkins.length - 1]; if (!rec) return;
   const entry = { from: 'sprout', name: k.name, age: 'sprout', date: rec.date, answers: sproutGroveAns(rec.answers) };
   if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
 }
 function sendSproutGrove() {
   const k = groveKid(), btn = $('grove-send'); if (!k || !btn) return;
-  const rec = (k.checkups || []).find(c => c.id === btn.dataset.rec) || k.checkups[k.checkups.length - 1];
-  if (!rec || !GGCare.send({ from: 'sprout', who: k._pid, name: k.name, age: 'sprout', answers: sproutGroveAns(rec.answers) })) { toast('Open the profile first, then try again.'); return; }
+  const rec = (k.checkins || []).find(c => c.id === btn.dataset.rec) || k.checkins[k.checkins.length - 1];
+  if (!rec || !GGGrowth.send({ from: 'sprout', who: k._pid, name: k.name, age: 'sprout', answers: sproutGroveAns(rec.answers) })) { toast('Open the profile first, then try again.'); return; }
   location.href = '/grove/?who=' + encodeURIComponent(k._pid);
 }
 function renderResults(rec, lastKey) {
@@ -1754,7 +1765,7 @@ async function saveTreePicture() {
   x.font = '400 34px Fredoka, Barlow, sans-serif';
   x.fillText(fmtDate(rec.date), W / 2, 175);
   const kidRec = loadKids()[kidId(S.name)];
-  const svg = treeSVG(rec.answers, { id: 'export', critters: kidRec ? { rings: (kidRec.checkups || []).length } : {} }).replace(/class="(piece|decor|critter)[^"]*"/g, '');
+  const svg = treeSVG(rec.answers, { id: 'export', critters: kidRec ? { rings: (kidRec.checkins || []).length } : {} }).replace(/class="(piece|decor|critter)[^"]*"/g, '');
   const img = new Image();
   const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; }).catch(() => {});
@@ -1769,9 +1780,9 @@ async function saveTreePicture() {
 }
 function currentRecord() {
   const kid = loadKids()[kidId(S.name)];
-  if (kid && !S.recordId && kid.checkups.length) return kid.checkups[kid.checkups.length - 1];
+  if (kid && !S.recordId && kid.checkins.length) return kid.checkins[kid.checkins.length - 1];
   if (!kid) return null;
-  return kid.checkups.find(c => c.id === S.recordId) || kid.checkups[kid.checkups.length - 1];
+  return kid.checkins.find(c => c.id === S.recordId) || kid.checkins[kid.checkins.length - 1];
 }
 function nextChild() {
   hush();
@@ -1787,19 +1798,19 @@ function nextChild() {
 const OWNER = 'Chris Joy';
 const PER_PART = 3;
 
-/* ---------- care plan editor ---------- */
+/* ---------- growth plan editor ---------- */
 function openPlan(editing) {
   S.editing = !!editing;
   const kid = loadKids()[kidId(S.name)];
   if (editing && kid && kid.plan) {
     S.picks = kid.plan.acts.slice();
     S.weeks = kid.plan.weeks;
-    const cu = kid.checkups.find(c => c.id === kid.plan.checkupId) || kid.checkups[kid.checkups.length - 1];
+    const cu = kid.checkins.find(c => c.id === kid.plan.checkinId) || kid.checkins[kid.checkins.length - 1];
     if (cu) S.answers = cu.answers;
   } else {
     S.picks = []; S.weeks = 2;
-    if (kid && (!S.answers || !Object.keys(S.answers).length) && kid.checkups.length) {
-      const last = kid.checkups[kid.checkups.length - 1];
+    if (kid && (!S.answers || !Object.keys(S.answers).length) && kid.checkins.length) {
+      const last = kid.checkins[kid.checkins.length - 1];
       S.answers = last.answers; S.recordId = last.id;
     }
   }
@@ -1880,16 +1891,16 @@ function savePlan() {
     kid.plan.end = addDays(kid.plan.start, S.weeks * 7 - 1);
   } else {
     if (kid.plan) kid.pastPlans.push({ acts: kid.plan.acts, weeks: kid.plan.weeks, start: kid.plan.start, end: kid.plan.end, daysDone: doneDays(kid.plan) });
-    const cu = kid.checkups.find(c => c.id === S.recordId) || kid.checkups[kid.checkups.length - 1];
-    kid.plan = { acts: S.picks.slice(), weeks: S.weeks, start: today, end: addDays(today, S.weeks * 7 - 1), checkupId: cu ? cu.id : null, log: {} };
+    const cu = kid.checkins.find(c => c.id === S.recordId) || kid.checkins[kid.checkins.length - 1];
+    kid.plan = { acts: S.picks.slice(), weeks: S.weeks, start: today, end: addDays(today, S.weeks * 7 - 1), checkinId: cu ? cu.id : null, log: {} };
   }
-  const cu = kid.checkups.find(c => c.id === kid.plan.checkupId);
+  const cu = kid.checkins.find(c => c.id === kid.plan.checkinId);
   if (cu) cu.plan = { acts: kid.plan.acts.slice(), weeks: kid.plan.weeks, made: keyDate(kid.plan.start).toISOString(), next: keyDate(addDays(kid.plan.end, 1)).toISOString() };
   saveKids(kids);
   const wasEditing = S.editing;
   S.editing = false;
   openTree(id, 'tree');
-  toast(wasEditing ? 'Your care plan is updated.' : 'Your care plan is ready. Let\'s grow!');
+  toast(wasEditing ? 'Your growth plan is updated.' : 'Your growth plan is ready. Let\'s grow!');
 }
 
 /* ---------- practice math ---------- */
@@ -1916,46 +1927,46 @@ function critterIcon(k) { return `<svg viewBox="-20 -30 40 44" aria-hidden="true
 
 /* ---------- My tree page ---------- */
 function openTree(id, tab) {
-  if (!['tree','checkups','grown'].includes(tab)) tab = 'tree';   // daily practice lives in The Grove now
+  if (!['tree','checkins','grown'].includes(tab)) tab = 'tree';   // daily practice lives in The Grove now
   const kid = loadKids()[id];
   if (!kid) return;
   S.kid = id; S.treeTab = tab || 'today'; S.dayView = 'today'; S.cuSel = null;
   S.name = kid.name; S.grade = kid.grade || S.grade;
   S.readAloud = isK2(S.grade);
-  S.recordId = kid.checkups.length ? kid.checkups[kid.checkups.length - 1].id : null;
-  S.answers = kid.checkups.length ? kid.checkups[kid.checkups.length - 1].answers : {};
+  S.recordId = kid.checkins.length ? kid.checkins[kid.checkins.length - 1].id : null;
+  S.answers = kid.checkins.length ? kid.checkins[kid.checkins.length - 1].answers : {};
   renderTree();
   go('tree');
 }
-function setTreeTab(t) { S.treeTab = ['tree','checkups','grown'].includes(t) ? t : 'tree'; renderTree(); }
+function setTreeTab(t) { S.treeTab = ['tree','checkins','grown'].includes(t) ? t : 'tree'; renderTree(); }
 function renderTree(landKey) {
   const kids = loadKids();
   const kid = kids[S.kid];
   if (!kid) { go('home'); return; }
-  const tabs = [['tree', 'My tree'], ['checkups', 'My check-ins'], ['grown', "How I've grown"]];
+  const tabs = [['tree', 'My tree'], ['checkins', 'My check-ins'], ['grown', "How I've grown"]];
   let body = '';
   if (S.treeTab === 'tree') body = treeTabHTML(kid, landKey);
-  if (S.treeTab === 'checkups') body = checkupsTabHTML(kid);
+  if (S.treeTab === 'checkins') body = checkinsTabHTML(kid);
   if (S.treeTab === 'grown') body = grownTabHTML(kid);
-  const last = kid.checkups[kid.checkups.length - 1];
+  const last = kid.checkins[kid.checkins.length - 1];
   const info = last ? concernInfo(last.answers, last.grade, last.safety) : null;
   $('view-tree').innerHTML = `
     <div class="mt-head"><button class="kid-pic" onclick="changeKidPic('${esc(S.kid)}')" aria-label="Change ${esc(kid.name)}'s picture">${GGAv.html(kid.avatar, kid.name, 60)}<span>Change</span></button><h2 class="kid">${esc(kid.name)}'s tree</h2>
-      <button class="big-btn" onclick="newCheckupFor('${esc(S.kid)}')">New check-in</button></div>
+      <button class="big-btn" onclick="newCheckinFor('${esc(S.kid)}')">New check-in</button></div>
     <div class="seg" role="group" aria-label="My tree">${tabs.map(([k, l]) => `<button aria-pressed="${S.treeTab === k}" onclick="setTreeTab('${k}')">${l}</button>`).join('')}</div>
     <div id="tree-body">${body}</div>
     <details class="grown-box grown-section" ${S.mode === 'grown' ? 'open' : ''}><summary>For grown-ups</summary><div class="inner">
       ${info ? grownNoteHTML(info, kid.name, last) : '<p>No check-ins yet.</p>'}
-      <p><b>Daily practice:</b> happens in The Grove now, where ${esc(kid.name)}'s tree grows with a few small practices a day.${kid.plan ? ` Their earlier care plan had ${doneDays(kid.plan)} full days practiced.` : ''}</p>
+      <p><b>Daily practice:</b> happens in The Grove now, where ${esc(kid.name)}'s tree grows with a few small practices a day.${kid.plan ? ` Their earlier growth plan had ${doneDays(kid.plan)} full days practiced.` : ''}</p>
       <div class="action-row" style="margin-top:10px">
         <button class="soft-btn" onclick="exportKid('${esc(S.kid)}')">Save ${esc(kid.name)} to a file</button>
         <button class="danger-link" onclick="removeKid('${esc(S.kid)}')">Remove ${esc(kid.name)}</button>
       </div></div></details>`;
 }
 
-// My tree: it grows a ring with every checkup. Daily practice lives in The Grove.
+// My tree: it grows a ring with every checkin. Daily practice lives in The Grove.
 function treeTabHTML(kid, landKey) {
-  const last = kid.checkups[kid.checkups.length - 1], n = kid.checkups.length;
+  const last = kid.checkins[kid.checkins.length - 1], n = kid.checkins.length;
   const tree = treeSVG(last ? last.answers : {}, { noDecor: true, critters: { rings: n }, land: landKey, label: kid.name + "'s tree" });
   const href = '/grove/' + (kid._pid ? '?who=' + encodeURIComponent(kid._pid) : '');
   return `<div class="today"><div class="today-tree">${tree}</div><div>
@@ -1964,20 +1975,20 @@ function treeTabHTML(kid, landKey) {
       <a class="big-btn" href="${href}">Tend Your Grove</a></div></div></div>`;
 }
 function todayHTML(kid, landKey) {
-  const last = kid.checkups[kid.checkups.length - 1];
+  const last = kid.checkins[kid.checkins.length - 1];
   const answers = last ? last.answers : {};
   const plan = kid.plan;
   const cr = critterState(kid);
   const treeBox = `<div class="today-tree" id="today-tree">${treeSVG(answers, { noDecor: true, critters: cr, land: landKey, label: kid.name + "'s tree" })}</div>`;
   if (!plan) {
-    return `<div class="today">${treeBox}<div><div class="banner-note"><p>You don't have a care plan yet. Pick a few things to practice and your tree will grow every day!</p>
-      <button class="big-btn" onclick="openPlan(false)">Make my care plan</button></div></div></div>`;
+    return `<div class="today">${treeBox}<div><div class="banner-note"><p>You don't have a growth plan yet. Pick a few things to practice and your tree will grow every day!</p>
+      <button class="big-btn" onclick="openPlan(false)">Make my growth plan</button></div></div></div>`;
   }
   if (planFinished(plan)) {
     const allCr = { lady: true, butterfly: true, bird: true, bunny: true, rings: Math.max(1, cr.rings) };
     return `<div class="today"><div class="today-tree">${treeSVG(answers, { noDecor: true, critters: allCr, land: 'bunny', label: kid.name + "'s tree with all the critters" })}</div>
-      <div><div class="banner-note"><p>You finished your care plan! All the critters came to celebrate. Time to check on your tree and see how you've grown.</p>
-      <button class="big-btn" onclick="newCheckupFor('${esc(S.kid)}')">Start a new check-in</button></div>
+      <div><div class="banner-note"><p>You finished your growth plan! All the critters came to celebrate. Time to check on your tree and see how you've grown.</p>
+      <button class="big-btn" onclick="newCheckinFor('${esc(S.kid)}')">Start a new check-in</button></div>
       <p class="progress-line">You practiced ${doneDays(plan)} full days. Way to grow!</p></div></div>`;
   }
   const today = dkey();
@@ -2052,7 +2063,7 @@ function tapDo(ev, actId) {
   plan.log[day] = on ? log.concat(actId) : log.filter(x => x !== actId);
   if (!plan.log[day].length) delete plan.log[day];
   saveKids(kids);
-  if (kid._pid && window.GGCare) { const act = ACTIVITIES.find(a => a.id === actId); GGCare.check(kid._pid, act ? act.title : actId, day, on); }
+  if (kid._pid && window.GGGrowth) { const act = ACTIVITIES.find(a => a.id === actId); GGGrowth.check(kid._pid, act ? act.title : actId, day, on); }
   const btn = document.querySelector(`[data-do="${actId}"]`);
   if (btn) btn.setAttribute('aria-pressed', on);
   const total = plan.acts.length;
@@ -2069,7 +2080,7 @@ function tapDo(ev, actId) {
   if (nowDone && !wasDone) {
     setTimeout(() => {
       if (newCritter || after.rings > before.rings) {
-        $('today-tree').innerHTML = treeSVG(kid.checkups.length ? kid.checkups[kid.checkups.length - 1].answers : {}, { noDecor: true, critters: after, land: newCritter, label: kid.name + "'s tree" });
+        $('today-tree').innerHTML = treeSVG(kid.checkins.length ? kid.checkins[kid.checkins.length - 1].answers : {}, { noDecor: true, critters: after, land: newCritter, label: kid.name + "'s tree" });
         $('critter-shelf').innerHTML = shelfHTML(after);
       }
       swayTree();
@@ -2084,7 +2095,7 @@ function tapDo(ev, actId) {
       if (S.readAloud) say(msg);
     }, 650);
   } else if (!on && wasDone) {
-    $('today-tree').innerHTML = treeSVG(kid.checkups.length ? kid.checkups[kid.checkups.length - 1].answers : {}, { noDecor: true, critters: after, label: kid.name + "'s tree" });
+    $('today-tree').innerHTML = treeSVG(kid.checkins.length ? kid.checkins[kid.checkins.length - 1].answers : {}, { noDecor: true, critters: after, label: kid.name + "'s tree" });
     $('critter-shelf').innerHTML = shelfHTML(after);
   }
 }
@@ -2125,7 +2136,7 @@ function swayTreeSoft() {
 
 function planTabHTML(kid) {
   const plan = kid.plan;
-  if (!plan) return `<div class="banner-note"><p>No care plan yet.</p><button class="big-btn" onclick="openPlan(false)">Make my care plan</button></div>`;
+  if (!plan) return `<div class="banner-note"><p>No growth plan yet.</p><button class="big-btn" onclick="openPlan(false)">Make my growth plan</button></div>`;
   const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean);
   return `<div class="plan-summary">
       <p class="kid-text" style="font-size:19px;margin:0">Practicing for ${plan.weeks} weeks, ${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Full days practiced: ${doneDays(plan)}.</p>
@@ -2133,23 +2144,23 @@ function planTabHTML(kid) {
     </div>
     <div class="action-row">
       <button class="big-btn" onclick="openPlan(true)">Change my activities</button>
-      <button class="soft-btn" onclick="showPrint()">Print my care plan</button>
+      <button class="soft-btn" onclick="showPrint()">Print my growth plan</button>
     </div>`;
 }
-function checkupsTabHTML(kid) {
-  const cs = kid.checkups.slice().reverse();
+function checkinsTabHTML(kid) {
+  const cs = kid.checkins.slice().reverse();
   if (!cs.length) return '<p>No check-ins yet.</p>';
-  if (!S.cuSel || !kid.checkups.find(c => c.id === S.cuSel)) S.cuSel = cs[0].id;
-  const sel = kid.checkups.find(c => c.id === S.cuSel);
+  if (!S.cuSel || !kid.checkins.find(c => c.id === S.cuSel)) S.cuSel = cs[0].id;
+  const sel = kid.checkins.find(c => c.id === S.cuSel);
   const planActs = sel.plan && sel.plan.acts ? sel.plan.acts.map(id => (ACTIVITIES.find(a => a.id === id) || {}).title).filter(Boolean) : [];
   return `<div class="cu-grid">${cs.map(c => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()">${treeSVG(c.answers, { label: 'Tree from ' + fmtDate(c.date) })}${fmtDate(c.date)}</button>`).join('')}</div>
     <div class="cu-detail"><h3 class="kid" style="font-family:var(--kid);font-weight:500;font-size:24px;color:var(--sky);margin:0">${fmtDate(sel.date)}</h3>${sel.std ? '' : '<p class="kid-text" style="font-size:16px;margin:4px 0 0">An earlier check-in, from before the new questions.</p>'}
       <ul class="kind-list">${PARTS.map(p => { const a = sel.answers[p.key] || { w: 'skip' }; return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(p.kind[a.w] || p.kind.skip)}</span></li>`; }).join('')}</ul>
-      ${planActs.length ? `<p class="kid-text" style="font-size:18px;margin-top:14px">Care plan from this check-in: ${planActs.map(esc).join(', ')}.</p>` : ''}
+      ${planActs.length ? `<p class="kid-text" style="font-size:18px;margin-top:14px">Growth plan from this check-in: ${planActs.map(esc).join(', ')}.</p>` : ''}
     </div>`;
 }
 function grownTabHTML(kid) {
-  const cs = kid.checkups;
+  const cs = kid.checkins;
   const shown = cs.slice(-8);
   const practiced = doneDays(kid.plan) + kid.pastPlans.reduce((s, p) => s + (p.daysDone || 0), 0);
   const crCount = CRITTERS.filter(c => critterState(kid)[c.key]).length;
@@ -2165,11 +2176,11 @@ function grownTabHTML(kid) {
     ${table}
     ${prev ? thenNowHTML(prev, cs[cs.length - 1], kid.name) : '<p class="kid-text" style="font-size:18px">After your next check-in, you will see your old and new trees side by side.</p>'}`;
 }
-function newCheckupFor(id) {
+function newCheckinFor(id) {
   const k = loadKids()[id];
   if (!k) return;
   $('kid-name').value = k.name;
-  setGrade(k.grade || (k.checkups.length ? k.checkups[k.checkups.length - 1].grade : null));
+  setGrade(k.grade || (k.checkins.length ? k.checkins[k.checkins.length - 1].grade : null));
   go('home');
   setTimeout(() => $('welcome-title').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   toast('Check the grade, then start the check-in.');
@@ -2190,19 +2201,19 @@ function showPrint() {
 function renderPrint(kid) {
   const plan = kid.plan;
   const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean);
-  const last = kid.checkups[kid.checkups.length - 1];
+  const last = kid.checkins[kid.checkins.length - 1];
   const days = plan.weeks * 7;
   const chunk = (from, to) => `<p class="tracker-label">Days ${from} to ${to}</p><table class="tracker ${acts.length <= 6 ? 'roomy' : acts.length <= 12 ? 'mid' : ''}"><thead><tr><th class="act-name">Activity</th>${Array.from({ length: to - from + 1 }, (_, i) => `<th>${from + i}</th>`).join('')}</tr></thead>
     <tbody>${acts.map(a => `<tr><th class="act-name"><i style="background:${partBy(a.part).hex}"></i>${esc(a.title)}</th>${Array.from({ length: to - from + 1 }, () => '<td></td>').join('')}</tr>`).join('')}</tbody></table>`;
   const nextStr = fmtKey(addDays(plan.end, 1), { weekday: 'long', month: 'long', day: 'numeric' });
   $('view-print').innerHTML = `
     <div class="action-row no-print" style="margin:0 0 18px;justify-content:center">
-      <button class="big-btn" onclick="printPlan()">Save or print my care plan</button>
+      <button class="big-btn" onclick="printPlan()">Save or print my growth plan</button>
       <button class="soft-btn" onclick="openTree('${esc(S.kid)}','tree')">Back to my tree</button>
     </div>
-    <article class="sheet" aria-label="Care plan">
+    <article class="sheet" aria-label="Growth plan">
       <div class="sheet-top">${last ? treeSVG(last.answers, { noDecor: true, critters: critterState(kid), label: kid.name + "'s tree" }) : ''}
-        <div><h2 class="sheet-title">${esc(kid.name)}'s care plan</h2>
+        <div><h2 class="sheet-title">${esc(kid.name)}'s growth plan</h2>
         <p class="sheet-sub">${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Color a box each day I do it!</p></div></div>
       ${days > 14 ? chunk(1, 14) + chunk(15, 28) : chunk(1, 14)}
       <div class="own"><h4>My own idea</h4>${isK2(kid.grade) ? '<div class="draw-box" aria-label="Space to draw"></div>' : '<div class="write-lines"><span></span><span></span><span></span></div>'}</div>
@@ -2216,7 +2227,7 @@ function renderPrint(kid) {
 }
 function printPlan() {
   const kid = loadKids()[S.kid], el = document.querySelector('#view-print .sheet');
-  ggSheet(kid ? kid.name + "'s care plan" : 'Care plan', 'sprout-care-plan.pdf', el, printPlanNow, 'The PDF has the coloring chart and lines. Print keeps the tree picture too.');
+  ggSheet(kid ? kid.name + "'s growth plan" : 'Growth plan', 'sprout-growth-plan.pdf', el, printPlanNow, 'The PDF has the coloring chart and lines. Print keeps the tree picture too.');
 }
 function printPlanNow() {
   document.body.classList.add('print-plan');
@@ -2228,7 +2239,7 @@ function printPlanNow() {
 const NAME_COLORS = ['#0096C7', '#3E9A1C', '#9B5DE5', '#D62839', '#E07A00', '#00829B'];
 function renderWelcomeBack() {
   const kids = loadKids();
-  const ids = Object.keys(kids).filter(k => kids[k].checkups.length).sort((a, b) => kids[a].name.localeCompare(kids[b].name));
+  const ids = Object.keys(kids).filter(k => kids[k].checkins.length).sort((a, b) => kids[a].name.localeCompare(kids[b].name));
   const locked = window.GGP ? GGP.list().filter(p => p.age === 'sprout' && !GGP.isOpen(p.id)) : [];
   const box = $('welcome-back');
   if (!box) return;
@@ -2241,7 +2252,7 @@ function renderWelcomeBack() {
 }
 function renderKids() {
   const kids = loadKids();
-  const ids = Object.keys(kids).filter(k => kids[k].checkups.length).sort((a, b) => kids[a].name.localeCompare(kids[b].name));
+  const ids = Object.keys(kids).filter(k => kids[k].checkins.length).sort((a, b) => kids[a].name.localeCompare(kids[b].name));
   const locked = window.GGP ? GGP.list().filter(p => p.age === 'sprout' && !GGP.isOpen(p.id)) : [];
   const unsaved = ids.filter(id => !kids[id]._pid);
   const extra = (locked.length ? `<div class="backup-row"><p><strong>Locked profiles on this device:</strong> ${locked.map(p => `<button class="soft-btn" onclick="openKidProfile('${p.id}','tree')">${esc(p.name)}</button>`).join(' ')}</p><p>Open your own grown-up profile to see every child you care for at once.</p></div>` : '')
@@ -2253,11 +2264,11 @@ function renderKids() {
     $('view-kids').innerHTML = `<h2 class="grown">My kids</h2><div class="empty"><p>No open trees yet. When a child finishes a check-in, a grown-up can save their tree in a Kids profile.</p><button class="big-btn" onclick="go('home')">Start a check-in</button></div>${backup}`;
     return;
   }
-  $('view-kids').innerHTML = `<h2 class="grown">My kids</h2><p class="lead">Every child's tree saves here on this device. Tap a name to open their tree, care plan, and check-ins.</p>
+  $('view-kids').innerHTML = `<h2 class="grown">My kids</h2><p class="lead">Every child's tree saves here on this device. Tap a name to open their tree, growth plan, and check-ins.</p>
     <div class="kids-list">${ids.map(id => {
-      const k = kids[id]; const last = k.checkups[k.checkups.length - 1];
+      const k = kids[id]; const last = k.checkins[k.checkins.length - 1];
       const cr = critterState(k);
-      const status = k.plan ? (planFinished(k.plan) ? 'Care plan finished' : `${doneDays(k.plan)} full days practiced`) : 'No care plan yet';
+      const status = k.plan ? (planFinished(k.plan) ? 'Growth plan finished' : `${doneDays(k.plan)} full days practiced`) : 'No growth plan yet';
       return `<button class="kid-card" onclick="openTree('${esc(id)}','tree')"><span class="kid-card-top">${GGAv.html(k.avatar, k.name, 48)}<strong>${esc(k.name)}</strong></span>
         <span>${gradeLabel(k.grade || last.grade)}. Last check-in ${fmtShort(last.date)}. ${status}.</span>
         <span class="mini-wx">${PARTS.map(p => wxIcon((last.answers[p.key] || { w: 'skip' }).w)).join('')}</span>
@@ -2300,12 +2311,13 @@ function restoreFile(input) {
       let added = 0;
       Object.keys(data.kids).forEach(id => {
         const inc = migrateKid(data.kids[id]);
-        if (!inc || !Array.isArray(inc.checkups)) return;
-        if (!kids[id]) { inc._legacy = true; if (localStorage.getItem(STORE) === null) localStorage.setItem(STORE, '{}'); kids[id] = inc; added += inc.checkups.length; return; }
+        moveOldCheckins(inc);
+        if (!inc || !Array.isArray(inc.checkins)) return;
+        if (!kids[id]) { inc._legacy = true; if (localStorage.getItem(STORE) === null) localStorage.setItem(STORE, '{}'); kids[id] = inc; added += inc.checkins.length; return; }
         const k = kids[id];
-        const have = new Set(k.checkups.map(c => c.id));
-        inc.checkups.forEach(c => { if (!have.has(c.id)) { k.checkups.push(c); added++; } });
-        k.checkups.sort((a, b) => a.date.localeCompare(b.date));
+        const have = new Set(k.checkins.map(c => c.id));
+        inc.checkins.forEach(c => { if (!have.has(c.id)) { k.checkins.push(c); added++; } });
+        k.checkins.sort((a, b) => a.date.localeCompare(b.date));
         if (inc.plan && (!k.plan || inc.plan.start > k.plan.start)) k.plan = inc.plan;
         else if (inc.plan && k.plan && inc.plan.start === k.plan.start) {
           Object.keys(inc.plan.log || {}).forEach(d => { k.plan.log[d] = Array.from(new Set((k.plan.log[d] || []).concat(inc.plan.log[d]))); });
@@ -2378,7 +2390,7 @@ function renderGuide() {
       <li><b>Pick an unhurried moment,</b> like a quiet afternoon, before bed, or a slow weekend morning.</li>
       <li><b>Stay close,</b> even if your child picks On my own. Sit nearby and be ready to talk.</li>
       <li><b>Weave in your family's faith.</b> Roots uses the word holy so every family can fill it in with their own tradition: prayer, scripture, worship, blessings, or quiet. Share what holds you.</li>
-      <li><b>Make the care plan a family project.</b> Check in on their tree together each day, cheer when a new critter arrives, and celebrate when they finish.</li>
+      <li><b>Make the growth plan a family project.</b> Check in on their tree together each day, cheer when a new critter arrives, and celebrate when they finish.</li>
       <li><b>Each child gets their own check-in.</b> Brothers and sisters save separately by first name.</li>
       <li><b>Grandparents, foster parents, and other caregivers</b> can use Sprout just the same.</li>
     </ul>

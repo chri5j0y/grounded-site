@@ -814,7 +814,7 @@ function start(){
     if (SPG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sprout visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); spLoad(); let n = 0; const go2 = () => { if (SC) spOpenRun(); else if (SC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sprout questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
     return;
   }
-  if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st) stOpenRun(); else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
+  if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Soul Tree questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
   const gt = [...(spOpen() ? [['sprout','Sprout','sprout']] : []), ...(saOpen() ? [['sapling','Sapling','sapling']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
@@ -1008,7 +1008,7 @@ function vClient(c){
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
   ${spPersonCard(c)}
   ${saPersonCard(c)}
-  ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Soul Tree Guide</b> <span class="muted">Rings, care plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
+  ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Soul Tree Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Details</h3>
@@ -1381,12 +1381,12 @@ const stTypeName = t => t === 'me' ? 'Me' : ((STG().people.find(x => x[0] === t)
 const stVisitName = k => (STG().visits.find(x => x[0] === k) || [])[1] || 'Visit';
 const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Needs care';
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
-const stConsentName = h => h === 'before' ? 'Recorded before import' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
-const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined');
-const sessTitle = s => s.kind === 'sp' ? 'Sprout: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Sapling: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Sapling: report record' : 'Sprout: report record') : s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
-function stQuestions(visit, set, key){ return set === 'staff' ? STG().staffQuestions[key] : stPart(key).questions; }
+const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
+const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
+const sessTitle = s => s.kind === 'sp' ? 'Sprout: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Sapling: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Sapling: report record' : s.tool === 'st' ? 'Soul Tree: report record' : 'Sprout: report record') : s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+function stQuestions(visit, set, key){ if (!STC) return []; return ((set === 'staff' ? STC.staff : STC.questions)[key]) || []; }
 function stScore(run){
-  const out = {}, sc = STG().scale;
+  const out = {}, sc = stScale();
   STG().parts.forEach(p => {
     const k = p.key;
     if (run.visit === 'open'){ const im = STG().impressions.find(x => x[0] === (run.impr||{})[k]); out[k] = im ? im[2] : null; return; }
@@ -1399,7 +1399,196 @@ function stScore(run){
 }
 const stAvg = sc => { const v = Object.values(sc || {}).filter(x => x != null); return v.length ? v.reduce((a,b) => a + b, 0) / v.length : null; };
 const mins = n => n + (n === 1 ? ' minute' : ' minutes');
-const stSafetyFlag = sf => !!sf && !sf.notAsked && ((sf.direct && sf.direct !== 'no') || ['often','always'].includes(sf.opener));
+const stSafetyFlag = sf => !!sf && !sf.notAsked && ((sf.direct && sf.direct !== 'no' && sf.direct !== 'skip') || ['often','always'].includes(sf.opener));
+
+// ----- session 22: questions from the public soul-tree/checkin.js, so Soul Tree and Soul Tree Guide always ask the same thing -----
+let STC = null, STC_WAIT = null, STC_FAIL = false;
+const ST_STD = 1;
+function stLoad(){
+  if (STC || STC_WAIT) return;
+  STC_FAIL = false;
+  STC_WAIT = fetch('../soul-tree/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SOUL_TREE_CHECKIN || !w.SOUL_TREE_CHECKIN.questions) throw 0; STC = w.SOUL_TREE_CHECKIN; STC_WAIT = null; if (DATA && V.tab === 'soultree') render(); })
+    .catch(() => { STC_WAIT = null; STC_FAIL = true; if (DATA && V.tab === 'soultree') render(); });
+}
+function stNeedData(){
+  if (STC) return '';
+  stLoad();
+  return STC_FAIL ? `<div class="card"><h3>The Soul Tree questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Soul Tree questions...</p></div>`;
+}
+const stScale = () => (STC && STC.answers) || STG().scale;
+// Flagged answers in a run: alone, hope, home. Quick visits ask question 1 of each part, which is never a flag question.
+function stRunFlags(r){
+  if (!STC || r.visit !== 'full') return [];
+  const out = [];
+  STG().parts.forEach(p => stQuestions(r.visit, r.set, p.key).forEach((q, i) => {
+    const a = ((r.ans || {})[p.key] || {})[i];
+    if (q.flag && a && STC.flags[q.flag].on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
+  }));
+  return out;
+}
+
+// ----- training (its own module; gates real visits for everyone; demo visits always open) -----
+const STM = () => STG() && STG().module;
+function stmData(){ DATA.stmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.stmod || {}); return DATA.stmod; }
+function stmState(){
+  const M = STM(), D = stmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const stReady = () => stmState().complete;
+function stmCard(){
+  const m = stmState();
+  if (!STM()) return '';
+  if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Renew your Soul Tree training soon</h3><p class="muted">Renew by ${nice(m.renewBy)}.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-mhome">Open Training</button></div>` : '';
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Soul Tree training' : 'Start with the Soul Tree training'}</h3><p class="muted">${esc(STM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="st-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+}
+function vSTM(){
+  const M = STM(), D = stmData(), s = stmState();
+  if (!M) return `<div class="card"><p>The Soul Tree training isn't on this device yet.</p></div>`;
+  if (V.stml !== undefined) return vSTMLesson(V.stml);
+  if (V.stq) return V.stq.done ? vSTMResult() : vSTMQ();
+  if (V.sts) return vSTMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-tab="soultree">Back to Soul Tree Guide</button>
+  <div class="hello st-hello" style="margin-top:14px"><div class="eyebrow" style="color:#E0A85C">Soul Tree Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => step('st-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  <h3 style="margin:22px 0 10px">Practice scenarios</h3>
+  ${step('st-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with adults, patients, and staff`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('st-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="st-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
+}
+function vSTMLesson(i){
+  const M = STM(), L = M.lessons[i], n = M.lessons.length, read = !!stmData().lessons[L.id];
+  return `<button class="linkbtn" data-act="st-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
+  ${lessonBody(L)}
+  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="st-mread" data-v="${i}">Mark as Read</button>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="st-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="st-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="st-mhome">Back to training</button>` : ''}</div>`;
+}
+function stmNewQuiz(){ const items = STM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vSTMQ(){
+  const Q = V.stq, items = STM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="st-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="st-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="st-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'st-mfinish' : 'st-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function stmFinish(){
+  const M = STM(), Q = V.stq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = stmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vSTMResult(){
+  const M = STM(), Q = V.stq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = stmState();
+  return `<button class="linkbtn" data-act="st-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="st-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="st-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="st-mq">Try Again</button><button class="btn btn-line" data-act="st-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vSTMSign(){
+  const A = STM().agreement, s = stmState(), D = stmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="st-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="st-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="stm-name">Your full name</label><input type="text" id="stm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="stm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="st-msigned">Sign Agreement</button>`}</div>`;
+}
+function stmPrint(){
+  const A = STM().agreement, D = stmData().signed;
+  fgSheet(ph('Soul Tree Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'soul-tree-guide-agreement'});
+}
+
+// ----- consent: the written form, kept encrypted here; a PDF if they want one -----
+const stForm = () => (STG().consent || {}).form || null;
+function stConsentCurrent(con){ const F = stForm(); return !(con && con.how === 'form' && F && con.v !== F.version); }
+function vSTForm(c){
+  const F = stForm(), cur = c.st.consent || {};
+  return `<button class="linkbtn" data-act="st-consent" data-v="${c.id}">Back to consent</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p></div>
+  <div class="card"><p class="muted" style="font-size:14px">Hand them the device, or read each line aloud. They check each box and type their name.</p>
+   ${F.boxes.map((b, i) => `<label class="cb"><input type="checkbox" class="stf-box" data-i="${i}"> ${esc(b)}</label>`).join('')}
+   <label class="f" for="stf-name">${esc(F.nameLabel)}</label><input type="text" id="stf-name" autocomplete="off" value="">
+   <label class="f" for="stf-by">${esc(F.byLabel)}</label><input type="text" id="stf-by" value="" placeholder="Daughter, healthcare agent">
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(F.pdfNote)}</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="st-form-save" data-v="${c.id}">Save Consent</button></div>`;
+}
+function stFormPdf(c){
+  const F = stForm(), con = c.st.consent || {};
+  if (!F || con.how !== 'form') return;
+  fgSheet(ph('Consent') + `<h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p><ul>${F.boxes.map(b => `<li>[x] ${esc(b)}</li>`).join('')}</ul>
+    <p><b>${esc(F.nameLabel)}:</b> ${esc(con.name || '')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p><p><b>Date:</b> ${nice(con.date)}</p><p style="font-size:9pt">Form version ${esc(String(con.v))}. ${esc(F.pdfNote)}</p>` + pf(), F.title, {file:'soul-tree-consent', date:con.date, confidential:true});
+}
+
+// ----- report a concern about a vulnerable adult (Minnesota: MAARC) -----
+// Report records are sessions with kind 'spr' and tool 'st': encrypted, never printed, never in a visit note.
+const stReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool === 'st' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+function vSTReport(cid){
+  const R = STG().report, c = cid ? CL(cid) : null, k = spContact ? (SPG() ? spContact() : {}) : {};
+  const where = V.stwhere || 'mn';
+  return `<button class="linkbtn" ${c ? `data-act="st-open" data-v="${c.id}"` : 'data-tab="soultree"'}>Back${c ? ' to ' + esc(c.name) : ''}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Soul Tree Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
+  <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div><p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p></div>
+  <div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card"><h3>What counts</h3>${R.kinds.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>
+  <div class="card"><div class="row" role="group" aria-label="Where are they?"><button class="chip" data-act="st-where" data-v="mn" aria-pressed="${where === 'mn'}">In Minnesota</button><button class="chip" data-act="st-where" data-v="out" aria-pressed="${where === 'out'}">Outside Minnesota</button></div>
+   ${where === 'mn' ? `<h3 style="margin-top:12px">${esc(R.mn.title)}</h3><p style="margin-top:6px">${esc(R.mn.lead)}</p>
+    <div class="row" style="margin-top:10px"><a class="btn btn-gold" href="tel:${esc(R.mn.tel)}">${icon('phone')} Call ${esc(R.mn.phone)}</a><a class="btn btn-line" href="${esc(R.mn.form)}" target="_blank" rel="noopener">Mandated reporter online form</a></div>
+    <ul style="margin-top:10px">${R.mn.notes.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+   : `<h3 style="margin-top:12px">${esc(R.out.title)}</h3><p style="margin-top:6px">${esc(R.out.lead)}</p><div class="row" style="margin-top:10px"><a class="btn btn-line" href="${esc(R.out.link)}" target="_blank" rel="noopener">${esc(R.out.linkText)}</a></div>`}</div>
+  ${k && (k.who || k.phone || k.step) ? `<div class="card"><h3>Your reporting contact</h3><p style="margin-top:6px">${esc(k.who || '')}${k.phone ? ` &middot; <a href="tel:${esc(k.phone.replace(/[^0-9+]/g, ''))}">${esc(k.phone)}</a>` : ''}</p>${k.step ? `<p class="muted" style="margin-top:4px">${esc(k.step)}</p>` : ''}</div>` : ''}
+  ${c ? `<div class="card"><h3>Record what you did</h3><p class="muted" style="font-size:14px">${esc(R.recordNote)}</p>
+   <label class="f" for="str-what">What you reported (a few plain words)</label><input type="text" id="str-what" placeholder="Concern about neglect at home">
+   <div class="grid g2"><div><label class="f" for="str-how">How</label><select id="str-how">${R.how.map(h => `<option>${esc(h)}</option>`).join('')}</select></div><div><label class="f" for="str-at">Date and time reported</label><input type="datetime-local" id="str-at"></div></div>
+   <label class="f" for="str-ref">Reference number (if you got one)</label><input type="text" id="str-ref" autocomplete="off">
+   <button class="btn btn-gold" style="margin-top:12px" data-act="st-rep-save" data-v="${c.id}">Save Report Record</button></div>
+   ${stReports(c.id).length ? `<div class="card"><h3>Report records</h3>${stReports(c.id).map(r => `<div class="list-row"><div class="lr-main"><b>${esc(r.what || 'Report')}</b><br><small class="muted">${esc(r.how || '')}${r.at ? ' &middot; ' + esc(r.at.replace('T', ' ')) : ''}${r.ref ? ' &middot; Ref ' + esc(r.ref) : ''}</small></div></div>`).join('')}</div>` : ''}`
+   : '<p class="muted" style="margin-top:10px">Open a person to record a report on their page.</p>'}`;
+}
+const stShield = cid => `<button class="btn btn-line btn-sm" data-act="st-report" data-v="${cid || ''}">${icon('shield')} Report a Concern</button>`;
+
+// ----- their own yes, every visit -----
+function stYesHtml(c){
+  const Y = STG().yes || {}, con = (c && c.st.consent) || {}, agent = con.how === 'agent';
+  const opts = [['yes', Y.yes || 'Yes, go ahead'], ...(agent ? [['assent', Y.assent || 'Can\'t say, but at ease']] : []), ['no', Y.no || 'Not today']];
+  return `<div class="card" style="margin-top:14px"><h3>${esc(Y.title || 'Their yes, today')}</h3>
+   ${Y.say ? `<div class="blk say" style="margin-top:8px"><div class="lab">Say</div><ul><li>${esc(Y.say)}</li></ul></div>` : ''}
+   ${agent ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(Y.agentNote || 'Someone else gave consent for them. Their own no, by words or by turning away, is always honored.')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p>` : ''}
+   <div class="st-opts" role="group" aria-label="Their answer" style="margin-top:10px">${opts.map(o => stChip('st-yes', `data-k="yes" data-v="${o[0]}"`, RUN.yes === o[0], o[1])).join('')}</div>
+   ${c && c.st.type === 'staff' ? `<p class="muted" style="font-size:14px;margin-top:12px">${esc(Y.staffNote || 'Never do a Soul Tree visit with someone you supervise.')}</p><div class="st-opts" style="margin-top:6px">${stChip('st-yes', 'data-k="notSup" data-v="1"', RUN.notSup, Y.staffCheck || 'I do not supervise this person')}</div>` : ''}</div>`;
+}
+function stNotToday(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ go('soultree'); toast('Demo ended. "Not today" is always honored.'); return; }
+  DATA.sessions.push({id:r.id, u:Date.now(), kind:'st', clientId:r.clientId, date:today(), minutes:0, visit:r.visit, set:r.set, notToday:true, std:ST_STD, scores:{}, safety:null, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', pn:{}});
+  DATA.draft = null; if (c){ touch(c); c.last = today(); }
+  save(); go('soultree', {stp:r.clientId}); toast('Recorded as "Not today." Thank them, and end kindly.');
+}
 
 // ----- rings: one for each full or quick visit, oldest in the middle -----
 function stRings(c){
@@ -1419,13 +1608,18 @@ function stPartTable(c){
 // ----- views -----
 function vST(){
   if (!STG()) return `<div class="card"><p>Soul Tree Guide isn't on this device yet.</p></div>`;
+  stLoad();
+  if (V.stm) return vSTM();
+  if (V.strep !== undefined) return vSTReport(V.strep);
+  if (V.stform) { const c = CL(V.stform); if (c && stForm()) return vSTForm(c); }
   if (V.stc) { const c = CL(V.stc); if (c) return vSTConsent(c); }
   if (V.stv) return vSTVisit();
   if (V.stp) { const c = CL(V.stp); if (c) return vSTPerson(c); }
   const S = STG(), list = stPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), me = stMe();
   const local = stLocalCount();
   return `<div class="hello st-hello"><div class="eyebrow" style="color:#E0A85C">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
+  ${stmCard()}
+  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}<div class="row" style="margin-top:12px">${S.report ? stShield('') : ''}${STM() && stReady() ? `<button class="btn btn-line btn-sm" data-act="st-mhome">${icon('cap')} Training</button>` : ''}</div></div>
   <div class="card"><h3>Someone new</h3>
    <div class="grid g2"><div><label class="f" for="st-nn">Code or initials</label><input type="text" id="st-nn" autocomplete="off" placeholder="R.M. or Room 12"></div>
    <div><label class="f" for="st-nt">Who they are</label><select id="st-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
@@ -1444,8 +1638,11 @@ function vSTConsent(c){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
   <div class="card step-card"><div class="blk say"><div class="lab">Say</div><ul><li>${esc(C.say)}</li></ul></div></div>
   <div class="card"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${C.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
-  <div class="card"><h3>Record it</h3>
-   ${C.how.map(h => `<label class="cb"><input type="radio" name="st-ch" value="${h[0]}" ${cur.how === h[0] ? 'checked' : ''}> ${esc(h[1])}</label>`).join('')}
+  ${stForm() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(stForm().title)}</h3><p class="muted">${esc(stForm().lead)}</p>
+   ${cur.how === 'form' ? `<p style="margin-top:8px"><span class="pill ${stConsentCurrent(cur) ? 'sage' : 'warn'}">${stConsentCurrent(cur) ? 'Signed' : 'The form changed. Ask again.'}</span> ${nice(cur.date)}${cur.name ? ' by ' + esc(cur.name) : ''}</p>` : ''}
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="st-form" data-v="${c.id}">${cur.how === 'form' ? 'Fill It In Again' : 'Fill In the Form'}</button>${cur.how === 'form' ? `<button class="btn btn-line btn-sm" data-act="st-form-pdf" data-v="${c.id}">${icon('print')} Save or Print the Form</button>` : ''}</div></div>` : ''}
+  <div class="card"><h3>${stForm() ? 'Or record another way' : 'Record it'}</h3>
+   ${C.how.filter(h => h[0] !== 'form').map(h => `<label class="cb"><input type="radio" name="st-ch" value="${h[0]}" ${cur.how === h[0] ? 'checked' : ''}> ${esc(h[1])}</label>`).join('')}
    <label class="f" for="st-cby">If someone else gave consent, who (relationship only)</label><input type="text" id="st-cby" value="${esc(cur.by||'')}" placeholder="Daughter, healthcare agent">
    <label class="f" for="st-cd">Date</label><input type="date" id="st-cd" value="${esc(cur.date || today())}" style="max-width:220px">
    <button class="btn btn-gold" style="margin-top:14px" data-act="st-consent-save" data-v="${c.id}">Save Consent</button></div>`;
@@ -1457,16 +1654,18 @@ function vSTPerson(c){
   <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(stTypeName(c.st.type))}</div><h1>${esc(c.name)}</h1></div>
    <div class="row">${me ? '<span class="pill sage">Private</span>' : con ? `<span class="pill ${con.how === 'declined' ? 'warn' : 'sage'}">${esc(stConsentName(con.how))} ${con.date ? nice(con.date) : ''}</span>` : '<span class="pill warn">Consent needed</span>'}</div></div>
   ${!me && !ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Ask first'}</h3><p class="muted">${con && con.how === 'declined' ? 'Visits stay off. If they change their mind, record it here.' : 'Explain what this is and ask before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="st-consent" data-v="${c.id}">${con ? 'Update Consent' : 'Consent'}</button></div>` : ''}
+  ${me ? '' : stmCard()}
+  ${me || !STG().report ? '' : `<div class="row" style="margin:12px 0">${stShield(c.id)}${stReports(c.id).length ? ` <span class="pill">${stReports(c.id).length} report record${stReports(c.id).length === 1 ? '' : 's'}</span>` : ''}</div>`}
   <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="st-start" data-v="${v[0]}" data-c="${c.id}" ${ok ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
-   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Skip anything that doesn\'t fit.</p>' : ''}</div>
+   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Quick and open visits usually fit best. In a full visit, skip anything that doesn\'t fit. A set made for hospice comes with Old Growth.</p>' : ''}</div>
   ${me ? '' : gvPersonCard(c)}
   ${me ? '' : htPersonCard(c)}
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Rings</h3><div class="st-ringwrap">${stRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(s => s.visit !== 'open' && stAvg(s.scores) != null).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust needs care.</p></div>${stPartTable(c)}</div>
-   <div class="card"><h3>Care plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
+   <div class="card"><h3>Growth plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
     <h3 style="margin-top:20px">Follow-ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-stfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(stVisitName(s.visit))}</b>${s.imported ? ' <span class="pill">Imported</span>' : ''}${stSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="st-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(stVisitName(s.visit))}</b>${s.imported ? ' <span class="pill">Imported</span>' : ''}${s.notToday ? ' <span class="pill">Not today</span>' : ''}${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? ' <span class="pill">Earlier questions</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${stSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="st-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
    <label class="f">Code or initials</label><input type="text" data-stc="name" value="${esc(c.name)}">
    ${me ? '' : `<label class="f">Who they are</label><select data-stc="type">${S.people.map(p => `<option value="${p[0]}" ${p[0] === c.st.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select>
@@ -1486,12 +1685,15 @@ function vSTVisit(){
   return `${back}
   ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Print the handout or copy the note to see how they look.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'staff' ? ' &middot; Staff questions' : ''}</div><h1>${esc(stVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.imported ? ' &middot; Moved from public Soul Tree' : ''}</p></div>
+  ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
+  ${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? '<div class="card"><p class="muted">This visit used the questions from before the session 22 update. It stays here, but it isn\'t compared with newer visits.</p></div>' : ''}
+  ${(s.flags || []).length && STC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged answers</h3>${s.flags.map(f => `<p style="margin-top:8px"><b>${esc(STC.flags[f].title)}.</b> ${esc(STC.flags[f].guide)}</p>`).join('')}</div>` : ''}
   <div class="card"><h3>The six parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
   ${s.imported ? '' : `<div class="card" ${stSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(stSafetyText(sf))}</p></div>`}
   ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
-  <div class="card"><h3>Care plan</h3>${stPlanList(s)}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
+  <div class="card"><h3>Growth plan</h3>${stPlanList(s)}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
   ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
   ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
   <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="st-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="st-print-note">${icon('print')} Save or Print Visit Note</button>`}
@@ -1509,10 +1711,12 @@ function stNote(s, c){
   L.push('Soul Tree visit: ' + stVisitName(s.visit) + (s.set === 'staff' ? ' (staff questions)' : '') + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
   L.push('Person: ' + (c ? c.name : '') + ' (' + stTypeName(c ? c.st.type : '') + ')');
   const con = c && c.st.consent; if (con) L.push('Consent: ' + stConsentName(con.how) + (con.by ? ' by ' + con.by : '') + (con.date ? ', ' + nice(con.date) : ''));
+  if (s.notToday) { L.push('', 'They said "Not today." The visit ended there.'); return L.join('\n'); }
   L.push('', 'How they are doing:');
   S.parts.forEach(p => { const v = (s.scores||{})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (s.visit === 'open' && v == null ? 'not talked about' : stLevel(v).toLowerCase() + (v != null && s.visit !== 'open' ? ' (' + v + ' of 10)' : ''))); });
   if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
   if ((s.did||[]).length) L.push('Interventions: ' + s.did.join(', ') + '.');
+  if ((s.flags || []).length) L.push('Flagged answers: ' + s.flags.length + '. See the visit in the Field Guide.');
   if (!s.imported) L.push('Safety: ' + stSafetyText(s.safety));
   const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
   if (plan.length || s.custom) L.push('', 'Plan: ' + [...plan, s.custom].filter(Boolean).join('; ') + '.');
@@ -1540,9 +1744,11 @@ function stStart(visit, cid, demo){
   const S = STG(), c = demo ? {id:'demo', name:S.demo.name, st:{type:S.demo.type, consent:{how:'verbal', date:today()}}} : CL(cid);
   if (!c) return;
   if (!demo && !stHasConsent(c)) return go('soultree', {stc:c.id});
+  if (!demo && STM() && !stReady()) { toast('Finish the Soul Tree training to start real visits. Demo visits are always open.'); return go('soultree', {stm:1}); }
+  if (!STC && visit !== 'open') { stLoad(); return toast(STC_FAIL ? "The Soul Tree questions didn't load. Check your connection and try again." : 'Loading the Soul Tree questions. Try again in a moment.'); }
   const type = c.st.type;
-  RUN = {kind:'st', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set:(visit === 'full' && type === 'staff') ? 'staff' : 'standard',
-    stem:type === 'patient' ? 'patient' : (visit === 'full' && type === 'staff') ? 'staff' : 'standard', started:Date.now(), step:0,
+  RUN = {kind:'st', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set:(visit !== 'open' && type === 'staff') ? 'staff' : 'standard',
+    stem:type === 'patient' ? 'patient' : (visit !== 'open' && type === 'staff') ? 'staff' : 'standard', started:Date.now(), step:0, yes:'', notSup:false, own:'',
     ans:{}, impr:{}, pn:{}, safety:{opener:'', direct:'', notAsked:false, reason:'', reasonText:'', actions:[]}, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
   stOpenRun();
 }
@@ -1550,9 +1756,9 @@ const stSteps = r => ['open', ...(r.visit === 'full' ? STG().parts.map(p => 'p:'
 function stOpenRun(){ $('#runner').classList.remove('hide'); stDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
 function stKeep(){ if (RUN && !RUN.demo){ DATA.draft = RUN; save(); } }
 const stChip = (act, attrs, on, label) => `<button type="button" class="chip" data-act="${act}" ${attrs} aria-pressed="${!!on}">${esc(label)}</button>`;
-function stQ(k, i, text){
+function stQ(k, i, text, q){
   const cur = ((RUN.ans||{})[k]||{})[i];
-  return `<div class="st-q"><p>${i === 'q' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}</p><div class="st-opts" role="group" aria-label="${esc(text)}">${STG().scale.map(o => stChip('st-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div></div>`;
+  return `<div class="st-q"><p>${i === 'q' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}${q && q.r ? ' <small class="muted">(reverse)</small>' : ''}</p><div class="st-opts" role="group" aria-label="${esc(text)}">${stScale().map(o => stChip('st-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>${q && q.tip ? `<p class="muted st-tip" style="font-size:14px;margin-top:6px">${esc(q.tip)}</p>` : ''}</div>`;
 }
 function stDraw(){
   const S = STG(), steps = stSteps(RUN), st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), n = steps.length;
@@ -1563,17 +1769,18 @@ function stDraw(){
     const v = S.visits.find(x => x[0] === RUN.visit);
     body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])}</h2><p class="purpose">${esc(v[3])}</p>
      <div class="card step-card" style="margin-top:14px">${blk('Say', S.openers.say, 'say')}<div class="tipbox">${esc(S.openers.tip)}</div></div>
-     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}${RUN.set === 'staff' ? '<p class="muted" style="margin-top:12px">Using the staff question set.</p>' : ''}`;
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}${RUN.set === 'staff' ? '<p class="muted" style="margin-top:12px">Using the staff question set.</p>' : ''}
+     ${stIsMe(c) ? '' : stYesHtml(c)}`;
   } else if (st.startsWith('p:')){
     const p = stPart(st.slice(2)), qs = stQuestions(RUN.visit, RUN.set, p.key);
     body = `<div class="run-step-n">Part ${S.parts.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
      <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.aloud], 'say')}<p class="muted" style="margin-top:8px"><b>Ask:</b> "${esc(S.stems[RUN.stem])}"</p></div>
-     ${qs.map((q, i) => stQ(p.key, i, q.t)).join('')}
+     ${stNeedData()}${qs.map((q, i) => stQ(p.key, i, q.t, q)).join('')}
      <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
      <label class="f" for="st-pn">Your notes (private)</label><textarea id="st-pn" data-stpn="${p.key}" style="min-height:80px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key]||'')}</textarea>`;
   } else if (st === 'quick'){
     body = `<div class="run-step-n">Six quick questions</div><h2 class="run-step-t">One for each part</h2><p class="muted">Read each one aloud. Let them answer in their own words, then tap.</p>
-     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${stQ(p.key, 0, p.quick).replace('<span class="st-n">1</span>', '')}<details class="st-lf"><summary>Listen for</summary><ul>${p.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details></div>`).join('')}
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${(q1 => stQ(p.key, 0, q1 ? q1.t : p.quick, q1))(stQuestions(RUN.visit, RUN.set, p.key)[0]).replace('<span class="st-n">1</span>', '')}<details class="st-lf"><summary>Listen for</summary><ul>${p.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details></div>`).join('')}
      <label class="f" for="st-pq">Your notes (private)</label><textarea id="st-pq" data-stf="priv" style="min-height:80px">${esc(RUN.priv)}</textarea>`;
   } else if (st === 'talk'){
     body = `<div class="run-step-n">Open conversation</div><h2 class="run-step-t">Follow where they lead</h2><p class="muted">Use any of these, in any order. After, mark how each part seemed to you.</p>
@@ -1594,19 +1801,21 @@ function stDraw(){
      <label class="cb" style="margin-top:16px"><input type="checkbox" data-stsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
      ${sf.notAsked ? `<select data-stsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-stsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
   } else if (st === 'close'){
+    const fl = stRunFlags(RUN);
     body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
+     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(STC.flags[f].title)}.</b> ${esc(STC.flags[f].guide)}</p>`).join('')}${fl.includes('home') && STG().report ? `<div class="row" style="margin-top:10px">${stShield(RUN.clientId || '')}</div>` : ''}</div>` : ''}
      ${S.tags.map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('st-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
      <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${S.did.map(t => stChip('st-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
      <label class="f" for="st-sum">Summary for the visit note</label><textarea id="st-sum" data-stf="summary" placeholder="A few plain lines your team can read">${esc(RUN.summary)}</textarea>
      ${RUN.visit === 'quick' ? '' : `<label class="f" for="st-priv">Private notes</label><textarea id="st-priv" data-stf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`}`;
   } else {
-    body = `<div class="run-step-n">Care plan</div><h2 class="run-step-t">Choose one or two small things</h2><p class="muted">Choose together. Less is more. These go on the handout.</p>
+    body = `<div class="run-step-n">Growth plan</div><h2 class="run-step-t">Choose one or two small things</h2><p class="muted">Choose together. Less is more. These go on the handout.</p>
      ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.hand)}</small></div><div class="st-opts">${p.practices.map(pr => stChip('st-plan', `data-k="${p.key}" data-v="${esc(pr.name)}"`, (RUN.plan[p.key]||[]).includes(pr.name), pr.name)).join('')}</div></div>`).join('')}
      <label class="f" for="st-cu">Anything else</label><input type="text" id="st-cu" data-stf="custom" value="${esc(RUN.custom)}" placeholder="Call her sister Sunday">
      ${stIsMe(c) ? '' : `<h4 style="margin-top:18px">Referrals</h4><div class="st-opts">${S.referrals.map(t => stChip('st-tog', `data-g="refs" data-v="${esc(t)}"`, RUN.refs.includes(t), t)).join('')}</div>`}
      ${RUN.demo ? '' : `<div class="grid g2"><div><label class="f" for="st-fd2">Follow-up date</label><input type="date" id="st-fd2" data-stf="fdate" value="${esc(RUN.fdate)}"></div><div><label class="f" for="st-ft2">Follow-up note</label><input type="text" id="st-ft2" data-stf="ftext" value="${esc(RUN.ftext)}" placeholder="Visit again"></div></div>`}`;
   }
-  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(stVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span><button class="bar-btn" data-act="st-pause" aria-label="Close">&times;</button></div></div>
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(stVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span>${STG().report && !RUN.demo ? `<button class="bar-btn" data-act="st-run-report" aria-label="Report a concern">${icon('shield')}</button>` : ''}<button class="bar-btn" data-act="st-pause" aria-label="Close">&times;</button></div></div>
     <div class="prog"><i style="width:${pct}%"></i></div>
     <div class="run-body" id="run-body"><div class="wrap">${body}</div></div>
     <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="st-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
@@ -1614,7 +1823,12 @@ function stDraw(){
   tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
 }
 function stNext(){
-  const st = stSteps(RUN)[RUN.step], sf = RUN.safety;
+  const st = stSteps(RUN)[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
+  if (st === 'open' && !stIsMe(c0)){
+    if (c0 && c0.st.type === 'staff' && !RUN.notSup) return alert('Check that you do not supervise this person. Soul Tree visits are never done by someone\'s supervisor.');
+    if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
+    if (RUN.yes === 'no') return stNotToday();
+  }
   if (st === 'safety' && !sf.notAsked && !sf.direct) return alert('Ask the second safety question, or check "I didn\'t ask these today" and say why.');
   if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
   if (st === 'safety' && stSafetyFlag(sf) && !sf.actions.length && !confirm('This is a positive screen. You haven\'t marked what you did. Go on anyway?')) return;
@@ -1624,7 +1838,8 @@ function stSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
   const s = {id:r.id, u:Date.now(), kind:'st', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)),
     visit:r.visit, set:r.set, ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, scores:stScore(r),
-    safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext};
+    safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
+    std:ST_STD, flags:stRunFlags(r), yes:r.yes || '', own:r.own || '', notSup:!!r.notSup};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
   if (r.demo){ s.person = c; V = {tab:'soultree', stv:'demo', stDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
@@ -1643,6 +1858,7 @@ function stToggle(t){
   if (a === 'st-ans'){ const i = t.dataset.i; RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][i] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
   else if (a === 'st-impr'){ RUN.impr[k] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
   else if (a === 'st-safe'){ RUN.safety[k] = v; stKeep(); const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; return; }
+  else if (a === 'st-yes'){ RUN[k] = k === 'notSup' ? on : v; stKeep(); const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; return; }
   else if (a === 'st-plan'){ const arr = RUN.plan[k] = RUN.plan[k] || []; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
   else if (a === 'st-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
   stKeep();
@@ -1661,7 +1877,7 @@ async function stImport(clients){
       const id = 'imp' + await sha12(code + '|' + (h.savedAt || '') + '|' + (h.date || ''));
       if (DATA.sessions.some(x => x.id === id) || (DATA.deleted && DATA.deleted.sessions && DATA.deleted.sessions[id])) continue;
       const plan = {}; let custom = [];
-      Object.entries(h.carePlan || {}).forEach(([k, v]) => { if (v && v.selected && v.selected.length) plan[k] = v.selected.slice(); if (v && v.custom) custom.push(v.custom); });
+      Object.entries(h.growthPlan || h['care' + 'Plan'] || {}).forEach(([k, v]) => { if (v && v.selected && v.selected.length) plan[k] = v.selected.slice(); if (v && v.custom) custom.push(v.custom); });
       const scores = {}; STG().parts.forEach(p => { const x = (h.scores || {})[p.key]; scores[p.key] = typeof x === 'number' ? x : null; });
       DATA.sessions.push({id, u:Date.now(), kind:'st', imported:true, clientId:c.id, date:h.date || today(), minutes:0, visit:'full', set:'standard', scores, plan, custom:custom.join('; '),
         summary:[h.referral ? 'Referral: ' + h.referral : '', h.narrative || ''].filter(Boolean).join('\n'), tags:[], did:[], refs:[], safety:null});
@@ -2042,7 +2258,7 @@ function gvAct(a, v, t){
 }
 
 // ---------------- SPROUT GUIDE ----------------
-// Wording lives in the Field library (FLD.sproutGuide). Questions come from the public sprout/checkup.js,
+// Wording lives in the Field library (FLD.sproutGuide). Questions come from the public sprout/checkin.js,
 // read in their own scope, so Sprout and Sprout Guide always ask the same thing.
 // A child is an ordinary People record with a .sp profile. Visits are sessions with kind 'sp'. Report records
 // are sessions with kind 'spr', kept apart from visits so they are never printed or copied.
@@ -2059,18 +2275,18 @@ const spK2 = g => ['K','1','2'].includes(String(g));
 const spBand = g => spK2(g) ? 'k2' : 'g35';
 const spPeople = () => DATA.clients.filter(c => c.sp);
 const spVisits = id => DATA.sessions.filter(s => s.kind === 'sp' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
-const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && s.tool !== 'st' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
 const SP_GRADES = ['K','1','2','3','4','5'];
 
-// ----- the question bank, read from the public sprout/checkup.js -----
+// ----- the question bank, read from the public sprout/checkin.js -----
 let SC = null, SC_WAIT = null, SC_FAIL = false;
 function spLoad(){
   if (SC || SC_WAIT) return;
   SC_FAIL = false;
-  SC_WAIT = fetch('../sprout/checkup.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
-    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SPROUT_CHECKUP || !w.SPROUT_CHECKUP.questions) throw 0; SC = w.SPROUT_CHECKUP; SC_WAIT = null; if (DATA && V.tab === 'sprout') render(); })
+  SC_WAIT = fetch('../sprout/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SPROUT_CHECKIN || !w.SPROUT_CHECKIN.questions) throw 0; SC = w.SPROUT_CHECKIN; SC_WAIT = null; if (DATA && V.tab === 'sprout') render(); })
     .catch(() => { SC_WAIT = null; SC_FAIL = true; if (DATA && V.tab === 'sprout') render(); });
 }
 function spNeedData(){
@@ -2843,7 +3059,7 @@ async function ggShare(blob, name, title){
 }
 // ---------------- SAPLING GUIDE ----------------
 // Guided Sapling visits with students in grades 6 to 8. Wording lives in the Field library (FLD.saplingGuide).
-// Questions come from the public sapling/checkup.js, read in their own scope, so Sapling and Sapling Guide always ask
+// Questions come from the public sapling/checkin.js, read in their own scope, so Sapling and Sapling Guide always ask
 // the same thing. A student is an ordinary People record with a .sa profile. Visits are sessions with kind 'sa'.
 // Reporting uses Sprout Guide's reporting card (one reporting setup for everyone); Sapling report records are kept as
 // kind 'spr' with tool 'sa', apart from visits, never printed or copied.
@@ -2862,13 +3078,13 @@ const saVisitName = k => k === 'nottoday' ? 'Not today' : ((SAG().visits.find(x 
 const saGradeName = g => g ? 'Grade ' + g : '';
 const SA_GRADES = ['6','7','8'];
 
-// ----- the question bank, read from the public sapling/checkup.js -----
+// ----- the question bank, read from the public sapling/checkin.js -----
 let SAC = null, SAC_WAIT = null, SAC_FAIL = false;
 function saLoad(){
   if (SAC || SAC_WAIT) return;
   SAC_FAIL = false;
-  SAC_WAIT = fetch('../sapling/checkup.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
-    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SAPLING_CHECKUP || !w.SAPLING_CHECKUP.questions) throw 0; SAC = w.SAPLING_CHECKUP; SAC_WAIT = null; if (DATA && V.tab === 'sapling') render(); })
+  SAC_WAIT = fetch('../sapling/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SAPLING_CHECKIN || !w.SAPLING_CHECKIN.questions) throw 0; SAC = w.SAPLING_CHECKIN; SAC_WAIT = null; if (DATA && V.tab === 'sapling') render(); })
     .catch(() => { SAC_WAIT = null; SAC_FAIL = true; if (DATA && V.tab === 'sapling') render(); });
 }
 function saNeedData(){
@@ -4654,6 +4870,9 @@ function mergeData(cur, inc){
   const im = inc.spmod || {}; out.spmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.spmod || {});
   Object.entries(im.lessons || {}).forEach(([k,v]) => { if (v && !out.spmod.lessons[k]) out.spmod.lessons[k] = v; });
   ['last','pass','signed'].forEach(k => { out.spmod[k] = newer(out.spmod[k], im[k]) || null; });
+  const it2 = inc.stmod || {}; out.stmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.stmod || {});
+  Object.entries(it2.lessons || {}).forEach(([k,v]) => { if (v && !out.stmod.lessons[k]) out.stmod.lessons[k] = v; });
+  ['last','pass','signed'].forEach(k => { out.stmod[k] = newer(out.stmod[k], it2[k]) || null; });
   const ia = inc.samod || {}; out.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.samod || {});
   Object.entries(ia.lessons || {}).forEach(([k,v]) => { if (v && !out.samod.lessons[k]) out.samod.lessons[k] = v; });
   ['last','pass','signed'].forEach(k => { out.samod[k] = newer(out.samod[k], ia[k]) || null; });
@@ -4706,7 +4925,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('sprout', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('sapling', {sav:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('sapling', {sarec:s.id}); else go('sprout', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('sprout', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('sapling', {sav:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('sapling', {sarec:s.id}); else if (s.tool === 'st') go('soultree', {strep:s.clientId}); else go('sprout', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -4764,14 +4983,39 @@ document.addEventListener('click', async e => {
     case 'st-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), st:{type:'me'}}; DATA.clients.push(c); save(); go('soultree', {stp:c.id}); break; }
     case 'st-open': { const c = CL(v); if (!c) return; if (!c.st){ c.st = {type:'community', consent:null}; touch(c); save(); } go('soultree', {stp:v}); break; }
     case 'st-consent': go('soultree', {stc:v}); break;
-    case 'st-consent-save': { const c = CL(v), h = (document.querySelector('input[name=st-ch]:checked') || {}).value; if (!h) return alert('Choose how consent was given, or Declined.'); c.st.consent = {how:h, by:$('#st-cby').value.trim(), date:$('#st-cd').value || today()}; touch(c); save(); go('soultree', {stp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); break; }
+    case 'st-consent-save': { const c = CL(v), h = (document.querySelector('input[name=st-ch]:checked') || {}).value; if (!h) return alert('Choose how consent was given, or Declined.'); if (h === 'agent' && !$('#st-cby').value.trim()){ $('#st-cby').focus(); return alert('Write who gave consent for them (relationship only).'); } c.st.consent = {how:h, by:$('#st-cby').value.trim(), date:$('#st-cd').value || today()}; touch(c); save(); go('soultree', {stp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); break; }
     case 'st-start': startST(v, t.dataset.c); break;
     case 'st-demo': stStart('quick', null, true); break;
     case 'st-next': stNext(); break;
     case 'st-prev': if (RUN && RUN.step > 0){ RUN.step--; stKeep(); stDraw(); } break;
     case 'st-save': stSaveRun(); break;
     case 'st-pause': stPause(); break;
-    case 'st-ans': case 'st-impr': case 'st-safe': case 'st-plan': case 'st-tog': if (RUN) stToggle(t); break;
+    case 'st-ans': case 'st-impr': case 'st-safe': case 'st-plan': case 'st-tog': case 'st-yes': if (RUN) stToggle(t); break;
+    case 'st-retry': STC_FAIL = false; stLoad(); render(); break;
+    case 'st-mhome': go('soultree', {stm:1}); break;
+    case 'st-ml': go('soultree', {stm:1, stml:+v}); break;
+    case 'st-mread': { const L = STM().lessons, i = +v; stmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !stmData().lessons[x.id]); if (nx >= 0) go('soultree', {stm:1, stml:nx}); else { go('soultree', {stm:1}); toast('Lesson marked as read.'); } break; }
+    case 'st-mq': go('soultree', {stm:1, stq:stmNewQuiz()}); break;
+    case 'st-mpick': V.stq.ans[V.stq.order[V.stq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=st-mnext],[data-act=st-mfinish]'); if (nb) nb.disabled = false; } break;
+    case 'st-mnext': if (V.stq.ans[V.stq.order[V.stq.i]] === undefined) break; V.stq.i++; render(); break;
+    case 'st-mprev': if (V.stq.i > 0){ V.stq.i--; render(); } break;
+    case 'st-mfinish': stmFinish(); break;
+    case 'st-msign': go('soultree', {stm:1, sts:1}); break;
+    case 'st-msigned': { const nm = $('#stm-name').value.trim(); if (!nm){ $('#stm-name').focus(); break; } if (!$('#stm-ok').checked){ alert('Check the box to show you agree, then sign.'); break; }
+      stmData().signed = {v:STM().version, date:today(), name:nm}; save(); go('soultree', {stm:1}); toast(stReady() ? 'Signed. Soul Tree visits are open.' : 'Signed.'); break; }
+    case 'st-mprint': stmPrint(); break;
+    case 'st-report': go('soultree', {strep:v || ''}); break;
+    case 'st-run-report': { if (!RUN) break; const cid = RUN.clientId; stKeep(); DATA.draft = RUN; save(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = ''; go('soultree', {strep:cid || ''}); toast('Your visit is paused and kept. Pick it up again from the Field Guide home.'); break; }
+    case 'st-where': V.stwhere = v; render(); break;
+    case 'st-rep-save': { const c = CL(v), what = $('#str-what').value.trim(); if (!c) break; if (!what){ $('#str-what').focus(); break; }
+      DATA.sessions.push({id:uid(), u:Date.now(), kind:'spr', tool:'st', clientId:c.id, date:today(), what, how:$('#str-how').value, at:$('#str-at').value || '', ref:$('#str-ref').value.trim()});
+      touch(c); save(); render(); toast('Report record saved. It stays encrypted here, and is never printed.'); break; }
+    case 'st-form': go('soultree', {stform:v}); break;
+    case 'st-form-save': { const c = CL(v), F = stForm(); if (!c || !F) break; const boxes = [...document.querySelectorAll('.stf-box')];
+      if (boxes.some(b => !b.checked)) { alert('Every box needs a check before the form is complete. If they don\'t agree to something, stop and talk it through.'); break; }
+      const nm = $('#stf-name').value.trim(); if (!nm){ $('#stf-name').focus(); break; }
+      c.st.consent = {how:'form', v:F.version, name:nm, by:$('#stf-by').value.trim(), date:today()}; touch(c); save(); go('soultree', {stp:c.id}); toast('Consent recorded.'); break; }
+    case 'st-form-pdf': { const c = CL(v); if (c) stFormPdf(c); break; }
     case 'st-visit': go('soultree', {stv:v}); break;
     case 'st-copy-note': { const s = stFindVisit(); if (s) copy(stNote(s, V.stv === 'demo' ? s.person : CL(s.clientId))); break; }
     case 'st-print-note': { const s = stFindVisit(); if (s) stPrintNote(s, V.stv === 'demo' ? s.person : CL(s.clientId)); break; }
