@@ -519,6 +519,14 @@ body.cd-noscroll{overflow:hidden;}
 .sp-kid-back{align-self:center;margin-bottom:auto;font-size:15px;}
 .sp-rep-in{display:flex;flex-direction:column;flex:1;min-height:0;}
 .sp-rep-in .run-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.sa-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#35603A 0%,#24452A 55%,#18301D 100%);}
+.sa-kid{background:#F7F4EC;font-family:'Barlow',sans-serif;}
+.sa-kid .sp-kid-q{font-size:clamp(22px,5vw,32px);font-weight:600;}
+.sa-kid-intro{font-size:17px;color:#4A5A66;}
+.sa-kid-ans{display:flex;flex-direction:column;gap:10px;margin-top:auto;}
+.sa-kid .sp-kid-a{flex-direction:row;justify-content:flex-start;min-height:56px;padding:12px 18px;font-size:19px;border-width:2px;border-radius:16px;text-align:left;}
+.sa-kid .sp-kid-foot{gap:8px;flex-wrap:wrap;}
+.sa-sheet h1{font-size:22px;} .sa-sheet h2{font-size:17px;margin-top:12px;} .sa-sheet p,.sa-sheet li{margin-top:4px;} .sa-sheet .pr-foot{font-size:12px;color:var(--ink-soft);margin-top:10px;}
 </style>
 <style>
 .gg-sitenav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:8px 18px;font-size:14px;background:rgba(139,94,26,.08);border-bottom:1px solid rgba(139,94,26,.18);}
@@ -795,6 +803,10 @@ function start(){
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
   V = {tab: tabsFor()[0][0]}; render();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
+  if (dr && dr.kind === 'sa'){
+    if (SAG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sapling visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); saLoad(); let n = 0; const go2 = () => { if (SAC) saOpenRun(); else if (SAC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sapling questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
+    return;
+  }
   if (dr && dr.kind === 'sp'){
     if (SPG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sprout visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); spLoad(); let n = 0; const go2 = () => { if (SC) spOpenRun(); else if (SC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sprout questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
     return;
@@ -802,7 +814,7 @@ function start(){
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st) stOpenRun(); else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  const gt = [...(spOpen() ? [['sprout','Sprout','sprout']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
+  const gt = [...(spOpen() ? [['sprout','Sprout','sprout']] : []), ...(saOpen() ? [['sapling','Sapling','sapling']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
   const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
@@ -813,7 +825,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST, sprout:vSP, grove:vGV, talks:vHT};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST, sprout:vSP, sapling:vSA, grove:vGV, talks:vHT};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -847,6 +859,7 @@ const IC = {
  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
  sprout:'<path d="M12 21v-9"/><path d="M12 12c0-4 3-6.5 7.5-6.5 0 4.2-3 6.5-7.5 6.5z"/><path d="M12 14.5c0-3.2-2.6-5.3-6.3-5.3 0 3.3 2.6 5.3 6.3 5.3z"/>',
+ sapling:'<path d="M12 21v-8"/><path d="M12 13c-3 0-5.2-2.1-5.2-4.8C6.8 5.4 9.1 3 12 3s5.2 2.4 5.2 5.2c0 2.7-2.2 4.8-5.2 4.8z"/><path d="M12 10.5l-2.4-2M12 12l2.4-2.3"/><path d="M8.5 21h7"/>',
  tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
@@ -872,7 +885,7 @@ function vHome(){
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="soultree"><span class="qi">${icon('tree')}</span><span><b>Soul Tree visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="sprout"><span class="qi">${icon('sprout')}</span><span><b>Sprout visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="soultree"><span class="qi">${icon('tree')}</span><span><b>Soul Tree visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="sprout"><span class="qi">${icon('sprout')}</span><span><b>Sprout visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="sapling"><span class="qi">${icon('sapling')}</span><span><b>Sapling visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups this week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -991,6 +1004,7 @@ function vClient(c){
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
   ${spPersonCard(c)}
+  ${saPersonCard(c)}
   ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Soul Tree Guide</b> <span class="muted">Rings, care plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
@@ -1081,6 +1095,7 @@ function vFieldHome(){
   ${orStatusCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="soultree">${icon('tree')} Open</button></div></div>` : ''}
   ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sprout">${icon('sprout')} Open</button></div></div>` : ''}
+  ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sapling">${icon('sapling')} Open</button></div></div>` : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
   ${fieldDue()}
@@ -1344,7 +1359,8 @@ function vOwner(){
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
   <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
-  ${FLD ? spOwnerCard() : ''}`;
+  ${FLD ? spOwnerCard() : ''}
+  ${FLD ? saOwnerCard() : ''}`;
 }
 
 // ---------------- SOUL TREE GUIDE ----------------
@@ -1364,7 +1380,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined');
-const sessTitle = s => s.kind === 'sp' ? 'Sprout: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'spr' ? 'Sprout: report record' : s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'sp' ? 'Sprout: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Sapling: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Sapling: report record' : 'Sprout: report record') : s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
 function stQuestions(visit, set, key){ return set === 'staff' ? STG().staffQuestions[key] : stPart(key).questions; }
 function stScore(run){
   const out = {}, sc = STG().scale;
@@ -2040,7 +2056,7 @@ const spK2 = g => ['K','1','2'].includes(String(g));
 const spBand = g => spK2(g) ? 'k2' : 'g35';
 const spPeople = () => DATA.clients.filter(c => c.sp);
 const spVisits = id => DATA.sessions.filter(s => s.kind === 'sp' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
-const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
 const SP_GRADES = ['K','1','2','3','4','5'];
@@ -2219,16 +2235,16 @@ const spDKey = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')
 
 // ----- the report panel: one overlay, used during a visit or from a child's page -----
 let REP = null;
-function spRepOpen(cid, visitId, raised){
+function spRepOpen(cid, visitId, raised, tool){
   const c = cid ? CL(cid) : null, st = DATA.settings.spState || 'MN', cty = DATA.settings.spCounty || 'stearns';
   const now = new Date(); now.setSeconds(0, 0);
-  REP = {cid:cid || null, visitId:visitId || null, demo: !!(RUN && RUN.kind === 'sp' && RUN.demo), name: c ? c.name : (RUN && RUN.person ? RUN.person.name : ''), state:st, county:cty,
+  REP = {tool: tool === 'sa' ? 'sa' : 'sp', cid:cid || null, visitId:visitId || null, demo: !!(RUN && (RUN.kind === 'sp' || RUN.kind === 'sa') && RUN.demo), name: c ? c.name : (RUN && RUN.person ? RUN.person.name : ''), state:st, county:cty,
     raised: raised || '', words:'', what:'', at: new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16), how:'phone', agency:'', ref:'', written:'', made:false};
   spRepDraw();
 }
 function spRepClose(){ const el = $('#sp-rep'); if (el) el.remove(); REP = null; document.body.classList.remove('cd-noscroll'); }
 function spRepDraw(){
-  const R = SPG().report, mn = R.mn, k = spContact(), r = REP, ct = spCounty(r.county), own = DATA.settings.spOwnCounty || {};
+  const r = REP, T = r.tool === 'sa' && SAG() ? SAG().report : {}, R = Object.assign({}, SPG().report, {title: T.title || SPG().report.title, lead: T.lead || SPG().report.lead}), mn = R.mn, k = spContact(), ct = spCounty(r.county), own = DATA.settings.spOwnCounty || {};
   const call = (num, label, cls) => num ? `<a class="btn ${cls || 'btn-line'} btn-sm" href="${spTel(num)}">${icon('phone')} ${esc(label)} ${esc(num)}</a>` : '';
   const county = r.state !== 'MN' ? '' : r.county === 'other' ? `<div class="card"><h4>Somewhere else in Minnesota</h4><p class="muted" style="margin-top:6px">Find the county or Tribal Nation where the child lives on the state's list, and save it here for next time.</p>
       <div class="row" style="margin-top:8px"><a class="btn btn-line btn-sm" href="${esc(mn.list)}" target="_blank" rel="noopener">${icon('link')} ${esc(mn.listName)}</a></div>
@@ -2276,18 +2292,19 @@ function spRepSave(){
   if (r.demo){ spRepClose(); toast('Demo. Nothing was saved.'); return; }
   const ct = spCounty(r.county), own = DATA.settings.spOwnCounty || {};
   const due = r.state === 'MN' && r.how !== 'online' && r.at && !r.written ? spDue(r.at) : null;
-  const s = {id:uid(), u:Date.now(), kind:'spr', clientId:r.cid, visitId:r.visitId, date:today(), raised:r.raised, words:r.words, what:r.what, at:r.at, how:r.how,
+  const s = {id:uid(), u:Date.now(), kind:'spr', tool:r.tool, clientId:r.cid, visitId:r.visitId, date:today(), raised:r.raised, words:r.words, what:r.what, at:r.at, how:r.how,
     state:r.state, county:r.state === 'MN' ? (r.county === 'other' ? own.name || 'Other' : (ct ? ct.name : '')) : 'Outside Minnesota', agency:r.agency || (ct ? ct.agency : ''), ref:r.ref, written:r.written, due: due ? due.toISOString() : ''};
   DATA.sessions.push(s);
   const c = r.cid ? CL(r.cid) : null;
-  if (c && due){ (c.followups = c.followups || []).push({date:spDKey(due), text:'Written report due (Sprout report record)', done:false}); touch(c); }
-  if (RUN && RUN.kind === 'sp' && !RUN.demo){ RUN.reports = RUN.reports || []; RUN.reports.push(s.id); spKeep(); }
+  if (c && due){ (c.followups = c.followups || []).push({date:spDKey(due), text:'Written report due (' + (r.tool === 'sa' ? 'Sapling' : 'Sprout') + ' report record)', done:false}); touch(c); }
+  if (RUN && (RUN.kind === 'sp' || RUN.kind === 'sa') && !RUN.demo){ RUN.reports = RUN.reports || []; RUN.reports.push(s.id); if (RUN.kind === 'sa') saKeep(); else spKeep(); }
   save(); spRepClose(); toast('Report record saved. It stays encrypted here.');
   if (!RUN) render();
 }
 function vSPReport(s){
   const c = CL(s.clientId), R = SPG().report, name = x => ((R.raised.find(o => o[0] === x) || [])[1] || x), how = x => ((R.how.find(o => o[0] === x) || [])[1] || x);
-  return `<button class="linkbtn" data-act="sp-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'Sprout Guide')}</button>
+  const sa = s.tool === 'sa';
+  return `<button class="linkbtn" data-act="${sa ? 'sa-open' : 'sp-open'}" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : sa ? 'Sapling Guide' : 'Sprout Guide')}</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Report record &middot; ${nice(s.date)}</div><h1>${esc(c ? c.name : '')}</h1><p class="muted">${esc(R.recordNote)}</p></div>
   <div class="card st-private"><p><b>Who raised it:</b> ${esc(name(s.raised))}</p>
    ${s.words ? `<p style="margin-top:8px"><b>Their exact words:</b></p><p style="white-space:pre-wrap">${esc(s.words)}</p>` : ''}
@@ -2751,7 +2768,7 @@ function spAct(a, v, t){
     case 'sp-rec-upd': { const s = DATA.sessions.find(x => x.id === v); if (!s) return true; s.ref = $('#spr-ref').value.trim(); s.written = $('#spr-wr').value; touch(s);
       const c = CL(s.clientId); if (c && s.written) (c.followups || []).forEach(f => { if (!f.done && /Written report due/.test(f.text || '')) { f.done = true; touch(c); } });
       save(); render(); toast('Saved.'); return true; }
-    case 'sp-rec-del': if (confirm('Delete this report record? It cannot be undone.')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sprout', s && s.clientId ? {spp:s.clientId} : {}); } return true;
+    case 'sp-rec-del': if (confirm('Delete this report record? It cannot be undone.')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.tool === 'sa') go('sapling', s.clientId ? {sap:s.clientId} : {}); else go('sprout', s && s.clientId ? {spp:s.clientId} : {}); } return true;
     case 'sp-print-home': { const s = spFindVisit(); if (s) spPrintHome(s, V.spv === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'sp-copy-note': { const s = spFindVisit(); if (s) copy(spNote(s, V.spv === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'sp-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sprout', s ? {spp:s.clientId} : {}); } return true;
@@ -2807,6 +2824,794 @@ function spSetField(on){ spLibUpdate(on ? 'Open Sprout Guide to Field users' : '
 function spSetContact(){ const k = {who:$('#spo-who').value.trim(), phone:$('#spo-ph').value.trim(), step:$('#spo-step').value.trim()}; spLibUpdate('Sprout Guide reporting contact', 'sproutGuide.report.contact', g => { g.report.contact = k; }); }
 function spSetChecked(){ if (!confirm('Mark the reporting info as rechecked today? Only do this after checking the county numbers, links, and law.')) return; spLibUpdate('Sprout Guide reporting info rechecked', 'sproutGuide.report.checked', g => { g.report.checked = today(); }); }
 function spPersonCard(c){ return c.sp && spOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sprout Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''; }
+
+// ---------------- PDF FILES FOR THE SHARE SHEET ----------------
+// App-ready: sheets a family or school will keep are made as real PDF files, then handed to the device's share sheet
+// (text, email, save, print). Desktop browsers without a share sheet download the file instead. Nothing is uploaded.
+// Plain text only, in Helvetica, so it works offline and needs no library. Blocks: [{k, t}] where k is one of
+// eyebrow, h1, sub, h2, p, li, b, i, foot.
+const GGPDF_W = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
+function ggPdfText(s){
+  s = String(s == null ? '' : s).replace(/[\u2018\u2019\u02BC]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/\u2026/g, '...').replace(/[\u2010-\u2015\u2212]/g, '-').replace(/\u2122/g, '\x99').replace(/\u2022/g, '\x95').replace(/\u00A0/g, ' ');
+  return Array.from(s.normalize('NFC')).map(ch => { const c = ch.charCodeAt(0); return c <= 255 ? ch : (ch.normalize('NFKD').replace(/[^\x00-\xFF]/g, '')[0] || '?'); }).join('');
+}
+function ggPdfWidth(s, size, bold){ let w = 0; for (const ch of s){ const c = ch.charCodeAt(0); w += (c >= 32 && c <= 126 ? GGPDF_W[c - 32] : c === 0x99 ? 1000 : 556); } return w * size / 1000 * (bold ? 1.07 : 1); }
+function ggPdfEsc(s){ let o = ''; for (const ch of s){ const c = ch.charCodeAt(0); o += ch === '\\' || ch === '(' || ch === ')' ? '\\' + ch : c > 126 || c < 32 ? '\\' + c.toString(8).padStart(3, '0') : ch; } return o; }
+function ggPdf(blocks){
+  const PW = 612, PH = 792, M = 60, TW = PW - 2 * M;
+  const ST = {eyebrow:[9,'F2',[0.545,0.369,0.102],6], h1:[21,'F2',[0.545,0.369,0.102],8], sub:[11,'F1',[0.35,0.3,0.27],14], h2:[13,'F2',[0.173,0.094,0.063],4], p:[11,'F1',[0.173,0.094,0.063],8], li:[11,'F1',[0.173,0.094,0.063],3], b:[11,'F2',[0.173,0.094,0.063],8], i:[10,'F3',[0.35,0.3,0.27],8], foot:[8,'F1',[0.45,0.42,0.4],0]};
+  const pages = []; let ops = [], y = PH - M, foot = '';
+  const newPage = () => { if (ops.length) pages.push(ops); ops = []; y = PH - M; };
+  const line = (txt, x, f, size, col) => ops.push(`BT ${col.join(' ')} rg /${f} ${size} Tf ${x.toFixed(1)} ${y.toFixed(1)} Td (${ggPdfEsc(txt)}) Tj ET`);
+  blocks.forEach(bk => {
+    const s = ST[bk.k] || ST.p, t = ggPdfText(bk.t);
+    if (bk.k === 'foot'){ foot = t; return; }
+    const size = s[0], lh = size * 1.38, ind = bk.k === 'li' ? 16 : 0, bold = s[1] === 'F2';
+    if (bk.k === 'h2') y -= 8;
+    const words = t.split(/\s+/).filter(Boolean), lines = []; let cur = '';
+    words.forEach(w => { const tr = cur ? cur + ' ' + w : w; if (ggPdfWidth(tr, size, bold) <= TW - ind || !cur) cur = tr; else { lines.push(cur); cur = w; } });
+    if (cur) lines.push(cur);
+    if (bk.k === 'h2' && y - lh * 3 < M + 20) newPage();
+    lines.forEach((ln, j) => {
+      if (y - lh < M + 20) newPage();
+      y -= lh;
+      if (bk.k === 'li' && j === 0) line('\x95', M + 4, 'F1', size, s[2]);
+      line(ln, M + ind, s[1], size, s[2]);
+    });
+    y -= s[3];
+  });
+  newPage();
+  const objs = [], add = o => { objs.push(o); return objs.length; };
+  const cat = add(''), pgs = add(''), f1 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'),
+    f2 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'), f3 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>');
+  const kids = pages.map((o, n) => {
+    const ft = (foot ? foot + '   ' : '') + 'Page ' + (n + 1) + ' of ' + pages.length;
+    const body = o.concat([`BT 0.45 0.42 0.4 rg /F1 8 Tf ${M} ${M - 24} Td (${ggPdfEsc(ft)}) Tj ET`]).join('\n');
+    const c = add(`<< /Length ${body.length} >>\nstream\n${body}\nendstream`);
+    return add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R /F3 ${f3} 0 R >> >> /Contents ${c} 0 R >>`);
+  });
+  objs[cat - 1] = `<< /Type /Catalog /Pages ${pgs} 0 R >>`;
+  objs[pgs - 1] = `<< /Type /Pages /Kids [${kids.map(k => k + ' 0 R').join(' ')}] /Count ${kids.length} >>`;
+  let out = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n'; const offs = [];
+  objs.forEach((o, i) => { offs.push(out.length); out += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+  const xr = out.length;
+  out += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + offs.map(n => String(n).padStart(10, '0') + ' 00000 n \n').join('') + `trailer\n<< /Size ${objs.length + 1} /Root ${cat} 0 R >>\nstartxref\n${xr}\n%%EOF`;
+  const bytes = new Uint8Array(out.length); for (let i = 0; i < out.length; i++) bytes[i] = out.charCodeAt(i) & 255;
+  return new Blob([bytes], {type:'application/pdf'});
+}
+async function ggShare(blob, name, title){
+  try {
+    const f = new File([blob], name, {type:'application/pdf'});
+    if (navigator.canShare && navigator.canShare({files:[f]})){ await navigator.share({files:[f], title}); return; }
+  } catch(e){ if (e && e.name === 'AbortError') return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('Saved as ' + name + '.');
+}
+// A sheet model {eyebrow, title, sub, sec:[{h, p:[], li:[]}], after:[], close, foot} as PDF blocks, or as print HTML.
+function ggSheetBlocks(m){
+  const b = [{k:'eyebrow', t:m.eyebrow || 'Grounded'}, {k:'h1', t:m.title}];
+  if (m.sub) b.push({k:'sub', t:m.sub});
+  (m.sec || []).forEach(s => { b.push({k:'h2', t:s.h}); (s.p || []).forEach(t => b.push({k:'p', t})); (s.li || []).forEach(t => b.push({k:'li', t})); });
+  (m.after || []).forEach(t => b.push({k:'b', t}));
+  if (m.close) b.push({k:'i', t:m.close});
+  if (m.foot) b.push({k:'foot', t:m.foot});
+  return b;
+}
+const ggSheetHTML = m => `<h1>${esc(m.title)}</h1>${m.sub ? `<p>${esc(m.sub)}</p>` : ''}${(m.sec || []).map(s => `<h2>${esc(s.h)}</h2>${(s.p || []).map(t => `<p>${esc(t)}</p>`).join('')}${(s.li || []).length ? `<ul>${s.li.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}`).join('')}${(m.after || []).map(t => `<p><b>${esc(t)}</b></p>`).join('')}${m.close ? `<p style="margin-top:4mm"><i>${esc(m.close)}</i></p>` : ''}${m.foot ? `<div class="pr-foot">${esc(m.foot)}</div>` : ''}`;
+
+// ---------------- SAPLING GUIDE ----------------
+// Guided Sapling visits with students in grades 6 to 8. Wording lives in the Field library (FLD.saplingGuide).
+// Questions come from the public sapling/checkup.js, read in their own scope, so Sapling and Sapling Guide always ask
+// the same thing. A student is an ordinary People record with a .sa profile. Visits are sessions with kind 'sa'.
+// Reporting uses Sprout Guide's reporting card (one reporting setup for everyone); Sapling report records are kept as
+// kind 'spr' with tool 'sa', apart from visits, never printed or copied.
+// Staff and Owner always see the tab. Field users see it once saplingGuide.open.field is on and Orientation is done.
+// Everyone takes the Sapling training (DATA.samod) before a real visit. Demo visits are always open.
+// Safest standard: another adult can always see in. The promise ("what stays between us") is read before the
+// student's yes. The optional question (grades 7 and 8, full visits) is never scored, printed, or copied.
+const SAG = () => (FLD && FLD.saplingGuide) || null;
+const saOpen = () => !!SAG() && !!SPG() && (TIER !== 'field' || !!(SAG().open && SAG().open.field && (!OR() || orState().complete)));
+const saLvName = k => (((SAG() || {}).levels || {}).names || []).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
+const saPart = k => SAG().parts.find(p => p.key === k);
+const saPeople = () => DATA.clients.filter(c => c.sa);
+const saVisits = id => DATA.sessions.filter(s => s.kind === 'sa' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const saReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool === 'sa' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const saVisitName = k => k === 'nottoday' ? 'Not today' : ((SAG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const saGradeName = g => g ? 'Grade ' + g : '';
+const SA_GRADES = ['6','7','8'];
+
+// ----- the question bank, read from the public sapling/checkup.js -----
+let SAC = null, SAC_WAIT = null, SAC_FAIL = false;
+function saLoad(){
+  if (SAC || SAC_WAIT) return;
+  SAC_FAIL = false;
+  SAC_WAIT = fetch('../sapling/checkup.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SAPLING_CHECKUP || !w.SAPLING_CHECKUP.questions) throw 0; SAC = w.SAPLING_CHECKUP; SAC_WAIT = null; if (DATA && V.tab === 'sapling') render(); })
+    .catch(() => { SAC_WAIT = null; SAC_FAIL = true; if (DATA && V.tab === 'sapling') render(); });
+}
+function saNeedData(){
+  if (SAC) return '';
+  saLoad();
+  return SAC_FAIL ? `<div class="card"><h3>The Sapling questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Sapling questions...</p></div>`;
+}
+const saQs = (grade, key) => ((SAC.questions[grade] || {})[key]) || [];
+const saAns = k => SAC.answers.find(a => a[0] === k) || null;
+const saIdx = run => run.visit === 'full' ? [0,1,2,3] : [0];
+const SA_STD = () => SAC ? SAC.version : 1;
+function saChildScore(grade, key, qa, idxs){
+  let sum = 0, n = 0; const qs = saQs(grade, key);
+  idxs.forEach(i => { const q = qs[i], a = saAns((qa || {})[i]); if (!q || !a || a[2] == null) return; const v = q[2] === 'r' ? 4 - a[2] : a[2]; sum += (v - 1) / 2; n++; });
+  return n ? Math.round(1 + 9 * sum / n) : null;
+}
+const saSeenScore = v => { const o = SAG().seen.find(x => x[0] === v); return o ? o[2] : null; };
+const saGvScore = v => { const o = SAG().grownView.answers.find(x => x[0] === v); return o && o[2] != null ? Math.round(1 + 9 * (o[2] - 1) / 2) : null; };
+// Three sources: the student's answers (counts twice), what the guide saw, the grown-up's view.
+// The grown-up's view never sets a level alone. Two steps apart is Mixed signals. The optional question never counts.
+function saSuggest(run, key){
+  const child = saChildScore(run.grade, key, (run.ans || {})[key], saIdx(run)), seen = saSeenScore((run.seen || {})[key]), grown = saGvScore(((run.gv || {}).ans || {})[key]);
+  const src = [[child, 2], [seen, 1], [grown, 1]].filter(x => x[0] != null);
+  if (child == null && seen == null) return {child, seen, grown, sug:'none', mixed:false};
+  const avg = src.reduce((a, x) => a + x[0] * x[1], 0) / src.reduce((a, x) => a + x[1], 0);
+  const ix = src.map(x => SP_LV.indexOf(spLvOf(x[0])));
+  return {child, seen, grown, sug:spLvOf(Math.round(avg)), mixed: Math.max(...ix) - Math.min(...ix) >= 2};
+}
+function saPrevLevel(c, s, key){
+  const prev = saVisits(c.id).filter(v => v.id !== s.id && v.std === s.std && v.levels && (v.date < s.date || (v.date === s.date && (v.u||0) < (s.u||0))))[0];
+  const a = prev && prev.levels[key] && prev.levels[key].pick, b = s.levels && s.levels[key] && s.levels[key].pick;
+  if (!a || !b || a === 'none' || b === 'none') return '';
+  const d = SP_LV.indexOf(b) - SP_LV.indexOf(a);
+  return d > 0 ? '<span class="sp-mk up" title="Up since last visit">&uarr;</span>' : d < 0 ? '<span class="sp-mk down" title="Down since last visit">&darr;</span>' : '<span class="sp-mk" title="Same as last visit">=</span>';
+}
+// The optional question: grades 7 and 8, full visits, unless the grown-up left it out. Returns why it's off, or ''.
+const saSensQ = g => { const x = SAC && SAC.sensitive && SAC.sensitive[g]; return x ? x[2] : null; };
+function saSensWhy(visit, grade, c){
+  if (!saSensQ(grade)) return 'grade';
+  if (visit !== 'full') return 'visit';
+  const con = c && c.sa && c.sa.consent;
+  return con && con.noVape ? 'left' : '';
+}
+
+// ----- permission: the shared check-box form, with middle school wording and the optional question -----
+function saConsentOk(c){
+  const con = c && c.sa && c.sa.consent;
+  if (!con || con.status !== 'ok') return false;
+  if (con.how === 'form') return con.v === SAG().consent.version && SAG().consent.boxes.every(b => (con.boxes || []).includes(b[0])) && !!con.name;
+  return !!con.how;
+}
+function saConsentLine(c){
+  const con = c.sa.consent, C = SAG().consent;
+  if (!con) return '<span class="pill warn">Permission needed</span>';
+  if (con.status === 'declined') return '<span class="pill warn">Said no for now</span>';
+  if (con.status === 'withdrawn') return '<span class="pill warn">Visits stopped</span>';
+  if (con.how === 'form' && con.v !== C.version) return '<span class="pill warn">Ask again: form updated</span>';
+  return `<span class="pill sage">${esc(((C.how.find(x => x[0] === con.how) || [])[1]) || 'Permission')}${con.date ? ' ' + nice(con.date) : ''}</span>`;
+}
+
+// ----- training (its own module, separate from Sprout's; gates real visits for everyone) -----
+const SAM = () => SAG() && SAG().module;
+function samData(){ DATA.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.samod || {}); return DATA.samod; }
+function samState(){
+  const M = SAM(), D = samData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const saReady = () => samState().complete;
+function vSAM(){
+  const M = SAM(), D = samData(), s = samState();
+  if (V.saml !== undefined) return vSAMLesson(V.saml);
+  if (V.saq) return V.saq.done ? vSAMResult() : vSAMQ();
+  if (V.sas) return vSAMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-act="sa-home">Back to Sapling Guide</button>
+  <div class="hello sa-hello" style="margin-top:14px"><div class="eyebrow" style="color:#A9D88A">Sapling Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => step('sa-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  <h3 style="margin:22px 0 10px">Practice scenarios</h3>
+  ${step('sa-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with middle schoolers`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('sa-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sa-mprint">${icon('print')} Print Agreement</button></div>` : ''}`;
+}
+function vSAMLesson(i){
+  const M = SAM(), L = M.lessons[i], n = M.lessons.length, read = !!samData().lessons[L.id];
+  return `<button class="linkbtn" data-act="sa-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
+  ${lessonBody(L)}
+  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="sa-mread" data-v="${i}">Mark as Read</button>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="sa-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="sa-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="sa-mhome">Back to training</button>` : ''}</div>`;
+}
+function samNewQuiz(){ const items = SAM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vSAMQ(){
+  const Q = V.saq, items = SAM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="sa-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="sa-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="sa-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'sa-mfinish' : 'sa-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function samFinish(){
+  const M = SAM(), Q = V.saq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = samData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vSAMResult(){
+  const M = SAM(), Q = V.saq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = samState();
+  return `<button class="linkbtn" data-act="sa-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="sa-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="sa-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="sa-mq">Try Again</button><button class="btn btn-line" data-act="sa-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vSAMSign(){
+  const A = SAM().agreement, s = samState(), D = samData();
+  if (!s.pass) return `<button class="linkbtn" data-act="sa-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="sa-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="sam-name">Your full name</label><input type="text" id="sam-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="sam-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="sa-msigned">Sign Agreement</button>`}</div>`;
+}
+function samPrint(){
+  const A = SAM().agreement, D = samData().signed;
+  printNow(ph('Sapling Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title);
+}
+
+// ----- views -----
+function vSA(){
+  if (SAG()) saLoad();
+  if (!SAG()) return `<div class="card"><p>Sapling Guide isn't on this device yet.</p></div>`;
+  if (!SPG()) return `<div class="card"><p>Sapling Guide uses Sprout Guide's reporting card, which isn't on this device yet.</p></div>`;
+  if (V.sam) return vSAM();
+  if (V.sarec){ const s = DATA.sessions.find(x => x.id === V.sarec); if (s) return vSPReport(s); }
+  if (V.sac){ const c = CL(V.sac); if (c) return vSAConsent(c); }
+  if (V.sav) return vSAVisit();
+  if (V.sap){ const c = CL(V.sap); if (c) return vSAPerson(c); }
+  const S = SAG(), list = saPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = samState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
+  return `<div class="hello sa-hello"><div class="eyebrow" style="color:#A9D88A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
+  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Sapling training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sa-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Sapling training' : 'Start with the Sapling training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
+  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
+  <div class="card"><h3>A student</h3>
+   <div class="grid g2"><div><label class="f" for="sa-nn">First name or nickname</label><input type="text" id="sa-nn" autocomplete="off" placeholder="Jordan"></div>
+   <div><label class="f" for="sa-ng">Grade</label><select id="sa-ng">${SA_GRADES.map(g => `<option value="${g}">${saGradeName(g)}</option>`).join('')}</select></div>
+   <div><label class="f" for="sa-nr">Their grown-up (relationship)</label><input type="text" id="sa-nr" placeholder="Mom, Grandpa, foster dad"></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sa-new">${icon('plus')} Add Student</button>${m.complete ? `<button class="btn btn-line" data-act="sa-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>
+  <div class="card"><div class="spread"><h3>Students</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = saVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(saGradeName(c.sa.grade))}</span> ${saConsentOk(c) ? '' : saConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${saVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a student above.</p>'}</div>
+  <div class="card"><h3>Reporting</h3><p class="muted">Sapling Guide and Sprout Guide share one reporting setup. The Report a concern button is on every visit screen.</p>
+   <p style="margin-top:8px">${(DATA.settings.spState || 'MN') === 'MN' ? 'Minnesota' : 'Another state'}${(DATA.settings.spState || 'MN') === 'MN' ? ' &middot; ' + esc(cty === 'other' ? (own.name || 'Somewhere else in Minnesota') : ((spCounty(cty) || {}).name || '')) : ''}${k.who || k.phone ? ' &middot; contact: ' + esc(k.who) + (k.phone ? ' ' + esc(k.phone) : '') : ''}</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sa-rep-new">Open the Reporting Card</button>${spOpen() ? '<button class="btn btn-line btn-sm" data-tab="sprout">Change Your County or Contact</button>' : ''}</div></div>`;
+}
+function vSAConsent(c){
+  const C = SAG().consent, cur = c.sa.consent || {}, how = V.sach || (cur.status === 'ok' ? cur.how : 'form'), boxes = cur.how === 'form' && cur.v === C.version ? (cur.boxes || []) : [];
+  const nv = V.sanv !== undefined ? V.sanv : !!cur.noVape;
+  return `<button class="linkbtn" data-act="sa-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)} &middot; ${esc(saGradeName(c.sa.grade))}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
+  ${cur.how === 'form' && cur.v && cur.v !== C.version ? `<div class="card" style="border-left:4px solid var(--gold)"><p>${esc(C.newVersion)}</p></div>` : ''}
+  <div class="card"><h3>How it was given</h3><div class="st-opts">${C.how.map(h => stChip('sa-ch', `data-v="${h[0]}"`, how === h[0], h[1])).join('')}</div></div>
+  ${how === 'form' ? `<div class="card sp-form"><p>${esc(C.formIntro)}</p><p style="margin-top:10px"><b>Please check each box.</b></p>
+    ${C.boxes.map(b => `<label class="cb sp-box"><input type="checkbox" data-sabox="${b[0]}" ${boxes.includes(b[0]) ? 'checked' : ''}> <span>${esc(b[1])}</span></label>`).join('')}</div>` :
+    `<div class="card"><p class="muted">${esc(how === 'file' ? C.fileNote : C.verbalNote)}</p>${how === 'file' ? `<label class="f" for="sa-cw">Where it is kept</label><input type="text" id="sa-cw" value="${esc(cur.where || '')}" placeholder="School office, hospice chart">` : ''}
+    <label class="f" for="sa-cn">${how === 'file' ? 'Notes' : 'What you explained'}</label><input type="text" id="sa-cn" value="${esc(cur.note || '')}"></div>`}
+  <div class="card"><h3>${esc(C.optional.title)}</h3><p style="margin-top:6px">${esc(C.optional.text)}</p>
+   <label class="cb sp-box"><input type="checkbox" id="sa-nv" data-sanv="1" ${nv ? 'checked' : ''}> <span>${esc(C.optional.box)}</span></label>
+   <p class="muted" style="font-size:14px;margin-top:8px">${esc(C.schoolNote)}</p></div>
+  <div class="card"><div class="grid g2"><div><label class="f" for="sa-cnm">${how === 'form' ? 'Grown-up types their name' : 'Who gave permission (name)'}</label><input type="text" id="sa-cnm" autocomplete="off" value="${esc(cur.status === 'ok' ? cur.name || '' : '')}"></div>
+   <div><label class="f" for="sa-crl">Relationship to ${esc(c.name)}</label><select id="sa-crl">${C.rels.map(r => `<option ${cur.rel === r ? 'selected' : ''}>${esc(r)}</option>`).join('')}</select></div>
+   <div><label class="f" for="sa-cdt">Date</label><input type="date" id="sa-cdt" value="${esc(cur.status === 'ok' && cur.date ? cur.date : today())}"></div></div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-consent-save" data-v="${c.id}">${icon('check')} Save Permission</button>${saConsentOk(c) ? `<button class="btn btn-line" data-act="sa-consent-pdf" data-v="${c.id}">${icon('copy')} Save PDF</button><button class="btn btn-line" data-act="sa-consent-print" data-v="${c.id}">${icon('print')} Print</button>` : ''}</div>
+   ${saConsentOk(c) ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(C.pdfNote)}</p>` : ''}</div>
+  <div class="card"><div class="row"><button class="btn btn-line btn-sm" data-act="sa-consent-no" data-v="${c.id}">They Said No for Now</button><button class="btn btn-line btn-sm" data-act="sa-consent-stop" data-v="${c.id}">They Stopped Sapling Visits</button></div></div>`;
+}
+function saConsentModel(c){
+  const C = SAG().consent, con = c.sa.consent, mark = on => on ? '[x] ' : '[  ] ';
+  const sec = [{h:'Student', p:[c.name + ', ' + saGradeName(c.sa.grade)]}];
+  if (con.how === 'form') sec.push({h:'Agreed', p:C.boxes.map(b => mark((con.boxes || []).includes(b[0])) + b[1])});
+  else sec.push({h:'How permission was given', p:[((C.how.find(x => x[0] === con.how) || [])[1] || '') + (con.where ? ': ' + con.where : ''), ...(con.note ? [con.note] : [])]});
+  sec.push({h:C.optional.title, p:[C.optional.text, mark(!!con.noVape) + C.optional.box]});
+  sec.push({h:'Signed', p:[(con.name || '') + ', ' + (con.rel || '') + (con.how === 'form' ? ' (typed name)' : '') + ', ' + nice(con.date), 'Guide: ' + (DATA.settings.name || '') + '. Recorded in the Grounded Field Guide, form version ' + C.version + '.']});
+  return {eyebrow:'Grounded Field Guide', title:C.title, sub:C.formIntro, sec, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
+}
+function saLevelTable(c){
+  const vs = saVisits(c.id).filter(s => s.levels).slice(0, 4);
+  if (!vs.length) return '<p class="muted" style="margin-top:8px">No levels yet. They come at the end of each visit.</p>';
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}</th>`).join('')}</tr>
+   ${SAG().parts.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const L = (s.levels || {})[p.key]; return `<td>${L ? `<span class="pill ${spLvCls(L.pick)}">${esc(saLvName(L.pick))}</span>${saPrevLevel(c, s, p.key)}${L.mixed ? ' <span class="pill" title="Mixed signals">Mixed</span>' : ''}` : '<span class="muted">&middot;</span>'}</td>`; }).join('')}</tr>`).join('')}</table></div>
+   ${vs.some(s => s.std !== SA_STD()) ? '<p class="muted" style="font-size:14px;margin-top:6px">Visits on an earlier standard are not compared with newer ones.</p>' : ''}`;
+}
+function vSAPerson(c){
+  const S = SAG(), vs = saVisits(c.id), ok = saConsentOk(c), ready = saReady(), reps = saReports(c.id), con = c.sa.consent;
+  return `<button class="linkbtn" data-tab="sapling">Back to Sapling Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(saGradeName(c.sa.grade))}${c.sa.rel ? ' &middot; grown-up: ' + esc(c.sa.rel) : ''}</div><h1>${esc(c.name)}</h1></div><div class="row">${saConsentLine(c)}${ok && con.noVape ? '<span class="pill">Optional question left out</span>' : ''}</div></div>
+  ${!ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Permission first</h3><p class="muted">${con && con.status === 'declined' ? esc(S.consent.declined) : con && con.status === 'withdrawn' ? esc(S.consent.withdrawn) : 'A parent or legal guardian gives permission before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sa-consent" data-v="${c.id}">Permission Form</button></div>` : ''}
+  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Sapling training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sa-mhome">Open Training</button></div>` : ''}
+  <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sa-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'sapling')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Levels</h3>${saLevelTable(c)}</div>
+   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-safu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+    <div class="grid g2" style="margin-top:10px"><input type="date" id="sa-fd" aria-label="Follow-up date"><input type="text" id="sa-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
+    <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(saVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.std && s.std !== SA_STD() ? ' &middot; earlier standard' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sa-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card st-private"><div class="spread"><h3>Report records</h3><button class="btn btn-line btn-sm" data-act="sa-rep-for" data-v="${c.id}">Report a Concern</button></div><p class="muted" style="font-size:14px">${esc(SPG().report.recordNote)}</p>
+   ${reps.length ? reps.map(r => `<div class="list-row"><div class="lr-main"><b>${nice(r.date)}</b> <span class="muted">${esc(r.agency || r.county || '')}</span>${r.due && !r.written ? ' <span class="pill warn">Written report due</span>' : ''}</div><button class="btn btn-line btn-sm" data-act="sa-rec" data-v="${r.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">None.</p>'}</div>
+  <div class="card"><h3>Details</h3>
+   <label class="f">First name or nickname</label><input type="text" data-sac="name" value="${esc(c.name)}">
+   <div class="grid g2"><div><label class="f">Grade</label><select data-sac="grade">${SA_GRADES.map(g => `<option value="${g}" ${g === c.sa.grade ? 'selected' : ''}>${saGradeName(g)}</option>`).join('')}</select></div>
+   <div><label class="f">Their grown-up (relationship)</label><input type="text" data-sac="rel" value="${esc(c.sa.rel || '')}"></div></div>
+   <label class="f">Status</label><select data-sac="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v === c.status ? 'selected' : ''}>${l}</option>`).join('')}</select>
+   <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="sa-consent" data-v="${c.id}">Permission Form</button><button class="btn btn-danger btn-sm" data-act="sa-del" data-v="${c.id}">Delete This Record</button></div></div>`;
+}
+function saSafetyText(sf){
+  if (!sf) return 'Not recorded.';
+  if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
+  const A = SAG().safety.answers, an = x => ((A.find(o => o[0] === x) || [])[1] || 'not recorded');
+  return (spSafeFlag(sf) ? 'Concern noted. ' : 'No concern noted. ') + 'Anyone hurting them or making them feel unsafe: ' + an(sf.safe) + '. Thoughts of hurting themselves or not wanting to be alive: ' + an(sf.self) + '.' + ((sf.actions || []).length ? ' Actions: ' + sf.actions.join(', ') + '.' : '');
+}
+function saFindVisit(){ return V.sav === 'demo' ? (V.saDemo || null) : DATA.sessions.find(x => x.id === V.sav) || null; }
+const saWhere = s => ((SAG().room.where.find(o => o[0] === (s.room || {}).where) || [])[1]) || 'not recorded';
+const saTold = k => ((SAG().goodbye.flagOpts.find(o => o[0] === k) || [])[1]) || 'Not marked as shared.';
+function vSAVisit(){
+  const s = saFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
+  if (!SAC && s.visit !== 'nottoday') { const w = saNeedData(); if (w) return w; }
+  const demo = V.sav === 'demo', c = demo ? s.person : CL(s.clientId), S = SAG();
+  const back = demo ? `<button class="linkbtn" data-tab="sapling">Back to Sapling Guide</button>` : `<button class="linkbtn" data-act="sa-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'student')}</button>`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}`;
+  const idxs = s.visit === 'full' ? [0,1,2,3] : [0], room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
+  const reps = demo ? [] : saReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, sq = sens.asked ? saSensQ(s.grade) : null;
+  return `${back}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(saGradeName(s.grade))}${s.std !== SA_STD() ? ' &middot; earlier standard' : ''}</div><h1>${esc(saVisitName(s.visit))}</h1>
+   <p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; the student stopped the visit' : ''}</p></div>
+  <div class="card"><p><b>Promise read:</b> ${s.promise ? 'Yes' : 'Not marked'} &middot; <b>Student's yes:</b> Yes &middot; <b>Who could see in:</b> ${esc(saWhere(s))}${((s.room || {}).who || []).length ? ' (' + s.room.who.map(w => ((room.who.find(o => o[0] === w) || [])[1] || w)).join(', ') + ')' : ''} &middot; <b>Screen:</b> ${esc(scr)}</p>
+   ${s.topic && s.topic.deck ? `<p style="margin-top:6px"><b>Topic:</b> ${esc(cdDeckName(s.topic.deck))}${(s.topic.used || []).length ? ', ' + s.topic.used.length + ' cards used' : ''}</p>` : ''}</div>
+  <div class="card"><h3>Levels</h3>${S.parts.map(p => { const L = (s.levels || {})[p.key] || {}; return `<div class="sp-lvrow"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span>
+    <span class="row" style="gap:6px"><span class="pill ${spLvCls(L.pick)}">${esc(saLvName(L.pick || 'none'))}</span>${c && !demo ? saPrevLevel(c, s, p.key) : ''}${L.mixed ? `<span class="pill">${esc(S.levels.mixed)}</span>` : ''}</span>
+    <small class="muted sp-src">Student: ${L.child == null ? 'no answers' : esc(saLvName(spLvOf(L.child)))} &middot; Saw: ${esc(((S.seen.find(o => o[0] === (s.seen || {})[p.key]) || [])[1]) || 'not marked')} &middot; Grown-up: ${L.grown == null ? 'not asked' : esc(saLvName(spLvOf(L.grown)))}${L.pick !== L.sug ? ' &middot; suggested ' + esc(saLvName(L.sug)) + (L.why ? ', changed because: ' + esc(L.why) : '') : ''}</small></div>`; }).join('')}</div>
+  ${(s.flags || []).length ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(S.goodbye.flagTitle)}</h3><ul style="margin-top:6px">${s.flags.map(f => `<li>${esc(f.q)} <b>${esc((saAns(f.a) || [])[1] || f.a)}</b></li>`).join('')}</ul><p class="muted" style="margin-top:6px">${esc(saTold(s.told))}${s.heard ? '. The student heard first.' : ''}</p></div>` : ''}
+  <details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
+   ${S.parts.map(p => { const qs = saQs(s.grade, p.key), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${idxs.map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i][0])} ${qa[i] ? (spHard(qs[i], qa[i]) ? `<b>${esc((saAns(qa[i]) || [])[1])}</b>` : esc((saAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}${((s.gv || {}).ans || {})[p.key] ? `<p class="muted" style="margin-top:4px">Grown-up: ${esc(((S.grownView.answers.find(o => o[0] === s.gv.ans[p.key]) || [])[1]) || '')}${(s.gv.words || {})[p.key] ? ', "' + esc(s.gv.words[p.key]) + '"' : ''}</p>` : ''}`; }).join('')}</details>
+  <div class="card st-private"><h3>${esc(S.sensitive.title)}</h3><p class="muted" style="font-size:14px">Private between the student and you. Never printed, copied, or used in a level.</p>
+   <p style="margin-top:8px">${sq ? `${esc(sq[0])} ${sens.a && sens.a !== 'skip' ? `<b>${esc((saAns(sens.a) || [])[1] || '')}</b>` : `<span class="muted">${esc(S.sensitive.skip)}</span>`}` : esc(S.sensitive.off[sens.why] || S.sensitive.off.visit)}</p></div>
+  <div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(saSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
+  ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${s.seenSheet ? 'The student saw the take-home sheet.' : 'Not marked as seen by the student.'}${Object.values(s.hide || {}).some(Boolean) ? ' They left some things out.' : ''}</p></div>` : ''}
+  ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
+  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="sa-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="sa-copy-pdf">${icon('copy')} Student Copy PDF</button>` : ''}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+}
+// The visit note: levels, flag count, safety summary. Never answer words, the grown-up's name, or the optional question.
+function saNote(s, c){
+  const S = SAG(), L = [];
+  L.push('Sapling visit: ' + saVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Student: ' + (c ? c.name : '') + ' (' + saGradeName(s.grade) + ')');
+  const con = c && c.sa && c.sa.consent; if (con && con.status === 'ok') L.push('Permission: ' + (((S.consent.how.find(x => x[0] === con.how) || [])[1]) || '') + (con.rel ? ', ' + con.rel : '') + (con.date ? ', ' + nice(con.date) : ''));
+  L.push('Promise read: ' + (s.promise ? 'yes' : 'not marked') + ". Student's yes: yes. Who could see in: " + saWhere(s) + '.');
+  if (s.stopped) L.push('The student stopped the visit, and it was honored.');
+  L.push('', 'Levels:');
+  S.parts.forEach(p => { const x = (s.levels || {})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (x ? saLvName(x.pick).toLowerCase() + (x.mixed ? ', mixed signals' : '') : 'not scored')); });
+  if ((s.flags || []).length) L.push('', 'Answers shared with the grown-up: ' + s.flags.length + ' (' + saTold(s.told).toLowerCase() + (s.heard ? '; the student heard first' : '') + ').');
+  L.push('Safety: ' + saSafetyText(s.safety));
+  if ((s.tryh || []).length) L.push('Try at home: ' + s.tryh.join(', ') + '.');
+  return L.join('\n');
+}
+function saTries(s){ const S = SAG(); return (s.tryh || []).map(t => { for (const p of S.parts){ const it = (S.tryHome[p.key] || []).find(x => x[0] === t); if (it) return [p, it]; } return null; }).filter(Boolean); }
+// The take-home sheet. The student sees it first and can leave out what we did, what they shared, and the guide's
+// "worth talking about" note. Flags already shared under the promise stay on. No levels, notes, safety step, or
+// optional question, ever.
+function saHomeModel(s, c){
+  const S = SAG(), H = S.takeHome, name = c ? c.name : '', hide = s.hide || {}, who = name || 'your student', sec = [];
+  if (!hide.did) sec.push({h:H.did, p:[saVisitName(s.visit) + (s.topic && s.topic.deck ? ' about ' + cdDeckName(s.topic.deck).toLowerCase() : '') + '. We looked at the six parts of ' + (name ? name + "'s" : 'their') + ' tree: ' + S.parts.map(p => p.part.toLowerCase()).join(', ') + '.' + (s.stopped ? ' We stopped when they wanted to, and that was the right thing to do.' : '')]});
+  if (s.share && !hide.share) sec.push({h:H.share, p:[s.share]});
+  const strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong');
+  if (strong.length) sec.push({h:H.strong, p:[strong.map(p => p.part + ' (' + p.name.toLowerCase() + ')').join(', ')]});
+  const talk = (s.told === 'concern' ? [] : (s.flags || [])).map(f => 'When asked "' + f.q + '" ' + who + ' said "' + (((saAns(f.a) || [])[1]) || '').toLowerCase() + '." ' + (f.flag === 'hope' ? 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away.' : 'Ask gently about it, and listen without fixing.'));
+  if (s.talkNote && !hide.talk) talk.push(s.talkNote);
+  if (talk.length) sec.push({h:H.talk, p:talk});
+  const tries = saTries(s);
+  if (tries.length) sec.push({h:H.try, p:tries.map(([p, it]) => it[0] + ' (' + p.part + '): ' + it[1])});
+  sec.push({h:H.help, li:H.helpLines});
+  return {eyebrow:'For your family', title:H.title, sub:(name ? name + ', ' : '') + nice(s.date), sec, after:['If someone is in danger, call 911. For a mental health crisis, call or text 988.'], close:H.close, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
+}
+// The student's own copy: what's growing strong, what they want to try, and help in their own hands.
+function saCopyModel(s, c){
+  const S = SAG(), K = S.studentCopy, sec = [];
+  const strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong');
+  if (strong.length) sec.push({h:K.strong, p:[strong.map(p => p.part + ' (' + p.name.toLowerCase() + ')').join(', ')]});
+  const tries = saTries(s);
+  if (tries.length) sec.push({h:K.try, p:tries.map(([p, it]) => it[0] + ': ' + it[1])});
+  sec.push({h:K.help, li:K.helpLines});
+  return {eyebrow:'Just for you', title:K.title, sub:K.lead + ' ' + nice(s.date), sec, close:K.close, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
+}
+const saFile = (kind, s) => 'sapling-' + kind + '-' + (s.date || today()) + '.pdf';
+
+// ----- the visit runner -----
+function saStart(visit, cid, demo){
+  const S = SAG();
+  if (!SAC){ saLoad(); return toast('Loading the Sapling questions. Try again in a moment.'); }
+  const c = demo ? {id:'demo', name:S.demo.name, sa:{grade:S.demo.grade, rel:'Mom', consent:{status:'ok', how:'verbal', date:today(), noVape:false}}} : CL(cid);
+  if (!c) return;
+  if (!demo && !saConsentOk(c)) return go('sapling', {sac:c.id});
+  if (!demo && !saReady()) return go('sapling', {sam:1});
+  const why = saSensWhy(visit, c.sa.grade, c);
+  RUN = {kind:'sa', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sa.grade, std:SAC.version, started:Date.now(), step:0,
+    screen:'guide', room:{where:'', who:[]}, promise:false, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:false,
+    sens:{on:!why, why, a:''}, safety:{safe:'', self:'', listen:[], notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[], topic:{deck:'', used:[]},
+    share:'', tryh:[], told:'', heard:false, talkNote:'', hide:{did:false, share:false, talk:false}, seenSheet:false, copy:false, priv:'', pn:{}, stopped:false};
+  saOpenRun();
+}
+function saSteps(r){
+  const parts = SAG().parts.map(p => 'p:' + p.key);
+  if (r.stopped) return ['start', ...(r.gvWhen === 'before' ? ['gv'] : []), 'levels', 'goodbye', 'review'];
+  return ['start', ...(r.gvWhen === 'before' ? ['gv'] : []), ...(r.visit === 'topic' ? ['topic'] : []), ...(r.visit === 'full' ? parts : ['quick']), ...(r.gvWhen === 'after' ? ['gv'] : []), 'safety', 'levels', 'goodbye', 'review'];
+}
+function saOpenRun(){ $('#runner').classList.remove('hide'); saDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
+function saKeep(){ if (RUN && RUN.kind === 'sa' && !RUN.demo){ DATA.draft = RUN; save(); } }
+function saQ(key, i, q){
+  const cur = ((RUN.ans || {})[key] || {})[i];
+  return `<div class="st-q"><p>${RUN.visit === 'full' ? `<span class="st-n">${i + 1}</span>` : ''}${esc(q[0])}${q[2] === 'r' ? ' <span class="pill" title="Yes is the hard answer here">reverse</span>' : ''}</p>
+   <div class="st-opts" role="group" aria-label="${esc(q[0])}">${SAC.answers.map(o => `<button type="button" class="chip" data-act="sa-ans" data-k="${key}" data-i="${i}" data-v="${o[0]}" aria-pressed="${cur === o[0]}">${esc(o[1])}</button>`).join('')}</div>
+   <div class="tipbox sp-tip"><b>Tip:</b> ${esc(q[1])}</div></div>`;
+}
+function saSensBlock(){
+  const S = SAG(), q = saSensQ(RUN.grade), a = RUN.sens.a;
+  return `<div class="card st-private" style="margin-top:14px"><h3>${esc(S.sensitive.title)}</h3><p class="muted" style="font-size:14px">Private. Never printed, copied, or used in a level.</p>
+   <div class="blk say" style="margin-top:8px"><div class="lab">Say</div><ul><li>${esc(S.sensitive.say)}</li></ul></div>
+   <div class="st-q"><p>${esc(q[0])}</p><div class="st-opts" role="group" aria-label="${esc(q[0])}">${SAC.answers.map(o => `<button type="button" class="chip" data-act="sa-sens" data-v="${o[0]}" aria-pressed="${a === o[0]}">${esc(o[1])}</button>`).join('')}<button type="button" class="chip" data-act="sa-sens" data-v="skip" aria-pressed="${a === 'skip'}">${esc(S.screen.skip)}</button></div>
+   <div class="tipbox sp-tip"><b>Tip:</b> ${esc(q[1])} ${esc(S.sensitive.tip)}</div><p class="muted" style="font-size:14px;margin-top:6px">${esc(S.sensitive.school)}</p></div></div>`;
+}
+const saSeenRow = key => `<div class="sp-seen"><span class="muted" style="font-size:14px">What you saw</span><div class="st-opts">${SAG().seen.map(o => stChip('sa-seen', `data-k="${key}" data-v="${o[0]}"`, RUN.seen[key] === o[0], o[1])).join('')}</div></div>`;
+function saFlags(run){
+  const out = [], idxs = saIdx(run);
+  SAG().parts.forEach(p => { const qs = saQs(run.grade, p.key), qa = (run.ans || {})[p.key] || {}; idxs.forEach(i => { const q = qs[i]; if (q && spFlagged(q, qa[i])) out.push({part:p.key, q:q[0], a:qa[i], flag:q[3]}); }); });
+  return out;
+}
+function saDraw(){
+  const S = SAG(), steps = saSteps(RUN), st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), n = steps.length;
+  const pct = Math.round(RUN.step / (n - 1) * 100);
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if (st === 'start'){
+    const R = S.room, P = S.promise, Y = S.studentYes, v = S.visits.find(x => x[0] === RUN.visit);
+    body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])} with ${esc(c ? c.name : '')}</h2><p class="purpose">${esc(saGradeName(RUN.grade))}. ${esc(v[3])}</p>
+     <div class="card"><h3>${esc(R.title)}</h3><p class="muted">${esc(R.lead)}</p><div class="st-opts">${R.where.map(o => stChip('sa-room', `data-v="${o[0]}"`, RUN.room.where === o[0], o[1])).join('')}</div>
+      ${RUN.room.where === 'in' ? `<div class="tipbox">${esc(R.inNote)}</div>` : ''}<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.never)}</p>
+      <h4 style="margin-top:12px">Also here</h4><div class="st-opts">${R.who.map(o => stChip('sa-who', `data-v="${o[0]}"`, RUN.room.who.includes(o[0]), o[1])).join('')}</div>
+      <div class="tipbox">${esc(R.concern)}</div></div>
+     <div class="card"><h3>${esc(S.grownView.title)}</h3><p class="muted">${esc(S.grownView.lead)}</p><div class="st-opts">${S.grownView.when.map(o => stChip('sa-gvwhen', `data-v="${o[0]}"`, RUN.gvWhen === o[0], o[1])).join('')}</div></div>
+     <div class="card"><h3>${esc(S.screen.title)}</h3><div class="st-opts">${S.screen.opts.map(o => stChip('sa-screen', `data-v="${o[0]}"`, RUN.screen === o[0], o[1])).join('')}</div><p class="muted" style="font-size:14px;margin-top:8px">${esc((S.screen.opts.find(o => o[0] === RUN.screen) || [])[2] || '')}</p>
+      ${RUN.screen === 'shared' ? `<label class="cb" style="margin-top:8px"><input type="checkbox" data-saread="1" ${RUN.read ? 'checked' : ''}> ${esc(S.screen.readAloud)}</label>` : ''}</div>
+     <div class="card step-card"><h3>${esc(P.title)}</h3><p class="muted">${esc(P.lead)}</p>${blk('Say', [P.say], 'say')}
+      <div class="blk"><div class="lab">The three limits</div><ul>${P.limits.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div><div class="tipbox">${esc(P.tip)}</div>
+      <label class="cb" style="margin-top:10px"><input type="checkbox" data-sapromise="1" ${RUN.promise ? 'checked' : ''}> ${esc(P.check)}</label></div>
+     <div class="card step-card">${blk('Ask the student', [Y.say], 'say')}<div class="tipbox">${esc(Y.tip)}</div>
+      <div class="st-opts" style="margin-top:12px">${stChip('sa-yes', 'data-v="yes"', RUN.yes === 'yes', 'Yes')}${stChip('sa-yes', 'data-v="no"', RUN.yes === 'no', 'Not today')}</div>
+      ${RUN.yes === 'no' ? `<p style="margin-top:10px">${esc(Y.notToday)}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sa-nottoday">${RUN.demo ? 'End the Demo' : 'Record Not Today and Close'}</button>` : ''}</div>
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}`;
+  } else if (st === 'gv'){
+    const G = S.grownView;
+    body = `<div class="run-step-n">${esc(G.title)}</div><h2 class="run-step-t">Ask the grown-up</h2><p class="muted">${esc(G.lead)}</p><div class="tipbox">${esc(G.tip)}</div>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div><div class="st-q"><p>${esc(G.q[p.key])}</p>
+      <div class="st-opts">${G.answers.map(o => stChip('sa-gv', `data-k="${p.key}" data-v="${o[0]}"`, RUN.gv.ans[p.key] === o[0], o[1])).join('')}</div>
+      <input type="text" data-sagw="${p.key}" value="${esc(RUN.gv.words[p.key] || '')}" placeholder="A few words (optional)" style="margin-top:8px" aria-label="${esc(p.part)}: the grown-up's words"></div></div>`).join('')}
+     <button class="btn btn-line btn-sm" style="margin-top:14px" data-act="sa-rep-gv">${icon('shield')} ${esc(G.concern)}</button>`;
+  } else if (st === 'topic'){
+    const decks = (CDG() ? CDG().decks : []).filter(d => d.sapling && Object.keys(d.sapling).length), d = RUN.topic.deck ? cdDeck(RUN.topic.deck) : null;
+    body = `<div class="run-step-n">Topic visit</div><h2 class="run-step-t">Cards for a hard topic</h2><p class="muted">Pick the deck. Use one or two cards for each part, in any order. Tap the ones you used.</p>
+     <label class="f" for="sa-deck">Topic</label><select id="sa-deck" data-sadeck="1" style="max-width:420px"><option value="">Choose a topic</option>${decks.map(x => `<option value="${x.id}" ${x.id === RUN.topic.deck ? 'selected' : ''}>${esc(x.title)}</option>`).join('')}</select>
+     ${d ? `<p class="muted" style="margin-top:8px">${esc(d.blurb || '')}</p>${S.parts.map(p => { const gk = ST2GV[p.key], list = (d.sapling || {})[gk] || []; return list.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${list.map((cd, i) => stChip('sa-card', `data-v="${gk}:${i}"`, RUN.topic.used.includes(gk + ':' + i), cdTxt(cd))).join('')}</div></div>` : ''; }).join('')}
+      <details class="st-lf"><summary>${esc(CDG().heavy || 'If something heavy comes up')}</summary><p class="muted" style="margin-top:6px">${esc(CDG().heavyNote || '')}</p></details>` : ''}
+     <label class="f" for="sa-tpn">Your notes (private)</label><textarea id="sa-tpn" data-saf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
+  } else if (st.startsWith('p:')){
+    const p = saPart(st.slice(2)), qs = saQs(RUN.grade, p.key), sens = p.key === 'body' && RUN.sens.on;
+    body = `<div class="run-step-n">Part ${S.parts.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
+     <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.say], 'say')}${S.parts.indexOf(p) === 0 ? blk('Then', S.openers.say, 'say') + `<div class="tipbox">${esc(S.openers.tip)}</div>` : ''}
+      <details class="st-lf"><summary>Talk starters (optional)</summary><div class="st-opts" style="margin-top:8px">${p.warm.map((w, i) => stChip('sa-warm', `data-k="${p.key}" data-v="${i}"`, (RUN.warm[p.key] || []).includes(i), w)).join('')}</div></details></div>
+     ${RUN.screen === 'shared' ? `<button class="btn btn-gold" style="margin-top:12px" data-act="sa-kid" data-v="${p.key}">${icon('play')} ${esc(S.screen.handTo)}</button>` : ''}
+     ${[0,1,2,3].map(i => qs[i] ? saQ(p.key, i, qs[i]) : '').join('')}
+     ${sens ? saSensBlock() : ''}
+     ${saSeenRow(p.key)}
+     <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
+     <label class="f" for="sa-pn">Your notes (private)</label><textarea id="sa-pn" data-sapn="${p.key}" style="min-height:70px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key] || '')}</textarea>`;
+  } else if (st === 'quick'){
+    body = `<div class="run-step-n">${RUN.visit === 'topic' ? 'Quick check-in' : 'Six quick questions'}</div><h2 class="run-step-t">One for each part</h2><p class="muted">Read each one, or hand them the device. Let them answer in their own words, then tap.</p>
+     ${RUN.screen === 'shared' ? `<button class="btn btn-gold" style="margin-top:12px" data-act="sa-kid" data-v="all">${icon('play')} ${esc(S.screen.handTo)}</button>` : ''}
+     ${S.parts.map(p => { const q = saQs(RUN.grade, p.key)[0]; return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${q ? saQ(p.key, 0, q) : ''}${saSeenRow(p.key)}</div>`; }).join('')}
+     <label class="f" for="sa-pq">Your notes (private)</label><textarea id="sa-pq" data-saf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
+  } else if (st === 'safety'){
+    const F = S.safety, sf = RUN.safety, sq = SAC.safety.questions, flag = spSafeFlag(sf);
+    body = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
+     <div class="card step-card">${blk('Say', [F.say], 'say')}${blk('Ask, then listen', F.open, 'say')}</div>
+     ${sq.map(([q, k]) => `<div class="st-q"><p>${esc(q)}</p><div class="st-opts">${F.answers.map(o => stChip('sa-safe', `data-k="${k}" data-v="${o[0]}"`, sf[k] === o[0], o[1])).join('')}</div></div>`).join('')}
+     <div class="tipbox">${esc(F.note)}</div>
+     ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+       <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="sa-rep-run">${icon('shield')} Report a Concern</button></div>
+       <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('sa-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
+     <label class="cb" style="margin-top:16px"><input type="checkbox" data-sasafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
+     ${sf.notAsked ? `<select data-sasafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-sasafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  } else if (st === 'levels'){
+    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(S.levels.lead)} The safety step and the optional question never change a level.</p>
+     ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} stopped the visit. Mark only what you have. "${esc(S.levels.notEnough)}" is fine.</div>` : ''}
+     ${S.parts.map(p => { const g = saSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug, needWhy = spStepGap(pick, g.sug) >= 2;
+       return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>
+        <p class="muted" style="font-size:14px;margin-top:4px">Student: ${g.child == null ? 'no answers' : esc(saLvName(spLvOf(g.child)))} &middot; Saw: ${esc(((S.seen.find(o => o[0] === RUN.seen[p.key]) || [])[1]) || 'not marked')} &middot; Grown-up: ${g.grown == null ? 'not asked' : esc(saLvName(spLvOf(g.grown)))}</p>
+        <p style="margin-top:6px">Suggested: <span class="pill ${spLvCls(g.sug)}">${esc(saLvName(g.sug))}</span>${g.mixed ? ` <span class="pill">${esc(S.levels.mixed)}</span>` : ''}</p>
+        <div class="st-opts">${S.levels.names.map(o => stChip('sa-lv', `data-k="${p.key}" data-v="${o[0]}"`, pick === o[0], o[1])).join('')}</div>
+        ${needWhy ? `<input type="text" data-salw="${p.key}" value="${esc(cur.why || '')}" placeholder="${esc(S.levels.why)}" style="margin-top:8px" aria-label="${esc(p.part)}: why the change">` : ''}</div>`; }).join('')}`;
+  } else if (st === 'goodbye'){
+    const G = S.goodbye, flags = saFlags(RUN);
+    body = `<div class="run-step-n">Goodbye</div><h2 class="run-step-t">Wrap up</h2>
+     <div class="card step-card">${blk('Say', [G.say], 'say')}${blk('Ask', [G.shareQ], 'say')}</div>
+     <label class="f" for="sa-share">Something ${esc(c ? c.name : 'they')} chose to share (goes on the take-home sheet, unless they leave it out)</label><input type="text" id="sa-share" data-saf="share" value="${esc(RUN.share)}">
+     ${flags.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:14px"><h3>${esc(G.flagTitle)}</h3><p class="muted">${esc(G.flagLead)}</p><ul style="margin-top:6px">${flags.map(f => `<li>${esc(f.q)} <b>${esc((saAns(f.a) || [])[1])}</b></li>`).join('')}</ul>
+       ${blk('Say to the student', [G.flagSay], 'say')}
+       <label class="cb" style="margin-top:8px"><input type="checkbox" data-saheard="1" ${RUN.heard ? 'checked' : ''}> ${esc(G.heard)}</label>
+       <div class="st-opts" style="margin-top:8px">${G.flagOpts.map(o => stChip('sa-told', `data-v="${o[0]}"`, RUN.told === o[0], o[1])).join('')}</div>
+       ${RUN.told === 'concern' ? `<p style="margin-top:8px">${esc(S.room.concern)}</p><button class="btn btn-line btn-sm" style="margin-top:8px" data-act="sa-rep-run">${icon('shield')} Report a Concern</button>` : ''}</div>` : ''}
+     <h4 style="margin-top:16px">${esc(S.takeHome.try)} <span class="muted" style="font-weight:400">(let them pick one or two)</span></h4>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${(S.tryHome[p.key] || []).map(t => stChip('sa-try', `data-v="${esc(t[0])}"`, RUN.tryh.includes(t[0]), t[0])).join('')}</div></div>`).join('')}
+     <label class="f" for="sa-priv">Private notes</label><textarea id="sa-priv" data-saf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`;
+  } else {
+    const R = S.takeHome.review, m = saHomeModel(saRunAsVisit(), c), H = S.takeHome, flagsOn = RUN.told !== 'concern' && saFlags(RUN).length;
+    const lo = k => `<label class="cb" style="margin-top:6px"><input type="checkbox" data-sahide="${k}" ${RUN.hide[k] ? 'checked' : ''}> ${esc(R.leaveOut)}</label>`;
+    body = `<div class="run-step-n">Take-home sheet</div><h2 class="run-step-t">${esc(R.title)}</h2><p class="muted">${esc(R.lead)}</p>
+     <div class="card"><h4>${esc(H.did)}</h4>${lo('did')}${RUN.share ? `<h4 style="margin-top:12px">${esc(H.share)}</h4><p style="margin-top:4px">${esc(RUN.share)}</p>${lo('share')}` : ''}
+      <h4 style="margin-top:12px">${esc(H.talk)}</h4>${flagsOn ? `<p class="muted" style="font-size:14px;margin-top:4px">${esc(R.locked)}</p>` : ''}
+      <label class="f" for="sa-tn">${esc(R.talkNote)}</label><input type="text" id="sa-tn" data-saf="talkNote" value="${esc(RUN.talkNote)}">${lo('talk')}</div>
+     <details class="card"><summary><b>See the whole sheet</b></summary><div class="sa-sheet" style="margin-top:8px">${ggSheetHTML(m)}</div></details>
+     <div class="card"><label class="cb"><input type="checkbox" data-saseen="1" ${RUN.seenSheet ? 'checked' : ''}> ${esc(R.seen)}</label><label class="cb" style="margin-top:6px"><input type="checkbox" data-sacopy="1" ${RUN.copy ? 'checked' : ''}> ${esc(R.copy)}</label>
+      <p class="muted" style="font-size:14px;margin-top:6px">Make the PDFs after you save, from the visit page.</p></div>`;
+  }
+  const last = st === 'review';
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(saVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span><button class="bar-btn sp-repbtn" data-act="sa-rep-run" aria-label="Report a concern" title="Report a concern">${icon('shield')}</button><button class="bar-btn" data-act="sa-pause" aria-label="Close">&times;</button></div></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="run-body" id="run-body"><div class="wrap">${st !== 'start' && !RUN.stopped && !['levels','goodbye','review'].includes(st) ? `<div class="sp-stopbar"><button class="btn btn-line btn-sm" data-act="sa-stop">${esc(S.stop.btn)}</button></div>` : ''}${body}</div></div>
+    <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="sa-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
+    ${last ? `<button class="btn btn-gold" data-act="sa-save">${icon('check')} ${RUN.demo ? 'Finish Demo' : 'Save Visit'}</button>` : `<button class="btn btn-gold" data-act="sa-next" ${st === 'start' && RUN.yes === 'no' ? 'disabled style="opacity:.4"' : ''}>${st === 'start' ? 'Begin' : 'Next'} &rsaquo;</button>`}</div></div>`;
+  tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
+}
+// The visit as it would be saved, for previews and saving.
+function saRunAsVisit(){
+  const r = RUN, levels = {};
+  SAG().parts.forEach(p => { const g = saSuggest(r, p.key), cur = r.lv[p.key] || {}; levels[p.key] = {child:g.child, seen:g.seen, grown:g.grown, sug:g.sug, mixed:g.mixed, pick:cur.pick || g.sug, why:cur.why || ''}; });
+  return {id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, grade:r.grade, visit:r.visit, screen:r.screen,
+    room:r.room, promise:r.promise, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety, topic:r.visit === 'topic' ? r.topic : null,
+    sens:{asked:r.sens.on && !r.stopped, why:r.stopped && r.sens.on && !r.sens.a ? 'stopped' : r.sens.why, a:r.sens.on ? r.sens.a : ''},
+    flags:saFlags(r), told:r.told, heard:r.heard, share:r.share, tryh:r.tryh, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet, copy:r.copy, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || []};
+}
+function saNext(){
+  const steps = saSteps(RUN), st = steps[RUN.step], sf = RUN.safety;
+  if (st === 'start'){
+    if (!RUN.room.where) return alert('Another adult must be able to see in before the visit starts. Mark which.');
+    if (!RUN.promise) return alert('Read the promise ("what stays between us") to the student first, then check the box.');
+    if (RUN.yes !== 'yes') return alert('Ask the student first. The visit starts only with their yes.');
+  }
+  if (st === 'topic' && !RUN.topic.deck) return alert('Choose a topic, or go back and pick a different visit.');
+  if (st === 'safety' && !sf.notAsked && (!sf.safe || !sf.self)) return alert('Ask both safety questions, or check "I didn\'t ask these today" and say why.');
+  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
+  if (st === 'safety' && spSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
+  if (st === 'levels'){
+    for (const p of SAG().parts){ const g = saSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug; if (spStepGap(pick, g.sug) >= 2 && !(cur.why || '').trim()) return alert(p.part + ': you changed the level by two steps. Add a quick reason.'); }
+  }
+  if (st === 'goodbye' && saFlags(RUN).length){
+    if (!RUN.told) return alert('Some answers need to reach the grown-up. Mark how they were shared, or that the worry is about the grown-up.');
+    if (RUN.told !== 'concern' && !RUN.heard) return alert('Tell the student first, as the promise said, then check the box.');
+  }
+  RUN.step++; saKeep(); saDraw();
+}
+function saStop(fromKid){
+  if (!fromKid && !confirm('Stop the visit now? That is always okay.')) return;
+  saKidClose();
+  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = SAG().safety.notAskedReasons[0];
+  RUN.step = saSteps(RUN).indexOf('levels'); saKeep(); saDraw();
+  toast(SAG().stop.say);
+}
+function saSaveRun(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId), s = saRunAsVisit();
+  saKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ s.person = c; V = {tab:'sapling', sav:'demo', saDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  DATA.sessions.push(s); DATA.draft = null;
+  if (c){ touch(c); c.last = today(); }
+  save(); go('sapling', {sav:s.id}); toast('Visit saved.');
+}
+function saNotToday(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ go('sapling'); toast('Demo ended. "Not today" is always honored.'); return; }
+  DATA.sessions.push({id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:0, std:r.std, grade:r.grade, visit:'nottoday', room:r.room, promise:r.promise, yes:'no'});
+  DATA.draft = null; if (c){ touch(c); c.last = today(); }
+  save(); go('sapling', {sap:r.clientId}); toast('"Not today" recorded. Thank them.');
+}
+function saPause(){
+  if (RUN.demo){ if (!confirm('Close the demo?')) return; }
+  else if (!confirm('Close this visit? Your notes are kept, and you can pick it up again next time you open the Field Guide.')) return;
+  if (!RUN.demo){ DATA.draft = RUN; save(); toast('Visit paused.'); }
+  saKidClose(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+}
+function saToggle(t){
+  const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
+  const one = () => t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t));
+  const flip = arr => { const i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); t.setAttribute('aria-pressed', i < 0); };
+  const redraw = () => { saKeep(); const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; };
+  switch(a){
+    case 'sa-ans': RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][t.dataset.i] = v; one(); break;
+    case 'sa-sens': RUN.sens.a = v; one(); break;
+    case 'sa-seen': RUN.seen[k] = RUN.seen[k] === v ? '' : v; if (RUN.seen[k]) one(); else t.setAttribute('aria-pressed', false); break;
+    case 'sa-gv': RUN.gv.ans[k] = v; one(); break;
+    case 'sa-room': RUN.room.where = v; return redraw();
+    case 'sa-who': flip(RUN.room.who); break;
+    case 'sa-gvwhen': RUN.gvWhen = v; return redraw();
+    case 'sa-screen': RUN.screen = v; return redraw();
+    case 'sa-yes': RUN.yes = v; return redraw();
+    case 'sa-warm': { const arr = RUN.warm[k] = RUN.warm[k] || [], i = arr.indexOf(+v); if (i >= 0) arr.splice(i, 1); else arr.push(+v); t.setAttribute('aria-pressed', i < 0); break; }
+    case 'sa-card': flip(RUN.topic.used); break;
+    case 'sa-safe': RUN.safety[k] = v; return redraw();
+    case 'sa-act': flip(RUN.safety.actions); break;
+    case 'sa-lv': RUN.lv[k] = Object.assign({}, RUN.lv[k], {pick:v}); return redraw();
+    case 'sa-told': RUN.told = v; return redraw();
+    case 'sa-try': flip(RUN.tryh); break;
+  }
+  saKeep();
+}
+
+// ----- the student's screen: one part at a time, the questions and answers only. Everything else stays hidden. -----
+let SAKID = null;
+function saKidOpen(which){
+  const keys = which === 'all' ? SAG().parts.map(p => p.key) : [which], list = [];
+  keys.forEach(k => { saIdx(RUN).forEach(i => { const q = saQs(RUN.grade, k)[i]; if (q) list.push({k, i, q}); }); if (k === 'body' && which !== 'all' && RUN.sens.on) list.push({k, i:'sens', q:saSensQ(RUN.grade), sens:true}); });
+  SAKID = {list, n:0, done:false}; saKidDraw();
+}
+function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; try { speechSynthesis.cancel(); } catch(e){} }
+function saKidDraw(){
+  const S = SAG(); let el = $('#sa-kid');
+  if (!el){ el = document.createElement('div'); el.id = 'sa-kid'; el.className = 'sp-kid sa-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Sapling questions'); document.body.appendChild(el); }
+  if (SAKID.done){
+    el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(S.screen.kidDone)}</div><button class="sp-kid-back" data-act="sa-kid-back">${esc(S.screen.back)}</button></div>`;
+    return;
+  }
+  const it = SAKID.list[SAKID.n], p = saPart(it.k), cur = it.sens ? RUN.sens.a : ((RUN.ans[it.k] || {})[it.i]);
+  el.innerHTML = `<div class="sp-kid-in" style="--pc:${p.color}"><div class="sp-kid-top"><span class="sp-kid-part">${esc(p.part)}</span><span class="sp-kid-dots">${SAKID.list.map((_, j) => `<i class="${j < SAKID.n ? 'on' : j === SAKID.n ? 'cur' : ''}"></i>`).join('')}</span></div>
+    ${SAKID.n === 0 ? `<p class="sa-kid-intro">${esc(S.screen.intro)}</p>` : ''}${it.sens ? `<p class="sa-kid-intro">${esc(S.sensitive.say)}</p>` : ''}
+    <div class="sp-kid-q">${esc(it.q[0])}</div>
+    <button class="sp-kid-say" data-act="sa-kid-say" aria-label="Read it to me">&#128264; Read it to me</button>
+    <div class="sa-kid-ans">${SAC.answers.map(o => `<button class="sp-kid-a" data-act="sa-kid-a" data-v="${o[0]}" aria-pressed="${cur === o[0]}"><span>${esc(o[1])}</span></button>`).join('')}</div>
+    <div class="sp-kid-foot">${SAKID.n > 0 ? '<button class="sp-kid-nav" data-act="sa-kid-prev">&lsaquo; Back</button>' : '<span></span>'}<button class="sp-kid-nav" data-act="sa-kid-skip">${esc(S.screen.skip)}</button><button class="sp-kid-stop" data-act="sa-kid-stop">${esc(S.stop.btn)}</button></div></div>`;
+  if (RUN.read) spSay(it.q[0]);
+}
+function saKidAnswer(v){
+  const it = SAKID.list[SAKID.n];
+  if (it.sens) RUN.sens.a = v === '' ? 'skip' : v;
+  else { RUN.ans[it.k] = RUN.ans[it.k] || {}; if (v === '') delete RUN.ans[it.k][it.i]; else RUN.ans[it.k][it.i] = v; }
+  saKeep();
+  if (SAKID.n < SAKID.list.length - 1) SAKID.n++; else SAKID.done = true;
+  setTimeout(saKidDraw, 160);
+}
+
+// ----- moving between screens -----
+function saAct(a, v, t){
+  switch(a){
+    case 'sa-retry': SAC_FAIL = false; saLoad(); render(); return true;
+    case 'sa-home': go('sapling'); return true;
+    case 'sa-mhome': go('sapling', {sam:1}); return true;
+    case 'sa-ml': go('sapling', {sam:1, saml:+v}); return true;
+    case 'sa-mread': { const L = SAM().lessons, i = +v; samData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !samData().lessons[x.id]); if (nx >= 0) go('sapling', {sam:1, saml:nx}); else { go('sapling', {sam:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sa-mq': go('sapling', {sam:1, saq:samNewQuiz()}); return true;
+    case 'sa-mpick': V.saq.ans[V.saq.order[V.saq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sa-mnext],[data-act=sa-mfinish]'); if (nb) nb.disabled = false; } return true;
+    case 'sa-mnext': if (V.saq.ans[V.saq.order[V.saq.i]] === undefined) return true; V.saq.i++; render(); return true;
+    case 'sa-mprev': if (V.saq.i > 0){ V.saq.i--; render(); } return true;
+    case 'sa-mfinish': samFinish(); return true;
+    case 'sa-msign': go('sapling', {sam:1, sas:1}); return true;
+    case 'sa-msigned': { const nm = $('#sam-name').value.trim(); if (!nm){ $('#sam-name').focus(); return true; } if (!$('#sam-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
+      samData().signed = {v:SAM().version, date:today(), name:nm}; save(); go('sapling', {sam:1}); toast(saReady() ? 'Signed. Sapling visits are open.' : 'Signed.'); return true; }
+    case 'sa-mprint': samPrint(); return true;
+    case 'sa-new': { const n = $('#sa-nn').value.trim(); if (!n){ $('#sa-nn').focus(); return true; }
+      const c = {id:uid(), u:Date.now(), name:n, service:'Sapling', status:'active', followups:[], created:today(), sa:{grade:$('#sa-ng').value, rel:$('#sa-nr').value.trim(), consent:null}};
+      DATA.clients.push(c); save(); V.sach = null; V.sanv = undefined; go('sapling', {sac:c.id}); return true; }
+    case 'sa-open': { const c = CL(v); if (!c){ go('sapling'); return true; } if (!c.sa){ c.sa = {grade:'6', rel:'', consent:null}; touch(c); save(); } go('sapling', {sap:v}); return true; }
+    case 'sa-consent': go('sapling', {sac:v}); return true;
+    case 'sa-ch': V.sach = v; { const nv = $('#sa-nv'); if (nv) V.sanv = nv.checked; const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
+    case 'sa-consent-save': { const c = CL(v), C = SAG().consent, how = V.sach || (c.sa.consent && c.sa.consent.status === 'ok' ? c.sa.consent.how : 'form'), name = $('#sa-cnm').value.trim();
+      const boxes = Array.from(document.querySelectorAll('[data-sabox]')).filter(x => x.checked).map(x => x.dataset.sabox);
+      if (how === 'form' && boxes.length < C.boxes.length){ alert('Every box needs to be checked before the form can be saved. The optional question box is separate and can stay unchecked.'); return true; }
+      if (!name){ $('#sa-cnm').focus(); alert(how === 'form' ? 'The grown-up types their name to sign.' : 'Add who gave permission.'); return true; }
+      c.sa.consent = {status:'ok', how, name, rel:$('#sa-crl').value, date:$('#sa-cdt').value || today(), v:C.version, boxes:how === 'form' ? boxes : [], noVape:!!($('#sa-nv') || {}).checked, where:how === 'file' ? ($('#sa-cw') || {}).value || '' : '', note:how !== 'form' ? ($('#sa-cn') || {}).value || '' : ''};
+      touch(c); save(); V.sach = null; V.sanv = undefined; go('sapling', {sac:c.id}); toast('Permission saved.'); return true; }
+    case 'sa-consent-pdf': { const c = CL(v); if (c && saConsentOk(c)) ggShare(ggPdf(ggSheetBlocks(saConsentModel(c))), 'sapling-permission-' + (c.sa.consent.date || today()) + '.pdf', SAG().consent.title); return true; }
+    case 'sa-consent-print': { const c = CL(v); if (c && saConsentOk(c)){ const m = saConsentModel(c); printNow(ph(m.title) + ggSheetHTML(m), m.title); } return true; }
+    case 'sa-consent-no': case 'sa-consent-stop': { const c = CL(v); if (!c || !confirm(a === 'sa-consent-no' ? 'Record that they said no for now? Visits stay off.' : 'Record that they stopped Sapling visits? Visits stay off unless they give permission again.')) return true;
+      c.sa.consent = {status:a === 'sa-consent-no' ? 'declined' : 'withdrawn', date:today()}; touch(c); save(); go('sapling', {sap:c.id}); return true; }
+    case 'sa-start': saStart(v, t.dataset.c, false); return true;
+    case 'sa-demo': saStart('quick', null, true); return true;
+    case 'sa-next': saNext(); return true;
+    case 'sa-prev': if (RUN && RUN.step > 0){ RUN.step--; saKeep(); saDraw(); } return true;
+    case 'sa-save': saSaveRun(); return true;
+    case 'sa-pause': saPause(); return true;
+    case 'sa-stop': if (RUN) saStop(false); return true;
+    case 'sa-kid-stop': if (RUN && SAKID){ const el = $('#sa-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(SAG().stop.say)}</div><button class="sp-kid-back" data-act="sa-kid-stopped">${esc(SAG().screen.back)}</button></div>`; if (RUN.read) spSay(SAG().stop.say); } return true;
+    case 'sa-kid-stopped': saStop(true); return true;
+    case 'sa-nottoday': saNotToday(); return true;
+    case 'sa-kid': saKidOpen(v); return true;
+    case 'sa-kid-a': saKidAnswer(v); return true;
+    case 'sa-kid-skip': saKidAnswer(''); return true;
+    case 'sa-kid-prev': if (SAKID && SAKID.n > 0){ SAKID.n--; saKidDraw(); } return true;
+    case 'sa-kid-say': if (SAKID && !SAKID.done) spSay(SAKID.list[SAKID.n].q[0]); return true;
+    case 'sa-kid-back': saKidClose(); { const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; } return true;
+    case 'sa-ans': case 'sa-sens': case 'sa-seen': case 'sa-gv': case 'sa-room': case 'sa-who': case 'sa-gvwhen': case 'sa-screen': case 'sa-yes': case 'sa-warm': case 'sa-card': case 'sa-safe': case 'sa-act': case 'sa-lv': case 'sa-told': case 'sa-try':
+      if (RUN && RUN.kind === 'sa') saToggle(t); return true;
+    case 'sa-rep-run': if (RUN) spRepOpen(RUN.clientId, RUN.id, '', 'sa'); return true;
+    case 'sa-rep-gv': if (RUN) spRepOpen(RUN.clientId, RUN.id, 'grownup', 'sa'); return true;
+    case 'sa-rep-for': spRepOpen(v, null, '', 'sa'); return true;
+    case 'sa-rep-new': spRepOpen(null, null, '', 'sa'); return true;
+    case 'sa-visit': go('sapling', {sav:v}); return true;
+    case 'sa-rec': go('sapling', {sarec:v}); return true;
+    case 'sa-home-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)))), saFile('take-home', s), SAG().takeHome.title); return true; }
+    case 'sa-home-print': { const s = saFindVisit(); if (s){ const m = saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
+    case 'sa-copy-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(saCopyModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)))), saFile('my-copy', s), SAG().studentCopy.title); return true; }
+    case 'sa-copy-note': { const s = saFindVisit(); if (s) copy(saNote(s, V.sav === 'demo' ? s.person : CL(s.clientId))); return true; }
+    case 'sa-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sapling', s ? {sap:s.clientId} : {}); } return true;
+    case 'sa-del': if (confirm('Delete this student and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('sapling'); } return true;
+    case 'sa-add-fu': { const c = CL(v), d = $('#sa-fd').value, tx = $('#sa-ft').value.trim(); if (!d){ $('#sa-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
+    case 'sa-field': saSetField(v === 'on'); return true;
+  }
+  return false;
+}
+// Typing and choosing. Returns true when handled.
+function saInput(t, ev){
+  if (t.dataset.sanv && ev === 'change'){ V.sanv = t.checked; return true; }
+  if (RUN && RUN.kind === 'sa'){
+    if (t.dataset.saf){ RUN[t.dataset.saf] = t.value; saKeep(); return true; }
+    if (t.dataset.sapn){ RUN.pn[t.dataset.sapn] = t.value; saKeep(); return true; }
+    if (t.dataset.sagw){ RUN.gv.words[t.dataset.sagw] = t.value; saKeep(); return true; }
+    if (t.dataset.salw){ RUN.lv[t.dataset.salw] = Object.assign({}, RUN.lv[t.dataset.salw], {why:t.value}); saKeep(); return true; }
+    if (t.dataset.sadeck && ev === 'change'){ RUN.topic = {deck:t.value, used:[]}; saKeep(); saDraw(); return true; }
+    if (t.dataset.saread && ev === 'change'){ RUN.read = t.checked; saKeep(); return true; }
+    if (t.dataset.sapromise && ev === 'change'){ RUN.promise = t.checked; saKeep(); return true; }
+    if (t.dataset.saheard && ev === 'change'){ RUN.heard = t.checked; saKeep(); return true; }
+    if (t.dataset.saseen && ev === 'change'){ RUN.seenSheet = t.checked; saKeep(); return true; }
+    if (t.dataset.sacopy && ev === 'change'){ RUN.copy = t.checked; saKeep(); return true; }
+    if (t.dataset.sahide && ev === 'change'){ RUN.hide[t.dataset.sahide] = t.checked; saKeep(); const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; return true; }
+    if (t.dataset.sasafe){ const k = t.dataset.sasafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; saKeep(); if (k === 'notAsked' && ev === 'change'){ const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; } return true; }
+  }
+  if (t.dataset.sac && V.sap){ const c = CL(V.sap); if (!c) return true; if (t.dataset.sac === 'name' || t.dataset.sac === 'status') c[t.dataset.sac] = t.value; else c.sa[t.dataset.sac] = t.value; touch(c); save(); if (ev === 'change' && t.tagName === 'SELECT') render(); return true; }
+  if (t.dataset.safu !== undefined && V.sap && ev === 'change'){ const c = CL(V.sap); c.followups[+t.dataset.safu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); return true; }
+  return false;
+}
+
+// ----- Owner: open to Field users. Reporting contact and the yearly recheck live on the Sprout Guide card. -----
+function saOwnerCard(){
+  const S = SAG();
+  if (!S) return `<div class="card"><h3>Sapling Guide</h3><p class="muted">Sapling Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="card"><h3>Sapling Guide</h3>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Sapling training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sa-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
+   <p class="muted" style="font-size:14px;margin-top:10px">Sapling Guide uses the same reporting contact, county card, and yearly recheck as Sprout Guide, set on the Sprout Guide card.</p></div>`;
+}
+async function saLibUpdate(title, path, fn){
+  const cur = await pendingPlain('field'); if (!cur || !cur.saplingGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); fn(next.saplingGuide);
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+function saSetField(on){ saLibUpdate(on ? 'Open Sapling Guide to Field users' : 'Close Sapling Guide to Field users', 'saplingGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
+function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sapling Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">${icon('sapling')} Open</button></div></div>` : ''; }
 
 // ---------------- HARD TALKS ----------------
 // Every hard conversation, for every life stage, side by side. The topic map, helper notes, and wording
@@ -3044,6 +3849,7 @@ function htPersonOpen(c){
   if (!c) return '';
   if (TIER !== 'field' && LIB) return `<button class="btn btn-line btn-sm" data-act="open-client" data-v="${c.id}">Open Their Record</button>`;
   if (c.sp && spOpen()) return `<button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open Their Record</button>`;
+  if (c.sa && saOpen()) return `<button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.st && stOpen()) return `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.gv && gvOpen()) return `<button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">Open Their Record</button>`;
   return '';
@@ -3841,6 +4647,9 @@ function mergeData(cur, inc){
   const im = inc.spmod || {}; out.spmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.spmod || {});
   Object.entries(im.lessons || {}).forEach(([k,v]) => { if (v && !out.spmod.lessons[k]) out.spmod.lessons[k] = v; });
   ['last','pass','signed'].forEach(k => { out.spmod[k] = newer(out.spmod[k], im[k]) || null; });
+  const ia = inc.samod || {}; out.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.samod || {});
+  Object.entries(ia.lessons || {}).forEach(([k,v]) => { if (v && !out.samod.lessons[k]) out.samod.lessons[k] = v; });
+  ['last','pass','signed'].forEach(k => { out.samod[k] = newer(out.samod[k], ia[k]) || null; });
   if (!out.settings.referrals && inc.settings && inc.settings.referrals) out.settings.referrals = inc.settings.referrals;
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
   return {data:out, stats};
@@ -3866,6 +4675,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('gv-') && gvAct(a, v, t)) return;
   if (a && a.startsWith('ht-') && htAct(a, v, t)) return;
   if (a && a.startsWith('sp-') && spAct(a, v, t)) return;
+  if (a && a.startsWith('sa-') && saAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
@@ -3889,7 +4699,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('sprout', {spv:s.id}); break; } if (s && s.kind === 'spr'){ go('sprout', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('sprout', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('sapling', {sav:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('sapling', {sarec:s.id}); else go('sprout', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -3978,6 +4788,7 @@ document.addEventListener('click', async e => {
 document.addEventListener('input', e => {
   const t = e.target; if (!DATA) return;
   if (spInput(t, 'input')) return;
+  if (saInput(t, 'input')) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
   if (t.dataset.plf === 'name' && PS){ PS.name = t.value; return; }
@@ -4002,6 +4813,7 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
   if (spInput(t, 'change')) return;
+  if (saInput(t, 'change')) return;
   if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
   if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
   if (t.dataset.cddeck){ cdAct('ht-cdeck', t.value || 'tree', t); return; }
