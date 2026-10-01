@@ -239,8 +239,34 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .choice{border-width:3px;}
 .choice[aria-pressed="true"]{border-color:var(--sky-bright);background:var(--sky-soft);}
 .choice[data-mode="grown"][aria-pressed="true"]{border-color:var(--violet);background:var(--violet-soft);}
-.choice[data-grade="k2"][aria-pressed="true"]{border-color:#F2B600;background:var(--sun-soft);}
-.choice[data-grade="35"][aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft);}
+.grade-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.grade-btn{border:3px solid var(--line);background:var(--bg);border-radius:16px;padding:10px 4px;font-family:var(--kid);font-size:20px;line-height:1.1;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.grade-btn small{font-family:inherit;font-size:13px;color:var(--ink-soft);}
+.grade-btn[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft);}
+.qs{display:flex;flex-direction:column;gap:14px;margin-top:6px;}
+.qcard{border:2px solid var(--line);border-radius:20px;padding:14px 16px;background:var(--card);}
+.qcard.answered{border-color:var(--leaf);}
+.qline{display:flex;gap:10px;align-items:flex-start;}
+.qtext{font-family:var(--kid);font-size:21px;line-height:1.3;margin:0;flex:1;}
+.q-say{flex:none;border:2px solid var(--line);background:var(--bg);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;padding:0;}
+.q-say svg{width:20px;height:20px;}
+.ans-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
+.ansb{border:3px solid var(--outline);background:var(--card);border-radius:16px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--kid);font-size:16px;line-height:1.15;min-height:84px;justify-content:center;}
+.ansb svg{width:40px;height:28px;}
+.ansb[aria-pressed="true"]{border-color:var(--sky-bright);background:var(--sky-soft);box-shadow:0 3px 0 var(--sky-bright);}
+.qtip{margin-top:10px;font-size:15px;color:var(--ink-soft);line-height:1.45;}
+.qtip b{color:var(--ink);}
+.safe-note{font-size:16px;color:var(--ink-soft);margin:0 0 8px;}
+.calm-card{border:3px solid var(--sky-bright);background:var(--sky-soft);border-radius:22px;padding:16px 18px;margin:0 0 18px;}
+.calm-card h3{font-family:var(--kid);font-weight:500;font-size:24px;margin:0 0 6px;}
+.calm-card p{margin:6px 0;font-size:17px;line-height:1.45;}
+.calm-card .action-row{margin-top:10px;}
+.lvl{display:inline-block;font-size:13px;font-weight:600;border-radius:99px;padding:2px 10px;margin-left:6px;vertical-align:middle;background:var(--bg);border:2px solid var(--line);}
+.lvl.strong{border-color:var(--leaf);}
+.lvl.care{border-color:#D62839;}
+.ans-list{margin:8px 0 0;padding-left:18px;font-size:15px;line-height:1.5;}
+.ans-list li{margin:2px 0;}
+.ans-list .hard{font-weight:600;}
 .form-error{color:var(--p-hope);font-size:15px;margin:8px 0 0;min-height:1em;}
 .big-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--kid);font-weight:500;font-size:23px;background:var(--leaf-deep);box-shadow:0 4px 0 #2B6B10;color:#fff;border:none;border-radius:999px;padding:14px 30px;min-height:58px;}
 .big-btn:hover{filter:brightness(1.07);}
@@ -572,6 +598,9 @@ body.ts-2 .guide{font-size:21.5px;}
   .cheer{font-size:32px;}
   .peek-list{grid-template-columns:1fr;}
   .choice-row{grid-template-columns:1fr;}
+  .grade-row{grid-template-columns:repeat(3,1fr);}
+  .ans-row{grid-template-columns:repeat(2,1fr);}
+  .qtext{font-size:19px;}
   .sheet{padding:18px;}
   .plan-bar .big-btn{width:100%;margin-left:0;}
 }
@@ -712,10 +741,7 @@ a.big-btn{text-decoration:none;}
       <input class="name-input" id="kid-name" type="text" autocomplete="off" maxlength="24" placeholder="Maya" oninput="clearErr('start-error')">
 
       <span class="field-label" id="grade-label">What grade are you in?</span>
-      <div class="choice-row" role="group" aria-labelledby="grade-label">
-        <button class="choice" data-grade="k2" aria-pressed="false" onclick="setGrade('k2')"><strong>Grades K to 2</strong><span>Short and simple, read aloud.</span></button>
-        <button class="choice" data-grade="35" aria-pressed="false" onclick="setGrade('35')"><strong>Grades 3 to 5</strong><span>A little more to read and think about.</span></button>
-      </div>
+      <div class="grade-row" role="group" aria-labelledby="grade-label" id="grade-row"></div>
 
       <p class="form-error" id="start-error" role="alert"></p>
       <div class="start-row"><button class="big-btn" onclick="startCheckup()">Start my checkup</button></div>
@@ -783,6 +809,7 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-care.js"></script>
 <script src="/shared/gg-profiles.js"></script>
 <script src="/sprout/guides.js"></script>
+<script src="/sprout/checkup.js"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -1081,8 +1108,33 @@ const TOPICS = (window.SPROUT_GUIDES || {}).topics || [];
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const partBy = key => PARTS.find(p => p.key === key);
-const gradeData = (p, grade) => grade === 'k2' ? p.k2 : p.g35;
-const gradeLabel = g => g === 'k2' ? 'Grades K to 2' : 'Grades 3 to 5';
+/* ---------- the checkup bank (sprout/checkup.js) ---------- */
+const CK = window.SPROUT_CHECKUP;
+const GRADE_KEYS = CK.grades.map(g => g[0]);
+const isK2 = g => g === 'k2' || g === 'K' || g === '1' || g === '2';
+const gradeData = (p, grade) => isK2(grade) ? p.k2 : p.g35;
+const gradeLabel = g => g === 'k2' ? 'Grades K to 2' : g === '35' ? 'Grades 3 to 5' : ((CK.grades.find(x => x[0] === g) || [])[1] || '');
+const qsFor = (grade, key) => ((CK.questions[grade] || {})[key]) || [];
+const safetyFor = grade => isK2(grade) ? CK.safety.young : CK.safety.older;
+const ANS = Object.fromEntries(CK.answers.map(a => [a[0], a]));
+const ANS_ICON = {
+  yes: '<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="currentColor"/><rect x="28" y="2" width="8" height="24" rx="2" fill="currentColor"/></svg>',
+  some: '<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="currentColor"/><rect x="28" y="2" width="8" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  no: '<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="28" y="2" width="8" height="24" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  unsure: '<svg viewBox="0 0 40 28" aria-hidden="true"><path d="M15 9a5 5 0 1 1 7 4.6c-1.4.6-2 1.5-2 3V18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="24" r="2" fill="currentColor"/></svg>'
+};
+/* One part's score on the shared 1 to 10 scale. Reverse questions count backward. */
+function partScore(grade, key, qa) {
+  let sum = 0, n = 0;
+  qsFor(grade, key).forEach((q, i) => {
+    const a = ANS[(qa || [])[i]]; if (!a || a[2] == null) return;
+    const v = q[2] === 'r' ? 4 - a[2] : a[2];
+    sum += (v - 1) / 2; n++;
+  });
+  return n ? Math.round(1 + 9 * sum / n) : null;
+}
+const levelOf = sc => sc == null ? null : (CK.levels.find(l => sc >= l[2]) || CK.levels[CK.levels.length - 1]);
+const wxOf = sc => sc == null ? 'skip' : sc >= 8 ? 'sun' : sc >= 5 ? 'cloud' : 'rain';
 const fmtDate = iso => new Date(iso).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
 const fmtShort = iso => new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 const dot = (p, cls) => `<span class="part-dot ${cls || ''}" style="background:${p.color}">${ICONS[p.icon]}</span>`;
@@ -1282,7 +1334,11 @@ function setMode(m) {
   document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === m ? 'true' : 'false'));
   $('tab-kids').hidden = m !== 'grown';
 }
+function renderGrades() {
+  $('grade-row').innerHTML = CK.grades.map(([k, l]) => `<button class="grade-btn" data-grade="${k}" aria-pressed="${S.grade === k}" onclick="setGrade('${k}')" aria-label="${l}">${k === 'K' ? 'K' : k}<small>${k === 'K' ? 'Kinder' : 'Grade'}</small></button>`).join('');
+}
 function setGrade(g) {
+  if (!GRADE_KEYS.includes(g)) g = null;
   S.grade = g;
   document.querySelectorAll('[data-grade]').forEach(b => b.setAttribute('aria-pressed', b.dataset.grade === g ? 'true' : 'false'));
   clearErr('start-error');
@@ -1296,10 +1352,11 @@ function startCheckup() {
   if (!name) { $('start-error').textContent = 'Type your first name to start.'; $('kid-name').focus(); return; }
   if (!S.grade) { $('start-error').textContent = 'Pick your grade to start.'; return; }
   S.name = name.charAt(0).toUpperCase() + name.slice(1);
-  S.step = 0; S.answers = {}; S.done = []; S.picks = []; S.weeks = 2; S.recordId = null;
-  S.readAloud = S.grade === 'k2';
+  S.step = 0; S.answers = {}; S.done = []; S.picks = []; S.weeks = 2; S.recordId = null; S.safety = []; S.inSafety = false;
+  S.readAloud = isK2(S.grade);
   const kid = loadKids()[kidId(S.name)];
-  S.prior = kid && kid.checkups.length ? kid.checkups[kid.checkups.length - 1] : null;
+  const last = kid && kid.checkups.length ? kid.checkups[kid.checkups.length - 1] : null;
+  S.prior = last && last.std === CK.version ? last : null;
   go('checkup');
   renderStep(true);
 }
@@ -1389,30 +1446,29 @@ function sprout(containerId, key) {
 }
 
 /* ---------- checkup ---------- */
-function renderStep(first, sproutKey) {
-  const p = PARTS[S.step];
-  const g = gradeData(p, S.grade);
-  const a = S.answers[p.key];
-  const w = a ? a.w : null;
-
+function treeLive(sproutKey) {
   $('dots').innerHTML = PARTS.map((q, i) => {
     const done = S.done.includes(q.key);
-    return `<span class="dot${done ? ' done' : ''}${i === S.step ? ' here' : ''}" style="${done ? 'background:' + q.color : ''}" title="${q.name}">${ICONS[q.icon]}</span>`;
+    return `<span class="dot${done ? ' done' : ''}${!S.inSafety && i === S.step ? ' here' : ''}" style="${done ? 'background:' + q.color : ''}" title="${q.name}">${ICONS[q.icon]}</span>`;
   }).join('');
-
   const grown = {};
   S.done.forEach(k => { if (S.answers[k]) grown[k] = S.answers[k]; });
   $('tree-live').innerHTML = treeSVG(grown, { hideKey: sproutKey, id: 'live-tree', label: S.name + "'s tree, growing" });
   $('tree-name').textContent = S.name + "'s tree";
   if (sproutKey) sprout('tree-live', sproutKey);
-
-  let signs = [];
-  if (w === 'sun') signs = g.sunny;
-  else if (w === 'rain') signs = g.rainy;
-  else if (w === 'cloud') signs = g.sunny.concat(g.rainy);
-  const picked = a && a.signs ? a.signs : [];
-  const isLast = S.step === PARTS.length - 1;
-
+}
+function toStepTop(first) {
+  const top = document.querySelector('.tabs').getBoundingClientRect().top + window.scrollY - 8;
+  if (!first || window.scrollY > top) window.scrollTo({ top, behavior: first ? 'auto' : 'smooth' });
+}
+function sayBtn(i) { return `<button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud">${ICONS.speaker}</button>`; }
+function renderStep(first, sproutKey) {
+  if (S.inSafety) return renderSafety(first, sproutKey);
+  const p = PARTS[S.step];
+  const g = gradeData(p, S.grade);
+  const qs = qsFor(S.grade, p.key);
+  const qa = (S.answers[p.key] && S.answers[p.key].qa) || [];
+  treeLive(sproutKey);
   $('step').innerHTML = `
     <div class="step-head">${dot(p)}<div><p class="step-count kid-text">Part ${S.step + 1} of 6</p><h2 class="step-name" style="color:${p.color}">${p.name}</h2></div></div>
     <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button></div>
@@ -1420,27 +1476,23 @@ function renderStep(first, sproutKey) {
       <div class="learn-card tree kid-text"><small>What ${p.key === 'meaning' ? 'a ' : ''}${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for a tree</small>${esc(g.tree)}</div>
       <div class="learn-card you kid-text"><small>What your ${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for you</small>${esc(g.you)}</div>
     </div>
-    <p class="question" id="q-text">${esc(g.q)}</p>
-    <div class="weather-row" role="group" aria-labelledby="q-text">
-      ${['sun', 'cloud', 'rain'].map(x => `<button class="weather" aria-pressed="${w === x}" onclick="pickWeather('${x}')">${WX[x]}<span>${WX_LABEL[x]}</span></button>`).join('')}
-    </div>
-    <div class="signs" ${signs.length ? '' : 'hidden'}>
-      <p class="signs-q">${signs.length > 1 ? 'Tap any that fit you.' : 'Tap it if it fits you.'}</p>
-      <div class="sign-list">${signs.map(s => `<button class="sign" aria-pressed="${picked.includes(s)}" onclick="toggleSign(this)" data-sign="${esc(s)}"><span class="box">${ICONS.check}</span><span>${esc(s)}</span></button>`).join('')}</div>
-    </div>
-    ${S.mode === 'grown' ? `<div class="tip"><b>Grown-up tip</b>${esc(p.tip)}</div>` : ''}
+    <div class="qs">${qs.map((q, i) => `<div class="qcard${qa[i] ? ' answered' : ''}">
+      <div class="qline"><p class="qtext" id="q-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
+      <div class="ans-row" role="group" aria-labelledby="q-${i}">${CK.answers.map(an => `<button class="ansb" aria-pressed="${qa[i] === an[0]}" onclick="pickAns(${i},'${an[0]}')">${ANS_ICON[an[0]]}<span>${esc(an[1])}</span></button>`).join('')}</div>
+      ${S.mode === 'grown' ? `<p class="qtip"><b>Grown-up tip.</b> ${esc(q[1])}</p>` : ''}
+    </div>`).join('')}</div>
     <div class="step-nav">
       <button class="soft-btn" onclick="${S.step === 0 ? 'go(\'home\')' : 'prevStep()'}">Back</button>
       <button class="soft-btn" onclick="skipStep()">Skip</button>
-      <button class="big-btn" onclick="nextStep()">${isLast ? 'See my tree' : 'Next'}</button>
+      <button class="big-btn" onclick="nextStep()">Next</button>
       <p class="step-error" id="step-error" role="alert"></p>
     </div>`;
-
-  if (first || sproutKey !== undefined) {
-    const top = document.querySelector('.tabs').getBoundingClientRect().top + window.scrollY - 8;
-    if (!first || window.scrollY > top) window.scrollTo({ top, behavior: first ? 'auto' : 'smooth' });
-  }
-  if (S.readAloud && (first || sproutKey !== undefined)) setTimeout(() => say(`${p.name}. ${g.tree} ${g.you} ${g.q}`), 350);
+  if (first || sproutKey !== undefined) toStepTop(first);
+  if (S.readAloud && (first || sproutKey !== undefined)) setTimeout(() => say(`${p.name}. ${g.tree} ${g.you} ${qs.length ? qs[0][0] : ''}`), 350);
+}
+function sayQ(i) {
+  if (S.inSafety) { const q = safetyFor(S.grade)[i]; if (q) say(q[0]); return; }
+  const q = qsFor(S.grade, PARTS[S.step].key)[i]; if (q) say(q[0]);
 }
 function toggleRead() {
   S.readAloud = !S.readAloud;
@@ -1449,37 +1501,42 @@ function toggleRead() {
   b.setAttribute('aria-pressed', S.readAloud);
   b.innerHTML = `${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}`;
   if (S.readAloud) {
-    const p = PARTS[S.step], g = gradeData(p, S.grade);
-    say(`${p.name}. ${g.tree} ${g.you} ${g.q}`);
+    if (S.inSafety) { say(safetyFor(S.grade).map(q => q[0]).join(' ')); return; }
+    const p = PARTS[S.step], g = gradeData(p, S.grade), qs = qsFor(S.grade, p.key);
+    say(`${p.name}. ${g.tree} ${g.you} ${qs.length ? qs[0][0] : ''}`);
   }
 }
-function pickWeather(w) {
-  const key = PARTS[S.step].key;
-  const prev = S.answers[key];
-  S.answers[key] = { w, signs: prev && prev.w === w ? prev.signs : [] };
-  if (S.readAloud) say(WX_LABEL[w]);
+function pickAns(i, v) {
+  const key = PARTS[S.step].key, n = qsFor(S.grade, key).length;
+  const prev = S.answers[key] && S.answers[key].qa ? S.answers[key].qa.slice() : [];
+  while (prev.length < n) prev.push(null);
+  prev[i] = prev[i] === v ? null : v;
+  S.answers[key] = { qa: prev };
+  if (S.readAloud && prev[i]) {
+    const nextQ = qsFor(S.grade, key)[i + 1];
+    say(ANS[v][1] + (nextQ && !prev[i + 1] ? '. ' + nextQ[0] : ''));
+  }
+  const y = window.scrollY;
   renderStep(false);
-  const btn = document.querySelector('.weather[aria-pressed="true"]');
-  if (btn) btn.focus({ preventScroll: true });
+  window.scrollTo(0, y);
+  const btn = document.querySelectorAll('.qcard')[i]; if (btn) { const b = btn.querySelector('.ansb[aria-pressed="true"]'); if (b) b.focus({ preventScroll: true }); }
 }
-function toggleSign(btn) {
-  const key = PARTS[S.step].key;
-  const s = btn.dataset.sign;
-  const a = S.answers[key];
-  const on = btn.getAttribute('aria-pressed') !== 'true';
-  btn.setAttribute('aria-pressed', on);
-  a.signs = on ? a.signs.concat(s) : a.signs.filter(x => x !== s);
-  if (on && S.readAloud) say(s);
+function sealPart(key) {
+  const a = S.answers[key] || { qa: [] };
+  const sc = partScore(S.grade, key, a.qa);
+  S.answers[key] = { qa: a.qa || [], score: sc, w: wxOf(sc), signs: [] };
 }
 function nextStep() {
-  const key = PARTS[S.step].key;
-  const a = S.answers[key];
-  if (!a) { $('step-error').textContent = 'Pick a weather first, or tap Skip.'; return; }
+  const key = PARTS[S.step].key, n = qsFor(S.grade, key).length;
+  const qa = (S.answers[key] && S.answers[key].qa) || [];
+  const missing = []; for (let i = 0; i < n; i++) if (!qa[i]) missing.push(i + 1);
+  if (missing.length) { $('step-error').textContent = missing.length === n ? 'Answer the questions, or tap Skip.' : `Answer question ${missing.join(' and ')}, or tap "I don't know."`; return; }
+  sealPart(key);
   advance(key);
 }
 function skipStep() {
   const key = PARTS[S.step].key;
-  S.answers[key] = { w: 'skip', signs: [] };
+  S.answers[key] = { qa: [], score: null, w: 'skip', signs: [] };
   advance(key);
 }
 function advance(key) {
@@ -1487,10 +1544,42 @@ function advance(key) {
   const fresh = !S.done.includes(key);
   if (fresh) S.done.push(key);
   if (S.step < PARTS.length - 1) { S.step++; renderStep(false, fresh ? key : null); }
-  else { finishCheckup(fresh ? key : null); }
+  else { S.inSafety = true; S.lastKey = fresh ? key : null; renderSafety(false, S.lastKey); }
 }
 function prevStep() {
+  if (S.inSafety) { S.inSafety = false; renderStep(false, null); return; }
   if (S.step > 0) { S.step--; renderStep(false, null); }
+}
+/* ---------- safety step ---------- */
+function renderSafety(first, sproutKey) {
+  const qs = safetyFor(S.grade);
+  treeLive(sproutKey);
+  $('step').innerHTML = `
+    <div class="step-head"><div><p class="step-count kid-text">Almost done</p><h2 class="step-name">Staying safe</h2></div></div>
+    <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button></div>
+    <p class="safe-note kid-text">${esc(qs.length > 1 ? CK.safety.intro : CK.safety.introYoung)}</p>
+    <div class="qs">${qs.map((q, i) => `<div class="qcard${S.safety[i] ? ' answered' : ''}">
+      <div class="qline"><p class="qtext" id="sq-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
+      <div class="ans-row" style="grid-template-columns:repeat(3,1fr)" role="group" aria-labelledby="sq-${i}">${CK.safety.answers.map(an => `<button class="ansb" aria-pressed="${S.safety[i] === an[0]}" onclick="pickSafe(${i},'${an[0]}')"><span>${esc(an[1])}</span></button>`).join('')}</div>
+    </div>`).join('')}</div>
+    <div class="step-nav">
+      <button class="soft-btn" onclick="prevStep()">Back</button>
+      <button class="soft-btn" onclick="finishCheckup(S.lastKey)">Skip</button>
+      <button class="big-btn" onclick="safetyDone()">See my tree</button>
+      <p class="step-error" id="step-error" role="alert"></p>
+    </div>`;
+  if (sproutKey !== undefined) toStepTop(false);
+  if (S.readAloud && sproutKey !== undefined) setTimeout(() => say(`${qs.length > 1 ? CK.safety.intro : CK.safety.introYoung} ${qs[0][0]}`), 350);
+}
+function pickSafe(i, v) {
+  S.safety[i] = S.safety[i] === v ? null : v;
+  if (S.readAloud && S.safety[i]) say(CK.safety.answers.find(a => a[0] === v)[1]);
+  const y = window.scrollY; renderSafety(false); window.scrollTo(0, y);
+}
+function safetyDone() {
+  const n = safetyFor(S.grade).length;
+  for (let i = 0; i < n; i++) if (!S.safety[i]) { $('step-error').textContent = 'Answer each question, or tap Skip.'; return; }
+  finishCheckup(S.lastKey);
 }
 
 /* ---------- results ---------- */
@@ -1500,7 +1589,9 @@ function finishCheckup(lastKey) {
   if (!kids[id]) kids[id] = migrateKid({ name: S.name, checkups: [] });
   kids[id].name = S.name;
   kids[id].grade = S.grade;
-  const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, mode: S.mode, answers: JSON.parse(JSON.stringify(S.answers)), plan: null };
+  hush(); S.inSafety = false;
+  const safety = safetyFor(S.grade).map((q, i) => S.safety[i] || null);
+  const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, std: CK.version, mode: S.mode, answers: JSON.parse(JSON.stringify(S.answers)), safety, safetyFlag: safety.some(a => a === 'yes' || a === 'unsure'), plan: null };
   kids[id].checkups.push(rec);
   saveKids(kids);
   S.recordId = rec.id;
@@ -1508,28 +1599,54 @@ function finishCheckup(lastKey) {
   const nudge = saveNudge(id); if (nudge) $('view-results').insertAdjacentHTML('afterbegin', nudge);
   go('results');
 }
-function concernInfo(answers, grade) {
+function concernInfo(answers, grade, safety) {
   const rainy = PARTS.filter(p => answers[p.key] && answers[p.key].w === 'rain');
   const skipped = PARTS.filter(p => answers[p.key] && answers[p.key].w === 'skip');
   const flags = [];
-  PARTS.forEach(p => { const a = answers[p.key]; if (a && a.signs) a.signs.forEach(s => { if (FLAG_SIGNS[s]) flags.push({ sign: s, type: FLAG_SIGNS[s], part: p }); }); });
-  return { rainy, skipped, flags, concern: rainy.length >= 2 || flags.length > 0 };
+  PARTS.forEach(p => {
+    const a = answers[p.key];
+    if (a && a.signs) a.signs.forEach(s => { if (FLAG_SIGNS[s]) flags.push({ sign: s, type: FLAG_SIGNS[s], part: p }); });
+    if (a && a.qa) qsFor(grade, p.key).forEach((q, i) => { if (q[3] && (a.qa[i] === 'yes' || a.qa[i] === 'some')) flags.push({ sign: q[0], ans: ANS[a.qa[i]][1], type: q[3], part: p }); });
+  });
+  const sq = safetyFor(grade), safe = [];
+  (safety || []).forEach((v, i) => { if ((v === 'yes' || v === 'unsure') && sq[i]) safe.push({ kind: sq[i][1], q: sq[i][0], ans: v }); });
+  return { rainy, skipped, flags, safe, concern: rainy.length >= 2 || flags.length > 0 || safe.length > 0 };
 }
-function grownNoteHTML(info, name) {
-  let h = '';
+const saidHTML = (f, name) => f.ans ? `${esc(name)} answered "${esc(f.ans)}" to "${esc(f.sign)}"` : `${esc(name)} tapped "${esc(f.sign)}"`;
+function safetyNoteHTML(info, name) {
+  if (!info.safe || !info.safe.length) return '';
+  const self = info.safe.some(x => x.kind === 'self'), hurt = info.safe.some(x => x.kind === 'safe');
+  let h = `<div class="calm-card"><h3>Please check in with ${esc(name)} today</h3>`;
+  info.safe.forEach(x => { h += `<p>${esc(name)} answered "${x.ans === 'yes' ? 'Yes' : 'Not sure'}" to "${esc(x.q)}"</p>`; });
+  h += `<p>Stay calm, find a quiet moment, and ask gently what is going on. Listen more than you talk, thank them for telling you, and don't promise to keep it a secret.</p>`;
+  if (self) h += `<p>If ${esc(name)} talks about wanting to die or to hurt themselves, stay with them. Call or text 988, the Suicide and Crisis Lifeline, any time, or call their doctor right away.</p>`;
+  if (hurt) h += `<p>If someone is hurting ${esc(name)}, report it to your county child protection agency or the police. Teachers, counselors, and other mandated reporters should follow their own reporting steps. The Childhelp hotline, 1-800-422-4453, can help you figure out who to call.</p>`;
+  h += `<p><b>If a child is in danger right now, call 911.</b></p><div class="action-row"><a class="big-btn" href="tel:911">Call 911</a><a class="soft-btn" href="tel:988">Call 988</a><a class="soft-btn" href="sms:988">Text 988</a></div></div>`;
+  return h;
+}
+function answersHTML(rec) {
+  if (!rec || rec.std !== CK.version) return '';
+  return `<details><summary>See every answer from ${fmtDate(rec.date)}</summary>${PARTS.map(p => {
+    const a = rec.answers[p.key] || {}, lv = levelOf(a.score), qs = qsFor(rec.grade, p.key);
+    return `<p style="margin:12px 0 0"><b>${p.name}</b>${lv ? `<span class="lvl ${lv[0]}">${lv[1]}</span>` : '<span class="lvl">Skipped</span>'}</p>${a.qa && a.qa.length ? `<ul class="ans-list">${qs.map((q, i) => { const an = ANS[a.qa[i]], hard = an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1); return `<li${hard ? ' class="hard"' : ''}>${esc(q[0])} <i>${an ? esc(an[1]) : 'No answer'}</i></li>`; }).join('')}</ul>` : ''}`;
+  }).join('')}${rec.safety ? `<p style="margin:12px 0 0"><b>Staying safe</b></p><ul class="ans-list">${safetyFor(rec.grade).map((q, i) => { const v = rec.safety[i]; return `<li${v && v !== 'no' ? ' class="hard"' : ''}>${esc(q[0])} <i>${v ? CK.safety.answers.find(x => x[0] === v)[1] : 'Skipped'}</i></li>`; }).join('')}</ul>` : ''}</details>`;
+}
+function grownNoteHTML(info, name, rec) {
+  let h = safetyNoteHTML(info, name);
   if (info.concern) h += `<p>${esc(name)} may be carrying something heavy right now. Spend some unhurried time together, ask about the rainy parts, and listen more than you fix. If it doesn't lift in a couple of weeks, reach out to someone you trust, like a pastor, teacher, school counselor, or ${esc(name)}'s doctor.</p>`;
   info.flags.forEach(f => {
-    if (f.type === 'bully') h += `<p>${esc(name)} tapped "${esc(f.sign)}" Listen first and ask what has been happening. Then let their teacher or school know so they can help. <button class="link-btn" onclick="openTalk('bullied','tree')">Read the Being bullied guide</button></p>`;
-    if (f.type === 'alone') h += `<p>${esc(name)} said "${esc(f.sign)}" Extra closeness this week, like one-on-one time, a walk, or a bedtime talk, can make a big difference. <button class="link-btn" onclick="openTalk('sadness','tree')">Read the Sadness that lingers guide</button></p>`;
-    if (f.type === 'hope') h += `<p>${esc(name)} tapped "${esc(f.sign)}" Most of the time this means a child feels worn out or sad, but please ask gently how they are feeling. If a child ever talks about wanting to die or to hurt themselves, call their doctor right away, or call or text 988, the Suicide and Crisis Lifeline, any time. <button class="link-btn" onclick="openTalk('wanting-die','tree')">Read the guide on when a child talks about wanting to die</button></p>`;
+    if (f.type === 'bully') h += `<p>${saidHTML(f, name)}. Listen first and ask what has been happening. Then let their teacher or school know so they can help. <button class="link-btn" onclick="openTalk('bullied','tree')">Read the Being bullied guide</button></p>`;
+    if (f.type === 'alone') h += `<p>${saidHTML(f, name)}. Extra closeness this week, like one-on-one time, a walk, or a bedtime talk, can make a big difference. <button class="link-btn" onclick="openTalk('sadness','tree')">Read the Sadness that lingers guide</button></p>`;
+    if (f.type === 'hope') h += `<p>${saidHTML(f, name)}. Most of the time this means a child feels worn out or sad, but please ask gently how they are feeling. If a child ever talks about wanting to die or to hurt themselves, call their doctor right away, or call or text 988, the Suicide and Crisis Lifeline, any time. <button class="link-btn" onclick="openTalk('wanting-die','tree')">Read the guide on when a child talks about wanting to die</button></p>`;
   });
-  if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
+  if (rec && rec.std === CK.version) h += `<p><b>Levels:</b> ${PARTS.map(p => { const lv = levelOf((rec.answers[p.key] || {}).score); return `${p.name} ${lv ? lv[1] : 'skipped'}`; }).join(', ')}.</p>`;
+  else if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
   if (info.skipped.length) h += `<p><b>Skipped:</b> ${info.skipped.map(p => p.name).join(', ')}. A skip can be a quiet signal too. You might gently ask about it later.</p>`;
   if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the care plan going.</p>`;
-  return h + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 60 hard talks.</p>`;
+  return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 60 hard talks.</p>`;
 }
 function thenNowHTML(prev, cur, name) {
-  if (!prev) return '';
+  if (!prev || prev.std !== cur.std) return '';
   const lines = [];
   PARTS.forEach(p => {
     const a = prev.answers[p.key], b = cur.answers[p.key];
@@ -1566,7 +1683,7 @@ function sendSproutGrove() {
   location.href = '/grove/?who=' + encodeURIComponent(k._pid);
 }
 function renderResults(rec, lastKey) {
-  const info = concernInfo(rec.answers, rec.grade);
+  const info = concernInfo(rec.answers, rec.grade, rec.safety);
   const name = S.name;
   const kind = PARTS.map(p => {
     const a = rec.answers[p.key] || { w: 'skip' };
@@ -1574,12 +1691,15 @@ function renderResults(rec, lastKey) {
   }).join('');
   let note = '';
   if (S.mode === 'grown') {
-    note = `<div class="grown-open"><h3>For the grown-up</h3>${grownNoteHTML(info, name)}</div>`;
+    note = `<div class="grown-open"><h3>For the grown-up</h3>${grownNoteHTML(info, name, rec)}</div>`;
+  } else if (info.safe.length) {
+    note = `<div class="calm-card"><h3>Thank you for telling</h3><p>That took courage. Please show this to a grown-up you trust today, like a parent, a teacher, or a school counselor.</p><p>You can call or text 988 any time to talk to someone kind. If you are in danger right now, call 911.</p><div class="action-row"><a class="big-btn" href="tel:911">Call 911</a><a class="soft-btn" href="tel:988">Call 988</a><a class="soft-btn" href="sms:988">Text 988</a></div></div>
+      <details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
   } else if (info.concern) {
     note = `<div class="invite"><p>Your tree has had some rainy days. Show it to a grown-up you trust.</p></div>
-      <details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name)}</div></details>`;
-  } else if (info.skipped.length) {
-    note = `<details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name)}</div></details>`;
+      <details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
+  } else {
+    note = `<details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
   }
   $('view-results').innerHTML = `
     <div class="results">
@@ -1642,6 +1762,7 @@ function currentRecord() {
 }
 function nextChild() {
   hush();
+  S.inSafety = false; S.safety = [];
   S.name = ''; S.answers = {}; S.step = 0; S.picks = []; S.recordId = null; S.prior = null;
   $('kid-name').value = '';
   go('home');
@@ -1689,7 +1810,7 @@ function renderPlan() {
     return `<div class="act-group"><h3>${dot(p)}${p.name}${sug.includes(k) ? '<span class="suggest">Suggested for you</span>' : ''}<span class="part-count" data-count="${k}">${n} of ${PER_PART}</span></h3>
       <div class="act-grid">${acts.map(a => `<button class="act" aria-pressed="${S.picks.includes(a.id)}" data-act="${a.id}" onclick="toggleAct('${a.id}')">
         <strong>${esc(a.title)}<span class="box">${ICONS.check}</span></strong>
-        ${S.grade === 'k2' ? `<p>${esc(a.k2)}</p>` : `<ol>${a.g35.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`}
+        ${isK2(S.grade) ? `<p>${esc(a.k2)}</p>` : `<ol>${a.g35.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`}
       </button>`).join('')}</div></div>`;
   }).join('');
   $('view-plan').innerHTML = `
@@ -1787,7 +1908,7 @@ function openTree(id, tab) {
   if (!kid) return;
   S.kid = id; S.treeTab = tab || 'today'; S.dayView = 'today'; S.cuSel = null;
   S.name = kid.name; S.grade = kid.grade || S.grade;
-  S.readAloud = S.grade === 'k2';
+  S.readAloud = isK2(S.grade);
   S.recordId = kid.checkups.length ? kid.checkups[kid.checkups.length - 1].id : null;
   S.answers = kid.checkups.length ? kid.checkups[kid.checkups.length - 1].answers : {};
   renderTree();
@@ -1804,14 +1925,14 @@ function renderTree(landKey) {
   if (S.treeTab === 'checkups') body = checkupsTabHTML(kid);
   if (S.treeTab === 'grown') body = grownTabHTML(kid);
   const last = kid.checkups[kid.checkups.length - 1];
-  const info = last ? concernInfo(last.answers, last.grade) : null;
+  const info = last ? concernInfo(last.answers, last.grade, last.safety) : null;
   $('view-tree').innerHTML = `
     <div class="mt-head"><button class="kid-pic" onclick="changeKidPic('${esc(S.kid)}')" aria-label="Change ${esc(kid.name)}'s picture">${GGAv.html(kid.avatar, kid.name, 60)}<span>Change</span></button><h2 class="kid">${esc(kid.name)}'s tree</h2>
       <button class="big-btn" onclick="newCheckupFor('${esc(S.kid)}')">New checkup</button></div>
     <div class="seg" role="group" aria-label="My tree">${tabs.map(([k, l]) => `<button aria-pressed="${S.treeTab === k}" onclick="setTreeTab('${k}')">${l}</button>`).join('')}</div>
     <div id="tree-body">${body}</div>
     <details class="grown-box grown-section" ${S.mode === 'grown' ? 'open' : ''}><summary>For grown-ups</summary><div class="inner">
-      ${info ? grownNoteHTML(info, kid.name) : '<p>No checkups yet.</p>'}
+      ${info ? grownNoteHTML(info, kid.name, last) : '<p>No checkups yet.</p>'}
       <p><b>Daily practice:</b> happens in The Grove now, where ${esc(kid.name)}'s tree grows with a few small practices a day.${kid.plan ? ` Their earlier care plan had ${doneDays(kid.plan)} full days practiced.` : ''}</p>
       <div class="action-row" style="margin-top:10px">
         <button class="soft-btn" onclick="exportKid('${esc(S.kid)}')">Save ${esc(kid.name)} to a file</button>
@@ -1861,7 +1982,7 @@ function todayHTML(kid, landKey) {
       ${canYest ? `<div class="day-toggle" role="group" aria-label="Which day"><button aria-pressed="${S.dayView === 'today'}" onclick="setDay('today')">Today</button><button aria-pressed="${S.dayView === 'yesterday'}" onclick="setDay('yesterday')">Yesterday</button></div>` : ''}
       <div class="do-list">${acts.map(a => { const p = partBy(a.part); const on = log.includes(a.id);
         return `<div role="button" tabindex="0" class="do" style="--pc:${p.color}" aria-pressed="${on}" data-do="${a.id}" onclick="tapDo(event,'${a.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tapDo(event,'${a.id}')}">
-          <span class="ring">${ICONS.check}</span><span><span>${esc(a.title)}</span><small>${esc(S.grade === 'k2' ? a.k2 : a.g35[0])}</small></span>
+          <span class="ring">${ICONS.check}</span><span><span>${esc(a.title)}</span><small>${esc(isK2(S.grade) ? a.k2 : a.g35[0])}</small></span>
           <button class="say" aria-label="Read ${esc(a.title)} aloud" onclick="event.stopPropagation();sayAct('${a.id}')">${ICONS.speaker}</button></div>`; }).join('')}</div>
       <p class="progress-line" id="progress-line">${progressText(doneN, acts.length)}</p>
       <div class="cheer-banner" id="cheer-banner"></div>
@@ -1901,7 +2022,7 @@ function shelfHTML(cr) {
 }
 function sayAct(id) {
   const a = ACTIVITIES.find(x => x.id === id);
-  if (a) say(`${a.title}. ${S.grade === 'k2' ? a.k2 : a.g35.join(' ')}`);
+  if (a) say(`${a.title}. ${isK2(S.grade) ? a.k2 : a.g35.join(' ')}`);
 }
 function setDay(d) { S.dayView = d; renderTree(); }
 
@@ -2009,7 +2130,7 @@ function checkupsTabHTML(kid) {
   const sel = kid.checkups.find(c => c.id === S.cuSel);
   const planActs = sel.plan && sel.plan.acts ? sel.plan.acts.map(id => (ACTIVITIES.find(a => a.id === id) || {}).title).filter(Boolean) : [];
   return `<div class="cu-grid">${cs.map(c => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()">${treeSVG(c.answers, { label: 'Tree from ' + fmtDate(c.date) })}${fmtDate(c.date)}</button>`).join('')}</div>
-    <div class="cu-detail"><h3 class="kid" style="font-family:var(--kid);font-weight:500;font-size:24px;color:var(--sky);margin:0">${fmtDate(sel.date)}</h3>
+    <div class="cu-detail"><h3 class="kid" style="font-family:var(--kid);font-weight:500;font-size:24px;color:var(--sky);margin:0">${fmtDate(sel.date)}</h3>${sel.std ? '' : '<p class="kid-text" style="font-size:16px;margin:4px 0 0">An earlier checkup, from before the new questions.</p>'}
       <ul class="kind-list">${PARTS.map(p => { const a = sel.answers[p.key] || { w: 'skip' }; return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(p.kind[a.w] || p.kind.skip)}</span></li>`; }).join('')}</ul>
       ${planActs.length ? `<p class="kid-text" style="font-size:18px;margin-top:14px">Care plan from this checkup: ${planActs.map(esc).join(', ')}.</p>` : ''}
     </div>`;
@@ -2021,7 +2142,7 @@ function grownTabHTML(kid) {
   const crCount = CRITTERS.filter(c => critterState(kid)[c.key]).length;
   const table = `<div class="grow-wrap"><table class="grow-table"><thead><tr><th></th>${shown.map(c => `<th>${fmtShort(c.date)}</th>`).join('')}</tr></thead>
     <tbody>${PARTS.map(p => `<tr><th class="part"><span>${dot(p)}${p.name}</span></th>${shown.map(c => { const w = (c.answers[p.key] || { w: 'skip' }).w; return `<td title="${WX_LABEL[w]}">${wxIcon(w)}<span class="sr-only">${WX_LABEL[w]}</span></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
-  const prev = cs.length > 1 ? cs[cs.length - 2] : null;
+  const prev = cs.length > 1 && cs[cs.length - 2].std === cs[cs.length - 1].std ? cs[cs.length - 2] : null;
   return `<div class="stat-row">
       <div class="stat"><b>${cs.length}</b><span>checkup${cs.length === 1 ? '' : 's'}</span></div>
       <div class="stat"><b>${practiced}</b><span>full days practiced</span></div>
@@ -2066,7 +2187,7 @@ function renderPrint(kid) {
         <div><h2 class="sheet-title">${esc(kid.name)}'s care plan</h2>
         <p class="sheet-sub">${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Color a box each day I do it!</p></div></div>
       ${days > 14 ? chunk(1, 14) + chunk(15, 28) : chunk(1, 14)}
-      <div class="own"><h4>My own idea</h4>${kid.grade === 'k2' ? '<div class="draw-box" aria-label="Space to draw"></div>' : '<div class="write-lines"><span></span><span></span><span></span></div>'}</div>
+      <div class="own"><h4>My own idea</h4>${isK2(kid.grade) ? '<div class="draw-box" aria-label="Space to draw"></div>' : '<div class="write-lines"><span></span><span></span><span></span></div>'}</div>
       <div class="sheet-foot">
         <div class="sign-line">My grown-up helper<span></span></div>
         <div class="next-date">Check on your tree again on<b>${esc(nextStr)}</b></div>
@@ -2197,13 +2318,14 @@ function renderGuide() {
     </nav>
 
     <h3 class="grown" id="g-what">What Sprout is</h3>
-    <p>Sprout builds spiritual and emotional resilience: a child's sense of being loved, knowing who they are, handling big feelings, belonging, caring for their body, and hope. It isn't a test, a screening, or a diagnosis. There are no scores, and no answer is wrong.</p>
+    <p>Sprout builds spiritual and emotional resilience: a child's sense of being loved, knowing who they are, handling big feelings, belonging, caring for their body, and hope. It isn't a test, a screening, or a diagnosis, and no answer is wrong. Grown-ups see a simple level for each part (Strong, Steady, or Needs care) so they know where to lean in. Kids see their tree and its weather.</p>
     <p>Sprout uses the same six-part tree as Soul Tree, the Grounded checkup for adults, in words kids understand. Rain is part of how every tree grows, and the checkup quietly teaches that hard days are part of growing too.</p>
 
     <h3 class="grown" id="g-how">How a checkup works</h3>
     <ul>
-      <li>Pick <b>On my own</b> or <b>With a grown-up</b>, then the child's grade. Grades K to 2 is shorter and read aloud. Grades 3 to 5 has a little more to read. With a grown-up adds a short tip on each page.</li>
-      <li>For each of the six parts, the child learns what that part does for a tree and for them, picks a weather, and taps any signs that fit. They can skip any part.</li>
+      <li>Pick <b>On my own</b> or <b>With a grown-up</b>, then the child's grade. Kindergarten and each grade from 1 to 5 has its own questions, written for that age. Kindergarten through grade 2 starts with read aloud on. With a grown-up adds a short tip under every question.</li>
+      <li>For each of the six parts, the child learns what that part does for a tree and for them, then answers four short questions: Yes, a lot; Sometimes; Not really; or I don't know. They can skip any part. Their answers decide the weather for that part of the tree.</li>
+      <li>At the end there is a short safety step. Every grade answers whether anyone is hurting them or making them feel scared. Grades 3 to 5 also answer one gentle question about wishing they were not alive. Any yes or not sure shows the child a calm card with 988 and 911, and shows the grown-up what to do next.</li>
       <li>Their tree grows one piece at a time. At the end they see the whole tree with a kind word for each part.</li>
       <li>Then they tap <b>Tend Your Grove</b>. Their answers travel to The Grove, locked in their profile, where daily practice happens: a few small things a day for each part of their tree, with critters that come to visit as the days add up.</li>
       <li>Every checkup adds a ring to their tree here. The Grove invites a new checkup every four weeks, and every checkup stays on their tree page, so you can see how they have grown over time.</li>
@@ -2297,6 +2419,7 @@ function printGuide() {
 
 /* ---------- start ---------- */
 renderPeek();
+renderGrades();
 renderWelcomeBack();
 if (window.GGP) {
   GGP.on(() => sproutRefresh());
