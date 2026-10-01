@@ -145,12 +145,10 @@ h3{font-size:calc(28px * var(--scale));}
 .text-link:hover{color:var(--gold-deep);}
 
 /* ---------- MODE + TABS ---------- */
-.mode-row{display:flex;justify-content:center;margin:34px 0 18px;}
-.mode-row[hidden]{display:none;}
 .seg{display:inline-flex;background:var(--bg-deep);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;}
 .seg button{white-space:nowrap;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;font-size:calc(15px * var(--scale));font-weight:700;border:0;background:transparent;border-radius:999px;padding:10px 20px;cursor:pointer;color:var(--ink-soft);}
 .seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow);}
-.tabs{display:flex;gap:6px;justify-content:center;border-bottom:1px solid var(--line);margin-bottom:34px;overflow-x:auto;scrollbar-width:none;}
+.tabs{display:flex;gap:6px;justify-content:center;border-bottom:1px solid var(--line);margin:34px 0;overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:calc(16px * var(--scale));border:0;background:none;padding:14px 16px 13px;display:flex;align-items:center;gap:8px;color:var(--ink-soft);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;}
 .tab svg{width:20px;height:20px;}
@@ -388,11 +386,9 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .banner .btn{margin-top:14px;}
 .banner.gold{background:linear-gradient(135deg,#8B5E1A,#6E4A14);}
 
-/* ---------- PRACTITIONER ---------- */
-.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.person{cursor:pointer;text-align:left;width:100%;}
-.person:hover{border-color:var(--sage);}
-.person h3{margin-bottom:4px;}
+/* ---------- care trees moved to the Field Guide ---------- */
+.care-moved{border-left:4px solid var(--gold);margin-bottom:24px;}
+.care-moved .tools-row{justify-content:flex-start;margin-top:14px;}
 .part-dots{display:flex;gap:6px;margin-top:10px;}
 .part-dots i{width:14px;height:14px;border-radius:50%;background:var(--part);}
 /* ---------- family ---------- */
@@ -409,10 +405,6 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .fam-strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:14px 18px;}
 .fam-strip p{flex:1 1 200px;margin:0;font-family:'Barlow',sans-serif;font-size:calc(16px * var(--scale));}
 @media (max-width:420px){ .fam-row{grid-template-columns:minmax(0,1fr);} .fam-pic{grid-row:auto;} }
-.log-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
-.log-day{font-family:'Barlow',sans-serif;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 10px;min-width:62px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);}
-.log-day[aria-pressed="true"]{background:var(--sage);border-color:var(--sage);color:#fff;}
-.log-day[disabled]{opacity:.4;cursor:default;}
 
 /* ---------- FOOTER ---------- */
 .site-footer{text-align:center;padding:64px 22px calc(40px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);margin-top:80px;}
@@ -428,7 +420,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .tools-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
 
 @media print{
-  .topbar,.hero,.tabs,.mode-row,.site-footer,.water-wrap{display:none !important;}
+  .topbar,.hero,.tabs,.site-footer,.water-wrap{display:none !important;}
   body::before{display:none;}
 }
 
@@ -458,7 +450,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .btn-light:hover{background:#fff;}
 .water-btn{white-space:nowrap;}
 @media (max-width:560px){
-  .mode-row{margin:24px 0 12px;}
+  .tabs{margin-top:24px;}
   .seg{display:flex;width:100%;}
   .seg button{flex:1;padding:10px 6px;font-size:13px;white-space:normal;line-height:1.2;}
   .water-btn{font-size:16px;padding:14px 20px 14px 16px;}
@@ -533,10 +525,6 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 </section>
 
 <main class="wrap" id="app">
-  <div class="mode-row"><div class="seg" id="mode" role="group" aria-label="Who is this grove for">
-    <button type="button" data-mode="self" aria-pressed="true">For myself</button>
-    <button type="button" data-mode="practitioner" aria-pressed="false">For someone in my care</button>
-  </div></div>
   <nav class="tabs" id="tabs" role="tablist" aria-label="Grove sections"></nav>
   <div id="view" aria-live="polite"></div>
 </main>
@@ -555,6 +543,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 
 <script src="/grove/data.js"></script>
 <script src="/grove/library.js"></script>
+<script src="/shared/grove-scene.js"></script>
 <script src="/shared/gg-care.js"></script>
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-profiles.js"></script>
@@ -568,45 +557,8 @@ const SUBSTACK = "https://chri5j0y.substack.com";
 const SUBSCRIBE_URL = "https://chri5j0y.substack.com/subscribe";
 const U = slug => SUBSTACK + "/p/" + slug;
 
-const ANCHORS = {
- morning:{t:"Arrive",b:"Before coffee, before your phone, sit for one minute. Just arrive in your body and the day. This one habit changes everything after it.",s:"Before anything else, one full breath where you are."},
- evening:{t:"Close the day",b:"Three specific graces from today. One thing you won't carry into sleep. One word for tomorrow. See the Guide for the full evening examen.",s:"One thing you're grateful for. One thing you're setting down."}
-};
+// ANCHORS, SEASONS, and the twelve WEEKS live in grove/data.js (the Field Guide's Grove Guide reads them too).
 
-// =====================================================================
-// TWELVE WEEKS + STORIES
-// =====================================================================
-const SEASONS = {
- planting:{name:"Planting", weeks:"Weeks 1 to 4", line:"Breaking ground. Small practices, every day, nothing forced."},
- rooting:{name:"Rooting", weeks:"Weeks 5 to 8", line:"Going deeper. The roots grow where no one can see them."},
- blooming:{name:"Blooming", weeks:"Weeks 9 to 12", line:"Full flower. What you've tended starts to show."}
-};
-const WEEKS = [
- {theme:"Start where you are", intro:"Nothing has to be ready. Not you, not your schedule, not your kitchen. This week you plant, and planting is small. Tend your tree once a day and let that be enough.", q:"What made you want to start, and what are you hoping grows?",
-  story:{title:"Grounded in Coffee", url:U("grounded-in-coffee"), line:"Sometimes the mess itself becomes part of the medicine."}},
- {theme:"Rest and limits", intro:"You can't pour from a dry well, and you already know it. This week, notice where your day leaks. Protect one small boundary like it matters, because it does.", q:"Where did you say yes this week when you needed to say no?",
-  story:{title:"My Boundaries Have Gates", url:U("my-boundaries-have-gates"), line:"It's okay to care deeply. The harder part is caring for yourself just as deeply afterward."}},
- {theme:"The body knows", intro:"Your body keeps its own record. It knows you're tired before you admit it. This week, listen to it the way you'd listen to a friend.", q:"What did your body tell you this week?",
-  story:{title:"Drift Away", url:U("drift-away"), line:"Some people don't say goodbye. They sing it."}},
- {theme:"When you miss a day", intro:"Somewhere around now, most people miss a day. Then two. That isn't the end of the practice. Coming back is the practice.", q:"What helped you come back when you drifted?",
-  story:{title:"The Recovery", url:U("the-recovery"), line:"Not the mistake. The recovery."}},
- {theme:"What you carry", intro:"Rooting is quiet work. Above ground, it can look like nothing is happening. Below, everything is. This week, notice what you've been carrying and haven't named.", q:"What are you carrying that you haven't said out loud?",
-  story:{title:"Grief Debt", url:U("grief-debt"), line:"Turns out my heart was keeping better count than my head was."}},
- {theme:"Don't wait on people", intro:"The call you keep meaning to make. The visit you keep putting off. This week, make it.", q:"Who did you reach toward this week, and how did it feel?",
-  story:{title:"If She Is Still Here", url:U("if-she-is-still-here"), line:"I almost said tomorrow. She didn't have a tomorrow."}},
- {theme:"Spirit, any way you come", intro:"You don't need a church or the right words. You need a little quiet and a willingness to notice what's bigger than you.", q:"Where did you feel something bigger than yourself this week?",
-  story:{title:"The Atypical Atheist", url:U("the-atypical-atheist"), line:"I believe in God, or something. I just cannot stand the church crap."}},
- {theme:"Practices that hold", intro:"Eight weeks in, some of this is becoming yours. The practices you keep on tired days are your roots. They hold when other things give way.", q:"Which practice has started to hold you?",
-  story:{title:"Prayer.", url:U("thank-god-for-sending-you"), line:"The prayer stayed whole long after everything else had come apart."}},
- {theme:"You get a say", intro:"Blooming begins with a choice. You don't control everything, but you get a say in how your life goes. Use it this week.", q:"What do you want more of in the life you're growing?",
-  story:{title:"Birth Plan", url:U("birth-plan"), line:"You don't just have to get ready to die. No one can, really. But you get a say in how it goes."}},
- {theme:"Love between us", intro:"Everything in a grove grows toward something. This week, grow toward the people you love.", q:"Where did you give or receive love this week?",
-  story:{title:"Love.", url:U("love"), line:"Love between us, right here, right now, is God loving us through each other."}},
- {theme:"Hope that shows up", intro:"Hope isn't a feeling you wait for. Sometimes it's something you do, and the feeling catches up with you.", q:"What gives you hope right now?",
-  story:{title:"He Was Praying Too", url:U("he-was-praying-too"), line:"When you were praying for me, I was praying too."}},
- {theme:"Holding on and letting go", intro:"Look at what grew. Some of it you'll keep. Some of it was only for this season. Both are good.", q:"What grew in these twelve weeks, and what are you ready to let go?",
-  story:{title:"Enlightenment", url:U("enlightenment"), line:"I have spent my whole life learning how to hold on well. Perhaps I only have one more thing left to learn."}}
-];
 const MORE_STORIES = {
  spirit:[{title:"Welcome Home", url:U("welcome-home")},{title:"Total Bliss", url:U("total-bliss")},{title:"The Impossible Dance of Particles", url:U("the-impossible-dance-of-particles")}],
  connect:[{title:"He Came to Collect", url:U("he-came-to-collect")},{title:"Please Help My Dad Die", url:U("please-help-my-dad-die")}]
@@ -683,149 +635,10 @@ Object.assign(ICON, {
 });
 
 // =====================================================================
-// ART: the grove. One tree per person, shaped by their life stage.
-// The parts someone is tending show their colors on the tree.
+// ART: the grove. The tree drawing lives in /shared/grove-scene.js, shared
+// with the Grove Guide in the Field Guide, so both draw the same tree.
 // =====================================================================
-const TONE = { trunk:'#6B4A2E', bark:'#B9A8F2', barkDim:'#4F3620', branch:'#C9B79A', branchHi:'#3CC0C6',
-  leaf:['#2F5A3A','#3F6B40','#4F7F4A'], leafHi:['#3E8A4E','#4FA85F','#6CC27A'], root:'#D6C3A0', rootHi:'#F2B36B',
-  fruit:'#E8862E', fruitHi:'#FF6B57', ink:'#2C1810' };
-const STAGE_H = { sprout:.34, sapling:.6, heartwood:.8, adult:1 };      // side by side in a family grove
-const STAGE_SOLO = { sprout:.62, sapling:.82, heartwood:.92, adult:1 };  // your own tree, filling the scene
-const stageOf = age => age === 'sprout' || age === 'sapling' || age === 'heartwood' ? age : 'adult';
-const STAGE_NAME = { sprout:'Sprout', sapling:'Sapling', heartwood:'Heartwood', adult:'Soul Tree' };
-function leafPath(x, y, len, ang, col){ return `<path transform="translate(${f1(x)} ${f1(y)}) rotate(${f1(ang)})" d="M0 0C${f1(len*.25)} ${f1(-len*.32)} ${f1(len*.75)} ${f1(-len*.32)} ${f1(len)} 0C${f1(len*.75)} ${f1(len*.32)} ${f1(len*.25)} ${f1(len*.32)} 0 0Z" fill="${col}"/>`; }
-// Roots: thick where they leave the trunk, thinning as they flow out.
-function rootsOf(t, H, R){
-  const col = t.parts.includes('roots') ? TONE.rootHi : TONE.root, n = {sprout:3, sapling:4, heartwood:5, adult:6}[t.stage];
-  const L = H * (t.stage === 'sprout' ? .9 : .62) * (t.rooting ? 1.3 : 1), w = Math.max(1.2, H * .012);
-  let o = '';
-  for (let i=0;i<n;i++){ const a = Math.PI * (.1 + .8 * i/(n-1)), len = L * (.75 + .35*R());
-    const ex = Math.cos(a)*len, ey = Math.max(8, Math.sin(a)*len*.55 + 6 + R()*8);
-    const c1 = `${f1(ex*.25)} ${f1(ey*.1+4)}`, c2 = `${f1(ex*.72)} ${f1(ey*.7)}`;
-    o += `<path d="M0 2C${c1} ${c2} ${f1(ex)} ${f1(ey)}" stroke="${col}" stroke-width="${f1(w)}" fill="none" stroke-linecap="round"/>`;
-    o += `<path d="M0 2C${f1(ex*.12)} ${f1(ey*.05+3)} ${f1(ex*.3)} ${f1(ey*.25)} ${f1(ex*.42)} ${f1(ey*.38)}" stroke="${col}" stroke-width="${f1(w*2.3)}" fill="none" stroke-linecap="round"/>`;
-    if (t.stage !== 'sprout') o += `<path d="M${f1(ex)} ${f1(ey)}c${f1(-3*Math.sign(ex||1))} 3 ${f1(-1*Math.sign(ex||1))} 7 ${f1(3*Math.sign(ex||1))} 6" stroke="${col}" stroke-width="${f1(w*.8)}" fill="none" stroke-linecap="round"/>`;
-  }
-  const tw = Math.max(1.6, H*.02), tl = L*.75;
-  o += `<path d="M${f1(-tw)} 0C${f1(-tw)} ${f1(tl*.3)} ${f1(-tw*.3)} ${f1(tl*.6)} 0 ${f1(tl)}C${f1(tw*.3)} ${f1(tl*.6)} ${f1(tw)} ${f1(tl*.3)} ${f1(tw)} 0Z" fill="${col}"/>`;
-  return o;
-}
-// One tree: t = {stage, g, parts, kind, rooting, snow}. Returns the part above ground,
-// the roots, a spot for a bird to perch, and its height.
-function treeParts(t, maxH, seed){
-  const R = rng(seed || 3), tend = id => t.parts.includes(id);
-  const H = maxH * (t.solo ? STAGE_SOLO : STAGE_H)[t.stage] * (.62 + .38*ease(t.g));
-  const leafs = tend('leaves') ? TONE.leafHi : TONE.leaf, fruitC = tend('fruit') ? TONE.fruitHi : TONE.fruit;
-  const trunkC = tend('trunk') ? PART.trunk.color : (t.kind === 'birch' ? '#EDE7DA' : TONE.trunk);
-  const brC = tend('branches') ? TONE.branchHi : (t.stage === 'sapling' ? TONE.trunk : TONE.branch);
-  let top = '', perch = { x: H*.2, y: -H*.7 };
-  if (t.stage === 'sprout'){
-    const lc = tend('leaves') ? ['#4FA85F','#7ED36A'] : ['#6CB34A','#9CD06A'];
-    top += `<path d="M0 0Q-3 ${f1(-H*.5)} 0 ${f1(-H)}" stroke="${trunkC}" stroke-width="${f1(Math.max(2.4, H*.05))}" fill="none" stroke-linecap="round"/>`;
-    top += leafPath(0, -H*.72, H*.42, 200, lc[0]) + leafPath(0, -H*.86, H*.42, -25, lc[1]);
-    if (t.g > .5) top += leafPath(0, -H*.45, H*.32, 160, lc[0]) + leafPath(0, -H*.55, H*.3, 15, lc[1]);
-    top += `<circle cx="0" cy="${f1(-H)}" r="${f1(Math.max(3, H*(tend('fruit')?.09:.07)))}" fill="${tend('fruit')?TONE.fruitHi:'#E86A5E'}"/>`;
-    if (tend('bark')) top += `<path d="M1.5 ${f1(-H*.2)}v${f1(-H*.12)}M-1.5 ${f1(-H*.4)}v${f1(-H*.1)}" stroke="${TONE.bark}" stroke-width="1.6" stroke-linecap="round"/>`;
-    perch = { x: H*.75, y: -6 };
-  } else if (t.stage === 'sapling' && t.kind !== 'pine'){
-    const lc = t.kind === 'maple' ? ['#D9483F','#E8962E'] : t.kind === 'birch' ? ['#9CCB5A','#C8E07A'] : [leafs[1], leafs[2]];
-    top += `<path d="M0 0Q-4 ${f1(-H*.5)} 0 ${f1(-H)}" stroke="${trunkC}" stroke-width="${f1(Math.max(3, H*.035))}" fill="none" stroke-linecap="round"/>`;
-    if (t.kind === 'birch') top += `<path d="M-1 ${f1(-H*.25)}h3M-1 ${f1(-H*.45)}h3" stroke="#2A2A2A" stroke-width="2"/>`;
-    const tips = [[-.34,-.62,-150],[.36,-.74,-30],[-.2,-.86,-120],[.12,-.95,-70]];
-    tips.forEach(([x,y],i) => { top += `<path d="M0 ${f1(y*H+H*.14)}Q${f1(x*H*.5)} ${f1(y*H+H*.06)} ${f1(x*H)} ${f1(y*H)}" stroke="${brC}" stroke-width="${f1(Math.max(1.8, H*.016))}" fill="none" stroke-linecap="round"/>`; });
-    tips.forEach(([x,y,a],i) => { top += leafPath(x*H, y*H, H*.2, a, lc[i%2]) + leafPath(x*H, y*H, H*.18, a+60, lc[(i+1)%2]); });
-    if (tend('bark')) top += `<path d="M1.5 ${f1(-H*.2)}v${f1(-H*.1)}M-1.8 ${f1(-H*.35)}v${f1(-H*.08)}" stroke="${TONE.bark}" stroke-width="1.8" stroke-linecap="round"/>`;
-    if (t.g > .55 || tend('fruit')) [[-.34,-.62],[.36,-.74]].forEach(([x,y]) => { top += `<circle cx="${f1(x*H)}" cy="${f1(y*H-2)}" r="${f1(Math.max(2.4,H*.02))}" fill="${fruitC}"/>`; });
-    perch = { x: .36*H, y: -.74*H - 6 };
-  } else {
-    // Heartwood and Soul Tree, or any stage as a pine
-    const big = t.stage === 'adult', cy = -H*.6, r = H*(big ? .3 : .28), tw = H*(big ? .045 : .036);
-    top += `<path d="M${f1(-tw)} 0C${f1(-tw*.8)} ${f1(-H*.3)} ${f1(-tw*.5)} ${f1(cy*.7)} ${f1(-tw*.45)} ${f1(cy)}L${f1(tw*.45)} ${f1(cy)}C${f1(tw*.5)} ${f1(cy*.7)} ${f1(tw*.8)} ${f1(-H*.3)} ${f1(tw)} 0Z" fill="${trunkC}"/>`;
-    if (t.kind === 'birch') [.2,.35,.5].forEach(k => { top += `<path d="M${f1(-tw*.5)} ${f1(-H*k)}h${f1(tw*.7)}" stroke="#2A2A2A" stroke-width="${f1(Math.max(1.5,H*.012))}" stroke-linecap="round"/>`; });
-    top += tend('bark') ? `<path d="M${f1(-tw*.35)} ${f1(-H*.06)}c2 ${f1(-H*.08)} -2 ${f1(-H*.14)} 0 ${f1(-H*.22)}M${f1(tw*.3)} ${f1(-H*.14)}c-2 ${f1(-H*.07)} 2 ${f1(-H*.13)} 0 ${f1(-H*.2)}" stroke="${TONE.bark}" stroke-width="${f1(Math.max(1.6,H*.012))}" fill="none" stroke-linecap="round"/>`
-      : t.kind === 'birch' ? '' : `<path d="M${f1(-tw*.35)} ${f1(-H*.06)}c2 ${f1(-H*.08)} -2 ${f1(-H*.14)} 0 ${f1(-H*.22)}" stroke="${TONE.barkDim}" stroke-width="1.2" fill="none" opacity=".6"/>`;
-    if (t.kind === 'pine'){
-      const tiers = 5; let tr = '';
-      for (let i=0;i<tiers;i++){ const y = -H*(.22 + i*.16), w = H*(.34 - i*.055);
-        tr += `<path d="M${f1(-w)} ${f1(y)}L0 ${f1(y-H*.3)}L${f1(w)} ${f1(y)}Z" fill="${i%2?(tend('leaves')?'#3E8A4E':'#2E6B4A'):(tend('leaves')?'#4FA85F':'#255E40')}" stroke="${TONE.ink}" stroke-width="1.2" stroke-linejoin="round"/>`;
-        if (t.snow) tr += `<path d="M${f1(-w*.35)} ${f1(y-H*.2)}L0 ${f1(y-H*.3)}L${f1(w*.35)} ${f1(y-H*.2)}Z" fill="#FFFFFF" opacity=".9"/>`; }
-      top += tr;
-      if (big || t.g > .55 || tend('fruit')) for (let i=0;i<(big?5:3);i++){ const y = -H*(.3 + R()*.5), x = (R()-.5)*H*.3*(1-(-y/H-.3)); top += `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(Math.max(2.4,H*.018))}" fill="${fruitC}" stroke="${TONE.ink}" stroke-width=".8"/>`; }
-      perch = { x: H*.22, y: -H*.36 };
-    } else {
-      const blobs = [[0,0,1],[-.78,.34,.72],[.78,.34,.72],[-.45,-.6,.72],[.45,-.6,.72],[0,-.95,.62],[0,.5,.66]];
-      const pal = t.kind === 'maple' ? (tend('leaves') ? ['#E0503F','#F09A3A','#F7C24A'] : ['#C0392B','#D9483F','#E8962E'])
-        : t.kind === 'birch' ? (tend('leaves') ? ['#8FD05A','#B9E274','#6FBF4E'] : ['#7DB34A','#9CCB5A','#B7D96A']) : leafs;
-      let crown = '', out = '';
-      blobs.forEach(([x,y,k],i) => { out += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(k*r+1.6)}" fill="${TONE.ink}"/>`; crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(k*r)}" fill="${pal[i%3]}"/>`; });
-      crown += `<circle cx="${f1(-r*.25)}" cy="${f1(cy-r*.2)}" r="${f1(r*.45)}" fill="${pal[2]}" opacity=".7"/>`;
-      if (t.stage === 'heartwood' && t.kind === 'grove') [[-.4,.2],[.45,-.15],[.1,.45]].forEach(([x,y]) => { crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(r*.22)}" fill="#9C4235"/>`; });
-      if (t.snow) [[0,-.95,.62],[-.45,-.6,.72],[.45,-.6,.72]].forEach(([x,y,k]) => { crown += `<path d="M${f1(x*r-k*r*.7)} ${f1(cy+y*r-k*r*.55)}Q${f1(x*r)} ${f1(cy+y*r-k*r*1.15)} ${f1(x*r+k*r*.7)} ${f1(cy+y*r-k*r*.55)}Z" fill="#FFFFFF" opacity=".92"/>`; });
-      top += out + crown;
-      const bw = f1(Math.max(1.6, H*.011));
-      top += `<path d="M0 ${f1(cy+r*.7)}L0 ${f1(cy-r*.3)}M0 ${f1(cy+r*.4)}Q${f1(-r*.35)} ${f1(cy+r*.15)} ${f1(-r*.62)} ${f1(cy+r*.05)}M0 ${f1(cy+r*.15)}Q${f1(r*.35)} ${f1(cy-r*.12)} ${f1(r*.6)} ${f1(cy-r*.2)}M0 ${f1(cy-r*.1)}Q${f1(-r*.2)} ${f1(cy-r*.4)} ${f1(-r*.35)} ${f1(cy-r*.62)}" stroke="${brC}" stroke-width="${bw}" fill="none" stroke-linecap="round"/>`;
-      const nf = big ? 7 : 4;
-      if (big || t.g > .55 || tend('fruit')) for (let i=0;i<nf;i++){ const a = R()*Math.PI*2, d = r*(.25 + R()*.6);
-        top += `<circle cx="${f1(Math.cos(a)*d)}" cy="${f1(cy+Math.sin(a)*d*.8)}" r="${f1(Math.max(2.4, r*.075))}" fill="${fruitC}" stroke="${TONE.ink}" stroke-width=".9"/>`; }
-      perch = { x: r*.62, y: cy - r*.92 };
-    }
-  }
-  return { top, roots: rootsOf(t, H, R), perch, H };
-}
-const SKIES = {
- dawn:["#F2D3A8","#C9D9C3"], day:["#CBE0DA","#EEF2E3"], dusk:["#E2A57E","#8C7DA0"], night:["#16233A","#2A3E47"]
-};
-function skyNow(){ const h = new Date().getHours(); return h>=5&&h<10?'dawn':h>=10&&h<17?'day':h>=17&&h<20?'dusk':'night'; }
-const FAR = { day:['#A9C0A4','#8FAE8E'], dawn:['#B7BFA0','#9AAE8E'], dusk:['#7E6F86','#6A5E78'], night:['#1D302B','#24382F'],
-  autumn:['#C99A5E','#B07A3A'], winter:['#C9D6D2','#AFC2BD'] };
-function butterflySVG(i, R, gy){ return `<g class="butterfly" style="animation-delay:${-i*2.3}s" transform="translate(${i*170} ${i%2?-26:10})"><g transform="translate(${f1(260+R()*300)} ${f1(gy*.4)})"><ellipse class="wing" cx="-6" cy="0" rx="7" ry="9" fill="#E9B949"/><ellipse class="wing r" cx="6" cy="0" rx="7" ry="9" fill="#F2C94C"/><ellipse class="wing" cx="-5" cy="7" rx="4" ry="5" fill="#D9674C"/><ellipse class="wing r" cx="5" cy="7" rx="4" ry="5" fill="#D9674C"/><path d="M0 -8v18" stroke="#3A2A1E" stroke-width="2" stroke-linecap="round"/></g></g>`; }
-function critterSVG(id, x, y){
-  if (id === 'ladybug') return `<g transform="translate(${f1(x)} ${f1(y)})"><circle r="4.2" fill="#D8352A"/><circle cx="3.4" cy="-2.4" r="2" fill="#1B1B1B"/><path d="M-3 3L3 -3" stroke="#1B1B1B" stroke-width=".8"/><circle cx="-1.6" cy="-1" r=".9" fill="#1B1B1B"/><circle cx="1.2" cy="1.8" r=".9" fill="#1B1B1B"/></g>`;
-  if (id === 'bird') return `<g transform="translate(${f1(x)} ${f1(y)}) scale(1.4)"><path d="M-8 1L-15 4L-8 4Z" fill="#3E5E82"/><ellipse rx="8" ry="5.5" fill="#4E78A6"/><path d="M-2 1C0 6 5 6 7 1Z" fill="#D9864A"/><circle cx="6" cy="-4" r="3.6" fill="#4E78A6"/><path d="M9.2 -4.4L12 -3.6L9.2 -2.8Z" fill="#E0A33A"/><circle cx="7" cy="-4.6" r=".8" fill="#141414"/><path d="M-1 5.5V8M2 5.5V8" stroke="#3A2A1E" stroke-width=".9"/></g>`;
-  if (id === 'bunny') return `<g transform="translate(${f1(x)} ${f1(y)}) scale(1.5)"><ellipse cy="-7" rx="9" ry="7.5" fill="#C9B59B"/><circle cx="7" cy="-14" r="5" fill="#C9B59B"/><path d="M6 -18C4 -28 6 -31 8 -30C9 -26 9 -22 8 -18ZM9 -18C10 -27 13 -29 14 -27C14 -24 12 -20 10 -17Z" fill="#C9B59B"/><circle cx="-8.5" cy="-6" r="3" fill="#F4EEE4"/><circle cx="9" cy="-15" r="1" fill="#2A1E14"/></g>`;
-  return '';
-}
-// o = {w, h, gy, trees:[{stage,g,parts,kind,label}], sky, scenery, rooting, visitors:[ids], uid, seed, label}
-function groveSceneSVG(o){
-  const W = o.w||1000, Hh = o.h||400, gy = o.gy, R = rng(o.seed||7), id = o.uid||'s', sc = o.scenery || 'forest';
-  const skyKey = sc === 'dusk' ? 'dusk' : (o.sky||'day');
-  let defs = '', bg = '';
-  const s = sc === 'winter' && skyKey !== 'night' ? ['#DCE6EA','#F3F5F1'] : SKIES[skyKey];
-  defs += `<linearGradient id="${id}sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s[0]}"/><stop offset="1" stop-color="${s[1]}"/></linearGradient>`;
-  bg += `<rect width="${W}" height="${gy+10}" fill="url(#${id}sky)"/>`;
-  if (skyKey==='night'){ for (let i=0;i<46;i++) bg += `<circle cx="${f1(R()*W)}" cy="${f1(R()*(gy-30))}" r="${f1(.6+R()*1.3)}" fill="#F4EBDA" opacity="${f1(.35+R()*.6)}"/>`; bg += `<circle cx="945" cy="${f1(gy*.26)}" r="20" fill="#F4EBDA"/><circle cx="954" cy="${f1(gy*.26-5)}" r="18" fill="#1A2940"/>`; }
-  else { const sy = gy*(skyKey==='day'?.2:skyKey==='dusk'?.34:.3), sn = skyKey==='dusk'?'#F2B26B':skyKey==='dawn'?'#F7D48A':'#FFF3C9';
-    bg += `<circle cx="945" cy="${f1(sy)}" r="40" fill="${sn}" opacity=".35"/><circle cx="945" cy="${f1(sy)}" r="24" fill="${sn}"/>`;
-    for (let i=0;i<3;i++){ const cx = 260+i*250+R()*60, cy = gy*(.14+R()*.14); bg += `<g fill="#fff" opacity="${skyKey==='day'?.7:.35}"><ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="48" ry="12"/><ellipse cx="${f1(cx+26)}" cy="${f1(cy-8)}" rx="28" ry="12"/></g>`; } }
-  const far = sc === 'autumn' ? FAR.autumn : sc === 'winter' && skyKey !== 'night' ? FAR.winter : FAR[skyKey] || FAR.day;
-  [[far[0], 60, 95, 30], [far[1], 34, 60, 24]].forEach(([c, hmin, hmax, step]) => { let d = '', x = -10;
-    while (x < W + 20){ const h = hmin + R()*(hmax-hmin), w = 12 + R()*8; d += `M${f1(x-w)} ${gy+2}L${f1(x)} ${f1(gy-h)}L${f1(x+w)} ${gy+2}Z`;
-      if (sc === 'winter' && skyKey !== 'night') bg += `<path d="M${f1(x-w*.3)} ${f1(gy-h*.7)}L${f1(x)} ${f1(gy-h)}L${f1(x+w*.3)} ${f1(gy-h*.7)}Z" fill="#fff" opacity=".85"/>`;
-      x += step + R()*10; }
-    bg = bg.replace(/$/, '') + `<path d="${d}" fill="${c}"/>`; });
-  if (sc === 'lake'){ const lc = skyKey === 'night' ? '#2B4556' : skyKey === 'dusk' ? '#9B8AA8' : '#86B8CB';
-    bg += `<path d="M0 ${gy-18}Q${W*.5} ${gy-30} ${W} ${gy-16}V${gy+4}H0Z" fill="${lc}"/><path d="M${W*.18} ${gy-12}h60M${W*.55} ${gy-16}h80M${W*.8} ${gy-10}h50" stroke="#fff" stroke-width="2" opacity=".5" stroke-linecap="round"/>`; }
-  const layers = ['#6B4E33','#5B412B','#4D3624','#402D1F','#35251A'];
-  const depth = Hh - gy, band = depth / layers.length; let soil = '';
-  layers.forEach((c,i)=>{ const y = gy + i*band + (i? 0: -2); const a = 5+R()*6;
-    soil += `<path d="M0 ${f1(y)}C${f1(W*.2)} ${f1(y-a)} ${f1(W*.38)} ${f1(y+a)} ${f1(W*.55)} ${f1(y)}S${f1(W*.85)} ${f1(y-a)} ${W} ${f1(y+2)}V${Hh}H0Z" fill="${c}"/>`; });
-  for (let i=0;i<60;i++){ const x = R()*W, y = gy + 12 + R()*(depth-16); soil += `<ellipse cx="${f1(x)}" cy="${f1(y)}" rx="${f1(1+R()*3.4)}" ry="${f1(.8+R()*2)}" fill="${R()>.5?'#8A6B4C':'#2A1D13'}" opacity="${f1(.25+R()*.4)}"/>`; }
-  let ground = `<path d="M0 ${gy}C${W*.2} ${gy-5} ${W*.38} ${gy+5} ${W*.55} ${gy}S${W*.85} ${gy-5} ${W} ${gy+2}" fill="none" stroke="${sc==='winter'?'#FFFFFF':'#2C1810'}" stroke-width="${sc==='winter'?5:2}" opacity="${sc==='winter'?.9:.55}"/>`;
-  if (sc !== 'winter') for (let i=0;i<60;i++){ const x = R()*W, h = 5+R()*9; ground += `<path d="M${f1(x)} ${gy+1}l${f1(-2+R()*1)} ${f1(-h)}M${f1(x+2)} ${gy+1}l${f1(1+R()*2)} ${f1(-h*.8)}" stroke="${sc==='autumn'?'#B08A4A':'#5E8C3F'}" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>`; }
-  const n = o.trees.length, gap = Math.min(300, 820/Math.max(1,n)), left = 500 - gap*(n-1)/2, maxH = (gy - 14) / 1.08;
-  let roots = '', tops = '', labels = '', vis = '';
-  o.trees.forEach((t, i) => { const x = n === 1 ? 500 : left + gap*i, tp = treeParts(Object.assign({ rooting:o.rooting, snow: sc==='winter', solo: n === 1 }, t), maxH, (o.seed||7) + i*31);
-    roots += `<g transform="translate(${f1(x)} ${gy})">${tp.roots}</g>`;
-    tops += `<g transform="translate(${f1(x)} ${gy})" data-x="${f1(x)}"><g class="sway" style="animation-delay:${f1(-R()*6)}s">${tp.top}</g></g>`;
-    if (t.label) labels += `<text x="${f1(x)}" y="${f1(Hh - 18)}" text-anchor="middle" font-family="Barlow, Arial, sans-serif" font-weight="600" font-size="22" fill="#F4EBDA" stroke="#2C1810" stroke-width="5" paint-order="stroke" stroke-linejoin="round">${esc(t.label)}</text>`;
-    if (i === 0 && o.visitors){ const V = o.visitors;
-      if (V.includes('ladybug')) vis += critterSVG('ladybug', x + Math.max(16, tp.H*.12), gy - 5);
-      if (V.includes('bird')) vis += critterSVG('bird', x + tp.perch.x, gy + tp.perch.y);
-      if (V.includes('bunny')) vis += critterSVG('bunny', Math.min(W - 40, x + Math.max(70, tp.H*.55)), gy + 2);
-      V.filter(v => v.startsWith('butterfly')).forEach((v, k) => { vis += butterflySVG(k, R, gy); });
-    } });
-  return `<svg viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(o.label||'A grove seen in cross section')}"><defs>${defs}</defs>${bg}${soil}${roots}${ground}<g class="plants">${tops}</g>${labels}${vis}</svg>`;
-}
+const { stageOf, STAGE_NAME, skyNow, sceneSVG: groveSceneSVG } = window.GGScene;
 
 // =====================================================================
 // STATE (saved in this browser only)
@@ -840,8 +653,6 @@ let gOwner = null;    // the profile whose tree is on screen
 let gHome = null;     // the unlocked profile (a grown-up may be looking at a child's tree)
 let PENDING_WHO = (new URLSearchParams(location.search)).get('who'); // ?who=<profile id> opens a family member's tree
 let Q = null;            // quiz in progress
-let openPerson = null;   // practitioner detail
-let adding = null;       // practitioner add form
 // Older groves used eight beds. Each bed now lives inside one of the six parts.
 const BED2PART = { body:'leaves', rest:'leaves', nourish:'leaves', mind:'bark', connect:'branches', spirit:'roots', create:'trunk', hope:'fruit' };
 function toParts(list){ const out = []; (list||[]).forEach(id => { const k = PART[id] ? id : BED2PART[id]; if (k && !out.includes(k)) out.push(k); });
@@ -856,7 +667,10 @@ function migrateGrove(G){
   if (!SCENERY.some(k => k.id === G.scenery)) G.scenery = 'forest';
   Object.values(G.done||{}).forEach(d => Object.keys(d).forEach(k => { if (BED2PART[k]){ d[BED2PART[k]] = true; delete d[k]; } }));
   return G; }
+// S.people holds trees for people in someone's care, saved before that moved to the Field Guide's
+// Grove Guide (session 11). They're kept only until downloaded for the Field Guide and removed.
 function migrate(){ S.self = migrateGrove(Object.assign(blankGrove(), S.self||{})); S.people = (S.people||[]).map(p => migrateGrove(Object.assign(blankGrove(), p))); S.dismissed = S.dismissed || {};
+  S.mode = 'self'; if (S.tab === 'people') S.tab = 'today';
   if (S.q && S.q.steps) Q = S.q; }
 function load(){ try {
   let r = localStorage.getItem(STORE);
@@ -870,7 +684,7 @@ function save(){ S.q = Q;
 // ---------- Grounded profiles ----------
 function groveSync0(type){
   const a = window.GGP && GGP.active();
-  if (!a){ gHome = null; if (gOwner){ gOwner = null; S = freshS(); Q = null; openPerson = null; adding = null; load(); render(); } else renderProfileNote(); return; }
+  if (!a){ gHome = null; if (gOwner){ gOwner = null; S = freshS(); Q = null; load(); render(); } else renderProfileNote(); return; }
   if (gOwner && gOwner !== a.id && gHome === a.id){   // looking at a family member's tree
     if (GGP.isOpen(gOwner)){ if (type === 'data'){ loadGrove(gOwner); render(); } else renderProfileNote(); return; }
     loadGrove(a.id); gHome = a.id; render(); return;
@@ -900,7 +714,7 @@ function loadGrove(id){
   const d = GGP.data(id), g = d && d.grove;
   if (g && g.self) S = Object.assign(freshS(), JSON.parse(JSON.stringify(g)));
   else { S = freshS(); S.self.who = id; const p = GGP.get(id); if (p) S.self.age = p.age; }
-  Q = null; openPerson = null; adding = null; migrate(); gOwner = id; saplingGifts(id);
+  Q = null; migrate(); gOwner = id; saplingGifts(id);
 }
 // ---------- family ----------
 // Everyone a grown-up agreed for on this device. Kids and middle schoolers open with the
@@ -993,23 +807,18 @@ const weekDates = wi => Array.from({length:7}, (_,i) => addDays(wi.roundStart, i
 // =====================================================================
 const $ = s => document.querySelector(s);
 function setScale(){ document.documentElement.style.setProperty('--scale', S.scale); $('#size-btn').textContent = S.scale > 1.2 ? 'A' : 'A+'; $('#size-btn').setAttribute('aria-label', 'Text size, now ' + (S.scale===1?'normal':S.scale<1.2?'larger':'largest')); }
-function tabsFor(){ return S.mode === 'self'
-  ? [['today',"Today's Practices",'today'],['library','Library','library'],['week','This week','week'],['tree','My tree','tree'],['journal','Journal','journal'],['guide','Guide','guide']].concat(!viewingFamily() && familyIds().length ? [['family','Family','grove']] : [])
-  : [['people','Trees','people'],['tree','Six parts','tree'],['library','Library','library'],['guide','Guide','guide']]; }
+function tabsFor(){ return [['today',"Today's Practices",'today'],['library','Library','library'],['week','This week','week'],['tree','My tree','tree'],['journal','Journal','journal'],['guide','Guide','guide']].concat(!viewingFamily() && familyIds().length ? [['family','Family','grove']] : []); }
 function renderTabs(){
   const t = tabsFor(); if (!t.some(x => x[0]===S.tab)) S.tab = t[0][0];
   $('#tabs').innerHTML = t.map(([id,label,ic]) => `<button class="tab" role="tab" aria-selected="${S.tab===id}" data-tab="${id}">${icon(ic)}${label}</button>`).join('');
-  document.querySelectorAll('#mode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === S.mode));
 }
 function setSeason(){ const wi = weekInfo(S.self); document.body.dataset.season = S.mode==='self' && wi ? wi.season : 'planting'; }
 function render(){
-  const mr = document.querySelector('.mode-row'); if (mr) mr.hidden = viewingFamily();
   renderTabs(); setSeason();
   const v = $('#view');
   if (!document.getElementById('g-prof-note')) v.insertAdjacentHTML('beforebegin', '<div id="g-prof-note"></div>');
   renderProfileNote();
-  v.innerHTML = S.mode === 'practitioner' && S.tab === 'people' ? viewPeople()
-    : (famStrip() + ({ today:viewToday, library:viewLibrary, week:viewWeek, tree:viewTree, journal:viewJournal, guide:viewGuide, family:viewFamily }[S.tab] || viewToday)());
+  v.innerHTML = (famStrip() + careMoved() + ({ today:viewToday, library:viewLibrary, week:viewWeek, tree:viewTree, journal:viewJournal, guide:viewGuide, family:viewFamily }[S.tab] || viewToday)());
   $('#hero-cta').textContent = S.self.start ? 'Go to today' : 'Tend Your Grove';
 }
 
@@ -1456,7 +1265,7 @@ function viewLibrary(){
   <div id="lib-results">${libResultsHTML()}</div>`;
 }
 function viewGuide(){
-  const sec = [['how','How it works'],['rhythm','Daily rhythm'],['examen','Evening examen'],['meditation','Meditation'],['writing','Writing'],['sound','Sound'],['carry','If you carry a lot'],['data','Your data']];
+  const sec = [['how','How it works'],['rhythm','Daily rhythm'],['examen','Evening examen'],['meditation','Meditation'],['writing','Writing'],['sound','Sound'],['carry','If you carry a lot'],['others','Walking with others'],['data','Your data']];
   return `<div class="section-head"><h2>The guide</h2><p>Everything behind the practices, in one place.</p></div>
   <div class="guide-nav">${sec.map(([id,l]) => `<a class="chip" style="text-decoration:none" href="#g-${id}">${l}</a>`).join('')}</div>
   <div class="card" id="g-how"><h3>How it works</h3><div class="steps" style="margin-top:14px">
@@ -1488,6 +1297,8 @@ function viewGuide(){
    <p style="margin-top:10px"><strong>Writing is processing.</strong> <span class="muted">You witness things most people never see. Putting them on the page is how you keep them from settling into your body.</span></p>
    <p style="margin-top:10px"><strong>Receiving counts.</strong> <span class="muted">Let someone help you this week. Care that only flows one direction runs dry.</span></p>
    <p class="note care">If you're in crisis, call or text <a href="tel:988">988</a> any time (US).</p></div>
+  <div class="card" id="g-others"><h3>Walking alongside someone else</h3><p class="muted" style="margin-top:6px">Chaplains, pastors, nurses, teachers, and counselors can walk with the people they serve through the twelve weeks with the Grove Guide, part of the Grounded Field Guide. Their trees stay encrypted on your device, next to Soul Tree Guide visits for the same person. Free for individuals.</p>
+   <div class="tools-row" style="justify-content:flex-start;margin-top:14px"><a class="btn btn-line btn-sm" href="${FG_ABOUT}">Request access</a></div></div>
   <div class="card" id="g-data"><h3>Your data</h3><p class="muted" style="margin-top:6px">Everything stays on this device. Nothing is collected, sent, or shared. Practices you check off here are shared with the other Grounded tools on this same device, like Soul Tree, so a practice done in one counts in all of them. Only the practice names and dates are shared, never your answers or journal. Clearing your browser data will erase your tree, so save a backup now and then, especially before switching phones.</p>
    <div class="tools-row" style="justify-content:flex-start;margin-top:14px"><button class="btn btn-line btn-sm" data-act="backup">Download backup</button><label class="btn btn-line btn-sm" style="cursor:pointer">Restore backup<input type="file" accept=".json,application/json" id="restore" hidden></label><button class="btn btn-line btn-sm" data-act="reset">Start over</button></div></div>`;
 }
@@ -1536,38 +1347,19 @@ function famRowHTML(r, seen, a){
   else act = `<span class="fam-meta">Open ${n}'s profile once to see their tree here.</span>`;
   return `<div class="card fam-row"><div class="fam-pic">${famAv(p, 56)}</div><div><h3>${n}</h3><p class="fam-meta">${meta}</p></div><div>${stats}${dots}</div>${alert}<div class="fam-act">${act}</div></div>`;
 }
-function viewPeople(){
-  if (adding) return viewAdd();
-  if (openPerson) { const P = S.people.find(p => p.id === openPerson); if (P) return viewPerson(P); openPerson = null; }
-  return `<div class="section-head"><h2>Trees you're tending</h2><p>For chaplains, nurses, and caregivers walking alongside someone through the twelve weeks. Use first names or initials only. Everything stays on this device.</p></div>
-  <div class="tools-row" style="justify-content:flex-start;margin-bottom:20px"><button class="btn btn-gold" data-act="add-person">${icon('people')}Add a person</button><button class="btn btn-line btn-sm" data-act="backup">Download backup</button><label class="btn btn-line btn-sm" style="cursor:pointer">Restore backup<input type="file" accept=".json,application/json" id="restore" hidden></label></div>
-  ${S.people.length ? `<div class="people">${S.people.map(p => { const wi = weekInfo(p), wd = wi && !wi.before ? weekDates(wi).filter(d => p.watered[d]).length : 0;
-    return `<button class="card person" data-act="open-person" data-v="${p.id}"><h3>${esc(p.name)}</h3><p class="muted">${!wi?'Not started':wi.before?'Starts '+nice(p.start,{month:'short',day:'numeric'}):wi.done?'Twelve weeks complete':SEASONS[wi.season].name+', Week '+wi.week}</p><p class="ui muted" style="font-size:14px">${wi&&!wi.before?wd+' of 7 days this week':''}</p><div class="part-dots">${p.parts.map(id => `<i style="--part:${PART[id].color}" title="${PART[id].name}"></i>`).join('')}</div></button>`; }).join('')}</div>`
-  : `<div class="card" style="text-align:center"><p class="muted">No trees yet. Add the first person you're walking with.</p></div>`}`;
+// Trees for people in someone's care moved to the Grounded Field Guide (Grove Guide) in session 11.
+// Anyone who still has some saved here sees one card: download them for the Field Guide, then remove them.
+const FG_ABOUT = 'https://growwithgrounded.com/field-guide/#about';
+function careMoved(){
+  if (!S.people || !S.people.length || viewingFamily() || !['today','guide'].includes(S.tab)) return '';
+  const n = S.people.length, names = listNames(S.people.map(p => esc(p.name)));
+  return `<div class="card care-moved"><h3>Trees for people in your care have a new home</h3>
+   <p class="muted" style="margin-top:6px">Walking alongside someone through The Grove now lives in the Grounded Field Guide, as the Grove Guide, where their trees stay encrypted on your device. You have ${plural(n, 'tree', 'trees')} saved here from before (${names}). Download ${n === 1 ? 'it' : 'them'} for the Field Guide, move ${n === 1 ? 'it' : 'them'} in from its Grove tab, then remove ${n === 1 ? 'it' : 'them'} here.</p>
+   <div class="tools-row"><button class="btn btn-gold btn-sm" data-act="care-export">Download for the Field Guide</button><button class="btn btn-line btn-sm" data-act="care-remove">Remove from this device</button><a class="text-btn" href="${FG_ABOUT}">About the Field Guide</a></div></div>`;
 }
-function viewAdd(){ const a = adding;
-  return `<button class="btn btn-line btn-sm" data-act="cancel-add">${icon('back')}Back</button>
-  <div class="card" style="margin-top:16px;max-width:820px"><h2>Add a person</h2>
-   <label class="lbl" for="p-name">First name or initials</label><input type="text" id="p-name" value="${esc(a.name)}" maxlength="40" autocomplete="off">
-   <label class="lbl">Parts to tend (choose any)</label><div class="part-pick">${PARTS.map(b => `<button class="part-toggle" style="--part:${b.color}" aria-pressed="${a.parts.includes(b.id)}" data-act="a-part" data-v="${b.id}"><span class="p-icon">${icon(b.id)}</span><span><strong>${b.name}</strong><small>${b.sub}</small></span></button>`).join('')}</div>
-   <label class="lbl">Movement level</label><div class="daytype">${LEVELS.map(l => `<button class="chip" aria-pressed="${a.level===l.id}" data-act="a-level" data-v="${l.id}">${l.name}</button>`).join('')}</div>
-   <label class="lbl" for="p-start">Start date</label><input type="date" id="p-start" value="${a.start}" style="max-width:220px">
-   <div class="quiz-nav"><span></span><button class="btn btn-gold" data-act="save-person">Plant their tree</button></div></div>`; }
-function viewPerson(P){
-  const wi = weekInfo(P), wk = WEEKS[wi.week-1];
-  const log = wi.before ? `<p class="muted">Starts ${nice(P.start)}.</p>` : `<div class="log-row">${weekDates(wi).map(d => `<button class="log-day" aria-pressed="${!!P.watered[d]}" data-act="log" data-v="${d}" ${d>today()?'disabled':''}>${nice(d,{weekday:'short'})}<br>${nice(d,{month:'numeric',day:'numeric'})}</button>`).join('')}</div>`;
-  return `<button class="btn btn-line btn-sm" data-act="close-person">${icon('back')}All trees</button>
-  <div class="section-head" style="margin-top:16px"><h2>${esc(P.name)}</h2><p>${wi.before?'Starts '+nice(P.start):wi.done?'Twelve weeks complete':SEASONS[wi.season].name+', Week '+wi.week+', Day '+wi.day+'. '+wk.theme+'.'}</p></div>
-  <div class="stage">${groveScene(P, {uid:'p'+P.id, seed:17})}</div>
-  <div class="grid-2" style="margin-top:18px">
-   <div class="card"><h3>Days tended</h3><p class="muted" style="margin:4px 0 8px">Tap the days they report practicing.</p>${log}
-    ${canLinger(wi)?`<button class="btn btn-line btn-sm" style="margin-top:12px" data-act="p-linger">Stay in Week ${wi.week} another week</button>`:''}</div>
-   <div class="card"><h3>Your notes</h3><textarea data-pnote="${P.id}" aria-label="Notes about ${esc(P.name)}" placeholder="Private to you, on this device.">${esc(P.notes||'')}</textarea><span class="saved-flag" id="sfp">Saved</span></div>
-  </div>
-  <div class="card" style="margin-top:18px"><h3>This week's practices</h3>${P.parts.map(id => { const b = PART[id], p = practiceFor(P,id,wi.season,'full');
-    return `<div style="--part:${b.color};display:grid;grid-template-columns:44px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)"><div class="p-icon" style="width:44px;height:44px">${icon(id)}</div><div><div class="p-part">${b.name}</div><strong style="font-weight:600">${p.t}</strong><p class="muted">${p.b}</p></div></div>`; }).join('')}
-   <p class="note">Reflection for this week: ${wk.q}</p></div>
-  <div class="tools-row" style="justify-content:flex-start;margin-top:18px"><button class="btn btn-gold" data-act="print-week" data-who="${P.id}">${icon('print')}Print weekly sheet</button><button class="btn btn-line btn-sm" data-act="remove-person">Remove this tree</button></div>`;
+function careExport(){
+  const out = { app:'the-grove', kind:'grove-care', v:1, exported: today(), people: JSON.parse(JSON.stringify(S.people)) };
+  download('grove-care-trees-' + today() + '.json', JSON.stringify(out, null, 1), 'application/json');
 }
 
 // =====================================================================
@@ -1673,9 +1465,8 @@ function rainNow(){
 // EVENTS
 // =====================================================================
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-tab],[data-act],[data-mode]'); if (!t) return;
-  if (t.dataset.mode){ S.mode = t.dataset.mode; S.tab = S.mode==='self'?'today':'people'; openPerson = null; adding = null; save(); render(); return; }
-  if (t.dataset.tab && !t.dataset.act){ e.preventDefault(); S.tab = t.dataset.tab; if (S.mode==='practitioner' && !['people','tree','library','guide'].includes(S.tab)){ S.mode='self'; } save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
+  const t = e.target.closest('[data-tab],[data-act]'); if (!t) return;
+  if (t.dataset.tab && !t.dataset.act){ e.preventDefault(); S.tab = t.dataset.tab; save(); render(); $('#app').scrollIntoView({behavior:'smooth'}); return; }
   const a = t.dataset.act, v = t.dataset.v, G = S.self;
   if (a === 'q-plant' && window.GGP && !GGP.active() && !LEGACY){
     GGP.require({ reason:'Your tree saves in a private Grounded profile, so you can come back to it every day. It stays on this device, locked with a passcode only you know.', age: Q && Q.age }).then(ok => { if (ok) { const b = document.querySelector('[data-act="q-plant"]'); if (b) b.click(); } });
@@ -1746,22 +1537,15 @@ document.addEventListener('click', e => {
     case 'level': G.level = v; break;
     case 'ics': makeICS(); return;
     case 'save-image': saveImage().catch(() => alert('The image could not be created in this browser.')); return;
-    case 'print-week': { const who = t.dataset.who; if (who==='self') printWeek(G); else { const P = S.people.find(p => p.id===who); printWeek(P, P.name); } return; }
+    case 'print-week': printWeek(G); return;
     case 'print-grew': printGrew(); return;
     case 'backup': download('the-grove-backup-' + today() + '.json', JSON.stringify({app:'the-grove', v:2, saved:new Date().toISOString(), data:S}, null, 1), 'application/json'); return;
     case 'reset': if (confirm('Start over? This clears your tree, journal, and any trees you tend for others on this device. Download a backup first if you want to keep them.')){ const keep = S.scale; S = { mode:'self', tab:'today', dayType:'full', remind:'07:00', scale:keep, self:blankGrove(), people:[], dismissed:{}, q:null }; Q = null; save(); } break;
-    case 'add-person': adding = { name:'', parts:[], level:'gentle', start:today() }; break;
-    case 'cancel-add': adding = null; break;
-    case 'a-part': { const i = adding.parts.indexOf(v); if (i >= 0) adding.parts.splice(i,1); else adding.parts.push(v); break; }
-    case 'a-level': adding.level = v; break;
-    case 'save-person': { const name = adding.name.trim(); if (!name){ alert('Add a first name or initials.'); return; } if (!adding.parts.length){ alert('Choose at least one part to tend.'); return; }
-      const P = Object.assign(blankGrove(), { id:'p'+Date.now().toString(36), name, parts:PARTS.map(b=>b.id).filter(id => adding.parts.includes(id)), level:adding.level, start:adding.start || today() });
-      S.people.push(P); adding = null; openPerson = P.id; break; }
-    case 'open-person': openPerson = v; break;
-    case 'close-person': openPerson = null; break;
-    case 'log': { const P = S.people.find(p => p.id===openPerson); if (P.watered[v]) delete P.watered[v]; else P.watered[v] = true; break; }
-    case 'p-linger': { const P = S.people.find(p => p.id===openPerson), wi = weekInfo(P); P.lingers[wi.week] = (P.lingers[wi.week]||0) + 1; break; }
-    case 'remove-person': if (!confirm('Remove this tree and its notes from this device?')) return; S.people = S.people.filter(p => p.id !== openPerson); openPerson = null; break;
+    case 'care-export': careExport(); return;
+    case 'care-remove': { const n = S.people.length;
+      if (!confirm('Remove ' + plural(n, 'tree', 'trees') + ' for people in your care from this device? Download them for the Field Guide first if you want to keep them.')) return;
+      if (!confirm('This can\'t be undone. Remove ' + (n === 1 ? 'it' : 'them') + ' now?')) return;
+      S.people = []; break; }
     default: return;
   }
   save(); render();
@@ -1771,10 +1555,7 @@ document.addEventListener('input', e => {
   const t = e.target;
   if (t.id === 'lib-q'){ LIB.q = t.value; const r = $('#lib-results'); if (r) r.innerHTML = libResultsHTML(); return; }
   if (t.dataset.journal){ S.self.journal[t.dataset.journal] = t.value; flag('sf'+t.dataset.journal); }
-  else if (t.dataset.pnote){ const P = S.people.find(p => p.id===t.dataset.pnote); if (P) P.notes = t.value; flag('sfp'); }
   else if (t.id === 'remind'){ S.remind = t.value; }
-  else if (t.id === 'p-name' && adding){ adding.name = t.value; }
-  else if (t.id === 'p-start' && adding){ adding.start = t.value; }
   else return;
   clearTimeout(saveTimer); saveTimer = setTimeout(save, 300);
 });

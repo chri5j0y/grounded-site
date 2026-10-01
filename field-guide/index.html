@@ -315,6 +315,30 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .st-bar{height:10px;border-radius:6px;background:var(--bg-deep);overflow:hidden;}
 .st-bar i{display:block;height:100%;border-radius:6px;}
 @media(max-width:520px){ .st-bar-row{grid-template-columns:1fr auto;} .st-bar{grid-column:1 / -1;order:3;} }
+.gv-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#3E5A42 0%,#2A4230 48%,#1F3325 100%);}
+.gv-stage{border-radius:16px;overflow:hidden;line-height:0;border:1px solid var(--line);box-shadow:var(--shadow);}
+.gv-stage svg{width:100%;height:auto;display:block;}
+.gv-mini{max-height:220px;}
+.gv-card{border-left:4px solid #3A6B46;}
+.gv-dots{display:inline-flex;gap:5px;vertical-align:middle;margin-left:6px;}
+.gv-dots i{width:11px;height:11px;border-radius:50%;}
+.gv-days{display:flex;gap:8px;flex-wrap:wrap;}
+.gv-day{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:8px 10px;min-width:64px;cursor:pointer;font-weight:600;font-size:14px;line-height:1.3;color:var(--ink-soft);}
+.gv-day[aria-pressed="true"]{background:#3A6B46;border-color:#3A6B46;color:#fff;}
+.gv-day[disabled]{opacity:.4;cursor:default;}
+.gv-parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.gv-part-t{text-align:left;border:1.5px solid var(--line);border-left:5px solid var(--pc);background:var(--card);border-radius:12px;padding:10px 12px;cursor:pointer;}
+.gv-part-t b{display:block;font-family:'Cormorant Garamond',serif;font-size:calc(20px * var(--scale));line-height:1.15;}
+.gv-part-t small{color:var(--ink-soft);font-size:13.5px;}
+.gv-part-t[aria-pressed="true"]{background:color-mix(in srgb,var(--pc) 14%,var(--card));border-color:var(--pc);}
+.gv-prac{border-left:4px solid var(--pc);padding:10px 0 10px 14px;margin-top:12px;}
+.gv-prac > b{font-family:'Cormorant Garamond',serif;font-size:calc(21px * var(--scale));display:block;line-height:1.2;}
+.gv-prac p{margin-top:4px;}
+.gv-pl{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--pc);}
+.gv-steps{margin:6px 0 8px 20px;}
+.gv-steps li{margin:3px 0;}
+.gv-print-tree svg{width:100%;height:auto;}
+@media print{ .gv-pt{border-collapse:collapse;width:100%;} .gv-pt th,.gv-pt td{border:.5pt solid #CFC3AD;padding:2mm;text-align:center;font-size:8.5pt;} .gv-pt td{height:8mm;} .gv-print-tree{margin:3mm 0;} }
 .codeshow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(22px * var(--scale));letter-spacing:.5px;margin:10px 0;word-break:break-word;}
 </style>
 <style>
@@ -349,6 +373,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
+<script src="../shared/grove-scene.js"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 (function(){ var t = Date.now(); ['codes','lib-owner','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
@@ -593,8 +618,9 @@ function start(){
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st) stOpenRun(); else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []),['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : (stOpen() ? [['soultree','Soul Tree','tree']] : []);
+  const gt = gvOpen() ? [['grove','Grove','grove']] : [];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
   return t;
 }
@@ -603,7 +629,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST, grove:vGV};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -637,6 +663,7 @@ const IC = {
  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
  tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
+ grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
@@ -866,6 +893,7 @@ function vFieldHome(){
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="soultree">${icon('tree')} Open</button></div></div>` : ''}
+  ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
@@ -1116,7 +1144,7 @@ function vOwner(){
    <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
-  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
 }
 
 // ---------------- SOUL TREE GUIDE ----------------
@@ -1212,6 +1240,7 @@ function vSTPerson(c){
   ${!me && !ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Ask first'}</h3><p class="muted">${con && con.how === 'declined' ? 'Visits stay off. If they change their mind, record it here.' : 'Explain what this is and ask before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="st-consent" data-v="${c.id}">${con ? 'Update Consent' : 'Consent'}</button></div>` : ''}
   <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="st-start" data-v="${v[0]}" data-c="${c.id}" ${ok ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
    ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Skip anything that doesn\'t fit.</p>' : ''}</div>
+  ${me ? '' : gvPersonCard(c)}
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Rings</h3><div class="st-ringwrap">${stRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(s => s.visit !== 'open' && stAvg(s.scores) != null).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust needs care.</p></div>${stPartTable(c)}</div>
    <div class="card"><h3>Care plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
@@ -1427,12 +1456,16 @@ async function stImport(clients){
 async function stImportLocal(){
   const codes = stLocalCodes(), out = {};
   codes.forEach(code => { try { out[code] = JSON.parse(localStorage.getItem('soul-tree:client:' + code) || '[]'); } catch(e){} });
-  if (!confirm(`Move ${codes.length} ${codes.length === 1 ? 'person' : 'people'} from public Soul Tree on this browser into the Field Guide? They'll be encrypted here. The public copy stays until you remove it in Soul Tree's Practitioner mode.`)) return;
+  if (!confirm(`Move ${codes.length} ${codes.length === 1 ? 'person' : 'people'} from public Soul Tree on this browser into the Field Guide? They'll be encrypted here.`)) return;
   await stImport(out);
+  // Public Soul Tree no longer has Practitioner mode, so offer to clear the public copy from here.
+  if (confirm('Remove those sessions from public Soul Tree on this browser now? They are safe in the Field Guide.')){
+    try { codes.forEach(code => localStorage.removeItem('soul-tree:client:' + code)); localStorage.removeItem('soul-tree:client-index'); toast('Removed from public Soul Tree.'); render(); } catch(e){}
+  }
 }
 async function stImportFile(file){
   try { const d = JSON.parse(await file.text()); if (d.app !== 'soul-tree' || !d.clients) throw 0; await stImport(d.clients); }
-  catch(e){ alert("That isn't a Soul Tree Practitioner backup. In public Soul Tree, open Practitioner mode and download a backup there."); }
+  catch(e){ alert("That isn't a Soul Tree practitioner backup. In public Soul Tree, the About page has Download Backup when old practitioner sessions are saved in that browser."); }
 }
 
 // ----- Owner: turn Soul Tree Guide on or off for Field users (through Update a Library) -----
@@ -1448,6 +1481,343 @@ async function stSetField(on){
   next._rev = (cur._rev || 0) + 1; next._updated = today();
   V.upd = {lvl:'field', title: on ? 'Open Soul Tree Guide to Field users' : 'Close Soul Tree Guide to Field users', note:'', rows:[['Replaces', 'soulTreeGuide.open.field']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+
+// ---------------- GROVE GUIDE ----------------
+// Walking alongside someone through The Grove's twelve weeks. Moved here from The Grove's
+// "For someone in my care" mode in session 11. Wording lives in the Field library (FLD.groveGuide).
+// The practices, weeks, and seasons come from the public grove/data.js and grove/library.js, so
+// there's one place to edit them. The tree is drawn by /shared/grove-scene.js, same as The Grove.
+// A person's tree is c.gv on their People record, so one person can have Soul Tree visits and a
+// Grove tree. Staff and Owner always see it; Field users once FLD.groveGuide.open.field is on
+// and Orientation is done.
+const GVG = () => (FLD && FLD.groveGuide) || null;
+const gvOpen = () => !!GVG() && (TIER !== 'field' || !!(GVG().open && GVG().open.field && (!OR() || orState().complete)));
+const gvPlanted = c => !!(c && c.gv && c.gv.start);
+const gvHasConsent = c => !!(c && c.gv && c.gv.consent && c.gv.consent.how && c.gv.consent.how !== 'declined');
+const gvConsentName = h => h === 'before' ? 'Agreed before the move' : ((GVG().consent.how.find(x => x[0] === h) || [])[1] || '');
+const gvTypeName = t => ((GVG().people.find(x => x[0] === t) || [])[1] || 'Person');
+const ST2GV = {holy:'roots', meaning:'trunk', mind:'bark', community:'branches', body:'leaves', hope:'fruit'};
+const BED2PART = {body:'leaves', rest:'leaves', nourish:'leaves', mind:'bark', connect:'branches', spirit:'roots', create:'trunk', hope:'fruit'};
+const GV_PARTS = ['roots','trunk','bark','branches','leaves','fruit'];
+
+// ----- The Grove's own words and practices, read from the public files -----
+let GD = null, GD_WAIT = null, GD_FAIL = false;
+function gvLoad(){
+  if (GD || GD_WAIT) return;
+  GD_FAIL = false;
+  GD_WAIT = Promise.all(['../grove/data.js', '../grove/library.js'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+    .then(([a, b]) => {
+      // Runs in its own scope, so The Grove's names can't collide with the Field Guide's.
+      GD = new Function(a + '\n' + b + '\n;return {PARTS, PART, STRANDS, STRAND, strandName, AGES, AGE, isKid, LEVELS, LEVEL_MOVE, BODY_REST, PRACTICES, SEASON_ORDER, KID_WEEK, CRITTERS, ANCHORS, SEASONS, WEEKS, LIBRARY, LIB_BY_KEY, libFits};')();
+      GD_WAIT = null; if (DATA) render();
+    })
+    .catch(() => { GD_WAIT = null; GD_FAIL = true; if (DATA) render(); });
+}
+function gvNeedData(){
+  if (GD) return '';
+  gvLoad();
+  return GD_FAIL ? `<div class="card"><h3>The Grove's practices didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="gv-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading The Grove's practices...</p></div>`;
+}
+
+// ----- weeks, seasons, growth (same rules as The Grove) -----
+const gvDiff = (a, b) => { const P = s => { const [y,m,d] = s.split('-').map(Number); return Date.UTC(y, m-1, d); }; return Math.round((P(b) - P(a)) / 864e5); };
+const gvSeasonOf = k => k <= 4 ? 'planting' : k <= 8 ? 'rooting' : 'blooming';
+const GV_SEASON = {planting:'Planting', rooting:'Rooting', blooming:'Blooming'};
+function gvWeek(T, at){
+  at = at || today(); if (!T || !T.start) return null; const d = gvDiff(T.start, at), L = T.lingers || {};
+  if (d < 0) return {before:true, week:1, day:1, round:1, rounds:1, season:'planting', roundStart:T.start};
+  let ws = 0;
+  for (let k = 1; k <= 12; k++){ const rounds = 1 + (L[k] || 0), len = 7 * rounds;
+    if (d < ws + len){ const into = d - ws, round = Math.floor(into / 7) + 1; return {week:k, day:into % 7 + 1, round, rounds, season:gvSeasonOf(k), roundStart:addDays(T.start, ws + (round - 1) * 7)}; }
+    ws += len; }
+  return {done:true, week:12, day:7, round:1, rounds:1, season:'blooming', roundStart:addDays(T.start, ws - 7)};
+}
+const gvTended = T => Object.keys((T && T.watered) || {}).filter(k => T.start && k >= T.start && k <= today()).length;
+function gvGrowth(T, wi){ if (!wi || wi.before) return .02; return Math.min({planting:.44, rooting:.68, blooming:1}[wi.season], .06 + gvTended(T) / 60); }
+const gvDaysText = T => { const n = gvTended(T); return n + (n === 1 ? ' day' : ' days') + ' tended'; };
+const gvCanLinger = wi => wi && !wi.before && !wi.done && wi.day >= 6 && wi.round === wi.rounds;
+const gvWeekDates = wi => Array.from({length:7}, (_, i) => addDays(wi.roundStart, i));
+function gvStatus(T){
+  const wi = gvWeek(T); if (!wi) return 'Not planted yet';
+  return wi.before ? 'Starts ' + nice(T.start) : wi.done ? 'Twelve weeks complete' : GV_SEASON[wi.season] + ', Week ' + wi.week + ', Day ' + wi.day;
+}
+const gvVisitors = T => GD && T.start ? GD.CRITTERS.filter(x => gvTended(T) >= x.days).map(x => x.id) : [];
+function gvScene(c, opts){
+  const T = c.gv, wi = gvWeek(T), rooting = !!(wi && wi.season === 'rooting');
+  if (!window.GGScene) return '';
+  return GGScene.sceneSVG(Object.assign({w:1000, h:400, gy: rooting ? 262 : 292, trees:[{stage: GGScene.stageOf(T.age), g: gvGrowth(T, wi), parts: T.parts || [], kind: T.kind || 'grove'}],
+    sky:'day', scenery:'forest', rooting, visitors: gvVisitors(T), seed:11, uid:'gv' + c.id, label: esc(c.name) + "'s tree in The Grove"}, opts || {}));
+}
+const gvTheme = (T, k) => GD.isKid(T.age) ? GD.KID_WEEK[k-1].theme : GD.WEEKS[k-1].theme;
+const gvQ = (T, k) => GD.isKid(T.age) ? GD.KID_WEEK[k-1].q : GD.WEEKS[k-1].q;
+const gvAgeName = a => (GD && GD.AGE[a]) ? GD.AGE[a].name : 'Adult';
+const gvDots = parts => `<span class="gv-dots" role="img" aria-label="Tending ${esc(parts.map(p => GD ? GD.PART[p].name : p).join(', '))}">${parts.map(p => `<i style="background:${GD ? GD.PART[p].color : 'var(--gold)'}"></i>`).join('')}</span>`;
+
+// ----- practices (same picking as The Grove's Today) -----
+function gvStrand(T, partId, day){ const pt = GD.PART[partId]; if (!pt) return 'hope'; if (pt.strands.length === 1) return pt.strands[0];
+  const n = T.start ? Math.max(0, gvDiff(T.start, day || today())) : 0; return pt.strands[n % pt.strands.length]; }
+function gvObj(T, sid, idx, season){ const p = GD.PRACTICES[sid][idx], kid = GD.isKid(T.age); let t = kid ? p[3] : p[0], b = kid ? p[4] : p[1];
+  if (b === 'LV'){ const L = GD.LEVEL_MOVE[T.level || 'gentle'][season]; t = L.t; b = L.b; } return {idx, n:p[0], t, b, s: kid ? p[5] : p[2]}; }
+function gvPick(T, sid, season, week){ const k = GD.SEASON_ORDER.indexOf(season), list = [0,1,2,3].map(i => k * 4 + i), sw = (T.swap || {})[sid + '-' + week]; return list.includes(sw) ? sw : list[(week - 1) % 4]; }
+function gvPinned(T, partId){ const k = (T.pins || {})[partId], it = k && GD.LIB_BY_KEY[k]; return it && it.part === partId && GD.libFits(it, T.age) ? it : null; }
+function gvLibPractice(T, it, season){ const kid = GD.isKid(T.age);
+  if (!it.isNew) return gvObj(T, it.strand, it.idx, season);
+  return {idx:null, n:it.name, t: kid ? it.kidName : it.name, b: kid ? it.kidText : it.text, s: kid ? it.kidBusy : it.busy}; }
+function gvPractice(T, partId, wi){
+  const season = wi && !wi.before ? wi.season : 'planting', week = wi ? wi.week : 1;
+  const pin = gvPinned(T, partId), sid = pin ? pin.strand : gvStrand(T, partId);
+  const o = pin ? Object.assign(gvLibPractice(T, pin, season), {strand:sid, pin:pin.key, it:pin}) : Object.assign(gvObj(T, sid, gvPick(T, sid, season, week), season), {strand:sid});
+  if (!o.it) o.it = GD.LIBRARY.find(x => !x.isNew && x.strand === sid && x.name === o.n) || null;
+  return o;
+}
+function gvHow(T, it){ if (!it || !it.how) return ''; const h = it.how, kid = GD.isKid(T.age) && h.length >= 6, w = kid ? h[3] : h[0], st = kid ? h[4] : h[1], hd = kid ? h[5] : h[2];
+  return `<details class="st-lf"><summary>Show me how</summary><p style="margin-top:6px"><b>Why it helps.</b> ${esc(w)}</p><ol class="gv-steps">${st.split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(hd)}</p></details>`; }
+
+// ----- views -----
+function vGV(){
+  const S = GVG(); if (!S) return `<div class="card"><p>The Grove Guide isn't on this device yet.</p></div>`;
+  const wait = gvNeedData(); if (wait) return wait;
+  if (V.gvl){ const c = CL(V.gvl.c); if (c && c.gv) return vGVLib(c, V.gvl.part); }
+  if (V.gvc){ const c = CL(V.gvc); if (c) return vGVPlant(c); }
+  if (V.gvp){ const c = CL(V.gvp); if (c && c.gv) return vGVTree(c); }
+  const list = DATA.clients.filter(c => c.gv && c.status !== 'closed').sort((a,b) => (b.gv.start || '').localeCompare(a.gv.start || ''));
+  const others = DATA.clients.filter(c => !c.gv && c.status !== 'closed' && !(c.st && c.st.type === 'me'));
+  const local = gvLocalPeople().length, I = S.introduce;
+  return `<div class="hello gv-hello"><div class="eyebrow" style="color:#B9D3A6">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
+  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
+  <div class="card"><h3>Someone new</h3>
+   <div class="grid g2"><div><label class="f" for="gv-nn">Code or initials</label><input type="text" id="gv-nn" autocomplete="off" placeholder="R.M. or Room 12"></div>
+   <div><label class="f" for="gv-nt">Who they are</label><select id="gv-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.privacy)}</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="gv-new">${icon('plus')} Add and Plant</button></div>
+   ${others.length ? `<label class="f" for="gv-from">Or someone already in People</label><div class="row"><select id="gv-from" style="max-width:320px">${others.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select><button class="btn btn-line btn-sm" data-act="gv-from">Plant Their Tree</button></div>` : ''}</div>
+  <div class="card"><h3>Trees you're tending</h3>
+   ${list.length ? list.map(c => { const T = c.gv, wi = gvWeek(T), wk = wi && !wi.before ? gvWeekDates(wi).filter(d => T.watered && T.watered[d]).length : 0;
+     return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> ${gvPlanted(c) ? gvDots(T.parts || []) : ''}${gvHasConsent(c) ? '' : ` <span class="pill warn">${T.consent && T.consent.how === 'declined' ? 'Said no for now' : 'Consent needed'}</span>`}<br><small class="muted">${esc(gvStatus(T))}${wi && !wi.before && !wi.done ? ' &middot; ' + wk + ' of 7 days this week' : ''}</small></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">Open</button></div>`; }).join('')
+     : '<p class="muted" style="margin-top:8px">No trees yet. Add the first person you\'re walking with.</p>'}</div>
+  <div class="card"><h3>${esc(I.title)}</h3><div class="blk say"><div class="lab">Say</div><ul>${I.say.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+   <ul class="checklist" style="margin-top:10px">${I.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card"><h3>By setting</h3>${S.settings.map(x => `<p style="margin-top:10px"><b>${esc(x[0])}.</b> ${esc(x[1])}</p>`).join('')}</div>
+  <div class="card"><h3>Move trees from public Grove</h3><p class="muted">${esc(S.moveNote)}</p>
+   <div class="row" style="margin-top:10px">${local ? `<button class="btn btn-line btn-sm" data-act="gv-imp-local">Move ${local} ${local === 1 ? 'Tree' : 'Trees'} From This Browser</button>` : '<span class="muted" style="font-size:15px">None found in this browser.</span>'}
+   <label class="btn btn-line btn-sm" style="cursor:pointer">From a Grove File<input type="file" id="gv-imp-file" accept=".json,application/json" hidden></label></div></div>`;
+}
+// Consent, then planting, on one screen.
+function vGVPlant(c){
+  const S = GVG(), C = S.consent, T = c.gv || {}, F = V.gvf || (V.gvf = gvForm(c)), need = !gvHasConsent(c);
+  return `<button class="linkbtn" data-act="${gvPlanted(c) ? 'gv-open' : 'gv-home'}" data-v="${c.id}">Back</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${gvPlanted(c) ? 'Plant a new round' : esc(C.title)}</h1><p>${need ? esc(C.lead) : 'Choose the parts to tend, how much movement fits, and when to start.'}</p></div>
+  ${need ? `<div class="card step-card"><div class="blk say"><div class="lab">Say</div><ul><li>${esc(C.say)}</li></ul></div></div>
+  <div class="card"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${C.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card"><h3>Their answer</h3>
+   ${C.how.map(h => `<label class="cb"><input type="radio" name="gv-ch" value="${h[0]}" ${F.how === h[0] ? 'checked' : ''}> ${esc(h[1])}</label>`).join('')}
+   <label class="f" for="gv-cby">If someone else agreed, who (relationship only)</label><input type="text" id="gv-cby" data-gvf="by" value="${esc(F.by)}" placeholder="Parent, guardian, healthcare agent">
+   <label class="f" for="gv-cd">Date</label><input type="date" id="gv-cd" data-gvf="cdate" value="${esc(F.cdate)}" style="max-width:220px"></div>` : `<p class="pill sage">${esc(gvConsentName(T.consent.how))} ${T.consent.date ? nice(T.consent.date) : ''}</p>`}
+  <div class="card"><h3>Their tree</h3>
+   <label class="f">Life stage</label><div class="row">${GD.AGES.map(a => `<button type="button" class="chip" aria-pressed="${F.age === a.id}" data-act="gv-age" data-v="${a.id}">${esc(a.name)}</button>`).join('')}</div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc((GD.AGE[F.age] || {}).who || '')}${GD.isKid(F.age) ? '. Practices use kid wording.' : ''}</p>
+   <label class="f">Parts to tend</label>${F.fromST ? `<p class="muted" style="font-size:14px;margin-bottom:6px">Picked from their Soul Tree visit on ${nice(F.fromST)}: the parts that weren't strong. Change any of them.</p>` : ''}
+   <div class="gv-parts">${GD.PARTS.map(p => `<button type="button" class="gv-part-t" style="--pc:${p.color}" aria-pressed="${F.parts.includes(p.id)}" data-act="gv-part" data-v="${p.id}"><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></button>`).join('')}</div>
+   <label class="f">Movement level</label><div class="row">${GD.LEVELS.map(l => `<button type="button" class="chip" aria-pressed="${F.level === l.id}" data-act="gv-level" data-v="${l.id}">${esc(l.name)}</button>`).join('')}</div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc((GD.LEVELS.find(l => l.id === F.level) || {}).desc || '')}</p>
+   <label class="f" for="gv-start">Start date</label><input type="date" id="gv-start" data-gvf="start" value="${esc(F.start)}" style="max-width:220px">
+   ${gvPlanted(c) ? '<p class="muted" style="font-size:14px;margin-top:8px">A new round starts the twelve weeks over. Days tended and what they shared so far stay on their record.</p>' : ''}
+   <div class="row" style="margin-top:16px"><button class="btn btn-gold" data-act="gv-save" data-v="${c.id}">${need ? 'Save and Plant' : 'Plant Their Tree'}</button></div></div>`;
+}
+function gvForm(c){
+  const T = c.gv || {}, F = {age: T.age || 'adult', parts: (T.parts || []).slice(), level: T.level || 'gentle', start: today(), how: '', by: '', cdate: today(), fromST: null};
+  if (!gvPlanted(c) && c.st && typeof stVisits === 'function'){
+    const v = stVisits(c.id).find(s => s.scores && Object.values(s.scores).some(x => x != null));
+    if (v){ const p = Object.entries(v.scores).filter(([k, x]) => x != null && x < 8).map(([k]) => ST2GV[k]).filter(Boolean);
+      if (p.length){ F.parts = GV_PARTS.filter(x => p.includes(x)); F.fromST = v.date; } }
+  }
+  return F;
+}
+function vGVTree(c){
+  const S = GVG(), T = c.gv;
+  if (!gvPlanted(c)) return `<button class="linkbtn" data-act="gv-home">Back to the Grove Guide</button>
+    <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(gvTypeName(c.st && c.st.type))}</div><h1>${esc(c.name)}</h1></div>
+    <div class="card" style="border-left:4px solid var(--gold)"><h3>${T.consent && T.consent.how === 'declined' ? 'They said no for now' : 'Not planted yet'}</h3><p class="muted">${T.consent && T.consent.how === 'declined' ? 'If they change their mind, ask again and record it.' : 'Ask first, then plant their tree.'}</p>
+     <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">${T.consent && T.consent.how === 'declined' ? 'Ask Again' : 'Plant Their Tree'}</button><button class="btn btn-danger btn-sm" data-act="gv-remove" data-v="${c.id}">Remove</button></div></div>`;
+  const wi = gvWeek(T), k = wi.week, kid = GD.isKid(T.age), wk = GD.WEEKS[k-1], WG = S.weeks[k-1] || {say:'', listen:[]};
+  const days = wi.before ? [] : gvWeekDates(wi), n = gvTended(T);
+  const nudge = wi.done ? S.nudges.done : (!wi.before && (k === 5 || k === 9) && wi.round === 1) ? S.nudges[String(k)] : '';
+  const stBtn = c.st && stOpen() && stHasConsent(c) ? `<button class="btn btn-line btn-sm" data-act="st-start" data-v="${wi.done ? 'full' : 'quick'}" data-c="${c.id}">${icon('tree')} ${wi.done ? 'Full Soul Tree Visit' : 'Soul Tree Quick Check-in'}</button>`
+    : c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open in Soul Tree Guide</button>` : '';
+  const part = id => { const P = GD.PART[id], p = gvPractice(T, id, wi), it = p.it;
+    return `<div class="gv-prac" style="--pc:${P.color}"><div class="gv-pl">${esc(GD.strandName(p.strand))}${p.pin ? ' <span class="pill gold">Their pick</span>' : ''}</div><b>${esc(p.t)}</b><p>${p.b}</p><p class="muted" style="font-size:15px"><b>Busy day:</b> ${p.s}</p>${gvHow(T, it)}
+     <div class="row" style="margin-top:6px"><button class="linkbtn" data-act="gv-lib" data-v="${id}">Choose a different practice</button>${p.pin ? `<button class="linkbtn" data-act="gv-unpin" data-v="${id}">Go back to the season's practice</button>` : ''}</div></div>`; };
+  return `<button class="linkbtn" data-act="gv-home">Back to the Grove Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(gvAgeName(T.age))} &middot; ${esc(gvTypeName(c.st && c.st.type))}</div><h1>${esc(c.name)}</h1><p>${esc(gvStatus(T))}${wi.before || wi.done ? '' : '. ' + esc(gvTheme(T, k)) + '.'}</p></div>
+   <div class="row">${T.consent ? `<span class="pill sage">${esc(gvConsentName(T.consent.how))}</span>` : ''}<span class="pill">${n} ${n === 1 ? 'day' : 'days'} tended</span></div></div>
+  <div class="gv-stage">${gvScene(c)}</div>
+  ${nudge ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><p>${esc(nudge)}</p><div class="row">${stBtn}${wi.done ? `<button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">Plant a New Round</button>` : ''}</div></div></div>` : ''}
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Days tended</h3>${wi.before ? `<p class="muted" style="margin-top:6px">Starts ${nice(T.start)}.</p>` : `<p class="muted" style="font-size:15px;margin:4px 0 10px">Tap the days they tell you they practiced. Their word is enough.</p>
+    <div class="gv-days">${days.map(d => `<button type="button" class="gv-day" aria-pressed="${!!(T.watered || {})[d]}" data-act="gv-day" data-v="${d}" ${d > today() ? 'disabled' : ''}>${new Date(d + 'T12:00').toLocaleDateString(undefined, {weekday:'short'})}<br>${new Date(d + 'T12:00').toLocaleDateString(undefined, {month:'numeric', day:'numeric'})}</button>`).join('')}</div>
+    ${gvCanLinger(wi) ? `<button class="btn btn-line btn-sm" style="margin-top:12px" data-act="gv-linger" data-v="${c.id}">Stay in Week ${k} Another Week</button>` : ''}`}</div>
+   <div class="card"><h3>${wi.done ? 'Looking back' : 'This week'}</h3>${!wi.done && !kid ? `<p class="muted" style="margin-top:4px">${esc(wk.intro)}</p>` : ''}
+    <div class="blk say"><div class="lab">Say</div><ul><li>${esc(WG.say)}</li></ul></div>
+    <div class="blk"><div class="lab">Listen for</div><ul>${WG.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="blk"><div class="lab">This week's question</div><p style="margin-top:4px"><i>${esc(gvQ(T, k))}</i></p></div>
+    <label class="f" for="gv-j">What they shared</label><textarea id="gv-j" data-gvj="${k}" placeholder="${esc(S.journalNote)}">${esc((T.journal || {})[k] || '')}</textarea></div></div>
+  <div class="card tipbox" style="margin-top:14px;border-left:4px solid var(--danger)">${esc(S.safety)}</div>
+  <div class="card" style="margin-top:14px"><div class="spread"><h3>Their practices${wi.before ? ' to start' : ''}</h3><span class="muted" style="font-size:15px">${GV_SEASON[wi.season]}${kid ? '' : ', ' + esc((GD.LEVELS.find(l => l.id === T.level) || {}).name || '') + ' movement'}</span></div>
+   <div class="gv-prac" style="--pc:#8B5E1A"><div class="gv-pl">Morning</div><b>${esc(GD.ANCHORS.morning.t)}</b><p>${esc(GD.ANCHORS.morning.b)}</p></div>
+   ${(T.parts || []).map(part).join('')}
+   <div class="gv-prac" style="--pc:#8B5E1A"><div class="gv-pl">Evening</div><b>${esc(GD.ANCHORS.evening.t)}</b><p>${esc(GD.ANCHORS.evening.b)}</p></div>
+   ${!kid ? `<p class="muted" style="font-size:15px;margin-top:10px">This week's story: <a href="${esc(wk.story.url)}" target="_blank" rel="noopener">${esc(wk.story.title)}</a>. &ldquo;${esc(wk.story.line)}&rdquo;</p>` : ''}
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="gv-print-week" data-v="${c.id}">${icon('print')} Print This Week's Sheet</button><button class="btn btn-line" data-act="gv-print-grew" data-v="${c.id}">${icon('print')} Print What Grew</button>${nudge ? '' : stBtn}</div></div>
+  <div class="card st-private" style="margin-top:14px"><h3>Private notes</h3><p class="muted" style="font-size:14px">${esc(S.notesNote)}</p><textarea data-gvn="1" aria-label="Private notes">${esc(T.notes || '')}</textarea></div>
+  <div class="card" style="margin-top:14px"><h3>The twelve weeks</h3>${Array.from({length:12}, (_, i) => { const kk = i + 1, st = wi.done || kk < k ? 'done' : kk === k && !wi.before ? 'now' : '';
+    return `<div class="list-row"><div class="lr-main"><small class="muted">Week ${kk}, ${GV_SEASON[gvSeasonOf(kk)]}</small><br><b>${esc(gvTheme(T, kk))}</b>${(T.journal || {})[kk] ? ' <span class="pill sage">Shared</span>' : ''}</div>${st === 'now' ? '<span class="pill gold">This week</span>' : ''}</div>`; }).join('')}</div>
+  <div class="card" style="margin-top:14px"><h3>Details</h3>
+   <label class="f">Code or initials</label><input type="text" data-gvc="name" value="${esc(c.name)}">
+   <div class="grid g2"><div><label class="f">Life stage</label><select data-gvd="age">${GD.AGES.map(a => `<option value="${a.id}" ${a.id === T.age ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select></div>
+   <div><label class="f">Movement level</label><select data-gvd="level">${GD.LEVELS.map(l => `<option value="${l.id}" ${l.id === T.level ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></div></div>
+   <label class="f">Parts to tend</label><div class="gv-parts">${GD.PARTS.map(p => `<button type="button" class="gv-part-t" style="--pc:${p.color}" aria-pressed="${(T.parts || []).includes(p.id)}" data-act="gv-edit-part" data-v="${p.id}"><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></button>`).join('')}</div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="gv-plant" data-v="${c.id}">Plant a New Round</button>${c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Soul Tree Guide</button>` : ''}<button class="btn btn-danger btn-sm" data-act="gv-remove" data-v="${c.id}">Remove Grove Tree</button></div></div>`;
+}
+function vGVLib(c, partId){
+  const T = c.gv, P = GD.PART[partId], cur = gvPractice(T, partId, gvWeek(T)), kid = GD.isKid(T.age);
+  const items = GD.LIBRARY.filter(it => it.part === partId && GD.libFits(it, T.age));
+  return `<button class="linkbtn" data-act="gv-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)} &middot; ${esc(P.name)}</div><h1>Choose a ${esc(P.name)} practice</h1><p>Their pick takes this part's place every week until it's changed, through every season.</p></div>
+  ${items.map(it => { const on = cur.pin === it.key; return `<div class="card gv-prac" style="--pc:${P.color};margin-top:10px"><div class="gv-pl">${esc(GD.strandName(it.strand))}${on ? ' <span class="pill gold">Their pick</span>' : ''}</div><b>${esc(kid && it.kidName ? it.kidName : it.name)}</b><p>${kid && it.kidText ? it.kidText : it.text === 'LV' ? 'Movement at their level, building through the seasons.' : it.text}</p>${gvHow(T, it)}
+    ${on ? '' : `<button class="btn btn-line btn-sm" style="margin-top:8px" data-act="gv-pick" data-v="${esc(it.key)}">Make This Their ${esc(P.name)} Practice</button>`}</div>`; }).join('')}`;
+}
+
+// ----- printing: a weekly sheet for them, and What Grew -----
+const gvStrip = s => String(s == null ? '' : s).replace(/<[^>]+>/g, '');
+function gvPrintWeek(c){
+  const S = GVG(), T = c.gv, wi = gvWeek(T), k = wi.week, kid = GD.isKid(T.age), wk = GD.WEEKS[k-1], days = gvWeekDates(wi);
+  const rows = (T.parts || []).map(id => { const p = gvPractice(T, id, wi); return `<div class="pr-step" style="border-left-color:${GD.PART[id].color}"><h3>${esc(GD.strandName(p.strand))}: ${esc(p.t)}</h3><p>${esc(gvStrip(p.b))}</p><p><i>Busy day: ${esc(gvStrip(p.s))}</i></p></div>`; }).join('');
+  printNow(ph('For you') + `<p>For ${esc(c.name)}</p><h1>Week ${k}: ${esc(gvTheme(T, k))}</h1><p>${GV_SEASON[wi.season]}, ${nice(days[0])} to ${nice(days[6])}</p>
+    ${kid ? '' : `<p><i>${esc(wk.intro)}</i></p>`}<h2>Every day</h2>
+    <div class="pr-step"><h3>Morning: ${esc(GD.ANCHORS.morning.t)}</h3><p>${esc(GD.ANCHORS.morning.b)}</p></div>${rows}<div class="pr-step"><h3>Evening: ${esc(GD.ANCHORS.evening.t)}</h3><p>${esc(GD.ANCHORS.evening.b)}</p></div>
+    <h2>Days tended</h2><table class="gv-pt"><tr>${days.map(d => `<th>${new Date(d + 'T12:00').toLocaleDateString(undefined, {weekday:'short', month:'numeric', day:'numeric'})}</th>`).join('')}</tr><tr>${days.map(d => `<td>${(T.watered || {})[d] ? '&#10003;' : ''}</td>`).join('')}</tr></table>
+    <h2>This week's question</h2><p>${esc(gvQ(T, k))}</p><div class="pr-field area"><div class="v"></div></div>
+    ${kid ? '' : `<h2>This week's story</h2><p><b>${esc(wk.story.title)}.</b> &ldquo;${esc(wk.story.line)}&rdquo; Read it free at ${esc(wk.story.url.replace('https://', ''))}</p>`}
+    <h2>Help any time</h2>${S.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}
+    <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'The Grove, Week ' + k);
+}
+function gvPrintGrew(c){
+  const S = GVG(), T = c.gv, wi = gvWeek(T);
+  const ent = Array.from({length:12}, (_, i) => (T.journal || {})[i + 1] ? `<div class="pr-step"><h3>Week ${i + 1}: ${esc(gvTheme(T, i + 1))}</h3><p><i>${esc(gvQ(T, i + 1))}</i></p><p style="white-space:pre-wrap">${esc(T.journal[i + 1])}</p></div>` : '').join('');
+  printNow(ph('For you') + `<h1>What Grew</h1><p>${esc(c.name.replace(/\.+$/, ''))}. Started ${nice(T.start)}. ${gvDaysText(T)}. ${wi.done ? 'Twelve weeks complete.' : 'Through Week ' + wi.week + '.'}</p>
+    <div class="gv-print-tree">${gvScene(c, {uid:'gvp' + c.id})}</div>
+    <h2>The parts they tended</h2><p>${(T.parts || []).map(p => esc(GD.PART[p].name)).join(', ')}</p>
+    <h2>In their words</h2>${ent || '<p>Nothing written yet.</p>'}
+    <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'What Grew');
+}
+
+// ----- Soul Tree person page: their Grove tree, or plant one from their visit -----
+function gvPersonCard(c){
+  if (!gvOpen() || !c || (c.st && c.st.type === 'me')) return '';
+  if (gvPlanted(c)) return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">${esc(gvStatus(c.gv))}. ${gvDaysText(c.gv)}.</p></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">${icon('grove')} Open Their Tree</button></div><div class="gv-stage gv-mini" style="margin-top:10px">${gvScene(c, {uid:'gvm' + c.id, h:300, gy:220, visitors:[]})}</div></div>`;
+  return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">Soul Tree notices. The Grove tends. Plant their tree, and the parts that weren't strong in their last visit come picked.</p></div><button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">${icon('grove')} Plant Their Grove Tree</button></div></div>`;
+}
+
+// ----- moving trees from the public Grove -----
+function gvLocalStore(){ for (const k of ['the-grove-v1', 'tending-the-garden-v1']){ try { const j = JSON.parse(localStorage.getItem(k) || 'null'); if (j && Array.isArray(j.people) && j.people.length) return {k, j}; } catch(e){} } return null; }
+function gvLocalPeople(){ const s = gvLocalStore(); return s ? s.j.people : []; }
+async function gvImport(people){
+  let added = 0;
+  for (const p of people || []){
+    if (!p || !p.id) continue;
+    if (DATA.clients.some(c => c.gv && c.gv.importId === p.id)) continue;
+    const parts = []; (p.parts || p.beds || []).forEach(x => { const k = GV_PARTS.includes(x) ? x : BED2PART[x]; if (k && !parts.includes(k)) parts.push(k); });
+    const c = {id:uid(), u:Date.now(), name:String(p.name || 'Tree').slice(0, 40), service:'The Grove', status:'active', followups:[], created:today(), st:{type:'community', consent:null},
+      gv:{age: ['adult','heartwood','sapling','sprout'].includes(p.age) ? p.age : 'adult', parts: GV_PARTS.filter(x => parts.includes(x)), level: p.level || 'gentle', start: p.start || null,
+        watered: Object.assign({}, p.watered), lingers: Object.assign({}, p.lingers), pins: Object.assign({}, p.pins), swap: Object.assign({}, p.swap), journal: {}, notes: p.notes || '',
+        consent: {how:'before', date: p.start || today()}, kind: p.kind || 'grove', importId: p.id}};
+    DATA.clients.push(c); added++;
+  }
+  await persist(); go('grove');
+  toast(added ? `Moved ${added} ${added === 1 ? 'tree' : 'trees'}. Set who each person is.` : 'Nothing new to move.');
+  return added;
+}
+async function gvImportLocal(){
+  const s = gvLocalStore(); if (!s) return;
+  const n = s.j.people.length;
+  if (!confirm(`Move ${n} ${n === 1 ? 'tree' : 'trees'} from the public Grove on this browser into the Field Guide? They'll be encrypted here.`)) return;
+  await gvImport(s.j.people);
+  if (confirm('Remove them from the public Grove on this browser now? Your own tree there stays.')){
+    try { const j = JSON.parse(localStorage.getItem(s.k)); j.people = []; localStorage.setItem(s.k, JSON.stringify(j)); toast('Removed from the public Grove.'); } catch(e){}
+  }
+}
+async function gvImportFile(file){
+  try { const d = JSON.parse(await file.text());
+    const people = d && (d.kind === 'grove-care' ? d.people : (['the-grove', 'tending-the-garden'].includes(d.app) && d.data) ? d.data.people : null);
+    if (!Array.isArray(people)) throw 0;
+    if (!people.length) return alert("That file doesn't have any trees for people in someone's care.");
+    await gvImport(people);
+  } catch(e){ alert("That isn't a Grove file. In The Grove, tap Download for the Field Guide, then choose that file here."); }
+}
+
+// ----- Owner: open or close the Grove Guide to Field users (through Update a Library) -----
+function gvFieldRow(){
+  const S = GVG();
+  if (!S) return `<p class="muted" style="margin-top:8px">The Grove Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="list-row"><div class="lr-main"><b>Grove Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="gv-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+}
+async function gvSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.groveGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.groveGuide.open = Object.assign({}, next.groveGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title: on ? 'Open the Grove Guide to Field users' : 'Close the Grove Guide to Field users', note:'', rows:[['Replaces', 'groveGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+// ----- actions -----
+function gvSaveTree(c){
+  const F = V.gvf, need = !gvHasConsent(c);
+  if (need){
+    const h = (document.querySelector('input[name=gv-ch]:checked') || {}).value;
+    if (!h) return alert('Record their answer first, or choose "They said no for now."');
+    c.gv = Object.assign({age:F.age, parts:[], level:F.level, start:null, watered:{}, lingers:{}, pins:{}, swap:{}, journal:{}, notes:'', kind:'grove'}, c.gv || {});
+    c.gv.consent = {how:h, by:(F.by || '').trim(), date:F.cdate || today()};
+    if (h === 'declined'){ touch(c); save(); V.gvf = null; go('grove', {gvp:c.id}); toast('Saved. No tree for now.'); return; }
+  }
+  if (!F.parts.length) return alert('Choose at least one part to tend.');
+  const T = c.gv, again = gvPlanted(c);
+  if (again && !confirm('Start a new round of twelve weeks? Days tended and what they shared stay on their record.')) return;
+  Object.assign(T, {age:F.age, parts: GV_PARTS.filter(x => F.parts.includes(x)), level:F.level, start:F.start || today(), lingers:{}, swap:{}});
+  if (!again) T.planted = today();
+  if (!c.service) c.service = 'The Grove';
+  touch(c); save(); V.gvf = null; go('grove', {gvp:c.id}); toast('Their tree is planted.');
+}
+function gvAct(a, v, t){
+  const c = V.gvp ? CL(V.gvp) : null, T = c && c.gv;
+  switch(a){
+    case 'gv-retry': GD_FAIL = false; gvLoad(); render(); return true;
+    case 'gv-home': V.gvf = null; go('grove'); return true;
+    case 'gv-open': V.gvf = null; go('grove', {gvp:v}); return true;
+    case 'gv-new': { const n = $('#gv-nn').value.trim(); if (!n){ $('#gv-nn').focus(); return true; }
+      const c2 = {id:uid(), u:Date.now(), name:n, service:'The Grove', status:'active', followups:[], created:today(), st:{type:$('#gv-nt').value, consent:null}};
+      DATA.clients.push(c2); save(); V.gvf = null; go('grove', {gvc:c2.id}); return true; }
+    case 'gv-from': { const id = $('#gv-from').value; if (!id) return true; V.gvf = null; go('grove', {gvc:id}); return true; }
+    case 'gv-plant': { const c2 = CL(v); if (!c2) return true; V.gvf = null; go('grove', {gvc:v}); return true; }
+    case 'gv-age': V.gvf.age = v; render(); return true;
+    case 'gv-level': V.gvf.level = v; render(); return true;
+    case 'gv-part': { const p = V.gvf.parts, i = p.indexOf(v); if (i >= 0) p.splice(i, 1); else p.push(v); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+    case 'gv-save': { const c2 = CL(v); if (c2) gvSaveTree(c2); return true; }
+    case 'gv-day': if (T){ T.watered = T.watered || {}; if (T.watered[v]) delete T.watered[v]; else T.watered[v] = true; touch(c); save(); const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
+    case 'gv-linger': if (T){ const wi = gvWeek(T); T.lingers = T.lingers || {}; T.lingers[wi.week] = (T.lingers[wi.week] || 0) + 1; touch(c); save(); render(); toast('They stay in Week ' + wi.week + ' another week.'); } return true;
+    case 'gv-edit-part': if (T){ const p = T.parts || (T.parts = []), i = p.indexOf(v); if (i >= 0){ if (p.length === 1) return alert('Keep at least one part.'), true; p.splice(i, 1); } else p.push(v); T.parts = GV_PARTS.filter(x => p.includes(x)); touch(c); save(); const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
+    case 'gv-lib': if (c) go('grove', {gvp:c.id, gvl:{c:c.id, part:v}}); return true;
+    case 'gv-pick': { const cc = CL(V.gvl.c), it = GD.LIB_BY_KEY[v]; if (cc && it){ cc.gv.pins = cc.gv.pins || {}; cc.gv.pins[it.part] = it.key; touch(cc); save(); go('grove', {gvp:cc.id}); toast('Their ' + GD.PART[it.part].name + ' practice is set.'); } return true; }
+    case 'gv-unpin': if (T && T.pins){ delete T.pins[v]; touch(c); save(); render(); } return true;
+    case 'gv-print-week': { const c2 = CL(v); if (c2) gvPrintWeek(c2); return true; }
+    case 'gv-print-grew': { const c2 = CL(v); if (c2) gvPrintGrew(c2); return true; }
+    case 'gv-remove': { const c2 = CL(v); if (!c2 || !confirm('Remove ' + c2.name + "'s Grove tree, days tended, and notes? Their People record and any Soul Tree visits stay.")) return true;
+      delete c2.gv; touch(c2); save(); go('grove'); toast('Grove tree removed.'); return true; }
+    case 'gv-imp-local': gvImportLocal(); return true;
+    case 'gv-field': gvSetField(v === 'on'); return true;
+  }
+  return false;
 }
 
 // ---------------- OWNER: update a library ----------------
@@ -1620,6 +1990,8 @@ function mergeData(cur, inc){
     const mine = out.clients[i], newer = (ic.u || 0) > (mine.u || 0) ? ic : mine, older = newer === ic ? mine : ic;
     const fus = {}; [...(older.followups||[]), ...(newer.followups||[])].forEach(f => { const k = fuKey(f); fus[k] = fus[k] ? Object.assign({}, fus[k], {done: fus[k].done || f.done}) : Object.assign({}, f); });
     const merged = Object.assign({}, older, newer, {followups: Object.values(fus)});
+    // Grove trees: days tended and what they shared combine across devices.
+    if (older.gv && newer.gv) merged.gv = Object.assign({}, older.gv, newer.gv, {watered: Object.assign({}, older.gv.watered, newer.gv.watered), journal: Object.assign({}, older.gv.journal, newer.gv.journal)});
     if (newer === ic) stats.updated++;
     out.clients[i] = merged;
   });
@@ -1659,6 +2031,7 @@ document.addEventListener('click', async e => {
   if (t.dataset.menu){ const open = $('#menu'); if (open) closeMenu(); else openMenu(t.dataset.menu); return; }
   if (t.dataset.tab && !t.dataset.act){ closeMenu(); go(t.dataset.tab); return; }
   const a = t.dataset.act, v = t.dataset.v;
+  if (a && a.startsWith('gv-') && gvAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
@@ -1775,6 +2148,10 @@ document.addEventListener('input', e => {
     if (t.dataset.stpn){ RUN.pn[t.dataset.stpn] = t.value; stKeep(); return; }
     if (t.dataset.stsafe === 'reasonText'){ RUN.safety.reasonText = t.value; stKeep(); return; }
   }
+  if (t.dataset.gvj && V.gvp){ const c = CL(V.gvp); if (c && c.gv){ c.gv.journal = c.gv.journal || {}; if (t.value) c.gv.journal[t.dataset.gvj] = t.value; else delete c.gv.journal[t.dataset.gvj]; touch(c); save(); } return; }
+  if (t.dataset.gvn && V.gvp){ const c = CL(V.gvp); if (c && c.gv){ c.gv.notes = t.value; touch(c); save(); } return; }
+  if (t.dataset.gvc === 'name' && V.gvp){ const c = CL(V.gvp); if (c){ c.name = t.value; touch(c); save(); } return; }
+  if (t.dataset.gvf && V.gvf){ V.gvf[t.dataset.gvf] = t.value; return; }
   if (t.dataset.stc === 'name' && V.stp){ const c = CL(V.stp); c.name = t.value; touch(c); save(); return; }
   if (RUN && t.dataset.note !== undefined){ RUN.notes[t.dataset.note] = t.value; DATA.draft = RUN; save(); return; }
   if (RUN && t.dataset.f){ RUN[t.dataset.f] = t.value; DATA.draft = RUN; save(); return; }
@@ -1789,6 +2166,10 @@ document.addEventListener('change', e => {
   if (RUN && RUN.kind === 'st' && t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
   if (t.dataset.stc && V.stp){ const c = CL(V.stp); if (t.dataset.stc === 'type') c.st.type = t.value; else c[t.dataset.stc] = t.value; touch(c); save(); if (t.tagName === 'SELECT') render(); return; }
   if (t.dataset.stfu !== undefined && V.stp){ const c = CL(V.stp); c.followups[+t.dataset.stfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); return; }
+  if (t.name === 'gv-ch' && V.gvf){ V.gvf.how = t.value; return; }
+  if (t.dataset.gvf && V.gvf){ V.gvf[t.dataset.gvf] = t.value; return; }
+  if (t.dataset.gvd && V.gvp){ const c = CL(V.gvp); if (c && c.gv){ c.gv[t.dataset.gvd] = t.value; touch(c); save(); render(); } return; }
+  if (t.id === 'gv-imp-file' && t.files[0]){ const f = t.files[0]; t.value = ''; gvImportFile(f); return; }
   if (t.id === 'st-imp-file' && t.files[0]){ const f = t.files[0]; t.value = ''; stImportFile(f); return; }
   if (RUN && t.dataset.prep !== undefined){ RUN.prep[t.dataset.prep] = t.checked; t.closest('.tick').classList.toggle('done', t.checked); DATA.draft = RUN; save(); return; }
   if (RUN && t.dataset.after !== undefined){ RUN.after[t.dataset.after] = t.checked; t.closest('.tick').classList.toggle('done', t.checked); DATA.draft = RUN; save(); return; }
