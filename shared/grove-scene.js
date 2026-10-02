@@ -14,14 +14,14 @@ const TRUNK_TENDED = '#C27A1E';   // the Trunk part's color (PARTS in grove/data
 const TONE = { trunk:'#6B4A2E', bark:'#B9A8F2', barkDim:'#4F3620', branch:'#C9B79A', branchHi:'#3CC0C6',
   leaf:['#2F5A3A','#3F6B40','#4F7F4A'], leafHi:['#3E8A4E','#4FA85F','#6CC27A'], root:'#D6C3A0', rootHi:'#F2B36B',
   fruit:'#E8862E', fruitHi:'#FF6B57', ink:'#2C1810' };
-const STAGE_H = { maple:.34, aspen:.6, pine:.8, adult:1 };      // side by side in a family grove
-const STAGE_SOLO = { maple:.62, aspen:.82, pine:.92, adult:1 };  // your own tree, filling the scene
+const STAGE_H = { maple:.34, aspen:.6, pine:.8, adult:1, willow:1 };      // side by side in a family grove
+const STAGE_SOLO = { maple:.62, aspen:.82, pine:.92, adult:1, willow:1 };  // your own tree, filling the scene
 const stageOf = age => age === 'maple' || age === 'aspen' || age === 'pine' ? age : 'adult';
-const STAGE_NAME = { maple:'Maple', aspen:'Aspen', pine:'Pine', adult:'Oak' };
+const STAGE_NAME = { maple:'Maple', aspen:'Aspen', pine:'Pine', adult:'Oak', willow:'Willow' };
 function leafPath(x, y, len, ang, col){ return `<path transform="translate(${f1(x)} ${f1(y)}) rotate(${f1(ang)})" d="M0 0C${f1(len*.25)} ${f1(-len*.32)} ${f1(len*.75)} ${f1(-len*.32)} ${f1(len)} 0C${f1(len*.75)} ${f1(len*.32)} ${f1(len*.25)} ${f1(len*.32)} 0 0Z" fill="${col}"/>`; }
 // Roots: thick where they leave the trunk, thinning as they flow out.
 function rootsOf(t, H, R){
-  const col = t.parts.includes('roots') ? TONE.rootHi : TONE.root, n = {maple:3, aspen:4, pine:5, adult:6}[t.stage];
+  const col = t.parts.includes('roots') ? TONE.rootHi : TONE.root, n = {maple:3, aspen:4, pine:5, adult:6, willow:6}[t.stage];
   const L = H * (t.stage === 'maple' ? .9 : .62) * (t.rooting ? 1.3 : 1), w = Math.max(1.2, H * .012);
   let o = '';
   for (let i=0;i<n;i++){ const a = Math.PI * (.1 + .8 * i/(n-1)), len = L * (.75 + .35*R());
@@ -44,7 +44,23 @@ function treeParts(t, maxH, seed){
   const trunkC = tend('trunk') ? TRUNK_TENDED : (t.kind === 'birch' ? '#EDE7DA' : TONE.trunk);
   const brC = tend('branches') ? TONE.branchHi : (t.stage === 'aspen' ? TONE.trunk : TONE.branch);
   let top = '', perch = { x: H*.2, y: -H*.7 };
-  if (t.stage === 'maple'){
+  if (t.stage === 'willow'){
+    // Willow (Willow Build Session 2): drooping strands from a rounded crown.
+    // A remembered willow stays, softer, with a small star above it.
+    const soft = t.remembered, tw = H*.04, cy = -H*.72, r = H*.3;
+    const dark = soft ? '#7E8A74' : (tend('leaves') ? '#4F7F4A' : '#5F7350'), light = soft ? '#A3AE97' : (tend('leaves') ? '#6CC27A' : '#8BA071');
+    top += `<path d="M${f1(-tw)} 0C${f1(-tw*.8)} ${f1(-H*.3)} ${f1(-tw*.4)} ${f1(cy*.8)} ${f1(-tw*.3)} ${f1(cy)}L${f1(tw*.3)} ${f1(cy)}C${f1(tw*.4)} ${f1(cy*.8)} ${f1(tw*.8)} ${f1(-H*.3)} ${f1(tw)} 0Z" fill="${trunkC}"/>`;
+    let crown = '';
+    [[0,0,1],[-.6,.15,.7],[.6,.15,.7],[-.3,-.35,.6],[.3,-.35,.6]].forEach(([x,y,k]) => { crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(k*r*.62+1.6)}" fill="${TONE.ink}"/>`; });
+    [[0,0,1],[-.6,.15,.7],[.6,.15,.7],[-.3,-.35,.6],[.3,-.35,.6]].forEach(([x,y,k],i) => { crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(k*r*.62)}" fill="${i%2?light:dark}"/>`; });
+    top += crown;
+    const n = 15, sw = Math.max(1.6, H*.022);
+    for (let i=0;i<n;i++){ const x = (-1 + 2*i/(n-1))*r*1.05, y0 = cy - r*.25 + Math.abs(x)/r*r*.25, len = H*(.45 + .25*R())*(1 - Math.abs(x)/r*.35);
+      top += `<path d="M${f1(x)} ${f1(y0)}Q${f1(x*1.08)} ${f1(y0+len*.5)} ${f1(x*1.12)} ${f1(Math.min(-2, y0+len))}" stroke="${i%2?light:dark}" stroke-width="${f1(sw)}" fill="none" stroke-linecap="round"/>`; }
+    if (tend('fruit') && !soft) [[-.4,.1],[.35,0],[.05,-.3]].forEach(([x,y]) => { top += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(Math.max(2.2,H*.016))}" fill="${fruitC}"/>`; });
+    if (soft) top += `<path transform="translate(${f1(r*.9)} ${f1(cy-r*1.1)}) scale(${f1(Math.max(.8,H/90))})" d="M0-6L1.6-1.6 6 0 1.6 1.6 0 6-1.6 1.6-6 0-1.6-1.6Z" fill="#E8C27A"/>`;
+    perch = { x: r*.5, y: cy - r*.5 };
+  } else if (t.stage === 'maple'){
     const lc = tend('leaves') ? ['#4FA85F','#7ED36A'] : ['#6CB34A','#9CD06A'];
     top += `<path d="M0 0Q-3 ${f1(-H*.5)} 0 ${f1(-H)}" stroke="${trunkC}" stroke-width="${f1(Math.max(2.4, H*.05))}" fill="none" stroke-linecap="round"/>`;
     top += leafPath(0, -H*.72, H*.42, 200, lc[0]) + leafPath(0, -H*.86, H*.42, -25, lc[1]);

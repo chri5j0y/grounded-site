@@ -27,6 +27,24 @@
      GGP.require({ reason, age })  promise: true once someone is unlocked
      GGP.on(fn)                    fn(type) on 'ready', 'change', 'data'
      GGP.lock(), GGP.openDialog(), GGP.createDialog(), GGP.manage(id)
+
+   Willow helpers (Willow Build Session 2)
+   - A grown-up can be a helper for another grown-up in Willow. The
+     person's key is kept inside the helper's vault, the same way a kid's
+     key is kept for a grown-up, so the helper opens it with their own
+     passcode. The person's record lists its helpers; a helper who is
+     removed loses the key the next time they unlock.
+   - A helper never switches into being the person. Willow shows the
+     helper only what the person chose to share.
+     GGP.helpers(id)                  helper ids for a person
+     GGP.helping()                    people the active helper can open
+     GGP.addHelper(id, helperId, pass)  pass: the helper's own passcode
+                                      (not needed when the helper is the
+                                      one unlocked)
+     GGP.removeHelper(id, helperId)
+     GGP.createDialog({ forOther: true, keepMe: true })
+                                      set up a profile for someone you
+                                      love; you stay unlocked as their helper
    ===================================================================== */
 (function () {
   if (window.GGP) return;
@@ -124,12 +142,18 @@
       open = {}; open[id] = { raw: raw, data: data };
       cur = { id: id, until: until };
       var p = getP(id), jobs = [];
+      var dropped = false;
       if (p && p.age === 'adult') Object.keys(data.keys || {}).forEach(function (kid) {
-        if (!getP(kid)) { delete data.keys[kid]; return; }
+        var kp = getP(kid);
+        if (!kp) { delete data.keys[kid]; dropped = true; return; }
+        // Willow: a grown-up's key stays only while this helper is still on their list
+        if (kp.age === 'adult' && (kp.helpers || []).indexOf(id) < 0) { delete data.keys[kid]; dropped = true; return; }
         var kr = unb64(data.keys[kid]);
         jobs.push(readVault(kid, kr).then(function (kd) { open[kid] = { raw: kr, data: kd }; }).catch(function () {}));
       });
       return Promise.all(jobs).then(function () {
+        if (dropped) return writeVault(id, raw, data);
+      }).then(function () {
         return sessPut({ id: id, raw: raw, until: until });
       }).then(function () {
         if (!silent) { try { localStorage.setItem(PING_OPEN, String(Date.now())); } catch (e) {} }
@@ -171,6 +195,8 @@
   function createProfile(o) {
     var raw = crypto.getRandomValues(new Uint8Array(32)), id = uid(), grown = null;
     var grownStep = Promise.resolve();
+    // Willow: set up for someone you love, with the unlocked grown-up as their helper
+    var helperOf = (!isMinor(o.age) && o.helperOf && cur && cur.id === o.helperOf && open[o.helperOf]) ? o.helperOf : null;
     if (isMinor(o.age)) {
       if (!o.grownId) return Promise.reject(new Error('A grown-up needs to agree first.'));
       grown = getP(o.grownId);
@@ -183,14 +209,16 @@
           id: id, name: o.name, avatar: o.avatar || '', age: o.age, code: o.code || 'text',
           salt: w.salt, wrap: w.wrap, created: todayStr(),
           agreed: { date: todayStr(), terms: TERMS_V, privacy: PRIVACY_V, by: grown ? 'grownup' : 'self', grownup: grown ? grown.name : '' },
-          grown: grown ? [grown.id] : [], shared: {}
+          grown: grown ? [grown.id] : [], shared: {}, helpers: helperOf ? [helperOf] : []
         };
         putP(p);
         var vault = blankVault();
         if (o.carry) Object.keys(o.carry).forEach(function (k) { vault[k] = o.carry[k]; });
         return writeVault(id, raw, vault).then(function () {
           if (g && grownOpens(o.age)) { g.data.keys = g.data.keys || {}; g.data.keys[id] = b64(raw); return writeVault(grown.id, g.raw, g.data); }
+          if (helperOf) { var h = open[helperOf]; h.data.keys = h.data.keys || {}; h.data.keys[id] = b64(raw); return writeVault(helperOf, h.raw, h.data); }
         }).then(function () {
+          if (helperOf) { open[id] = { raw: raw, data: vault }; emit('change'); return id; }
           var until = Date.now() + (o.hours || 8) * 3600000;
           // a grown-up who was already unlocked stays unlocked and can open the child
           if (grown && cur && cur.id === grown.id && grownOpens(o.age)) { open[id] = { raw: raw, data: vault }; emit('change'); return id; }
@@ -384,14 +412,15 @@
   function createDialog(opt) {
     opt = opt || {};
     return new Promise(function (resolve) {
-      var st = { name: opt.name || '', avatar: opt.avatar || '', age: opt.age || (cur ? '' : 'adult'), pass: null };
+      var st = { name: opt.name || '', avatar: opt.avatar || '', age: opt.forOther ? 'adult' : (opt.age || (cur ? '' : 'adult')), pass: null };
+      var other = !!opt.forOther, keep = other && opt.keepMe && cur && getP(cur.id) && getP(cur.id).age === 'adult' ? cur.id : null;
       if (!st.age) { var a = cur && getP(cur.id); st.age = a && a.age === 'adult' ? '' : 'adult'; }
       dialog(function (d) { step1(d); }, function (r) { resolve(!!r); });
       function step1(d) {
-        d.show('<h2 id="ggp-title">Create a Grounded profile</h2>' +
+        d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : 'Create a Grounded profile') + '</h2>' +
           (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode, on this device only.</p>') +
-          '<label class="ggp-l" for="ggp-name">First name or a nickname</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
-          '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>' +
+          '<label class="ggp-l" for="ggp-name">' + (other ? 'Their first name, or what you call them' : 'First name or a nickname') + '</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
+          (other ? '' : '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
           '<div class="ggp-picrow"><span id="ggp-av">' + av(st.avatar, st.name || '?', 56) + '</span><button type="button" class="ggp-link" id="ggp-pick">Choose a picture</button></div>' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-next>Next</button></div>');
         $(d, '[data-x]').onclick = function () { d.close(false); };
@@ -419,6 +448,7 @@
         var kid = st.age === 'maple', min = st.age === 'adult' || st.age === 'pine' ? 6 : 4;
         d.show('<h2 id="ggp-title">' + (kid ? 'Pick a secret picture code' : 'Choose a passcode') + '</h2>' +
           (kid ? '<p>' + esc(st.name) + ', tap three pictures in an order you will remember. That is your secret code.</p><div id="ggp-pad"></div><p class="ggp-small" id="ggp-again" style="text-align:center"></p>'
+            : other ? '<p>At least ' + min + ' characters. Choose it together with ' + esc(st.name) + ' if you can, so it opens their own tree. ' + (keep ? 'You will still open it with your own passcode, as their helper.' : '') + '</p><label class="ggp-l" for="ggp-p1">Passcode</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">'
             : '<p>At least ' + min + ' characters. Only you will know it.</p><label class="ggp-l" for="ggp-p1">Passcode</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">') +
           HOURS('ggp-h') +
           (st.age === 'adult' || st.age === 'pine' ? '<p class="ggp-note"><b>Please remember your passcode.</b> It never leaves this device, so no one, including us, can recover it. You can download a locked backup from your profile any time.</p>' : '') +
@@ -449,11 +479,12 @@
           '<p>Grounded tools are for reflection and growth. They are not therapy, medical care, or a crisis service. If you or someone you love is in crisis, call or text 988 any time.</p>' +
           '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + '. We never see it.</p>' +
           (minor ? grownBlock(st.name, st.age)
+            : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Create profile</button></div>');
         $(d, '[data-back]').onclick = function () { st.pass = null; step2(d); };
         $(d, '[data-go]').onclick = function () {
-          var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null };
+          var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null, helperOf: keep };
           try { if (minor) Object.assign(o, readGrown(d)); else if (!$(d, '#ggp-agree').checked) throw new Error('Please check the box to agree.'); }
           catch (e) { return d.msg(e.message); }
           run(d, function () { return createProfile(o); }).then(function (id) {
@@ -496,7 +527,7 @@
         var act = cur && getP(cur.id);
         if (act && act.id === p.id) { d.close(true); return; }
         // a grown-up who is open can switch to a child they care for without a code
-        if (act && act.age === 'adult' && open[p.id]) {
+        if (act && act.age === 'adult' && open[p.id] && p.age !== 'adult') {
           var kr = open[p.id].raw;
           run(d, function () { return openWithRaw(p.id, kr, cur.until); }).then(function () { finish(d, p); }).catch(function () {});
           return;
@@ -625,7 +656,7 @@
      MANAGE
      ===================================================================== */
   function removeProfile(id) {
-    readList().forEach(function (q) { if (q.grown && q.grown.indexOf(id) > -1) { q.grown = q.grown.filter(function (g) { return g !== id; }); putP(q); } });
+    readList().forEach(function (q) { if (q.grown && q.grown.indexOf(id) > -1) { q.grown = q.grown.filter(function (g) { return g !== id; }); putP(q); } if (q.helpers && q.helpers.indexOf(id) > -1) { q.helpers = q.helpers.filter(function (g) { return g !== id; }); putP(q); } });
     Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
     var wasActive = cur && cur.id === id;
     dropP(id); delete open[id];
@@ -645,7 +676,9 @@
         '<label class="ggp-l">Age</label><select id="ggp-age">' + AGES.map(function (a) { return '<option value="' + a.id + '"' + (a.id === p.age ? ' selected' : '') + '>' + a.name + ' (' + a.who + ')</option>'; }).join('') + '</select>' +
         (isAdult ? '<label class="ggp-l" for="ggp-email">Email, optional</label><input type="email" id="ggp-email" value="' + esc(v.email || '') + '" placeholder="Fills in contact forms on this site"><span class="ggp-small">It stays in your locked profile and is only sent if you send a form.</span>' : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b ggp-go" data-save>Save changes</button></div>' +
-        (kids.length ? '<hr class="ggp-sep"><p><b>Kids you can open</b></p><p class="ggp-small">' + kids.map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
+        (kids.filter(function (k) { return k.age !== 'adult'; }).length ? '<hr class="ggp-sep"><p><b>Kids you can open</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age !== 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
+        (kids.filter(function (k) { return k.age === 'adult'; }).length ? '<hr class="ggp-sep"><p><b>People you help in Willow</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age === 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
+        (isAdult && (p.helpers || []).length ? '<hr class="ggp-sep"><p><b>Helpers in Willow</b></p><p class="ggp-small">They open this profile in Willow with their own passcode, and see only what you choose to share there.</p>' + (p.helpers || []).map(getP).filter(Boolean).map(function (h) { return '<p class="ggp-small" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>' + esc(h.name) + '</span>' + (cur.id === id ? '<button type="button" class="ggp-link" data-rmhelper="' + h.id + '">Remove</button>' : '') + '</p>'; }).join('') : '') +
         (grownOpens(p.age) ? '<hr class="ggp-sep"><p><b>Grown-ups who can open this profile</b></p><p class="ggp-small">' + (grown.length ? grown.map(function (g) { return esc(g.name); }).join(', ') : 'None yet') + '</p><button type="button" class="ggp-link" data-addgrown>Add another grown-up</button>' : '') +
         '<hr class="ggp-sep"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">' +
         '<button type="button" class="ggp-link" data-code>Change ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '</button>' +
@@ -669,6 +702,7 @@
         save(id).then(function () { emit('change'); toast('Saved.'); view(d); });
       };
       var ag = $(d, '[data-addgrown]'); if (ag) ag.onclick = function () { addGrown(d); };
+      d.el.querySelectorAll('[data-rmhelper]').forEach(function (b) { b.onclick = function () { var h = getP(b.dataset.rmhelper); if (!h || !confirm('Remove ' + h.name + ' as a helper? They will no longer open ' + p.name + '\'s profile.')) return; removeHelper(id, h.id); toast(h.name + ' is no longer a helper.'); view(d); }; });
       $(d, '[data-code]').onclick = function () { changeCode(d); };
       $(d, '[data-backup]').onclick = function () { backup(id); };
       $(d, '[data-rm]').onclick = function () {
@@ -775,9 +809,11 @@
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
       html += link('/grove/', 'The Grove');
       html += link(a.href, 'My tree in ' + a.tool);
+      if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
+      helping().map(getP).filter(Boolean).forEach(function (q) { html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage my profile');
-      var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(Boolean);
+      var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
       html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('lock', 'Lock');
     } else {
@@ -886,6 +922,8 @@
     var h = (v.oak && v.oak.history) || [];
     if (h.length) { var last = h[h.length - 1]; chips.push(['/oak/', 'Last Oak check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
     else { var a = AGE[p.age] || AGE.adult; chips.push([a.href, 'Take ' + (/^[AEIOU]/.test(a.tool) ? 'an ' : 'a ') + a.tool + ' check-in']); }
+    if (v.willow && v.willow.started) chips.push(['/willow/', 'My tree in Willow']);
+    helping().map(getP).filter(Boolean).forEach(function (q) { chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';
     if (!box) { box = document.createElement('section'); box.id = 'ggp-welcome'; box.className = 'ggp-welcome'; box.setAttribute('aria-label', 'Welcome back'); document.querySelector('.hero').insertAdjacentElement('afterend', box); }
@@ -893,14 +931,42 @@
   }
   function paintAll() { try { paintNav(); paintStories(); fillForms(); welcome(); } catch (e) { console.error(e); } }
 
+  /* ---------- Willow helpers ---------- */
+  function addHelper(id, helperId, helperPass) {
+    var p = getP(id), h = getP(helperId);
+    if (!p || !h || !open[id]) return Promise.reject(new Error('Open their profile first.'));
+    if (p.age !== 'adult' || h.age !== 'adult') return Promise.reject(new Error('Helpers are for grown-ups.'));
+    if (id === helperId) return Promise.reject(new Error('Choose someone else as a helper.'));
+    var step = open[helperId] && cur && cur.id === helperId ? Promise.resolve(open[helperId])
+      : rawFromPass(h, helperPass || '').then(function (hr) { return readVault(helperId, hr).then(function (hd) { return { raw: hr, data: hd }; }); });
+    return step.then(function (H) {
+      H.data.keys = H.data.keys || {}; H.data.keys[id] = b64(open[id].raw);
+      return writeVault(helperId, H.raw, H.data);
+    }).then(function () {
+      var q = getP(id); q.helpers = (q.helpers || []).filter(function (x) { return x !== helperId; }).concat(helperId); putP(q); emit('change'); return true;
+    });
+  }
+  function removeHelper(id, helperId) {
+    var q = getP(id); if (!q) return false;
+    q.helpers = (q.helpers || []).filter(function (x) { return x !== helperId; }); putP(q);
+    if (open[helperId] && open[helperId].data.keys && open[helperId].data.keys[id]) { delete open[helperId].data.keys[id]; writeVault(helperId, open[helperId].raw, open[helperId].data); }
+    emit('change'); return true;
+  }
+  function helping() {
+    var a = cur && getP(cur.id); if (!a || a.age !== 'adult') return [];
+    return Object.keys(open).filter(function (k) { var q = getP(k); return k !== a.id && q && q.age === 'adult' && (q.helpers || []).indexOf(a.id) > -1; });
+  }
+
   /* =====================================================================
      PUBLIC
      ===================================================================== */
   var readyP = null;
   window.GGP = {
     TERMS_V: TERMS_V, PRIVACY_V: PRIVACY_V, AGES: AGES, ageName: ageName,
-    list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, grown: p.grown || [], shared: p.shared || {} }; }); },
-    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, grown: p.grown || [], shared: p.shared || {} } : null; },
+    list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
+    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} } : null; },
+    helpers: function (id) { var p = getP(id); return p ? (p.helpers || []).slice() : []; },
+    helping: helping, addHelper: addHelper, removeHelper: removeHelper,
     active: function () { var p = cur && getP(cur.id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, until: cur.until } : null; },
     openIds: function () { return Object.keys(open); },
     isOpen: function (id) { return !!open[id]; },

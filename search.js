@@ -4,7 +4,7 @@
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
    Where the words come from (edit them there, not here):
-     Hard Talks   maple/guides.js, aspen/guides.js, oak/guides.js
+     Hard Talks   maple/guides.js, aspen/guides.js, oak/guides.js, willow/guides.js
      Practices    grove/data.js and grove/library.js
      Stories      stories.html (read as the page is today)
      Tools        TOOLS below
@@ -29,7 +29,7 @@
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
     { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'heartwood high school teen teenager 9th 10th 11th 12th grade' }, // GG-RENAME-KEEP: old names still find the tool
     { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'elder tree eldertree seniors elders older adults retirement aging grandparents' }, // GG-RENAME-KEEP: old names still find the tool
-    { title: 'Willow', sub: 'For hospice. Coming soon.', href: '', keys: 'old growth oldgrowth end of life dying hospice' } // GG-RENAME-KEEP: old names still find the tool
+    { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, hard talks, readings', href: '/willow/', keys: 'old growth oldgrowth end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' } // GG-RENAME-KEEP: old names still find the tool
   ];
 
 
@@ -151,7 +151,7 @@
     ITEMS = [];
     status.textContent = 'Getting the guides ready...';
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), loadGrove()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js'), loadGrove()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -175,6 +175,15 @@
         add({ type: 'talk', age: 'ad', ageLabel: 'Adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak' });
+      });
+      // Willow hard talks (Willow Build Session 2)
+      var sw = window.WILLOW_GUIDES;
+      if (sw) sw.guides.forEach(function (t) {
+        var ring = (sw.rings.find(function (r) { return r[0] === t.ring; }) || [])[1] || '';
+        var part = function (k) { var x = t.parts.find(function (p) { return p[0] === k; }); return x ? x[1] : ''; };
+        var quick = [part('what') || part('know'), part('helps')].filter(Boolean);
+        add({ type: 'talk', age: 'ad', ageLabel: 'Hospice', title: t.title.replace(/^"|"$/g, ''), sub: ring, keys: t.keys, lead: quick, quick: quick,
+          body: t.parts.map(function (p) { return p[1]; }).join(' '), href: '/willow/#guide=' + encodeURIComponent(t.id), from: 'Willow' });
       });
 
       var gl = window.GGSGroveLibrary || window.GroveLibrary;

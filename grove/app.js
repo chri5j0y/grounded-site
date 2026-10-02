@@ -123,7 +123,10 @@ function treeOf(p) {
   const t = (p.shared || {}).tree, show = !!(t && t.show !== false && t.tool);
   const wk = addDays(today(), -6), parts = new Set();
   if (show) (t.recent || []).forEach(r => { if (r.d >= wk) (r.parts || []).forEach(k => parts.add(k)); });
-  return { show, days: show ? (t.days || 0) : 0, rings: show ? (t.rings || 0) : 0, recent: show ? (t.recent || []) : [], parts: [...parts], updated: t && t.updated };
+  // Willow (Willow Build Session 2): a tree that grows in Willow stands as a willow, and a
+  // remembered tree stays in the grove after a death, softer, with nothing asked of it.
+  const sh = p.shared || {}, willow = !!(t && t.tool === 'willow'), remembered = !!sh.remembered;
+  return { show, days: show ? (t.days || 0) : 0, rings: show ? (t.rings || 0) : 0, recent: show ? (t.recent || []) : [], parts: [...parts], updated: t && t.updated, willow, remembered, rememberedOn: remembered ? sh.remembered.date : '' };
 }
 function groveDays() {
   let changed = false;
@@ -174,7 +177,7 @@ function alertsHtml() {
 function viewGrove() {
   const ps = people(), days = groveDays(), vis = VISITORS.filter(c => days >= c.days).map(c => c.id), next = VISITORS.find(c => days < c.days);
   const scen = SCENES.find(x => x.id === G.scenery && days >= x.days) ? G.scenery : 'forest';
-  const trees = ps.slice(0, 8).map(p => { const t = treeOf(p); return { stage: stageOf(p.age), g: t.show ? Math.min(1, .12 + t.days / 60) : .1, parts: t.parts, kind: G.kinds[p.id] || 'grove', label: p.name }; });
+  const trees = ps.slice(0, 8).map(p => { const t = treeOf(p); return { stage: t.willow ? 'willow' : stageOf(p.age), remembered: t.remembered, g: t.remembered ? 1 : t.show ? Math.min(1, .12 + t.days / 60) : .1, parts: t.remembered ? [] : t.parts, kind: t.willow ? 'grove' : (G.kinds[p.id] || 'grove'), label: p.name }; });
   let h = '';
   if (!G.intro) h += `<div class="banner gv-intro"><h3>Where our trees grow together</h3><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups and high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += `<div class="section-head"><h2>Our grove</h2><p>${ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.'}</p></div>`;
@@ -184,8 +187,9 @@ function viewGrove() {
   h += `<div class="gv-people" role="list">${ps.map(p => { const t = treeOf(p); return `<button type="button" role="listitem" class="gv-person${S.sel === p.id ? ' on' : ''}" aria-pressed="${S.sel === p.id}" data-act="sel" data-id="${esc(p.id)}">${window.GGAv ? GGAv.html(p.avatar, p.name, 44) : ''}<b>${esc(p.name)}</b><span>${t.show ? `${t.days} ${t.days === 1 ? 'day' : 'days'} tended` : 'Growing quietly'}</span></button>`; }).join('')}</div>`;
   const sp = S.sel && who(S.sel);
   if (sp) {
-    const t = treeOf(sp), tool = toolOf(sp.age);
-    h += `<div class="card gv-detail"><h3>${esc(sp.name)}'s tree</h3>`
+    const t = treeOf(sp), tool = t.willow ? { name: 'Willow', href: '/willow/' } : toolOf(sp.age);
+    if (t.remembered) h += `<div class="card gv-detail"><h3>Remembering ${esc(sp.name)}</h3><p>${t.rememberedOn ? 'Died ' + esc(nice(t.rememberedOn)) + '. ' : ''}Their willow stays in the grove, just as it was. Nothing is taken away.</p>${t.rings ? `<dl class="gv-stats"><div><dt>Rings</dt><dd>${t.rings}</dd></div></dl>` : ''}<a class="btn btn-gold btn-sm" href="/willow/#for=${esc(sp.id)}">Open their Willow</a></div>`;
+    else h += `<div class="card gv-detail"><h3>${esc(sp.name)}'s tree</h3>`
       + (t.show ? `<dl class="gv-stats"><div><dt>Days tended</dt><dd>${t.days}</dd></div><div><dt>Rings</dt><dd>${t.rings}</dd></div></dl>`
         + (t.parts.length ? `<p>Tended this week: ${PARTS6.filter(x => t.parts.includes(x.key)).map(x => `<span class="gv-part" style="--pc:${x.color}">${x.name}</span>`).join(' ')}</p>` : '<p class="muted">Resting this week. A tree never dies, and nothing is taken away.</p>')
         : `<p class="muted">${esc(sp.name)} keeps their growth private. Their tree still stands in the grove.</p>`)

@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=r5a'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=w2a'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -27,7 +27,7 @@
       { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true },
       { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
       { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true },
-      { id: 'willow', title: 'Willow', desc: 'For hospice', icon: ic.willow, bg: '#E8ECDD', soon: true }
+      { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
@@ -35,7 +35,8 @@
     { name: 'Hard Talks', items: [
       { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/maple/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
       { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for hard talks, grades 6 to 8', href: HOME + '/aspen/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' },
-      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/oak/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' }
+      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/oak/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' },
+      { id: 'lc-hospice', title: 'At the end of life', desc: 'Hard talks for hospice families and the bedside', href: HOME + '/willow/#guides', icon: ic.door, bg: '#E8ECDD', color: '#5F7350' }
     ] },
     { name: 'For professionals', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
@@ -49,6 +50,7 @@
     if (p.indexOf('/oak') === 0 || h.indexOf('oak.') === 0) return life ? 'lc-adult' : 'oak';
     if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return life ? 'lc-kids' : 'maple';
     if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return life ? 'lc-ms' : 'aspen';
+    if (p.indexOf('/willow') === 0) return /^#(guide|guides)/.test(hash) ? 'lc-hospice' : 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     return '';
