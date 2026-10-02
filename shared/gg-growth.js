@@ -21,7 +21,7 @@
    ===================================================================== */
 (function () {
   var KEY = 'gg-shared-v1';
-  function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function read() { try { var d = JSON.parse(localStorage.getItem(KEY)) || {}; return window.GGRename ? GGRename.fix(d) : d; } catch (e) { return {}; } }
   function write(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
   function slug(s) { return String(s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
   function pad(n) { return String(n).padStart(2, '0'); }

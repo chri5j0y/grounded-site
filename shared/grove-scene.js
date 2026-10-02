@@ -14,22 +14,22 @@ const TRUNK_TENDED = '#C27A1E';   // the Trunk part's color (PARTS in grove/data
 const TONE = { trunk:'#6B4A2E', bark:'#B9A8F2', barkDim:'#4F3620', branch:'#C9B79A', branchHi:'#3CC0C6',
   leaf:['#2F5A3A','#3F6B40','#4F7F4A'], leafHi:['#3E8A4E','#4FA85F','#6CC27A'], root:'#D6C3A0', rootHi:'#F2B36B',
   fruit:'#E8862E', fruitHi:'#FF6B57', ink:'#2C1810' };
-const STAGE_H = { sprout:.34, sapling:.6, heartwood:.8, adult:1 };      // side by side in a family grove
-const STAGE_SOLO = { sprout:.62, sapling:.82, heartwood:.92, adult:1 };  // your own tree, filling the scene
-const stageOf = age => age === 'sprout' || age === 'sapling' || age === 'heartwood' ? age : 'adult';
-const STAGE_NAME = { sprout:'Sprout', sapling:'Sapling', heartwood:'Heartwood', adult:'Soul Tree' };
+const STAGE_H = { maple:.34, aspen:.6, pine:.8, adult:1 };      // side by side in a family grove
+const STAGE_SOLO = { maple:.62, aspen:.82, pine:.92, adult:1 };  // your own tree, filling the scene
+const stageOf = age => age === 'maple' || age === 'aspen' || age === 'pine' ? age : 'adult';
+const STAGE_NAME = { maple:'Maple', aspen:'Aspen', pine:'Pine', adult:'Oak' };
 function leafPath(x, y, len, ang, col){ return `<path transform="translate(${f1(x)} ${f1(y)}) rotate(${f1(ang)})" d="M0 0C${f1(len*.25)} ${f1(-len*.32)} ${f1(len*.75)} ${f1(-len*.32)} ${f1(len)} 0C${f1(len*.75)} ${f1(len*.32)} ${f1(len*.25)} ${f1(len*.32)} 0 0Z" fill="${col}"/>`; }
 // Roots: thick where they leave the trunk, thinning as they flow out.
 function rootsOf(t, H, R){
-  const col = t.parts.includes('roots') ? TONE.rootHi : TONE.root, n = {sprout:3, sapling:4, heartwood:5, adult:6}[t.stage];
-  const L = H * (t.stage === 'sprout' ? .9 : .62) * (t.rooting ? 1.3 : 1), w = Math.max(1.2, H * .012);
+  const col = t.parts.includes('roots') ? TONE.rootHi : TONE.root, n = {maple:3, aspen:4, pine:5, adult:6}[t.stage];
+  const L = H * (t.stage === 'maple' ? .9 : .62) * (t.rooting ? 1.3 : 1), w = Math.max(1.2, H * .012);
   let o = '';
   for (let i=0;i<n;i++){ const a = Math.PI * (.1 + .8 * i/(n-1)), len = L * (.75 + .35*R());
     const ex = Math.cos(a)*len, ey = Math.max(8, Math.sin(a)*len*.55 + 6 + R()*8);
     const c1 = `${f1(ex*.25)} ${f1(ey*.1+4)}`, c2 = `${f1(ex*.72)} ${f1(ey*.7)}`;
     o += `<path d="M0 2C${c1} ${c2} ${f1(ex)} ${f1(ey)}" stroke="${col}" stroke-width="${f1(w)}" fill="none" stroke-linecap="round"/>`;
     o += `<path d="M0 2C${f1(ex*.12)} ${f1(ey*.05+3)} ${f1(ex*.3)} ${f1(ey*.25)} ${f1(ex*.42)} ${f1(ey*.38)}" stroke="${col}" stroke-width="${f1(w*2.3)}" fill="none" stroke-linecap="round"/>`;
-    if (t.stage !== 'sprout') o += `<path d="M${f1(ex)} ${f1(ey)}c${f1(-3*Math.sign(ex||1))} 3 ${f1(-1*Math.sign(ex||1))} 7 ${f1(3*Math.sign(ex||1))} 6" stroke="${col}" stroke-width="${f1(w*.8)}" fill="none" stroke-linecap="round"/>`;
+    if (t.stage !== 'maple') o += `<path d="M${f1(ex)} ${f1(ey)}c${f1(-3*Math.sign(ex||1))} 3 ${f1(-1*Math.sign(ex||1))} 7 ${f1(3*Math.sign(ex||1))} 6" stroke="${col}" stroke-width="${f1(w*.8)}" fill="none" stroke-linecap="round"/>`;
   }
   const tw = Math.max(1.6, H*.02), tl = L*.75;
   o += `<path d="M${f1(-tw)} 0C${f1(-tw)} ${f1(tl*.3)} ${f1(-tw*.3)} ${f1(tl*.6)} 0 ${f1(tl)}C${f1(tw*.3)} ${f1(tl*.6)} ${f1(tw)} ${f1(tl*.3)} ${f1(tw)} 0Z" fill="${col}"/>`;
@@ -42,9 +42,9 @@ function treeParts(t, maxH, seed){
   const H = maxH * (t.solo ? STAGE_SOLO : STAGE_H)[t.stage] * (.62 + .38*ease(t.g));
   const leafs = tend('leaves') ? TONE.leafHi : TONE.leaf, fruitC = tend('fruit') ? TONE.fruitHi : TONE.fruit;
   const trunkC = tend('trunk') ? TRUNK_TENDED : (t.kind === 'birch' ? '#EDE7DA' : TONE.trunk);
-  const brC = tend('branches') ? TONE.branchHi : (t.stage === 'sapling' ? TONE.trunk : TONE.branch);
+  const brC = tend('branches') ? TONE.branchHi : (t.stage === 'aspen' ? TONE.trunk : TONE.branch);
   let top = '', perch = { x: H*.2, y: -H*.7 };
-  if (t.stage === 'sprout'){
+  if (t.stage === 'maple'){
     const lc = tend('leaves') ? ['#4FA85F','#7ED36A'] : ['#6CB34A','#9CD06A'];
     top += `<path d="M0 0Q-3 ${f1(-H*.5)} 0 ${f1(-H)}" stroke="${trunkC}" stroke-width="${f1(Math.max(2.4, H*.05))}" fill="none" stroke-linecap="round"/>`;
     top += leafPath(0, -H*.72, H*.42, 200, lc[0]) + leafPath(0, -H*.86, H*.42, -25, lc[1]);
@@ -52,7 +52,7 @@ function treeParts(t, maxH, seed){
     top += `<circle cx="0" cy="${f1(-H)}" r="${f1(Math.max(3, H*(tend('fruit')?.09:.07)))}" fill="${tend('fruit')?TONE.fruitHi:'#E86A5E'}"/>`;
     if (tend('bark')) top += `<path d="M1.5 ${f1(-H*.2)}v${f1(-H*.12)}M-1.5 ${f1(-H*.4)}v${f1(-H*.1)}" stroke="${TONE.bark}" stroke-width="1.6" stroke-linecap="round"/>`;
     perch = { x: H*.75, y: -6 };
-  } else if (t.stage === 'sapling' && t.kind !== 'pine'){
+  } else if (t.stage === 'aspen' && t.kind !== 'pine'){
     const lc = t.kind === 'maple' ? ['#D9483F','#E8962E'] : t.kind === 'birch' ? ['#9CCB5A','#C8E07A'] : [leafs[1], leafs[2]];
     top += `<path d="M0 0Q-4 ${f1(-H*.5)} 0 ${f1(-H)}" stroke="${trunkC}" stroke-width="${f1(Math.max(3, H*.035))}" fill="none" stroke-linecap="round"/>`;
     if (t.kind === 'birch') top += `<path d="M-1 ${f1(-H*.25)}h3M-1 ${f1(-H*.45)}h3" stroke="#2A2A2A" stroke-width="2"/>`;
@@ -63,7 +63,7 @@ function treeParts(t, maxH, seed){
     if (t.g > .55 || tend('fruit')) [[-.34,-.62],[.36,-.74]].forEach(([x,y]) => { top += `<circle cx="${f1(x*H)}" cy="${f1(y*H-2)}" r="${f1(Math.max(2.4,H*.02))}" fill="${fruitC}"/>`; });
     perch = { x: .36*H, y: -.74*H - 6 };
   } else {
-    // Heartwood and Soul Tree, or any stage as a pine
+    // Pine and Oak, or any stage as a pine
     const big = t.stage === 'adult', cy = -H*.6, r = H*(big ? .3 : .28), tw = H*(big ? .045 : .036);
     top += `<path d="M${f1(-tw)} 0C${f1(-tw*.8)} ${f1(-H*.3)} ${f1(-tw*.5)} ${f1(cy*.7)} ${f1(-tw*.45)} ${f1(cy)}L${f1(tw*.45)} ${f1(cy)}C${f1(tw*.5)} ${f1(cy*.7)} ${f1(tw*.8)} ${f1(-H*.3)} ${f1(tw)} 0Z" fill="${trunkC}"/>`;
     if (t.kind === 'birch') [.2,.35,.5].forEach(k => { top += `<path d="M${f1(-tw*.5)} ${f1(-H*k)}h${f1(tw*.7)}" stroke="#2A2A2A" stroke-width="${f1(Math.max(1.5,H*.012))}" stroke-linecap="round"/>`; });
@@ -84,7 +84,7 @@ function treeParts(t, maxH, seed){
       let crown = '', out = '';
       blobs.forEach(([x,y,k],i) => { out += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(k*r+1.6)}" fill="${TONE.ink}"/>`; crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(k*r)}" fill="${pal[i%3]}"/>`; });
       crown += `<circle cx="${f1(-r*.25)}" cy="${f1(cy-r*.2)}" r="${f1(r*.45)}" fill="${pal[2]}" opacity=".7"/>`;
-      if (t.stage === 'heartwood' && t.kind === 'grove') [[-.4,.2],[.45,-.15],[.1,.45]].forEach(([x,y]) => { crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(r*.22)}" fill="#9C4235"/>`; });
+      if (t.stage === 'pine' && t.kind === 'grove') [[-.4,.2],[.45,-.15],[.1,.45]].forEach(([x,y]) => { crown += `<circle cx="${f1(x*r)}" cy="${f1(cy+y*r)}" r="${f1(r*.22)}" fill="#9C4235"/>`; });
       if (t.snow) [[0,-.95,.62],[-.45,-.6,.72],[.45,-.6,.72]].forEach(([x,y,k]) => { crown += `<path d="M${f1(x*r-k*r*.7)} ${f1(cy+y*r-k*r*.55)}Q${f1(x*r)} ${f1(cy+y*r-k*r*1.15)} ${f1(x*r+k*r*.7)} ${f1(cy+y*r-k*r*.55)}Z" fill="#FFFFFF" opacity=".92"/>`; });
       top += out + crown;
       const bw = f1(Math.max(1.6, H*.011));

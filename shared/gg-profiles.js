@@ -35,15 +35,15 @@
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
-    { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Soul Tree', href: '/soul-tree/' },
-    { id: 'heartwood', name: 'High school', who: 'Grades 9 to 12', tool: 'The Grove', href: '/grove/' },
-    { id: 'sapling', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Sapling', href: '/sapling/' },
-    { id: 'sprout', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Sprout', href: '/sprout/' }
+    { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Oak', href: '/oak/' },
+    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'The Grove', href: '/grove/' },
+    { id: 'aspen', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Aspen', href: '/aspen/' },
+    { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/maple/' }
   ];
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
   var PICS = ['fox', 'owl', 'bunny', 'turtle', 'bee', 'frog', 'ladybug', 'sunflower', 'butterfly'];
   var isMinor = function (age) { return age && age !== 'adult'; };
-  var grownOpens = function (age) { return age === 'sprout' || age === 'sapling'; };
+  var grownOpens = function (age) { return age === 'maple' || age === 'aspen'; };
 
   /* ---------- small helpers ---------- */
   var enc = new TextEncoder(), dec = new TextDecoder();
@@ -54,10 +54,21 @@
   function todayStr() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function slug(s) { return String(s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
 
-  function readList() { try { var j = JSON.parse(localStorage.getItem(LIST)); return (j && j.list) || []; } catch (e) { return []; } }
+  /* The tree rename (Oct 2026): records saved under the old tree names are read under the new ones.
+     gg-app.js does this on tool pages; pages without it use this same small copy. */
+  var RN_IDS = { sprout: 'maple', sapling: 'aspen', soultree: 'oak', 'soul-tree': 'oak', soulTree: 'oak', heartwood: 'pine', eldertree: 'sequoia', oldgrowth: 'willow' }; // GG-RENAME-KEEP
+  function rnFix(x, d) {
+    if (window.GGRename) return window.GGRename.fix(x);
+    d = d || 0; if (!x || typeof x !== 'object' || d > 40) return x;
+    var id = function (v) { return typeof v === 'string' && Object.prototype.hasOwnProperty.call(RN_IDS, v) ? RN_IDS[v] : v; };
+    if (Array.isArray(x)) { for (var i = 0; i < x.length; i++) { if (typeof x[i] === 'string') x[i] = id(x[i]); else rnFix(x[i], d + 1); } return x; }
+    Object.keys(x).forEach(function (k) { var v = x[k]; if (typeof v === 'string') v = x[k] = id(v); else rnFix(v, d + 1); if (Object.prototype.hasOwnProperty.call(RN_IDS, k)) { if (x[RN_IDS[k]] == null) x[RN_IDS[k]] = v; delete x[k]; } });
+    return x;
+  }
+  function readList() { try { var j = JSON.parse(localStorage.getItem(LIST)); return rnFix((j && j.list) || []); } catch (e) { return []; } }
   function writeList(l) { localStorage.setItem(LIST, JSON.stringify({ v: 1, list: l })); }
   function getP(id) { return readList().filter(function (p) { return p.id === id; })[0] || null; }
-  function putP(p) { var l = readList(), i = -1; l.forEach(function (x, j) { if (x.id === p.id) i = j; }); if (i >= 0) l[i] = p; else l.push(p); writeList(l); }
+  function putP(p) { p = rnFix(p); var l = readList(), i = -1; l.forEach(function (x, j) { if (x.id === p.id) i = j; }); if (i >= 0) l[i] = p; else l.push(p); writeList(l); }
   function dropP(id) { writeList(readList().filter(function (p) { return p.id !== id; })); localStorage.removeItem(BOX + id); }
 
   /* ---------- crypto ---------- */
@@ -84,7 +95,7 @@
   function readVault(id, raw) {
     var box = null; try { box = JSON.parse(localStorage.getItem(BOX + id)); } catch (e) {}
     if (!box) return Promise.resolve(blankVault());
-    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameGarden(Object.assign(blankVault(), JSON.parse(dec.decode(b)))); });
+    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameGarden(Object.assign(blankVault(), rnFix(JSON.parse(dec.decode(b))))); });
   }
   // The old garden tool is now The Grove. A saved garden moves to the new key once.
   function renameGarden(v) { if (v.garden && !v.grove) v.grove = v.garden; delete v.garden; return v; }
@@ -186,19 +197,19 @@
     });
   }
 
-  /* ---------- Soul Tree profiles made before Grounded profiles ---------- */
-  function legacySoulTree() { try { return JSON.parse(localStorage.getItem('soul-tree:profiles')) || []; } catch (e) { return []; } }
-  function openLegacySoulTree(lp, pass) {
+  /* ---------- Oak profiles made before Grounded profiles ---------- */
+  function legacyOak() { try { return JSON.parse(localStorage.getItem('oak:profiles')) || []; } catch (e) { return []; } }
+  function openLegacyOak(lp, pass) {
     return passKey(pass, unb64(lp.salt)).then(function (k) {
-      var box = JSON.parse(localStorage.getItem('soul-tree:p:' + lp.id) || 'null');
+      var box = JSON.parse(localStorage.getItem('oak:p:' + lp.id) || 'null');
       if (!box) return { avatar: '', history: [] };
-      return unseal(k, box).then(function (b) { return JSON.parse(dec.decode(b)); });
+      return unseal(k, box).then(function (b) { return rnFix(JSON.parse(dec.decode(b))); });
     }).catch(function () { throw new Error('That passcode did not work. Try again.'); });
   }
-  function retireLegacySoulTree(lp) {
-    localStorage.removeItem('soul-tree:p:' + lp.id);
-    var l = legacySoulTree().filter(function (x) { return x.id !== lp.id; });
-    if (l.length) localStorage.setItem('soul-tree:profiles', JSON.stringify(l)); else localStorage.removeItem('soul-tree:profiles');
+  function retireLegacyOak(lp) {
+    localStorage.removeItem('oak:p:' + lp.id);
+    var l = legacyOak().filter(function (x) { return x.id !== lp.id; });
+    if (l.length) localStorage.setItem('oak:profiles', JSON.stringify(l)); else localStorage.removeItem('oak:profiles');
   }
 
   /* =====================================================================
@@ -350,7 +361,7 @@
       : (adults().length
         ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + adults().map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
         : '');
-    var what = age === 'heartwood'
+    var what = age === 'pine'
       ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which beds are growing and days tended, and will be alerted if a safety answer needs attention. The grown-up will never see answers or journal entries. Those are locked with the teen\'s own passcode.</div>'
       : '<div class="ggp-note">Grown-ups who agree can open ' + esc(kidName || 'this') + ' profile with their own passcode, so no child is ever alone with something hard.</div>';
     return '<hr class="ggp-sep"><p><b>A grown-up needs to agree.</b></p>' + what + who +
@@ -402,12 +413,12 @@
         $(d, '[data-adult]').onclick = function () { st.name = ''; st.avatar = ''; st.age = 'adult'; step1(d); };
       }
       function step2(d) {
-        var kid = st.age === 'sprout', min = st.age === 'adult' || st.age === 'heartwood' ? 6 : 4;
+        var kid = st.age === 'maple', min = st.age === 'adult' || st.age === 'pine' ? 6 : 4;
         d.show('<h2 id="ggp-title">' + (kid ? 'Pick a secret picture code' : 'Choose a passcode') + '</h2>' +
           (kid ? '<p>' + esc(st.name) + ', tap three pictures in an order you will remember. That is your secret code.</p><div id="ggp-pad"></div><p class="ggp-small" id="ggp-again" style="text-align:center"></p>'
             : '<p>At least ' + min + ' characters. Only you will know it.</p><label class="ggp-l" for="ggp-p1">Passcode</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">') +
           HOURS('ggp-h') +
-          (st.age === 'adult' || st.age === 'heartwood' ? '<p class="ggp-note"><b>Please remember your passcode.</b> It never leaves this device, so no one, including us, can recover it. You can download a locked backup from your profile any time.</p>' : '') +
+          (st.age === 'adult' || st.age === 'pine' ? '<p class="ggp-note"><b>Please remember your passcode.</b> It never leaves this device, so no one, including us, can recover it. You can download a locked backup from your profile any time.</p>' : '') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-next' + (kid ? ' disabled' : '') + '>Next</button></div>');
         $(d, '[data-back]').onclick = function () { step1(d); };
         var first = null, pad;
@@ -433,13 +444,13 @@
         var minor = isMinor(st.age);
         d.show('<h2 id="ggp-title">One last step</h2>' +
           '<p>Grounded tools are for reflection and growth. They are not therapy, medical care, or a crisis service. If you or someone you love is in crisis, call or text 988 any time.</p>' +
-          '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'sprout' ? 'the picture code' : 'the passcode') + '. We never see it.</p>' +
+          '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + '. We never see it.</p>' +
           (minor ? grownBlock(st.name, st.age)
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Create profile</button></div>');
         $(d, '[data-back]').onclick = function () { st.pass = null; step2(d); };
         $(d, '[data-go]').onclick = function () {
-          var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'sprout' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null };
+          var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null };
           try { if (minor) Object.assign(o, readGrown(d)); else if (!$(d, '#ggp-agree').checked) throw new Error('Please check the box to agree.'); }
           catch (e) { return d.msg(e.message); }
           run(d, function () { return createProfile(o); }).then(function (id) {
@@ -460,7 +471,7 @@
     return new Promise(function (resolve) {
       dialog(function (d) { var one = opt.id && getP(opt.id); if (one) askCode(d, one); else pickPerson(d); }, function (r) { resolve(!!r); });
       function pickPerson(d) {
-        var list = readList(), legacy = legacySoulTree(), act = cur && getP(cur.id);
+        var list = readList(), legacy = legacyOak(), act = cur && getP(cur.id);
         if (!list.length && !legacy.length) { d.close(); createDialog(opt).then(resolve); return; }
         d.show('<h2 id="ggp-title">' + (act ? 'Switch person' : 'Open your profile') + '</h2>' +
           (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Profiles on this device.</p>') +
@@ -468,7 +479,7 @@
             var here = act && act.id === p.id;
             return '<button type="button" class="ggp-person" data-id="' + p.id + '"' + (here ? ' aria-pressed="true"' : '') + '>' + av(p.avatar, p.name, 56) + '<b>' + esc(p.name) + '</b><span>' + (here ? 'Open now' : ageName(p.age)) + '</span></button>';
           }).join('') + legacy.map(function (lp) {
-            return '<button type="button" class="ggp-person" data-legacy="' + lp.id + '">' + av('', lp.name, 56) + '<b>' + esc(lp.name) + '</b><span>From Soul Tree</span></button>';
+            return '<button type="button" class="ggp-person" data-legacy="' + lp.id + '">' + av('', lp.name, 56) + '<b>' + esc(lp.name) + '</b><span>From Oak</span></button>';
           }).join('') + '</div>' +
           '<div class="ggp-row" style="justify-content:space-between"><button type="button" class="ggp-link" data-restore>Restore a backup</button><span style="display:flex;gap:8px"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-new>New profile</button></span></div>');
         $(d, '[data-x]').onclick = function () { d.close(false); };
@@ -515,7 +526,7 @@
           };
           return;
         }
-        var teen = p.age === 'heartwood', ok = adults();
+        var teen = p.age === 'pine', ok = adults();
         d.show('<h2 id="ggp-title">' + (teen ? 'Forgot your passcode' : 'A grown-up can help') + '</h2>' +
           (teen ? '<p>Your answers and journal are locked with your passcode, so nobody, not even a grown-up, can open them. A grown-up can clear them so you can start fresh with a new passcode. Your beds, days tended, and butterflies stay.</p>'
             : '<p>A grown-up who cares for ' + esc(p.name) + ' can open this profile with their own passcode, then set a new ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '.</p>') +
@@ -542,7 +553,7 @@
       }
       // set a new code; raw given = keep data, raw null = clear private data (teens)
       function newCode(d, p, raw, G) {
-        var kid = p.code === 'pics', min = p.age === 'heartwood' ? 6 : 4, val = null, first = null;
+        var kid = p.code === 'pics', min = p.age === 'pine' ? 6 : 4, val = null, first = null;
         d.show('<h2 id="ggp-title">' + (kid ? 'A new picture code for ' : 'A new passcode for ') + esc(p.name) + '</h2>' +
           (raw ? '' : '<p class="ggp-note">' + esc(p.name) + ', choose your new passcode yourself, so it stays private to you.</p>') +
           (kid ? '<div id="ggp-pad"></div><p class="ggp-small" id="ggp-again" style="text-align:center">Tap three pictures.</p>'
@@ -568,8 +579,8 @@
         };
       }
       function legacyOpen(d, lp) {
-        d.show('<h2 id="ggp-title">Welcome back, ' + esc(lp.name) + '</h2><p>Your Soul Tree profile is moving into Grounded profiles, so it works across every Grounded tool. Your check-ins come with you, still locked with the same passcode.</p>' +
-          '<label class="ggp-l" for="ggp-pass">Your Soul Tree passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">' + HOURS('ggp-h') +
+        d.show('<h2 id="ggp-title">Welcome back, ' + esc(lp.name) + '</h2><p>Your Oak profile is moving into Grounded profiles, so it works across every Grounded tool. Your check-ins come with you, still locked with the same passcode.</p>' +
+          '<label class="ggp-l" for="ggp-pass">Your Oak passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">' + HOURS('ggp-h') +
           '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Move my profile</button></div>');
         $(d, '[data-back]').onclick = function () { pickPerson(d); };
@@ -578,10 +589,10 @@
           if (!pass) return d.msg('Type your passcode.');
           if (!$(d, '#ggp-agree').checked) return d.msg('Please check the box to agree.');
           run(d, function () {
-            return openLegacySoulTree(lp, pass).then(function (data) {
-              var name = lp.name; if (readList().some(function (p) { return p.name.toLowerCase() === name.toLowerCase(); })) name = name + ' (Soul Tree)';
-              return createProfile({ name: name, avatar: data.avatar || '', age: 'adult', pass: pass, code: 'text', hours: hours, carry: { soulTree: { history: data.history || [] } } });
-            }).then(function () { retireLegacySoulTree(lp); });
+            return openLegacyOak(lp, pass).then(function (data) {
+              var name = lp.name; if (readList().some(function (p) { return p.name.toLowerCase() === name.toLowerCase(); })) name = name + ' (Oak)';
+              return createProfile({ name: name, avatar: data.avatar || '', age: 'adult', pass: pass, code: 'text', hours: hours, carry: { oak: { history: data.history || [] } } });
+            }).then(function () { retireLegacyOak(lp); });
           }).then(function () { d.close(true); toast('Your profile moved in. Welcome, ' + lp.name + '.'); }).catch(function () {});
         };
       }
@@ -645,7 +656,7 @@
         if (!name) return d.msg('Add a name.');
         if (readList().some(function (x) { return x.id !== id && x.name.toLowerCase() === name.toLowerCase(); })) return d.msg('Another profile already has that name.');
         if ((p.age === 'adult') !== (age === 'adult')) return d.msg('A profile can move between school ages, but not between Adult and kids or teens. Create a new profile instead.');
-        if (grownOpens(p.age) && age === 'heartwood') {
+        if (grownOpens(p.age) && age === 'pine') {
           if (!confirm('Moving to High school makes answers and journal private to ' + name + '. Grown-ups will no longer be able to open this profile. Continue?')) return;
           Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
           
@@ -676,7 +687,7 @@
       };
     }
     function changeCode(d) {
-      var kid = p.code === 'pics', min = p.age === 'adult' || p.age === 'heartwood' ? 6 : 4, val = null, first = null;
+      var kid = p.code === 'pics', min = p.age === 'adult' || p.age === 'pine' ? 6 : 4, val = null, first = null;
       d.show('<h2 id="ggp-title">' + (kid ? 'New picture code' : 'New passcode') + '</h2>' +
         (kid ? '<div id="ggp-pad"></div><p class="ggp-small" id="ggp-again" style="text-align:center">Tap three pictures.</p>' : '<label class="ggp-l" for="ggp-p1">New passcode, at least ' + min + ' characters</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">') +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Save</button></div>');
@@ -760,14 +771,14 @@
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
       html += link('/grove/', 'My grove');
-      if (p.age !== 'heartwood') html += link(a.href, 'My ' + a.tool + ' check-in');
+      if (p.age !== 'pine') html += link(a.href, 'My ' + a.tool + ' check-in');
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage my profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(Boolean);
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
       html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('lock', 'Lock');
     } else {
-      var n = readList().length + legacySoulTree().length;
+      var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
       if (n) html += item('open', 'Open a profile');
       html += item('create', 'Create a profile') + item('restore', 'Restore a backup') + link('/privacy.html#profiles', 'How profiles work');
@@ -870,9 +881,9 @@
       var sd = g.start.split('-').map(Number), days = Math.floor((new Date().setHours(0, 0, 0, 0) - new Date(sd[0], sd[1] - 1, sd[2]).getTime()) / 864e5);
       chips.push(['/grove/', days < 0 ? 'Your tree starts growing soon' : days >= 84 ? 'Your tree is in full bloom' : 'Week ' + (Math.floor(days / 7) + 1) + ' in The Grove']);
     } else chips.push(['/grove/', 'Tend Your Grove']);
-    var h = (v.soulTree && v.soulTree.history) || [];
-    if (h.length) { var last = h[h.length - 1]; chips.push(['/soul-tree/', 'Last Soul Tree check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
-    else if (p.age !== 'heartwood') { var a = AGE[p.age]; chips.push([a.href, 'Take a ' + a.tool + ' check-in']); }
+    var h = (v.oak && v.oak.history) || [];
+    if (h.length) { var last = h[h.length - 1]; chips.push(['/oak/', 'Last Oak check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
+    else if (p.age !== 'pine') { var a = AGE[p.age]; chips.push([a.href, 'Take ' + (/^[AEIOU]/.test(a.tool) ? 'an ' : 'a ') + a.tool + ' check-in']); }
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';
     if (!box) { box = document.createElement('section'); box.id = 'ggp-welcome'; box.className = 'ggp-welcome'; box.setAttribute('aria-label', 'Welcome back'); document.querySelector('.hero').insertAdjacentElement('afterend', box); }
@@ -902,7 +913,7 @@
     require: function (opt) {
       opt = opt || {};
       if (cur) return Promise.resolve(true);
-      var has = readList().length + legacySoulTree().length;
+      var has = readList().length + legacyOak().length;
       return (has ? openDialog(opt) : createDialog(opt)).then(function () { return !!cur; });
     },
     ready: null
