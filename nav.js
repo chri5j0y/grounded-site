@@ -316,7 +316,7 @@
       if (onTools) { var f = document.getElementById('ss-q'); if (f) { f.scrollIntoView({ block: 'center' }); f.focus(); } return; }
       opener = document.activeElement;
       ov.hidden = false; document.documentElement.style.overflow = 'hidden';
-      if (!loaded) { loaded = true; var s = document.createElement('script'); s.src = base + '/search.js'; document.body.appendChild(s); }
+      if (!loaded) { loaded = true; var s = document.createElement('script'); s.src = base + '/search.js?v=l1'; document.body.appendChild(s); }
       setTimeout(function () { var i = document.getElementById('ss-q'); if (i) i.focus(); }, 30);
     }
     function close() { ov.hidden = true; document.documentElement.style.overflow = ''; if (opener && opener.focus) opener.focus(); }

@@ -51,6 +51,7 @@
     { title: 'Rates', sub: 'What it costs, plainly', href: '/rates.html', keys: 'rates price prices cost costs fee fees how much pay payment deposit' },
     { title: 'About', sub: 'Who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story' },
     { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/index.html#contact', keys: 'contact email call reach out question' },
+    { title: 'The Grounded library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },
     { title: 'Privacy', sub: 'Your answers stay on your device', href: '/privacy.html', keys: 'privacy data private' },
     { title: 'Terms', sub: 'Terms of use', href: '/terms.html', keys: 'terms legal' }
   ];
@@ -142,6 +143,16 @@
       } catch (e) {}
     });
   }
+  // The Grounded library (Library session): read as text, so a page that already loaded books.js isn't disturbed.
+  var BOOKS = [];
+  function loadBooks() {
+    return fetch('/library/books.js').then(function (r) { return r.ok ? r.text() : ''; }).then(function (txt) {
+      var sec = {}, m = /const SECTIONS = \{([\s\S]*?)\};/.exec(txt);
+      if (m) m[1].replace(/([A-Z]{2}):\s*\['([^']+)'/g, function (a, k, n) { sec[k] = n; });
+      var d = /const BOOK_DATA = `([\s\S]*?)`/.exec(txt);
+      BOOKS = d ? d[1].trim().split('\n').map(function (l) { var f = l.split('|'); return f.length > 6 ? { no: f[0], title: f[1], author: f[2], summary: f[6], tags: f[7] || '', parts: f[5], sec: sec[f[0].slice(0, 2)] || '' } : null; }).filter(Boolean) : [];
+    }).catch(function () { BOOKS = []; });
+  }
   function add(o) {   // titles also match with hyphens joined, so "Self-harm" matches "selfharm"
     o.nTitle = norm(o.title + ' ' + String(o.title).replace(/(\w)-(\w)/g, '$1$2')); o.nKeys = norm(o.keys || ''); o.nLead = norm((o.lead || []).join(' ') + ' ' + (o.sub || '')); o.nBody = norm(o.body || '');
     ITEMS.push(o);
@@ -151,7 +162,7 @@
     ITEMS = [];
     status.textContent = 'Getting the guides ready...';
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js'), loadGrove()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -194,6 +205,10 @@
           ages: it.ages, body: how.slice(0, 3).join(' '), href: '/grove/#library=' + encodeURIComponent(it.name) });
       });
 
+      BOOKS.forEach(function (b) {
+        add({ type: 'book', title: b.title, sub: b.author + (b.sec ? '. ' + b.sec : ''), keys: b.tags + ' ' + b.author + ' ' + b.sec + ' ' + b.parts + ' book books reading library', lead: [b.summary], href: '/library/#book=' + b.no });
+      });
+
       return fetch('/stories.html').then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
         if (!html) return;
         var doc = new DOMParser().parseFromString(html, 'text/html');
@@ -234,7 +249,7 @@
     });
     return best;
   }
-  var TYPE_ORDER = { talk: 0, practice: 1, page: 2, tool: 3, story: 4 };
+  var TYPE_ORDER = { talk: 0, practice: 1, book: 2, page: 3, tool: 4, story: 5 };
   function search(q) {
     var p = parse(q);
     if (!p.words.length) return { p: p, groups: [] };
@@ -261,7 +276,7 @@
     }).sort(function (a, b) {
       // Hard Talks lead unless another kind is clearly the better answer (like a tool's name)
       var svc = /\b(wedding|weddings|marriage|married|premarital|elope|elopement|vow|vows|officiant|ceremony|funeral|funerals|memorial|blessing|cost|costs|price|prices|rate|rates|fee|fees|book|hire|service|services)\b/.test(p.raw);
-      var bonus = function (g) { return g.type === 'talk' ? (svc ? 0 : 3) : (g.type === 'page' && svc ? 8 : 0); };
+      var bonus = function (g) { return g.type === 'talk' ? (svc ? 0 : 3) : g.type === 'book' ? -2 : (g.type === 'page' && svc ? 8 : 0); };
       var ta = a.top + bonus(a), tb = b.top + bonus(b);
       return tb - ta || TYPE_ORDER[a.type] - TYPE_ORDER[b.type];
     });
@@ -269,7 +284,7 @@
   }
 
   /* ---------- showing results ---------- */
-  var NAMES = { talk: 'Hard Talks', practice: 'Practices', page: 'Pages', tool: 'Tools', story: 'Stories' };
+  var NAMES = { talk: 'Hard Talks', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
   var SHOW = 5, openAll = {}, uid = 0;
 
@@ -283,7 +298,7 @@
   }
   function rowHTML(it) {
     var id = 'ss-x' + (++uid);
-    if (it.type === 'tool' || it.type === 'story' || it.type === 'page') {
+    if (it.type === 'tool' || it.type === 'story' || it.type === 'page' || it.type === 'book') {
       var inner = '<span class="ss-title">' + esc(it.title) + '</span><span class="ss-sub">' + esc(it.sub) + '</span>';
       return '<li class="ss-item">' + (it.href ? '<a class="ss-row" href="' + esc(it.href) + '">' + inner + '</a>' : '<div class="ss-row ss-soon">' + inner + '</div>') + '</li>';
     }
