@@ -111,7 +111,7 @@ const nameOf = id => { const p = GP() && GGP.get(id); return p ? p.name : 'them'
 const S = { tab: 'today', sub: null, pid: null, ck: null, guide: { q: '', ring: 'all', open: null, pro: false }, read: { q: '', trad: 'mine', open: null }, faithLook: null, cut: null, logAll: false };
 
 function blankRec() {
-  return { v: 1, started: '', role: '', faith: null, checkins: [], matters: {}, cuttings: [], log: [], days: {}, line: { name: '', phone: '' },
+  return { v: 1, started: '', role: '', faith: null, checkins: [], matters: {}, cuttings: [], log: [], days: {}, visits: [], line: { name: '', phone: '' },
     share: { tree: true, matters: true, cuttings: true, log: true, faith: false, answers: false, grove: true } };
 }
 function rec(id) {
@@ -199,7 +199,7 @@ function publish(id) {
 }
 
 /* ---------- views ---------- */
-const TAB_OF = { today: 'today', about: 'today', setup: 'today', checkin: 'today', results: 'today', history: 'today', matters: 'matters', cuttings: 'cuttings', bedside: 'bedside', guides: 'guides', readings: 'readings' };
+const TAB_OF = { today: 'today', about: 'today', setup: 'today', checkin: 'today', results: 'today', history: 'today', matters: 'matters', share: 'today', visitin: 'today', cuttings: 'cuttings', bedside: 'bedside', guides: 'guides', readings: 'readings' };
 const VIEWS = {};
 function paintNav() {
   const tab = TAB_OF[S.tab] || 'today';
@@ -407,18 +407,21 @@ function bedsidePick() {
 }
 VIEWS.today = () => {
   const a = me();
-  if (!a) return welcomeHtml() + lineHtml() + aboutShort();
+  if (!a) return visitInCard() + welcomeHtml() + lineHtml() + aboutShort();
   const t = target(), r = rec(t), mine = rec(a.id);
-  if (!mine.started && !helped().length) return welcomeHtml() + lineHtml();
+  if (!mine.started && !helped().length) return visitInCard() + welcomeHtml() + lineHtml();
   if (!r) return welcomeHtml();
   if (remembered(t)) return rememberedHtml(t);
   const role = roleOf(t), self = t === a.id;
   let h = `<div class="w-head"><p class="w-eyebrow">${longDate(today())}</p><h2>${self ? (role === 'helper' ? 'Today, for you' : 'Today') : 'Today with ' + esc(nameOf(t))}</h2></div>`;
   h += lineHtml();
+  h += visitInCard();
   h += treeCard(r, t, role);
+  h += fromVisitCard(r, t);
   h += practiceCard(r, role);
   if (!self || role === 'person') h += logCard(t);
   if (!self) h += bedsidePick();
+  h += shareCard(t, role);
   if (self && role === 'helper') {
     const ppl = helped();
     h += `<div class="w-card"><p class="w-eyebrow">The people you care for</p>${ppl.length ? `<div class="w-chips">${ppl.map(p => `<button type="button" class="w-chip" onclick="W.view('${p.id}')">${window.GGAv ? GGAv.html(p.avatar, p.name, 26) : ''}<span>${esc(p.name)}'s tree</span></button>`).join('')}</div>` : `<p>You're not set up as anyone's helper yet.</p>`}<div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('setup')">Set up Willow for someone</button></div></div>`;
@@ -1024,6 +1027,122 @@ function remember() {
 }
 function unremember() { const t = target(); GGP.setShared(t, { remembered: null }); closeSettings(); render(); }
 
+/* ---------- the bridge: Willow and a chaplain's or doula's Willow Guide (Willow Build Session 3) ----------
+   Both ways, in person, sealed with a short spoken code (shared/gg-bridge.js). Nothing is uploaded.
+   Share with my chaplain or doula: check-ins, and only what the person chose to share. Never the home safety answer.
+   From your visit: a card from Willow Guide with practices, What matters, and the vigil plan. Fills in blanks only. */
+const GB = () => window.GGBridge || null;
+const first = n => String(n || '').trim().split(/\s+/)[0] || '';
+const VIGIL_MAP = { v0: 'vigil0', v1: 'vigil1', v2: 'vigil2', v3: 'vigil3', v4: 'vigil4' };
+function shareCard(t, role) {
+  return `<div class="w-card w-bridge"><p class="w-eyebrow">${icon('hand', 16)} Your chaplain or doula</p>
+    <p>${role === 'helper' && t === (me() || {}).id ? 'Share your own check-ins with the hospice chaplain or doula who visits.' : 'Share check-ins with the chaplain or doula who visits, so they know where to start.'} You choose what goes. It travels in person, sealed with a code you read aloud.</p>
+    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('share')">Share with my chaplain or doula</button></div></div>`;
+}
+const SHARE_PICK = { checkins: true, faith: true, matters: true, notes: false };
+VIEWS.share = () => {
+  const a = me(); if (!a) return needProfileHtml('Sharing');
+  const t = target(), r = rec(t); if (!r) return VIEWS.today();
+  const self = t === a.id, n = esc(nameOf(t)), cks = (r.checkins || []).slice(-4).reverse();
+  const can = { checkins: sees('tree') && cks.length > 0, faith: sees('faith') && !!r.faith, matters: sees('matters') && Object.keys(r.matters || {}).some(k => r.matters[k] && k !== 'updated' && k !== 'by'), notes: sees('answers') && cks.some(c => c.note) };
+  const row = (k, label, sub, why) => `<label class="w-switch"><input type="checkbox" ${can[k] && SHARE_PICK[k] ? 'checked' : ''} ${can[k] ? '' : 'disabled'} onchange="W.sharePick('${k}',this.checked)"><span><b>${esc(label)}</b><small>${can[k] ? esc(sub) : esc(why)}</small></span></label>`;
+  return `<div class="w-head"><p class="w-eyebrow">Your chaplain or doula</p><h2>Share with my chaplain or doula</h2>
+    <p class="lead">${self ? 'Choose what goes.' : 'You can share only what ' + n + ' chose to share with helpers.'} They scan a code on this screen with their Field Guide, and you read them two words and a number, out loud. Nothing passes through Grounded.</p></div>
+    <div class="w-card">
+      ${row('checkins', 'Check-ins', `The last ${cks.length === 1 ? 'one' : cks.length}, with answers. Your chaplain or doula sees how each part is doing.`, sees('tree') ? 'No check-ins yet.' : n + ' keeps this private.')}
+      ${row('faith', 'Faith answers', 'Tradition, how it\'s lived out, who to call, and anything never to do.', !sees('faith') ? n + ' keeps this private.' : 'Not answered yet.')}
+      ${row('matters', 'What matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Nothing written yet.')}
+      ${row('notes', 'Notes from check-ins', 'Anything written at the end of a check-in.', !sees('answers') ? 'Kept private.' : 'No notes yet.')}
+      <p class="w-small">Never shared: the answer about feeling safe at home.</p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.shareMake()">Make the code</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button></div>
+    </div>`;
+};
+function sharePick(k, v) { SHARE_PICK[k] = !!v; }
+function shareMake() {
+  const a = me(), t = target(), r = rec(t); if (!a || !r || !GB()) { toast('Sharing needs a newer browser.'); return; }
+  const d = { n: first((GGP.get(t) || a).name), d: today(), by: first(a.name), role: roleOf(t) };
+  if (SHARE_PICK.checkins && sees('tree')) d.ck = (r.checkins || []).slice(-4).reverse().map(c => {
+    const o = { id: c.id, d: c.date, q: c.quick ? 1 : 0, by: c.by, h: first(c.helper), role: c.role, a: c.answers, sc: c.sc, fl: c.flags || [], v: c.v || 1,
+      sf: { choice: (c.safety || {}).choice || '', observed: (c.safety || {}).observed || '', helper: (c.safety || {}).helper || '' } };
+    if (SHARE_PICK.notes && sees('answers') && c.note) o.note = String(c.note).slice(0, 600);
+    return o;
+  });
+  if (SHARE_PICK.faith && sees('faith') && r.faith) d.f = { trad: r.faith.trad || '', own: r.faith.own || '', matters: r.faith.matters || '', lives: r.faith.lives || [], changed: r.faith.changed || '', call: r.faith.call || '', never: r.faith.never || '', date: r.faith.date || '' };
+  if (SHARE_PICK.matters && sees('matters')) {
+    const m = r.matters || {}, out = {}, vg = {};
+    ['who', 'good', 'joy', 'hope', 'worry', 'close', 'comfort', 'never'].forEach(k => { if (m[k]) out[k] = String(m[k]).slice(0, 400); });
+    Object.keys(VIGIL_MAP).forEach(k => { if (m[VIGIL_MAP[k]]) vg[k] = String(m[VIGIL_MAP[k]]).slice(0, 400); });
+    if (Object.keys(out).length) d.m = out; if (Object.keys(vg).length) d.v = vg;
+  }
+  if (!d.ck && !d.f && !d.m && !d.v) { toast('Choose at least one thing to share.'); return; }
+  const code = GB().code();
+  GB().seal('wl-share', d, code).then(tok => {
+    GB().show({ title: 'Share with my chaplain or doula', link: GB().url('guide', tok), code,
+      say: 'Your chaplain or doula scans this with their Field Guide. Then read them these words out loud.',
+      small: 'Nothing is uploaded. It only opens with these words, so never write or text them with the link. You can copy the link to send another way, then say the words by phone.' });
+  }).catch(() => toast('That did not work on this device. Try a current browser.'));
+}
+// A card from a visit, waiting to be opened.
+const INV = { code: '', card: null, err: '', to: '' };
+function visitInCard() {
+  if (!GB() || !GB().pending('willow')) return '';
+  if (!me()) return `<div class="w-card w-bridge"><p class="w-eyebrow">${icon('candle', 16)} A card from your visit</p><p>Your chaplain or doula sent a card. Open your profile first, then type the words they read to you.</p><div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.open()">Open my profile</button></div></div>`;
+  return `<div class="w-card w-bridge"><p class="w-eyebrow">${icon('candle', 16)} A card from your visit</p><p>Your chaplain or doula sent a card from today's visit.</p><div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.go('visitin')">Open the card</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.visitDrop()">Throw it away</button></div></div>`;
+}
+VIEWS.visitin = () => {
+  const a = me(); if (!a) return needProfileHtml('A card from your visit');
+  if (!GB() || (!GB().pending('willow') && !INV.card)) return VIEWS.today();
+  if (!INV.card) return `<div class="w-head"><p class="w-eyebrow">A card from your visit</p><h2>Type the words they read to you</h2><p class="lead">Two words and a number, like "cedar lantern 47." The card only opens with them.</p></div>
+    <div class="w-card"><label class="w-l" for="w-invc">The words</label><input type="text" id="w-invc" autocomplete="off" autocapitalize="none" spellcheck="false" value="${esc(INV.code)}" oninput="W.INV.code=this.value">
+    ${INV.err ? `<p class="w-flagnote">${esc(INV.err)}</p>` : ''}
+    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.visitOpen()">Open it</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button></div></div>`;
+  const c = INV.card, mine = [a].concat(helped());
+  const def = INV.to || (c.who === 'helper' ? a.id : (mine.find(p => p.id === target() && roleOf(p.id) === 'person') || mine.find(p => roleOf(p.id) === 'person') || a).id);
+  INV.to = def;
+  const tries = (c.t || []).map(x => `<li><b>${esc(x[2])}</b> ${esc(x[3])}</li>`).join('');
+  return `<div class="w-head"><p class="w-eyebrow">A card from your visit</p><h2>From ${esc(c.g || 'your visit')}${c.r ? ', ' + esc(c.r === 'doula' ? 'your doula' : 'your chaplain') : ''}</h2><p class="lead">${nice(c.d)}. For ${esc(c.n || 'you')}.</p></div>
+    <div class="w-card">${tries ? `<p class="w-eyebrow">To try</p><ul class="w-list">${tries}</ul>` : ''}
+      ${c.m ? `<p class="w-eyebrow">What matters</p><p class="w-small">Fills in What matters where nothing is written yet. Nothing already written is changed.</p>` : ''}
+      ${c.v ? `<p class="w-eyebrow">Vigil plan</p><p class="w-small">Fills in "When the time comes" where nothing is written yet.</p>` : ''}
+      <label class="w-l" for="w-invto">Add it to</label><select id="w-invto" onchange="W.INV.to=this.value">${mine.map(p => `<option value="${p.id}" ${p.id === def ? 'selected' : ''}>${p.id === a.id ? 'My own tree' : esc(p.name) + '\'s tree'}</option>`).join('')}</select>
+      <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.visitAdd()">Add to the tree</button><button type="button" class="btn btn-secondary" onclick="W.visitDrop()">Throw it away</button></div></div>`;
+};
+function visitOpen() {
+  if (!GB()) return;
+  const tok = GB().pending('willow'); if (!tok) { go('today'); return; }
+  if (!INV.code.trim()) { INV.err = 'Type the words first.'; render(); return; }
+  GB().open(tok, INV.code, 'wl-visit').then(d => {
+    if (!d) { INV.err = 'Those words didn\'t open it. Check them with your chaplain or doula, and try again.'; render(); return; }
+    INV.card = d; INV.err = ''; render();
+  }).catch(() => { INV.err = 'This browser can\'t open the card. Try a current Safari, Chrome, or Edge.'; render(); });
+}
+function visitAdd() {
+  const c = INV.card, id = INV.to, r = rec(id); if (!c || !r) return;
+  if (!r.started) { r.started = today(); r.role = c.who === 'helper' ? 'helper' : 'person'; }
+  r.visits = r.visits || [];
+  r.visits.push({ id: uid(), d: c.d, g: c.g || '', r: c.r || '', t: (c.t || []).slice(0, 3), v: c.v || null, vl: c.vl || [], added: today() });
+  const canM = id === (me() || {}).id || (r.share && r.share.matters);
+  if (canM && (c.m || c.v)) {
+    r.matters = r.matters || {}; let n = 0;
+    Object.keys(c.m || {}).forEach(k => { if (c.m[k] && !r.matters[k]) { r.matters[k] = String(c.m[k]).slice(0, 2000); n++; } });
+    Object.keys(VIGIL_MAP).forEach(k => { const v = (c.v || {})[k]; if (v && !r.matters[VIGIL_MAP[k]]) { r.matters[VIGIL_MAP[k]] = String(v).slice(0, 2000); n++; } });
+    if (n) { r.matters.updated = today(); r.matters.by = (me() || {}).name || ''; }
+  }
+  GB().clear('willow'); INV.card = null; INV.code = ''; INV.to = '';
+  persist(id).then(() => { S.pid = id; go('today'); toast('Added. It\'s on Today.'); });
+}
+function visitDrop() { if (GB()) GB().clear('willow'); INV.card = null; INV.code = ''; INV.err = ''; go('today'); toast('Thrown away. Nothing was saved.'); }
+function fromVisitCard(r, t) {
+  const v = (r.visits || []).slice(-1)[0]; if (!v) return '';
+  const tries = (v.t || []).map(x => { const part = x[0] === 'self' ? 'leaves' : x[0], d = (r.days || {})[today()] || {}, done = (d.done || []).includes(part + ':' + x[1]);
+    return `<li><b>${esc(x[2])}</b> ${esc(x[3])} ${done ? '<span class="w-done">Done today</span>' : `<button type="button" class="text-btn" onclick="W.did('${part}','${esc(x[1])}')">Did it today</button>`}</li>`; }).join('');
+  const extra = sees('matters') && v.v ? (v.vl || []).filter(x => v.v[x[0]]).map(x => `<li><b>${esc(x[1])}:</b> ${esc(v.v[x[0]])}</li>`).join('') : '';
+  if (!tries && !extra) return '';
+  return `<div class="w-card w-fromvisit"><p class="w-eyebrow">${icon('candle', 16)} From your visit${v.g ? ' with ' + esc(v.g) : ''}</p>
+    ${tries ? `<ul class="w-list">${tries}</ul>` : ''}${extra ? `<p class="w-small" style="margin-top:8px">Also in the vigil plan:</p><ul class="w-list">${extra}</ul>` : ''}
+    <p class="w-small">${nice(v.d)}. No streaks. Done is enough.</p></div>`;
+}
+
 /* ---------- moving between people ---------- */
 function view(id) { S.pid = id; S.ck = null; if (S.tab === 'checkin' || S.tab === 'results' || S.tab === 'setup') S.tab = 'today'; render(); }
 function openProfile() { if (GP()) GGP.openDialog({ reason: 'Choose your picture, then type your passcode.' }); }
@@ -1051,6 +1170,7 @@ function fromHash() {
   render(); setTimeout(() => scrollTop(true), 80); return true;
 }
 window.addEventListener('hashchange', fromHash);
+window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'willow') { S.tab = 'today'; render(); } });
 
 /* ---------- start ---------- */
 window.W = window.W || {};
@@ -1060,6 +1180,7 @@ Object.assign(window.W, {
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
   guide: openGuide, gList, printGuide, reading: openReading, printReading,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
+  sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify
 });
 const yr = $('#copyright-year'); if (yr) yr.textContent = new Date().getFullYear();

@@ -530,6 +530,18 @@ body.cd-noscroll{overflow:hidden;}
 .sp-rep-in{display:flex;flex-direction:column;flex:1;min-height:0;}
 .sp-rep-in .run-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .sa-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#35603A 0%,#24452A 55%,#18301D 100%);}
+/* Willow Guide (Willow Build Session 3): dusk lilac, sage accent */
+.wl-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A7590 0%,#5D5A6E 50%,#3E3B4C 100%);}
+.wl-hot{margin-top:8px;padding:8px 12px;border-left:3px solid var(--gold);background:var(--bg-deep);border-radius:6px;font-size:15px;}
+.wl-plan{padding:12px 0;border-top:1px solid var(--line);} .wl-plan:first-of-type{border-top:0;} .wl-plan p{margin-top:2px;font-size:15px;} .wl-plan.done{opacity:.7;}
+.wl-planform input{width:100%;}
+.wl-dt summary{cursor:pointer;} .wl-dt[open] summary{margin-bottom:6px;}
+.wl-strug{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);}
+.wl-steps{margin:10px 0 0 20px;} .wl-steps li{margin-top:4px;}
+.wl-tcard summary{cursor:pointer;} .wl-tcard{margin-top:12px;}
+.wl-from{border-left:4px solid #5F7350;}
+.wl-sendbox{align-items:flex-start;margin-top:10px;} .wl-sendbox small{font-size:14px;}
+.wl-safeopts .chip{text-align:left;}
 .sa-kid{background:#F7F4EC;font-family:'Barlow',sans-serif;}
 .sa-kid .sp-kid-q{font-size:clamp(22px,5vw,32px);font-weight:600;}
 .sa-kid-intro{font-size:17px;color:#4A5A66;}
@@ -573,6 +585,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="print-root" aria-hidden="true"></div>
 <script src="../shared/gg-app.js?v=r4p"></script>
 <script src="../shared/gg-pdf.js"></script>
+<script src="../shared/gg-bridge.js"></script>
 <script src="../read.js"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -817,6 +830,11 @@ function start(){
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
   V = {tab: tabsFor()[0][0]}; render();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
+  if (dr && dr.kind === 'wl'){
+    if (WLG() && (dr.demo || CL(dr.clientId))) setTimeout(() => { if (confirm('You have a Willow visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); wlLoad(); let n = 0; const go2 = () => { if (WC) wlOpenRun(); else if (WC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Willow questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
+    return;
+  }
+  if (window.GGBridge && GGBridge.pending('guide')) setTimeout(wlBridgeIn, 300);
   if (dr && dr.kind === 'sa'){
     if (SAG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have an Aspen visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); saLoad(); let n = 0; const go2 = () => { if (SAC) saOpenRun(); else if (SAC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Aspen questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
     return;
@@ -828,7 +846,7 @@ function start(){
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have an Oak visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Oak questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
+  const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
   const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
@@ -839,7 +857,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, grove:vGV, talks:vHT};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -878,6 +896,7 @@ const IC = {
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
+ willow:'<path d="M12 21V8.5"/><path d="M12 9c-2.6 0-5 1.4-6 4.2M12 9c2.6 0 5 1.4 6 4.2"/><path d="M6 13.2v4.3M8.6 10.8v6.4M15.4 10.8v6.4M18 13.2v4.3"/><path d="M7.5 7.5C8.5 4.8 10 3.5 12 3.5s3.5 1.3 4.5 4"/><path d="M8.5 21h7"/>',
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
 const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<span class="w gwg-w">Grow With Grounded</span>`;
@@ -899,7 +918,7 @@ function vHome(){
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups this week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1019,6 +1038,7 @@ function vClient(c){
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
   ${spPersonCard(c)}
   ${saPersonCard(c)}
+  ${wlPersonCard(c)}
   ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Oak Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
@@ -1110,6 +1130,7 @@ function vFieldHome(){
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
   ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="maple">${icon('maple')} Open</button></div></div>` : ''}
   ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="aspen">${icon('aspen')} Open</button></div></div>` : ''}
+  ${wlOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(WLG().title)}</h3><p class="muted">${esc(WLG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="willow">${icon('willow')} Open</button></div></div>` : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
   ${fieldDue()}
@@ -1375,7 +1396,8 @@ function vOwner(){
   ${vProof()}
   <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
   ${FLD ? spOwnerCard() : ''}
-  ${FLD ? saOwnerCard() : ''}`;
+  ${FLD ? saOwnerCard() : ''}
+  ${FLD ? wlOwnerCard() : ''}`;
 }
 
 
@@ -1440,7 +1462,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
-const sessTitle = s => s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'st' ? 'Oak: report record' : 'Maple: report record') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'st' ? 'Oak: report record' : 'Maple: report record') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
 function stQuestions(visit, set, key){ if (!STC) return []; return ((set === 'staff' ? STC.staff : STC.questions)[key]) || []; }
 function stScore(run){
   const out = {}, sc = stScale();
@@ -1714,7 +1736,7 @@ function vSTPerson(c){
   ${me ? '' : stmCard()}
   ${me || !STG().report ? '' : `<div class="row" style="margin:12px 0">${stShield(c.id)}${stReports(c.id).length ? ` <span class="pill">${stReports(c.id).length} report record${stReports(c.id).length === 1 ? '' : 's'}</span>` : ''}</div>`}
   <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="st-start" data-v="${v[0]}" data-c="${c.id}" ${ok ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
-   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Quick and open visits usually fit best. In a full visit, skip anything that doesn\'t fit. A set made for hospice comes with Willow.</p>' : ''}</div>
+   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Quick and open visits usually fit best. In a full visit, skip anything that doesn\'t fit.' + (wlOpen() ? ' For someone in hospice, Willow Guide asks questions written for the end of life. <button class="linkbtn" data-tab="willow">Open Willow Guide</button>' : '') + '</p>' : ''}</div>
   ${me ? '' : gvPersonCard(c)}
   ${me ? '' : htPersonCard(c)}
   <div class="grid g2" style="margin-top:14px">
@@ -3858,11 +3880,905 @@ async function saLibUpdate(title, path, fn){
 function saSetField(on){ saLibUpdate(on ? 'Open Aspen Guide to Field users' : 'Close Aspen Guide to Field users', 'aspenGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
 function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Aspen Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">${icon('aspen')} Open</button></div></div>` : ''; }
 
+// ---------------- WILLOW GUIDE ----------------
+// Willow Build Session 3. Chaplains and end-of-life doulas (and a social worker or nurse in that role) walking with a
+// person in hospice and the people who love them. Wording lives in the Field library (FLD.willowGuide): training,
+// consent, visit types, the safety protocol, HOPE prompts, care plan wording, and the bridge. Questions, faith cards,
+// struggle types, guilt and shame, vigil prompts, care plan starters, and practices come from the public willow/checkin.js,
+// faith.js, and practices.js, read in their own scope, so Willow and Willow Guide always ask the same thing.
+// A person is an ordinary People record with a .wl profile (type 'person' or 'family'). Visits are sessions with kind 'wl'.
+// Check-ins a family shares from their Willow are sessions with kind 'wl', visit 'shared', and src 'willow'.
+// Scores (1 to 10) are visible here, to notice change and plan care. The family only ever sees gentle words.
+// Staff and Owner always see the tab. Field users see it once willowGuide.open.field is on and Orientation is done.
+// Everyone takes the Willow training (DATA.wlmod) before a real visit. Demo visits are always open.
+const WLG = () => (FLD && FLD.willowGuide) || null;
+const wlOpen = () => !!WLG() && (TIER !== 'field' || !!(WLG().open && WLG().open.field && (!OR() || orState().complete)));
+const WL_PARTS = [
+  {key:'roots', part:'Roots', name:'What grounds you', color:'#6B4226'},
+  {key:'trunk', part:'Trunk', name:'A life that mattered', color:'#4A5D3A'},
+  {key:'bark', part:'Bark', name:'Peace inside', color:'#8B5E1A'},
+  {key:'branches', part:'Branches', name:'Love said out loud', color:'#B5824A'},
+  {key:'leaves', part:'Leaves', name:'Comfort', color:'#A8542E'},
+  {key:'fruit', part:'Fruit', name:'Hope and readiness', color:'#C98A3E'}
+];
+const wlPart = k => WL_PARTS.find(p => p.key === k);
+const wlPeople = () => DATA.clients.filter(c => c.wl);
+const wlVisits = id => DATA.sessions.filter(s => s.kind === 'wl' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const wlRole = () => DATA.settings.wlRole || 'chaplain';
+const wlRoleName = k => ((WLG().roles.find(x => x[0] === (k || wlRole())) || [])[1]) || 'Chaplain';
+const wlVisitWord = k => (WLG().visitWord || {})[k || wlRole()] || 'Spiritual care visit';
+const wlVisitName = k => k === 'nottoday' ? 'Not today' : k === 'shared' ? 'Shared from their Willow' : ((WLG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const wlTypeName = t => ((WLG().people.find(x => x[0] === t) || [])[1]) || 'Person';
+const wlRunRole = c => c && c.wl && c.wl.type === 'family' ? 'helper' : 'person';
+const wlFirst = n => String(n || '').trim().split(/\s+/)[0] || '';
+const wlFmt = v => v == null ? '' : (Math.round(v * 10) / 10).toFixed(1).replace(/\.0$/, '');
+
+// ----- the public files: questions, faith cards, practices -----
+let WC = null, WC_WAIT = null, WC_FAIL = false;
+function wlLoad(){
+  if (WC || WC_WAIT) return;
+  WC_FAIL = false;
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js', '../willow/practices.js'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+    .then(([a, b, c]) => {
+      const run = src => { const w = {}; new Function('window', src)(w); return w; };
+      const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
+      if (!C || !C.questions || !F || !F.intake || !P || !P.person) throw 0;
+      WC = {C, F, P}; WC_WAIT = null; if (DATA && V.tab === 'willow') render();
+    })
+    .catch(() => { WC_WAIT = null; WC_FAIL = true; if (DATA && V.tab === 'willow') render(); });
+}
+function wlNeedData(){
+  if (WC) return '';
+  wlLoad();
+  return WC_FAIL ? `<div class="card"><h3>The Willow questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Willow questions...</p></div>`;
+}
+
+// ----- scoring: the same as Willow (1 to 10, one decimal). Levels: strong 8+, steady 5+, needs care below 5 -----
+const wlAnsRow = k => WC.C.answers.find(a => a[0] === k) || null;
+const wlBank = role => role === 'helper' ? WC.C.helper : WC.C.questions;
+function wlScorePart(role, key, arr){
+  const qs = wlBank(role)[key] || [], vals = [];
+  (arr || []).forEach((a, i) => { const o = wlAnsRow(a); if (!o || o[2] == null || !qs[i]) return; vals.push(qs[i].r ? 3 - o[2] : o[2]); });
+  if (!vals.length) return null;
+  return Math.round(10 * (1 + 9 * (vals.reduce((x, y) => x + y, 0) / vals.length) / 3)) / 10;
+}
+const wlLevelOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
+const wlLvName = l => l === 'strong' ? 'Strong' : l === 'steady' ? 'Steady' : l === 'care' ? 'Needs care' : 'Not scored';
+const wlLvCls = l => l === 'strong' ? 'sage' : l === 'steady' ? 'gold' : l === 'care' ? 'warn' : '';
+function wlRunScores(r){
+  const sc = {}, lv = {};
+  WL_PARTS.forEach(p => {
+    let v = null;
+    if (r.visit === 'open'){ const im = WLG().impressions.find(x => x[0] === (r.impr || {})[p.key]); v = im && im[2] != null ? im[2] : null; }
+    else if (r.visit === 'full' || r.visit === 'quick') v = wlScorePart(r.role, p.key, (r.ans || {})[p.key]);
+    if (v != null){ sc[p.key] = v; lv[p.key] = wlLevelOf(v); }
+  });
+  return {sc, lv};
+}
+function wlRunFlags(r){
+  if (!WC || !(r.visit === 'full' || r.visit === 'quick')) return [];
+  const out = [], who = r.role === 'helper' ? 'helper' : 'person';
+  WL_PARTS.forEach(p => (wlBank(r.role)[p.key] || []).forEach((q, i) => {
+    const a = ((r.ans || {})[p.key] || [])[i], f = q.flag && WC.C.flags[q.flag];
+    if (f && f.who === who && f.on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
+  }));
+  return out;
+}
+// Questions about them, for a family member answering from what they see.
+function wlTheyify(t){
+  const cut = t.indexOf('? Like '), head = cut > -1 ? t.slice(0, cut) : t, tail = cut > -1 ? t.slice(cut) : '';
+  return head.replace(/\byourself\b/g, 'themselves').replace(/\byour\b/g, 'their').replace(/\byou (need|know|hold|want)\b/g, 'they $1').replace(/\byou\b/g, 'them') + tail;
+}
+const wlFaithNone = f => !!f && (f.trad === 'private' || f.matters === 'none');
+function wlQText(r, q){ let t = wlFaithNone(r.faith) && q.none ? q.none : q.t; if (r.by === 'observed') t = wlTheyify(t); return t; }
+function wlStem(r, c){
+  if (r.role === 'helper') return WC.C.stems.helper.replace('{name}', (c && c.wl && c.wl.forName) || 'them');
+  if (r.by === 'observed') return 'From what you\'ve seen and heard, lately how often has ' + (c ? c.name : 'them') + '...';
+  return WC.C.stems.standard;
+}
+const WL_FAITH_EXTRA = {'christian-other':'Another Christian church', raised:'Raised in a faith, not practicing now', private:'I\'d rather not say'};
+const wlFaithName = id => (WC && WC.F.cards[id] && WC.F.cards[id].name) || WL_FAITH_EXTRA[id] || id || '';
+function wlFaithText(f){
+  if (!f || !WC) return '';
+  const I = WC.F.intake, opt = (k, v) => { const row = I.follow.find(x => x[0] === k); const o = row && row[2].find(x => x[0] === v); return o ? o[1] : ''; };
+  const bits = [];
+  if (f.trad) bits.push(wlFaithName(f.trad));
+  if (f.own) bits.push('"' + f.own + '"');
+  if (f.matters) bits.push('Matters now: ' + opt('matters', f.matters).toLowerCase());
+  if ((f.lives || []).length) bits.push('Lives it out through ' + f.lives.map(v => opt('lives', v).toLowerCase()).join(', '));
+  if (f.changed) bits.push('Relationship with it: ' + opt('changed', f.changed).toLowerCase());
+  return bits.join('. ') + (bits.length ? '.' : '');
+}
+// The tradition card, for the guide: the short fields only. The full card lives in Willow's Bedside tab.
+function wlCardHTML(id){
+  const K = WC && WC.F.cards[id]; if (!K) return '';
+  const row = (lab, t) => t ? `<p style="margin-top:6px"><b>${esc(lab)}:</b> ${esc(t)}</p>` : '';
+  return `<details class="card wl-tcard"><summary><b>${esc(K.name)} card</b> <span class="muted">Words, what to ask, who to call</span></summary>
+    ${row('Words', K.words)}${row('Ask', K.ask)}${row('Comfort', K.comfort)}${row('Before death', K.before)}${row('Avoid', K.avoid)}${row('Care', K.care)}${row('Who to call', K.call)}${row('When it\'s hard', K.hard)}
+    <p class="muted" style="margin-top:8px;font-size:14px">${esc(WC.F.end)}</p></details>`;
+}
+
+// ----- consent: their yes. Most hospice yeses are spoken. -----
+function wlConsentOk(c){ const con = c && c.wl && c.wl.consent; return !!(con && con.how && con.how !== 'declined'); }
+function wlConsentLine(c){
+  const con = c.wl.consent;
+  if (!con || !con.how) return '<span class="pill warn">Their yes needed</span>';
+  if (con.how === 'declined') return '<span class="pill warn">Said no for now</span>';
+  return `<span class="pill sage">${esc(((WLG().consent.how.find(x => x[0] === con.how) || [])[1]) || 'Yes')}${con.date ? ' ' + nice(con.date) : ''}</span>`;
+}
+
+// ----- training (its own module; gates real visits for everyone; demo visits always open) -----
+const WLM = () => WLG() && WLG().module;
+function wlmData(){ DATA.wlmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.wlmod || {}); return DATA.wlmod; }
+function wlmState(){
+  const M = WLM(), D = wlmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const wlReady = () => wlmState().complete;
+function vWLM(){
+  const M = WLM(), D = wlmData(), s = wlmState();
+  if (V.wlml !== undefined) return vWLMLesson(V.wlml);
+  if (V.wlq) return V.wlq.done ? vWLMResult() : vWLMQ();
+  if (V.wlsg) return vWLMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-act="wl-home">Back to Willow Guide</button>
+  <div class="hello wl-hello" style="margin-top:14px"><div class="eyebrow" style="color:#E8C27A">Willow Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => step('wl-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  <h3 style="margin:22px 0 10px">Practice scenarios</h3>
+  ${step('wl-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios at the bedside`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('wl-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="wl-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
+}
+function vWLMLesson(i){
+  const M = WLM(), L = M.lessons[i], n = M.lessons.length, read = !!wlmData().lessons[L.id];
+  return `<button class="linkbtn" data-act="wl-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
+  ${lessonBody(L)}
+  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="wl-mread" data-v="${i}">Mark as Read</button>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="wl-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="wl-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="wl-mhome">Back to training</button>` : ''}</div>`;
+}
+function wlmNewQuiz(){ const items = WLM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vWLMQ(){
+  const Q = V.wlq, items = WLM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="wl-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="wl-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="wl-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'wl-mfinish' : 'wl-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function wlmFinish(){
+  const M = WLM(), Q = V.wlq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = wlmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vWLMResult(){
+  const M = WLM(), Q = V.wlq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = wlmState();
+  return `<button class="linkbtn" data-act="wl-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="wl-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="wl-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="wl-mq">Try Again</button><button class="btn btn-line" data-act="wl-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vWLMSign(){
+  const A = WLM().agreement, s = wlmState(), D = wlmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="wl-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="wl-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="wlm-name">Your full name</label><input type="text" id="wlm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="wlm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="wl-msigned">Sign Agreement</button>`}</div>`;
+}
+function wlmPrint(){
+  const A = WLM().agreement, D = wlmData().signed;
+  fgSheet(ph('Willow Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'willow-guide-agreement'});
+}
+
+// ----- views -----
+function wlHello(){ const S = WLG(); return `<div class="hello wl-hello"><div class="eyebrow" style="color:#E8C27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`; }
+function vWL(){
+  if (!WLG()) return `<div class="card"><p>Willow Guide isn't on this device yet.</p></div>`;
+  wlLoad();
+  if (V.wlm) return vWLM();
+  if (V.wli) return vWLImport();
+  if (V.wlsend){ const s = wlFindVisit(V.wlsend); if (s) return vWLSend(s); }
+  if (V.wlc){ const c = CL(V.wlc); if (c) return vWLConsent(c); }
+  if (V.wlv) return vWLVisit();
+  if (V.wlp){ const c = CL(V.wlp); if (c) return vWLPerson(c); }
+  const S = WLG(), m = wlmState(), list = wlPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||''));
+  return `${wlHello()}
+  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Willow training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="wl-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Willow training' : 'Start with the Willow training'}</h3><p class="muted">${esc(WLM() ? WLM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wl-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="wl-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
+  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
+   <div class="grid g2" style="margin-top:12px"><div><label class="f" for="wl-role" style="margin-top:0">I visit as</label><select id="wl-role" data-wlset="wlRole">${S.roles.map(r => `<option value="${r[0]}" ${wlRole() === r[0] ? 'selected' : ''}>${esc(r[1])}</option>`).join('')}</select></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.roleNote)}</p></div>
+  ${htCrisisLine()}
+  <div class="card"><h3>Someone new</h3>
+   <div class="grid g2"><div><label class="f" for="wl-nn">First name or initials</label><input type="text" id="wl-nn" autocomplete="off" placeholder="Ruth, or R.M."></div>
+   <div><label class="f" for="wl-nt">Who they are</label><select id="wl-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div>
+   <div><label class="f" for="wl-nr">For family: whose family?</label><input type="text" id="wl-nr" autocomplete="off" placeholder="Ruth's daughter"></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.privacy)}</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="wl-new">${icon('plus')} Add Person</button>${m.complete ? `<button class="btn btn-line" data-act="wl-demo">${icon('play')} Try a Demo Visit</button>` : ''}<button class="btn btn-line" data-act="wl-import">${icon('willow')} Bring In From Their Willow</button></div></div>
+  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = wlVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(c.wl.type === 'family' ? 'Family' : 'Person')}</span> ${wlConsentOk(c) ? '' : wlConsentLine(c)}${c.wl.forName ? ` <span class="muted">${esc(c.wl.forName)}</span>` : ''}<br><small class="muted">${last ? 'Last ' + nice(last.date) : 'No visits yet'} &middot; ${wlVisits(c.id).filter(s => s.visit !== 'shared').length} visits${wlVisits(c.id).some(s => s.visit === 'shared') ? ' &middot; shares from Willow' : ''}</small></div><button class="btn btn-line btn-sm" data-act="wl-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>`;
+}
+const htCrisisLine = () => `<div class="card" style="border-left:4px solid var(--danger)"><div class="spread"><div><b>In danger now?</b> <span class="muted">Call the hospice nurse line, or 911. For thoughts of suicide, 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a></div></div></div>`;
+function vWLConsent(c){
+  const C = WLG().consent, cur = c.wl.consent || {}, how = V.wlch || cur.how || 'verbal';
+  return `<button class="linkbtn" data-act="wl-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)} &middot; ${esc(wlTypeName(c.wl.type))}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
+  <div class="card"><h3>How they said yes</h3><div class="st-opts">${C.how.map(h => stChip('wl-ch', `data-v="${h[0]}"`, how === h[0], h[1])).join('')}</div>
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(C.note)}</p></div>
+  <div class="card"><div class="grid g2"><div><label class="f" for="wl-cnm">${how === 'agent' ? 'Their health care agent (name)' : how === 'declined' ? 'Who said no (optional)' : 'Who said yes (name)'}</label><input type="text" id="wl-cnm" autocomplete="off" value="${esc(cur.name || '')}"></div>
+   <div><label class="f" for="wl-cdt">Date</label><input type="date" id="wl-cdt" value="${esc(cur.date || today())}"></div></div>
+   <label class="f" for="wl-cn">Notes</label><input type="text" id="wl-cn" value="${esc(cur.note || '')}" placeholder="${how === 'plan' ? 'Where it is in the plan of care' : 'What you explained'}">
+   <p class="muted" style="font-size:14px;margin-top:8px">${esc(C.every)}</p>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="wl-consent-save" data-v="${c.id}">${icon('check')} Save</button></div></div>`;
+}
+function wlScoreTable(c){
+  const vs = wlVisits(c.id).filter(s => s.lv && Object.keys(s.lv).length).slice(0, 5);
+  if (!vs.length) return '<p class="muted" style="margin-top:8px">No scores yet. They come from visits and from check-ins a family shares.</p>';
+  const by = s => s.visit === 'shared' ? 'From Willow' + (s.by === 'observed' ? ', seen' : '') : s.by === 'observed' ? 'Seen by family' : wlVisitName(s.visit);
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}<br><small class="muted">${esc(by(s))}</small></th>`).join('')}</tr>
+   ${WL_PARTS.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const l = (s.lv || {})[p.key], v = (s.sc || {})[p.key]; return `<td>${l ? `<span class="pill ${wlLvCls(l)}">${esc(wlLvName(l))}</span> <small class="muted">${wlFmt(v)}</small>` : '<span class="muted">&middot;</span>'}</td>`; }).join('')}</tr>`).join('')}</table></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">Scores run 1 to 10. Strong is 8 and up, steady 5 and up. Answers a family member gives from what they see are marked, and never count as the person's own.</p>`;
+}
+const WL_MATTERS = () => WLG().matters || [];
+function vWLPerson(c){
+  const S = WLG(), ok = wlConsentOk(c), ready = wlReady(), vs = wlVisits(c.id), fam = c.wl.type === 'family', w = c.wl, con = w.consent;
+  const plans = (w.plans || []).slice().sort((a,b) => (a.status === 'done') - (b.status === 'done') || (b.date||'').localeCompare(a.date||''));
+  const fw = w.fromWillow, h = w.hope || {}, vg = w.vigil || {}, mt = w.matters || {};
+  const vigOn = WC ? (WC.C.guide.vigil || []).some((x, i) => vg['v' + i]) || S.vigil.extra.some(x => vg[x[0]]) : false;
+  return `<button class="linkbtn" data-tab="willow">Back to Willow Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(wlTypeName(w.type))}${w.forName ? ' &middot; ' + esc(w.forName) : ''}</div><h1>${esc(c.name)}</h1></div><div class="row">${wlConsentLine(c)}</div></div>
+  ${wlNeedData()}
+  ${!ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Their yes first'}</h3><p class="muted">${esc(con && con.how === 'declined' ? S.consent.declined : S.consent.lead)}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="wl-consent" data-v="${c.id}">Record Their Yes</button></div>` : ''}
+  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Willow training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="wl-mhome">Open Training</button></div>` : ''}
+  <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.filter(v => !(fam && v[0] === 'vigil')).map(v => `<button class="qbtn" data-act="wl-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : v[0] === 'vigil' ? 'eol' : 'willow')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
+   ${fam ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(S.familyNote)}</p>` : ''}</div>
+  <div class="card"><h3>The six parts</h3>${wlScoreTable(c)}</div>
+  <div class="card"><div class="spread"><h3>${esc(S.plan.title)}</h3><button class="btn btn-line btn-sm" data-act="wl-plan-add" data-v="${c.id}">${icon('plus')} Add a Plan</button></div>
+   ${plans.length ? plans.map(p => `<div class="wl-plan ${p.status === 'done' ? 'done' : ''}"><div class="spread"><b>${esc(p.need || 'Care plan')}</b><span class="row" style="gap:6px">${p.status === 'done' ? `<span class="pill sage">Done ${p.done ? nice(p.done) : ''}</span>` : '<span class="pill gold">Open</span>'}<button class="linkbtn" data-act="wl-plan-edit" data-v="${p.id}" data-c="${c.id}">Edit</button></span></div>
+    <p style="margin-top:4px"><span class="muted">${esc(S.plan.goal)}:</span> ${esc(p.goal)}</p><p><span class="muted">${esc(S.plan.approach)}:</span> ${esc(p.approach)}</p><p><span class="muted">${esc(S.plan.action)}:</span> ${esc(p.action)}</p>
+    ${p.changed ? `<p><span class="muted">${esc(S.plan.changed)}:</span> ${esc(p.changed)}</p>` : ''}</div>`).join('') : `<p class="muted" style="margin-top:8px">${esc(S.plan.empty)}</p>`}
+   ${V.wlpe && V.wlpe.c === c.id ? wlPlanForm(c) : ''}</div>
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Never do:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${w.faith.trad ? wlCardHTML(w.faith.trad) : ''}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
+   <div class="card"><h3>${esc(S.hope.title)}</h3><p class="muted" style="font-size:14px">${esc(S.hope.lead)}</p>
+    ${S.hope.fields.map(f => `<label class="f" for="wl-h-${f[0]}">${esc(f[1])}</label><textarea id="wl-h-${f[0]}" data-wlh="${f[0]}" style="min-height:60px" placeholder="${esc(f[2])}">${esc(h[f[0]] || '')}</textarea>`).join('')}
+    <p class="muted" style="font-size:13px;margin-top:6px">${h.date ? 'Last changed ' + nice(h.date) + '. ' : ''}${esc(S.hope.source)}</p></div></div>
+  <div class="card"><div class="spread"><h3>${esc(S.mattersTitle)}</h3>${fw && fw.matters ? '<span class="pill">Some from their Willow</span>' : ''}</div><p class="muted" style="font-size:14px">${esc(S.mattersLead)}</p>
+   <div class="grid g2">${WL_MATTERS().map(f => `<div><label class="f" for="wl-m-${f[0]}">${esc(f[1])}</label><textarea id="wl-m-${f[0]}" data-wlmt="${f[0]}" style="min-height:56px">${esc(mt[f[0]] || '')}</textarea></div>`).join('')}</div></div>
+  ${fam ? '' : `<div class="card"><div class="spread"><h3>${esc(S.vigil.title)}</h3>${vigOn ? `<div class="row"><button class="btn btn-line btn-sm" data-act="wl-vigil-pdf" data-v="${c.id}">${icon('copy')} Save PDF</button><button class="btn btn-line btn-sm" data-act="wl-vigil-print" data-v="${c.id}">${icon('print')} Print</button></div>` : ''}</div>
+   <p class="muted" style="font-size:14px">${esc(S.vigil.lead)}</p>${WC ? wlVigilFields(vg, 'wlvg') : ''}</div>`}
+  ${fw ? `<div class="card wl-from"><h3>${esc(S.bridge.fromCardTitle)}</h3><p class="muted" style="font-size:14px">Last shared ${nice(fw.date)}${fw.by ? ' by ' + esc(fw.by) : ''}. ${esc(S.bridge.fromCardNote)}</p>
+   ${(fw.notes || []).length ? `<h4 style="margin-top:10px">Notes from their check-ins</h4>${fw.notes.slice(0, 6).map(n => `<p style="margin-top:4px"><span class="muted">${nice(n.d)}:</span> ${esc(n.t)}</p>`).join('')}` : ''}
+   ${fw.vigil && Object.values(fw.vigil).some(Boolean) ? `<h4 style="margin-top:10px">Their vigil wishes, in Willow</h4>${(WC ? WC.C.guide.vigil : []).map((x, i) => fw.vigil['v' + i] ? `<p style="margin-top:4px"><b>${esc(x[0])}:</b> ${esc(fw.vigil['v' + i])}</p>` : '').join('')}` : ''}</div>` : ''}
+  <div class="row" style="margin:14px 0"><button class="btn btn-line" data-act="wl-import" data-v="${c.id}">${icon('willow')} Bring In From Their Willow</button></div>
+  <div class="grid g2">
+   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-wlfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+    <div class="grid g2" style="margin-top:10px"><input type="date" id="wl-fd" aria-label="Follow-up date"><input type="text" id="wl-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
+    <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div>
+   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(wlVisitName(s.visit))}</b>${s.by === 'observed' ? ' <span class="pill">Seen by family</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${wlSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.quick ? ' &middot; quick' : ''}</small></div><button class="btn btn-line btn-sm" data-act="wl-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div></div>
+  ${htPersonCard(c)}
+  <div class="card"><h3>Details</h3>
+   <label class="f">First name or initials</label><input type="text" data-wlc="name" value="${esc(c.name)}">
+   <div class="grid g2"><div><label class="f">Who they are</label><select data-wlc="type">${S.people.map(p => `<option value="${p[0]}" ${p[0] === w.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select></div>
+   <div><label class="f">${fam ? 'Whose family' : 'Family or helpers'}</label><input type="text" data-wlc="forName" value="${esc(w.forName || '')}" placeholder="${fam ? 'Ruth\'s daughter' : 'Daughter Ann, son Mike'}"></div></div>
+   <label class="f">Status</label><select data-wlc="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v === c.status ? 'selected' : ''}>${l}</option>`).join('')}</select>
+   <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="wl-consent" data-v="${c.id}">Their Yes</button><button class="btn btn-danger btn-sm" data-act="wl-del" data-v="${c.id}">Delete This Record</button></div></div>`;
+}
+function wlVigilFields(vg, attr){
+  const pub = (WC.C.guide.vigil || []).map((x, i) => ['v' + i, x[0], x[1]]), all = pub.concat(WLG().vigil.extra);
+  return `<div class="grid g2">${all.map(f => `<div><label class="f" for="${attr}-${f[0]}">${esc(f[1])}</label><textarea id="${attr}-${f[0]}" data-${attr}="${f[0]}" style="min-height:56px" placeholder="${esc(f[2])}">${esc(vg[f[0]] || '')}</textarea></div>`).join('')}</div>`;
+}
+function wlPlanForm(c){
+  const S = WLG(), e = V.wlpe, P = WC ? WC.P.plans : [];
+  return `<div class="card wl-planform" style="margin-top:12px;border-left:4px solid var(--gold)"><h4>${e.id ? 'Edit this plan' : 'A new plan'}</h4>
+   ${e.id ? '' : `<label class="f">${esc(S.plan.start)}</label><div class="st-opts">${P.map((p, i) => stChip('wl-plan-tpl', `data-v="${i}"`, e.tpl === i, p[0])).join('')}${stChip('wl-plan-tpl', 'data-v="-1"', e.tpl === -1, S.plan.custom)}</div>`}
+   <label class="f" for="wl-pe-need">${esc(S.plan.need)}</label><input type="text" id="wl-pe-need" data-wlpe="need" value="${esc(e.need || '')}">
+   <label class="f" for="wl-pe-goal">${esc(S.plan.goal)}</label><input type="text" id="wl-pe-goal" data-wlpe="goal" value="${esc(e.goal || '')}">
+   <label class="f" for="wl-pe-appr">${esc(S.plan.approach)}</label><input type="text" id="wl-pe-appr" data-wlpe="approach" value="${esc(e.approach || '')}">
+   <label class="f" for="wl-pe-act">${esc(S.plan.action)}</label><input type="text" id="wl-pe-act" data-wlpe="action" value="${esc(e.action || '')}">
+   ${e.id ? `<label class="f" for="wl-pe-chg">${esc(S.plan.changed)}</label><input type="text" id="wl-pe-chg" data-wlpe="changed" value="${esc(e.changed || '')}" placeholder="${esc(S.plan.changedNote)}">
+   <label class="cb"><input type="checkbox" data-wlpe="status" ${e.status === 'done' ? 'checked' : ''}> This plan is done</label>` : `<p class="muted" style="font-size:14px;margin-top:8px">${esc(WC ? WC.P.planEnd : '')}</p>`}
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wl-plan-save" data-v="${c.id}">${icon('check')} Save Plan</button><button class="btn btn-line btn-sm" data-act="wl-plan-cancel">Cancel</button>${e.id ? `<button class="btn btn-danger btn-sm" data-act="wl-plan-del" data-v="${c.id}">Delete</button>` : ''}</div></div>`;
+}
+function wlSafeFlag(sf){ return !!sf && (sf.choice === 'self' || sf.choice === 'sooner' || sf.observed === 'yes' || sf.helper === 'yes' || (sf.home && sf.home !== 'yes')); }
+function wlSafetyText(sf, forNote){
+  if (!sf) return 'Not recorded.';
+  const A = WC ? WC.C.safety : null, bits = [];
+  if (sf.notAsked) return 'Safety question not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
+  if (sf.choice && A){ const o = A.options.find(x => x[0] === sf.choice); bits.push('When asked about dying, they chose: "' + String(o ? o[1] : sf.choice).replace(/\.$/, '') + '"'); }
+  if (sf.observed) bits.push('Family says they have said things like wanting it over: ' + ({yes:'yes', no:'no', unsure:'not sure'}[sf.observed] || sf.observed));
+  if (sf.helper) bits.push('Caregiver thoughts of not wanting to go on: ' + ({yes:'yes', no:'no', skip:'would rather not say'}[sf.helper] || sf.helper));
+  if (sf.home && !forNote) bits.push('Feels safe at home and with caregivers: ' + ({yes:'yes', notalways:'not always', no:'no'}[sf.home] || sf.home));
+  if (sf.home && forNote && sf.home !== 'yes') bits.push('A home safety concern was raised. See the separate report steps.');
+  const t = bits.length ? bits.join('. ') + '.' : 'No safety question came up.';
+  return (wlSafeFlag(sf) ? 'Concern noted. ' : '') + t + ((sf.actions || []).length ? ' Actions: ' + sf.actions.join(', ') + '.' : '');
+}
+function wlFindVisit(id){ id = id || V.wlv; return id === 'demo' ? (V.wlDemo || null) : DATA.sessions.find(x => x.id === id && x.kind === 'wl') || null; }
+function wlTries(s){ if (!WC) return []; return (s.tryp || []).map(([k, id]) => { const L = k === 'self' ? WC.P.selfcare : (WC.P.person[k] || []), it = L.find(x => x[0] === id); return it ? [k, it] : null; }).filter(Boolean); }
+function vWLVisit(){
+  const s = wlFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
+  const w = wlNeedData(); if (w) return w;
+  const demo = V.wlv === 'demo', c = demo ? s.person : CL(s.clientId), S = WLG(), C = WC.C;
+  const back = demo ? `<button class="linkbtn" data-tab="willow">Back to Willow Guide</button>` : `<button class="linkbtn" data-act="wl-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'their record')}</button>`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said ${s.yes === 'later' ? 'not now, come back' : 'not today'}. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="wl-del-visit" data-v="${s.id}">Delete</button>`}`;
+  const shared = s.visit === 'shared', bank = wlBank(s.role), idx = s.quick || s.visit === 'quick' ? [0] : [0, 1, 2];
+  const byName = ((C.answeredBy.find(b => b[0] === s.by) || [])[1]) || (s.role === 'helper' ? 'They answered for themselves' : '');
+  const plans = wlVisitPlans(s, c);
+  const tries = wlTries(s), struggles = (s.struggles || []).map(id => C.guide.struggles.find(x => x[0] === id)).filter(Boolean);
+  return `${back}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${shared ? '' : ' &middot; ' + esc(wlRoleName(s.setting))}</div><h1>${esc(wlVisitName(s.visit))}</h1>
+   <p>${esc(c ? c.name : '')}${byName ? ' &middot; ' + esc(byName) : ''}${s.helper ? ' (' + esc(s.helper) + ')' : ''}${shared && s.quick ? ' &middot; quick check-in' : shared ? ' &middot; full check-in' : ''}</p></div>
+  ${shared ? `<div class="card"><p class="muted">${esc(S.bridge.sharedNote)}</p></div>` : ''}
+  ${s.lv && Object.keys(s.lv).length ? `<div class="card"><h3>The six parts</h3>${WL_PARTS.map(p => { const v = (s.sc || {})[p.key], l = (s.lv || {})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${wlLvCls(l)}">${esc(wlLvName(l))}${v != null ? ' ' + wlFmt(v) : ''}</span></div>`; }).join('')}
+   ${s.by === 'observed' ? '<p class="muted" style="font-size:14px;margin-top:8px">Answered by family from what they see. Kept apart from the person\'s own answers.</p>' : ''}</div>` : ''}
+  ${(s.flags || []).length ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged answers</h3>${s.flags.map(f => C.flags[f] ? `<p style="margin-top:8px"><b>${esc(C.flags[f].title)}.</b> ${esc(C.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+  <div class="card" ${wlSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(wlSafetyText(s.safety))}</p>${s.safety && s.safety.home && s.safety.home !== 'yes' ? `<p class="muted" style="font-size:14px;margin-top:6px">${esc(S.safety.homePrivate)}</p>` : ''}</div>
+  ${!shared && s.faithCheck ? `<div class="card"><h3>Faith</h3><p style="margin-top:6px">${esc({same:'Still true, they said.', changed:'Something changed, and it was updated.', new:'Asked for the first time.', skip:'Not asked today.'}[s.faithCheck] || '')}${s.faith ? ' ' + esc(wlFaithText(s.faith)) : ''}</p></div>` : ''}
+  ${struggles.length || (s.guilt && s.guilt.kind != null) || s.hopeAsked ? `<div class="card"><h3>What you heard</h3>${struggles.length ? `<p style="margin-top:6px"><b>Struggle:</b> ${struggles.map(x => esc(x[1])).join(', ')}</p>` : ''}${s.guilt && s.guilt.kind != null && C.guide.guiltShame[s.guilt.kind] ? `<p style="margin-top:6px"><b>Guilt and shame:</b> ${esc(C.guide.guiltShame[s.guilt.kind][0])}</p>` : ''}${s.hopeAsked ? `<p style="margin-top:6px"><b>HOPE questions:</b> ${esc(((C.guide.hope.asked.find(x => x[0] === s.hopeAsked) || [])[1]) || '')}</p>` : ''}</div>` : ''}
+  ${(s.tags || []).length || (s.did || []).length || (s.refs || []).length ? `<div class="card">${(s.tags || []).length ? `<p><b>Noticed:</b> ${s.tags.map(esc).join(', ')}</p>` : ''}${(s.did || []).length ? `<p style="margin-top:6px"><b>Offered:</b> ${s.did.map(esc).join(', ')}</p>` : ''}${(s.refs || []).length ? `<p style="margin-top:6px"><b>Referred to:</b> ${s.refs.map(esc).join(', ')}</p>` : ''}</div>` : ''}
+  ${plans.length ? `<div class="card"><h3>${esc(S.plan.title)}</h3>${plans.map(p => `<p style="margin-top:8px"><b>${esc(p.need || '')}</b><br><span class="muted">${esc(S.plan.goal)}:</span> ${esc(p.goal)}. <span class="muted">${esc(S.plan.approach)}:</span> ${esc(p.approach)}. <span class="muted">${esc(S.plan.action)}:</span> ${esc(p.action)}.</p>`).join('')}</div>` : ''}
+  ${tries.length ? `<div class="card"><h3>${esc(S.takeHome.try)}</h3>${tries.map(([k, it]) => `<p style="margin-top:6px"><b>${esc(it[1])}</b> <span class="muted">${esc(k === 'self' ? 'For them as a caregiver' : wlPart(k).part)}</span><br>${esc(it[2])}</p>`).join('')}</div>` : ''}
+  ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
+  ${s.note ? `<div class="card"><h3>Their note</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.note)}</p></div>` : ''}
+  ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${WL_PARTS.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
+  ${s.ans && Object.keys(s.ans).length ? `<details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
+   ${WL_PARTS.map(p => { const qs = bank[p.key] || [], qa = (s.ans || {})[p.key] || []; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${idx.map(i => qs[i] ? `<p style="margin-top:4px">${esc(s.by === 'observed' ? wlTheyify(qs[i].t) : qs[i].t)} ${qa[i] ? (wlHard(qs[i], qa[i]) ? `<b>${esc((wlAnsRow(qa[i]) || [])[1])}</b>` : esc((wlAnsRow(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}`; }).join('')}</details>` : ''}
+  <div class="row" style="margin-top:14px">${shared ? '' : `<button class="btn btn-gold" data-act="wl-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="wl-home-print">${icon('print')} Print Take-Home</button><button class="btn btn-line" data-act="wl-send" data-v="${demo ? 'demo' : s.id}">${icon('willow')} Send to Their Willow</button>`}<button class="btn btn-line" data-act="wl-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="wl-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+}
+const wlByNote = by => by === 'observed' ? 'by family, from what they see' : by === 'tapped' ? 'by the person, out loud, with a helper tapping' : 'by the person';
+function wlVisitPlans(s, c){ return s.planList ? s.planList : c && c.wl ? (c.wl.plans || []).filter(p => (s.plans || []).includes(p.id)) : []; }
+function wlHard(q, a){ const o = wlAnsRow(a); if (!o || o[2] == null) return false; const v = q.r ? 3 - o[2] : o[2]; return v <= 1; }
+// The visit note for the chart: levels and scores, flags, the safety summary, what was offered, plans. Never their
+// words, private notes, or the home safety answer itself.
+function wlNote(s, c){
+  const S = WLG(), C = WC ? WC.C : null, L = [];
+  if (s.visit === 'shared'){
+    L.push('Willow check-in shared by the family, ' + nice(s.date) + (s.quick ? ' (quick)' : ' (full)'));
+    L.push('Answered: ' + wlByNote(s.by) + '.');
+  } else {
+    L.push(wlVisitWord(s.setting) + ' (Willow Guide, ' + wlVisitName(s.visit).toLowerCase() + '), ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+    L.push('Visit by: ' + (DATA.settings.name || '') + ', ' + wlRoleName(s.setting).toLowerCase());
+    L.push((c ? c.name : '') + ', ' + wlTypeName(s.role === 'helper' ? 'family' : 'person').toLowerCase() + '. Their yes: yes.' + (s.by && s.role !== 'helper' ? ' Answered: ' + wlByNote(s.by) + '.' : ''));
+    if (s.faith && (s.faith.trad || s.faith.own)) L.push('Faith: ' + (s.faith.trad ? wlFaithName(s.faith.trad) : 'in their own words') + (s.faithCheck === 'same' ? ' (still true)' : s.faithCheck === 'changed' ? ' (updated today)' : ''));
+  }
+  if (s.lv && Object.keys(s.lv).length){
+    L.push('', 'Six parts' + (s.by === 'observed' ? ' (family\'s view, not the person\'s own answers)' : '') + ':');
+    WL_PARTS.forEach(p => { const l = (s.lv || {})[p.key]; L.push('  ' + p.part + ' (' + p.name.toLowerCase() + '): ' + (l ? wlLvName(l).toLowerCase() + ', ' + wlFmt(s.sc[p.key]) + ' of 10' : 'not scored')); });
+  }
+  if ((s.flags || []).length && C) L.push('', 'Flagged: ' + s.flags.map(f => C.flags[f] ? C.flags[f].title.toLowerCase() : f).join(', ') + '.');
+  L.push('Safety: ' + wlSafetyText(s.safety, true));
+  if ((s.struggles || []).length && C) L.push('Spiritual struggle: ' + s.struggles.map(id => ((C.guide.struggles.find(x => x[0] === id) || [])[1] || id).toLowerCase()).join(', ') + '.');
+  if ((s.tags || []).length) L.push('Noticed: ' + s.tags.join(', ').toLowerCase() + '.');
+  if ((s.did || []).length) L.push('Offered: ' + s.did.join(', ').toLowerCase() + '.');
+  if ((s.refs || []).length) L.push('Referred to: ' + s.refs.join(', ').toLowerCase() + '.');
+  const plans = wlVisitPlans(s, c);
+  if (plans.length){ L.push('', 'Care plan:'); plans.forEach(p => L.push('  ' + (p.need ? p.need + ' ' : '') + 'Goal: ' + p.goal + '. Approach: ' + p.approach + '. Action: ' + p.action + '.')); }
+  if (s.summary) L.push('', s.summary);
+  if (s.fdate) L.push('Follow-up: ' + nice(s.fdate) + (s.ftext ? ', ' + s.ftext : ''));
+  return L.join('\n');
+}
+// The take-home sheet: gentle words only. Never scores, flags, notes, or anything about safety.
+function wlHomeModel(s, c){
+  const S = WLG(), H = S.takeHome, sec = [], name = c ? wlFirst(c.name) : '';
+  const strong = s.by === 'observed' ? [] : WL_PARTS.filter(p => (s.lv || {})[p.key] === 'strong');
+  if (strong.length) sec.push({h:H.strong, p:[strong.map(p => p.part + ' (' + p.name.toLowerCase() + ')').join(', ')]});
+  const tries = wlTries(s);
+  if (tries.length) sec.push({h:H.try, p:tries.map(([k, it]) => it[1] + ': ' + it[2])});
+  const plans = wlVisitPlans(s, c).filter(p => p.status !== 'done');
+  if (plans.length) sec.push({h:H.plan, p:plans.map(p => p.goal + (p.action ? ': ' + p.action : '') + '.')});
+  if (s.visit === 'vigil' && c && c.wl && c.wl.vigil) { const vb = wlVigilLines(c.wl.vigil); if (vb.length) sec.push({h:H.vigil, p:vb}); }
+  sec.push({h:H.help, li:H.helpLines});
+  return {eyebrow:'For you and your family', title:H.title, sub:(name ? name + ', ' : '') + nice(s.date) + (DATA.settings.name ? '. With ' + DATA.settings.name + ', ' + wlRoleName(s.setting).toLowerCase() : ''), sec, close:H.close, foot:'Willow\u2122 is a trademark of Chris Joy. growwithgrounded.com/willow'};
+}
+function wlVigilLines(vg){
+  if (!WC) return [];
+  const pub = (WC.C.guide.vigil || []).map((x, i) => ['v' + i, x[0]]), all = pub.concat(WLG().vigil.extra.map(x => [x[0], x[1]]));
+  return all.filter(f => vg[f[0]]).map(f => f[1] + ': ' + vg[f[0]]);
+}
+function wlVigilModel(c){
+  const S = WLG();
+  return {eyebrow:'Vigil plan', title:S.vigil.sheetTitle.replace('{name}', wlFirst(c.name)), sub:S.vigil.sheetLead, sec:[{h:S.vigil.title, p:wlVigilLines(c.wl.vigil || {})}, ...(c.wl.faith && c.wl.faith.never ? [{h:'Please never', p:[c.wl.faith.never]}] : [])], close:S.vigil.sheetClose, foot:'Willow\u2122 is a trademark of Chris Joy. growwithgrounded.com/willow'};
+}
+const wlFile = (kind, s) => 'willow-' + kind + '-' + ((s && s.date) || today()) + '.pdf';
+
+// ----- the bridge: a sealed card, both ways, shown in person -----
+// To their Willow: first name, the date, the guide's first name and role, practices, What matters fields, and the vigil
+// plan, each only if the guide includes it. Never scores, flags, notes, plans, or safety.
+function vWLSend(s){
+  const S = WLG(), B = S.bridge, demo = s === V.wlDemo, c = demo ? s.person : CL(s.clientId); if (!c) return '';
+  const w = wlNeedData(); if (w) return w;
+  const F = V.wlsf || (V.wlsf = {tries:true, matters:WL_MATTERS().some(f => (c.wl.matters || {})[f[0]]), vigil:c.wl.type !== 'family' && wlVigilLines(c.wl.vigil || {}).length > 0});
+  const tries = wlTries(s), mt = WL_MATTERS().filter(f => (c.wl.matters || {})[f[0]]), vg = wlVigilLines(c.wl.vigil || {});
+  const box = (k, on, label, sub, off) => `<label class="cb wl-sendbox"><input type="checkbox" data-wlsf="${k}" ${on && !off ? 'checked' : ''} ${off ? 'disabled' : ''}> <span><b>${esc(label)}</b><br><small class="muted">${sub}</small></span></label>`;
+  return `<button class="linkbtn" data-act="wl-visit" data-v="${demo ? 'demo' : s.id}">Back to the visit</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)} &middot; ${nice(s.date)}</div><h1>${esc(B.toTitle)}</h1><p>${esc(B.toLead)}</p></div>
+  <div class="card"><h3>What goes on the card</h3>
+   ${box('tries', F.tries, S.takeHome.try, tries.length ? tries.map(([k, it]) => esc(it[1])).join(', ') : 'None chosen in this visit', !tries.length)}
+   ${box('matters', F.matters, S.mattersTitle, mt.length ? mt.map(f => esc(f[1])).join(', ') : 'Nothing written yet', !mt.length)}
+   ${c.wl.type === 'family' ? '' : box('vigil', F.vigil, S.vigil.title, vg.length ? vg.length + ' wishes' : 'Nothing written yet', !vg.length)}
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(B.toNever)}</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="wl-send-make" data-v="${demo ? 'demo' : s.id}">${icon('willow')} Make the Code</button></div></div>`;
+}
+async function wlSendMake(s){
+  const c = s === V.wlDemo ? s.person : CL(s.clientId), F = V.wlsf || {}, B = WLG().bridge; if (!c || !window.GGBridge) return toast('This needs a newer browser.');
+  const card = {n:wlFirst(c.name), d:s.date || today(), g:wlFirst(DATA.settings.name), r:wlRole() === 'other' ? 'chaplain' : wlRole(), who:c.wl.type === 'family' ? 'helper' : 'person'};
+  if (F.tries) card.t = wlTries(s).map(([k, it]) => [k, it[0], it[1], it[2]]).slice(0, 3);
+  if (F.matters){ card.m = {}; WL_MATTERS().forEach(f => { const v = (c.wl.matters || {})[f[0]]; if (v) card.m[f[0]] = String(v).slice(0, 400); }); }
+  if (F.vigil && c.wl.type !== 'family'){ card.v = {}; Object.entries(c.wl.vigil || {}).forEach(([k, v]) => { if (v && k !== 'date') card.v[k] = String(v).slice(0, 400); }); card.vl = WLG().vigil.extra.map(x => [x[0], x[1]]); }
+  if (!(card.t && card.t.length) && !card.m && !card.v) return toast(B.nothing);
+  const code = GGBridge.code(), tok = await GGBridge.seal('wl-visit', card, code);
+  GGBridge.show({title:B.toTitle, link:GGBridge.url('willow', tok), code, say:B.toSay, small:B.toSmall});
+}
+// From their Willow: paste or scan, type the code they read aloud, then choose whose record.
+function vWLImport(){
+  const S = WLG(), B = S.bridge, I = V.wli, w = wlNeedData(); if (w) return w;
+  const people = wlPeople().filter(c => c.status !== 'closed');
+  if (!I.card) return `<button class="linkbtn" data-tab="willow">Back to Willow Guide</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Willow Guide</div><h1>${esc(B.fromTitle)}</h1><p>${esc(B.fromLead)}</p></div>
+  <div class="card">${I.token ? `<p><span class="pill sage">${icon('check')} A card arrived</span> <span class="muted">${esc(B.fromArrived)}</span></p>` : `<label class="f" for="wl-il" style="margin-top:0">${esc(B.pasteLabel)}</label><textarea id="wl-il" data-wli="link" style="min-height:70px" placeholder="https://growwithgrounded.com/field-guide/#gg-wg=...">${esc(I.link || '')}</textarea>`}
+   <label class="f" for="wl-ic">${esc(B.codeLabel)}</label><input type="text" id="wl-ic" data-wli="code" value="${esc(I.code || '')}" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="cedar lantern 47" style="max-width:320px">
+   ${I.err ? `<p class="tipbox" style="border-left:3px solid var(--danger)">${esc(I.err)}</p>` : ''}
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="wl-imp-open">Open It</button>${I.token ? `<button class="btn btn-line" data-act="wl-imp-drop">Throw It Away</button>` : ''}</div>
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(B.fromPrivacy)}</p></div>`;
+  const d = I.card, cks = d.ck || [], role = d.role === 'helper' ? 'family' : 'person';
+  const match = people.filter(c => c.wl.type === role && wlFirst(c.name).toLowerCase() === String(d.n || '').toLowerCase());
+  if (I.cid === undefined) I.cid = match.length === 1 ? match[0].id : (V.wlp && CL(V.wlp) ? V.wlp : '');
+  return `<button class="linkbtn" data-tab="willow">Back to Willow Guide</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Shared ${nice(d.d)}${d.by ? ' by ' + esc(d.by) : ''}</div><h1>${esc(d.n || 'Their Willow')}</h1><p>${esc(role === 'family' ? B.fromHelper : B.fromPerson)}</p></div>
+  <div class="card"><h3>What they shared</h3><ul style="margin-top:6px">
+   <li>${cks.length} check-in${cks.length === 1 ? '' : 's'}${cks.length ? ', the latest ' + nice(cks[0].d) : ''}${cks.some(x => x.by === 'observed') ? ', some answered by family from what they see' : ''}</li>
+   ${d.f ? '<li>Faith answers</li>' : ''}${d.m ? '<li>What matters to them</li>' : ''}${d.v ? '<li>Vigil wishes</li>' : ''}${cks.some(x => x.note) ? '<li>Notes from check-ins</li>' : ''}</ul>
+   <p class="muted" style="font-size:14px;margin-top:8px">${esc(B.fromNever)}</p></div>
+  <div class="card"><h3>Whose record</h3><select data-wli="cid" style="max-width:360px"><option value="">Someone new: ${esc(d.n || '')}</option>${people.map(c => `<option value="${c.id}" ${I.cid === c.id ? 'selected' : ''}>${esc(c.name)} (${esc(c.wl.type === 'family' ? 'family' : 'person')})</option>`).join('')}</select>
+   ${!I.cid ? `<p class="muted" style="font-size:14px;margin-top:6px">${esc(B.newNote)}</p>` : ''}
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="wl-imp-save">${icon('check')} Add to Their Record</button><button class="btn btn-line" data-act="wl-imp-drop">Throw It Away</button></div></div>`;
+}
+async function wlImpOpen(){
+  const I = V.wli, B = WLG().bridge; if (!window.GGBridge) return toast('This needs a newer browser.');
+  const tok = I.token || GGBridge.find(I.link || '');
+  if (!tok){ I.err = B.badLink; return render(); }
+  if (!String(I.code || '').trim()){ I.err = B.needCode; return render(); }
+  let d = null;
+  try { d = await GGBridge.open(tok, I.code, 'wl-share'); } catch(e){ I.err = B.oldBrowser; return render(); }
+  if (!d){ I.err = B.badCode; return render(); }
+  I.err = ''; I.token = tok; I.card = d; render();
+}
+function wlImpSave(){
+  const I = V.wli, d = I.card; if (!d) return;
+  const role = d.role === 'helper' ? 'family' : 'person';
+  let c = I.cid ? CL(I.cid) : null;
+  if (!c){ c = {id:uid(), u:Date.now(), name:wlFirst(d.n) || 'From Willow', service:'End-of-life support', status:'active', followups:[], created:today(), wl:{type:role, consent:null, plans:[]}}; DATA.clients.push(c); }
+  if (!c.wl) c.wl = {type:role, consent:null, plans:[]};
+  const have = new Set(DATA.sessions.filter(s => s.kind === 'wl' && s.clientId === c.id && s.wid).map(s => s.wid));
+  let added = 0;
+  (d.ck || []).forEach(k => {
+    if (!k || have.has(k.id)) return;
+    const s = {id:uid(), u:Date.now(), kind:'wl', clientId:c.id, date:k.d || today(), visit:'shared', src:'willow', wid:k.id, role:(k.role || d.role) === 'helper' ? 'helper' : 'person', by:k.by || 'self', helper:k.h || '', quick:!!k.q, std:k.v || 1,
+      ans:k.a || {}, sc:{}, lv:{}, flags:Array.isArray(k.fl) ? k.fl : [], safety:{choice:(k.sf || {}).choice || '', observed:(k.sf || {}).observed || '', helper:(k.sf || {}).helper || ''}, note:k.note || ''};
+    // Scores are worked out here from their answers, so a shared card can't carry scores that don't match.
+    WL_PARTS.forEach(p => { const v = WC && (s.std === WC.C.version) ? wlScorePart(s.role, p.key, s.ans[p.key]) : ((k.sc || {})[p.key] == null ? null : +k.sc[p.key]); if (v != null && isFinite(v)){ s.sc[p.key] = Math.max(1, Math.min(10, v)); s.lv[p.key] = wlLevelOf(s.sc[p.key]); } });
+    DATA.sessions.push(s); added++;
+  });
+  const fw = c.wl.fromWillow = Object.assign({}, c.wl.fromWillow || {}, {date:d.d || today(), by:d.by || ''});
+  const notes = (d.ck || []).filter(k => k && k.note).map(k => ({d:k.d, t:String(k.note).slice(0, 800)}));
+  if (notes.length) fw.notes = notes.concat(fw.notes || []).filter((n, i, a) => a.findIndex(x => x.d === n.d && x.t === n.t) === i).slice(0, 12);
+  if (d.f && (d.f.trad || d.f.own)){ fw.faith = d.f; if (!c.wl.faith || c.wl.faith.src === 'willow' || (d.f.date && (!c.wl.faith.date || d.f.date > c.wl.faith.date))) c.wl.faith = Object.assign({}, d.f, {src:'willow', date:d.f.date || d.d}); }
+  if (d.m){ fw.matters = true; c.wl.matters = c.wl.matters || {}; WL_MATTERS().forEach(f => { if (d.m[f[0]] && !c.wl.matters[f[0]]) c.wl.matters[f[0]] = String(d.m[f[0]]).slice(0, 2000); }); }
+  if (d.v){ fw.vigil = {}; Object.entries(d.v).forEach(([k, v]) => { if (/^v\d$/.test(k)) fw.vigil[k] = String(v).slice(0, 2000); }); c.wl.vigil = c.wl.vigil || {}; Object.entries(fw.vigil).forEach(([k, v]) => { if (v && !c.wl.vigil[k]) c.wl.vigil[k] = v; }); }
+  touch(c); if (!c.last || (d.d && d.d > c.last)) c.last = d.d || today();
+  if (window.GGBridge) GGBridge.clear('guide');
+  save(); V = {tab:'willow', wlp:c.id}; render(); toast(added ? added + ' check-in' + (added === 1 ? '' : 's') + ' added.' : 'Added. Those check-ins were already here.');
+}
+
+// ----- the visit runner -----
+function wlStart(visit, cid, demo){
+  const S = WLG();
+  if (!WC){ wlLoad(); return toast(WC_FAIL ? "The Willow questions didn't load. Check your connection and try again." : 'Loading the Willow questions. Try again in a moment.'); }
+  const c = demo ? {id:'demo', name:S.demo.name, wl:{type:'person', consent:{how:'verbal', date:today()}, faith:Object.assign({date:today()}, S.demo.faith), plans:[], vigil:{}, matters:{}}} : CL(cid);
+  if (!c) return;
+  if (!demo && !wlConsentOk(c)) return go('willow', {wlc:c.id});
+  if (!demo && !wlReady()){ toast('Finish the Willow training to start real visits. Demo visits are always open.'); return go('willow', {wlm:1}); }
+  const role = wlRunRole(c);
+  RUN = {kind:'wl', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, role, by:role === 'helper' ? 'self' : '', setting:wlRole(), std:WC.C.version, started:Date.now(), step:0, yes:'',
+    faith:c.wl.faith ? JSON.parse(JSON.stringify(c.wl.faith)) : {lives:[]}, faithEdit:!c.wl.faith, faithCheck:'', ans:{}, impr:{}, pn:{},
+    safety:{ask:false, choice:'', observed:'', helper:'', home:'', homeAsk:false, notAsked:false, reason:'', reasonText:'', actions:[]},
+    hope:Object.assign({}, c.wl.hope || {}), hopeAsked:'', struggles:[], guilt:{kind:null}, vigil:Object.assign({}, c.wl.vigil || {}),
+    tags:[], did:[], refs:[], newPlans:[], planChg:{}, tryp:[], summary:'', priv:'', fdate:'', ftext:''};
+  wlOpenRun();
+}
+const wlSteps = r => ['open', ...(r.by === 'observed' ? [] : ['faith']),
+  ...(r.visit === 'full' ? WL_PARTS.map(p => 'p:' + p.key) : r.visit === 'quick' ? ['quick'] : r.visit === 'open' ? ['talk'] : ['vigil']),
+  ...(r.visit === 'vigil' ? [] : ['safety', 'heart']), 'close', 'plan'];
+function wlOpenRun(){ $('#runner').classList.remove('hide'); wlDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
+function wlKeep(){ if (RUN && !RUN.demo){ DATA.draft = RUN; save(); } }
+function wlRedraw(){ const b = $('#run-body'), y = b ? b.scrollTop : 0; wlDraw(); const n = $('#run-body'); if (n) n.scrollTop = y; }
+function wlQ(k, i, q){
+  const cur = ((RUN.ans || {})[k] || [])[i], text = wlQText(RUN, q), f = q.flag && WC.C.flags[q.flag], hot = f && f.on.includes(cur) && f.who === (RUN.role === 'helper' ? 'helper' : 'person');
+  return `<div class="st-q"><p>${RUN.visit === 'quick' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}${q.r ? ' <small class="muted">(reverse)</small>' : ''}${q.anchor ? ' <small class="muted">(anchor)</small>' : ''}</p>
+   <div class="st-opts" role="group" aria-label="${esc(text)}">${WC.C.answers.map(o => stChip('wl-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>
+   ${q.tip ? `<p class="muted st-tip" style="font-size:14px;margin-top:6px">${esc(q.tip)}</p>` : ''}${hot ? `<p class="wl-hot">${esc(f.guide)}</p>` : ''}</div>`;
+}
+function wlFaithStep(c){
+  const I = WC.F.intake, f = RUN.faith, cur = c.wl.faith;
+  const blk = (lab, arr, cls) => `<div class="blk ${cls || ''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  let h = `<div class="run-step-n">Faith comes first</div><h2 class="run-step-t">Faith, spirit, or something else</h2>
+   <div class="card step-card">${blk('Ask', [WC.C.guide.opening.faith], 'say')}<div class="tipbox">${esc(WLG().faithTip)}</div></div>`;
+  if (cur && !RUN.faithEdit){
+    h += `<div class="card"><p>Last time${cur.date ? ', ' + nice(cur.date) : ''}: ${esc(wlFaithText(cur))}</p>${cur.never ? `<p style="margin-top:6px"><b>Never do:</b> ${esc(cur.never)}</p>` : ''}
+      <p style="margin-top:10px"><b>Ask: "Is that still true for you?"</b></p>
+      <div class="st-opts">${stChip('wl-fcheck', 'data-v="same"', RUN.faithCheck === 'same', 'Yes, still true')}${stChip('wl-fcheck', 'data-v="changed"', RUN.faithCheck === 'changed', 'Something has changed')}${stChip('wl-fcheck', 'data-v="skip"', RUN.faithCheck === 'skip', 'Not today')}</div></div>
+      ${cur.trad ? wlCardHTML(cur.trad) : ''}`;
+    return h;
+  }
+  const chip = id => stChip('wl-ftrad', `data-v="${id}"`, f.trad === id, wlFaithName(id));
+  const single = row => `<h4 style="margin-top:14px">${esc(row[1])}</h4><div class="st-opts">${row[2].map(o => stChip('wl-fset', `data-k="${row[0]}" data-v="${o[0]}"`, f[row[0]] === o[0], o[1])).join('')}</div>`;
+  const multi = row => `<h4 style="margin-top:14px">${esc(row[1])}</h4><div class="st-opts">${row[2].map(o => stChip('wl-flive', `data-v="${o[0]}"`, (f.lives || []).includes(o[0]), o[1])).join('')}</div>`;
+  h += `<p class="muted">${esc(I.welcome)} ${RUN.role === 'helper' ? 'This is their own faith, as a caregiver.' : ''}</p>
+   ${I.groups.map(g => `<h4 style="margin-top:14px">${esc(g[1])}</h4><div class="st-opts">${g[2].map(chip).join('')}</div>`).join('')}
+   <label class="f" for="wl-fown">${esc(I.own)}</label><input type="text" id="wl-fown" data-wlff="own" maxlength="120" value="${esc(f.own || '')}">
+   ${single(I.follow[0])}${multi(I.follow[1])}${single(I.follow[2])}
+   <label class="f" for="wl-fcall">${esc(I.call)}</label><input type="text" id="wl-fcall" data-wlff="call" maxlength="160" value="${esc(f.call || '')}" placeholder="A name, a church, a temple, a phone number">
+   <label class="f" for="wl-fnever">${esc(I.never)}</label><input type="text" id="wl-fnever" data-wlff="never" maxlength="200" value="${esc(f.never || '')}" placeholder='${esc(I.neverEx)}'>
+   <p class="muted" style="font-size:14px;margin-top:8px">${esc(I.universal)}</p>
+   ${f.trad ? wlCardHTML(f.trad) : ''}`;
+  return h;
+}
+function wlSafetyStep(){
+  const S = WLG(), F = S.safety, A = WC.C.safety, sf = RUN.safety, fl = wlRunFlags(RUN), person = RUN.role === 'person';
+  const endQ = person && (fl.includes('end') || sf.ask), helpQ = !person && (fl.includes('hope') || sf.ask), seen = RUN.by === 'observed';
+  const blk = (lab, arr, cls) => `<div class="blk ${cls || ''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  const proto = (title, items) => `<div class="card st-protocol" style="margin-top:12px"><h3>${esc(title)}</h3><ul class="checklist" style="margin-top:8px">${items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>`;
+  let h = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>`;
+  if (fl.includes('end') || fl.includes('hope')) h += `<div class="card" style="border-left:4px solid var(--gold)"><p><b>${esc(WC.C.flags[fl.includes('end') ? 'end' : 'hope'].title)}.</b> ${esc(F.flagged)}</p></div>`;
+  if (endQ && seen){
+    h += `<div class="st-q"><p>${esc(A.observed.ask)}</p><div class="st-opts">${[['yes','Yes'],['no','No'],['unsure','Not sure']].map(o => stChip('wl-safe', `data-k="observed" data-v="${o[0]}"`, sf.observed === o[0], o[1])).join('')}</div></div>
+      ${sf.observed === 'yes' ? proto(F.titles.observed, F.protocol.observed) : ''}`;
+  } else if (endQ){
+    const ch = A.options.find(o => o[0] === sf.choice);
+    h += `<div class="card step-card">${blk('Say', [F.say], 'say')}</div>
+      <div class="st-q"><p>${esc(A.ask)}</p><div class="st-opts wl-safeopts">${A.options.map(o => stChip('wl-safe', `data-k="choice" data-v="${o[0]}"`, sf.choice === o[0], o[1])).join('')}</div>
+      ${ch ? `<p class="tipbox">${esc((F.means || {})[ch[0]] || ch[2] || '')}</p>` : ''}</div>
+      ${sf.choice === 'self' ? proto(F.titles.self, F.protocol.self) + `<div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div>` : ''}
+      ${sf.choice === 'sooner' ? proto(F.titles.sooner, F.protocol.sooner) : ''}`;
+  }
+  if (helpQ){
+    h += `<div class="st-q"><p>${esc(A.helper.ask)}</p><div class="st-opts">${[['yes','Yes'],['no','No'],['skip','I\'d rather not say']].map(o => stChip('wl-safe', `data-k="helper" data-v="${o[0]}"`, sf.helper === o[0], o[1])).join('')}</div></div>
+      ${sf.helper === 'yes' ? proto(F.titles.helperYes, F.protocol.helperYes) + `<div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a></div>` : ''}`;
+  }
+  if (!endQ && !helpQ) h += `<div class="card"><p>${esc(F.optional)}</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-safe-ask">${esc(person ? F.askAnyway : F.askAnywayHelper)}</button></div>`;
+  if (person && !seen){
+    h += `<div class="card" style="margin-top:14px"><h3>${esc(F.homeTitle)}</h3><p class="muted" style="font-size:15px">${esc(F.homeWhen)}</p>
+      <label class="cb"><input type="checkbox" data-wlsafe="homeAsk" ${sf.homeAsk ? 'checked' : ''}> ${esc(F.homeAskBox)}</label>
+      ${sf.homeAsk ? `<div class="st-q"><p>${esc(A.home.ask)}</p><div class="st-opts">${A.home.options.map(o => stChip('wl-safe', `data-k="home" data-v="${o[0]}"`, sf.home === o[0], o[1])).join('')}</div></div>
+      ${sf.home && sf.home !== 'yes' ? proto(F.titles.home, F.protocol.home) + `<div class="row" style="margin-top:10px"><a class="btn btn-line btn-sm" href="tel:18448801574">${icon('phone')} MAARC 1-844-880-1574</a><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a></div>` : ''}` : ''}</div>`;
+  }
+  if (wlSafeFlag(sf)) h += `<h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('wl-tog', `data-g="actions" data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div>`;
+  if (endQ || helpQ){
+    h += `<label class="cb" style="margin-top:16px"><input type="checkbox" data-wlsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask today</label>
+     ${sf.notAsked ? `<select data-wlsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-wlsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  }
+  return h;
+}
+function wlHeartStep(){
+  const S = WLG(), G = WC.C.guide, fl = wlRunFlags(RUN), sel = RUN.struggles;
+  const openG = fl.includes('regret') || fl.includes('guilt') || sel.includes('moral') || RUN.guilt.kind != null;
+  let h = `<div class="run-step-n">Listening deeper</div><h2 class="run-step-t">${esc(S.heart.title)}</h2><p class="muted">${esc(S.heart.lead)}</p>`;
+  h += `<details class="card wl-dt" ${fl.includes('struggle') || sel.length ? 'open' : ''}><summary><b>${esc(S.heart.struggleTitle)}</b>${fl.includes('struggle') ? ' <span class="pill gold">Flagged</span>' : ''}</summary>
+    <p class="muted" style="font-size:15px;margin-top:6px">${esc(S.heart.struggleLead)}</p>
+    <div class="st-opts" style="margin-top:8px">${G.struggles.map(x => stChip('wl-strug', `data-v="${x[0]}"`, sel.includes(x[0]), x[1])).join('')}</div>
+    ${G.struggles.filter(x => sel.includes(x[0])).map(x => `<div class="wl-strug"><p><b>${esc(x[1])}.</b> <span class="muted">${esc(x[2])}</span></p><p style="margin-top:4px"><b>Ask:</b> "${esc(x[3])}"</p><p class="tipbox">${esc(x[4])}</p></div>`).join('')}</details>`;
+  h += `<details class="card wl-dt" ${openG ? 'open' : ''}><summary><b>${esc(S.guilt.title)}</b>${fl.includes('regret') || fl.includes('guilt') ? ' <span class="pill gold">Flagged</span>' : ''}</summary>
+    <p class="muted" style="font-size:15px;margin-top:6px">${esc(S.guilt.lead)}</p>
+    <ol class="wl-steps">${S.guilt.steps.map(x => `<li><b>${esc(x[0])}.</b> ${esc(x[1])}</li>`).join('')}</ol>
+    <h4 style="margin-top:12px">${esc(S.guilt.which)}</h4><div class="st-opts">${G.guiltShame.map((x, i) => stChip('wl-guilt', `data-v="${i}"`, RUN.guilt.kind === i, x[0])).join('')}</div>
+    ${RUN.guilt.kind != null && G.guiltShame[RUN.guilt.kind] ? `<p class="tipbox">${esc(G.guiltShame[RUN.guilt.kind][1])}</p><p class="muted" style="font-size:14px;margin-top:6px">${esc(S.guilt.never)}</p>` : ''}</details>`;
+  if (RUN.visit !== 'quick' || RUN.hopeOpen){
+    h += `<details class="card wl-dt" ${RUN.visit === 'full' || RUN.hopeOpen ? 'open' : ''}><summary><b>${esc(S.hope.title)}</b> <span class="muted">${esc(S.hope.short)}</span></summary>
+      <p class="muted" style="font-size:15px;margin-top:6px">${esc(S.hope.lead)}</p>
+      <div class="st-opts" style="margin-top:8px">${G.hope.asked.map(o => stChip('wl-hopeask', `data-v="${o[0]}"`, RUN.hopeAsked === o[0], o[1])).join('')}</div>
+      ${S.hope.fields.map(f => `<label class="f" for="wl-rh-${f[0]}">${esc(f[1])}</label><textarea id="wl-rh-${f[0]}" data-wlrh="${f[0]}" style="min-height:60px" placeholder="${esc(f[2])}">${esc(RUN.hope[f[0]] || '')}</textarea>`).join('')}</details>`;
+  } else h += `<button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-hope-open">${esc(S.hope.title)}</button>`;
+  return h;
+}
+function wlDraw(){
+  const S = WLG(), steps = wlSteps(RUN); if (RUN.step >= steps.length) RUN.step = steps.length - 1;
+  const st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), n = steps.length, G = WC.C.guide;
+  const pct = Math.round(RUN.step / (n - 1) * 100), me = DATA.settings.name || 'your chaplain';
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if (st === 'open'){
+    const v = S.visits.find(x => x[0] === RUN.visit), say = [(G.opening[RUN.setting === 'doula' ? 'doula' : 'chaplain'] || '').replace('{me}', me), G.opening.person];
+    body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])}</h2><p class="purpose">${esc(v[3])}</p>
+     <div class="card step-card" style="margin-top:14px">${blk('Say', say, 'say')}<div class="tipbox">${esc(S.openTip)}</div></div>
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}
+     <div class="card" style="margin-top:14px"><h3>${esc(S.yes.ask)}</h3><div class="st-opts">${S.yes.opts.map(o => stChip('wl-yes', `data-v="${o[0]}"`, RUN.yes === o[0], o[1])).join('')}</div></div>
+     ${RUN.role === 'person' ? `<div class="card"><h3>Who is answering?</h3><div class="st-opts">${WC.C.answeredBy.map(b => stChip('wl-by', `data-v="${b[0]}"`, RUN.by === b[0], b[1])).join('')}</div>
+      <p class="muted" style="font-size:14px;margin-top:8px">${esc(RUN.by === 'observed' ? S.observed : S.byNote)}</p>
+      ${RUN.by === 'observed' && c.wl.faith ? `<p style="margin-top:8px"><b>Faith on file:</b> ${esc(wlFaithText(c.wl.faith))}</p>` : ''}</div>` : `<div class="card"><p class="muted">${esc(S.familyRun)}</p></div>`}`;
+  } else if (st === 'faith') body = wlFaithStep(c);
+  else if (st.startsWith('p:')){
+    const p = wlPart(st.slice(2)), qs = wlBank(RUN.role)[p.key] || [];
+    body = `<div class="run-step-n">Part ${WL_PARTS.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
+     <div class="card step-card" style="border-left-color:${p.color}"><p class="muted"><b>Ask:</b> "${esc(wlStem(RUN, c))}"</p></div>
+     ${qs.map((q, i) => wlQ(p.key, i, q)).join('')}
+     ${RUN.role === 'person' ? `<details class="card st-lf" style="margin-top:14px"><summary><b>More to ask</b> <span class="muted">${esc((G.pc6 || {})[p.key] || '')}</span></summary>${blk('Ask', G.prompts[p.key] || [], 'say')}</details>` : ''}
+     <label class="f" for="wl-pn">Your notes (private)</label><textarea id="wl-pn" data-wlpn="${p.key}" style="min-height:80px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key] || '')}</textarea>`;
+  } else if (st === 'quick'){
+    body = `<div class="run-step-n">Six quick questions</div><h2 class="run-step-t">One for each part</h2><p class="muted">Read each one aloud. Let them answer in their own words, then tap.</p>
+     <p class="muted" style="margin-top:6px"><b>Ask:</b> "${esc(wlStem(RUN, c))}"</p>
+     ${WL_PARTS.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${wlQ(p.key, 0, (wlBank(RUN.role)[p.key] || [])[0])}</div>`).join('')}
+     <label class="f" for="wl-pq">Your notes (private)</label><textarea id="wl-pq" data-wlf="priv" style="min-height:80px">${esc(RUN.priv)}</textarea>`;
+  } else if (st === 'talk'){
+    body = `<div class="run-step-n">Open conversation</div><h2 class="run-step-t">Follow where they lead</h2><p class="muted">Use any of these, in any order. After, mark how each part seemed to you.</p>
+     ${WL_PARTS.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${blk('Ask', RUN.role === 'person' ? (G.prompts[p.key] || []) : (S.helperPrompts[p.key] || []), 'say')}
+      <div class="st-opts" role="group" aria-label="${esc(p.part)}">${S.impressions.map(o => stChip('wl-impr', `data-k="${p.key}" data-v="${o[0]}"`, RUN.impr[p.key] === o[0], o[1])).join('')}</div>
+      <textarea data-wlpn="${p.key}" style="min-height:64px;margin-top:10px" placeholder="Your notes (private)" aria-label="${esc(p.part)} notes">${esc(RUN.pn[p.key] || '')}</textarea></div>`).join('')}`;
+  } else if (st === 'vigil'){
+    body = `<div class="run-step-n">Vigil planning</div><h2 class="run-step-t">${esc(S.vigil.runTitle)}</h2><p class="muted">${esc(S.vigil.lead)}</p>
+     <div class="card step-card">${blk('Say', [S.vigil.say], 'say')}<div class="tipbox">${esc(S.vigil.tip)}</div></div>
+     ${wlVigilFields(RUN.vigil, 'wlrv')}`;
+  } else if (st === 'safety') body = wlSafetyStep();
+  else if (st === 'heart') body = wlHeartStep();
+  else if (st === 'close'){
+    const fl = wlRunFlags(RUN);
+    body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
+     <div class="card step-card">${blk('Say', G.closing.map(x => x.replace('{x}', '...').replace('{y}', '...')), 'say')}</div>
+     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(WC.C.flags[f].title)}.</b> ${esc(WC.C.flags[f].guide)}</p>`).join('')}</div>` : ''}
+     ${S.tags.map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('wl-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
+     <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${S.did.map(t => stChip('wl-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
+     <h4 style="margin-top:18px">Referrals</h4><div class="st-opts">${S.refs.map(t => stChip('wl-tog', `data-g="refs" data-v="${esc(t)}"`, RUN.refs.includes(t), t)).join('')}</div>
+     <label class="f" for="wl-sum">Summary for the visit note</label><textarea id="wl-sum" data-wlf="summary" placeholder="A few plain lines your team can read. Not their words.">${esc(RUN.summary)}</textarea>
+     ${RUN.visit === 'quick' ? '' : `<label class="f" for="wl-priv">Private notes</label><textarea id="wl-priv" data-wlf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`}`;
+  } else {
+    const open = c && c.wl ? (c.wl.plans || []).filter(p => p.status !== 'done') : [], P = WC.P;
+    const list = RUN.role === 'helper' ? [['self', P.selfcare]] : WL_PARTS.map(p => [p.key, P.person[p.key] || []]);
+    body = `<div class="run-step-n">Care plan</div><h2 class="run-step-t">${esc(S.plan.runTitle)}</h2><p class="muted">${esc(S.plan.lead)}</p>
+     ${open.length ? `<div class="card"><h3>Open plans</h3>${open.map(p => `<div style="margin-top:10px"><b>${esc(p.need || 'Care plan')}</b><p class="muted" style="font-size:15px">${esc(p.goal)}. ${esc(p.action)}.</p>
+       <input type="text" data-wlchg="${p.id}" value="${esc((RUN.planChg[p.id] || {}).changed || '')}" placeholder="${esc(S.plan.changed)}: ${esc(S.plan.changedNote)}" style="margin-top:6px">
+       <label class="cb"><input type="checkbox" data-wlpdone="${p.id}" ${(RUN.planChg[p.id] || {}).done ? 'checked' : ''}> Done</label></div>`).join('')}</div>` : ''}
+     <div class="card"><h3>${esc(S.plan.newTitle)}</h3><p class="muted" style="font-size:15px">${esc(S.plan.start)}</p>
+      <div class="st-opts">${P.plans.map((p, i) => stChip('wl-rplan', `data-v="${i}"`, RUN.newPlans.some(x => x.tpl === i), p[0])).join('')}${stChip('wl-rplan', 'data-v="-1"', false, S.plan.custom)}</div>
+      ${RUN.newPlans.map((p, j) => `<div class="wl-planform" style="margin-top:12px"><div class="spread"><b>${esc(p.need || S.plan.custom)}</b><button class="linkbtn" data-act="wl-rplan-del" data-v="${j}">Remove</button></div>
+        ${p.tpl === -1 ? `<input type="text" data-wlnp="${j}" data-k="need" value="${esc(p.need)}" placeholder="${esc(S.plan.need)}" style="margin-top:6px">` : ''}
+        <input type="text" data-wlnp="${j}" data-k="goal" value="${esc(p.goal)}" placeholder="${esc(S.plan.goal)}" style="margin-top:6px" aria-label="${esc(S.plan.goal)}">
+        <input type="text" data-wlnp="${j}" data-k="approach" value="${esc(p.approach)}" placeholder="${esc(S.plan.approach)}" style="margin-top:6px" aria-label="${esc(S.plan.approach)}">
+        <input type="text" data-wlnp="${j}" data-k="action" value="${esc(p.action)}" placeholder="${esc(S.plan.action)}" style="margin-top:6px" aria-label="${esc(S.plan.action)}"></div>`).join('')}</div>
+     <div class="card"><h3>${esc(S.practices.title)}</h3><p class="muted" style="font-size:15px">${esc(S.practices.lead)}</p>
+      ${list.map(([k, L]) => `<div class="st-qp" style="--pc:${k === 'self' ? '#5F7350' : wlPart(k).color}"><div class="st-qh">${esc(k === 'self' ? 'For them, as a caregiver' : wlPart(k).part)} ${k === 'self' ? '' : `<small>${esc(wlPart(k).name)}</small>`}</div><div class="st-opts">${L.map(it => stChip('wl-try', `data-k="${k}" data-v="${it[0]}"`, RUN.tryp.some(x => x[0] === k && x[1] === it[0]), it[1])).join('')}</div></div>`).join('')}</div>
+     ${RUN.demo ? '' : `<div class="grid g2"><div><label class="f" for="wl-fd2">Follow-up date</label><input type="date" id="wl-fd2" data-wlf="fdate" value="${esc(RUN.fdate)}"></div><div><label class="f" for="wl-ft2">Follow-up note</label><input type="text" id="wl-ft2" data-wlf="ftext" value="${esc(RUN.ftext)}" placeholder="Visit again"></div></div>`}`;
+  }
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(wlVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span><button class="bar-btn" data-act="wl-pause" aria-label="Close">&times;</button></div></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="run-body" id="run-body"><div class="wrap">${body}</div></div>
+    <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="wl-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
+    ${st === 'plan' ? `<button class="btn btn-gold" data-act="wl-save">${icon('check')} ${RUN.demo ? 'Finish Demo' : 'Save Visit'}</button>` : `<button class="btn btn-gold" data-act="wl-next">${st === 'open' ? 'Begin' : 'Next'} &rsaquo;</button>`}</div></div>`;
+  tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
+}
+function wlNext(){
+  const st = wlSteps(RUN)[RUN.step], sf = RUN.safety, fl = wlRunFlags(RUN);
+  if (st === 'open'){
+    if (!RUN.yes) return alert('Ask if now is an okay time, and mark their answer.');
+    if (RUN.yes !== 'yes') return wlNotToday();
+    if (RUN.role === 'person' && !RUN.by) return alert('Mark who is answering today.');
+  }
+  if (st === 'faith'){
+    if (!RUN.faithEdit && !RUN.faithCheck) return alert('Ask if their faith answer is still true, and mark it.');
+    if (RUN.faithEdit && !RUN.faith.trad && !RUN.faith.own) return alert('Choose one, write their own words, or "I\'d rather not say."');
+  }
+  if (st === 'safety'){
+    const endQ = RUN.role === 'person' && (fl.includes('end') || sf.ask), helpQ = RUN.role === 'helper' && (fl.includes('hope') || sf.ask);
+    if (endQ && !sf.notAsked && !(RUN.by === 'observed' ? sf.observed : sf.choice)) return alert('Ask the safety question, or check "I didn\'t ask today" and say why.');
+    if (helpQ && !sf.notAsked && !sf.helper) return alert('Ask the safety question, or check "I didn\'t ask today" and say why.');
+    if (sf.notAsked && !sf.reason) return alert('Choose why it wasn\'t asked.');
+    if (sf.homeAsk && !sf.home) return alert('Mark their answer about feeling safe, or uncheck that box.');
+    if (wlSafeFlag(sf) && !sf.actions.length && !confirm('This needs action. You haven\'t marked what you did. Go on anyway?')) return;
+  }
+  RUN.step++; wlKeep(); wlDraw();
+}
+function wlNotToday(){
+  const r = RUN, s = {id:r.id, u:Date.now(), kind:'wl', clientId:r.clientId, date:today(), visit:'nottoday', yes:r.yes, role:r.role, setting:r.setting};
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ toast('Demo closed. They said not today, and that is always honored.'); return; }
+  DATA.sessions.push(s); DATA.draft = null; save(); go('willow', {wlp:r.clientId}); toast('Honored. Saved as not today.');
+}
+function wlSaveRun(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId), S = WLG();
+  const {sc, lv} = wlRunScores(r), useFaith = r.by !== 'observed' && (r.faithEdit || r.faithCheck === 'changed');
+  const newPlans = r.newPlans.filter(p => p.goal || p.action).map(p => ({id:uid(), need:p.need || '', goal:p.goal || '', approach:p.approach || '', action:p.action || '', changed:'', status:'open', date:today()}));
+  const touched = Object.keys(r.planChg).filter(id => r.planChg[id] && (r.planChg[id].changed || r.planChg[id].done));
+  const s = {id:r.id, u:Date.now(), kind:'wl', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), visit:r.visit, role:r.role, by:r.by, setting:r.setting, std:r.std,
+    ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, sc, lv, flags:wlRunFlags(r), yes:r.yes,
+    faithCheck:r.by === 'observed' ? '' : (r.faithEdit ? (c.wl.faith ? 'changed' : 'new') : r.faithCheck), faith:r.by === 'observed' ? null : (useFaith ? r.faith : (c.wl.faith || null)),
+    safety:r.safety, struggles:r.struggles, guilt:r.guilt, hopeAsked:r.hopeAsked, tags:r.tags, did:r.did, refs:r.refs, tryp:r.tryp,
+    plans:newPlans.map(p => p.id).concat(touched), summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext};
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ s.person = c; s.planList = newPlans; V = {tab:'willow', wlv:'demo', wlDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  const w = c.wl;
+  if (useFaith && (r.faith.trad || r.faith.own)) w.faith = Object.assign({}, r.faith, {date:today(), src:'guide'});
+  else if (w.faith && r.faithCheck === 'same') w.faith.date = today();
+  if (S.hope.fields.some(f => (r.hope[f[0]] || '') !== ((w.hope || {})[f[0]] || ''))) w.hope = Object.assign({}, r.hope, {date:today()});
+  if (r.visit === 'vigil') w.vigil = Object.assign({}, r.vigil, {date:today()});
+  w.plans = (w.plans || []).concat(newPlans);
+  touched.forEach(id => { const p = w.plans.find(x => x.id === id), ch = r.planChg[id]; if (!p) return; if (ch.changed) p.changed = ch.changed; if (ch.done){ p.status = 'done'; p.done = today(); } });
+  DATA.sessions.push(s); DATA.draft = null;
+  touch(c); c.last = today(); if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false});
+  save(); go('willow', {wlv:s.id}); toast('Visit saved.');
+}
+function wlPause(){
+  if (RUN.demo){ if (!confirm('Close the demo?')) return; }
+  else if (!confirm('Close this visit? Your notes are kept, and you can pick it up again next time you open the Field Guide.')) return;
+  if (!RUN.demo){ DATA.draft = RUN; save(); toast('Visit paused.'); }
+  clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+}
+// Chips in the runner. Redraw when a choice changes what shows.
+function wlToggle(t){
+  const on = t.getAttribute('aria-pressed') !== 'true', a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
+  const one = () => t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t));
+  if (a === 'wl-ans'){ const i = +t.dataset.i; RUN.ans[k] = RUN.ans[k] || []; RUN.ans[k][i] = v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-impr'){ RUN.impr[k] = v; one(); return wlKeep(); }
+  if (a === 'wl-yes'){ RUN.yes = v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-by'){ RUN.by = v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-fcheck'){ RUN.faithCheck = v; if (v === 'changed'){ RUN.faithEdit = true; } wlKeep(); return wlRedraw(); }
+  if (a === 'wl-ftrad'){ RUN.faith.trad = RUN.faith.trad === v ? '' : v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-fset'){ RUN.faith[k] = RUN.faith[k] === v ? '' : v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-flive'){ const L = RUN.faith.lives = RUN.faith.lives || []; if (L.includes(v)) L.splice(L.indexOf(v), 1); else L.push(v); t.setAttribute('aria-pressed', !!L.includes(v)); return wlKeep(); }
+  if (a === 'wl-safe'){ RUN.safety[k] = v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-strug'){ const L = RUN.struggles; if (on) L.push(v); else L.splice(L.indexOf(v), 1); wlKeep(); return wlRedraw(); }
+  if (a === 'wl-guilt'){ RUN.guilt.kind = RUN.guilt.kind === +v ? null : +v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-hopeask'){ RUN.hopeAsked = RUN.hopeAsked === v ? '' : v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t && RUN.hopeAsked === v)); return wlKeep(); }
+  if (a === 'wl-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); return wlKeep(); }
+  if (a === 'wl-try'){ const i = RUN.tryp.findIndex(x => x[0] === k && x[1] === v); if (i > -1) RUN.tryp.splice(i, 1); else { if (RUN.tryp.length >= 3) return toast('Three is plenty. Less is more.'); RUN.tryp.push([k, v]); } t.setAttribute('aria-pressed', i < 0); return wlKeep(); }
+  if (a === 'wl-rplan'){ const i = +v, P = WC.P.plans[i]; if (i >= 0 && RUN.newPlans.some(x => x.tpl === i)) return; RUN.newPlans.push(i >= 0 ? {tpl:i, need:P[0], goal:P[1], approach:P[2], action:P[3]} : {tpl:-1, need:'', goal:'', approach:'', action:''}); wlKeep(); return wlRedraw(); }
+  return false;
+}
+function wlInput(t, ev){
+  if (t.dataset.wlset && ev === 'change'){ DATA.settings[t.dataset.wlset] = t.value; save(); return true; }
+  if (RUN && RUN.kind === 'wl'){
+    if (t.dataset.wlf){ RUN[t.dataset.wlf] = t.value; wlKeep(); return true; }
+    if (t.dataset.wlpn){ RUN.pn[t.dataset.wlpn] = t.value; wlKeep(); return true; }
+    if (t.dataset.wlff){ RUN.faith[t.dataset.wlff] = t.value; wlKeep(); return true; }
+    if (t.dataset.wlrh){ RUN.hope[t.dataset.wlrh] = t.value; wlKeep(); return true; }
+    if (t.dataset.wlrv){ RUN.vigil[t.dataset.wlrv] = t.value; wlKeep(); return true; }
+    if (t.dataset.wlchg){ RUN.planChg[t.dataset.wlchg] = Object.assign({}, RUN.planChg[t.dataset.wlchg], {changed:t.value}); wlKeep(); return true; }
+    if (t.dataset.wlpdone && ev === 'change'){ RUN.planChg[t.dataset.wlpdone] = Object.assign({}, RUN.planChg[t.dataset.wlpdone], {done:t.checked}); wlKeep(); return true; }
+    if (t.dataset.wlnp !== undefined){ const p = RUN.newPlans[+t.dataset.wlnp]; if (p){ p[t.dataset.k] = t.value; wlKeep(); } return true; }
+    if (t.dataset.wlsafe){ const k = t.dataset.wlsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; wlKeep(); if ((k === 'notAsked' || k === 'homeAsk') && ev === 'change') wlRedraw(); return true; }
+  }
+  if (t.dataset.wli && V.wli){ V.wli[t.dataset.wli] = t.value; if (t.dataset.wli === 'cid' && ev === 'change') render(); return true; }
+  if (t.dataset.wlsf && ev === 'change' && V.wlsf){ V.wlsf[t.dataset.wlsf] = t.checked; return true; }
+  if (t.dataset.wlpe && V.wlpe){ V.wlpe[t.dataset.wlpe] = t.type === 'checkbox' ? (t.checked ? 'done' : 'open') : t.value; return true; }
+  const c = V.wlp ? CL(V.wlp) : null;
+  if (c && c.wl){
+    if (t.dataset.wlh){ c.wl.hope = Object.assign({}, c.wl.hope, {[t.dataset.wlh]:t.value, date:today()}); touch(c); save(); return true; }
+    if (t.dataset.wlmt){ c.wl.matters = Object.assign({}, c.wl.matters, {[t.dataset.wlmt]:t.value}); touch(c); save(); return true; }
+    if (t.dataset.wlvg){ c.wl.vigil = Object.assign({}, c.wl.vigil, {[t.dataset.wlvg]:t.value, date:today()}); touch(c); save(); return true; }
+    if (t.dataset.wlc){ const k = t.dataset.wlc; if (k === 'name' || k === 'status') c[k] = t.value; else c.wl[k] = t.value; touch(c); save(); if (ev === 'change' && t.tagName === 'SELECT') render(); return true; }
+    if (t.dataset.wlfu !== undefined && ev === 'change'){ c.followups[+t.dataset.wlfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); return true; }
+  }
+  return false;
+}
+function wlAct(a, v, t){
+  if (RUN && RUN.kind === 'wl' && ['wl-ans','wl-impr','wl-yes','wl-by','wl-fcheck','wl-ftrad','wl-fset','wl-flive','wl-safe','wl-strug','wl-guilt','wl-hopeask','wl-tog','wl-try','wl-rplan'].includes(a)){ wlToggle(t); return true; }
+  switch (a){
+    case 'wl-home': go('willow'); return true;
+    case 'wl-retry': WC_FAIL = false; wlLoad(); render(); return true;
+    case 'wl-open': go('willow', {wlp:v}); return true;
+    case 'wl-new': { const n = ($('#wl-nn').value || '').trim(); if (!n){ $('#wl-nn').focus(); return true; }
+      const type = $('#wl-nt').value, c = {id:uid(), u:Date.now(), name:n, service:'End-of-life support', status:'active', followups:[], created:today(), wl:{type, forName:($('#wl-nr').value || '').trim(), consent:null, plans:[]}};
+      DATA.clients.push(c); save(); go('willow', {wlc:c.id}); return true; }
+    case 'wl-demo': wlStart('full', null, true); return true;
+    case 'wl-start': wlStart(v, t.dataset.c, false); return true;
+    case 'wl-next': wlNext(); return true;
+    case 'wl-prev': if (RUN.step > 0){ RUN.step--; wlKeep(); wlDraw(); } return true;
+    case 'wl-save': wlSaveRun(); return true;
+    case 'wl-pause': wlPause(); return true;
+    case 'wl-safe-ask': RUN.safety.ask = true; wlKeep(); wlRedraw(); return true;
+    case 'wl-hope-open': RUN.hopeOpen = true; wlRedraw(); return true;
+    case 'wl-rplan-del': RUN.newPlans.splice(+v, 1); wlKeep(); wlRedraw(); return true;
+    case 'wl-consent': V.wlch = null; go('willow', {wlc:v}); return true;
+    case 'wl-ch': V.wlch = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); { const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
+    case 'wl-consent-save': { const c = CL(v); if (!c) return true; const how = V.wlch || (c.wl.consent || {}).how || 'verbal', nm = ($('#wl-cnm').value || '').trim();
+      if (how !== 'declined' && how !== 'plan' && !nm){ $('#wl-cnm').focus(); return true; }
+      c.wl.consent = {how, name:nm, date:$('#wl-cdt').value || today(), note:($('#wl-cn').value || '').trim()}; touch(c); save(); V.wlch = null; go('willow', {wlp:c.id}); toast(how === 'declined' ? 'Saved. Visits stay off for now.' : 'Their yes is recorded.'); return true; }
+    case 'wl-visit': go('willow', {wlv:v, wlDemo:v === 'demo' ? V.wlDemo : null}); return true;
+    case 'wl-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('willow', s && s.clientId ? {wlp:s.clientId} : {}); } return true;
+    case 'wl-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('willow'); } return true;
+    case 'wl-add-fu': { const c = CL(v), d = $('#wl-fd').value, tx = $('#wl-ft').value.trim(); if (!d){ $('#wl-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
+    case 'wl-plan-add': V.wlpe = {c:v, tpl:null, need:'', goal:'', approach:'', action:''}; render(); setTimeout(() => { const el = document.querySelector('.wl-planform'); if (el) el.scrollIntoView({block:'center'}); }, 40); return true;
+    case 'wl-plan-tpl': { const i = +v, P = WC && WC.P.plans[i]; V.wlpe = Object.assign(V.wlpe, i >= 0 && P ? {tpl:i, need:P[0], goal:P[1], approach:P[2], action:P[3]} : {tpl:-1, need:'', goal:'', approach:'', action:''}); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+    case 'wl-plan-edit': { const c = CL(t.dataset.c), p = c && (c.wl.plans || []).find(x => x.id === v); if (p){ V.wlpe = Object.assign({c:c.id}, JSON.parse(JSON.stringify(p))); const y = window.scrollY; render(); window.scrollTo(0, y); } return true; }
+    case 'wl-plan-cancel': V.wlpe = null; render(); return true;
+    case 'wl-plan-save': { const c = CL(v), e = V.wlpe; if (!c || !e) return true; if (!(e.goal || '').trim() && !(e.action || '').trim()){ toast('Write a goal or an action first.'); return true; }
+      c.wl.plans = c.wl.plans || [];
+      if (e.id){ const p = c.wl.plans.find(x => x.id === e.id); if (p){ const was = p.status; Object.assign(p, {need:e.need, goal:e.goal, approach:e.approach, action:e.action, changed:e.changed || '', status:e.status === 'done' ? 'done' : 'open'}); if (p.status === 'done' && was !== 'done') p.done = today(); } }
+      else c.wl.plans.push({id:uid(), need:e.need || '', goal:e.goal || '', approach:e.approach || '', action:e.action || '', changed:'', status:'open', date:today()});
+      touch(c); save(); V.wlpe = null; render(); toast('Plan saved.'); return true; }
+    case 'wl-plan-del': { const c = CL(v), e = V.wlpe; if (c && e && e.id && confirm('Delete this plan?')){ c.wl.plans = (c.wl.plans || []).filter(x => x.id !== e.id); touch(c); save(); V.wlpe = null; render(); } return true; }
+    case 'wl-vigil-pdf': { const c = CL(v); if (c) ggShare(ggPdf(ggSheetBlocks(wlVigilModel(c))), 'willow-vigil-plan-' + today() + '.pdf', WLG().vigil.title); return true; }
+    case 'wl-vigil-print': { const c = CL(v); if (c){ const m = wlVigilModel(c); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
+    case 'wl-home-pdf': { const s = wlFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(wlHomeModel(s, V.wlv === 'demo' ? s.person : CL(s.clientId)))), wlFile('after-our-visit', s), WLG().takeHome.title); return true; }
+    case 'wl-home-print': { const s = wlFindVisit(); if (s){ const m = wlHomeModel(s, V.wlv === 'demo' ? s.person : CL(s.clientId)); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
+    case 'wl-copy-note': { const s = wlFindVisit(); if (s) copy(wlNote(s, V.wlv === 'demo' ? s.person : CL(s.clientId))); return true; }
+    case 'wl-send': V.wlsf = null; go('willow', {wlsend:v, wlDemo:V.wlDemo}); return true;
+    case 'wl-send-make': { const s = wlFindVisit(v); if (s) wlSendMake(s); return true; }
+    case 'wl-import': go('willow', {wli:{token:window.GGBridge ? GGBridge.pending('guide') : '', link:'', code:'', err:''}, wlp:v || null}); return true;
+    case 'wl-imp-open': wlImpOpen(); return true;
+    case 'wl-imp-save': wlImpSave(); return true;
+    case 'wl-imp-drop': if (window.GGBridge) GGBridge.clear('guide'); go('willow'); toast('Thrown away. Nothing was saved.'); return true;
+    case 'wl-mhome': V = {tab:'willow', wlm:1}; render(); return true;
+    case 'wl-ml': V = {tab:'willow', wlm:1, wlml:+v}; render(); return true;
+    case 'wl-mread': wlmData().lessons[WLM().lessons[+v].id] = today(); save(); render(); return true;
+    case 'wl-mq': V = {tab:'willow', wlm:1, wlq:wlmNewQuiz()}; render(); return true;
+    case 'wl-mpick': V.wlq.ans[V.wlq.order[V.wlq.i]] = +v; render(); return true;
+    case 'wl-mnext': V.wlq.i++; render(); return true;
+    case 'wl-mprev': V.wlq.i--; render(); return true;
+    case 'wl-mfinish': wlmFinish(); return true;
+    case 'wl-msign': V = {tab:'willow', wlm:1, wlsg:1}; render(); return true;
+    case 'wl-msigned': { const nm = ($('#wlm-name').value || '').trim(); if (!nm){ $('#wlm-name').focus(); return true; } if (!$('#wlm-ok').checked) return alert('Check the box to agree.'), true; wlmData().signed = {v:WLM().version, date:today(), name:nm}; save(); V = {tab:'willow', wlm:1}; render(); toast('Signed. Real visits are open.'); return true; }
+    case 'wl-mprint': wlmPrint(); return true;
+    case 'wl-field': wlSetField(v === 'on'); return true;
+  }
+  return false;
+}
+
+// ----- Owner: open Willow Guide to Field users (through Update a Library) -----
+function wlOwnerCard(){
+  const S = WLG();
+  if (!S) return `<div class="card"><h3>Willow Guide</h3><p class="muted">Willow Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="card"><h3>Willow Guide</h3>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Willow training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="wl-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div></div>`;
+}
+async function wlSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.willowGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.willowGuide.open = Object.assign({}, next.willowGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title:on ? 'Open Willow Guide to Field users' : 'Close Willow Guide to Field users', note:'', rows:[['Replaces', 'willowGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+function wlPersonCard(c){ return c.wl && wlOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Willow Guide</b> <span class="muted">Visits, the six parts, care plans, and the vigil plan for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="wl-open" data-v="${c.id}">${icon('willow')} Open</button></div></div>` : ''; }
+// A card from a family's Willow that arrived by link while the Field Guide was locked, or while it was open.
+function wlBridgeIn(){
+  if (!window.GGBridge || !GGBridge.pending('guide') || !DATA) return;
+  if (!wlOpen()){ toast('A card from Willow arrived, but Willow Guide isn\'t open on this device.'); return; }
+  if (RUN) return;
+  go('willow', {wli:{token:GGBridge.pending('guide'), link:'', code:'', err:''}});
+}
+window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'guide' && DATA) wlBridgeIn(); });
+
+
 // ---------------- HARD TALKS ----------------
 // Every hard conversation, for every life stage, side by side. The topic map, helper notes, and wording
 // live in the Field library (FLD.hardTalks). The guides themselves are read from the public
 // maple/guides.js, aspen/guides.js, and oak/guides.js, so there's one place to edit them.
-// Pine and Willow are coming soon: they show a stand-in guide (Aspen, Oak) with a note.
+// Pine is coming soon: it shows a stand-in guide (Aspen) with a note. Willow is live (Willow Build Session 3): its stage
+// reads willow/guides.js. See htStagesAll and htWillowIds.
 // Handouts print one page per guide, sized to fit, with a QR code made on this device by qr.js.
 // "Add to their record" saves a session with kind 'ht': topic, stages, handouts, and date. Never what
 // was said. Staff and Owner always see it; Field users once FLD.hardTalks.open.field is on and
@@ -3870,12 +4786,28 @@ function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="ma
 const HTG = () => (FLD && FLD.hardTalks) || null;
 const htOpen = () => !!HTG() && (TIER !== 'field' || !!(HTG().open && HTG().open.field && (!OR() || orState().complete)));
 const HT_SITE = 'https://growwithgrounded.com';
-const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', oak:'/oak/#life='};
-const HT_TM = {maple:'Maple', aspen:'Aspen', oak:'Oak'};
+const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', oak:'/oak/#life=', willow:'/willow/#guide='};
+const HT_TM = {maple:'Maple', aspen:'Aspen', oak:'Oak', willow:'Willow'};
+// Willow's guides for a topic. A topic can name them itself (T.willow, through a Hard Talks patch). Until then they come
+// from the topic's Oak guides, so every end-of-life topic finds its Willow guides without a library change.
+const HT_OAK_WILLOW = {'own-death':['end','notready','afraid','burden'], 'dying-loved':['signs','hear','hanging','visions','rally','kids'],
+  'bedside':['signs','starving','hear','visions','hanging','rally'], 'after-death':['firsthour','official','notthere','relief'], 'eol-plan':['notready','end'],
+  'spouse-death':['relief','notthere'], 'parent-death':['relief','notthere'], 'caregiving':['conflict','relief','burden'], 'aging-parents':['burden','conflict'],
+  'estrangement':['estranged'], 'ambiguous-loss':['estranged'], 'shame':['parent','forgive'], 'forgiveness':['forgive'], 'moral-injury':['forgive','parent'],
+  'faith-crisis':['punish','afraid'], 'spiritual-dryness':['punish'], 'leaving-faith':['comeback'], 'church-hurt':['comeback'], 'diagnosis':['miracle'],
+  'suicidal-self':['end'], 'suicidal-other':['end']};
+function htWillowIds(T){
+  if (Array.isArray(T.willow)) return T.willow;
+  const out = []; (T.oak || []).forEach(id => (HT_OAK_WILLOW[id] || []).forEach(w => { if (!out.includes(w)) out.push(w); }));
+  return out;
+}
+// The sealed library still marks Willow coming soon with Oak standing in. Once willow/guides.js is loaded, the stage is
+// live here, without changing the library itself (so Download for Editing stays exactly as sealed).
+function htStagesAll(){ const L = (HTG() && HTG().stages) || []; return L.map(st => st.id === 'willow' && HD && HD.willow ? Object.assign({}, st, {src:'willow', soon:false}) : st); }
 const HT_CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
 const HT_ABUSE = /abuse|abused|molest|rape|assault|touched me|hits me|hitting me|beat(s|ing)? me|domestic/;
 const htTopic = id => (HTG().topics || []).find(t => t.id === id) || null;
-const htStageDef = id => (HTG().stages || []).find(s => s.id === id) || null;
+const htStageDef = id => htStagesAll().find(s => s.id === id) || null;
 const htGroupName = k => ((HTG().groups || []).find(g => g.key === k) || {}).name || '';
 const htRecs = cid => DATA.sessions.filter(s => s.kind === 'ht' && (!cid || s.clientId === cid)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const htStageNames = ids => (ids || []).map(id => { const s = HTG() && htStageDef(id); return s ? s.name : id; }).join(', ');
@@ -3885,13 +4817,14 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
-    .then(([a, b, c]) => {
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+    .then(([a, b, c, d]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
       if (!sp || !sa || !st) throw 0;
       const by = list => { const m = {}; (list || []).forEach(t => { if (t && t.id) m[t.id] = t; }); return m; };
-      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics)};
+      const wl = run(d).WILLOW_GUIDES;
+      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics), willow: by(wl && wl.guides)};
       HD_WAIT = null; if (DATA && V.tab === 'talks') render();
     })
     .catch(() => { HD_WAIT = null; HD_FAIL = true; if (DATA && V.tab === 'talks') render(); });
@@ -3903,9 +4836,9 @@ function htNeedData(){
     : `<div class="card"><p class="muted">Loading the guides...</p></div>`;
 }
 const htGuide = (src, id) => (HD && HD[src] && HD[src][id]) || null;
-// The guides for one stage of one topic. Pine stands in with Aspen; Willow with Oak.
+// The guides for one stage of one topic. Pine stands in with Aspen. Willow reads its own guides once they load.
 function htStage(T, st){
-  const ids = st.id === 'pine' ? (T.hw || T.aspen || []) : st.id === 'willow' ? (T.eol ? (T.og || T.oak || []) : []) : (T[st.id] || []);
+  const ids = st.id === 'pine' ? (T.hw || T.aspen || []) : st.id === 'willow' ? (st.src === 'willow' ? htWillowIds(T) : (T.eol ? (T.og || T.oak || []) : [])) : (T[st.id] || []);
   return ids.map(id => ({src: st.src, id, g: htGuide(st.src, id)})).filter(r => r.g);
 }
 function htRef(T, st){
@@ -3942,6 +4875,16 @@ function htSections(r, print){
     if (!print) add('teach', 'For teachers', 'list', g.teach);
     add('reach', 'When to get more help', 'list', g.reach);
     if (!print) add('more', 'Learn more', 'links', g.more);
+  } else if (r.src === 'willow'){
+    const P = htWillowParts(g);
+    add('quick', 'The basics', 'list', P.what);
+    add('know', 'What we know', 'p', P.know);
+    add('means', 'What it may mean', 'p', P.means);
+    add('say', 'Words that help', 'say', P.say);
+    add('dont', 'Try not to say', 'list', P.dont);
+    add('helps', 'What helps', 'list', P.helps);
+    add('faith', 'Faith and meaning', 'p', P.faith);
+    if (!print) add('pro', 'For chaplains and doulas', 'p', P.pro);
   } else if (r.src === 'aspen'){
     add('quick', 'The basics', 'list', g.quick);
     add('talk', 'Talking it through', 'p', g.talk);
@@ -3971,6 +4914,7 @@ function htSections(r, print){
   }
   return S;
 }
+function htWillowParts(g){ const P = {}; (g.parts || []).forEach(x => { if (Array.isArray(x)) (P[x[0]] = P[x[0]] || []).push(x[1]); }); return P; }
 function htSecHTML(x){
   const li = a => a.map(t => `<li>${esc(htPlain(t))}</li>`).join('');
   if (x.type === 'say') return `<div class="blk say"><div class="lab">${esc(x.h)}</div><ul>${li(x.items)}</ul></div>`;
@@ -3995,7 +4939,7 @@ const HT_STOP = ' a an and are about as at be but by can do does for from get ho
 const HT_HAY = new WeakMap();
 function htHay(T){
   if (HT_HAY.has(T)) return HT_HAY.get(T);
-  const g = (HTG().stages || []).flatMap(st => htStage(T, st)).map(r => r.g.title + ' ' + (r.g.keys || '')).join(' ');
+  const g = htStagesAll().flatMap(st => htStage(T, st)).map(r => r.g.title + ' ' + (r.g.keys || '')).join(' ');
   const h = htNorm([T.title, T.keys || '', T.helper || '', htGroupName(T.group), g].join(' ')); HT_HAY.set(T, h); return h;
 }
 function htMatch(T, q){
@@ -4008,7 +4952,7 @@ function htListHTML(){
   const H = HTG(), q = (V.htq || '').trim(), grp = V.htg || '';
   const list = (H.topics || []).filter(T => (!grp || T.group === grp) && htMatch(T, q));
   const raw = q.toLowerCase(), crisis = q && (HT_CRISIS.test(raw) || HT_ABUSE.test(raw));
-  const row = T => `<button class="gitem ht-item" data-act="ht-topic" data-v="${esc(T.id)}"><span class="ht-dots" aria-hidden="true">${(H.stages || []).map(st => { const on = htStage(T, st).length; return `<i class="${on ? (st.soon ? 'soon' : 'on') : ''}" style="--sc:${esc(st.color)}"></i>`; }).join('')}</span><span><b>${esc(T.title)}</b><small>${esc((H.stages || []).filter(st => !st.soon && htStage(T, st).length).map(st => st.name).join(', '))}</small></span><span class="arr">&rsaquo;</span></button>`;
+  const row = T => `<button class="gitem ht-item" data-act="ht-topic" data-v="${esc(T.id)}"><span class="ht-dots" aria-hidden="true">${htStagesAll().map(st => { const on = htStage(T, st).length; return `<i class="${on ? (st.soon ? 'soon' : 'on') : ''}" style="--sc:${esc(st.color)}"></i>`; }).join('')}</span><span><b>${esc(T.title)}</b><small>${esc(htStagesAll().filter(st => !st.soon && htStage(T, st).length).map(st => st.name).join(', '))}</small></span><span class="arr">&rsaquo;</span></button>`;
   const body = q ? (list.length ? list.map(row).join('') : `<p class="muted" style="margin:6px 0 14px">Nothing matched "${esc(q)}." Try a simpler word, like grief, divorce, or bullying.</p>`)
     : (H.groups || []).filter(g => !grp || g.key === grp).map(g => { const ts = list.filter(T => T.group === g.key); return ts.length ? `<div class="gcat"><h3>${esc(g.name)}</h3><p class="muted" style="font-size:15px">${esc(g.blurb || '')}</p></div>${ts.map(row).join('')}` : ''; }).join('');
   return (crisis ? htCrisisCard(HT_ABUSE.test(raw)) : '') + body;
@@ -4032,7 +4976,7 @@ function vHT(){
   const recent = htRecs().slice(0, 5);
   return `${htHello()}${htSubTabs()}
   <div class="card">${(H.intro || []).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
-   <div class="ht-legend">${(H.stages || []).map(st => `<span><i class="${st.soon ? 'soon' : 'on'}" style="--sc:${esc(st.color)}"></i>${esc(st.name)} <small class="muted">${esc(st.ages)}${st.soon ? ', coming soon' : ''}</small></span>`).join('')}</div></div>
+   <div class="ht-legend">${htStagesAll().map(st => `<span><i class="${st.soon ? 'soon' : 'on'}" style="--sc:${esc(st.color)}"></i>${esc(st.name)} <small class="muted">${esc(st.ages)}${st.soon ? ', coming soon' : ''}</small></span>`).join('')}</div></div>
   ${htCrisisCard(false)}
   <div class="card"><label class="f" for="ht-q" style="margin-top:0">Find a topic</label><input type="text" id="ht-q" value="${esc(V.htq || '')}" placeholder="Grief, divorce, vaping, a scary diagnosis..." autocomplete="off">
    <div class="row" style="margin-top:12px"><button class="chip" aria-pressed="${!V.htg}" data-act="ht-group" data-v="">All</button>${(H.groups || []).map(g => `<button class="chip" aria-pressed="${V.htg === g.key}" data-act="ht-group" data-v="${esc(g.key)}">${esc(g.name)}</button>`).join('')}</div></div>
@@ -4041,7 +4985,7 @@ function vHT(){
   ${TIER !== 'field' ? htCheckCard() + cdCheckCard() : ''}`;
 }
 function vHTTopic(T){
-  const H = HTG(), stages = (H.stages || []).map(st => ({st, refs: htStage(T, st)}));
+  const H = HTG(), stages = htStagesAll().map(st => ({st, refs: htStage(T, st)}));
   const have = stages.filter(x => x.refs.length), none = stages.filter(x => !x.refs.length && (x.st.id !== 'willow' || T.eol));
   const pk = V.htp || (V.htp = have.filter(x => !(x.st.id === 'willow')).map(x => x.st.id));
   const card = ({st, refs}) => {
@@ -4119,7 +5063,7 @@ function htCheck(){
   const H = HTG(), used = {maple:new Set(), aspen:new Set(), oak:new Set()}, missing = [];
   (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['hw','aspen'],['og','oak']].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
   const loose = Object.keys(used).flatMap(src => Object.keys(HD[src]).filter(id => !used[src].has(id)).map(id => HT_TM[src] + ': ' + HD[src][id].title));
-  return {missing, loose, total: Object.keys(HD).reduce((n, k) => n + Object.keys(HD[k]).length, 0)};
+  return {missing, loose, total: ['maple','aspen','oak'].reduce((n, k) => n + Object.keys(HD[k]).length, 0)};
 }
 function htCheckCard(){
   const r = htCheck();
@@ -4199,7 +5143,7 @@ function htSave(T){
     DATA.clients.push(c);
   } else c = CL(F.cid);
   if (!c) return alert('Choose who this was with.');
-  const order = (HTG().stages || []).map(s => s.id), date = F.date || today();
+  const order = htStagesAll().map(s => s.id), date = F.date || today();
   DATA.sessions.push({id:uid(), u:Date.now(), kind:'ht', clientId:c.id, date, minutes:0, topic:T.id, topicTitle:T.title,
     stages: order.filter(x => F.stages.includes(x)), hand: [...order, 'pack'].filter(x => F.hand.includes(x))});
   if (F.fdate) (c.followups = c.followups || []).push({date:F.fdate, text:(F.ftext || '').trim() || 'Follow up on ' + T.title, done:false});
@@ -4219,7 +5163,7 @@ function htAct(a, v, t){
     case 'ht-full': V.htx = Object.assign({}, V.htx, {[v]: !(V.htx || {})[v]}); htKeep(); return true;
     case 'ht-pk': { const p = V.htp || [], i = p.indexOf(v); if (i >= 0) p.splice(i, 1); else p.push(v); V.htp = p; htKeep(); return true; }
     case 'ht-print': case 'ht-pack': if (T){
-      const ids = a === 'ht-pack' ? (HTG().stages || []).map(s => s.id).filter(x => (V.htp || []).includes(x)) : [v];
+      const ids = a === 'ht-pack' ? htStagesAll().map(s => s.id).filter(x => (V.htp || []).includes(x)) : [v];
       if (!ids.length) return true;
       htPrint(T, ids, T.title + (a === 'ht-pack' ? ', Family Pack' : ''));
       // Fills in the record form: these stages were talked through, and this handout was given.
@@ -4246,15 +5190,16 @@ function htAct(a, v, t){
 // "Add to their record" saves a session with kind 'ht' and a plan field. Never what was said.
 const CDG = () => (HTG() && HTG().cards) || null;
 const PLG = () => (HTG() && HTG().plans) || null;
-const CD_AGES = ['maple','aspen','oak'];
-const CD_SRC = {maple:'maple', aspen:'aspen', oak:'oak'};
+// Willow joins the tree cards once its deck (hardTalks.cards.base.willow) is in the library (Willow Build Session 3).
+const cdAges = () => ['maple','aspen','oak', ...((((CDG() || {}).base || {}).willow) ? ['willow'] : [])];
+const CD_SRC = {maple:'maple', aspen:'aspen', oak:'oak', willow:'willow'};
 const cdFaith = () => !!(DATA && DATA.settings.htFaith);
 const cdTxt = c => c == null ? '' : typeof c === 'string' ? c : (cdFaith() ? c.t : (c.n || c.t));
 const cdKind = s => /\.\.\.$/.test(s) ? 'finish' : /^(Show me|Draw|Point)\b/.test(s) ? 'show' : 'q';
 const cdKindName = s => cdKind(s) === 'q' ? '' : (((CDG() || {}).kinds || {})[cdKind(s)] || '');
 const cdPart = id => ((CDG() || {}).parts || []).find(p => p.id === id) || null;
-const cdStageDef = id => (HTG().stages || []).find(s => s.id === id) || {id, name:id, color:'#8B5E1A', ages:''};
-const cdStages = () => CD_AGES.map(cdStageDef);
+const cdStageDef = id => htStagesAll().find(s => s.id === id) || {id, name:id, color:'#8B5E1A', ages:''};
+const cdStages = () => cdAges().map(cdStageDef);
 const cdDeck = id => (CDG().decks || []).find(d => d.id === id) || null;
 const cdDeckName = id => id === 'tree' ? (CDG().treeName || 'Tree cards') : ((cdDeck(id) || {}).title || 'Cards');
 const cdSlotName = k => k === 'warm' ? (CDG().warmName || 'Warm up') : k === 'close' ? (CDG().closeName || 'Closing') : ((cdPart(k) || {}).name || k);
@@ -4269,7 +5214,7 @@ function cdPool(stage, deck, k){
 function cdGuideOnly(T){
   if (!T) return false; if (T.crisis || T.abuse) return true;
   const G = (CDG() || {}).guideOnly || {};
-  return (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => (G[r.src] || []).includes(r.id)));
+  return htStagesAll().filter(st => !st.soon).some(st => htStage(T, st).some(r => (G[r.src] || []).includes(r.id)));
 }
 // A deck names the topics it belongs to (d.topics), so two topics that share a guide never trade
 // cards. Decks from before that field fall back to matching by guide id.
@@ -4277,7 +5222,7 @@ function cdDeckFor(T){
   if (!T || !CDG() || cdGuideOnly(T)) return null;
   const D = CDG().decks || [];
   return D.find(d => (d.topics || []).includes(T.id))
-    || D.find(d => !d.topics && (HTG().stages || []).filter(st => !st.soon).some(st => htStage(T, st).some(r => ((d.guides || {})[r.src] || []).includes(r.id))))
+    || D.find(d => !d.topics && htStagesAll().filter(st => !st.soon).some(st => htStage(T, st).some(r => ((d.guides || {})[r.src] || []).includes(r.id))))
     || null;
 }
 // The Hard Talks group a deck sits in, for the deck picker.
@@ -4425,7 +5370,7 @@ const plFmt = id => (PLG().formats || []).find(f => f.id === id) || PLG().format
 const plLine = x => cdTxt(x);
 const plAgeKey = st => st === 'oak' ? 'adult' : st;
 function plStages(S){
-  const order = CD_AGES, sel = order.filter(x => (S.stages || []).includes(x));
+  const order = cdAges(), sel = order.filter(x => (S.stages || []).includes(x));
   const list = sel.length ? sel : ['oak'];
   if (S.fmt !== 'family') return {main: list[0], older: null, all: [list[0]]};
   return {main: list[0], older: list.length > 1 ? list[list.length - 1] : null, all: list};
@@ -4470,12 +5415,13 @@ function plCards(S, k, deck){
   }
   return out;
 }
-function plRefs(T, stage){ const st = T && HD ? (HTG().stages || []).find(s => s.id === stage) : null; return st ? htStage(T, st) : []; }
+function plRefs(T, stage){ const st = T && HD ? htStagesAll().find(s => s.id === stage) : null; return st ? htStage(T, st) : []; }
 function plFromGuide(T, stage, gi){
   const refs = plRefs(T, stage); if (!refs.length) return null;
   const r = refs[Math.min(+gi || 0, refs.length - 1)], g = r.g;
-  const say = r.src === 'maple' ? g.start : r.src === 'aspen' ? g.say : ((g.helper || {}).say);
-  const avoid = r.src === 'oak' ? ((g.helper || {}).avoid) : g.avoid;
+  const WP = r.src === 'willow' ? htWillowParts(g) : null;
+  const say = r.src === 'maple' ? g.start : r.src === 'aspen' ? g.say : WP ? WP.say : ((g.helper || {}).say);
+  const avoid = r.src === 'oak' ? ((g.helper || {}).avoid) : WP ? WP.dont : g.avoid;
   return {title: g.title, link: htLink(r), say: (say || []).slice(0, 3).map(htPlain), avoid: (avoid || []).slice(0, 3).map(htPlain)};
 }
 function plBuild(S){
@@ -4632,14 +5578,14 @@ function cdCheckCard(){
   return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>Card check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. ${have} topics have their own cards, ${only.length} stay guide only, ${need.length} use the tree cards for now. Send this to a chat for the next batch.</p>
    ${need.length ? `<p style="margin-top:8px"><b>Topics without cards yet:</b> ${esc(need.join('; '))}</p>` : ''}
    ${bad.length ? `<p style="margin-top:8px"><b>Deck problems:</b> ${esc(bad.join('; '))}</p>` : ''}
-   <p class="muted" style="font-size:14px;margin-top:8px">Pine and Willow cards wait until those tools are ready.</p></div>`;
+   <p class="muted" style="font-size:14px;margin-top:8px">${cdAges().includes('willow') ? 'Willow has its own tree cards. Pine cards wait until that tool is ready.' : 'Pine cards wait until that tool is ready. Willow tree cards come with the Willow Guide library update.'}</p></div>`;
 }
 // ----- topic page: cards and plans for this topic -----
 function cdTopicCard(T){
   if (!CDG()) return '';
   const d = cdDeckFor(T), only = cdGuideOnly(T);
   return `<div class="card" style="margin-top:14px"><h3>Cards and plans</h3>
-   <p class="muted" style="font-size:15px;margin-top:4px">${only ? esc(CDG().guideOnlyNote || '') : d ? esc(d.title) + ' has its own cards for ' + esc(CD_AGES.filter(a => d[a]).map(a => cdStageDef(a).name).join(', ')) + '.' : "This topic doesn't have its own cards yet. The tree cards work for it."}</p>
+   <p class="muted" style="font-size:15px;margin-top:4px">${only ? esc(CDG().guideOnlyNote || '') : d ? esc(d.title) + ' has its own cards for ' + esc(cdAges().filter(a => d[a]).map(a => cdStageDef(a).name).join(', ')) + '.' : "This topic doesn't have its own cards yet. The tree cards work for it."}</p>
    <div class="row" style="margin-top:12px">${only ? '' : `<button class="btn btn-line btn-sm" data-act="ht-tcards" data-v="${esc(T.id)}">Draw Cards</button>`}<button class="btn btn-gold btn-sm" data-act="ht-tplan" data-v="${esc(T.id)}">Plan a Session</button></div></div>`;
 }
 // ----- actions -----
@@ -4665,7 +5611,7 @@ function cdAct(a, v, t){
     case 'ht-cprint': cdPrint(cdPrintList(), cdStageDef(S.stage).name + ', ' + cdDeckName(S.deck), S.backs); return true;
     case 'ht-cprintkept': cdPrint(S.kept.slice(), 'Kept cards', S.backs); return true;
     case 'ht-tcards': { const T = htTopic(v), d = cdDeckFor(T); V = {tab:'talks', htv:'cards', htq:V.htq, htg:V.htg}; S.deck = d ? d.id : 'tree'; S.mode = null; S.parts = GV_PARTS.slice(); render(); return true; }
-    case 'ht-tplan': { const st = (V.htSeen || [])[0]; PS = plNew({topic: v, stages: CD_AGES.includes(st) ? [st] : ['oak']}); V = {tab:'talks', htv:'plans', htq:V.htq, htg:V.htg}; render(); return true; }
+    case 'ht-tplan': { const st = (V.htSeen || [])[0]; PS = plNew({topic: v, stages: cdAges().includes(st) ? [st] : ['oak']}); V = {tab:'talks', htv:'plans', htq:V.htq, htg:V.htg}; render(); return true; }
     // plans
     case 'ht-pfmt': { const P = plState(); P.fmt = v; if (v !== 'family') P.stages = [plStages(P).main]; htKeep(); return true; }
     case 'ht-pmin': plState().min = +v; htKeep(); return true;
@@ -4966,6 +5912,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('ht-') && htAct(a, v, t)) return;
   if (a && a.startsWith('sp-') && spAct(a, v, t)) return;
   if (a && a.startsWith('sa-') && saAct(a, v, t)) return;
+  if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
@@ -4989,7 +5936,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'wl'){ go('willow', {wlv:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -5107,6 +6054,7 @@ document.addEventListener('input', e => {
   const t = e.target; if (!DATA) return;
   if (spInput(t, 'input')) return;
   if (saInput(t, 'input')) return;
+  if (wlInput(t, 'input')) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
   if (t.dataset.plf === 'name' && PS){ PS.name = t.value; return; }
@@ -5132,6 +6080,7 @@ document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
   if (spInput(t, 'change')) return;
   if (saInput(t, 'change')) return;
+  if (wlInput(t, 'change')) return;
   if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
   if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
   if (t.dataset.cddeck){ cdAct('ht-cdeck', t.value || 'tree', t); return; }

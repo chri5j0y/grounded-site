@@ -1,0 +1,1702 @@
+{
+ "_gfg": "library-patch",
+ "level": "owner",
+ "title": "Proofreading: Willow Build Session 3",
+ "note": "422 lines from Willow Guide, the Willow bridge, and the privacy page.",
+ "set": {
+  "proofreadingAdd.w3-willow-guide": {
+   "id": "w3-willow-guide",
+   "title": "Willow Build Session 3: Willow Guide and the bridge",
+   "lines": [
+    [
+     "w3-001",
+     "Walking alongside a person in hospice, and the people who love them."
+    ],
+    [
+     "w3-002",
+     "Willow Guide is for chaplains and end-of-life doulas, and for a social worker or nurse when they fill that role. It asks the same questions as Willow, so a family's Willow and your visits speak the same language."
+    ],
+    [
+     "w3-003",
+     "Every visit begins with their yes, and then with faith. Scores are here for you, to notice change and plan care. The family only ever sees gentle words."
+    ],
+    [
+     "w3-004",
+     "Near the end, a wish to die is usually about readiness or suffering, not danger. Willow Guide helps you tell the difference, and tells you what to do with each."
+    ],
+    [
+     "w3-005",
+     "End-of-life doula"
+    ],
+    [
+     "w3-006",
+     "Social worker or nurse in this role"
+    ],
+    [
+     "w3-007",
+     "Your role changes how visits open and what the visit note calls the visit. Change it any time."
+    ],
+    [
+     "w3-008",
+     "Spiritual care visit"
+    ],
+    [
+     "w3-009",
+     "The person in hospice"
+    ],
+    [
+     "w3-010",
+     "A family member or caregiver"
+    ],
+    [
+     "w3-011",
+     "First names or initials only. Never a full name, a room number with a name, or a photo. Everything stays encrypted on this device."
+    ],
+    [
+     "w3-012",
+     "Family visits use Willow's caregiver questions. Their answers are about them, not about the person they love. Vigil planning belongs on the person's own record."
+    ],
+    [
+     "w3-013",
+     "A caregiver answers for themselves. These questions are about how they are holding up."
+    ],
+    [
+     "w3-014",
+     "30 to 45 minutes"
+    ],
+    [
+     "w3-015",
+     "Faith first, then all six parts, three questions each."
+    ],
+    [
+     "w3-016",
+     "About 15 minutes"
+    ],
+    [
+     "w3-017",
+     "Faith first, then one question for each part."
+    ],
+    [
+     "w3-018",
+     "Open conversation"
+    ],
+    [
+     "w3-019",
+     "Follow where they lead"
+    ],
+    [
+     "w3-020",
+     "Prompts for each part. You mark how each part seemed."
+    ],
+    [
+     "w3-021",
+     "Vigil planning"
+    ],
+    [
+     "w3-022",
+     "About 30 minutes"
+    ],
+    [
+     "w3-023",
+     "The room, the people, the words, touch, and after."
+    ],
+    [
+     "w3-024",
+     "Ask before the first visit. In hospice, most yeses are spoken, and that is enough."
+    ],
+    [
+     "w3-025",
+     "They said yes, out loud"
+    ],
+    [
+     "w3-026",
+     "Spiritual care is in their hospice plan of care"
+    ],
+    [
+     "w3-027",
+     "Their health care agent said yes"
+    ],
+    [
+     "w3-028",
+     "Written consent"
+    ],
+    [
+     "w3-029",
+     "They said no for now"
+    ],
+    [
+     "w3-030",
+     "If they can no longer speak for themselves, their health care agent, or the family member their team names, can say yes for them. Their own earlier wishes still come first."
+    ],
+    [
+     "w3-031",
+     "Visits stay off. If they change their mind, record it here. Leave the door open: \"If you ever want company, ask for me.\""
+    ],
+    [
+     "w3-032",
+     "You'll still ask at the start of every visit: \"Is now an okay time?\""
+    ],
+    [
+     "w3-033",
+     "Is now an okay time?"
+    ],
+    [
+     "w3-034",
+     "Not now, come back later"
+    ],
+    [
+     "w3-035",
+     "Sit down if you can, at eye level. Turn off the TV only if they say yes. Your first job is to be a guest."
+    ],
+    [
+     "w3-036",
+     "They answered, or they answered out loud while someone tapped. Both count as their own voice."
+    ],
+    [
+     "w3-037",
+     "They can't answer now, so a family member answers from what they see and hear. These answers are kept apart and never count as the person's own. Faith is not asked today."
+    ],
+    [
+     "w3-038",
+     "Every answer is welcome, including none. Use their words back to them. If they say \"not religious,\" ask what does hold them up."
+    ],
+    [
+     "w3-039",
+     "What's holding you up right now?"
+    ],
+    [
+     "w3-040",
+     "Has your faith helped, or gone quiet, through all this?"
+    ],
+    [
+     "w3-041",
+     "What does caring for them mean to you?"
+    ],
+    [
+     "w3-042",
+     "What stories have you been remembering together?"
+    ],
+    [
+     "w3-043",
+     "How are you, really?"
+    ],
+    [
+     "w3-044",
+     "What's the hardest part for you?"
+    ],
+    [
+     "w3-045",
+     "Who's leaning on you, and who can you lean on?"
+    ],
+    [
+     "w3-046",
+     "How is the family doing together?"
+    ],
+    [
+     "w3-047",
+     "When did you last eat a real meal, or sleep a full night?"
+    ],
+    [
+     "w3-048",
+     "What would one real break look like?"
+    ],
+    [
+     "w3-049",
+     "What are you hoping for now?"
+    ],
+    [
+     "w3-050",
+     "Can you picture yourself on the other side of this?"
+    ],
+    [
+     "w3-051",
+     "Readiness or danger"
+    ],
+    [
+     "w3-052",
+     "Many people near the end think about dying a lot. Can I ask you a question about that?"
+    ],
+    [
+     "w3-053",
+     "Their answers call for the safety step. Ask gently, and listen for which kind it is."
+    ],
+    [
+     "w3-054",
+     "Not ready is common. Ask what they're hoping for, and what would help them feel more ready."
+    ],
+    [
+     "w3-055",
+     "Peace with dying is a gift, not a warning sign. Honor it. Ask what helps them feel ready."
+    ],
+    [
+     "w3-056",
+     "This is usually about suffering, waiting, or feeling like a burden. It is not a crisis, and it does need the team."
+    ],
+    [
+     "w3-057",
+     "This is the one that needs action now. Stay with them, and follow the steps below."
+    ],
+    [
+     "w3-058",
+     "Respect it. Let them know you're glad to come back to it any time."
+    ],
+    [
+     "w3-059",
+     "They've thought about ending their life"
+    ],
+    [
+     "w3-060",
+     "They wish it would come sooner"
+    ],
+    [
+     "w3-061",
+     "Family has heard them say it"
+    ],
+    [
+     "w3-062",
+     "A caregiver isn't sure they can go on"
+    ],
+    [
+     "w3-063",
+     "They don't always feel safe"
+    ],
+    [
+     "w3-064",
+     "Stay with them. Don't leave them alone if they may be in danger."
+    ],
+    [
+     "w3-065",
+     "Ask gently: \"Have you thought about how?\" and \"Do you have what you'd need?\""
+    ],
+    [
+     "w3-066",
+     "Call the hospice nurse now. Then tell your supervisor."
+    ],
+    [
+     "w3-067",
+     "Call or text 988 together, or call 911 if danger is right now."
+    ],
+    [
+     "w3-068",
+     "With the nurse and family, make extra medications and any firearms safe."
+    ],
+    [
+     "w3-069",
+     "Write your visit note today."
+    ],
+    [
+     "w3-070",
+     "Thank them for telling you. Don't argue it away."
+    ],
+    [
+     "w3-071",
+     "Ask what makes it hard right now: pain, breath, fear, feeling like a burden, or the waiting."
+    ],
+    [
+     "w3-072",
+     "Tell the hospice nurse today, so symptoms get looked at."
+    ],
+    [
+     "w3-073",
+     "Bring it to the team meeting, and visit again soon."
+    ],
+    [
+     "w3-074",
+     "Tell the hospice nurse and the team."
+    ],
+    [
+     "w3-075",
+     "Visit soon. If they can still talk, ask them yourself."
+    ],
+    [
+     "w3-076",
+     "Stay with them. Call or text 988 together, or call 911 if they're in danger."
+    ],
+    [
+     "w3-077",
+     "Tell the hospice social worker and bereavement team today."
+    ],
+    [
+     "w3-078",
+     "Help them name one person to call tonight."
+    ],
+    [
+     "w3-079",
+     "Thank them, and believe them. Don't investigate."
+    ],
+    [
+     "w3-080",
+     "Tell your supervisor and the hospice social worker today."
+    ],
+    [
+     "w3-081",
+     "In Minnesota, report to MAARC at 1-844-880-1574. If you are a mandated reporter, report right away, within 24 hours."
+    ],
+    [
+     "w3-082",
+     "If they're in danger now, call 911."
+    ],
+    [
+     "w3-083",
+     "Stayed with them"
+    ],
+    [
+     "w3-084",
+     "Called the hospice nurse"
+    ],
+    [
+     "w3-085",
+     "Told my supervisor"
+    ],
+    [
+     "w3-086",
+     "Called or texted 988 together"
+    ],
+    [
+     "w3-087",
+     "Means made safer"
+    ],
+    [
+     "w3-088",
+     "Told the social worker"
+    ],
+    [
+     "w3-089",
+     "Reported to MAARC"
+    ],
+    [
+     "w3-090",
+     "Brought it to the team"
+    ],
+    [
+     "w3-091",
+     "Too tired, or asleep"
+    ],
+    [
+     "w3-092",
+     "Others were in the room"
+    ],
+    [
+     "w3-093",
+     "Not the right moment"
+    ],
+    [
+     "w3-094",
+     "Asked recently, nothing changed"
+    ],
+    [
+     "w3-095",
+     "Nothing in their answers called for the safety question today. You can still ask."
+    ],
+    [
+     "w3-096",
+     "Ask about readiness anyway"
+    ],
+    [
+     "w3-097",
+     "Ask how they're holding up anyway"
+    ],
+    [
+     "w3-098",
+     "Ask only when they're alone with you. This answer is never shared with family, and never goes on a handout."
+    ],
+    [
+     "w3-099",
+     "They're alone with me, and I asked"
+    ],
+    [
+     "w3-100",
+     "This answer stays on this device only. It never goes on a handout or the visit note."
+    ],
+    [
+     "w3-101",
+     "What's underneath"
+    ],
+    [
+     "w3-102",
+     "Open what fits. Leave the rest. Most visits use one of these, or none."
+    ],
+    [
+     "w3-103",
+     "Spiritual struggle"
+    ],
+    [
+     "w3-104",
+     "Name which kind you're hearing. Each one asks for something different. Don't defend God. Name it, and stay."
+    ],
+    [
+     "w3-105",
+     "Guilt and shame"
+    ],
+    [
+     "w3-106",
+     "Listen first. Then sort."
+    ],
+    [
+     "w3-107",
+     "Let them tell it all the way through. Don't rush to fix or forgive."
+    ],
+    [
+     "w3-108",
+     "Reflect the weight back: \"That's been heavy to carry.\""
+    ],
+    [
+     "w3-109",
+     "Is it guilt about something they did, shame about who they are, or guilt for something that was never theirs?"
+    ],
+    [
+     "w3-110",
+     "Guilt points to repair. Shame needs worth and company. What was never theirs can be set down."
+    ],
+    [
+     "w3-111",
+     "A rite from their tradition, a blessing, a letter, or the Four Things. Ask before you pray."
+    ],
+    [
+     "w3-112",
+     "What are you hearing?"
+    ],
+    [
+     "w3-113",
+     "Forgiveness is never forced, and never toward someone who isn't safe."
+    ],
+    [
+     "w3-114",
+     "A spiritual history, a little at a time"
+    ],
+    [
+     "w3-115",
+     "Four parts. Fill in what you learn, over as many visits as it takes. Use your own words."
+    ],
+    [
+     "w3-116",
+     "Sources of hope"
+    ],
+    [
+     "w3-117",
+     "What gives them hope, comfort, strength, peace, or love? What holds them up when things are hard?"
+    ],
+    [
+     "w3-118",
+     "Organized religion"
+    ],
+    [
+     "w3-119",
+     "Are they part of a faith community? Does it help, or has it hurt? Who should we call?"
+    ],
+    [
+     "w3-120",
+     "Personal practice"
+    ],
+    [
+     "w3-121",
+     "Prayer, reading, music, nature, meditation, rituals. What do they do on their own?"
+    ],
+    [
+     "w3-122",
+     "Effects on care"
+    ],
+    [
+     "w3-123",
+     "Does their faith shape choices about comfort, clarity, food, touch, or what happens after death? Anything we should never do?"
+    ],
+    [
+     "w3-124",
+     "HOPE: Anandarajah and Hight, 2001. The four headings are theirs. The prompts here are Grounded's own."
+    ],
+    [
+     "w3-125",
+     "What you noticed"
+    ],
+    [
+     "w3-126",
+     "Feels like a burden"
+    ],
+    [
+     "w3-127",
+     "Waiting for someone"
+    ],
+    [
+     "w3-128",
+     "Family conflict"
+    ],
+    [
+     "w3-129",
+     "Estranged family"
+    ],
+    [
+     "w3-130",
+     "Unfinished business"
+    ],
+    [
+     "w3-131",
+     "Hard to tell today"
+    ],
+    [
+     "w3-132",
+     "Presence in silence"
+    ],
+    [
+     "w3-133",
+     "Prayer in their tradition"
+    ],
+    [
+     "w3-134",
+     "Prayer in my own words"
+    ],
+    [
+     "w3-135",
+     "Scripture or a reading"
+    ],
+    [
+     "w3-136",
+     "Music or singing"
+    ],
+    [
+     "w3-137",
+     "The Four Things"
+    ],
+    [
+     "w3-138",
+     "A story for Cuttings"
+    ],
+    [
+     "w3-139",
+     "Ritual or sacrament arranged"
+    ],
+    [
+     "w3-140",
+     "Called their clergy"
+    ],
+    [
+     "w3-141",
+     "Family meeting"
+    ],
+    [
+     "w3-142",
+     "Guided breathing"
+    ],
+    [
+     "w3-143",
+     "Their own clergy"
+    ],
+    [
+     "w3-144",
+     "Bereavement team"
+    ],
+    [
+     "w3-145",
+     "Music or art therapy"
+    ],
+    [
+     "w3-146",
+     "What we'll work on"
+    ],
+    [
+     "w3-147",
+     "One or two at a time. Less is more."
+    ],
+    [
+     "w3-148",
+     "Start from one of these, or write your own."
+    ],
+    [
+     "w3-149",
+     "Write your own"
+    ],
+    [
+     "w3-150",
+     "What you heard"
+    ],
+    [
+     "w3-151",
+     "Approach (how)"
+    ],
+    [
+     "w3-152",
+     "In their words, at the next visit"
+    ],
+    [
+     "w3-153",
+     "No plans yet. Add one here or at the end of a visit."
+    ],
+    [
+     "w3-154",
+     "One gentle practice for their Willow"
+    ],
+    [
+     "w3-155",
+     "Choose one or two, together. They go on the take-home sheet, and into their Willow if they want."
+    ],
+    [
+     "w3-156",
+     "What matters to them"
+    ],
+    [
+     "w3-157",
+     "In their words, a little at a time. A family's Willow can fill these in too."
+    ],
+    [
+     "w3-158",
+     "Who they are, as a person"
+    ],
+    [
+     "w3-159",
+     "What makes a good day now"
+    ],
+    [
+     "w3-160",
+     "Small things that bring joy"
+    ],
+    [
+     "w3-161",
+     "What they're hoping for"
+    ],
+    [
+     "w3-162",
+     "What worries them"
+    ],
+    [
+     "w3-163",
+     "Who they want close"
+    ],
+    [
+     "w3-164",
+     "What comforts them"
+    ],
+    [
+     "w3-165",
+     "Anything we should never do"
+    ],
+    [
+     "w3-166",
+     "How they want the last days to feel"
+    ],
+    [
+     "w3-167",
+     "Some people like to say how they want the last days to feel. Skip anything that doesn't fit."
+    ],
+    [
+     "w3-168",
+     "Some people like to plan how they want the room to feel near the end. Would you want to talk about that, a little or a lot?"
+    ],
+    [
+     "w3-169",
+     "Ask, then write their words. A \"no\" is an answer too. Some plans fit in two lines."
+    ],
+    [
+     "w3-170",
+     "Songs, hymns, a playlist, or silence"
+    ],
+    [
+     "w3-171",
+     "Readings and prayers"
+    ],
+    [
+     "w3-172",
+     "Which ones, and who reads them"
+    ],
+    [
+     "w3-173",
+     "Faith leader to call"
+    ],
+    [
+     "w3-174",
+     "Name, community, phone"
+    ],
+    [
+     "w3-175",
+     "Who to call when it's close"
+    ],
+    [
+     "w3-176",
+     "And who calls them"
+    ],
+    [
+     "w3-177",
+     "Pets, photos, a window open, a candle"
+    ],
+    [
+     "w3-178",
+     "{name}'s vigil plan"
+    ],
+    [
+     "w3-179",
+     "How they want the last days to feel, in their words. For family, helpers, and the hospice team."
+    ],
+    [
+     "w3-180",
+     "If something here doesn't fit anymore, ask them. Their wishes can change, and that's okay."
+    ],
+    [
+     "w3-181",
+     "After our visit"
+    ],
+    [
+     "w3-182",
+     "What's holding strong"
+    ],
+    [
+     "w3-183",
+     "One gentle thing to try"
+    ],
+    [
+     "w3-184",
+     "What we're working on together"
+    ],
+    [
+     "w3-185",
+     "Your vigil plan"
+    ],
+    [
+     "w3-186",
+     "Help, any time"
+    ],
+    [
+     "w3-187",
+     "Your hospice's 24/7 line, day or night, for anything hospice can help with."
+    ],
+    [
+     "w3-188",
+     "988 Suicide and Crisis Lifeline: call or text 988."
+    ],
+    [
+     "w3-189",
+     "If someone is in danger now, call 911."
+    ],
+    [
+     "w3-190",
+     "You don't have to carry this alone."
+    ],
+    [
+     "w3-191",
+     "Send to their Willow"
+    ],
+    [
+     "w3-192",
+     "A card for their Willow, from today's visit. You choose what goes on it. They scan it with their own phone, and you read them the code."
+    ],
+    [
+     "w3-193",
+     "Never on the card: scores, flags, safety answers, your notes, or care plans. If their phone is shared, anyone who opens their Willow can see it."
+    ],
+    [
+     "w3-194",
+     "Have them scan this with the phone or tablet that has their Willow. Then read them the code out loud. Willow asks for it before anything opens."
+    ],
+    [
+     "w3-195",
+     "Nothing is uploaded. The card travels sealed inside the code, and only opens with the words you say. Never write or text the words with the link."
+    ],
+    [
+     "w3-196",
+     "There's nothing to send yet. Choose a practice, or write What matters or the vigil plan first."
+    ],
+    [
+     "w3-197",
+     "Bring in from their Willow"
+    ],
+    [
+     "w3-198",
+     "When a family shares from Willow, scan their code with this device, or paste their link here. Then type the code they read to you."
+    ],
+    [
+     "w3-199",
+     "Type the code they read to you."
+    ],
+    [
+     "w3-200",
+     "The code they read to you"
+    ],
+    [
+     "w3-201",
+     "The card only opens with their code. Nothing passes through Grounded. Once added, it's encrypted on this device like everything else."
+    ],
+    [
+     "w3-202",
+     "Check-ins from the person's own Willow, and only what they chose to share."
+    ],
+    [
+     "w3-203",
+     "A caregiver's own Willow check-ins, about how they are holding up."
+    ],
+    [
+     "w3-204",
+     "Willow never shares the answer about feeling safe at home, and never shares faith answers or notes the person kept private."
+    ],
+    [
+     "w3-205",
+     "A new record will be made with their first name. Record their yes before your first visit."
+    ],
+    [
+     "w3-206",
+     "That doesn't look like a Willow link. Ask them to copy it again, or scan the code."
+    ],
+    [
+     "w3-207",
+     "That code didn't open it. Check the words and the number, and try again."
+    ],
+    [
+     "w3-208",
+     "This browser can't open that card. Try a current Safari, Chrome, or Edge."
+    ],
+    [
+     "w3-209",
+     "Shared from their Willow. Scores were worked out on this device from their answers. Check-ins answered by family from what they see are marked, and never count as the person's own."
+    ],
+    [
+     "w3-210",
+     "From their Willow"
+    ],
+    [
+     "w3-211",
+     "Their faith answers and What matters fill in only where you hadn't written anything."
+    ],
+    [
+     "w3-212",
+     "Pastor Dan at First Lutheran"
+    ],
+    [
+     "w3-213",
+     "Willow Guide training"
+    ],
+    [
+     "w3-214",
+     "Six short lessons, ten practice scenarios, and an agreement. About an hour. Renew once a year."
+    ],
+    [
+     "w3-215",
+     "Willow Guide walks with people in the last part of their lives. The questions are gentle, and some answers carry real weight. This training is how we make sure every visit is safe, humble, and kind."
+    ],
+    [
+     "w3-216",
+     "Demo visits are always open, so you can try everything before your first real visit."
+    ],
+    [
+     "w3-217",
+     "Willow, and who it's for"
+    ],
+    [
+     "w3-218",
+     "Willow is the person's own tree for the last part of the path. It's built for two: the person in hospice, and the people who love them."
+    ],
+    [
+     "w3-219",
+     "A tree that bends"
+    ],
+    [
+     "w3-220",
+     "A willow bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone."
+    ],
+    [
+     "w3-221",
+     "Willow checks in on six parts of the tree: Roots (what grounds you), Trunk (a life that mattered), Bark (peace inside), Branches (love said out loud), Leaves (comfort), and Fruit (hope and readiness)."
+    ],
+    [
+     "w3-222",
+     "Families use it most"
+    ],
+    [
+     "w3-223",
+     "Families and caregivers use Willow far more than patients do. A family member often sets it up, taps answers while their person talks, and keeps a log of what helped. Caregivers have their own tree, because they carry this too."
+    ],
+    [
+     "w3-224",
+     "In Willow Guide, a family member can have their own record. Their visits use Willow's caregiver questions, about how they are holding up."
+    ],
+    [
+     "w3-225",
+     "Scores are for you"
+    ],
+    [
+     "w3-226",
+     "Every answer becomes a score from 1 to 10 for each part. You see the scores, so you can notice change and plan care. The family only ever sees gentle words: well tended, holding, could use some care."
+    ],
+    [
+     "w3-227",
+     "Never read a score aloud, and never put one on a handout. A score is a reason to listen, not a verdict."
+    ],
+    [
+     "w3-228",
+     "You are a guest"
+    ],
+    [
+     "w3-229",
+     "Willow is not a whole-team tool. It's for the person's spirit and the family's. Bring symptoms to the nurse, and practical needs to the social worker."
+    ],
+    [
+     "w3-230",
+     "Willow is the person's own tree, built for the people who love them too."
+    ],
+    [
+     "w3-231",
+     "Scores are for the guide. Families see gentle words."
+    ],
+    [
+     "w3-232",
+     "You are a guest in their room and their story."
+    ],
+    [
+     "w3-233",
+     "Faith comes first"
+    ],
+    [
+     "w3-234",
+     "A chaplain always asks. Not asking can feel like being overlooked. Willow asks about faith at the start of every visit."
+    ],
+    [
+     "w3-235",
+     "Every answer is welcome"
+    ],
+    [
+     "w3-236",
+     "Ask: \"Faith, spirit, or something else. What has mattered to you?\" Then listen. Every answer is welcome, including none. Use their words back to them."
+    ],
+    [
+     "w3-237",
+     "When someone says faith doesn't matter to them, or they'd rather not say, Willow uses universal words: meaning, love, legacy, what grounds you."
+    ],
+    [
+     "w3-238",
+     "Is that still true?"
+    ],
+    [
+     "w3-239",
+     "After the first visit, read back what they said last time and ask, \"Is that still true?\" Faith shifts near the end. Some people return to a faith they left. Some go quiet. Some find their faith is stronger than ever."
+    ],
+    [
+     "w3-240",
+     "Tradition cards are a start, not the answer"
+    ],
+    [
+     "w3-241",
+     "Willow has a card for each tradition: words, comfort, what happens before and after death, and who to call. They are drafts until reviewers from each tradition read them. Families practice their faith in their own ways. Ask."
+    ],
+    [
+     "w3-242",
+     "Never pray in a tradition that isn't theirs without asking first. Offer, don't perform: \"Would you like a prayer? From your tradition, or in my own words?\""
+    ],
+    [
+     "w3-243",
+     "Never use the bedside to convert. When a family member pushes faith at the bedside, your job is to protect the dying person's own faith, or their lack of one."
+    ],
+    [
+     "w3-244",
+     "Ask about faith every visit. Every answer is welcome."
+    ],
+    [
+     "w3-245",
+     "Read back last time's answer and ask if it's still true."
+    ],
+    [
+     "w3-246",
+     "Offer, don't perform. Never convert."
+    ],
+    [
+     "w3-247",
+     "Their yes, who's answering, then faith and the six parts. Stop whenever they're tired."
+    ],
+    [
+     "w3-248",
+     "Record their yes before the first visit. In hospice, most are spoken. If they can't speak for themselves, their health care agent can say yes. Then ask at every visit: \"Is now an okay time?\" Not now is always honored."
+    ],
+    [
+     "w3-249",
+     "Who is answering"
+    ],
+    [
+     "w3-250",
+     "There are three kinds: they answered, they answered out loud while someone tapped, or a family member answered from what they see. That last kind is kept apart and never speaks for the person's own tree. When family answers, faith is not asked that day."
+    ],
+    [
+     "w3-251",
+     "Four kinds of visit"
+    ],
+    [
+     "w3-252",
+     "A full visit asks three questions for each part. A quick visit asks one. An open conversation follows where they lead, and you mark how each part seemed. Vigil planning writes down how they want the last days to feel."
+    ],
+    [
+     "w3-253",
+     "Read the tip under each question. It tells you what to listen for when the answer is hard."
+    ],
+    [
+     "w3-254",
+     "Private notes stay on your device. They are never printed or copied. The visit note for the chart carries levels, scores, flags, what you offered, and plans, never their words."
+    ],
+    [
+     "w3-255",
+     "Ask \"Is now an okay time?\" every visit."
+    ],
+    [
+     "w3-256",
+     "Family's answers from what they see are kept apart."
+    ],
+    [
+     "w3-257",
+     "Private notes never leave your device."
+    ],
+    [
+     "w3-258",
+     "Near the end, a wish to die is usually not suicidal. The safety step helps you tell readiness from danger."
+    ],
+    [
+     "w3-259",
+     "When it comes up"
+    ],
+    [
+     "w3-260",
+     "When someone says they've felt hopeless or wished it would end, the safety step follows. Ask: \"When you think about dying, which is closest for you right now?\" Not ready. Ready when it comes. Wish it would come sooner. Thought about ending my life myself. Rather not say."
+    ],
+    [
+     "w3-261",
+     "What each answer means"
+    ],
+    [
+     "w3-262",
+     "Not ready and ready are not warning signs. Ready is often peace. \"Sooner\" is usually about suffering, waiting, or feeling like a burden. It isn't a crisis, and the team should know today so symptoms get looked at."
+    ],
+    [
+     "w3-263",
+     "\"Ending my life myself\" needs action now. Stay with them. Ask about a plan and the means. Call the hospice nurse, then your supervisor. Call or text 988 together, or 911 if danger is right now. Make extra medications and firearms safe with the nurse and family."
+    ],
+    [
+     "w3-264",
+     "When family answers"
+    ],
+    [
+     "w3-265",
+     "If a family member says their person has said things like wanting it over, that's common near the end and worth bringing to the nurse and team. It's not a crisis. Visit soon, and ask them yourself if they can still talk."
+    ],
+    [
+     "w3-266",
+     "Caregivers and home safety"
+    ],
+    [
+     "w3-267",
+     "When a caregiver says they've felt hopeless, ask whether they're having thoughts of not wanting to go on themselves. If yes, 988 and the bereavement team."
+    ],
+    [
+     "w3-268",
+     "Ask about feeling safe at home only when the person is alone with you. Believe them. Tell your supervisor and social worker today. In Minnesota, report to MAARC at 1-844-880-1574. Mandated reporters report right away, within 24 hours. That answer never goes to family or onto a handout."
+    ],
+    [
+     "w3-269",
+     "A wish to die near the end is usually readiness or suffering, not danger."
+    ],
+    [
+     "w3-270",
+     "\"Sooner\" means tell the team today. \"Myself\" means act now."
+    ],
+    [
+     "w3-271",
+     "Ask about home safety only when they're alone with you."
+    ],
+    [
+     "w3-272",
+     "Struggle, guilt, and shame"
+    ],
+    [
+     "w3-273",
+     "Some of the heaviest things near the end are spiritual. Name which kind you're hearing, and stay."
+    ],
+    [
+     "w3-274",
+     "Six kinds of struggle"
+    ],
+    [
+     "w3-275",
+     "Divine (\"God abandoned me\"), doubt (\"I don't know what I believe\"), interpersonal (\"the church hurt me\"), moral (\"I've done things I can't take back\"), ultimate meaning (\"what was it all for\"), and fear of evil or judgment (\"I'm afraid of hell\"). Each needs something different. The struggle picker gives you a question and a tip for each."
+    ],
+    [
+     "w3-276",
+     "Don't defend God. Lament is prayer. The Psalms yell at God too, and God stayed."
+    ],
+    [
+     "w3-277",
+     "Guilt says \"I did.\" It points to repair: a letter, a call, the Four Things, confession in their tradition. Shame says \"I am.\" It needs worth and company. Be the witness who stays, and offer blessing, not advice. Some guilt was never theirs to carry. Name that gently."
+    ],
+    [
+     "w3-278",
+     "A spiritual history in four parts: sources of hope, organized religion, personal practice, and effects on care. Fill it in a little at a time, over as many visits as it takes."
+    ],
+    [
+     "w3-279",
+     "Name the kind of struggle, then stay. Don't defend God."
+    ],
+    [
+     "w3-280",
+     "Guilt points to repair. Shame needs worth and company."
+    ],
+    [
+     "w3-281",
+     "Forgiveness is never forced."
+    ],
+    [
+     "w3-282",
+     "Plans, vigils, and the bridge"
+    ],
+    [
+     "w3-283",
+     "What you'll work on, how they want the end to feel, and how a family's Willow and your visits stay connected."
+    ],
+    [
+     "w3-284",
+     "Goal (why), Approach (how), Action (what). One or two at a time. The last line is always What changed, in their words, at the next visit."
+    ],
+    [
+     "w3-285",
+     "The vigil plan"
+    ],
+    [
+     "w3-286",
+     "The room, the people, the words, touch, and after. Plus music, readings, the faith leader to call, and who to call when it's close. Write their words. A \"no\" is an answer too. Wishes can change, so ask again."
+    ],
+    [
+     "w3-287",
+     "The take-home sheet"
+    ],
+    [
+     "w3-288",
+     "What's holding strong, one gentle thing to try, what you're working on together, and help lines. Never scores, flags, safety answers, or notes."
+    ],
+    [
+     "w3-289",
+     "The bridge, both ways"
+    ],
+    [
+     "w3-290",
+     "Send to their Willow puts a card from your visit into their Willow: practices, What matters, and the vigil plan, only what you choose. Bring in from their Willow takes check-ins a family shares with you, and only what the person chose to share."
+    ],
+    [
+     "w3-291",
+     "Both are sealed with a short spoken code. Read it aloud, or say it on the phone. Never write or text the code with the link."
+    ],
+    [
+     "w3-292",
+     "Every plan ends with What changed, in their words."
+    ],
+    [
+     "w3-293",
+     "Handouts never carry scores or safety answers."
+    ],
+    [
+     "w3-294",
+     "Say the code. Never send it with the link."
+    ],
+    [
+     "w3-295",
+     "Ruth, 88, tells you she's tired and wishes God would just take her home soon. In the safety step she chooses \"I wish it would come sooner.\""
+    ],
+    [
+     "w3-296",
+     "What do you do?"
+    ],
+    [
+     "w3-297",
+     "Call 911 and stay with her until help comes."
+    ],
+    [
+     "w3-298",
+     "Thank her, ask what makes it hard right now, and tell the hospice nurse today."
+    ],
+    [
+     "w3-299",
+     "Tell her she shouldn't feel that way."
+    ],
+    [
+     "w3-300",
+     "Note it privately and do nothing more."
+    ],
+    [
+     "w3-301",
+     "\"Sooner\" is usually about suffering or waiting. It isn't a crisis, and the team should know today."
+    ],
+    [
+     "w3-302",
+     "Walt, 74, chooses \"I've thought about ending my life myself.\" His wife is in the kitchen."
+    ],
+    [
+     "w3-303",
+     "What comes first?"
+    ],
+    [
+     "w3-304",
+     "Finish the visit and mention it in your note."
+    ],
+    [
+     "w3-305",
+     "Stay with him, ask about a plan and the means, and call the hospice nurse now."
+    ],
+    [
+     "w3-306",
+     "Leave to call your supervisor from the car."
+    ],
+    [
+     "w3-307",
+     "Ask his wife to sit with him so you can go."
+    ],
+    [
+     "w3-308",
+     "This answer needs action now. Stay, ask about a plan and the means, and call the nurse."
+    ],
+    [
+     "w3-309",
+     "On your first visit, Marie says, \"I'm not religious.\""
+    ],
+    [
+     "w3-310",
+     "What's the best next step?"
+    ],
+    [
+     "w3-311",
+     "Skip faith from now on."
+    ],
+    [
+     "w3-312",
+     "Ask what does hold her up, and use her words."
+    ],
+    [
+     "w3-313",
+     "Offer to pray for her anyway."
+    ],
+    [
+     "w3-314",
+     "Tell her it's never too late to believe."
+    ],
+    [
+     "w3-315",
+     "Every answer is welcome. Ask what grounds her, and use her own words back."
+    ],
+    [
+     "w3-316",
+     "A visiting son asks you to pray with his mother \"so she'll accept Jesus before she dies.\" She's told you she's Buddhist."
+    ],
+    [
+     "w3-317",
+     "What's your job?"
+    ],
+    [
+     "w3-318",
+     "Pray with her as the son asks."
+    ],
+    [
+     "w3-319",
+     "Protect her own faith, gently: \"Let's keep this room about what your mom wants.\""
+    ],
+    [
+     "w3-320",
+     "Leave and let the family sort it out."
+    ],
+    [
+     "w3-321",
+     "Pray silently so no one is upset."
+    ],
+    [
+     "w3-322",
+     "Never use the bedside to convert. Protect the dying person's own faith."
+    ],
+    [
+     "w3-323",
+     "Frank can't answer questions anymore. His daughter offers to answer for him."
+    ],
+    [
+     "w3-324",
+     "How do you record it?"
+    ],
+    [
+     "w3-325",
+     "As Frank's own answers."
+    ],
+    [
+     "w3-326",
+     "As \"I'm answering from what I see,\" kept apart from his own tree."
+    ],
+    [
+     "w3-327",
+     "Don't record anything."
+    ],
+    [
+     "w3-328",
+     "As the daughter's own caregiver check-in."
+    ],
+    [
+     "w3-329",
+     "Family's answers from what they see are kept apart and never count as the person's own."
+    ],
+    [
+     "w3-330",
+     "Alone with you, June says she doesn't always feel safe with the nephew who cares for her."
+    ],
+    [
+     "w3-331",
+     "Ask the nephew about it."
+    ],
+    [
+     "w3-332",
+     "Believe her, tell your supervisor and social worker today, and report to MAARC."
+    ],
+    [
+     "w3-333",
+     "Put it on her take-home sheet so the family knows."
+    ],
+    [
+     "w3-334",
+     "Wait to see if she brings it up again."
+    ],
+    [
+     "w3-335",
+     "Believe her and act today. That answer is never shared with family."
+    ],
+    [
+     "w3-336",
+     "Tom says, \"God is punishing me for what I did in the war.\""
+    ],
+    [
+     "w3-337",
+     "What helps most?"
+    ],
+    [
+     "w3-338",
+     "Tell him God has a plan."
+    ],
+    [
+     "w3-339",
+     "Assure him God forgave him long ago."
+    ],
+    [
+     "w3-340",
+     "Name what you hear, listen for guilt or shame, and stay. Offer his tradition's word of mercy if he wants it."
+    ],
+    [
+     "w3-341",
+     "Change the subject to something lighter."
+    ],
+    [
+     "w3-342",
+     "Don't defend God or rush to absolve. Sort guilt from shame, and stay."
+    ],
+    [
+     "w3-343",
+     "Ann says she wants to forgive her ex-husband, who was violent, before she dies. Her daughter wants him to visit."
+    ],
+    [
+     "w3-344",
+     "What do you keep in mind?"
+    ],
+    [
+     "w3-345",
+     "Forgiveness means he should visit."
+    ],
+    [
+     "w3-346",
+     "Forgiveness is never forced, and never toward someone unsafe. It can happen without contact."
+    ],
+    [
+     "w3-347",
+     "Tell Ann it's too late for that."
+    ],
+    [
+     "w3-348",
+     "Let the daughter decide."
+    ],
+    [
+     "w3-349",
+     "You're making Ruth's take-home sheet after a full visit. Her Bark score was 3.2."
+    ],
+    [
+     "w3-350",
+     "What goes on the sheet?"
+    ],
+    [
+     "w3-351",
+     "\"Bark: 3.2 of 10.\""
+    ],
+    [
+     "w3-352",
+     "\"Bark needs care.\""
+    ],
+    [
+     "w3-353",
+     "What's holding strong, a gentle practice, and help lines. No scores."
+    ],
+    [
+     "w3-354",
+     "Her safety answer, so the family knows."
+    ],
+    [
+     "w3-355",
+     "Handouts never carry scores, flags, or safety answers."
+    ],
+    [
+     "w3-356",
+     "A daughter wants to share her mom's Willow with you. She texts you the link."
+    ],
+    [
+     "w3-357",
+     "How should the code reach you?"
+    ],
+    [
+     "w3-358",
+     "In the same text as the link."
+    ],
+    [
+     "w3-359",
+     "Read aloud, in person or by phone."
+    ],
+    [
+     "w3-360",
+     "It doesn't need a code."
+    ],
+    [
+     "w3-361",
+     "The code is spoken. Never send it with the link."
+    ],
+    [
+     "w3-362",
+     "Willow Guide agreement"
+    ],
+    [
+     "w3-363",
+     "Before my first real Willow Guide visit, and every year after, I agree:"
+    ],
+    [
+     "w3-364",
+     "I'll ask for their yes before the first visit, and ask \"Is now an okay time?\" every visit."
+    ],
+    [
+     "w3-365",
+     "I'll ask about faith every visit, welcome every answer, and never use the bedside to convert."
+    ],
+    [
+     "w3-366",
+     "I'll never pray in a tradition that isn't theirs without asking first."
+    ],
+    [
+     "w3-367",
+     "I'll follow the safety step every time it comes up, and act right away when someone has thought about ending their life."
+    ],
+    [
+     "w3-368",
+     "I'll ask about home safety only when the person is alone with me, and report concerns as the law requires."
+    ],
+    [
+     "w3-369",
+     "I'll keep family's answers from what they see apart from the person's own."
+    ],
+    [
+     "w3-370",
+     "I'll never put scores, flags, safety answers, or private notes on a handout or a card."
+    ],
+    [
+     "w3-371",
+     "I'll use first names or initials only, keep my device locked, and back it up."
+    ],
+    [
+     "w3-372",
+     "I'll bring symptoms to the nurse and practical needs to the social worker, and stay in my role."
+    ],
+    [
+     "w3-373",
+     "What's been the best part of today, even a small one?"
+    ],
+    [
+     "w3-374",
+     "Who has come to see you lately?"
+    ],
+    [
+     "w3-375",
+     "What do you want me to know about you before we start?"
+    ],
+    [
+     "w3-376",
+     "Tell me about this room. What's here that matters to you?"
+    ],
+    [
+     "w3-377",
+     "Where do you find strength right now? Is God, or your faith, part of that?"
+    ],
+    [
+     "w3-378",
+     "Where do you find strength right now?"
+    ],
+    [
+     "w3-379",
+     "Is there a prayer, a song, or a verse you keep coming back to?"
+    ],
+    [
+     "w3-380",
+     "Is there a song, a saying, or a place you keep coming back to?"
+    ],
+    [
+     "w3-381",
+     "What do you imagine comes after? Does that bring you peace, or worry?"
+    ],
+    [
+     "w3-382",
+     "Is there someone from your faith or community you'd like to see?"
+    ],
+    [
+     "w3-383",
+     "When you sit quietly, what happens?"
+    ],
+    [
+     "w3-384",
+     "What are you proudest of?"
+    ],
+    [
+     "w3-385",
+     "What did life teach you that you want the people you love to know?"
+    ],
+    [
+     "w3-386",
+     "Tell me one story you want remembered."
+    ],
+    [
+     "w3-387",
+     "How do you want to be remembered?"
+    ],
+    [
+     "w3-388",
+     "What would be left undone if today were your last day?"
+    ],
+    [
+     "w3-389",
+     "Are you at peace? What would help you be more at peace?"
+    ],
+    [
+     "w3-390",
+     "What scares you most, if you're willing to say?"
+    ],
+    [
+     "w3-391",
+     "When do you feel most like yourself these days?"
+    ],
+    [
+     "w3-392",
+     "What's the hardest part about this for you?"
+    ],
+    [
+     "w3-393",
+     "Who do you want close right now?"
+    ],
+    [
+     "w3-394",
+     "Who do you wish were here?"
+    ],
+    [
+     "w3-395",
+     "Is there something you want to say to someone, or hear from someone?"
+    ],
+    [
+     "w3-396",
+     "Is there anyone you need to forgive, or ask forgiveness from?"
+    ],
+    [
+     "w3-397",
+     "How is it for you, being cared for?"
+    ],
+    [
+     "w3-398",
+     "What makes a good day for you now?"
+    ],
+    [
+     "w3-399",
+     "What small thing would bring you joy this week?"
+    ],
+    [
+     "w3-400",
+     "Is there a taste, a sound, or a touch you've been missing?"
+    ],
+    [
+     "w3-401",
+     "Is your comfort being taken care of? Want me to tell the nurse anything?"
+    ],
+    [
+     "w3-402",
+     "What worries you most about what's ahead?"
+    ],
+    [
+     "w3-403",
+     "When you think about dying, what feels ready, and what doesn't?"
+    ],
+    [
+     "w3-404",
+     "Does your family know what matters most to you?"
+    ],
+    [
+     "w3-405",
+     "What do you want the last days to feel like?"
+    ],
+    [
+     "w3-406",
+     "Would you like a prayer, a blessing, or a few quiet minutes before I go?"
+    ],
+    [
+     "w3-407",
+     "Would you like a few quiet minutes, or a song, before I go?"
+    ],
+    [
+     "w3-408",
+     "What I heard matters most today is... Did I get that right?"
+    ],
+    [
+     "w3-409",
+     "What would you like me to remember for next time?"
+    ],
+    [
+     "w3-410",
+     "Share check-ins with the chaplain or doula who visits, so they know where to start. You choose what goes. It travels in person, sealed with a code you read aloud."
+    ],
+    [
+     "w3-411",
+     "Share your own check-ins with the hospice chaplain or doula who visits."
+    ],
+    [
+     "w3-412",
+     "They scan a code on this screen with their Field Guide, and you read them two words and a number, out loud. Nothing passes through Grounded."
+    ],
+    [
+     "w3-413",
+     "Never shared: the answer about feeling safe at home."
+    ],
+    [
+     "w3-414",
+     "Your chaplain or doula scans this with their Field Guide. Then read them these words out loud."
+    ],
+    [
+     "w3-415",
+     "Nothing is uploaded. It only opens with these words, so never write or text them with the link. You can copy the link to send another way, then say the words by phone."
+    ],
+    [
+     "w3-416",
+     "Your chaplain or doula sent a card. Open your profile first, then type the words they read to you."
+    ],
+    [
+     "w3-417",
+     "Two words and a number, like \"cedar lantern 47.\" The card only opens with them."
+    ],
+    [
+     "w3-418",
+     "Those words didn't open it. Check them with your chaplain or doula, and try again."
+    ],
+    [
+     "w3-419",
+     "Fills in What matters where nothing is written yet. Nothing already written is changed."
+    ],
+    [
+     "w3-420",
+     "Fills in \"When the time comes\" where nothing is written yet."
+    ],
+    [
+     "w3-421",
+     "No streaks. Done is enough."
+    ],
+    [
+     "w3-422",
+     "Willow can share with your hospice chaplain or doula, in person, and only when you choose. You pick what goes: check-ins, faith answers, what matters, and notes, and only what the person already chose to share. A chaplain or doula can send a card back from a visit, with a practice to try, what matters, and the vigil plan. Either way, the card is sealed with a short code you read out loud, and it travels inside a QR code or link after the #, the part a browser never sends to any server. It never passes through us. The answer about feeling safe at home is never shared. Once a chaplain or doula adds it, it's kept in their own encrypted Field Guide, under their organization's privacy rules."
+    ]
+   ]
+  }
+ }
+}
