@@ -58,6 +58,7 @@
     var k = kid(age) && it.kidName, h = it.how || [];
     var steps = k ? (h[4] || h[1]) : h[1];
     return {
+      key: it.name,
       name: (k ? it.kidName : it.name) || it.name,
       text: (k ? it.kidText : it.text) || it.text || '',
       busy: (k ? it.kidBusy : it.busy) || it.busy || '',
@@ -70,7 +71,8 @@
     if (!v.why && !v.steps.length) return '';
     return (v.why ? '<p><b>Why it helps.</b> ' + esc(v.why) + '</p>' : '')
       + (v.steps.length ? '<p style="margin-bottom:2px"><b>How to do it.</b></p><ol>' + v.steps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' : '')
-      + (v.hard ? '<p><b>If it\'s hard.</b> ' + esc(v.hard) + '</p>' : '');
+      + (v.hard ? '<p><b>If it\'s hard.</b> ' + esc(v.hard) + '</p>' : '')
+      + (window.GGShelf && v.key ? GGShelf.html('practice', v.key) : '');
   }
   function info(key, age) {
     var it = get(key); if (!it) return {};

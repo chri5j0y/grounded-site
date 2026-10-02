@@ -900,6 +900,7 @@ function guideHtml(g) {
     <div data-read="Read this guide aloud">${body}</div>
     ${pro ? `<details class="w-det"><summary>${esc(G.labels.pro)}</summary><div><p>${esc(pro[1])}</p></div></details>` : ''}
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
+    ${window.GGShelf ? GGShelf.html('willow', g.id) : ''}
     <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support, not medical care, therapy, or legal advice. &copy; ${new Date().getFullYear()} Chris Joy.</p>
   </article>`;
 }
