@@ -549,7 +549,7 @@ body.cd-noscroll{overflow:hidden;}
   <p class="lock-notice"><a class="lock-home" href="../index.html">Back to Grow With Grounded</a> &nbsp; <a class="lock-home" href="../privacy.html">Privacy</a> <a class="lock-home" href="../terms.html">Terms</a><br>&copy; 2026 Chris Joy / Grounded.&trade; Proprietary and confidential. For authorized Grounded practitioners only.</p>
 </section>
 <div id="app" class="hide">
-<nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../thresholds.html">Thresholds</a><a href="../tools.html">Tools</a><a href="../stories.html">Stories</a><a href="../our-story.html">Our Story</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
+<nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../tools.html">Tools</a><a href="../stories.html">Stories</a><a href="../about.html">About</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
   <header class="bar"><div class="bar-in">
     <a class="brand" href="#" data-tab="home" aria-label="Field Guide home"><svg class="b-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><svg class="b-word" viewBox="0 0 6024 772" aria-hidden="true"><use href="#g-word"/></svg><span class="b-sep">/</span><span class="b-name">Field Guide<sup>&trade;</sup></span></a>
     <button class="bar-btn fg-theme" type="button" aria-label="Switch to dark mode"></button>
@@ -871,11 +871,11 @@ const IC = {
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
 const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<svg viewBox="0 0 6024 772" aria-hidden="true"><use href="#g-word"/></svg>`;
-const CATS = [['start','Getting started'],['eol','End-of-life support'],['ceremony','Ceremonies'],['counsel','Spiritual counseling & coaching'],['grief','Grief & caregiver support'],['speaking','Speaking & training'],['self','For you'],['safety','Safety']];
+const CATS = [['start','Getting started'],['eol','End-of-life support'],['ceremony','Ceremonies'],['counsel','Spiritual guidance'],['grief','Grief & caregiver support'],['speaking','Speaking & training'],['self','For you'],['safety','Safety']];
 const catIcon = c => ({start:'start', eol:'eol', ceremony:'ceremony', counsel:'counsel', grief:'grief', speaking:'speaking', self:'self', safety:'safety'}[c]);
 const G = id => LIB.guides.find(g => g.id === id);
 const CL = id => DATA.clients.find(c => c.id === id);
-const SERVICE_NAMES = {all:'Any service', eol:'End-of-life support', officiant:'Officiant', counsel:'Spiritual counseling', grief:'Grief & caregiver support', speaking:'Speaking & training', self:'For you', safety:'Safety'};
+const SERVICE_NAMES = {all:'Any service', eol:'End-of-life support', officiant:'Officiant', counsel:'Spiritual guidance', grief:'Grief & caregiver support', speaking:'Speaking & training', self:'For you', safety:'Safety'};
 
 // ---------------- HOME ----------------
 function vHome(){
@@ -1003,7 +1003,7 @@ function vClients(){
 function vClient(c){
   const ss = DATA.sessions.filter(s => s.clientId === c.id).sort((a,b) => (b.date||'').localeCompare(a.date||''));
   const owed = ss.filter(s => !s.paid && s.fee && !/free/i.test(s.fee)).length;
-  const svcOpts = ['','End-of-life support','Officiant: funeral or memorial','Officiant: wedding','Officiant: blessing','Spiritual counseling','Grief support','Caregiver support','Speaking and training','Other'];
+  const svcOpts = ['','End-of-life support','Officiant: funeral or memorial','Officiant: wedding','Officiant: blessing','Spiritual guidance','Grief support','Caregiver support','Speaking and training','Other'];
   return `<button class="btn btn-line btn-sm" data-act="back-clients">${icon('back')} All people</button>
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
@@ -1067,7 +1067,7 @@ function docForm(d){
 
 // ---------------- TRAINING ----------------
 function vTraining(){
-  const T = LIB.training, P = DATA.training.progress, svcs = [['first','First conversation'],['eol','End-of-life support'],['vigil','Vigil sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual counseling'],['grief','Grief & caregiver'],['speaking','Speaking']];
+  const T = LIB.training, P = DATA.training.progress, svcs = [['first','First conversation'],['eol','End-of-life support'],['vigil','Vigil sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual guidance'],['grief','Grief & caregiver'],['speaking','Speaking']];
   return `<div class="page-head"><div class="eyebrow">Training &middot; Proprietary and confidential</div><h1>Learning the Grounded way</h1></div>
   ${OR() ? orStatusCard() : ''}
   <div class="card"><p class="purpose">${esc(T.welcome)}</p></div>

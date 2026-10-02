@@ -1,5 +1,5 @@
 /* =====================================================================
-   GROUNDED . SITE-WIDE SEARCH (Tools page)
+   GROUNDED . SITE-WIDE SEARCH (opened from the Search button in every header, nav.js)
    One box that finds Hard Talks, Grove practices, tools, and stories.
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
@@ -30,6 +30,29 @@
     { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'heartwood high school teen teenager 9th 10th 11th 12th grade' }, // GG-RENAME-KEEP: old names still find the tool
     { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'elder tree eldertree seniors elders older adults retirement aging grandparents' }, // GG-RENAME-KEEP: old names still find the tool
     { title: 'Willow', sub: 'For hospice. Coming soon.', href: '', keys: 'old growth oldgrowth end of life dying hospice' } // GG-RENAME-KEEP: old names still find the tool
+  ];
+
+
+  /* ---------- site pages (Rebrand Session 2: search covers the whole site) ---------- */
+  var PAGES = [
+    { title: 'Services', sub: 'Marriage, celebrations, farewells, hard seasons, and teams', href: '/services.html', keys: 'services thresholds ceremonies ceremony officiant help book hire support' },
+    { title: 'The Grounded Marriage', sub: 'Premarital counseling, a custom wedding, and a first-anniversary check-in, from $1,400', href: '/services.html#marriage', keys: 'marriage married wedding package premarital engaged couple grounded marriage' },
+    { title: 'Weddings', sub: 'Custom ceremonies, from $650', href: '/weddings.html', keys: 'wedding weddings officiant marry married ceremony vows' },
+    { title: 'Elopements', sub: 'Just the two of you, anywhere, from $350', href: '/elopements.html', keys: 'elope elopement courthouse small simple legal ceremony' },
+    { title: 'Vow renewals', sub: 'For couples who would say it all again, from $500', href: '/vow-renewals.html', keys: 'vow renewal renew vows anniversary' },
+    { title: 'Premarital counseling', sub: 'PREPARE/ENRICH with Chris and Kayti, from $700', href: '/premarital-counseling.html', keys: 'premarital counseling prepare enrich engaged license discount' },
+    { title: 'Funerals and memorials', sub: 'Honest, personal services, from $500', href: '/funerals-memorials.html', keys: 'funeral funerals memorial service died death officiant eulogy' },
+    { title: 'Celebrations of life', sub: 'Stories, music, laughter, and room for tears', href: '/celebrations-of-life.html', keys: 'celebration of life memorial death died' },
+    { title: 'Bedside blessings', sub: 'Prayers and rituals for the last days', href: '/bedside-blessings.html', keys: 'bedside blessing dying last rites prayer hospice' },
+    { title: 'Pregnancy and infant loss', sub: 'Gentle support and ceremony after losing a baby, by donation', href: '/pregnancy-infant-loss.html', keys: 'miscarriage stillbirth infant loss baby died pregnancy loss nicu' },
+    { title: 'Child blessings', sub: 'Welcoming a new life into a family', href: '/child-blessings.html', keys: 'baby blessing naming child dedication new baby' },
+    { title: 'House blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
+    { title: 'Milestones', sub: 'Graduations, retirements, recovery, and more', href: '/milestones.html', keys: 'milestone graduation retirement recovery anniversary' },
+    { title: 'Rates', sub: 'What it costs, plainly', href: '/rates.html', keys: 'rates price prices cost costs fee fees how much pay payment deposit' },
+    { title: 'About', sub: 'Who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story' },
+    { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/index.html#contact', keys: 'contact email call reach out question' },
+    { title: 'Privacy', sub: 'Your answers stay on your device', href: '/privacy.html', keys: 'privacy data private' },
+    { title: 'Terms', sub: 'Terms of use', href: '/terms.html', keys: 'terms legal' }
   ];
 
   /* ---------- everyday words ---------- */
@@ -104,6 +127,21 @@
       s.onload = ok; s.onerror = ok; document.head.appendChild(s);
     });
   }
+  // The Grove data runs in its own scope, so it never clashes with a tool page that already
+  // has its own copies loaded (searching from inside Maple, Aspen, Oak, or The Grove).
+  var GPART = null;
+  function loadGrove() {
+    return Promise.all(['/grove/data.js', '/grove/library.js'].map(function (u) {
+      return fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; });
+    })).then(function (t) {
+      try {
+        var keep = window.GroveLibrary;
+        var got = new Function(t[0] + '\n;' + t[1] + '\n;return { lib: window.GroveLibrary, part: (typeof PART !== "undefined") ? PART : null };')();
+        GPART = got.part; window.GGSGroveLibrary = got.lib;
+        if (keep) window.GroveLibrary = keep;
+      } catch (e) {}
+    });
+  }
   function add(o) {   // titles also match with hyphens joined, so "Self-harm" matches "selfharm"
     o.nTitle = norm(o.title + ' ' + String(o.title).replace(/(\w)-(\w)/g, '$1$2')); o.nKeys = norm(o.keys || ''); o.nLead = norm((o.lead || []).join(' ') + ' ' + (o.sub || '')); o.nBody = norm(o.body || '');
     ITEMS.push(o);
@@ -113,9 +151,10 @@
     ITEMS = [];
     status.textContent = 'Getting the guides ready...';
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/grove/data.js'), load('/grove/library.js')
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), loadGrove()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
+      PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
 
       var sp = window.MAPLE_GUIDES;
       if (sp) sp.topics.forEach(function (t) {
@@ -138,9 +177,9 @@
           href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak' });
       });
 
-      var gl = window.GroveLibrary;
+      var gl = window.GGSGroveLibrary || window.GroveLibrary;
       if (gl) gl.items.forEach(function (it) {
-        var how = it.how || [], part = (typeof PART !== 'undefined' && PART[it.part]) || {};
+        var how = it.how || [], part = (GPART && GPART[it.part]) || {};
         add({ type: 'practice', title: it.name, sub: (part.name ? part.name + ' (' + part.sub + ')' : ''), keys: it.kidName || '', lead: [it.text],
           text: it.text, why: how[0], steps: how[1] ? String(how[1]).split('|') : [], hard: how[2],
           ages: it.ages, body: how.slice(0, 3).join(' '), href: '/grove/#library=' + encodeURIComponent(it.name) });
@@ -186,7 +225,7 @@
     });
     return best;
   }
-  var TYPE_ORDER = { talk: 0, practice: 1, tool: 2, story: 3 };
+  var TYPE_ORDER = { talk: 0, practice: 1, page: 2, tool: 3, story: 4 };
   function search(q) {
     var p = parse(q);
     if (!p.words.length) return { p: p, groups: [] };
@@ -197,7 +236,7 @@
         p.words.forEach(function (alts) { var s = scoreWord(it, alts); if (s) { matched++; total += s; } });
         if (all ? matched === p.words.length : matched > 0) {
           if (p.ageHint && it.age === p.ageHint) total += 2;
-          if (it.type === 'tool' && it.nTitle.trim() === p.words.map(function (a) { return a[0]; }).join(' ')) total += 10;
+          if ((it.type === 'tool' || it.type === 'page') && it.nTitle.trim() === p.words.map(function (a) { return a[0]; }).join(' ')) total += 10;
           hits.push([it, total + matched * 2]);
         }
       });
@@ -212,14 +251,16 @@
       return { type: k, items: list.map(function (h) { return h[0]; }), top: list[0][1] };
     }).sort(function (a, b) {
       // Hard Talks lead unless another kind is clearly the better answer (like a tool's name)
-      var ta = a.top + (a.type === 'talk' ? 3 : 0), tb = b.top + (b.type === 'talk' ? 3 : 0);
+      var svc = /\b(wedding|weddings|marriage|married|premarital|elope|elopement|vow|vows|officiant|ceremony|funeral|funerals|memorial|blessing|cost|costs|price|prices|rate|rates|fee|fees|book|hire|service|services)\b/.test(p.raw);
+      var bonus = function (g) { return g.type === 'talk' ? (svc ? 0 : 3) : (g.type === 'page' && svc ? 8 : 0); };
+      var ta = a.top + bonus(a), tb = b.top + bonus(b);
       return tb - ta || TYPE_ORDER[a.type] - TYPE_ORDER[b.type];
     });
     return { p: p, groups: groups, partial: partial };
   }
 
   /* ---------- showing results ---------- */
-  var NAMES = { talk: 'Hard Talks', practice: 'Practices', tool: 'Tools', story: 'Stories' };
+  var NAMES = { talk: 'Hard Talks', practice: 'Practices', page: 'Pages', tool: 'Tools', story: 'Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
   var SHOW = 5, openAll = {}, uid = 0;
 
@@ -233,7 +274,7 @@
   }
   function rowHTML(it) {
     var id = 'ss-x' + (++uid);
-    if (it.type === 'tool' || it.type === 'story') {
+    if (it.type === 'tool' || it.type === 'story' || it.type === 'page') {
       var inner = '<span class="ss-title">' + esc(it.title) + '</span><span class="ss-sub">' + esc(it.sub) + '</span>';
       return '<li class="ss-item">' + (it.href ? '<a class="ss-row" href="' + esc(it.href) + '">' + inner + '</a>' : '<div class="ss-row ss-soon">' + inner + '</div>') + '</li>';
     }
@@ -300,7 +341,7 @@
       if (open) card.removeAttribute('hidden'); else card.setAttribute('hidden', '');
     }
   });
-  // tools.html?q=vaping opens with that search
+  // any page?q=vaping opens search with that query (nav.js opens the panel)
   var start = new URLSearchParams(location.search).get('q');
   if (start) { input.value = start; go(); }
 

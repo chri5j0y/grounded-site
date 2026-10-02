@@ -21,16 +21,16 @@
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
-    { name: 'Check-ins', items: [
-      { id: 'maple', title: 'Maple', desc: 'A gentle check-in for kids, grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#D8F3FF' },
-      { id: 'aspen', title: 'Aspen', desc: 'A check-in for grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
-      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#F3E1D8', soon: true },
-      { id: 'oak', title: 'Oak', desc: 'A six-part check-in for adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
-      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#EAE5D2', soon: true },
-      { id: 'willow', title: 'Willow', desc: 'For hospice', icon: ic.willow, bg: '#ECE6DE', soon: true }
+    { name: 'The trees', items: [
+      { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4' },
+      { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
+      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true },
+      { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
+      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true },
+      { id: 'willow', title: 'Willow', desc: 'For hospice', icon: ic.willow, bg: '#E8ECDD', soon: true }
     ] },
-    { name: 'Practice', items: [
-      { id: 'grove', title: 'The Grove', desc: 'Daily practice for every tree, all ages and stages', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+    { name: 'Together', items: [
+      { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
     ] },
     { name: 'Hard Talks', items: [
       { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/maple/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
@@ -236,4 +236,98 @@
     else { btn.style.cssText += 'position:fixed;top:12px;right:12px;z-index:95;background:rgba(255,248,236,.9);'; document.body.appendChild(btn); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
+})();
+
+/* ===== Site search in the header (Rebrand Session 2) =====
+   A Search button sits top left, next to the logo, on every page that loads this file.
+   It opens a search panel over the page. search.js loads on first open.
+   Nothing typed is ever sent anywhere. Press / to open, Escape to close. */
+(function () {
+  if (window.GGSearchUI) return; window.GGSearchUI = true;
+  var base = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
+  var css = '' +
+    '.ggs-btn{display:inline-flex;align-items:center;gap:7px;font:600 15px/1 Barlow,system-ui,sans-serif;color:inherit;background:transparent;border:1.5px solid rgba(139,94,26,.35);border-radius:999px;padding:8px 14px;cursor:pointer;margin-left:14px;white-space:nowrap;flex:none;}' +
+    '.ggs-btn:hover,.ggs-btn:focus-visible{border-color:#8B5E1A;}' +
+    '.ggs-btn svg{width:17px;height:17px;flex:none;}' +
+    '@media (max-width:640px){.ggs-btn{padding:8px 10px;margin-left:8px;}.ggs-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}}' +
+    '.ggs{--bg:#FAF7F2;--bg-deep:#F2ECE0;--ink:#2C1810;--ink-soft:#6B5A4D;--line:#E2D8C3;--card:#FFFFFF;--gold:#8B5E1A;position:fixed;inset:0;z-index:10000;background:rgba(28,20,12,.55);display:flex;justify-content:center;align-items:flex-start;padding:max(16px,env(safe-area-inset-top,0px)) 12px 16px;overflow-y:auto;font-family:Barlow,system-ui,sans-serif;color:var(--ink);}' +
+    '.ggs[hidden]{display:none;}' +
+    '.ggs-panel{position:relative;width:min(820px,100%);margin-top:6vh;}' +
+    '.ggs-close{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:24px;line-height:1;cursor:pointer;z-index:2;}' +
+    '.ggs .site-search{margin:0;padding:26px 26px 22px;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:16px;max-width:none;box-shadow:0 24px 60px rgba(0,0,0,.25);}' +
+    '.ggs .ss-label{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;font-size:31px;line-height:1.15;padding-right:44px;}' +
+    '.ggs .ss-hint{color:var(--ink-soft);font-size:16px;margin:4px 0 16px;}' +
+    '.ggs .ss-field{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:0 18px;color:var(--ink-soft);}' +
+    '.ggs .ss-field:focus-within{border-color:var(--gold);}' +
+    '.ggs .ss-field svg{width:22px;height:22px;flex:none;}' +
+    '.ggs .ss-field input{flex:1;min-width:0;font:inherit;font-size:19px;color:var(--ink);background:transparent;border:none;padding:13px 0;outline:none;}' +
+    '.ggs .ss-try{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}' +
+    '.ggs .ss-try button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;}' +
+    '.ggs .site-search.has-results .ss-try{display:none;}' +
+    '.ggs .ss-status{font-size:15px;color:var(--ink-soft);margin:10px 0 0;min-height:1em;}' +
+    '.ggs .ss-group{margin-top:18px;}' +
+    '.ggs .ss-group h4{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:0 0 4px;}' +
+    '.ggs .ss-group h4 span{color:var(--ink-soft);margin-left:4px;}' +
+    '.ggs .ss-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}' +
+    '.ggs .ss-item{border-bottom:1px solid var(--line);}' +
+    '.ggs .ss-row{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:none;border:none;padding:11px 34px 11px 4px;cursor:pointer;text-decoration:none;position:relative;border-radius:6px;}' +
+    '.ggs .ss-row:hover{background:var(--bg-deep);}' +
+    '.ggs .ss-title{display:block;font-weight:600;font-size:18px;line-height:1.35;}' +
+    '.ggs .ss-sub{display:block;font-size:15.5px;color:var(--ink-soft);line-height:1.45;margin-top:2px;}' +
+    '.ggs .ss-tag{display:inline-block;font-weight:600;font-size:12.5px;line-height:1;padding:4px 9px;border-radius:999px;color:var(--gold);background:var(--bg-deep);}' +
+    '.ggs .ss-card{background:var(--bg-deep);border-radius:10px;padding:14px 18px 18px;margin:0 0 12px;font-size:17px;line-height:1.55;}' +
+    '.ggs .ss-card ul,.ggs .ss-card ol{padding-left:22px;}' +
+    '.ggs .ss-card-h{font-weight:700;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);margin:4px 0 6px;}' +
+    '.ggs .ss-go{display:inline-block;margin-top:10px;font-weight:600;font-size:15px;padding:10px 20px;border-radius:999px;background:var(--gold);color:var(--card);text-decoration:none;}' +
+    '.ggs .ss-more{font:inherit;font-size:15.5px;font-weight:600;color:var(--gold);background:none;border:none;border-bottom:1px solid currentColor;padding:0;margin-top:10px;cursor:pointer;}' +
+    '.ggs .ss-note,.ggs .ss-empty{margin-top:12px;font-size:16px;}' +
+    '.ggs .ss-crisis{margin-top:14px;padding:14px 18px;border-left:4px solid #9C2F2F;background:rgba(156,47,47,.09);border-radius:0 10px 10px 0;font-size:17px;}' +
+    '.ggs .ss-crisis a{color:inherit;font-weight:700;}' +
+    '@media (max-width:600px){.ggs-panel{margin-top:0}.ggs .site-search{padding:20px 16px 16px;}.ggs .ss-label{font-size:26px;}.ggs .ss-field input{font-size:17px;}}';
+  var dark = '.ggs{--bg:#1F1A14;--bg-deep:#171310;--ink:#F3EDE3;--ink-soft:#C2B6A4;--line:#3A322A;--card:#2A241D;--gold:#D9A847;}.ggs-btn{border-color:rgba(217,168,71,.45);}';
+  var icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
+  var ov, loaded = false, opener = null;
+  function build() {
+    var head = document.querySelector('header.topbar, header.site-header, header');
+    if (!head) return;
+    var st = document.createElement('style');
+    st.textContent = css + '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) ' + dark.replace(/\}\./g, '} :root:not([data-theme="light"]) .') + '}' + ':root[data-theme="dark"] ' + dark.replace(/\}\./g, '} :root[data-theme="dark"] .');
+    document.head.appendChild(st);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'ggs-btn'; btn.setAttribute('aria-haspopup', 'dialog');
+    btn.innerHTML = icon + '<span>Search</span>';
+    var anchor = head.querySelector('.brand-sub, .brand-tool') || head.querySelector('.brand');
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(btn, anchor.nextSibling);
+    else (head.firstElementChild || head).insertBefore(btn, (head.firstElementChild || head).firstChild);
+    var onTools = !!document.getElementById('site-search');
+    ov = document.createElement('div');
+    ov.className = 'ggs'; ov.hidden = true; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Search');
+    ov.innerHTML = '<div class="ggs-panel"><button type="button" class="ggs-close" aria-label="Close search">&times;</button>' +
+      (onTools ? '' : '<form class="site-search" id="site-search" role="search" autocomplete="off">' +
+      '<label class="ss-label" for="ss-q">Search Grow With Grounded</label>' +
+      '<p class="ss-hint">Services, hard talks, daily practices, tools, and stories, for every age. Your search stays on your device.</p>' +
+      '<div class="ss-field">' + icon + '<input id="ss-q" type="search" placeholder="Try: vaping, bullying, funeral, wedding cost" enterkeyhint="search"></div>' +
+      '<div class="ss-try" role="group" aria-label="Try a search"><button type="button" data-try="vaping">Vaping</button><button type="button" data-try="bullying">Bullying</button><button type="button" data-try="someone died">Someone died</button><button type="button" data-try="wedding">Weddings</button><button type="button" data-try="rates">Rates</button></div>' +
+      '<p class="ss-status" id="ss-status" aria-live="polite"></p><div id="ss-results"></div></form>') + '</div>';
+    document.body.appendChild(ov);
+    function open() {
+      if (onTools) { var f = document.getElementById('ss-q'); if (f) { f.scrollIntoView({ block: 'center' }); f.focus(); } return; }
+      opener = document.activeElement;
+      ov.hidden = false; document.documentElement.style.overflow = 'hidden';
+      if (!loaded) { loaded = true; var s = document.createElement('script'); s.src = base + '/search.js'; document.body.appendChild(s); }
+      setTimeout(function () { var i = document.getElementById('ss-q'); if (i) i.focus(); }, 30);
+    }
+    function close() { ov.hidden = true; document.documentElement.style.overflow = ''; if (opener && opener.focus) opener.focus(); }
+    btn.addEventListener('click', open);
+    ov.querySelector('.ggs-close').addEventListener('click', close);
+    ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !ov.hidden) { close(); return; }
+      var t = e.target, typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable || t.tagName === 'SELECT');
+      if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey) { e.preventDefault(); open(); }
+    });
+    if (!onTools && new URLSearchParams(location.search).get('q')) open();
+    window.GGOpenSearch = open;
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
