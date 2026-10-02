@@ -226,3 +226,51 @@ window.GGJourney = {
   }
  }
 };
+
+/* ---------- Aspen (grades 6 to 8), Rebrand Session 4 ----------
+   The same twelve themes, so a family can be on the same week together,
+   with intros and reflection questions written for middle schoolers.
+   The Grounded stories show only in the grown-up's view. */
+window.GGJourney.AGES = window.GGJourney.AGES || {};
+window.GGJourney.AGES.aspen = {
+ "WEEKS": [
+  { "intro": "You don't have to be ready. This week you plant, and planting is small. Tend your tree once a day, and that's enough.", "q": "What do you hope grows in you this season?" },
+  { "intro": "Phones need charging, and so do you. This week, notice what wears you out. Pick one small way to protect your rest, like keeping your phone out of your room at night.", "q": "When did you need a break this week, and did you take one?" },
+  { "intro": "Your body notices things before your brain does: a tight stomach, tired eyes, a racing heart. This week, listen to it the way you'd listen to a friend.", "q": "What did your body tell you this week?" },
+  { "intro": "Almost everyone misses a day. Then two. That isn't failing. Coming back is the whole practice, and your tree is always glad to see you.", "q": "What helped you come back when you forgot?" },
+  { "intro": "Sometimes we carry worries nobody can see, like a heavy backpack under a coat. This week, notice what you've been carrying. You don't have to fix it. Just name it.", "q": "What's been heavy for you lately?" },
+  { "intro": "The text you keep meaning to send. The thank you you never said. This week, reach out to someone first.", "q": "Who did you reach out to this week, and how did it feel?" },
+  { "intro": "You don't need the right words. Quiet, wonder, prayer, music, a sky full of stars. This week, notice the moments that feel bigger than you.", "q": "When did you feel part of something bigger than yourself this week?" },
+  { "intro": "Eight weeks in, some practices are becoming yours. The ones you still do on tired days are like roots. They hold you up.", "q": "Which practice has started to feel like yours?" },
+  { "intro": "You don't control everything, but you get a say in a lot: how you treat people, what you practice, and who you're becoming. Use your say this week.", "q": "What do you want more of in your life?" },
+  { "intro": "Trees in a grove grow toward each other. This week, grow toward the people you love: family, friends, anyone who is good to you.", "q": "Where did you give or get love this week?" },
+  { "intro": "Hope isn't only a feeling you wait for. Sometimes it's something you do, and the feeling catches up with you.", "q": "What gives you hope right now?" },
+  { "intro": "Look at what grew. Some of it you'll keep. Some of it was only for this season. Both are good.", "q": "What grew in these twelve weeks, and what are you ready to let go of?" }
+ ],
+ "ANCHORS": {
+  "morning": { "t": "Wake up slow", "b": "Before you grab your phone, take one slow breath and notice how you feel. Then start your day.", "s": "One slow breath before your phone." },
+  "evening": { "t": "End the day", "b": "Think of one good thing from today, and one thing you're setting down before you sleep.", "s": "One good thing. One thing to set down." }
+ },
+ "LEVELS": [
+  { "id": "gentle", "name": "Gentle", "desc": "Easy movement, like stretching or a short walk." },
+  { "id": "moderate", "name": "Moderate", "desc": "Getting my heart pumping a little." },
+  { "id": "athletic", "name": "Athletic", "desc": "I play sports or love a hard workout." }
+ ],
+ "LEVEL_MOVE": {
+  "gentle": {
+   "planting": { "t": "Ten minutes of easy moving", "b": "Stretch, take a short walk, or dance to one song. <strong>Moving at all counts.</strong>" },
+   "rooting": { "t": "Fifteen minutes", "b": "A longer walk, a bike ride, or shooting hoops. Try a few stretches at the end." },
+   "blooming": { "t": "Twenty minutes", "b": "Something fun that gets you moving: a walk with a friend, a game outside, or a dance break." }
+  },
+  "moderate": {
+   "planting": { "t": "Twenty minutes, most days", "b": "Biking, a fast walk, jumping rope, or a game outside. <strong>Warm up first.</strong>" },
+   "rooting": { "t": "Thirty minutes, most days", "b": "Mix it up: one day a game, one day a bike ride, one day something new. Add a few push ups or squats." },
+   "blooming": { "t": "Thirty to forty minutes", "b": "Pick something you love and do it a little longer. Keep one easy rest day each week." }
+  },
+  "athletic": {
+   "planting": { "t": "Practice, plus recovery", "b": "Keep up your sport or training, and stretch after every practice. <strong>Sleep is part of training.</strong>" },
+   "rooting": { "t": "Train smart", "b": "Warm up every time, drink water, and take one full rest day each week. Tell a coach or grown-up if something hurts." },
+   "blooming": { "t": "Your best, safely", "b": "Notice how much stronger you've gotten. Keep your rest day, and never play through pain." }
+  }
+ }
+};

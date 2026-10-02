@@ -908,7 +908,7 @@ html.ts-2 main{zoom:1.25;}
   .sticky-bar{bottom:70px;}
 }
 </style>
-<link rel="stylesheet" href="/shared/gg-tend.css">
+<link rel="stylesheet" href="/shared/gg-tend.css?v=r4a">
 <link rel="stylesheet" href="/shared/gg-footer.css">
 </head>
 <body>
@@ -995,7 +995,7 @@ html.ts-2 main{zoom:1.25;}
 
 <div class="view" id="client-growthplan">
   <div class="section-title">Your Growth Plan</div>
-  <p class="lead">Choose up to 3 practices for each part of your tree. They show up in Today, ready to check off, and you can change them anytime. This is the practical next step that turns your check-in into real growth.</p>
+  <p class="lead">Start with about 3 practices for each part of your tree, and a few more for any part that needs care. There is no limit. They show up in Today, ready to check off, and you can change them anytime. This is the practical next step that turns your check-in into real growth.</p>
   <div class="info-field" style="max-width:340px;margin:18px 0 8px;">
     <label for="client-save-name">Your name (optional, shown on your plan)</label>
     <input type="text" id="client-save-name" placeholder="e.g. Sam">
@@ -1043,8 +1043,8 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=r4p"></script>
-<script src="/shared/gg-journey.js"></script>
-<script src="/shared/gg-tend.js"></script>
+<script src="/shared/gg-journey.js?v=r4a"></script>
+<script src="/shared/gg-tend.js?v=r4a"></script>
 <script src="/oak/guides.js?v=r4p"></script>
 <script>
 const DOMAIN_DEFS = [
@@ -2346,7 +2346,7 @@ function renderGrowthPlanBuilder(mode) {
         <div class="domain-score-display" style="color:${d.color};">${scores[d.key]}/10</div>
       </div>
       <div class="practice-picker">
-        <div class="practice-picker-label">Choose 1 to 3 practices to commit to</div>
+        <div class="practice-picker-label">${(n => `Suggested: about ${n} practices`)(oakSuggest(scores[d.key]))}</div>
         ${d.restore.map(r => `
           <div class="practice-item">
             <label class="practice-option">
@@ -2356,7 +2356,7 @@ function renderGrowthPlanBuilder(mode) {
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0], mode === 'client')}</div>
           </div>`).join('')}
-        <div class="practice-limit-note">Choose up to 3, or write your own below. Tap "How to do this" on any practice to learn more.</div>
+        <div class="practice-limit-note">${oakSuggestNote(scores[d.key])} Choose as many as you like, or write your own below. Tap "How to do this" on any practice to learn more.</div>
         <input type="text" class="practice-custom" id="cp-${mode}-${d.key}-custom" aria-label="${d.part} custom practice" placeholder="Your own practice or next step...">
         ${shelfHtml(d.key)}
       </div>
@@ -2579,12 +2579,14 @@ function toggleRestore(id, btn) {
   if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
-function enforcePracticeLimit(el, mode, key) {
-  const checked = document.querySelectorAll(`input[name="cp-${mode}-${key}"]:checked`);
-  if (checked.length > 3) {
-    el.checked = false;
-    showToast('You can select up to 3 practices per domain.');
-  }
+// No limits on practices (Rebrand Session 4), only suggestions: about 3 for a Strong part,
+// 4 for Steady, 5 for Needs care. Kept as a no-op so older markup still works.
+function enforcePracticeLimit(el, mode, key) {}
+const oakLevelKey = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
+function oakSuggest(sc) { return window.GGTend && GGTend.suggest ? GGTend.suggest(oakLevelKey(sc)) : ({ care: 5, steady: 4 }[oakLevelKey(sc)] || 3); }
+function oakSuggestNote(sc) {
+  const lv = oakLevelKey(sc);
+  return lv === 'care' ? 'This part needs care, so about 5 practices is a good start.' : lv === 'steady' ? 'This part is steady, so about 4 practices is a good start.' : lv === 'strong' ? 'This part is strong, so about 3 practices will keep it growing.' : 'About 3 practices is a good start.';
 }
 
 // App-ready: a real PDF for the share sheet (text, email, save), with Print as a backup.

@@ -26,6 +26,7 @@
 <meta name="twitter:image" content="https://growwithgrounded.com/aspen/share-image.png">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/shared/gg-hero.css">
+<link rel="stylesheet" href="/shared/gg-tend.css?v=r4a">
 <style>
 :root{
   --serif:'Cormorant Garamond',Georgia,serif;
@@ -310,6 +311,37 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 </style>
 <style>/* Grow With Grounded name in the header (session 20) */.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:var(--gold,#8B5E1A);white-space:nowrap;}.foot-name{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;line-height:1.1;margin-top:8px;}@media (max-width:640px){.brand .brand-name{display:none;}}</style>
 <link rel="stylesheet" href="/shared/gg-footer.css">
+<style>/* Aspen's own app: five tabs, with the shared tending styles (Rebrand Session 4) */
+.asp-app{--gold:var(--hero);}
+.asp-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 14px;}
+.asp-head h2{margin:0;font-size:clamp(26px,4vw,32px);}
+.asp-head .grow{flex:1;min-width:180px;}
+.asp-head p{margin:2px 0 0;}
+.asp-link{background:none;border:none;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;}
+.asp-tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:0 0 18px;overflow-x:auto;scrollbar-width:none;}
+.asp-tab{flex:1;min-width:84px;background:none;border:none;border-bottom:3px solid transparent;padding:10px 6px 9px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.4px;color:var(--ink-soft);cursor:pointer;}
+.asp-tab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.asp-tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--hero);}
+@media (max-width:700px){
+  .asp-tabs{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--card);border-bottom:none;border-top:1px solid var(--line);margin:0;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 14px rgba(0,0,0,.06);}
+  .asp-tab{min-width:0;border-bottom:none;border-top:3px solid transparent;font-size:12px;padding:8px 2px 9px;}
+  .asp-tab[aria-selected="true"]{border-top-color:var(--hero);}
+  body.asp-on main{padding-bottom:90px;}
+}
+.asp-app .btn-primary{background:var(--sun);color:var(--sun-ink);}
+.asp-app .btn-secondary,.gt-sheet .btn-secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+.asp-app .btn-sm,.gt-sheet .btn-sm{padding:8px 14px;font-size:15px;}
+.asp-app .btn-primary,.asp-app .btn-secondary,.gt-sheet .btn-primary,.gt-sheet .btn-secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:11px 18px;font-weight:700;font-size:16px;cursor:pointer;}
+.gt-sheet .btn-primary{background:var(--sun);color:var(--sun-ink);border:none;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;}
+.asp-app .gt-card h2,.asp-app .gt-card h3,.asp-app .gt-status,.asp-app .gt-part h3,.asp-app .gt-stats dd,.gt-sheet h2,.gt-sheet h3{font-family:var(--serif);}
+.asp-app .gt-part h3 small,.asp-app .gt-kicker{font-family:var(--sans);}
+.asp-pi{display:inline-flex;width:22px;height:22px;color:var(--pc);}
+.asp-pi svg{width:22px;height:22px;}
+.asp-see p{margin:0 0 8px;}
+.asp-see b{display:block;}
+.gt-share{display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600;}
+</style>
 </head>
 <body>
 <header class="topbar"><div class="topbar-inner">
@@ -375,7 +407,9 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=r4p"></script>
-<script src="checkin.js?v=r4p"></script>
+<script src="checkin.js?v=r4a"></script>
+<script src="/shared/gg-journey.js?v=r4a"></script>
+<script src="/shared/gg-tend.js?v=r4a"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -1021,7 +1055,10 @@ function hush(){ try { if (window.GGRead) GGRead.stop(); if ('speechSynthesis' i
 const TAB_OF = {home:'home',students:'students',dash:'students',checkin:'students',plan:'students',practice:'students',helpplan:'students',rings:'students',grown:'grown',gstudent:'grown',life:'life',guide:'life'};
 function go(view, opts){
   hush();
-  if (['plan','practice','helpplan'].includes(view)) view = 'dash';   // daily practice lives in The Grove now
+  // Daily practice lives in each student's own app again (Rebrand Session 4): the five tabs on their tree.
+  if (view === 'plan'){ ASP_TAB = 'plan'; view = 'dash'; }
+  else if (view === 'practice'){ ASP_TAB = 'today'; view = 'dash'; }
+  document.body.classList.toggle('asp-on', view === 'dash');
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   $('view-'+view).classList.add('active');
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === TAB_OF[view]));
@@ -1151,24 +1188,25 @@ function treeSVG(s){
 function renderHome(){
   $('view-home').innerHTML = `
     <h2>One tree, six parts</h2>
-    <p class="lede">Aspen is a check-in for spiritual and emotional resilience in grades 6 to 8. A student looks at six parts of their own tree, picks a few daily practices, and adds a growth ring each time they check in.</p>
+    <p class="lede">Aspen is a check-in for spiritual and emotional resilience in grades 6 to 8. A student looks at six parts of their own tree, tends it with small daily practices, and adds a growth ring each season.</p>
     <div class="parts">${PARTS.map(p=>`<div class="part-tile" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><b>${p.name}</b><span>${p.sub}</span></div>`).join('')}</div>
     <div class="steps">
       <div class="panel step"><h3>Check in</h3><p class="muted">Thirty-six questions, six for each part of the tree. Do it on your own or with a grown-up. Pause anytime and pick up later.</p></div>
-      <div class="panel step"><h3>Care for your tree</h3><p class="muted">Aspen suggests two parts that could use some care. Pick up to three small practices, or write your own. Every practice adds a leaf.</p></div>
-      <div class="panel step"><h3>Watch it grow</h3><p class="muted">Each check-in adds a ring. Over sixth, seventh, and eighth grade, you build a tree trunk made of your own years.</p></div>
+      <div class="panel step"><h3>Tend it every day</h3><p class="muted">Your growth plan suggests a few small practices for each part. Check off any one and your tree is watered for the day. Each week brings a theme and a short check-in.</p></div>
+      <div class="panel step"><h3>Watch it grow</h3><p class="muted">Each full check-in adds a ring, and a season of tending runs twelve weeks. Over sixth, seventh, and eighth grade, you build a tree trunk made of your own years.</p></div>
     </div>
     <div class="help-strip"><div><b>Need to talk to someone right now?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
 }
 
 /* ---------- students ---------- */
-function renderStudents(){
+function renderStudents(opts){
   const list = DB.students;
   const locked = window.GGP ? GGP.list().filter(p => p.age === 'aspen' && !GGP.isOpen(p.id)) : [];
+  if (!(opts && opts.list) && list.length === 1 && !locked.length){ openStudent(list[0].id); return; }
   $('view-students').innerHTML = `
     <h2>Who's checking in?</h2>
     <p class="lede">Tap your name, or add yourself. Everything stays on this device, locked with your own passcode.</p>
-    <div class="people">${list.map(s=>`<button class="person" onclick="openStudent('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}, ${s.leaves||0} leaves${s._pid?'':'. Not saved yet'}</span></button>`).join('')}${locked.map(p=>`<button class="person" onclick="openStudentProfile('${p.id}')">${GGAv.html(p.avatar, p.name, 44)}<b>${esc(p.name)}</b><span class="muted">Locked. Tap to open</span></button>`).join('')}</div>
+    <div class="people">${list.map(s=>`<button class="person" onclick="openStudent('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}, ${aspDays(s)} ${aspDays(s)===1?'day':'days'} tended${s._pid?'':'. Not saved yet'}</span></button>`).join('')}${locked.map(p=>`<button class="person" onclick="openStudentProfile('${p.id}')">${GGAv.html(p.avatar, p.name, 44)}<b>${esc(p.name)}</b><span class="muted">Locked. Tap to open</span></button>`).join('')}</div>
     <div class="panel" style="max-width:460px">
       <h3>Add a student</h3>
       <div class="field"><label for="new-name">First name or nickname</label><input id="new-name" maxlength="30" autocomplete="off"></div>
@@ -1189,7 +1227,8 @@ function addStudent(tryOnly){
   GGP.createDialog({ age:'aspen', name, carry:{ aspen:{ student:c } }, reason:'Your tree saves in your own Middle school profile, locked with a passcode only you know. The grown-ups who agree can open it too, so they can help.' })
     .then(ok => { if (!ok) return; DB = load(); const now = DB.students.find(x => x._pid && x.name.toLowerCase() === name.toLowerCase()); if (now) openStudent(now.id); else go('students'); });
 }
-function openStudent(id){ CUR = id; go('dash'); setTimeout(visitCheck, 0); }
+function openStudent(id){ if (CUR !== id) ASP_TAB = 'today'; CUR = id; go('dash'); setTimeout(visitCheck, 0); }
+function aspDays(s){ const d = (s.tend && s.tend.days) || {}; return Object.keys(d).filter(k => d[k] && (((d[k].d || []).length) || ((d[k].a || []).length))).length; }
 function changePic(){ const s = me(); if (!s) return; GGAv.pick({ value: s.avatar, name: s.name, photo: true, prefer: 'friendly', onPick: v => { s.avatar = v; save(); renderDash(); toast(v ? 'Picture saved.' : 'Using your initials.'); } }); }
 
 /* ---------- dashboard ---------- */
@@ -1203,38 +1242,98 @@ function planItems(s){
   const order = PARTS.map(p => p.key);
   return s.plan.picks.map(pickInfo).sort((a,b) => order.indexOf(a.part) - order.indexOf(b.part));
 }
+/* ---------- the student's own app (Rebrand Session 4) ----------
+   Five tabs, the same as Oak: Today, Week, Season, Growth plan, Guides. Daily tending,
+   the twelve-week journey, and seasons come from the shared engine (gg-tend.js), with
+   Aspen's own words (gg-journey.js, AGES.aspen). Everything is saved in the student's
+   record, so it stays locked in their profile. */
+let ASP_TAB = 'today';
+const ASP_TABS = [['today','Today','sun'],['week','Week','calendar'],['season','Season','rings'],['plan','Growth plan','can'],['guides','Guides','door']];
+const ASP_TAB_ICONS = {
+  can: '<path d="M4 10h11v8.5a2.5 2.5 0 0 1-2.5 2.5h-6A2.5 2.5 0 0 1 4 18.5z"/><path d="M15 12.5l5.5-4.5"/><path d="M20.5 8l1-1.5"/><path d="M7 10V7.5a2.5 2.5 0 0 1 5 0V10"/>',
+  door: '<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+  calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.2"/>',
+  rings: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.8"/><circle cx="12" cy="12" r="2.6"/>'
+};
+function aspTab(t){ ASP_TAB = t; if (!$('view-dash').classList.contains('active')) go('dash'); else renderDash(); toTop(false); }
+function aspMulti(){ return DB.students.length > 1 || (!!window.GGP && GGP.list().some(p => p.age === 'aspen' && !GGP.isOpen(p.id))); }
 function renderDash(){
   const s = me(); if (!s){ go('students'); return; }
   applyTheme(s);
-  const done = s.log[today()] || [], items = planItems(s), stuck = stuckParts(s);
-  const last = s.rings[s.rings.length-1];
-  $('view-dash').innerHTML = `
-    <button class="back" onclick="go('students')">&larr; All students</button>${saveNudge(s)}
-    <div class="dash">
-      <div>
-        <div class="tree-box">${treeSVG(s)}<p class="leafcount">${s.leaves||0} leaves, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}</p></div>
-        <div class="row" style="margin-top:10px;justify-content:center"><button class="btn ghost small" onclick="go('rings')">My rings</button><button class="btn ghost small" onclick="showCalm()">Need help now?</button></div>
-      </div>
-      <div>
-        <div class="me-row"><button class="me-pic" onclick="changePic()" aria-label="Change your picture">${GGAv.html(s.avatar, s.name, 56)}<span>Change</span></button><h2>Hi, ${esc(s.name)}</h2></div>
-        <p class="muted" style="margin-top:-4px">Grade ${s.grade} <button class="btn ghost small" style="margin-left:6px" onclick="changeGrade()">Change grade</button></p>
-        ${visitCardsHTML(s)}
-        <div class="panel">
-          ${s.draft ? `<h3>You're partway through a check-in</h3><p class="muted">Pick up right where you left off.</p><button class="btn" onclick="go('checkin')">Continue check-in</button>`
-            : `<h3>${s.rings.length ? 'Ready for a new ring?' : 'Start your first check-in'}</h3><p class="muted">${last ? 'Your last check-in was '+fmtDate(last.date)+'.' : 'About 8 to 10 minutes. There are no wrong answers.'}</p><button class="btn" onclick="startCheckin()">Start check-in</button>`}
-        </div>
-        <div class="panel">
-          <h3>Tend Your Grove</h3>
-          <p class="muted">${s.plan ? 'Your growth plan moved to The Grove, where all daily practice lives now. Your rings, leaves, and past practices are still here.' : 'Aspen is for checking in. Daily practice happens in The Grove, with a few small practices a day for each part of your tree.'} Each check-in here adds a ring and three leaves.</p>
-          <a class="btn teal small" href="/grove/${s._pid ? '?who=' + encodeURIComponent(s._pid) : ''}">Tend Your Grove</a>
-        </div>
-        <div class="panel">
-          <h3>Your kind of tree</h3>
-          <p class="muted small">New kinds of trees and scenery unlock in The Grove as you tend it. The kind you choose there shows here too.${(s.leaves||0) >= 10 ? ' The leaves you already earned carry over, so your unlocks are waiting.' : ''}</p>
-        </div>
-      </div>
-    </div>`;
+  const tab = ASP_TABS.some(t => t[0] === ASP_TAB) ? ASP_TAB : 'today';
+  $('view-dash').innerHTML = `<div class="asp-app">
+    <div class="asp-head">
+      <button class="me-pic" onclick="GGTend.openSettings()" aria-label="Profile and settings">${GGAv.html(s.avatar, s.name, 52)}<span>Settings</span></button>
+      <div class="grow"><h2>Hi, ${esc(s.name)}</h2><p class="muted small">Grade ${s.grade}${aspMulti() ? ` <span aria-hidden="true">/</span> <button class="asp-link" onclick="go('students',{list:true})">All students</button>` : ''}</p></div>
+      <button class="btn ghost small" onclick="showCalm()">Need help now?</button>
+    </div>
+    ${saveNudge(s)}
+    ${s.draft ? `<div class="panel"><h3 style="margin-top:0">You're partway through a check-in</h3><p class="muted">Pick up right where you left off.</p><button class="btn" onclick="go('checkin')">Continue check-in</button></div>` : ''}
+    ${visitCardsHTML(s)}
+    <nav class="asp-tabs" role="tablist" aria-label="Your tree">${ASP_TABS.map(t => `<button class="asp-tab" role="tab" aria-selected="${t[0] === tab}" onclick="aspTab('${t[0]}')"><svg viewBox="0 0 24 24" aria-hidden="true">${ASP_TAB_ICONS[t[2]]}</svg><span>${t[1]}</span></button>`).join('')}</nav>
+    ${ASP_TABS.map(t => `<div class="asp-pane" id="asp-${t[0]}" role="tabpanel"${t[0] === tab ? '' : ' hidden'}></div>`).join('')}
+  </div>`;
+  if (window.GGTend) GGTend.render();
+  if (tab === 'plan') renderPlan();
+  if (tab === 'guides') renderGuidesTab();
 }
+
+/* The shared engine reads and writes the open student's tending record. A student's growth
+   plan from before (picked in Aspen, later carried in The Grove) becomes Today's practices. */
+function picksToTend(picks){
+  const out = {}; PARTS.forEach(p => { out[p.key] = {selected:[], custom:'', own:[]}; });
+  (picks || []).forEach(p => { if (!out[p.part]) return; if (p.own) out[p.part].own.push(p.own); else { const i = pickInfo(p); if (i && i.text) out[p.part].selected.push(i.text); } });
+  return out;
+}
+function aspTendGet(){
+  const s = me(); if (!s) return null;
+  if (!s.tend || typeof s.tend !== 'object') s.tend = {};
+  if (!s.tend.plan && s.plan && (s.plan.picks || []).length) s.tend.plan = picksToTend(s.plan.picks);
+  return s.tend;
+}
+// The weekly quick check-in: question 1 of every part (Leaves 1 is sleep, so Rest), plus the tagged Leaves questions.
+function aspWeeklyBank(){
+  const s = me(), g = String(s ? s.grade : 6), Q = CK.questions[g] || {}, tags = (CK.weekly || {})[g] || {}, out = {};
+  PARTS.forEach(p => {
+    out[p.key] = (Q[p.key] || []).map((q, i) => ({ t: q[0], s: p.key === 'leaves' ? (i === 0 ? 'rest' : (Object.keys(tags).find(k => tags[k] === i) || null)) : null }));
+  });
+  return out;
+}
+function aspPracticeInfo(key, name){
+  const s = me(), grades = [s ? s.grade : 6, 6, 7, 8];
+  for (const g of grades){
+    const list = (PRACTICES[g] || {})[key] || [], idx = list.findIndex(pr => pr[2] === name);
+    if (idx < 0) continue;
+    const pr = list[idx], L = ((LEARN[g] || {})[key] || [])[idx];
+    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>` : '';
+    return { desc: `${STYLE_NAMES[pr[0]]}, about ${pr[1]} ${pr[1] === 1 ? 'minute' : 'minutes'}`, guide, hard: L ? L[2] : '' };
+  }
+  return {};
+}
+const ASP_SEE = `<p><b>Always shown to your grown-up</b>If you answer that someone is hurting you, that you've thought about hurting yourself, that you're being bullied, that you feel lonely or left out, or that you feel like giving up, your grown-up sees that answer so they can help.</p>
+  <p><b>The big picture</b>How each part of your tree is doing (Strong, Steady, or Needs care), how your tree looks today, how many days you tended it, and which parts you're tending.</p>
+  <p><b>Just yours</b>The rest of your answers, the practices you check off each day, your notes, and your weekly reflections. You can share a reflection with your grown-up anytime.</p>`;
+function aspProfileHtml(){
+  const s = me(); if (!s) return '';
+  return `<section><h3>Your profile</h3><p class="gt-who">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b> <span class="gt-small">Grade ${s.grade}</span></p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();changePic()">Change picture</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();changeGrade()">Change grade</button>${aspMulti() ? `<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();go('students',{list:true})">All students</button>` : ''}${!s._pid && window.GGP ? `<button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();saveStudentProfile('${s.id}')">Save my tree</button>` : ''}</div>
+    ${s._pid ? '' : `<p class="gt-small">${s._legacy ? 'Your rings were saved before Grounded profiles and are not locked yet.' : 'Right now your tree is only kept until this page closes.'}</p>`}</section>`;
+}
+function aspExtraSettings(){ return `<section class="asp-see" id="asp-see"><h3>What your grown-up can see</h3>${ASP_SEE}</section>`; }
+
+/* The Guides tab: the six parts, and the When Life Changes guides (written for grown-ups). */
+function renderGuidesTab(){
+  const box = $('asp-guides'); if (!box) return;
+  const G = guidesData();
+  box.innerHTML = `<div class="panel"><h3 style="margin-top:0">Your six parts</h3>
+      ${PARTS.map(p => `<p style="margin:10px 0 0"><b style="color:${pcolor(p.key)}">${p.name}</b> <span class="muted">${esc(p.sub)}</span><br>${esc(p.about)}</p>`).join('')}</div>
+    <div class="panel"><h3 style="margin-top:0">When life gets hard</h3>
+      <p class="muted">These guides are written for grown-ups, to help them talk with you about hard things. You can read them too, or ask your grown-up to read one with you.</p>
+      ${G.groups.map(g => `<div class="life-group"><h4>${esc(g.name)}</h4><div class="topics">${g.topics.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}</div>
+    <div class="help-strip"><div><b>Need to talk to someone right now?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
+}
+
 /* ---------- a card from an Aspen Guide visit ----------
    A guide's QR or link carries only a first name, the date, what's growing strong, and what the student chose
    to try. It lands on the student's own tree, for them. No levels, notes, safety answers, the optional question,
@@ -1327,7 +1426,7 @@ function renderCheckin(){
     v.innerHTML = `
       <button class="back" onclick="go('dash')">&larr; Back</button>
       <h2>Before you start</h2>
-      <div class="note"><b>This is yours, and your grown-up can see it too.</b> That's so they can help, not to grade you. There are no wrong answers. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Needs care.</div>
+      <div class="note"><b>This is yours.</b> Your grown-up sees how each part of your tree is doing, not your answers, except a few safety answers, so they can help. <button class="asp-link" onclick="GGTend.openSettings()">What your grown-up can see</button>. There are no wrong answers. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Needs care.</div>
       <div class="panel">
         <h3>How are you doing this check-in?</h3>
         <div class="seg" role="group" aria-label="Check-in mode"><button aria-pressed="${d.mode==='self'}" onclick="setMode('self')">On my own</button><button aria-pressed="${d.mode==='grown'}" onclick="setMode('grown')">With a grown-up</button></div>
@@ -1401,7 +1500,8 @@ function finishCheckin(){
   const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, std:CK.version, bank:CK.bank, sens:!!d.sens, mode:d.mode, answers, safety:d.safety.slice(), flags:d.flags.slice(), safetyFlag};
   ring.flagged = safetyFlag || ringFlags(ring).length > 0;
   s.rings.push(ring); s.draft = null; s.leaves = (s.leaves||0)+3; save();   // each checkin: one ring, three leaves
-  renderResult(ring);
+  const seasonMsg = window.GGTend ? GGTend.onFullCheckin({date: dayKey(ring.date)}) : null;
+  renderResult(ring, seasonMsg);
   if (safetyFlag) showCalm({final:true});
 }
 /* ---------- Tend Your Grove ----------
@@ -1456,16 +1556,17 @@ function sapSendGrove(id){
   if (!GGGrowth.send({ from:'aspen', who:s._pid, name:s.name, age:'aspen', answers:sapGroveAns(ring) })){ toast('Open the profile first, then try again.'); return; }
   location.href = '/grove/?who=' + encodeURIComponent(s._pid);
 }
-function renderResult(ring){
+function renderResult(ring, seasonMsg){
   const s = me(), prev = s.rings[s.rings.length-2], cmp = sameStd(ring, prev) ? prev : null;
   const strong = PARTS.filter(p => (levelOf(ringScore(ring, p.key)) || [])[2] === 'strong').map(p => p.name);
   $('view-checkin').innerHTML = `
     <h2>A new ring for your tree</h2>
-    <p class="lede">${cmp ? 'Here is how each part of your tree is doing, and how it compares to your last ring.' : prev ? 'Here is how each part of your tree is doing. Your earlier rings used different questions, so this ring starts fresh.' : 'Your first ring. Here is where each part of your tree is starting.'} Three new leaves, too.</p>
+    <p class="lede">${cmp ? 'Here is how each part of your tree is doing, and how it compares to your last ring.' : prev ? 'Here is how each part of your tree is doing. Your earlier rings used different questions, so this ring starts fresh.' : 'Your first ring. Here is where each part of your tree is starting.'}</p>
+    ${seasonMsg ? `<div class="note">${esc(seasonMsg)}</div>` : ''}
     <div class="status-grid">${PARTS.map(p=>statusCell(ring,cmp,p.key,false)).join('')}</div>
     ${strong.length ? `<p class="muted">Growing strong: ${strong.join(', ')}.</p>` : ''}
-    <div class="note">Aspen suggests caring for <b>${lowestTwo(ring).map(k=>PART[k].name).join(' and ')}</b>. Daily practice happens in The Grove: tap Tend Your Grove and your answers go there, locked in your profile, to shape your practices.</div>
-    <div class="row">${sapGroveBtn(ring)}<button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="go('dash')">Back to my tree</button></div>`;
+    <div class="note">Aspen suggests caring for <b>${lowestTwo(ring).map(k=>PART[k].name).join(' and ')}</b>. Your growth plan suggests about 3 practices for each part, and a few more for the parts that need care.</div>
+    <div class="row"><button class="btn" onclick="aspTab('plan')">Build my growth plan</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="aspTab('today')">Back to my tree</button></div>`;
   toTop(true);
 }
 
@@ -1497,7 +1598,8 @@ function calmKey(e){ if (e.key==='Escape') closeCalm(); }
 function closeCalm(){ $('overlay-root').innerHTML=''; document.removeEventListener('keydown', calmKey); }
 
 /* ---------- growth plan ---------- */
-const MAX_PER_PART = 3;
+// No limits (Rebrand Session 4), only suggestions: about 3 for a Strong part, 4 for Steady, 5 for Needs care.
+const aspSuggest = (ring, k) => { const lv = ring ? (levelOf(ringScore(ring, k)) || [])[2] : null; return window.GGTend && GGTend.suggest ? GGTend.suggest(lv) : ({care:5, steady:4}[lv] || 3); };
 const PART_GUIDES = {roots:['faith','death','identity'], trunk:['identity','grades','cut','startms'], bark:['compare','grades','phone','news'], branches:['friends','leftout','bullying','crush'], leaves:['sleep','looks','eating','vaping'], fruit:['divorce','moving','disaster','news']};
 function guideTitle(id){ let t = id; guidesData().groups.forEach(g => g.topics.forEach(x => { if (x.id === id) t = x.title; })); return t; }
 function guideLinks(k){ return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
@@ -1508,7 +1610,7 @@ function learnHTML(g, k, idx){
 let planDraft = null, planOpen = {};
 function renderPlan(){
   const s = me(); if (!s){ go('students'); return; }
-  applyTheme(s);
+  const box = $('asp-plan') || $('view-plan'), inApp = box.id === 'asp-plan';
   const last = s.rings[s.rings.length-1];
   const suggested = last ? lowestTwo(last) : [];
   if (!planDraft || planDraft.sid !== s.id){ planDraft = {sid:s.id, picks: s.plan ? JSON.parse(JSON.stringify(s.plan.picks)) : []}; planOpen = {}; }
@@ -1517,14 +1619,14 @@ function renderPlan(){
   const isPicked = (k, idx) => pd.picks.some(p => !p.own && p.part === k && p.idx === idx && p.grade === g);
   const order = [...suggested, ...PARTS.map(p => p.key).filter(k => !suggested.includes(k))];
   const total = pd.picks.length;
-  $('view-plan').innerHTML = `
-    <button class="back" onclick="planDraft=null;go('dash')">&larr; Back to my tree</button>
+  box.innerHTML = `
+    ${inApp ? '' : `<button class="back" onclick="planDraft=null;go('dash')">&larr; Back to my tree</button>`}
     <h2>Your growth plan</h2>
-    <p class="lede">Pick up to 3 practices for any part of your tree. ${suggested.length ? `Aspen suggests starting with <b>${suggested.map(k => PART[k].name).join(' and ')}</b>.` : ''} Tap <b>Learn more</b> on any practice to see how it works.</p>
+    <p class="lede">Start with about 3 practices for each part of your tree, and a few more for any part that needs care. There's no limit, and you can write your own. ${suggested.length ? `Aspen suggests starting with <b>${suggested.map(k => PART[k].name).join(' and ')}</b>.` : ''} Tap <b>Learn more</b> on any practice to see how it works.</p>
     <div class="row" style="margin-bottom:14px"><button class="btn ghost small" onclick="go('helpplan')">How growth plans work</button><button class="btn ghost small" onclick="showCalm()">Need to talk to someone?</button></div>
     ${order.map(k => { const n = inPart(k).length, open = suggested.includes(k) || planOpen[k] || n > 0;
       return `<details class="plan-part" style="border-left:6px solid ${pcolor(k)}" ${open ? 'open' : ''} ontoggle="planOpen['${k}']=this.open">
-      <summary><span class="pp-name">${PART[k].name} <span class="muted small">${PART[k].sub}</span></span>${suggested.includes(k) ? '<span class="pill">Suggested this week</span>' : ''}<span class="muted small pp-count">${n} of 3 picked</span></summary>
+      <summary><span class="pp-name">${PART[k].name} <span class="muted small">${PART[k].sub}</span></span>${suggested.includes(k) ? '<span class="pill">Suggested this week</span>' : ''}<span class="muted small pp-count">${n} picked, about ${aspSuggest(last, k)} suggested</span></summary>
       <div class="pp-body">
         ${PRACTICES[g][k].map((pr, idx) => `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${esc(pr[2])}</span></button>${learnHTML(g, k, idx)}</div>`).join('')}
         ${inPart(k).filter(p => p.own).map(p => `<p class="row own-row"><span>${esc(p.own)} <span class="muted small">(your own)</span></span><button class="btn ghost small" onclick="removeOwn('${p.id}')">Remove</button></p>`).join('')}
@@ -1537,12 +1639,11 @@ function togglePick(k, idx){
   const pd = planDraft, g = me().grade;
   const i = pd.picks.findIndex(p => !p.own && p.part === k && p.idx === idx && p.grade === g);
   if (i >= 0) pd.picks.splice(i, 1);
-  else { if (pd.picks.filter(p => p.part === k).length >= MAX_PER_PART){ toast('Three is plenty for ' + PART[k].name + '. Tap one to swap it out.'); return; } pd.picks.push({part:k, idx, grade:g, added:Date.now()}); }
+  else pd.picks.push({part:k, idx, grade:g, added:Date.now()});
   planOpen[k] = true; renderPlan();
 }
 function addOwn(k){
   const el = $('own-' + k), t = el.value.trim(); if (!t){ el.focus(); return; }
-  if (planDraft.picks.filter(p => p.part === k).length >= MAX_PER_PART){ toast('Three is plenty for ' + PART[k].name + '. Remove one first.'); return; }
   planDraft.picks.push({own:t, part:k, id:uid(), added:Date.now()}); planOpen[k] = true; renderPlan();
 }
 function removeOwn(id){ planDraft.picks = planDraft.picks.filter(p => p.id !== id); renderPlan(); }
@@ -1559,7 +1660,8 @@ function savePlan(){
   s.planLog = s.planLog.slice(0, 100);
   newPicks.forEach(p => { if (!p.added) p.added = Date.now(); });
   s.plan = {picks:newPicks, created: (s.plan && s.plan.created) || now, updated: now};
-  planDraft = null; save(); toast('Growth plan saved.'); go('dash');
+  const t = aspTendGet(); if (t) t.plan = picksToTend(newPicks);
+  planDraft = null; save(); toast(newPicks.length ? 'Saved. Your practices are in Today.' : 'Growth plan saved.'); ASP_TAB = 'today'; go('dash');
 }
 
 /* ---------- practice history ---------- */
@@ -1623,14 +1725,14 @@ function renderPractice(){
 }
 function renderHelpPlan(){
   const s = me();
-  $('view-helpplan').innerHTML = `<button class="back" onclick="go(me() ? 'plan' : 'students')">&larr; Back to my growth plan</button>
+  $('view-helpplan').innerHTML = `<button class="back" onclick="me() ? aspTab('plan') : go('students')">&larr; Back to my growth plan</button>
     <h2>How growth plans work</h2>
-    <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. For any part, pick up to 3 practices, or write your own. After a check-in, Aspen suggests two parts that could use some care, but you can choose any.</p></div>
+    <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a part that Needs care. There's no limit, and you can write your own. After a check-in, Aspen points to two parts that could use some care, but you can choose any.</p></div>
     <div class="panel"><h3>Learn more</h3><p>Every practice has a <b>Learn more</b> button. It tells you why it helps, how to do it step by step, what to do if it's hard, and a way to try it with a grown-up.</p></div>
-    <div class="panel"><h3>Leaves and unlocks</h3><p>Each practice you check off adds a leaf to your tree. Every check-in adds three more. Leaves unlock new tree styles and color themes.</p></div>
-    <div class="panel"><h3>No streaks</h3><p>Missing a day doesn't erase anything. Your tree just grows a little slower that week. Come back whenever you're ready.</p></div>
-    <div class="panel"><h3>Change it anytime</h3><p>Tap <b>Edit my growth plan</b> to add or remove practices. <b>My practice</b> shows what you've done and how your plan has changed.</p></div>
-    <div class="panel"><h3>Stuck?</h3><p>If a part has been tricky for a week, Aspen will ask if you want to try it with a grown-up or swap in a different practice. Both are good choices.</p></div>
+    <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
+    <div class="panel"><h3>No streaks</h3><p>Miss a few days and your tree looks dry or droops a little, but it never dies and nothing is taken away. One practice perks it up, and a few days bring it all the way back.</p></div>
+    <div class="panel"><h3>Easier today</h3><p>Hard day? Tap <b>Easier today</b> on a practice for a smaller version that still counts.</p></div>
+    <div class="panel"><h3>Change it anytime</h3><p>Open <b>Growth plan</b> to add or remove practices whenever you want.</p></div>
     <div class="help-strip"><div><b>Need to talk to someone?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
 }
 
@@ -1672,8 +1774,13 @@ function ringDetail(s, i, grown){
       });
       h += `</div>`;
     }
-    h += `<details class="panel"><summary><b>See every answer</b></summary><p class="muted small">Answers that may need care are in bold.</p><ul class="answers-list">`;
+    /* Three layers (Rebrand Session 4): a grown-up always sees the safety answers and the lonely,
+       bullied, and giving up answers. Every answer shows only for a check-in done together. */
+    const together = ring.mode === 'grown';
+    h += together ? `<details class="panel"><summary><b>See every answer</b></summary><p class="muted small">You did this check-in together, so every answer is here. Answers that may need care are in bold.</p><ul class="answers-list">`
+      : `<details class="panel"><summary><b>Answers always shown to you</b></summary><p class="muted small">The safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. The rest of ${name}'s answers are theirs.</p><ul class="answers-list">`;
     PARTS.forEach(p => ringQs(ring, p.key).forEach((q,qi)=>{
+      if (!together && !(std ? q[3] : (ring.flags || []).includes(p.key+':'+qi))) return;
       const a = ringQa(ring, p.key)[qi], an = ANS[a];
       const hard = std ? (an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1)) : (an && an[2] === 1);
       const mark = std ? (q[3] && (a === 'yes' || a === 'some')) : (ring.flags || []).includes(p.key+':'+qi);
@@ -1690,7 +1797,7 @@ function renderRings(){
   const s = me(); if (!s){ go('students'); return; }
   applyTheme(s);
   const n = s.rings.length, sel = selRing[s.id] != null ? selRing[s.id] : n-1;
-  $('view-rings').innerHTML = `<button class="back" onclick="go('dash')">&larr; Back to my tree</button><h2>Your rings</h2>
+  $('view-rings').innerHTML = `<button class="back" onclick="aspTab('season')">&larr; Back to my tree</button><h2>Your rings</h2>
     ${n ? `<p class="lede">Every check-in adds a ring. Darker lines mark a new school year. Tap a ring to see that check-in.</p>
       <div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}</button>`).join('')}</div></div><div>${ringDetail(s, sel, false)}</div></div>`
       : `<p class="lede">No rings yet. Your first check-in adds your first ring.</p><button class="btn" onclick="startCheckin()">Start check-in</button>`}`;
@@ -1711,12 +1818,15 @@ function renderGrown(){
       <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it.</p>
     </div>
     <div class="panel"><h3>How Aspen works</h3>
-      <p>Each check-in has 36 questions, six for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Aspen suggests two parts to care for, and Tend Your Grove carries the answers to The Grove, where daily practice happens. Each check-in adds a growth ring and three leaves.</p>
+      <p>Each check-in has 36 questions, six for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Aspen suggests two parts to care for, and the student builds a growth plan of small daily practices. Each day they tend their tree, each week brings a theme and a short check-in, and a full check-in at the end of a twelve-week season adds a growth ring.</p>
       <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Needs care (1 to 4). Students see the levels too, with a reminder that a part needing care is a part to tend, not a grade. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
       <p>Aspen follows the Grounded tree standard, the same one behind Maple, Oak, and the tools to come, so every check-in measures the same six parts the same way, written for each grade.</p>
     </div>
     <div class="panel"><h3>What you can see</h3>
-      <p>Grown-ups can see every answer, and students are told that plainly before they start: "This is yours, and your grown-up can see it too. That's so they can help, not to grade you." Kids answer more honestly when they know up front.</p>
+      <p>Aspen gives students some privacy, in three layers, and tells them so plainly before they start. Kids answer more honestly when they know up front.</p>
+      <p><b>Always shown to you.</b> The two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. When an answer is worrying, you see exactly what they said and what to do next.</p>
+      <p><b>The big picture.</b> How each part of the tree is doing (Strong, Steady, or Needs care), how the tree looks today, how many days they tended it, and which parts they're tending.</p>
+      <p><b>Just theirs.</b> The rest of their answers, the practices they check off each day, their notes, and their weekly reflections, unless they choose to share a reflection with you.</p>
     </div>
     <div class="panel"><h3>Safety and the calm card</h3>
       <p>Every grade has gentle questions about feeling lonely or left out, being bullied, and losing hope, plus two direct safety questions at the end. When a student answers one of them in a worrying way, you see a "Worth a check-in" marker on that ring, with what they said and what to do next. The student sees a calm card right away with safe people to talk to and helplines they can call or text on their own. For loneliness, the calm card opens when the answer is "Yeah, most of the time," since feeling left out sometimes is common at this age, but you still see every "Sometimes."</p>
@@ -1750,13 +1860,30 @@ function openG(id){ CUR = id; go('gstudent'); }
 function pickGRing(i){ gSel[CUR] = i; renderGStudent(); }
 function renderGStudent(){
   const s = me(); if (!s){ go('grown'); return; }
-  const n = s.rings.length, sel = gSel[s.id] != null ? gSel[s.id] : n-1, items = planItems(s);
+  const n = s.rings.length, sel = gSel[s.id] != null ? gSel[s.id] : n-1;
+  const t = s.tend || {}, plan = t.plan || (s.plan ? picksToTend(s.plan.picks) : null);
+  const tendingParts = PARTS.filter(p => { const x = (plan || {})[p.key] || {}; return (x.selected || []).length + (x.own || []).length + (x.custom ? 1 : 0) > 0; });
+  const week7 = [...Array(7)].map((_, i) => dayKey(Date.now() - i*864e5)).filter(d => { const x = (t.days || {})[d]; return x && (((x.d || []).length) || ((x.a || []).length)); }).length;
+  const h = window.GGTend ? GGTend.health() : 0, wk = window.GGTend ? GGTend._week() : 0;
+  const W = wk ? ((window.GGJourney || {}).WEEKS || [])[Math.min(12, wk) - 1] : null;
+  const kidQ = wk ? ((((window.GGJourney || {}).AGES || {}).aspen || {}).WEEKS || [])[Math.min(12, wk) - 1] : null, kq = kidQ && kidQ.q;
+  const shared = Object.keys(t.weeks || {}).map(k => t.weeks[k]).filter(x => x && x.share && x.refl).sort((x, y) => String(y.date).localeCompare(String(x.date)));
   $('view-gstudent').innerHTML = `<button class="back" onclick="go('grown')">&larr; All students</button>
-    <div class="me-row">${GGAv.html(s.avatar, s.name, 56)}<div><h2 style="margin:0">${esc(s.name)}</h2><p class="muted" style="margin:0">Grade ${s.grade}, ${s.leaves||0} leaves</p></div></div>
+    <div class="me-row">${GGAv.html(s.avatar, s.name, 56)}<div><h2 style="margin:0">${esc(s.name)}</h2><p class="muted" style="margin:0">Grade ${s.grade}</p></div></div>
+    <p class="muted small">What you see here: safety answers always, and the big picture of ${esc(s.name)}'s tree. The rest of their answers, the practices they check off, and their reflections are theirs unless they share them.</p>
     ${n ? `<div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickGRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickGRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}${r.flagged?' <span class="marker">Worth a check-in</span>':''}</button>`).join('')}</div></div><div>${ringDetail(s, sel, true)}</div></div>` : '<p class="muted">No check-ins yet.</p>'}
     ${sensPanel(s)}
-    <div class="panel"><h3>Growth plan</h3>${items.length ? PARTS.filter(p => items.some(i => i.part === p.key)).map(p => `<p style="margin:10px 0 2px;color:${pcolor(p.key)};font-weight:700">${p.name} <span class="muted small">${p.sub}</span>${stuckParts(s).includes(p.key) ? ' <span class="marker">Tricky this week</span>' : ''}</p><ul style="margin-top:0">${items.filter(i => i.part === p.key).map(it => `<li>${esc(it.text)}</li>`).join('')}</ul>${guideLinks(p.key)}`).join('') : '<p class="muted">No growth plan yet.</p>'}</div>
-    <details class="panel"><summary><b>Practice history</b></summary><div style="margin-top:10px">${historyHTML(s)}</div></details>
+    <div class="panel"><h3>Tending</h3>
+      <div class="asp-app" style="display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:16px;align-items:center">
+        <div>${window.GGTend ? GGTend.treeSVG(h, 0) : ''}</div>
+        <div><p style="margin:0"><b>${['Thriving','A little dry','Drooping','Resting bare'][h] || 'Thriving'}.</b> ${week7} of the last 7 days tended, ${aspDays(s)} in all.</p>
+          ${t.start ? `<p class="muted small">Season ${t.season || 1}, week ${Math.min(12, wk || 1)} of 12.</p>` : '<p class="muted small">The season starts with the first full check-in.</p>'}
+          <p class="small" style="margin-top:8px"><b>Parts ${esc(s.name)} is tending:</b> ${tendingParts.length ? tendingParts.map(p => `<span style="color:${pcolor(p.key)};font-weight:700">${p.name}</span>`).join(', ') : 'none chosen yet'}.</p></div>
+      </div>
+      ${tendingParts.length ? `<p class="small" style="margin-top:12px"><b>Guides for these parts:</b></p>${tendingParts.map(p => guideLinks(p.key)).join('')}` : ''}
+    </div>
+    ${W ? `<div class="panel"><h3>This week in Aspen: ${esc(W.theme || '')}</h3>${kq ? `<p>${esc(s.name)}'s reflection question this week: "${esc(kq)}"</p>` : ''}${W.story ? `<p class="muted">For you, a story from Grounded: <a href="${esc(W.story.url)}" target="_blank" rel="noopener">${esc(W.story.title)}</a>. <i>${esc(W.story.line)}</i> Read it first, and share what fits in your own words.</p>` : ''}</div>` : ''}
+    <div class="panel"><h3>Reflections ${esc(s.name)} shared</h3>${shared.length ? shared.map(x => `<p style="margin:8px 0 0"><b>${fmtDate(x.date + 'T12:00')}</b><br>${esc(x.refl)}</p>`).join('') : `<p class="muted">Nothing shared yet. Weekly reflections are ${esc(s.name)}'s own unless they choose to share one with you.</p>`}</div>
     <div class="row"><button class="btn ghost small" onclick="removeStudent('${s.id}')">Remove this student from this device</button></div>`;
 }
 /* The optional question about being offered a vape or other substances (grades 7 and 8).
@@ -1824,6 +1951,34 @@ function renderGuide(opts){
     ${!t.quick && !t.talk ? '<p class="muted">This guide is being written.</p>' : ''}
     </div>`;
 }
+
+/* ---------- the shared tending engine, set up for Aspen (Rebrand Session 4) ---------- */
+if (window.GGTend) GGTend.init({
+  tool: 'aspen', toolName: 'Aspen',
+  els: { today: 'asp-today', week: 'asp-week', season: 'asp-season' },
+  parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.sub, color: pcolor(p.key) })),
+  moveKey: 'leaves',
+  partIcon: k => `<span class="asp-pi" aria-hidden="true">${ICONS[k] || ''}</span>`,
+  questions: () => aspWeeklyBank(),
+  answers: ANSWERS,
+  weekStem: 'Think about this past week.',
+  journey: ((window.GGJourney || {}).AGES || {}).aspen,
+  showStory: false, noQuick: true, shareRefl: true, noRecords: true,
+  tree: { pal: [['#9A7A12', '#D9A91E', '#F2CC4E'], ['#8F7C3E', '#C2AE62', '#DCCB8C'], ['#7A6A40', '#9E8A55', '#B8A46E']], trunk: '#BDB5A0', trunkBare: '#A79F8A', fruit: 'leaf', fruitColor: '#F5C518' },
+  practiceInfo: aspPracticeInfo,
+  history: () => { const s = me(); return s ? s.rings.map(r => ({ date: dayKey(r.date), type: 'full' })) : []; },
+  hasResults: () => !!(me() && me().rings.length),
+  ringCount: () => (me() ? me().rings.length : 0),
+  toast: m => toast(m),
+  store: { get: aspTendGet, save: () => { save(); return Promise.resolve(); } },
+  profileHtml: aspProfileHtml, extraSettings: aspExtraSettings,
+  actions: {
+    fullCheckin: () => { const s = me(); if (s && s.draft) go('checkin'); else startCheckin(); },
+    results: () => go('rings'), progress: () => go('rings'), plan: () => aspTab('plan'),
+    about: () => go('helpplan'), textSize: () => cycleTextSize(),
+    createProfile: () => { const s = me(); if (s) saveStudentProfile(s.id); }, openProfile: () => go('students', { list: true }), lock: () => { if (window.GGP) GGP.lock(); }
+  }
+});
 
 /* ---------- start ---------- */
 const yr = $('copyright-year'); if (yr) yr.textContent = new Date().getFullYear();

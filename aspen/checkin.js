@@ -388,6 +388,17 @@ const SENSITIVE_WHY = {
   '8': 'This question is optional. It helps your grown-up know if someone has been pressuring you, so they can help.'
 };
 
+/* The weekly quick check-in (Rebrand Session 4): question 1 of every part
+   (Leaves question 1 is about sleep, so it stands for Rest), plus the Leaves
+   questions below where a grade has one. Only questions where "yes" is the
+   good answer are tagged, so week to week comparisons read the right way.
+   Grade 8 has no movement or food question, so it asks the six. */
+const WEEKLY = {
+  '6': { move: 1 },
+  '7': { move: 1, nourish: 4 },
+  '8': {}
+};
+
 // The safety step. The same two questions for grades 6 to 8.
 const SAFETY = {
   questions: [
@@ -398,5 +409,5 @@ const SAFETY = {
   intro: 'These help make sure you\'re safe. There\'s no wrong answer, and you can skip if you want.'
 };
 
-window.ASPEN_CHECKIN = { version: VERSION, bank: BANK, perPart: PER_PART, bankSizes: BANK_SIZES, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, sensitive: SENSITIVE, sensitiveWhy: SENSITIVE_WHY, safety: SAFETY };
+window.ASPEN_CHECKIN = { weekly: WEEKLY, version: VERSION, bank: BANK, perPart: PER_PART, bankSizes: BANK_SIZES, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, sensitive: SENSITIVE, sensitiveWhy: SENSITIVE_WHY, safety: SAFETY };
 })();

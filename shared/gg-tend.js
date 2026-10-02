@@ -5,8 +5,9 @@
    can use it next with their own words and parts.
 
    The rhythm
-   - Today: the practices from your growth plan, up to 3 per part,
-     grouped by part. Checking off any one waters the tree for the day.
+   - Today: the practices from your growth plan, grouped by part. No
+     limits, only suggestions: about 3 for a Strong part, 4 for Steady,
+     5 for Needs care (GGTend.suggest), plus any of their own. Checking off any one waters the tree for the day.
      Each practice has an "easier today" version and an optional note.
      Morning and evening anchors sit at the top and bottom.
    - Week: one of twelve weekly themes, a quick check-in (question 1 of
@@ -27,7 +28,21 @@
      GGTend.init(cfg)        see the Oak page for a full example
      GGTend.render()         redraw whatever tab is showing
      GGTend.onFullCheckin(entry)   call when a full check-in finishes
-     GGTend.setPlan(plan)    {partKey: {selected:[names], custom:''}}
+     GGTend.setPlan(plan)    {partKey: {selected:[names], custom:'', own:[names]}}
+     GGTend.suggest(level)   how many practices to suggest for a part:
+                             'strong' 3, 'steady' 4, 'care' 5 (3 if unknown)
+
+   Optional config (Rebrand Session 4, for Aspen and Maple)
+     journey      words that replace the shared journey for this age
+                  (WEEKS by position, ANCHORS, LEVELS, LEVEL_MOVE)
+     showStory    false hides the Grounded story in Week
+     noQuick      true hides the quick check-in buttons
+     shareRefl    true adds "Share this with my grown-up" to the reflection
+     noRecords    true hides the records section (a grown-up keeps the backups)
+     ringCount    () => number of rings to show, when a tool counts rings its own way
+     tree         { pal: [3 colors] x3, trunk, trunkBare, fruit: 'acorn' or 'leaf', fruitColor }
+     profileHtml  () => html for the profile section of the settings sheet
+     extraSettings () => html added to the settings sheet
      GGTend.plan()           the saved plan, or null
      GGTend.state()          the saved record, or null
      GGTend.openSettings()   the settings sheet behind the profile picture
@@ -38,6 +53,19 @@
   var C = null;            // the tool's config
   var CAL = null;          // the month showing on the calendar {y, m}
   var OPEN = {};           // which practice drawers are open
+
+  /* ---------- an age's own words over the shared journey ---------- */
+  function mergeJourney(base, over) {
+    if (!over) return base;
+    var out = {}; Object.keys(base).forEach(function (k) { out[k] = base[k]; });
+    Object.keys(over).forEach(function (k) {
+      if (k === 'WEEKS' && Array.isArray(base.WEEKS)) out.WEEKS = base.WEEKS.map(function (w, i) { var o = {}; Object.keys(w).forEach(function (x) { o[x] = w[x]; }); var v = over.WEEKS[i] || {}; Object.keys(v).forEach(function (x) { o[x] = v[x]; }); return o; });
+      else out[k] = over[k];
+    });
+    return out;
+  }
+  // How many practices to suggest for one part of the tree. Suggestions only, never a limit.
+  function suggest(level) { return level === 'care' ? 5 : level === 'steady' ? 4 : 3; }
 
   /* ---------- small helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -70,18 +98,21 @@
     return s;
   }
   function save() { return C.store.save(); }
-  function countPlan(p) { var n = 0; Object.keys(p || {}).forEach(function (k) { var x = p[k] || {}; n += (x.selected || []).length + (x.custom ? 1 : 0); }); return n; }
+  function countPlan(p) { var n = 0; Object.keys(p || {}).forEach(function (k) { var x = p[k] || {}; n += (x.selected || []).length + (x.custom ? 1 : 0) + (x.own || []).length; }); return n; }
   function items(s) {
     var out = [];
     C.parts.forEach(function (pt) {
       var x = (s.plan || {})[pt.key]; if (!x) return;
       (x.selected || []).forEach(function (name) { out.push({ key: pt.key, name: name, custom: false }); });
       if (x.custom) out.push({ key: pt.key, name: x.custom, custom: true });
+      (x.own || []).forEach(function (name) { if (name) out.push({ key: pt.key, name: name, custom: true }); });
     });
     return out;
   }
   function day(s, d, make) { if (!s.days[d] && make) s.days[d] = { d: [], n: {}, e: [], a: [] }; return s.days[d] || null; }
   function tended(s, d) { var x = s.days[d]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); }
+  // Rings: seasons finished, or (C.ringCount) the tool's own count, like Aspen's one ring per full check-in.
+  function ringN(s) { return C.ringCount ? C.ringCount() : (s.rings || []).length; }
   function partsOn(s, d) { var x = s.days[d], set = {}; if (!x) return 0; (x.d || []).forEach(function (id) { set[id.split('|')[0]] = 1; }); return Object.keys(set).length; }
 
   /* ---------- season and week ---------- */
@@ -117,12 +148,12 @@
   ];
   function treeSVG(h, parts, big) {
     var R = rng(41), W = 320, H = 250, gy = 210, cx = 160, cy = 104;
-    var pal = [
+    var T = (C && C.tree) || {};
+    var pal = (T.pal || [
       ['#6F5517', '#A88A3A', '#D2B260'],   // thriving, Oak gold
       ['#7C6A3C', '#AE9A64', '#CDBB86'],   // dry
-      ['#6B5634', '#8F7445', '#A88D5C'],   // drooping
-      null                                  // bare
-    ][h];
+      ['#6B5634', '#8F7445', '#A88D5C']    // drooping
+    ]).concat([null])[h];                  // bare
     var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3));
     var drop = [0, 2, 9, 0][h];
     var o = '<svg class="gt-tree-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(LINES[h]) + '" xmlns="http://www.w3.org/2000/svg">';
@@ -131,7 +162,7 @@
     o += '<rect x="0" y="' + gy + '" width="' + W + '" height="' + (H - gy) + '" fill="#81654B"/><rect x="0" y="' + (gy + 18) + '" width="' + W + '" height="' + (H - gy - 18) + '" fill="#6E543E"/>';
     o += '<path d="M0 ' + gy + 'H' + W + '" stroke="#5E7D3F" stroke-width="3"/>';
     // trunk with its flare into the ground, and the main limbs
-    var tk = h === 3 ? '#5A4636' : '#4E2E12';
+    var tk = h === 3 ? (T.trunkBare || '#5A4636') : (T.trunk || '#4E2E12');
     o += '<path d="M' + (cx - 30) + ' ' + gy + 'Q' + (cx - 14) + ' ' + (gy - 6) + ' ' + (cx - 12) + ' ' + (gy - 36) + 'L' + (cx - 9) + ' ' + (cy + 30) + 'H' + (cx + 9) + 'L' + (cx + 12) + ' ' + (gy - 36) + 'Q' + (cx + 14) + ' ' + (gy - 6) + ' ' + (cx + 30) + ' ' + gy + 'Z" fill="' + tk + '"/>';
     o += '<path d="M' + (cx - 5) + ' ' + (cy + 34) + 'Q' + (cx - 30) + ' ' + (cy + 14) + ' ' + (cx - 66) + ' ' + (cy - 4) + 'M' + (cx + 5) + ' ' + (cy + 32) + 'Q' + (cx + 34) + ' ' + (cy + 12) + ' ' + (cx + 70) + ' ' + (cy - 8) + 'M' + cx + ' ' + (cy + 30) + 'Q' + (cx - 3) + ' ' + (cy - 4) + ' ' + (cx + 4) + ' ' + (cy - 40) + 'M' + (cx - 34) + ' ' + (cy + 12) + 'Q' + (cx - 46) + ' ' + (cy - 14) + ' ' + (cx - 40) + ' ' + (cy - 38) + 'M' + (cx + 38) + ' ' + (cy + 10) + 'Q' + (cx + 50) + ' ' + (cy - 16) + ' ' + (cx + 44) + ' ' + (cy - 36) + '" stroke="' + tk + '" stroke-width="' + (h === 3 ? 5 : 6) + '" fill="none" stroke-linecap="round"/>';
     if (h === 3) o += '<path d="M' + (cx - 66) + ' ' + (cy - 4) + 'l-14 -10M' + (cx + 70) + ' ' + (cy - 8) + 'l16 -8M' + (cx + 4) + ' ' + (cy - 40) + 'l-8 -14M' + (cx - 40) + ' ' + (cy - 38) + 'l-10 -10M' + (cx + 44) + ' ' + (cy - 36) + 'l10 -12" stroke="' + tk + '" stroke-width="3" fill="none" stroke-linecap="round"/>';
@@ -151,10 +182,11 @@
         });
         o += '</g>';
       });
-      // acorns, one for each part tended today, when the tree is well
+      // acorns (or bright leaves), one for each part tended today, when the tree is well
       if (h <= 1) for (var k = 0; k < Math.min(6, parts); k++) {
         var ax = cx - 80 + k * 32 + (k % 2) * 6, ay = cy + 36 - (k % 3) * 22;
-        o += '<g transform="translate(' + ax + ' ' + ay + ')"><ellipse cy="3" rx="4.2" ry="5.4" fill="#8A5A2B"/><path d="M-5 0Q0 -6 5 0Z" fill="#4E3418"/></g>';
+        if (T.fruit === 'leaf') o += '<g transform="translate(' + ax + ' ' + ay + ') rotate(' + (k * 47 % 90 - 45) + ')"><path d="M0 -6C5 -6 7 -1 0 7C-7 -1 -5 -6 0 -6Z" fill="' + (T.fruitColor || '#E8B923') + '" stroke="#8A6A12" stroke-width=".8"/></g>';
+        else o += '<g transform="translate(' + ax + ' ' + ay + ')"><ellipse cy="3" rx="4.2" ry="5.4" fill="#8A5A2B"/><path d="M-5 0Q0 -6 5 0Z" fill="#4E3418"/></g>';
       }
     }
     // fallen leaves on the ground when dry or drooping
@@ -195,11 +227,11 @@
     var count = Object.keys(s.days).filter(function (k) { return tended(s, k) && (!s.start || k >= s.start); }).length;
     var html = '<div class="gt-card gt-treecard"><div class="gt-tree" id="gt-tree">' + treeSVG(h, parts) + '</div><div class="gt-tree-side"><p class="gt-status">' + LINES[h] + '</p>'
       + (parts >= 6 ? '<p class="gt-small">All six parts tended today. That is a full day.</p>' : parts ? '<p class="gt-small">' + parts + ' of 6 parts tended today.</p>' : '')
-      + '<dl class="gt-stats"><div><dt>Days tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + (s.rings || []).length + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p></div></div>';
+      + '<dl class="gt-stats"><div><dt>Days tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + ringN(s) + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p></div></div>';
     if (!list.length) {
       var hasCheck = (C.history() || []).length > 0;
-      html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose up to 3 practices for each part of your tree. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
-        + (hasCheck ? '<button class="btn btn-primary" onclick="GGTend.act(\'plan\')">Build my growth plan</button>' : '<button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button><button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>')
+      html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for any part that needs care. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
+        + (hasCheck ? '<button class="btn btn-primary" onclick="GGTend.act(\'plan\')">Build my growth plan</button>' : '<button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button>' + (C.noQuick ? '' : '<button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>'))
         + '</div></div>';
       box.innerHTML = html; return;
     }
@@ -248,7 +280,7 @@
     var w = weekShown(s), W = (J.WEEKS || [])[w - 1] || {}, st = (J.SEASONS || {})[stretch(w)] || {}, rec = (s.weeks || {})[weekKey(s)] || null;
     var html = '<div class="gt-weekhead"><p class="gt-kicker">Season ' + (s.season || 1) + ', week ' + w + ' of 12</p><h2>' + esc(W.theme || '') + '</h2><p class="gt-stretch"><b>' + esc(st.name || '') + '.</b> ' + esc(st.line || '') + '</p></div>';
     if (weekNo(s) > 12) html += '<div class="gt-card gt-due"><p><b>Your season check-in is ready.</b> Finish a full check-in to add a ring to your tree and begin a new season.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my season check-in</button></div></div>';
-    html += '<div class="gt-card"><p class="gt-intro">' + esc(W.intro || '') + '</p>' + (W.story ? '<p class="gt-story">From Grounded: <a class="text-link" href="' + esc(W.story.url) + '" target="_blank" rel="noopener">' + esc(W.story.title) + '</a>. <i>' + esc(W.story.line) + '</i></p>' : '') + '</div>';
+    html += '<div class="gt-card"><p class="gt-intro">' + esc(W.intro || '') + '</p>' + (W.story && C.showStory !== false ? '<p class="gt-story">From Grounded: <a class="text-link" href="' + esc(W.story.url) + '" target="_blank" rel="noopener">' + esc(W.story.title) + '</a>. <i>' + esc(W.story.line) + '</i></p>' : '') + '</div>';
     // the quick weekly check-in
     var Qs = weeklyQs(), pv = prevWeek(s);
     if (rec && rec.ans && !EDIT) {
@@ -265,7 +297,7 @@
         }).join('') + '</div></li>';
       }).join('') + '</ol><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.saveWeek()">Save this week</button></div></div>';
     }
-    html += '<div class="gt-card"><h3>Reflection</h3><label class="gt-q" for="gt-refl">' + esc(W.q || 'What did you notice this week?') + '</label><textarea id="gt-refl" rows="4">' + esc(rec && rec.refl || '') + '</textarea><div class="btn-row"><button class="btn btn-secondary" onclick="GGTend.saveRefl()">Save my reflection</button></div></div>';
+    html += '<div class="gt-card"><h3>Reflection</h3><label class="gt-q" for="gt-refl">' + esc(W.q || 'What did you notice this week?') + '</label><textarea id="gt-refl" rows="4">' + esc(rec && rec.refl || '') + '</textarea>' + (C.shareRefl ? '<label class="gt-switch gt-share"><input type="checkbox" id="gt-refl-share"' + (rec && rec.share ? ' checked' : '') + '> Share this reflection with my grown-up</label><p class="gt-small">Your reflections are just for you unless you share one.</p>' : '') + '<div class="btn-row"><button class="btn btn-secondary" onclick="GGTend.saveRefl()">Save my reflection</button></div></div>';
     html += calendarHtml(s);
     box.innerHTML = html;
   }
@@ -300,13 +332,13 @@
     var s = ensure(), hist = C.history() || [];
     var html = '';
     if (s && s.start) {
-      var w = weekShown(s), due = weekNo(s) >= 12, n = (s.rings || []).length;
-      html += '<div class="gt-card gt-seasoncard"><div>' + ringsSVG(n, w) + '</div><div><p class="gt-kicker">Season ' + (s.season || 1) + '</p><h2>Week ' + w + ' of 12</h2><p>This season began ' + nice(s.start) + '. ' + (n ? 'Your tree has ' + n + ' ring' + (n === 1 ? '' : 's') + ', one for each season you have finished.' : 'Finish this season with a full check-in to add your first ring.') + '</p>'
+      var w = weekShown(s), due = weekNo(s) >= 12, n = ringN(s);
+      html += '<div class="gt-card gt-seasoncard"><div>' + ringsSVG(n, w) + '</div><div><p class="gt-kicker">Season ' + (s.season || 1) + '</p><h2>Week ' + w + ' of 12</h2><p>This season began ' + nice(s.start) + '. ' + (n ? 'Your tree has ' + n + ' ring' + (n === 1 ? '' : 's') + (C.ringCount ? ', one for each full check-in.' : ', one for each season you have finished.') : 'Finish this season with a full check-in to add your first ring.') + '</p>'
         + (due ? '<p class="gt-due-line"><b>Your season check-in is ready.</b> A full check-in now adds a ring and begins a new season.</p>' : '<p class="gt-small">The full check-in comes due at week 12. You can check in anytime.</p>') + '</div></div>';
     } else if (s) {
       html += '<div class="gt-card"><h2>Your first season</h2><p>A season is twelve weeks of tending, from Planting to Rooting to Blooming. It begins the day you finish your first full check-in. Every season you finish adds a ring to your tree.</p></div>';
     } else html += needProfile('season');
-    html += '<div class="btn-row gt-season-acts"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin a full check-in</button><button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>'
+    html += '<div class="btn-row gt-season-acts"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin a full check-in</button>' + (C.noQuick ? '' : '<button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>')
       + (C.hasResults() ? '<button class="btn btn-secondary" onclick="GGTend.act(\'results\')">My latest results</button>' : '')
       + '<button class="btn btn-secondary" onclick="GGTend.act(\'progress\')">My progress over time</button></div>';
     if (hist.length) html += '<div class="gt-card"><h3>Your check-ins</h3><ul class="gt-hist">' + hist.slice().reverse().slice(0, 8).map(function (e) { return '<li><b>' + nice(e.date) + '</b><span>' + (e.type === 'quick' ? 'Quick check-in' : 'Full check-in') + '</span></li>'; }).join('') + '</ul></div>';
@@ -321,12 +353,13 @@
     var lv = (J.LEVELS || []).map(function (L) { return '<label class="gt-radio"><input type="radio" name="gt-level" value="' + L.id + '"' + (s && s.level === L.id ? ' checked' : '') + (s ? '' : ' disabled') + ' onchange="GGTend.setLevel(this.value)"><span><b>' + esc(L.name) + '</b>' + esc(L.desc) + '</span></label>'; }).join('');
     var html = '<div class="gt-sheet-back" id="gt-settings" role="dialog" aria-modal="true" aria-labelledby="gt-set-title" onclick="if(event.target===this)GGTend.closeSettings()"><div class="gt-sheet">'
       + '<div class="gt-sheet-head"><h2 id="gt-set-title">Profile and settings</h2><button type="button" class="gt-x" onclick="GGTend.closeSettings()" aria-label="Close">&times;</button></div>'
-      + (a ? '<section><h3>Your profile</h3><p class="gt-who">' + (window.GGAv ? GGAv.html(a.avatar, a.name, 44) : '') + '<b>' + esc(a.name) + '</b></p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.openDialog()">Switch profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'lock\')">Lock</button></div></section>'
+      + (C.profileHtml ? C.profileHtml() : a ? '<section><h3>Your profile</h3><p class="gt-who">' + (window.GGAv ? GGAv.html(a.avatar, a.name, 44) : '') + '<b>' + esc(a.name) + '</b></p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.openDialog()">Switch profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'lock\')">Lock</button></div></section>'
         : '<section><h3>Your profile</h3><p>Create a private profile to keep your tree, your practices, and your check-ins on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'openProfile\')">Open my profile</button></div></section>')
       + '<section id="gt-set-level"><h3>Movement level</h3><p class="gt-small">Shapes the movement shown with your Leaves practices. Change it anytime.</p>' + lv + (s ? '' : '<p class="gt-small">Open your profile to choose a level.</p>') + '</section>'
+      + (C.extraSettings ? C.extraSettings() : '')
       + '<section><h3>Daily reminder</h3>' + (can ? '<label class="gt-switch"><input type="checkbox"' + (rem && rem.on ? ' checked' : '') + ' onchange="GGTend.remind(this.checked)"> Remind me to tend my tree</label><label class="gt-small" for="gt-rtime">Time</label> <input type="time" id="gt-rtime" value="' + esc((rem && rem.time) || '08:00') + '" onchange="GGTend.remind(null)">' : '<p class="gt-small">Daily reminders come with the ' + esc(C.toolName) + ' phone app. They are set on your phone, and nothing is sent to a server.</p>') + '</section>'
       + '<section><h3>Reading and display</h3><div class="btn-row">' + (window.GGRead && GGRead.settings ? '<button class="btn btn-secondary btn-sm" onclick="GGRead.settings()">Read aloud voice</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.act(\'textSize\')">Text size</button><button class="btn btn-secondary btn-sm" onclick="GGTend.theme()">Light or dark</button></div></section>'
-      + '<section><h3>Your records</h3><div class="btn-row">' + (a ? '<button class="btn btn-secondary btn-sm" onclick="GGP.backup()">Download a backup</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'progress\')">Save or load a results file</button></div><p class="gt-small">Everything stays on this device. To delete a profile and everything in it, open Picture, passcode, and more.</p></section>'
+      + (C.noRecords ? '' : '<section><h3>Your records</h3><div class="btn-row">' + (a ? '<button class="btn btn-secondary btn-sm" onclick="GGP.backup()">Download a backup</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'progress\')">Save or load a results file</button></div><p class="gt-small">Everything stays on this device. To delete a profile and everything in it, open Picture, passcode, and more.</p></section>')
       + '<section><h3>About</h3><p><a class="text-link" href="#" onclick="GGTend.closeSettings();GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a></p></section>'
       + '</div></div>';
     document.body.insertAdjacentHTML('beforeend', html);
@@ -341,7 +374,8 @@
   function persist() { return save().catch(function () { toast('That did not save. Open your profile and try again.'); }); }
   function perk() { var t = el('gt-tree'); if (!t) return; t.classList.remove('perk'); void t.offsetWidth; t.classList.add('perk'); }
   var api = {
-    init: function (cfg) { C = cfg; },
+    init: function (cfg) { C = cfg; J = mergeJourney(window.GGJourney || {}, cfg.journey); },
+    suggest: suggest,
     render: function () { if (!C) return; renderToday(); renderWeek(); renderSeason(); },
     act: function (name) { if (C.actions[name]) C.actions[name](); },
     state: function () { return ensure(); },
@@ -369,10 +403,10 @@
       var s = ensure(); if (!s) return; var box = el(C.els.week), ans = {};
       box.querySelectorAll('.gt-opts [aria-checked="true"]').forEach(function (b) { ans[b.getAttribute('data-q')] = b.getAttribute('data-a'); });
       if (Object.keys(ans).length < weeklyQs().length) { toast('Answer each question, or choose Not sure.'); return; }
-      var k = weekKey(s), refl = (el('gt-refl') || {}).value; s.weeks[k] = Object.assign(s.weeks[k] || {}, { date: today(), ans: ans }); if (refl != null) s.weeks[k].refl = refl.trim();
+      var k = weekKey(s), refl = (el('gt-refl') || {}).value; s.weeks[k] = Object.assign(s.weeks[k] || {}, { date: today(), ans: ans }); if (refl != null) s.weeks[k].refl = refl.trim(); var sh = el('gt-refl-share'); if (sh) { if (sh.checked) s.weeks[k].share = true; else delete s.weeks[k].share; }
       persist(); renderWeek(); toast('Saved. See you next week.');
     },
-    saveRefl: function () { var s = ensure(); if (!s) return; var k = weekKey(s), v = ((el('gt-refl') || {}).value || '').trim(); s.weeks[k] = Object.assign(s.weeks[k] || { date: today() }, { refl: v.slice(0, 4000) }); persist(); toast('Reflection saved.'); },
+    saveRefl: function () { var s = ensure(); if (!s) return; var k = weekKey(s), v = ((el('gt-refl') || {}).value || '').trim(); s.weeks[k] = Object.assign(s.weeks[k] || { date: today() }, { refl: v.slice(0, 4000) }); var sh = el('gt-refl-share'); if (sh) { if (sh.checked) s.weeks[k].share = true; else delete s.weeks[k].share; } persist(); toast(sh && sh.checked ? 'Reflection saved and shared with your grown-up.' : 'Reflection saved.'); },
     month: function (n) { if (!CAL) return; CAL.m += n; if (CAL.m < 0) { CAL.m = 11; CAL.y--; } if (CAL.m > 11) { CAL.m = 0; CAL.y++; } renderWeek(); },
     setLevel: function (v) { var s = ensure(); if (!s) return; s.level = v; persist(); renderToday(); toast('Movement level saved.'); },
     remind: function (on) {
