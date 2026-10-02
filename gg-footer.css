@@ -1,0 +1,22 @@
+/* GROUNDED . ONE FOOTER (shared)
+   The footer belongs to Grow With Grounded, not to any one tool, so it looks
+   the same on every page: the house gold tree and links, the name in ink.
+   Tool pages keep their own colors everywhere else. Loaded last on each tool page. */
+.site-footer{--house:#8B5E1A;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .site-footer{--house:#E8B45A;}}
+:root[data-theme="dark"] .site-footer{--house:#E8B45A;}
+.site-footer .foot-tree{color:var(--house) !important;}
+.site-footer .foot-name{font-size:30px;}
+.site-footer .foot-links a,.site-footer .foot-links .text-link{color:var(--house) !important;}
+/* the same paper, ink, and lines as the home page footer */
+.site-footer{--fbg:#F7EFE1;--fink:#2C1810;--fsoft:#6B5A4D;--fline:#E3D3B4;background:var(--fbg) !important;color:var(--fink);border-top:1px solid var(--fline) !important;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .site-footer{--fbg:#2B2017;--fink:#F3EDE3;--fsoft:#D6C4AC;--fline:#4B3827;}}
+:root[data-theme="dark"] .site-footer{--fbg:#2B2017;--fink:#F3EDE3;--fsoft:#D6C4AC;--fline:#4B3827;}
+.site-footer .foot-name{color:var(--fink) !important;}
+.site-footer .foot-tag{color:var(--fsoft) !important;}
+.site-footer .foot-links{display:flex;gap:10px 20px;justify-content:center;flex-wrap:wrap;margin:18px 0;}
+.site-footer .foot-links a{font-size:16px;font-weight:600;text-decoration:none;border-bottom:1px solid currentColor;}
+.site-footer .foot-local,.site-footer .foot-crisis{font-size:15px;color:var(--fsoft);margin:8px 0 0;}
+.site-footer .foot-local a{color:var(--house) !important;}
+.site-footer .footer-privacy,.site-footer .privacy{font-size:14px;color:var(--fsoft) !important;margin:12px auto 0;max-width:620px;}
+.site-footer .footer-copyright,.site-footer .copyright{font-size:13px;color:var(--fsoft) !important;margin:12px auto 0;max-width:760px;}
