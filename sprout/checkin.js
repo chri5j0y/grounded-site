@@ -8,7 +8,8 @@
      Branches (community), Leaves (body), Fruit (hope).
    - The number of questions per part fits the stage: Sprout 4, Sapling 6,
      Soul Tree 8, written for each grade or life stage. Sprout asks 4.
-   - Every question has a tip for the grown-up or guide.
+   - Every question has a tip for the grown-up or guide, and a short
+     "Why this question?" line for the grown-up (WHY).
    - Four answers plus "I don't know." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (marked 'r').
    - Levels: Strong (8 to 10), Steady (5 to 7), Needs care (1 to 4).
@@ -280,6 +281,239 @@ const Q = {
   }
 };
 
+/* Why this question? One line per question, same order as Q, written for the grown-up.
+   Shown in With a grown-up mode, next to the tip. */
+const WHY = {
+  K: {
+    holy: [
+      'Feeling loved at home is the first root a young child grows.',
+      'Feeling safe at bedtime tells you a lot about how safe a young child feels overall.',
+      'Small quiet rituals, like a prayer or a hug, help young children feel held.',
+      'Young children can feel alone even in a busy home. This helps you hear it early.'
+    ],
+    meaning: [
+      'Liking who they are is the start of a healthy sense of self.',
+      'Knowing they\'re good at something builds a young child\'s confidence.',
+      'Helping at home gives young children a sense that they belong and matter.',
+      'Wishing to be someone else can point to something a child feels they are missing.'
+    ],
+    mind: [
+      'Telling a grown-up about big feelings is the first step in handling them.',
+      'Calming down after being upset is a skill young children are just learning.',
+      'Knowing feelings pass helps young children feel less scared of them.',
+      'Lots of worry at this age is worth noticing, so you can help early.'
+    ],
+    community: [
+      'A friend to play with helps young children learn to get along and share.',
+      'Knowing who to go to for help is one of the most important safety skills for young children.',
+      'Kind classmates help a young child feel safe at school.',
+      'Young children may not say on their own that someone is being mean. Asking gently helps.'
+    ],
+    body: [
+      'Sleep shapes a young child\'s mood, behavior, and growth.',
+      'Running and playing every day helps young bodies and moods.',
+      'Good food helps young children grow and have energy to play.',
+      'Tummy aches and headaches that keep coming back can be a sign of worry, not only sickness.'
+    ],
+    hope: [
+      'Something fun to look forward to helps young children feel hopeful.',
+      'Waking up happy is a simple window into how a young child is doing.',
+      'Wishes for growing up show that a child can picture a good future.',
+      'A young child who expects nothing good to happen may need extra care and attention.'
+    ]
+  },
+  '1': {
+    holy: [
+      'Knowing they are loved helps children feel secure enough to grow.',
+      'Feeling safe at home is the base everything else grows from.',
+      'Prayer or quiet time can help children feel peaceful and connected.',
+      'Children can feel lonely even when people are around. This question helps you hear it.'
+    ],
+    meaning: [
+      'Liking the way they are helps children feel confident and secure.',
+      'Something they love to do gives children joy and a sense of who they are.',
+      'Feeling proud after trying something hard builds a child\'s grit.',
+      'Feeling not good at anything is worth hearing early, before it sticks.'
+    ],
+    mind: [
+      'Naming feelings helps children understand and handle them.',
+      'Calming their body down is a skill that helps children for life.',
+      'Telling a grown-up when something bothers them keeps small problems small.',
+      'Feelings that are hard to stop can mean a child needs more tools, or more support.'
+    ],
+    community: [
+      'Friends at school help children feel happy and safe there.',
+      'Grown-ups who listen help children feel valued.',
+      'Feeling like they belong in class helps children learn and enjoy school.',
+      'Being left out or picked on is painful, and young children don\'t always say so on their own.'
+    ],
+    body: [
+      'Waking up rested is a good sign that sleep is working.',
+      'Moving every day supports a child\'s body, mood, and focus.',
+      'Drinking water during the day helps energy and focus.',
+      'Feeling tired or sick a lot is worth noticing, and worth mentioning to their doctor.'
+    ],
+    hope: [
+      'Something to look forward to helps children feel hopeful.',
+      'Believing tomorrow can be good helps children bounce back from hard days.',
+      'Dreams of what they want to do show a child picturing a good future.',
+      'Sadness about what is coming next can point to a worry worth talking about.'
+    ]
+  },
+  '2': {
+    holy: [
+      'Feeling loved just for being themselves is one of the strongest roots a child can have.',
+      'A calm, safe place gives children somewhere to settle when life feels big.',
+      'Something that helps them feel held when scared gives children comfort and courage.',
+      'Feeling that nobody cares is painful and important to hear right away.'
+    ],
+    meaning: [
+      'Feeling good about who they are helps children try new things.',
+      'Getting better with practice teaches children that effort pays off.',
+      'Feeling like they matter in their family helps children feel secure.',
+      'Thinking others are better can start early. Hearing it helps you respond with care.'
+    ],
+    mind: [
+      'Naming feelings as they happen helps children manage them.',
+      'Trying again after something goes wrong builds resilience.',
+      'Having ways to calm down gives children tools for hard moments.',
+      'A lot of worry at this age is worth noticing, so you can help early.'
+    ],
+    community: [
+      'A friend they can count on helps children feel safe and happy.',
+      'Feeling like they belong at school helps children learn and enjoy it.',
+      'Helping others builds kindness and a sense of purpose.',
+      'Being treated badly or left out at school is something children need help with.'
+    ],
+    body: [
+      'A steady bedtime helps children sleep better.',
+      'Lots of play and movement helps children\'s bodies and moods.',
+      'Feeling strong and healthy helps children feel good about their bodies.',
+      'Lots of screen time can crowd out sleep, play, and time with people.'
+    ],
+    hope: [
+      'Something fun this week gives children something to look forward to.',
+      'Believing things can get better helps children handle disappointment.',
+      'Working on a goal teaches children that they can make things happen.',
+      'Wishing tomorrow would not come can be a sign of real worry or sadness. Take it seriously.'
+    ]
+  },
+  '3': {
+    holy: [
+      'Feeling loved even after a mistake teaches children that love isn\'t earned.',
+      'Noticing amazing things builds wonder, one of the deepest roots of spiritual health.',
+      'Something holy, like prayer, faith, or quiet time, can help children feel steady.',
+      'Feeling alone with problems means a child may need help reaching out.'
+    ],
+    meaning: [
+      'Liking who they are becoming helps children grow with confidence.',
+      'Being proud of learning something builds motivation.',
+      'Helping in ways that matter gives children a sense of purpose.',
+      'Feeling like they mess everything up is harsh self-talk worth gently challenging.'
+    ],
+    mind: [
+      'Noticing a big feeling early helps children catch it before it takes over.',
+      'A calm-down tool that works gives children confidence in hard moments.',
+      'Talking about worries keeps them from growing bigger inside.',
+      'Keeping feelings stuck inside can make them heavier over time.'
+    ],
+    community: [
+      'A friend who is glad to see them helps a child feel wanted.',
+      'Grown-ups at school they can talk to give children another safe place.',
+      'Feeling included in groups helps children feel they belong.',
+      'Teasing, bullying, or being hurt is never okay, and children need grown-ups to know.'
+    ],
+    body: [
+      'Enough sleep helps children feel and learn their best the next day.',
+      'Hard play builds strong bodies and helps with stress.',
+      'Breakfast helps children focus and have energy at school.',
+      'Stomachaches and headaches that keep coming back can be a sign of worry, not only sickness.'
+    ],
+    hope: [
+      'Something to be excited about helps children feel hopeful.',
+      'Believing they can get better at hard things builds a growth mindset.',
+      'Dreams for when they\'re older help children picture a good future.',
+      'Feeling like things will never get better is worth taking seriously.'
+    ]
+  },
+  '4': {
+    holy: [
+      'Feeling that they matter just for being themselves is one of the strongest roots a child can have.',
+      'Feeling close to God, or to something good and bigger, can give children comfort and meaning.',
+      'Something that helps them feel steady gives children a place to stand when life feels wobbly.',
+      'Feeling empty or alone inside is worth hearing and gently exploring.'
+    ],
+    meaning: [
+      'Knowing their strengths helps children feel capable.',
+      'Caring about something a lot gives children a sense of purpose.',
+      'Feeling that their days matter helps children stay motivated.',
+      'Often feeling not good enough is worth hearing early, before it becomes how they see themselves.'
+    ],
+    mind: [
+      'Figuring out why they\'re upset helps children solve the problem underneath.',
+      'Calming down before acting helps children avoid regrets.',
+      'Knowing sad and mad are okay helps children accept their feelings.',
+      'Worries that keep children up at night are worth talking about.'
+    ],
+    community: [
+      'Friends they can be themselves around help children feel accepted.',
+      'Belonging to a team, club, class, or faith group gives children support beyond home.',
+      'Standing up for others builds courage and kindness.',
+      'Meanness at school or online is never okay, and children need grown-ups to know.'
+    ],
+    body: [
+      'Feeling rested most mornings is a good sign that sleep is working.',
+      'Moving every day helps children\'s bodies and moods.',
+      'Feeling okay about their body matters more at this age than many grown-ups realize.',
+      'Late-night screens can steal sleep children need.'
+    ],
+    hope: [
+      'Working toward goals gives children a sense of direction.',
+      'Believing they can find a way through builds resilience.',
+      'Gratitude helps children notice the good in their lives.',
+      'Feeling hopeless is serious and worth talking about right away.'
+    ]
+  },
+  '5': {
+    holy: [
+      'Feeling loved and accepted as they really are helps children grow strong roots.',
+      'Big questions are a healthy part of growing up, and having someone to ask helps.',
+      'A peaceful practice gives children a way to find calm on their own.',
+      'Feeling alone with what they\'re going through means a child may need help reaching out.'
+    ],
+    meaning: [
+      'A good sense of who they are helps children handle peer pressure.',
+      'Being proud of how they treat others builds strong character.',
+      'Feeling they have something to give helps children find purpose.',
+      'Comparing themselves to others and feeling worse often starts around this age.'
+    ],
+    mind: [
+      'Handling stress without falling apart is a key skill for the middle school years.',
+      'Putting bad feelings into words helps children get support.',
+      'Being kind to themselves after mistakes helps children learn and bounce back.',
+      'Stress or worry most days is worth noticing, so you can help early.'
+    ],
+    community: [
+      'Friends who treat them well help children through the changes ahead.',
+      'A grown-up they trust with anything is one of the strongest protections a child can have.',
+      'Feeling they fit in matters a lot at this age.',
+      'Bullying in person or online is never okay, and children need grown-ups to know.'
+    ],
+    body: [
+      'Enough sleep helps children feel good and think clearly.',
+      'Being active most days helps children\'s bodies and moods.',
+      'Eating for energy keeps the focus on strength, not looks.',
+      'Worries about how they look often start around this age. Hearing them early helps.'
+    ],
+    hope: [
+      'Looking forward to growing up helps children face changes ahead.',
+      'Believing they can make life good helps children keep going through hard times.',
+      'People and plans that make the future feel bright give children hope.',
+      'Feeling like giving up is serious and worth talking about right away.'
+    ]
+  }
+};
+
 // The safety step. Feeling safe for every grade; the gentle direct question for grades 3 to 5 only.
 const SAFETY = {
   young: [
@@ -294,5 +528,5 @@ const SAFETY = {
   introYoung: 'One last question. It helps grown-ups keep kids safe.'
 };
 
-window.SPROUT_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, safety: SAFETY };
+window.SPROUT_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, safety: SAFETY };
 })();

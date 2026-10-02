@@ -3163,6 +3163,13 @@ setTimeout(lcFromHash, 0);
       return r;
     };
     var sv = window.showView; if (sv) window.showView = function () { R.stop(); return sv.apply(this, arguments); };
+    /* Practices: each "View Practices" list gets its own Read aloud button when it opens. */
+    var tr = window.toggleRestore; if (tr) window.toggleRestore = function (id) {
+      var r = tr.apply(this, arguments), box = document.getElementById(id + '-restore');
+      if (box && box.classList.contains('open') && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: box, label: 'Read these practices aloud' }), box.firstChild);
+      if (box && !box.classList.contains('open')) R.stop();
+      return r;
+    };
   });
 })();
 </script>

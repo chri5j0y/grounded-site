@@ -256,6 +256,9 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .ansb svg{width:40px;height:28px;}
 .ansb[aria-pressed="true"]{border-color:var(--sky-bright);background:var(--sky-soft);box-shadow:0 3px 0 var(--sky-bright);}
 .qtip{margin-top:10px;font-size:15px;color:var(--ink-soft);line-height:1.45;}
+.q-why{margin-top:6px;font-size:15px;color:var(--ink-soft);line-height:1.45;}
+.q-why summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center;}
+.q-why p{margin:4px 0 0;padding-left:12px;border-left:3px solid var(--gold);}
 .qtip b{color:var(--ink);}
 .safe-note{font-size:16px;color:var(--ink-soft);margin:0 0 8px;}
 .calm-card{border:3px solid var(--sky-bright);background:var(--sky-soft);border-radius:22px;padding:16px 18px;margin:0 0 18px;}
@@ -308,7 +311,9 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .step-head .part-dot svg{width:32px;height:32px;}
 .step-name{font-family:var(--kid);font-weight:500;font-size:40px;line-height:1;margin:0;}
 .step-count{font-family:var(--kid);font-size:16px;color:var(--ink-soft);margin:0 0 2px;}
-.say-row{display:flex;justify-content:flex-end;margin:4px 0 6px;}
+.say-row{display:flex;justify-content:flex-end;flex-wrap:wrap;margin:4px 0 6px;}
+.say-row .voice-slot{flex-basis:100%;display:flex;justify-content:flex-end;}
+.say-row .voice-slot .gg-rbar{margin:8px 0 0;justify-content:flex-end;}
 .say-btn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-family:var(--kid);font-size:16px;color:var(--ink-soft);}
 .say-btn[aria-pressed="true"]{border-color:var(--sky);color:var(--sky);}
 .say-btn svg{width:20px;height:20px;}
@@ -1117,6 +1122,7 @@ const isK2 = g => g === 'k2' || g === 'K' || g === '1' || g === '2';
 const gradeData = (p, grade) => isK2(grade) ? p.k2 : p.g35;
 const gradeLabel = g => g === 'k2' ? 'Grades K to 2' : g === '35' ? 'Grades 3 to 5' : ((CK.grades.find(x => x[0] === g) || [])[1] || '');
 const qsFor = (grade, key) => ((CK.questions[grade] || {})[key]) || [];
+const whyFor = (grade, key, i) => ((((CK.why || {})[grade] || {})[key]) || [])[i] || '';   // Why this question? (for the grown-up)
 const safetyFor = grade => isK2(grade) ? CK.safety.young : CK.safety.older;
 const ANS = Object.fromEntries(CK.answers.map(a => [a[0], a]));
 const ANS_ICON = {
@@ -1301,6 +1307,7 @@ if ('speechSynthesis' in window) {
   try { speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { speechSynthesis.onvoiceschanged = pickVoice; }
 }
 function say(text) {
+  if (window.GGRead && GGRead.available) { GGRead.say(text); return; }   // the shared voice choice and speed
   if (!('speechSynthesis' in window)) return;
   try {
     speechSynthesis.cancel();
@@ -1311,7 +1318,7 @@ function say(text) {
     speechSynthesis.speak(u);
   } catch (e) {}
 }
-function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {} }
+function hush() { try { if (window.GGRead) GGRead.stop(); if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {} }
 
 /* ---------- navigation ---------- */
 function go(view) {
@@ -1484,7 +1491,7 @@ function renderStep(first, sproutKey) {
   treeLive(sproutKey);
   $('step').innerHTML = `
     <div class="step-head">${dot(p)}<div><p class="step-count kid-text">Part ${S.step + 1} of 6</p><h2 class="step-name" style="color:${p.color}">${p.name}</h2></div></div>
-    <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button></div>
+    <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button><div class="voice-slot"></div></div>
     <div class="learn">
       <div class="learn-card tree kid-text"><small>What ${p.key === 'meaning' ? 'a ' : ''}${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for a tree</small>${esc(g.tree)}</div>
       <div class="learn-card you kid-text"><small>What your ${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for you</small>${esc(g.you)}</div>
@@ -1492,7 +1499,7 @@ function renderStep(first, sproutKey) {
     <div class="qs">${qs.map((q, i) => `<div class="qcard${qa[i] ? ' answered' : ''}">
       <div class="qline"><p class="qtext" id="q-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
       <div class="ans-row" role="group" aria-labelledby="q-${i}">${CK.answers.map(an => `<button class="ansb" aria-pressed="${qa[i] === an[0]}" onclick="pickAns(${i},'${an[0]}')">${ANS_ICON[an[0]]}<span>${esc(an[1])}</span></button>`).join('')}</div>
-      ${S.mode === 'grown' ? `<p class="qtip"><b>Grown-up tip.</b> ${esc(q[1])}</p>` : ''}
+      ${S.mode === 'grown' ? `<p class="qtip"><b>Grown-up tip.</b> ${esc(q[1])}</p>${whyFor(S.grade, p.key, i) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(S.grade, p.key, i))}</p></details>` : ''}` : ''}
     </div>`).join('')}</div>
     <div class="step-nav">
       <button class="soft-btn" onclick="${S.step === 0 ? 'go(\'home\')' : 'prevStep()'}">Back</button>
@@ -1501,18 +1508,28 @@ function renderStep(first, sproutKey) {
       <p class="step-error" id="step-error" role="alert"></p>
     </div>`;
   if (first || sproutKey !== undefined) toStepTop(first);
+  voiceSlots();
   if (S.readAloud && (first || sproutKey !== undefined)) setTimeout(() => say(`${p.name}. ${g.tree} ${g.you} ${qs.length ? qs[0][0] : ''}`), 350);
 }
 function sayQ(i) {
   if (S.inSafety) { const q = safetyFor(S.grade)[i]; if (q) say(q[0]); return; }
   const q = qsFor(S.grade, PARTS[S.step].key)[i]; if (q) say(q[0]);
 }
+/* The shared voice picker, speed, and "Get a better voice" help (read.js), shown while read aloud is on. */
+function voiceSlots() {
+  document.querySelectorAll('.voice-slot').forEach(el => {
+    if (!S.readAloud) { el.innerHTML = ''; return; }
+    if (window.GGRead && !el.firstChild) el.appendChild(GGRead.settings());
+  });
+}
+window.addEventListener('ggread-ready', () => { if (window.GGRead) GGRead.setProfile({ rate: 0.88, pitch: 1.05, key: 'gg_voice_sprout' }); voiceSlots(); });
 function toggleRead() {
   S.readAloud = !S.readAloud;
   if (!S.readAloud) hush();
   const b = document.querySelector('.say-btn');
   b.setAttribute('aria-pressed', S.readAloud);
   b.innerHTML = `${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}`;
+  voiceSlots();
   if (S.readAloud) {
     if (S.inSafety) { say(safetyFor(S.grade).map(q => q[0]).join(' ')); return; }
     const p = PARTS[S.step], g = gradeData(p, S.grade), qs = qsFor(S.grade, p.key);
@@ -1569,7 +1586,7 @@ function renderSafety(first, sproutKey) {
   treeLive(sproutKey);
   $('step').innerHTML = `
     <div class="step-head"><div><p class="step-count kid-text">Almost done</p><h2 class="step-name">Staying safe</h2></div></div>
-    <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button></div>
+    <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button><div class="voice-slot"></div></div>
     <p class="safe-note kid-text">${esc(qs.length > 1 ? CK.safety.intro : CK.safety.introYoung)}</p>
     <div class="qs">${qs.map((q, i) => `<div class="qcard${S.safety[i] ? ' answered' : ''}">
       <div class="qline"><p class="qtext" id="sq-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
@@ -1582,6 +1599,7 @@ function renderSafety(first, sproutKey) {
       <p class="step-error" id="step-error" role="alert"></p>
     </div>`;
   if (sproutKey !== undefined) toStepTop(false);
+  voiceSlots();
   if (S.readAloud && sproutKey !== undefined) setTimeout(() => say(`${qs.length > 1 ? CK.safety.intro : CK.safety.introYoung} ${qs[0][0]}`), 350);
 }
 function pickSafe(i, v) {
@@ -2566,6 +2584,7 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
+<script src="/read.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js';document.head.appendChild(s)"></script>
 <script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>

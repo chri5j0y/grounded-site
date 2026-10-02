@@ -1,6 +1,10 @@
-/* Grounded read-aloud engine, shared by Stories, Soul Tree, and The Grove.
+/* Grounded read-aloud engine, shared by Stories, Sprout, Sapling, Soul Tree, The Grove, and the Field Guide.
    Picks the most natural voice on each device (quality first, with a gentle preference for a
-   male or female voice), lets people choose a voice, and plays a recorded audio file when one exists. */
+   male or female voice), lets people choose a voice and a speed, shows how to get a better voice,
+   and plays a recorded audio file when one exists.
+   Privacy: voices that run on the device come first. A voice that needs the internet sends the words
+   it reads to that company, so it is never picked automatically; it shows as "uses internet" in the
+   menu, and only a person can choose it. Nothing else leaves the device. */
 (function () {
   var synth = window.speechSynthesis;
   var NOVELTY = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|organ|superstar|trinoids|whisper|wobble|zarvox|junior|grandma|grandpa|kathy|shelley|sandy|flo\b|rocko|eddy|reed|ralph|fred/i;
@@ -8,6 +12,8 @@
   var MALE = /\b(andrew|brian|guy|christopher|eric|roger|steffan|evan|nathan|tom|aaron|arthur|jamie|oliver|daniel|ryan|thomas|davis|tony|jason|george|william|james|matthew|male)\b/i;
   var FEMALE = /\b(jenny|aria|ava|emma|michelle|samantha|allison|susan|serena|karen|moira|tessa|zoe|nicky|sonia|libby|victoria|kate|fiona|joanna|salli|kimberly|ivy|natasha|martha|female)\b/i;
   var P = { pref: null, rate: 0.95, pitch: 1, key: 'gg_voice' };
+  var SPEEDS = [['0.8', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']], SPEED_KEY = 'gg_voice_speed';
+  function speed() { var v = 1; try { v = parseFloat(localStorage.getItem(SPEED_KEY)) || 1; } catch (e) {} return Math.min(1.5, Math.max(0.6, v)); }
   var chosen = null, list = [];
   function quality(v) {
     var q = 0;
@@ -17,7 +23,7 @@
     if (/google/i.test(v.name)) q += 25;
     if (GOOD.test(v.name)) q += 12;
     if (/en[-_]us/i.test(v.lang)) q += 10; else if (/en[-_](gb|au|ie|ca|nz)/i.test(v.lang)) q += 6;
-    if (v.localService === false) q += 4;
+    if (v.localService === false) q -= 200;   // online voices: never chosen automatically
     return q;
   }
   function score(v) {
@@ -32,12 +38,13 @@
       .sort(function (a, b) { return score(b) - score(a); });
     var saved = null; try { saved = localStorage.getItem(P.key); } catch (e) {}
     chosen = (saved && list.find(function (v) { return v.name === saved; })) || list[0] || null;
-    document.querySelectorAll('.gg-vm select').forEach(fillMenu);
+    document.querySelectorAll('select.gg-vsel').forEach(fillMenu);
   }
+  function online(v) { return v && v.localService === false; }
   function nice(n) { return n.replace(/^Microsoft /, '').replace(/ Online \(Natural\)/, ' (natural)').replace(/ - English \(([^)]+)\)/, ', $1').replace(/^Google /, 'Google ').replace(/\s+/g, ' ').trim(); }
   function fillMenu(sel) {
     var cur = chosen ? chosen.name : '';
-    sel.innerHTML = list.slice(0, 7).map(function (v) { return '<option value="' + v.name.replace(/"/g, '&quot;') + '"' + (v.name === cur ? ' selected' : '') + '>' + nice(v.name) + '</option>'; }).join('') || '<option>Device voice</option>';
+    sel.innerHTML = list.filter(function (v, k) { return k < 7 || v.name === cur; }).slice(0, 8).map(function (v) { return '<option value="' + v.name.replace(/"/g, '&quot;') + '"' + (v.name === cur ? ' selected' : '') + '>' + nice(v.name) + (online(v) ? ' (uses internet)' : '') + '</option>'; }).join('') || '<option>Device voice</option>';
   }
   if (synth) { refresh(); try { synth.addEventListener('voiceschanged', refresh); } catch (e) { synth.onvoiceschanged = refresh; } }
 
@@ -51,6 +58,10 @@
     '.gg-vm select{font:inherit;font-size:14px;color:inherit;background:transparent;border:1px solid rgba(139,94,26,.4);border-radius:10px;padding:6px 8px;max-width:210px;}' +
     '.gg-vm select option{color:#2C1810;background:#fff;}' +
     '.gg-reading{background:rgba(232,180,90,.2) !important;outline:2px solid rgba(232,180,90,.7);outline-offset:4px;border-radius:6px;transition:background .3s ease;}' +
+    '.gg-vhelp-btn{font:inherit;font-size:14px;color:inherit;background:transparent;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 2px;min-height:32px;}' +
+    '.gg-vhelp{flex-basis:100%;font-size:15px;line-height:1.5;border:1px solid rgba(139,94,26,.35);border-radius:12px;padding:12px 16px;margin-top:2px;}' +
+    '.gg-vhelp h4{margin:0 0 6px;font-size:16px;}.gg-vhelp p{margin:6px 0;}.gg-vhelp ol{margin:4px 0 10px 20px;padding:0;}.gg-vhelp li{margin:3px 0;}' +
+    '.gg-vhelp b{font-weight:700;}' +
     '@media print{.gg-rbar{display:none !important}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var I = {
@@ -59,12 +70,13 @@
     play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>',
     stop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'
   };
-  var SEL = 'h1,h2,h3,h4,p,li,blockquote,figcaption,dt,dd,.card-sub,.step-domain,.domain-prompt';
+  var SEL = 'h1,h2,h3,h4,p,li,blockquote,figcaption,dt,dd,.card-sub,.step-domain,.domain-prompt,.restore-item';
   var SKIP = 'nav,footer,form,button,select,textarea,.no-print,[aria-hidden="true"],.gg-rbar,.gn-panel,script,style,.sr-only,.slider-hint,.restore-content';
   function blocksOf(root) {
     var out = [];
     root.querySelectorAll(SEL).forEach(function (el) {
-      if (!el.offsetParent || el.closest(SKIP) || el.querySelector(SEL)) return;
+      var sk = el.closest(SKIP);
+      if (!el.offsetParent || (sk && sk !== root && root.contains(sk)) || el.querySelector(SEL)) return;
       var t = (el.innerText || '').replace(/\s+/g, ' ').trim();
       if (t.length < 2) return;
       if (t.length > 260) (t.match(/[^.!?]+[.!?]+["”’)]*\s*|[^.!?]+$/g) || [t]).forEach(function (x) { x = x.trim(); if (x) out.push({ el: el, t: x }); });
@@ -88,7 +100,7 @@
     var u = new SpeechSynthesisUtterance(item.t);
     if (!chosen) refresh();
     try { if (chosen) { u.voice = chosen; u.lang = chosen.lang; } } catch (e) { chosen = null; }
-    u.rate = P.rate; u.pitch = P.pitch;
+    u.rate = P.rate * speed(); u.pitch = P.pitch;
     u.onend = function () { if (state === 'playing') { i++; next(); } };
     u.onerror = function () { if (state === 'playing') { i++; next(); } };
     synth.speak(u);
@@ -97,12 +109,48 @@
   function pause() { if (state !== 'playing') return; state = 'paused'; if (audio) audio.pause(); else synth.cancel(); emit(); }
   function resume() { if (state !== 'paused') return; state = 'playing'; emit(); if (audio) audio.play(); else next(); }
   function stop() { state = 'idle'; if (synth) synth.cancel(); if (audio) { audio.pause(); audio.currentTime = 0; } mark(null); emit(); }
+  /* Steps to get a better voice. Phone menus change, so each one also says what to search for. Checked Oct 2026. */
+  var HELP = '<h4>Get a better voice</h4>' +
+    '<p>Most phones and computers come with free, natural-sounding voices that aren\'t turned on yet. Download one once, and every Grounded tool can use it, even offline.</p>' +
+    '<p><b>iPhone or iPad</b></p><ol><li>Open Settings, then Accessibility.</li><li>Tap Read &amp; Speak (on older versions, Spoken Content), then Voices, then English.</li><li>Pick a voice marked Enhanced or Premium, like Ava, Evan, Nathan, or Zoe, and tap download. Use Wi-Fi; they\'re large.</li></ol>' +
+    '<p><b>Android</b></p><ol><li>Open Settings and search for Text-to-speech.</li><li>Choose Speech Services by Google as the engine, then tap its settings.</li><li>Tap Install voice data, then English, and download a voice you like.</li></ol>' +
+    '<p><b>Mac</b></p><ol><li>Open System Settings, then Accessibility.</li><li>Open Read &amp; Speak (or Spoken Content), then System voice, then Manage Voices.</li><li>Download an English voice marked Enhanced, Premium, or Siri.</li></ol>' +
+    '<p><b>Windows</b></p><ol><li>Open Settings, then Time &amp; language, then Speech.</li><li>Under Manage voices, tap Add voices and add an English voice.</li></ol>' +
+    '<p>Then close this page all the way, open it again, and pick the new voice from the Voice menu. Voices marked "uses internet" read the words through that company\'s servers, so Grounded never picks them for you.</p>';
   function voiceMenu() {
-    var lab = document.createElement('label'); lab.className = 'gg-vm';
-    lab.innerHTML = '<span>Voice</span><select aria-label="Choose a reading voice"></select>';
-    var sel = lab.querySelector('select'); fillMenu(sel);
-    sel.addEventListener('change', function () { var v = list.find(function (x) { return x.name === sel.value; }); if (v) { chosen = v; try { localStorage.setItem(P.key, v.name); } catch (e) {} if (state === 'playing') { synth.cancel(); next(); } } });
-    return lab;
+    var g = document.createElement('span'); g.className = 'gg-vm gg-vset'; g.style.flexWrap = 'wrap';
+    g.innerHTML = '<label class="gg-vm"><span>Voice</span><select class="gg-vsel" aria-label="Choose a reading voice"></select></label>' +
+      '<label class="gg-vm"><span>Speed</span><select class="gg-vspeed" aria-label="Reading speed">' + SPEEDS.map(function (x) { return '<option value="' + x[0] + '"' + (Math.abs(parseFloat(x[0]) - speed()) < .01 ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></label>' +
+      '<button type="button" class="gg-vhelp-btn" aria-expanded="false">Get a better voice</button>';
+    var sel = g.querySelector('.gg-vsel'), sp = g.querySelector('.gg-vspeed'), hb = g.querySelector('.gg-vhelp-btn');
+    fillMenu(sel);
+    sel.addEventListener('change', function () { var v = list.find(function (x) { return x.name === sel.value; }); if (v) { chosen = v; try { localStorage.setItem(P.key, v.name); } catch (e) {} document.querySelectorAll('.gg-vsel').forEach(function (o) { if (o !== sel) fillMenu(o); }); if (state === 'playing') { synth.cancel(); next(); } } });
+    sp.addEventListener('change', function () { try { localStorage.setItem(SPEED_KEY, sp.value); } catch (e) {} document.querySelectorAll('.gg-vspeed').forEach(function (o) { o.value = sp.value; }); if (state === 'playing') { synth.cancel(); next(); } });
+    hb.addEventListener('click', function () {
+      var bar = g.closest('.gg-rbar') || g.parentNode, h = bar.querySelector('.gg-vhelp');
+      if (h) { h.remove(); hb.setAttribute('aria-expanded', 'false'); return; }
+      h = document.createElement('div'); h.className = 'gg-vhelp'; h.innerHTML = HELP; bar.appendChild(h); hb.setAttribute('aria-expanded', 'true');
+    });
+    return g;
+  }
+  /* Just the voice, speed, and help, for tools that keep their own Read aloud switch (Sprout, Sapling, Field Guide). */
+  function settings() {
+    var bar = document.createElement('div'); bar.className = 'gg-rbar gg-rset no-print';
+    if (synth) bar.appendChild(voiceMenu()); else bar.hidden = true;
+    return bar;
+  }
+  /* Speak one line with the chosen voice and speed. Used by tools that read one question at a time. */
+  function say(text, opts) {
+    if (!synth || !text) return;
+    opts = opts || {};
+    stop();
+    try {
+      if (!chosen) refresh();
+      var u = new SpeechSynthesisUtterance(text);
+      try { if (chosen) { u.voice = chosen; u.lang = chosen.lang; } } catch (e) { chosen = null; }
+      u.rate = (opts.rate || P.rate) * speed(); u.pitch = opts.pitch || P.pitch;
+      synth.speak(u);
+    } catch (e) {}
   }
   /* A play, pause, and stop control that reads a region. audioSrc plays a recording instead when it exists. */
   function control(opts) {
@@ -157,7 +205,16 @@
     return bar;
   }
   function isOn(key) { try { return localStorage.getItem(key || 'gg_read_on') === '1'; } catch (e) { return false; } }
-  window.GGRead = { setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, isOn: isOn, available: !!synth, get state() { return state; } };
+  window.GGRead = { setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, get state() { return state; } };
+
+  /* Practice steps: any "Show me how" or "Learn more" box gets its own Read aloud button when it opens. */
+  document.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!d || !d.matches || !d.open || !d.matches('details.howto, details.learn, details.gg-readable')) return;
+    var body = d.querySelector(':scope > div') || d;
+    if (body.querySelector(':scope > .gg-rbar')) return;
+    body.insertBefore(control({ root: body, label: 'Read these steps aloud' }), body.firstChild);
+  }, true);
   window.addEventListener('pagehide', function () { if (synth) synth.cancel(); });
   window.dispatchEvent(new Event('ggread-ready'));
 

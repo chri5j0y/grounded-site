@@ -563,6 +563,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="print-root" aria-hidden="true"></div>
 <script src="../shared/gg-app.js"></script>
 <script src="../shared/gg-pdf.js"></script>
+<script src="../read.js"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
 <script>
@@ -2892,13 +2893,15 @@ function spToggle(t){
 
 // ----- the child's screen: questions and picture answers only. Everything else stays hidden. -----
 let KID = null;
-function spSay(text){ if (!('speechSynthesis' in window)) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.rate = 0.88; u.pitch = 1.05; speechSynthesis.speak(u); } catch(e){} }
+// Session 23: student screens read with the shared engine (read.js), so they use the best voice on this device
+// and the speed chosen in any Grounded tool. Falls back to the plain device voice.
+function spSay(text){ if (window.GGRead && GGRead.available){ GGRead.say(text, { rate: 0.88, pitch: 1.05 }); return; } if (!('speechSynthesis' in window)) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.rate = 0.88; u.pitch = 1.05; speechSynthesis.speak(u); } catch(e){} }
 function spKidOpen(which){
   const keys = which === 'all' ? SPG().parts.map(p => p.key) : [which], list = [];
   keys.forEach(k => spIdx(RUN).forEach(i => { const q = spQs(RUN.grade, k)[i]; if (q) list.push({k, i, q}); }));
   KID = {list, n:0, done:false}; spKidDraw();
 }
-function spKidClose(){ const el = $('#sp-kid'); if (el) el.remove(); KID = null; try { speechSynthesis.cancel(); } catch(e){} }
+function spKidClose(){ const el = $('#sp-kid'); if (el) el.remove(); KID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
 function spKidDraw(){
   const S = SPG(); let el = $('#sp-kid');
   if (!el){ el = document.createElement('div'); el.id = 'sp-kid'; el.className = 'sp-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Sprout questions'); document.body.appendChild(el); }
@@ -3095,8 +3098,13 @@ function saNeedData(){
 }
 const saQs = (grade, key) => ((SAC.questions[grade] || {})[key]) || [];
 const saAns = k => SAC.answers.find(a => a[0] === k) || null;
-const saIdx = run => run.visit === 'full' ? [0,1,2,3] : [0];
+// Session 23: Sapling asks six questions per part (bank 2). A visit notes its bank; visits from an earlier
+// bank read only the questions they asked (bank 1: the first four, which never changed) and are never compared.
+const SA_BANK = () => (SAC && SAC.bank) || 1;
+const saBankN = b => (SAC && SAC.bankSizes && SAC.bankSizes[b || 1]) || (SAC && (b || 1) === SA_BANK() ? SAC.perPart : 4) || 4;
+const saIdx = run => run.visit === 'full' ? Array.from({length: saBankN(run.bank)}, (x, i) => i) : [0];
 const SA_STD = () => SAC ? SAC.version : 1;
+const saCur = s => (s.std || 0) === SA_STD() && (s.bank || 1) === SA_BANK();   // on the current standard and bank
 function saChildScore(grade, key, qa, idxs){
   let sum = 0, n = 0; const qs = saQs(grade, key);
   idxs.forEach(i => { const q = qs[i], a = saAns((qa || {})[i]); if (!q || !a || a[2] == null) return; const v = q[2] === 'r' ? 4 - a[2] : a[2]; sum += (v - 1) / 2; n++; });
@@ -3115,7 +3123,7 @@ function saSuggest(run, key){
   return {child, seen, grown, sug:spLvOf(Math.round(avg)), mixed: Math.max(...ix) - Math.min(...ix) >= 2};
 }
 function saPrevLevel(c, s, key){
-  const prev = saVisits(c.id).filter(v => v.id !== s.id && v.std === s.std && v.levels && (v.date < s.date || (v.date === s.date && (v.u||0) < (s.u||0))))[0];
+  const prev = saVisits(c.id).filter(v => v.id !== s.id && v.std === s.std && (v.bank || 1) === (s.bank || 1) && v.levels && (v.date < s.date || (v.date === s.date && (v.u||0) < (s.u||0))))[0];
   const a = prev && prev.levels[key] && prev.levels[key].pick, b = s.levels && s.levels[key] && s.levels[key].pick;
   if (!a || !b || a === 'none' || b === 'none') return '';
   const d = SP_LV.indexOf(b) - SP_LV.indexOf(a);
@@ -3295,7 +3303,7 @@ function saLevelTable(c){
   if (!vs.length) return '<p class="muted" style="margin-top:8px">No levels yet. They come at the end of each visit.</p>';
   return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}</th>`).join('')}</tr>
    ${SAG().parts.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const L = (s.levels || {})[p.key]; return `<td>${L ? `<span class="pill ${spLvCls(L.pick)}">${esc(saLvName(L.pick))}</span>${saPrevLevel(c, s, p.key)}${L.mixed ? ' <span class="pill" title="Mixed signals">Mixed</span>' : ''}` : '<span class="muted">&middot;</span>'}</td>`; }).join('')}</tr>`).join('')}</table></div>
-   ${vs.some(s => s.std !== SA_STD()) ? '<p class="muted" style="font-size:14px;margin-top:6px">Visits on an earlier standard are not compared with newer ones.</p>' : ''}`;
+   ${vs.some(s => s.visit !== 'nottoday' && !saCur(s)) ? '<p class="muted" style="font-size:14px;margin-top:6px">Visits on an earlier standard or an earlier set of questions are not compared with newer ones.</p>' : ''}`;
 }
 function vSAPerson(c){
   const S = SAG(), vs = saVisits(c.id), ok = saConsentOk(c), ready = saReady(), reps = saReports(c.id), con = c.sa.consent;
@@ -3309,7 +3317,7 @@ function vSAPerson(c){
    <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-safu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="sa-fd" aria-label="Follow-up date"><input type="text" id="sa-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(saVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.std && s.std !== SA_STD() ? ' &middot; earlier standard' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sa-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(saVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.std && s.visit !== 'nottoday' && !saCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sa-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card st-private"><div class="spread"><h3>Report records</h3><button class="btn btn-line btn-sm" data-act="sa-rep-for" data-v="${c.id}">Report a Concern</button></div><p class="muted" style="font-size:14px">${esc(SPG().report.recordNote)}</p>
    ${reps.length ? reps.map(r => `<div class="list-row"><div class="lr-main"><b>${nice(r.date)}</b> <span class="muted">${esc(r.agency || r.county || '')}</span>${r.due && !r.written ? ' <span class="pill warn">Written report due</span>' : ''}</div><button class="btn btn-line btn-sm" data-act="sa-rec" data-v="${r.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">None.</p>'}</div>
   <div class="card"><h3>Details</h3>
@@ -3334,11 +3342,11 @@ function vSAVisit(){
   const demo = V.sav === 'demo', c = demo ? s.person : CL(s.clientId), S = SAG();
   const back = demo ? `<button class="linkbtn" data-tab="sapling">Back to Sapling Guide</button>` : `<button class="linkbtn" data-act="sa-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'student')}</button>`;
   if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}`;
-  const idxs = s.visit === 'full' ? [0,1,2,3] : [0], room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
+  const idxs = saIdx(s), room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : saReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, sq = sens.asked ? saSensQ(s.grade) : null;
   return `${back}
   ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(saGradeName(s.grade))}${s.std !== SA_STD() ? ' &middot; earlier standard' : ''}</div><h1>${esc(saVisitName(s.visit))}</h1>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(saGradeName(s.grade))}${!saCur(s) ? ' &middot; earlier questions' : ''}</div><h1>${esc(saVisitName(s.visit))}</h1>
    <p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; the student stopped the visit' : ''}</p></div>
   <div class="card"><p><b>Promise read:</b> ${s.promise ? 'Yes' : 'Not marked'} &middot; <b>Student's yes:</b> Yes &middot; <b>Who could see in:</b> ${esc(saWhere(s))}${((s.room || {}).who || []).length ? ' (' + s.room.who.map(w => ((room.who.find(o => o[0] === w) || [])[1] || w)).join(', ') + ')' : ''} &middot; <b>Screen:</b> ${esc(scr)}</p>
    ${s.topic && s.topic.deck ? `<p style="margin-top:6px"><b>Topic:</b> ${esc(cdDeckName(s.topic.deck))}${(s.topic.used || []).length ? ', ' + s.topic.used.length + ' cards used' : ''}</p>` : ''}</div>
@@ -3431,7 +3439,7 @@ function saStart(visit, cid, demo){
   if (!demo && !saConsentOk(c)) return go('sapling', {sac:c.id});
   if (!demo && !saReady()) return go('sapling', {sam:1});
   const why = saSensWhy(visit, c.sa.grade, c);
-  RUN = {kind:'sa', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sa.grade, std:SAC.version, started:Date.now(), step:0,
+  RUN = {kind:'sa', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sa.grade, std:SAC.version, bank:SA_BANK(), started:Date.now(), step:0,
     screen:'guide', room:{where:'', who:[]}, promise:false, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:false,
     sens:{on:!why, why, a:''}, safety:{safe:'', self:'', listen:[], notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[], topic:{deck:'', used:[]},
     share:'', tryh:[], told:'', heard:false, talkNote:'', hide:{did:false, share:false, talk:false}, seenSheet:false, copy:false, priv:'', pn:{}, stopped:false};
@@ -3505,7 +3513,7 @@ function saDraw(){
      <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.say], 'say')}${S.parts.indexOf(p) === 0 ? blk('Then', S.openers.say, 'say') + `<div class="tipbox">${esc(S.openers.tip)}</div>` : ''}
       <details class="st-lf"><summary>Talk starters (optional)</summary><div class="st-opts" style="margin-top:8px">${p.warm.map((w, i) => stChip('sa-warm', `data-k="${p.key}" data-v="${i}"`, (RUN.warm[p.key] || []).includes(i), w)).join('')}</div></details></div>
      ${RUN.screen === 'shared' ? `<button class="btn btn-gold" style="margin-top:12px" data-act="sa-kid" data-v="${p.key}">${icon('play')} ${esc(S.screen.handTo)}</button>` : ''}
-     ${[0,1,2,3].map(i => qs[i] ? saQ(p.key, i, qs[i]) : '').join('')}
+     ${saIdx(RUN).map(i => qs[i] ? saQ(p.key, i, qs[i]) : '').join('')}
      ${sens ? saSensBlock() : ''}
      ${saSeenRow(p.key)}
      <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
@@ -3571,7 +3579,7 @@ function saDraw(){
 function saRunAsVisit(){
   const r = RUN, levels = {};
   SAG().parts.forEach(p => { const g = saSuggest(r, p.key), cur = r.lv[p.key] || {}; levels[p.key] = {child:g.child, seen:g.seen, grown:g.grown, sug:g.sug, mixed:g.mixed, pick:cur.pick || g.sug, why:cur.why || ''}; });
-  return {id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, grade:r.grade, visit:r.visit, screen:r.screen,
+  return {id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, bank:r.bank || 1, grade:r.grade, visit:r.visit, screen:r.screen,
     room:r.room, promise:r.promise, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety, topic:r.visit === 'topic' ? r.topic : null,
     sens:{asked:r.sens.on && !r.stopped, why:r.stopped && r.sens.on && !r.sens.a ? 'stopped' : r.sens.why, a:r.sens.on ? r.sens.a : ''},
     flags:saFlags(r), told:r.told, heard:r.heard, share:r.share, tryh:r.tryh, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet, copy:r.copy, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || []};
@@ -3615,7 +3623,7 @@ function saNotToday(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
   if (r.demo){ go('sapling'); toast('Demo ended. "Not today" is always honored.'); return; }
-  DATA.sessions.push({id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:0, std:r.std, grade:r.grade, visit:'nottoday', room:r.room, promise:r.promise, yes:'no'});
+  DATA.sessions.push({id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:0, std:r.std, bank:r.bank || 1, grade:r.grade, visit:'nottoday', room:r.room, promise:r.promise, yes:'no'});
   DATA.draft = null; if (c){ touch(c); c.last = today(); }
   save(); go('sapling', {sap:r.clientId}); toast('"Not today" recorded. Thank them.');
 }
@@ -3658,7 +3666,7 @@ function saKidOpen(which){
   keys.forEach(k => { saIdx(RUN).forEach(i => { const q = saQs(RUN.grade, k)[i]; if (q) list.push({k, i, q}); }); if (k === 'body' && which !== 'all' && RUN.sens.on) list.push({k, i:'sens', q:saSensQ(RUN.grade), sens:true}); });
   SAKID = {list, n:0, done:false}; saKidDraw();
 }
-function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; try { speechSynthesis.cancel(); } catch(e){} }
+function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
 function saKidDraw(){
   const S = SAG(); let el = $('#sa-kid');
   if (!el){ el = document.createElement('div'); el.id = 'sa-kid'; el.className = 'sp-kid sa-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Sapling questions'); document.body.appendChild(el); }
