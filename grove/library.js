@@ -1,7 +1,7 @@
 /* =====================================================================
    THE GROVE . PRACTICE LIBRARY
    "Show me how" for every practice, plus the new practices folded in
-   from Sprout and Sapling. Edit words here, not in index.html.
+   from Maple and Aspen. Edit words here, not in index.html.
 
    HOW[strand]["Practice name"] = [
      why it helps,
@@ -10,7 +10,7 @@
      kid why, "kid step|kid step", kid if it's hard
    ]
    The name must match the first name in PRACTICES (grove/data.js).
-   Kid fields are for Sprout-age trees (the kid wording in data.js).
+   Kid fields are for Maple-age trees (the kid wording in data.js).
 
    NEW practices are at the bottom, in LIB_NEW. Each has its own
    words for the Today card plus its how-to.
@@ -369,7 +369,7 @@ nourish:{
  "Grow or Gather":["Getting close to where food comes from helps you appreciate it.",
   "Pick one: grow herbs on a windowsill, visit a farmers market, or pick something fresh.|Choose one thing to grow or bring home.|Cook or eat it this week.|Notice how it tastes.",
   "No space? A single pot of basil counts. So does the grocery store produce aisle.",
-  "Watching something grow is exciting.","Plant a seed in a cup of dirt.|Water it and watch it grow.","Beans sprout fast."],
+  "Watching something grow is exciting.","Plant a seed in a cup of dirt.|Water it and watch it grow.","Beans maple fast."],
  "Feed Someone":["Feeding people is one of the oldest ways to love them.",
   "Think of someone who could use a meal: a new parent, someone grieving, someone sick.|Make or bring them food.|Keep it simple.|Drop it off with a short note.",
   "Can't cook? Send a meal, or bring groceries.",
@@ -430,7 +430,7 @@ hope:{
 };
 
 // =====================================================================
-// NEW PRACTICES, folded in from Sprout and Sapling
+// NEW PRACTICES, folded in from Maple and Aspen
 // =====================================================================
 const LIB_NEW = [
  // ---------- Roots ----------
@@ -679,7 +679,7 @@ const LIBRARY = (function(){
 })();
 const LIB_BY_KEY = Object.fromEntries(LIBRARY.map(it => [it.key, it]));
 // Which practices fit which tree. "teen" means middle school and up.
-const libFits = (it, age) => it.ages === 'all' || (it.ages === 'teen' ? age !== 'sprout' : it.ages === 'teenOnly' ? (age === 'sapling' || age === 'heartwood') : true);
+const libFits = (it, age) => it.ages === 'all' || (it.ages === 'teen' ? age !== 'maple' : it.ages === 'teenOnly' ? (age === 'aspen' || age === 'pine') : true);
 function libSearch(q, age){
   const words = String(q || '').toLowerCase().split(/\s+/).filter(Boolean);
   const hits = LIBRARY.filter(it => (!age || libFits(it, age)) && words.every(w => it.find.includes(w)));

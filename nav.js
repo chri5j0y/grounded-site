@@ -11,35 +11,31 @@
    If this file ever fails to load, each site's plain Tools link still works. */
 (function () {
   var HOME = 'https://growwithgrounded.com';
+  var mk = function (k) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg" alt="" width="42" height="42">'; };
   var ic = {
+    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'),
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#4A5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-6 14-15 14z"/><path d="M5 19l8.5-8.5"/></svg>',
-    sprout: '<svg viewBox="4 6 102 70"><defs><clipPath id="gn-sun"><path d="M0 0H110V72H100Q55 62 10 72H0Z"/></clipPath></defs><circle cx="55" cy="72" r="33" fill="#FFD23F" clip-path="url(#gn-sun)"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 52 55 36" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 56C41 56 34 46 37 36C48 36 55 44 55 56Z" fill="#6CCB3A" stroke="#1F5C0E" stroke-width="2"/><path d="M55 46C68 45 74 35 72 24C61 24 55 33 55 46Z" fill="#A5E072" stroke="#1F5C0E" stroke-width="2"/><circle cx="55" cy="36" r="5" fill="#FF6B6B"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
-    sapling: '<svg viewBox="4 -5 102 81"><circle cx="55" cy="34" r="27" fill="#F2B33D"/><path d="M10 72Q55 50 100 72Q55 62 10 72Z" fill="#4DB36E"/><path d="M10 72Q55 62 100 72" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 67Q52 42 55 14" stroke="#5A3414" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M43 36.5C32 36.5 27 29 29 21.5C37 21.5 43 27.5 43 36.5Z" fill="#7ED3A0" stroke="#123F2E" stroke-width="2"/><path d="M67 31.5C76 30.8 80 23.4 79 16C71 16 67 22 67 31.5Z" fill="#2F9E6B" stroke="#123F2E" stroke-width="2"/><circle cx="55" cy="14" r="6" fill="#FF6B6B"/></svg>',
-    grove: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F3325" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/></svg>',
-    oldgrowth: '<svg viewBox="0 0 24 24" fill="none" stroke="#7A6A58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21c.6-4 .8-8 .6-12M14 21c-.4-4-.2-7 1-10"/><path d="M10.6 9L6 5M11 11L7.5 10M15 11l3.5-4M16 9.5l3 .5"/><circle cx="6" cy="5" r="1.2"/><circle cx="18.5" cy="7" r="1.2"/><path d="M4 21h16"/></svg>',
-    eldertree: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E6233" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c-1.5-1.6-3.5-2.2-5.5-2"/><path d="M12 14c1.6-1.6 3.6-2.1 5.6-1.8"/><path d="M5 10.5a3 3 0 0 1 2.5-4.6A4.5 4.5 0 0 1 16 5.6a3 3 0 0 1 3 4.9"/><circle cx="8" cy="13.6" r=".9"/><circle cx="9.6" cy="14.6" r=".9"/><circle cx="16" cy="14.4" r=".9"/><path d="M5 21h14"/></svg>',
-    heartwood: '<svg viewBox="0 0 24 24" fill="none" stroke="#6B2E22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
     { name: 'Check-ins', items: [
-      { id: 'sprout', title: 'Sprout', desc: 'A gentle check-in for kids, grades K to 5', href: HOME + '/sprout/', icon: ic.sprout, bg: '#D8F3FF' },
-      { id: 'sapling', title: 'Sapling', desc: 'A check-in for grades 6 to 8', href: HOME + '/sapling/', icon: ic.sapling, bg: '#DDF0EC' },
-      { id: 'heartwood', title: 'Heartwood', desc: 'For grades 9 to 12', icon: ic.heartwood, bg: '#F3E1D8', soon: true },
-      { id: 'soultree', title: 'Soul Tree', desc: 'A six-part check-in for adults', href: HOME + '/soul-tree/', icon: ic.tree, bg: '#F1E6CC' },
-      { id: 'eldertree', title: 'Elder Tree', desc: 'For seniors', icon: ic.eldertree, bg: '#EAE5D2', soon: true },
-      { id: 'oldgrowth', title: 'Old Growth', desc: 'For hospice', icon: ic.oldgrowth, bg: '#ECE6DE', soon: true }
+      { id: 'maple', title: 'Maple', desc: 'A gentle check-in for kids, grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#D8F3FF' },
+      { id: 'aspen', title: 'Aspen', desc: 'A check-in for grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
+      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#F3E1D8', soon: true },
+      { id: 'oak', title: 'Oak', desc: 'A six-part check-in for adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
+      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#EAE5D2', soon: true },
+      { id: 'willow', title: 'Willow', desc: 'For hospice', icon: ic.willow, bg: '#ECE6DE', soon: true }
     ] },
     { name: 'Practice', items: [
       { id: 'grove', title: 'The Grove', desc: 'Daily practice for every tree, all ages and stages', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
     ] },
     { name: 'Hard Talks', items: [
-      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/sprout/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
-      { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for hard talks, grades 6 to 8', href: HOME + '/sapling/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' },
-      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/soul-tree/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' }
+      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/maple/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
+      { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for hard talks, grades 6 to 8', href: HOME + '/aspen/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' },
+      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/oak/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' }
     ] },
     { name: 'For professionals', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
@@ -50,9 +46,9 @@
   function here() {
     var h = location.hostname, p = location.pathname, hash = location.hash || '';
     var life = /^#(life|talk)/.test(hash);
-    if (p.indexOf('/soul-tree') === 0 || h.indexOf('soultree.') === 0) return life ? 'lc-adult' : 'soultree';
-    if (p.indexOf('/sprout') === 0 || h.indexOf('sprout.') === 0) return life ? 'lc-kids' : 'sprout';
-    if (p.indexOf('/sapling') === 0 || h.indexOf('sapling.') === 0) return life ? 'lc-ms' : 'sapling';
+    if (p.indexOf('/oak') === 0 || h.indexOf('oak.') === 0) return life ? 'lc-adult' : 'oak';
+    if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return life ? 'lc-kids' : 'maple';
+    if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return life ? 'lc-ms' : 'aspen';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     return '';
@@ -71,6 +67,7 @@
     'a.gn-tool > span:last-child{min-width:0;flex:1;}' +
     '.gn-ic{width:42px;height:42px;border-radius:11px;flex:none;display:grid;place-items:center;}' +
     '.gn-ic svg{width:24px;height:24px;}' +
+    '.gn-ic .gn-mark{width:42px;height:42px;border-radius:11px;display:block;}' +
     '.gn-tool b{display:flex;align-items:center;gap:6px;font-weight:600;font-size:15.5px;line-height:1.25;}' +
     '.gn-tool small{display:block;font-size:13px;line-height:1.35;color:#5B6A73;margin-top:1px;}' +
     '.gn-tag{font-size:11px;font-weight:600;color:#fff;background:#8B5E1A;border-radius:999px;padding:1px 8px;white-space:nowrap;}' +

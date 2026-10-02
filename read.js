@@ -1,4 +1,4 @@
-/* Grounded read-aloud engine, shared by Stories, Sprout, Sapling, Soul Tree, The Grove, and the Field Guide.
+/* Grounded read-aloud engine, shared by Stories, Maple, Aspen, Oak, The Grove, and the Field Guide.
    Picks the most natural voice on each device (quality first, with a gentle preference for a
    male or female voice), lets people choose a voice and a speed, shows how to get a better voice,
    and plays a recorded audio file when one exists.
@@ -133,7 +133,7 @@
     });
     return g;
   }
-  /* Just the voice, speed, and help, for tools that keep their own Read aloud switch (Sprout, Sapling, Field Guide). */
+  /* Just the voice, speed, and help, for tools that keep their own Read aloud switch (Maple, Aspen, Field Guide). */
   function settings() {
     var bar = document.createElement('div'); bar.className = 'gg-rbar gg-rset no-print';
     if (synth) bar.appendChild(voiceMenu()); else bar.hidden = true;
@@ -187,7 +187,7 @@
     paint();
     return bar;
   }
-  /* A Sprout-style "Read aloud: on / off" switch. When on, onRead is called whenever the page changes. */
+  /* A Maple-style "Read aloud: on / off" switch. When on, onRead is called whenever the page changes. */
   function toggle(opts) {
     var key = opts.key || 'gg_read_on';
     var on = false; try { on = localStorage.getItem(key) === '1'; } catch (e) {}

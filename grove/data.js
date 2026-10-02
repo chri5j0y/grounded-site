@@ -74,16 +74,16 @@ const partOf = id => STRAND[id] ? STRAND[id].part : id;
 const strandName = id => { const b = STRAND[id]; if (!b) return id; return b.part === 'leaves' ? 'Leaves: ' + b.name : b.name; };
 
 // ---------- AGE MODES ----------
-// Wording: sprout uses kid words; sapling and heartwood use teen words.
+// Wording: maple uses kid words; aspen and pine use teen words.
 const AGES = [
  { id:"adult", name:"Adult", who:"Me, or another adult", w:0 },
- { id:"heartwood", name:"High school", who:"Grades 9 to 12", w:1 },
- { id:"sapling", name:"Middle school", who:"Grades 6 to 8", w:1 },
- { id:"sprout", name:"Kids", who:"Kindergarten to grade 5", w:2 }
+ { id:"pine", name:"High school", who:"Grades 9 to 12", w:1 },
+ { id:"aspen", name:"Middle school", who:"Grades 6 to 8", w:1 },
+ { id:"maple", name:"Kids", who:"Kindergarten to grade 5", w:2 }
 ];
 const AGE = Object.fromEntries(AGES.map(a => [a.id, a]));
 const wordIdx = age => (AGE[age] || AGE.adult).w;
-const isKid = age => age === 'sprout';
+const isKid = age => age === 'maple';
 
 // ---------- ANSWER SCALES ----------
 const SCALE5 = [["Never",1],["Rarely",2],["Sometimes",3],["Often",4],["Almost always",5]];
@@ -180,8 +180,8 @@ const QS = {
 };
 
 // ---------- TEEN WEEKLY CHECK-IN: 8 questions, one per strand ----------
-// Only high schoolers use this, until Heartwood is ready. Everyone else checks
-// in with Sprout, Sapling, or Soul Tree.
+// Only high schoolers use this, until Pine is ready. Everyone else checks
+// in with Maple, Aspen, or Oak.
 const WEEKLY_STEM = ["This past week, how often was this true?","This past week, how often was this true?","This week, how often?"];
 const WEEKLY = {
  body:["I moved my body on purpose.","I moved my body on purpose.","I played and moved a lot."],
@@ -239,7 +239,7 @@ const BODY_REST_KID = "Rest day. A slow walk or a big stretch is plenty.";
 // ---------- PRACTICES: 12 per strand ----------
 // Four per season, in order: Planting (1 to 4), Rooting (5 to 8), Blooming (9 to 12).
 // [name, what to do, busy day version, kid name, kid what to do, kid busy day]
-// Names that match Soul Tree's library count in both tools.
+// Names that match Oak's library count in both tools.
 // "LV" means the Body level text is used for adults and teens.
 const PRACTICES = {
  body:[
@@ -527,7 +527,7 @@ const CRITTERS = [
 
 // ---------- UNLOCKS ----------
 // Days tended unlock tree kinds and scenery. The kind you choose shows on
-// your tree in The Grove and in Sapling.
+// your tree in The Grove and in Aspen.
 const TREE_KINDS = [
  { id:"grove", name:"Grove tree", days:0 },
  { id:"birch", name:"Birch", days:15 },
@@ -544,11 +544,11 @@ const SCENERY = [
 
 // ---------- CHECK-IN TOOLS ----------
 // Where each age checks on their tree. The Grove nudges at the end of each
-// season and after twelve weeks. Heartwood is coming soon, so high schoolers
+// season and after twelve weeks. Pine is coming soon, so high schoolers
 // keep The Grove's short weekly check-in until then.
 const CHECKIN = {
- sprout:   { tool:"Sprout",    href:"/sprout/",    season:"/sprout/",            full:"/sprout/" },
- sapling:  { tool:"Sapling",   href:"/sapling/",   season:"/sapling/",           full:"/sapling/" },
- heartwood:{ tool:"The Grove", href:null,          season:null,                  full:null },
- adult:    { tool:"Soul Tree", href:"/soul-tree/", season:"/soul-tree/#quick",   full:"/soul-tree/#checkin" }
+ maple:   { tool:"Maple",    href:"/maple/",    season:"/maple/",            full:"/maple/" },
+ aspen:  { tool:"Aspen",   href:"/aspen/",   season:"/aspen/",           full:"/aspen/" },
+ pine:{ tool:"The Grove", href:null,          season:null,                  full:null },
+ adult:    { tool:"Oak", href:"/oak/", season:"/oak/#quick",   full:"/oak/#checkin" }
 };

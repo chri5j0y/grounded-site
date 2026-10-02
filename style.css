@@ -171,11 +171,11 @@ h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:29px;line-he
   .story-body p{font-size:21px;}
 }
 
-/* Tool groups, Sprout card, practitioner note */
+/* Tool groups, Maple card, practitioner note */
 .tool-group{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin:40px 0 0;}
 .tool-group + .grid-1{margin-top:14px;}
 .tool-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;}
-.sprout-art{width:180px;height:180px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:#0096C7;}
+.maple-art{width:180px;height:180px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;background:#0096C7;}
 .practitioner-note{margin-top:28px;font-size:15px;color:var(--ink-soft);}
 
 /* Ceremonies and Our Story */
@@ -448,10 +448,10 @@ section:nth-of-type(even):not(.news-band){background:var(--alt);}
 a.tool-mini:hover{border-color:var(--gold);}
 .tool-mini.soon{opacity:.75;}
 .tool-soon{opacity:.85;}
-.sapling-art,.heartwood-art,.oldgrowth-art{width:180px;height:180px;border-radius:24px;display:grid;place-items:center;}
-.sapling-art{background:#1F6F74;}
-.heartwood-art{background:#F3E1D8;}
-.oldgrowth-art{background:#ECE6DE;}
+.aspen-art,.pine-art,.willow-art{width:180px;height:180px;border-radius:24px;display:grid;place-items:center;}
+.aspen-art{background:#1F6F74;}
+.pine-art{background:#F3E1D8;}
+.willow-art{background:#ECE6DE;}
 .urgent-line{font-weight:600;}
 .contact-email,.contact-sub{margin:14px 0 0;font-size:17px;color:var(--ink-soft);}
 .call-text{margin:14px 0 0;font-size:17px;}

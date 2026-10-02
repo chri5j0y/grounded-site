@@ -4,7 +4,7 @@
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
    Where the words come from (edit them there, not here):
-     Hard Talks   sprout/guides.js, sapling/guides.js, soul-tree/guides.js
+     Hard Talks   maple/guides.js, aspen/guides.js, oak/guides.js
      Practices    grove/data.js and grove/library.js
      Stories      stories.html (read as the page is today)
      Tools        TOOLS below
@@ -22,14 +22,14 @@
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Sprout', sub: 'Check-in for kids, grades K to 5, with guides for 60 hard talks', href: '/sprout/', keys: 'kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
-    { title: 'Sapling', sub: 'Check-in for grades 6 to 8, with 49 guides for hard talks', href: '/sapling/', keys: 'middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
-    { title: 'Soul Tree', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/soul-tree/', keys: 'adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
+    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with guides for 60 hard talks', href: '/maple/', keys: 'sprout kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' }, // GG-RENAME-KEEP: old names still find the tool
+    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 guides for hard talks', href: '/aspen/', keys: 'sapling middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' }, // GG-RENAME-KEEP: old names still find the tool
+    { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/oak/', keys: 'soul tree soultree adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' }, // GG-RENAME-KEEP: old names still find the tool
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove garden tending tend routine' },
-    { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice soul tree guide grove guide' },
-    { title: 'Heartwood', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },
-    { title: 'Elder Tree', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'seniors elders older adults retirement aging grandparents' },
-    { title: 'Old Growth', sub: 'For hospice. Coming soon.', href: '', keys: 'end of life dying hospice' }
+    { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
+    { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'heartwood high school teen teenager 9th 10th 11th 12th grade' }, // GG-RENAME-KEEP: old names still find the tool
+    { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'elder tree eldertree seniors elders older adults retirement aging grandparents' }, // GG-RENAME-KEEP: old names still find the tool
+    { title: 'Willow', sub: 'For hospice. Coming soon.', href: '', keys: 'old growth oldgrowth end of life dying hospice' } // GG-RENAME-KEEP: old names still find the tool
   ];
 
   /* ---------- everyday words ---------- */
@@ -113,29 +113,29 @@
     ITEMS = [];
     status.textContent = 'Getting the guides ready...';
     loading = Promise.all([
-      load('/sprout/guides.js'), load('/sapling/guides.js'), load('/soul-tree/guides.js'), load('/grove/data.js'), load('/grove/library.js')
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/grove/data.js'), load('/grove/library.js')
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
 
-      var sp = window.SPROUT_GUIDES;
+      var sp = window.MAPLE_GUIDES;
       if (sp) sp.topics.forEach(function (t) {
         var ring = (sp.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
         add({ type: 'talk', age: 'k5', ageLabel: 'Kids, K to 5', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.k2, t.g35].concat(t.helps || [], t.before || [], t.after || [], t.teach || []).join(' '),
-          href: '/sprout/#talk=' + encodeURIComponent(t.id), from: 'Sprout' });
+          href: '/maple/#talk=' + encodeURIComponent(t.id), from: 'Maple' });
       });
-      var sa = window.SAPLING_GUIDES;
+      var sa = window.ASPEN_GUIDES;
       if (sa) sa.groups.forEach(function (g) { g.topics.forEach(function (t) {
         if (!t.quick) return;
         add({ type: 'talk', age: 'ms', ageLabel: 'Grades 6 to 8', title: t.title, sub: g.name, keys: t.keys || '', lead: t.quick, quick: t.quick,
-          body: (t.talk || []).concat(t.say || []).join(' '), href: '/sapling/#talk=' + encodeURIComponent(t.id), from: 'Sapling' });
+          body: (t.talk || []).concat(t.say || []).join(' '), href: '/aspen/#talk=' + encodeURIComponent(t.id), from: 'Aspen' });
       }); });
-      var so = window.SOULTREE_GUIDES;
+      var so = window.OAK_GUIDES;
       if (so) so.topics.forEach(function (t) {
         var ring = (so.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
         add({ type: 'talk', age: 'ad', ageLabel: 'Adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
-          href: '/soul-tree/#life=' + encodeURIComponent(t.id), from: 'Soul Tree' });
+          href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak' });
       });
 
       var gl = window.GroveLibrary;
@@ -261,7 +261,7 @@
     var html = crisisHTML(r.p.raw);
     if (!n) {
       html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse every Hard Talk: ' +
-        '<a class="text-link" href="/sprout/#life">for kids, K to 5</a>, <a class="text-link" href="/sapling/#life">for grades 6 to 8</a>, or <a class="text-link" href="/soul-tree/#life">for adults</a>.</p></div>';
+        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, or <a class="text-link" href="/oak/#life">for adults</a>.</p></div>';
     } else {
       if (r.partial) html += '<p class="ss-note">Nothing matched every word, so here is what matched some of them.</p>';
       r.groups.forEach(function (g) {

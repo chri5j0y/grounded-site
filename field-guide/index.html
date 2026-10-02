@@ -285,7 +285,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .lock-ask b{color:#F4EBDA;} .lock-ask span{font-size:14px;color:rgba(244,235,218,.7);}
 .lock-ask .btn{align-self:flex-start;margin-top:4px;text-decoration:none;}
 .btn-ghost{background:transparent;border:1px solid rgba(217,168,71,.7);color:#E6D3A6;}
-/* ---------- soul tree guide ---------- */
+/* ---------- Oak guide ---------- */
 .grid > .card + .card{margin-top:0;}
 .st-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#C07A34 0%,#A5601E 45%,#6E3E14 100%);}
 .st-visits{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:10px;}
@@ -482,7 +482,7 @@ body.cd-noscroll{overflow:hidden;}
 .pls-foot{margin-top:4mm;font-size:7.4pt;color:#6B5A4D;text-align:center;border-top:.5pt solid #DDD0B8;padding-top:2mm;}
 .codeshow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(22px * var(--scale));letter-spacing:.5px;margin:10px 0;word-break:break-word;}
 
-/* ---------- sprout guide ---------- */
+/* ---------- maple guide ---------- */
 .sp-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#3F5A2C 0%,#2C3F20 55%,#1F2D17 100%);}
 .sp-chip{display:inline-flex;align-items:center;gap:8px;}
 .sp-chip svg{width:26px;height:18px;flex:0 0 auto;}
@@ -596,7 +596,7 @@ async function derive(pass, salt, extractable){
   return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:ITER, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, extractable, ['encrypt','decrypt']);
 }
 async function seal(key, obj){ const iv = crypto.getRandomValues(new Uint8Array(12)); const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(JSON.stringify(obj))); return {iv:b64(iv), ct:b64(ct)}; }
-async function open(key, box){ const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(box.iv)}, key, unb64(box.ct)); return JSON.parse(dec.decode(pt)); }
+async function open(key, box){ const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(box.iv)}, key, unb64(box.ct)); const o = JSON.parse(dec.decode(pt)); return window.GGRename ? GGRename.fix(o) : o; } // the tree rename: old names in sealed libraries, records, and backups are read under the new ones
 
 // ---------------- levels and codes ----------------
 // Three levels. Owner opens Owner, Staff, and Field. Staff opens Staff and Field. Field opens Field.
@@ -808,19 +808,19 @@ function start(){
   V = {tab: tabsFor()[0][0]}; render();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
   if (dr && dr.kind === 'sa'){
-    if (SAG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sapling visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); saLoad(); let n = 0; const go2 = () => { if (SAC) saOpenRun(); else if (SAC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sapling questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
+    if (SAG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have an Aspen visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); saLoad(); let n = 0; const go2 = () => { if (SAC) saOpenRun(); else if (SAC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Aspen questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
     return;
   }
   if (dr && dr.kind === 'sp'){
-    if (SPG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sprout visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); spLoad(); let n = 0; const go2 = () => { if (SC) spOpenRun(); else if (SC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sprout questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
+    if (SPG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Maple visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); spLoad(); let n = 0; const go2 = () => { if (SC) spOpenRun(); else if (SC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Maple questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
     return;
   }
-  if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have a Soul Tree visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Soul Tree questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
+  if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have an Oak visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Oak questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  const gt = [...(spOpen() ? [['sprout','Sprout','sprout']] : []), ...(saOpen() ? [['sapling','Sapling','sapling']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['soultree','Soul Tree','tree']] : []), ...gt];
+  const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
   return t;
 }
@@ -829,7 +829,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, soultree:vST, sprout:vSP, sapling:vSA, grove:vGV, talks:vHT};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, grove:vGV, talks:vHT};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -862,8 +862,8 @@ const IC = {
  safety:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16v.5"/>',
  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
- sprout:'<path d="M12 21v-9"/><path d="M12 12c0-4 3-6.5 7.5-6.5 0 4.2-3 6.5-7.5 6.5z"/><path d="M12 14.5c0-3.2-2.6-5.3-6.3-5.3 0 3.3 2.6 5.3 6.3 5.3z"/>',
- sapling:'<path d="M12 21v-8"/><path d="M12 13c-3 0-5.2-2.1-5.2-4.8C6.8 5.4 9.1 3 12 3s5.2 2.4 5.2 5.2c0 2.7-2.2 4.8-5.2 4.8z"/><path d="M12 10.5l-2.4-2M12 12l2.4-2.3"/><path d="M8.5 21h7"/>',
+ maple:'<path d="M12 21v-9"/><path d="M12 12c0-4 3-6.5 7.5-6.5 0 4.2-3 6.5-7.5 6.5z"/><path d="M12 14.5c0-3.2-2.6-5.3-6.3-5.3 0 3.3 2.6 5.3 6.3 5.3z"/>',
+ aspen:'<path d="M12 21v-8"/><path d="M12 13c-3 0-5.2-2.1-5.2-4.8C6.8 5.4 9.1 3 12 3s5.2 2.4 5.2 5.2c0 2.7-2.2 4.8-5.2 4.8z"/><path d="M12 10.5l-2.4-2M12 12l2.4-2.3"/><path d="M8.5 21h7"/>',
  tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
@@ -889,7 +889,7 @@ function vHome(){
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="soultree"><span class="qi">${icon('tree')}</span><span><b>Soul Tree visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="sprout"><span class="qi">${icon('sprout')}</span><span><b>Sprout visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="sapling"><span class="qi">${icon('sapling')}</span><span><b>Sapling visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups this week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1009,7 +1009,7 @@ function vClient(c){
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
   ${spPersonCard(c)}
   ${saPersonCard(c)}
-  ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Soul Tree Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
+  ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Oak Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Details</h3>
@@ -1097,9 +1097,9 @@ function vFieldHome(){
   const w = FLD.welcome;
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
-  ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="soultree">${icon('tree')} Open</button></div></div>` : ''}
-  ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sprout">${icon('sprout')} Open</button></div></div>` : ''}
-  ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sapling">${icon('sapling')} Open</button></div></div>` : ''}
+  ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
+  ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="maple">${icon('maple')} Open</button></div></div>` : ''}
+  ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="aspen">${icon('aspen')} Open</button></div></div>` : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
   ${fieldDue()}
@@ -1367,11 +1367,11 @@ function vOwner(){
   ${FLD ? saOwnerCard() : ''}`;
 }
 
-// ---------------- SOUL TREE GUIDE ----------------
-// Wording lives in the Field library (FLD.soulTreeGuide), so it is sealed and edited through Update a Library.
+// ---------------- OAK GUIDE ----------------
+// Wording lives in the Field library (FLD.oakGuide), so it is sealed and edited through Update a Library.
 // People are ordinary People records with a .st profile. Visits are sessions with kind 'st', so backups merge them.
-// Staff and Owner always see it. Field users see it once FLD.soulTreeGuide.open.field is on and Orientation is done.
-const STG = () => (FLD && FLD.soulTreeGuide) || null;
+// Staff and Owner always see it. Field users see it once FLD.oakGuide.open.field is on and Orientation is done.
+const STG = () => (FLD && FLD.oakGuide) || null;
 const stOpen = () => !!STG() && (TIER !== 'field' || !!(STG().open && STG().open.field && (!OR() || orState().complete)));
 const stPart = k => STG().parts.find(p => p.key === k);
 const stIsMe = c => !!(c && c.st && c.st.type === 'me');
@@ -1384,7 +1384,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
-const sessTitle = s => s.kind === 'sp' ? 'Sprout: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Sapling: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Sapling: report record' : s.tool === 'st' ? 'Soul Tree: report record' : 'Sprout: report record') : s.kind === 'st' ? 'Soul Tree: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'st' ? 'Oak: report record' : 'Maple: report record') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
 function stQuestions(visit, set, key){ if (!STC) return []; return ((set === 'staff' ? STC.staff : STC.questions)[key]) || []; }
 function stScore(run){
   const out = {}, sc = stScale();
@@ -1402,21 +1402,21 @@ const stAvg = sc => { const v = Object.values(sc || {}).filter(x => x != null); 
 const mins = n => n + (n === 1 ? ' minute' : ' minutes');
 const stSafetyFlag = sf => !!sf && !sf.notAsked && ((sf.direct && sf.direct !== 'no' && sf.direct !== 'skip') || ['often','always'].includes(sf.opener));
 
-// ----- session 22: questions from the public soul-tree/checkin.js, so Soul Tree and Soul Tree Guide always ask the same thing -----
+// ----- session 22: questions from the public oak/checkin.js, so Oak and Oak Guide always ask the same thing -----
 let STC = null, STC_WAIT = null, STC_FAIL = false;
 const ST_STD = 1;
 function stLoad(){
   if (STC || STC_WAIT) return;
   STC_FAIL = false;
-  STC_WAIT = fetch('../soul-tree/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
-    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SOUL_TREE_CHECKIN || !w.SOUL_TREE_CHECKIN.questions) throw 0; STC = w.SOUL_TREE_CHECKIN; STC_WAIT = null; if (DATA && V.tab === 'soultree') render(); })
-    .catch(() => { STC_WAIT = null; STC_FAIL = true; if (DATA && V.tab === 'soultree') render(); });
+  STC_WAIT = fetch('../oak/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.OAK_CHECKIN || !w.OAK_CHECKIN.questions) throw 0; STC = w.OAK_CHECKIN; STC_WAIT = null; if (DATA && V.tab === 'oak') render(); })
+    .catch(() => { STC_WAIT = null; STC_FAIL = true; if (DATA && V.tab === 'oak') render(); });
 }
 function stNeedData(){
   if (STC) return '';
   stLoad();
-  return STC_FAIL ? `<div class="card"><h3>The Soul Tree questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-retry">Try Again</button></div>`
-    : `<div class="card"><p class="muted">Loading the Soul Tree questions...</p></div>`;
+  return STC_FAIL ? `<div class="card"><h3>The Oak questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Oak questions...</p></div>`;
 }
 const stScale = () => (STC && STC.answers) || STG().scale;
 // Flagged answers in a run: alone, hope, home. Quick visits ask question 1 of each part, which is never a flag question.
@@ -1446,19 +1446,19 @@ const stReady = () => stmState().complete;
 function stmCard(){
   const m = stmState();
   if (!STM()) return '';
-  if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Renew your Soul Tree training soon</h3><p class="muted">Renew by ${nice(m.renewBy)}.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-mhome">Open Training</button></div>` : '';
-  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Soul Tree training' : 'Start with the Soul Tree training'}</h3><p class="muted">${esc(STM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="st-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+  if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Renew your Oak training soon</h3><p class="muted">Renew by ${nice(m.renewBy)}.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-mhome">Open Training</button></div>` : '';
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Oak training' : 'Start with the Oak training'}</h3><p class="muted">${esc(STM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="st-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
 }
 function vSTM(){
   const M = STM(), D = stmData(), s = stmState();
-  if (!M) return `<div class="card"><p>The Soul Tree training isn't on this device yet.</p></div>`;
+  if (!M) return `<div class="card"><p>The Oak training isn't on this device yet.</p></div>`;
   if (V.stml !== undefined) return vSTMLesson(V.stml);
   if (V.stq) return V.stq.done ? vSTMResult() : vSTMQ();
   if (V.sts) return vSTMSign();
   const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
   const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
-  return `<button class="linkbtn" data-tab="soultree">Back to Soul Tree Guide</button>
-  <div class="hello st-hello" style="margin-top:14px"><div class="eyebrow" style="color:#E0A85C">Soul Tree Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  return `<button class="linkbtn" data-tab="oak">Back to Oak Guide</button>
+  <div class="hello st-hello" style="margin-top:14px"><div class="eyebrow" style="color:#E0A85C">Oak Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
   ${M.lessons.map((l, i) => step('st-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
@@ -1520,8 +1520,8 @@ function vSTMSign(){
 }
 function stmPrint(){
   const A = STM().agreement, D = stmData().signed;
-  fgSheet(ph('Soul Tree Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'soul-tree-guide-agreement'});
+  fgSheet(ph('Oak Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'oak-guide-agreement'});
 }
 
 // ----- consent: the written form, kept encrypted here; a PDF if they want one -----
@@ -1542,7 +1542,7 @@ function stFormPdf(c){
   const F = stForm(), con = c.st.consent || {};
   if (!F || con.how !== 'form') return;
   fgSheet(ph('Consent') + `<h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p><ul>${F.boxes.map(b => `<li>[x] ${esc(b)}</li>`).join('')}</ul>
-    <p><b>${esc(F.nameLabel)}:</b> ${esc(con.name || '')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p><p><b>Date:</b> ${nice(con.date)}</p><p style="font-size:9pt">Form version ${esc(String(con.v))}. ${esc(F.pdfNote)}</p>` + pf(), F.title, {file:'soul-tree-consent', date:con.date, confidential:true});
+    <p><b>${esc(F.nameLabel)}:</b> ${esc(con.name || '')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p><p><b>Date:</b> ${nice(con.date)}</p><p style="font-size:9pt">Form version ${esc(String(con.v))}. ${esc(F.pdfNote)}</p>` + pf(), F.title, {file:'oak-consent', date:con.date, confidential:true});
 }
 
 // ----- report a concern about a vulnerable adult (Minnesota: MAARC) -----
@@ -1551,8 +1551,8 @@ const stReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool ===
 function vSTReport(cid){
   const R = STG().report, c = cid ? CL(cid) : null, k = spContact ? (SPG() ? spContact() : {}) : {};
   const where = V.stwhere || 'mn';
-  return `<button class="linkbtn" ${c ? `data-act="st-open" data-v="${c.id}"` : 'data-tab="soultree"'}>Back${c ? ' to ' + esc(c.name) : ''}</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Soul Tree Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
+  return `<button class="linkbtn" ${c ? `data-act="st-open" data-v="${c.id}"` : 'data-tab="oak"'}>Back${c ? ' to ' + esc(c.name) : ''}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Oak Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div><p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p></div>
   <div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
   <div class="card"><h3>What counts</h3>${R.kinds.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>
@@ -1580,15 +1580,15 @@ function stYesHtml(c){
    ${Y.say ? `<div class="blk say" style="margin-top:8px"><div class="lab">Say</div><ul><li>${esc(Y.say)}</li></ul></div>` : ''}
    ${agent ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(Y.agentNote || 'Someone else gave consent for them. Their own no, by words or by turning away, is always honored.')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p>` : ''}
    <div class="st-opts" role="group" aria-label="Their answer" style="margin-top:10px">${opts.map(o => stChip('st-yes', `data-k="yes" data-v="${o[0]}"`, RUN.yes === o[0], o[1])).join('')}</div>
-   ${c && c.st.type === 'staff' ? `<p class="muted" style="font-size:14px;margin-top:12px">${esc(Y.staffNote || 'Never do a Soul Tree visit with someone you supervise.')}</p><div class="st-opts" style="margin-top:6px">${stChip('st-yes', 'data-k="notSup" data-v="1"', RUN.notSup, Y.staffCheck || 'I do not supervise this person')}</div>` : ''}</div>`;
+   ${c && c.st.type === 'staff' ? `<p class="muted" style="font-size:14px;margin-top:12px">${esc(Y.staffNote || 'Never do an Oak visit with someone you supervise.')}</p><div class="st-opts" style="margin-top:6px">${stChip('st-yes', 'data-k="notSup" data-v="1"', RUN.notSup, Y.staffCheck || 'I do not supervise this person')}</div>` : ''}</div>`;
 }
 function stNotToday(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ go('soultree'); toast('Demo ended. "Not today" is always honored.'); return; }
+  if (r.demo){ go('oak'); toast('Demo ended. "Not today" is always honored.'); return; }
   DATA.sessions.push({id:r.id, u:Date.now(), kind:'st', clientId:r.clientId, date:today(), minutes:0, visit:r.visit, set:r.set, notToday:true, std:ST_STD, scores:{}, safety:null, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', pn:{}});
   DATA.draft = null; if (c){ touch(c); c.last = today(); }
-  save(); go('soultree', {stp:r.clientId}); toast('Recorded as "Not today." Thank them, and end kindly.');
+  save(); go('oak', {stp:r.clientId}); toast('Recorded as "Not today." Thank them, and end kindly.');
 }
 
 // ----- rings: one for each full or quick visit, oldest in the middle -----
@@ -1608,7 +1608,7 @@ function stPartTable(c){
 
 // ----- views -----
 function vST(){
-  if (!STG()) return `<div class="card"><p>Soul Tree Guide isn't on this device yet.</p></div>`;
+  if (!STG()) return `<div class="card"><p>Oak Guide isn't on this device yet.</p></div>`;
   stLoad();
   if (V.stm) return vSTM();
   if (V.strep !== undefined) return vSTReport(V.strep);
@@ -1629,7 +1629,7 @@ function vST(){
   <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
    ${list.length ? list.map(c => { const last = stVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(stTypeName(c.st.type))}</span>${stHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${stVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>
   <div class="card st-me"><div class="spread"><div><h3>My own tree</h3><p class="muted">${esc(S.meNote)}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="st-me">Start My Tree</button>`}</div></div>
-  <div class="card"><h3>Move sessions from public Soul Tree</h3><p class="muted">${esc(S.importNote)}</p>
+  <div class="card"><h3>Move sessions from public Oak</h3><p class="muted">${esc(S.importNote)}</p>
    <div class="row" style="margin-top:10px">${local ? `<button class="btn btn-line btn-sm" data-act="st-imp-local">Move ${local} ${local === 1 ? 'Person' : 'People'} From This Browser</button>` : '<span class="muted" style="font-size:15px">None found in this browser.</span>'}
    <label class="btn btn-line btn-sm" style="cursor:pointer">From a Practitioner Backup File<input type="file" id="st-imp-file" accept=".json,application/json" hidden></label></div></div>`;
 }
@@ -1651,14 +1651,14 @@ function vSTConsent(c){
 function vSTPerson(c){
   const S = STG(), me = stIsMe(c), vs = stVisits(c.id), ok = stHasConsent(c), con = c.st.consent;
   const latest = vs.find(s => s.plan && Object.values(s.plan).some(a => a && a.length)) || null;
-  return `<button class="linkbtn" data-tab="soultree">Back to Soul Tree Guide</button>
+  return `<button class="linkbtn" data-tab="oak">Back to Oak Guide</button>
   <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(stTypeName(c.st.type))}</div><h1>${esc(c.name)}</h1></div>
    <div class="row">${me ? '<span class="pill sage">Private</span>' : con ? `<span class="pill ${con.how === 'declined' ? 'warn' : 'sage'}">${esc(stConsentName(con.how))} ${con.date ? nice(con.date) : ''}</span>` : '<span class="pill warn">Consent needed</span>'}</div></div>
   ${!me && !ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Ask first'}</h3><p class="muted">${con && con.how === 'declined' ? 'Visits stay off. If they change their mind, record it here.' : 'Explain what this is and ask before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="st-consent" data-v="${c.id}">${con ? 'Update Consent' : 'Consent'}</button></div>` : ''}
   ${me ? '' : stmCard()}
   ${me || !STG().report ? '' : `<div class="row" style="margin:12px 0">${stShield(c.id)}${stReports(c.id).length ? ` <span class="pill">${stReports(c.id).length} report record${stReports(c.id).length === 1 ? '' : 's'}</span>` : ''}</div>`}
   <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="st-start" data-v="${v[0]}" data-c="${c.id}" ${ok ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
-   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Quick and open visits usually fit best. In a full visit, skip anything that doesn\'t fit. A set made for hospice comes with Old Growth.</p>' : ''}</div>
+   ${c.st.type === 'staff' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full visits use the staff question set.</p>' : c.st.type === 'patient' ? '<p class="muted" style="font-size:14px;margin-top:8px">For patients, questions are asked as "Lately, how often have you..." Quick and open visits usually fit best. In a full visit, skip anything that doesn\'t fit. A set made for hospice comes with Willow.</p>' : ''}</div>
   ${me ? '' : gvPersonCard(c)}
   ${me ? '' : htPersonCard(c)}
   <div class="grid g2" style="margin-top:14px">
@@ -1682,10 +1682,10 @@ function stFindVisit(){ return V.stv === 'demo' ? (V.stDemo || null) : DATA.sess
 function vSTVisit(){
   const s = stFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
   const demo = V.stv === 'demo', c = demo ? s.person : CL(s.clientId), me = stIsMe(c), S = STG(), sf = s.safety || {};
-  const back = demo ? `<button class="linkbtn" data-tab="soultree">Back to Soul Tree Guide</button>` : `<button class="linkbtn" data-act="st-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
+  const back = demo ? `<button class="linkbtn" data-tab="oak">Back to Oak Guide</button>` : `<button class="linkbtn" data-act="st-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
   return `${back}
   ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Print the handout or copy the note to see how they look.</span></div>' : ''}
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'staff' ? ' &middot; Staff questions' : ''}</div><h1>${esc(stVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.imported ? ' &middot; Moved from public Soul Tree' : ''}</p></div>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'staff' ? ' &middot; Staff questions' : ''}</div><h1>${esc(stVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.imported ? ' &middot; Moved from public Oak' : ''}</p></div>
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
   ${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? '<div class="card"><p class="muted">This visit used the questions from before the session 22 update. It stays here, but it isn\'t compared with newer visits.</p></div>' : ''}
   ${(s.flags || []).length && STC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged answers</h3>${s.flags.map(f => `<p style="margin-top:8px"><b>${esc(STC.flags[f].title)}.</b> ${esc(STC.flags[f].guide)}</p>`).join('')}</div>` : ''}
@@ -1709,7 +1709,7 @@ function stSafetyText(sf){
 }
 function stNote(s, c){
   const S = STG(), L = [];
-  L.push('Soul Tree visit: ' + stVisitName(s.visit) + (s.set === 'staff' ? ' (staff questions)' : '') + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Oak visit: ' + stVisitName(s.visit) + (s.set === 'staff' ? ' (staff questions)' : '') + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
   L.push('Person: ' + (c ? c.name : '') + ' (' + stTypeName(c ? c.st.type : '') + ')');
   const con = c && c.st.consent; if (con) L.push('Consent: ' + stConsentName(con.how) + (con.by ? ' by ' + con.by : '') + (con.date ? ', ' + nice(con.date) : ''));
   if (s.notToday) { L.push('', 'They said "Not today." The visit ended there.'); return L.join('\n'); }
@@ -1727,7 +1727,7 @@ function stNote(s, c){
   return L.join('\n');
 }
 function stPrintNote(s, c){
-  fgSheet(ph('Confidential visit note') + `<h1>Soul Tree visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(stNote(s, c))}</p>` + pf(), 'Soul Tree visit note', {file:'soul-tree-visit-note', date:s.date, confidential:true});
+  fgSheet(ph('Confidential visit note') + `<h1>Oak visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(stNote(s, c))}</p>` + pf(), 'Oak visit note', {file:'oak-visit-note', date:s.date, confidential:true});
 }
 function stPrintHandout(s){
   const S = STG(), H = S.handout;
@@ -1736,7 +1736,7 @@ function stPrintHandout(s){
     <h2>Six parts of your tree</h2><ul>${S.parts.map(p => `<li><b>${esc(p.part)}:</b> ${esc(p.hand)}</li>`).join('')}</ul>
     <h2>Ways to tend it</h2>${parts || '<p>Pick one part of your tree, and do one small thing for it this week.</p>'}${s.custom ? `<p><b>Also:</b> ${esc(s.custom)}</p>` : ''}
     <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>
-    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}` + `<div class="pr-foot">Soul Tree&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'soul-tree-handout', date:s.date});
+    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}` + `<div class="pr-foot">Oak&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'oak-handout', date:s.date});
 }
 
 // ----- the visit runner -----
@@ -1744,9 +1744,9 @@ function startST(visit, cid){ stStart(visit, cid, false); }
 function stStart(visit, cid, demo){
   const S = STG(), c = demo ? {id:'demo', name:S.demo.name, st:{type:S.demo.type, consent:{how:'verbal', date:today()}}} : CL(cid);
   if (!c) return;
-  if (!demo && !stHasConsent(c)) return go('soultree', {stc:c.id});
-  if (!demo && STM() && !stReady()) { toast('Finish the Soul Tree training to start real visits. Demo visits are always open.'); return go('soultree', {stm:1}); }
-  if (!STC && visit !== 'open') { stLoad(); return toast(STC_FAIL ? "The Soul Tree questions didn't load. Check your connection and try again." : 'Loading the Soul Tree questions. Try again in a moment.'); }
+  if (!demo && !stHasConsent(c)) return go('oak', {stc:c.id});
+  if (!demo && STM() && !stReady()) { toast('Finish the Oak training to start real visits. Demo visits are always open.'); return go('oak', {stm:1}); }
+  if (!STC && visit !== 'open') { stLoad(); return toast(STC_FAIL ? "The Oak questions didn't load. Check your connection and try again." : 'Loading the Oak questions. Try again in a moment.'); }
   const type = c.st.type;
   RUN = {kind:'st', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set:(visit !== 'open' && type === 'staff') ? 'staff' : 'standard',
     stem:type === 'patient' ? 'patient' : (visit !== 'open' && type === 'staff') ? 'staff' : 'standard', started:Date.now(), step:0, yes:'', notSup:false, own:'',
@@ -1826,7 +1826,7 @@ function stDraw(){
 function stNext(){
   const st = stSteps(RUN)[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
   if (st === 'open' && !stIsMe(c0)){
-    if (c0 && c0.st.type === 'staff' && !RUN.notSup) return alert('Check that you do not supervise this person. Soul Tree visits are never done by someone\'s supervisor.');
+    if (c0 && c0.st.type === 'staff' && !RUN.notSup) return alert('Check that you do not supervise this person. Oak visits are never done by someone\'s supervisor.');
     if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
     if (RUN.yes === 'no') return stNotToday();
   }
@@ -1842,10 +1842,10 @@ function stSaveRun(){
     safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
     std:ST_STD, flags:stRunFlags(r), yes:r.yes || '', own:r.own || '', notSup:!!r.notSup};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'soultree', stv:'demo', stDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'oak', stv:'demo', stDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
-  save(); go('soultree', {stv:s.id}); toast('Visit saved.');
+  save(); go('oak', {stv:s.id}); toast('Visit saved.');
 }
 function stPause(){
   if (RUN.demo){ if (!confirm('Close the demo?')) return; }
@@ -1865,15 +1865,15 @@ function stToggle(t){
   stKeep();
 }
 
-// ----- moving sessions from public Soul Tree -----
-function stLocalCodes(){ try { const ix = JSON.parse(localStorage.getItem('soul-tree:client-index') || '[]'); return Array.isArray(ix) ? ix : []; } catch(e){ return []; } }
+// ----- moving sessions from public Oak -----
+function stLocalCodes(){ try { const ix = JSON.parse(localStorage.getItem('oak:client-index') || '[]'); return Array.isArray(ix) ? ix : []; } catch(e){ return []; } }
 function stLocalCount(){ return stLocalCodes().length; }
 async function stImport(clients){
   let people = 0, visits = 0;
   for (const [code, hist] of Object.entries(clients || {})){
     if (!Array.isArray(hist) || !hist.length) continue;
     let c = DATA.clients.find(x => x.st && x.st.importCode === code);
-    if (!c){ c = {id:uid(), u:Date.now(), name:code, service:'Soul Tree', status:'active', followups:[], created:today(), st:{type:'community', consent:{how:'before', date:hist[0].date || today()}, importCode:code}}; DATA.clients.push(c); people++; }
+    if (!c){ c = {id:uid(), u:Date.now(), name:code, service:'Oak', status:'active', followups:[], created:today(), st:{type:'community', consent:{how:'before', date:hist[0].date || today()}, importCode:code}}; DATA.clients.push(c); people++; }
     for (const h of hist){
       const id = 'imp' + await sha12(code + '|' + (h.savedAt || '') + '|' + (h.date || ''));
       if (DATA.sessions.some(x => x.id === id) || (DATA.deleted && DATA.deleted.sessions && DATA.deleted.sessions[id])) continue;
@@ -1892,31 +1892,31 @@ async function stImport(clients){
 }
 async function stImportLocal(){
   const codes = stLocalCodes(), out = {};
-  codes.forEach(code => { try { out[code] = JSON.parse(localStorage.getItem('soul-tree:client:' + code) || '[]'); } catch(e){} });
-  if (!confirm(`Move ${codes.length} ${codes.length === 1 ? 'person' : 'people'} from public Soul Tree on this browser into the Field Guide? They'll be encrypted here.`)) return;
+  codes.forEach(code => { try { out[code] = JSON.parse(localStorage.getItem('oak:client:' + code) || '[]'); } catch(e){} });
+  if (!confirm(`Move ${codes.length} ${codes.length === 1 ? 'person' : 'people'} from public Oak on this browser into the Field Guide? They'll be encrypted here.`)) return;
   await stImport(out);
-  // Public Soul Tree no longer has Practitioner mode, so offer to clear the public copy from here.
-  if (confirm('Remove those sessions from public Soul Tree on this browser now? They are safe in the Field Guide.')){
-    try { codes.forEach(code => localStorage.removeItem('soul-tree:client:' + code)); localStorage.removeItem('soul-tree:client-index'); toast('Removed from public Soul Tree.'); render(); } catch(e){}
+  // Public Oak no longer has Practitioner mode, so offer to clear the public copy from here.
+  if (confirm('Remove those sessions from public Oak on this browser now? They are safe in the Field Guide.')){
+    try { codes.forEach(code => localStorage.removeItem('oak:client:' + code)); localStorage.removeItem('oak:client-index'); toast('Removed from public Oak.'); render(); } catch(e){}
   }
 }
 async function stImportFile(file){
-  try { const d = JSON.parse(await file.text()); if (d.app !== 'soul-tree' || !d.clients) throw 0; await stImport(d.clients); }
-  catch(e){ alert("That isn't a Soul Tree practitioner backup. In public Soul Tree, the About page has Download Backup when old practitioner sessions are saved in that browser."); }
+  try { const d = JSON.parse(await file.text()); if (d.app !== 'oak' || !d.clients) throw 0; await stImport(d.clients); }
+  catch(e){ alert("That isn't an Oak practitioner backup. In public Oak, the About page has Download Backup when old practitioner sessions are saved in that browser."); }
 }
 
-// ----- Owner: turn Soul Tree Guide on or off for Field users (through Update a Library) -----
+// ----- Owner: turn Oak Guide on or off for Field users (through Update a Library) -----
 function stFieldRow(){
   const S = STG();
-  if (!S) return `<p class="muted">Soul Tree Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
+  if (!S) return `<p class="muted">Oak Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Soul Tree Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="st-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Oak Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="st-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
 }
 async function stSetField(on){
-  const cur = await pendingPlain('field'); if (!cur || !cur.soulTreeGuide) return;
-  const next = JSON.parse(JSON.stringify(cur)); next.soulTreeGuide.open = Object.assign({}, next.soulTreeGuide.open, {field:on});
+  const cur = await pendingPlain('field'); if (!cur || !cur.oakGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.oakGuide.open = Object.assign({}, next.oakGuide.open, {field:on});
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'field', title: on ? 'Open Soul Tree Guide to Field users' : 'Close Soul Tree Guide to Field users', note:'', rows:[['Replaces', 'soulTreeGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  V.upd = {lvl:'field', title: on ? 'Open Oak Guide to Field users' : 'Close Oak Guide to Field users', note:'', rows:[['Replaces', 'oakGuide.open.field']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 
@@ -1925,7 +1925,7 @@ async function stSetField(on){
 // "For someone in my care" mode in session 11. Wording lives in the Field library (FLD.groveGuide).
 // The practices, weeks, and seasons come from the public grove/data.js and grove/library.js, so
 // there's one place to edit them. The tree is drawn by /shared/grove-scene.js, same as The Grove.
-// A person's tree is c.gv on their People record, so one person can have Soul Tree visits and a
+// A person's tree is c.gv on their People record, so one person can have Oak visits and a
 // Grove tree. Staff and Owner always see it; Field users once FLD.groveGuide.open.field is on
 // and Orientation is done.
 const GVG = () => (FLD && FLD.groveGuide) || null;
@@ -2055,7 +2055,7 @@ function vGVPlant(c){
   <div class="card"><h3>Their tree</h3>
    <label class="f">Life stage</label><div class="row">${GD.AGES.map(a => `<button type="button" class="chip" aria-pressed="${F.age === a.id}" data-act="gv-age" data-v="${a.id}">${esc(a.name)}</button>`).join('')}</div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc((GD.AGE[F.age] || {}).who || '')}${GD.isKid(F.age) ? '. Practices use kid wording.' : ''}</p>
-   <label class="f">Parts to tend</label>${F.fromST ? `<p class="muted" style="font-size:14px;margin-bottom:6px">Picked from their Soul Tree visit on ${nice(F.fromST)}: the parts that weren't strong. Change any of them.</p>` : ''}
+   <label class="f">Parts to tend</label>${F.fromST ? `<p class="muted" style="font-size:14px;margin-bottom:6px">Picked from their Oak visit on ${nice(F.fromST)}: the parts that weren't strong. Change any of them.</p>` : ''}
    <div class="gv-parts">${GD.PARTS.map(p => `<button type="button" class="gv-part-t" style="--pc:${p.color}" aria-pressed="${F.parts.includes(p.id)}" data-act="gv-part" data-v="${p.id}"><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></button>`).join('')}</div>
    <label class="f">Movement level</label><div class="row">${GD.LEVELS.map(l => `<button type="button" class="chip" aria-pressed="${F.level === l.id}" data-act="gv-level" data-v="${l.id}">${esc(l.name)}</button>`).join('')}</div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc((GD.LEVELS.find(l => l.id === F.level) || {}).desc || '')}</p>
@@ -2081,8 +2081,8 @@ function vGVTree(c){
   const wi = gvWeek(T), k = wi.week, kid = GD.isKid(T.age), wk = GD.WEEKS[k-1], WG = S.weeks[k-1] || {say:'', listen:[]};
   const days = wi.before ? [] : gvWeekDates(wi), n = gvTended(T);
   const nudge = wi.done ? S.nudges.done : (!wi.before && (k === 5 || k === 9) && wi.round === 1) ? S.nudges[String(k)] : '';
-  const stBtn = c.st && stOpen() && stHasConsent(c) ? `<button class="btn btn-line btn-sm" data-act="st-start" data-v="${wi.done ? 'full' : 'quick'}" data-c="${c.id}">${icon('tree')} ${wi.done ? 'Full Soul Tree Visit' : 'Soul Tree Quick Check-in'}</button>`
-    : c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open in Soul Tree Guide</button>` : '';
+  const stBtn = c.st && stOpen() && stHasConsent(c) ? `<button class="btn btn-line btn-sm" data-act="st-start" data-v="${wi.done ? 'full' : 'quick'}" data-c="${c.id}">${icon('tree')} ${wi.done ? 'Full Oak Visit' : 'Oak Quick Check-in'}</button>`
+    : c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open in Oak Guide</button>` : '';
   const part = id => { const P = GD.PART[id], p = gvPractice(T, id, wi), it = p.it;
     return `<div class="gv-prac" style="--pc:${P.color}"><div class="gv-pl">${esc(GD.strandName(p.strand))}${p.pin ? ' <span class="pill gold">Their pick</span>' : ''}</div><b>${esc(p.t)}</b><p>${p.b}</p><p class="muted" style="font-size:15px"><b>Busy day:</b> ${p.s}</p>${gvHow(T, it)}
      <div class="row" style="margin-top:6px"><button class="linkbtn" data-act="gv-lib" data-v="${id}">Choose a different practice</button>${p.pin ? `<button class="linkbtn" data-act="gv-unpin" data-v="${id}">Go back to the season's practice</button>` : ''}</div></div>`; };
@@ -2115,7 +2115,7 @@ function vGVTree(c){
    <div class="grid g2"><div><label class="f">Life stage</label><select data-gvd="age">${GD.AGES.map(a => `<option value="${a.id}" ${a.id === T.age ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select></div>
    <div><label class="f">Movement level</label><select data-gvd="level">${GD.LEVELS.map(l => `<option value="${l.id}" ${l.id === T.level ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></div></div>
    <label class="f">Parts to tend</label><div class="gv-parts">${GD.PARTS.map(p => `<button type="button" class="gv-part-t" style="--pc:${p.color}" aria-pressed="${(T.parts || []).includes(p.id)}" data-act="gv-edit-part" data-v="${p.id}"><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></button>`).join('')}</div>
-   <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="gv-plant" data-v="${c.id}">Plant a New Round</button>${c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Soul Tree Guide</button>` : ''}<button class="btn btn-danger btn-sm" data-act="gv-remove" data-v="${c.id}">Remove Grove Tree</button></div></div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="gv-plant" data-v="${c.id}">Plant a New Round</button>${c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Oak Guide</button>` : ''}<button class="btn btn-danger btn-sm" data-act="gv-remove" data-v="${c.id}">Remove Grove Tree</button></div></div>
   ${stOpen() ? '' : htPersonCard(c)}`;
 }
 function vGVLib(c, partId){
@@ -2151,11 +2151,11 @@ function gvPrintGrew(c){
     <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'What Grew', {file:'grove-what-grew'});
 }
 
-// ----- Soul Tree person page: their Grove tree, or plant one from their visit -----
+// ----- Oak person page: their Grove tree, or plant one from their visit -----
 function gvPersonCard(c){
   if (!gvOpen() || !c || (c.st && c.st.type === 'me')) return '';
   if (gvPlanted(c)) return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">${esc(gvStatus(c.gv))}. ${gvDaysText(c.gv)}.</p></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">${icon('grove')} Open Their Tree</button></div><div class="gv-stage gv-mini" style="margin-top:10px">${gvScene(c, {uid:'gvm' + c.id, h:300, gy:220, visitors:[]})}</div></div>`;
-  return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">Soul Tree notices. The Grove tends. Plant their tree, and the parts that weren't strong in their last visit come picked.</p></div><button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">${icon('grove')} Plant Their Grove Tree</button></div></div>`;
+  return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">Oak notices. The Grove tends. Plant their tree, and the parts that weren't strong in their last visit come picked.</p></div><button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">${icon('grove')} Plant Their Grove Tree</button></div></div>`;
 }
 
 // ----- moving trees from the public Grove -----
@@ -2168,7 +2168,7 @@ async function gvImport(people){
     if (DATA.clients.some(c => c.gv && c.gv.importId === p.id)) continue;
     const parts = []; (p.parts || p.beds || []).forEach(x => { const k = GV_PARTS.includes(x) ? x : BED2PART[x]; if (k && !parts.includes(k)) parts.push(k); });
     const c = {id:uid(), u:Date.now(), name:String(p.name || 'Tree').slice(0, 40), service:'The Grove', status:'active', followups:[], created:today(), st:{type:'community', consent:null},
-      gv:{age: ['adult','heartwood','sapling','sprout'].includes(p.age) ? p.age : 'adult', parts: GV_PARTS.filter(x => parts.includes(x)), level: p.level || 'gentle', start: p.start || null,
+      gv:{age: ['adult','pine','aspen','maple'].includes(p.age) ? p.age : 'adult', parts: GV_PARTS.filter(x => parts.includes(x)), level: p.level || 'gentle', start: p.start || null,
         watered: Object.assign({}, p.watered), lingers: Object.assign({}, p.lingers), pins: Object.assign({}, p.pins), swap: Object.assign({}, p.swap), journal: {}, notes: p.notes || '',
         consent: {how:'before', date: p.start || today()}, kind: p.kind || 'grove', importId: p.id}};
     DATA.clients.push(c); added++;
@@ -2250,7 +2250,7 @@ function gvAct(a, v, t){
     case 'gv-unpin': if (T && T.pins){ delete T.pins[v]; touch(c); save(); render(); } return true;
     case 'gv-print-week': { const c2 = CL(v); if (c2) gvPrintWeek(c2); return true; }
     case 'gv-print-grew': { const c2 = CL(v); if (c2) gvPrintGrew(c2); return true; }
-    case 'gv-remove': { const c2 = CL(v); if (!c2 || !confirm('Remove ' + c2.name + "'s Grove tree, days tended, and notes? Their People record and any Soul Tree visits stay.")) return true;
+    case 'gv-remove': { const c2 = CL(v); if (!c2 || !confirm('Remove ' + c2.name + "'s Grove tree, days tended, and notes? Their People record and any Oak visits stay.")) return true;
       delete c2.gv; touch(c2); save(); go('grove'); toast('Grove tree removed.'); return true; }
     case 'gv-imp-local': gvImportLocal(); return true;
     case 'gv-field': gvSetField(v === 'on'); return true;
@@ -2258,14 +2258,14 @@ function gvAct(a, v, t){
   return false;
 }
 
-// ---------------- SPROUT GUIDE ----------------
-// Wording lives in the Field library (FLD.sproutGuide). Questions come from the public sprout/checkin.js,
-// read in their own scope, so Sprout and Sprout Guide always ask the same thing.
+// ---------------- MAPLE GUIDE ----------------
+// Wording lives in the Field library (FLD.mapleGuide). Questions come from the public maple/checkin.js,
+// read in their own scope, so Maple and Maple Guide always ask the same thing.
 // A child is an ordinary People record with a .sp profile. Visits are sessions with kind 'sp'. Report records
 // are sessions with kind 'spr', kept apart from visits so they are never printed or copied.
-// Staff and Owner always see the tab. Field users see it once sproutGuide.open.field is on and Orientation is done.
-// Everyone takes the Sprout training (DATA.spmod) before a real visit. Demo visits are always open.
-const SPG = () => (FLD && FLD.sproutGuide) || null;
+// Staff and Owner always see the tab. Field users see it once mapleGuide.open.field is on and Orientation is done.
+// Everyone takes the Maple training (DATA.spmod) before a real visit. Demo visits are always open.
+const SPG = () => (FLD && FLD.mapleGuide) || null;
 const spOpen = () => !!SPG() && (TIER !== 'field' || !!(SPG().open && SPG().open.field && (!OR() || orState().complete)));
 const SP_LV = ['care','steady','strong'];
 const spLvName = k => (((SPG() || {}).levels || {}).names || []).concat([]).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
@@ -2281,20 +2281,20 @@ const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x 
 const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
 const SP_GRADES = ['K','1','2','3','4','5'];
 
-// ----- the question bank, read from the public sprout/checkin.js -----
+// ----- the question bank, read from the public maple/checkin.js -----
 let SC = null, SC_WAIT = null, SC_FAIL = false;
 function spLoad(){
   if (SC || SC_WAIT) return;
   SC_FAIL = false;
-  SC_WAIT = fetch('../sprout/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
-    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SPROUT_CHECKIN || !w.SPROUT_CHECKIN.questions) throw 0; SC = w.SPROUT_CHECKIN; SC_WAIT = null; if (DATA && V.tab === 'sprout') render(); })
-    .catch(() => { SC_WAIT = null; SC_FAIL = true; if (DATA && V.tab === 'sprout') render(); });
+  SC_WAIT = fetch('../maple/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.MAPLE_CHECKIN || !w.MAPLE_CHECKIN.questions) throw 0; SC = w.MAPLE_CHECKIN; SC_WAIT = null; if (DATA && V.tab === 'maple') render(); })
+    .catch(() => { SC_WAIT = null; SC_FAIL = true; if (DATA && V.tab === 'maple') render(); });
 }
 function spNeedData(){
   if (SC) return '';
   spLoad();
-  return SC_FAIL ? `<div class="card"><h3>The Sprout questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-retry">Try Again</button></div>`
-    : `<div class="card"><p class="muted">Loading the Sprout questions...</p></div>`;
+  return SC_FAIL ? `<div class="card"><h3>The Maple questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Maple questions...</p></div>`;
 }
 const spQs = (grade, key) => ((SC.questions[grade] || {})[key]) || [];
 const spAns = k => SC.answers.find(a => a[0] === k) || null;
@@ -2363,8 +2363,8 @@ function vSPM(){
   if (V.sps) return vSPMSign();
   const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
   const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
-  return `<button class="linkbtn" data-act="sp-home">Back to Sprout Guide</button>
-  <div class="hello sp-hello" style="margin-top:14px"><div class="eyebrow" style="color:#9BD27A">Sprout Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  return `<button class="linkbtn" data-act="sp-home">Back to Maple Guide</button>
+  <div class="hello sp-hello" style="margin-top:14px"><div class="eyebrow" style="color:#9BD27A">Maple Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
   ${M.lessons.map((l, i) => step('sp-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
@@ -2426,8 +2426,8 @@ function vSPMSign(){
 }
 function spmPrint(){
   const A = SPM().agreement, D = spmData().signed;
-  fgSheet(ph('Sprout Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'sprout-guide-agreement'});
+  fgSheet(ph('Maple Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'maple-guide-agreement'});
 }
 
 // ----- reporting contact and county -----
@@ -2516,7 +2516,7 @@ function spRepSave(){
     state:r.state, county:r.state === 'MN' ? (r.county === 'other' ? own.name || 'Other' : (ct ? ct.name : '')) : 'Outside Minnesota', agency:r.agency || (ct ? ct.agency : ''), ref:r.ref, written:r.written, due: due ? due.toISOString() : ''};
   DATA.sessions.push(s);
   const c = r.cid ? CL(r.cid) : null;
-  if (c && due){ (c.followups = c.followups || []).push({date:spDKey(due), text:'Written report due (' + (r.tool === 'sa' ? 'Sapling' : 'Sprout') + ' report record)', done:false}); touch(c); }
+  if (c && due){ (c.followups = c.followups || []).push({date:spDKey(due), text:'Written report due (' + (r.tool === 'sa' ? 'Aspen' : 'Maple') + ' report record)', done:false}); touch(c); }
   if (RUN && (RUN.kind === 'sp' || RUN.kind === 'sa') && !RUN.demo){ RUN.reports = RUN.reports || []; RUN.reports.push(s.id); if (RUN.kind === 'sa') saKeep(); else spKeep(); }
   save(); spRepClose(); toast('Report record saved. It stays encrypted here.');
   if (!RUN) render();
@@ -2524,7 +2524,7 @@ function spRepSave(){
 function vSPReport(s){
   const c = CL(s.clientId), R = SPG().report, name = x => ((R.raised.find(o => o[0] === x) || [])[1] || x), how = x => ((R.how.find(o => o[0] === x) || [])[1] || x);
   const sa = s.tool === 'sa';
-  return `<button class="linkbtn" data-act="${sa ? 'sa-open' : 'sp-open'}" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : sa ? 'Sapling Guide' : 'Sprout Guide')}</button>
+  return `<button class="linkbtn" data-act="${sa ? 'sa-open' : 'sp-open'}" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : sa ? 'Aspen Guide' : 'Maple Guide')}</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Report record &middot; ${nice(s.date)}</div><h1>${esc(c ? c.name : '')}</h1><p class="muted">${esc(R.recordNote)}</p></div>
   <div class="card st-private"><p><b>Who raised it:</b> ${esc(name(s.raised))}</p>
    ${s.words ? `<p style="margin-top:8px"><b>Their exact words:</b></p><p style="white-space:pre-wrap">${esc(s.words)}</p>` : ''}
@@ -2541,7 +2541,7 @@ function vSPReport(s){
 // ----- views -----
 function vSP(){
   if (SPG()) spLoad();
-  if (!SPG()) return `<div class="card"><p>Sprout Guide isn't on this device yet.</p></div>`;
+  if (!SPG()) return `<div class="card"><p>Maple Guide isn't on this device yet.</p></div>`;
   if (V.spm) return vSPM();
   if (V.sprec){ const s = DATA.sessions.find(x => x.id === V.sprec); if (s) return vSPReport(s); }
   if (V.spc){ const c = CL(V.spc); if (c) return vSPConsent(c); }
@@ -2549,8 +2549,8 @@ function vSP(){
   if (V.spp){ const c = CL(V.spp); if (c) return vSPPerson(c); }
   const S = SPG(), list = spPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = spmState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
   return `<div class="hello sp-hello"><div class="eyebrow" style="color:#9BD27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Sprout training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sp-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Sprout training' : 'Start with the Sprout training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
+  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Maple training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sp-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Maple training' : 'Start with the Maple training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
   <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
   <div class="card"><h3>A child</h3>
    <div class="grid g2"><div><label class="f" for="sp-nn">First name or nickname</label><input type="text" id="sp-nn" autocomplete="off" placeholder="Mia"></div>
@@ -2584,17 +2584,17 @@ function vSPConsent(c){
    <div><label class="f" for="sp-cdt">Date</label><input type="date" id="sp-cdt" value="${esc(cur.status === 'ok' && cur.date ? cur.date : today())}"></div></div>
    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sp-consent-save" data-v="${c.id}">${icon('check')} Save Permission</button>${spConsentOk(c) ? `<button class="btn btn-line" data-act="sp-consent-pdf" data-v="${c.id}">${icon('print')} Save PDF or Print</button>` : ''}</div>
    ${spConsentOk(c) && c.sp.consent.how === 'form' ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(C.pdfNote)}</p>` : ''}</div>
-  <div class="card"><div class="row"><button class="btn btn-line btn-sm" data-act="sp-consent-no" data-v="${c.id}">They Said No for Now</button><button class="btn btn-line btn-sm" data-act="sp-consent-stop" data-v="${c.id}">They Stopped Sprout Visits</button></div></div>`;
+  <div class="card"><div class="row"><button class="btn btn-line btn-sm" data-act="sp-consent-no" data-v="${c.id}">They Said No for Now</button><button class="btn btn-line btn-sm" data-act="sp-consent-stop" data-v="${c.id}">They Stopped Maple Visits</button></div></div>`;
 }
 function spConsentPrint(c){
   const C = SPG().consent, con = c.sp.consent;
   const mark = on => on ? '&#9745;' : '&#9744;';
-  fgSheet(ph('Permission for Sprout visits') + `<h1>${esc(C.title)}</h1><p>${esc(C.formIntro)}</p>
+  fgSheet(ph('Permission for Maple visits') + `<h1>${esc(C.title)}</h1><p>${esc(C.formIntro)}</p>
     <h2>Child</h2><p>${esc(c.name)}, ${esc(spGradeName(c.sp.grade))}</p>
     ${con.how === 'form' ? `<h2>Agreed</h2>${C.boxes.map(b => `<p>${mark((con.boxes || []).includes(b[0]))} ${esc(b[1])}</p>`).join('')}`
       : `<h2>How permission was given</h2><p>${esc((C.how.find(x => x[0] === con.how) || [])[1] || '')}${con.where ? ': ' + esc(con.where) : ''}</p>${con.note ? `<p>${esc(con.note)}</p>` : ''}`}
     <div class="pr-sign"><div>${esc(con.name || '')}, ${esc(con.rel || '')}${con.how === 'form' ? ' (typed name)' : ''}</div><div>${nice(con.date)}</div></div>
-    <p style="margin-top:6mm"><i>Guide: ${esc(DATA.settings.name || '')}. Recorded in the Grounded Field Guide, form version ${C.version}.</i></p>` + pf(), 'Sprout permission', {file:'sprout-permission', date:con.date});
+    <p style="margin-top:6mm"><i>Guide: ${esc(DATA.settings.name || '')}. Recorded in the Grounded Field Guide, form version ${C.version}.</i></p>` + pf(), 'Maple permission', {file:'maple-permission', date:con.date});
 }
 function spLevelTable(c){
   const vs = spVisits(c.id).filter(s => s.levels).slice(0, 4);
@@ -2606,10 +2606,10 @@ function spLevelTable(c){
 const SC_STD = () => SC ? SC.version : 1;
 function vSPPerson(c){
   const S = SPG(), vs = spVisits(c.id), ok = spConsentOk(c), ready = spReady(), reps = spReports(c.id);
-  return `<button class="linkbtn" data-tab="sprout">Back to Sprout Guide</button>
+  return `<button class="linkbtn" data-tab="maple">Back to Maple Guide</button>
   <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(spGradeName(c.sp.grade))}${c.sp.rel ? ' &middot; grown-up: ' + esc(c.sp.rel) : ''}</div><h1>${esc(c.name)}</h1></div><div class="row">${spConsentLine(c)}</div></div>
   ${!ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Permission first</h3><p class="muted">${c.sp.consent && c.sp.consent.status === 'declined' ? esc(S.consent.declined) : c.sp.consent && c.sp.consent.status === 'withdrawn' ? esc(S.consent.withdrawn) : 'A parent or legal guardian gives permission before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sp-consent" data-v="${c.id}">Permission Form</button></div>` : ''}
-  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Sprout training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sp-mhome">Open Training</button></div>` : ''}
+  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Maple training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sp-mhome">Open Training</button></div>` : ''}
   <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sp-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Levels</h3>${spLevelTable(c)}</div>
@@ -2638,7 +2638,7 @@ function vSPVisit(){
   const s = spFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
   if (!SC && s.visit !== 'nottoday') { const w = spNeedData(); if (w) return w; }
   const demo = V.spv === 'demo', c = demo ? s.person : CL(s.clientId), S = SPG();
-  const back = demo ? `<button class="linkbtn" data-tab="sprout">Back to Sprout Guide</button>` : `<button class="linkbtn" data-act="sp-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'child')}</button>`;
+  const back = demo ? `<button class="linkbtn" data-tab="maple">Back to Maple Guide</button>` : `<button class="linkbtn" data-act="sp-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'child')}</button>`;
   if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}`;
   const idxs = s.visit === 'full' ? [0,1,2,3] : [0], room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : spReports(c ? c.id : null).filter(r => r.visitId === s.id);
@@ -2661,7 +2661,7 @@ function vSPVisit(){
 }
 function spNote(s, c){
   const S = SPG(), L = [];
-  L.push('Sprout visit: ' + spVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Maple visit: ' + spVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
   L.push('Child: ' + (c ? c.name : '') + ' (' + spGradeName(s.grade) + ')');
   const con = c && c.sp && c.sp.consent; if (con && con.status === 'ok') L.push('Permission: ' + (((S.consent.how.find(x => x[0] === con.how) || [])[1]) || '') + (con.rel ? ', ' + con.rel : '') + (con.date ? ', ' + nice(con.date) : ''));
   L.push("Child's yes: yes. Room: " + (((S.room.where.find(o => o[0] === (s.room || {}).where) || [])[1]) || 'not recorded') + '.');
@@ -2686,17 +2686,17 @@ function spPrintHome(s, c){
     ${tries.length ? `<h2>${esc(H.try)}</h2>${tries.map(([p, it]) => `<p><b>${esc(it[0])}</b> (${esc(p.part)}): ${esc(band === 'k2' ? it[1] : it[2])}</p>`).join('')}` : ''}
     <h2>${esc(H.help)}</h2><ul>${H.helpLines.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <p><b>If someone is in danger, call 911. For a mental health crisis, call or text 988.</b></p>
-    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>` + `<div class="pr-foot">Sprout&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'sprout-take-home', date:s.date});
+    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>` + `<div class="pr-foot">Maple&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'maple-take-home', date:s.date});
 }
 
 // ----- the visit runner -----
 function spStart(visit, cid, demo){
   const S = SPG();
-  if (!SC){ spLoad(); return toast('Loading the Sprout questions. Try again in a moment.'); }
+  if (!SC){ spLoad(); return toast('Loading the Maple questions. Try again in a moment.'); }
   const c = demo ? {id:'demo', name:S.demo.name, sp:{grade:S.demo.grade, rel:'Mom', consent:{status:'ok', how:'verbal', date:today()}}} : CL(cid);
   if (!c) return;
-  if (!demo && !spConsentOk(c)) return go('sprout', {spc:c.id});
-  if (!demo && !spReady()) return go('sprout', {spm:1});
+  if (!demo && !spConsentOk(c)) return go('maple', {spc:c.id});
+  if (!demo && !spReady()) return go('maple', {spm:1});
   RUN = {kind:'sp', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sp.grade, std:SC.version, started:Date.now(), step:0,
     screen:'guide', room:{where:'', who:[]}, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:spK2(c.sp.grade),
     safety:{safe:'', self:'', listen:[], notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[], topic:{deck:'', used:[]}, share:'', tryh:[], told:'', talkHome:true, priv:'', pn:{}, stopped:false};
@@ -2748,10 +2748,10 @@ function spDraw(){
       <input type="text" data-spgw="${p.key}" value="${esc(RUN.gv.words[p.key] || '')}" placeholder="A few words (optional)" style="margin-top:8px" aria-label="${esc(p.part)}: the grown-up's words"></div></div>`).join('')}
      <button class="btn btn-line btn-sm" style="margin-top:14px" data-act="sp-rep-gv">${icon('shield')} ${esc(G.concern)}</button>`;
   } else if (st === 'topic'){
-    const decks = (CDG() ? CDG().decks : []).filter(d => d.sprout && Object.keys(d.sprout).length), d = RUN.topic.deck ? cdDeck(RUN.topic.deck) : null;
+    const decks = (CDG() ? CDG().decks : []).filter(d => d.maple && Object.keys(d.maple).length), d = RUN.topic.deck ? cdDeck(RUN.topic.deck) : null;
     body = `<div class="run-step-n">Topic visit</div><h2 class="run-step-t">Cards for a hard topic</h2><p class="muted">Pick the deck. Use one or two cards for each part, in any order. Tap the ones you used.</p>
      <label class="f" for="sp-deck">Topic</label><select id="sp-deck" data-spdeck="1" style="max-width:420px"><option value="">Choose a topic</option>${decks.map(x => `<option value="${x.id}" ${x.id === RUN.topic.deck ? 'selected' : ''}>${esc(x.title)}</option>`).join('')}</select>
-     ${d ? `<p class="muted" style="margin-top:8px">${esc(d.blurb || '')}</p>${S.parts.map(p => { const gk = ST2GV[p.key], list = (d.sprout || {})[gk] || []; return list.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${list.map((cd, i) => stChip('sp-card', `data-v="${gk}:${i}"`, RUN.topic.used.includes(gk + ':' + i), cdTxt(cd))).join('')}</div></div>` : ''; }).join('')}
+     ${d ? `<p class="muted" style="margin-top:8px">${esc(d.blurb || '')}</p>${S.parts.map(p => { const gk = ST2GV[p.key], list = (d.maple || {})[gk] || []; return list.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${list.map((cd, i) => stChip('sp-card', `data-v="${gk}:${i}"`, RUN.topic.used.includes(gk + ':' + i), cdTxt(cd))).join('')}</div></div>` : ''; }).join('')}
       <details class="st-lf"><summary>${esc(CDG().heavy || 'If something heavy comes up')}</summary><p class="muted" style="margin-top:6px">${esc(CDG().heavyNote || '')}</p></details>` : ''}
      <label class="f" for="sp-tpn">Your notes (private)</label><textarea id="sp-tpn" data-spf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
   } else if (st.startsWith('p:')){
@@ -2846,18 +2846,18 @@ function spSaveRun(){
     room:r.room, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety, topic:r.visit === 'topic' ? r.topic : null,
     flags:spFlags(r), told:r.told, talkHome:r.talkHome, share:r.share, tryh:r.tryh, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || []};
   spKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'sprout', spv:'demo', spDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'maple', spv:'demo', spDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); }
-  save(); go('sprout', {spv:s.id}); toast('Visit saved.');
+  save(); go('maple', {spv:s.id}); toast('Visit saved.');
 }
 function spNotToday(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ go('sprout'); toast('Demo ended. "Not today" is always honored.'); return; }
+  if (r.demo){ go('maple'); toast('Demo ended. "Not today" is always honored.'); return; }
   DATA.sessions.push({id:r.id, u:Date.now(), kind:'sp', clientId:r.clientId, date:today(), minutes:0, std:r.std, grade:r.grade, visit:'nottoday', room:r.room, yes:'no'});
   DATA.draft = null; if (c){ touch(c); c.last = today(); }
-  save(); go('sprout', {spp:r.clientId}); toast('"Not today" recorded. Thank them.');
+  save(); go('maple', {spp:r.clientId}); toast('"Not today" recorded. Thank them.');
 }
 function spPause(){
   if (RUN.demo){ if (!confirm('Close the demo?')) return; }
@@ -2904,7 +2904,7 @@ function spKidOpen(which){
 function spKidClose(){ const el = $('#sp-kid'); if (el) el.remove(); KID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
 function spKidDraw(){
   const S = SPG(); let el = $('#sp-kid');
-  if (!el){ el = document.createElement('div'); el.id = 'sp-kid'; el.className = 'sp-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Sprout questions'); document.body.appendChild(el); }
+  if (!el){ el = document.createElement('div'); el.id = 'sp-kid'; el.className = 'sp-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Maple questions'); document.body.appendChild(el); }
   if (KID.done){
     el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(S.screen.kidDone)}</div><button class="sp-kid-back" data-act="sp-kid-back">${esc(S.screen.back)}</button></div>`;
     if (RUN.read) spSay(S.screen.kidDone); return;
@@ -2927,34 +2927,34 @@ function spKidAnswer(v){
 function spAct(a, v, t){
   switch(a){
     case 'sp-retry': SC_FAIL = false; spLoad(); render(); return true;
-    case 'sp-home': go('sprout'); return true;
-    case 'sp-mhome': go('sprout', {spm:1}); return true;
-    case 'sp-ml': go('sprout', {spm:1, spml:+v}); return true;
-    case 'sp-mread': { const L = SPM().lessons, i = +v; spmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !spmData().lessons[x.id]); if (nx >= 0) go('sprout', {spm:1, spml:nx}); else { go('sprout', {spm:1}); toast('Lesson marked as read.'); } return true; }
-    case 'sp-mq': go('sprout', {spm:1, spq:spmNewQuiz()}); return true;
+    case 'sp-home': go('maple'); return true;
+    case 'sp-mhome': go('maple', {spm:1}); return true;
+    case 'sp-ml': go('maple', {spm:1, spml:+v}); return true;
+    case 'sp-mread': { const L = SPM().lessons, i = +v; spmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !spmData().lessons[x.id]); if (nx >= 0) go('maple', {spm:1, spml:nx}); else { go('maple', {spm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sp-mq': go('maple', {spm:1, spq:spmNewQuiz()}); return true;
     case 'sp-mpick': V.spq.ans[V.spq.order[V.spq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sp-mnext],[data-act=sp-mfinish]'); if (nb) nb.disabled = false; } return true;
     case 'sp-mnext': if (V.spq.ans[V.spq.order[V.spq.i]] === undefined) return true; V.spq.i++; render(); return true;
     case 'sp-mprev': if (V.spq.i > 0){ V.spq.i--; render(); } return true;
     case 'sp-mfinish': spmFinish(); return true;
-    case 'sp-msign': go('sprout', {spm:1, sps:1}); return true;
+    case 'sp-msign': go('maple', {spm:1, sps:1}); return true;
     case 'sp-msigned': { const nm = $('#spm-name').value.trim(); if (!nm){ $('#spm-name').focus(); return true; } if (!$('#spm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
-      spmData().signed = {v:SPM().version, date:today(), name:nm}; save(); go('sprout', {spm:1}); toast(spReady() ? 'Signed. Sprout visits are open.' : 'Signed.'); return true; }
+      spmData().signed = {v:SPM().version, date:today(), name:nm}; save(); go('maple', {spm:1}); toast(spReady() ? 'Signed. Maple visits are open.' : 'Signed.'); return true; }
     case 'sp-mprint': spmPrint(); return true;
     case 'sp-new': { const n = $('#sp-nn').value.trim(); if (!n){ $('#sp-nn').focus(); return true; }
-      const c = {id:uid(), u:Date.now(), name:n, service:'Sprout', status:'active', followups:[], created:today(), sp:{grade:$('#sp-ng').value, rel:$('#sp-nr').value.trim(), consent:null}};
-      DATA.clients.push(c); save(); go('sprout', {spc:c.id}); return true; }
-    case 'sp-open': { const c = CL(v); if (!c){ go('sprout'); return true; } if (!c.sp){ c.sp = {grade:'K', rel:'', consent:null}; touch(c); save(); } go('sprout', {spp:v}); return true; }
-    case 'sp-consent': V.spch = null; go('sprout', {spc:v}); return true;
+      const c = {id:uid(), u:Date.now(), name:n, service:'Maple', status:'active', followups:[], created:today(), sp:{grade:$('#sp-ng').value, rel:$('#sp-nr').value.trim(), consent:null}};
+      DATA.clients.push(c); save(); go('maple', {spc:c.id}); return true; }
+    case 'sp-open': { const c = CL(v); if (!c){ go('maple'); return true; } if (!c.sp){ c.sp = {grade:'K', rel:'', consent:null}; touch(c); save(); } go('maple', {spp:v}); return true; }
+    case 'sp-consent': V.spch = null; go('maple', {spc:v}); return true;
     case 'sp-ch': V.spch = v; { const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
     case 'sp-consent-save': { const c = CL(v), C = SPG().consent, how = V.spch || (c.sp.consent && c.sp.consent.status === 'ok' ? c.sp.consent.how : 'form'), name = $('#sp-cnm').value.trim();
       const boxes = Array.from(document.querySelectorAll('[data-spbox]')).filter(x => x.checked).map(x => x.dataset.spbox);
       if (how === 'form' && boxes.length < C.boxes.length){ alert('Every box needs to be checked before the form can be saved.'); return true; }
       if (!name){ $('#sp-cnm').focus(); alert(how === 'form' ? 'The grown-up types their name to sign.' : 'Add who gave permission.'); return true; }
       c.sp.consent = {status:'ok', how, name, rel:$('#sp-crl').value, date:$('#sp-cdt').value || today(), v:C.version, boxes:how === 'form' ? boxes : [], where:how === 'file' ? ($('#sp-cw') || {}).value || '' : '', note:how !== 'form' ? ($('#sp-cn') || {}).value || '' : ''};
-      touch(c); save(); V.spch = null; go('sprout', {spc:c.id}); toast('Permission saved.'); return true; }
+      touch(c); save(); V.spch = null; go('maple', {spc:c.id}); toast('Permission saved.'); return true; }
     case 'sp-consent-pdf': { const c = CL(v); if (c && spConsentOk(c)) spConsentPrint(c); return true; }
-    case 'sp-consent-no': case 'sp-consent-stop': { const c = CL(v); if (!c || !confirm(a === 'sp-consent-no' ? 'Record that they said no for now? Visits stay off.' : 'Record that they stopped Sprout visits? Visits stay off unless they give permission again.')) return true;
-      c.sp.consent = {status:a === 'sp-consent-no' ? 'declined' : 'withdrawn', date:today()}; touch(c); save(); go('sprout', {spp:c.id}); return true; }
+    case 'sp-consent-no': case 'sp-consent-stop': { const c = CL(v); if (!c || !confirm(a === 'sp-consent-no' ? 'Record that they said no for now? Visits stay off.' : 'Record that they stopped Maple visits? Visits stay off unless they give permission again.')) return true;
+      c.sp.consent = {status:a === 'sp-consent-no' ? 'declined' : 'withdrawn', date:today()}; touch(c); save(); go('maple', {spp:c.id}); return true; }
     case 'sp-start': spStart(v, t.dataset.c, false); return true;
     case 'sp-demo': spStart('quick', null, true); return true;
     case 'sp-next': spNext(); return true;
@@ -2985,16 +2985,16 @@ function spAct(a, v, t){
       if (o.url && !/^https?:\/\//.test(o.url)) o.url = 'https://' + o.url; DATA.settings.spOwnCounty = o; DATA.settings.spCounty = 'other'; save(); if (REP) spRepDraw(); toast('Saved as your county.'); return true; }
     case 'sp-k-save': DATA.settings.spContact = {who:$('#sp-k-who').value.trim(), phone:$('#sp-k-ph').value.trim(), step:$('#sp-k-step').value.trim()}; save(); render(); toast('Saved for you.'); return true;
     case 'sp-k-reset': delete DATA.settings.spContact; save(); render(); return true;
-    case 'sp-visit': go('sprout', {spv:v}); return true;
-    case 'sp-rec': go('sprout', {sprec:v}); return true;
+    case 'sp-visit': go('maple', {spv:v}); return true;
+    case 'sp-rec': go('maple', {sprec:v}); return true;
     case 'sp-rec-upd': { const s = DATA.sessions.find(x => x.id === v); if (!s) return true; s.ref = $('#spr-ref').value.trim(); s.written = $('#spr-wr').value; touch(s);
       const c = CL(s.clientId); if (c && s.written) (c.followups || []).forEach(f => { if (!f.done && /Written report due/.test(f.text || '')) { f.done = true; touch(c); } });
       save(); render(); toast('Saved.'); return true; }
-    case 'sp-rec-del': if (confirm('Delete this report record? It cannot be undone.')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.tool === 'sa') go('sapling', s.clientId ? {sap:s.clientId} : {}); else go('sprout', s && s.clientId ? {spp:s.clientId} : {}); } return true;
+    case 'sp-rec-del': if (confirm('Delete this report record? It cannot be undone.')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.tool === 'sa') go('aspen', s.clientId ? {sap:s.clientId} : {}); else go('maple', s && s.clientId ? {spp:s.clientId} : {}); } return true;
     case 'sp-print-home': { const s = spFindVisit(); if (s) spPrintHome(s, V.spv === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'sp-copy-note': { const s = spFindVisit(); if (s) copy(spNote(s, V.spv === 'demo' ? s.person : CL(s.clientId))); return true; }
-    case 'sp-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sprout', s ? {spp:s.clientId} : {}); } return true;
-    case 'sp-del': if (confirm('Delete this child and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('sprout'); } return true;
+    case 'sp-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('maple', s ? {spp:s.clientId} : {}); } return true;
+    case 'sp-del': if (confirm('Delete this child and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('maple'); } return true;
     case 'sp-add-fu': { const c = CL(v), d = $('#sp-fd').value, tx = $('#sp-ft').value.trim(); if (!d){ $('#sp-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
     case 'sp-field': spSetField(v === 'on'); return true;
     case 'sp-own-contact': spSetContact(); return true;
@@ -3024,10 +3024,10 @@ function spInput(t, ev){
 // ----- Owner: open to Field users, the reporting contact everyone starts with, and the yearly recheck -----
 function spOwnerCard(){
   const S = SPG();
-  if (!S) return `<div class="card"><h3>Sprout Guide</h3><p class="muted">Sprout Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
+  if (!S) return `<div class="card"><h3>Maple Guide</h3><p class="muted">Maple Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
   const on = !!(S.open && S.open.field), R = S.report, k = R.contact || {}, due = addYear(R.checked), soon = addDays(today(), 30) >= due;
-  return `<div class="card" ${soon ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Sprout Guide</h3>
-   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Sprout training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sp-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
+  return `<div class="card" ${soon ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Maple Guide</h3>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Maple training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sp-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
    <h4 style="margin-top:14px">Reporting info</h4><p class="muted" style="margin-top:4px">Last checked ${nice(R.checked)}. ${soon ? `<b style="color:var(--danger)">Recheck by ${nice(due)}:</b> county numbers, after hours lines, online forms, and the law.` : `Recheck by ${nice(due)}.`}</p>
    <div class="row" style="margin-top:8px"><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="sp-own-checked">Mark Rechecked Today</button></div>
    <h4 style="margin-top:14px">Your reporting contact, for everyone</h4><p class="muted" style="font-size:14px">Each person can change it for themselves.</p>
@@ -3036,16 +3036,16 @@ function spOwnerCard(){
    <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-own-contact">Update for Everyone</button></div>`;
 }
 async function spLibUpdate(title, path, fn){
-  const cur = await pendingPlain('field'); if (!cur || !cur.sproutGuide) return;
-  const next = JSON.parse(JSON.stringify(cur)); fn(next.sproutGuide);
+  const cur = await pendingPlain('field'); if (!cur || !cur.mapleGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); fn(next.mapleGuide);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
   V.upd = {lvl:'field', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
-function spSetField(on){ spLibUpdate(on ? 'Open Sprout Guide to Field users' : 'Close Sprout Guide to Field users', 'sproutGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
-function spSetContact(){ const k = {who:$('#spo-who').value.trim(), phone:$('#spo-ph').value.trim(), step:$('#spo-step').value.trim()}; spLibUpdate('Sprout Guide reporting contact', 'sproutGuide.report.contact', g => { g.report.contact = k; }); }
-function spSetChecked(){ if (!confirm('Mark the reporting info as rechecked today? Only do this after checking the county numbers, links, and law.')) return; spLibUpdate('Sprout Guide reporting info rechecked', 'sproutGuide.report.checked', g => { g.report.checked = today(); }); }
-function spPersonCard(c){ return c.sp && spOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sprout Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''; }
+function spSetField(on){ spLibUpdate(on ? 'Open Maple Guide to Field users' : 'Close Maple Guide to Field users', 'mapleGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
+function spSetContact(){ const k = {who:$('#spo-who').value.trim(), phone:$('#spo-ph').value.trim(), step:$('#spo-step').value.trim()}; spLibUpdate('Maple Guide reporting contact', 'mapleGuide.report.contact', g => { g.report.contact = k; }); }
+function spSetChecked(){ if (!confirm('Mark the reporting info as rechecked today? Only do this after checking the county numbers, links, and law.')) return; spLibUpdate('Maple Guide reporting info rechecked', 'mapleGuide.report.checked', g => { g.report.checked = today(); }); }
+function spPersonCard(c){ return c.sp && spOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Maple Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''; }
 
 // ---------------- PDF FILES FOR THE SHARE SHEET ----------------
 // App-ready: every sheet is a real PDF file, made on the device with the shared ../shared/gg-pdf.js (ggPdf, ggSheetBlocks,
@@ -3060,17 +3060,17 @@ async function ggShare(blob, name, title){
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('Saved as ' + name + '.');
 }
-// ---------------- SAPLING GUIDE ----------------
-// Guided Sapling visits with students in grades 6 to 8. Wording lives in the Field library (FLD.saplingGuide).
-// Questions come from the public sapling/checkin.js, read in their own scope, so Sapling and Sapling Guide always ask
+// ---------------- ASPEN GUIDE ----------------
+// Guided Aspen visits with students in grades 6 to 8. Wording lives in the Field library (FLD.aspenGuide).
+// Questions come from the public aspen/checkin.js, read in their own scope, so Aspen and Aspen Guide always ask
 // the same thing. A student is an ordinary People record with a .sa profile. Visits are sessions with kind 'sa'.
-// Reporting uses Sprout Guide's reporting card (one reporting setup for everyone); Sapling report records are kept as
+// Reporting uses Maple Guide's reporting card (one reporting setup for everyone); Aspen report records are kept as
 // kind 'spr' with tool 'sa', apart from visits, never printed or copied.
-// Staff and Owner always see the tab. Field users see it once saplingGuide.open.field is on and Orientation is done.
-// Everyone takes the Sapling training (DATA.samod) before a real visit. Demo visits are always open.
+// Staff and Owner always see the tab. Field users see it once aspenGuide.open.field is on and Orientation is done.
+// Everyone takes the Aspen training (DATA.samod) before a real visit. Demo visits are always open.
 // Safest standard: another adult can always see in. The promise ("what stays between us") is read before the
 // student's yes. The optional question (grades 7 and 8, full visits) is never scored, printed, or copied.
-const SAG = () => (FLD && FLD.saplingGuide) || null;
+const SAG = () => (FLD && FLD.aspenGuide) || null;
 const saOpen = () => !!SAG() && !!SPG() && (TIER !== 'field' || !!(SAG().open && SAG().open.field && (!OR() || orState().complete)));
 const saLvName = k => (((SAG() || {}).levels || {}).names || []).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
 const saPart = k => SAG().parts.find(p => p.key === k);
@@ -3081,24 +3081,24 @@ const saVisitName = k => k === 'nottoday' ? 'Not today' : ((SAG().visits.find(x 
 const saGradeName = g => g ? 'Grade ' + g : '';
 const SA_GRADES = ['6','7','8'];
 
-// ----- the question bank, read from the public sapling/checkin.js -----
+// ----- the question bank, read from the public aspen/checkin.js -----
 let SAC = null, SAC_WAIT = null, SAC_FAIL = false;
 function saLoad(){
   if (SAC || SAC_WAIT) return;
   SAC_FAIL = false;
-  SAC_WAIT = fetch('../sapling/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
-    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SAPLING_CHECKIN || !w.SAPLING_CHECKIN.questions) throw 0; SAC = w.SAPLING_CHECKIN; SAC_WAIT = null; if (DATA && V.tab === 'sapling') render(); })
-    .catch(() => { SAC_WAIT = null; SAC_FAIL = true; if (DATA && V.tab === 'sapling') render(); });
+  SAC_WAIT = fetch('../aspen/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.ASPEN_CHECKIN || !w.ASPEN_CHECKIN.questions) throw 0; SAC = w.ASPEN_CHECKIN; SAC_WAIT = null; if (DATA && V.tab === 'aspen') render(); })
+    .catch(() => { SAC_WAIT = null; SAC_FAIL = true; if (DATA && V.tab === 'aspen') render(); });
 }
 function saNeedData(){
   if (SAC) return '';
   saLoad();
-  return SAC_FAIL ? `<div class="card"><h3>The Sapling questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-retry">Try Again</button></div>`
-    : `<div class="card"><p class="muted">Loading the Sapling questions...</p></div>`;
+  return SAC_FAIL ? `<div class="card"><h3>The Aspen questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Aspen questions...</p></div>`;
 }
 const saQs = (grade, key) => ((SAC.questions[grade] || {})[key]) || [];
 const saAns = k => SAC.answers.find(a => a[0] === k) || null;
-// Session 23: Sapling asks six questions per part (bank 2). A visit notes its bank; visits from an earlier
+// Session 23: Aspen asks six questions per part (bank 2). A visit notes its bank; visits from an earlier
 // bank read only the questions they asked (bank 1: the first four, which never changed) and are never compared.
 const SA_BANK = () => (SAC && SAC.bank) || 1;
 const saBankN = b => (SAC && SAC.bankSizes && SAC.bankSizes[b || 1]) || (SAC && (b || 1) === SA_BANK() ? SAC.perPart : 4) || 4;
@@ -3154,7 +3154,7 @@ function saConsentLine(c){
   return `<span class="pill sage">${esc(((C.how.find(x => x[0] === con.how) || [])[1]) || 'Permission')}${con.date ? ' ' + nice(con.date) : ''}</span>`;
 }
 
-// ----- training (its own module, separate from Sprout's; gates real visits for everyone) -----
+// ----- training (its own module, separate from Maple's; gates real visits for everyone) -----
 const SAM = () => SAG() && SAG().module;
 function samData(){ DATA.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.samod || {}); return DATA.samod; }
 function samState(){
@@ -3174,8 +3174,8 @@ function vSAM(){
   if (V.sas) return vSAMSign();
   const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
   const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
-  return `<button class="linkbtn" data-act="sa-home">Back to Sapling Guide</button>
-  <div class="hello sa-hello" style="margin-top:14px"><div class="eyebrow" style="color:#A9D88A">Sapling Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  return `<button class="linkbtn" data-act="sa-home">Back to Aspen Guide</button>
+  <div class="hello sa-hello" style="margin-top:14px"><div class="eyebrow" style="color:#A9D88A">Aspen Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
   ${M.lessons.map((l, i) => step('sa-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
@@ -3237,15 +3237,15 @@ function vSAMSign(){
 }
 function samPrint(){
   const A = SAM().agreement, D = samData().signed;
-  fgSheet(ph('Sapling Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'sapling-guide-agreement'});
+  fgSheet(ph('Aspen Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'aspen-guide-agreement'});
 }
 
 // ----- views -----
 function vSA(){
   if (SAG()) saLoad();
-  if (!SAG()) return `<div class="card"><p>Sapling Guide isn't on this device yet.</p></div>`;
-  if (!SPG()) return `<div class="card"><p>Sapling Guide uses Sprout Guide's reporting card, which isn't on this device yet.</p></div>`;
+  if (!SAG()) return `<div class="card"><p>Aspen Guide isn't on this device yet.</p></div>`;
+  if (!SPG()) return `<div class="card"><p>Aspen Guide uses Maple Guide's reporting card, which isn't on this device yet.</p></div>`;
   if (V.sam) return vSAM();
   if (V.sarec){ const s = DATA.sessions.find(x => x.id === V.sarec); if (s) return vSPReport(s); }
   if (V.sac){ const c = CL(V.sac); if (c) return vSAConsent(c); }
@@ -3253,8 +3253,8 @@ function vSA(){
   if (V.sap){ const c = CL(V.sap); if (c) return vSAPerson(c); }
   const S = SAG(), list = saPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = samState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
   return `<div class="hello sa-hello"><div class="eyebrow" style="color:#A9D88A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Sapling training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sa-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Sapling training' : 'Start with the Sapling training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
+  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Aspen training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sa-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Aspen training' : 'Start with the Aspen training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
   <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
   <div class="card"><h3>A student</h3>
    <div class="grid g2"><div><label class="f" for="sa-nn">First name or nickname</label><input type="text" id="sa-nn" autocomplete="off" placeholder="Jordan"></div>
@@ -3264,9 +3264,9 @@ function vSA(){
    <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sa-new">${icon('plus')} Add Student</button>${m.complete ? `<button class="btn btn-line" data-act="sa-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>
   <div class="card"><div class="spread"><h3>Students</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
    ${list.length ? list.map(c => { const last = saVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(saGradeName(c.sa.grade))}</span> ${saConsentOk(c) ? '' : saConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${saVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a student above.</p>'}</div>
-  <div class="card"><h3>Reporting</h3><p class="muted">Sapling Guide and Sprout Guide share one reporting setup. The Report a concern button is on every visit screen.</p>
+  <div class="card"><h3>Reporting</h3><p class="muted">Aspen Guide and Maple Guide share one reporting setup. The Report a concern button is on every visit screen.</p>
    <p style="margin-top:8px">${(DATA.settings.spState || 'MN') === 'MN' ? 'Minnesota' : 'Another state'}${(DATA.settings.spState || 'MN') === 'MN' ? ' &middot; ' + esc(cty === 'other' ? (own.name || 'Somewhere else in Minnesota') : ((spCounty(cty) || {}).name || '')) : ''}${k.who || k.phone ? ' &middot; contact: ' + esc(k.who) + (k.phone ? ' ' + esc(k.phone) : '') : ''}</p>
-   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sa-rep-new">Open the Reporting Card</button>${spOpen() ? '<button class="btn btn-line btn-sm" data-tab="sprout">Change Your County or Contact</button>' : ''}</div></div>`;
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sa-rep-new">Open the Reporting Card</button>${spOpen() ? '<button class="btn btn-line btn-sm" data-tab="maple">Change Your County or Contact</button>' : ''}</div></div>`;
 }
 function vSAConsent(c){
   const C = SAG().consent, cur = c.sa.consent || {}, how = V.sach || (cur.status === 'ok' ? cur.how : 'form'), boxes = cur.how === 'form' && cur.v === C.version ? (cur.boxes || []) : [];
@@ -3287,7 +3287,7 @@ function vSAConsent(c){
    <div><label class="f" for="sa-cdt">Date</label><input type="date" id="sa-cdt" value="${esc(cur.status === 'ok' && cur.date ? cur.date : today())}"></div></div>
    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-consent-save" data-v="${c.id}">${icon('check')} Save Permission</button>${saConsentOk(c) ? `<button class="btn btn-line" data-act="sa-consent-pdf" data-v="${c.id}">${icon('copy')} Save PDF</button><button class="btn btn-line" data-act="sa-consent-print" data-v="${c.id}">${icon('print')} Print</button>` : ''}</div>
    ${saConsentOk(c) ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(C.pdfNote)}</p>` : ''}</div>
-  <div class="card"><div class="row"><button class="btn btn-line btn-sm" data-act="sa-consent-no" data-v="${c.id}">They Said No for Now</button><button class="btn btn-line btn-sm" data-act="sa-consent-stop" data-v="${c.id}">They Stopped Sapling Visits</button></div></div>`;
+  <div class="card"><div class="row"><button class="btn btn-line btn-sm" data-act="sa-consent-no" data-v="${c.id}">They Said No for Now</button><button class="btn btn-line btn-sm" data-act="sa-consent-stop" data-v="${c.id}">They Stopped Aspen Visits</button></div></div>`;
 }
 function saConsentModel(c){
   const C = SAG().consent, con = c.sa.consent, mark = on => on ? '[x] ' : '[  ] ';
@@ -3296,7 +3296,7 @@ function saConsentModel(c){
   else sec.push({h:'How permission was given', p:[((C.how.find(x => x[0] === con.how) || [])[1] || '') + (con.where ? ': ' + con.where : ''), ...(con.note ? [con.note] : [])]});
   sec.push({h:C.optional.title, p:[C.optional.text, mark(!!con.noVape) + C.optional.box]});
   sec.push({h:'Signed', p:[(con.name || '') + ', ' + (con.rel || '') + (con.how === 'form' ? ' (typed name)' : '') + ', ' + nice(con.date), 'Guide: ' + (DATA.settings.name || '') + '. Recorded in the Grounded Field Guide, form version ' + C.version + '.']});
-  return {eyebrow:'Grounded Field Guide', title:C.title, sub:C.formIntro, sec, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
+  return {eyebrow:'Grounded Field Guide', title:C.title, sub:C.formIntro, sec, foot:'Aspen\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
 }
 function saLevelTable(c){
   const vs = saVisits(c.id).filter(s => s.levels).slice(0, 4);
@@ -3307,11 +3307,11 @@ function saLevelTable(c){
 }
 function vSAPerson(c){
   const S = SAG(), vs = saVisits(c.id), ok = saConsentOk(c), ready = saReady(), reps = saReports(c.id), con = c.sa.consent;
-  return `<button class="linkbtn" data-tab="sapling">Back to Sapling Guide</button>
+  return `<button class="linkbtn" data-tab="aspen">Back to Aspen Guide</button>
   <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(saGradeName(c.sa.grade))}${c.sa.rel ? ' &middot; grown-up: ' + esc(c.sa.rel) : ''}</div><h1>${esc(c.name)}</h1></div><div class="row">${saConsentLine(c)}${ok && con.noVape ? '<span class="pill">Optional question left out</span>' : ''}</div></div>
   ${!ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Permission first</h3><p class="muted">${con && con.status === 'declined' ? esc(S.consent.declined) : con && con.status === 'withdrawn' ? esc(S.consent.withdrawn) : 'A parent or legal guardian gives permission before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sa-consent" data-v="${c.id}">Permission Form</button></div>` : ''}
-  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Sapling training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sa-mhome">Open Training</button></div>` : ''}
-  <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sa-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'sapling')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
+  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish the Aspen training to start real visits.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sa-mhome">Open Training</button></div>` : ''}
+  <div class="card"><h3>Start a visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sa-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'aspen')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Levels</h3>${saLevelTable(c)}</div>
    <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-safu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
@@ -3340,7 +3340,7 @@ function vSAVisit(){
   const s = saFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
   if (!SAC && s.visit !== 'nottoday') { const w = saNeedData(); if (w) return w; }
   const demo = V.sav === 'demo', c = demo ? s.person : CL(s.clientId), S = SAG();
-  const back = demo ? `<button class="linkbtn" data-tab="sapling">Back to Sapling Guide</button>` : `<button class="linkbtn" data-act="sa-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'student')}</button>`;
+  const back = demo ? `<button class="linkbtn" data-tab="aspen">Back to Aspen Guide</button>` : `<button class="linkbtn" data-act="sa-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'student')}</button>`;
   if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}`;
   const idxs = saIdx(s), room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : saReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, sq = sens.asked ? saSensQ(s.grade) : null;
@@ -3361,12 +3361,12 @@ function vSAVisit(){
   <div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(saSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${s.seenSheet ? 'The student saw the take-home sheet.' : 'Not marked as seen by the student.'}${Object.values(s.hide || {}).some(Boolean) ? ' They left some things out.' : ''}</p></div>` : ''}
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="sa-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="sa-copy-pdf">${icon('copy')} Student Copy PDF</button><button class="btn btn-line" data-act="sa-copy-qr">${icon('tree')} Send to My Sapling</button>` : ''}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="sa-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="sa-copy-pdf">${icon('copy')} Student Copy PDF</button><button class="btn btn-line" data-act="sa-copy-qr">${icon('tree')} Send to My Aspen</button>` : ''}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 // The visit note: levels, flag count, safety summary. Never answer words, the grown-up's name, or the optional question.
 function saNote(s, c){
   const S = SAG(), L = [];
-  L.push('Sapling visit: ' + saVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Aspen visit: ' + saVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
   L.push('Student: ' + (c ? c.name : '') + ' (' + saGradeName(s.grade) + ')');
   const con = c && c.sa && c.sa.consent; if (con && con.status === 'ok') L.push('Permission: ' + (((S.consent.how.find(x => x[0] === con.how) || [])[1]) || '') + (con.rel ? ', ' + con.rel : '') + (con.date ? ', ' + nice(con.date) : ''));
   L.push('Promise read: ' + (s.promise ? 'yes' : 'not marked') + ". Student's yes: yes. Who could see in: " + saWhere(s) + '.');
@@ -3394,7 +3394,7 @@ function saHomeModel(s, c){
   const tries = saTries(s);
   if (tries.length) sec.push({h:H.try, p:tries.map(([p, it]) => it[0] + ' (' + p.part + '): ' + it[1])});
   sec.push({h:H.help, li:H.helpLines});
-  return {eyebrow:'For your family', title:H.title, sub:(name ? name + ', ' : '') + nice(s.date), sec, after:['If someone is in danger, call 911. For a mental health crisis, call or text 988.'], close:H.close, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
+  return {eyebrow:'For your family', title:H.title, sub:(name ? name + ', ' : '') + nice(s.date), sec, after:['If someone is in danger, call 911. For a mental health crisis, call or text 988.'], close:H.close, foot:'Aspen\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
 }
 // The student's own copy: what's growing strong, what they want to try, and help in their own hands.
 function saCopyModel(s, c){
@@ -3404,10 +3404,10 @@ function saCopyModel(s, c){
   const tries = saTries(s);
   if (tries.length) sec.push({h:K.try, p:tries.map(([p, it]) => it[0] + ': ' + it[1])});
   sec.push({h:K.help, li:K.helpLines});
-  return {eyebrow:'Just for you', title:K.title, sub:K.lead + ' ' + nice(s.date), sec, close:K.close, foot:'Sapling\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
+  return {eyebrow:'Just for you', title:K.title, sub:K.lead + ' ' + nice(s.date), sec, close:K.close, foot:'Aspen\u2122 is a trademark of Chris Joy. growwithgrounded.com'};
 }
-const saFile = (kind, s) => 'sapling-' + kind + '-' + (s.date || today()) + '.pdf';
-// The student's own copy can drop a "From your visit" card into their own Sapling tree, by QR or link. It carries only
+const saFile = (kind, s) => 'aspen-' + kind + '-' + (s.date || today()) + '.pdf';
+// The student's own copy can drop a "From your visit" card into their own Aspen tree, by QR or link. It carries only
 // their first name, the date, what's growing strong, and what they chose to try: never levels, notes, the safety step,
 // the optional question, or the guide's or grown-up's name. Student only: nothing goes to the grown-up this way.
 function saVisitCard(s, c){
@@ -3415,7 +3415,7 @@ function saVisitCard(s, c){
   return {n:String((c && c.name) || '').trim().split(/\s+/)[0] || '', d:s.date || today(), s:strong, t:saTries(s).map(([p, it]) => [p.key, it[0], it[1]])};
 }
 const saVisitUrl = (s, c) => window.GGApp && GGApp.visit ? GGApp.visit.url(saVisitCard(s, c)) : '';
-const SA_QR_SAY = 'Scan this with your own phone to put this card on your Sapling tree.';
+const SA_QR_SAY = 'Scan this with your own phone to put this card on your Aspen tree.';
 function saCopyBlocks(s, c){
   const b = ggSheetBlocks(saCopyModel(s, c)), u = saVisitUrl(s, c);
   if (u){ const f = b.findIndex(x => x.k === 'foot'); b.splice(f < 0 ? b.length : f, 0, {k:'h2', t:'Keep it on your tree'}, {k:'qr', url:u, t:SA_QR_SAY + ' It carries only your first name, the date, what\'s growing strong, and what you want to try.'}); }
@@ -3424,8 +3424,8 @@ function saCopyBlocks(s, c){
 function saCopyQR(s, c){
   const u = saVisitUrl(s, c);
   if (!u) return toast('There is nothing to send yet. Pick something to try, or mark a part as strong.');
-  const svg = window.GGQR ? GGQR.svg(u, {label:'QR code for the student\'s Sapling tree'}) : '';
-  GGApp.dialog({title:'Send to My Sapling', html:(svg ? `<div class="ggx-qr">${svg}</div>` : '') + `<p>${esc(SA_QR_SAY)} It opens Sapling and asks whose tree it's for.</p>
+  const svg = window.GGQR ? GGQR.svg(u, {label:'QR code for the student\'s Aspen tree'}) : '';
+  GGApp.dialog({title:'Send to My Aspen', html:(svg ? `<div class="ggx-qr">${svg}</div>` : '') + `<p>${esc(SA_QR_SAY)} It opens Aspen and asks whose tree it's for.</p>
     <p class="ggx-small">Only the student's first name, the date, what's growing strong, and what they want to try. No levels, notes, or answers. If their phone is shared with family, anyone who can open their tree can see it, and they can remove it any time.</p>`,
     buttons:[{t:'Done', kind:'main'}]});
 }
@@ -3433,11 +3433,11 @@ function saCopyQR(s, c){
 // ----- the visit runner -----
 function saStart(visit, cid, demo){
   const S = SAG();
-  if (!SAC){ saLoad(); return toast('Loading the Sapling questions. Try again in a moment.'); }
+  if (!SAC){ saLoad(); return toast('Loading the Aspen questions. Try again in a moment.'); }
   const c = demo ? {id:'demo', name:S.demo.name, sa:{grade:S.demo.grade, rel:'Mom', consent:{status:'ok', how:'verbal', date:today(), noVape:false}}} : CL(cid);
   if (!c) return;
-  if (!demo && !saConsentOk(c)) return go('sapling', {sac:c.id});
-  if (!demo && !saReady()) return go('sapling', {sam:1});
+  if (!demo && !saConsentOk(c)) return go('aspen', {sac:c.id});
+  if (!demo && !saReady()) return go('aspen', {sam:1});
   const why = saSensWhy(visit, c.sa.grade, c);
   RUN = {kind:'sa', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sa.grade, std:SAC.version, bank:SA_BANK(), started:Date.now(), step:0,
     screen:'guide', room:{where:'', who:[]}, promise:false, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:false,
@@ -3501,10 +3501,10 @@ function saDraw(){
       <input type="text" data-sagw="${p.key}" value="${esc(RUN.gv.words[p.key] || '')}" placeholder="A few words (optional)" style="margin-top:8px" aria-label="${esc(p.part)}: the grown-up's words"></div></div>`).join('')}
      <button class="btn btn-line btn-sm" style="margin-top:14px" data-act="sa-rep-gv">${icon('shield')} ${esc(G.concern)}</button>`;
   } else if (st === 'topic'){
-    const decks = (CDG() ? CDG().decks : []).filter(d => d.sapling && Object.keys(d.sapling).length), d = RUN.topic.deck ? cdDeck(RUN.topic.deck) : null;
+    const decks = (CDG() ? CDG().decks : []).filter(d => d.aspen && Object.keys(d.aspen).length), d = RUN.topic.deck ? cdDeck(RUN.topic.deck) : null;
     body = `<div class="run-step-n">Topic visit</div><h2 class="run-step-t">Cards for a hard topic</h2><p class="muted">Pick the deck. Use one or two cards for each part, in any order. Tap the ones you used.</p>
      <label class="f" for="sa-deck">Topic</label><select id="sa-deck" data-sadeck="1" style="max-width:420px"><option value="">Choose a topic</option>${decks.map(x => `<option value="${x.id}" ${x.id === RUN.topic.deck ? 'selected' : ''}>${esc(x.title)}</option>`).join('')}</select>
-     ${d ? `<p class="muted" style="margin-top:8px">${esc(d.blurb || '')}</p>${S.parts.map(p => { const gk = ST2GV[p.key], list = (d.sapling || {})[gk] || []; return list.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${list.map((cd, i) => stChip('sa-card', `data-v="${gk}:${i}"`, RUN.topic.used.includes(gk + ':' + i), cdTxt(cd))).join('')}</div></div>` : ''; }).join('')}
+     ${d ? `<p class="muted" style="margin-top:8px">${esc(d.blurb || '')}</p>${S.parts.map(p => { const gk = ST2GV[p.key], list = (d.aspen || {})[gk] || []; return list.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${list.map((cd, i) => stChip('sa-card', `data-v="${gk}:${i}"`, RUN.topic.used.includes(gk + ':' + i), cdTxt(cd))).join('')}</div></div>` : ''; }).join('')}
       <details class="st-lf"><summary>${esc(CDG().heavy || 'If something heavy comes up')}</summary><p class="muted" style="margin-top:6px">${esc(CDG().heavyNote || '')}</p></details>` : ''}
      <label class="f" for="sa-tpn">Your notes (private)</label><textarea id="sa-tpn" data-saf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
   } else if (st.startsWith('p:')){
@@ -3614,18 +3614,18 @@ function saStop(fromKid){
 function saSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId), s = saRunAsVisit();
   saKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'sapling', sav:'demo', saDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'aspen', sav:'demo', saDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); }
-  save(); go('sapling', {sav:s.id}); toast('Visit saved.');
+  save(); go('aspen', {sav:s.id}); toast('Visit saved.');
 }
 function saNotToday(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ go('sapling'); toast('Demo ended. "Not today" is always honored.'); return; }
+  if (r.demo){ go('aspen'); toast('Demo ended. "Not today" is always honored.'); return; }
   DATA.sessions.push({id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:0, std:r.std, bank:r.bank || 1, grade:r.grade, visit:'nottoday', room:r.room, promise:r.promise, yes:'no'});
   DATA.draft = null; if (c){ touch(c); c.last = today(); }
-  save(); go('sapling', {sap:r.clientId}); toast('"Not today" recorded. Thank them.');
+  save(); go('aspen', {sap:r.clientId}); toast('"Not today" recorded. Thank them.');
 }
 function saPause(){
   if (RUN.demo){ if (!confirm('Close the demo?')) return; }
@@ -3669,7 +3669,7 @@ function saKidOpen(which){
 function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
 function saKidDraw(){
   const S = SAG(); let el = $('#sa-kid');
-  if (!el){ el = document.createElement('div'); el.id = 'sa-kid'; el.className = 'sp-kid sa-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Sapling questions'); document.body.appendChild(el); }
+  if (!el){ el = document.createElement('div'); el.id = 'sa-kid'; el.className = 'sp-kid sa-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Aspen questions'); document.body.appendChild(el); }
   if (SAKID.done){
     el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(S.screen.kidDone)}</div><button class="sp-kid-back" data-act="sa-kid-back">${esc(S.screen.back)}</button></div>`;
     return;
@@ -3696,35 +3696,35 @@ function saKidAnswer(v){
 function saAct(a, v, t){
   switch(a){
     case 'sa-retry': SAC_FAIL = false; saLoad(); render(); return true;
-    case 'sa-home': go('sapling'); return true;
-    case 'sa-mhome': go('sapling', {sam:1}); return true;
-    case 'sa-ml': go('sapling', {sam:1, saml:+v}); return true;
-    case 'sa-mread': { const L = SAM().lessons, i = +v; samData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !samData().lessons[x.id]); if (nx >= 0) go('sapling', {sam:1, saml:nx}); else { go('sapling', {sam:1}); toast('Lesson marked as read.'); } return true; }
-    case 'sa-mq': go('sapling', {sam:1, saq:samNewQuiz()}); return true;
+    case 'sa-home': go('aspen'); return true;
+    case 'sa-mhome': go('aspen', {sam:1}); return true;
+    case 'sa-ml': go('aspen', {sam:1, saml:+v}); return true;
+    case 'sa-mread': { const L = SAM().lessons, i = +v; samData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !samData().lessons[x.id]); if (nx >= 0) go('aspen', {sam:1, saml:nx}); else { go('aspen', {sam:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sa-mq': go('aspen', {sam:1, saq:samNewQuiz()}); return true;
     case 'sa-mpick': V.saq.ans[V.saq.order[V.saq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sa-mnext],[data-act=sa-mfinish]'); if (nb) nb.disabled = false; } return true;
     case 'sa-mnext': if (V.saq.ans[V.saq.order[V.saq.i]] === undefined) return true; V.saq.i++; render(); return true;
     case 'sa-mprev': if (V.saq.i > 0){ V.saq.i--; render(); } return true;
     case 'sa-mfinish': samFinish(); return true;
-    case 'sa-msign': go('sapling', {sam:1, sas:1}); return true;
+    case 'sa-msign': go('aspen', {sam:1, sas:1}); return true;
     case 'sa-msigned': { const nm = $('#sam-name').value.trim(); if (!nm){ $('#sam-name').focus(); return true; } if (!$('#sam-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
-      samData().signed = {v:SAM().version, date:today(), name:nm}; save(); go('sapling', {sam:1}); toast(saReady() ? 'Signed. Sapling visits are open.' : 'Signed.'); return true; }
+      samData().signed = {v:SAM().version, date:today(), name:nm}; save(); go('aspen', {sam:1}); toast(saReady() ? 'Signed. Aspen visits are open.' : 'Signed.'); return true; }
     case 'sa-mprint': samPrint(); return true;
     case 'sa-new': { const n = $('#sa-nn').value.trim(); if (!n){ $('#sa-nn').focus(); return true; }
-      const c = {id:uid(), u:Date.now(), name:n, service:'Sapling', status:'active', followups:[], created:today(), sa:{grade:$('#sa-ng').value, rel:$('#sa-nr').value.trim(), consent:null}};
-      DATA.clients.push(c); save(); V.sach = null; V.sanv = undefined; go('sapling', {sac:c.id}); return true; }
-    case 'sa-open': { const c = CL(v); if (!c){ go('sapling'); return true; } if (!c.sa){ c.sa = {grade:'6', rel:'', consent:null}; touch(c); save(); } go('sapling', {sap:v}); return true; }
-    case 'sa-consent': go('sapling', {sac:v}); return true;
+      const c = {id:uid(), u:Date.now(), name:n, service:'Aspen', status:'active', followups:[], created:today(), sa:{grade:$('#sa-ng').value, rel:$('#sa-nr').value.trim(), consent:null}};
+      DATA.clients.push(c); save(); V.sach = null; V.sanv = undefined; go('aspen', {sac:c.id}); return true; }
+    case 'sa-open': { const c = CL(v); if (!c){ go('aspen'); return true; } if (!c.sa){ c.sa = {grade:'6', rel:'', consent:null}; touch(c); save(); } go('aspen', {sap:v}); return true; }
+    case 'sa-consent': go('aspen', {sac:v}); return true;
     case 'sa-ch': V.sach = v; { const nv = $('#sa-nv'); if (nv) V.sanv = nv.checked; const y = window.scrollY; render(); window.scrollTo(0, y); } return true;
     case 'sa-consent-save': { const c = CL(v), C = SAG().consent, how = V.sach || (c.sa.consent && c.sa.consent.status === 'ok' ? c.sa.consent.how : 'form'), name = $('#sa-cnm').value.trim();
       const boxes = Array.from(document.querySelectorAll('[data-sabox]')).filter(x => x.checked).map(x => x.dataset.sabox);
       if (how === 'form' && boxes.length < C.boxes.length){ alert('Every box needs to be checked before the form can be saved. The optional question box is separate and can stay unchecked.'); return true; }
       if (!name){ $('#sa-cnm').focus(); alert(how === 'form' ? 'The grown-up types their name to sign.' : 'Add who gave permission.'); return true; }
       c.sa.consent = {status:'ok', how, name, rel:$('#sa-crl').value, date:$('#sa-cdt').value || today(), v:C.version, boxes:how === 'form' ? boxes : [], noVape:!!($('#sa-nv') || {}).checked, where:how === 'file' ? ($('#sa-cw') || {}).value || '' : '', note:how !== 'form' ? ($('#sa-cn') || {}).value || '' : ''};
-      touch(c); save(); V.sach = null; V.sanv = undefined; go('sapling', {sac:c.id}); toast('Permission saved.'); return true; }
-    case 'sa-consent-pdf': { const c = CL(v); if (c && saConsentOk(c)) ggShare(ggPdf(ggSheetBlocks(saConsentModel(c))), 'sapling-permission-' + (c.sa.consent.date || today()) + '.pdf', SAG().consent.title); return true; }
+      touch(c); save(); V.sach = null; V.sanv = undefined; go('aspen', {sac:c.id}); toast('Permission saved.'); return true; }
+    case 'sa-consent-pdf': { const c = CL(v); if (c && saConsentOk(c)) ggShare(ggPdf(ggSheetBlocks(saConsentModel(c))), 'aspen-permission-' + (c.sa.consent.date || today()) + '.pdf', SAG().consent.title); return true; }
     case 'sa-consent-print': { const c = CL(v); if (c && saConsentOk(c)){ const m = saConsentModel(c); printNow(ph(m.title) + ggSheetHTML(m), m.title); } return true; }
-    case 'sa-consent-no': case 'sa-consent-stop': { const c = CL(v); if (!c || !confirm(a === 'sa-consent-no' ? 'Record that they said no for now? Visits stay off.' : 'Record that they stopped Sapling visits? Visits stay off unless they give permission again.')) return true;
-      c.sa.consent = {status:a === 'sa-consent-no' ? 'declined' : 'withdrawn', date:today()}; touch(c); save(); go('sapling', {sap:c.id}); return true; }
+    case 'sa-consent-no': case 'sa-consent-stop': { const c = CL(v); if (!c || !confirm(a === 'sa-consent-no' ? 'Record that they said no for now? Visits stay off.' : 'Record that they stopped Aspen visits? Visits stay off unless they give permission again.')) return true;
+      c.sa.consent = {status:a === 'sa-consent-no' ? 'declined' : 'withdrawn', date:today()}; touch(c); save(); go('aspen', {sap:c.id}); return true; }
     case 'sa-start': saStart(v, t.dataset.c, false); return true;
     case 'sa-demo': saStart('quick', null, true); return true;
     case 'sa-next': saNext(); return true;
@@ -3747,15 +3747,15 @@ function saAct(a, v, t){
     case 'sa-rep-gv': if (RUN) spRepOpen(RUN.clientId, RUN.id, 'grownup', 'sa'); return true;
     case 'sa-rep-for': spRepOpen(v, null, '', 'sa'); return true;
     case 'sa-rep-new': spRepOpen(null, null, '', 'sa'); return true;
-    case 'sa-visit': go('sapling', {sav:v}); return true;
-    case 'sa-rec': go('sapling', {sarec:v}); return true;
+    case 'sa-visit': go('aspen', {sav:v}); return true;
+    case 'sa-rec': go('aspen', {sarec:v}); return true;
     case 'sa-home-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)))), saFile('take-home', s), SAG().takeHome.title); return true; }
     case 'sa-home-print': { const s = saFindVisit(); if (s){ const m = saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
     case 'sa-copy-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(saCopyBlocks(s, V.sav === 'demo' ? s.person : CL(s.clientId))), saFile('my-copy', s), SAG().studentCopy.title); return true; }
     case 'sa-copy-qr': { const s = saFindVisit(); if (s) saCopyQR(s, V.sav === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'sa-copy-note': { const s = saFindVisit(); if (s) copy(saNote(s, V.sav === 'demo' ? s.person : CL(s.clientId))); return true; }
-    case 'sa-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('sapling', s ? {sap:s.clientId} : {}); } return true;
-    case 'sa-del': if (confirm('Delete this student and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('sapling'); } return true;
+    case 'sa-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('aspen', s ? {sap:s.clientId} : {}); } return true;
+    case 'sa-del': if (confirm('Delete this student and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('aspen'); } return true;
     case 'sa-add-fu': { const c = CL(v), d = $('#sa-fd').value, tx = $('#sa-ft').value.trim(); if (!d){ $('#sa-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
     case 'sa-field': saSetField(v === 'on'); return true;
   }
@@ -3783,30 +3783,30 @@ function saInput(t, ev){
   return false;
 }
 
-// ----- Owner: open to Field users. Reporting contact and the yearly recheck live on the Sprout Guide card. -----
+// ----- Owner: open to Field users. Reporting contact and the yearly recheck live on the Maple Guide card. -----
 function saOwnerCard(){
   const S = SAG();
-  if (!S) return `<div class="card"><h3>Sapling Guide</h3><p class="muted">Sapling Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
+  if (!S) return `<div class="card"><h3>Aspen Guide</h3><p class="muted">Aspen Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="card"><h3>Sapling Guide</h3>
-   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Sapling training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sa-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
-   <p class="muted" style="font-size:14px;margin-top:10px">Sapling Guide uses the same reporting contact, county card, and yearly recheck as Sprout Guide, set on the Sprout Guide card.</p></div>`;
+  return `<div class="card"><h3>Aspen Guide</h3>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Aspen training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sa-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
+   <p class="muted" style="font-size:14px;margin-top:10px">Aspen Guide uses the same reporting contact, county card, and yearly recheck as Maple Guide, set on the Maple Guide card.</p></div>`;
 }
 async function saLibUpdate(title, path, fn){
-  const cur = await pendingPlain('field'); if (!cur || !cur.saplingGuide) return;
-  const next = JSON.parse(JSON.stringify(cur)); fn(next.saplingGuide);
+  const cur = await pendingPlain('field'); if (!cur || !cur.aspenGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); fn(next.aspenGuide);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
   V.upd = {lvl:'field', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
-function saSetField(on){ saLibUpdate(on ? 'Open Sapling Guide to Field users' : 'Close Sapling Guide to Field users', 'saplingGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
-function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sapling Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">${icon('sapling')} Open</button></div></div>` : ''; }
+function saSetField(on){ saLibUpdate(on ? 'Open Aspen Guide to Field users' : 'Close Aspen Guide to Field users', 'aspenGuide.open.field', g => { g.open = Object.assign({}, g.open, {field:on}); }); }
+function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Aspen Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">${icon('aspen')} Open</button></div></div>` : ''; }
 
 // ---------------- HARD TALKS ----------------
 // Every hard conversation, for every life stage, side by side. The topic map, helper notes, and wording
 // live in the Field library (FLD.hardTalks). The guides themselves are read from the public
-// sprout/guides.js, sapling/guides.js, and soul-tree/guides.js, so there's one place to edit them.
-// Heartwood and Old Growth are coming soon: they show a stand-in guide (Sapling, Soul Tree) with a note.
+// maple/guides.js, aspen/guides.js, and oak/guides.js, so there's one place to edit them.
+// Pine and Willow are coming soon: they show a stand-in guide (Aspen, Oak) with a note.
 // Handouts print one page per guide, sized to fit, with a QR code made on this device by qr.js.
 // "Add to their record" saves a session with kind 'ht': topic, stages, handouts, and date. Never what
 // was said. Staff and Owner always see it; Field users once FLD.hardTalks.open.field is on and
@@ -3814,8 +3814,8 @@ function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="ma
 const HTG = () => (FLD && FLD.hardTalks) || null;
 const htOpen = () => !!HTG() && (TIER !== 'field' || !!(HTG().open && HTG().open.field && (!OR() || orState().complete)));
 const HT_SITE = 'https://growwithgrounded.com';
-const HT_PATH = {sprout:'/sprout/#talk=', sapling:'/sapling/#talk=', soultree:'/soul-tree/#life='};
-const HT_TM = {sprout:'Sprout', sapling:'Sapling', soultree:'Soul Tree'};
+const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', oak:'/oak/#life='};
+const HT_TM = {maple:'Maple', aspen:'Aspen', oak:'Oak'};
 const HT_CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
 const HT_ABUSE = /abuse|abused|molest|rape|assault|touched me|hits me|hitting me|beat(s|ing)? me|domestic/;
 const htTopic = id => (HTG().topics || []).find(t => t.id === id) || null;
@@ -3829,13 +3829,13 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../sprout/guides.js', '../sapling/guides.js', '../soul-tree/guides.js'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
-      const sp = run(a).SPROUT_GUIDES, sa = run(b).SAPLING_GUIDES, st = run(c).SOULTREE_GUIDES;
+      const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
       if (!sp || !sa || !st) throw 0;
       const by = list => { const m = {}; (list || []).forEach(t => { if (t && t.id) m[t.id] = t; }); return m; };
-      HD = {sprout: by(sp.topics), sapling: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), soultree: by(st.topics)};
+      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics)};
       HD_WAIT = null; if (DATA && V.tab === 'talks') render();
     })
     .catch(() => { HD_WAIT = null; HD_FAIL = true; if (DATA && V.tab === 'talks') render(); });
@@ -3847,19 +3847,19 @@ function htNeedData(){
     : `<div class="card"><p class="muted">Loading the guides...</p></div>`;
 }
 const htGuide = (src, id) => (HD && HD[src] && HD[src][id]) || null;
-// The guides for one stage of one topic. Heartwood stands in with Sapling; Old Growth with Soul Tree.
+// The guides for one stage of one topic. Pine stands in with Aspen; Willow with Oak.
 function htStage(T, st){
-  const ids = st.id === 'heartwood' ? (T.hw || T.sapling || []) : st.id === 'oldgrowth' ? (T.eol ? (T.og || T.soultree || []) : []) : (T[st.id] || []);
+  const ids = st.id === 'pine' ? (T.hw || T.aspen || []) : st.id === 'willow' ? (T.eol ? (T.og || T.oak || []) : []) : (T[st.id] || []);
   return ids.map(id => ({src: st.src, id, g: htGuide(st.src, id)})).filter(r => r.g);
 }
 function htRef(T, st){
   const refs = htStage(T, st); if (!refs.length) return null;
   const i = Math.min(Math.max(+((V.hts || {})[st.id] || 0), 0), refs.length - 1);
-  return Object.assign({aud: st.src === 'soultree' ? ((V.hta || {})[st.id] || 'self') : 'all'}, refs[i]);
+  return Object.assign({aud: st.src === 'oak' ? ((V.hta || {})[st.id] || 'self') : 'all'}, refs[i]);
 }
 const htLink = r => HT_SITE + HT_PATH[r.src] + encodeURIComponent(r.id);
 
-// ----- text from the public files (Sapling's help lines carry links) -----
+// ----- text from the public files (Aspen's help lines carry links) -----
 const HT_A = /<a\s[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
 const htPlain = s => String(s == null ? '' : s).replace(HT_A, '$2').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
 function htRich(s){
@@ -3870,10 +3870,10 @@ function htRich(s){
 const htDomain = u => String(u || '').replace(/^https?:\/\/(www\.)?/, '').split(/[/?#]/)[0];
 const htPrintText = s => htPlain(String(s == null ? '' : s).replace(HT_A, (m, u, x) => htPlain(x) + (/^https?:\/\//.test(u) ? ' (' + htDomain(u) + ')' : '')));
 
-// ----- one guide as sections. aud: 'self' or 'helper' for Soul Tree; print leaves out the long extras -----
+// ----- one guide as sections. aud: 'self' or 'helper' for Oak; print leaves out the long extras -----
 function htSections(r, print){
   const g = r.g, S = [], add = (k, h, type, items) => { if (items == null) return; const a = Array.isArray(items) ? items.filter(x => x != null && x !== '' && !(Array.isArray(x) && !x.length)) : [items]; if (a.length && a.some(x => x)) S.push({k, h, type, items: a}); };
-  if (r.src === 'sprout'){
+  if (r.src === 'maple'){
     add('quick', 'The basics', 'list', g.quick);
     if (g.k2 || g.g35) add('look', 'What it can look like', 'pair', [g.k2 ? ['K to 2', g.k2] : null, g.g35 ? ['Grades 3 to 5', g.g35] : null].filter(Boolean));
     if (!print) add('before', 'Before you talk', 'list', g.before);
@@ -3886,7 +3886,7 @@ function htSections(r, print){
     if (!print) add('teach', 'For teachers', 'list', g.teach);
     add('reach', 'When to get more help', 'list', g.reach);
     if (!print) add('more', 'Learn more', 'links', g.more);
-  } else if (r.src === 'sapling'){
+  } else if (r.src === 'aspen'){
     add('quick', 'The basics', 'list', g.quick);
     add('talk', 'Talking it through', 'p', g.talk);
     add('say', 'Words that help', 'say', g.say);
@@ -3986,18 +3986,18 @@ function vHT(){
 }
 function vHTTopic(T){
   const H = HTG(), stages = (H.stages || []).map(st => ({st, refs: htStage(T, st)}));
-  const have = stages.filter(x => x.refs.length), none = stages.filter(x => !x.refs.length && (x.st.id !== 'oldgrowth' || T.eol));
-  const pk = V.htp || (V.htp = have.filter(x => !(x.st.id === 'oldgrowth')).map(x => x.st.id));
+  const have = stages.filter(x => x.refs.length), none = stages.filter(x => !x.refs.length && (x.st.id !== 'willow' || T.eol));
+  const pk = V.htp || (V.htp = have.filter(x => !(x.st.id === 'willow')).map(x => x.st.id));
   const card = ({st, refs}) => {
     const r = htRef(T, st), x = (V.htx || {})[st.id], secs = htSections(r, false), quick = secs.find(s => s.k === 'quick');
     return `<div class="card ht-stage" style="--sc:${esc(st.color)}">
      <div class="spread"><div><div class="ht-sname">${esc(st.name)}</div><small class="muted">${esc(st.ages)}</small></div>${st.soon ? '<span class="pill">Coming soon</span>' : ''}</div>
      ${st.soon ? `<p class="tipbox" style="margin-top:10px">${esc(st.stand || '')}</p>` : ''}
      ${refs.length > 1 ? `<div class="row ht-pick">${refs.map((rr, i) => `<button class="chip" aria-pressed="${rr.id === r.id}" data-act="ht-pick" data-v="${esc(st.id)}" data-i="${i}">${esc(rr.g.title)}</button>`).join('')}</div>` : ''}
-     ${r.src === 'soultree' ? `<div class="row ht-pick"><button class="chip" aria-pressed="${r.aud !== 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="self">For them</button><button class="chip" aria-pressed="${r.aud === 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="helper">For someone helping</button></div>` : ''}
+     ${r.src === 'oak' ? `<div class="row ht-pick"><button class="chip" aria-pressed="${r.aud !== 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="self">For them</button><button class="chip" aria-pressed="${r.aud === 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="helper">For someone helping</button></div>` : ''}
      <h3 class="ht-gt">${esc(r.g.title)}</h3>
-     ${r.src === 'soultree' && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
-     ${x || (r.src === 'soultree' && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
+     ${r.src === 'oak' && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
+     ${x || (r.src === 'oak' && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
      <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
@@ -4060,14 +4060,14 @@ function htPersonCard(c){
 }
 // Staff and Owner: guides in the public files that the map doesn't reach, and map ids that aren't there.
 function htCheck(){
-  const H = HTG(), used = {sprout:new Set(), sapling:new Set(), soultree:new Set()}, missing = [];
-  (H.topics || []).forEach(T => [['sprout','sprout'],['sapling','sapling'],['soultree','soultree'],['hw','sapling'],['og','soultree']].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
+  const H = HTG(), used = {maple:new Set(), aspen:new Set(), oak:new Set()}, missing = [];
+  (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['hw','aspen'],['og','oak']].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
   const loose = Object.keys(used).flatMap(src => Object.keys(HD[src]).filter(id => !used[src].has(id)).map(id => HT_TM[src] + ': ' + HD[src][id].title));
   return {missing, loose, total: Object.keys(HD).reduce((n, k) => n + Object.keys(HD[k]).length, 0)};
 }
 function htCheckCard(){
   const r = htCheck();
-  if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from Sprout, Sapling, and Soul Tree are in Hard Talks.</p>`;
+  if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from Maple, Aspen, and Oak are in Hard Talks.</p>`;
   return `<div class="card" style="margin-top:18px;border-left:4px solid var(--gold)"><h3>Map check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. Send it to a chat for a Hard Talks patch.</p>
    ${r.loose.length ? `<p style="margin-top:8px"><b>Guides not in Hard Talks yet:</b> ${esc(r.loose.join('; '))}</p>` : ''}
    ${r.missing.length ? `<p style="margin-top:8px"><b>Not found in the guide files:</b> ${esc(r.missing.join('; '))}</p>` : ''}</div>`;
@@ -4076,8 +4076,8 @@ function htCheckCard(){
 // ----- handouts: one page per guide, sized to fit a page, with a QR code to the full guide -----
 function htPageHTML(T, stIds, r){
   const H = HTG(), O = H.handout || {}, sts = stIds.map(htStageDef).filter(Boolean), first = sts[0];
-  const helper = r.src === 'soultree' && r.aud === 'helper';
-  const who = sts.length > 1 && r.src === 'sapling' ? 'For grown-ups helping middle and high schoolers' : (helper && first.handHelper ? first.handHelper : first.hand);
+  const helper = r.src === 'oak' && r.aud === 'helper';
+  const who = sts.length > 1 && r.src === 'aspen' ? 'For grown-ups helping middle and high schoolers' : (helper && first.handHelper ? first.handHelper : first.hand);
   const notes = sts.filter(s => s.soon && s.handNote).map(s => s.handNote);
   const secs = htSections(r, true).filter(x => x.k !== 'faith' || DATA.settings.htFaith);
   const li = a => a.map(t => `<li>${esc(htPrintText(t))}</li>`).join('');
@@ -4183,15 +4183,15 @@ function htAct(a, v, t){
 // ---------------- HARD TALKS: CARDS AND PLANS ----------------
 // Conversation cards and session plans live in the Field library (FLD.hardTalks.cards and
 // FLD.hardTalks.plans), so they open whenever Hard Talks does. Cards: tree cards for each live age
-// (Sprout, Sapling, Soul Tree), plus topic decks that attach to Hard Talks topics by guide id.
+// (Maple, Aspen, Oak), plus topic decks that attach to Hard Talks topics by guide id.
 // Plans walk the tree once, roots to fruit: arrive, six parts, close. Each part has a line to say,
 // cards, and what to listen for, with a spoken bridge to the next part. A Grove practice sits at
 // its own part (read from grove/library.js). Saved plans stay encrypted on this device (DATA.plans).
 // "Add to their record" saves a session with kind 'ht' and a plan field. Never what was said.
 const CDG = () => (HTG() && HTG().cards) || null;
 const PLG = () => (HTG() && HTG().plans) || null;
-const CD_AGES = ['sprout','sapling','soultree'];
-const CD_SRC = {sprout:'sprout', sapling:'sapling', soultree:'soultree'};
+const CD_AGES = ['maple','aspen','oak'];
+const CD_SRC = {maple:'maple', aspen:'aspen', oak:'oak'};
 const cdFaith = () => !!(DATA && DATA.settings.htFaith);
 const cdTxt = c => c == null ? '' : typeof c === 'string' ? c : (cdFaith() ? c.t : (c.n || c.t));
 const cdKind = s => /\.\.\.$/.test(s) ? 'finish' : /^(Show me|Draw|Point)\b/.test(s) ? 'show' : 'q';
@@ -4250,7 +4250,7 @@ function cdBack(k, stage){
 // ----- state for the Cards view (kept while the Field Guide is open) -----
 let CS = null;
 function cdState(){
-  if (!CS) CS = {stage:'soultree', deck:'tree', parts:['roots','trunk','bark','branches','leaves','fruit'], mode:null, cur:null, kept:[], q:{}, walk:null, backs:true};
+  if (!CS) CS = {stage:'oak', deck:'tree', parts:['roots','trunk','bark','branches','leaves','fruit'], mode:null, cur:null, kept:[], q:{}, walk:null, backs:true};
   if (CS.deck !== 'tree' && !(cdDeck(CS.deck) || {})[CS.stage]) CS.deck = 'tree';
   return CS;
 }
@@ -4363,14 +4363,14 @@ function cdLive(){ htKeep(); if ($('#cd-full')) cdFull(); }
 
 // ---------------- SESSION PLANS ----------------
 let PS = null;
-function plNew(over){ return Object.assign({fmt:'one', min:45, stages:['soultree'], topic:'', gi:0, focus:'', ppart:'', pkey:'', seed:uid(), off:{}, name:'', id:null}, over || {}); }
+function plNew(over){ return Object.assign({fmt:'one', min:45, stages:['oak'], topic:'', gi:0, focus:'', ppart:'', pkey:'', seed:uid(), off:{}, name:'', id:null}, over || {}); }
 function plState(){ if (!PS) PS = plNew(); return PS; }
 const plFmt = id => (PLG().formats || []).find(f => f.id === id) || PLG().formats[0];
 const plLine = x => cdTxt(x);
-const plAgeKey = st => st === 'soultree' ? 'adult' : st;
+const plAgeKey = st => st === 'oak' ? 'adult' : st;
 function plStages(S){
   const order = CD_AGES, sel = order.filter(x => (S.stages || []).includes(x));
-  const list = sel.length ? sel : ['soultree'];
+  const list = sel.length ? sel : ['oak'];
   if (S.fmt !== 'family') return {main: list[0], older: null, all: [list[0]]};
   return {main: list[0], older: list.length > 1 ? list[list.length - 1] : null, all: list};
 }
@@ -4394,7 +4394,7 @@ function plPractices(S){
 function plPractice(S){
   const list = plPractices(S); if (!list.length) return null;
   const it = list.find(x => x.key === S.pkey) || list[cdShuffle(list.length, S.seed + '|p|' + plPracticePart(S))[0]];
-  const kid = plStages(S).main === 'sprout', h = it.how || [], useKid = kid && h.length >= 6;
+  const kid = plStages(S).main === 'maple', h = it.how || [], useKid = kid && h.length >= 6;
   const text = kid ? it.kidText : (it.text === 'LV' ? it.busy : it.text);
   return {key: it.key, name: kid ? it.kidName : it.name, text: text === 'LV' ? (kid ? it.kidBusy : it.busy) : text, why: useKid ? h[3] : h[0], steps: String((useKid ? h[4] : h[1]) || '').split('|').filter(Boolean), hard: useKid ? h[5] : h[2]};
 }
@@ -4418,14 +4418,14 @@ function plRefs(T, stage){ const st = T && HD ? (HTG().stages || []).find(s => s
 function plFromGuide(T, stage, gi){
   const refs = plRefs(T, stage); if (!refs.length) return null;
   const r = refs[Math.min(+gi || 0, refs.length - 1)], g = r.g;
-  const say = r.src === 'sprout' ? g.start : r.src === 'sapling' ? g.say : ((g.helper || {}).say);
-  const avoid = r.src === 'soultree' ? ((g.helper || {}).avoid) : g.avoid;
+  const say = r.src === 'maple' ? g.start : r.src === 'aspen' ? g.say : ((g.helper || {}).say);
+  const avoid = r.src === 'oak' ? ((g.helper || {}).avoid) : g.avoid;
   return {title: g.title, link: htLink(r), say: (say || []).slice(0, 3).map(htPlain), avoid: (avoid || []).slice(0, 3).map(htPlain)};
 }
 function plBuild(S){
   const P = PLG(), F = plFmt(S.fmt), ST = plStages(S), T = S.topic ? htTopic(S.topic) : null;
   const guideOnly = cdGuideOnly(T), deck = cdDeckFor(T), times = plTimes(S, F, guideOnly);
-  const voice = S.fmt === 'family' ? 'sprout' : ST.main, key = S.fmt === 'family' ? 'all' : ST.main;
+  const voice = S.fmt === 'family' ? 'maple' : ST.main, key = S.fmt === 'family' ? 'all' : ST.main;
   const br = (P.bridges || {})[voice] || [], prac = plPractice(S), pp = plPracticePart(S);
   const steps = [{kind:'open', name:'Arrive', min:times.open, say:((F.open || {})[key] || []).map(plLine)}];
   GV_PARTS.forEach((k, i) => {
@@ -4576,7 +4576,7 @@ function cdCheckCard(){
   return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>Card check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. ${have} topics have their own cards, ${only.length} stay guide only, ${need.length} use the tree cards for now. Send this to a chat for the next batch.</p>
    ${need.length ? `<p style="margin-top:8px"><b>Topics without cards yet:</b> ${esc(need.join('; '))}</p>` : ''}
    ${bad.length ? `<p style="margin-top:8px"><b>Deck problems:</b> ${esc(bad.join('; '))}</p>` : ''}
-   <p class="muted" style="font-size:14px;margin-top:8px">Heartwood and Old Growth cards wait until those tools are ready.</p></div>`;
+   <p class="muted" style="font-size:14px;margin-top:8px">Pine and Willow cards wait until those tools are ready.</p></div>`;
 }
 // ----- topic page: cards and plans for this topic -----
 function cdTopicCard(T){
@@ -4609,7 +4609,7 @@ function cdAct(a, v, t){
     case 'ht-cprint': cdPrint(cdPrintList(), cdStageDef(S.stage).name + ', ' + cdDeckName(S.deck), S.backs); return true;
     case 'ht-cprintkept': cdPrint(S.kept.slice(), 'Kept cards', S.backs); return true;
     case 'ht-tcards': { const T = htTopic(v), d = cdDeckFor(T); V = {tab:'talks', htv:'cards', htq:V.htq, htg:V.htg}; S.deck = d ? d.id : 'tree'; S.mode = null; S.parts = GV_PARTS.slice(); render(); return true; }
-    case 'ht-tplan': { const st = (V.htSeen || [])[0]; PS = plNew({topic: v, stages: CD_AGES.includes(st) ? [st] : ['soultree']}); V = {tab:'talks', htv:'plans', htq:V.htq, htg:V.htg}; render(); return true; }
+    case 'ht-tplan': { const st = (V.htSeen || [])[0]; PS = plNew({topic: v, stages: CD_AGES.includes(st) ? [st] : ['oak']}); V = {tab:'talks', htv:'plans', htq:V.htq, htg:V.htg}; render(); return true; }
     // plans
     case 'ht-pfmt': { const P = plState(); P.fmt = v; if (v !== 'family') P.stages = [plStages(P).main]; htKeep(); return true; }
     case 'ht-pmin': plState().min = +v; htKeep(); return true;
@@ -4933,7 +4933,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('sprout', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('sapling', {sav:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('sapling', {sarec:s.id}); else if (s.tool === 'st') go('soultree', {strep:s.clientId}); else go('sprout', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('soultree', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -4987,11 +4987,11 @@ document.addEventListener('click', async e => {
     case 'upd-seal': await sealUpdate(); break;
     case 'upd-cancel': V.upd = null; render(); break;
     case 'st-field': await stSetField(v === 'on'); break;
-    case 'st-new': { const n = $('#st-nn').value.trim(); if (!n){ $('#st-nn').focus(); return; } const c = {id:uid(), u:Date.now(), name:n, service:'Soul Tree', status:'active', followups:[], created:today(), st:{type:$('#st-nt').value, consent:null}}; DATA.clients.push(c); save(); go('soultree', {stc:c.id}); break; }
-    case 'st-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), st:{type:'me'}}; DATA.clients.push(c); save(); go('soultree', {stp:c.id}); break; }
-    case 'st-open': { const c = CL(v); if (!c) return; if (!c.st){ c.st = {type:'community', consent:null}; touch(c); save(); } go('soultree', {stp:v}); break; }
-    case 'st-consent': go('soultree', {stc:v}); break;
-    case 'st-consent-save': { const c = CL(v), h = (document.querySelector('input[name=st-ch]:checked') || {}).value; if (!h) return alert('Choose how consent was given, or Declined.'); if (h === 'agent' && !$('#st-cby').value.trim()){ $('#st-cby').focus(); return alert('Write who gave consent for them (relationship only).'); } c.st.consent = {how:h, by:$('#st-cby').value.trim(), date:$('#st-cd').value || today()}; touch(c); save(); go('soultree', {stp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); break; }
+    case 'st-new': { const n = $('#st-nn').value.trim(); if (!n){ $('#st-nn').focus(); return; } const c = {id:uid(), u:Date.now(), name:n, service:'Oak', status:'active', followups:[], created:today(), st:{type:$('#st-nt').value, consent:null}}; DATA.clients.push(c); save(); go('oak', {stc:c.id}); break; }
+    case 'st-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), st:{type:'me'}}; DATA.clients.push(c); save(); go('oak', {stp:c.id}); break; }
+    case 'st-open': { const c = CL(v); if (!c) return; if (!c.st){ c.st = {type:'community', consent:null}; touch(c); save(); } go('oak', {stp:v}); break; }
+    case 'st-consent': go('oak', {stc:v}); break;
+    case 'st-consent-save': { const c = CL(v), h = (document.querySelector('input[name=st-ch]:checked') || {}).value; if (!h) return alert('Choose how consent was given, or Declined.'); if (h === 'agent' && !$('#st-cby').value.trim()){ $('#st-cby').focus(); return alert('Write who gave consent for them (relationship only).'); } c.st.consent = {how:h, by:$('#st-cby').value.trim(), date:$('#st-cd').value || today()}; touch(c); save(); go('oak', {stp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); break; }
     case 'st-start': startST(v, t.dataset.c); break;
     case 'st-demo': stStart('quick', null, true); break;
     case 'st-next': stNext(); break;
@@ -5000,36 +5000,36 @@ document.addEventListener('click', async e => {
     case 'st-pause': stPause(); break;
     case 'st-ans': case 'st-impr': case 'st-safe': case 'st-plan': case 'st-tog': case 'st-yes': if (RUN) stToggle(t); break;
     case 'st-retry': STC_FAIL = false; stLoad(); render(); break;
-    case 'st-mhome': go('soultree', {stm:1}); break;
-    case 'st-ml': go('soultree', {stm:1, stml:+v}); break;
-    case 'st-mread': { const L = STM().lessons, i = +v; stmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !stmData().lessons[x.id]); if (nx >= 0) go('soultree', {stm:1, stml:nx}); else { go('soultree', {stm:1}); toast('Lesson marked as read.'); } break; }
-    case 'st-mq': go('soultree', {stm:1, stq:stmNewQuiz()}); break;
+    case 'st-mhome': go('oak', {stm:1}); break;
+    case 'st-ml': go('oak', {stm:1, stml:+v}); break;
+    case 'st-mread': { const L = STM().lessons, i = +v; stmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !stmData().lessons[x.id]); if (nx >= 0) go('oak', {stm:1, stml:nx}); else { go('oak', {stm:1}); toast('Lesson marked as read.'); } break; }
+    case 'st-mq': go('oak', {stm:1, stq:stmNewQuiz()}); break;
     case 'st-mpick': V.stq.ans[V.stq.order[V.stq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=st-mnext],[data-act=st-mfinish]'); if (nb) nb.disabled = false; } break;
     case 'st-mnext': if (V.stq.ans[V.stq.order[V.stq.i]] === undefined) break; V.stq.i++; render(); break;
     case 'st-mprev': if (V.stq.i > 0){ V.stq.i--; render(); } break;
     case 'st-mfinish': stmFinish(); break;
-    case 'st-msign': go('soultree', {stm:1, sts:1}); break;
+    case 'st-msign': go('oak', {stm:1, sts:1}); break;
     case 'st-msigned': { const nm = $('#stm-name').value.trim(); if (!nm){ $('#stm-name').focus(); break; } if (!$('#stm-ok').checked){ alert('Check the box to show you agree, then sign.'); break; }
-      stmData().signed = {v:STM().version, date:today(), name:nm}; save(); go('soultree', {stm:1}); toast(stReady() ? 'Signed. Soul Tree visits are open.' : 'Signed.'); break; }
+      stmData().signed = {v:STM().version, date:today(), name:nm}; save(); go('oak', {stm:1}); toast(stReady() ? 'Signed. Oak visits are open.' : 'Signed.'); break; }
     case 'st-mprint': stmPrint(); break;
-    case 'st-report': go('soultree', {strep:v || ''}); break;
-    case 'st-run-report': { if (!RUN) break; const cid = RUN.clientId; stKeep(); DATA.draft = RUN; save(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = ''; go('soultree', {strep:cid || ''}); toast('Your visit is paused and kept. Pick it up again from the Field Guide home.'); break; }
+    case 'st-report': go('oak', {strep:v || ''}); break;
+    case 'st-run-report': { if (!RUN) break; const cid = RUN.clientId; stKeep(); DATA.draft = RUN; save(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = ''; go('oak', {strep:cid || ''}); toast('Your visit is paused and kept. Pick it up again from the Field Guide home.'); break; }
     case 'st-where': V.stwhere = v; render(); break;
     case 'st-rep-save': { const c = CL(v), what = $('#str-what').value.trim(); if (!c) break; if (!what){ $('#str-what').focus(); break; }
       DATA.sessions.push({id:uid(), u:Date.now(), kind:'spr', tool:'st', clientId:c.id, date:today(), what, how:$('#str-how').value, at:$('#str-at').value || '', ref:$('#str-ref').value.trim()});
       touch(c); save(); render(); toast('Report record saved. It stays encrypted here, and is never printed.'); break; }
-    case 'st-form': go('soultree', {stform:v}); break;
+    case 'st-form': go('oak', {stform:v}); break;
     case 'st-form-save': { const c = CL(v), F = stForm(); if (!c || !F) break; const boxes = [...document.querySelectorAll('.stf-box')];
       if (boxes.some(b => !b.checked)) { alert('Every box needs a check before the form is complete. If they don\'t agree to something, stop and talk it through.'); break; }
       const nm = $('#stf-name').value.trim(); if (!nm){ $('#stf-name').focus(); break; }
-      c.st.consent = {how:'form', v:F.version, name:nm, by:$('#stf-by').value.trim(), date:today()}; touch(c); save(); go('soultree', {stp:c.id}); toast('Consent recorded.'); break; }
+      c.st.consent = {how:'form', v:F.version, name:nm, by:$('#stf-by').value.trim(), date:today()}; touch(c); save(); go('oak', {stp:c.id}); toast('Consent recorded.'); break; }
     case 'st-form-pdf': { const c = CL(v); if (c) stFormPdf(c); break; }
-    case 'st-visit': go('soultree', {stv:v}); break;
+    case 'st-visit': go('oak', {stv:v}); break;
     case 'st-copy-note': { const s = stFindVisit(); if (s) copy(stNote(s, V.stv === 'demo' ? s.person : CL(s.clientId))); break; }
     case 'st-print-note': { const s = stFindVisit(); if (s) stPrintNote(s, V.stv === 'demo' ? s.person : CL(s.clientId)); break; }
     case 'st-print-hand': { const s = stFindVisit(); if (s) stPrintHandout(s); break; }
-    case 'st-del-visit': if (confirm('Delete this visit?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('soultree', {stp:s.clientId}); else go('soultree'); } break;
-    case 'st-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('soultree'); } break;
+    case 'st-del-visit': if (confirm('Delete this visit?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('oak', {stp:s.clientId}); else go('oak'); } break;
+    case 'st-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('oak'); } break;
     case 'st-add-fu': { const c = CL(v), d = $('#st-fd').value, tx = $('#st-ft').value.trim(); if (!d){ $('#st-fd').focus(); return; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'st-imp-local': await stImportLocal(); break;
     case 'own-dl': download(v === 'codes' ? 'codes.js' : 'lib-' + v + '.js', draftFile(v)); break;
