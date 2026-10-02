@@ -196,6 +196,7 @@
 
   /* ---------- Today ---------- */
   function needProfile(where) {
+    if (C && C.lockedHtml) { var lh = C.lockedHtml(where); if (lh) return lh; }   // a tool's own "who's tending" screen (Oak, Rebrand Session 4)
     return '<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary" onclick="GGTend.act(\'openProfile\')">Open my profile</button></div><p class="gt-small"><a class="text-link" href="#" onclick="GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a></p></div>';
   }
   function anchorHtml(s, which) {

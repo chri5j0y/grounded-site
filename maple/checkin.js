@@ -530,5 +530,14 @@ const SAFETY = {
   introYoung: 'One last question. It helps grown-ups keep kids safe.'
 };
 
-window.MAPLE_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, safety: SAFETY };
+/* The weekly quick check-in (Rebrand Session 4): question 1 of every part
+   (Leaves question 1 is sleep, so it counts as Rest), plus the Leaves questions
+   tagged here by their place in each grade's list. Grades 2 and 4 ask about the
+   body instead of food in that spot, so they have no Nourish question. */
+const WEEKLY = {
+  K: { move: 1, nourish: 2 }, '1': { move: 1, nourish: 2 }, '2': { move: 1 },
+  '3': { move: 1, nourish: 2 }, '4': { move: 1 }, '5': { move: 1, nourish: 2 }
+};
+
+window.MAPLE_CHECKIN = { weekly: WEEKLY, version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, safety: SAFETY };
 })();

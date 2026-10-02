@@ -274,3 +274,257 @@ window.GGJourney.AGES.aspen = {
   }
  }
 };
+
+/* Maple's own words (Rebrand Session 4): the twelve weeks, anchors, and movement,
+   written two ways, for grades K to 2 and grades 3 to 5. Grounded stories stay
+   in the grown-up's view. */
+window.GGJourney.AGES.maple_k2 = {
+ "WEEKS": [
+  {
+   "intro": "Every big tree starts as a tiny seed. This week, we plant. Do one little thing for your tree each day.",
+   "q": "What do you want to grow this year?"
+  },
+  {
+   "intro": "Even trees rest at night. This week, we practice resting: quiet time, cozy bedtimes, and breaks when you feel tired.",
+   "q": "When did you feel tired this week? What helped?"
+  },
+  {
+   "intro": "Your body talks to you! A tummy ache, sleepy eyes, or wiggly legs are all ways it tells you something. This week, we listen.",
+   "q": "What did your body tell you this week?"
+  },
+  {
+   "intro": "Sometimes we forget. That's okay! Your tree is always happy when you come back.",
+   "q": "What helps you remember to take care of your tree?"
+  },
+  {
+   "intro": "Sometimes we carry big feelings inside, like a heavy backpack. This week, we set them down by talking about them.",
+   "q": "Was there a feeling that felt heavy this week?"
+  },
+  {
+   "intro": "This week, be the one who says hi first, gives the first hug, or asks someone to play.",
+   "q": "Who did you say hi to first this week?"
+  },
+  {
+   "intro": "Quiet, wonder, prayer, a song, a starry sky. This week, we look for the big, beautiful things that remind us we are not alone.",
+   "q": "What made you say wow this week?"
+  },
+  {
+   "intro": "You have been tending your tree for weeks now! Which little things feel easy now? Keep those.",
+   "q": "Which thing you do for your tree is your favorite?"
+  },
+  {
+   "intro": "Your ideas matter. This week, you help choose: a meal, a game, or a way to help.",
+   "q": "What did you get to choose this week?"
+  },
+  {
+   "intro": "Love grows when we share it. This week, we notice hugs, kind words, and helping hands.",
+   "q": "How did someone show you love this week?"
+  },
+  {
+   "intro": "Hope is believing good things can happen. This week, we look for good things, big and small.",
+   "q": "What good thing are you hoping for?"
+  },
+  {
+   "intro": "Look how much your tree grew! This week, we remember what helped and say goodbye to what we don't need anymore.",
+   "q": "What helped your tree grow the most?"
+  }
+ ],
+ "ANCHORS": {
+  "morning": {
+   "t": "Good morning, body",
+   "b": "When you wake up, stretch up tall like a tree and say good morning to your day.",
+   "s": "Stretch tall like a tree."
+  },
+  "evening": {
+   "t": "Bedtime good thing",
+   "b": "At bedtime, tell your grown-up one good thing from today.",
+   "s": "One good thing from today."
+  }
+ },
+ "LEVELS": [
+  {
+   "id": "gentle",
+   "name": "Gentle",
+   "desc": "Slow and easy moving, like stretching or walking."
+  },
+  {
+   "id": "moderate",
+   "name": "Moderate",
+   "desc": "Running and playing."
+  },
+  {
+   "id": "athletic",
+   "name": "Athletic",
+   "desc": "Sports, or running super fast."
+  }
+ ],
+ "LEVEL_MOVE": {
+  "gentle": {
+   "planting": {
+    "t": "Ten minutes of easy moving",
+    "b": "Stretch, walk, or dance to a song. <strong>Any moving counts.</strong>"
+   },
+   "rooting": {
+    "t": "Fifteen minutes",
+    "b": "A walk, a bike ride, or playing at the park."
+   },
+   "blooming": {
+    "t": "Twenty minutes",
+    "b": "A game outside, a dance party, or a family walk."
+   }
+  },
+  "moderate": {
+   "planting": {
+    "t": "Thirty minutes of play",
+    "b": "Tag, biking, jumping rope, or a game outside."
+   },
+   "rooting": {
+    "t": "Forty-five minutes of play",
+    "b": "Mix it up: a game one day, a bike ride the next, something new another day."
+   },
+   "blooming": {
+    "t": "An hour of active play",
+    "b": "Little bits add up across the day. <strong>Kids grow best with about an hour.</strong>"
+   }
+  },
+  "athletic": {
+   "planting": {
+    "t": "An hour of active play",
+    "b": "Practice, games, and free play all count. <strong>Warm up first.</strong>"
+   },
+   "rooting": {
+    "t": "An hour, plus a skill",
+    "b": "Keep playing hard, and practice one skill, like dribbling, jumping rope, or swimming."
+   },
+   "blooming": {
+    "t": "An hour, with a rest day",
+    "b": "Play hard, and keep one easy day each week so your body can rest and grow."
+   }
+  }
+ }
+};
+window.GGJourney.AGES.maple_35 = {
+ "WEEKS": [
+  {
+   "intro": "Every tree starts small. This week, you plant: pick a few small things to do for your tree each day, and let that be enough.",
+   "q": "What do you hope grows in you this season?"
+  },
+  {
+   "intro": "Your body and brain need recharging, just like a tablet. This week, notice what wears you out, and practice taking real breaks and getting good sleep.",
+   "q": "When did you need a break this week, and did you take one?"
+  },
+  {
+   "intro": "Your body notices things before your brain does: a tight tummy, tired eyes, a fast heartbeat. This week, practice listening to it.",
+   "q": "What did your body tell you this week?"
+  },
+  {
+   "intro": "Everyone forgets sometimes. Missing a day isn't failing. Coming back is the real practice, and your tree is always glad to see you.",
+   "q": "What helped you come back when you forgot?"
+  },
+  {
+   "intro": "Sometimes we carry worries nobody can see. This week, notice what you've been carrying, and share one thing with a grown-up you trust.",
+   "q": "What's been heavy for you lately?"
+  },
+  {
+   "intro": "Don't wait for someone else to go first. This week, be the one who reaches out: say hi, invite someone, or send a note.",
+   "q": "Who did you reach out to this week, and how did it feel?"
+  },
+  {
+   "intro": "You don't need fancy words. Quiet, wonder, prayer, music, nature, or your family's traditions can help you feel part of something bigger.",
+   "q": "When did you feel part of something bigger than yourself this week?"
+  },
+  {
+   "intro": "By now, some practices are starting to feel like yours. This week, notice which ones help most, and keep them.",
+   "q": "Which practice has started to feel like yours?"
+  },
+  {
+   "intro": "Your choices matter. This week, notice where you get to decide, and choose something that helps you grow.",
+   "q": "What do you want more of in your life?"
+  },
+  {
+   "intro": "Love isn't just a feeling. It's what we do: listening, helping, saying sorry, saying thank you. Notice the love around you this week.",
+   "q": "Where did you give or get love this week?"
+  },
+  {
+   "intro": "Hope is believing things can get better, and taking a small step to help them. Look for hope this week, and share it.",
+   "q": "What gives you hope right now?"
+  },
+  {
+   "intro": "Twelve weeks of tending! Look back at how your tree has grown. Keep what helped, and let go of what you don't need anymore.",
+   "q": "What grew in these twelve weeks, and what are you ready to let go of?"
+  }
+ ],
+ "ANCHORS": {
+  "morning": {
+   "t": "Stretch and breathe",
+   "b": "Before you start your day, stretch up tall and take one slow breath.",
+   "s": "Stretch tall. One slow breath."
+  },
+  "evening": {
+   "t": "Good thing, let it go",
+   "b": "At bedtime, name one good thing from today, and one thing you're ready to let go of.",
+   "s": "One good thing. One thing to let go."
+  }
+ },
+ "LEVELS": [
+  {
+   "id": "gentle",
+   "name": "Gentle",
+   "desc": "Easy moving, like stretching, walking, or dancing slow."
+  },
+  {
+   "id": "moderate",
+   "name": "Moderate",
+   "desc": "Moving that makes my heart beat faster."
+  },
+  {
+   "id": "athletic",
+   "name": "Athletic",
+   "desc": "I play sports or love to run hard."
+  }
+ ],
+ "LEVEL_MOVE": {
+  "gentle": {
+   "planting": {
+    "t": "Ten minutes of easy moving",
+    "b": "Stretch, walk, or dance to a song. <strong>Any moving counts.</strong>"
+   },
+   "rooting": {
+    "t": "Fifteen minutes",
+    "b": "A walk, a bike ride, or playing at the park."
+   },
+   "blooming": {
+    "t": "Twenty minutes",
+    "b": "A game outside, a dance party, or a family walk."
+   }
+  },
+  "moderate": {
+   "planting": {
+    "t": "Thirty minutes of play",
+    "b": "Tag, biking, jumping rope, or a game outside."
+   },
+   "rooting": {
+    "t": "Forty-five minutes of play",
+    "b": "Mix it up: a game one day, a bike ride the next, something new another day."
+   },
+   "blooming": {
+    "t": "An hour of active play",
+    "b": "Little bits add up across the day. <strong>Kids grow best with about an hour.</strong>"
+   }
+  },
+  "athletic": {
+   "planting": {
+    "t": "An hour of active play",
+    "b": "Practice, games, and free play all count. <strong>Warm up first.</strong>"
+   },
+   "rooting": {
+    "t": "An hour, plus a skill",
+    "b": "Keep playing hard, and practice one skill, like dribbling, jumping rope, or swimming."
+   },
+   "blooming": {
+    "t": "An hour, with a rest day",
+    "b": "Play hard, and keep one easy day each week so your body can rest and grow."
+   }
+  }
+ }
+};

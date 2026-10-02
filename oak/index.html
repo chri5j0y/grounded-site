@@ -896,6 +896,14 @@ html.ts-2 main{zoom:1.25;}
 .prof-warn{background:var(--bg-deep,#F2ECE0);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:14px;}
 .prof-msg{min-height:1.2em;color:#A33D2A;font-weight:600;font-size:14px;margin:10px 0 0;}
 .prof-small{font-size:14px;margin-top:12px;}
+.oak-people{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0 4px;flex-basis:100%;}
+.oak-person{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:96px;padding:12px 10px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);cursor:pointer;font:inherit;color:var(--ink);}
+.oak-person b{font-size:15px;}
+.oak-person:hover,.oak-person:focus-visible{border-color:var(--gold);}
+.oak-plus{width:52px;height:52px;border-radius:50%;border:1.5px dashed var(--line);display:grid;place-items:center;font-size:26px;color:var(--ink-soft);}
+.pbar-kids{flex-basis:100%;margin:8px 0 0;font-size:14px;color:var(--ink-soft);}
+.oak-who-card .pbar-who{display:flex;flex-direction:column;gap:4px;}
+.oak-who-card .pbar-act{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
 </style>
 <style>/* Grow With Grounded name in the header (session 20) */.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:var(--house,#8B5E1A);white-space:nowrap;}.foot-name{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;line-height:1.1;margin-top:8px;}@media (max-width:640px){.brand .brand-name{display:none;}}</style>
 <style>/* Five tabs (Rebrand Session 3): along the bottom on phones and in the app */
@@ -1043,8 +1051,8 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=r4p"></script>
-<script src="/shared/gg-journey.js?v=r4a"></script>
-<script src="/shared/gg-tend.js?v=r4a"></script>
+<script src="/shared/gg-journey.js?v=r4m"></script>
+<script src="/shared/gg-tend.js?v=r4m"></script>
 <script src="/oak/guides.js?v=r4p"></script>
 <script>
 const DOMAIN_DEFS = [
@@ -2764,6 +2772,8 @@ if (window.GGTend) GGTend.init({
   history: () => personalHistory || [],
   hasResults: () => !!window.currentClientEntry,
   toast: m => showToast(m),
+  profileHtml: () => oakProfileHtml(),
+  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button></div></div>`,
   store: {
     get: () => { if (!PROF || !window.GGP) return null; const d = GGP.data(PROF.id, 'oak'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
     save: () => (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve()
@@ -2772,7 +2782,7 @@ if (window.GGTend) GGTend.init({
     fullCheckin: () => startCheckin(), quickCheckin: () => startQuick(),
     results: () => showView('client-results'), progress: () => showView('client-progress'),
     plan: () => showView('client-growthplan'), about: () => showView('client-intro'),
-    createProfile: () => profCreateDialog(), openProfile: () => profUnlockDialog(),
+    createProfile: () => profCreateDialog(), openProfile: () => oakOpenAny(),
     lock: () => profLock(), textSize: () => cycleTextSize()
   }
 });
@@ -2855,10 +2865,57 @@ function renderProfileBar() {
       <div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Saving to your Grounded profile on this device. Unlocked until ${t}.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${young}</div>`;
   } else {
-    const n = window.GGP ? GGP.list().length + (JSON.parse(localStorage.getItem('oak:profiles') || '[]')).length : 0;
-    bar.innerHTML = `<div class="pbar pbar-off"><div class="pbar-who"><strong>${n ? 'Welcome back' : 'Save your progress on this device'}</strong><span>${n ? 'Open your Grounded profile to see your tree grow over time.' : 'Create a private Grounded profile, locked with your own passcode. It works across every Grounded tool.'}</span></div>
-      <div class="pbar-act">${n ? '<button type="button" class="btn btn-primary btn-sm" onclick="profUnlockDialog()">Open my profile</button>' : ''}<button type="button" class="btn ${n ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="profCreateDialog()">Create a profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div></div>`;
+    bar.innerHTML = `<div class="pbar pbar-off">${oakWhoHtml('bar')}</div>`;
   }
+}
+/* Who's tending today? (Rebrand Session 4). Every adult on this device keeps their own tree in
+   their own locked profile. Oak lists the adults only; kids' and middle schoolers' profiles stay
+   in Maple and Aspen. One adult skips the list and goes straight to their passcode. */
+function oakAdults() {
+  const list = window.GGP ? GGP.list().filter(p => p.age === 'adult').map(p => ({ id: p.id, name: p.name, avatar: p.avatar })) : [];
+  let old = []; try { old = JSON.parse(localStorage.getItem('oak:profiles') || '[]') || []; } catch (e) {}
+  return list.concat(old.map(p => ({ id: '', legacy: true, name: p.name, avatar: '' }))).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+}
+function oakYoung() { return window.GGP ? GGP.list().filter(p => p.age !== 'adult') : []; }
+function oakWhoHtml(where) {
+  const adults = oakAdults(), young = oakYoung();
+  const kidsLine = young.length ? `<p class="pbar-kids">Kids and middle schoolers tend their trees in <a href="/maple/">Maple</a> and <a href="/aspen/">Aspen</a>.</p>` : '';
+  if (!adults.length) {
+    return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create a private Grounded profile, locked with your own passcode. It works across every Grounded tool, and everyone on this device can have their own.</span></div>
+      <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create a profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${kidsLine}`;
+  }
+  if (adults.length === 1) {
+    const a = adults[0];
+    return `<div class="pbar-who"><strong>Welcome back${a.name ? ', ' + escapeHtml(a.name) : ''}</strong><span>Open your profile to see your tree and today's practices.</span></div>
+      <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="oakOpenWho(0)">Open my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="profCreateDialog()">Add a person</button></div>${kidsLine}`;
+  }
+  return `<div class="pbar-who"><strong>Who's tending today?</strong><span>Tap your picture, then enter your passcode. Each person's tree stays locked in their own profile.</span></div>
+    <div class="oak-people">${adults.map((a, i) => `<button type="button" class="oak-person" onclick="oakOpenWho(${i})">${GGAv.html(a.avatar, a.name, 52)}<b>${escapeHtml(a.name)}</b></button>`).join('')}
+      <button type="button" class="oak-person oak-add" onclick="profCreateDialog()"><span class="oak-plus" aria-hidden="true">+</span><b>Add a person</b></button></div>${kidsLine}`;
+}
+function oakOpenWho(i) {
+  const a = oakAdults()[i]; if (!a || !window.GGP) return;
+  const after = ok => { if (ok && window.currentClientEntry) setTimeout(savePersonalFile, 50); };
+  if (a.legacy) GGP.openDialog().then(after); else GGP.openDialog({ id: a.id }).then(after);
+}
+function oakOpenAny() {
+  const n = oakAdults().length;
+  if (n === 1) { oakOpenWho(0); return; }
+  if (!n) { profCreateDialog(); return; }
+  const b = document.getElementById('st-profile-bar'); if (b) b.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+// Switch person: lock this person first, then show who's tending.
+function oakSwitch() {
+  if (!window.GGP) return;
+  if (window.GGTend) GGTend.closeSettings();
+  GGP.lock().then(() => { showToast('Locked. Choose who is tending.'); const b = document.getElementById('st-profile-bar'); if (b) b.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+}
+function oakProfileHtml() {
+  const a = window.GGP && GGP.active();
+  if (!a) return `<section><h3>Your profile</h3><p>Open your profile, or create one, to keep your tree, practices, and check-ins on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();oakOpenAny()">Open a profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profCreateDialog()">Add a person</button></div></section>`;
+  return `<section><h3>Your profile</h3><p class="gt-who">${GGAv.html(a.avatar, a.name, 44)}<b>${escapeHtml(a.name)}</b></p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="oakSwitch()">Switch person</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profLock()">Lock</button></div>
+    <p class="gt-small">Everyone on this device can have their own tree. Switching locks yours first, so no one sees anyone else's.</p></section>`;
 }
 function profCreateDialog() {
   if (!window.GGP) return;
