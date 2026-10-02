@@ -1,0 +1,388 @@
+/* =====================================================================
+   GROUNDED . TENDING (shared)
+   The daily, weekly, and seasonal rhythm inside each tree app.
+   Built for Oak first (Rebrand Session 3), written so Aspen and Maple
+   can use it next with their own words and parts.
+
+   The rhythm
+   - Today: the practices from your growth plan, up to 3 per part,
+     grouped by part. Checking off any one waters the tree for the day.
+     Each practice has an "easier today" version and an optional note.
+     Morning and evening anchors sit at the top and bottom.
+   - Week: one of twelve weekly themes, a quick check-in (question 1 of
+     every part plus Move, Rest, and Nourish), a short reflection, and
+     the days tended calendar.
+   - Season: twelve weeks. A full check-in at week 12 or later adds a
+     ring and starts the next season.
+
+   The tree is gentle. A day or few missed and the leaves look dry. About
+   a week and it droops. Two weeks or more and it rests bare. It never
+   dies, and nothing is ever taken away. The first practice perks it up,
+   and a few days of tending bring it back to full.
+
+   Everything is saved inside the person's own locked Grounded profile
+   (GGP), under the tool's record, as "tend". Nothing leaves the device.
+
+   For tools
+     GGTend.init(cfg)        see the Oak page for a full example
+     GGTend.render()         redraw whatever tab is showing
+     GGTend.onFullCheckin(entry)   call when a full check-in finishes
+     GGTend.setPlan(plan)    {partKey: {selected:[names], custom:''}}
+     GGTend.plan()           the saved plan, or null
+     GGTend.state()          the saved record, or null
+     GGTend.openSettings()   the settings sheet behind the profile picture
+   ===================================================================== */
+(function () {
+  if (window.GGTend) return;
+  var J = window.GGJourney || {};
+  var C = null;            // the tool's config
+  var CAL = null;          // the month showing on the calendar {y, m}
+  var OPEN = {};           // which practice drawers are open
+
+  /* ---------- small helpers ---------- */
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function dstr(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function today() { return dstr(new Date()); }
+  function parse(s) { var p = String(s).split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function addDays(s, n) { var d = parse(s); d.setDate(d.getDate() + n); return dstr(d); }
+  function between(a, b) { return Math.round((parse(b) - parse(a)) / 86400000); }
+  function nice(s) { return parse(s).toLocaleDateString(undefined, { month: 'long', day: 'numeric' }); }
+  function rng(seed) { var a = seed >>> 0; return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function el(id) { return document.getElementById(id); }
+  function toast(m) { if (C && C.toast) C.toast(m); }
+  function itemId(key, name) { return key + '|' + name; }
+
+  /* ---------- the saved record ---------- */
+  function S() { return C && C.store ? C.store.get() : null; }
+  function blank() { return { v: 1, start: null, season: 1, rings: [], plan: null, level: null, days: {}, weeks: {} }; }
+  function ensure() {
+    var s = S(); if (!s) return null;
+    var b = blank(); Object.keys(b).forEach(function (k) { if (s[k] === undefined) s[k] = b[k]; });
+    // First time: the season starts on the latest full check-in, and the
+    // latest growth plan becomes Today's practices.
+    if (!s.start || !s.plan) {
+      var full = (C.history() || []).filter(function (e) { return e && e.type !== 'quick' && e.date; });
+      var last = full[full.length - 1];
+      if (!s.start && last) s.start = last.date;
+      if (!s.plan) { var withPlan = (C.history() || []).filter(function (e) { return e && e.growthPlan && countPlan(e.growthPlan); }); var lp = withPlan[withPlan.length - 1]; if (lp) s.plan = JSON.parse(JSON.stringify(lp.growthPlan)); }
+    }
+    return s;
+  }
+  function save() { return C.store.save(); }
+  function countPlan(p) { var n = 0; Object.keys(p || {}).forEach(function (k) { var x = p[k] || {}; n += (x.selected || []).length + (x.custom ? 1 : 0); }); return n; }
+  function items(s) {
+    var out = [];
+    C.parts.forEach(function (pt) {
+      var x = (s.plan || {})[pt.key]; if (!x) return;
+      (x.selected || []).forEach(function (name) { out.push({ key: pt.key, name: name, custom: false }); });
+      if (x.custom) out.push({ key: pt.key, name: x.custom, custom: true });
+    });
+    return out;
+  }
+  function day(s, d, make) { if (!s.days[d] && make) s.days[d] = { d: [], n: {}, e: [], a: [] }; return s.days[d] || null; }
+  function tended(s, d) { var x = s.days[d]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); }
+  function partsOn(s, d) { var x = s.days[d], set = {}; if (!x) return 0; (x.d || []).forEach(function (id) { set[id.split('|')[0]] = 1; }); return Object.keys(set).length; }
+
+  /* ---------- season and week ---------- */
+  function weekNo(s) { if (!s.start) return 0; return Math.floor(Math.max(0, between(s.start, today())) / 7) + 1; }
+  function weekShown(s) { return Math.min(12, Math.max(1, weekNo(s))); }
+  function stretch(w) { return (J.SEASON_ORDER || ['planting', 'rooting', 'blooming'])[Math.min(2, Math.floor((w - 1) / 4))]; }
+  function weekKey(s) { return 's' + (s.season || 1) + 'w' + weekNo(s); }
+
+  /* ---------- the gentle tree ---------- */
+  // 0 thriving, 1 a little dry, 2 drooping, 3 resting bare
+  function stateFrom(s, d) {
+    var last = null;
+    for (var i = 0; i <= 60; i++) { var x = addDays(d, -i); if (tended(s, x)) { last = i; break; } }
+    if (last === null) return Object.keys(s.days).some(function (k) { return k < d && tended(s, k); }) ? 3 : 0;
+    var missed = Math.max(0, last - 1);
+    return missed === 0 ? 0 : missed <= 3 ? 1 : missed <= 12 ? 2 : 3;
+  }
+  function health(s) {
+    var d = today();
+    if (!tended(s, d)) return stateFrom(s, d);
+    // Tended today: start from how it looked before today, then perk up.
+    var y = addDays(d, -1), any = Object.keys(s.days).some(function (k) { return k < d && tended(s, k); });
+    if (!any) return 0;   // a brand-new tree starts out well
+    var before = stateFrom(s, y);
+    var recent = 0; for (var i = 0; i < 3; i++) if (tended(s, addDays(d, -i))) recent++;
+    return Math.max(0, before - recent);
+  }
+  var LINES = [
+    'Your tree is thriving.',
+    'Your tree is a little dry. One practice will perk it up.',
+    'Your tree is drooping. It is still here, and one practice is a start.',
+    'Your tree is resting bare. Nothing is lost. Tend it once today and watch it wake up.'
+  ];
+  function treeSVG(h, parts, big) {
+    var R = rng(41), W = 320, H = 250, gy = 210, cx = 160, cy = 104;
+    var pal = [
+      ['#6F5517', '#A88A3A', '#D2B260'],   // thriving, Oak gold
+      ['#7C6A3C', '#AE9A64', '#CDBB86'],   // dry
+      ['#6B5634', '#8F7445', '#A88D5C'],   // drooping
+      null                                  // bare
+    ][h];
+    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3));
+    var drop = [0, 2, 9, 0][h];
+    var o = '<svg class="gt-tree-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(LINES[h]) + '" xmlns="http://www.w3.org/2000/svg">';
+    if (parts >= 6 && h === 0) o += '<circle cx="' + cx + '" cy="' + cy + '" r="112" fill="#F2B33D" opacity=".16"/>';
+    // ground: a thin grass line over soil, roots unseen below it
+    o += '<rect x="0" y="' + gy + '" width="' + W + '" height="' + (H - gy) + '" fill="#81654B"/><rect x="0" y="' + (gy + 18) + '" width="' + W + '" height="' + (H - gy - 18) + '" fill="#6E543E"/>';
+    o += '<path d="M0 ' + gy + 'H' + W + '" stroke="#5E7D3F" stroke-width="3"/>';
+    // trunk with its flare into the ground, and the main limbs
+    var tk = h === 3 ? '#5A4636' : '#4E2E12';
+    o += '<path d="M' + (cx - 30) + ' ' + gy + 'Q' + (cx - 14) + ' ' + (gy - 6) + ' ' + (cx - 12) + ' ' + (gy - 36) + 'L' + (cx - 9) + ' ' + (cy + 30) + 'H' + (cx + 9) + 'L' + (cx + 12) + ' ' + (gy - 36) + 'Q' + (cx + 14) + ' ' + (gy - 6) + ' ' + (cx + 30) + ' ' + gy + 'Z" fill="' + tk + '"/>';
+    o += '<path d="M' + (cx - 5) + ' ' + (cy + 34) + 'Q' + (cx - 30) + ' ' + (cy + 14) + ' ' + (cx - 66) + ' ' + (cy - 4) + 'M' + (cx + 5) + ' ' + (cy + 32) + 'Q' + (cx + 34) + ' ' + (cy + 12) + ' ' + (cx + 70) + ' ' + (cy - 8) + 'M' + cx + ' ' + (cy + 30) + 'Q' + (cx - 3) + ' ' + (cy - 4) + ' ' + (cx + 4) + ' ' + (cy - 40) + 'M' + (cx - 34) + ' ' + (cy + 12) + 'Q' + (cx - 46) + ' ' + (cy - 14) + ' ' + (cx - 40) + ' ' + (cy - 38) + 'M' + (cx + 38) + ' ' + (cy + 10) + 'Q' + (cx + 50) + ' ' + (cy - 16) + ' ' + (cx + 44) + ' ' + (cy - 36) + '" stroke="' + tk + '" stroke-width="' + (h === 3 ? 5 : 6) + '" fill="none" stroke-linecap="round"/>';
+    if (h === 3) o += '<path d="M' + (cx - 66) + ' ' + (cy - 4) + 'l-14 -10M' + (cx + 70) + ' ' + (cy - 8) + 'l16 -8M' + (cx + 4) + ' ' + (cy - 40) + 'l-8 -14M' + (cx - 40) + ' ' + (cy - 38) + 'l-10 -10M' + (cx + 44) + ' ' + (cy - 36) + 'l10 -12" stroke="' + tk + '" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    if (pal) {
+      var clumps = [];
+      for (var i = 0; i < 95; i++) {
+        var a = R() * Math.PI * 2, rr = Math.sqrt(R()), x = cx + Math.cos(a) * rr * 116, y = cy - 18 + Math.sin(a) * rr * 58;
+        clumps.push([x, y, 13 + R() * 9, R()]);
+      }
+      [0, 1, 2].forEach(function (layer) {
+        o += '<g fill="' + pal[layer] + '">';
+        clumps.forEach(function (c, i) {
+          if (c[3] > keep) return;
+          var dy = [6, 0, -5][layer] + drop * (0.4 + (c[1] - cy + 70) / 140), r = c[2] * [1.05, .8, .5][layer];
+          if (layer === 2 && i % 3) return;
+          o += '<circle cx="' + c[0].toFixed(1) + '" cy="' + (c[1] + dy).toFixed(1) + '" r="' + r.toFixed(1) + '"/>';
+        });
+        o += '</g>';
+      });
+      // acorns, one for each part tended today, when the tree is well
+      if (h <= 1) for (var k = 0; k < Math.min(6, parts); k++) {
+        var ax = cx - 80 + k * 32 + (k % 2) * 6, ay = cy + 36 - (k % 3) * 22;
+        o += '<g transform="translate(' + ax + ' ' + ay + ')"><ellipse cy="3" rx="4.2" ry="5.4" fill="#8A5A2B"/><path d="M-5 0Q0 -6 5 0Z" fill="#4E3418"/></g>';
+      }
+    }
+    // fallen leaves on the ground when dry or drooping
+    if (h === 1 || h === 2) for (var f = 0; f < (h === 1 ? 5 : 14); f++) o += '<ellipse cx="' + (cx - 110 + R() * 220).toFixed(1) + '" cy="' + (gy - 2 + R() * 4).toFixed(1) + '" rx="4" ry="2" fill="' + (h === 1 ? '#B79A55' : '#8F7445') + '" transform="rotate(' + Math.round(R() * 60 - 30) + ' ' + cx + ' ' + gy + ')"/>';
+    return o + '</svg>';
+  }
+
+  /* ---------- Today ---------- */
+  function needProfile(where) {
+    return '<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary" onclick="GGTend.act(\'openProfile\')">Open my profile</button></div><p class="gt-small"><a class="text-link" href="#" onclick="GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a></p></div>';
+  }
+  function anchorHtml(s, which) {
+    var A = (J.ANCHORS || {})[which]; if (!A) return '';
+    var x = day(s, today()), on = !!(x && x.a && x.a.indexOf(which) >= 0);
+    return '<div class="gt-anchor gt-' + which + '"><button type="button" class="gt-check' + (on ? ' on' : '') + '" aria-pressed="' + on + '" aria-label="' + esc(A.t) + (on ? ', done' : '') + '" onclick="GGTend.anchor(\'' + which + '\')"></button><div><b>' + esc(A.t) + '</b><p>' + esc(A.b) + '</p></div></div>';
+  }
+  function practiceHtml(s, it) {
+    var id = itemId(it.key, it.name), x = day(s, today()), done = !!(x && x.d.indexOf(id) >= 0), easy = !!(x && x.e.indexOf(id) >= 0);
+    var note = (x && x.n && x.n[id]) || '', info = it.custom ? {} : (C.practiceInfo(it.key, it.name) || {});
+    var safe = encodeURIComponent(id), open = OPEN[id] || '';
+    var body = '';
+    if (open === 'how' && info.guide) body = '<div class="gt-drawer">' + info.guide + '</div>';
+    if (open === 'note') body = '<div class="gt-drawer"><label class="gt-small" for="gt-n-' + safe + '">A note for today (optional)</label><textarea id="gt-n-' + safe + '" rows="2" onchange="GGTend.note(\'' + safe + '\', this.value)">' + esc(note) + '</textarea></div>';
+    return '<li class="gt-item' + (done ? ' done' : '') + '"><button type="button" class="gt-check' + (done ? ' on' : '') + '" aria-pressed="' + done + '" aria-label="' + esc(it.name) + (done ? ', done' : '') + '" onclick="GGTend.check(\'' + safe + '\')"></button>'
+      + '<div class="gt-item-main"><b>' + esc(it.name) + (it.custom ? ' <span class="gt-own">Your own</span>' : '') + '</b>'
+      + (easy && info.hard ? '<p class="gt-easy"><span>Easier today.</span> ' + esc(info.hard) + '</p>' : (info.desc ? '<p>' + esc(info.desc) + '</p>' : ''))
+      + (note && open !== 'note' ? '<p class="gt-note">' + esc(note) + '</p>' : '')
+      + '<div class="gt-acts">' + (info.hard ? '<button type="button" aria-pressed="' + easy + '" onclick="GGTend.easy(\'' + safe + '\')">' + (easy ? 'Back to the usual' : 'Easier today') + '</button>' : '')
+      + (info.guide ? '<button type="button" aria-expanded="' + (open === 'how') + '" onclick="GGTend.drawer(\'' + safe + '\',\'how\')">How to do this</button>' : '')
+      + '<button type="button" aria-expanded="' + (open === 'note') + '" onclick="GGTend.drawer(\'' + safe + '\',\'note\')">' + (note ? 'Edit note' : 'Add a note') + '</button></div>' + body + '</div></li>';
+  }
+  function renderToday() {
+    var box = el(C.els.today); if (!box) return;
+    var s = ensure();
+    if (!s) { box.innerHTML = needProfile('today'); return; }
+    var h = health(s), d = today(), x = day(s, d), list = items(s), parts = partsOn(s, d);
+    var seasonLine = s.start ? 'Season ' + (s.season || 1) + ', week ' + weekShown(s) + ' of 12' : 'Your season begins with your first full check-in';
+    var count = Object.keys(s.days).filter(function (k) { return tended(s, k) && (!s.start || k >= s.start); }).length;
+    var html = '<div class="gt-card gt-treecard"><div class="gt-tree" id="gt-tree">' + treeSVG(h, parts) + '</div><div class="gt-tree-side"><p class="gt-status">' + LINES[h] + '</p>'
+      + (parts >= 6 ? '<p class="gt-small">All six parts tended today. That is a full day.</p>' : parts ? '<p class="gt-small">' + parts + ' of 6 parts tended today.</p>' : '')
+      + '<dl class="gt-stats"><div><dt>Days tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + (s.rings || []).length + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p></div></div>';
+    if (!list.length) {
+      var hasCheck = (C.history() || []).length > 0;
+      html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose up to 3 practices for each part of your tree. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
+        + (hasCheck ? '<button class="btn btn-primary" onclick="GGTend.act(\'plan\')">Build my growth plan</button>' : '<button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button><button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>')
+        + '</div></div>';
+      box.innerHTML = html; return;
+    }
+    html += anchorHtml(s, 'morning');
+    C.parts.forEach(function (pt) {
+      var mine = list.filter(function (it) { return it.key === pt.key; });
+      if (!mine.length) return;
+      var lv = '';
+      if (pt.key === C.moveKey) {
+        var L = s.level && J.LEVEL_MOVE && J.LEVEL_MOVE[s.level] && J.LEVEL_MOVE[s.level][stretch(weekShown(s))];
+        lv = L ? '<div class="gt-level"><b>Move at your level: ' + esc(L.t) + '</b><p>' + L.b + '</p></div>' : '<p class="gt-small gt-level-set"><a class="text-link" href="#" onclick="GGTend.openSettings(\'level\');return false;">Set your movement level</a> to see movement fitted to you.</p>';
+      }
+      html += '<section class="gt-part" style="--pc:' + pt.color + '"><h3>' + (C.partIcon ? C.partIcon(pt.key) : '') + '<span>' + esc(pt.part) + '</span><small>' + esc(pt.name) + '</small></h3>' + lv + '<ul>' + mine.map(function (it) { return practiceHtml(s, it); }).join('') + '</ul></section>';
+    });
+    html += anchorHtml(s, 'evening');
+    html += '<div class="btn-row gt-foot"><button class="btn btn-secondary" onclick="GGTend.act(\'plan\')">Change my practices</button></div>';
+    box.innerHTML = html;
+  }
+
+  /* ---------- Week ---------- */
+  function weeklyQs() {
+    var Q = C.questions(), out = [];
+    C.parts.forEach(function (pt) {
+      var list = Q[pt.key] || []; if (!list.length) return;
+      out.push({ id: pt.key, key: pt.key, label: pt.part + (list[0].s ? ': ' + strandName(list[0].s) : ''), t: list[0].t });
+      list.forEach(function (q, i) { if (i && q.s) out.push({ id: pt.key + '.' + q.s, key: pt.key, label: pt.part + ': ' + strandName(q.s), t: q.t }); });
+    });
+    return out;
+  }
+  function strandName(sid) { return { move: 'Move', rest: 'Rest', nourish: 'Nourish' }[sid] || sid; }
+  function score(a) { var o = (C.answers || []).filter(function (x) { return x[0] === a; })[0]; return o ? o[2] : null; }
+  function prevWeek(s) {
+    var keys = Object.keys(s.weeks || {}).filter(function (k) { return k !== weekKey(s) && s.weeks[k] && s.weeks[k].ans; });
+    keys.sort(function (a, b) { return String(s.weeks[a].date).localeCompare(String(s.weeks[b].date)); });
+    return keys.length ? s.weeks[keys[keys.length - 1]] : null;
+  }
+  var EDIT = false;
+  function renderWeek() {
+    var box = el(C.els.week); if (!box) return;
+    var s = ensure();
+    if (!s) { box.innerHTML = needProfile('week'); return; }
+    if (!s.start) {
+      box.innerHTML = '<div class="gt-card gt-empty"><h3>Your season starts with a full check-in</h3><p>A season is twelve weeks. Each week brings a theme, a short check-in, and a question to sit with. It begins the day you finish your first full check-in.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button></div></div>' + calendarHtml(s);
+      return;
+    }
+    var w = weekShown(s), W = (J.WEEKS || [])[w - 1] || {}, st = (J.SEASONS || {})[stretch(w)] || {}, rec = (s.weeks || {})[weekKey(s)] || null;
+    var html = '<div class="gt-weekhead"><p class="gt-kicker">Season ' + (s.season || 1) + ', week ' + w + ' of 12</p><h2>' + esc(W.theme || '') + '</h2><p class="gt-stretch"><b>' + esc(st.name || '') + '.</b> ' + esc(st.line || '') + '</p></div>';
+    if (weekNo(s) > 12) html += '<div class="gt-card gt-due"><p><b>Your season check-in is ready.</b> Finish a full check-in to add a ring to your tree and begin a new season.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my season check-in</button></div></div>';
+    html += '<div class="gt-card"><p class="gt-intro">' + esc(W.intro || '') + '</p>' + (W.story ? '<p class="gt-story">From Grounded: <a class="text-link" href="' + esc(W.story.url) + '" target="_blank" rel="noopener">' + esc(W.story.title) + '</a>. <i>' + esc(W.story.line) + '</i></p>' : '') + '</div>';
+    // the quick weekly check-in
+    var Qs = weeklyQs(), pv = prevWeek(s);
+    if (rec && rec.ans && !EDIT) {
+      html += '<div class="gt-card"><h3>This week\'s check-in</h3><ul class="gt-wsum">' + Qs.map(function (q) {
+        var a = rec.ans[q.id], lab = ((C.answers || []).filter(function (x) { return x[0] === a; })[0] || [])[1] || 'Skipped', p = pv && pv.ans ? score(pv.ans[q.id]) : null, n = score(a);
+        var tr = p === null || n === null ? '' : n > p ? '<span class="gt-up">Up from last week</span>' : n < p ? '<span class="gt-down">Down from last week</span>' : '<span>Same as last week</span>';
+        return '<li><b>' + esc(q.label) + '</b><span>' + esc(lab) + '</span>' + tr + '</li>';
+      }).join('') + '</ul><div class="btn-row"><button class="btn btn-secondary" onclick="GGTend.editWeek()">Change my answers</button></div></div>';
+    } else {
+      html += '<div class="gt-card"><h3>This week\'s check-in</h3><p class="gt-small">' + esc(C.weekStem) + '</p><ol class="gt-wq">' + Qs.map(function (q, i) {
+        var cur = rec && rec.ans ? rec.ans[q.id] : null;
+        return '<li><p><b>' + esc(q.label) + '.</b> ' + esc(q.t) + '</p><div class="gt-opts" role="radiogroup" aria-label="' + esc(q.label) + '">' + (C.answers || []).map(function (o) {
+          return '<button type="button" role="radio" aria-checked="' + (cur === o[0]) + '" data-q="' + esc(q.id) + '" data-a="' + o[0] + '" onclick="GGTend.pick(this)">' + esc(o[1]) + '</button>';
+        }).join('') + '</div></li>';
+      }).join('') + '</ol><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.saveWeek()">Save this week</button></div></div>';
+    }
+    html += '<div class="gt-card"><h3>Reflection</h3><label class="gt-q" for="gt-refl">' + esc(W.q || 'What did you notice this week?') + '</label><textarea id="gt-refl" rows="4">' + esc(rec && rec.refl || '') + '</textarea><div class="btn-row"><button class="btn btn-secondary" onclick="GGTend.saveRefl()">Save my reflection</button></div></div>';
+    html += calendarHtml(s);
+    box.innerHTML = html;
+  }
+  function calendarHtml(s) {
+    var now = new Date(); if (!CAL) CAL = { y: now.getFullYear(), m: now.getMonth() };
+    var first = new Date(CAL.y, CAL.m, 1), days = new Date(CAL.y, CAL.m + 1, 0).getDate(), lead = first.getDay();
+    var name = first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+    var cells = '', n = 0, t = today();
+    for (var i = 0; i < lead; i++) cells += '<span class="gt-cal-pad"></span>';
+    for (var d = 1; d <= days; d++) {
+      var k = CAL.y + '-' + pad(CAL.m + 1) + '-' + pad(d), on = tended(s, k), six = partsOn(s, k) >= 6;
+      if (on) n++;
+      cells += '<span class="gt-cal-day' + (on ? ' on' : '') + (six ? ' six' : '') + (k === t ? ' today' : '') + '" aria-label="' + nice(k) + (six ? ', all six parts tended' : on ? ', tended' : '') + '">' + d + '</span>';
+    }
+    var wk = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(function (x) { return '<span class="gt-cal-wd" aria-hidden="true">' + x + '</span>'; }).join('');
+    return '<div class="gt-card gt-cal"><div class="gt-cal-head"><button type="button" onclick="GGTend.month(-1)" aria-label="Previous month">&lsaquo;</button><h3>' + esc(name) + '</h3><button type="button" onclick="GGTend.month(1)" aria-label="Next month">&rsaquo;</button></div>'
+      + '<div class="gt-cal-grid">' + wk + cells + '</div><p class="gt-small">' + n + ' day' + (n === 1 ? '' : 's') + ' tended this month. A filled day means you tended your tree. A ring means all six parts.</p></div>';
+  }
+
+  /* ---------- Season ---------- */
+  function ringsSVG(n, w) {
+    var o = '<svg class="gt-rings" viewBox="0 0 200 200" role="img" aria-label="' + n + ' ring' + (n === 1 ? '' : 's') + '" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="96" fill="#C9A06A"/><circle cx="100" cy="100" r="96" fill="none" stroke="#5A3A1E" stroke-width="6"/>';
+    var total = Math.max(n + 1, 2), step = 80 / total;
+    for (var i = 1; i <= n; i++) o += '<circle cx="100" cy="100" r="' + (12 + step * i).toFixed(1) + '" fill="none" stroke="#8A5A2B" stroke-width="2.4"/>';
+    var r = 12 + step * (n + 1), frac = Math.min(1, w / 12), c = 2 * Math.PI * r;
+    o += '<circle cx="100" cy="100" r="' + r.toFixed(1) + '" fill="none" stroke="#8A5A2B" stroke-width="4" opacity=".18"/>';
+    o += '<circle cx="100" cy="100" r="' + r.toFixed(1) + '" fill="none" stroke="#6B3F1C" stroke-width="4" stroke-linecap="round" stroke-dasharray="' + (c * frac).toFixed(1) + ' ' + c.toFixed(1) + '" transform="rotate(-90 100 100)"/>';
+    return o + '<circle cx="100" cy="100" r="6" fill="#8A5A2B"/></svg>';
+  }
+  function renderSeason() {
+    var box = el(C.els.season); if (!box) return;
+    var s = ensure(), hist = C.history() || [];
+    var html = '';
+    if (s && s.start) {
+      var w = weekShown(s), due = weekNo(s) >= 12, n = (s.rings || []).length;
+      html += '<div class="gt-card gt-seasoncard"><div>' + ringsSVG(n, w) + '</div><div><p class="gt-kicker">Season ' + (s.season || 1) + '</p><h2>Week ' + w + ' of 12</h2><p>This season began ' + nice(s.start) + '. ' + (n ? 'Your tree has ' + n + ' ring' + (n === 1 ? '' : 's') + ', one for each season you have finished.' : 'Finish this season with a full check-in to add your first ring.') + '</p>'
+        + (due ? '<p class="gt-due-line"><b>Your season check-in is ready.</b> A full check-in now adds a ring and begins a new season.</p>' : '<p class="gt-small">The full check-in comes due at week 12. You can check in anytime.</p>') + '</div></div>';
+    } else if (s) {
+      html += '<div class="gt-card"><h2>Your first season</h2><p>A season is twelve weeks of tending, from Planting to Rooting to Blooming. It begins the day you finish your first full check-in. Every season you finish adds a ring to your tree.</p></div>';
+    } else html += needProfile('season');
+    html += '<div class="btn-row gt-season-acts"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin a full check-in</button><button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>'
+      + (C.hasResults() ? '<button class="btn btn-secondary" onclick="GGTend.act(\'results\')">My latest results</button>' : '')
+      + '<button class="btn btn-secondary" onclick="GGTend.act(\'progress\')">My progress over time</button></div>';
+    if (hist.length) html += '<div class="gt-card"><h3>Your check-ins</h3><ul class="gt-hist">' + hist.slice().reverse().slice(0, 8).map(function (e) { return '<li><b>' + nice(e.date) + '</b><span>' + (e.type === 'quick' ? 'Quick check-in' : 'Full check-in') + '</span></li>'; }).join('') + '</ul></div>';
+    box.innerHTML = html;
+  }
+
+  /* ---------- settings, behind the profile picture ---------- */
+  function openSettings(focus) {
+    var s = ensure(), a = window.GGP && GGP.active();
+    var old = el('gt-settings'); if (old) old.remove();
+    var R = window.GGApp && GGApp.remind, can = R && R.can && R.can(), rem = can ? R.get(C.tool) : null;
+    var lv = (J.LEVELS || []).map(function (L) { return '<label class="gt-radio"><input type="radio" name="gt-level" value="' + L.id + '"' + (s && s.level === L.id ? ' checked' : '') + (s ? '' : ' disabled') + ' onchange="GGTend.setLevel(this.value)"><span><b>' + esc(L.name) + '</b>' + esc(L.desc) + '</span></label>'; }).join('');
+    var html = '<div class="gt-sheet-back" id="gt-settings" role="dialog" aria-modal="true" aria-labelledby="gt-set-title" onclick="if(event.target===this)GGTend.closeSettings()"><div class="gt-sheet">'
+      + '<div class="gt-sheet-head"><h2 id="gt-set-title">Profile and settings</h2><button type="button" class="gt-x" onclick="GGTend.closeSettings()" aria-label="Close">&times;</button></div>'
+      + (a ? '<section><h3>Your profile</h3><p class="gt-who">' + (window.GGAv ? GGAv.html(a.avatar, a.name, 44) : '') + '<b>' + esc(a.name) + '</b></p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.openDialog()">Switch profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'lock\')">Lock</button></div></section>'
+        : '<section><h3>Your profile</h3><p>Create a private profile to keep your tree, your practices, and your check-ins on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'openProfile\')">Open my profile</button></div></section>')
+      + '<section id="gt-set-level"><h3>Movement level</h3><p class="gt-small">Shapes the movement shown with your Leaves practices. Change it anytime.</p>' + lv + (s ? '' : '<p class="gt-small">Open your profile to choose a level.</p>') + '</section>'
+      + '<section><h3>Daily reminder</h3>' + (can ? '<label class="gt-switch"><input type="checkbox"' + (rem && rem.on ? ' checked' : '') + ' onchange="GGTend.remind(this.checked)"> Remind me to tend my tree</label><label class="gt-small" for="gt-rtime">Time</label> <input type="time" id="gt-rtime" value="' + esc((rem && rem.time) || '08:00') + '" onchange="GGTend.remind(null)">' : '<p class="gt-small">Daily reminders come with the ' + esc(C.toolName) + ' phone app. They are set on your phone, and nothing is sent to a server.</p>') + '</section>'
+      + '<section><h3>Reading and display</h3><div class="btn-row">' + (window.GGRead && GGRead.settings ? '<button class="btn btn-secondary btn-sm" onclick="GGRead.settings()">Read aloud voice</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.act(\'textSize\')">Text size</button><button class="btn btn-secondary btn-sm" onclick="GGTend.theme()">Light or dark</button></div></section>'
+      + '<section><h3>Your records</h3><div class="btn-row">' + (a ? '<button class="btn btn-secondary btn-sm" onclick="GGP.backup()">Download a backup</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'progress\')">Save or load a results file</button></div><p class="gt-small">Everything stays on this device. To delete a profile and everything in it, open Picture, passcode, and more.</p></section>'
+      + '<section><h3>About</h3><p><a class="text-link" href="#" onclick="GGTend.closeSettings();GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a></p></section>'
+      + '</div></div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+    var sheet = el('gt-settings'), f = focus === 'level' ? el('gt-set-level') : sheet.querySelector('.gt-x');
+    if (focus === 'level' && f) f.scrollIntoView({ block: 'start' });
+    var x = sheet.querySelector('.gt-x'); if (x) x.focus();
+    sheet.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSettings(); });
+  }
+  function closeSettings() { var x = el('gt-settings'); if (x) x.remove(); }
+
+  /* ---------- actions ---------- */
+  function persist() { return save().catch(function () { toast('That did not save. Open your profile and try again.'); }); }
+  function perk() { var t = el('gt-tree'); if (!t) return; t.classList.remove('perk'); void t.offsetWidth; t.classList.add('perk'); }
+  var api = {
+    init: function (cfg) { C = cfg; },
+    render: function () { if (!C) return; renderToday(); renderWeek(); renderSeason(); },
+    act: function (name) { if (C.actions[name]) C.actions[name](); },
+    state: function () { return ensure(); },
+    plan: function () { var s = ensure(); return s ? s.plan : null; },
+    setPlan: function (p) { var s = ensure(); if (!s) return false; s.plan = JSON.parse(JSON.stringify(p)); persist(); renderToday(); return true; },
+    onFullCheckin: function (entry) {
+      var s = ensure(); if (!s) return null; var d = (entry && entry.date) || today(), msg = null;
+      if (!s.start) { s.start = d; s.season = 1; msg = 'Your first season has begun. Week 1 starts today.'; }
+      else if (weekNo(s) >= 12) { s.rings = (s.rings || []).concat([{ date: d, season: s.season || 1 }]); s.season = (s.season || 1) + 1; s.start = d; msg = 'A new ring for your tree. Season ' + s.season + ' begins today.'; }
+      persist(); api.render(); return msg;
+    },
+    check: function (safe) {
+      var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.d.indexOf(id), before = health(s);
+      if (i >= 0) x.d.splice(i, 1); else x.d.push(id);
+      persist(); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('Your tree is perking up.'); }
+      renderWeek();
+    },
+    anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); renderToday(); if (i < 0) perk(); renderWeek(); },
+    easy: function (safe) { var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.e.indexOf(id); if (i >= 0) x.e.splice(i, 1); else x.e.push(id); persist(); renderToday(); },
+    note: function (safe, v) { var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true); v = String(v || '').trim(); if (v) x.n[id] = v.slice(0, 600); else delete x.n[id]; persist(); },
+    drawer: function (safe, which) { var id = decodeURIComponent(safe); OPEN[id] = OPEN[id] === which ? '' : which; renderToday(); if (which === 'note' && OPEN[id]) { var t = el('gt-n-' + safe); if (t) t.focus(); } },
+    pick: function (b) { var g = b.parentNode; Array.prototype.forEach.call(g.children, function (x) { x.setAttribute('aria-checked', x === b ? 'true' : 'false'); }); },
+    editWeek: function () { EDIT = true; renderWeek(); EDIT = false; },
+    saveWeek: function () {
+      var s = ensure(); if (!s) return; var box = el(C.els.week), ans = {};
+      box.querySelectorAll('.gt-opts [aria-checked="true"]').forEach(function (b) { ans[b.getAttribute('data-q')] = b.getAttribute('data-a'); });
+      if (Object.keys(ans).length < weeklyQs().length) { toast('Answer each question, or choose Not sure.'); return; }
+      var k = weekKey(s), refl = (el('gt-refl') || {}).value; s.weeks[k] = Object.assign(s.weeks[k] || {}, { date: today(), ans: ans }); if (refl != null) s.weeks[k].refl = refl.trim();
+      persist(); renderWeek(); toast('Saved. See you next week.');
+    },
+    saveRefl: function () { var s = ensure(); if (!s) return; var k = weekKey(s), v = ((el('gt-refl') || {}).value || '').trim(); s.weeks[k] = Object.assign(s.weeks[k] || { date: today() }, { refl: v.slice(0, 4000) }); persist(); toast('Reflection saved.'); },
+    month: function (n) { if (!CAL) return; CAL.m += n; if (CAL.m < 0) { CAL.m = 11; CAL.y--; } if (CAL.m > 11) { CAL.m = 0; CAL.y++; } renderWeek(); },
+    setLevel: function (v) { var s = ensure(); if (!s) return; s.level = v; persist(); renderToday(); toast('Movement level saved.'); },
+    remind: function (on) {
+      var R = window.GGApp && GGApp.remind; if (!R) return; var cur = R.get(C.tool) || {}, t = (el('gt-rtime') || {}).value || cur.time || '08:00';
+      R.set(C.tool, { on: on === null ? !!cur.on : on, time: t, title: C.toolName, body: 'Your tree is ready for today.' });
+    },
+    theme: function () { var b = document.querySelector('.gg-theme'); if (b) b.click(); },
+    openSettings: openSettings, closeSettings: closeSettings,
+    health: function () { var s = ensure(); return s ? health(s) : 0; },
+    treeSVG: treeSVG, _week: function () { var s = ensure(); return s ? weekNo(s) : 0; }
+  };
+  window.GGTend = api;
+})();
