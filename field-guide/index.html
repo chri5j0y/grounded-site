@@ -47,7 +47,17 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .lock::after{content:'';position:absolute;inset:14px;border:1px solid rgba(217,168,71,.35);border-radius:18px;pointer-events:none;}
 .lock-card{width:100%;max-width:420px;text-align:center;}
 .lock-tree{width:120px;height:auto;color:#D9A847;}
-.lock-word{width:200px;height:auto;color:#F4EBDA;margin-top:10px;}
+.lock-gwg{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:30px;line-height:1.1;color:#F4EBDA;margin-top:10px;}
+.gwg-w{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15pt;line-height:1;color:#2A1C12;height:auto !important;white-space:nowrap;}
+.pf{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:14px;font-weight:600;padding:5px 10px;border-radius:20px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;}
+.pf[aria-pressed="true"]{background:var(--sage,#5F7D48);border-color:var(--sage,#5F7D48);color:#fff;}
+.proof-row{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);}
+.proof-row:first-child{border-top:0;}
+.proof-row .pt{flex:1;min-width:0;}
+.proof-row .pc{display:flex;gap:6px;flex:none;}
+.proof-sec summary{cursor:pointer;font-weight:600;padding:10px 0;}
+.proof-sec summary span{color:var(--muted,#6B5A4D);font-weight:500;margin-left:6px;}
+@media(max-width:560px){.proof-row{flex-direction:column;gap:6px;}}
 .lock-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:28px;color:#E6D3A6;margin:6px 0 2px;}
 .lock-tm{font-size:12px;vertical-align:super;}
 .lock-sub{font-size:15px;color:rgba(244,235,218,.75);margin-bottom:22px;}
@@ -79,13 +89,13 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .bar-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:8px 14px;min-height:60px;}
 .brand{display:flex;align-items:center;gap:10px;color:#D9A847;text-decoration:none;margin-right:auto;min-width:0;}
 .brand .b-tree{height:40px;width:auto;flex:none;}
-.brand .b-word{height:17px;width:auto;color:#F4EBDA;flex:none;}
+.brand .b-gwg{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:#F4EBDA;white-space:nowrap;flex:none;}
 .brand .b-sep{color:rgba(244,235,218,.4);font-size:22px;}
 .brand .b-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:21px;color:#E6D3A6;white-space:nowrap;}
 .brand .b-name sup{font-size:10px;font-style:normal;}
 .bar-btn{background:rgba(255,255,255,.06);border:1px solid rgba(217,168,71,.4);color:#F4EBDA;border-radius:10px;min-width:44px;height:42px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:14px;}
 .bar-btn svg{width:20px;height:20px;}
-@media(max-width:640px){ .brand .b-word,.brand .b-sep{display:none;} .bar-btn .lbl{display:none;} .brand .b-tree{height:34px;} }
+@media(max-width:640px){ .brand .b-gwg{font-size:18px;} .brand .b-sep{display:none;} .bar-btn .lbl{display:none;} .brand .b-tree{height:34px;} }
 .tabs{background:var(--umber-2);}
 .tabs-in{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;}
 .tabs-in::-webkit-scrollbar{display:none;}
@@ -542,7 +552,7 @@ body.cd-noscroll{overflow:hidden;}
 <section class="lock" id="lock">
   <div class="lock-card">
     <svg class="lock-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><br>
-    <svg class="lock-word" viewBox="0 0 6024 772" role="img" aria-label="Grounded."><use href="#g-word"/></svg>
+    <div class="lock-gwg">Grow With Grounded</div>
     <div class="lock-title">Field Guide<span class="lock-tm">&trade;</span></div>
     <div id="lock-body"></div>
   </div>
@@ -551,7 +561,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="app" class="hide">
 <nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../tools.html">Tools</a><a href="../stories.html">Stories</a><a href="../about.html">About</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
   <header class="bar"><div class="bar-in">
-    <a class="brand" href="#" data-tab="home" aria-label="Field Guide home"><svg class="b-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><svg class="b-word" viewBox="0 0 6024 772" aria-hidden="true"><use href="#g-word"/></svg><span class="b-sep">/</span><span class="b-name">Field Guide<sup>&trade;</sup></span></a>
+    <a class="brand" href="#" data-tab="home" aria-label="Field Guide home"><svg class="b-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><span class="b-gwg">Grow With Grounded</span><span class="b-sep">/</span><span class="b-name">Field Guide<sup>&trade;</sup></span></a>
     <button class="bar-btn fg-theme" type="button" aria-label="Switch to dark mode"></button>
     <button class="bar-btn" data-menu="tools" aria-label="Tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span class="lbl">Tools</span></button>
     <button class="bar-btn" data-menu="me" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -870,7 +880,7 @@ const IC = {
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
-const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<svg viewBox="0 0 6024 772" aria-hidden="true"><use href="#g-word"/></svg>`;
+const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<span class="w gwg-w">Grow With Grounded</span>`;
 const CATS = [['start','Getting started'],['eol','End-of-life support'],['ceremony','Ceremonies'],['counsel','Spiritual guidance'],['grief','Grief & caregiver support'],['speaking','Speaking & training'],['self','For you'],['safety','Safety']];
 const catIcon = c => ({start:'start', eol:'eol', ceremony:'ceremony', counsel:'counsel', grief:'grief', speaking:'speaking', self:'self', safety:'safety'}[c]);
 const G = id => LIB.guides.find(g => g.id === id);
@@ -885,7 +895,7 @@ function vHome(){
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
   const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !stIsMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
-  const quick = [['first-conversation','Free first conversation','30 minutes'],['eol-first-visit','End-of-life first visit','60 to 90 minutes'],['vigil','Vigil sitting','Up to 8 hours'],['funeral-interview','Funeral family interview','60 to 90 minutes'],['wedding-interview','Wedding couple interview','60 to 90 minutes'],['counsel-first','Counseling first session','60 minutes'],['grief-first','Grief first session','60 minutes'],['debrief','After-session debrief','5 to 10 minutes']];
+  const quick = [['first-conversation','Free first conversation','30 minutes'],['eol-first-visit','End-of-life first visit','60 to 90 minutes'],['vigil','Vigil sitting','Up to 8 hours'],['funeral-interview','Funeral family interview','60 to 90 minutes'],['wedding-interview','Wedding couple interview','60 to 90 minutes'],['counsel-first','Spiritual guidance first session','60 minutes'],['grief-first','Grief first session','60 minutes'],['debrief','After-session debrief','5 to 10 minutes']];
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
@@ -1362,11 +1372,32 @@ function vOwner(){
    <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
+  ${vProof()}
   <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
   ${FLD ? spOwnerCard() : ''}
   ${FLD ? saOwnerCard() : ''}`;
 }
 
+
+// ---------------- OWNER: Proofreading ----------------
+// Every line of writing added to the site and tools, by session. The lines live in the Owner
+// library (OWN.proofreading), so new sessions add to them through Update a Library.
+// Checks are kept in this device's encrypted records (DATA.owner.proof), one box per person.
+function vProof(){
+  const P = OWN && OWN.proofreading; if (!P || !P.sections) return '';
+  const ck = (DATA.owner.proof = DATA.owner.proof || {}), who = P.people || ['Chris', 'Kayti'];
+  const only = !!V.proofOpen, done = id => who.every((w, i) => ck[id + '|' + i]);
+  let all = 0, fin = 0;
+  const secs = P.sections.map(sec => {
+    const n = sec.lines.length, d = sec.lines.filter(l => done(l[0])).length; all += n; fin += d;
+    const rows = sec.lines.filter(l => !only || !done(l[0])).map(l => `<div class="proof-row"><div class="pt">${esc(l[1])}</div><div class="pc">${who.map((w, i) => { const on = !!ck[l[0] + '|' + i]; return `<button type="button" class="pf" data-act="proof" data-v="${esc(l[0] + '|' + i)}" aria-pressed="${on}" aria-label="${esc(w)} checked: ${esc(l[1]).slice(0, 60)}">${on ? icon('check') : ''}${esc(w)}</button>`; }).join('')}</div></div>`).join('');
+    return `<details class="proof-sec"${(V.proofSecs || []).includes(sec.id) ? ' open' : ''} data-sec="${esc(sec.id)}"><summary>${esc(sec.title)}<span>${d} of ${n} done by both</span></summary>${rows || '<p class="muted" style="padding:8px 0">Every line here is checked by both.</p>'}</details>`;
+  }).join('');
+  return `<div class="card" id="proof-card"><h3>Proofreading</h3><p class="muted">${esc(P.intro || '')}</p>
+   <p style="margin-top:8px"><b>${fin} of ${all}</b> lines checked by both. Checks are saved on this device.</p>
+   <div class="row" style="margin-top:8px"><button class="btn btn-line btn-sm" data-act="proof-only">${only ? 'Show every line' : 'Show only lines still to check'}</button></div>
+   <div style="margin-top:8px">${secs}</div></div>`;
+}
 // ---------------- OAK GUIDE ----------------
 // Wording lives in the Field library (FLD.oakGuide), so it is sealed and edited through Update a Library.
 // People are ordinary People records with a .st profile. Visits are sessions with kind 'st', so backups merge them.
@@ -4965,6 +4996,9 @@ document.addEventListener('click', async e => {
     case 'or-print-cert': orPrintCert(); break;
     case 'or-print-agree': orPrintAgreement(); break;
     case 'own-hide': V.show = null; render(); break;
+    case 'proof': { const ck = (DATA.owner.proof = DATA.owner.proof || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save();
+      V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); const y = window.scrollY; render(); window.scrollTo(0, y); break; }
+    case 'proof-only': V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); V.proofOpen = !V.proofOpen; render(); break;
     case 'own-show': V.show = v; render(); break;
     case 'own-setup': { const d = ensureDraft(); await relink(d); await persist(); render(); toast('Setup is ready to upload.'); break; }
     case 'own-make': {

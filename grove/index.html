@@ -1010,7 +1010,7 @@ function practiceCard(G, id, season){
   let extra = '';
   if (sid==='body' || sid==='nourish') extra = kid ? '' : `<p class="note care">${sid==='body' ? 'Not medical advice. Check with your doctor if you have a health condition. Joint pain means stop.' : 'Everyone\'s needs are different. If you manage a health condition, or food has been hard for you, a doctor or dietitian can help you shape this.'}</p>`;
   if (sid==='mind') extra = kid ? `<p class="note care">If you ever feel unsafe, or so sad you want to hurt yourself, tell a grown-up right away.</p>` : `<p class="note care">If you're in crisis or thinking about ending your life, call or text <a href="tel:988">988</a> any time (US).</p>`;
-  if (sid==='spirit' && G.age==='adult') extra = `<p class="note">Want a deeper look at your spiritual health? <a href="${OAK_URL}" target="_blank" rel="noopener">Take the free Oak check-in</a>.</p>`;
+  if (sid==='spirit' && G.age==='adult') extra = `<p class="note">Want a deeper look at your spiritual health? <a href="${OAK_URL}" target="_blank" rel="noopener">Take the Oak check-in</a>.</p>`;
   const on = isDone(G, id), pin = p.pin ? LIB_BY_KEY[p.pin] : null, it = pin || libItem(sid, p.n);
   const change = pin ? `<button class="swap-btn" data-act="unpin" data-v="${id}">${icon('back')}Go back to the season's practice</button>`
     : `<button class="swap-btn" data-act="swap" data-v="${id}">${icon('swap')}Try a different one</button>`;
@@ -1173,7 +1173,7 @@ function viewTree(){
       ${self?`<button class="btn ${planted?'btn-line':'btn-gold'} btn-sm" style="margin-left:auto" data-act="toggle-part" data-v="${pt.id}">${planted?'Tending':'Tend this part'}</button>`:''}</header>
       ${sc && sc[pt.id] != null ? `<div class="mini wide" title="${sc[pt.id]} of 100"><i style="width:${Math.max(3,sc[pt.id])}%;background:var(--part)"></i></div>` : ''}
       ${body}
-      ${pt.id==='roots' && !kid?`<p class="note">For a deeper look at your spiritual health, try <a href="${OAK_URL}" target="_blank" rel="noopener">Oak</a>, a free check-in from Grounded.</p>`:''}
+      ${pt.id==='roots' && !kid?`<p class="note">For a deeper look at your spiritual health, try <a href="${OAK_URL}" target="_blank" rel="noopener">Oak</a>, a check-in from Grow With Grounded.</p>`:''}
       ${pt.id==='bark'?`<p class="note care">In crisis? Call or text <a href="tel:988">988</a> any time (US).</p>`:''}
       ${pt.id==='leaves' && !kid?`<p class="note care">Not medical advice. Check with your doctor before changing how you move or eat, especially with a health condition.</p>`:''}
       ${more && !kid?`<p class="note">More from Grounded: ${more}</p>`:''}</article>`; }).join('')}</div>`;
