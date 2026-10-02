@@ -4,19 +4,19 @@
 :root{
   --bg:#FAF7F2; --bg-deep:#F2ECE0; --ink:#2C1810; --ink-soft:#6B5A4D; --line:#E2D8C3; --card:#FFFFFF;
   --gold:#8B5E1A; --gold-deep:#6E4A14; --sage:#5F7D48;
-  --holy:#5B3A22; --meaning:#8B5E1A; --mind:#7D6B57; --community:#9A5B34; --body:#5F7D48; --hope:#C07A26;
+  --p-roots:#5B3A22; --p-trunk:#8B5E1A; --p-bark:#7D6B57; --p-branches:#9A5B34; --p-leaves:#5F7D48; --p-fruit:#C07A26;
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --page-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.16 0 0 0 0 0.08 0 0 0 0.32 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
     --bg:#1F1A14; --bg-deep:#171310; --ink:#F3EDE3; --ink-soft:#C2B6A4; --line:#3A322A; --card:#2A241D;
     --gold:#D9A847; --gold-deep:#C8923A; --sage:#9DB883;
-    --holy:#C99A73; --meaning:#D9A847; --mind:#B8A590; --community:#D6906A; --body:#9DB883; --hope:#E8A955;
+    --p-roots:#C99A73; --p-trunk:#D9A847; --p-bark:#B8A590; --p-branches:#D6906A; --p-leaves:#9DB883; --p-fruit:#E8A955;
     --page-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.92 0 0 0 0 0.8 0 0 0 0.3 -0.11'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }}:root[data-theme="dark"]{
     --bg:#1F1A14; --bg-deep:#171310; --ink:#F3EDE3; --ink-soft:#C2B6A4; --line:#3A322A; --card:#2A241D;
     --gold:#D9A847; --gold-deep:#C8923A; --sage:#9DB883;
-    --holy:#C99A73; --meaning:#D9A847; --mind:#B8A590; --community:#D6906A; --body:#9DB883; --hope:#E8A955;
+    --p-roots:#C99A73; --p-trunk:#D9A847; --p-bark:#B8A590; --p-branches:#D6906A; --p-leaves:#9DB883; --p-fruit:#E8A955;
     --page-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.92 0 0 0 0 0.8 0 0 0 0.3 -0.11'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 *{box-sizing:border-box;margin:0;padding:0;}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js"></script>
+<script src="/shared/gg-app.js?v=r4p"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -54,12 +54,12 @@
   --brown:#5A3414;
   --hill:#8EDB5E;
   --soil:#F3DDB3;
-  --p-holy:#FF6B6B;
-  --p-meaning:#FF9F1C;
-  --p-mind:#9B5DE5;
-  --p-community:#00B4D8;
-  --p-body:#6CCB3A;
-  --p-hope:#D62839;
+  --p-roots:#FF6B6B;
+  --p-trunk:#FF9F1C;
+  --p-bark:#9B5DE5;
+  --p-branches:#00B4D8;
+  --p-leaves:#6CCB3A;
+  --p-fruit:#D62839;
   --kid:'Fredoka','Barlow',system-ui,sans-serif;
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Barlow',system-ui,sans-serif;
@@ -92,12 +92,12 @@
     --brown:#E0B488;
     --hill:#3E8A2E;
     --soil:#4A3B28;
-    --p-holy:#FF8787;
-    --p-meaning:#FFB347;
-    --p-mind:#B98BF2;
-    --p-community:#48CAE4;
-    --p-body:#8BE05A;
-    --p-hope:#FF5D6C;
+    --p-roots:#FF8787;
+    --p-trunk:#FFB347;
+    --p-bark:#B98BF2;
+    --p-branches:#48CAE4;
+    --p-leaves:#8BE05A;
+    --p-fruit:#FF5D6C;
   }}:root[data-theme="dark"]{
     --bg:#1F1612;
     --bg-sky:#9D4018;
@@ -125,12 +125,12 @@
     --brown:#E0B488;
     --hill:#3E8A2E;
     --soil:#4A3B28;
-    --p-holy:#FF8787;
-    --p-meaning:#FFB347;
-    --p-mind:#B98BF2;
-    --p-community:#48CAE4;
-    --p-body:#8BE05A;
-    --p-hope:#FF5D6C;
+    --p-roots:#FF8787;
+    --p-trunk:#FFB347;
+    --p-bark:#B98BF2;
+    --p-branches:#48CAE4;
+    --p-leaves:#8BE05A;
+    --p-fruit:#FF5D6C;
   }
 *{box-sizing:border-box;}
 html{scroll-padding-top:env(safe-area-inset-top,0px);}
@@ -272,7 +272,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .ans-list{margin:8px 0 0;padding-left:18px;font-size:15px;line-height:1.5;}
 .ans-list li{margin:2px 0;}
 .ans-list .hard{font-weight:600;}
-.form-error{color:var(--p-hope);font-size:15px;margin:8px 0 0;min-height:1em;}
+.form-error{color:var(--p-fruit);font-size:15px;margin:8px 0 0;min-height:1em;}
 .big-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--kid);font-weight:500;font-size:23px;background:var(--leaf-deep);box-shadow:0 4px 0 #2B6B10;color:#fff;border:none;border-radius:999px;padding:14px 30px;min-height:58px;}
 .big-btn:hover{filter:brightness(1.07);}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .big-btn{background:var(--leaf);color:#0F2A0A;box-shadow:0 4px 0 #2B6B10;}}:root[data-theme="dark"] .big-btn{background:var(--leaf);color:#0F2A0A;box-shadow:0 4px 0 #2B6B10;}
@@ -346,7 +346,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .tip b{font-family:var(--serif);font-size:18px;color:var(--ink);display:block;}
 .step-nav{display:flex;gap:10px;align-items:center;margin-top:26px;flex-wrap:wrap;}
 .step-nav .big-btn{margin-left:auto;}
-.step-error{color:var(--p-hope);font-size:15px;width:100%;text-align:right;margin:0;min-height:1em;}
+.step-error{color:var(--p-fruit);font-size:15px;width:100%;text-align:right;margin:0;min-height:1em;}
 
 /* Tree pieces */
 .piece{transform-box:fill-box;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.3,1.4,.5,1),opacity .4s ease;}
@@ -407,7 +407,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .weeks button{border:2px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 14px;font-family:var(--kid);font-size:17px;}
 .weeks button[aria-pressed="true"]{border-color:var(--sky);background:var(--sky-soft);}
 .plan-bar .big-btn{margin-left:auto;}
-.plan-error{width:100%;margin:0;color:var(--p-hope);font-size:15px;min-height:1em;}
+.plan-error{width:100%;margin:0;color:var(--p-fruit);font-size:15px;min-height:1em;}
 
 /* Printable growth plan */
 .sheet{background:#fff;color:#233440;border:2px solid var(--line);border-radius:26px;padding:28px;max-width:780px;margin:0 auto;}
@@ -450,7 +450,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .hist th,.hist td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap;}
 .hist th{font-family:var(--sans);font-weight:600;color:var(--ink-soft);font-size:13.5px;}
 .hist td svg{width:28px;height:28px;display:inline-block;vertical-align:middle;}
-.danger-link{background:none;border:none;color:var(--p-hope);border-bottom:1px solid currentColor;padding:0;font-size:15px;}
+.danger-link{background:none;border:none;color:var(--p-fruit);border-bottom:1px solid currentColor;padding:0;font-size:15px;}
 .backup-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);align-items:center;}
 .backup-row p{flex-basis:100%;margin:0 0 4px;font-size:15px;color:var(--ink-soft);}
 
@@ -807,9 +807,9 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-growth.js"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js"></script>
+<script src="/shared/gg-profiles.js?v=r4p"></script>
 <script src="/maple/guides.js"></script>
-<script src="/maple/checkin.js"></script>
+<script src="/maple/checkin.js?v=r4p"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -833,7 +833,7 @@ const WX_SCORE = { sun: 2, cloud: 1, rain: 0 };
 
 const PARTS = [
   {
-    key: 'holy', plural: true, name: 'Roots', value: 'Holy', icon: 'roots', color: 'var(--p-holy)', hex: '#FF6B6B',
+    key: 'roots', plural: true, name: 'Roots', value: 'What grounds you', icon: 'roots', color: 'var(--p-roots)', hex: '#FF6B6B',
     k2: {
       tree: 'Roots hold a tree tight.',
       you: 'Your roots are the holy things that hold you close, like prayer and what your family believes.',
@@ -863,7 +863,7 @@ const PARTS = [
     }
   },
   {
-    key: 'meaning', name: 'Trunk', value: 'Meaning', icon: 'trunk', color: 'var(--p-meaning)', hex: '#FF9F1C',
+    key: 'trunk', name: 'Trunk', value: 'Purpose', icon: 'trunk', color: 'var(--p-trunk)', hex: '#FF9F1C',
     k2: {
       tree: 'The trunk helps a tree stand tall.',
       you: 'Your trunk is what makes you you.',
@@ -893,7 +893,7 @@ const PARTS = [
     }
   },
   {
-    key: 'mind', name: 'Bark', value: 'Mind', icon: 'bark', color: 'var(--p-mind)', hex: '#9B5DE5',
+    key: 'bark', name: 'Bark', value: 'Mind and feelings', icon: 'bark', color: 'var(--p-bark)', hex: '#9B5DE5',
     k2: {
       tree: 'Bark keeps a tree safe.',
       you: 'Your bark helps you with big feelings.',
@@ -923,7 +923,7 @@ const PARTS = [
     }
   },
   {
-    key: 'community', plural: true, name: 'Branches', value: 'Community', icon: 'branches', color: 'var(--p-community)', hex: '#00B4D8',
+    key: 'branches', plural: true, name: 'Branches', value: 'Relationships', icon: 'branches', color: 'var(--p-branches)', hex: '#00B4D8',
     k2: {
       tree: 'Branches reach out wide.',
       you: 'Your branches are your people.',
@@ -953,7 +953,7 @@ const PARTS = [
     }
   },
   {
-    key: 'body', plural: true, name: 'Leaves', value: 'Body', icon: 'leaf', color: 'var(--p-body)', hex: '#6CCB3A',
+    key: 'leaves', plural: true, name: 'Leaves', value: 'Body', icon: 'leaf', color: 'var(--p-leaves)', hex: '#6CCB3A',
     k2: {
       tree: 'Leaves drink up sunshine.',
       you: 'Your leaves are your body.',
@@ -983,7 +983,7 @@ const PARTS = [
     }
   },
   {
-    key: 'hope', name: 'Fruit', value: 'Hope', icon: 'fruit', color: 'var(--p-hope)', hex: '#D62839',
+    key: 'fruit', name: 'Fruit', value: 'Hope', icon: 'fruit', color: 'var(--p-fruit)', hex: '#D62839',
     k2: {
       tree: 'Fruit holds seeds for new trees.',
       you: 'Your fruit is hope.',
@@ -1024,63 +1024,63 @@ const FLAG_SIGNS = {
 };
 
 const ACTIVITIES = [
-  { id: 'thanks-note', part: 'holy', title: 'Thank-you note',
+  { id: 'thanks-note', part: 'roots', title: 'Thank-you note',
     k2: 'Draw a thank-you picture for someone and give it to them.',
     g35: ['Think of someone who has been kind to you.', 'Write or draw a thank-you note to them.', 'Give it to them in person and read it out loud if you can.'] },
-  { id: 'three-good', part: 'holy', title: 'Three good things',
+  { id: 'three-good', part: 'roots', title: 'Three good things',
     k2: 'At bedtime, tell your grown-up three good things from today.',
     g35: ['At bedtime, think back over your day.', 'Name three good things, big or small.', 'Say thank you for them, in your family\'s way.'] },
-  { id: 'quiet-together', part: 'holy', title: 'Quiet together',
+  { id: 'quiet-together', part: 'roots', title: 'Quiet together',
     k2: 'Sit quietly or pray with your family for one minute.',
     g35: ['Find a quiet spot with your family.', 'Share a prayer or sit still together for one minute.', 'Notice how your body feels afterward.'] },
 
-  { id: 'strength-detective', part: 'meaning', title: 'Strength detective',
+  { id: 'strength-detective', part: 'trunk', title: 'Strength detective',
     k2: 'Ask your grown-up: "What is something I am good at?"',
     g35: ['Ask a grown-up to watch for one of your strengths this week.', 'They tell you what they noticed, like "You were brave when..."', 'Write it down and keep it somewhere you can see it.'] },
-  { id: 'all-about-me', part: 'meaning', title: 'All about me',
+  { id: 'all-about-me', part: 'trunk', title: 'All about me',
     k2: 'Draw three things you love to do.',
     g35: ['Draw or write three things you love to do.', 'Add one thing you are learning to get better at.', 'Share it with someone.'] },
-  { id: 'helper-job', part: 'meaning', title: 'Helper job',
+  { id: 'helper-job', part: 'trunk', title: 'Helper job',
     k2: 'Pick one way to help at home or at school.',
     g35: ['Pick one job that helps your family or class.', 'Do it every day this week.', 'Notice how it feels to help.'] },
 
-  { id: 'name-it', part: 'mind', title: 'Name it to tame it',
+  { id: 'name-it', part: 'bark', title: 'Name it to tame it',
     k2: 'When a feeling gets big, say its name: "I feel mad."',
     g35: ['When a feeling gets big, stop for a moment.', 'Say its name out loud: "I feel mad" or "I feel worried."', 'Notice if it gets a little smaller.'] },
-  { id: 'feelings-weather', part: 'mind', title: 'Feelings weather',
+  { id: 'feelings-weather', part: 'bark', title: 'Feelings weather',
     k2: 'Tell your grown-up what weather your feelings are today.',
     g35: ['Once a day, check your feelings weather.', 'Is it sunny, cloudy, rainy, or stormy inside?', 'Tell a grown-up and say why.'] },
-  { id: 'balloon-breaths', part: 'mind', title: 'Balloon breaths',
+  { id: 'balloon-breaths', part: 'bark', title: 'Balloon breaths',
     k2: 'Breathe in slowly like a balloon. Let it out slowly. Three times.',
     g35: ['Put your hands on your belly.', 'Breathe in slowly and fill your belly like a balloon.', 'Let it out slowly. Do it three times.'] },
 
-  { id: 'kindness-three', part: 'community', title: 'Kindness three',
+  { id: 'kindness-three', part: 'branches', title: 'Kindness three',
     k2: 'Do three kind things this week and tell your grown-up.',
     g35: ['Plan three kind things to do this week.', 'Do them on purpose, for family, friends, or classmates.', 'Tell your grown-up about each one.'] },
-  { id: 'people-tree', part: 'community', title: 'My people tree',
+  { id: 'people-tree', part: 'branches', title: 'My people tree',
     k2: 'Draw a tree and put your people on the branches.',
     g35: ['Draw a big tree with lots of branches.', 'Write the names of your people on the branches.', 'Put a star by someone you can go to for help.'] },
-  { id: 'ask-to-play', part: 'community', title: 'Ask to play',
+  { id: 'ask-to-play', part: 'branches', title: 'Ask to play',
     k2: 'Ask someone new to play with you.',
     g35: ['Look for someone who might be alone.', 'Ask them to play or sit with you.', 'Try it again with someone new next week.'] },
 
-  { id: 'move-wiggle', part: 'body', title: 'Move and wiggle',
+  { id: 'move-wiggle', part: 'leaves', title: 'Move and wiggle',
     k2: 'Run, dance, or jump every day. Little bits add up.',
     g35: ['Find fun ways to move every day, like tag, dancing, or biking.', 'Little bits add up, like 10 minutes here and there.', 'Try to move for an hour in all.'] },
-  { id: 'screens-off', part: 'body', title: 'Screens off, lights low',
+  { id: 'screens-off', part: 'leaves', title: 'Screens off, lights low',
     k2: 'Turn off screens before bed and pick a calm bedtime story.',
     g35: ['Turn off screens an hour before bed.', 'Pick a calm bedtime routine, like a story, a bath, or a stretch.', 'Go to bed at about the same time each night.'] },
-  { id: 'water-check', part: 'body', title: 'Water check',
+  { id: 'water-check', part: 'leaves', title: 'Water check',
     k2: 'Drink a glass of water and notice how you feel.',
     g35: ['Drink a glass of water with each meal.', 'Keep a water bottle nearby.', 'Notice how your body feels.'] },
 
-  { id: 'hope-map', part: 'hope', title: 'Hope map',
+  { id: 'hope-map', part: 'fruit', title: 'Hope map',
     k2: 'Draw something you want to do, then draw how you will get there.',
     g35: ['Draw something you want to do or learn.', 'Draw two different paths to get there.', 'At the end, write "I can do it!"'] },
-  { id: 'looking-forward', part: 'hope', title: 'Looking forward',
+  { id: 'looking-forward', part: 'fruit', title: 'Looking forward',
     k2: 'Draw something fun that is coming up.',
     g35: ['Think of something good coming up soon.', 'Draw it or write about it.', 'Count down the days on your calendar.'] },
-  { id: 'tomorrow-wish', part: 'hope', title: 'Tomorrow wish',
+  { id: 'tomorrow-wish', part: 'fruit', title: 'Tomorrow wish',
     k2: 'Before bed, say one good thing you hope happens tomorrow.',
     g35: ['Before bed, think about tomorrow.', 'Say one good thing you hope happens.', 'In the morning, look for it.'] }
 ];
@@ -1172,7 +1172,7 @@ let GUEST = {};
 function profKids() { return window.GGP ? GGP.openIds().map(id => GGP.get(id)).filter(p => p && p.age === 'maple') : []; }
 function loadKids() {
   let kids = {};
-  try { kids = JSON.parse(localStorage.getItem(STORE)) || {}; if (window.GGRename) GGRename.fix(kids); } catch (e) { kids = {}; }
+  try { kids = JSON.parse(localStorage.getItem(STORE)) || {}; if (window.GGRename) GGRename.fix(kids); if (window.GGParts) GGParts.fix(kids); } catch (e) { kids = {}; }
   Object.keys(kids).forEach(id => { kids[id]._legacy = true; });
   profKids().forEach(p => {
     const d = GGP.data(p.id, 'maple');
@@ -1357,7 +1357,7 @@ function setGrade(g) {
   clearErr('start-error');
 }
 function renderPeek() {
-  const blurbs = { holy: 'Feeling safe and loved', meaning: 'What makes you you', mind: 'Big feelings', community: 'Your people', body: 'Sleep, food, and play', hope: 'Looking forward' };
+  const blurbs = { roots: 'Feeling safe and loved', trunk: 'What makes you you', bark: 'Big feelings', branches: 'Your people', leaves: 'Sleep, food, and play', fruit: 'Looking forward' };
   $('peek-list').innerHTML = PARTS.map(p => `<li>${dot(p)}<span><b>${p.name}</b>${blurbs[p.key]}</span></li>`).join('');
 }
 function startCheckin() {
@@ -1391,15 +1391,15 @@ function leavesMarkup() {
 }
 const LEAVES = leavesMarkup();
 const PIECES = {
-  holy: `<g stroke="#8A5A3B" stroke-linecap="round" fill="none"><path stroke-width="7" d="M160 238 C156 262 138 276 110 290"/><path stroke-width="7" d="M160 238 C166 264 186 278 214 292"/><path stroke-width="6" d="M160 240 C160 268 158 290 160 316"/><path stroke-width="4" d="M126 283 C116 290 104 300 96 312"/><path stroke-width="4" d="M199 285 C211 292 221 302 227 314"/><path stroke-width="3.5" d="M160 300 C150 306 144 312 140 321"/><path stroke-width="3.5" d="M110 290 C98 292 88 290 78 294"/><path stroke-width="3.5" d="M214 292 C226 294 236 292 246 297"/></g>`,
-  meaning: `<path d="M147 244 C151 205 153 168 155 116 L166 116 C168 168 170 205 175 244 Z" fill="#B98A5E" stroke="#8A6A4E" stroke-width="2"/>`,
-  mind: `<g stroke="#7A5236" stroke-linecap="round" fill="none" stroke-width="3"><path d="M155 230 C153 217 155 205 153 194"/><path d="M165 222 C167 210 165 200 166 188"/><path d="M158 172 C156 162 158 152 157 142"/><path d="M163 158 C164 150 163 140 164 130"/><ellipse cx="162" cy="206" rx="3" ry="4.5" stroke-width="2.5"/></g>`,
-  community: `<g stroke="#9A6E47" stroke-linecap="round" fill="none"><path stroke-width="8" d="M156 180 C140 168 124 156 104 136"/><path stroke-width="8" d="M165 162 C180 148 196 134 214 110"/><path stroke-width="6.5" d="M160 120 C160 106 161 94 162 80"/><path stroke-width="4.5" d="M122 154 C112 150 100 150 90 154"/><path stroke-width="4.5" d="M200 130 C210 131 222 134 234 140"/><path stroke-width="4" d="M150 160 C144 146 138 124 134 104"/><path stroke-width="4" d="M170 142 C176 126 184 104 192 88"/></g>`,
-  body: `<g>${LEAVES}</g>`,
-  hope: `<g>${[[112, 142], [206, 120], [170, 90], [140, 116], [228, 150], [92, 164], [186, 96]].map(([x, y]) => `<path d="M${x} ${y - 7} q2 -6 6 -7" stroke="#2B6B10" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="7.5" fill="#FF6B6B" stroke="#C0392B" stroke-width="1.2"/><circle cx="${x - 2.5}" cy="${y - 2.5}" r="2.2" fill="#FFFFFF" opacity="0.75"/>`).join('')}</g>`
+  roots: `<g stroke="#8A5A3B" stroke-linecap="round" fill="none"><path stroke-width="7" d="M160 238 C156 262 138 276 110 290"/><path stroke-width="7" d="M160 238 C166 264 186 278 214 292"/><path stroke-width="6" d="M160 240 C160 268 158 290 160 316"/><path stroke-width="4" d="M126 283 C116 290 104 300 96 312"/><path stroke-width="4" d="M199 285 C211 292 221 302 227 314"/><path stroke-width="3.5" d="M160 300 C150 306 144 312 140 321"/><path stroke-width="3.5" d="M110 290 C98 292 88 290 78 294"/><path stroke-width="3.5" d="M214 292 C226 294 236 292 246 297"/></g>`,
+  trunk: `<path d="M147 244 C151 205 153 168 155 116 L166 116 C168 168 170 205 175 244 Z" fill="#B98A5E" stroke="#8A6A4E" stroke-width="2"/>`,
+  bark: `<g stroke="#7A5236" stroke-linecap="round" fill="none" stroke-width="3"><path d="M155 230 C153 217 155 205 153 194"/><path d="M165 222 C167 210 165 200 166 188"/><path d="M158 172 C156 162 158 152 157 142"/><path d="M163 158 C164 150 163 140 164 130"/><ellipse cx="162" cy="206" rx="3" ry="4.5" stroke-width="2.5"/></g>`,
+  branches: `<g stroke="#9A6E47" stroke-linecap="round" fill="none"><path stroke-width="8" d="M156 180 C140 168 124 156 104 136"/><path stroke-width="8" d="M165 162 C180 148 196 134 214 110"/><path stroke-width="6.5" d="M160 120 C160 106 161 94 162 80"/><path stroke-width="4.5" d="M122 154 C112 150 100 150 90 154"/><path stroke-width="4.5" d="M200 130 C210 131 222 134 234 140"/><path stroke-width="4" d="M150 160 C144 146 138 124 134 104"/><path stroke-width="4" d="M170 142 C176 126 184 104 192 88"/></g>`,
+  leaves: `<g>${LEAVES}</g>`,
+  fruit: `<g>${[[112, 142], [206, 120], [170, 90], [140, 116], [228, 150], [92, 164], [186, 96]].map(([x, y]) => `<path d="M${x} ${y - 7} q2 -6 6 -7" stroke="#2B6B10" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="7.5" fill="#FF6B6B" stroke="#C0392B" stroke-width="1.2"/><circle cx="${x - 2.5}" cy="${y - 2.5}" r="2.2" fill="#FFFFFF" opacity="0.75"/>`).join('')}</g>`
 };
-const ANCHOR = { holy: [262, 290], meaning: [202, 206], mind: [96, 214], community: [42, 120], body: [252, 62], hope: [58, 60] };
-const DRAW_ORDER = ['holy', 'meaning', 'mind', 'community', 'body', 'hope'];
+const ANCHOR = { roots: [262, 290], trunk: [202, 206], bark: [96, 214], branches: [42, 120], leaves: [252, 62], fruit: [58, 60] };
+const DRAW_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
 
 function decorMarkup(key, w) {
   const [x, y] = ANCHOR[key];
@@ -1418,7 +1418,7 @@ function treeSVG(answers, opts) {
     const a = answers[key];
     const answered = !!a;
     const skipped = a && a.w === 'skip';
-    let cls = 'piece ' + (key === 'holy' ? 'roots' : '');
+    let cls = 'piece ' + (key === 'roots' ? 'roots' : '');
     let style = '';
     if (!answered) { cls += ' off'; }
     else if (skipped) { style = 'opacity:0.2'; }
@@ -1486,7 +1486,7 @@ function renderStep(first, mapleKey) {
     <div class="step-head">${dot(p)}<div><p class="step-count kid-text">Part ${S.step + 1} of 6</p><h2 class="step-name" style="color:${p.color}">${p.name}</h2></div></div>
     <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read aloud: ${S.readAloud ? 'on' : 'off'}</button><div class="voice-slot"></div></div>
     <div class="learn">
-      <div class="learn-card tree kid-text"><small>What ${p.key === 'meaning' ? 'a ' : ''}${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for a tree</small>${esc(g.tree)}</div>
+      <div class="learn-card tree kid-text"><small>What ${p.key === 'trunk' ? 'a ' : ''}${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for a tree</small>${esc(g.tree)}</div>
       <div class="learn-card you kid-text"><small>What your ${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for you</small>${esc(g.you)}</div>
     </div>
     <div class="qs">${qs.map((q, i) => `<div class="qcard${qa[i] ? ' answered' : ''}">
@@ -1692,7 +1692,7 @@ function thenNowHTML(prev, cur, name) {
    Maple is for checking in. The Grove is for daily practice.
    Each part's weather goes to one matching Grove question, inside the child's
    own locked profile. Sun, cloud, rain -> 5, 3, 1 (The Grove's kid scale). */
-const MAPLE_TO_GROVE = { holy: 'spirit.6', meaning: 'create.2', mind: 'mind.0', community: 'connect.1', body: 'body.2', hope: 'hope.0' };
+const MAPLE_TO_GROVE = { roots: 'spirit.6', trunk: 'create.2', bark: 'mind.0', branches: 'connect.1', leaves: 'body.2', fruit: 'hope.0' };
 function mapleGroveAns(ans) { const v = { sun: 5, cloud: 3, rain: 1 }, out = {}; PARTS.forEach(p => { const a = (ans || {})[p.key]; if (a && v[a.w]) out[MAPLE_TO_GROVE[p.key]] = v[a.w]; }); return out; }
 function groveKid() { const k = loadKids()[kidId(S.name)]; return k && k._pid && window.GGP && window.GGGrowth && GGP.isOpen(k._pid) ? k : null; }
 function groveBtnHTML(rec) {
@@ -2119,9 +2119,9 @@ function flyPiece(btn, part) {
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const tree = $('today-tree');
   if (!tree || !btn.animate) return;
-  const art = part === 'hope'
+  const art = part === 'fruit'
     ? '<circle cx="17" cy="19" r="10" fill="#FF6B6B" stroke="#C0392B" stroke-width="1.5"/><circle cx="13" cy="15" r="3" fill="#fff" opacity=".8"/><path d="M17 9q2-6 7-7" stroke="#2B6B10" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
-    : (part === 'community' || part === 'body')
+    : (part === 'branches' || part === 'leaves')
       ? '<path d="M17 32C9 26 7 12 17 2C27 12 25 26 17 32Z" fill="#6CCB3A" stroke="#2B6B10" stroke-width="1.8"/><path d="M17 30V10" stroke="#2B6B10" stroke-width="1.5"/>'
       : '<path d="M17 3C17 3 6 16 6 22A11 11 0 0 0 28 22C28 16 17 3 17 3Z" fill="#00B4D8" stroke="#0077B6" stroke-width="1.8"/><ellipse cx="13" cy="21" rx="2.5" ry="4" fill="#fff" opacity=".7"/>';
   const el = document.createElement('div');
@@ -2316,7 +2316,7 @@ function restoreFile(input) {
   const r = new FileReader();
   r.onload = () => {
     try {
-      const data = (window.GGRename ? GGRename.fix(JSON.parse(r.result)) : JSON.parse(r.result));
+      const data = (window.GGRename ? GGRename.fix(JSON.parse(r.result)) : JSON.parse(r.result)); if (window.GGParts) GGParts.fix(data);
       if (!data || data.app !== 'maple' || !data.kids) throw new Error('bad');
       const kids = loadKids();
       let added = 0;
@@ -2400,7 +2400,7 @@ function renderGuide() {
     <ul>
       <li><b>Pick an unhurried moment,</b> like a quiet afternoon, before bed, or a slow weekend morning.</li>
       <li><b>Stay close,</b> even if your child picks On my own. Sit nearby and be ready to talk.</li>
-      <li><b>Weave in your family's faith.</b> Roots uses the word holy so every family can fill it in with their own tradition: prayer, scripture, worship, blessings, or quiet. Share what holds you.</li>
+      <li><b>Weave in your family's faith.</b> Roots, what grounds you, leaves room for every family to fill it in with their own tradition: prayer, scripture, worship, blessings, or quiet. Share what holds you.</li>
       <li><b>Make the growth plan a family project.</b> Check in on their tree together each day, cheer when a new critter arrives, and celebrate when they finish.</li>
       <li><b>Each child gets their own check-in.</b> Brothers and sisters save separately by first name.</li>
       <li><b>Grandparents, foster parents, and other caregivers</b> can use Maple just the same.</li>
@@ -2413,7 +2413,7 @@ function renderGuide() {
       <li><b>Save a file now and then.</b> Clearing the browser or switching devices erases saved check-ins. Use Save everyone to a file under My kids and keep it somewhere safe.</li>
       <li><b>It fits the SEL skills you already teach.</b> Each part connects to CASEL's five competencies, noted under The six parts.</li>
       <li><b>If a child's answers worry you,</b> follow your school's usual process, like talking with your school counselor, and let the family know.</li>
-      <li><b>About faith.</b> Roots uses the word holy so children of any faith can answer from their own family's tradition. Check with your school about how it fits your classroom.</li>
+      <li><b>About faith.</b> Roots, what grounds you, leaves room for children of any faith to answer from their own family's tradition. Check with your school about how it fits your classroom.</li>
     </ul>
 
     <h3 class="grown" id="g-changes">When life changes</h3>

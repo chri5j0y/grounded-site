@@ -20,7 +20,7 @@
 
 const HOW = {
 
-// ---------- ROOTS (Holy) ----------
+// ---------- ROOTS (What grounds you) ----------
 spirit:{
  "Gratitude and Intention":["Naming what you're thankful for trains your eyes to find the good, and an intention gives your day a direction without turning it into a test.",
   "Before you pick up your phone, sit up and take one slow breath.|Name three specific things you're thankful for. \"The quiet kitchen\" beats \"my home.\"|Add one thing from yesterday that felt like a gift, even a small one.|Choose one intention, a way of being rather than a task: patient, present, brave.|Say it once more as you start your day.",
@@ -72,7 +72,7 @@ spirit:{
   "Asking big questions helps you learn and wonder.","Pick a grown-up you trust.|Ask a big question, like \"Why are we here?\" or \"What helps you feel peaceful?\"|Listen to their answer.","Feels awkward? Ask at bedtime or on a walk."]
 },
 
-// ---------- TRUNK (Meaning) ----------
+// ---------- TRUNK (Purpose) ----------
 create:{
  "Journal Often":["Ten minutes on the page helps your mind sort what you've seen and felt, so you don't carry it loose.",
   "Set a timer for ten minutes.|Start with a moment, not a theme: a hand, a word someone said, the light in a room.|Write without stopping or editing. No one else will read it.|When the timer ends, underline one line that surprised you.",
@@ -124,7 +124,7 @@ create:{
   "Knowing your superpower helps you be brave.","Name your superpower, like kindness, bravery, or helping.|Draw it on a card.|Keep it in your pocket or backpack.","Ask a grown-up what superpower they see in you."]
 },
 
-// ---------- BARK (Mind) ----------
+// ---------- BARK (Mind and feelings) ----------
 mind:{
  "Meditation":["A few minutes of sitting trains your attention and gives your nervous system a place to rest.",
   "Sit comfortably with your back supported, and set a timer for ten minutes.|Close your eyes or let them rest on the floor.|Follow your breath in and out.|When your mind wanders, and it will, notice and come back. That returning is the practice.|Show up again tomorrow.",
@@ -176,7 +176,7 @@ mind:{
   "Listening closely helps your body slow down.","Ring a bell or tap a glass.|Listen until the sound disappears.|Raise your hand when you can't hear it anymore.","Try it again with your eyes closed."]
 },
 
-// ---------- BRANCHES (Community) ----------
+// ---------- BRANCHES (Relationships) ----------
 connect:{
  "One Reach-Out a Day":["Small reaches keep relationships alive between the big moments.",
   "Think of one person each day.|Send a text, make a call, or write a note.|Keep it simple: \"Thinking of you today.\"|Don't wait for the perfect thing to say.",

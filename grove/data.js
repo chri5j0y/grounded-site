@@ -9,16 +9,16 @@
 // The same six parts as every Grounded check-in tool. Leaves holds three
 // strands (Move, Rest, Nourish) so The Grove can aim at the one that needs it.
 const PARTS = [
- { id:"roots", name:"Roots", sub:"Holy", color:"#8E5A2B", strands:["spirit"],
+ { id:"roots", name:"Roots", sub:"What grounds you", color:"#8E5A2B", strands:["spirit"],
    blurb:"What's sacred to you, and what holds you up. Any faith, or none.",
    kid:"Quiet, wonder, and feeling thankful." },
- { id:"trunk", name:"Trunk", sub:"Meaning", color:"#C27A1E", strands:["create"],
+ { id:"trunk", name:"Trunk", sub:"Purpose", color:"#C27A1E", strands:["create"],
    blurb:"What you live for, and the things you make along the way.",
    kid:"Making, building, and what you love to do." },
- { id:"bark", name:"Bark", sub:"Mind", color:"#6E5BB5", strands:["mind"],
+ { id:"bark", name:"Bark", sub:"Mind and feelings", color:"#6E5BB5", strands:["mind"],
    blurb:"Settling your thoughts and caring for your emotional health.",
    kid:"Big feelings, calm breaths, and kind thoughts." },
- { id:"branches", name:"Branches", sub:"Community", color:"#1F8A8F", strands:["connect"],
+ { id:"branches", name:"Branches", sub:"Relationships", color:"#1F8A8F", strands:["connect"],
    blurb:"Reaching toward people, and letting them reach you.",
    kid:"Family, friends, and people who care about you." },
  { id:"leaves", name:"Leaves", sub:"Body", color:"#3A9B58", strands:["body","rest","nourish"],

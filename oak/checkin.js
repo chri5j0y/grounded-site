@@ -4,8 +4,10 @@
    so both always ask the same thing. Edit questions here, not in index.html.
 
    The Grounded tree standard, version 1:
-   - Six parts in one order: Roots (holy), Trunk (meaning), Bark (mind),
-     Branches (community), Leaves (body), Fruit (hope).
+   - Six parts in one order: Roots (What grounds you), Trunk (Purpose),
+     Bark (Mind and feelings), Branches (Relationships), Leaves (Body),
+     Fruit (Hope). Code names match the tree part: roots, trunk, bark,
+     branches, leaves, fruit.
    - The number of questions per part fits the stage: Maple 4, Aspen 6,
      Oak 8.
    - Every question has a tip for the guide. Oak also gives each one
@@ -56,7 +58,7 @@ const STEMS = {
 };
 
 const Q = {
-  holy: [
+  roots: [
     { t: 'Felt connected to something larger than yourself, like God, the Holy, nature, or love?',
       tip: 'Let them name it in their own words. Use their word for the sacred, not yours.',
       why: 'Feeling part of something larger is one of the strongest roots a person can have.' },
@@ -82,7 +84,7 @@ const Q = {
       tip: 'Do not rush to reassure. Ask what it is about, if they want to say. Offer their own tradition\'s ways of release, or a faith leader they trust.',
       why: 'Guilt and shame can choke the roots. They can also be set down, with help.' }
   ],
-  meaning: [
+  trunk: [
     { t: 'Felt that your life matters?',
       tip: 'If they hesitate, ask who would notice if they were gone. Listen for hopelessness and move to safety if it is there.',
       why: 'Knowing your life matters is the core of the trunk.' },
@@ -108,7 +110,7 @@ const Q = {
       tip: 'This can be moral injury. Listen without judging. Their own faith leader, a chaplain, or a counselor can help them carry it.',
       why: 'Carrying something that went against your values is a heavy, real wound.' }
   ],
-  mind: [
+  bark: [
     { t: 'Been kind to yourself when you struggled?',
       tip: 'Ask how they would talk to a friend in the same spot. Then how they talk to themselves.',
       why: 'Self-kindness helps you bounce back. It is a skill, and it can grow.' },
@@ -134,7 +136,7 @@ const Q = {
       tip: 'Caregivers rarely say this first. Thank them for saying it, and ask who cares for them.',
       why: 'Caring for others drains you too. Noticing it is how you start to refill.' }
   ],
-  community: [
+  branches: [
     { t: 'Had at least one person you can be fully yourself with?',
       tip: 'Ask who it is. If no one comes to mind, gently note that, and come back to it in the growth plan.',
       why: 'One safe person can carry you through a great deal.' },
@@ -160,7 +162,7 @@ const Q = {
       tip: 'Ask which relationship, if they want to say. Listen for harm, not only disagreement.',
       why: 'Strain with someone close pulls on every other part of the tree.' }
   ],
-  body: [
+  leaves: [
     { t: 'Gotten enough restful sleep?', s: 'rest',
       tip: 'Ask what gets in the way of sleep. Pain, worry, and grief often do.',
       why: 'Sleep is the soil everything else grows in.' },
@@ -186,7 +188,7 @@ const Q = {
       tip: 'Ask which parts drain them and which parts connect them. Both are real.',
       why: 'Screens can connect us or drain us. Noticing which is the first step.' }
   ],
-  hope: [
+  fruit: [
     { t: 'Held on to hope, even when you couldn\'t know how things would turn out?',
       tip: 'Ask what they hope for now. Near the end of life, hope often changes shape. It does not disappear.',
       why: 'Hope that holds without knowing the ending is the deepest kind.' },
@@ -216,7 +218,7 @@ const Q = {
 
 // Work-focused set for staff and helping professionals.
 const STAFF = {
-  holy: [
+  roots: [
     { t: 'Felt connected to something sacred or larger than yourself in your work?',
       tip: 'Use their language: calling, purpose, God, the Holy, or simply love.',
       why: 'Work that touches the sacred can feed your roots, not only drain them.' },
@@ -242,7 +244,7 @@ const STAFF = {
       tip: 'Do not defend or explain. Ask what they saw that stays with them.',
       why: 'What you witness can shake your spirit. It deserves attention.' }
   ],
-  meaning: [
+  trunk: [
     { t: 'Felt that your work matters?',
       tip: 'Ask for a recent moment when it clearly mattered.',
       why: 'Knowing your work matters is the trunk of a working life.' },
@@ -268,7 +270,7 @@ const STAFF = {
       tip: 'This is moral distress. Name it. Ask whether there is someone at work they can raise it with safely.',
       why: 'Moral distress wears helpers down. Naming it is the first step.' }
   ],
-  mind: [
+  bark: [
     { t: 'Been able to set down hard moments after the workday?',
       tip: 'Ask what helps them leave work at work, and what follows them home.',
       why: 'Setting hard moments down lets your mind rest.' },
@@ -294,7 +296,7 @@ const STAFF = {
       tip: 'Ask what they carry most. Offer a small end-of-day ritual for setting it down.',
       why: 'Carrying others\' pain home is heavy. You can learn to set it down.' }
   ],
-  community: [
+  branches: [
     { t: 'Had a coworker you can be honest with?',
       tip: 'Ask who. If no one, gently note that.',
       why: 'One honest coworker can carry you through hard seasons at work.' },
@@ -320,7 +322,7 @@ const STAFF = {
       tip: 'Ask how it affects them, not who is to blame.',
       why: 'Team conflict drains energy from everything else.' }
   ],
-  body: [
+  leaves: [
     { t: 'Gotten restful sleep between workdays?',
       tip: 'Shift work and on-call often break sleep. Ask what would help most.',
       why: 'Sleep is how your body recovers from the work.' },
@@ -346,7 +348,7 @@ const STAFF = {
       tip: 'Ask without judgment. Offer their employee help program or the SAMHSA line if use is growing.',
       why: 'Numbing out helps for a night, then adds its own weight.' }
   ],
-  hope: [
+  fruit: [
     { t: 'Held on to hope about your work?',
       tip: 'Ask what keeps them going.',
       why: 'Hope keeps helpers in hard work.' },

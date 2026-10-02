@@ -95,8 +95,11 @@
   function readVault(id, raw) {
     var box = null; try { box = JSON.parse(localStorage.getItem(BOX + id)); } catch (e) {}
     if (!box) return Promise.resolve(blankVault());
-    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameGarden(Object.assign(blankVault(), rnFix(JSON.parse(dec.decode(b))))); });
+    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameParts(renameGarden(Object.assign(blankVault(), rnFix(JSON.parse(dec.decode(b)))))); });
   }
+  // The six parts rename (Rebrand Session 4): each tree app's record moves to the new part names.
+  // gg-app.js holds the rule (GGParts). The Grove's record is never touched, since its strands are not parts.
+  function renameParts(v) { var P = window.GGParts; if (P && v && typeof v === 'object') ['maple', 'aspen', 'oak'].forEach(function (t) { if (v[t] && typeof v[t] === 'object') P.fix(v[t]); }); return v; }
   // The old garden tool is now The Grove. A saved garden moves to the new key once.
   function renameGarden(v) { if (v.garden && !v.grove) v.grove = v.garden; delete v.garden; return v; }
   function writeVault(id, raw, data) {
@@ -203,7 +206,7 @@
     return passKey(pass, unb64(lp.salt)).then(function (k) {
       var box = JSON.parse(localStorage.getItem('oak:p:' + lp.id) || 'null');
       if (!box) return { avatar: '', history: [] };
-      return unseal(k, box).then(function (b) { return rnFix(JSON.parse(dec.decode(b))); });
+      return unseal(k, box).then(function (b) { var o = rnFix(JSON.parse(dec.decode(b))); return window.GGParts ? window.GGParts.fix(o) : o; });
     }).catch(function () { throw new Error('That passcode did not work. Try again.'); });
   }
   function retireLegacyOak(lp) {

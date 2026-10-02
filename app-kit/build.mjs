@@ -23,7 +23,7 @@ function build(id){
   // Every page loads the config just before the shared app foundation.
   for (const pg of config.pages) {
     const f = path.join(www, pg.endsWith('/') ? pg + 'index.html' : pg); let h = fs.readFileSync(f, 'utf8');
-    h = h.replace(/<script src="(\.\.\/|\/)shared\/gg-app\.js"><\/script>/, m => '<script src="/gg-app-config.js"></script>\n' + m);
+    h = h.replace(/<script src="(\.\.\/|\/)shared\/gg-app\.js(\?[^"]*)?"><\/script>/, m => '<script src="/gg-app-config.js"></script>\n' + m);
     fs.writeFileSync(f, h);
   }
   fs.writeFileSync(path.join(www, 'index.html'), `<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${a.start}"><title>${a.name}</title></head><body></body></html>\n`);

@@ -173,6 +173,43 @@
   window.GGRename = { id: rnId, fix: rnFix, storage: rnStorage };
   rnStorage();
 
+  /* ---------------- THE SIX PARTS RENAME (Oct 2026, Rebrand Session 4) ----------------
+     The six parts are named the same way everywhere, on screen and behind the scenes:
+     Roots (What grounds you), Trunk (Purpose), Bark (Mind and feelings),
+     Branches (Relationships), Leaves (Body), Fruit (Hope). Code names match the tree
+     part: roots, trunk, bark, branches, leaves, fruit. Records saved before used the old
+     code names. GGParts.fix brings a tree app's own records forward, on this device only.
+     Never run it on The Grove's records: The Grove's practice strands (mind, body, hope)
+     are not parts. Lines marked GG-PARTS-KEEP hold the old names on purpose. */
+  var PK = { holy: 'roots', meaning: 'trunk', mind: 'bark', community: 'branches', body: 'leaves', hope: 'fruit' }; // GG-PARTS-KEEP
+  var PK_VAL = { key: 1, part: 1, k: 1 };                 // fields that hold one part name
+  var PK_LIST = { unsure: 1, parts: 1, done: 1, s: 1, strong: 1, order: 1 }; // fields that hold a list of part names
+  var PK_NAME = { Holy: 'What grounds you', Meaning: 'Purpose', Mind: 'Mind and feelings', Community: 'Relationships' }; // GG-PARTS-KEEP
+  function pkHas(k) { return typeof k === 'string' && Object.prototype.hasOwnProperty.call(PK, k); }
+  function pkId(s) { return pkHas(s) ? PK[s] : s; }
+  function pkTag(s) {
+    // "holy|Prayer" (a practice id) and "p:holy" (a visit step) carry a part name in front.
+    if (typeof s !== 'string') return s;
+    var i = s.indexOf('|'); if (i > 0 && pkHas(s.slice(0, i))) return PK[s.slice(0, i)] + s.slice(i);
+    if (s.indexOf('p:') === 0 && pkHas(s.slice(2))) return 'p:' + PK[s.slice(2)];
+    return s;
+  }
+  function pkFix(x, depth) {
+    depth = depth || 0; if (!x || typeof x !== 'object' || depth > 40) return x;
+    if (Array.isArray(x)) { for (var i = 0; i < x.length; i++) { if (typeof x[i] === 'string') x[i] = pkTag(x[i]); else pkFix(x[i], depth + 1); } return x; }
+    var keys = Object.keys(x), allParts = keys.length > 0 && keys.every(pkHas);
+    keys.forEach(function (k) {
+      var v = x[k];
+      if (typeof v === 'string') v = x[k] = PK_VAL[k] ? pkId(pkTag(v)) : pkTag(v);
+      else if (Array.isArray(v) && PK_LIST[k]) v = x[k] = v.map(function (e) { return typeof e === 'string' ? pkId(e) : pkFix(e, depth + 1); });
+      else pkFix(v, depth + 1);
+      var nk = allParts ? PK[k] : pkTag(k);
+      if (nk !== k) { if (x[nk] == null) x[nk] = v; delete x[k]; }
+    });
+    return x;
+  }
+  window.GGParts = { id: pkId, tag: pkTag, fix: pkFix, name: function (n) { return Object.prototype.hasOwnProperty.call(PK_NAME, n) ? PK_NAME[n] : n; } };
+
   /* ---------------- LINKS ---------------- */
   function toolOf(url) {
     var m = /^\/([a-z-]+)\//.exec(url.pathname || '');
@@ -341,16 +378,16 @@
   /* ---------------- A CARD FROM AN ASPEN GUIDE VISIT ----------------
      Only a first name, the date, strong part names, and what the student chose to try. Never levels,
      notes, safety answers, the optional question, or a guide's or grown-up's name. */
-  var VPARTS = ['holy', 'meaning', 'mind', 'community', 'body', 'hope'];
+  var VPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
   function vclean(v) {
     if (!v || typeof v !== 'object') return null;
     var name = String(v.n || '').replace(/[<>]/g, '').trim().split(/\s+/)[0] || '';
     var d = String(v.d || ''); if (!/^\d{4}-\d\d-\d\d$/.test(d)) return null;
-    var strong = []; (Array.isArray(v.s) ? v.s : []).forEach(function (k) { if (VPARTS.indexOf(k) >= 0 && strong.indexOf(k) < 0) strong.push(k); });
+    var strong = []; (Array.isArray(v.s) ? v.s : []).forEach(function (k) { k = pkId(k); if (VPARTS.indexOf(k) >= 0 && strong.indexOf(k) < 0) strong.push(k); });
     var tries = []; (Array.isArray(v.t) ? v.t : []).forEach(function (t) {
-      if (!Array.isArray(t) || tries.length >= 4 || VPARTS.indexOf(t[0]) < 0) return;
+      if (!Array.isArray(t) || tries.length >= 4 || VPARTS.indexOf(pkId(t[0])) < 0) return;
       var a = String(t[1] || '').replace(/[<>]/g, '').slice(0, 60), b = String(t[2] || '').replace(/[<>]/g, '').slice(0, 240);
-      if (a) tries.push([t[0], a, b]);
+      if (a) tries.push([pkId(t[0]), a, b]);
     });
     if (!strong.length && !tries.length) return null;
     return { n: name.slice(0, 30), d: d, s: strong, t: tries };

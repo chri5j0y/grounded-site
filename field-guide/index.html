@@ -571,7 +571,7 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js"></script>
+<script src="../shared/gg-app.js?v=r4p"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../read.js"></script>
 <script src="../shared/grove-scene.js"></script>
@@ -661,7 +661,7 @@ async function enter(inner){
   const v2 = inner.v === 2;
   const keys = v2 ? Object.assign({}, inner.keys || {}) : {staff: inner.libKey};
   TIER = v2 ? inner.tier : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
-  DATA = Object.assign(blankData(), inner.data); DATA.owner = Object.assign({saved:[], draft:null}, DATA.owner || {}); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
+  DATA = fgPartsData(Object.assign(blankData(), inner.data)); DATA.owner = Object.assign({saved:[], draft:null}, DATA.owner || {}); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
   // Changes made in the Access manager on this device are now live: pick up the new keys.
   // Clears once every file it made is on the site: codes.js (if codes changed) and each library it resealed.
   const d = DATA.owner.draft;
@@ -1381,10 +1381,15 @@ function vOwner(){
 
 // ---------------- OWNER: Proofreading ----------------
 // Every line of writing added to the site and tools, by session. The lines live in the Owner
-// library (OWN.proofreading), so new sessions add to them through Update a Library.
+// library (OWN.proofreading, plus OWN.proofreadingAdd from Rebrand Session 4 on), so new sessions
+// add to them through Update a Library.
 // Checks are kept in this device's encrypted records (DATA.owner.proof), one box per person.
 function vProof(){
-  const P = OWN && OWN.proofreading; if (!P || !P.sections) return '';
+  // Sections live in OWN.proofreading.sections, and later sessions add theirs under
+  // OWN.proofreadingAdd.<session> (Rebrand Session 4), so an update never has to know the list's length.
+  const base = (OWN && OWN.proofreading) || null, more = (OWN && OWN.proofreadingAdd && typeof OWN.proofreadingAdd === 'object') ? Object.keys(OWN.proofreadingAdd).sort().map(k => OWN.proofreadingAdd[k]).filter(x => x && Array.isArray(x.lines)) : [];
+  if (!(base && base.sections) && !more.length) return '';
+  const P = Object.assign({}, base || {}, { sections: ((base && base.sections) || []).concat(more) });
   const ck = (DATA.owner.proof = DATA.owner.proof || {}), who = P.people || ['Chris', 'Kayti'];
   const only = !!V.proofOpen, done = id => who.every((w, i) => ck[id + '|' + i]);
   let all = 0, fin = 0;
@@ -1402,7 +1407,27 @@ function vProof(){
 // Wording lives in the Field library (FLD.oakGuide), so it is sealed and edited through Update a Library.
 // People are ordinary People records with a .st profile. Visits are sessions with kind 'st', so backups merge them.
 // Staff and Owner always see it. Field users see it once FLD.oakGuide.open.field is on and Orientation is done.
-const STG = () => (FLD && FLD.oakGuide) || null;
+/* The six parts rename (Rebrand Session 4). The guides' library text was sealed with the old part
+   names (holy, meaning, mind, community, body, hope). Until a library update is sealed, the guides
+   read it under the new names: part keys and Try at home lists move to roots, trunk, bark, branches,
+   leaves, fruit, and the part labels show What grounds you, Purpose, Mind and feelings, Relationships. */
+const FG_PARTS_DONE = new WeakSet();
+function fgPartsLib(L){
+  if (!L || typeof L !== 'object' || FG_PARTS_DONE.has(L) || !window.GGParts) return L;
+  FG_PARTS_DONE.add(L);
+  (L.parts || []).forEach(p => { if (p && typeof p === 'object'){ p.key = GGParts.id(p.key); if (typeof p.name === 'string') p.name = GGParts.name(p.name); } });
+  ['tryHome'].forEach(k => { if (L[k] && typeof L[k] === 'object' && !Array.isArray(L[k])) GGParts.fix(L[k]); });
+  return L;
+}
+// Saved Oak, Maple, and Aspen Guide visits move to the new part names. Grove Guide records (gv) are left alone.
+function fgPartsData(D){
+  if (!D || !window.GGParts) return D;
+  (D.clients || []).forEach(c => { if (c) ['st', 'sp', 'sa'].forEach(k => { if (c[k] && typeof c[k] === 'object') GGParts.fix(c[k]); }); });
+  (D.sessions || []).forEach(x => { if (x && ['st', 'sp', 'sa'].includes(x.kind)) GGParts.fix(x); });
+  if (D.draft && ['st', 'sp', 'sa'].includes(D.draft.kind)) GGParts.fix(D.draft);
+  return D;
+}
+const STG = () => fgPartsLib((FLD && FLD.oakGuide) || null);
 const stOpen = () => !!STG() && (TIER !== 'field' || !!(STG().open && STG().open.field && (!OR() || orState().complete)));
 const stPart = k => STG().parts.find(p => p.key === k);
 const stIsMe = c => !!(c && c.st && c.st.type === 'me');
@@ -1965,7 +1990,7 @@ const gvPlanted = c => !!(c && c.gv && c.gv.start);
 const gvHasConsent = c => !!(c && c.gv && c.gv.consent && c.gv.consent.how && c.gv.consent.how !== 'declined');
 const gvConsentName = h => h === 'before' ? 'Agreed before the move' : ((GVG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const gvTypeName = t => ((GVG().people.find(x => x[0] === t) || [])[1] || 'Person');
-const ST2GV = {holy:'roots', meaning:'trunk', mind:'bark', community:'branches', body:'leaves', hope:'fruit'};
+const ST2GV = {roots:'roots', trunk:'trunk', bark:'bark', branches:'branches', leaves:'leaves', fruit:'fruit'}; // Oak Guide parts and Grove parts now share names (Rebrand Session 4)
 const BED2PART = {body:'leaves', rest:'leaves', nourish:'leaves', mind:'bark', connect:'branches', spirit:'roots', create:'trunk', hope:'fruit'};
 const GV_PARTS = ['roots','trunk','bark','branches','leaves','fruit'];
 
@@ -2296,7 +2321,7 @@ function gvAct(a, v, t){
 // are sessions with kind 'spr', kept apart from visits so they are never printed or copied.
 // Staff and Owner always see the tab. Field users see it once mapleGuide.open.field is on and Orientation is done.
 // Everyone takes the Maple training (DATA.spmod) before a real visit. Demo visits are always open.
-const SPG = () => (FLD && FLD.mapleGuide) || null;
+const SPG = () => fgPartsLib((FLD && FLD.mapleGuide) || null);
 const spOpen = () => !!SPG() && (TIER !== 'field' || !!(SPG().open && SPG().open.field && (!OR() || orState().complete)));
 const SP_LV = ['care','steady','strong'];
 const spLvName = k => (((SPG() || {}).levels || {}).names || []).concat([]).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
@@ -3101,7 +3126,7 @@ async function ggShare(blob, name, title){
 // Everyone takes the Aspen training (DATA.samod) before a real visit. Demo visits are always open.
 // Safest standard: another adult can always see in. The promise ("what stays between us") is read before the
 // student's yes. The optional question (grades 7 and 8, full visits) is never scored, printed, or copied.
-const SAG = () => (FLD && FLD.aspenGuide) || null;
+const SAG = () => fgPartsLib((FLD && FLD.aspenGuide) || null);
 const saOpen = () => !!SAG() && !!SPG() && (TIER !== 'field' || !!(SAG().open && SAG().open.field && (!OR() || orState().complete)));
 const saLvName = k => (((SAG() || {}).levels || {}).names || []).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
 const saPart = k => SAG().parts.find(p => p.key === k);
@@ -3539,7 +3564,7 @@ function saDraw(){
       <details class="st-lf"><summary>${esc(CDG().heavy || 'If something heavy comes up')}</summary><p class="muted" style="margin-top:6px">${esc(CDG().heavyNote || '')}</p></details>` : ''}
      <label class="f" for="sa-tpn">Your notes (private)</label><textarea id="sa-tpn" data-saf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
   } else if (st.startsWith('p:')){
-    const p = saPart(st.slice(2)), qs = saQs(RUN.grade, p.key), sens = p.key === 'body' && RUN.sens.on;
+    const p = saPart(st.slice(2)), qs = saQs(RUN.grade, p.key), sens = p.key === 'leaves' && RUN.sens.on;
     body = `<div class="run-step-n">Part ${S.parts.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
      <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.say], 'say')}${S.parts.indexOf(p) === 0 ? blk('Then', S.openers.say, 'say') + `<div class="tipbox">${esc(S.openers.tip)}</div>` : ''}
       <details class="st-lf"><summary>Talk starters (optional)</summary><div class="st-opts" style="margin-top:8px">${p.warm.map((w, i) => stChip('sa-warm', `data-k="${p.key}" data-v="${i}"`, (RUN.warm[p.key] || []).includes(i), w)).join('')}</div></details></div>
@@ -3694,7 +3719,7 @@ function saToggle(t){
 let SAKID = null;
 function saKidOpen(which){
   const keys = which === 'all' ? SAG().parts.map(p => p.key) : [which], list = [];
-  keys.forEach(k => { saIdx(RUN).forEach(i => { const q = saQs(RUN.grade, k)[i]; if (q) list.push({k, i, q}); }); if (k === 'body' && which !== 'all' && RUN.sens.on) list.push({k, i:'sens', q:saSensQ(RUN.grade), sens:true}); });
+  keys.forEach(k => { saIdx(RUN).forEach(i => { const q = saQs(RUN.grade, k)[i]; if (q) list.push({k, i, q}); }); if (k === 'leaves' && which !== 'all' && RUN.sens.on) list.push({k, i:'sens', q:saSensQ(RUN.grade), sens:true}); });
   SAKID = {list, n:0, done:false}; saKidDraw();
 }
 function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
@@ -4925,7 +4950,7 @@ async function importBackup(file){
     const p = prompt('Enter the passcode this backup was made with:'); if (p === null) return;
     const key = await derive(p, unb64(box.salt), false); const inner = await open(key, box);
     if (!confirm(`Add this backup to this device? It has ${inner.data.clients.length} people and ${inner.data.sessions.length} sessions. Anything new will be added, the newest version of anything edited on both devices will be kept, and nothing on this device will be lost.`)) return;
-    const r = mergeData(DATA, Object.assign(blankData(), inner.data));
+    const r = mergeData(DATA, fgPartsData(Object.assign(blankData(), inner.data)));
     DATA = Object.assign(blankData(), r.data);
     await persist(); toast(`Backup added: ${r.stats.added} new, ${r.stats.updated} updated.`); go('home');
   } catch(e){ alert("That backup couldn't be opened. Check the file and the passcode."); }

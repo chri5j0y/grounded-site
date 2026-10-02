@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js"></script>
+<script src="/shared/gg-app.js?v=r4p"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -374,8 +374,8 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js"></script>
-<script src="checkin.js"></script>
+<script src="/shared/gg-profiles.js?v=r4p"></script>
+<script src="checkin.js?v=r4p"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -880,16 +880,16 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 const PARTS = [
-  {key:'roots', name:'Roots', sub:'Holy', about:'Feeling held by something bigger, and knowing you matter.'},
-  {key:'trunk', name:'Trunk', sub:'Meaning', about:'What you care about, what you are good at, and why it matters.'},
-  {key:'bark', name:'Bark', sub:'Mind', about:'How you talk to yourself and handle big feelings.'},
-  {key:'branches', name:'Branches', sub:'Community', about:'Friends, family, and grown-ups you can count on.'},
+  {key:'roots', name:'Roots', sub:'What grounds you', about:'Feeling held by something bigger, and knowing you matter.'},
+  {key:'trunk', name:'Trunk', sub:'Purpose', about:'What you care about, what you are good at, and why it matters.'},
+  {key:'bark', name:'Bark', sub:'Mind and feelings', about:'How you talk to yourself and handle big feelings.'},
+  {key:'branches', name:'Branches', sub:'Relationships', about:'Friends, family, and grown-ups you can count on.'},
   {key:'leaves', name:'Leaves', sub:'Body', about:'Sleep, movement, screens, and feeling at home in your body.'},
   {key:'fruit', name:'Fruit', sub:'Hope', about:'Looking forward, being thankful, and believing things can get better.'}
 ];
 const PART = Object.fromEntries(PARTS.map(p => [p.key, p]));
 /* Aspen's part keys and the shared tree standard keys used in checkin.js */
-const CK_KEY = {roots:'holy', trunk:'meaning', bark:'mind', branches:'community', leaves:'body', fruit:'hope'};
+const CK_KEY = {roots:'roots', trunk:'trunk', bark:'bark', branches:'branches', leaves:'leaves', fruit:'fruit'}; // the question bank uses the same part names (Rebrand Session 4)
 const ICONS = {
   roots:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
   trunk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21c1.5-5 2-11 2-18h4c0 7 .5 13 2 18"/><path d="M5 21h14"/><path d="M11 10c1 .5 1.5 1.5 1 3"/></svg>',
@@ -1724,13 +1724,13 @@ function renderGrown(){
       <button class="btn ghost small" onclick="showCalm()">See the calm card</button>
     </div>
     <div class="panel"><h3>Why each part matters</h3>
-      <p><b>Roots (Holy).</b> Research from Lisa Miller at Columbia University finds that a sense of being held by something greater is one of the strongest protections young people have in hard seasons, and early adolescence is when that spiritual life often wakes up. <a class="src" href="https://www.tc.columbia.edu/faculty/lfm14/" target="_blank" rel="noopener">Teachers College</a></p>
+      <p><b>Roots (What grounds you).</b> Research from Lisa Miller at Columbia University finds that a sense of being held by something greater is one of the strongest protections young people have in hard seasons, and early adolescence is when that spiritual life often wakes up. <a class="src" href="https://www.tc.columbia.edu/faculty/lfm14/" target="_blank" rel="noopener">Teachers College</a></p>
       <p>Faith can also hurt. A 2023 review of studies on young people found that spiritual well-being protects against depression, while spiritual struggle, like feeling abandoned or punished by God, adds to it. So Roots asks whether the sacred is a comfort or a weight. It never asks what a student believes, and a student of any faith, or none, can be strong here. <a class="src" href="https://link.springer.com/article/10.1186/s12888-023-05091-2" target="_blank" rel="noopener">BMC Psychiatry</a></p>
       <p><b>Friends, crushes, and being offered things.</b> Aspen never asks a student to say whether they date, who they like, or whether they have used anything. It asks whether they would know what to do and who to tell. CDC's Dating Matters program teaches 11 to 14 year olds healthy relationship skills before dating starts, beginning with friendships in sixth grade. <a class="src" href="https://www.cdc.gov/intimate-partner-violence/php/datingmatters" target="_blank" rel="noopener">CDC</a></p>
-      <p><b>Branches (Community).</b> Search Institute in Minneapolis finds that relationships where adults express care, challenge growth, provide support, share power, and expand possibilities help young people thrive. Middle school is when "share power" starts to matter most. <a class="src" href="https://searchinstitute.org/developmental-relationships" target="_blank" rel="noopener">Search Institute</a></p>
+      <p><b>Branches (Relationships).</b> Search Institute in Minneapolis finds that relationships where adults express care, challenge growth, provide support, share power, and expand possibilities help young people thrive. Middle school is when "share power" starts to matter most. <a class="src" href="https://searchinstitute.org/developmental-relationships" target="_blank" rel="noopener">Search Institute</a></p>
       <p><b>Leaves (Body).</b> Sleep experts endorsed by the American Academy of Pediatrics recommend 9 to 12 hours a night for ages 6 to 12 and 8 to 10 hours for ages 13 to 18, and keeping phones out of the bedroom at night. <a class="src" href="https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx" target="_blank" rel="noopener">HealthyChildren.org</a></p>
-      <p><b>Bark (Mind).</b> The American Psychological Association advises that social media not crowd out sleep or activity, and that kids limit comparison, especially around looks. <a class="src" href="https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use" target="_blank" rel="noopener">APA health advisory</a></p>
-      <p><b>Fruit (Hope) and Trunk (Meaning).</b> Simple gratitude practices like writing down three good things are linked with more well-being in students. <a class="src" href="https://ggie.berkeley.edu/practice/three-good-things-for-students/" target="_blank" rel="noopener">Greater Good in Education</a></p>
+      <p><b>Bark (Mind and feelings).</b> The American Psychological Association advises that social media not crowd out sleep or activity, and that kids limit comparison, especially around looks. <a class="src" href="https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use" target="_blank" rel="noopener">APA health advisory</a></p>
+      <p><b>Fruit (Hope) and Trunk (Purpose).</b> Simple gratitude practices like writing down three good things are linked with more well-being in students. <a class="src" href="https://ggie.berkeley.edu/practice/three-good-things-for-students/" target="_blank" rel="noopener">Greater Good in Education</a></p>
     </div>
     <div class="panel"><h3>Stories from Grounded</h3>
       <p class="muted">Real stories from hospice chaplain Chris Joy, for the grown-ups.</p>
