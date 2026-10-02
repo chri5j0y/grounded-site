@@ -814,7 +814,7 @@ function resetDevice(){
 }
 function lock(){
   if (DATA && RUN && !RUN.demo) { DATA.draft = RUN; persist(); }
-  clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose(); spKidClose(); spRepClose();
+  clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose(); spKidClose(); spRepClose(); dkClose();
   LIB = null; OWN = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
   $('#view').innerHTML = ''; $('#runner').innerHTML = ''; $('#runner').classList.add('hide'); closeMenu();
   lockScreen('unlock');
@@ -848,7 +848,7 @@ function start(){
 function tabsFor(){
   const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
   return t;
 }
@@ -857,7 +857,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1394,6 +1394,7 @@ function vOwner(){
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
   ${vProof()}
+  ${vSpeak()}
   <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
   ${FLD ? spOwnerCard() : ''}
   ${FLD ? saOwnerCard() : ''}
@@ -5868,6 +5869,8 @@ function mergeData(cur, inc){
   out.plans = out.plans || [];
   (inc.plans || []).forEach(ip => { const i = out.plans.findIndex(x => x.id === ip.id); if (i < 0){ out.plans.push(ip); stats.added++; } else if ((ip.u || 0) > (out.plans[i].u || 0)){ out.plans[i] = ip; stats.updated++; } });
   out.plans = out.plans.filter(x => !(out.deleted.plans[x.id] && out.deleted.plans[x.id] >= (x.u || 0)));
+  // Saved presentation decks (Presentations session): newest copy wins; deleted ones stay deleted.
+  { const dm = dkMerge(out, inc); stats.added += dm.added; stats.updated += dm.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));
   const tp = inc.training && inc.training.progress || {};
@@ -5913,6 +5916,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('sp-') && spAct(a, v, t)) return;
   if (a && a.startsWith('sa-') && saAct(a, v, t)) return;
   if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
+  if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
@@ -6055,6 +6059,7 @@ document.addEventListener('input', e => {
   if (spInput(t, 'input')) return;
   if (saInput(t, 'input')) return;
   if (wlInput(t, 'input')) return;
+  if (dkInput(t)) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
   if (t.dataset.plf === 'name' && PS){ PS.name = t.value; return; }
@@ -6110,6 +6115,497 @@ document.addEventListener('change', e => {
   if (t.id === 'upd-file' && t.files[0]){ const f = t.files[0]; t.value = ''; readUpdate(f); }
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden && DATA) persist(); });
+
+// ---------------- PRESENT ----------------
+/* PRESENT (Presentations session, October 2026)
+   - The Present tab, for Staff and Owner only. Slide wording lives in the Staff library (LIB.presentations),
+     so it is sealed and edited through Update a Library.
+   - Build a deck from four choices: subject, audience, format, and in the room or online. Each library slide
+     says which formats it belongs to (f: e elevator, o one-on-one, s small group, c conference) and can carry
+     wording for one audience (aud) or one setting (live, virtual).
+   - A built deck is a plain copy. Editing it never touches the library. Saved decks live in DATA.decks
+     (encrypted with the rest of this device's records) and travel in backups. The deck being built and not
+     yet saved lives in DATA.dkWork.
+   - Present on one screen, or Presenter View with the audience on a second window. Offline, notes, timer.
+   - Handouts and speaker notes save as a PDF or print, through fgSheet.
+   - The Owner tab's "Speaking and proposals" card reads OWN.speaking (Owner library). Checks are kept in
+     DATA.owner.speak.
+   Lives inside the main script, so it reads LIB, OWN, and DATA directly. At load it only adds the slide styles. */
+
+const DKL = () => (typeof LIB !== 'undefined' && LIB && LIB.presentations) || null;
+const dkOn = () => typeof TIER !== 'undefined' && TIER !== 'field' && !!LIB;
+const dkDeckDef = id => ((DKL() || {}).decks || []).find(d => d.id === id) || null;
+const dkPair = (list, id) => (list || []).find(x => x[0] === id) || null;
+const dkAud = id => { const p = dkPair((DKL() || {}).audiences, id); return p ? p[1] : ''; };
+const dkFmt = id => dkPair((DKL() || {}).formats, id) || ['s', 'Small group', 'About 30 minutes', 30];
+const dkMode = id => { const p = dkPair((DKL() || {}).modes, id); return p ? p[1] : ''; };
+const dkMark = m => new URL('../shared/marks/' + m + '.svg', location.href).href;
+const dkByLine = d => d.id === 'grounded' ? 'Grow With Grounded' : d.name + ' by Grow With Grounded';
+let DK_SHOW = null, DK_TICK = null, DK_AW = null;
+
+function dkList(){ return (DATA.decks = DATA.decks || []); }
+function dkCur(){ if (!V.dke) return null; return V.dke === 'work' ? DATA.dkWork || null : dkList().find(x => x.id === V.dke) || null; }
+function dkKeep(d){ if (!d) return; d.u = Date.now(); if (d.id) save(); else { DATA.dkWork = d; save(); } }
+
+// ----- building a deck from the library -----
+function dkResolve(s, aud, mode){
+  const o = JSON.parse(JSON.stringify(s));
+  const a = (s.aud && s.aud[aud]) || {}, m = s[mode] || {};
+  delete o.aud; delete o.live; delete o.virtual; delete o.f;
+  Object.assign(o, JSON.parse(JSON.stringify(a)), JSON.parse(JSON.stringify(m)));
+  return {sid: s.id, k: o.k, h: o.h || '', sub: o.sub || '', pts: o.pts || [], cols: o.cols || null, notes: o.notes || '', url: o.url || '', contact: o.contact || '', off: false};
+}
+function dkBuild(deckId, aud, fmt, mode, name){
+  const L = DKL(), D = dkDeckDef(deckId); if (!L || !D) return null;
+  const slides = D.slides.filter(s => (s.f || 'osc').includes(fmt)).map(s => dkResolve(s, aud, mode));
+  const mn = (L.modeNotes || {})[mode];
+  if (mn && slides[0]) slides[0].notes = (slides[0].notes ? slides[0].notes + '\n\n' : '') + mn;
+  return {id: null, u: Date.now(), made: today(), lv: L.v || 1, name: name || D.name + ' for ' + dkAud(aud).toLowerCase(), deck: deckId, aud, fmt, mode, slides};
+}
+const dkShown = d => d.slides.filter(s => !s.off);
+
+// ----- one slide -----
+const DK_KIND = {title:'Title', big:'Big line', list:'Points', parts:'Six parts', trees:'The trees', two:'Two columns', ask:'Together', close:'Closing'};
+function dkMarkTile(D, cls){
+  if (D.mark === 'grounded') return `<div class="${cls} dk-gg"><svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg></div>`;
+  return `<div class="${cls}"><img src="${esc(dkMark(D.mark))}" alt=""></div>`;
+}
+function dkSlideHTML(s, d, n, of){
+  const D = dkDeckDef(d.deck) || {name: d.deck, mark: 'grounded', color: '#8B5E1A'}, L = DKL() || {};
+  const c = D.color || '#8B5E1A', st = `style="--dk:${esc(c)}"`;
+  const pts = a => (a && a.length) ? `<ul class="dk-pts">${a.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : '';
+  const foot = `<div class="dk-foot">${D.mark === 'grounded' ? `<svg class="dk-fm" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<img class="dk-fm" src="${esc(dkMark(D.mark))}" alt="">`}<span>${esc(dkByLine(D))}</span><span class="dk-n">${n ? n + ' / ' + of : ''}</span></div>`;
+  const h = s.h ? `<h2 class="dk-h">${esc(s.h)}</h2>` : '';
+  const sub = s.sub ? `<p class="dk-sub">${esc(s.sub)}</p>` : '';
+  switch (s.k){
+    case 'title': return `<div class="dks dk-title" ${st}><div class="dk-tl"><div class="dk-by">${D.id === 'grounded' ? 'Chaplaincy for every age and stage' : 'By Grow With Grounded'}</div><h1 class="dk-name">${esc(s.h)}${D.id === 'grounded' ? '' : '<sup>TM</sup>'}</h1>${s.sub ? `<p class="dk-tag">${esc(s.sub)}</p>` : ''}${D.preview ? '<span class="dk-soon">Coming</span>' : ''}<div class="dk-who">${esc([DATA.settings.name, DATA.settings.role].filter(Boolean).join(', '))}</div></div>${dkMarkTile(D, 'dk-tile')}</div>`;
+    case 'big': return `<div class="dks dk-big" ${st}><div class="dk-bigin"><h2 class="dk-h">${esc(s.h)}</h2>${sub}</div><div class="dk-n2">${n ? n + ' / ' + of : ''}</div></div>`;
+    case 'parts': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-parts">${(L.parts || []).map((p, i) => `<div class="dk-part"><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join('')}</div></div>${foot}</div>`;
+    case 'trees': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-trees">${(L.trees || []).map(t => `<div class="dk-tree${t[0] === D.mark ? ' on' : ''}"><img src="${esc(dkMark(t[0]))}" alt=""><b>${esc(t[1])}</b><span>${esc(t[2])}</span>${t[3] === 'coming' ? '<i>Coming</i>' : ''}</div>`).join('')}</div></div>${foot}</div>`;
+    case 'two': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-two">${(s.cols || []).map(col => `<div><h3 class="dk-ch">${esc(col[0])}</h3>${pts(col[1])}</div>`).join('')}</div></div>${foot}</div>`;
+    case 'ask': return `<div class="dks dk-ask" ${st}><div class="dk-bigin"><svg class="dk-askic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/></svg><h2 class="dk-h">${esc(s.h)}</h2>${sub}</div>${foot}</div>`;
+    case 'close': { const qr = s.url && window.GGQR ? GGQR.svg(s.url, {label: 'QR code for ' + s.url}) : '';
+      return `<div class="dks dk-close" ${st}><div class="dk-tl"><h2 class="dk-h">${esc(s.h)}</h2>${sub}<p class="dk-url">${esc(String(s.url || '').replace(/^https?:\/\//, '').replace(/\/$/, ''))}</p>${s.contact ? `<p class="dk-mail">${esc(s.contact)}</p>` : ''}</div>${qr ? `<div class="dk-qr">${qr}</div>` : ''}</div>`; }
+    default: return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}${pts(s.pts)}</div>${foot}</div>`;
+  }
+}
+
+// ----- the Present tab -----
+function vDK(){
+  const L = DKL();
+  const head = `<div class="page-head"><div class="eyebrow">Present &middot; Staff and Owner</div><h1>${esc(L ? L.title : 'Present')}</h1><p>${esc(L ? L.lead : 'Talks and decks for every tree.')}</p></div>`;
+  if (!L) return head + `<div class="card"><h3>Not in this library yet</h3><p class="muted">The slides live in the Staff library. On an Owner device, open Owner, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
+  const d = dkCur();
+  if (V.dke && d) return dkEditHTML(d);
+  const sel = V.dks = V.dks || Object.assign({deck: 'grounded', aud: 'hospice', fmt: 's', mode: 'live'}, DATA.settings.dkLast || {});
+  if (!dkDeckDef(sel.deck)) sel.deck = L.decks[0].id;
+  const chip = (k, id, label, sm) => `<button type="button" class="chip" data-act="dk-sel" data-v="${esc(k + '|' + id)}" aria-pressed="${sel[k] === id}">${label}${sm ? ` <small class="muted">${esc(sm)}</small>` : ''}</button>`;
+  const pre = dkBuild(sel.deck, sel.aud, sel.fmt, sel.mode), F = dkFmt(sel.fmt);
+  const saved = dkList().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
+  return head + `<div class="card"><div class="dk-intro">${L.intro.map(t => `<p class="muted">${esc(t)}</p>`).join('')}</div></div>
+  ${DATA.dkWork ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><h3>${esc(DATA.dkWork.name)}</h3><p class="muted">A deck you started and haven't saved.</p></div><div class="row"><button class="btn btn-gold btn-sm" data-act="dk-open" data-v="work">Open</button><button class="btn btn-line btn-sm" data-act="dk-drop">Let It Go</button></div></div></div>` : ''}
+  <div class="card" style="margin-top:14px"><h3>Build a talk</h3>
+   <label class="f">Subject</label><div class="dk-pick">${L.decks.map(D => `<button type="button" class="dk-pk" data-act="dk-sel" data-v="${esc('deck|' + D.id)}" aria-pressed="${sel.deck === D.id}" style="--dk:${esc(D.color)}">${dkMarkTile(D, 'dk-pkm')}<span><b>${esc(D.name)}</b>${D.preview ? ' <span class="pill">Preview</span>' : ''}<small>${esc(D.who)}</small></span></button>`).join('')}</div>
+   <label class="f">Who you're speaking to</label><div class="row">${L.audiences.map(a => chip('aud', a[0], esc(a[1]))).join('')}</div>
+   <label class="f">How long you have</label><div class="row">${L.formats.map(f => chip('fmt', f[0], esc(f[1]), f[2])).join('')}</div>
+   <label class="f">Where</label><div class="row">${L.modes.map(m => chip('mode', m[0], esc(m[1]))).join('')}</div>
+   <p style="margin-top:14px"><b>${pre ? pre.slides.length : 0} slides</b>, ${esc(F[2].toLowerCase())}, with speaker notes on every slide.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="dk-make">Make the Deck</button></div></div>
+  <div class="card" style="margin-top:14px"><h3>Saved decks</h3>${saved.length ? saved.map(x => { const D = dkDeckDef(x.deck) || {name: x.deck}; return `<div class="list-row"><div class="lr-main"><b>${esc(x.name)}</b><br><small class="muted">${esc(D.name)}, ${esc(dkAud(x.aud).toLowerCase())}, ${esc(dkFmt(x.fmt)[1].toLowerCase())}, ${esc(dkMode(x.mode).toLowerCase())}. ${dkShown(x).length} slides. Changed ${esc(nice(new Date(x.u || Date.now()).toISOString().slice(0, 10)))}.</small></div><div class="row"><button class="btn btn-line btn-sm" data-act="dk-open" data-v="${x.id}">Open</button><button class="btn btn-gold btn-sm" data-act="dk-go" data-v="${x.id}">${icon('play')} Present</button></div></div>`; }).join('') : '<p class="muted">Decks you save show here. They stay on this device, encrypted with your records, and travel in your backups.</p>'}</div>`;
+}
+function dkEditHTML(d){
+  const D = dkDeckDef(d.deck) || {name: d.deck}, F = dkFmt(d.fmt), shown = dkShown(d), L = DKL() || {};
+  const old = d.lv && L.v && d.lv < L.v;
+  const field = (i, k, label, val, area) => `<label class="f" for="dk-${i}-${k}">${label}</label>${area ? `<textarea id="dk-${i}-${k}" rows="${k === 'notes' ? 4 : 4}" data-dkf="${i}|${k}">${esc(val)}</textarea>` : `<input type="text" id="dk-${i}-${k}" data-dkf="${i}|${k}" value="${esc(val)}">`}`;
+  let n = 0;
+  const rows = d.slides.map((s, i) => {
+    const num = s.off ? '' : ++n;
+    const fields = s.k === 'two'
+      ? field(i, 'h', 'Heading', s.h) + field(i, 'sub', 'Line under the heading', s.sub) + (s.cols || []).map((c, j) => field(i, 'c' + j + 'h', 'Column ' + (j + 1) + ' heading', c[0]) + field(i, 'c' + j + 'p', 'Column ' + (j + 1) + ' points, one per line', (c[1] || []).join('\n'), true)).join('')
+      : field(i, 'h', s.k === 'ask' ? 'Question' : 'Heading', s.h) + (['title', 'big', 'parts', 'trees', 'ask', 'close', 'list'].includes(s.k) ? field(i, 'sub', s.k === 'title' ? 'Tagline' : s.k === 'ask' ? 'What to do' : 'Line under the heading', s.sub) : '') + (s.k === 'list' ? field(i, 'pts', 'Points, one per line', (s.pts || []).join('\n'), true) : '') + (s.k === 'close' ? field(i, 'url', 'Link for the QR code', s.url) : '');
+    return `<div class="dk-row${s.off ? ' off' : ''}" id="dk-row-${i}"><div class="dk-th" id="dk-th-${i}">${dkSlideHTML(s, d, num, shown.length)}</div>
+     <div class="dk-rm"><div class="spread"><div><span class="pill">${s.off ? 'Hidden' : 'Slide ' + num}</span> <span class="pill gold">${esc(DK_KIND[s.k] || 'Slide')}</span></div>
+      <div class="row"><button class="btn btn-line btn-sm" data-act="dk-up" data-v="${i}" aria-label="Move up"${i ? '' : ' disabled'}>Up</button><button class="btn btn-line btn-sm" data-act="dk-down" data-v="${i}" aria-label="Move down"${i < d.slides.length - 1 ? '' : ' disabled'}>Down</button><button class="btn btn-line btn-sm" data-act="dk-off" data-v="${i}">${s.off ? 'Show' : 'Hide'}</button>${s.own ? `<button class="btn btn-line btn-sm" data-act="dk-del" data-v="${i}">Remove</button>` : ''}</div></div>
+      <details${(V.dkOpen || []).includes(i) ? ' open' : ''} data-dki="${i}"><summary>Change the words and notes</summary>${fields}${field(i, 'notes', 'Speaker notes', s.notes, true)}</details>
+      ${s.notes ? `<p class="muted dk-np">${esc(s.notes.length > 180 ? s.notes.slice(0, 177) + '...' : s.notes)}</p>` : ''}</div></div>`;
+  }).join('');
+  return `<button class="linkbtn" data-act="dk-back">Back to Present</button>
+  <div class="page-head" style="margin-top:10px"><div class="eyebrow">${esc(D.name)} deck</div><h1>${esc(d.name)}</h1><p>For ${esc(dkAud(d.aud).toLowerCase())}, ${esc(F[1].toLowerCase())} (${esc(F[2].toLowerCase())}), ${esc(dkMode(d.mode).toLowerCase())}.</p></div>
+  <div class="card"><label class="f" for="dk-name">Deck name</label><input type="text" id="dk-name" data-dkf="name" value="${esc(d.name)}">
+   <p style="margin-top:10px"><b>${shown.length} slides showing</b>${d.slides.length > shown.length ? `, ${d.slides.length - shown.length} hidden` : ''}. ${d.id ? 'Saved. Changes save as you go.' : '<span class="pill warn">Not saved yet</span>'}</p>
+   ${old ? '<p class="tipbox">The library wording has changed since this deck was made. Your deck keeps its own words. To pick up the new wording, tap Start Over From the Library.</p>' : ''}
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="dk-go" data-v="${d.id || 'work'}">${icon('play')} Present</button><button class="btn btn-line" data-act="dk-pv" data-v="${d.id || 'work'}">Presenter View</button>${d.id ? '' : '<button class="btn btn-line" data-act="dk-save">Save Deck</button>'}</div>
+   <p class="muted" style="font-size:14px;margin-top:8px">Present fills this screen. Presenter View opens the slides in a second window for the projector, and keeps your notes, the next slide, and the timer here.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="dk-hand">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="dk-notes">${icon('print')} Save or Print Speaker Notes</button>${d.id ? '<button class="btn btn-line btn-sm" data-act="dk-copy">Make a Copy</button>' : ''}<button class="btn btn-line btn-sm" data-act="dk-reset">Start Over From the Library</button>${d.id ? '<button class="btn btn-line btn-sm" data-act="dk-rm">Delete Deck</button>' : ''}</div></div>
+  <div class="dk-rows">${rows}</div>
+  <div class="card" style="margin-top:14px"><h3>Add a slide</h3><p class="muted">New slides go at the end. Move them where you want them.</p><div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="dk-add" data-v="list">${icon('plus')} Points Slide</button><button class="btn btn-line btn-sm" data-act="dk-add" data-v="big">${icon('plus')} Big Line Slide</button><button class="btn btn-line btn-sm" data-act="dk-add" data-v="ask">${icon('plus')} Together Slide</button></div></div>`;
+}
+function dkOpenKeep(){ V.dkOpen = Array.from(document.querySelectorAll('details[data-dki][open]')).map(x => +x.getAttribute('data-dki')); }
+function dkRerender(){ dkOpenKeep(); const y = window.scrollY; render(); window.scrollTo(0, y); }
+
+// typing in the editor: change the deck, redraw only that slide's picture
+function dkInput(t){
+  if (!t.dataset || t.dataset.dkf === undefined) return false;
+  const d = dkCur(); if (!d) return true;
+  const f = t.dataset.dkf;
+  if (f === 'name'){ d.name = t.value; dkKeep(d); return true; }
+  const [i, k] = f.split('|'), s = d.slides[+i]; if (!s) return true;
+  const m = /^c(\d)([hp])$/.exec(k);
+  if (m){ s.cols = s.cols || []; const c = s.cols[+m[1]] = s.cols[+m[1]] || ['', []]; if (m[2] === 'h') c[0] = t.value; else c[1] = t.value.split('\n').map(x => x.trim()).filter(Boolean); }
+  else if (k === 'pts') s.pts = t.value.split('\n').map(x => x.trim()).filter(Boolean);
+  else s[k] = t.value;
+  s.edited = 1; dkKeep(d);
+  const th = document.getElementById('dk-th-' + i);
+  if (th && k !== 'notes'){ const shown = dkShown(d); th.innerHTML = dkSlideHTML(s, d, s.off ? '' : shown.indexOf(s) + 1, shown.length); }
+  return true;
+}
+
+function dkAct(a, v, t){
+  const d = dkCur();
+  switch (a){
+    case 'dk-sel': { const [k, id] = String(v).split('|'); V.dks = V.dks || {}; V.dks[k] = id; DATA.settings.dkLast = Object.assign({}, V.dks); save(); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+    case 'dk-make': { const s = V.dks; if (DATA.dkWork && !confirm('You have an unsaved deck, "' + DATA.dkWork.name + '". Making a new one lets it go. Go ahead?')) return true;
+      const w = dkBuild(s.deck, s.aud, s.fmt, s.mode); if (!w) return true; DATA.dkWork = w; save(); go('present', {dke: 'work'}); return true; }
+    case 'dk-open': go('present', {dke: v}); return true;
+    case 'dk-back': go('present'); return true;
+    case 'dk-drop': if (confirm('Let this unsaved deck go?')){ DATA.dkWork = null; save(); render(); } return true;
+    case 'dk-save': { if (!d) return true; const n = prompt('Name this deck:', d.name); if (n === null) return true;
+      d.name = n.trim() || d.name; d.id = uid(); d.u = Date.now(); dkList().push(d); DATA.dkWork = null; save(); go('present', {dke: d.id}); toast('Deck saved.'); return true; }
+    case 'dk-copy': { if (!d) return true; const c = JSON.parse(JSON.stringify(d)); c.id = uid(); c.u = Date.now(); c.made = today(); c.name = d.name + ' (copy)'; dkList().push(c); save(); go('present', {dke: c.id}); toast('Copy made.'); return true; }
+    case 'dk-rm': { if (!d || !d.id || !confirm('Delete "' + d.name + '"? This cannot be undone.')) return true;
+      DATA.deleted = DATA.deleted || {clients: {}, sessions: {}}; DATA.deleted.decks = DATA.deleted.decks || {}; DATA.deleted.decks[d.id] = Date.now();
+      DATA.decks = dkList().filter(x => x.id !== d.id); save(); go('present'); return true; }
+    case 'dk-reset': { if (!d || !confirm('Start over from the library? Your changes to these slides will be undone. The name stays.')) return true;
+      const w = dkBuild(d.deck, d.aud, d.fmt, d.mode, d.name); if (!w) return true; d.slides = w.slides; d.lv = w.lv; dkKeep(d); dkRerender(); return true; }
+    case 'dk-up': case 'dk-down': { if (!d) return true; const i = +v, j = a === 'dk-up' ? i - 1 : i + 1; if (j < 0 || j >= d.slides.length) return true;
+      [d.slides[i], d.slides[j]] = [d.slides[j], d.slides[i]]; dkKeep(d); dkOpenKeep(); V.dkOpen = (V.dkOpen || []).map(x => x === i ? j : x === j ? i : x); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+    case 'dk-off': if (d){ d.slides[+v].off = !d.slides[+v].off; dkKeep(d); dkRerender(); } return true;
+    case 'dk-del': if (d && confirm('Remove this slide?')){ d.slides.splice(+v, 1); dkKeep(d); V.dkOpen = []; dkRerender(); } return true;
+    case 'dk-add': { if (!d) return true; const k = v === 'big' ? 'big' : v === 'ask' ? 'ask' : 'list';
+      d.slides.push({sid: 'own-' + uid(), own: 1, k, h: k === 'ask' ? 'Your question' : 'Your heading', sub: k === 'ask' ? (d.mode === 'virtual' ? 'Answer in the chat.' : 'Turn to someone near you.') : '', pts: k === 'list' ? ['A point'] : [], notes: '', off: false});
+      dkKeep(d); V.dkOpen = [d.slides.length - 1]; render(); setTimeout(() => { const r = document.getElementById('dk-row-' + (d.slides.length - 1)); if (r) r.scrollIntoView({block: 'center'}); const f = document.getElementById('dk-' + (d.slides.length - 1) + '-h'); if (f){ f.focus(); f.select(); } }, 60); return true; }
+    case 'dk-go': case 'dk-pv': { const x = v === 'work' ? DATA.dkWork : dkList().find(y => y.id === v); if (x) dkPresent(x, a === 'dk-pv'); return true; }
+    case 'dk-hand': if (d) dkHandout(d); return true;
+    case 'dk-notes': if (d) dkSpeakerNotes(d); return true;
+    case 'dk-spk': { const ck = (DATA.owner.speak = DATA.owner.speak || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save(); V.spkOpen = Array.from(document.querySelectorAll('.spk-item[open]')).map(x => x.getAttribute('data-spk')); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+  }
+  if (a.startsWith('dk-s-')) return dkShowAct(a);
+  return false;
+}
+
+// ----- presenting -----
+function dkPresent(d, two){
+  const slides = dkShown(d); if (!slides.length) return toast('Every slide is hidden. Show at least one.');
+  const F = dkFmt(d.fmt);
+  if (typeof SESS_UNTIL !== 'undefined' && SESS_UNTIL && SESS_UNTIL - Date.now() < (F[3] + 10) * 60000) toast('Your unlock time ends at ' + new Date(SESS_UNTIL).toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'}) + '. The Field Guide will lock then.');
+  DK_SHOW = {d, slides, i: 0, two: !!two, notes: !!two, black: false, t0: Date.now(), run: true, spent: 0, target: F[3]};
+  if (two){
+    try { DK_AW = window.open('', 'gg-dk-audience', 'popup=yes,width=1280,height=760'); } catch(e){ DK_AW = null; }
+    if (!DK_AW){ DK_SHOW.two = false; toast("A second window couldn't open here. Presenting on this screen instead."); }
+    else dkAudienceSetup();
+  }
+  let el = document.getElementById('dk-show');
+  if (!el){ el = document.createElement('div'); el.id = 'dk-show'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Presenting ' + d.name); document.body.appendChild(el); }
+  document.body.classList.add('dk-noscroll');
+  if (!DK_SHOW.two && el.requestFullscreen) el.requestFullscreen().catch(() => {});
+  clearInterval(DK_TICK); DK_TICK = setInterval(dkTick, 1000);
+  dkDraw();
+}
+function dkClock(){ const S = DK_SHOW; return S.spent + (S.run ? Date.now() - S.t0 : 0); }
+const dkMMSS = ms => { const s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+function dkTick(){
+  if (!DK_SHOW){ clearInterval(DK_TICK); return; }
+  if (typeof lastAct !== 'undefined') lastAct = Date.now(); // a long slide must not lock the Field Guide mid-talk
+  const c = document.getElementById('dk-clock'); if (c){ const ms = dkClock(); c.textContent = dkMMSS(ms); c.classList.toggle('over', ms > DK_SHOW.target * 60000); }
+  if (DK_AW && DK_AW.closed && DK_SHOW.two){ DK_AW = null; }
+}
+function dkDraw(){
+  const S = DK_SHOW, el = document.getElementById('dk-show'); if (!S || !el) return;
+  const s = S.slides[S.i], nx = S.slides[S.i + 1], of = S.slides.length;
+  const cur = S.black ? '<div class="dks dk-blank"></div>' : dkSlideHTML(s, S.d, S.i + 1, of);
+  const bar = `<div class="dk-bar"><button class="dk-b" data-act="dk-s-prev" aria-label="Previous slide"${S.i ? '' : ' disabled'}>${icon('back')}</button><span class="dk-cnt">${S.i + 1} of ${of}</span><button class="dk-b" data-act="dk-s-next" aria-label="Next slide"${S.i < of - 1 ? '' : ' disabled'}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <span class="dk-sp"></span><span class="dk-time"><span id="dk-clock">${dkMMSS(dkClock())}</span> <small>of ${S.target} min</small></span><button class="dk-b dk-tx" data-act="dk-s-pause">${S.run ? 'Pause' : 'Go'}</button>
+    ${S.two ? '' : `<button class="dk-b dk-tx" data-act="dk-s-notes" aria-pressed="${S.notes}">Notes</button>`}<button class="dk-b dk-tx" data-act="dk-s-black" aria-pressed="${S.black}">Blank</button><button class="dk-b dk-tx" data-act="dk-s-end">End</button></div>`;
+  const notes = `<div class="dk-notes"><div class="eyebrow">Slide ${S.i + 1}${s.h ? ': ' + esc(s.h) : ''}</div>${s.notes ? s.notes.split('\n').filter(x => x.trim()).map(p => `<p>${esc(p)}</p>`).join('') : '<p class="muted">No notes for this slide.</p>'}</div>`;
+  if (S.two){
+    el.className = 'dk-pv';
+    el.innerHTML = `<div class="dk-pvg"><div class="dk-pvc">${cur}</div><div class="dk-pvr"><div class="dk-nextl">${nx ? 'Next' : 'Last slide'}</div><div class="dk-pvn">${nx ? dkSlideHTML(nx, S.d, S.i + 2, of) : ''}</div>${notes}</div></div>${bar}<p class="dk-hint">The audience window: drag it to the projector, then double-click it for full screen.${DK_AW ? '' : ' It was closed. <button class="linkbtn" data-act="dk-s-reopen">Open it again</button>'}</p>`;
+    dkAudienceDraw();
+  } else {
+    el.className = 'dk-one' + (S.notes ? ' with-notes' : '');
+    el.innerHTML = `<div class="dk-stage" data-dk-stage>${cur}</div>${S.notes ? notes : ''}${bar}`;
+  }
+}
+function dkGo(n){ const S = DK_SHOW; if (!S) return; const j = Math.max(0, Math.min(S.slides.length - 1, n)); if (j === S.i && !S.black) return; S.i = j; S.black = false; dkDraw(); }
+function dkShowAct(a){
+  const S = DK_SHOW; if (!S) return true;
+  if (a === 'dk-s-prev') dkGo(S.i - 1);
+  else if (a === 'dk-s-next') dkGo(S.i + 1);
+  else if (a === 'dk-s-notes'){ S.notes = !S.notes; dkDraw(); }
+  else if (a === 'dk-s-black'){ S.black = !S.black; dkDraw(); }
+  else if (a === 'dk-s-pause'){ if (S.run){ S.spent += Date.now() - S.t0; S.run = false; } else { S.t0 = Date.now(); S.run = true; } dkDraw(); }
+  else if (a === 'dk-s-reopen'){ try { DK_AW = window.open('', 'gg-dk-audience', 'popup=yes,width=1280,height=760'); } catch(e){} if (DK_AW) dkAudienceSetup(); dkDraw(); }
+  else if (a === 'dk-s-end') dkClose();
+  return true;
+}
+function dkClose(){
+  clearInterval(DK_TICK); DK_TICK = null; DK_SHOW = null;
+  if (DK_AW){ try { DK_AW.close(); } catch(e){} DK_AW = null; }
+  const el = document.getElementById('dk-show'); if (el) el.remove();
+  document.body.classList.remove('dk-noscroll');
+  if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+}
+// The audience window is a blank page this window writes into, so it needs no unlock and holds nothing but the slide on screen.
+function dkAudienceSetup(){
+  const w = DK_AW; if (!w) return;
+  const sym = document.getElementById('g-icon'), fonts = new URL('../fonts/fonts.css', location.href).href;
+  w.document.open();
+  w.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(DK_SHOW.d.name)}</title><link rel="stylesheet" href="${esc(fonts)}"><style>${DK_CSS}html,body{margin:0;height:100%;background:#000;overflow:hidden;cursor:none;}#a{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}#a .dks{width:min(100vw,177.78vh);}</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true">${sym ? sym.outerHTML : ''}</svg><div id="a"></div></body></html>`);
+  w.document.close();
+  const key = e => dkKey(e);
+  w.document.addEventListener('keydown', key);
+  w.document.addEventListener('dblclick', () => { const r = w.document.documentElement; if (r.requestFullscreen) r.requestFullscreen().catch(() => {}); });
+  w.document.addEventListener('click', () => dkGo(DK_SHOW ? DK_SHOW.i + 1 : 0));
+}
+function dkAudienceDraw(){
+  const w = DK_AW, S = DK_SHOW; if (!w || w.closed || !S) return;
+  const a = w.document.getElementById('a'); if (!a) return;
+  a.innerHTML = S.black ? '' : dkSlideHTML(S.slides[S.i], S.d, S.i + 1, S.slides.length);
+}
+function dkKey(e){
+  if (!DK_SHOW) return;
+  const k = e.key;
+  if (['ArrowRight', 'PageDown', ' ', 'Enter', 'ArrowDown'].includes(k)){ if (k !== 'Enter' || !(e.target && e.target.closest && e.target.closest('button'))){ e.preventDefault(); dkGo(DK_SHOW.i + 1); } }
+  else if (['ArrowLeft', 'PageUp', 'Backspace', 'ArrowUp'].includes(k)){ e.preventDefault(); dkGo(DK_SHOW.i - 1); }
+  else if (k === 'Home'){ e.preventDefault(); dkGo(0); }
+  else if (k === 'End'){ e.preventDefault(); dkGo(DK_SHOW.slides.length - 1); }
+  else if (k === 'b' || k === 'B' || k === '.'){ e.preventDefault(); dkShowAct('dk-s-black'); }
+  else if ((k === 'n' || k === 'N') && !DK_SHOW.two){ e.preventDefault(); dkShowAct('dk-s-notes'); }
+  else if (k === 'Escape'){ if (!document.fullscreenElement){ e.preventDefault(); dkClose(); } }
+}
+document.addEventListener('keydown', e => { if (DK_SHOW) dkKey(e); });
+// Tap the right side of the slide to go forward, the left to go back. Swipe works too.
+(function(){
+  let x0 = null, y0 = null;
+  document.addEventListener('pointerdown', e => { if (!DK_SHOW || !e.target.closest('[data-dk-stage]')) return; x0 = e.clientX; y0 = e.clientY; });
+  document.addEventListener('pointerup', e => {
+    if (!DK_SHOW || x0 === null) return; const st = e.target.closest('[data-dk-stage]'); const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){ dkGo(DK_SHOW.i + (dx < 0 ? 1 : -1)); return; }
+    if (!st || Math.abs(dx) > 10) return; const r = st.getBoundingClientRect(); dkGo(DK_SHOW.i + (e.clientX > r.left + r.width / 3 ? 1 : -1));
+  });
+})();
+
+// ----- handouts -----
+function dkHandBlocks(d){
+  const D = dkDeckDef(d.deck) || {name: d.deck}, L = DKL() || {}, H = L.handout || {}, out = [];
+  out.push({k: 'eyebrow', t: dkByLine(D)}, {k: 'h1', t: d.name}, {k: 'sub', t: D.tagline || ''});
+  dkShown(d).forEach(s => {
+    if (s.k === 'title' || s.k === 'close') return;
+    if (s.k === 'ask'){ out.push({k: 'h2', t: s.h}, {k: 'lines', n: 3}); return; }
+    if (s.k === 'big'){ out.push({k: 'b', t: [s.h, s.sub].filter(Boolean).join(' ')}); return; }
+    out.push({k: 'h2', t: s.h});
+    if (s.sub && s.k !== 'trees') out.push({k: 'p', t: s.sub});
+    if (s.k === 'parts') (L.parts || []).forEach(p => out.push({k: 'li', t: p[0] + ': ' + p[1]}));
+    else if (s.k === 'trees') (L.trees || []).forEach(t => out.push({k: 'li', t: t[1] + ': ' + t[2] + (t[3] === 'coming' ? ' (coming)' : '')}));
+    else if (s.k === 'two') (s.cols || []).forEach(c => { out.push({k: 'b', t: c[0]}); (c[1] || []).forEach(p => out.push({k: 'li', t: p})); });
+    else (s.pts || []).forEach(p => out.push({k: 'li', t: p}));
+  });
+  out.push({k: 'h2', t: H.notes || 'My notes'}, {k: 'lines', n: 6});
+  const cl = dkShown(d).find(s => s.k === 'close'), url = (cl && cl.url) || D.url;
+  if (url) out.push({k: 'qr', url, t: (H.qr || 'Scan to open') + ' ' + (D.id === 'grounded' ? 'Grow With Grounded' : D.name)});
+  if (H.help) out.push({k: 'i', t: H.help});
+  out.push({k: 'foot', t: H.foot || 'Grow With Grounded. growwithgrounded.com'});
+  return out;
+}
+function dkBlocksHTML(blocks){
+  return blocks.map(b => b.k === 'h1' ? `<h1>${esc(b.t)}</h1>` : b.k === 'h2' ? `<h2>${esc(b.t)}</h2>` : b.k === 'sub' ? `<p><i>${esc(b.t)}</i></p>` : b.k === 'li' ? `<ul><li>${esc(b.t)}</li></ul>` : b.k === 'b' ? `<p><b>${esc(b.t)}</b></p>`
+    : b.k === 'lines' ? `<div class="pr-field area"><div class="l"></div><div class="v"></div></div>` : b.k === 'qr' ? `<div class="ht-qr" data-url="${esc(b.url)}" data-label="${esc(b.t)}">${window.GGQR ? GGQR.svg(b.url, {label: b.t}) : ''}<p>${esc(b.t)}<br>${esc(b.url)}</p></div>`
+    : b.k === 'i' ? `<p><i>${esc(b.t)}</i></p>` : b.k === 'eyebrow' || b.k === 'foot' ? '' : `<p>${esc(b.t)}</p>`).join('').replace(/<\/ul><ul>/g, '');
+}
+function dkHandout(d){
+  const blocks = dkHandBlocks(d);
+  fgSheet(ph('Handout') + dkBlocksHTML(blocks) + pf(), d.name, {file: d.name + ' handout', blocks: () => blocks});
+}
+function dkSpeakerNotes(d){
+  const D = dkDeckDef(d.deck) || {name: d.deck}, F = dkFmt(d.fmt), out = [];
+  out.push({k: 'eyebrow', t: 'Speaker notes'}, {k: 'h1', t: d.name},
+    {k: 'sub', t: dkAud(d.aud) + '. ' + F[1] + ', ' + F[2].toLowerCase() + '. ' + dkMode(d.mode) + '. ' + dkShown(d).length + ' slides.'},
+    {k: 'i', t: 'For the presenter. Not a handout.'});
+  dkShown(d).forEach((s, i) => {
+    out.push({k: 'h2', t: (i + 1) + '. ' + (s.h || DK_KIND[s.k] || 'Slide')});
+    if (s.sub) out.push({k: 'p', t: s.sub});
+    if (s.k === 'two') (s.cols || []).forEach(c => { out.push({k: 'b', t: c[0]}); (c[1] || []).forEach(p => out.push({k: 'li', t: p})); });
+    else (s.pts || []).forEach(p => out.push({k: 'li', t: p}));
+    if (s.notes) s.notes.split('\n').filter(x => x.trim()).forEach(p => out.push({k: 'i', t: p}));
+  });
+  out.push({k: 'foot', t: 'Grounded Field Guide. ' + dkByLine(D) + '.'});
+  fgSheet(ph('Speaker notes') + dkBlocksHTML(out) + pf(), d.name + ': speaker notes', {file: d.name + ' speaker notes', blocks: () => out});
+}
+
+// ----- OWNER: Speaking and proposals (OWN.speaking) -----
+function vSpeak(){
+  const P = (typeof OWN !== 'undefined' && OWN && OWN.speaking) || null; if (!P) return '';
+  const ck = DATA.owner.speak = DATA.owner.speak || {};
+  const days = s => { if (!s) return ''; const [y, m, dd] = s.split('-').map(Number), t = new Date(), a = new Date(y, m - 1, dd), b = new Date(t.getFullYear(), t.getMonth(), t.getDate()), n = Math.round((a - b) / 86400000); return n > 1 ? n + ' days left' : n === 1 ? 'Due tomorrow' : n === 0 ? 'Due today' : 'Past due'; };
+  const tick = (id, text) => { const on = !!ck[id]; return `<button type="button" class="dk-todo" data-act="dk-spk" data-v="${esc(id)}" aria-pressed="${on}"><span class="dk-box">${on ? icon('check') : ''}</span><span>${esc(text)}</span></button>`; };
+  const items = (P.items || []).map(it => {
+    const fields = (it.fields || []).map(f => `<div class="spk-f"><div class="spread"><b>${esc(f.label)}</b><button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(f.text)}">${icon('copy')} Copy</button></div>${f.note ? `<p class="muted" style="font-size:14px">${esc(f.note)}</p>` : ''}<div class="spk-t">${esc(f.text)}</div><small class="muted">${f.text.length}${f.limit ? ' of ' + f.limit : ''} characters</small></div>`).join('');
+    const people = (it.people || []).map(p => `<div class="spk-p"><h4>${esc(p.name)}</h4>${(p.rows || []).map(r => `<div class="list-row"><div class="lr-main"><small class="muted">${esc(r[0])}</small><br>${esc(r[1])}</div>${r[2] ? `<button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(r[1])}">${icon('copy')} Copy</button>` : ''}</div>`).join('')}
+      ${p.bio ? `<div class="spk-f"><div class="spread"><b>Bio</b><button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(p.bio)}">${icon('copy')} Copy</button></div><div class="spk-t">${esc(p.bio)}</div><small class="muted">${p.bio.length} characters</small></div>` : ''}${p.note ? `<p class="tipbox">${esc(p.note)}</p>` : ''}</div>`).join('');
+    const plan = it.plan ? `<h4 style="margin-top:16px">${esc(it.plan.title || 'Session plan')}</h4>${it.plan.intro ? `<p class="muted">${esc(it.plan.intro)}</p>` : ''}<div class="spk-plan">${it.plan.rows.map(r => `<div class="spk-pr"><b>${esc(r[0])}</b><span class="pill">${esc(r[1])}</span><span>${esc(r[2])}</span></div>`).join('')}</div>` : '';
+    const lists = (it.lists || []).map(l => { const n = l.items.filter(x => ck[it.id + '|' + x[0]]).length; return `<h4 style="margin-top:16px">${esc(l.title)} <small class="muted">${n} of ${l.items.length} done</small></h4>${l.items.map(x => tick(it.id + '|' + x[0], x[1])).join('')}`; }).join('');
+    const notes = it.notes && it.notes.length ? `<h4 style="margin-top:16px">${esc(it.notesTitle || 'Notes')}</h4><ul class="spk-ul">${it.notes.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+    return `<details class="spk-item" data-spk="${esc(it.id)}"${(V.spkOpen || []).includes(it.id) ? ' open' : ''}><summary><b>${esc(it.title)}</b><span>${esc(it.event || '')}${it.due ? ', due ' + esc(nice(it.due)) + ' (' + days(it.due) + ')' : ''}</span></summary>
+      ${it.status ? `<p style="margin-top:6px"><span class="pill gold">${esc(it.status)}</span></p>` : ''}${it.lead ? `<p class="muted" style="margin-top:8px">${esc(it.lead)}</p>` : ''}
+      ${it.portal ? `<div class="row" style="margin-top:10px"><a class="btn btn-gold btn-sm" href="${esc(it.portal)}" target="_blank" rel="noopener noreferrer">${icon('link')} ${esc(it.portalLabel || 'Open the portal')}</a></div>` : ''}
+      ${lists}${fields ? `<h4 style="margin-top:16px">${esc(it.fieldsTitle || 'Fields to paste')}</h4>${fields}` : ''}${people ? `<h4 style="margin-top:16px">Presenters</h4>${people}` : ''}${plan}${notes}
+      ${it.source ? `<p class="muted" style="font-size:14px;margin-top:12px">Source: <a href="${esc(it.source)}" target="_blank" rel="noopener noreferrer">${esc(it.sourceLabel || it.source)}</a></p>` : ''}</details>`;
+  }).join('');
+  return `<div class="card" id="spk-card"><h3>${esc(P.title || 'Speaking and proposals')}</h3><p class="muted">${esc(P.intro || '')}</p><div style="margin-top:8px">${items}</div>
+   ${P.ideas && P.ideas.length ? `<h4 style="margin-top:16px">${esc(P.ideasTitle || 'Ideas for later')}</h4><ul class="spk-ul">${P.ideas.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`;
+}
+
+// ----- backups: saved decks combine like saved session plans -----
+function dkMerge(out, inc){
+  out.deleted = out.deleted || {clients: {}, sessions: {}};
+  out.deleted.decks = out.deleted.decks || {};
+  Object.entries((inc.deleted || {}).decks || {}).forEach(([id, ts]) => { out.deleted.decks[id] = Math.max(out.deleted.decks[id] || 0, ts); });
+  out.decks = out.decks || []; let added = 0, updated = 0;
+  (inc.decks || []).forEach(x => { const i = out.decks.findIndex(y => y.id === x.id); if (i < 0){ out.decks.push(x); added++; } else if ((x.u || 0) > (out.decks[i].u || 0)){ out.decks[i] = x; updated++; } });
+  out.decks = out.decks.filter(x => !(out.deleted.decks[x.id] && out.deleted.decks[x.id] >= (x.u || 0)));
+  if (inc.owner && inc.owner.speak){ out.owner = out.owner || {}; out.owner.speak = Object.assign({}, inc.owner.speak, out.owner.speak || {}); }
+  return {added, updated};
+}
+
+// ----- styles -----
+const DK_CSS = `
+.dks{--dk:#8B5E1A;--dkd:color-mix(in srgb,var(--dk) 82%,#000);--paper:#FBF7EF;--pink:#2A1C12;position:relative;width:100%;aspect-ratio:16/9;container-type:inline-size;overflow:hidden;border-radius:0;font-family:'Barlow',system-ui,sans-serif;color:var(--pink);background:var(--paper);line-height:1.25;text-align:left;}
+.dks *{box-sizing:border-box;margin:0;padding:0;}
+.dks h1,.dks h2,.dks h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;}
+.dk-title,.dk-big,.dk-close{background:var(--dk);color:#FFF8EC;background-image:radial-gradient(ellipse 60% 70% at 85% 20%,rgba(255,255,255,.16),transparent 70%);}
+.dk-title{display:flex;align-items:center;gap:5cqw;padding:6cqw 7cqw;}
+.dk-tl{flex:1;min-width:0;}
+.dk-by{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.5cqw;letter-spacing:.35cqw;text-transform:uppercase;opacity:.85;}
+.dk-name{font-size:9.6cqw;line-height:1;margin-top:1.2cqw;}
+.dk-name sup{font-family:'Barlow',sans-serif;font-size:1.4cqw;font-weight:600;vertical-align:5.6cqw;margin-left:.4cqw;}
+.dk-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:3.6cqw;margin-top:1.4cqw;opacity:.95;}
+.dk-soon{display:inline-block;margin-top:2cqw;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.4cqw;letter-spacing:.2cqw;text-transform:uppercase;border:.15cqw solid rgba(255,248,236,.7);border-radius:3cqw;padding:.4cqw 1.4cqw;}
+.dk-who{position:absolute;left:7cqw;bottom:4.4cqw;font-size:1.6cqw;opacity:.85;}
+.dk-tile{flex:none;width:30cqw;height:30cqw;border-radius:6cqw;overflow:hidden;box-shadow:0 1.2cqw 3cqw rgba(0,0,0,.25);background:#FBF7EF;}
+.dk-tile img{width:100%;height:100%;display:block;}
+.dk-gg{display:flex;align-items:center;justify-content:center;color:#8B5E1A;}
+.dk-gg svg{width:62%;height:62%;}
+.dk-big,.dk-ask{display:flex;align-items:center;justify-content:center;text-align:center;padding:7cqw 9cqw;}
+.dk-bigin{max-width:100%;}
+.dk-big .dk-h{font-size:6.2cqw;line-height:1.08;}
+.dk-big .dk-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:3.4cqw;margin-top:2cqw;opacity:.92;}
+.dk-n2{position:absolute;right:3cqw;bottom:2.4cqw;font-size:1.2cqw;opacity:.6;}
+.dk-paper{border-left:1.3cqw solid var(--dk);}
+.dk-body{padding:5cqw 6cqw 7cqw 5.4cqw;height:100%;}
+.dk-paper .dk-h{font-size:4.6cqw;line-height:1.05;color:var(--dkd);}
+.dk-paper .dk-sub{font-size:2.1cqw;color:#6B5A4D;margin-top:1cqw;}
+.dk-pts{list-style:none;margin-top:2.8cqw;display:flex;flex-direction:column;gap:1.5cqw;}
+.dk-pts li{position:relative;padding-left:3cqw;font-size:2.45cqw;line-height:1.3;}
+.dk-pts li::before{content:'';position:absolute;left:0;top:1.05cqw;width:1.1cqw;height:1.1cqw;border-radius:.25cqw;background:var(--dk);}
+.dk-foot{position:absolute;left:5.4cqw;right:3cqw;bottom:2.2cqw;display:flex;align-items:center;gap:1cqw;font-size:1.25cqw;color:#6B5A4D;}
+.dk-fm{width:2.6cqw;height:2.6cqw;border-radius:.6cqw;color:#8B5E1A;}
+.dk-n{margin-left:auto;}
+.dk-parts{display:grid;grid-template-columns:repeat(6,1fr);gap:1.2cqw;margin-top:4cqw;}
+.dk-part{background:color-mix(in srgb,var(--dk) 9%,#fff);border-top:.6cqw solid var(--dk);border-radius:1cqw;padding:2.2cqw 1.4cqw 2.6cqw;min-height:16cqw;display:flex;flex-direction:column;gap:1cqw;}
+.dk-part b{font-family:'Cormorant Garamond',serif;font-size:3cqw;line-height:1;color:var(--dkd);}
+.dk-part span{font-size:1.8cqw;line-height:1.25;}
+.dk-trees{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2cqw;margin-top:4cqw;align-items:start;}
+.dk-tree{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5cqw;position:relative;}
+.dk-tree img{width:10.5cqw;height:10.5cqw;border-radius:2.4cqw;display:block;box-shadow:0 .4cqw 1cqw rgba(0,0,0,.12);}
+.dk-tree.on img{outline:.5cqw solid var(--dk);outline-offset:.5cqw;}
+.dk-tree b{font-family:'Cormorant Garamond',serif;font-size:2.3cqw;margin-top:.8cqw;}
+.dk-tree span{font-size:1.35cqw;color:#6B5A4D;line-height:1.2;}
+.dk-tree i{font-style:normal;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1cqw;letter-spacing:.15cqw;text-transform:uppercase;color:var(--dkd);}
+.dk-two{display:grid;grid-template-columns:1fr 1fr;gap:4cqw;margin-top:2.6cqw;}
+.dk-ch{font-size:3cqw;color:var(--dkd);}
+.dk-two .dk-pts{margin-top:1.4cqw;}
+.dk-two .dk-pts li{font-size:2.15cqw;}
+.dk-ask{background:color-mix(in srgb,var(--dk) 13%,#FBF7EF);}
+.dk-ask .dk-h{font-size:4.6cqw;line-height:1.12;color:var(--dkd);}
+.dk-ask .dk-sub{font-size:2.3cqw;margin-top:2.4cqw;color:#4A3B30;}
+.dk-askic{width:6cqw;height:6cqw;fill:none;stroke:var(--dk);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin-bottom:2cqw;}
+.dk-close{display:flex;align-items:center;gap:5cqw;padding:6cqw 7cqw;}
+.dk-close .dk-h{font-size:7cqw;line-height:1.02;}
+.dk-close .dk-sub{font-size:2.3cqw;margin-top:2cqw;opacity:.92;max-width:52cqw;}
+.dk-url{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:3.4cqw;margin-top:3cqw;}
+.dk-mail{font-size:2.1cqw;margin-top:.6cqw;opacity:.9;}
+.dk-qr{flex:none;background:#fff;border-radius:2.4cqw;padding:2cqw;width:26cqw;height:26cqw;}
+.dk-qr svg{width:100%;height:100%;display:block;}
+.dk-blank{background:#000;}
+`;
+const DK_UI_CSS = `
+.dk-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;}
+.dk-pk{display:flex;gap:12px;align-items:center;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;color:var(--ink);font:inherit;}
+.dk-pk[aria-pressed="true"]{border-color:var(--dk);box-shadow:0 0 0 2px var(--dk) inset;}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.85;}
+.dk-pk small{display:block;color:var(--ink-soft);font-size:calc(14px * var(--scale));line-height:1.35;margin-top:2px;}
+.dk-pkm{flex:none;width:52px;height:52px;border-radius:12px;overflow:hidden;background:#FBF7EF;}
+.dk-pkm img{width:100%;height:100%;display:block;}
+.dk-pkm.dk-gg svg{width:62%;height:62%;}
+.dk-intro p+p{margin-top:8px;}
+.dk-rows{display:flex;flex-direction:column;gap:12px;margin-top:14px;}
+.dk-row{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);}
+.dk-row.off .dk-th{opacity:.4;}
+.dk-th{border-radius:8px;overflow:hidden;align-self:start;box-shadow:0 1px 6px rgba(0,0,0,.15);}
+.dk-rm{min-width:0;}
+.dk-rm details{margin-top:10px;}
+.dk-rm summary{cursor:pointer;font-weight:600;color:var(--gold);}
+.dk-np{font-size:calc(14px * var(--scale));margin-top:8px;}
+@media(max-width:700px){.dk-row{grid-template-columns:1fr;}}
+body.dk-noscroll{overflow:hidden;}
+#dk-show{position:fixed;inset:0;z-index:300;background:#0E0B09;color:#F2EADC;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);}
+#dk-show .dk-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px;}
+#dk-show.dk-one .dk-stage .dks{width:min(100%,calc((100vh - 90px) * 1.7778));}
+#dk-show.dk-one.with-notes .dk-stage .dks{width:min(100%,calc((62vh - 40px) * 1.7778));}
+#dk-show .dk-notes{background:#1B1511;border-top:1px solid #3A2E23;padding:14px 20px;overflow:auto;font-size:calc(19px * var(--scale));line-height:1.55;}
+#dk-show.dk-one .dk-notes{max-height:32vh;}
+#dk-show .dk-notes p{margin-top:8px;}
+#dk-show .dk-notes .eyebrow{color:#D9A847;}
+.dk-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#16110D;border-top:1px solid #2E241B;flex-wrap:wrap;}
+.dk-b{display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;border-radius:24px;border:1px solid #3A2E23;background:#221A14;color:#F2EADC;cursor:pointer;font:inherit;padding:0 14px;}
+.dk-b svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.dk-b[disabled]{opacity:.35;cursor:default;}
+.dk-b[aria-pressed="true"]{background:#D9A847;color:#1A130D;border-color:#D9A847;}
+.dk-tx{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:15px;}
+.dk-cnt{min-width:72px;text-align:center;font-weight:600;}
+.dk-sp{flex:1;}
+.dk-time{font-variant-numeric:tabular-nums;font-size:20px;font-weight:600;padding:0 6px;}
+.dk-time small{font-size:14px;color:#BFB09A;font-weight:500;}
+#dk-clock.over{color:#F1B39F;}
+#dk-show.dk-pv .dk-pvg{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px;padding:16px;}
+.dk-pvc{display:flex;align-items:center;justify-content:center;min-height:0;}
+.dk-pvc .dks{width:min(100%,calc((100vh - 170px) * 1.7778));}
+.dk-pvr{display:flex;flex-direction:column;gap:10px;min-height:0;}
+.dk-pvn .dks{opacity:.92;}
+.dk-nextl{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:13px;color:#D9A847;}
+#dk-show.dk-pv .dk-notes{flex:1;border:1px solid #3A2E23;border-radius:12px;}
+.dk-hint{font-size:14px;color:#BFB09A;padding:0 16px 10px;}
+.dk-hint .linkbtn{color:#D9A847;}
+@media(max-width:820px){#dk-show.dk-pv .dk-pvg{grid-template-columns:1fr;overflow:auto;}}
+.dk-todo{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:9px 0;cursor:pointer;color:var(--ink);font:inherit;}
+.dk-todo .dk-box{flex:none;width:24px;height:24px;border:2px solid var(--line);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.dk-todo .dk-box svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;}
+.dk-todo[aria-pressed="true"] .dk-box{background:var(--sage);border-color:var(--sage);color:#fff;}
+.dk-todo[aria-pressed="true"] span:last-child{color:var(--ink-soft);text-decoration:line-through;}
+.spk-item{border-top:1px solid var(--line);padding:6px 0;}
+.spk-item summary{cursor:pointer;padding:8px 0;}
+.spk-item summary span{display:block;color:var(--ink-soft);font-size:calc(15px * var(--scale));}
+.spk-f{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);}
+.spk-t{white-space:pre-wrap;margin:8px 0 4px;}
+.spk-p{margin-top:12px;}
+.spk-plan{margin-top:8px;}
+.spk-pr{display:grid;grid-template-columns:110px auto 1fr;gap:10px;align-items:start;padding:8px 0;border-top:1px solid var(--line);}
+@media(max-width:560px){.spk-pr{grid-template-columns:1fr;gap:2px;}}
+.spk-ul{margin:6px 0 0 20px;}
+.spk-ul li{margin-top:4px;}
+@media print{#dk-show{display:none !important;}}
+`;
+(function(){ const s = document.createElement('style'); s.id = 'dk-css'; s.textContent = DK_CSS + DK_UI_CSS; document.head.appendChild(s); })();
 
 // ---------------- boot ----------------
 if (!window.crypto || !crypto.subtle){ $('#lock-body').innerHTML = '<p class="lock-sub">This browser can\'t run the Field Guide securely. Please open it in a current version of Safari, Chrome, or Edge, from its web address.</p>'; }
