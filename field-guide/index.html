@@ -1440,6 +1440,9 @@ function fgPartsLib(L){
   FG_PARTS_DONE.add(L);
   (L.parts || []).forEach(p => { if (p && typeof p === 'object'){ p.key = GGParts.id(p.key); if (typeof p.name === 'string') p.name = GGParts.name(p.name); } });
   ['tryHome'].forEach(k => { if (L[k] && typeof L[k] === 'object' && !Array.isArray(L[k])) GGParts.fix(L[k]); });
+  // The grown-up's view questions are keyed by part in the sealed library. Without this they showed blank
+  // in Maple Guide and Aspen Guide visits after the six parts rename, until the library is sealed with new keys.
+  if (L.grownView && L.grownView.q && typeof L.grownView.q === 'object') GGParts.fix(L.grownView.q);
   return L;
 }
 // Saved Oak, Maple, and Aspen Guide visits move to the new part names. Grove Guide records (gv) are left alone.
