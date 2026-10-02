@@ -17,6 +17,10 @@
    - Flagged answers (alone, losing hope, not safe at home) are never
      lost: the person sees help lines, and a guide sees them at goodbye.
 
+   Leaves holds three strands, Move, Rest, and Nourish. One Leaves question
+   for each is tagged s: 'move', 'rest', or 'nourish'. The weekly quick
+   check-in asks question 1 of every part plus each tagged strand.
+
    Each question: { t, tip, why } plus r: 1 for reverse questions
    ("Often" is the hard answer) and flag: 'alone', 'hope', or 'home'.
    Question 1 of every part is the quick check-in question, so it is never
@@ -157,13 +161,13 @@ const Q = {
       why: 'Strain with someone close pulls on every other part of the tree.' }
   ],
   body: [
-    { t: 'Gotten enough restful sleep?',
+    { t: 'Gotten enough restful sleep?', s: 'rest',
       tip: 'Ask what gets in the way of sleep. Pain, worry, and grief often do.',
       why: 'Sleep is the soil everything else grows in.' },
-    { t: 'Moved your body in ways you enjoy?',
+    { t: 'Moved your body in ways you enjoy?', s: 'move',
       tip: 'Any movement counts: stretching, walking, dancing in the kitchen. Fit it to what their body can do.',
       why: 'Movement lifts mood and gives stress somewhere to go.' },
-    { t: 'Eaten in ways that nourish you, without guilt or strict rules?',
+    { t: 'Eaten in ways that nourish you, without guilt or strict rules?', s: 'nourish',
       tip: 'Keep this gentle. If you hear fear or strict rules around food, listen, and point to a professional.',
       why: 'Food is meant to be care, not a test you pass or fail.' },
     { t: 'Taken unhurried rest, with nothing to get done?',

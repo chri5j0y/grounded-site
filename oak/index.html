@@ -898,6 +898,17 @@ html.ts-2 main{zoom:1.25;}
 .prof-small{font-size:14px;margin-top:12px;}
 </style>
 <style>/* Grow With Grounded name in the header (session 20) */.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:var(--house,#8B5E1A);white-space:nowrap;}.foot-name{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;line-height:1.1;margin-top:8px;}@media (max-width:640px){.brand .brand-name{display:none;}}</style>
+<style>/* Five tabs (Rebrand Session 3): along the bottom on phones and in the app */
+@media (max-width:700px){
+  #client-nav{position:fixed;top:auto;bottom:0;left:0;right:0;border-bottom:none;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);overflow:visible;box-shadow:0 -4px 14px rgba(0,0,0,.06);}
+  #client-nav .nav-btn{min-width:0;flex:1 1 0;border-bottom:none;border-top:3px solid transparent;padding:8px 2px 9px;white-space:normal;line-height:1.1;}
+  #client-nav .nav-btn.active{border-top-color:var(--gold);}
+  body{padding-bottom:78px;}
+  .toast{bottom:94px;}
+  .sticky-bar{bottom:70px;}
+}
+</style>
+<link rel="stylesheet" href="/shared/gg-tend.css">
 </head>
 <body>
 
@@ -916,7 +927,7 @@ html.ts-2 main{zoom:1.25;}
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Shelter for others. Strength for you.</p>
     <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults.</p>
-    <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="document.querySelector(&#x27;#client-nav [onclick*=client-assess]&#x27;).click();document.getElementById(&#x27;client-nav&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;})">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="document.querySelector(&#x27;#client-nav [onclick*=client-intro]&#x27;).click();document.getElementById(&#x27;client-nav&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;})">How it works</button></div>
+    <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');document.getElementById('client-nav').scrollIntoView({behavior:'smooth'})">How it works</button></div>
     <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Grounded Field Guide.</p>
     <div id="hero-tree-slot" hidden></div>
   </div>
@@ -924,19 +935,21 @@ html.ts-2 main{zoom:1.25;}
 </section>
 <div class="gg-parts" style="--dot:#3D5A73;--dot-dark:#9DB8D0"><ul class="gg-parts-in" aria-label="The six parts of the tree"><li class="gg-part"><div><b>Roots</b><span>What grounds you</span></div></li><li class="gg-part"><div><b>Trunk</b><span>Purpose</span></div></li><li class="gg-part"><div><b>Bark</b><span>Mind and feelings</span></div></li><li class="gg-part"><div><b>Branches</b><span>Relationships</span></div></li><li class="gg-part"><div><b>Leaves</b><span>Body</span></div></li><li class="gg-part"><div><b>Fruit</b><span>Hope</span></div></li></ul></div>
 
-<nav class="nav" id="client-nav">
-  <button class="nav-btn active" data-icon="tree" onclick="showView('client-intro',this)"><span>About</span></button>
-  <button class="nav-btn" data-icon="leaf" onclick="showView('client-assess',this)"><span>Check-in</span></button>
-  <button class="nav-btn" data-icon="results" onclick="showView('client-results',this)"><span>Results</span></button>
-  <button class="nav-btn" data-icon="can" onclick="showView('client-growthplan',this)"><span>Growth Plan</span></button>
-  <button class="nav-btn" data-icon="maple" onclick="showView('client-progress',this)"><span>My Progress</span></button>
-  <button class="nav-btn" data-icon="door" data-lc="1" onclick="LCS.client.open=null;showView('client-life',this)"><span>Life Changes</span></button>
+<nav class="nav" id="client-nav" aria-label="Oak">
+  <button class="nav-btn active" data-icon="sun" data-tab="today" onclick="showView('client-today')"><span>Today</span></button>
+  <button class="nav-btn" data-icon="calendar" data-tab="week" onclick="showView('client-week')"><span>Week</span></button>
+  <button class="nav-btn" data-icon="rings" data-tab="season" onclick="showView('client-season')"><span>Season</span></button>
+  <button class="nav-btn" data-icon="can" data-tab="plan" onclick="showView('client-growthplan')"><span>Growth plan</span></button>
+  <button class="nav-btn" data-icon="door" data-tab="guides" data-lc="1" onclick="LCS.client.open=null;showView('client-life')"><span>Guides</span></button>
 </nav>
 
 
 <main>
 <div id="st-profile-bar"></div>
-<div class="view active" id="client-intro">
+<div class="view active" id="client-today"></div>
+<div class="view" id="client-week"></div>
+<div class="view" id="client-season"></div>
+<div class="view" id="client-intro">
   <div id="prac-moved"></div>
   <p class="lead">Have you ever known a person, or perhaps been a person, who gives the impression that everything is good, but you sense it would only take one small bump in the road before the house of cards comes tumbling down? It takes one to know one. I lived this way for a long time, and I have met countless others who have felt the same.</p>
   <p class="lead">The answer is resilience: your ability to bounce back when something unexpected and unwanted occurs. The key is strengthening the different parts of your life, so when one part is injured, the healthy parts provide support for real healing and a return to wholeness.</p>
@@ -957,14 +970,13 @@ html.ts-2 main{zoom:1.25;}
     <p>I'm Chris, a hospice chaplain. Grow With Grounded exists to support caregivers, normalize hospice, and walk with the bereaved. I built Oak from years of sitting with people at the end of their lives and watching which parts of them held when everything else gave way.</p>
     <div class="btn-row">
       <a class="btn btn-secondary" href="https://growwithgrounded.com/">Visit growwithgrounded.com</a>
-      <a class="btn btn-secondary" href="https://growwithgrounded.com/grove/">The Grove</a>
     </div>
   </div>
 
   <div class="btn-row" style="margin-top:32px;">
     <button class="btn btn-primary" onclick="startCheckin()">Begin Your Check-in</button>
     <button class="btn btn-secondary" onclick="startQuick()">Quick Check-in, 2 minutes</button>
-    <button class="btn btn-secondary" onclick="showView('client-progress', document.querySelectorAll('#client-nav .nav-btn')[4])">Returning? Load My File</button>
+    <button class="btn btn-secondary" onclick="showView('client-today')">Go to Today</button>
   </div>
 </div>
 
@@ -982,7 +994,7 @@ html.ts-2 main{zoom:1.25;}
 
 <div class="view" id="client-growthplan">
   <div class="section-title">Your Growth Plan</div>
-  <p class="lead">Choose 1 to 3 practices for each part of your tree. This becomes your personal plan, the practical next step that turns your check-in into real growth.</p>
+  <p class="lead">Choose up to 3 practices for each part of your tree. They show up in Today, ready to check off, and you can change them anytime. This is the practical next step that turns your check-in into real growth.</p>
   <div class="info-field" style="max-width:340px;margin:18px 0 8px;">
     <label for="client-save-name">Your name (optional, shown on your plan)</label>
     <input type="text" id="client-save-name" placeholder="e.g. Sam">
@@ -991,7 +1003,7 @@ html.ts-2 main{zoom:1.25;}
     <p class="lead" style="padding:20px 0;">Finish your check-in first so your growth plan can reflect your actual results.</p>
   </div>
   <div class="btn-row" id="client-growthplan-generate-row" style="display:none;">
-    <button class="btn btn-primary" onclick="generateGrowthPlanDoc('client')">Create My Growth Plan</button>
+    <button class="btn btn-primary" onclick="oakSavePlan()">Save My Growth Plan</button>
   </div>
   <div id="client-growthplan-doc"></div>
 </div>
@@ -1028,6 +1040,8 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js"></script>
+<script src="/shared/gg-journey.js"></script>
+<script src="/shared/gg-tend.js"></script>
 <script src="/oak/guides.js"></script>
 <script>
 const DOMAIN_DEFS = [
@@ -1848,7 +1862,10 @@ const ICONS = {
   maple: '<path d="M12 21v-9"/><path d="M12 12c0-4.5-3.2-7-8-7 0 4.5 3.2 7 8 7z"/><path d="M12 14.5c0-3.5 2.4-6 7-6 0 3.5-2.4 6-7 6z"/><path d="M6.5 21h11"/>',
   people: '<circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.5 20.5c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M15.5 15c3.2 0 6 1.6 6 5"/>',
   plus: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/>',
-  door: '<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/>'
+  door: '<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+  calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.2"/>',
+  rings: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.8"/><circle cx="12" cy="12" r="2.6"/>'
 };
 function icon(name, size) {
   return `<svg class="icon" width="${size || 22}" height="${size || 22}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
@@ -2386,7 +2403,7 @@ function generateGrowthPlanDoc(mode) {
       ${domainsHtml}
       <div class="growth-plan-next">
         <div class="growth-plan-next-label">Keep growing</div>
-        <p><strong>The Grove</strong> is a free daily practice from Grounded. Your tree grows there too, with a few small practices a day for all six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Start at growwithgrounded.com/grove</p>
+        <p><strong>Tend it every day.</strong> Your practices wait in the Today tab in Oak, ready to check off. A short check-in each week and a full check-in every twelve weeks show how your tree is growing. Open Oak at growwithgrounded.com/oak</p>
       </div>
       <div class="growth-plan-footer">
         <p class="growth-plan-footer-link">More stories from the edge of life at ${groundedShort}</p>
@@ -2398,7 +2415,7 @@ function generateGrowthPlanDoc(mode) {
       ${isClient ? '<button class="btn btn-secondary" onclick="savePersonalFile()">Save My Results</button>' : ''}
     </div>
     ${isClient ? `<p class="soft-invite no-print">Want company while you keep this plan? <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Grounded.</a> sends a new story every Wednesday.</p>
-    <div class="grove-next no-print"><div><strong>Ready to put this plan into practice?</strong> The Grove walks with you, one small practice at a time, for every part of your tree.</div><a class="btn btn-primary" href="https://growwithgrounded.com/grove/">Tend Your Grove</a></div>` : ''}`;
+    <div class="grove-next no-print"><div><strong>Ready to put this plan into practice?</strong> ${PROF ? 'Your practices are waiting in Today, ready to check off.' : 'Open or create your profile, and your practices show up in Today, ready to check off.'}</div><button class="btn btn-primary" onclick="${PROF ? "showView('client-today')" : 'profCreateDialog()'}">${PROF ? 'Go to Today' : 'Create a profile'}</button></div>` : ''}`;
   document.getElementById(sheetId).scrollIntoView({ behavior: 'smooth', block: 'start' });
   showToast('Growth plan created below.');
 }
@@ -2504,7 +2521,7 @@ function calculateResults(mode) {
     <div class="btn-row">
       <button class="btn btn-primary" onclick="showView('${prefix}-growthplan', document.querySelectorAll('#${isClient ? 'client' : 'practitioner'}-nav .nav-btn')[3])">Build ${isClient ? 'My' : 'the'} Growth Plan</button>
     </div>
-    ${isClient ? '<div id="client-save-box"></div><div id="client-grove-box"></div>' + inviteHtml() : ''}`;
+    ${isClient ? '<div id="client-save-box"></div>' + inviteHtml() : ''}`;
 
   const goToGrowthPlanPart = key => {
     showView(`${prefix}-growthplan`, document.querySelectorAll(`#${isClient ? 'client' : 'practitioner'}-nav .nav-btn`)[3]);
@@ -2517,13 +2534,14 @@ function calculateResults(mode) {
     window.lastClientScores = scores;
     window.lastClientUnsure = unsure;
     window.lastClientReflections = reflections;
-    window.stGroveAns = stGroveFrom(); window.stGroveSent = false;
     const safety = { opener: ST_SAFE.opener || 'skipped', direct: ST_SAFE.direct || 'skipped' };
     window.currentClientEntry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], std: ST_STD, scores, unsure, reflections, flags, safety, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
     showView('client-results', document.querySelectorAll('#client-nav .nav-btn')[2]);
     renderGrowthPlanBuilder('client');
     if (PROF) { const c = JSON.parse(JSON.stringify(currentClientEntry)); personalHistory.push(c); sortEntries(personalHistory); profPersist(); }
-    renderSaveBox(); renderGroveBox();
+    if (PROF && !ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(currentClientEntry); if (msg) setTimeout(() => showToast(msg), 900); }
+    oakPrefillPlan();
+    renderSaveBox();
     renderProgress();
   }
   mountTree(`${prefix}-results-tree`, { variant: 'score', scores, interactive: true, seam: '#2C1810', assemble: true }, goToGrowthPlanPart);
@@ -2532,19 +2550,24 @@ function calculateResults(mode) {
 // =====================================================================
 // NAVIGATION
 // =====================================================================
+// Five tabs. Each view belongs to one tab, so the right tab lights up
+// however a view was opened.
+const VIEW_TAB = { 'client-today': 'today', 'client-intro': 'today', 'client-week': 'week', 'client-season': 'season', 'client-assess': 'season', 'client-results': 'season', 'client-progress': 'season', 'client-growthplan': 'plan', 'client-life': 'guides' };
 function showView(id, btn) {
   const navId = id.startsWith('client') ? 'client-nav' : null;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if (navId) {
-    document.querySelectorAll(`#${navId} .nav-btn`).forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+    const tab = VIEW_TAB[id];
+    document.querySelectorAll(`#${navId} .nav-btn`).forEach(b => { const on = b.getAttribute('data-tab') === tab; b.classList.toggle('active', on); if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
   }
   if (id === 'client-life') renderLC('client');
+  if (id === 'client-growthplan') oakPlanOpen();
+  if ((id === 'client-today' || id === 'client-week' || id === 'client-season') && window.GGTend) GGTend.render();
   if (navId) scrollToViewTop(id, false, false);
 }
 
-function goHome() { showView('client-intro', document.querySelectorAll('#client-nav .nav-btn')[0]); }
+function goHome() { showView('client-today'); }
 
 function toggleRestore(id, btn) {
   const open = document.getElementById(id + '-restore').classList.toggle('open');
@@ -2677,6 +2700,77 @@ function renderQuotes() {
 }
 
 
+
+// =====================================================================
+// TENDING: Today, Week, and Season (/shared/gg-tend.js)
+// Oak keeps its tending record in the profile's locked vault, beside
+// its check-ins, under "oak" > "tend".
+// =====================================================================
+function oakLatestEntry() {
+  const list = (personalHistory || []).filter(e => e && e.scores);
+  const full = list.filter(e => e.type !== 'quick');
+  return full[full.length - 1] || list[list.length - 1] || null;
+}
+function oakPrefillPlan() {
+  const box = document.getElementById('client-growthplan-builder'), first = box && box.querySelector('.domain-card');
+  if (!first || first.dataset.filled) return;
+  first.dataset.filled = '1';
+  const plan = (window.GGTend && GGTend.plan()) || (window.currentClientEntry && currentClientEntry.growthPlan) || null;
+  if (!plan) return;
+  ALL_DOMAINS.forEach(d => {
+    const p = plan[d.key] || {}, chosen = new Set(p.selected || []);
+    document.querySelectorAll(`input[name="cp-client-${d.key}"]`).forEach(c => { c.checked = chosen.has(c.value); });
+    const custom = document.getElementById(`cp-client-${d.key}-custom`); if (custom) custom.value = p.custom || '';
+  });
+}
+function oakPlanOpen() {
+  if (!window.lastClientScores) {
+    const e = oakLatestEntry();
+    if (e) { window.lastClientScores = e.scores; window.lastClientUnsure = e.unsure || []; renderGrowthPlanBuilder('client'); }
+  }
+  oakPrefillPlan();
+}
+function oakSavePlan() {
+  const plan = collectGrowthPlan('client');
+  const n = ALL_DOMAINS.reduce((t, d) => t + plan[d.key].selected.length + (plan[d.key].custom ? 1 : 0), 0);
+  if (!n) { showToast('Choose at least one practice first.'); return; }
+  generateGrowthPlanDoc('client');
+  if (PROF && window.GGTend) {
+    GGTend.setPlan(plan);
+    if (window.currentClientEntry) savePersonalFile();
+    setTimeout(() => showToast('Saved. Your practices are in Today.'), 700);
+  }
+}
+if (window.GGTend) GGTend.init({
+  tool: 'oak', toolName: 'Oak',
+  els: { today: 'client-today', week: 'client-week', season: 'client-season' },
+  parts: ALL_DOMAINS.map(d => ({ key: d.key, part: d.part, name: d.name, color: d.color })),
+  moveKey: 'body',
+  partIcon: key => partIcon(DOMAIN_BY_KEY[key], 22),
+  questions: () => (window.OAK_CHECKIN || {}).questions || {},
+  answers: (window.OAK_CHECKIN || {}).answers || [],
+  weekStem: 'This past week, how often have you...',
+  practiceInfo: (key, name) => {
+    const d = DOMAIN_BY_KEY[key], r = d && d.restore.find(x => x[0] === name), g = GUIDES[key + '|' + name];
+    return { desc: r ? r[1] : '', guide: guideHtml(key, name, true), hard: g ? g.hard : '' };
+  },
+  history: () => personalHistory || [],
+  hasResults: () => !!window.currentClientEntry,
+  toast: m => showToast(m),
+  store: {
+    get: () => { if (!PROF || !window.GGP) return null; const d = GGP.data(PROF.id, 'oak'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
+    save: () => (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve()
+  },
+  actions: {
+    fullCheckin: () => startCheckin(), quickCheckin: () => startQuick(),
+    results: () => showView('client-results'), progress: () => showView('client-progress'),
+    plan: () => showView('client-growthplan'), about: () => showView('client-intro'),
+    createProfile: () => profCreateDialog(), openProfile: () => profUnlockDialog(),
+    lock: () => profLock(), textSize: () => cycleTextSize()
+  }
+});
+setTimeout(() => { if (window.GGTend) GGTend.render(); }, 0);
+
 // ---------- SELF CHECK-IN: SAVE AND LOAD MY FILE ----------
 window.personalHistory = [];
 window.personalFileLoaded = false;
@@ -2735,7 +2829,9 @@ function profSync() {
     window.personalHistory = []; personalHistory = window.personalHistory;
     window.personalFileLoaded = false; window.currentClientEntry = null;
   }
-  renderProfileBar(); renderSaveBox(); renderGroveBox(); renderProgress();
+  renderProfileBar(); renderSaveBox(); renderProgress();
+  if (window.GGTend) GGTend.render();
+  if (document.getElementById('client-growthplan').classList.contains('active')) oakPlanOpen();
 }
 async function profPersist() {
   if (!PROF || !window.GGP) return;
@@ -2748,13 +2844,13 @@ function renderProfileBar() {
   if (PROF) {
     const a = GGP.active(), t = new Date(a.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
     const young = a.age !== 'adult' ? `<div class="pbar-who" style="flex-basis:100%"><span>Oak is written for grown-ups. ${a.age === 'maple' ? '<a href="/maple/">Maple</a> is made for kids.' : a.age === 'aspen' ? '<a href="/aspen/">Aspen</a> is made for middle schoolers.' : 'The Grove has wording made for teens.'}</span></div>` : '';
-    bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGP.manage()" aria-label="Manage your profile">${GGAv.html(a.avatar, a.name, 40)}</button>
+    bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGTend.openSettings()" aria-label="Profile and settings">${GGAv.html(a.avatar, a.name, 40)}</button>
       <div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Saving to your Grounded profile on this device. Unlocked until ${t}.</span></div>
-      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGP.backup()">Download backup</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${young}</div>`;
+      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${young}</div>`;
   } else {
     const n = window.GGP ? GGP.list().length + (JSON.parse(localStorage.getItem('oak:profiles') || '[]')).length : 0;
     bar.innerHTML = `<div class="pbar pbar-off"><div class="pbar-who"><strong>${n ? 'Welcome back' : 'Save your progress on this device'}</strong><span>${n ? 'Open your Grounded profile to see your tree grow over time.' : 'Create a private Grounded profile, locked with your own passcode. It works across every Grounded tool.'}</span></div>
-      <div class="pbar-act">${n ? '<button type="button" class="btn btn-primary btn-sm" onclick="profUnlockDialog()">Open my profile</button>' : ''}<button type="button" class="btn ${n ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="profCreateDialog()">Create a profile</button></div></div>`;
+      <div class="pbar-act">${n ? '<button type="button" class="btn btn-primary btn-sm" onclick="profUnlockDialog()">Open my profile</button>' : ''}<button type="button" class="btn ${n ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="profCreateDialog()">Create a profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div></div>`;
   }
 }
 function profCreateDialog() {
@@ -2828,55 +2924,6 @@ function loadPersonalFile(input) {
     }
   };
   reader.readAsText(file);
-}
-
-// =====================================================================
-// TEND YOUR GROVE
-// Oak is for checking in. The Grove is for daily practice.
-// Matching answers go to The Grove inside the person's own locked profile.
-// Map: Oak part.question index -> Grove strand.question index. Both ask about
-// the past two weeks. Rarely, Sometimes, Often, Almost always -> 2, 3, 4, 5.
-// "Not sure" and the safety step are never sent. Only questions that ask the same thing the same way round are paired.
-// =====================================================================
-const ST_TO_GROVE = {
-  'holy.0': 'spirit.1', 'holy.1': 'spirit.0', 'holy.2': 'spirit.5', 'holy.4': 'spirit.6',
-  'meaning.0': 'create.2', 'meaning.1': 'create.3',
-  'mind.0': 'mind.5', 'mind.2': 'mind.3', 'mind.3': 'mind.0',
-  'community.0': 'connect.3', 'community.1': 'connect.7', 'community.3': 'connect.5', 'community.6': 'connect.2', 'community.7': 'connect.6',
-  'body.0': 'rest.0', 'body.1': 'body.0', 'body.2': 'nourish.6', 'body.3': 'rest.3', 'body.4': 'body.3', 'body.5': 'body.5',
-  'hope.0': 'hope.1', 'hope.1': 'hope.6', 'hope.2': 'hope.4', 'hope.4': 'hope.2', 'hope.6': 'hope.3'
-};
-const ST_QUICK_TO_GROVE = { holy: 'spirit.1', meaning: 'create.2', mind: 'mind.5', community: 'connect.3', body: 'rest.0', hope: 'hope.1' };
-function stGroveFrom() {
-  const out = {}, val = a => { const o = Q_OPTS.find(x => x[0] === a); return o && o[2] !== null ? o[2] + 2 : null; };
-  if (ST_QUICK) Object.keys(ST_QUICK_TO_GROVE).forEach(k => { const v = val((ST_ANS['quick_' + k] || {})[0]); if (v) out[ST_QUICK_TO_GROVE[k]] = v; });
-  else Object.keys(ST_TO_GROVE).forEach(k => { const [d, i] = k.split('.'); const v = val((ST_ANS[d] || {})[i]); if (v) out[ST_TO_GROVE[k]] = v; });
-  return out;
-}
-function renderGroveBox() {
-  const box = document.getElementById('client-grove-box'); if (!box) return;
-  const ans = window.stGroveAns || {}, n = Object.keys(ans).length;
-  if (!n || !window.GGGrowth) { box.innerHTML = ''; return; }
-  if (window.stGroveSent) {
-    box.innerHTML = `<div class="save-box"><div class="save-box-title">On its way to The Grove</div><p>${n} matching answer${n !== 1 ? 's are' : ' is'} waiting in The Grove, locked in your profile. The Grove fills them in and you finish the rest.</p><div class="btn-row"><a class="btn btn-primary" href="/grove/">Open The Grove</a></div></div>`;
-    return;
-  }
-  box.innerHTML = `<div class="save-box"><div class="save-box-title">Tend your tree every day in The Grove</div><p>Oak is for checking in. The Grove turns what you noticed into small daily practices. Send your ${n} matching answer${n !== 1 ? 's' : ''} there, locked in your profile the whole way.</p><div class="btn-row"><button class="btn btn-primary" onclick="sendToGrove()">Tend Your Grove</button>${window.GGApp && !GGApp.native ? '<button class="btn btn-secondary" onclick="stToPhone()">Send to Another Phone</button>' : ''}</div></div>`;
-}
-// The Grove on another phone, or the Grove app on this one. Only the matching Grove answers travel.
-function stToPhone(app) {
-  const ans = window.stGroveAns || {}; if (!Object.keys(ans).length || !window.GGApp) return;
-  const a = window.GGP && GGP.active(), nm = (document.getElementById('client-save-name') || {}).value || '';
-  const entry = { from: 'oak', name: (a && a.name) || nm.trim(), age: (a && a.age) || 'adult', answers: ans };
-  if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
-}
-async function sendToGrove() {
-  if (window.GGApp && GGApp.native) { stToPhone(true); return; }   // in the Oak app, The Grove is its own app
-  if (!window.GGP || !window.GGGrowth) return;
-  if (!GGP.active()) { const ok = await GGP.require({ age: 'adult', reason: 'Your answers travel to The Grove inside your own profile, locked with a passcode only you know.' }); if (!ok) return; }
-  const a = GGP.active(); if (!a) return;
-  if (GGGrowth.send({ from: 'oak', who: a.id, name: a.name, age: a.age, answers: window.stGroveAns || {} })) { window.stGroveSent = true; renderGroveBox(); showToast('Sent to The Grove.'); }
-  else showToast('Open your profile first, then send again.');
 }
 
 function renderSaveBox() {
@@ -3133,7 +3180,7 @@ function lcFromHash() {
   showView('client-life', btn);
 }
 window.addEventListener('hashchange', lcFromHash);
-/* Deep links from The Grove: #quick starts the quick check-in, #checkin the full one */
+/* Deep links: #quick starts the quick check-in, #checkin the full one */
 function checkinFromHash() { const h = location.hash; if (h === '#quick' && typeof startQuick === 'function') startQuick(); else if ((h === '#checkin' || h === '#check' + 'up') && typeof startCheckin === 'function') startCheckin(); }
 setTimeout(checkinFromHash, 60);
 setTimeout(lcFromHash, 0);
