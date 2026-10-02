@@ -17,6 +17,7 @@
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#4A5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-6 14-15 14z"/><path d="M5 19l8.5-8.5"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
+    shelf: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16M9 4v16M14 5l4 15M3 20h18"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
@@ -38,6 +39,9 @@
       { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/oak/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' },
       { id: 'lc-hospice', title: 'At the end of life', desc: 'Hard talks for hospice families and the bedside', href: HOME + '/willow/#guides', icon: ic.door, bg: '#E8ECDD', color: '#5F7350' }
     ] },
+    { name: 'Further reading', items: [
+      { id: 'library', title: 'The Grounded library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.shelf, bg: '#F1E6CC' }
+    ] },
     { name: 'For professionals', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
     ] }
@@ -53,6 +57,7 @@
     if (p.indexOf('/willow') === 0) return /^#(guide|guides)/.test(hash) ? 'lc-hospice' : 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
+    if (p.indexOf('/library') === 0) return 'library';
     return '';
   }
 
