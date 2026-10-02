@@ -111,3 +111,15 @@
   .gt-card{padding:16px;}
   .gt-wsum li b{min-width:0;width:100%;}
 }
+/* Find more practices: the shared library (Rebrand Session 5) */
+.gt-lib-q{width:100%;box-sizing:border-box;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);margin:4px 0 10px;}
+.gt-lib-parts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.gt-chip{font:inherit;font-size:14px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;}
+.gt-chip.on{background:var(--pc,var(--ink));border-color:var(--pc,var(--ink));color:#fff;}
+.gt-lib-ul{list-style:none;margin:0;padding:0;}
+.gt-lib-item{border-left:4px solid var(--pc);padding:8px 0 10px 12px;margin-bottom:10px;}
+.gt-lib-item p{margin:4px 0;}
+.gt-lib-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+.gt-lib-top small{font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;color:var(--ink-soft);}
+.gt-earlier-note{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:12px 0;}
+.gt-earlier-note p{white-space:pre-wrap;margin:4px 0 0;}

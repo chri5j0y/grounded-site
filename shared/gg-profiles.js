@@ -36,7 +36,7 @@
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
     { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Oak', href: '/oak/' },
-    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'The Grove', href: '/grove/' },
+    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'Oak', href: '/oak/' },   // Oak until Pine is built (Session 5)
     { id: 'aspen', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Aspen', href: '/aspen/' },
     { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/maple/' }
   ];
@@ -365,7 +365,7 @@
         ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + adults().map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
         : '');
     var what = age === 'pine'
-      ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which beds are growing and days tended, and will be alerted if a safety answer needs attention. The grown-up will never see answers or journal entries. Those are locked with the teen\'s own passcode.</div>'
+      ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended, and will be alerted if a safety answer needs attention. The grown-up will never see answers or journal entries. Those are locked with the teen\'s own passcode.</div>'
       : '<div class="ggp-note">Grown-ups who agree can open ' + esc(kidName || 'this') + ' profile with their own passcode, so no child is ever alone with something hard.</div>';
     return '<hr class="ggp-sep"><p><b>A grown-up needs to agree.</b></p>' + what + who +
       '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am ' + esc(kidName || 'this child') + '\'s parent, guardian, or another responsible grown-up. I have read and agree to the ' + TERMS_LINKS + ' on their behalf.</span></label>';
@@ -773,8 +773,8 @@
     if (p) {
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
-      html += link('/grove/', 'My grove');
-      if (p.age !== 'pine') html += link(a.href, 'My ' + a.tool + ' check-in');
+      html += link('/grove/', 'The Grove');
+      html += link(a.href, 'My tree in ' + a.tool);
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage my profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(Boolean);
@@ -879,14 +879,13 @@
     var p = cur && getP(cur.id);
     if (!isHome) return;
     if (!p) { if (box) box.remove(); return; }
-    var v = vaultNow(), chips = [], g = v.grove && v.grove.self;
-    if (g && g.start) {
-      var sd = g.start.split('-').map(Number), days = Math.floor((new Date().setHours(0, 0, 0, 0) - new Date(sd[0], sd[1] - 1, sd[2]).getTime()) / 864e5);
-      chips.push(['/grove/', days < 0 ? 'Your tree starts growing soon' : days >= 84 ? 'Your tree is in full bloom' : 'Week ' + (Math.floor(days / 7) + 1) + ' in The Grove']);
-    } else chips.push(['/grove/', 'Tend Your Grove']);
+    // Your tree is yours. The grove is ours. (Rebrand Session 5)
+    var v = vaultNow(), chips = [], ta = AGE[p.age] || AGE.adult;
+    chips.push([ta.href, 'Tend my tree in ' + ta.tool]);
+    chips.push(['/grove/', 'Visit The Grove']);
     var h = (v.oak && v.oak.history) || [];
     if (h.length) { var last = h[h.length - 1]; chips.push(['/oak/', 'Last Oak check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
-    else if (p.age !== 'pine') { var a = AGE[p.age]; chips.push([a.href, 'Take ' + (/^[AEIOU]/.test(a.tool) ? 'an ' : 'a ') + a.tool + ' check-in']); }
+    else { var a = AGE[p.age] || AGE.adult; chips.push([a.href, 'Take ' + (/^[AEIOU]/.test(a.tool) ? 'an ' : 'a ') + a.tool + ' check-in']); }
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';
     if (!box) { box = document.createElement('section'); box.id = 'ggp-welcome'; box.className = 'ggp-welcome'; box.setAttribute('aria-label', 'Welcome back'); document.querySelector('.hero').insertAdjacentElement('afterend', box); }

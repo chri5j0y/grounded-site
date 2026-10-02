@@ -98,7 +98,7 @@
     return s;
   }
   function save() { return C.store.save(); }
-  function countPlan(p) { var n = 0; Object.keys(p || {}).forEach(function (k) { var x = p[k] || {}; n += (x.selected || []).length + (x.custom ? 1 : 0) + (x.own || []).length; }); return n; }
+  function countPlan(p) { var n = 0; Object.keys(p || {}).forEach(function (k) { var x = p[k] || {}; n += (x.selected || []).length + (x.custom ? 1 : 0) + (x.own || []).length + (x.lib || []).length; }); return n; }
   function items(s) {
     var out = [];
     C.parts.forEach(function (pt) {
@@ -106,6 +106,8 @@
       (x.selected || []).forEach(function (name) { out.push({ key: pt.key, name: name, custom: false }); });
       if (x.custom) out.push({ key: pt.key, name: x.custom, custom: true });
       (x.own || []).forEach(function (name) { if (name) out.push({ key: pt.key, name: name, custom: true }); });
+      // Practices added from the shared library (Rebrand Session 5): {k: library key, n: name}
+      (x.lib || []).forEach(function (l) { if (l && l.k) out.push({ key: pt.key, name: l.n, custom: false, lib: l.k }); });
     });
     return out;
   }
@@ -206,13 +208,13 @@
   }
   function practiceHtml(s, it) {
     var id = itemId(it.key, it.name), x = day(s, today()), done = !!(x && x.d.indexOf(id) >= 0), easy = !!(x && x.e.indexOf(id) >= 0);
-    var note = (x && x.n && x.n[id]) || '', info = it.custom ? {} : (C.practiceInfo(it.key, it.name) || {});
+    var note = (x && x.n && x.n[id]) || '', info = it.custom ? {} : it.lib ? (window.GGLibrary ? GGLibrary.info(it.lib, libAge()) : {}) : (C.practiceInfo(it.key, it.name) || {});
     var safe = encodeURIComponent(id), open = OPEN[id] || '';
     var body = '';
     if (open === 'how' && info.guide) body = '<div class="gt-drawer">' + info.guide + '</div>';
     if (open === 'note') body = '<div class="gt-drawer"><label class="gt-small" for="gt-n-' + safe + '">A note for today (optional)</label><textarea id="gt-n-' + safe + '" rows="2" onchange="GGTend.note(\'' + safe + '\', this.value)">' + esc(note) + '</textarea></div>';
     return '<li class="gt-item' + (done ? ' done' : '') + '"><button type="button" class="gt-check' + (done ? ' on' : '') + '" aria-pressed="' + done + '" aria-label="' + esc(it.name) + (done ? ', done' : '') + '" onclick="GGTend.check(\'' + safe + '\')"></button>'
-      + '<div class="gt-item-main"><b>' + esc(it.name) + (it.custom ? ' <span class="gt-own">Your own</span>' : '') + '</b>'
+      + '<div class="gt-item-main"><b>' + esc(it.name) + (it.custom ? ' <span class="gt-own">Your own</span>' : it.lib ? ' <span class="gt-own">From the library</span>' : '') + '</b>'
       + (easy && info.hard ? '<p class="gt-easy"><span>Easier today.</span> ' + esc(info.hard) + '</p>' : (info.desc ? '<p>' + esc(info.desc) + '</p>' : ''))
       + (note && open !== 'note' ? '<p class="gt-note">' + esc(note) + '</p>' : '')
       + '<div class="gt-acts">' + (info.hard ? '<button type="button" aria-pressed="' + easy + '" onclick="GGTend.easy(\'' + safe + '\')">' + (easy ? 'Back to the usual' : 'Easier today') + '</button>' : '')
@@ -248,7 +250,7 @@
       html += '<section class="gt-part" style="--pc:' + pt.color + '"><h3>' + (C.partIcon ? C.partIcon(pt.key) : '') + '<span>' + esc(pt.part) + '</span><small>' + esc(pt.name) + '</small></h3>' + lv + '<ul>' + mine.map(function (it) { return practiceHtml(s, it); }).join('') + '</ul></section>';
     });
     html += anchorHtml(s, 'evening');
-    html += '<div class="btn-row gt-foot"><button class="btn btn-secondary" onclick="GGTend.act(\'plan\')">Change my practices</button></div>';
+    html += '<div class="btn-row gt-foot"><button class="btn btn-secondary" onclick="GGTend.act(\'plan\')">Change my practices</button>' + (window.GGLibrary ? '<button class="btn btn-secondary" onclick="GGTend.openLib()">Find more practices</button>' : '') + '</div>';
     box.innerHTML = html;
   }
 
@@ -342,6 +344,7 @@
     html += '<div class="btn-row gt-season-acts"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin a full check-in</button>' + (C.noQuick ? '' : '<button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>')
       + (C.hasResults() ? '<button class="btn btn-secondary" onclick="GGTend.act(\'results\')">My latest results</button>' : '')
       + '<button class="btn btn-secondary" onclick="GGTend.act(\'progress\')">My progress over time</button></div>';
+    html += earlierHtml(s);
     if (hist.length) html += '<div class="gt-card"><h3>Your check-ins</h3><ul class="gt-hist">' + hist.slice().reverse().slice(0, 8).map(function (e) { return '<li><b>' + nice(e.date) + '</b><span>' + (e.type === 'quick' ? 'Quick check-in' : 'Full check-in') + '</span></li>'; }).join('') + '</ul></div>';
     box.innerHTML = html;
   }
@@ -357,6 +360,7 @@
       + (C.profileHtml ? C.profileHtml() : a ? '<section><h3>Your profile</h3><p class="gt-who">' + (window.GGAv ? GGAv.html(a.avatar, a.name, 44) : '') + '<b>' + esc(a.name) + '</b></p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.openDialog()">Switch profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'lock\')">Lock</button></div></section>'
         : '<section><h3>Your profile</h3><p>Create a private profile to keep your tree, your practices, and your check-ins on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'openProfile\')">Open my profile</button></div></section>')
       + '<section id="gt-set-level"><h3>Movement level</h3><p class="gt-small">Shapes the movement shown with your Leaves practices. Change it anytime.</p>' + lv + (s ? '' : '<p class="gt-small">Open your profile to choose a level.</p>') + '</section>'
+      + groveSettingsHtml(s)
       + (C.extraSettings ? C.extraSettings() : '')
       + '<section><h3>Daily reminder</h3>' + (can ? '<label class="gt-switch"><input type="checkbox"' + (rem && rem.on ? ' checked' : '') + ' onchange="GGTend.remind(this.checked)"> Remind me to tend my tree</label><label class="gt-small" for="gt-rtime">Time</label> <input type="time" id="gt-rtime" value="' + esc((rem && rem.time) || '08:00') + '" onchange="GGTend.remind(null)">' : '<p class="gt-small">Daily reminders come with the ' + esc(C.toolName) + ' phone app. They are set on your phone, and nothing is sent to a server.</p>') + '</section>'
       + '<section><h3>Reading and display</h3><div class="btn-row">' + (window.GGRead && GGRead.settings ? '<button class="btn btn-secondary btn-sm" onclick="GGRead.settings()">Read aloud voice</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.act(\'textSize\')">Text size</button><button class="btn btn-secondary btn-sm" onclick="GGTend.theme()">Light or dark</button></div></section>'
@@ -371,17 +375,121 @@
   }
   function closeSettings() { var x = el('gt-settings'); if (x) x.remove(); }
 
+  /* ---------- The Grove (Rebrand Session 5) ----------
+     Your tree is yours. The grove is ours. A tree app never sends answers,
+     levels, notes, or safety flags to The Grove. With the person's switch on
+     (the default), it shares only the big picture of their growth, in the
+     profile's small unencrypted "shared" record that a family view can read:
+     days tended, rings, and which parts were tended on recent days. */
+  var GROVE_LINE = 'Your tree is yours. The grove is ours.';
+  var EARLIER_OPEN = false;
+  function pid() { return C.profileId ? C.profileId() : null; }
+  function publish(s) {
+    var id = pid(); if (!id || !window.GGP || !GGP.isOpen || !GGP.isOpen(id) || !s) return;
+    if (s.groveShow === false) { GGP.setShared(id, { tree: { tool: C.tool, show: false, updated: today() } }); return; }
+    var recent = [], d = today();
+    for (var i = 0; i < 14; i++) { var k = addDays(d, -i), x = s.days[k]; if (!x || !tended(s, k)) continue;
+      var set = {}; (x.d || []).forEach(function (pidk) { set[pidk.split('|')[0]] = 1; }); recent.push({ d: k, parts: Object.keys(set) }); }
+    var days = Object.keys(s.days).filter(function (k) { return tended(s, k); }).length;
+    GGP.setShared(id, { tree: { tool: C.tool, show: true, days: days, rings: ringN(s), season: s.season || 1, recent: recent, updated: d } });
+  }
+  function groveSettingsHtml(s) {
+    var on = !s || s.groveShow !== false;
+    return '<section id="gt-set-grove"><h3>The Grove</h3><p class="gt-small"><b>' + GROVE_LINE + '</b> You tend your tree here. The Grove is where your family\'s trees grow together.</p>'
+      + '<label class="gt-switch"><input type="checkbox"' + (on ? ' checked' : '') + (s ? '' : ' disabled') + ' onchange="GGTend.setGroveShow(this.checked)"> Show my growth on The Grove</label>'
+      + '<p class="gt-small">Only the big picture shows: days tended, rings, and which parts you tended. Never your answers, levels, or notes. Turn it off anytime.</p>'
+      + '<p><a class="text-link" href="/grove/">Visit The Grove</a></p></section>';
+  }
+  // Old personal tending from The Grove moves into this tree, once, as "Earlier, from The Grove".
+  function moveEarlier() {
+    var id = pid(); if (!id || !window.GGP || !GGP.isOpen || !GGP.isOpen(id)) return;
+    var d = GGP.data(id), g = d && d.grove && d.grove.self; if (!g || typeof g !== 'object') return;
+    var used = !!(g.start || Object.keys(g.watered || {}).length || Object.keys(g.journal || {}).some(function (k) { return String(g.journal[k] || '').trim(); }));
+    var s = ensure(); if (!s) return;
+    if (!used) { delete d.grove.self; GGP.save(id); return; }
+    if (!s.earlier) s.earlier = { from: 'grove', moved: today(), self: JSON.parse(JSON.stringify(g)) };
+    Promise.resolve(save()).then(function () { var d2 = GGP.data(id); if (d2 && d2.grove) { delete d2.grove.self; return GGP.save(id); } }).catch(function () {});
+  }
+  function earlierHtml(s) {
+    var e = s && s.earlier, g = e && e.self; if (!g) return '';
+    var days = Object.keys(g.watered || {}).filter(function (k) { return k <= today(); }).sort();
+    var notes = Object.keys(g.journal || {}).filter(function (k) { return String(g.journal[k] || '').trim(); }).sort(function (a, b) { return a - b; });
+    var html = '<div class="gt-card gt-earlier"><h3>Earlier, from The Grove</h3><p class="gt-small">Before your tree grew here, you tended in The Grove. It moved here on ' + nice(e.moved) + ', because your tree is yours.</p>'
+      + '<dl class="gt-stats"><div><dt>Days tended there</dt><dd>' + days.length + '</dd></div>' + (notes.length ? '<div><dt>Reflections</dt><dd>' + notes.length + '</dd></div>' : '') + '</dl>'
+      + (days.length ? '<p class="gt-small">From ' + nice(days[0]) + ' to ' + nice(days[days.length - 1]) + '.</p>' : '');
+    if (notes.length) {
+      html += '<button type="button" class="btn btn-secondary btn-sm" aria-expanded="' + EARLIER_OPEN + '" onclick="GGTend.earlierToggle()">' + (EARLIER_OPEN ? 'Hide my reflections' : 'Read my reflections') + '</button>';
+      if (EARLIER_OPEN) html += notes.map(function (k) { return '<div class="gt-earlier-note"><b>Week ' + esc(k) + '</b><p>' + esc(g.journal[k]) + '</p></div>'; }).join('');
+    }
+    return html + '</div>';
+  }
+
+  /* ---------- find more practices (the shared library, Rebrand Session 5) ---------- */
+  var LIBQ = { part: '', q: '', open: '' };
+  function libAge() { return (typeof C.libAge === 'function' ? C.libAge() : C.libAge) || 'oak'; }
+  function inPlan(s, it) { var x = ((s && s.plan) || {})[it.part] || {}; return (x.lib || []).some(function (l) { return l.k === it.key; }); }
+  function libToggle(key) {
+    var s = ensure(); if (!s) { toast('Open your profile to add practices.'); return; }
+    var it = GGLibrary.get(key); if (!it) return;
+    if (!s.plan) s.plan = {}; if (!s.plan[it.part]) s.plan[it.part] = { selected: [] };
+    var x = s.plan[it.part], L = x.lib || (x.lib = []), i = -1;
+    L.forEach(function (l, j) { if (l.k === key) i = j; });
+    if (i >= 0) { L.splice(i, 1); toast('Taken out of your practices.'); }
+    else { L.push({ k: key, n: GGLibrary.view(it, libAge()).name }); toast('Added to your practices.'); }
+    persist(); renderToday(); drawLib();
+  }
+  function drawLib() {
+    var box = el('gt-lib-list'); if (!box) return;
+    var s = ensure(), age = libAge();
+    var list = LIBQ.q ? GGLibrary.search(LIBQ.q, age) : C.parts.reduce(function (a, pt) { return (!LIBQ.part || LIBQ.part === pt.key) ? a.concat(GGLibrary.forPart(pt.key, age)) : a; }, []);
+    if (LIBQ.q && LIBQ.part) list = list.filter(function (it) { return it.part === LIBQ.part; });
+    var chips = el('gt-lib-parts');
+    if (chips) chips.innerHTML = '<button type="button" class="gt-chip' + (!LIBQ.part ? ' on' : '') + '" aria-pressed="' + !LIBQ.part + '" onclick="GGTend.libPart(\'\')">All parts</button>'
+      + C.parts.map(function (pt) { var on = LIBQ.part === pt.key; return '<button type="button" class="gt-chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" style="--pc:' + pt.color + '" onclick="GGTend.libPart(\'' + pt.key + '\')">' + esc(pt.part) + '</button>'; }).join('');
+    if (!list.length) { box.innerHTML = '<p class="gt-small">' + (LIBQ.q ? 'Nothing found for that. Try a simpler word, like sleep, calm, or friends.' : 'No practices here yet.') + '</p>'; return; }
+    var partOf = {}; C.parts.forEach(function (pt) { partOf[pt.key] = pt; });
+    box.innerHTML = '<ul class="gt-lib-ul">' + list.slice(0, 80).map(function (it) {
+      var v = GGLibrary.view(it, age), on = inPlan(s, it), open = LIBQ.open === it.key, safe = encodeURIComponent(it.key), pt = partOf[it.part] || {};
+      return '<li class="gt-lib-item" style="--pc:' + (pt.color || '#8B5E1A') + '"><div class="gt-lib-top"><b>' + esc(v.name) + '</b><small>' + esc(pt.part || '') + '</small></div>'
+        + (v.text ? '<p>' + esc(v.text) + '</p>' : '')
+        + '<div class="gt-acts"><button type="button" aria-pressed="' + on + '" onclick="GGTend.libToggle(\'' + safe + '\')">' + (on ? 'In my practices. Take it out' : 'Add to my practices') + '</button>'
+        + '<button type="button" aria-expanded="' + open + '" onclick="GGTend.libHow(\'' + safe + '\')">Show me how</button></div>'
+        + (open ? '<div class="gt-drawer">' + GGLibrary.guideHtml(v) + '</div>' : '') + '</li>';
+    }).join('') + '</ul>';
+  }
+  function openLib(part) {
+    closeLib(); LIBQ = { part: part || '', q: '', open: '' };
+    var html = '<div class="gt-sheet-back" id="gt-lib" role="dialog" aria-modal="true" aria-labelledby="gt-lib-title" onclick="if(event.target===this)GGTend.closeLib()"><div class="gt-sheet">'
+      + '<div class="gt-sheet-head"><h2 id="gt-lib-title">Find more practices</h2><button type="button" class="gt-x" onclick="GGTend.closeLib()" aria-label="Close">&times;</button></div>'
+      + '<p class="gt-small">The Grounded practice library. Add any practice to your own, alongside the ones from your growth plan. Suggestions only, never a limit.</p>'
+      + '<label class="gt-small" for="gt-lib-q">Search the library</label><input id="gt-lib-q" class="gt-lib-q" type="search" placeholder="Try sleep, calm, or friends" oninput="GGTend.libFind(this.value)">'
+      + '<div class="gt-lib-parts" id="gt-lib-parts"></div><div id="gt-lib-list"><p class="gt-small">Getting the library ready...</p></div></div></div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+    var sheet = el('gt-lib'); sheet.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLib(); });
+    var x = sheet.querySelector('.gt-x'); if (x) x.focus();
+    GGLibrary.ready().then(function (ok) { var b = el('gt-lib-list'); if (!b) return; if (ok) drawLib(); else b.innerHTML = '<p class="gt-small">The library did not load. Check your connection and try again.</p>'; });
+  }
+  function closeLib() { var x = el('gt-lib'); if (x) x.remove(); }
+
   /* ---------- actions ---------- */
   function persist() { return save().catch(function () { toast('That did not save. Open your profile and try again.'); }); }
   function perk() { var t = el('gt-tree'); if (!t) return; t.classList.remove('perk'); void t.offsetWidth; t.classList.add('perk'); }
   var api = {
     init: function (cfg) { C = cfg; J = mergeJourney(window.GGJourney || {}, cfg.journey); },
     suggest: suggest,
-    render: function () { if (!C) return; renderToday(); renderWeek(); renderSeason(); },
+    render: function () { if (!C) return; moveEarlier(); renderToday(); renderWeek(); renderSeason(); },
+    setGroveShow: function (on) { var s = ensure(); if (!s) return; s.groveShow = !!on; persist(); publish(s); toast(on ? 'Your growth will show on The Grove.' : 'Your growth stays off The Grove.'); },
+    earlierToggle: function () { EARLIER_OPEN = !EARLIER_OPEN; renderSeason(); },
     act: function (name) { if (C.actions[name]) C.actions[name](); },
     state: function () { return ensure(); },
     plan: function () { var s = ensure(); return s ? s.plan : null; },
-    setPlan: function (p) { var s = ensure(); if (!s) return false; s.plan = JSON.parse(JSON.stringify(p)); persist(); renderToday(); return true; },
+    setPlan: function (p) { var s = ensure(); if (!s) return false; var old = s.plan || {}; s.plan = JSON.parse(JSON.stringify(p));
+      Object.keys(old).forEach(function (k) { var L = (old[k] || {}).lib; if (L && L.length) { if (!s.plan[k]) s.plan[k] = { selected: [] }; if (!s.plan[k].lib) s.plan[k].lib = L; } });
+      persist(); renderToday(); return true; },
+    openLib: function (part) { openLib(part); }, closeLib: function () { closeLib(); },
+    libFind: function (q) { LIBQ.q = q; drawLib(); }, libPart: function (p) { LIBQ.part = p; LIBQ.q = ''; var f = el('gt-lib-q'); if (f) f.value = ''; drawLib(); },
+    libHow: function (safe) { var k = decodeURIComponent(safe); LIBQ.open = LIBQ.open === k ? '' : k; drawLib(); },
+    libToggle: function (safe) { libToggle(decodeURIComponent(safe)); },
     onFullCheckin: function (entry) {
       var s = ensure(); if (!s) return null; var d = (entry && entry.date) || today(), msg = null;
       if (!s.start) { s.start = d; s.season = 1; msg = 'Your first season has begun. Week 1 starts today.'; }
@@ -391,10 +499,10 @@
     check: function (safe) {
       var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.d.indexOf(id), before = health(s);
       if (i >= 0) x.d.splice(i, 1); else x.d.push(id);
-      persist(); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('Your tree is perking up.'); }
+      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('Your tree is perking up.'); }
       renderWeek();
     },
-    anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); renderToday(); if (i < 0) perk(); renderWeek(); },
+    anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); publish(s); renderToday(); if (i < 0) perk(); renderWeek(); },
     easy: function (safe) { var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.e.indexOf(id); if (i >= 0) x.e.splice(i, 1); else x.e.push(id); persist(); renderToday(); },
     note: function (safe, v) { var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true); v = String(v || '').trim(); if (v) x.n[id] = v.slice(0, 600); else delete x.n[id]; persist(); },
     drawer: function (safe, which) { var id = decodeURIComponent(safe); OPEN[id] = OPEN[id] === which ? '' : which; renderToday(); if (which === 'note' && OPEN[id]) { var t = el('gt-n-' + safe); if (t) t.focus(); } },

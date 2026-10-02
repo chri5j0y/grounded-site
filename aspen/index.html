@@ -26,7 +26,7 @@
 <meta name="twitter:image" content="https://growwithgrounded.com/aspen/share-image.png">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/shared/gg-hero.css">
-<link rel="stylesheet" href="/shared/gg-tend.css?v=r4m">
+<link rel="stylesheet" href="/shared/gg-tend.css?v=r5a">
 <style>
 :root{
   --serif:'Cormorant Garamond',Georgia,serif;
@@ -406,10 +406,11 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=r4p"></script>
+<script src="/shared/gg-profiles.js?v=r5a"></script>
 <script src="checkin.js?v=r4a"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
-<script src="/shared/gg-tend.js?v=r4m"></script>
+<script src="/shared/gg-library.js?v=r5a"></script>
+<script src="/shared/gg-tend.js?v=r5a"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -1504,58 +1505,6 @@ function finishCheckin(){
   renderResult(ring, seasonMsg);
   if (safetyFlag) showCalm({final:true});
 }
-/* ---------- Tend Your Grove ----------
-   Aspen is for checking in. The Grove is for daily practice.
-   Matching answers go to The Grove inside the student's own locked profile.
-   Map per grade: part.question index -> Grove strand.question index. Each pair
-   says the same thing the same way round, so the value is simply how often:
-   Yeah most of the time, Sometimes, Not really -> 5, 3, 1.
-   Session 23 adds pairs for questions 5 and 6 (bank 2); earlier rings never had answers there.
-   Never sent: "Not sure," safety questions, and the optional sensitive question. */
-const SAP_TO_GROVE = {
-  6: { 'roots.0':'spirit.6', 'roots.1':'spirit.1', 'roots.2':'create.2', 'trunk.0':'create.4', 'trunk.2':'create.6',
-       'bark.0':'mind.0', 'bark.1':'mind.5', 'bark.2':'mind.2', 'branches.0':'connect.3', 'branches.1':'connect.0', 'branches.2':'connect.2',
-       'leaves.0':'rest.0', 'leaves.1':'body.0', 'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'hope.2', 'fruit.3':'hope.3',
-       'roots.4':'spirit.2', 'roots.5':'spirit.4', 'trunk.4':'create.7', 'bark.4':'mind.3', 'leaves.4':'body.3', 'leaves.5':'rest.4', 'fruit.4':'hope.5' },
-  7: { 'roots.0':'spirit.3', 'roots.1':'spirit.5', 'roots.2':'create.2', 'trunk.0':'create.3', 'trunk.2':'create.6', 'trunk.3':'create.5',
-       'bark.0':'mind.0', 'bark.1':'mind.5', 'branches.2':'connect.2', 'leaves.0':'rest.0', 'leaves.1':'body.0', 'leaves.2':'nourish.7',
-       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.2':'hope.6', 'fruit.3':'hope.3',
-       'roots.4':'spirit.2', 'branches.5':'connect.7', 'leaves.4':'nourish.0', 'leaves.5':'body.4', 'fruit.4':'hope.5' },
-  8: { 'roots.0':'spirit.6', 'roots.1':'spirit.1', 'trunk.0':'create.3', 'trunk.1':'create.6', 'trunk.2':'create.2',
-       'bark.0':'mind.0', 'bark.1':'mind.5', 'bark.2':'mind.2', 'branches.2':'connect.2', 'leaves.0':'rest.0', 'leaves.1':'body.2', 'leaves.2':'rest.2',
-       'fruit.0':'hope.0', 'fruit.1':'hope.1', 'fruit.3':'hope.3',
-       'roots.4':'spirit.0', 'roots.5':'spirit.4', 'bark.4':'connect.5', 'branches.5':'connect.7', 'leaves.4':'body.3', 'leaves.5':'rest.4', 'fruit.4':'hope.5' }
-};
-function sapGroveAns(ring){
-  if (!isStd(ring)) return {};
-  const map = SAP_TO_GROVE[ring.grade] || {}, v = { yes:5, some:3, no:1 }, out = {}, sx = ring.sens && CK.sensitive[String(ring.grade)];
-  Object.keys(map).forEach(k => {
-    const [p, i] = k.split('.');
-    if (sx && CK_KEY[p] === sx[0] && +i === sx[1]) return;   // the sensitive question never leaves Aspen
-    const a = ringQa(ring, p)[+i]; if (v[a]) out[map[k]] = v[a];
-  });
-  return out;
-}
-function sapGroveBtn(ring){
-  const s = me(), a = window.GGP && GGP.active(), label = s && a && s._pid && a.id !== s._pid ? `Tend ${esc(s.name)}'s Grove` : 'Tend Your Grove';
-  const has = !!s && Object.keys(sapGroveAns(ring)).length > 0;
-  const phone = has ? `<button class="btn ghost" onclick="sapToPhone('${esc(ring.id)}')">Send to Another Phone</button>` : '';
-  // In the Aspen app, The Grove is its own app: one tap opens it with these answers.
-  if (window.GGApp && GGApp.native && has) return `<button class="btn" onclick="sapToPhone('${esc(ring.id)}', true)">${label}</button>`;
-  if (!s || !s._pid || !window.GGP || !window.GGGrowth || !GGP.isOpen(s._pid) || !has) return `<a class="btn" href="/grove/">${label}</a>${phone}`;
-  return `<button class="btn" id="grove-send" onclick="sapSendGrove('${esc(ring.id)}')">${label}</button>${phone}`;
-}
-// The Grove on another phone, or the Grove app on this one. Never the safety answers or the optional question.
-function sapToPhone(id, app){
-  const s = me(), ring = s && s.rings.find(r => r.id === id); if (!ring || !window.GGApp) return;
-  const entry = { from:'aspen', name:s.name, age:'aspen', date:ring.date, answers:sapGroveAns(ring) };
-  if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
-}
-function sapSendGrove(id){
-  const s = me(), ring = s && s.rings.find(r => r.id === id), btn = $('grove-send'); if (!ring || !btn) return;
-  if (!GGGrowth.send({ from:'aspen', who:s._pid, name:s.name, age:'aspen', answers:sapGroveAns(ring) })){ toast('Open the profile first, then try again.'); return; }
-  location.href = '/grove/?who=' + encodeURIComponent(s._pid);
-}
 function renderResult(ring, seasonMsg){
   const s = me(), prev = s.rings[s.rings.length-2], cmp = sameStd(ring, prev) ? prev : null;
   const strong = PARTS.filter(p => (levelOf(ringScore(ring, p.key)) || [])[2] === 'strong').map(p => p.name);
@@ -1954,6 +1903,8 @@ function renderGuide(opts){
 
 /* ---------- the shared tending engine, set up for Aspen (Rebrand Session 4) ---------- */
 if (window.GGTend) GGTend.init({
+  libAge: 'aspen',
+  profileId: () => { const s = me(); return (s && s._pid) || null; },
   tool: 'aspen', toolName: 'Aspen',
   els: { today: 'asp-today', week: 'asp-week', season: 'asp-season' },
   parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.sub, color: pcolor(p.key) })),

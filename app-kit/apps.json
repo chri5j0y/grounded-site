@@ -3,9 +3,9 @@
   "common": ["shared/", "fonts/", "nav.js", "read.js", "privacy.html", "terms.html", "style.css", "site.js", "favicon.svg", "apple-touch-icon.png"],
   "apps": {
     "grove":       { "name": "The Grove",   "appId": "com.growwithgrounded.grove",      "scheme": "grounded-grove",      "start": "/grove/",       "tools": ["grove"],       "icon": "icons/grove-1024.png", "files": ["grove/"] },
-    "maple":       { "name": "Maple",       "appId": "com.growwithgrounded.maple",      "scheme": "grounded-maple",      "start": "/maple/",       "tools": ["maple"],       "icon": "icons/maple-1024.png", "files": ["maple/"] },
-    "aspen":       { "name": "Aspen",       "appId": "com.growwithgrounded.aspen",      "scheme": "grounded-aspen",      "start": "/aspen/",       "tools": ["aspen"],       "icon": "icons/aspen-1024.png", "files": ["aspen/"] },
-    "oak":         { "name": "Oak",         "appId": "com.growwithgrounded.oak",        "scheme": "grounded-oak",        "start": "/oak/",         "tools": ["oak"],         "icon": "icons/oak-1024.png",   "files": ["oak/"] },
+    "maple":       { "name": "Maple",       "appId": "com.growwithgrounded.maple",      "scheme": "grounded-maple",      "start": "/maple/",       "tools": ["maple"],       "icon": "icons/maple-1024.png", "files": ["maple/", "grove/data.js", "grove/library.js"] },
+    "aspen":       { "name": "Aspen",       "appId": "com.growwithgrounded.aspen",      "scheme": "grounded-aspen",      "start": "/aspen/",       "tools": ["aspen"],       "icon": "icons/aspen-1024.png", "files": ["aspen/", "grove/data.js", "grove/library.js"] },
+    "oak":         { "name": "Oak",         "appId": "com.growwithgrounded.oak",        "scheme": "grounded-oak",        "start": "/oak/",         "tools": ["oak"],         "icon": "icons/oak-1024.png",   "files": ["oak/", "grove/data.js", "grove/library.js"] },
     "field-guide": { "name": "Field Guide", "appId": "com.growwithgrounded.fieldguide", "scheme": "grounded-fieldguide", "start": "/field-guide/", "tools": ["field-guide"], "files": ["field-guide/", "grove/data.js", "grove/library.js", "maple/checkin.js", "maple/guides.js", "aspen/checkin.js", "aspen/guides.js", "oak/checkin.js", "oak/guides.js", "pine/guides.js"] }
   },
   "plugins": ["@capacitor/preferences", "@capacitor/filesystem", "@capacitor/share", "@capacitor/browser", "@capacitor/app", "@capacitor/app-launcher", "@capacitor/local-notifications"]

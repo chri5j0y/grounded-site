@@ -689,7 +689,7 @@ a.big-btn{text-decoration:none;}
 </style>
 <style>/* Grow With Grounded name in the header (session 20) */.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:var(--gold,#8B5E1A);white-space:nowrap;}.foot-name{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;line-height:1.1;margin-top:8px;}@media (max-width:640px){.brand .brand-name{display:none;}}</style>
 <link rel="stylesheet" href="/shared/gg-footer.css">
-<link rel="stylesheet" href="/shared/gg-tend.css?v=r4m">
+<link rel="stylesheet" href="/shared/gg-tend.css?v=r5a">
 <style>/* Maple's own app: five tabs, with the shared tending styles (Rebrand Session 4) */
 .mp-app{--gold:var(--sky);--bg-deep:var(--sun-soft);}
 .mp-who{flex:1;min-width:180px;}
@@ -855,11 +855,12 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-growth.js"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=r4p"></script>
+<script src="/shared/gg-profiles.js?v=r5a"></script>
 <script src="/maple/guides.js"></script>
 <script src="/maple/checkin.js?v=r4m"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
-<script src="/shared/gg-tend.js?v=r4m"></script>
+<script src="/shared/gg-library.js?v=r5a"></script>
+<script src="/shared/gg-tend.js?v=r5a"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -1879,35 +1880,6 @@ function thenNowHTML(prev, cur, name) {
     </div>
     <ul class="tn-lines">${lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`;
 }
-/* ---------- Tend Your Grove ----------
-   Maple is for checking in. The Grove is for daily practice.
-   Each part's weather goes to one matching Grove question, inside the child's
-   own locked profile. Sun, cloud, rain -> 5, 3, 1 (The Grove's kid scale). */
-const MAPLE_TO_GROVE = { roots: 'spirit.6', trunk: 'create.2', bark: 'mind.0', branches: 'connect.1', leaves: 'body.2', fruit: 'hope.0' };
-function mapleGroveAns(ans) { const v = { sun: 5, cloud: 3, rain: 1 }, out = {}; PARTS.forEach(p => { const a = (ans || {})[p.key]; if (a && v[a.w]) out[MAPLE_TO_GROVE[p.key]] = v[a.w]; }); return out; }
-function groveKid() { const k = loadKids()[kidId(S.name)]; return k && k._pid && window.GGP && window.GGGrowth && GGP.isOpen(k._pid) ? k : null; }
-function groveBtnHTML(rec) {
-  const k = groveKid(), label = S.mode === 'grown' && k ? `Tend ${esc(k.name)}'s Grove` : 'Tend Your Grove';
-  const has = Object.keys(mapleGroveAns(rec.answers)).length > 0;
-  const phone = has ? `<button class="soft-btn" onclick="mapleToPhone('${esc(rec.id)}')">Send to Another Phone</button>` : '';
-  // In the Maple app, The Grove is its own app: one tap opens it with these answers.
-  if (window.GGApp && GGApp.native && has) return `<button class="big-btn" onclick="mapleToPhone('${esc(rec.id)}', true)">${label}</button>`;
-  if (!k || !has) return `<a class="big-btn" href="/grove/">${label}</a>${phone}`;
-  return `<button class="big-btn" id="grove-send" data-rec="${esc(rec.id)}" onclick="sendMapleGrove()">${label}</button>${phone}`;
-}
-// The Grove on another phone, or the Grove app on this one. Only Grove answers travel: never the safety step.
-function mapleToPhone(recId, app) {
-  const k = loadKids()[kidId(S.name)]; if (!k || !window.GGApp) return;
-  const rec = (k.checkins || []).find(c => c.id === recId) || k.checkins[k.checkins.length - 1]; if (!rec) return;
-  const entry = { from: 'maple', name: k.name, age: 'maple', date: rec.date, answers: mapleGroveAns(rec.answers) };
-  if (app) GGApp.handoff.send(entry); else GGApp.handoff.qr(entry);
-}
-function sendMapleGrove() {
-  const k = groveKid(), btn = $('grove-send'); if (!k || !btn) return;
-  const rec = (k.checkins || []).find(c => c.id === btn.dataset.rec) || k.checkins[k.checkins.length - 1];
-  if (!rec || !GGGrowth.send({ from: 'maple', who: k._pid, name: k.name, age: 'maple', answers: mapleGroveAns(rec.answers) })) { toast('Open the profile first, then try again.'); return; }
-  location.href = '/grove/?who=' + encodeURIComponent(k._pid);
-}
 function renderResults(rec, lastKey) {
   const info = concernInfo(rec.answers, rec.grade, rec.safety);
   const name = S.name;
@@ -1939,7 +1911,6 @@ function renderResults(rec, lastKey) {
         ${note}
         ${thenNowHTML(S.prior, rec, name)}
         <div class="action-row">
-          ${groveBtnHTML(rec)}
           <button class="soft-btn" onclick="openTree(kidId(S.name), 'tree')">Go to my tree</button>
           ${S.mode === 'grown' ? '<button class="soft-btn" onclick="nextChild()">Start with the next child</button>' : ''}
         </div>
@@ -2235,6 +2206,8 @@ function mpInit(kid) {
   if (!window.GGTend) return;
   const band = mpBand(kid.grade), J = window.GGJourney || {};
   GGTend.init({
+  libAge: 'maple',
+  profileId: () => (MP_KID && MP_KID._pid) || null,
     tool: 'maple', toolName: 'Maple',
     els: { today: 'mp-today', week: 'mp-week', season: 'mp-season' },
     parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.value, color: p.hex })),
@@ -2740,10 +2713,10 @@ function renderGuide() {
       <li>For each of the six parts, the child learns what that part does for a tree and for them, then answers four short questions: Yes, a lot; Sometimes; Not really; or I don't know. They can skip any part. Their answers decide the weather for that part of the tree.</li>
       <li>At the end there is a short safety step. Every grade answers whether anyone is hurting them or making them feel scared. Grades 3 to 5 also answer one gentle question about wishing they were not alive. Any yes or not sure shows the child a calm card with 988 and 911, and shows the grown-up what to do next.</li>
       <li>Their tree grows one piece at a time. At the end they see the whole tree with a kind word for each part.</li>
-      <li>Then they tap <b>Tend Your Grove</b>. Their answers travel to The Grove, locked in their profile, where daily practice happens: a few small things a day for each part of their tree, with critters that come to visit as the days add up.</li>
-      <li>Every check-in adds a ring to their tree here. The Grove invites a new check-in every four weeks, and every check-in stays on their tree page, so you can see how they have grown over time.</li>
+      <li>Then their tree is ready to tend right here in Maple: a few small things a day for each part, done together. Their tree also stands in The Grove beside the rest of the family's trees.</li>
+      <li>Every check-in adds a ring to their tree here. Maple invites a new check-in every four weeks, and every check-in stays on their tree page, so you can see how they have grown over time.</li>
     </ul>
-    <p>A check-in takes about 10 to 15 minutes, and daily practice in The Grove takes just a few minutes. Everything saves only on this device.</p>
+    <p>A check-in takes about 10 to 15 minutes, and daily tending in Maple takes just a few minutes. Everything saves only on this device.</p>
 
     <h3 class="grown" id="g-talk">Talking about answers</h3>
     <p>The most important part of Maple happens after the screen. A few things help:</p>
