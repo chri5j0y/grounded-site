@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=w2a'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=sp1'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -321,7 +321,7 @@
       if (onTools) { var f = document.getElementById('ss-q'); if (f) { f.scrollIntoView({ block: 'center' }); f.focus(); } return; }
       opener = document.activeElement;
       ov.hidden = false; document.documentElement.style.overflow = 'hidden';
-      if (!loaded) { loaded = true; var s = document.createElement('script'); s.src = base + '/search.js?v=l1'; document.body.appendChild(s); }
+      if (!loaded) { loaded = true; var s = document.createElement('script'); s.src = base + '/search.js?v=sp1'; document.body.appendChild(s); }
       setTimeout(function () { var i = document.getElementById('ss-q'); if (i) i.focus(); }, 30);
     }
     function close() { ov.hidden = true; document.documentElement.style.overflow = ''; if (opener && opener.focus) opener.focus(); }

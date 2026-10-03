@@ -72,21 +72,10 @@
   function todayStr() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function slug(s) { return String(s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
 
-  /* The tree rename (Oct 2026): records saved under the old tree names are read under the new ones.
-     gg-app.js does this on tool pages; pages without it use this same small copy. */
-  var RN_IDS = { sprout: 'maple', sapling: 'aspen', soultree: 'oak', 'soul-tree': 'oak', soulTree: 'oak', heartwood: 'pine', eldertree: 'sequoia', oldgrowth: 'willow' }; // GG-RENAME-KEEP
-  function rnFix(x, d) {
-    if (window.GGRename) return window.GGRename.fix(x);
-    d = d || 0; if (!x || typeof x !== 'object' || d > 40) return x;
-    var id = function (v) { return typeof v === 'string' && Object.prototype.hasOwnProperty.call(RN_IDS, v) ? RN_IDS[v] : v; };
-    if (Array.isArray(x)) { for (var i = 0; i < x.length; i++) { if (typeof x[i] === 'string') x[i] = id(x[i]); else rnFix(x[i], d + 1); } return x; }
-    Object.keys(x).forEach(function (k) { var v = x[k]; if (typeof v === 'string') v = x[k] = id(v); else rnFix(v, d + 1); if (Object.prototype.hasOwnProperty.call(RN_IDS, k)) { if (x[RN_IDS[k]] == null) x[RN_IDS[k]] = v; delete x[k]; } });
-    return x;
-  }
-  function readList() { try { var j = JSON.parse(localStorage.getItem(LIST)); return rnFix((j && j.list) || []); } catch (e) { return []; } }
+  function readList() { try { var j = JSON.parse(localStorage.getItem(LIST)); return (j && j.list) || []; } catch (e) { return []; } }
   function writeList(l) { localStorage.setItem(LIST, JSON.stringify({ v: 1, list: l })); }
   function getP(id) { return readList().filter(function (p) { return p.id === id; })[0] || null; }
-  function putP(p) { p = rnFix(p); var l = readList(), i = -1; l.forEach(function (x, j) { if (x.id === p.id) i = j; }); if (i >= 0) l[i] = p; else l.push(p); writeList(l); }
+  function putP(p) { var l = readList(), i = -1; l.forEach(function (x, j) { if (x.id === p.id) i = j; }); if (i >= 0) l[i] = p; else l.push(p); writeList(l); }
   function dropP(id) { writeList(readList().filter(function (p) { return p.id !== id; })); localStorage.removeItem(BOX + id); }
 
   /* ---------- crypto ---------- */
@@ -113,13 +102,11 @@
   function readVault(id, raw) {
     var box = null; try { box = JSON.parse(localStorage.getItem(BOX + id)); } catch (e) {}
     if (!box) return Promise.resolve(blankVault());
-    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameParts(renameGarden(Object.assign(blankVault(), rnFix(JSON.parse(dec.decode(b)))))); });
+    return rawKey(raw).then(function (k) { return unseal(k, box); }).then(function (b) { return renameParts(Object.assign(blankVault(), JSON.parse(dec.decode(b)))); });
   }
   // The six parts rename (Rebrand Session 4): each tree app's record moves to the new part names.
   // gg-app.js holds the rule (GGParts). The Grove's record is never touched, since its strands are not parts.
   function renameParts(v) { var P = window.GGParts; if (P && v && typeof v === 'object') ['maple', 'aspen', 'oak'].forEach(function (t) { if (v[t] && typeof v[t] === 'object') P.fix(v[t]); }); return v; }
-  // The old garden tool is now The Grove. A saved garden moves to the new key once.
-  function renameGarden(v) { if (v.garden && !v.grove) v.grove = v.garden; delete v.garden; return v; }
   function writeVault(id, raw, data) {
     return rawKey(raw).then(function (k) { return seal(k, enc.encode(JSON.stringify(data))); }).then(function (box) { localStorage.setItem(BOX + id, JSON.stringify(box)); });
   }
@@ -234,7 +221,7 @@
     return passKey(pass, unb64(lp.salt)).then(function (k) {
       var box = JSON.parse(localStorage.getItem('oak:p:' + lp.id) || 'null');
       if (!box) return { avatar: '', history: [] };
-      return unseal(k, box).then(function (b) { var o = rnFix(JSON.parse(dec.decode(b))); return window.GGParts ? window.GGParts.fix(o) : o; });
+      return unseal(k, box).then(function (b) { var o = JSON.parse(dec.decode(b)); return window.GGParts ? window.GGParts.fix(o) : o; });
     }).catch(function () { throw new Error('That passcode did not work. Try again.'); });
   }
   function retireLegacyOak(lp) {
@@ -973,9 +960,9 @@
     data: function (id, tool) { id = id || (cur && cur.id); if (!open[id]) return null; var d = open[id].data; if (!tool) return d; if (!d[tool] || typeof d[tool] !== 'object') d[tool] = {}; return d[tool]; },
     setData: function (id, tool, obj) { id = id || (cur && cur.id); if (!open[id]) return false; open[id].data[tool] = obj; return true; },
     save: save,
-    shared: function (id) { var p = getP(id); if (!p) return {}; var s = p.shared || {}; if (s.garden && !s.grove) s = Object.assign({}, s, { grove: s.garden }); return s; },
+    shared: function (id) { var p = getP(id); if (!p) return {}; return p.shared || {}; },
     setAvatar: function (id, v) { var p = getP(id); if (!p || !open[id]) return false; p.avatar = v || ''; putP(p); paintAll(); return true; },
-    setShared: function (id, obj) { var p = getP(id); if (!p || !open[id]) return false; p.shared = Object.assign(p.shared || {}, obj); delete p.shared.garden; putP(p); return true; },
+    setShared: function (id, obj) { var p = getP(id); if (!p || !open[id]) return false; p.shared = Object.assign(p.shared || {}, obj); putP(p); return true; },
     on: function (fn) { subs.push(fn); }, off: function (fn) { subs = subs.filter(function (x) { return x !== fn; }); },
     lock: lock, openDialog: openDialog, createDialog: createDialog, manage: manage, backup: backup, restore: restore, toast: toast,
     require: function (opt) {

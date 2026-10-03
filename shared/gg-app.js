@@ -127,52 +127,6 @@
     keys: function () { var o = []; try { for (var i = 0; i < LS.length; i++) o.push(LS.key(i)); } catch (e) {} return o; }
   };
 
-  /* ---------------- THE TREE RENAME (Oct 2026) ----------------
-     Sprout is now Maple, Sapling is Aspen, Soul Tree is Oak, Heartwood is Pine,
-     Elder Tree is Sequoia, and Old Growth is Willow. Saved records made before the
-     rename still use the old names. GGRename brings them forward, quietly, on this
-     device only. Lines marked GG-RENAME-KEEP hold the old names on purpose. */
-  var RN_IDS = { sprout: 'maple', sapling: 'aspen', soultree: 'oak', 'soul-tree': 'oak', soulTree: 'oak', heartwood: 'pine', eldertree: 'sequoia', oldgrowth: 'willow', sproutGuide: 'mapleGuide', saplingGuide: 'aspenGuide', soulTreeGuide: 'oakGuide' }; // GG-RENAME-KEEP
-  var RN_KEYS = [[/^sprout:/, 'maple:'], [/^sapling_/, 'aspen_'], [/^soul-tree:/, 'oak:'], [/^gg_voice_sprout$/, 'gg_voice_maple'], [/^gg_voice_sapling$/, 'gg_voice_aspen'], [/^gg_voice_soultree$/, 'gg_voice_oak'], [/^gg_read_sprout$/, 'gg_read_maple'], [/^gg_read_sapling$/, 'gg_read_aspen'], [/^gg_read_soultree$/, 'gg_read_oak']]; // GG-RENAME-KEEP
-  function rnId(s) { return typeof s === 'string' && Object.prototype.hasOwnProperty.call(RN_IDS, s) && !/Guide$/.test(s) ? RN_IDS[s] : s; }
-  function rnFix(x, depth) {
-    // Renames old names used as object keys or as whole values. Never touches longer text.
-    depth = depth || 0; if (!x || typeof x !== 'object' || depth > 40) return x;
-    if (Array.isArray(x)) { for (var i = 0; i < x.length; i++) { if (typeof x[i] === 'string') x[i] = rnId(x[i]); else rnFix(x[i], depth + 1); } return x; }
-    Object.keys(x).forEach(function (k) {
-      var v = x[k];
-      if (typeof v === 'string') v = x[k] = rnId(v); else rnFix(v, depth + 1);
-      if (Object.prototype.hasOwnProperty.call(RN_IDS, k)) { var nk = RN_IDS[k]; if (x[nk] == null) x[nk] = v; delete x[k]; }
-    });
-    return x;
-  }
-  function rnStorage() {
-    if (!LS) return;
-    try {
-      var keys = [], i, moved = 0; for (i = 0; i < LS.length; i++) keys.push(LS.key(i));
-      var first = LS.getItem('gg-renamed-v1') === null;
-      keys.forEach(function (k) {
-        var nk = null; RN_KEYS.forEach(function (m) { if (!nk && m[0].test(k)) nk = k.replace(m[0], m[1]); });
-        if (!nk) return;
-        var v = LS.getItem(k), out = v;
-        try { var j = JSON.parse(v); if (j && typeof j === 'object') out = JSON.stringify(rnFix(j)); } catch (e) {}
-        if (LS.getItem(nk) === null) LS.setItem(nk, out);
-        else if (LS.getItem(nk) !== out) LS.setItem('gg-renamed-backup:' + k, v); // both exist: the newer one stays, the older is kept
-        if (LS.getItem(nk) !== null) { LS.removeItem(k); moved++; }
-      });
-      if (first || moved) {
-        for (i = 0; i < LS.length; i++) {
-          var key = LS.key(i), val = LS.getItem(key);
-          if (!val || val.length > 4000000 || (val.charAt(0) !== '{' && val.charAt(0) !== '[') || key.indexOf('gg-renamed-backup:') === 0 || key.indexOf('gg-moved-backup:') === 0) continue;
-          try { var o = JSON.parse(val), s = JSON.stringify(rnFix(o)); if (s !== val) LS.setItem(key, s); } catch (e) {}
-        }
-        LS.setItem('gg-renamed-v1', new Date().toISOString().slice(0, 10));
-      }
-    } catch (e) {}
-  }
-  window.GGRename = { id: rnId, fix: rnFix, storage: rnStorage };
-  rnStorage();
-
   /* ---------------- THE SIX PARTS RENAME (Oct 2026, Rebrand Session 4) ----------------
      The six parts are named the same way everywhere, on screen and behind the scenes:
      Roots (What grounds you), Trunk (Purpose), Bark (Mind and feelings),
@@ -363,7 +317,7 @@
   function unpack(s) {
     try {
       if (!/^g1\./.test(s)) return null;
-      var j = rnFix(JSON.parse(dec64(s.slice(3))));
+      var j = JSON.parse(dec64(s.slice(3)));
       return clean({ from: j.f, name: j.n, age: j.g, date: j.d, answers: j.a });
     } catch (e) { return null; }
   }
@@ -393,7 +347,7 @@
     return { n: name.slice(0, 30), d: d, s: strong, t: tries };
   }
   function vcode(v) { var c = vclean(v); return c ? 'v1.' + enc64(JSON.stringify(c)) : ''; }
-  function vunpack(s) { try { if (!/^v1\./.test(s)) return null; return vclean(rnFix(JSON.parse(dec64(s.slice(3))))); } catch (e) { return null; } }
+  function vunpack(s) { try { if (!/^v1\./.test(s)) return null; return vclean(JSON.parse(dec64(s.slice(3)))); } catch (e) { return null; } }
   function vurl(v) { var c = vcode(v); return c ? SITE + '/aspen/#gg-visit=' + c : ''; }
   function takeVisit(h) {
     var m = /[#&]gg-visit=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;

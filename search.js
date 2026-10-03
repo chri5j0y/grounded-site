@@ -22,21 +22,21 @@
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with guides for 60 hard talks', href: '/maple/', keys: 'sprout kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' }, // GG-RENAME-KEEP: old names still find the tool
-    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 guides for hard talks', href: '/aspen/', keys: 'sapling middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' }, // GG-RENAME-KEEP: old names still find the tool
-    { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/oak/', keys: 'soul tree soultree adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' }, // GG-RENAME-KEEP: old names still find the tool
-    { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove garden tending tend routine' },
+    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with guides for 60 hard talks', href: '/maple/', keys: 'kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
+    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 guides for hard talks', href: '/aspen/', keys: 'middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
+    { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/oak/', keys: 'adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
+    { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
-    { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'heartwood high school teen teenager 9th 10th 11th 12th grade' }, // GG-RENAME-KEEP: old names still find the tool
-    { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'elder tree eldertree seniors elders older adults retirement aging grandparents' }, // GG-RENAME-KEEP: old names still find the tool
-    { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, hard talks, readings', href: '/willow/', keys: 'old growth oldgrowth end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' } // GG-RENAME-KEEP: old names still find the tool
+    { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },
+    { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'seniors elders older adults retirement aging grandparents' },
+    { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, hard talks, readings', href: '/willow/', keys: 'end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
 
 
   /* ---------- site pages (Rebrand Session 2: search covers the whole site) ---------- */
   var PAGES = [
-    { title: 'Services', sub: 'Marriage, celebrations, farewells, hard seasons, and teams', href: '/services.html', keys: 'services thresholds ceremonies ceremony officiant help book hire support' },
-    { title: 'The Grounded Marriage', sub: 'Premarital counseling, a custom wedding, and a first-anniversary check-in, from $1,400', href: '/services.html#marriage', keys: 'marriage married wedding package premarital engaged couple grounded marriage' },
+    { title: 'Services', sub: 'Marriage, celebrations, farewells, hard seasons, growth, and teams', href: '/services.html', keys: 'services thresholds ceremonies ceremony officiant help book hire support' },
+    { title: 'The Grounded Marriage', sub: 'Premarital counseling, a custom wedding, and a first-anniversary check-in, from $1,400', href: '/the-grounded-marriage.html', keys: 'marriage married wedding package premarital engaged couple grounded marriage' },
     { title: 'Weddings', sub: 'Custom ceremonies, from $650', href: '/weddings.html', keys: 'wedding weddings officiant marry married ceremony vows' },
     { title: 'Elopements', sub: 'Just the two of you, anywhere, from $350', href: '/elopements.html', keys: 'elope elopement courthouse small simple legal ceremony' },
     { title: 'Vow renewals', sub: 'For couples who would say it all again, from $500', href: '/vow-renewals.html', keys: 'vow renewal renew vows anniversary' },
@@ -48,9 +48,15 @@
     { title: 'Child blessings', sub: 'Welcoming a new life into a family', href: '/child-blessings.html', keys: 'baby blessing naming child dedication new baby' },
     { title: 'House blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
     { title: 'Milestones', sub: 'Graduations, retirements, recovery, and more', href: '/milestones.html', keys: 'milestone graduation retirement recovery anniversary' },
+    { title: 'End-of-Life Support', sub: 'Presence at the bedside, planning, and vigil, from $125 an hour', href: '/end-of-life-support.html', keys: 'end of life dying vigil doula bedside hospice planning family support legacy' },
+    { title: 'Grief and Caregiver Support', sub: 'One-on-one support after a loss or while caregiving, $125 a session', href: '/grief-caregiver-support.html', keys: 'grief griefwork bereavement loss caregiver caregiving burnout widow widower' },
+    { title: 'Growth and renewal', sub: 'Grow deeper. Rest well. Spiritual guidance, meditation, and retreats', href: '/services.html#growth', keys: 'growth renewal grow deeper rest retreat retreats workshop workshops seminar seminars faith spiritual practice' },
+    { title: 'Spiritual Guidance', sub: 'One-on-one guidance for your inner life, $125 a session', href: '/spiritual-guidance.html', keys: 'spiritual guidance direction director faith doubt questions discernment religious hurt prayer meaning' },
+    { title: 'Meditation, Sound and Movement', sub: 'Sound bowls, body scans, yoga, and breathwork', href: '/meditation-sound-movement.html', keys: 'meditation sound bowl bowls yoga breathwork body scan mindfulness rest relax' },
+    { title: 'Speaking and Training', sub: 'Talks and trainings for teams, from $750', href: '/speaking-training.html', keys: 'speaking speaker talk keynote training conference in-service workshop hospice team staff' },
     { title: 'Rates', sub: 'What it costs, plainly', href: '/rates.html', keys: 'rates price prices cost costs fee fees how much pay payment deposit' },
     { title: 'About', sub: 'Who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story' },
-    { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/index.html#contact', keys: 'contact email call reach out question' },
+    { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/contact.html', keys: 'contact email call reach out question' },
     { title: 'The Grounded library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },
     { title: 'Privacy', sub: 'Your answers stay on your device', href: '/privacy.html', keys: 'privacy data private' },
     { title: 'Terms', sub: 'Terms of use', href: '/terms.html', keys: 'terms legal' }

@@ -20,3 +20,6 @@
 .site-footer .foot-local a{color:var(--house) !important;}
 .site-footer .footer-privacy,.site-footer .privacy{font-size:14px;color:var(--fsoft) !important;margin:12px auto 0;max-width:620px;}
 .site-footer .footer-copyright,.site-footer .copyright{font-size:13px;color:var(--fsoft) !important;margin:12px auto 0;max-width:760px;}
+
+/* Site polish: small raised trademark after the brand name (header and footer) */
+.tm{font-size:.42em;font-weight:600;vertical-align:super;line-height:0;margin-left:1px;letter-spacing:0;}
