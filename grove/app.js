@@ -154,6 +154,7 @@ function render() {
   renderTabs();
   const v = $('#view');
   v.innerHTML = hereBar() + alertsHtml() + ({ grove: viewGrove, wall: viewWall, together: viewTogether, earlier: viewEarlier, how: viewHow, library: viewLibrary }[S.tab] || viewGrove)();
+  if (S.tab === 'library' && S.lib.q) libFind();
 }
 window.render = render;
 
@@ -300,15 +301,30 @@ function viewHow() {
 }
 
 /* ---------- Practice library (deep links from the site-wide search) ---------- */
+function libItemHtml(it) {
+  const L = window.GGLibrary, v = L.view(it, 'oak'), open = S.open === it.key;
+  return `<li class="gv-prac" style="--pc:${(PARTS6.find(p => p.key === it.part) || {}).color}"><div class="gv-prac-top"><b>${esc(v.name)}</b><small>${esc(PNAME[it.part] || '')}</small></div><p>${esc(v.text)}</p><button type="button" class="text-btn" data-act="libhow" data-id="${esc(it.key)}" aria-expanded="${open}">${open ? 'Hide how' : 'Show me how'}</button>${open ? `<div class="gv-steps">${L.guideHtml(v)}</div>` : ''}</li>`;
+}
 function viewLibrary() {
   const L = window.GGLibrary, q = S.lib.q;
-  let h = `<div class="section-head"><h2>Practice library</h2><p>Every Grounded practice, with how to do it. To add one to your own practices, open your tree app and tap Find more practices.</p></div>
-    <label class="lbl" for="gv-libq">Search</label><input id="gv-libq" class="gv-input" type="search" value="${esc(q)}" placeholder="Try sleep, calm, or friends">`;
+  let h = `<div class="section-head"><h2>Practice library</h2><p>Every Grounded practice, with how to do it. To add one to your own practices, open your tree app and tap Find more practices. Searching here also finds When Life Changes guides, books, and more.</p></div>
+    <label class="lbl" for="gv-libq">Search</label><input id="gv-libq" class="gv-input" type="search" value="${esc(q)}" placeholder="Try sleep, calm, friends, or grief" enterkeyhint="search">
+    <div id="gv-libres"></div>`;
   if (!L) return h;
-  const list = (q ? L.search(q) : []).slice(0, 40);
-  h += list.length ? `<ul class="gv-libl">${list.map(it => { const v = L.view(it, 'oak'), open = S.open === it.key; return `<li class="gv-prac" style="--pc:${(PARTS6.find(p => p.key === it.part) || {}).color}"><div class="gv-prac-top"><b>${esc(v.name)}</b><small>${esc(PNAME[it.part] || '')}</small></div><p>${esc(v.text)}</p><button type="button" class="text-btn" data-act="libhow" data-id="${esc(it.key)}" aria-expanded="${open}">${open ? 'Hide how' : 'Show me how'}</button>${open ? `<div class="gv-steps">${L.guideHtml(v)}</div>` : ''}</li>`; }).join('')}</ul>`
-    : `<p class="muted">${q ? 'Nothing found. Try a simpler word.' : 'Type a word to search.'}</p>`;
+  if (!window.GGFind) {   // without the shared search engine, the library's own search still works
+    const list = (q ? L.search(q) : []).slice(0, 40);
+    h += list.length ? `<ul class="gv-libl">${list.map(libItemHtml).join('')}</ul>` : `<p class="muted">${q ? 'Nothing found. Try a simpler word.' : 'Type a word to search.'}</p>`;
+  } else if (!q) h += '<p class="muted" id="gv-libhint">Type a word to search.</p>';
   return h + `<p><button class="btn btn-line btn-sm" data-tab="grove">Back to our grove</button></p>`;
+}
+/* Search: the same engine as the header search. Practices first, then the rest of Grow With Grounded. */
+function libFind() {
+  const i = $('#gv-libq'); if (!i || !window.GGFind || !window.GGLibrary) return;
+  const hint = $('#gv-libhint'); if (hint) hint.hidden = !!i.value.trim();
+  GGLibrary.ready().then(() => GGFind(i, { here: 'grove', localType: 'practice', localLabel: 'Practices', localNone: 'No practices',
+    localKeep: x => !!GGLibrary.get(x.key),
+    localHTML: items => `<ul class="gv-libl">${items.slice(0, 40).map(x => libItemHtml(GGLibrary.get(x.key))).join('')}</ul>`,
+    after: '#gv-libres', accent: 'var(--accent)' }));
 }
 
 /* ---------- actions ---------- */
@@ -354,7 +370,9 @@ document.addEventListener('click', e => {
   else if (act === 'oldnotes') { S.open = S.open === 'oldnotes' ? '' : 'oldnotes'; render(); }
   else if (act === 'seen') { const p = who(id), s = p && (p.shared || {}).safety; if (s) { G.seen[id] = s.flag; save(); render(); } }
 });
-document.addEventListener('input', e => { if (e.target.id === 'gv-libq') { S.lib.q = e.target.value; const pos = e.target.selectionStart; render(); const f = $('#gv-libq'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (x) {} } } });
+document.addEventListener('input', e => { if (e.target.id !== 'gv-libq') return; S.lib.q = e.target.value;
+  if (window.GGFind && window.GGLibrary) { libFind(); return; }
+  const pos = e.target.selectionStart; render(); const f = $('#gv-libq'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (x) {} } });
 
 /* ---------- boot ---------- */
 function setScale() { document.documentElement.style.setProperty('--scale', G.scale); const b = $('#size-btn'); if (b) { b.textContent = G.scale > 1.2 ? 'A' : 'A+'; b.setAttribute('aria-label', 'Text size, now ' + (G.scale === 1 ? 'normal' : G.scale < 1.2 ? 'larger' : 'largest')); } }

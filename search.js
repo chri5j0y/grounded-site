@@ -1,10 +1,12 @@
 /* =====================================================================
    GROUNDED . SITE-WIDE SEARCH (opened from the Search button in every header, nav.js)
-   One box that finds Hard Talks, Grove practices, tools, and stories.
+   One engine for every search box on the site: the header search, the Tools
+   page, each app's When Life Changes tab, and every practice library.
+   It finds When Life Changes guides, practices, books, pages, tools, and stories.
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
    Where the words come from (edit them there, not here):
-     Hard Talks   maple/guides.js, aspen/guides.js, oak/guides.js, willow/guides.js
+     Guides       maple/guides.js, aspen/guides.js, oak/guides.js, willow/guides.js
      Practices    grove/data.js and grove/library.js
      Stories      stories.html (read as the page is today)
      Tools        TOOLS below
@@ -14,22 +16,20 @@
    any time a search comes up empty that shouldn't.
    ===================================================================== */
 (function () {
-  var box = document.getElementById('site-search');
-  if (!box) return;
-  var input = document.getElementById('ss-q');
-  var out = document.getElementById('ss-results');
-  var status = document.getElementById('ss-status');
+  // Loaded once per page. A second load just mounts any new site search box.
+  if (window.GGSearch && window.GGSearch.attach) { window.GGSearch.mountSite(); return; }
+  var WAIT = [];   // status lines waiting on the index
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with guides for 60 hard talks', href: '/maple/', keys: 'kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
-    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 guides for hard talks', href: '/aspen/', keys: 'middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
-    { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/oak/', keys: 'adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
+    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with 60 When Life Changes guides for grown-ups', href: '/maple/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
+    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 When Life Changes guides for grown-ups', href: '/aspen/', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
+    { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with guides for 60+ hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
     { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },
     { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'seniors elders older adults retirement aging grandparents' },
-    { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, hard talks, readings', href: '/willow/', keys: 'end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
+    { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
 
 
@@ -166,7 +166,7 @@
   function build() {
     if (loading) return loading;
     ITEMS = [];
-    status.textContent = 'Getting the guides ready...';
+    WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
       load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js'), loadGrove(), loadBooks()
     ]).then(function () {
@@ -178,29 +178,29 @@
         var ring = (sp.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
         add({ type: 'talk', age: 'k5', ageLabel: 'Kids, K to 5', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.k2, t.g35].concat(t.helps || [], t.before || [], t.after || [], t.teach || []).join(' '),
-          href: '/maple/#talk=' + encodeURIComponent(t.id), from: 'Maple' });
+          href: '/maple/#talk=' + encodeURIComponent(t.id), from: 'Maple', id: t.id, app: 'maple' });
       });
       var sa = window.ASPEN_GUIDES;
       if (sa) sa.groups.forEach(function (g) { g.topics.forEach(function (t) {
         if (!t.quick) return;
         add({ type: 'talk', age: 'ms', ageLabel: 'Grades 6 to 8', title: t.title, sub: g.name, keys: t.keys || '', lead: t.quick, quick: t.quick,
-          body: (t.talk || []).concat(t.say || []).join(' '), href: '/aspen/#talk=' + encodeURIComponent(t.id), from: 'Aspen' });
+          body: (t.talk || []).concat(t.say || []).join(' '), href: '/aspen/#talk=' + encodeURIComponent(t.id), from: 'Aspen', id: t.id, app: 'aspen' });
       }); });
       var so = window.OAK_GUIDES;
       if (so) so.topics.forEach(function (t) {
         var ring = (so.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
         add({ type: 'talk', age: 'ad', ageLabel: 'Adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
-          href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak' });
+          href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak', id: t.id, app: 'oak' });
       });
-      // Willow hard talks (Willow Build Session 2)
+      // Willow guides (Willow Build Session 2)
       var sw = window.WILLOW_GUIDES;
       if (sw) sw.guides.forEach(function (t) {
         var ring = (sw.rings.find(function (r) { return r[0] === t.ring; }) || [])[1] || '';
         var part = function (k) { var x = t.parts.find(function (p) { return p[0] === k; }); return x ? x[1] : ''; };
         var quick = [part('what') || part('know'), part('helps')].filter(Boolean);
         add({ type: 'talk', age: 'ad', ageLabel: 'Hospice', title: t.title.replace(/^"|"$/g, ''), sub: ring, keys: t.keys, lead: quick, quick: quick,
-          body: t.parts.map(function (p) { return p[1]; }).join(' '), href: '/willow/#guide=' + encodeURIComponent(t.id), from: 'Willow' });
+          body: t.parts.map(function (p) { return p[1]; }).join(' '), href: '/willow/#guide=' + encodeURIComponent(t.id), from: 'Willow', id: t.id, app: 'willow' });
       });
 
       var gl = window.GGSGroveLibrary || window.GroveLibrary;
@@ -208,7 +208,7 @@
         var how = it.how || [], part = (GPART && GPART[it.part]) || {};
         add({ type: 'practice', title: it.name, sub: (part.name ? part.name + ' (' + part.sub + ')' : ''), keys: it.kidName || '', lead: [it.text],
           text: it.text, why: how[0], steps: how[1] ? String(how[1]).split('|') : [], hard: how[2],
-          ages: it.ages, body: how.slice(0, 3).join(' '), href: '/grove/#library=' + encodeURIComponent(it.name) });
+          ages: it.ages, key: it.key, part: it.part, body: how.slice(0, 3).join(' '), href: '/grove/#library=' + encodeURIComponent(it.name) });
       });
 
       BOOKS.forEach(function (b) {
@@ -227,7 +227,7 @@
             keys: a.getAttribute('data-themes') || '', lead: [quote ? quote.textContent : ''], body: pv ? pv.textContent : '', href: href });
         });
       }).catch(function () {});
-    }).then(function () { status.textContent = ''; });
+    }).then(function () { WAIT.forEach(function (el) { if (/ready/.test(el.textContent)) el.textContent = ''; }); });
     return loading;
   }
 
@@ -280,7 +280,7 @@
       var list = by[k].sort(function (a, b) { return b[1] - a[1]; });
       return { type: k, items: list.map(function (h) { return h[0]; }), top: list[0][1] };
     }).sort(function (a, b) {
-      // Hard Talks lead unless another kind is clearly the better answer (like a tool's name)
+      // Guides lead unless another kind is clearly the better answer (like a tool's name)
       var svc = /\b(wedding|weddings|marriage|married|premarital|elope|elopement|vow|vows|officiant|ceremony|funeral|funerals|memorial|blessing|cost|costs|price|prices|rate|rates|fee|fees|book|hire|service|services)\b/.test(p.raw);
       var bonus = function (g) { return g.type === 'talk' ? (svc ? 0 : 3) : g.type === 'book' ? -2 : (g.type === 'page' && svc ? 8 : 0); };
       var ta = a.top + bonus(a), tb = b.top + bonus(b);
@@ -289,10 +289,28 @@
     return { p: p, groups: groups, partial: partial };
   }
 
+  /* ---------- kid-safe results (Maple and Aspen) ----------
+     Inside Maple and Aspen, "More from Grow With Grounded" skips anything
+     written only for adults. Add a word here if something slips through. */
+  var ADULT = /\b(affair|infidel|cheat\w*|sex|sexual\w*|intimacy|porn\w*|alcohol\w*|drinking|drunk|drugs?|addict\w*|overdos\w*|gambl\w*|abortion|suicid\w*|assisted|euthanas\w*|maid|erotic|hookup)\b/;
+  function adultOnly(it) {
+    var hay = (it.title + ' ' + (it.keys || '') + ' ' + (it.sub || '')).toLowerCase();
+    if (it.type === 'talk') return (it.app === 'oak' || it.app === 'willow') && ADULT.test(hay);
+    if (it.type === 'story' || it.type === 'book') return ADULT.test(hay);
+    return false;
+  }
+  function kidOk(it, kid) {
+    if (!kid) return true;
+    if (adultOnly(it)) return false;
+    if (it.type === 'practice' && kid === 'maple' && (it.ages === 'teen' || it.ages === 'teenOnly')) return false;
+    return true;
+  }
+
   /* ---------- showing results ---------- */
-  var NAMES = { talk: 'Hard Talks', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Stories' };
+  var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
-  var SHOW = 5, openAll = {}, uid = 0;
+  var APPNAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak', willow: 'Willow', grove: 'The Grove' };
+  var SHOW = 5, uid = 0;
 
   function crisisHTML(raw) {
     var c = CRISIS.test(raw), a = ABUSE.test(raw);
@@ -302,20 +320,22 @@
       (a ? '<p>For child abuse: Childhelp, <a href="tel:18004224453">1-800-422-4453</a>. For abuse at home: the National Domestic Violence Hotline, <a href="tel:18007997233">1-800-799-7233</a>.</p>' : '') +
       '</div>';
   }
-  function rowHTML(it) {
+  function rowHTML(it, opts) {
     var id = 'ss-x' + (++uid);
+    var local = opts && opts.here && it.type === 'talk' && it.app === opts.here && opts.open;
     if (it.type === 'tool' || it.type === 'story' || it.type === 'page' || it.type === 'book') {
       var inner = '<span class="ss-title">' + esc(it.title) + '</span><span class="ss-sub">' + esc(it.sub) + '</span>';
       return '<li class="ss-item">' + (it.href ? '<a class="ss-row" href="' + esc(it.href) + '">' + inner + '</a>' : '<div class="ss-row ss-soon">' + inner + '</div>') + '</li>';
     }
-    var tag = it.type === 'talk' ? it.ageLabel : (AGES[it.ages] || '');
+    var tag = it.type === 'talk' ? (local ? '' : it.ageLabel) : (AGES[it.ages] || '');
     var head = '<button type="button" class="ss-row" aria-expanded="false" aria-controls="' + id + '">' +
       '<span class="ss-title">' + esc(it.title) + (tag ? ' <span class="ss-tag ss-' + (it.age || it.ages) + '">' + esc(tag) + '</span>' : '') + '</span>' +
       '<span class="ss-sub">' + esc(it.type === 'talk' ? it.sub : it.text) + '</span></button>';
     var card;
     if (it.type === 'talk') {
       card = '<p class="ss-card-h">Quick card</p>' + list(it.quick) +
-        '<a class="btn btn-primary ss-go" href="' + esc(it.href) + '">Full guide in ' + esc(it.from) + '</a>';
+        (local ? '<button type="button" class="btn btn-primary ss-go" data-open="' + esc(it.id) + '">' + esc(opts.openLabel || 'Talking it through') + '</button>'
+               : '<a class="btn btn-primary ss-go" href="' + esc(it.href) + '">Full guide in ' + esc(it.from) + '</a>');
     } else {
       card = (it.why ? '<p>' + esc(it.why) + '</p>' : '') +
         (it.steps.length ? '<p class="ss-card-h">How to do it</p><ol>' + it.steps.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>' : '<p>' + esc(it.text) + '</p>') +
@@ -324,57 +344,168 @@
     }
     return '<li class="ss-item">' + head + '<div class="ss-card" id="' + id + '" hidden>' + card + '</div></li>';
   }
-  function render(q) {
-    uid = 0;
+  function groupHTML(type, items, label, state, opts) {
+    var all = state[type], shown = all ? items : items.slice(0, SHOW);
+    return '<div class="ss-group" role="group" aria-label="' + esc(label) + '"><h4>' + esc(label) + ' <span>' + items.length + '</span></h4><ul class="ss-list">' +
+      shown.map(function (it) { return rowHTML(it, opts); }).join('') + '</ul>' +
+      (items.length > SHOW ? '<button type="button" class="ss-more" data-type="' + type + '">' + (all ? 'Show fewer' : 'Show all ' + items.length) + '</button>' : '') + '</div>';
+  }
+
+  /* One function draws results for every box.
+     opts.here       the app this box lives in (maple, aspen, oak, willow, grove)
+     opts.localType  'talk' (a When Life Changes tab) or 'practice' (a practice library)
+     opts.localHTML  for practice libraries: draws the app's own list (with its Add buttons)
+     opts.localKeep  filter for the app's own items (age, part)
+     opts.kid        'maple' or 'aspen' keeps adult-only results out of "More"
+     opts.open       opens one of this app's own guides inside the app */
+  function draw(panel, q, opts, statusEl) {
+    opts = opts || {}; uid = 0;
+    var state = panel._ggOpen || (panel._ggOpen = {});
     var r = search(q);
-    if (!r.p.words.length && !r.p.raw.trim()) { out.innerHTML = ''; status.textContent = ''; box.classList.remove('has-results'); return; }
-    var n = r.groups.reduce(function (s, g) { return s + g.items.length; }, 0);
-    var html = crisisHTML(r.p.raw);
-    if (!n) {
-      html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse every Hard Talk: ' +
-        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, or <a class="text-link" href="/oak/#life">for adults</a>.</p></div>';
-    } else {
-      if (r.partial) html += '<p class="ss-note">Nothing matched every word, so here is what matched some of them.</p>';
-      r.groups.forEach(function (g) {
-        var all = openAll[g.type], items = all ? g.items : g.items.slice(0, SHOW);
-        html += '<div class="ss-group" role="group" aria-label="' + NAMES[g.type] + '"><h4>' + NAMES[g.type] + ' <span>' + g.items.length + '</span></h4><ul class="ss-list">' +
-          items.map(rowHTML).join('') + '</ul>' +
-          (g.items.length > SHOW ? '<button type="button" class="ss-more" data-type="' + g.type + '">' + (all ? 'Show fewer' : 'Show all ' + g.items.length + ' ' + NAMES[g.type].toLowerCase()) + '</button>' : '') +
-          '</div>';
+    if (!r.p.words.length && !r.p.raw.trim()) { panel.innerHTML = ''; if (statusEl) statusEl.textContent = ''; return 0; }
+    var here = opts.here, lt = opts.localType, local = [], groups = [];
+    r.groups.forEach(function (g) {
+      var rest = [];
+      g.items.forEach(function (it) {
+        var mine = here && lt === g.type && (lt === 'practice' ? (!opts.localKeep || opts.localKeep(it)) : it.app === here);
+        if (mine) local.push(it);
+        else if (kidOk(it, opts.kid)) rest.push(it);
       });
+      if (rest.length) groups.push({ type: g.type, items: rest });
+    });
+    var n = local.length + groups.reduce(function (s, g) { return s + g.items.length; }, 0);
+    var html = crisisHTML(r.p.raw);
+    if (r.partial && n) html += '<p class="ss-note">Nothing matched every word, so here is what matched some of them.</p>';
+    if (here && local.length) {
+      var lab = opts.localLabel || 'In ' + (APPNAME[here] || here);
+      html += opts.localHTML ? '<div class="ss-group ss-local"><h4>' + esc(lab) + ' <span>' + local.length + '</span></h4>' + opts.localHTML(local) + '</div>'
+                             : groupHTML('local', local, lab, state, opts);
+    } else if (here) {
+      html += '<p class="ss-note">' + (opts.localNone ? esc(opts.localNone) : 'Nothing in ' + esc(APPNAME[here] || here)) + ' for &ldquo;' + esc(q.trim()) + '.&rdquo;' + (groups.length ? ' Here is what the rest of Grow With Grounded has.' : '') + '</p>';
     }
-    out.innerHTML = html;
-    box.classList.add('has-results');
-    status.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'No results';
+    if (groups.length) {
+      if (here) html += '<h3 class="ss-more-h">More from Grow With Grounded</h3>';
+      groups.forEach(function (g) { html += groupHTML(g.type, g.items, NAMES[g.type], state, opts); });
+    }
+    if (!n) {
+      html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
+        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/oak/#life">for adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
+    }
+    panel.innerHTML = html;
+    if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'No results';
+    return n;
+  }
+  function wire(panel, again) {
+    if (panel._ggWired) return; panel._ggWired = true;
+    panel.addEventListener('click', function (e) {
+      var more = e.target.closest('.ss-more');
+      if (more && panel.contains(more)) { var t = more.getAttribute('data-type'); panel._ggOpen[t] = !panel._ggOpen[t]; again(); return; }
+      var op = e.target.closest('[data-open]');
+      if (op && panel._ggOpts && panel._ggOpts.open) { panel._ggOpts.open(op.getAttribute('data-open')); return; }
+      var row = e.target.closest('button.ss-row');
+      if (row && panel.contains(row)) {
+        var card = document.getElementById(row.getAttribute('aria-controls'));
+        var open = row.getAttribute('aria-expanded') !== 'true';
+        row.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) card.removeAttribute('hidden'); else card.setAttribute('hidden', '');
+      }
+    });
   }
 
-  /* ---------- wiring ---------- */
-  var timer = null;
-  function go() {
-    var q = input.value;
-    clearTimeout(timer);
-    timer = setTimeout(function () { build().then(function () { openAll = {}; render(q); }); }, 140);
+  /* ---------- the header and Tools page box ---------- */
+  function mountSite() {
+    var box = document.getElementById('site-search');
+    if (!box || box._ggMounted) return; box._ggMounted = true;
+    var input = document.getElementById('ss-q'), out = document.getElementById('ss-results'), status = document.getElementById('ss-status');
+    WAIT.push(status);
+    var timer = null;
+    function render() { var q = input.value; out._ggOpts = {}; draw(out, q, {}, status) ; box.classList.toggle('has-results', !!q.trim()); }
+    function go() { clearTimeout(timer); timer = setTimeout(function () { build().then(function () { out._ggOpen = {}; render(); }); }, 140); }
+    wire(out, render);
+    input.addEventListener('focus', function () { build(); }, { once: true });
+    input.addEventListener('input', go);
+    box.addEventListener('submit', function (e) { e.preventDefault(); go(); input.blur(); });
+    box.addEventListener('click', function (e) { var chip = e.target.closest('[data-try]'); if (chip) { input.value = chip.getAttribute('data-try'); go(); } });
+    // any page?q=vaping opens search with that query (nav.js opens the panel)
+    var start = new URLSearchParams(location.search).get('q');
+    if (start) { input.value = start; go(); }
   }
-  input.addEventListener('focus', function () { build(); }, { once: true });
-  input.addEventListener('input', go);
-  box.addEventListener('submit', function (e) { e.preventDefault(); go(); input.blur(); });
-  box.addEventListener('click', function (e) {
-    var chip = e.target.closest('[data-try]');
-    if (chip) { input.value = chip.getAttribute('data-try'); go(); return; }
-    var more = e.target.closest('.ss-more');
-    if (more) { var t = more.getAttribute('data-type'); openAll[t] = !openAll[t]; render(input.value); return; }
-    var row = e.target.closest('button.ss-row');
-    if (row) {
-      var card = document.getElementById(row.getAttribute('aria-controls'));
-      var open = row.getAttribute('aria-expanded') !== 'true';
-      row.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) card.removeAttribute('hidden'); else card.setAttribute('hidden', '');
-    }
-  });
-  // any page?q=vaping opens search with that query (nav.js opens the panel)
-  var start = new URLSearchParams(location.search).get('q');
-  if (start) { input.value = start; go(); }
 
-  // For testing: window.GGSearch.run('vaping') returns what the box would show.
-  window.GGSearch = { run: function (q) { return build().then(function () { return search(q); }); } };
+  /* ---------- a search box inside an app ----------
+     GGSearch.attach(input, opts): call it on every input event (nav.js's GGFind does).
+     While there are words in the box, the app's own list hides (opts.hide, CSS
+     selectors) and the results show right under opts.after (or the input). */
+  var CSS_DONE = false;
+  function css() {
+    if (CSS_DONE) return; CSS_DONE = true;
+    var st = document.createElement('style');
+    st.textContent = '' +
+      '.ggf{--ggf-line:rgba(128,112,90,.32);--ggf-soft:rgba(128,112,90,.10);margin:14px 0 20px;font-family:Barlow,system-ui,sans-serif;color:inherit;}' +
+      '.ggf .ss-status{font-size:15px;opacity:.8;margin:0 0 4px;min-height:1em;}' +
+      '.ggf .ss-group{margin-top:16px;}' +
+      '.ggf .ss-group h4{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ggf-acc,#8B5E1A);margin:0 0 4px;}' +
+      '.ggf .ss-group h4 span{opacity:.7;margin-left:4px;}' +
+      '.ggf .ss-more-h{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;font-size:24px;line-height:1.2;margin:26px 0 0;padding-top:16px;border-top:2px solid var(--ggf-line);}' +
+      '.ggf .ss-list,.ggf .gt-lib-ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--ggf-line);}' +
+      '.ggf .ss-item{border-bottom:1px solid var(--ggf-line);}' +
+      '.ggf .ss-row{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:none;padding:12px 6px;cursor:pointer;text-decoration:none;border-radius:8px;min-height:44px;}' +
+      '.ggf .ss-row:hover,.ggf .ss-row:focus-visible{background:var(--ggf-soft);}' +
+      '.ggf .ss-soon{opacity:.7;cursor:default;}' +
+      '.ggf .ss-title{display:block;font-weight:600;font-size:17.5px;line-height:1.35;}' +
+      '.ggf .ss-sub{display:block;font-size:15px;opacity:.8;line-height:1.45;margin-top:2px;}' +
+      '.ggf .ss-tag{display:inline-block;font-weight:600;font-size:12.5px;line-height:1;padding:4px 9px;border-radius:999px;background:var(--ggf-soft);vertical-align:2px;}' +
+      '.ggf .ss-card{background:var(--ggf-soft);border-radius:10px;padding:12px 16px 16px;margin:0 0 12px;font-size:16.5px;line-height:1.55;}' +
+      '.ggf .ss-card ul,.ggf .ss-card ol{padding-left:22px;}' +
+      '.ggf .ss-card-h{font-weight:700;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;opacity:.8;margin:4px 0 6px;}' +
+      '.ggf .ss-go{display:inline-block;margin-top:8px;font:600 15px/1.2 Barlow,system-ui,sans-serif;padding:11px 20px;border-radius:999px;border:none;background:var(--ggf-acc,#8B5E1A);color:#fff;text-decoration:none;cursor:pointer;}' +
+      '.ggf .ss-more{font:inherit;font-size:15px;font-weight:600;color:var(--ggf-acc,#8B5E1A);background:none;border:none;border-bottom:1px solid currentColor;padding:0;margin-top:10px;cursor:pointer;}' +
+      '.ggf .ss-note,.ggf .ss-empty{margin-top:10px;font-size:16px;}' +
+      '.ggf .ss-crisis{margin-top:6px;padding:14px 18px;border-left:4px solid #9C2F2F;background:rgba(156,47,47,.10);border-radius:0 10px 10px 0;font-size:16.5px;}' +
+      '.ggf .ss-crisis p{margin:6px 0 0;}.ggf .ss-crisis a{color:inherit;font-weight:700;}' +
+      '.ggf a.text-link{color:inherit;font-weight:600;}';
+    document.head.appendChild(st);
+  }
+  function attach(input, opts) {
+    if (!input) return;
+    opts = opts || {}; css();
+    var panel = input._ggPanel;
+    if (!panel || !panel.isConnected) {
+      panel = document.createElement('div'); panel.className = 'ggf'; panel.setAttribute('aria-live', 'polite');
+      if (opts.accent) panel.style.setProperty('--ggf-acc', opts.accent);
+      panel.innerHTML = '<p class="ss-status"></p><div class="ggf-out"></div>';
+      var after = (opts.after && document.querySelector(opts.after)) || input;
+      after.parentNode.insertBefore(panel, after.nextSibling);
+      input._ggPanel = panel;
+    }
+    var out = panel.querySelector('.ggf-out'), status = panel.querySelector('.ss-status');
+    out._ggOpts = opts;
+    var hide = function (on) { (opts.hide || []).forEach(function (sel) { document.querySelectorAll(sel).forEach(function (el) { el.hidden = on; }); }); };
+    var q = input.value || '';
+    if (!q.trim()) { hide(false); panel.hidden = true; out.innerHTML = ''; return Promise.resolve(0); }
+    hide(true); panel.hidden = false;
+    clearTimeout(input._ggT);
+    return new Promise(function (ok) {
+      input._ggT = setTimeout(function () {
+        if (WAIT.indexOf(status) < 0) WAIT.push(status);
+        build().then(function () {
+          if (input.value !== q) return ok(0);
+          out._ggOpen = {};
+          var again = function () { draw(out, input.value, out._ggOpts, status); };
+          wire(out, again);
+          ok(draw(out, q, opts, status));
+        });
+      }, 140);
+    });
+  }
+
+  /* For practice libraries that draw their own list: ranked practice keys for a search. */
+  function practices(q) { return build().then(function () { var r = search(q), g = r.groups.filter(function (x) { return x.type === 'practice'; })[0]; return g ? g.items.map(function (it) { return it.key; }) : []; }); }
+
+  window.GGSearch = {
+    run: function (q) { return build().then(function () { return search(q); }); },   // for testing
+    ready: function () { return build(); },
+    mountSite: mountSite, attach: attach, draw: function (panel, q, opts) { css(); panel.classList.add('ggf'); panel._ggOpts = opts; panel._ggQ = q; panel._ggOpen = panel._ggOpen || {}; wire(panel, function () { draw(panel, panel._ggQ, panel._ggOpts); }); return build().then(function () { return draw(panel, q, opts); }); },
+    practices: practices, adultOnly: adultOnly
+  };
+  mountSite();
 })();

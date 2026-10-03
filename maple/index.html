@@ -801,7 +801,7 @@ a.big-btn{text-decoration:none;}
       </div>
       <div class="life-promo">
         <b>When Life Changes</b>
-        <p>Hard talks, made a little easier. Quick guides for more than 50 things kids face, from a pet dying to scary news, with what to say and how to talk it through.</p>
+        <p>How to show up. Quick guides for more than 50 things kids face, from a pet dying to scary news, with what to say and how to talk it through.</p>
         <button class="soft-btn" onclick="go('life')">Find a guide</button>
       </div>
       <div class="grown-note">
@@ -861,7 +861,7 @@ a.big-btn{text-decoration:none;}
 <script src="/maple/checkin.js?v=r4m"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=l1"></script>
-<script src="/shared/gg-tend.js?v=r5a"></script>
+<script src="/shared/gg-tend.js?v=wl1"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -2300,7 +2300,7 @@ function mpRenderGuides() {
   const young = isK2(MP_KID.grade);
   box.innerHTML = `<div class="banner-note mp-guides"><h3 class="kid">Your six parts</h3>
       ${PARTS.map(p => `<p>${dot(p)}<span><b style="color:${p.hex}">${p.name}</b> <span class="mp-sub">${esc(p.value)}</span><br>${esc((young ? p.k2 : p.g35).you)}</span></p>`).join('')}</div>
-    <div class="banner-note"><h3 class="kid">For grown-ups</h3><p>Hard talks, made a little easier, and how Maple works.</p>
+    <div class="banner-note"><h3 class="kid">For grown-ups</h3><p>When Life Changes guides, and how Maple works.</p>
       <div class="action-row"><button class="soft-btn" onclick="go('life')">When Life Changes</button><button class="soft-btn" onclick="go('guide')">Grown-up guide</button></div></div>`;
 }
 
@@ -2832,10 +2832,10 @@ function renderLife() {
   if (!v.querySelector('.life-search')) {
     v.innerHTML = `<div class="life-head">
         <h2 class="grown">When Life Changes</h2>
-        <p class="lead">Hard talks, made a little easier. Each card is a quick reference to read right before a hard conversation. Tap <b>Talking it through</b> for the full guide: what to say, questions kids ask, and when to get more help.</p>
+        <p class="lead"><b>How to show up.</b> Each card is a quick reference to read right before a hard conversation. Tap <b>Talking it through</b> for the full guide: what to say, questions kids ask, and when to get more help.</p>
       </div>
       <div class="life-tools no-print">
-        <input class="life-search" id="life-search" type="search" placeholder="Search: divorce, pet died, lockdown, moving..." aria-label="Search the guides" oninput="LIFE.q=this.value;renderLifeList()">
+        <input class="life-search" id="life-search" type="search" placeholder="Search: divorce, pet died, lockdown, moving..." aria-label="Search the guides" oninput="lifeFind(this)" enterkeyhint="search">
       </div>
       <div class="ring-chips no-print" role="group" aria-label="Filter by topic">
         <button class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="setLifeRing('all')">All topics</button>
@@ -2847,6 +2847,12 @@ function renderLife() {
   renderLifeList();
 }
 function setLifeRing(k) { LIFE.ring = k; renderLifeList(); }
+/* Search: the same engine as the header search. Maple's guides first, then the rest of Grow With Grounded (kid-safe). */
+function lifeFind(el) {
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'maple', kid: 'maple', localType: 'talk', open: id => openTalk(id), openLabel: 'Talking it through',
+    after: '.life-tools', hide: ['#life-list', '.ring-chips'], accent: 'var(--btn-ink)' });
+}
 function renderLifeList() {
   document.querySelectorAll('.ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === LIFE.ring));
   const rings = RINGS.filter(r => LIFE.ring === 'all' || r.key === LIFE.ring);
@@ -2857,7 +2863,7 @@ function renderLifeList() {
     count += ts.length;
     html += `<div class="ring-block" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="talk-grid">${ts.map(t => `
       <article class="talk-card" style="--rc:${r.color}">
-        <span class="label">Hard talk</span>
+        <span class="label">Guide</span>
         <h4>${esc(t.title)}</h4>
         <ul>${t.quick.map(q => `<li>${esc(q)}</li>`).join('')}</ul>
         <p class="meta">Often rainy: ${esc(t.rainy)}. Try: ${t.acts.map(actTitle).map(esc).join(', ')}.</p>
@@ -2879,7 +2885,7 @@ function openTalk(id, from) {
     </div>
     <span class="ring-tag">${esc(r.name)}</span>
     <h2>${esc(t.title)}</h2>
-    <div class="quick-box"><b>Hard talk: quick reference</b>${list(t.quick)}</div>
+    <div class="quick-box"><b>Quick reference</b>${list(t.quick)}</div>
 
     <h3>Talking it through</h3>
     <h4>What this can look like</h4>
@@ -2921,6 +2927,6 @@ setTimeout(lifeFromHash, 0);
 
 </script>
 <script src="/read.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js';document.head.appendChild(s)"></script>
-<script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=wl1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>

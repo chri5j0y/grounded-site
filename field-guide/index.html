@@ -350,7 +350,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .gv-steps li{margin:3px 0;}
 .gv-print-tree svg{width:100%;height:auto;}
 @media print{ .gv-pt{border-collapse:collapse;width:100%;} .gv-pt th,.gv-pt td{border:.5pt solid #CFC3AD;padding:2mm;text-align:center;font-size:8.5pt;} .gv-pt td{height:8mm;} .gv-print-tree{margin:3mm 0;} }
-/* ---------- hard talks ---------- */
+/* ---------- When Life Changes ---------- */
 .ht-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A5432 0%,#523823 50%,#2E2118 100%);}
 .ht-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:15px;}
 .ht-legend i,.ht-dots i{display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--sc);vertical-align:middle;}
@@ -372,7 +372,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .ht-pick .chip{padding:7px 12px;font-size:14px;}
 .ht-none{margin-top:12px;font-size:15px;}
 .ht-card{border-left:4px solid var(--gold);}
-/* ---------- Hard Talks: cards and plans ---------- */
+/* ---------- When Life Changes: cards and plans ---------- */
 .ht-subtabs{margin:0 0 14px;}
 .cd{--pc:#8B5E1A;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);color:var(--ink);}
 .cd-band{background:var(--pc);color:#fff;padding:10px 18px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase;}
@@ -418,7 +418,7 @@ body.cd-noscroll{overflow:hidden;}
 .pl-kind{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
 .pl-prac{margin-top:12px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px;}
 .pl-listen{margin-top:10px;font-size:15px;color:var(--ink-soft);}
-/* Hard Talks handouts. #ht-measure is an offscreen copy used to size each page to fit before printing. */
+/* When Life Changes handouts. #ht-measure is an offscreen copy used to size each page to fit before printing. */
 #ht-measure{position:absolute;left:-10000px;top:0;width:178mm;visibility:hidden;pointer-events:none;background:#fff;}
 .ht-page{font-size:10pt;line-height:1.38;color:#2A1C12;font-family:'Barlow',sans-serif;}
 .ht-page .ht-head{display:flex;align-items:center;gap:3.5mm;border-bottom:1.5pt solid #8B5E1A;padding-bottom:2.5mm;margin-bottom:3.5mm;}
@@ -728,7 +728,7 @@ function lockScreen(mode, msg){
       <form id="lf"><label for="l1">Access code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Continue</button></form>
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
-      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who use Grounded tools with the people they serve: guided visits, tool guides, Hard Talks for every age, handouts, and session plans. Anything you write stays encrypted on your own device.</p>
+      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who use Grounded tools with the people they serve: guided visits, tool guides, When Life Changes for every age, handouts, and session plans. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For individuals</b><span>Free. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../index.html#contact">Request access</a></div>
       <div><b>For organizations</b><span>Hospices, churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" data-mail="org" href="../index.html#contact">Reach out for pricing</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given an Owner code, enter it once here. Your notes and records stay just as they are.</p>
@@ -847,7 +847,7 @@ function start(){
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have an Oak visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Oak questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
-  const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','Hard Talks','talk']] : [])];
+  const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
   const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
   if (TIER === 'owner') t.push(['owner','Owner','key']);
@@ -919,7 +919,7 @@ function vHome(){
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   <h3 style="margin-top:18px">Start a session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>Hard Talks</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups this week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1056,7 +1056,7 @@ function vClient(c){
     <div class="grid g2" style="margin-top:10px"><input type="date" id="nfd"><input type="text" id="nft" placeholder="What to do"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>
     <h3 style="margin-top:22px">Sessions</h3>
-    ${ss.length ? ss.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sessTitle(s))}</b><br><small class="muted">${nice(s.date)} &middot; ${s.kind === 'ht' ? (HTG() ? esc(htStageNames(s.stages) || 'Hard Talks') : 'Hard Talks') : (s.minutes||0) + ' min'}${s.fee ? ' &middot; ' + esc(s.fee) : ''} ${s.paid ? '<span class="pill sage">Paid</span>' : (s.fee && !/free/i.test(s.fee) ? '<span class="pill warn">Unpaid</span>' : '')}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted">No sessions yet.</p>'}
+    ${ss.length ? ss.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sessTitle(s))}</b><br><small class="muted">${nice(s.date)} &middot; ${s.kind === 'ht' ? (HTG() ? esc(htStageNames(s.stages) || 'When Life Changes') : 'When Life Changes') : (s.minutes||0) + ' min'}${s.fee ? ' &middot; ' + esc(s.fee) : ''} ${s.paid ? '<span class="pill sage">Paid</span>' : (s.fee && !/free/i.test(s.fee) ? '<span class="pill warn">Unpaid</span>' : '')}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted">No sessions yet.</p>'}
    </div></div>
   <div class="row" style="margin-top:14px"><button class="btn btn-danger btn-sm" data-act="del-client" data-v="${c.id}">Delete This Record</button></div>`;
 }
@@ -4778,7 +4778,7 @@ function wlBridgeIn(){
 window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'guide' && DATA) wlBridgeIn(); });
 
 
-// ---------------- HARD TALKS ----------------
+// ---------------- WHEN LIFE CHANGES ----------------
 // Every hard conversation, for every life stage, side by side. The topic map, helper notes, and wording
 // live in the Field library (FLD.hardTalks). The guides themselves are read from the public
 // maple/guides.js, aspen/guides.js, and oak/guides.js, so there's one place to edit them.
@@ -4793,7 +4793,7 @@ const htOpen = () => !!HTG() && (TIER !== 'field' || !!(HTG().open && HTG().open
 const HT_SITE = 'https://growwithgrounded.com';
 const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', oak:'/oak/#life=', willow:'/willow/#guide='};
 const HT_TM = {maple:'Maple', aspen:'Aspen', oak:'Oak', willow:'Willow'};
-// Willow's guides for a topic. A topic can name them itself (T.willow, through a Hard Talks patch). Until then they come
+// Willow's guides for a topic. A topic can name them itself (T.willow, through a When Life Changes patch). Until then they come
 // from the topic's Oak guides, so every end-of-life topic finds its Willow guides without a library change.
 const HT_OAK_WILLOW = {'own-death':['end','notready','afraid','burden'], 'dying-loved':['signs','hear','hanging','visions','rally','kids'],
   'bedside':['signs','starving','hear','visions','hanging','rally'], 'after-death':['firsthour','official','notthere','relief'], 'eol-plan':['notready','end'],
@@ -4964,14 +4964,17 @@ function htListHTML(){
 }
 
 // ----- views -----
-function htHello(){ const H = HTG(); return `<div class="hello ht-hello"><div class="eyebrow" style="color:#E8C987">Grounded Field Guide&trade;</div><h1>${esc(H.title)}</h1><p>${esc(H.lead)}</p></div>`; }
+// The guides are named When Life Changes everywhere (Hard Talks retired). Library text sealed before the
+// rename still says Hard Talks, so it's renamed as it shows. Once the library is patched this changes nothing.
+function wlcName(t){ return String(t == null ? '' : t).replace(/Hard Talks/g, 'When Life Changes').replace(/Hard talks/g, 'When Life Changes').replace(/hard talks/g, 'When Life Changes guides').replace(/\bHard Talk\b/g, 'Guide'); }
+function htHello(){ const H = HTG(); return `<div class="hello ht-hello"><div class="eyebrow" style="color:#E8C987">Grounded Field Guide&trade;</div><h1>${esc(wlcName(H.title))}</h1><p><b>How to show up.</b> ${esc(wlcName(H.lead))}</p></div>`; }
 function htSubTabs(){
   if (!CDG()) return '';
   const v = V.htv || 'topics';
-  return `<div class="sub-tabs ht-subtabs" role="tablist" aria-label="Hard Talks">${[['topics','Topics'],['cards','Cards'],['plans','Plans']].map(([k, l]) => `<button class="chip" role="tab" aria-selected="${v === k}" aria-pressed="${v === k}" data-act="ht-view" data-v="${k}">${l}</button>`).join('')}</div>`;
+  return `<div class="sub-tabs ht-subtabs" role="tablist" aria-label="When Life Changes">${[['topics','Topics'],['cards','Cards'],['plans','Plans']].map(([k, l]) => `<button class="chip" role="tab" aria-selected="${v === k}" aria-pressed="${v === k}" data-act="ht-view" data-v="${k}">${l}</button>`).join('')}</div>`;
 }
 function vHT(){
-  const H = HTG(); if (!H) return `<div class="card"><p>Hard Talks isn't on this device yet.</p></div>`;
+  const H = HTG(); if (!H) return `<div class="card"><p>When Life Changes isn't on this device yet.</p></div>`;
   // Cards need nothing from the site, so they work even when the guides can't load.
   if (V.htv === 'cards' && CDG() && !V.htt && !V.htrec) return htHello() + htSubTabs() + vCards();
   const wait = htNeedData(); if (wait) return (CDG() && !V.htt && !V.htrec ? htHello() + htSubTabs() : '') + wait;
@@ -4980,13 +4983,13 @@ function vHT(){
   if (V.htv === 'plans' && PLG()) return htHello() + htSubTabs() + vPlans();
   const recent = htRecs().slice(0, 5);
   return `${htHello()}${htSubTabs()}
-  <div class="card">${(H.intro || []).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
+  <div class="card">${(H.intro || []).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(wlcName(t))}</p>`).join('')}
    <div class="ht-legend">${htStagesAll().map(st => `<span><i class="${st.soon ? 'soon' : 'on'}" style="--sc:${esc(st.color)}"></i>${esc(st.name)} <small class="muted">${esc(st.ages)}${st.soon ? ', coming soon' : ''}</small></span>`).join('')}</div></div>
   ${htCrisisCard(false)}
   <div class="card"><label class="f" for="ht-q" style="margin-top:0">Find a topic</label><input type="text" id="ht-q" value="${esc(V.htq || '')}" placeholder="Grief, divorce, vaping, a scary diagnosis..." autocomplete="off">
    <div class="row" style="margin-top:12px"><button class="chip" aria-pressed="${!V.htg}" data-act="ht-group" data-v="">All</button>${(H.groups || []).map(g => `<button class="chip" aria-pressed="${V.htg === g.key}" data-act="ht-group" data-v="${esc(g.key)}">${esc(g.name)}</button>`).join('')}</div></div>
   <div id="ht-list">${htListHTML()}</div>
-  ${recent.length ? `<div class="card" style="margin-top:18px"><h3>Recently shared</h3>${recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Hard Talk')}</b> <span class="muted">${esc(c ? c.name : 'Record removed')}</span><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`; }).join('')}</div>` : ''}
+  ${recent.length ? `<div class="card" style="margin-top:18px"><h3>Recently shared</h3>${recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Guide')}</b> <span class="muted">${esc(c ? c.name : 'Record removed')}</span><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`; }).join('')}</div>` : ''}
   ${TIER !== 'field' ? htCheckCard() + cdCheckCard() : ''}`;
 }
 function vHTTopic(T){
@@ -5007,7 +5010,7 @@ function vHTTopic(T){
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
   const faithOn = !!DATA.settings.htFaith;
-  return `<button class="linkbtn" data-act="ht-home">Back to Hard Talks</button>
+  return `<button class="linkbtn" data-act="ht-home">Back to When Life Changes</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(htGroupName(T.group))}</div><h1>${esc(T.title)}</h1></div>
   ${T.crisis || T.abuse ? htCrisisCard(!!T.abuse) : ''}
   <div class="card ht-helper"><h3>For the helper</h3><p style="margin-top:6px">${esc(T.helper || '')}</p></div>
@@ -5052,16 +5055,16 @@ function vHTRec(s){
   const c = CL(s.clientId), T = htTopic(s.topic);
   const hand = (s.hand || []).map(k => k === 'pack' ? 'Family pack' : k === 'plan' ? 'Session plan' : (htStageDef(k) ? htStageDef(k).name + ' handout' : k));
   const pl = s.plan && PLG() ? plFmt(s.plan.fmt) : null;
-  return `<button class="linkbtn" data-act="ht-home">Back to Hard Talks</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>${esc(s.topicTitle || 'Hard Talk')}</h1><p>${esc(c ? c.name : 'Record removed')}</p></div>
+  return `<button class="linkbtn" data-act="ht-home">Back to When Life Changes</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>${esc(s.topicTitle || 'Guide')}</h1><p>${esc(c ? c.name : 'Record removed')}</p></div>
   <div class="card"><p><b>Stages talked through:</b> ${esc(htStageNames(s.stages) || 'None noted')}</p><p style="margin-top:8px"><b>Handouts given:</b> ${esc(hand.join(', ') || 'None')}</p>${pl ? `<p style="margin-top:8px"><b>Session plan:</b> ${esc(pl.name)}, ${s.plan.min} minutes${s.plan.focus && cdPart(s.plan.focus) ? ', focus on ' + esc(cdPart(s.plan.focus).name) : ''}</p>` : ''}
-   <p class="muted" style="font-size:14px;margin-top:10px">Hard Talks records keep the topic, stages, handouts, and date. Follow-ups live on their record.</p></div>
+   <p class="muted" style="font-size:14px;margin-top:10px">When Life Changes records keep the topic, stages, handouts, and date. Follow-ups live on their record.</p></div>
   <div class="row" style="margin-top:14px">${T ? `<button class="btn btn-gold btn-sm" data-act="ht-topic" data-v="${esc(T.id)}">Open the Topic</button>` : ''}${htPersonOpen(c)}<button class="btn btn-danger btn-sm" data-act="ht-del" data-v="${s.id}">Delete</button></div>`;
 }
 function htPersonCard(c){
   if (!c || !htOpen()) return '';
   const rs = htRecs(c.id); if (!rs.length) return '';
-  return `<div class="card ht-card" style="margin-top:14px"><h3>Hard Talks</h3>${rs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Hard Talk')}</b><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}${(s.hand || []).length ? ' &middot; handout' + (s.hand.length > 1 ? 's' : '') + ' given' : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`).join('')}</div>`;
+  return `<div class="card ht-card" style="margin-top:14px"><h3>When Life Changes</h3>${rs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Guide')}</b><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}${(s.hand || []).length ? ' &middot; handout' + (s.hand.length > 1 ? 's' : '') + ' given' : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`).join('')}</div>`;
 }
 // Staff and Owner: guides in the public files that the map doesn't reach, and map ids that aren't there.
 function htCheck(){
@@ -5072,9 +5075,9 @@ function htCheck(){
 }
 function htCheckCard(){
   const r = htCheck();
-  if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from Maple, Aspen, and Oak are in Hard Talks.</p>`;
-  return `<div class="card" style="margin-top:18px;border-left:4px solid var(--gold)"><h3>Map check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. Send it to a chat for a Hard Talks patch.</p>
-   ${r.loose.length ? `<p style="margin-top:8px"><b>Guides not in Hard Talks yet:</b> ${esc(r.loose.join('; '))}</p>` : ''}
+  if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from Maple, Aspen, and Oak are in When Life Changes.</p>`;
+  return `<div class="card" style="margin-top:18px;border-left:4px solid var(--gold)"><h3>Map check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. Send it to a chat for a When Life Changes patch.</p>
+   ${r.loose.length ? `<p style="margin-top:8px"><b>Guides not in When Life Changes yet:</b> ${esc(r.loose.join('; '))}</p>` : ''}
    ${r.missing.length ? `<p style="margin-top:8px"><b>Not found in the guide files:</b> ${esc(r.missing.join('; '))}</p>` : ''}</div>`;
 }
 
@@ -5096,7 +5099,7 @@ function htPageHTML(T, stIds, r){
   const qr = window.GGQR ? GGQR.svg(url, {label: 'QR code for ' + short}) : '';
   const help = [...(H.help || []), ...(T.abuse ? (H.abuseHelp || []) : [])];
   return `<section class="ht-page">
-   <div class="ht-head">${logo('t').replace('<svg', '<svg class="t"')}${logo('w').replace('<svg', '<svg class="w"')}<div class="r">Hard Talks<br>${esc(who)}</div></div>
+   <div class="ht-head">${logo('t').replace('<svg', '<svg class="t"')}${logo('w').replace('<svg', '<svg class="w"')}<div class="r">When Life Changes<br>${esc(who)}</div></div>
    <h1>${esc(r.g.title)}</h1>${notes.map(n => `<p class="ht-note">${esc(n)}</p>`).join('')}
    <div class="ht-cols">${secs.map(sec).join('')}</div>
    <div class="ht-foot"><div class="ht-help"><h2>Help any time</h2>${help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}<div class="ht-from">${esc(O.from || 'Shared by')}:</div></div>
@@ -5121,18 +5124,18 @@ async function htPrint(T, stIds, title){
   fgSheet(html, title, {file:'hard-talks-handout'});
 }
 
-// ----- Owner: open or close Hard Talks to Field users (through Update a Library) -----
+// ----- Owner: open or close When Life Changes to Field users (through Update a Library) -----
 function htFieldRow(){
   const S = HTG();
-  if (!S) return `<p class="muted" style="margin-top:8px">Hard Talks isn't in the Field library yet. Add it with Update a Library.</p>`;
+  if (!S) return `<p class="muted" style="margin-top:8px">When Life Changes isn't in the Field library yet. Add it with Update a Library.</p>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="list-row"><div class="lr-main"><b>Hard Talks</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="ht-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+  return `<div class="list-row"><div class="lr-main"><b>When Life Changes</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="ht-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
 }
 async function htSetField(on){
   const cur = await pendingPlain('field'); if (!cur || !cur.hardTalks) return;
   const next = JSON.parse(JSON.stringify(cur)); next.hardTalks.open = Object.assign({}, next.hardTalks.open, {field:on});
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'field', title: on ? 'Open Hard Talks to Field users' : 'Close Hard Talks to Field users', note:'', rows:[['Replaces', 'hardTalks.open.field']], warns:[], from:cur._rev || 0, next};
+  V.upd = {lvl:'field', title: on ? 'Open When Life Changes to Field users' : 'Close When Life Changes to Field users', note:'', rows:[['Replaces', 'hardTalks.open.field']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 
@@ -5143,7 +5146,7 @@ function htSave(T){
   let c = null;
   if (F.cid === 'new'){
     const n = (F.nn || '').trim(); if (!n){ const el = $('#ht-nn'); if (el) el.focus(); return alert('Add a code or initials first.'); }
-    c = {id:uid(), u:Date.now(), name:n.slice(0, 40), service:'Hard Talks', status:'active', followups:[], created:today()};
+    c = {id:uid(), u:Date.now(), name:n.slice(0, 40), service:'When Life Changes', status:'active', followups:[], created:today()};
     if (STG()) c.st = {type: F.nt || 'family', consent:null};
     DATA.clients.push(c);
   } else c = CL(F.cid);
@@ -5179,16 +5182,16 @@ function htAct(a, v, t){
     case 'ht-rs': if (V.htf){ const p = V.htf.stages, i = p.indexOf(v); if (i >= 0) p.splice(i, 1); else p.push(v); htKeep(); } return true;
     case 'ht-rh': if (V.htf){ const p = V.htf.hand, i = p.indexOf(v); if (i >= 0) p.splice(i, 1); else p.push(v); htKeep(); } return true;
     case 'ht-save': { const T2 = htTopic(v); if (T2) htSave(T2); return true; }
-    case 'ht-del': if (confirm('Delete this Hard Talks record? Follow-ups on their record stay.')){ DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('talks'); toast('Deleted.'); } return true;
+    case 'ht-del': if (confirm('Delete this When Life Changes record? Follow-ups on their record stay.')){ DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('talks'); toast('Deleted.'); } return true;
     case 'ht-field': htSetField(v === 'on'); return true;
   }
   return cdAct(a, v, t);
 }
 
-// ---------------- HARD TALKS: CARDS AND PLANS ----------------
+// ---------------- WHEN LIFE CHANGES: CARDS AND PLANS ----------------
 // Conversation cards and session plans live in the Field library (FLD.hardTalks.cards and
-// FLD.hardTalks.plans), so they open whenever Hard Talks does. Cards: tree cards for each live age
-// (Maple, Aspen, Oak), plus topic decks that attach to Hard Talks topics by guide id.
+// FLD.hardTalks.plans), so they open whenever When Life Changes does. Cards: tree cards for each live age
+// (Maple, Aspen, Oak), plus topic decks that attach to When Life Changes topics by guide id.
 // Plans walk the tree once, roots to fruit: arrive, six parts, close. Each part has a line to say,
 // cards, and what to listen for, with a spoken bridge to the next part. A Grove practice sits at
 // its own part (read from grove/library.js). Saved plans stay encrypted on this device (DATA.plans).
@@ -5230,7 +5233,7 @@ function cdDeckFor(T){
     || D.find(d => !d.topics && htStagesAll().filter(st => !st.soon).some(st => htStage(T, st).some(r => ((d.guides || {})[r.src] || []).includes(r.id))))
     || null;
 }
-// The Hard Talks group a deck sits in, for the deck picker.
+// The When Life Changes group a deck sits in, for the deck picker.
 function cdDeckGroup(d){
   const ts = HTG().topics || [];
   const T = ts.find(t => (d.topics || []).includes(t.id)) || ts.find(t => cdDeckFor(t) === d);
@@ -5250,7 +5253,7 @@ function cdFace(card, k, stage, deck, cls){
 }
 function cdBack(k, stage){
   const pt = cdPart(k), st = cdStageDef(stage);
-  return `<div class="cd cd-back" style="--pc:${esc(cdSlotColor(k))}">${logo('t').replace('<svg', '<svg class="t"')}<b>${esc(cdSlotName(k))}</b>${pt ? `<small>${esc(pt.sub)}</small>` : ''}<span>${esc(st.name)} &middot; ${esc(CDG().back || 'Hard Talks')}</span></div>`;
+  return `<div class="cd cd-back" style="--pc:${esc(cdSlotColor(k))}">${logo('t').replace('<svg', '<svg class="t"')}<b>${esc(cdSlotName(k))}</b>${pt ? `<small>${esc(pt.sub)}</small>` : ''}<span>${esc(st.name)} &middot; ${esc(wlcName(CDG().back || 'When Life Changes'))}</span></div>`;
 }
 
 // ----- state for the Cards view (kept while the Field Guide is open) -----
@@ -5351,7 +5354,7 @@ function cdPrint(list, title, backs){
   }
   // The PDF draws the same cards itself: nine to a page, playing-card size, dashed cut lines, mirrored backs.
   const blocks = () => [{k:'cards', backs:!!backs, foot:(C.printFoot || '') + ' Grounded Field Guide.', cards:list.map(r => { const card = cdCard(r), t = cdTxt(card), st = cdStageDef(r.stage), pt = cdPart(r.k);
-    return {head:cdSlotName(r.k), sub:pt ? pt.sub : '', kind:cdKindName(t), t, left:st.name, right:cdDeckName(r.deck), color:cdSlotColor(r.k), backLine:st.name + ', ' + (C.back || 'Hard Talks')}; })}];
+    return {head:cdSlotName(r.k), sub:pt ? pt.sub : '', kind:cdKindName(t), t, left:st.name, right:cdDeckName(r.deck), color:cdSlotColor(r.k), backLine:st.name + ', ' + wlcName(C.back || 'When Life Changes')}; })}];
   fgSheet(`<style>@page{size:letter;margin:9mm 12mm 9mm;}</style>` + pages.join(''), title, {file:'hard-talks-cards', blocks});
 }
 // Full screen: one big card, tap for the next one. Escape closes.
@@ -5560,7 +5563,7 @@ function plRecord(){
   let c = null;
   if (F.cid === 'new'){
     const n = (F.nn || '').trim(); if (!n){ const el = $('#pl-nn'); if (el) el.focus(); return alert('Add a code or initials first.'); }
-    c = {id:uid(), u:Date.now(), name:n.slice(0, 40), service:'Hard Talks', status:'active', followups:[], created:today()};
+    c = {id:uid(), u:Date.now(), name:n.slice(0, 40), service:'When Life Changes', status:'active', followups:[], created:today()};
     if (STG()) c.st = {type: F.nt || 'family', consent:null};
     DATA.clients.push(c);
   } else c = CL(F.cid);

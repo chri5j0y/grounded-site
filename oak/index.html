@@ -1054,7 +1054,7 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-profiles.js?v=sp1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=l1"></script>
-<script src="/shared/gg-tend.js?v=r5a"></script>
+<script src="/shared/gg-tend.js?v=wl1"></script>
 <script src="/oak/guides.js?v=r4p"></script>
 <script>
 const DOMAIN_DEFS = [
@@ -3157,11 +3157,11 @@ function renderLC(mode) {
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for life's hardest seasons</h2>
-      <p class="lead">${mode === 'prac'
+      <p class="lead"><b>How to show up.</b> ${mode === 'prac'
         ? 'Quick references and full guides for walking with someone through a hard season: what they may be carrying, what to say and not say, and when to bring in more help. Each guide prints as a handout you can leave with a family.'
         : 'Quick references and full guides for more than 60 hard seasons of life, from grief and diagnosis to burnout, betrayal, and doubt. Each guide has two views: one for when you are going through it, and one for when you are helping someone else.'}</p>
     </div>
-    <input class="lc-search no-print" type="search" placeholder="Search: grief, diagnosis, divorce, burnout, faith..." aria-label="Search the guides" value="${lcEsc(st.q)}" oninput="LCS['${mode}'].q=this.value;lcRenderList('${mode}')">
+    <input class="lc-search no-print" type="search" placeholder="Search: grief, diagnosis, divorce, burnout, faith..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All topics</button>
       ${LC_RINGS.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
@@ -3169,6 +3169,7 @@ function renderLC(mode) {
     <div id="${mode}-lc-list"></div>
     <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. For guides on talking with children, visit <a class="text-link" href="https://growwithgrounded.com/maple/#life">When Life Changes in Maple</a>.</p>`;
   lcRenderList(mode);
+  if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
 function lcRenderList(mode) {
   const st = LCS[mode];
@@ -3190,6 +3191,13 @@ function lcRenderList(mode) {
       </article>`).join('')}</div></div>`;
   });
   box.innerHTML = n ? html : `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>`;
+}
+/* Search: the same engine as the header search. Oak's guides first, then the rest of Grow With Grounded. */
+function lcFind(el, mode) {
+  LCS[mode].q = ''; LCS[mode].find = el.value;
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'oak', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking it through',
+    hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips'], accent: 'var(--btn-ink)' });
 }
 function lcOpen(mode, id) {
   LCS[mode].open = id;
@@ -3307,6 +3315,6 @@ setTimeout(lcFromHash, 0);
 })();
 </script>
 <script src="/read.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js';document.head.appendChild(s)"></script>
-<script src="/nav.js" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=wl1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js';document.head.appendChild(s)"></script>
 </body>
 </html>

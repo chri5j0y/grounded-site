@@ -1,5 +1,5 @@
 /* =====================================================================
-   WILLOW GUIDES . hard talks
+   WILLOW GUIDES . When Life Changes
    Each guide: { id, title, ring, keys, story, parts: [[label, text], ...] }
    Labels: what (What's happening), say, dont (Don't say), helps (What helps),
    pro (For chaplains and doulas), faith (Faith notes).

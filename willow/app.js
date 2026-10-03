@@ -215,6 +215,7 @@ function render() {
   const v = $('#w-view'); if (!v) return;
   v.innerHTML = (VIEWS[S.tab] || VIEWS.today)();
   v.querySelectorAll('[data-read]').forEach(el => addRead(el));
+  if (S.tab === 'guides' && !S.guide.open && S.guide.find) { const i = v.querySelector('.lc-search'); if (i) gFind(i); }
 }
 function go(v, force) {
   if (window.GGRead && GGRead.stop) GGRead.stop();
@@ -442,7 +443,7 @@ function rememberedHtml(t) {
     <div class="w-card"><p class="w-eyebrow">Your own tree</p><p>Grief is part of your tree now. Your check-ins keep growing it.</p><div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.view('${(me() || {}).id}')">Go to my own tree</button></div></div>`;
 }
 function aboutShort() {
-  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard talks, readings for any faith or none, and what to do at the bedside.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
+  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings for any faith or none, and what to do at the bedside.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
 }
 VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h2>A tree for the last part of the path</h2></div>
   <div data-read="Read this aloud">
@@ -460,7 +461,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
   <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays on this device, locked with a passcode. Nothing is sent to Grounded or anyone else. Willow is not medical care or a crisis service. For anything urgent, call your hospice first, day or night.</div>
-  <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button><button type="button" class="btn btn-secondary" onclick="W.go('guides')">Hard talks</button><button type="button" class="btn btn-secondary" onclick="W.go('readings')">Readings</button></div>`;
+  <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button><button type="button" class="btn btn-secondary" onclick="W.go('guides')">When Life Changes</button><button type="button" class="btn btn-secondary" onclick="W.go('readings')">Readings</button></div>`;
 function begin() {
   const a = me();
   if (a && (rec(a.id).started || helped().length)) { go('today'); return; }
@@ -857,7 +858,7 @@ VIEWS.bedside = () => {
   return h;
 };
 
-/* ---------- Guides: hard talks ---------- */
+/* ---------- Guides: When Life Changes ---------- */
 const RING_COLOR = { spirit: 'var(--p-roots)', last: 'var(--p-fruit)' };
 function gMatch(g, q) {
   if (!q) return true;
@@ -867,10 +868,10 @@ function gMatch(g, q) {
 VIEWS.guides = () => {
   const st = S.guide;
   if (st.open) { const g = G.guides.find(x => x.id === st.open); if (g) return guideHtml(g); st.open = null; }
-  let h = `<div class="lc-head"><p class="eyebrow">Hard talks</p><h2 class="section-title" style="margin-top:4px">Words for the hardest conversations</h2>
-    <p class="lead">What's happening, what to say, what not to say, and what helps. For families, and for the chaplains and doulas who sit with them.</p>
+  let h = `<div class="lc-head"><p class="eyebrow">When Life Changes</p><h2 class="section-title" style="margin-top:4px">Words for the hardest conversations</h2>
+    <p class="lead"><b>How to show up.</b> What's happening, what to say, what not to say, and what helps. For families, and for the chaplains and doulas who sit with them.</p>
     <p class="w-tool">${esc(G.tool)}</p></div>
-    <input class="lc-search" type="search" placeholder="Search: miracle, hell, burden, not eating, kids..." aria-label="Search the guides" value="${esc(st.q)}" oninput="W.S.guide.q=this.value;W.gList()">
+    <input class="lc-search" type="search" placeholder="Search: miracle, hell, burden, not eating, kids..." aria-label="Search the guides" value="${esc(st.find || '')}" oninput="W.gFind(this)" enterkeyhint="search">
     <div class="lc-chips" role="group" aria-label="Filter">
       <button class="lc-chip" style="--rc:var(--ink-soft)" aria-pressed="${st.ring === 'all'}" onclick="W.S.guide.ring='all';W.render()">All</button>
       ${G.rings.map(r => `<button class="lc-chip" style="--rc:${RING_COLOR[r[0]]}" aria-pressed="${st.ring === r[0]}" onclick="W.S.guide.ring='${r[0]}';W.render()">${esc(r[1])}</button>`).join('')}
@@ -884,12 +885,19 @@ function gListHtml() {
     const gs = G.guides.filter(g => g.ring === r[0] && gMatch(g, st.q)); if (!gs.length) return; n += gs.length;
     h += `<div class="lc-ring" style="--rc:${RING_COLOR[r[0]]}"><h3><i></i>${esc(r[1])}</h3><div class="lc-grid">${gs.map(g => {
       const first = g.parts.find(p => p[0] === 'what') || g.parts[0];
-      return `<article class="lc-card" style="--rc:${RING_COLOR[r[0]]}"><span class="lc-label">Hard talk</span><h4>${esc(g.title)}</h4><p class="w-small">${esc(first[1])}</p><button class="btn btn-secondary" onclick="W.guide('${g.id}')">Open the guide</button></article>`;
+      return `<article class="lc-card" style="--rc:${RING_COLOR[r[0]]}"><span class="lc-label">Guide</span><h4>${esc(g.title)}</h4><p class="w-small">${esc(first[1])}</p><button class="btn btn-secondary" onclick="W.guide('${g.id}')">Open the guide</button></article>`;
     }).join('')}</div></div>`;
   });
   return n ? h : `<div class="lc-none"><p>No guides match "${esc(st.q)}." Try another word.</p></div>`;
 }
 function gList() { const b = $('#w-glist'); if (b) b.innerHTML = gListHtml(); }
+/* Search: the same engine as the header search. Willow's guides first, then the rest of Grow With Grounded. */
+function gFind(el) {
+  S.guide.q = ''; S.guide.find = el.value;
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'willow', localType: 'talk', open: id => openGuide(id), openLabel: 'Open the guide',
+    hide: ['#w-glist', '.lc-chips'], accent: 'var(--btn-ink)' });
+}
 function guideHtml(g) {
   const ring = G.rings.find(r => r[0] === g.ring), rc = RING_COLOR[g.ring];
   const body = g.parts.filter(p => p[0] !== 'pro').map(p => p[0] === 'say' ? `<h3>${esc(G.labels[p[0]])}</h3><div class="lc-say"><p>${esc(p[1])}</p></div>` : p[0] === 'dont' ? `<h3>${esc(G.labels[p[0]])}</h3><div class="lc-reach"><p>${esc(p[1])}</p></div>` : `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('');
@@ -1179,7 +1187,7 @@ Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
   checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
-  guide: openGuide, gList, printGuide, reading: openReading, printReading,
+  guide: openGuide, gList, gFind, printGuide, reading: openReading, printReading,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify

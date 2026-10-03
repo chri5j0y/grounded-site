@@ -22,22 +22,22 @@
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
-    { name: 'The trees', items: [
-      { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4' },
-      { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
-      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true },
-      { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
-      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true },
-      { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
+    { name: 'The trees', lcKey: true, items: [
+      { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4',
+        lc: { id: 'lc-kids', href: HOME + '/maple/#life', mark: 'maple', color: '#A14219', who: 'for talking with kids, K to 5' } },
+      { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC',
+        lc: { id: 'lc-ms', href: HOME + '/aspen/#life', mark: 'aspen', color: '#1F6F74', who: 'for talking with middle schoolers' } },
+      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true,
+        lc: { mark: 'pine', color: '#3A6B35', soon: true } },
+      { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC',
+        lc: { id: 'lc-adult', href: HOME + '/oak/#life', mark: 'oak', color: '#3D5A73', who: 'for your own hard seasons, or someone you help' } },
+      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true,
+        lc: { mark: 'sequoia', color: '#7A2E1C', soon: true } },
+      { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD',
+        lc: { id: 'lc-hospice', href: HOME + '/willow/#guides', mark: 'willow', color: '#5F7350', who: 'at the end of life' } }
     ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
-    ] },
-    { name: 'Hard Talks', items: [
-      { id: 'lc-kids', title: 'Talking with kids', desc: 'Guides for hard talks, grades K to 5', href: HOME + '/maple/#life', icon: ic.door, bg: '#E3DAF7', color: '#6B3FBF' },
-      { id: 'lc-ms', title: 'Talking with middle schoolers', desc: 'Guides for hard talks, grades 6 to 8', href: HOME + '/aspen/#life', icon: ic.door, bg: '#DDF0EC', color: '#1F6F74' },
-      { id: 'lc-adult', title: 'For your own life', desc: 'Guides for hard seasons, for you or someone you help', href: HOME + '/oak/#life', icon: ic.door, bg: '#EFE3D0', color: '#6E4A14' },
-      { id: 'lc-hospice', title: 'At the end of life', desc: 'Hard talks for hospice families and the bedside', href: HOME + '/willow/#guides', icon: ic.door, bg: '#E8ECDD', color: '#5F7350' }
     ] },
     { name: 'Further reading', items: [
       { id: 'library', title: 'The Grounded library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.shelf, bg: '#F1E6CC' }
@@ -54,7 +54,7 @@
     if (p.indexOf('/oak') === 0 || h.indexOf('oak.') === 0) return life ? 'lc-adult' : 'oak';
     if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return life ? 'lc-kids' : 'maple';
     if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return life ? 'lc-ms' : 'aspen';
-    if (p.indexOf('/willow') === 0) return /^#(guide|guides)/.test(hash) ? 'lc-hospice' : 'willow';
+    if (p.indexOf('/willow') === 0) return /^#(guide|guides|life)/.test(hash) ? 'lc-hospice' : 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     if (p.indexOf('/library') === 0) return 'library';
@@ -88,6 +88,17 @@
     '.gn-sub-mode.gn-panel{position:static;width:100%;box-sizing:border-box;box-shadow:none;border:none;border-radius:0;padding:6px 0 4px;background:transparent;}' +
     '.gn-sub-mode .gn-grid{grid-template-columns:1fr;}' +
     '.gn-menu-sub > *:not(.gn-panel){display:none !important;}' +
+    '.gn-row{display:flex;align-items:stretch;gap:6px;}' +
+    '.gn-row > .gn-tool{flex:1;min-width:0;}' +
+    'a.gn-lc,.gn-lc{flex:none;width:84px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:7px 4px !important;border-radius:12px !important;border:1px solid #EADFC6 !important;text-decoration:none !important;color:var(--lc) !important;font-family:Barlow,system-ui,sans-serif !important;font-weight:600 !important;font-size:11.5px !important;line-height:1.15 !important;letter-spacing:0 !important;text-transform:none !important;text-align:center;white-space:normal !important;min-height:56px;}' +
+    'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#F6EEDB;border-color:var(--lc) !important;}' +
+    '.gn-lc-soon{opacity:.5;cursor:default;}' +
+    '.gn-lc-ic{position:relative;width:30px;height:30px;display:block;}' +
+    '.gn-lc-ic img{width:30px;height:30px;border-radius:8px;display:block;}' +
+    '.gn-bub{position:absolute;right:-8px;bottom:-6px;width:18px;height:16px;}' +
+    '.gn-key{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.35;color:#5B6A73;margin:0 0 6px;}' +
+    '.gn-key b{color:#2A2A2A;font-weight:600;}' +
+    '.gn-key-ic{position:relative;width:18px;height:16px;flex:none;}.gn-key-ic .gn-bub{position:static;display:block;}' +
     '@media (max-width:600px){.gn-grid{grid-template-columns:1fr;}}' +
     '';
   var GN_DARK = ''+
@@ -98,7 +109,10 @@
       '.gn-tool small{color:#C2B6A4;}' +
       '.gn-group h4,a.gn-all,.gn-back,.gn-lock{color:#D9A847 !important;}' +
       '.gn-foot{border-color:#3A322A;}' +
-      '.gn-sub-mode.gn-panel{background:transparent;}' ;
+      '.gn-sub-mode.gn-panel{background:transparent;}' +
+      'a.gn-lc,.gn-lc{border-color:#3A322A !important;color:#F3EDE3 !important;}' +
+      'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#332A20;}' +
+      '.gn-key{color:#C2B6A4;}.gn-key b{color:#F3EDE3;}' ;
 
 
 
@@ -139,14 +153,28 @@
     panel.setAttribute('aria-label', 'Grounded tools');
     function render() {
       var cur = here();
+      var bub = function (c) { return '<svg class="gn-bub" viewBox="0 0 20 18" aria-hidden="true"><path d="M3.5 1.5h13a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H9.5l-4 3.8v-3.8h-2a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2z" fill="' + c + '" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M5.6 5.8h8.8M5.6 8.6h5.6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'; };
+      var lcBtn = function (t) {
+        var c = t.lc; if (!c) return '';
+        var art = '<span class="gn-lc-ic"><img src="' + HOME + '/shared/marks/' + c.mark + '-small.svg" alt="" width="30" height="30">' + bub(c.color) + '</span><span class="gn-lc-t">When Life<br>Changes</span>';
+        if (c.soon) return '<span class="gn-lc gn-lc-soon" style="--lc:' + c.color + '" title="When Life Changes for ' + t.title + ' is coming soon" aria-hidden="true">' + art + '</span>';
+        var on = c.id === cur;
+        return '<a class="gn-lc' + (on ? ' gn-here' : '') + '" style="--lc:' + c.color + '" href="' + c.href + '"' + (on ? ' aria-current="page"' : '') + ' aria-label="When Life Changes in ' + t.title + ', ' + c.who + '. How to show up.">' + art + '</a>';
+      };
       panel.innerHTML = '<button type="button" class="gn-back">&#8592; Menu</button><div class="gn-grid">' +
         GN_GROUPS.map(function (g) {
-          return '<div class="gn-group"><h4>' + g.name + '</h4>' + g.items.map(function (t) {
-            if (t.soon) return '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
-            var isHere = t.id === cur;
-            return '<a class="gn-tool' + (isHere ? ' gn-here' : '') + '" href="' + t.href + '"' + (isHere ? ' aria-current="page"' : '') + '>' +
-              '<span class="gn-ic" style="background:' + t.bg + ';color:' + (t.color || '#8B5E1A') + '">' + t.icon + '</span>' +
-              '<span><b>' + t.title + (t.locked ? ' <span class="gn-lock" title="Access code required">' + ic.lock + '</span>' : '') + (isHere ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
+          return '<div class="gn-group"><h4>' + g.name + '</h4>' +
+            (g.lcKey ? '<p class="gn-key"><span class="gn-key-ic">' + bub('#8B5E1A') + '</span><span><b>When Life Changes:</b> how to show up. Guides for each age.</span></p>' : '') +
+            g.items.map(function (t) {
+            var row;
+            if (t.soon) row = '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
+            else {
+              var isHere = t.id === cur;
+              row = '<a class="gn-tool' + (isHere ? ' gn-here' : '') + '" href="' + t.href + '"' + (isHere ? ' aria-current="page"' : '') + '>' +
+                '<span class="gn-ic" style="background:' + t.bg + ';color:' + (t.color || '#8B5E1A') + '">' + t.icon + '</span>' +
+                '<span><b>' + t.title + (t.locked ? ' <span class="gn-lock" title="Access code required">' + ic.lock + '</span>' : '') + (isHere ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
+            }
+            return t.lc ? '<div class="gn-row">' + row + lcBtn(t) + '</div>' : row;
           }).join('') + '</div>';
         }).join('') +
         '</div><div class="gn-foot"><a class="gn-all" href="' + HOME + '/tools.html">See all tools</a></div>';
@@ -164,11 +192,22 @@
       panel.style.top = (r.bottom + window.scrollY + 10) + 'px';
       panel.style.left = (left + window.scrollX) + 'px';
     }
+    // Phones: the open menu fits the screen under the top bar and scrolls inside itself,
+    // so every tool can be reached (the bar is pinned, so the page can't scroll it into view).
+    function fit() {
+      if (isMobile() && (menu.classList.contains('open') || menu.classList.contains('gn-menu-sub'))) {
+        var top = Math.max(0, menu.getBoundingClientRect().top);
+        var vh = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+        menu.style.maxHeight = Math.max(160, vh - top) + 'px';
+        menu.style.overflowY = 'auto'; menu.style.overscrollBehavior = 'contain'; menu.style.webkitOverflowScrolling = 'touch';
+      } else { menu.style.maxHeight = ''; menu.style.overflowY = ''; menu.style.overscrollBehavior = ''; }
+    }
     function openPanel() {
       if (isMobile()) {
         panel.classList.add('gn-sub-mode');
         if (panel.parentNode !== menu) menu.appendChild(panel);
         menu.classList.add('gn-menu-sub');
+        menu.scrollTop = 0; fit();
       } else {
         panel.classList.remove('gn-sub-mode');
         if (panel.parentNode !== document.body) document.body.appendChild(panel);
@@ -181,6 +220,7 @@
       panel.classList.remove('gn-show');
       menu.classList.remove('gn-menu-sub');
       btn.setAttribute('aria-expanded', 'false');
+      fit();
     }
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -193,8 +233,10 @@
       closePanel();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('gn-show')) { closePanel(); btn.focus(); } });
-    window.addEventListener('resize', function () { if (panel.classList.contains('gn-show')) { closePanel(); } });
-    if (menuBtn) menuBtn.addEventListener('click', function () { closePanel(); });
+    window.addEventListener('resize', function () { if (panel.classList.contains('gn-show') && !isMobile()) { closePanel(); } fit(); });
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
+    if (menuBtn) menuBtn.addEventListener('click', function () { closePanel(); setTimeout(fit, 0); });
+    if (window.MutationObserver) new MutationObserver(fit).observe(menu, { attributes: true, attributeFilter: ['class'] });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
@@ -293,7 +335,20 @@
     '@media (max-width:600px){.ggs-panel{margin-top:0}.ggs .site-search{padding:20px 16px 16px;}.ggs .ss-label{font-size:26px;}.ggs .ss-field input{font-size:17px;}}';
   var dark = '.ggs{--bg:#1F1A14;--bg-deep:#171310;--ink:#F3EDE3;--ink-soft:#C2B6A4;--line:#3A322A;--card:#2A241D;--gold:#D9A847;}.ggs-btn{border-color:rgba(217,168,71,.45);}';
   var icon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
-  var ov, loaded = false, opener = null;
+  var ov, opener = null, loading = null;
+  // One loader for search.js, shared by the header search and every in-app search box.
+  window.GGSearchLoad = function () {
+    if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
+    if (loading) return loading;
+    loading = new Promise(function (ok) {
+      var s = document.createElement('script'); s.src = base + '/search.js?v=wl1';
+      s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
+      document.body.appendChild(s);
+    });
+    return loading;
+  };
+  // In-app boxes call GGFind(this, {...}) on every keystroke (see GGSearch.attach in search.js).
+  window.GGFind = function (input, opts) { return window.GGSearchLoad().then(function (G) { return G ? G.attach(input, opts) : 0; }); };
   function build() {
     var head = document.querySelector('header.topbar, header.site-header, header');
     if (!head) return;
@@ -312,7 +367,7 @@
     ov.innerHTML = '<div class="ggs-panel"><button type="button" class="ggs-close" aria-label="Close search">&times;</button>' +
       (onTools ? '' : '<form class="site-search" id="site-search" role="search" autocomplete="off">' +
       '<label class="ss-label" for="ss-q">Search Grow With Grounded</label>' +
-      '<p class="ss-hint">Services, hard talks, daily practices, tools, and stories, for every age. Your search stays on your device.</p>' +
+      '<p class="ss-hint">Services, When Life Changes guides, daily practices, tools, books, and stories, for every age. Your search stays on your device.</p>' +
       '<div class="ss-field">' + icon + '<input id="ss-q" type="search" placeholder="Try: vaping, bullying, funeral, wedding cost" enterkeyhint="search"></div>' +
       '<div class="ss-try" role="group" aria-label="Try a search"><button type="button" data-try="vaping">Vaping</button><button type="button" data-try="bullying">Bullying</button><button type="button" data-try="someone died">Someone died</button><button type="button" data-try="wedding">Weddings</button><button type="button" data-try="rates">Rates</button></div>' +
       '<p class="ss-status" id="ss-status" aria-live="polite"></p><div id="ss-results"></div></form>') + '</div>';
@@ -321,7 +376,7 @@
       if (onTools) { var f = document.getElementById('ss-q'); if (f) { f.scrollIntoView({ block: 'center' }); f.focus(); } return; }
       opener = document.activeElement;
       ov.hidden = false; document.documentElement.style.overflow = 'hidden';
-      if (!loaded) { loaded = true; var s = document.createElement('script'); s.src = base + '/search.js?v=sp1'; document.body.appendChild(s); }
+      window.GGSearchLoad().then(function (G) { if (G) G.mountSite(); });
       setTimeout(function () { var i = document.getElementById('ss-q'); if (i) i.focus(); }, 30);
     }
     function close() { ov.hidden = true; document.documentElement.style.overflow = ''; if (opener && opener.focus) opener.focus(); }
