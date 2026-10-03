@@ -589,7 +589,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=tc1"></script>
-<script src="../shared/gg-learn.js?v=ln1"></script>
+<script src="../shared/gg-learn.js?v=ln2"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -4291,7 +4291,17 @@ function wlConsentLine(c){
 
 // ----- training (its own module; gates real visits for everyone; demo visits always open) -----
 const WLM = () => WLG() && WLG().module;
-function wlmData(){ DATA.wlmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.wlmod || {}); return DATA.wlmod; }
+function wlmData(){ DATA.wlmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.wlmod || {}); return DATA.wlmod; }
+/* Willow Guide Training, version 2 (Willow Learn, Part 2, October 2026).
+   - Each lesson is a narrated video in the shared player (shared/gg-learn.js), drawn from the sealed
+     library (FLD.willowGuide.module.lessons[i].video.scenes), with Read It Instead underneath it.
+   - A lesson counts when the video reaches its closing scene (DATA.wlmod.how[id] 'watched'), or when Read It
+     Instead is opened and Mark as Read is tapped ('read'). Either way counts.
+   - Lessons open in order. Anyone who has passed or signed before (renewing) opens any lesson.
+   - A lesson without video (an older library) still shows as text with Mark as Read. */
+const wlmFree = () => { const D = wlmData(); return wlmState().complete || !!(D.pass || D.signed); };
+const wlmOpen = i => { const M = WLM(), D = wlmData(); return i <= 0 || wlmFree() || !!(M.lessons[i - 1] && D.lessons[M.lessons[i - 1].id]); };
+function wlmTrack(){ const M = WLM(); return {id:'wlg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
 function wlmState(){
   const M = WLM(), D = wlmData(), t = today();
   if (!M) return {complete:false, total:0, done:0};
@@ -4313,7 +4323,7 @@ function vWLM(){
   <div class="hello wl-hello" style="margin-top:14px"><div class="eyebrow" style="color:#E8C27A">Willow Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
-  ${M.lessons.map((l, i) => step('wl-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = wlmOpen(i); return step('wl-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
   <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
   ${step('wl-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios at the bedside`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
@@ -4321,14 +4331,38 @@ function vWLM(){
   ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="wl-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('wl') : ''}`;
 }
 function vWLMLesson(i){
-  const M = WLM(), L = M.lessons[i], n = M.lessons.length, read = !!wlmData().lessons[L.id];
+  const M = WLM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vWLM();
+  if (!wlmOpen(i)) return `<button class="linkbtn" data-act="wl-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = !!(L.video && L.video.scenes && L.video.scenes.length && window.GGLearn), watch = vid && !V.wlread;
+  if (watch){ if (window.GGLearn) GGLearn.css(); setTimeout(() => wlmMount(i), 0); }
   return `<button class="linkbtn" data-act="wl-mhome">Back to training</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
-  ${lessonBody(L)}
-  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="wl-mread" data-v="${i}">Mark as Read</button>`}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="wlm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="wl-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="wl-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="wlm-foot">${wlmFoot(i)}</div>`;
+}
+// The buttons under a lesson. Redrawn in place when a video finishes, so the player is never torn down.
+function wlmFoot(i){
+  const M = WLM(), L = M.lessons[i], n = M.lessons.length, D = wlmData(), done = !!D.lessons[L.id];
+  const reading = V.wlread || !(L.video && L.video.scenes && L.video.scenes.length && window.GGLearn), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="wl-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
    ${i > 0 ? `<button class="btn btn-line" data-act="wl-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
-   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="wl-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
-   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="wl-mhome">Back to training</button>` : ''}</div>`;
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="wl-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="wl-mhome">Back to training</button>` : ''}</div>
+  ${all && !wlmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="wl-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function wlmMount(i){
+  const host = $('#wlm-host'); if (!host || !window.GGLearn) return;
+  const M = WLM(), L = M.lessons[i], D = wlmData(), tr = wlmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#5D5A6E',
+    onAt: k => { lastAct = Date.now(); wlmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = wlmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#wlm-foot'); if (f) f.innerHTML = wlmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'willow', wlm:1, wlml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'willow', wlm:1}; render(); }});
 }
 function wlmNewQuiz(){ const items = WLM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
 function vWLMQ(){
@@ -5012,10 +5046,11 @@ function wlAct(a, v, t){
     case 'wl-imp-open': wlImpOpen(); return true;
     case 'wl-imp-save': wlImpSave(); return true;
     case 'wl-imp-drop': if (window.GGBridge) GGBridge.clear('guide'); go('willow'); toast('Thrown away. Nothing was saved.'); return true;
-    case 'wl-mhome': V = {tab:'willow', wlm:1}; render(); return true;
-    case 'wl-ml': V = {tab:'willow', wlm:1, wlml:+v}; render(); return true;
-    case 'wl-mread': wlmData().lessons[WLM().lessons[+v].id] = today(); save(); render(); return true;
-    case 'wl-mq': V = {tab:'willow', wlm:1, wlq:wlmNewQuiz()}; render(); return true;
+    case 'wl-mhome': lnStop(); V = {tab:'willow', wlm:1}; render(); return true;
+    case 'wl-ml': if (!wlmOpen(+v)) return true; lnStop(); V = {tab:'willow', wlm:1, wlml:+v}; render(); return true;
+    case 'wl-mread': { const d = wlmData(), id = WLM().lessons[+v].id; if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'read'; } save(); render(); return true; }
+    case 'wl-mreadit': lnStop(); V.wlread = v === '1'; render(); return true;
+    case 'wl-mq': lnStop(); V = {tab:'willow', wlm:1, wlq:wlmNewQuiz()}; render(); return true;
     case 'wl-mpick': V.wlq.ans[V.wlq.order[V.wlq.i]] = +v; render(); return true;
     case 'wl-mnext': V.wlq.i++; render(); return true;
     case 'wl-mprev': V.wlq.i--; render(); return true;
@@ -6195,6 +6230,7 @@ function mergeData(cur, inc){
   if (!out.settings.referrals && inc.settings && inc.settings.referrals) out.settings.referrals = inc.settings.referrals;
   const iw = inc.wlmod || {}; out.wlmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.wlmod || {});
   Object.entries(iw.lessons || {}).forEach(([k,v]) => { if (v && !out.wlmod.lessons[k]) out.wlmod.lessons[k] = v; });
+  out.wlmod.how = Object.assign({}, iw.how || {}, out.wlmod.how || {}); // how each lesson was finished (watched or read)
   ['last','pass','signed'].forEach(k => { out.wlmod[k] = newer(out.wlmod[k], iw[k]) || null; });
   // Founder and Staff records (Labels, Learn, and Backup build): approvals, edits, codes, checklists, Learn progress.
   const fo = inc.founder || {}; out.founder = Object.assign({saved:[], draft:null}, out.founder || {});
