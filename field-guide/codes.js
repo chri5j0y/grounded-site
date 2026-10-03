@@ -3,7 +3,7 @@
 // Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.
 window.GFG_CODES = {
  "v": 1,
- "stamp": "muoqvj9ltrngi",
+ "stamp": "musp54r5bzf37",
  "salt": "YDaHLbQgDd0HU0BbtgF6Cg==",
  "codes": [
   {
@@ -15,20 +15,40 @@ window.GFG_CODES = {
    "label": "Founder code",
    "made": "2026-09-30",
    "ends": null
+  },
+  {
+   "iv": "WUMiy0wGYGLAyeIr",
+   "ct": "epQ34wnpxqCTs/sWzSxyEFPL4XsZrj8x11SPq4wU2Iqd02bLaoQOHVNcS/x1zyJq2XUdGNcFMYMOJyAfIbVWYe+jTuwgjwci+aza0OcgrhTkBKsv6w==",
+   "id": "foumusp0tnqdv9bf",
+   "tier": "founder",
+   "kind": "founder",
+   "label": "Christopher Joy",
+   "made": "2026-10-03",
+   "ends": null
+  },
+  {
+   "iv": "FCUEDcHp+TUBinKC",
+   "ct": "fdZ0JimpR21Q2PC1IxliQGFYyKhuhd9HmARMhnn4FRncbW0JDe3TWleaLgopohQ2vubmAJ7qgPngM1nRt4MkbaVrIHP796+NmfLTBqkZMtVOOFddlQ==",
+   "id": "foumusp54r5ovwsv",
+   "tier": "founder",
+   "kind": "founder",
+   "label": "Kathryn Joy",
+   "made": "2026-10-03",
+   "ends": null
   }
  ],
  "links": {
   "founder>field": {
-   "iv": "EqqnEz9e/L2q55fD",
-   "ct": "pCMQFNzCw+DzD3oaF7CDL8XFTV37vTDiZm1tC7X7Ysf3kJJ/NVZ2stnPBY55K+7cVdjbYbc4hDvvW1Ntr6BHcQg4t/w="
+   "iv": "JZbxT/3xQyN6TR1V",
+   "ct": "WykjKcsIRum/u2Z+A87Fw26JBk6QI7ZwdA6Tbpjs1xhXgjetN+nQ41CPJrawu3kCBoUvP+xpGNvVmVXhOoPpSxEvErE="
   },
   "founder>staff": {
-   "iv": "rlXokXHBrOD9xs8I",
-   "ct": "drjDbwO5EkRKXN1KhanwcNZjo0+OX+nVv4JjYG5FmuX+CqTHW7Ta/poIeT0wfs2RdxO5xdJLmLINGq2OW/HZJ/X9i0w="
+   "iv": "XCEus+zsk4oBzFqv",
+   "ct": "IPxpbJV2vgh6ss8HS1P/Kn7VQW3M6gx/G+eIi8dGFLDl33cpAP8T3gooYqsgQBBDJsfhLQDuZFJaUDS3UZTpJUx9nCc="
   },
   "staff>field": {
-   "iv": "NweidGzFhIRZ0Dsk",
-   "ct": "2fNRhc3kDbKDPBHMJ0xwiSuylsvbl8j7B/AdJkQlVhdVRSYiSo962t4AexoJ/t/ozyrY9jhbAah4tA6tfmzzY/gu3tg="
+   "iv": "OoksOZFTi+kpDsCM",
+   "ct": "awgrrUKICbIiqNlROYmZPdnltmk70Yv31t8R5vgcPm3RV6MTQ70G/nlOT/pyCyH7xwtyIMB/zF9pwBcC132H0LRTRxE="
   }
  }
 };
