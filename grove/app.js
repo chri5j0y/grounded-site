@@ -295,6 +295,9 @@ function viewHow() {
     <p>The Grove never sees anyone's answers, levels, notes, or journal. It sees names, pictures, and, only if someone's "Show my growth on The Grove" switch is on, the big picture: days tended, rings, and which parts they tended. Anyone can turn that switch off in their tree app's settings, kids included.</p>
     <p>For kids and teens, the grown-ups who agreed for them get a quiet alert here if a check-in asks for a caring conversation. Never the answers.</p>
     <p>Everything stays on this device. Nothing is sent anywhere.</p>
+    <h3>Keeping it safe</h3>
+    <p>One backup file holds The Grove, every profile on this device (each still locked), and settings. Load it on another device to bring everything back, or to combine two devices.</p>
+    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('pick')">Load a backup</button></div>
     <h3>Coming later</h3>
     <p>Groves that link across different phones, and groves for classrooms and churches, after careful review.</p>
   </div>`;
@@ -340,7 +343,7 @@ function post() {
 function drop(id) {
   const a = me(), x = G.wall.find(p => p.id === id); if (!a || !x || !(a.id === x.by || a.age === 'adult')) return;
   if (!confirm('Remove this post from the wall?')) return;
-  G.wall = G.wall.filter(p => p.id !== id); delete G.reacts[id]; save(); render();
+  G.wall = G.wall.filter(p => p.id !== id); delete G.reacts[id]; G.gone = G.gone || {}; G.gone[id] = Date.now(); save(); render();
 }
 function did(id) {
   const d = today(), day = G.done[d] || (G.done[d] = {});

@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=sp1'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=lb1'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -22,19 +22,13 @@
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
-    { name: 'The Trees', lcKey: true, items: [
-      { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4',
-        lc: { id: 'lc-kids', href: HOME + '/maple/#life', mark: 'maple', color: '#A14219', who: 'for talking with kids, K to 5' } },
-      { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC',
-        lc: { id: 'lc-ms', href: HOME + '/aspen/#life', mark: 'aspen', color: '#1F6F74', who: 'for talking with middle schoolers' } },
-      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true,
-        lc: { mark: 'pine', color: '#3A6B35', soon: true } },
-      { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC',
-        lc: { id: 'lc-adult', href: HOME + '/oak/#life', mark: 'oak', color: '#3D5A73', who: 'for your own hard seasons, or someone you help' } },
-      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true,
-        lc: { mark: 'sequoia', color: '#7A2E1C', soon: true } },
-      { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD',
-        lc: { id: 'lc-hospice', href: HOME + '/willow/#guides', mark: 'willow', color: '#5F7350', who: 'at the end of life' } }
+    { name: 'The Trees', items: [
+      { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4' },
+      { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
+      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true },
+      { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
+      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true },
+      { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
@@ -49,12 +43,11 @@
 
 
   function here() {
-    var h = location.hostname, p = location.pathname, hash = location.hash || '';
-    var life = /^#(life|talk)/.test(hash);
-    if (p.indexOf('/oak') === 0 || h.indexOf('oak.') === 0) return life ? 'lc-adult' : 'oak';
-    if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return life ? 'lc-kids' : 'maple';
-    if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return life ? 'lc-ms' : 'aspen';
-    if (p.indexOf('/willow') === 0) return /^#(guide|guides|life)/.test(hash) ? 'lc-hospice' : 'willow';
+    var h = location.hostname, p = location.pathname;
+    if (p.indexOf('/oak') === 0 || h.indexOf('oak.') === 0) return 'oak';
+    if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return 'maple';
+    if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return 'aspen';
+    if (p.indexOf('/willow') === 0) return 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     if (p.indexOf('/library') === 0) return 'library';
@@ -88,13 +81,6 @@
     '.gn-sub-mode.gn-panel{position:static;width:100%;box-sizing:border-box;box-shadow:none;border:none;border-radius:0;padding:6px 0 4px;background:transparent;}' +
     '.gn-sub-mode .gn-grid{grid-template-columns:1fr;}' +
     '.gn-menu-sub > *:not(.gn-panel){display:none !important;}' +
-    '.gn-row{display:flex;align-items:stretch;gap:6px;}' +
-    '.gn-row > .gn-tool{flex:1;min-width:0;}' +
-    'a.gn-lc,.gn-lc{flex:none;width:104px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:6px 8px !important;border-radius:12px !important;border:1px solid #EADFC6 !important;border-left:3px solid var(--lc) !important;text-decoration:none !important;color:var(--lc) !important;font-family:Barlow,system-ui,sans-serif !important;font-weight:600 !important;font-size:13px !important;line-height:1.2 !important;letter-spacing:0 !important;text-transform:none !important;text-align:center;white-space:normal !important;min-height:48px;}' +
-    'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#F6EEDB;border-color:var(--lc) !important;}' +
-    '.gn-lc-soon{opacity:.5;cursor:default;}' +
-    '.gn-h4-split{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}' +
-    '.gn-colhead{text-align:right;}' +
     '@media (max-width:600px){.gn-grid{grid-template-columns:1fr;}}' +
     '';
   var GN_DARK = ''+
@@ -105,11 +91,7 @@
       '.gn-tool small{color:#C2B6A4;}' +
       '.gn-group h4,a.gn-all,.gn-back,.gn-lock{color:#D9A847 !important;}' +
       '.gn-foot{border-color:#3A322A;}' +
-      '.gn-sub-mode.gn-panel{background:transparent;}' +
-      'a.gn-lc,.gn-lc{border-color:#3A322A !important;border-left-color:var(--lc) !important;color:#F3EDE3 !important;}' +
-      'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#332A20;}' ;
-
-
+      '.gn-sub-mode.gn-panel{background:transparent;}';
 
   /* Scope dark-only rules so they follow the phone setting unless the visitor picks a theme */
   function themed(rules) {
@@ -148,16 +130,9 @@
     panel.setAttribute('aria-label', 'Grounded tools');
     function render() {
       var cur = here();
-      var lcBtn = function (t) {
-        var c = t.lc; if (!c) return '';
-        var art = 'When Life Changes';
-        if (c.soon) return '<span class="gn-lc gn-lc-soon" style="--lc:' + c.color + '" title="When Life Changes for ' + t.title + ' is coming soon" aria-hidden="true">' + art + '</span>';
-        var on = c.id === cur;
-        return '<a class="gn-lc' + (on ? ' gn-here' : '') + '" style="--lc:' + c.color + '" href="' + c.href + '"' + (on ? ' aria-current="page"' : '') + ' aria-label="When Life Changes in ' + t.title + ', ' + c.who + '. Guides for showing up.">' + art + '</a>';
-      };
       panel.innerHTML = '<button type="button" class="gn-back">&#8592; Menu</button><div class="gn-grid">' +
         GN_GROUPS.map(function (g) {
-          return '<div class="gn-group">' + (g.lcKey ? '<h4 class="gn-h4-split"><span>' + g.name + '</span><span class="gn-colhead">Guides for Showing Up</span></h4>' : '<h4>' + g.name + '</h4>') +
+          return '<div class="gn-group">' + '<h4>' + g.name + '</h4>' +
             g.items.map(function (t) {
             var row;
             if (t.soon) row = '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
@@ -167,7 +142,7 @@
                 '<span class="gn-ic" style="background:' + t.bg + ';color:' + (t.color || '#8B5E1A') + '">' + t.icon + '</span>' +
                 '<span><b>' + t.title + (t.locked ? ' <span class="gn-lock" title="Access code required">' + ic.lock + '</span>' : '') + (isHere ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
             }
-            return t.lc ? '<div class="gn-row">' + row + lcBtn(t) + '</div>' : row;
+            return row;
           }).join('') + '</div>';
         }).join('') +
         '</div><div class="gn-foot"><a class="gn-all" href="' + HOME + '/tools.html">See all tools</a></div>';

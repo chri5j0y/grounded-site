@@ -585,6 +585,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
 <script src="../shared/gg-app.js?v=tc1"></script>
+<script src="../shared/gg-backup.js?v=bk1"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=tc1"></script>
@@ -869,8 +870,8 @@ function start(){
 }
 function tabsFor(){
   const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : []), ['learn','Learn','play']];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['learn','Learn','play'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
   if (TIER === 'founder') t.push(['founder','Founder','key']);
   return t;
 }
@@ -879,11 +880,11 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
-function go(tab, extra){ V = Object.assign({tab}, extra||{}); render(); }
+function go(tab, extra){ if (typeof lnStop === 'function' && LN) lnStop(); V = Object.assign({tab}, extra||{}); render(); }
 
 // ---------------- icons ----------------
 const IC = {
@@ -939,6 +940,7 @@ function vHome(){
   const quick = [['first-conversation','Free First Conversation','30 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
+  ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 style="margin-top:18px">Start a Session</h3>
   <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
@@ -1432,22 +1434,378 @@ function vFounder(){
 function vProof(){
   // Sections live in FDR.proofreading.sections, and later sessions add theirs under
   // FDR.proofreadingAdd.<session> (Rebrand Session 4), so an update never has to know the list's length.
-  const base = (FDR && FDR.proofreading) || null, more = (FDR && FDR.proofreadingAdd && typeof FDR.proofreadingAdd === 'object') ? Object.keys(FDR.proofreadingAdd).sort().map(k => FDR.proofreadingAdd[k]).filter(x => x && Array.isArray(x.lines)) : [];
-  if (!(base && base.sections) && !more.length) return '';
-  const P = Object.assign({}, base || {}, { sections: ((base && base.sections) || []).concat(more) });
-  const ck = (DATA.founder.proof = DATA.founder.proof || {}), who = P.people || ['Chris', 'Kayti'];
-  const only = !!V.proofOpen, done = id => who.every((w, i) => ck[id + '|' + i]);
+  // Labels, Learn, and Backup build: a line is approved when either person approves it (both is fine),
+  // Read-Along reads every line aloud, and suggested edits collect in Edits to Send.
+  const P = prData(); if (!P) return '';
+  const ck = prChecks(), who = P.people, only = !!V.proofOpen, E = prEdits();
   let all = 0, fin = 0;
   const secs = P.sections.map(sec => {
-    const n = sec.lines.length, d = sec.lines.filter(l => done(l[0])).length; all += n; fin += d;
-    const rows = sec.lines.filter(l => !only || !done(l[0])).map(l => `<div class="proof-row"><div class="pt">${esc(l[1])}</div><div class="pc">${who.map((w, i) => { const on = !!ck[l[0] + '|' + i]; return `<button type="button" class="pf" data-act="proof" data-v="${esc(l[0] + '|' + i)}" aria-pressed="${on}" aria-label="${esc(w)} checked: ${esc(l[1]).slice(0, 60)}">${on ? icon('check') : ''}${esc(w)}</button>`; }).join('')}</div></div>`).join('');
-    return `<details class="proof-sec"${(V.proofSecs || []).includes(sec.id) ? ' open' : ''} data-sec="${esc(sec.id)}"><summary>${esc(sec.title)}<span>${d} of ${n} done by both</span></summary>${rows || '<p class="muted" style="padding:8px 0">Every line here is checked by both.</p>'}</details>`;
+    const n = sec.lines.length, d = sec.lines.filter(l => prDone(l[0])).length; all += n; fin += d;
+    const rows = sec.lines.filter(l => !only || !prDone(l[0])).map(l => {
+      const by = prBy(l[0]), ed = E[l[0]] && !E[l[0]].sent ? E[l[0]] : null, editing = V.prEdit === l[0];
+      return `<div class="proof-row${by.length ? ' pr-ok' : ''}"><div class="pt">${esc(l[1])}
+        ${ed ? `<div class="pr-sug">Suggested: ${esc(ed.t)}${ed.who ? ` <span>(${esc(ed.who)})</span>` : ''}</div>` : ''}
+        ${by.length ? `<div class="pr-by">${icon('check')} Approved by ${esc(by.map(b => who[b.i] + ', ' + nice(b.d)).join(' and '))}</div>` : ''}
+        ${editing ? `<div class="pr-ed"><label class="f" for="pr-ta">Suggest a change</label><textarea id="pr-ta" rows="3">${esc(ed ? ed.t : l[1])}</textarea><div class="row" style="margin-top:8px"><button class="btn btn-gold btn-sm" data-act="pr-ed-save" data-v="${esc(l[0])}">Save Edit</button><button class="btn btn-line btn-sm" data-act="pr-ed-x">Cancel</button>${ed ? `<button class="btn btn-line btn-sm" data-act="pr-ed-del" data-v="${esc(l[0])}">Remove Edit</button>` : ''}</div></div>` : ''}</div>
+        <div class="pc">${who.map((w, i) => { const on = !!ck[l[0] + '|' + i]; return `<button type="button" class="pf" data-act="proof" data-v="${esc(l[0] + '|' + i)}" aria-pressed="${on}" aria-label="${esc(w)} approved: ${esc(l[1]).slice(0, 60)}">${on ? icon('check') : ''}${esc(w)}</button>`; }).join('')}<button type="button" class="pf pf-ed" data-act="pr-ed" data-v="${esc(l[0])}" aria-label="Suggest a change: ${esc(l[1]).slice(0, 60)}">Edit</button></div></div>`;
+    }).join('');
+    return `<details class="proof-sec"${(V.proofSecs || []).includes(sec.id) ? ' open' : ''} data-sec="${esc(sec.id)}"><summary>${esc(sec.title)}<span>${d} of ${n} approved</span></summary>
+      <div class="row" style="margin:4px 0 6px"><button class="btn btn-line btn-sm" data-act="pr-ra" data-v="${esc(sec.id)}">Read-Along for this section</button></div>${rows || '<p class="muted" style="padding:8px 0">Every line here is approved.</p>'}</details>`;
   }).join('');
+  const nE = Object.values(E).filter(x => !x.sent).length, me = prWho();
   return `<div class="card" id="proof-card"><h3>Proofreading</h3><p class="muted">${esc(P.intro || '')}</p>
-   <p style="margin-top:8px"><b>${fin} of ${all}</b> lines checked by both. Checks are saved on this device.</p>
-   <div class="row" style="margin-top:8px"><button class="btn btn-line btn-sm" data-act="proof-only">${only ? 'Show every line' : 'Show only lines still to check'}</button></div>
+   <p style="margin-top:8px"><b>${fin} of ${all}</b> lines approved. A line is approved when either of you approves it.</p>
+   <label class="f" for="pr-who">Who's proofing on this device?</label><select id="pr-who" data-prwho>${who.map((w, i) => `<option value="${i}" ${me === i ? 'selected' : ''}>${esc(w)}</option>`).join('')}</select>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="pr-ra" data-v="">Read-Along</button><button class="btn btn-line btn-sm" data-act="proof-only">${only ? 'Show every line' : 'Show only lines still to check'}</button><button class="btn btn-line btn-sm" data-act="pr-edits">Edits to Send (${nE})</button></div>
+   ${V.prEdits ? prEditsHTML() : ''}
+   <p class="muted" style="margin-top:10px;font-size:14px">Approvals and edits save on this device and travel in the one backup file. To share progress, back up on one device and load the file on the other.</p>
    <div style="margin-top:8px">${secs}</div></div>`;
 }
+function prData(){
+  const base = (FDR && FDR.proofreading) || null, more = (FDR && FDR.proofreadingAdd && typeof FDR.proofreadingAdd === 'object') ? Object.keys(FDR.proofreadingAdd).sort().map(k => FDR.proofreadingAdd[k]).filter(x => x && Array.isArray(x.lines)) : [];
+  if (!(base && base.sections) && !more.length) return null;
+  const P = Object.assign({}, base || {}, { sections: ((base && base.sections) || []).concat(more) });
+  P.people = P.people || ['Chris', 'Kayti'];
+  return P;
+}
+const prChecks = () => (DATA.founder.proof = DATA.founder.proof || {});
+const prEdits = () => (DATA.founder.edits = DATA.founder.edits || {});
+function prBy(id){ const ck = prChecks(), P = prData(), out = []; ((P && P.people) || ['Chris','Kayti']).forEach((w, i) => { if (ck[id + '|' + i]) out.push({i, d: ck[id + '|' + i]}); }); return out; }
+const prDone = id => prBy(id).length > 0;
+function prWho(){ const P = prData(), ppl = (P && P.people) || ['Chris','Kayti']; let w = DATA.settings.proofWho; if (w == null){ const n = (DATA.settings.name || '').toLowerCase(); w = Math.max(0, ppl.findIndex(p => n && p.toLowerCase().startsWith(n.slice(0, 4)))); } return +w || 0; }
+function prEditsHTML(){
+  const P = prData(), E = prEdits(), list = Object.entries(E).filter(([, x]) => !x.sent);
+  return `<div class="pr-edits"><h4>Edits to Send</h4>${list.length ? list.map(([id, x]) => `<div class="pr-erow"><div class="muted" style="font-size:13px">${esc(x.s || '')}</div><div><s>${esc(x.o || '')}</s></div><div><b>${esc(x.t)}</b></div></div>`).join('') : '<p class="muted">No edits waiting. Tap Edit on any line, or Stop and Edit during Read-Along.</p>'}
+   ${list.length ? `<div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="pr-copy">Copy All</button><button class="btn btn-line btn-sm" data-act="pr-dl">Download</button><button class="btn btn-line btn-sm" data-act="pr-sent">Mark All Sent</button></div><p class="muted" style="font-size:14px;margin-top:6px">Paste or upload these in a chat, and every edit gets applied to the site and the libraries in one pass.</p>` : ''}</div>`;
+}
+function prEditsText(){
+  const list = Object.entries(prEdits()).filter(([, x]) => !x.sent);
+  return 'Grow With Grounded proofreading edits, ' + today() + ' (' + list.length + ')\n\n' + list.map(([id, x], n) => `${n + 1}. [${id}] ${x.s || ''}\n   Now: ${x.o || ''}\n   Change to: ${x.t}${x.who ? '\n   From: ' + x.who : ''}`).join('\n\n');
+}
+function prSaveEdit(id, text){
+  const P = prData(); let line = null, sec = '';
+  P.sections.forEach(s => s.lines.forEach(l => { if (l[0] === id){ line = l; sec = s.title; } }));
+  if (!line) return;
+  text = String(text || '').trim();
+  if (!text || text === line[1]) { delete prEdits()[id]; }
+  else prEdits()[id] = {t: text, o: line[1], s: sec, who: P.people[prWho()], at: Date.now()};
+  save();
+}
+function proofMerge(a, b){ return Object.assign({}, b || {}, a || {}); }
+function editsMerge(a, b){ const o = Object.assign({}, a || {}); Object.entries(b || {}).forEach(([k, x]) => { if (!o[k] || (x.at || 0) > (o[k].at || 0)) o[k] = x; }); return o; }
+function prAct(a, v, t){
+  const keep = () => { V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); const y = window.scrollY; render(); window.scrollTo(0, y); };
+  switch (a){
+    case 'pr-ed': V.prEdit = V.prEdit === v ? null : v; keep(); setTimeout(() => { const x = $('#pr-ta'); if (x) x.focus(); }, 30); return true;
+    case 'pr-ed-x': V.prEdit = null; keep(); return true;
+    case 'pr-ed-save': { const x = $('#pr-ta'); prSaveEdit(v, x ? x.value : ''); V.prEdit = null; keep(); toast('Edit saved. It waits in Edits to Send.'); return true; }
+    case 'pr-ed-del': delete prEdits()[v]; save(); V.prEdit = null; keep(); return true;
+    case 'pr-edits': V.prEdits = !V.prEdits; keep(); return true;
+    case 'pr-copy': { const txt = prEditsText(); (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied. Paste it in a chat.'), () => { prompt('Copy these edits:', txt); }); return true; }
+    case 'pr-dl': { const b = new Blob([prEditsText()], {type:'text/plain'}), n = 'proofreading-edits-' + today() + '.txt'; if (window.GGApp && GGApp.share) GGApp.share(b, n, 'Proofreading edits'); else { const l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = n; document.body.appendChild(l); l.click(); setTimeout(() => { URL.revokeObjectURL(l.href); l.remove(); }, 500); } return true; }
+    case 'pr-sent': if (!confirm('Mark every edit as sent? They leave this list (still kept in your records).')) return true; Object.values(prEdits()).forEach(x => { if (!x.sent) x.sent = today(); }); save(); keep(); return true;
+    case 'pr-ra': raOpen(v || ''); return true;
+  }
+  return false;
+}
+document.addEventListener('change', e => { const s = e.target.closest && e.target.closest('[data-prwho]'); if (s && DATA){ DATA.settings.proofWho = +s.value; save(); } });
+
+// ----- Read-Along: every line read aloud, with fast Approve, Skip, Back, and Stop and Edit -----
+let RA = null;
+const RA_CSS = `#ra{position:fixed;inset:0;z-index:250;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(14px + env(safe-area-inset-bottom,0px));}
+#ra .ra-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}#ra .ra-top .eyebrow{flex:1;min-width:0;}
+#ra .ra-main{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;justify-content:center;max-width:900px;width:100%;margin:0 auto;}
+#ra .ra-sec{font-family:'Barlow Condensed',Barlow,sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-size:calc(13px * var(--scale));}
+#ra .ra-line{font-family:'Cormorant Garamond',Georgia,serif;font-size:calc(clamp(26px,4.6vw,44px) * var(--scale));line-height:1.25;margin:10px 0;}
+#ra .ra-line .w{transition:color .15s;}#ra .ra-line .w.on{color:var(--gold);}
+#ra .ra-sug{font-size:calc(17px * var(--scale));color:var(--gold);font-style:italic;}
+#ra .ra-st{font-size:calc(15px * var(--scale));color:var(--ink-soft);margin-top:6px;}
+#ra .ra-bar{height:5px;border-radius:3px;background:var(--line);margin:8px 0;overflow:hidden;}#ra .ra-bar i{display:block;height:100%;background:var(--gold);}
+#ra .ra-ctl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;max-width:900px;width:100%;margin:0 auto;}
+#ra .ra-ctl .btn{min-height:56px;justify-content:center;}
+#ra .ra-ok{background:#5F7D48 !important;border-color:#5F7D48 !important;color:#fff !important;}
+#ra .ra-sub{max-width:900px;width:100%;margin:8px auto 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:calc(14px * var(--scale));}
+#ra textarea{width:100%;font:inherit;font-size:calc(18px * var(--scale));}
+#ra .ra-who{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}#ra .ra-who .btn{min-height:56px;min-width:140px;justify-content:center;}
+@media(max-width:560px){#ra .ra-ctl{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.pr-sug{color:var(--gold);font-style:italic;margin-top:4px;font-size:calc(15px * var(--scale));}.pr-sug span{color:var(--ink-soft);font-style:normal;}
+.pr-by{color:#5F7D48;font-size:calc(13px * var(--scale));margin-top:4px;display:flex;gap:4px;align-items:center;}.pr-by svg{width:14px;height:14px;}
+.pr-ok .pt{opacity:.8;}.pr-ed{margin-top:8px;}.pr-ed textarea{width:100%;}
+.pr-edits{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);}.pr-edits h4{margin:0 0 6px;}
+.pr-erow{padding:8px 0;border-top:1px solid var(--line);}.pr-erow s{color:var(--ink-soft);}`;
+function raCSS(){ if (!document.getElementById('ra-css')){ const s = document.createElement('style'); s.id = 'ra-css'; s.textContent = RA_CSS; document.head.appendChild(s); } }
+(function(){ raCSS(); })();
+function raQueue(secId){
+  const P = prData(); if (!P) return [];
+  const q = []; P.sections.forEach(s => { if (secId && s.id !== secId) return; s.lines.forEach(l => { if (!prDone(l[0])) q.push({id: l[0], t: l[1], s: s.title}); }); });
+  return q;
+}
+function raOpen(secId){
+  const q = raQueue(secId); if (!q.length) return toast(secId ? 'Every line in this section is approved.' : 'Every line is approved.');
+  RA = {q, i: 0, playing: false, tok: 0, who: prWho(), auto: !!DATA.settings.raAuto, started: false, edit: false};
+  let el = $('#ra'); if (!el){ el = document.createElement('div'); el.id = 'ra'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Read-Along'); document.body.appendChild(el); }
+  document.body.classList.add('dk-noscroll'); raStartScreen();
+}
+function raClose(){ raHush(); RA = null; const el = $('#ra'); if (el) el.remove(); document.body.classList.remove('dk-noscroll'); if (V.tab === 'founder'){ const y = window.scrollY; render(); window.scrollTo(0, y); } }
+function raHush(){ if (RA){ RA.tok++; clearInterval(RA.hl); clearInterval(RA.tick); } try { if (window.GGRead) GGRead.stop(); else speechSynthesis.cancel(); } catch(e){} }
+function raStartScreen(){
+  const P = prData(), el = $('#ra');
+  el.innerHTML = `<div class="ra-top"><div class="eyebrow">Proofreading · Read-Along</div><button class="btn btn-line btn-sm" data-ra="close">Close</button></div>
+   <div class="ra-main"><h2 style="font-family:'Cormorant Garamond',serif;font-size:34px;margin:0">${RA.q.length} lines to check</h2>
+   <p class="muted" style="margin-top:6px">Each line is read aloud and shown big, with the words lighting up as they're read. Approve (space bar) moves straight on. Skip leaves a line for later. Stop and Edit pauses so you can type a fix.</p>
+   <h3 style="margin-top:18px">Who's proofing?</h3><div class="ra-who">${P.people.map((w, i) => `<button class="btn ${RA.who === i ? 'btn-gold' : 'btn-line'}" data-ra="who" data-v="${i}">${esc(w)}</button>`).join('')}</div>
+   <label class="pr-auto" style="display:flex;gap:10px;align-items:center;margin-top:16px"><input type="checkbox" id="ra-auto" ${RA.auto ? 'checked' : ''}> <span>Keep going on its own: each line counts as approved unless I tap Skip or Stop and Edit</span></label>
+   <div class="ra-sub" id="ra-vs" style="margin:14px 0 0"></div>
+   <div class="row" style="margin-top:18px"><button class="btn btn-gold" data-ra="go" style="min-height:56px;min-width:180px;justify-content:center">Start</button></div></div>`;
+  try { if (window.GGRead) $('#ra-vs').appendChild(GGRead.settings()); } catch(e){}
+}
+function raLeft(){ const sp = window.GGRead ? GGRead.speed() : 1; let w = 0; for (let k = RA.i; k < RA.q.length; k++) w += RA.q[k].t.split(/\s+/).length; return Math.max(1, Math.round((w / (160 * sp)) + (RA.q.length - RA.i) * 2 / 60)); }
+function raShow(){
+  const el = $('#ra'), L = RA.q[RA.i], E = prEdits()[L.id], by = prBy(L.id), P = prData();
+  el.innerHTML = `<div class="ra-top"><div class="eyebrow">Read-Along · ${esc(P.people[RA.who])} proofing</div><button class="btn btn-line btn-sm" data-ra="close">Close</button></div>
+   <div class="ra-bar"><i style="width:${Math.round(RA.i / RA.q.length * 100)}%"></i></div>
+   <div class="ra-main"><div class="ra-sec">${esc(L.s)}</div>
+    ${RA.edit ? `<label class="f" for="ra-ta">Suggest a change</label><textarea id="ra-ta" rows="4">${esc(E && !E.sent ? E.t : L.t)}</textarea><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-ra="save">Save Edit and Go On</button><button class="btn btn-line" data-ra="cancel">Cancel</button></div>`
+      : `<div class="ra-line" id="ra-line">${L.t.split(/\s+/).map(w => `<span class="w">${esc(w)}</span>`).join(' ')}</div>${E && !E.sent ? `<div class="ra-sug">Suggested: ${esc(E.t)}</div>` : ''}`}
+    <div class="ra-st">Line ${RA.i + 1} of ${RA.q.length} · about ${raLeft()} minutes left${by.length ? ' · Approved by ' + esc(by.map(b => P.people[b.i]).join(' and ')) : ''}</div></div>
+   ${RA.edit ? '' : `<div class="ra-ctl"><button class="btn btn-line" data-ra="back" aria-label="Back one line">Back</button><button class="btn btn-line" data-ra="play">${RA.playing ? 'Pause' : 'Play'}</button><button class="btn ra-ok" data-ra="ok">Approve</button><button class="btn btn-line" data-ra="skip">Skip</button><button class="btn btn-line" data-ra="edit">Stop and Edit</button></div>
+   <div class="ra-sub"><span class="muted">Keys: space Approve, right arrow Skip, left arrow Back, E Edit, P Pause</span><span id="ra-vs2"></span></div>`}`;
+  try { if (!RA.edit && window.GGRead) $('#ra-vs2').appendChild(GGRead.settings()); } catch(e){}
+  if (RA.edit){ setTimeout(() => { const x = $('#ra-ta'); if (x){ x.focus(); x.setSelectionRange(x.value.length, x.value.length); } }, 30); return; }
+  if (RA.playing) raSpeak();
+}
+function raSpeak(){
+  raHush(); const t = RA.tok, L = RA.q[RA.i], W = Array.from(document.querySelectorAll('#ra-line .w'));
+  const sp = window.GGRead ? GGRead.speed() : 1, ms = Math.max(1400, W.length * 60000 / (165 * sp)); let k = 0;
+  RA.hl = setInterval(() => { if (t !== RA.tok) return clearInterval(RA.hl); W.forEach((w, j) => w.classList.toggle('on', j === k)); k++; if (k > W.length) clearInterval(RA.hl); }, ms / Math.max(1, W.length));
+  let spoke = false; try { if (window.GGRead && GGRead.available){ GGRead.say(L.t); spoke = true; } } catch(e){}
+  const start = Date.now();
+  RA.tick = setInterval(() => {
+    if (!RA || t !== RA.tok) return clearInterval(RA && RA.tick);
+    const busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
+    if (!busy && Date.now() - start > (spoke ? 600 : ms)){
+      clearInterval(RA.tick); W.forEach(w => w.classList.remove('on'));
+      if (RA.auto){ setTimeout(() => { if (RA && t === RA.tok && RA.playing) raDo('ok'); }, 700); }
+      else { const s = $('#ra .ra-st'); if (s && !/Your call/.test(s.textContent)) s.insertAdjacentHTML('beforeend', ' · <b>Your call: Approve, Skip, or Edit</b>'); }
+    }
+  }, 200);
+}
+function raNext(){ if (RA.i >= RA.q.length - 1){ raHush(); const n = RA.q.length; $('#ra').innerHTML = `<div class="ra-top"><div class="eyebrow">Read-Along</div><button class="btn btn-line btn-sm" data-ra="close">Close</button></div><div class="ra-main"><h2 style="font-family:'Cormorant Garamond',serif;font-size:36px;margin:0">That's all ${n} lines.</h2><p class="muted" style="margin-top:8px">Anything you skipped is still waiting. Edits are in Edits to Send.</p><div class="row" style="margin-top:16px"><button class="btn btn-gold" data-ra="close">Done</button></div></div>`; return; } RA.i++; raShow(); }
+function raDo(k, v){
+  if (!RA) return;
+  const L = RA.q[RA.i];
+  switch (k){
+    case 'close': raClose(); break;
+    case 'who': RA.who = +v; DATA.settings.proofWho = RA.who; save(); raStartScreen(); break;
+    case 'go': RA.auto = !!($('#ra-auto') || {}).checked; DATA.settings.raAuto = RA.auto; save(); RA.playing = true; RA.started = true; raShow(); break;
+    case 'play': RA.playing = !RA.playing; if (!RA.playing) raHush(); raShow(); break;
+    case 'ok': raHush(); prChecks()[L.id + '|' + RA.who] = today(); save(); raNext(); break;
+    case 'skip': raHush(); raNext(); break;
+    case 'back': raHush(); if (RA.i > 0) RA.i--; raShow(); break;
+    case 'edit': raHush(); RA.edit = true; raShow(); break;
+    case 'cancel': RA.edit = false; raShow(); break;
+    case 'save': { const x = $('#ra-ta'); prSaveEdit(L.id, x ? x.value : ''); RA.edit = false; toast('Edit saved.'); raNext(); break; }
+  }
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-ra]'); if (b && RA){ e.preventDefault(); raDo(b.dataset.ra, b.dataset.v); } });
+document.addEventListener('keydown', e => {
+  if (!RA || !RA.started || RA.edit || /input|textarea|select/i.test((e.target.tagName || ''))) return;
+  const m = {' ': 'ok', 'Spacebar': 'ok', 'ArrowRight': 'skip', 's': 'skip', 'ArrowLeft': 'back', 'b': 'back', 'e': 'edit', 'p': 'play', 'Escape': 'close'}[e.key];
+  if (m){ e.preventDefault(); raDo(m); }
+});
+
+// ---------------- LEARN ----------------
+/* LEARN (Labels, Learn, and Backup build, October 2026)
+   - The Learn tab: animated, narrated walkthroughs that play like videos. Optional, never blocks anything,
+     and never changes the required trainings (Orientation and the Guide trainings stay as they are).
+   - Lesson scripts live in the sealed libraries, so they are proofed and updated like everything else:
+     FLD.learn (Everyone and Organization tracks), LIB.learn (Staff track), FDR.learn (Founder track).
+     Each role sees its own track plus every track below it.
+   - A lesson is {id, n, title, mins, scenes:[...]} and each scene is {k, say, ...}. Kinds: title, parts, big,
+     points, trees, levels, flow, screen, tabs, card, quiz. Scenes are drawn on a 960 by 540 canvas that
+     scales to the screen. Narration uses the shared read-aloud engine (read.js): the device's best voice,
+     the voice picker, speed, and Get a better voice.
+   - Progress (DATA.learn.done, DATA.learn.at) is saved with this device's records and travels in backups. */
+const LN_MARK = m => new URL('../shared/marks/' + m + '.svg', location.href).href;
+const LN_HERO = h => new URL('../shared/heroes/' + h + '-wide.svg', location.href).href;
+function lnTracks(){
+  const out = [], add = L => { if (L && L.learn && Array.isArray(L.learn.tracks)) L.learn.tracks.forEach(t => { if (t && Array.isArray(t.lessons) && !out.some(x => x.id === t.id)) out.push(t); }); };
+  add(typeof FLD !== 'undefined' ? FLD : null);
+  if (TIER !== 'field') add(typeof LIB !== 'undefined' ? LIB : null);
+  if (TIER === 'founder') add(typeof FDR !== 'undefined' ? FDR : null);
+  return out.sort((a, b) => (a.order || 0) - (b.order || 0));
+}
+const lnData = () => (DATA.learn = Object.assign({done:{}, at:{}}, DATA.learn || {}));
+function lnFind(id){ for (const t of lnTracks()) for (const l of t.lessons) if (l.id === id) return {t, l}; return null; }
+function learnMerge(a, b){ a = Object.assign({done:{}, at:{}}, a || {}); b = b || {}; const o = {done: Object.assign({}, b.done || {}, a.done || {}), at: Object.assign({}, b.at || {}, a.at || {})}; return o; }
+let LN = null;
+function vLearn(){
+  const tracks = lnTracks(), D = lnData();
+  if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
+  const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
+  if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
+  const all = tracks.reduce((n, t) => n + t.lessons.length, 0), fin = tracks.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
+  return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
+  ${tracks.map(t => `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${t.lessons.filter(l => D.done[l.id]).length} of ${t.lessons.length}</span></div>
+    <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? ' · Pick up where you left off' : ''}</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}
+  <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'field' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p>`;
+}
+function vLesson(t, l){
+  const i = Math.min((lnData().at[l.id] || 0), l.scenes.length - 1);
+  setTimeout(() => lnMount(l, i), 0);
+  return `<div class="page-head"><button class="linkbtn" data-act="ln-home">&larr; All lessons</button><div class="eyebrow" style="margin-top:8px">${esc(t.title)} · Lesson ${esc(String(l.n || ''))}</div><h1>${esc(l.title)}</h1></div>
+  <div class="ln-player"><div class="ln-stage" id="ln-stage"><div class="ln-canvas" id="ln-canvas"></div></div>
+   <div class="ln-prog" id="ln-prog">${l.scenes.map(() => '<span></span>').join('')}</div>
+   <p class="ln-cap" id="ln-cap"></p><div id="ln-quiz"></div>
+   <div class="ln-ctl"><button class="btn btn-gold" data-act="ln-play" id="ln-pl">Play</button><button class="btn btn-line" data-act="ln-back" aria-label="Back one scene">Back</button><button class="btn btn-line" data-act="ln-next" aria-label="Next scene">Next</button><button class="btn btn-line" data-act="ln-restart">Start Over</button><span class="muted" id="ln-cn"></span></div>
+   <div class="ln-vs" id="ln-vs"></div></div>`;
+}
+function lnMount(l, i){
+  LN = {l, i: -1, playing: false, tok: 0};
+  try { if (window.GGRead) $('#ln-vs').appendChild(GGRead.settings()); } catch(e){}
+  lnFit(); lnShow(i);
+}
+function lnFit(){ const st = $('#ln-stage'), cv = $('#ln-canvas'); if (st && cv) cv.style.transform = 'scale(' + (st.clientWidth / 960) + ')'; }
+window.addEventListener('resize', lnFit);
+function lnHush(){ if (LN){ LN.tok++; clearInterval(LN.hl); clearInterval(LN.tick); clearTimeout(LN.nx); } try { if (window.GGRead) GGRead.stop(); else speechSynthesis.cancel(); } catch(e){} }
+function lnStop(){ lnHush(); LN = null; }
+const lnA = (d, extra) => ` class="a${extra ? ' ' + extra : ''}" style="transition-delay:${d}s"`;
+const LN_HAND = '<svg class="ln-ptr" viewBox="0 0 40 48" aria-hidden="true"><path d="M14 3c2.2 0 4 1.8 4 4v13l2-.4c1.6-.3 3.2.6 3.7 2.1l.2.6 2-.3c1.7-.2 3.3.8 3.8 2.4l.2.6 1.6-.2c2-.2 3.8 1.3 4 3.3L36 38c.3 4.5-3 8.5-7.5 9H18.6c-2.6 0-5-1.2-6.5-3.3L4.3 32.8c-1.2-1.7-.8-4 .9-5.1 1.5-1 3.5-.8 4.8.5L10 30V7c0-2.2 1.8-4 4-4z" fill="#FFF8EC" stroke="#2C1810" stroke-width="2"/></svg><span class="ln-ring"></span>';
+const LN_COL = {maple:'#C4501E', aspen:'#1F6F74', pine:'#3A6B35', oak:'#3D5A73', sequoia:'#7A2E1C', willow:'#5D5A6E', grove:'#223829', field:'#2E2118', site:'#8B5E1A'};
+const LN_PART = [['roots','Roots','What grounds you','#5B3A22'],['trunk','Trunk','Purpose','#8B5E1A'],['bark','Bark','Mind and feelings','#7D6B57'],['branches','Branches','Relationships','#9A5B34'],['leaves','Leaves','Body','#5F7D48'],['fruit','Fruit','Hope','#C07A26']];
+function lnScene(sc){
+  const h = x => esc(x == null ? '' : x);
+  switch (sc.k){
+    case 'title': return `<img class="ln-hero" src="${LN_HERO(sc.hero || 'oak')}" alt=""><div class="ln-tt"><div${lnA(.5, 'ln-eb')}>${h(sc.eyebrow || '')}</div><h2${lnA(.9)}>${h(sc.h)}</h2>${sc.sub ? `<p${lnA(1.5)}>${h(sc.sub)}</p>` : ''}<div${lnA(1.9, 'ln-by')}>GROW WITH GROUNDED</div></div>`;
+    case 'parts': { const L = [[1.0,2122,440,1960,470,1950,466,'end',0],[1.8,2132,380,2300,420,2310,416,'start',1],[2.6,2124,360,1960,370,1950,366,'end',2],[3.4,2210,250,2330,260,2340,256,'start',3],[4.2,2030,230,1910,220,1900,216,'end',4],[5.0,2150,195,2320,130,2330,126,'start',5]];
+      return `<svg viewBox="1660 30 940 529" preserveAspectRatio="xMidYMid slice" width="960" height="540" style="position:absolute;inset:0"><image href="${LN_HERO('oak')}" x="0" y="0" width="3600" height="560"/>${L.map(([d,x1,y1,x2,y2,tx,ty,an,p]) => { const P = LN_PART[p]; return `<g${lnA(d)}><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F6EFE2" stroke-width="2.4"/><circle cx="${x1}" cy="${y1}" r="6" fill="#F6EFE2"/><circle cx="${x1}" cy="${y1}" r="3.5" fill="${P[3]}"/><text x="${tx}" y="${ty}" text-anchor="${an}" font-family="Cormorant Garamond,serif" font-weight="600" font-size="34" fill="#FFF8EC">${P[1]}</text><text x="${tx}" y="${ty + 26}" text-anchor="${an}" font-family="Barlow,sans-serif" font-weight="500" font-size="20" fill="#F2DDB5">${P[2]}</text></g>`; }).join('')}</svg>`; }
+    case 'big': return `<div class="ln-big"><p${lnA(.3)}>${h(sc.h)}</p>${sc.sub ? `<small${lnA(1.8)}>${h(sc.sub)}</small>` : ''}</div>`;
+    case 'points': return `<div class="ln-pts"><h3${lnA(.2)}>${h(sc.h)}</h3>${(sc.items || []).map((it, j) => { const a = Array.isArray(it) ? it : [it]; return `<div${lnA(.9 + j * (sc.gap || 1.1), 'ln-pt')}><span class="ln-dot" style="background:${a[2] || 'var(--ln-gold)'}"></span><span><b>${h(a[0])}</b>${a[1] ? `<small>${h(a[1])}</small>` : ''}</span></div>`; }).join('')}</div>`;
+    case 'trees': { const T = [['maple','Maple','Grades K to 5'],['aspen','Aspen','Grades 6 to 8'],['pine','Pine','Grades 9 to 12'],['oak','Oak','Adults'],['sequoia','Sequoia','Seniors'],['willow','Willow','Hospice']].concat(sc.grove ? [['grove','The Grove','Every age, together']] : []);
+      return `<div class="ln-trees"><h3${lnA(.2)}>${h(sc.h || 'Six trees. The same six parts.')}</h3><div class="ln-trow">${T.map((x, j) => `<div${lnA(.6 + j * .4, 'ln-tr')}><img src="${LN_MARK(x[0] + '-tab')}" alt=""><b style="color:${LN_COL[x[0]]}">${x[1]}</b><small>${x[2]}</small></div>`).join('')}</div></div>`; }
+    case 'levels': return `<div class="ln-lv">${[['Strong','8 to 10','#5F7D48'],['Steady','5 to 7','#8B5E1A'],['Growing Edge','1 to 4','#B8612F']].map((c, j) => `<div${lnA(.8 + j, 'ln-lc')} style="--k:${c[2]};transition-delay:${.8 + j}s"><b>${c[0]}</b><small>${c[1]}</small></div>`).join('')}</div>`;
+    case 'flow': { const n = (sc.steps || []).length; return `<div class="ln-flow"><h3${lnA(.2)}>${h(sc.h)}</h3><div class="ln-frow" style="--n:${n}">${(sc.steps || []).map((s, j) => `${j ? `<span${lnA(.6 + j * 1.1, 'ln-arr')}>&rarr;</span>` : ''}<div${lnA(.8 + j * 1.1, 'ln-step')}><span class="ln-sn">${j + 1}</span><b>${h(s[0])}</b>${s[1] ? `<small>${h(s[1])}</small>` : ''}</div>`).join('')}</div></div>`; }
+    case 'screen': { const c = LN_COL[sc.app] || sc.color || '#3D5A73';
+      return `<div class="ln-phone"><div class="ln-ptop" style="background:${c}">${sc.app && sc.app !== 'field' && sc.app !== 'site' ? `<img src="${LN_MARK(sc.app + '-tab')}" alt="">` : ''}<b>${h(sc.app_name || '')}</b><span>${h(sc.title || '')}</span></div>${(sc.rows || []).map((r, j) => `<div class="ln-prow${j === sc.tap ? ' ln-tgt' : ''}"${j === sc.tap ? ' data-tap' : ''}><span>${h(r[0])}</span><span${r[2] ? ` style="color:${r[2]};font-weight:600"` : ''}>${h(r[1] || '')}</span></div>`).join('')}</div>
+        ${sc.panel ? `<div class="ln-panel" style="border-left-color:${sc.panel.c || c}"><h4>${h(sc.panel.h)}</h4>${sc.panel.sub ? `<p>${h(sc.panel.sub)}</p>` : ''}${(sc.panel.items || []).length ? `<ul>${sc.panel.items.map(x => `<li>${h(x)}</li>`).join('')}</ul>` : ''}</div>` : ''}${sc.tap != null ? LN_HAND : ''}`; }
+    case 'tabs': return `<div class="ln-fg"><div class="ln-fgtop"><b>${h(sc.app_name || 'Grounded Field Guide')}</b></div><div class="ln-fgtabs">${(sc.tabs || []).map((x, j) => `<span class="${j === sc.tap ? 'ln-tgt' : ''}"${j === sc.tap ? ' data-tap' : ''}>${h(x)}</span>`).join('')}</div>
+        ${sc.note ? `<div class="ln-note"><h4>${h(sc.note.h)}</h4><p>${h(sc.note.p || '')}</p></div>` : ''}</div>${sc.tap != null ? LN_HAND : ''}`;
+    case 'card': return `<div class="ln-card"><h4>${h(sc.title)}</h4>${sc.body ? `<p>${h(sc.body)}</p>` : ''}${(sc.fields || []).map(f => `<label>${h(f[0])}</label><div class="ln-in">${h(f[1] || '')}</div>`).join('')}<div class="ln-btns">${(sc.btns || []).map((b, j) => `<span class="ln-b${j === 0 ? ' pri' : ''}${j === sc.tap ? ' ln-tgt' : ''}"${j === sc.tap ? ' data-tap' : ''}>${h(b)}</span>`).join('')}</div></div>
+        ${sc.result ? `<div class="ln-res">${h(sc.result)}</div>` : ''}${sc.tap != null ? LN_HAND : ''}`;
+    case 'quiz': return `<div class="ln-qz"><div${lnA(.2, 'ln-eb')}>You've Got It</div><h3${lnA(.5)}>${h(sc.q)}</h3></div>`;
+  }
+  return '';
+}
+function lnShow(n){
+  if (!LN) return; const l = LN.l; LN.i = Math.max(0, Math.min(l.scenes.length - 1, n)); const sc = l.scenes[LN.i], t = ++LN.tok;
+  clearInterval(LN.hl); clearInterval(LN.tick); clearTimeout(LN.nx); try { if (window.GGRead) GGRead.stop(); } catch(e){}
+  lnData().at[l.id] = LN.i; save();
+  const st = $('#ln-stage'), cv = $('#ln-canvas'); if (!st || !cv) return lnStop();
+  st.classList.remove('go'); cv.innerHTML = lnScene(sc); cv.className = 'ln-canvas ln-k-' + sc.k;
+  $('#ln-cap').innerHTML = String(sc.say || '').split(/\s+/).map(w => `<span class="w">${esc(w)}</span>`).join(' ');
+  Array.from($('#ln-prog').children).forEach((b, k) => b.classList.toggle('on', k <= LN.i));
+  $('#ln-cn').textContent = 'Scene ' + (LN.i + 1) + ' of ' + l.scenes.length;
+  $('#ln-quiz').innerHTML = sc.k === 'quiz' ? `<div class="ln-opts">${sc.opts.map((o, j) => `<button class="btn btn-line" data-act="ln-ans" data-v="${j}">${esc(o)}</button>`).join('')}</div><div id="ln-fb"></div>` : '';
+  const tg = cv.querySelector('[data-tap]'), ptr = cv.querySelector('.ln-ptr'), ring = cv.querySelector('.ln-ring');
+  if (tg && ptr){ const cr = cv.getBoundingClientRect(), r = tg.getBoundingClientRect(), k = cr.width / 960, x = (r.left - cr.left + r.width * .6) / k, y = (r.top - cr.top + r.height * .5) / k;
+    cv.style.setProperty('--px', (x - 14) + 'px'); cv.style.setProperty('--py', (y - 4) + 'px'); if (ring){ ring.style.left = (x - 24) + 'px'; ring.style.top = (y - 24) + 'px'; } }
+  requestAnimationFrame(() => requestAnimationFrame(() => { if (st) st.classList.add('go'); }));
+  if (!LN.playing) return;
+  const W = Array.from(document.querySelectorAll('#ln-cap .w')), sp = window.GGRead ? GGRead.speed() : 1, ms = Math.max(3500, W.length * 60000 / (160 * sp));
+  let kk = 0; LN.hl = setInterval(() => { if (!LN || t !== LN.tok) return clearInterval(LN && LN.hl); W.forEach((w, j) => w.classList.toggle('on', j === kk)); kk++; if (kk > W.length) clearInterval(LN.hl); }, ms / Math.max(1, W.length));
+  let spoke = false; try { if (window.GGRead && GGRead.available){ GGRead.say(sc.say || ''); spoke = true; } } catch(e){}
+  const start = Date.now(), hold = (tg ? 3600 : 0) + 900;
+  LN.tick = setInterval(() => {
+    if (!LN || t !== LN.tok) return clearInterval(LN && LN.tick);
+    const busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
+    if (!busy && Date.now() - start > (spoke ? Math.min(ms, 1500) : ms)){
+      clearInterval(LN.tick); W.forEach(w => w.classList.remove('on'));
+      if (sc.k === 'quiz'){ lnSetPlay(false); return; }
+      LN.nx = setTimeout(() => { if (LN && t === LN.tok && LN.playing){ if (LN.i < l.scenes.length - 1) lnShow(LN.i + 1); else lnSetPlay(false); } }, Math.max(hold - (Date.now() - start), 700));
+    }
+  }, 200);
+}
+function lnSetPlay(p){ if (!LN) return; LN.playing = p; const b = $('#ln-pl'); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) lnHush(); }
+function lnAct(a, v){
+  switch (a){
+    case 'ln-open': lnStop(); go('learn', {ln: v}); return true;
+    case 'ln-home': lnStop(); go('learn'); return true;
+    case 'ln-play': if (!LN) return true; if (LN.playing){ lnSetPlay(false); } else { LN.playing = true; lnSetPlay(true); lnShow(LN.i >= LN.l.scenes.length - 1 && LN.l.scenes[LN.i].k !== 'quiz' ? 0 : LN.i); } return true;
+    case 'ln-back': if (LN) lnShow(LN.i - 1); return true;
+    case 'ln-next': if (LN) lnShow(LN.i + 1); return true;
+    case 'ln-restart': if (LN) lnShow(0); return true;
+    case 'ln-ans': { if (!LN) return true; const sc = LN.l.scenes[LN.i], ok = +v === sc.right;
+      document.querySelectorAll('.ln-opts .btn').forEach((b, j) => { b.classList.toggle('ln-right', ok && j === +v); b.classList.toggle('ln-wrong', !ok && j === +v); });
+      $('#ln-fb').innerHTML = ok ? `<p class="ln-yes"><b>That's it.</b> ${esc(sc.why || '')}</p>${lnNextHTML()}` : `<p class="ln-no"><b>Not quite.</b> Try another answer.</p>`;
+      if (ok){ lnData().done[LN.l.id] = today(); save(); try { if (window.GGRead) GGRead.say("That's it. " + (sc.why || '')); } catch(e){} }
+      return true; }
+  }
+  return false;
+}
+function lnNextHTML(){ const tr = lnTracks(), flat = []; tr.forEach(t => t.lessons.forEach(l => flat.push(l))); const i = flat.findIndex(l => l.id === LN.l.id), nx = flat[i + 1];
+  return `<div class="row" style="margin-top:10px">${nx ? `<button class="btn btn-gold" data-act="ln-open" data-v="${esc(nx.id)}">Next: ${esc(nx.title)}</button>` : ''}<button class="btn btn-line" data-act="ln-home">All lessons</button></div>`; }
+document.addEventListener('keydown', e => {
+  if (!LN || V.tab !== 'learn' || /input|textarea|select/i.test(e.target.tagName || '')) return;
+  if (e.key === ' '){ e.preventDefault(); lnAct('ln-play'); } else if (e.key === 'ArrowRight') lnShow(LN.i + 1); else if (e.key === 'ArrowLeft') lnShow(LN.i - 1);
+});
+(function(){ const s = document.createElement('style'); s.textContent = `
+.ln-list{display:grid;gap:8px;margin-top:10px;}
+.ln-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;min-height:56px;}
+.ln-item:hover{border-color:var(--gold);}.ln-item svg{width:20px;height:20px;color:var(--gold);flex:none;}
+.ln-n{width:34px;height:34px;border-radius:50%;background:var(--bg-deep);color:var(--gold);display:grid;place-items:center;font-weight:700;flex:none;}
+.ln-item.done .ln-n{background:#5F7D48;color:#fff;}.ln-item.done .ln-n svg{color:#fff;width:18px;height:18px;}
+.ln-t{flex:1;min-width:0;}.ln-t b{display:block;}.ln-t small{color:var(--ink-soft);}
+.ln-stage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#F2ECE0;border:1px solid var(--line);}
+.ln-canvas{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;font-family:Barlow,system-ui,sans-serif;color:#2C1810;--ln-gold:#8B5E1A;}
+.ln-canvas .a{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}.go .ln-canvas .a{opacity:1;transform:none;}
+.ln-prog{display:flex;gap:5px;margin:10px 0;}.ln-prog span{flex:1;height:5px;border-radius:3px;background:var(--line);}.ln-prog span.on{background:var(--gold);}
+.ln-cap{font-size:calc(19px * var(--scale));line-height:1.5;min-height:3em;margin:6px 0;}.ln-cap .w.on{color:var(--gold);}
+.ln-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}.ln-ctl .btn{min-height:48px;}.ln-ctl .muted{margin-left:auto;}
+.ln-opts{display:grid;gap:8px;margin:8px 0;}.ln-opts .btn{justify-content:flex-start;text-align:left;white-space:normal;min-height:52px;}
+.ln-opts .ln-right{border-color:#5F7D48 !important;background:rgba(95,125,72,.14) !important;}.ln-opts .ln-wrong{border-color:#B8612F !important;}
+.ln-yes b{color:#5F7D48;}.ln-no b{color:#B8612F;}
+.ln-hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:59% 50%;}
+.ln-tt{position:absolute;left:56px;top:48px;color:#F6EFE2;max-width:520px;}.ln-tt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:60px;line-height:1.02;margin:6px 0 0;text-shadow:0 2px 12px rgba(0,0,0,.3);}
+.ln-tt p{font-size:24px;margin:12px 0 0;color:#F2DDB5;}.ln-eb{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:20px;color:#F2C46A;}
+.ln-by{font-family:'Barlow Condensed',sans-serif;letter-spacing:2.4px;font-size:16px;margin-top:14px;opacity:.9;}
+.ln-big{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:0 90px;}.ln-big p{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:52px;line-height:1.15;margin:0;}.ln-big small{display:block;font-size:26px;color:#6B5A4D;margin-top:20px;}
+.ln-pts{padding:48px 70px;}.ln-pts h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:46px;margin:0 0 22px;}
+.ln-pt{display:flex;gap:16px;align-items:flex-start;margin:0 0 18px;font-size:28px;line-height:1.25;}.ln-pt small{display:block;font-size:21px;color:#6B5A4D;margin-top:2px;}
+.ln-dot{width:16px;height:16px;border-radius:50%;flex:none;margin-top:10px;}
+.ln-trees h3{position:absolute;top:56px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0;}
+.ln-trow{position:absolute;left:30px;right:30px;bottom:90px;display:flex;justify-content:center;gap:18px;}
+.ln-tr{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:130px;}.ln-tr img{width:110px;height:110px;border-radius:24px;}
+.ln-tr b{font-family:'Cormorant Garamond',serif;font-size:30px;margin-top:8px;}.ln-tr small{font-size:17px;color:#6B5A4D;}
+.ln-lv{position:absolute;inset:0;display:flex;gap:36px;align-items:center;justify-content:center;padding:0 60px;}
+.ln-lc{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-top:8px solid var(--k);border-radius:20px;padding:44px 20px;text-align:center;}
+.ln-lc b{display:block;font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--k);}.ln-lc small{font-size:22px;color:#6B5A4D;}
+.ln-flow{padding:50px 50px;}.ln-flow h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0 0 40px;}
+.ln-frow{display:flex;align-items:center;gap:14px;}.ln-step{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 18px;min-height:200px;}
+.ln-step b{display:block;font-size:26px;line-height:1.2;margin-top:10px;}.ln-step small{display:block;font-size:19px;color:#6B5A4D;margin-top:8px;line-height:1.3;}
+.ln-sn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#8B5E1A;color:#FFF8EC;font-weight:700;font-size:20px;}
+.ln-arr{font-size:36px;color:#8B5E1A;flex:none;}
+.ln-phone{position:absolute;left:56px;top:34px;width:380px;height:472px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:30px;overflow:hidden;font-size:21px;}
+.ln-ptop{display:flex;align-items:center;gap:10px;padding:14px 16px;color:#F6EFE2;}.ln-ptop img{width:36px;height:36px;border-radius:9px;}.ln-ptop b{font-family:'Cormorant Garamond',serif;font-size:28px;}.ln-ptop span{margin-left:auto;font-size:17px;opacity:.9;}
+.ln-prow{display:flex;justify-content:space-between;padding:13px 18px;border-top:1px solid #EFE6D4;}
+.ln-tgt{transition:background .3s ease 2.6s,box-shadow .3s ease 2.6s;}.go .ln-tgt{background:#F6EEDB;box-shadow:inset 0 0 0 2px #8B5E1A;}
+.ln-panel{position:absolute;right:56px;top:70px;width:400px;background:#FFFCF6;border:1px solid #DDD0B8;border-left:8px solid #8B5E1A;padding:22px 24px;transform:translateX(560px);transition:transform .7s ease 3s;}
+.go .ln-panel{transform:none;}.ln-panel h4{font-family:'Cormorant Garamond',serif;font-size:32px;margin:0;}.ln-panel p{font-size:19px;color:#6B5A4D;margin:6px 0 10px;}.ln-panel li{font-size:22px;line-height:1.6;}
+.ln-ptr{position:absolute;left:820px;top:520px;width:56px;z-index:5;transition:left 1.3s ease 1.1s,top 1.3s ease 1.1s;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}
+.go .ln-ptr{left:var(--px,600px);top:var(--py,300px);}
+.ln-ring{position:absolute;width:48px;height:48px;border-radius:50%;border:4px solid #8B5E1A;opacity:0;transform:scale(.3);transition:all .5s ease 2.5s;z-index:4;}.go .ln-ring{opacity:.85;transform:scale(1.5);}
+.ln-fg{position:absolute;inset:30px 40px;background:#F6F0E4;border:1px solid #DDD0B8;border-radius:22px;overflow:hidden;}
+.ln-fgtop{background:#2E2118;color:#D9A847;padding:16px 22px;font-family:'Cormorant Garamond',serif;font-size:28px;}
+.ln-fgtabs{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid #DDD0B8;flex-wrap:wrap;}.ln-fgtabs span{padding:10px 14px;border-radius:12px;font-size:20px;font-weight:600;color:#6B5A4D;}
+.ln-note{margin:26px 26px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 24px;opacity:0;transform:translateY(16px);transition:all .7s ease 3s;}.go .ln-note{opacity:1;transform:none;}
+.ln-note h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-note p{font-size:22px;color:#6B5A4D;margin:0;line-height:1.35;}
+.ln-card{position:absolute;left:70px;top:40px;width:540px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:22px;padding:24px 28px;}
+.ln-card h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-card p{font-size:19px;color:#6B5A4D;margin:0 0 10px;line-height:1.35;}
+.ln-card label{display:block;font-size:17px;font-weight:600;margin-top:10px;}.ln-in{border:1px solid #DDD0B8;border-radius:10px;padding:9px 12px;font-size:19px;margin-top:4px;background:#fff;min-height:42px;}
+.ln-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}.ln-b{border:1px solid #8B5E1A;color:#8B5E1A;border-radius:999px;padding:10px 18px;font-weight:600;font-size:18px;}.ln-b.pri{background:#8B5E1A;color:#FFF8EC;}
+.ln-res{position:absolute;right:60px;bottom:60px;max-width:300px;background:#2E2118;color:#FFF8EC;border-radius:18px;padding:16px 20px;font-size:20px;line-height:1.3;opacity:0;transform:translateY(14px);transition:all .6s ease 3.1s;}.go .ln-res{opacity:1;transform:none;}
+.ln-qz{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 80px;}.ln-qz .ln-eb{color:#8B5E1A;}.ln-qz h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:48px;line-height:1.1;margin:10px 0 0;}
+`; document.head.appendChild(s); })();
+
 // ---------------- OAK GUIDE ----------------
 // Wording lives in the Field library (FLD.oakGuide), so it is sealed and edited through Update a Library.
 // People are ordinary People records with a .st profile. Visits are sessions with kind 'st', so backups merge them.
@@ -5753,9 +6111,9 @@ function vSettings(){
    <label class="f">Role</label><input type="text" data-set="role" value="${esc(s.role||'')}" placeholder="Founder, practitioner in training...">
    <label class="f">Lock automatically after</label><select data-set="autolock">${[2,5,10,15].map(m => `<option value="${m}" ${+s.autolock===m?'selected':''}>${m} minutes</option>`).join('')}<option value="0" ${!+s.autolock?'selected':''}>Only when my unlock time ends</option></select>
    <label class="f">Text Size</label><select data-set="scale">${[['1','Normal'],['1.12','Larger'],['1.25','Largest']].map(([v,l]) => `<option value="${v}" ${String(s.scale)===v?'selected':''}>${l}</option>`).join('')}</select></div>
-  <div class="card"><h3>Backup and Moving Devices</h3><p class="muted">Your records live only on this device. A backup file is encrypted with your passcode. Adding a backup combines it with what's here: new notes are added, the newest version of anything edited on both devices is kept, and nothing is lost. Send a backup either direction, anytime.</p>
+  <div class="card"><h3>Backup and Moving Devices</h3><p class="muted">One Grow With Grounded Backup file holds everything on this device: your Field Guide (sealed with your passcode, with every Founder and Staff record), plus any Grounded profiles, The Grove, and settings. Loading a backup combines it with what's here: new things are added, the newest version of anything edited on both devices is kept, and nothing is lost. Send a backup either direction, anytime. Older Field Guide backup files load here too.</p>
    <p style="margin-top:8px">${DATA.lastBackup ? 'Last backup: ' + new Date(DATA.lastBackup).toLocaleString() : 'No backups yet.'}</p>
-   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="export">Download Backup</button><label class="btn btn-line" style="cursor:pointer">Add From Backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div></div>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="export">Back Up Everything</button><label class="btn btn-line" style="cursor:pointer">Load a Backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div></div>
   <div class="card"><h3>Change Passcode</h3><label class="f" for="cp0">Current passcode</label><input type="password" id="cp0" autocomplete="current-password"><label class="f" for="cp1">New passcode</label><input type="password" id="cp1" autocomplete="new-password"><label class="f" for="cp2">New passcode again</label><input type="password" id="cp2" autocomplete="new-password">
    <button class="btn btn-line" style="margin-top:12px" data-act="change-pass">Change Passcode</button><p class="muted" style="margin-top:8px;font-size:14px">Older backup files keep the passcode they were made with.</p></div>
   <div class="card"><h3>Reset This Device</h3><p class="muted">Erases everything stored here. Download a backup first.</p><button class="btn btn-danger" style="margin-top:10px" data-act="reset">Reset This Device</button></div>`;
@@ -5862,12 +6220,31 @@ function printCert(){
 function toast(t){ const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
 async function copy(t){ try { await navigator.clipboard.writeText(t); toast('Copied.'); } catch(e){ const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove(); toast('Copied.'); } }
 async function exportBackup(){
+  // One Grow With Grounded Backup (shared/gg-backup.js): every Grounded record on this device in one file.
+  // The Field Guide part stays sealed with this passcode, Founder and Staff data included.
   await persist(); DATA.lastBackup = Date.now(); await persist();
+  const after = () => { if (V.tab === 'home' || V.tab === 'settings') render(); };
+  if (window.GGBackup) return GGBackup.make({after});
   const v = localStorage.getItem(VAULT_KEY);
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([v], {type:'application/json'})); a.download = `field-guide-backup-${today()}.json`;
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-  toast('Backup downloaded. Keep it somewhere safe.'); if (V.tab === 'home' || V.tab === 'settings') render();
+  toast('Backup downloaded. Keep it somewhere safe.'); after();
 }
+// A Field Guide copy brought in by Load a Backup waits here (gg-fg-import) until this Field Guide is unlocked.
+const FG_PENDING = 'gg-fg-import';
+const fgPending = () => { try { return localStorage.getItem(FG_PENDING); } catch(e){ return null; } };
+async function fgMergePending(){
+  const txt = fgPending(); if (!txt) return;
+  try {
+    const box = JSON.parse(txt); if (box.app !== 'grounded-field-guide') throw 0;
+    const p = prompt('Enter the Field Guide passcode this backup was made with:'); if (p === null) return;
+    const key = await derive(p, unb64(box.salt), false); const inner = await open(key, box);
+    const r = mergeData(DATA, fgPartsData(Object.assign(blankData(), inner.data)));
+    DATA = Object.assign(blankData(), r.data);
+    await persist(); localStorage.removeItem(FG_PENDING); toast(`Backup added: ${r.stats.added} new, ${r.stats.updated} updated. Nothing on this device was lost.`); go('home');
+  } catch(e){ alert("That backup couldn't be opened. Check the passcode it was made with and try again."); }
+}
+function fgDropPending(){ if (!confirm('Set this backup aside? Nothing on this device changes, and you can load the file again anytime.')) return; try { localStorage.removeItem(FG_PENDING); } catch(e){} render(); }
 function mergeData(cur, inc){
   const out = JSON.parse(JSON.stringify(cur));
   out.deleted = out.deleted || {clients:{}, sessions:{}};
@@ -5918,18 +6295,27 @@ function mergeData(cur, inc){
   Object.entries(ia.lessons || {}).forEach(([k,v]) => { if (v && !out.samod.lessons[k]) out.samod.lessons[k] = v; });
   ['last','pass','signed'].forEach(k => { out.samod[k] = newer(out.samod[k], ia[k]) || null; });
   if (!out.settings.referrals && inc.settings && inc.settings.referrals) out.settings.referrals = inc.settings.referrals;
+  const iw = inc.wlmod || {}; out.wlmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.wlmod || {});
+  Object.entries(iw.lessons || {}).forEach(([k,v]) => { if (v && !out.wlmod.lessons[k]) out.wlmod.lessons[k] = v; });
+  ['last','pass','signed'].forEach(k => { out.wlmod[k] = newer(out.wlmod[k], iw[k]) || null; });
+  // Founder and Staff records (Labels, Learn, and Backup build): approvals, edits, codes, checklists, Learn progress.
+  const fo = inc.founder || {}; out.founder = Object.assign({saved:[], draft:null}, out.founder || {});
+  (fo.saved || []).forEach(x => { if (!out.founder.saved.some(y => y.id === x.id)) { out.founder.saved.push(x); stats.added++; } });
+  if (!out.founder.draft && fo.draft) out.founder.draft = fo.draft;
+  out.founder.speak = Object.assign({}, fo.speak || {}, out.founder.speak || {});
+  out.founder.proof = proofMerge(out.founder.proof, fo.proof);
+  out.founder.edits = editsMerge(out.founder.edits, fo.edits);
+  out.learn = learnMerge(out.learn, inc.learn);
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
   return {data:out, stats};
 }
 async function importBackup(file){
+  // Any Grow With Grounded Backup or older Field Guide file. GGBackup shows what's inside and merges the rest;
+  // the Field Guide part comes back here (fgMergePending) to merge with this vault.
+  if (window.GGBackup) return GGBackup.load(file, { onFieldGuide: () => setTimeout(fgMergePending, 300), after: n => { if (!fgPending()) { if (n) toast('Backup loaded.'); render(); } } });
   try {
     const box = JSON.parse(await file.text()); if (box.app !== 'grounded-field-guide') throw 0;
-    const p = prompt('Enter the passcode this backup was made with:'); if (p === null) return;
-    const key = await derive(p, unb64(box.salt), false); const inner = await open(key, box);
-    if (!confirm(`Add this backup to this device? It has ${inner.data.clients.length} people and ${inner.data.sessions.length} sessions. Anything new will be added, the newest version of anything edited on both devices will be kept, and nothing on this device will be lost.`)) return;
-    const r = mergeData(DATA, fgPartsData(Object.assign(blankData(), inner.data)));
-    DATA = Object.assign(blankData(), r.data);
-    await persist(); toast(`Backup added: ${r.stats.added} new, ${r.stats.updated} updated.`); go('home');
+    localStorage.setItem(FG_PENDING, JSON.stringify(box)); await fgMergePending();
   } catch(e){ alert("That backup couldn't be opened. Check the file and the passcode."); }
 }
 
@@ -5945,11 +6331,15 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('sa-') && saAct(a, v, t)) return;
   if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
+  if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
+  if (a && a.startsWith('ln-') && lnAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
     case 'settings': closeMenu(); go('settings'); break;
     case 'export': closeMenu(); exportBackup(); break;
+    case 'fg-pend': fgMergePending(); break;
+    case 'fg-pend-drop': fgDropPending(); break;
     case 'reset': resetDevice(); break;
     case 'guide': go('guides', {guide:v}); break;
     case 'back-guides': go('guides'); break;

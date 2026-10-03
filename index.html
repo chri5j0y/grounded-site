@@ -317,6 +317,20 @@ body.bro-open{overflow:hidden;}
 a.ht-tool:hover{border-color:var(--tc);}
 .ht-tool.soon{opacity:.78;}
 .ht-note{font-size:15px;color:var(--ink-soft);margin-top:18px;}
+.ht-wlc{display:flex;align-items:center;gap:16px;margin-top:16px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;text-decoration:none;color:var(--ink);}
+a.ht-wlc:hover{border-color:var(--gold);}
+.ht-wlc-ic{width:48px;height:48px;border-radius:12px;background:var(--bg-deep);color:var(--gold);display:grid;place-items:center;flex:none;}
+.ht-wlc-ic svg{width:26px;height:26px;}
+.ht-wlc-t{flex:1;min-width:0;}.ht-wlc-t b{display:block;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.2;}
+.ht-wlc-t span{display:block;font-size:15px;color:var(--ink-soft);margin-top:2px;}
+.ht-wlc-b{flex:none;white-space:nowrap;}
+@media(max-width:620px){.ht-wlc{flex-wrap:wrap;}.ht-wlc-b{width:100%;text-align:center;justify-content:center;}}
+.who-home .wrap{display:block;}.who-home .who-text{max-width:760px;}.who-home .lead{margin-bottom:12px;}.who-home .who-text>p{margin:0 0 12px;}
+.who-founders{display:inline-flex;align-items:center;gap:12px;margin:0 0 22px;color:var(--ink);text-decoration:none;font-weight:600;min-height:44px;}
+.who-founders:hover span:last-child{text-decoration:underline;}
+.wf-pics{display:inline-flex;}.wf-pics img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--bg);}
+.wf-pics img+img{margin-left:-10px;}
+
 .tg-steps{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px;padding:0;}
 .tg-steps li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:4px;}
 .tg-steps b{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold);} .tg-steps span{font-size:16px;color:var(--ink-soft);line-height:1.55;}
@@ -367,25 +381,37 @@ a.ht-tool:hover{border-color:var(--tc);}
 </section>
 
 
-<section id="who" class="who-band">
+<section id="tools" class="home-tools">
   <div class="wrap">
-    <!-- PORTRAIT: when your new photo of the two of you is ready, save it as kayti-chris.jpg and change the src below. -->
-    <figure class="who-photo"><img src="chris-kayti-wedding.jpg" alt="Kayti and Chris Joy" loading="lazy"></figure>
+    <div class="ht-head"><div><div class="eyebrow">Tools</div><h2>A tree for every age and stage.</h2></div><a class="text-link" href="tools.html">See all tools</a></div>
+    <div class="ht-grid"><a class="card ht-tool" style="--tc:#C4501E" href="https://growwithgrounded.com/maple/"><img class="ht-mark" src="/shared/marks/maple-small.svg" alt="" width="48" height="48" loading="lazy"><b>Maple</b><span>For grades K to 5</span></a><a class="card ht-tool" style="--tc:#1F6F74" href="https://growwithgrounded.com/aspen/"><img class="ht-mark" src="/shared/marks/aspen-small.svg" alt="" width="48" height="48" loading="lazy"><b>Aspen</b><span>For grades 6 to 8</span></a><div class="card ht-tool soon" style="--tc:#3A6B35" aria-disabled="true"><img class="ht-mark" src="/shared/marks/pine-small.svg" alt="" width="48" height="48" loading="lazy"><b>Pine</b><span>For grades 9 to 12</span><span class="badge">Coming soon</span></div><a class="card ht-tool" style="--tc:#3D5A73" href="https://growwithgrounded.com/oak/"><img class="ht-mark" src="/shared/marks/oak-small.svg" alt="" width="48" height="48" loading="lazy"><b>Oak</b><span>For adults</span></a><div class="card ht-tool soon" style="--tc:#7A2E1C" aria-disabled="true"><img class="ht-mark" src="/shared/marks/sequoia-small.svg" alt="" width="48" height="48" loading="lazy"><b>Sequoia</b><span>For seniors</span><span class="badge">Coming soon</span></div><a class="card ht-tool" style="--tc:#56664A" href="https://growwithgrounded.com/willow/"><img class="ht-mark" src="/shared/marks/willow-small.svg" alt="" width="48" height="48" loading="lazy"><b>Willow</b><span>For hospice</span></a><a class="card ht-tool" style="--tc:#223829" href="https://growwithgrounded.com/grove/"><img class="ht-mark" src="/shared/marks/grove-small.svg" alt="" width="48" height="48" loading="lazy"><b>The Grove</b><span>For every age</span></a></div>
+    <a class="card ht-wlc" href="tools.html#when-life-changes">
+      <span class="ht-wlc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg></span>
+      <span class="ht-wlc-t"><b>When Life Changes</b><span>Guides for showing up, for every age. A pet dies, a parent gets sick, scary news.</span></span>
+      <span class="btn btn-primary ht-wlc-b">Find a Guide</span>
+    </a>
+    <p class="ht-note">Growth apps for every age and stage, coming to phones soon. Your answers stay on your device. Grounded in current research and real chaplaincy work, not therapy or medical care.</p>
+  </div>
+</section>
+
+<section id="who" class="who-band who-home">
+  <div class="wrap">
     <div class="who-text">
       <div class="eyebrow">Who we are</div>
-      <h2>Kayti and Chris Joy.</h2>
-      <p class="who-mail"><a class="text-link email-link" data-user="chris" data-subject="Hello Chris" href="#contact"><span data-fill>chris [at] growwithgrounded [dot] com</span></a><a class="text-link email-link" data-user="kayti" data-subject="Hello Kayti" href="#contact"><span data-fill>kayti [at] growwithgrounded [dot] com</span></a></p>
-      <p class="lead">Married 22 years, raising four boys, and we've sat on both sides of the bed: Chris as a chaplain in the ICU, on a behavioral health unit, through COVID, and now in hospice, and Kayti as a teacher, a yoga and breathwork guide, and for seven years a caregiver for her own family at the end of life.</p>
-      <p>In those rooms, people stop pretending. They say what matters. Every life is full of thresholds, and what we've learned at the bedside helps at every one of them: we normalize grief, stay with people in crisis, care for the people around the bed, help them rebuild, and honor the joyful thresholds too.</p>
+      <h2>Grow With Grounded.</h2>
+      <p class="lead">Tending the whole person, every age and stage, through every threshold.</p>
+      <p>We're an independent practice in St. Cloud, Minnesota, serving people anywhere. We lead ceremonies for life's big days, walk with people through hard seasons and the end of life, and build research-informed tools that help every age tend the six parts that make them whole.</p>
+      <p>It all grows from years at the bedside, where people stop pretending and say what matters.</p>
       <ul class="cred-strip">
-        <li>Chaplain in the ICU, behavioral health, COVID response, and hospice</li>
-        <li>Master's degree in seminary and theology</li>
-        <li>Ordained and legally able to officiate in Minnesota</li>
-        <li>Certified PREPARE/ENRICH facilitators</li>
-        <li>End-of-life doula training through INELDA</li>
+        <li>Your story stays yours</li>
+        <li>All faith traditions and everything in-between</li>
+        <li>Grace over pressure</li>
+        <li>Safety first, always</li>
+        <li>Show up</li>
       </ul>
-      <p class="indie-line">Grow With Grounded is our own independent practice. It isn't connected to any hospice, hospital, or church.</p>
-      <a class="btn btn-primary" href="about.html">About us</a>
+      <p class="indie-line">Grow With Grounded is our own independent practice, free to serve anyone, anywhere.</p>
+      <a class="who-founders" href="about.html"><span class="wf-pics"><img src="kayti-joy-avatar.jpg" alt="" width="44" height="44" loading="lazy"><img src="chris.jpg" alt="" width="44" height="44" loading="lazy"></span><span>Founded by Kayti and Chris Joy</span></a>
+      <div><a class="btn btn-primary" href="about.html">About us</a></div>
     </div>
   </div>
 </section>
@@ -403,14 +429,6 @@ a.ht-tool:hover{border-color:var(--tc);}
     </div>
   </div>
 </section>
-<section id="tools" class="home-tools">
-  <div class="wrap">
-    <div class="ht-head"><div><div class="eyebrow">Tools</div><h2>A tree for every age and stage.</h2></div><a class="text-link" href="tools.html">See all tools</a></div>
-    <div class="ht-grid"><a class="card ht-tool" style="--tc:#C4501E" href="https://growwithgrounded.com/maple/"><img class="ht-mark" src="/shared/marks/maple-small.svg" alt="" width="48" height="48" loading="lazy"><b>Maple</b><span>For grades K to 5</span></a><a class="card ht-tool" style="--tc:#1F6F74" href="https://growwithgrounded.com/aspen/"><img class="ht-mark" src="/shared/marks/aspen-small.svg" alt="" width="48" height="48" loading="lazy"><b>Aspen</b><span>For grades 6 to 8</span></a><div class="card ht-tool soon" style="--tc:#3A6B35" aria-disabled="true"><img class="ht-mark" src="/shared/marks/pine-small.svg" alt="" width="48" height="48" loading="lazy"><b>Pine</b><span>For grades 9 to 12</span><span class="badge">Coming soon</span></div><a class="card ht-tool" style="--tc:#3D5A73" href="https://growwithgrounded.com/oak/"><img class="ht-mark" src="/shared/marks/oak-small.svg" alt="" width="48" height="48" loading="lazy"><b>Oak</b><span>For adults</span></a><div class="card ht-tool soon" style="--tc:#7A2E1C" aria-disabled="true"><img class="ht-mark" src="/shared/marks/sequoia-small.svg" alt="" width="48" height="48" loading="lazy"><b>Sequoia</b><span>For seniors</span><span class="badge">Coming soon</span></div><a class="card ht-tool" style="--tc:#56664A" href="https://growwithgrounded.com/willow/"><img class="ht-mark" src="/shared/marks/willow-small.svg" alt="" width="48" height="48" loading="lazy"><b>Willow</b><span>For hospice</span></a><a class="card ht-tool" style="--tc:#223829" href="https://growwithgrounded.com/grove/"><img class="ht-mark" src="/shared/marks/grove-small.svg" alt="" width="48" height="48" loading="lazy"><b>The Grove</b><span>For every age</span></a></div>
-    <p class="ht-note">Growth apps for every age and stage, coming to phones soon. Your answers stay on your device. Grounded in current research and real chaplaincy work, not therapy or medical care.</p>
-  </div>
-</section>
-
 <section id="kind-words" hidden>
   <div class="wrap">
     <div class="eyebrow">Kind Words</div>
@@ -471,7 +489,7 @@ a.ht-tool:hover{border-color:var(--tc);}
   <p class="copyright">&copy; <span class="year"></span> Chris Joy. All rights reserved. Grow With Grounded&trade;, Maple&trade;, Aspen&trade;, Pine&trade;, Oak&trade;, Sequoia&trade;, Willow&trade;, The Grove&trade;, and Grounded&trade; are trademarks of Chris Joy.</p>
 </div></footer>
 <script src="site.js"></script>
-<script src="nav.js?v=nv1" defer></script>
+<script src="nav.js?v=lh1" defer></script>
 <script>
 /* Grounded service scenes: one small illustrated moment per topic.
    Motion plays once, then settles, except tiny living details. Reduced motion shows the still final scene. */

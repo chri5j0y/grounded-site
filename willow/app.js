@@ -1006,7 +1006,8 @@ function openSettings(focus) {
         : `<p class="w-small">When ${self ? 'you die, a helper' : n + ' dies, you'} can mark ${self ? 'your' : 'their'} tree as remembered. Nothing is erased. Check-ins stop, and The Grove shows a remembered willow.</p><label class="w-l" for="w-rd">Date</label><input type="date" id="w-rd" value="${today()}"><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.remember()">Remember ${self ? 'my' : esc(nameOf(t)) + '\'s'} tree</button></div>`}</section>`;
     }
   }
-  h += `<section><h3>Reading and Text</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="cycleTextSize()">Change text size</button></div></section>
+  h += `<section><h3>Your Records</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('pick')">Load a backup</button></div><p class="w-small">One file with every profile on this device, each still locked. Load it on any device to bring it all back.</p></section>
+  <section><h3>Reading and Text</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="cycleTextSize()">Change text size</button></div></section>
     <p class="w-small">Everything in Willow stays on this device, locked in each person's own profile. <a class="text-link" href="/privacy.html#willow">How Willow keeps things private</a></p></div>`;
   wrap.innerHTML = h;
   document.body.appendChild(wrap);

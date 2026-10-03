@@ -502,10 +502,10 @@
           }).join('') + legacy.map(function (lp) {
             return '<button type="button" class="ggp-person" data-legacy="' + lp.id + '">' + av('', lp.name, 56) + '<b>' + esc(lp.name) + '</b><span>From Oak</span></button>';
           }).join('') + '</div>' +
-          '<div class="ggp-row" style="justify-content:space-between"><button type="button" class="ggp-link" data-restore>Restore a backup</button><span style="display:flex;gap:8px"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-new>New profile</button></span></div>');
+          '<div class="ggp-row" style="justify-content:space-between"><button type="button" class="ggp-link" data-restore>Load a backup</button><span style="display:flex;gap:8px"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-new>New profile</button></span></div>');
         $(d, '[data-x]').onclick = function () { d.close(false); };
         $(d, '[data-new]').onclick = function () { d.close(); createDialog(opt).then(resolve); };
-        $(d, '[data-restore]').onclick = function () { restore(function () { pickPerson(d); }); };
+        $(d, '[data-restore]').onclick = function () { d.close(false); backupGo('pick'); };
         d.el.querySelectorAll('[data-id]').forEach(function (b) { b.onclick = function () { askCode(d, getP(b.dataset.id)); }; });
         d.el.querySelectorAll('[data-legacy]').forEach(function (b) { b.onclick = function () { legacyOpen(d, legacy.filter(function (x) { return x.id === b.dataset.legacy; })[0]); }; });
       }
@@ -760,6 +760,16 @@
     inp.click();
   }
 
+  /* One Grow With Grounded Backup (shared/gg-backup.js), loaded only when someone asks for it. */
+  function backupGo(act, opts) {
+    var run = function () { if (window.GGBackup) GGBackup[act](opts); };
+    if (window.GGBackup) return run();
+    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=bk1'; s.onload = run;
+    s.onerror = function () { toast('The backup tool could not load. Check the connection and try again.'); };
+    document.head.appendChild(s);
+  }
+  window.GGBackupGo = backupGo;
+
   /* =====================================================================
      NAVIGATION BUTTON
      ===================================================================== */
@@ -802,12 +812,12 @@
       html += item('manage', 'Manage my profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
-      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('lock', 'Lock');
+      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('bk', 'Back up everything') + item('ld', 'Load a backup') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
       if (n) html += item('open', 'Open a profile');
-      html += item('create', 'Create a profile') + item('restore', 'Restore a backup') + link('/privacy.html#profiles', 'How profiles work');
+      html += item('create', 'Create a profile') + item('ld', 'Load a backup') + item('bk', 'Back up everything') + link('/privacy.html#profiles', 'How profiles work');
     }
     pop.innerHTML = html;
     pop.querySelectorAll('[data-a]').forEach(function (b) {
@@ -817,6 +827,8 @@
         else if (act === 'switch' || act === 'open') openDialog();
         else if (act === 'create') createDialog();
         else if (act === 'restore') restore(function () { openDialog(); });
+        else if (act === 'bk') backupGo('make');
+        else if (act === 'ld') backupGo('pick');
         else if (act === 'lock') lock().then(function () { toast('Locked. Everything is safe on this device.'); });
         else if (act === 'as') { var k = getP(b.dataset.id); openWithRaw(k.id, open[k.id].raw, cur.until).then(function () { toast('Now in ' + k.name + '\'s profile.'); }); }
       };
