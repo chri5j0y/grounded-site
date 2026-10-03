@@ -5,7 +5,7 @@
    oak, willow (When Life Changes guides) and practice (the shared practice library).
    Matched by topic in the Library session (October 2026). These are
    books for further reading, never sources for a guide. To fix a match,
-   edit the list here. Proofread in the Owner tab's Proofreading card.
+   edit the list here. Proofread in the Founder tab's Proofreading card.
    ===================================================================== */
 (function () {
   var BOOKS = {

@@ -3,7 +3,7 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=sp1"></script>
-<script src="/shared/gg-shelf.js?v=l1"></script>
+<script src="/shared/gg-shelf.js?v=fd1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -269,7 +269,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .calm-card .action-row{margin-top:10px;}
 .lvl{display:inline-block;font-size:13px;font-weight:600;border-radius:99px;padding:2px 10px;margin-left:6px;vertical-align:middle;background:var(--bg);border:2px solid var(--line);}
 .lvl.strong{border-color:var(--leaf);}
-.lvl.care{border-color:#D62839;}
+.lvl.edge{border-color:#D62839;}
 .ans-list{margin:8px 0 0;padding-left:18px;font-size:15px;line-height:1.5;}
 .ans-list li{margin:2px 0;}
 .ans-list .hard{font-weight:600;}
@@ -858,10 +858,10 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=sp1"></script>
 <script src="/maple/guides.js"></script>
-<script src="/maple/checkin.js?v=r4m"></script>
+<script src="/maple/checkin.js?v=fd1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=l1"></script>
-<script src="/shared/gg-tend.js?v=wl1"></script>
+<script src="/shared/gg-tend.js?v=fd1"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -2246,7 +2246,7 @@ function mpProfileHtml() {
 }
 function mpExtraSettings() { return `<section class="mp-see" id="mp-see"><h3>What your grown-up can see</h3>${MP_SEE}</section>`; }
 
-/* Growth plan: no limits, only suggestions. About 3 for a Strong part, 4 for Steady, 5 for Needs care, plus their own. */
+/* Growth plan: no limits, only suggestions. About 3 for a Strong part, 4 for Steady, 5 for a Growing Edge, plus their own. */
 function mpLevelOf(key) {
   const last = MP_KID && MP_KID.checkins[MP_KID.checkins.length - 1];
   const a = last && last.answers[key];
@@ -2705,7 +2705,7 @@ function renderGuide() {
     </nav>
 
     <h3 class="grown" id="g-what">What Maple is</h3>
-    <p>Maple builds spiritual and emotional resilience: a child's sense of being loved, knowing who they are, handling big feelings, belonging, caring for their body, and hope. It isn't a test, a screening, or a diagnosis, and no answer is wrong. Grown-ups see a simple level for each part (Strong, Steady, or Needs care) so they know where to lean in. Kids see their tree and its weather.</p>
+    <p>Maple builds spiritual and emotional resilience: a child's sense of being loved, knowing who they are, handling big feelings, belonging, caring for their body, and hope. It isn't a test, a screening, or a diagnosis, and no answer is wrong. Grown-ups see a simple level for each part (Strong, Steady, or Growing Edge) so they know where to lean in. Kids see their tree and its weather.</p>
     <p>Maple uses the same six-part tree as Oak, the Grounded check-in for adults, in words kids understand. Rain is part of how every tree grows, and the check-in quietly teaches that hard days are part of growing too.</p>
 
     <h3 class="grown" id="g-how">How a check-in works</h3>
@@ -2755,7 +2755,7 @@ function renderGuide() {
       <li><b>Save a file now and then.</b> Clearing the browser or switching devices erases saved check-ins. Use Save everyone to a file under My kids and keep it somewhere safe.</li>
       <li><b>It fits the SEL skills you already teach.</b> Each part connects to CASEL's five competencies, noted under The six parts.</li>
       <li><b>If a child's answers worry you,</b> follow your school's usual process, like talking with your school counselor, and let the family know.</li>
-      <li><b>About faith.</b> Roots, what grounds you, leaves room for children of any faith to answer from their own family's tradition. Check with your school about how it fits your classroom.</li>
+      <li><b>About faith.</b> Roots, what grounds you, leaves room for children of all faith traditions and everything in-between to answer from their own family's tradition. Check with your school about how it fits your classroom.</li>
     </ul>
 
     <h3 class="grown" id="g-changes">When life changes</h3>

@@ -10,7 +10,7 @@
 // strands (Move, Rest, Nourish) so The Grove can aim at the one that needs it.
 const PARTS = [
  { id:"roots", name:"Roots", sub:"What grounds you", color:"#8E5A2B", strands:["spirit"],
-   blurb:"What's sacred to you, and what holds you up. Any faith, or none.",
+   blurb:"What's sacred to you, and what holds you up. All faith traditions and everything in-between.",
    kid:"Quiet, wonder, and feeling thankful." },
  { id:"trunk", name:"Trunk", sub:"Purpose", color:"#C27A1E", strands:["create"],
    blurb:"What you live for, and the things you make along the way.",
@@ -56,7 +56,7 @@ const STRANDS = [
    kid:"Family, friends, and people who care about you.",
    why:"We are not built to grow alone. Isolation quietly drains every other part of health. Like a sweet pea, we grow by holding onto something. Branches are about the people you hold onto." },
  { id:"spirit", part:"roots", name:"Roots", color:"#8E5A2B", slot:"morning",
-   blurb:"Meaning, gratitude, and what's sacred to you. Any faith, or none.",
+   blurb:"Meaning, gratitude, and what's sacred to you. All faith traditions and everything in-between.",
    kid:"Quiet, wonder, and feeling thankful.",
    why:"Everyone has an inner life, whether they call it faith or not. Gratitude, quiet, and holding others in mind give your days a center. You don't need the right words. You just need to show up." },
  { id:"create", part:"trunk", name:"Trunk", color:"#C27A1E", slot:"midday",
@@ -373,7 +373,7 @@ const PRACTICES = {
    "I Love You Because","Tell someone in your family one reason you love them.","Give someone a hug, if they want one."]
  ],
  spirit:[
-  ["Gratitude and Intention","Each morning, name three specific things you're thankful for and one intention for the day. Not a goal. A way you want to be. Any faith, any words, or none at all.","Before you start the car or open the door: one breath, one thank you.",
+  ["Gratitude and Intention","Each morning, name three specific things you're thankful for and one intention for the day. Not a goal. A way you want to be. In your own words, from your own tradition, or in quiet.","Before you start the car or open the door: one breath, one thank you.",
    "Three Thank Yous","Every morning, name three things you're thankful for.","Name one thing you're thankful for."],
   ["Breath Prayer","Choose a short phrase, like \"Here I am\" or \"Peace, be still,\" and pray or repeat it on the in-breath and the out-breath.","Three breaths with your phrase.",
    "Breathing Words","Breathe in and think, \"I am.\" Breathe out and think, \"loved.\" Do it five times.","Two breaths with your words."],

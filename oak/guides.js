@@ -502,7 +502,7 @@ const LC_TOPICS = [
     avoid: ["Crowding the room or sharing hard stories.", "Taking pictures without asking."],
     help: ["Bring food and coffee.", "Take care of calls and pets."],
     you: "Keeping vigil is one of the most sacred things people do. Notice what it stirs in you." },
-  faith: "Many traditions have prayers, blessings, or rituals for the dying. A chaplain can help, whatever your faith or none.",
+  faith: "Many traditions have prayers, blessings, or rituals for the dying. A chaplain can help, from all faith traditions and everything in-between.",
   practices: ["roots|Prayer", "fruit|Provide Care", "bark|Music"],
   reach: ["Call the hospice nurse any time you are unsure or worried, day or night.", "Ask for the hospice chaplain or social worker."],
   more: [L.convo, L.dougy], kids: "dying" },

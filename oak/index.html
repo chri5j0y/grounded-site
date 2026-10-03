@@ -3,7 +3,7 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=sp1"></script>
-<script src="/shared/gg-shelf.js?v=l1"></script>
+<script src="/shared/gg-shelf.js?v=fd1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -1004,7 +1004,7 @@ html.ts-2 main{zoom:1.25;}
 
 <div class="view" id="client-growthplan">
   <div class="section-title">Your Growth Plan</div>
-  <p class="lead">Start with about 3 practices for each part of your tree, and a few more for any part that needs care. There is no limit. They show up in Today, ready to check off, and you can change them anytime. This is the practical next step that turns your check-in into real growth.</p>
+  <p class="lead">Start with about 3 practices for each part of your tree, and a few more for each growing edge. There is no limit. They show up in Today, ready to check off, and you can change them anytime. This is the practical next step that turns your check-in into real growth.</p>
   <div class="info-field" style="max-width:340px;margin:18px 0 8px;">
     <label for="client-save-name">Your name (optional, shown on your plan)</label>
     <input type="text" id="client-save-name" placeholder="e.g. Sam">
@@ -1047,15 +1047,15 @@ html.ts-2 main{zoom:1.25;}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js"></script>
-<script src="/oak/checkin.js?v=r4p"></script>
+<script src="/oak/checkin.js?v=fd1"></script>
 <script src="/shared/gg-growth.js?v=sp1"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=sp1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=l1"></script>
-<script src="/shared/gg-tend.js?v=wl1"></script>
-<script src="/oak/guides.js?v=r4p"></script>
+<script src="/shared/gg-tend.js?v=fd1"></script>
+<script src="/oak/guides.js?v=fd1"></script>
 <script>
 const DOMAIN_DEFS = [
   {
@@ -1737,7 +1737,7 @@ const G = {
   'roots|Sabbath Hour': { why: 'Rest with no productivity is an ancient rhythm, and it gives the soul room to catch up with the body.', today: 'Choose one hour this week. Put away work, chores, and screens. Do only restful, life-giving things: a walk, a nap, a long meal, music.', build: 'Grow it toward a half day or a full day of rest each week, with a simple opening and closing ritual, like lighting a candle.', hard: 'If an hour feels impossible, start with 15 minutes. Rest is a skill you build.' },
   'roots|Sit Spot': { why: 'Returning to one place in nature over time helps you notice slow changes and feel rooted in the world around you.', today: 'Find a spot outside, or by a window, where you can sit. Spend ten minutes noticing sounds, light, and small movements.', build: 'Return weekly through the seasons. Keep a line or two in a notebook about what you notice.', hard: 'In Minnesota winters, a window seat counts. So does a warm coat and five minutes.' },
   'roots|Mealtime Blessing': { why: 'A moment of thanks before eating turns an ordinary meal into a small ritual of gratitude and connection.', today: 'Before your next meal, pause. Give thanks for the food, the earth, and the hands that brought it to you.', build: 'Make it part of shared meals. Let others take turns offering the blessing.', hard: 'If praying aloud feels awkward, a silent breath of thanks is enough.', vary: 'A simple "We\'re grateful for this food and for each other" works for any table.' },
-  'roots|Spiritual Direction': { why: 'A spiritual director or chaplain listens with you for the sacred in your life, without an agenda, which helps you hear what you can\'t hear alone.', today: 'Ask a pastor, chaplain, or local retreat center about spiritual directors near you, including ones who welcome any faith or none.', build: 'Many people meet monthly. Bring whatever is alive or heavy in you.', hard: 'If cost is a barrier, ask about sliding scales. Many directors offer them.' },
+  'roots|Spiritual Direction': { why: 'A spiritual director or chaplain listens with you for the sacred in your life, without an agenda, which helps you hear what you can\'t hear alone.', today: 'Ask a pastor, chaplain, or local retreat center about spiritual directors near you, including ones who welcome all faith traditions and everything in-between.', build: 'Many people meet monthly. Bring whatever is alive or heavy in you.', hard: 'If cost is a barrier, ask about sliding scales. Many directors offer them.' },
   'trunk|Values Sort': { why: 'Knowing your values gives you a compass for choices, big and small. Values work is at the heart of acceptance and commitment therapy.', today: 'Read a values list and circle ten that matter most. Narrow them to your top three.', build: 'Each week, pick one value and do one small thing that honors it.', hard: 'If you can\'t choose, ask: what makes me angry when it\'s missing? That often points to a value.' },
   'trunk|Legacy Letter': { why: 'Writing what you hope to pass on clarifies what matters most, and gives the people you love something precious.', today: 'Write a few lines to someone you love about a lesson, a hope, or a blessing you want them to carry.', build: 'Add to it over time. Some people write one for each person they love.', hard: 'If it feels heavy or final, remember a legacy letter is about living, and it can be written at any age.' },
   'trunk|Purpose Statement': { why: 'A clear sense of purpose is one of the strongest supports for well-being, and naming it makes it easier to live.', today: 'Finish this sentence a few ways: "I\'m here to..." Keep the version that feels most true.', build: 'Read it each morning and let it shape one choice that day.', hard: 'If nothing comes, you may be in a season of searching. That\'s normal and healthy. Try again in a month.' },
@@ -2110,7 +2110,7 @@ const Q_OPTS = CKB.answers;
 const QUESTIONS = CKB.questions;
 const QUICK_Q = Object.fromEntries(Object.keys(QUESTIONS).map(k => [k, QUESTIONS[k][0].t]));
 const ST_FLAGS = CKB.flags;
-const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Needs care';
+const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLevelLine = sc => sc == null ? 'Not sure yet' : `${stLevel(sc)}, ${sc} of 10`;
 let ST_ANS = {}, ST_SAFE = {}, ST_QUICK = false;
 
@@ -2450,9 +2450,9 @@ function interpretResults(scores) {
   else balance = 'Your outer tree (branches, leaves, and fruit) is stronger than your inner tree (roots, trunk, and bark). Life above ground looks full, but what holds and carries you may need tending.';
   let overall;
   if (!care && strong >= 4) overall = 'Your tree is strong and healthy across most parts. The work now is maintenance and depth, not rescue.';
-  else if (care < 3) overall = 'Some parts of your tree are carrying more weight than others right now. This is common and workable. Strengthening the weaker parts will relieve pressure on the ones holding the most.';
+  else if (care < 3) overall = 'Some parts of your tree are carrying more weight than others right now. This is common and workable. Tending your growing edges will relieve pressure on the parts holding the most.';
   else overall = 'Several parts of your tree are depleted right now, which means the healthy parts have less to draw on when one gets injured. This is a meaningful moment to be honest about where you need support, and to consider working with a counselor, chaplain, or trusted guide alongside this tool.';
-  return `Your <strong>${strongest.part.toLowerCase()}</strong> (${strongest.name}) are the healthiest part of your tree right now, a real resource to draw on. Your <strong>${weakest.part.toLowerCase()}</strong> (${weakest.name}) need the most tending. ${balance} ${overall}`
+  return `Your <strong>${strongest.part.toLowerCase()}</strong> (${strongest.name}) are the healthiest part of your tree right now, a real resource to draw on. Your biggest growing edge right now is your <strong>${weakest.part.toLowerCase()}</strong> (${weakest.name}), where your next growth begins. ${balance} ${overall}`
     .replace('Your <strong>trunk</strong> (Purpose) are', 'Your <strong>trunk</strong> (Purpose) is')
     .replace('Your <strong>bark</strong> (Mind and feelings) are', 'Your <strong>bark</strong> (Mind and feelings) is')
     .replace('Your <strong>fruit</strong> (Hope) are', 'Your <strong>fruit</strong> (Hope) is')
@@ -2524,7 +2524,7 @@ function calculateResults(mode) {
       <div class="tree-result-wrap"><div id="${prefix}-results-tree" style="width:100%;max-width:320px;"></div></div>
       <p class="tree-caption">Each part of your tree is shaded by its score. The fuller the color, the healthier that part. Tap a part to work on it in your growth plan.</p>
       <div class="lvl-list">
-        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">This is a part to tend, not a grade.</p>' : ''}</div>`).join('')}
+        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">Your growing edge is where your next growth begins.</p>' : ''}</div>`).join('')}
       </div>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       <div class="interpretation">${interpretResults(scores)}</div>
@@ -2591,13 +2591,13 @@ function toggleRestore(id, btn) {
 }
 
 // No limits on practices (Rebrand Session 4), only suggestions: about 3 for a Strong part,
-// 4 for Steady, 5 for Needs care. Kept as a no-op so older markup still works.
+// 4 for Steady, 5 for a Growing Edge. Kept as a no-op so older markup still works.
 function enforcePracticeLimit(el, mode, key) {}
-const oakLevelKey = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
-function oakSuggest(sc) { return window.GGTend && GGTend.suggest ? GGTend.suggest(oakLevelKey(sc)) : ({ care: 5, steady: 4 }[oakLevelKey(sc)] || 3); }
+const oakLevelKey = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge';
+function oakSuggest(sc) { return window.GGTend && GGTend.suggest ? GGTend.suggest(oakLevelKey(sc)) : ({ edge: 5, steady: 4 }[oakLevelKey(sc)] || 3); }
 function oakSuggestNote(sc) {
   const lv = oakLevelKey(sc);
-  return lv === 'care' ? 'This part needs care, so about 5 practices is a good start.' : lv === 'steady' ? 'This part is steady, so about 4 practices is a good start.' : lv === 'strong' ? 'This part is strong, so about 3 practices will keep it growing.' : 'About 3 practices is a good start.';
+  return lv === 'edge' ? 'This is a growing edge, so about 5 practices is a good start.' : lv === 'steady' ? 'This part is steady, so about 4 practices is a good start.' : lv === 'strong' ? 'This part is strong, so about 3 practices will keep it growing.' : 'About 3 practices is a good start.';
 }
 
 // App-ready: a real PDF for the share sheet (text, email, save), with Print as a backup.

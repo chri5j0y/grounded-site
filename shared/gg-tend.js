@@ -7,7 +7,7 @@
    The rhythm
    - Today: the practices from your growth plan, grouped by part. No
      limits, only suggestions: about 3 for a Strong part, 4 for Steady,
-     5 for Needs care (GGTend.suggest), plus any of their own. Checking off any one waters the tree for the day.
+     5 for a Growing Edge (GGTend.suggest), plus any of their own. Checking off any one waters the tree for the day.
      Each practice has an "easier today" version and an optional note.
      Morning and evening anchors sit at the top and bottom.
    - Week: one of twelve weekly themes, a quick check-in (question 1 of
@@ -30,7 +30,7 @@
      GGTend.onFullCheckin(entry)   call when a full check-in finishes
      GGTend.setPlan(plan)    {partKey: {selected:[names], custom:'', own:[names]}}
      GGTend.suggest(level)   how many practices to suggest for a part:
-                             'strong' 3, 'steady' 4, 'care' 5 (3 if unknown)
+                             'strong' 3, 'steady' 4, 'edge' 5 (3 if unknown)
 
    Optional config (Rebrand Session 4, for Aspen and Maple)
      journey      words that replace the shared journey for this age
@@ -65,7 +65,7 @@
     return out;
   }
   // How many practices to suggest for one part of the tree. Suggestions only, never a limit.
-  function suggest(level) { return level === 'care' ? 5 : level === 'steady' ? 4 : 3; }
+  function suggest(level) { return level === 'edge' ? 5 : level === 'steady' ? 4 : 3; }
 
   /* ---------- small helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -233,7 +233,7 @@
       + '<dl class="gt-stats"><div><dt>Days tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + ringN(s) + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p></div></div>';
     if (!list.length) {
       var hasCheck = (C.history() || []).length > 0;
-      html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for any part that needs care. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
+      html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for each growing edge. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
         + (hasCheck ? '<button class="btn btn-primary" onclick="GGTend.act(\'plan\')">Build my growth plan</button>' : '<button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button>' + (C.noQuick ? '' : '<button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick check-in, 2 minutes</button>'))
         + '</div></div>';
       box.innerHTML = html; return;

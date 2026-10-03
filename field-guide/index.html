@@ -592,7 +592,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="qr.js"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
-(function(){ var t = Date.now(); ['codes','lib-owner','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
+(function(){ var t = Date.now(); ['codes','lib-founder','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
 </script>
 <script>
 // =====================================================================
@@ -623,14 +623,31 @@ async function seal(key, obj){ const iv = crypto.getRandomValues(new Uint8Array(
 async function open(key, box){ const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(box.iv)}, key, unb64(box.ct)); const o = JSON.parse(dec.decode(pt)); return o; } // the tree rename: old names in sealed libraries, records, and backups are read under the new ones
 
 // ---------------- levels and codes ----------------
-// Three levels. Owner opens Owner, Staff, and Field. Staff opens Staff and Field. Field opens Field.
+// Three levels. Founder opens Founder, Staff, and Field. Staff opens Staff and Field. Field opens Field.
 // Each level's library has its own key. codes.js holds a sealed copy of a library key for every
 // access code (never the code itself), plus "links" that let a higher level open the ones below it.
 // A code is only used once, to set up a device. After that, each person's own passcode unlocks it.
-const BOX = {owner: window.GFG_OWNER || null, staff: window.GFG_STAFF || null, field: window.GFG_FIELD || null};
-const CODES = window.GFG_CODES || {v:1, stamp:'', salt:null, codes:[], links:{}};
-const RANK = {field:1, staff:2, owner:3};
-const LEVEL_NAME = {owner:'Owner', staff:'Staff', field:'Field', org:'Organization'};
+const BOX = {founder: window.GFG_FOUNDER || null, staff: window.GFG_STAFF || null, field: window.GFG_FIELD || null};
+// Codes, vaults, drafts, and update files made before the Founder rename (October 2026) carry the old level
+// name (FG_OLD) inside. fgTier, fgCodesNorm, and fgDraftNorm read them under the new name, so no device or
+// code has to be set up again.
+const FG_OLD = 'own' + 'er';
+const fgTier = t => t === FG_OLD ? 'founder' : t;
+function fgCodesNorm(c){
+  if (!c) return c;
+  (c.codes || []).forEach(e => { e.tier = fgTier(e.tier); if (e.kind) e.kind = fgTier(e.kind); if (e.label === 'Own' + 'er code') e.label = 'Founder code'; });
+  const L = c.links || {}; Object.keys(L).forEach(k => { if (k.indexOf(FG_OLD + '>') === 0){ const n = 'founder>' + k.slice(FG_OLD.length + 1); if (!L[n]) L[n] = L[k]; delete L[k]; } });
+  return c;
+}
+function fgDraftNorm(d){
+  if (!d) return d;
+  ['keys', 'libs', 'newIds'].forEach(p => { const o = d[p]; if (o && o[FG_OLD] !== undefined){ if (o.founder === undefined) o.founder = o[FG_OLD]; delete o[FG_OLD]; } });
+  if (d.codes) fgCodesNorm(d.codes);
+  return d;
+}
+const CODES = fgCodesNorm(window.GFG_CODES || {v:1, stamp:'', salt:null, codes:[], links:{}});
+const RANK = {field:1, staff:2, founder:3};
+const LEVEL_NAME = {founder:'Founder', staff:'Staff', field:'Field', org:'Organization'};
 async function rawKey(raw){ return crypto.subtle.importKey('raw', unb64(raw), {name:'AES-GCM'}, true, ['encrypt','decrypt']); }
 async function tryOpen(box, raw){ if (!box || !raw) return null; try { return await open(await rawKey(raw), box); } catch(e){ return null; } }
 const newRaw = () => b64(crypto.getRandomValues(new Uint8Array(32)));
@@ -640,7 +657,7 @@ async function resolveCode(code){
     const dk = await derive(code, unb64(CODES.salt), false);
     for (const e of CODES.codes){
       let r = null; try { r = await open(dk, e); } catch(err){}
-      if (r){ if (e.ends && e.ends < today()) throw new Error('ended'); return {tier:r.tier, k:r.k, codeId:e.id}; }
+      if (r){ if (e.ends && e.ends < today()) throw new Error('ended'); return {tier:fgTier(r.tier), k:r.k, codeId:e.id}; }
     }
   }
   // The Staff code from before levels still works until Staff is rotated.
@@ -651,20 +668,20 @@ async function resolveCode(code){
   }
   throw new Error('nomatch');
 }
-async function linkKey(codes, name, srcRaw){ const L = codes.links && codes.links[name]; if (!L || !srcRaw) return null; const r = await tryOpen(L, srcRaw); return r ? r.k : null; }
+async function linkKey(codes, name, srcRaw){ const L = codes.links && (codes.links[name] || codes.links[name.replace('founder>', FG_OLD + '>')]); if (!L || !srcRaw) return null; const r = await tryOpen(L, srcRaw); return r ? r.k : null; }
 // Opens every library this level can reach. Throws 'renew' if the level's own library won't open.
 async function openLevels(tier, keys){
   const K = Object.assign({}, keys), out = {};
   const pick = async (lvl, cands) => { for (const c of cands){ if (!c) continue; const lib = await tryOpen(BOX[lvl], c); if (lib){ K[lvl] = c; return lib; } } return null; };
   out.own = await pick(tier, [K[tier]]);
   if (!out.own) throw new Error('renew');
-  out.staff = tier === 'owner' ? await pick('staff', [await linkKey(CODES, 'owner>staff', K.owner), K.staff]) : tier === 'staff' ? out.own : null;
-  out.field = tier === 'owner' ? await pick('field', [await linkKey(CODES, 'owner>field', K.owner), await linkKey(CODES, 'staff>field', K.staff), K.field])
+  out.staff = tier === 'founder' ? await pick('staff', [await linkKey(CODES, 'founder>staff', K.founder), K.staff]) : tier === 'staff' ? out.own : null;
+  out.field = tier === 'founder' ? await pick('field', [await linkKey(CODES, 'founder>field', K.founder), await linkKey(CODES, 'staff>field', K.staff), K.field])
             : tier === 'staff' ? await pick('field', [await linkKey(CODES, 'staff>field', K.staff), K.field]) : out.own;
-  out.ownerLib = tier === 'owner' ? out.own : null;
+  out.founderLib = tier === 'founder' ? out.own : null;
   out.keys = K; return out;
 }
-function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.field; OWN = o.ownerLib; }
+function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.field; FDR = o.founderLib; }
 function codeEnded(){
   if (!CODEID || CODEID === 'legacy') return false;
   const e = CODES.codes.find(x => x.id === CODEID);
@@ -674,27 +691,31 @@ function codeEnded(){
 async function enter(inner){
   const v2 = inner.v === 2;
   const keys = v2 ? Object.assign({}, inner.keys || {}) : {staff: inner.libKey};
-  TIER = v2 ? inner.tier : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
-  DATA = fgPartsData(Object.assign(blankData(), inner.data)); DATA.owner = Object.assign({saved:[], draft:null}, DATA.owner || {}); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
+  if (keys[FG_OLD] !== undefined){ if (keys.founder === undefined) keys.founder = keys[FG_OLD]; delete keys[FG_OLD]; }
+  TIER = v2 ? fgTier(inner.tier) : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
+  DATA = fgPartsData(Object.assign(blankData(), inner.data));
+  if (inner.data && inner.data[FG_OLD] && !(inner.data.founder && inner.data.founder.saved && inner.data.founder.saved.length)) DATA.founder = inner.data[FG_OLD];
+  delete DATA.founder;
+  DATA.founder = Object.assign({saved:[], draft:null}, DATA.founder || {}); fgDraftNorm(DATA.founder.draft); (DATA.founder.saved || []).forEach(x => { x.tier = fgTier(x.tier); if (x.kind) x.kind = fgTier(x.kind); }); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
   // Changes made in the Access manager on this device are now live: pick up the new keys.
   // Clears once every file it made is on the site: codes.js (if codes changed) and each library it resealed.
-  const d = DATA.owner.draft;
+  const d = DATA.founder.draft;
   if (d){
     const libs = Object.entries(d.libs || {}), codesLive = !d.stamp || d.stamp === CODES.stamp, libsLive = libs.every(([l, b]) => BOX[l] && b && BOX[l].iv === b.iv);
-    if ((d.stamp || libs.length) && codesLive && libsLive){ Object.assign(keys, d.keys || {}); if (d.newIds && d.newIds[TIER]) CODEID = d.newIds[TIER]; DATA.owner.draft = null; setTimeout(() => toast('Your Owner tab changes are live.'), 900); }
+    if ((d.stamp || libs.length) && codesLive && libsLive){ Object.assign(keys, d.keys || {}); if (d.newIds && d.newIds[TIER]) CODEID = d.newIds[TIER]; DATA.founder.draft = null; setTimeout(() => toast('Your Founder tab changes are live.'), 900); }
   }
   KEYS = keys;
   useLevels(await openLevels(TIER, keys));
-  // An Owner device shows library updates waiting to upload, so they can be tried before they go live.
-  const dd = DATA.owner.draft;
-  if (TIER === 'owner' && dd && dd.libs) for (const [l, b] of Object.entries(dd.libs)){ const pl = await tryOpen(b, Object.assign({}, KEYS, dd.keys || {})[l]); if (pl){ if (l === 'owner') OWN = pl; else if (l === 'staff') LIB = pl; else FLD = pl; } }
+  // A Founder device shows library updates waiting to upload, so they can be tried before they go live.
+  const dd = DATA.founder.draft;
+  if (TIER === 'founder' && dd && dd.libs) for (const [l, b] of Object.entries(dd.libs)){ const pl = await tryOpen(b, Object.assign({}, KEYS, dd.keys || {})[l]); if (pl){ if (l === 'founder') FDR = pl; else if (l === 'staff') LIB = pl; else FLD = pl; } }
   return v2 ? 'ok' : 'upgrade';
 }
 
 // ---------------- state ----------------
-let LIB = null, OWN = null, FLD = null, TIER = null, KEYS = {}, CODEID = null, DATA = null, USERKEY = null, VSALT = null;
+let LIB = null, FDR = null, FLD = null, TIER = null, KEYS = {}, CODEID = null, DATA = null, USERKEY = null, VSALT = null;
 let V = {tab:'home'}, RUN = null, lastAct = Date.now(), saveT = null, runTimer = null;
-const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, orient:{lessons:{}, last:null, pass:null, signed:null, staff:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, owner:{saved:[], draft:null}, plans:[]});
+const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, orient:{lessons:{}, last:null, pass:null, signed:null, staff:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, founder:{saved:[], draft:null}, plans:[]});
 const touch = o => { if (o) o.u = Date.now(); return o; };
 
 function readVault(){ try { return JSON.parse(localStorage.getItem(VAULT_KEY)); } catch(e){ return null; } }
@@ -731,9 +752,9 @@ function lockScreen(mode, msg){
       <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who use Grounded tools with the people they serve: guided visits, tool guides, When Life Changes for every age, handouts, and session plans. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For individuals</b><span>Free. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../index.html#contact">Request access</a></div>
       <div><b>For organizations</b><span>Hospices, churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" data-mail="org" href="../index.html#contact">Reach out for pricing</a></div></div></div>`,
-    upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given an Owner code, enter it once here. Your notes and records stay just as they are.</p>
-      <form id="lf"><label for="l1">Owner code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
-      <button class="btn btn-gold" type="submit">Add Owner Access</button></form>
+    upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
+      <form id="lf"><label for="l1">Founder code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+      <button class="btn btn-gold" type="submit">Add Founder Access</button></form>
       <p class="lock-help"><button type="button" id="keep">Keep Staff access</button></p>`,
     create: `<p class="lock-sub">Now create your personal passcode. It encrypts your notes on this device. There is no way to recover it, so choose one you'll remember.</p>
       <form id="lf"><label for="l0">Your first name</label><input id="l0" type="text" autocomplete="given-name" style="letter-spacing:0" required>
@@ -786,7 +807,7 @@ async function handleLock(mode){
       await persist(); await sessStart(); start();
     } else if (mode === 'renew' || mode === 'upgrade'){
       const r = await resolveCode($('#l1').value);
-      if (mode === 'upgrade' && r.tier !== 'owner') { m.textContent = "That's not an Owner code. Tap Keep Staff access instead."; return; }
+      if (mode === 'upgrade' && r.tier !== 'founder') { m.textContent = "That's not a Founder code. Tap Keep Staff access instead."; return; }
       const keys = Object.assign({}, KEYS, {[r.tier]: r.k});
       useLevels(await openLevels(r.tier, keys));
       TIER = r.tier; CODEID = r.codeId;
@@ -816,7 +837,7 @@ function resetDevice(){
 function lock(){
   if (DATA && RUN && !RUN.demo) { DATA.draft = RUN; persist(); }
   clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose(); spKidClose(); spRepClose(); dkClose();
-  LIB = null; OWN = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
+  LIB = null; FDR = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
   $('#view').innerHTML = ''; $('#runner').innerHTML = ''; $('#runner').classList.add('hide'); closeMenu();
   lockScreen('unlock');
 }
@@ -850,15 +871,15 @@ function tabsFor(){
   const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : [])];
   const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
-  if (TIER === 'owner') t.push(['owner','Owner','key']);
+  if (TIER === 'founder') t.push(['founder','Founder','key']);
   return t;
 }
-const notice = () => ((LIB || OWN || FLD || {}).brand || {}).notice || '';
+const notice = () => ((LIB || FDR || FLD || {}).brand || {}).notice || '';
 function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, owner:vOwner, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1140,7 +1161,7 @@ function vFieldHome(){
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
 }
 
-// Follow-ups due this week, for Field users (Staff and Owner see them on Home). Only people Field can open.
+// Follow-ups due this week, for Field users (Staff and Founders see them on Home). Only people Field can open.
 function fieldDue(){
   const due = [];
   DATA.clients.filter(c => !stIsMe(c)).forEach(c => (c.followups || []).forEach(f => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f}); }));
@@ -1151,7 +1172,7 @@ function fieldDue(){
 
 // ---------------- ORIENTATION ----------------
 // Lives in the Field library (FLD.orientation). Everyone who opens Field sees it. Field users must finish it
-// before anything else opens. Staff and Owner also get the Staff section (LIB.orientationStaff).
+// before anything else opens. Staff and Founders also get the Staff section (LIB.orientationStaff).
 // Renew yearly, and again whenever FLD.orientation.version goes up (retake the scenarios, sign again).
 const OR = () => (FLD && FLD.orientation) || null;
 const addYear = s => { const [y,m,d] = s.split('-').map(Number); const t = new Date(y + 1, m-1, d); return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; };
@@ -1208,7 +1229,7 @@ function vOrient(){
   ${step('or-quiz', null, 7, s.pass, `${O.quiz.items.length} real-world scenarios`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('or-go-sign', null, 8, s.signed, O.agreement.title, aSub, !s.pass)}
-  ${S ? `<h3 style="margin:22px 0 10px">Staff section</h3>${step('or-staff', null, 9, s.staff, S.title, s.staff ? `Read ${nice(D.staff.date)}` : `About ${S.minutes} minutes. For Staff and Owner only.`, false)}` : ''}`;
+  ${S ? `<h3 style="margin:22px 0 10px">Staff section</h3>${step('or-staff', null, 9, s.staff, S.title, s.staff ? `Read ${nice(D.staff.date)}` : `About ${S.minutes} minutes. For Staff and Founders only.`, false)}` : ''}`;
 }
 function lessonBody(L){
   return `<div class="lesson"><h1>${esc(L.title)}</h1><p class="lead">${esc(L.lead)}</p>
@@ -1299,26 +1320,26 @@ function orPrintAgreement(){
     <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'orientation-agreement'});
 }
 
-// ---------------- OWNER: Access manager, pricing, playbook ----------------
+// ---------------- FOUNDER: Access manager, pricing, playbook ----------------
 // Changes are made on a working copy ("draft") saved in this device's encrypted records.
 // Nothing changes for anyone until the files it gives you are uploaded to field-guide/ on the site.
 const WORDS = ["acorn", "alder", "amber", "anchor", "apple", "aspen", "aurora", "autumn", "badger", "balsam", "banner", "barley", "basil", "basin", "bay", "beacon", "beech", "berry", "birch", "bison", "bloom", "blossom", "bluff", "boulder", "bramble", "branch", "breeze", "briar", "brook", "brush", "buck", "bud", "burrow", "butte", "cabin", "candle", "canoe", "canyon", "cardinal", "cedar", "chapel", "cherry", "chestnut", "cinder", "clay", "cloud", "clover", "coast", "cobble", "comet", "copper", "coral", "cove", "crane", "creek", "crest", "crocus", "crow", "dahlia", "daisy", "dawn", "deer", "delta", "dew", "dove", "dune", "dusk", "eagle", "earth", "echo", "elder", "elm", "ember", "evergreen", "fable", "falcon", "fawn", "feather", "fern", "field", "finch", "fir", "flame", "flax", "flint", "flower", "forest", "fossil", "fox", "frost", "garden", "garnet", "glacier", "glade", "glen", "glow", "gourd", "grain", "granite", "grove", "gull", "harbor", "harvest", "haven", "hawk", "hazel", "hearth", "heath", "hemlock", "heron", "hickory", "hill", "hollow", "honey", "hops", "horizon", "iris", "island", "ivy", "jade", "jasper", "juniper", "kelp", "kestrel", "kettle", "kite", "lake", "lantern", "larch", "lark", "laurel", "leaf", "ledge", "lichen", "lilac", "lily", "linden", "lodge", "loon", "lotus", "lupine", "maple", "marigold", "marsh", "meadow", "mesa", "mint", "mist", "moon", "moss", "moth", "mountain", "nest", "nettle", "north", "nutmeg", "oak", "oasis", "ocean", "olive", "onyx", "orchard", "orchid", "osprey", "otter", "owl", "paddle", "pasture", "pearl", "pebble", "pecan", "pepper", "petal", "pine", "pinecone", "plover", "plum", "pond", "poplar", "poppy", "prairie", "prism", "quail", "quarry", "quill", "rain", "rainbow", "rapids", "raven", "reed", "reef", "ridge", "ripple", "river", "robin", "rock", "rose", "rowan", "rye", "sable", "saddle", "sage", "salmon", "sand", "sapling", "seed", "sequoia", "shade", "shell", "shore", "sierra", "sky", "slate", "snow", "sorrel", "sparrow", "spring", "sprout", "spruce", "star", "stone", "stream", "summit", "sun", "sunrise", "swallow", "swan", "tamarack", "teal", "thicket", "thistle", "thrush", "thunder", "tide", "timber", "torch", "trail", "trout", "tulip", "tundra", "twig", "valley", "vine", "violet", "walnut", "warbler", "water", "wheat", "willow", "wind", "winter", "wolf", "wren", "yarrow", "yew", "zephyr"];
 function wordsCode(){ const r = crypto.getRandomValues(new Uint32Array(4)); return [0,1,2].map(i => WORDS[r[i] % WORDS.length]).join('-') + '-' + (10 + r[3] % 90); }
 function oneYear(){ const d = new Date(); d.setFullYear(d.getFullYear() + 1); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-const effKeys = () => Object.assign({}, KEYS, DATA.owner.draft ? DATA.owner.draft.keys : {});
-const workCodes = () => DATA.owner.draft ? DATA.owner.draft.codes : CODES;
+const effKeys = () => Object.assign({}, KEYS, DATA.founder.draft ? DATA.founder.draft.keys : {});
+const workCodes = () => DATA.founder.draft ? DATA.founder.draft.codes : CODES;
 function ensureDraft(){
-  if (!DATA.owner.draft) DATA.owner.draft = {stamp:'', codes: JSON.parse(JSON.stringify(CODES)), keys:{}, libs:{}, newIds:{}};
-  const d = DATA.owner.draft; d.codes.links = d.codes.links || {}; d.codes.codes = d.codes.codes || []; return d;
+  if (!DATA.founder.draft) DATA.founder.draft = {stamp:'', codes: JSON.parse(JSON.stringify(CODES)), keys:{}, libs:{}, newIds:{}};
+  const d = DATA.founder.draft; d.codes.links = d.codes.links || {}; d.codes.codes = d.codes.codes || []; return d;
 }
 async function relink(d){
   const k = Object.assign({}, KEYS, d.keys), L = Object.assign({}, d.codes.links);
-  if (k.owner && k.staff) L['owner>staff'] = await seal(await rawKey(k.owner), {k:k.staff});
-  if (k.owner && k.field) L['owner>field'] = await seal(await rawKey(k.owner), {k:k.field});
+  if (k.founder && k.staff) L['founder>staff'] = await seal(await rawKey(k.founder), {k:k.staff});
+  if (k.founder && k.field) L['founder>field'] = await seal(await rawKey(k.founder), {k:k.field});
   if (k.staff && k.field) L['staff>field'] = await seal(await rawKey(k.staff), {k:k.field});
   d.codes.links = L; d.stamp = d.codes.stamp = uid();
 }
-function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return !!(k.staff && (!L['owner>staff'] || (k.field && !L['staff>field']))); }
+function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return !!(k.staff && (!L['founder>staff'] || (k.field && !L['staff>field']))); }
 async function makeCode(kind, label, ends){
   const tier = kind === 'org' ? 'field' : kind, k = effKeys()[tier];
   if (!k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish setup."'); return null; }
@@ -1328,14 +1349,14 @@ async function makeCode(kind, label, ends){
   const e = await seal(await derive(code, unb64(d.codes.salt), false), {k, tier});
   Object.assign(e, {id: tier.slice(0,3) + uid(), tier, kind, label, made: today(), ends: ends || null});
   d.codes.codes.push(e);
-  DATA.owner.saved.push({id:e.id, code, label, tier, kind, made:e.made, ends:e.ends});
+  DATA.founder.saved.push({id:e.id, code, label, tier, kind, made:e.made, ends:e.ends});
   await relink(d); await persist();
   return {code, e};
 }
 async function rotateLevel(tier){
   const plain = await pendingPlain(tier);
   if (!plain) return alert("This device can't open the " + LEVEL_NAME[tier] + ' library, so it can\'t rotate it.');
-  const warn = {owner:'Rotate the Owner code? The current Owner code stops working once you upload. Kayti (and any other Owner device) types the new Owner code once.',
+  const warn = {founder:'Rotate the Founder code? The current Founder code stops working once you upload. Kayti (and any other Founder device) types the new Founder code once.',
     staff:'Rotate the Staff code? The current Staff code, including the one from before levels, stops working once you upload. Every Staff device types the new Staff code once. Use this when someone leaves.',
     field:'Rotate Field? Every Field code, including every organization code, stops working once you upload. Each organization then needs a new code. This is the yearly change.'}[tier];
   if (!confirm(warn)) return;
@@ -1343,78 +1364,79 @@ async function rotateLevel(tier){
   d.keys[tier] = raw;
   d.libs[tier] = await seal(await rawKey(raw), plain);
   d.codes.codes = d.codes.codes.filter(e => e.tier !== tier);
-  DATA.owner.saved = DATA.owner.saved.filter(x => x.tier !== tier);
-  const r = await makeCode(tier, {owner:'Owner code', staff:'Staff code', field:'Field code (individuals)'}[tier], tier === 'field' ? oneYear() : null);
+  DATA.founder.saved = DATA.founder.saved.filter(x => x.tier !== tier);
+  const r = await makeCode(tier, {founder:'Founder code', staff:'Staff code', field:'Field code (individuals)'}[tier], tier === 'field' ? oneYear() : null);
   if (!r) return;
   d.newIds[tier] = r.e.id; await persist();
   V.show = r.e.id; render();
 }
 const HEAD = '// Grounded Field Guide(TM). (c) 2026 Chris Joy / Grounded. Proprietary and confidential.\n';
 function draftFile(which){
-  const d = DATA.owner.draft;
-  if (which === 'codes') return HEAD + '// Access codes. Each line holds a sealed copy of one library key. No code is stored here in readable form.\n// Made and changed by the Access manager (Owner tab). Replace this whole file with the one it downloads.\nwindow.GFG_CODES = ' + JSON.stringify(d.codes, null, 1) + ';\n';
+  const d = DATA.founder.draft;
+  if (which === 'codes') return HEAD + '// Access codes. Each line holds a sealed copy of one library key. No code is stored here in readable form.\n// Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.\nwindow.GFG_CODES = ' + JSON.stringify(d.codes, null, 1) + ';\n';
   return HEAD + '// ' + LEVEL_NAME[which] + ' library (encrypted).\nwindow.GFG_' + which.toUpperCase() + ' = ' + JSON.stringify(d.libs[which]) + ';\n';
 }
 function download(name, text){
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type:'text/javascript'})); a.download = name;
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
-function vOwner(){
-  const d = DATA.owner.draft, C = workCodes(), live = new Set(CODES.codes.map(e => e.id)), k = effKeys();
-  const saved = id => DATA.owner.saved.find(x => x.id === id);
-  const order = {owner:0, staff:1, field:2, org:3};
+function vFounder(){
+  const d = DATA.founder.draft, C = workCodes(), live = new Set(CODES.codes.map(e => e.id)), k = effKeys();
+  const saved = id => DATA.founder.saved.find(x => x.id === id);
+  const order = {founder:0, staff:1, field:2, org:3};
   const list = C.codes.slice().sort((a,b) => (order[a.kind||a.tier] - order[b.kind||b.tier]) || String(a.label).localeCompare(String(b.label)));
   const legacyLive = BOX.staff && BOX.staff.salt && !(d && d.libs.staff);
   const shown = V.show ? saved(V.show) : null;
-  const pr = OWN.pricing, pb = OWN.playbook;
-  const fileRows = d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="own-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
-  return `<div class="page-head"><div class="eyebrow">Owner &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>
+  const pr = FDR.pricing, pb = FDR.playbook;
+  const fileRows = d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
+  return `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>
   ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
     <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here.${live.has(shown.id) ? '' : ' It starts working once you upload codes.js.'}</p>
-    <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="own-hide">Done</button></div></div>` : ''}
-  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Owner device opens everything from now on.</p>
-    <label class="f" for="own-sc">Staff code</label><input type="password" id="own-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
-    <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="own-addstaff">Add Staff Access</button></div>`
-    : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish setup</h3><p class="muted">One time only. This links the Owner code to the Staff and Field libraries, so an Owner code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="own-setup">Finish Setup</button></div>` : ''}
+    <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="fdr-hide">Done</button></div></div>` : ''}
+  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Founder device opens everything from now on.</p>
+    <label class="f" for="fdr-sc">Staff code</label><input type="password" id="fdr-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
+    <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="fdr-addstaff">Add Staff Access</button></div>`
+    : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Field libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}
   ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to upload</h3><p class="muted">${Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
-    <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="own-discard">Discard These Changes</button></div></div>` : ''}
+    <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-discard">Discard These Changes</button></div></div>` : ''}
   <div class="card"><h3>Access codes</h3><p class="muted">A code is only used once, to set up a device. After that, each person unlocks with their own passcode.</p>
-   <div style="margin-top:8px">${list.map(e => { const ended = e.ends && e.ends < today(), sv = saved(e.id); return `<div class="list-row"><div class="lr-main"><b>${esc(e.label)}</b> <span class="pill">${esc(LEVEL_NAME[e.kind || e.tier])}</span>${live.has(e.id) ? '' : ' <span class="pill warn">Not uploaded yet</span>'}${ended ? ' <span class="pill warn">Ended</span>' : ''}<br><small class="muted">Made ${nice(e.made)} &middot; ${e.ends ? 'ends ' + nice(e.ends) : 'no end date'}</small></div><div class="row">${sv ? `<button class="btn btn-line btn-sm" data-act="own-show" data-v="${e.id}">Show</button>` : ''}<button class="btn btn-line btn-sm" data-act="own-remove" data-v="${e.id}">Remove</button></div></div>`; }).join('')}
+   <div style="margin-top:8px">${list.map(e => { const ended = e.ends && e.ends < today(), sv = saved(e.id); return `<div class="list-row"><div class="lr-main"><b>${esc(e.label)}</b> <span class="pill">${esc(LEVEL_NAME[e.kind || e.tier])}</span>${live.has(e.id) ? '' : ' <span class="pill warn">Not uploaded yet</span>'}${ended ? ' <span class="pill warn">Ended</span>' : ''}<br><small class="muted">Made ${nice(e.made)} &middot; ${e.ends ? 'ends ' + nice(e.ends) : 'no end date'}</small></div><div class="row">${sv ? `<button class="btn btn-line btn-sm" data-act="fdr-show" data-v="${e.id}">Show</button>` : ''}<button class="btn btn-line btn-sm" data-act="fdr-remove" data-v="${e.id}">Remove</button></div></div>`; }).join('')}
    ${legacyLive ? `<div class="list-row"><div class="lr-main"><b>Staff code</b> <span class="pill">Staff</span><br><small class="muted">The code from before levels. It works until you rotate Staff.</small></div></div>` : ''}</div></div>
   <div class="card"><h3>Make a code</h3>
-   <label class="f" for="own-kind">Kind</label><select id="own-kind"><option value="org">Organization (Field)</option><option value="field">Individual (Field)</option><option value="staff">Staff</option><option value="owner">Owner</option></select>
-   <label class="f" for="own-label">Name</label><input type="text" id="own-label" placeholder="Organization or person">
-   <label class="f" for="own-ends">Ends</label><input type="date" id="own-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. New Field users go through Orientation before anything else opens.</p>
-   <button class="btn btn-gold" style="margin-top:12px" data-act="own-make">Make Code</button></div>
+   <label class="f" for="fdr-kind">Kind</label><select id="fdr-kind"><option value="org">Organization (Field)</option><option value="field">Individual (Field)</option><option value="staff">Staff</option><option value="founder">Founder</option></select>
+   <label class="f" for="fdr-label">Name</label><input type="text" id="fdr-label" placeholder="Organization or person">
+   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. New Field users go through Orientation before anything else opens.</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make">Make Code</button></div>
   <div class="card"><h3>Rotate a level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Field for the yearly change.</p>
-   <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="own-rot" data-v="field">Rotate Field</button><button class="btn btn-line btn-sm" data-act="own-rot" data-v="staff">Rotate Staff</button><button class="btn btn-line btn-sm" data-act="own-rot" data-v="owner">Rotate Owner</button></div>
+   <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="field">Rotate Field</button><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="staff">Rotate Staff</button><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="founder">Rotate Founder</button></div>
    <p class="muted" style="font-size:14px;margin-top:10px">Removing a code stops it from setting up new devices and ends it on devices that already use it. For a clean break, rotate the level too.</p></div>
   ${vUpdateCard()}
   <div class="card"><h3>Private pricing</h3><p class="muted">${esc(pr.intro)}</p>
    <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   <div class="card"><h3>${esc(pb.title)}</h3><p class="muted">${esc(pb.body)}</p></div>
+  ${vBiz()}
   ${vProof()}
   ${vSpeak()}
   <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
-  ${FLD ? spOwnerCard() : ''}
-  ${FLD ? saOwnerCard() : ''}
-  ${FLD ? wlOwnerCard() : ''}`;
+  ${FLD ? spFounderCard() : ''}
+  ${FLD ? saFounderCard() : ''}
+  ${FLD ? wlFounderCard() : ''}`;
 }
 
 
-// ---------------- OWNER: Proofreading ----------------
-// Every line of writing added to the site and tools, by session. The lines live in the Owner
-// library (OWN.proofreading, plus OWN.proofreadingAdd from Rebrand Session 4 on), so new sessions
+// ---------------- FOUNDER: Proofreading ----------------
+// Every line of writing added to the site and tools, by session. The lines live in the Founder
+// library (FDR.proofreading, plus FDR.proofreadingAdd from Rebrand Session 4 on), so new sessions
 // add to them through Update a Library.
-// Checks are kept in this device's encrypted records (DATA.owner.proof), one box per person.
+// Checks are kept in this device's encrypted records (DATA.founder.proof), one box per person.
 function vProof(){
-  // Sections live in OWN.proofreading.sections, and later sessions add theirs under
-  // OWN.proofreadingAdd.<session> (Rebrand Session 4), so an update never has to know the list's length.
-  const base = (OWN && OWN.proofreading) || null, more = (OWN && OWN.proofreadingAdd && typeof OWN.proofreadingAdd === 'object') ? Object.keys(OWN.proofreadingAdd).sort().map(k => OWN.proofreadingAdd[k]).filter(x => x && Array.isArray(x.lines)) : [];
+  // Sections live in FDR.proofreading.sections, and later sessions add theirs under
+  // FDR.proofreadingAdd.<session> (Rebrand Session 4), so an update never has to know the list's length.
+  const base = (FDR && FDR.proofreading) || null, more = (FDR && FDR.proofreadingAdd && typeof FDR.proofreadingAdd === 'object') ? Object.keys(FDR.proofreadingAdd).sort().map(k => FDR.proofreadingAdd[k]).filter(x => x && Array.isArray(x.lines)) : [];
   if (!(base && base.sections) && !more.length) return '';
   const P = Object.assign({}, base || {}, { sections: ((base && base.sections) || []).concat(more) });
-  const ck = (DATA.owner.proof = DATA.owner.proof || {}), who = P.people || ['Chris', 'Kayti'];
+  const ck = (DATA.founder.proof = DATA.founder.proof || {}), who = P.people || ['Chris', 'Kayti'];
   const only = !!V.proofOpen, done = id => who.every((w, i) => ck[id + '|' + i]);
   let all = 0, fin = 0;
   const secs = P.sections.map(sec => {
@@ -1430,7 +1452,7 @@ function vProof(){
 // ---------------- OAK GUIDE ----------------
 // Wording lives in the Field library (FLD.oakGuide), so it is sealed and edited through Update a Library.
 // People are ordinary People records with a .st profile. Visits are sessions with kind 'st', so backups merge them.
-// Staff and Owner always see it. Field users see it once FLD.oakGuide.open.field is on and Orientation is done.
+// Staff and Founders always see it. Field users see it once FLD.oakGuide.open.field is on and Orientation is done.
 /* The six parts rename (Rebrand Session 4). The guides' library text was sealed with the old part
    names (holy, meaning, mind, community, body, hope). Until a library update is sealed, the guides
    read it under the new names: part keys and Try at home lists move to roots, trunk, bark, branches,
@@ -1463,7 +1485,7 @@ const stMe = () => DATA.clients.find(stIsMe);
 const stVisits = id => DATA.sessions.filter(s => s.kind === 'st' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const stTypeName = t => t === 'me' ? 'Me' : ((STG().people.find(x => x[0] === t) || [])[1] || 'Person');
 const stVisitName = k => (STG().visits.find(x => x[0] === k) || [])[1] || 'Visit';
-const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Needs care';
+const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
@@ -1745,7 +1767,7 @@ function vSTPerson(c){
   ${me ? '' : gvPersonCard(c)}
   ${me ? '' : htPersonCard(c)}
   <div class="grid g2" style="margin-top:14px">
-   <div class="card"><h3>Rings</h3><div class="st-ringwrap">${stRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(s => s.visit !== 'open' && stAvg(s.scores) != null).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust needs care.</p></div>${stPartTable(c)}</div>
+   <div class="card"><h3>Rings</h3><div class="st-ringwrap">${stRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(s => s.visit !== 'open' && stAvg(s.scores) != null).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust is a growing edge.</p></div>${stPartTable(c)}</div>
    <div class="card"><h3>Growth plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
     <h3 style="margin-top:20px">Follow-ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-stfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
@@ -1988,12 +2010,12 @@ async function stImportFile(file){
   catch(e){ alert("That isn't an Oak practitioner backup. In public Oak, the About page has Download Backup when old practitioner sessions are saved in that browser."); }
 }
 
-// ----- Owner: turn Oak Guide on or off for Field users (through Update a Library) -----
+// ----- Founder: turn Oak Guide on or off for Field users (through Update a Library) -----
 function stFieldRow(){
   const S = STG();
   if (!S) return `<p class="muted">Oak Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Oak Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="st-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Oak Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="st-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
 }
 async function stSetField(on){
   const cur = await pendingPlain('field'); if (!cur || !cur.oakGuide) return;
@@ -2009,7 +2031,7 @@ async function stSetField(on){
 // The practices, weeks, and seasons come from the public grove/data.js and grove/library.js, so
 // there's one place to edit them. The tree is drawn by /shared/grove-scene.js, same as The Grove.
 // A person's tree is c.gv on their People record, so one person can have Oak visits and a
-// Grove tree. Staff and Owner always see it; Field users once FLD.groveGuide.open.field is on
+// Grove tree. Staff and Founders always see it; Field users once FLD.groveGuide.open.field is on
 // and Orientation is done.
 const GVG = () => (FLD && FLD.groveGuide) || null;
 const gvOpen = () => !!GVG() && (TIER !== 'field' || !!(GVG().open && GVG().open.field && (!OR() || orState().complete)));
@@ -2278,12 +2300,12 @@ async function gvImportFile(file){
   } catch(e){ alert("That isn't a Grove file. In The Grove, tap Download for the Field Guide, then choose that file here."); }
 }
 
-// ----- Owner: open or close the Grove Guide to Field users (through Update a Library) -----
+// ----- Founder: open or close the Grove Guide to Field users (through Update a Library) -----
 function gvFieldRow(){
   const S = GVG();
   if (!S) return `<p class="muted" style="margin-top:8px">The Grove Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="list-row"><div class="lr-main"><b>Grove Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="gv-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+  return `<div class="list-row"><div class="lr-main"><b>Grove Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="gv-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
 }
 async function gvSetField(on){
   const cur = await pendingPlain('field'); if (!cur || !cur.groveGuide) return;
@@ -2346,14 +2368,14 @@ function gvAct(a, v, t){
 // read in their own scope, so Maple and Maple Guide always ask the same thing.
 // A child is an ordinary People record with a .sp profile. Visits are sessions with kind 'sp'. Report records
 // are sessions with kind 'spr', kept apart from visits so they are never printed or copied.
-// Staff and Owner always see the tab. Field users see it once mapleGuide.open.field is on and Orientation is done.
+// Staff and Founders always see the tab. Field users see it once mapleGuide.open.field is on and Orientation is done.
 // Everyone takes the Maple training (DATA.spmod) before a real visit. Demo visits are always open.
 const SPG = () => fgPartsLib((FLD && FLD.mapleGuide) || null);
 const spOpen = () => !!SPG() && (TIER !== 'field' || !!(SPG().open && SPG().open.field && (!OR() || orState().complete)));
-const SP_LV = ['care','steady','strong'];
+const SP_LV = ['edge','steady','strong'];
 const spLvName = k => (((SPG() || {}).levels || {}).names || []).concat([]).find(x => x[0] === k)?.[1] || (k === 'none' ? 'Not enough to say' : '');
-const spLvCls = k => k === 'strong' ? 'sage' : k === 'steady' ? 'gold' : k === 'care' ? 'warn' : '';
-const spLvOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
+const spLvCls = k => k === 'strong' ? 'sage' : k === 'steady' ? 'gold' : k === 'edge' ? 'warn' : '';
+const spLvOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge';
 const spPart = k => SPG().parts.find(p => p.key === k);
 const spK2 = g => ['K','1','2'].includes(String(g));
 const spBand = g => spK2(g) ? 'k2' : 'g35';
@@ -3080,8 +3102,8 @@ function spAct(a, v, t){
     case 'sp-del': if (confirm('Delete this child and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('maple'); } return true;
     case 'sp-add-fu': { const c = CL(v), d = $('#sp-fd').value, tx = $('#sp-ft').value.trim(); if (!d){ $('#sp-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
     case 'sp-field': spSetField(v === 'on'); return true;
-    case 'sp-own-contact': spSetContact(); return true;
-    case 'sp-own-checked': spSetChecked(); return true;
+    case 'sp-fdr-contact': spSetContact(); return true;
+    case 'sp-fdr-checked': spSetChecked(); return true;
   }
   return false;
 }
@@ -3104,19 +3126,19 @@ function spInput(t, ev){
   return false;
 }
 
-// ----- Owner: open to Field users, the reporting contact everyone starts with, and the yearly recheck -----
-function spOwnerCard(){
+// ----- Founder: open to Field users, the reporting contact everyone starts with, and the yearly recheck -----
+function spFounderCard(){
   const S = SPG();
   if (!S) return `<div class="card"><h3>Maple Guide</h3><p class="muted">Maple Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
   const on = !!(S.open && S.open.field), R = S.report, k = R.contact || {}, due = addYear(R.checked), soon = addDays(today(), 30) >= due;
   return `<div class="card" ${soon ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Maple Guide</h3>
-   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Maple training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sp-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Maple training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sp-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
    <h4 style="margin-top:14px">Reporting info</h4><p class="muted" style="margin-top:4px">Last checked ${nice(R.checked)}. ${soon ? `<b style="color:var(--danger)">Recheck by ${nice(due)}:</b> county numbers, after hours lines, online forms, and the law.` : `Recheck by ${nice(due)}.`}</p>
-   <div class="row" style="margin-top:8px"><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="sp-own-checked">Mark Rechecked Today</button></div>
+   <div class="row" style="margin-top:8px"><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="sp-fdr-checked">Mark Rechecked Today</button></div>
    <h4 style="margin-top:14px">Your reporting contact, for everyone</h4><p class="muted" style="font-size:14px">Each person can change it for themselves.</p>
    <div class="grid g2"><div><label class="f" for="spo-who">Who to call</label><input type="text" id="spo-who" value="${esc(k.who || '')}" placeholder="Grounded: Chris Joy"></div><div><label class="f" for="spo-ph">Phone</label><input type="tel" id="spo-ph" value="${esc(k.phone || '')}"></div></div>
    <label class="f" for="spo-step">Organization step</label><input type="text" id="spo-step" value="${esc(k.step || '')}" placeholder="Tell your supervisor the same day">
-   <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-own-contact">Update for Everyone</button></div>`;
+   <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-fdr-contact">Update for Everyone</button></div>`;
 }
 async function spLibUpdate(title, path, fn){
   const cur = await pendingPlain('field'); if (!cur || !cur.mapleGuide) return;
@@ -3149,7 +3171,7 @@ async function ggShare(blob, name, title){
 // the same thing. A student is an ordinary People record with a .sa profile. Visits are sessions with kind 'sa'.
 // Reporting uses Maple Guide's reporting card (one reporting setup for everyone); Aspen report records are kept as
 // kind 'spr' with tool 'sa', apart from visits, never printed or copied.
-// Staff and Owner always see the tab. Field users see it once aspenGuide.open.field is on and Orientation is done.
+// Staff and Founders always see the tab. Field users see it once aspenGuide.open.field is on and Orientation is done.
 // Everyone takes the Aspen training (DATA.samod) before a real visit. Demo visits are always open.
 // Safest standard: another adult can always see in. The promise ("what stays between us") is read before the
 // student's yes. The optional question (grades 7 and 8, full visits) is never scored, printed, or copied.
@@ -3866,13 +3888,13 @@ function saInput(t, ev){
   return false;
 }
 
-// ----- Owner: open to Field users. Reporting contact and the yearly recheck live on the Maple Guide card. -----
-function saOwnerCard(){
+// ----- Founder: open to Field users. Reporting contact and the yearly recheck live on the Maple Guide card. -----
+function saFounderCard(){
   const S = SAG();
   if (!S) return `<div class="card"><h3>Aspen Guide</h3><p class="muted">Aspen Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
   const on = !!(S.open && S.open.field);
   return `<div class="card"><h3>Aspen Guide</h3>
-   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Aspen training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sa-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Aspen training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sa-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>
    <p class="muted" style="font-size:14px;margin-top:10px">Aspen Guide uses the same reporting contact, county card, and yearly recheck as Maple Guide, set on the Maple Guide card.</p></div>`;
 }
 async function saLibUpdate(title, path, fn){
@@ -3894,7 +3916,7 @@ function saPersonCard(c){ return c.sa && saOpen() ? `<div class="card" style="ma
 // A person is an ordinary People record with a .wl profile (type 'person' or 'family'). Visits are sessions with kind 'wl'.
 // Check-ins a family shares from their Willow are sessions with kind 'wl', visit 'shared', and src 'willow'.
 // Scores (1 to 10) are visible here, to notice change and plan care. The family only ever sees gentle words.
-// Staff and Owner always see the tab. Field users see it once willowGuide.open.field is on and Orientation is done.
+// Staff and Founders always see the tab. Field users see it once willowGuide.open.field is on and Orientation is done.
 // Everyone takes the Willow training (DATA.wlmod) before a real visit. Demo visits are always open.
 const WLG = () => (FLD && FLD.willowGuide) || null;
 const wlOpen = () => !!WLG() && (TIER !== 'field' || !!(WLG().open && WLG().open.field && (!OR() || orState().complete)));
@@ -3939,7 +3961,7 @@ function wlNeedData(){
     : `<div class="card"><p class="muted">Loading the Willow questions...</p></div>`;
 }
 
-// ----- scoring: the same as Willow (1 to 10, one decimal). Levels: strong 8+, steady 5+, needs care below 5 -----
+// ----- scoring: the same as Willow (1 to 10, one decimal). Levels: strong 8+, steady 5+, growing edge below 5 -----
 const wlAnsRow = k => WC.C.answers.find(a => a[0] === k) || null;
 const wlBank = role => role === 'helper' ? WC.C.helper : WC.C.questions;
 function wlScorePart(role, key, arr){
@@ -3948,9 +3970,9 @@ function wlScorePart(role, key, arr){
   if (!vals.length) return null;
   return Math.round(10 * (1 + 9 * (vals.reduce((x, y) => x + y, 0) / vals.length) / 3)) / 10;
 }
-const wlLevelOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
-const wlLvName = l => l === 'strong' ? 'Strong' : l === 'steady' ? 'Steady' : l === 'care' ? 'Needs care' : 'Not scored';
-const wlLvCls = l => l === 'strong' ? 'sage' : l === 'steady' ? 'gold' : l === 'care' ? 'warn' : '';
+const wlLevelOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge';
+const wlLvName = l => l === 'strong' ? 'Strong' : l === 'steady' ? 'Steady' : l === 'edge' ? 'Growing Edge' : 'Not scored';
+const wlLvCls = l => l === 'strong' ? 'sage' : l === 'steady' ? 'gold' : l === 'edge' ? 'warn' : '';
 function wlRunScores(r){
   const sc = {}, lv = {};
   WL_PARTS.forEach(p => {
@@ -4752,13 +4774,13 @@ function wlAct(a, v, t){
   return false;
 }
 
-// ----- Owner: open Willow Guide to Field users (through Update a Library) -----
-function wlOwnerCard(){
+// ----- Founder: open Willow Guide to Field users (through Update a Library) -----
+function wlFounderCard(){
   const S = WLG();
   if (!S) return `<div class="card"><h3>Willow Guide</h3><p class="muted">Willow Guide isn't in the Field library yet. Add it with Update a Library.</p></div>`;
   const on = !!(S.open && S.open.field);
   return `<div class="card"><h3>Willow Guide</h3>
-   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Willow training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="wl-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div></div>`;
+   <div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Open to Field users</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Willow training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="wl-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div></div>`;
 }
 async function wlSetField(on){
   const cur = await pendingPlain('field'); if (!cur || !cur.willowGuide) return;
@@ -4786,7 +4808,7 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'g
 // reads willow/guides.js. See htStagesAll and htWillowIds.
 // Handouts print one page per guide, sized to fit, with a QR code made on this device by qr.js.
 // "Add to their record" saves a session with kind 'ht': topic, stages, handouts, and date. Never what
-// was said. Staff and Owner always see it; Field users once FLD.hardTalks.open.field is on and
+// was said. Staff and Founders always see it; Field users once FLD.hardTalks.open.field is on and
 // Orientation is done.
 const HTG = () => (FLD && FLD.hardTalks) || null;
 const htOpen = () => !!HTG() && (TIER !== 'field' || !!(HTG().open && HTG().open.field && (!OR() || orState().complete)));
@@ -5066,7 +5088,7 @@ function htPersonCard(c){
   const rs = htRecs(c.id); if (!rs.length) return '';
   return `<div class="card ht-card" style="margin-top:14px"><h3>When Life Changes</h3>${rs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Guide')}</b><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}${(s.hand || []).length ? ' &middot; handout' + (s.hand.length > 1 ? 's' : '') + ' given' : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`).join('')}</div>`;
 }
-// Staff and Owner: guides in the public files that the map doesn't reach, and map ids that aren't there.
+// Staff and Founders: guides in the public files that the map doesn't reach, and map ids that aren't there.
 function htCheck(){
   const H = HTG(), used = {maple:new Set(), aspen:new Set(), oak:new Set()}, missing = [];
   (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['hw','aspen'],['og','oak']].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
@@ -5076,7 +5098,7 @@ function htCheck(){
 function htCheckCard(){
   const r = htCheck();
   if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from Maple, Aspen, and Oak are in When Life Changes.</p>`;
-  return `<div class="card" style="margin-top:18px;border-left:4px solid var(--gold)"><h3>Map check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. Send it to a chat for a When Life Changes patch.</p>
+  return `<div class="card" style="margin-top:18px;border-left:4px solid var(--gold)"><h3>Map check</h3><p class="muted" style="font-size:15px">Only Staff and Founders see this. Send it to a chat for a When Life Changes patch.</p>
    ${r.loose.length ? `<p style="margin-top:8px"><b>Guides not in When Life Changes yet:</b> ${esc(r.loose.join('; '))}</p>` : ''}
    ${r.missing.length ? `<p style="margin-top:8px"><b>Not found in the guide files:</b> ${esc(r.missing.join('; '))}</p>` : ''}</div>`;
 }
@@ -5124,12 +5146,12 @@ async function htPrint(T, stIds, title){
   fgSheet(html, title, {file:'hard-talks-handout'});
 }
 
-// ----- Owner: open or close When Life Changes to Field users (through Update a Library) -----
+// ----- Founder: open or close When Life Changes to Field users (through Update a Library) -----
 function htFieldRow(){
   const S = HTG();
   if (!S) return `<p class="muted" style="margin-top:8px">When Life Changes isn't in the Field library yet. Add it with Update a Library.</p>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="list-row"><div class="lr-main"><b>When Life Changes</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Owner only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="ht-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+  return `<div class="list-row"><div class="lr-main"><b>When Life Changes</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done.</small></div><button class="btn btn-line btn-sm" data-act="ht-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
 }
 async function htSetField(on){
   const cur = await pendingPlain('field'); if (!cur || !cur.hardTalks) return;
@@ -5574,7 +5596,7 @@ function plRecord(){
   if (!c.last || date > c.last) c.last = date;
   touch(c); save(); V.plf = null; htKeep(); toast('Saved to ' + c.name + "'s record.");
 }
-// ----- Staff and Owner: which topics still need cards -----
+// ----- Staff and Founders: which topics still need cards -----
 function cdCheckCard(){
   const C = CDG(); if (!C || !HD) return '';
   const H = HTG(), need = [], only = [], bad = [];
@@ -5583,7 +5605,7 @@ function cdCheckCard(){
   const claim = {};
   (C.decks || []).forEach(d => (d.topics || []).forEach(id => { if (!htTopic(id)) bad.push(d.title + ': topic "' + id + '"'); else if (claim[id]) bad.push(d.title + ' and ' + claim[id] + ' both claim "' + htTopic(id).title + '"'); else claim[id] = d.title; }));
   const have = (H.topics || []).length - need.length - only.length;
-  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>Card check</h3><p class="muted" style="font-size:15px">Only Staff and Owner see this. ${have} topics have their own cards, ${only.length} stay guide only, ${need.length} use the tree cards for now. Send this to a chat for the next batch.</p>
+  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>Card check</h3><p class="muted" style="font-size:15px">Only Staff and Founders see this. ${have} topics have their own cards, ${only.length} stay guide only, ${need.length} use the tree cards for now. Send this to a chat for the next batch.</p>
    ${need.length ? `<p style="margin-top:8px"><b>Topics without cards yet:</b> ${esc(need.join('; '))}</p>` : ''}
    ${bad.length ? `<p style="margin-top:8px"><b>Deck problems:</b> ${esc(bad.join('; '))}</p>` : ''}
    <p class="muted" style="font-size:14px;margin-top:8px">${cdAges().includes('willow') ? 'Willow has its own tree cards. Pine cards wait until that tool is ready.' : 'Pine cards wait until that tool is ready. Willow tree cards come with the Willow Guide library update.'}</p></div>`;
@@ -5648,18 +5670,18 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft'){ const b = $('#cd-full [data-act="ht-cwback"]'); if (b){ e.preventDefault(); b.click(); } }
 });
 
-// ---------------- OWNER: update a library ----------------
+// ---------------- FOUNDER: update a library ----------------
 // Library edits never need a code in chat. Download for Editing gives a plain copy to send to a chat.
 // Update a Library takes the file a chat gives back (a whole library, or a patch that sets named
 // sections), shows what will change, and seals it here with that level's current key. The sealed file
 // joins "Ready to upload". Keys and codes never leave this device.
-const LEVELS = ['field','staff','owner'];
+const LEVELS = ['field','staff','founder'];
 async function sha12(t){ const h = await crypto.subtle.digest('SHA-256', enc.encode(t)); return Array.from(new Uint8Array(h)).slice(0, 6).map(b => b.toString(16).padStart(2, '0')).join(''); }
-const pendingBox = lvl => { const d = DATA.owner.draft; return (d && d.libs && d.libs[lvl]) || BOX[lvl]; };
+const pendingBox = lvl => { const d = DATA.founder.draft; return (d && d.libs && d.libs[lvl]) || BOX[lvl]; };
 async function pendingPlain(lvl){
-  const d = DATA.owner.draft, k = effKeys()[lvl];
+  const d = DATA.founder.draft, k = effKeys()[lvl];
   if (d && d.libs && d.libs[lvl]) return await tryOpen(d.libs[lvl], k);
-  return lvl === 'owner' ? OWN : lvl === 'staff' ? LIB : FLD;
+  return lvl === 'founder' ? FDR : lvl === 'staff' ? LIB : FLD;
 }
 function pathGet(o, path){ return path.split('.').reduce((a, k) => (a && typeof a === 'object') ? a[k] : undefined, o); }
 function pathSet(o, path, val){ const ks = path.split('.'); let a = o; ks.slice(0, -1).forEach(k => { if (!a[k] || typeof a[k] !== 'object') a[k] = {}; a = a[k]; }); a[ks[ks.length - 1]] = val; }
@@ -5677,8 +5699,8 @@ async function downloadForEdit(lvl){
 }
 async function readUpdate(file){
   let f; try { const txt = await file.text(); if (/window\.GFG_/.test(txt)) return alert("That's a sealed library file for the site. Choose the update file a chat gave you instead (it ends in .json)."); f = JSON.parse(txt); } catch(e){ return alert("That file couldn't be read. Choose the .json update file from the chat."); }
-  if (!f || !['library-edit','library-patch'].includes(f._gfg) || !LEVELS.includes(f.level)) return alert("That isn't a Field Guide library update.");
-  const lvl = f.level, cur = await pendingPlain(lvl);
+  if (!f || !['library-edit','library-patch'].includes(f._gfg) || !LEVELS.includes(fgTier(f.level))) return alert("That isn't a Field Guide library update.");
+  const lvl = fgTier(f.level), cur = await pendingPlain(lvl);
   if (!cur) return alert("This device can't open the " + LEVEL_NAME[lvl] + ' library, so it can\'t update it. See "Finish setup."');
   const next = JSON.parse(JSON.stringify(cur)), rows = [], warns = [];
   if (f._gfg === 'library-edit'){
@@ -5705,7 +5727,7 @@ async function sealUpdate(){
   // The pre-levels Staff code opens the Staff library through its salt. Keep it while the key is unchanged.
   if (!d.keys[U.lvl] && BOX[U.lvl] && BOX[U.lvl].salt) box.salt = BOX[U.lvl].salt;
   d.libs[U.lvl] = box;
-  if (U.lvl === 'owner') OWN = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
+  if (U.lvl === 'founder') FDR = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
   V.upd = null; await persist(); render(); toast('Sealed. It is in "Ready to upload."');
 }
 function vUpdateCard(){
@@ -5978,25 +6000,25 @@ document.addEventListener('click', async e => {
     case 'or-go-sign': go('orient', {sign:1}); break;
     case 'or-print-cert': orPrintCert(); break;
     case 'or-print-agree': orPrintAgreement(); break;
-    case 'own-hide': V.show = null; render(); break;
-    case 'proof': { const ck = (DATA.owner.proof = DATA.owner.proof || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save();
+    case 'fdr-hide': V.show = null; render(); break;
+    case 'proof': { const ck = (DATA.founder.proof = DATA.founder.proof || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save();
       V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); const y = window.scrollY; render(); window.scrollTo(0, y); break; }
     case 'proof-only': V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); V.proofOpen = !V.proofOpen; render(); break;
-    case 'own-show': V.show = v; render(); break;
-    case 'own-setup': { const d = ensureDraft(); await relink(d); await persist(); render(); toast('Setup is ready to upload.'); break; }
-    case 'own-make': {
-      const kind = $('#own-kind').value, label = $('#own-label').value.trim(), ends = $('#own-ends').value;
-      if (!label){ $('#own-label').focus(); return; }
-      if ((kind === 'owner' || kind === 'staff') && ends && !confirm('Give this ' + LEVEL_NAME[kind] + ' code an end date of ' + nice(ends) + '? Owner and Staff codes usually have none.')) return;
+    case 'fdr-show': V.show = v; render(); break;
+    case 'fdr-setup': { const d = ensureDraft(); await relink(d); await persist(); render(); toast('Setup is ready to upload.'); break; }
+    case 'fdr-make': {
+      const kind = $('#fdr-kind').value, label = $('#fdr-label').value.trim(), ends = $('#fdr-ends').value;
+      if (!label){ $('#fdr-label').focus(); return; }
+      if ((kind === 'founder' || kind === 'staff') && ends && !confirm('Give this ' + LEVEL_NAME[kind] + ' code an end date of ' + nice(ends) + '? Founder and Staff codes usually have none.')) return;
       const r = await makeCode(kind, label, ends || null); if (r){ V.show = r.e.id; render(); } break; }
-    case 'own-remove': {
+    case 'fdr-remove': {
       const d0 = workCodes(), e0 = d0.codes.find(x => x.id === v); if (!e0) return;
-      if (e0.tier === 'owner' && d0.codes.filter(x => x.tier === 'owner').length < 2) return alert("That's the only Owner code. Rotate Owner instead, so there's always a way in.");
+      if (e0.tier === 'founder' && d0.codes.filter(x => x.tier === 'founder').length < 2) return alert("That's the only Founder code. Rotate Founder instead, so there's always a way in.");
       if (!confirm('Remove "' + e0.label + '"? It stops working once you upload codes.js.')) return;
-      const d = ensureDraft(); d.codes.codes = d.codes.codes.filter(x => x.id !== v); DATA.owner.saved = DATA.owner.saved.filter(x => x.id !== v);
+      const d = ensureDraft(); d.codes.codes = d.codes.codes.filter(x => x.id !== v); DATA.founder.saved = DATA.founder.saved.filter(x => x.id !== v);
       await relink(d); await persist(); if (V.show === v) V.show = null; render(); break; }
-    case 'own-rot': await rotateLevel(v); break;
-    case 'own-addstaff': { const code = $('#own-sc').value; if (!code.trim()){ $('#own-sc').focus(); return; }
+    case 'fdr-rot': await rotateLevel(v); break;
+    case 'fdr-addstaff': { const code = $('#fdr-sc').value; if (!code.trim()){ $('#fdr-sc').focus(); return; }
       toast('One moment...'); let r = null; try { r = await resolveCode(code); } catch(err){}
       if (!r || r.tier !== 'staff') return alert("That's not the Staff code. It's the Field Guide code you used before levels.");
       KEYS = Object.assign({}, KEYS, {staff: r.k}); useLevels(await openLevels(TIER, KEYS)); await persist(); render(); toast('Staff access added. Now tap Finish Setup.'); break; }
@@ -6049,11 +6071,11 @@ document.addEventListener('click', async e => {
     case 'st-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('oak'); } break;
     case 'st-add-fu': { const c = CL(v), d = $('#st-fd').value, tx = $('#st-ft').value.trim(); if (!d){ $('#st-fd').focus(); return; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'st-imp-local': await stImportLocal(); break;
-    case 'own-dl': download(v === 'codes' ? 'codes.js' : 'lib-' + v + '.js', draftFile(v)); break;
-    case 'own-discard': {
+    case 'fdr-dl': download(v === 'codes' ? 'codes.js' : 'lib-' + v + '.js', draftFile(v)); break;
+    case 'fdr-discard': {
       if (!confirm('Discard every change that hasn\'t been uploaded? Codes made since then will be forgotten.')) return;
-      const liveIds = new Set(CODES.codes.map(e => e.id)); DATA.owner.saved = DATA.owner.saved.filter(x => liveIds.has(x.id));
-      DATA.owner.draft = null; V.show = null; await persist(); render(); break; }
+      const liveIds = new Set(CODES.codes.map(e => e.id)); DATA.founder.saved = DATA.founder.saved.filter(x => liveIds.has(x.id));
+      DATA.founder.draft = null; V.show = null; await persist(); render(); break; }
     case 'change-pass': {
       const p0 = $('#cp0').value, p1 = $('#cp1').value, p2 = $('#cp2').value;
       if (p1.length < 6) return alert('Please use at least 6 characters.'); if (p1 !== p2) return alert("The new passcodes don't match.");
@@ -6117,6 +6139,7 @@ document.addEventListener('change', e => {
   if (t.dataset.sp){ const s = DATA.sessions.find(x => x.id === t.dataset.sp); s.paid = t.checked; touch(s); save(); return; }
   if (t.dataset.tp && t.type === 'checkbox'){ DATA.training.progress[t.dataset.tp] = t.checked; save(); return; }
   if (t.dataset.actCb === 'agree' && t.checked){ DATA.training.agreed = today(); save(); render(); return; }
+  if (t.dataset.bizV){ V.bizV = V.bizV || {}; V.bizV[t.dataset.bizV] = t.value; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.set){ DATA.settings[t.dataset.set] = t.value; save(); return; }
   if (t.id === 'imp' && t.files[0]) importBackup(t.files[0]);
   if (t.id === 'upd-file' && t.files[0]){ const f = t.files[0]; t.value = ''; readUpdate(f); }
@@ -6125,7 +6148,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden && DAT
 
 // ---------------- PRESENT ----------------
 /* PRESENT (Presentations session, October 2026)
-   - The Present tab, for Staff and Owner only. Slide wording lives in the Staff library (LIB.presentations),
+   - The Present tab, for Staff and Founders only. Slide wording lives in the Staff library (LIB.presentations),
      so it is sealed and edited through Update a Library.
    - Build a deck from four choices: subject, audience, format, and in the room or online. Each library slide
      says which formats it belongs to (f: e elevator, o one-on-one, s small group, c conference) and can carry
@@ -6135,19 +6158,22 @@ document.addEventListener('visibilitychange', () => { if (document.hidden && DAT
      yet saved lives in DATA.dkWork.
    - Present on one screen, or Presenter View with the audience on a second window. Offline, notes, timer.
    - Handouts and speaker notes save as a PDF or print, through fgSheet.
-   - The Owner tab's "Speaking and proposals" card reads OWN.speaking (Owner library). Checks are kept in
-     DATA.owner.speak.
-   Lives inside the main script, so it reads LIB, OWN, and DATA directly. At load it only adds the slide styles. */
+   - The Founder tab's "Speaking and proposals" card reads FDR.speaking (Founder library). Checks are kept in
+     DATA.founder.speak.
+   Lives inside the main script, so it reads LIB, FDR, and DATA directly. At load it only adds the slide styles. */
 
 const DKL = () => (typeof LIB !== 'undefined' && LIB && LIB.presentations) || null;
 const dkOn = () => typeof TIER !== 'undefined' && TIER !== 'field' && !!LIB;
-const dkDeckDef = id => ((DKL() || {}).decks || []).find(d => d.id === id) || null;
+// Founder decks (FDR.founderDecks, Founder library) join the list on Founder devices only. They carry
+// business numbers, so they never live in the Staff library.
+const dkDecks = () => ((DKL() || {}).decks || []).concat(typeof TIER !== 'undefined' && TIER === 'founder' && typeof FDR !== 'undefined' && FDR && Array.isArray(FDR.founderDecks) ? FDR.founderDecks : []);
+const dkDeckDef = id => dkDecks().find(d => d.id === id) || null;
 const dkPair = (list, id) => (list || []).find(x => x[0] === id) || null;
 const dkAud = id => { const p = dkPair((DKL() || {}).audiences, id); return p ? p[1] : ''; };
 const dkFmt = id => dkPair((DKL() || {}).formats, id) || ['s', 'Small group', 'About 30 minutes', 30];
 const dkMode = id => { const p = dkPair((DKL() || {}).modes, id); return p ? p[1] : ''; };
 const dkMark = m => new URL('../shared/marks/' + m + '.svg', location.href).href;
-const dkByLine = d => d.id === 'grounded' ? 'Grow With Grounded' : d.name + ' by Grow With Grounded';
+const dkByLine = d => d.mark === 'grounded' ? 'Grow With Grounded' : d.name + ' by Grow With Grounded';
 let DK_SHOW = null, DK_TICK = null, DK_AW = null;
 
 function dkList(){ return (DATA.decks = DATA.decks || []); }
@@ -6167,7 +6193,7 @@ function dkBuild(deckId, aud, fmt, mode, name){
   const slides = D.slides.filter(s => (s.f || 'osc').includes(fmt)).map(s => dkResolve(s, aud, mode));
   const mn = (L.modeNotes || {})[mode];
   if (mn && slides[0]) slides[0].notes = (slides[0].notes ? slides[0].notes + '\n\n' : '') + mn;
-  return {id: null, u: Date.now(), made: today(), lv: L.v || 1, name: name || D.name + ' for ' + dkAud(aud).toLowerCase(), deck: deckId, aud, fmt, mode, slides};
+  return {id: null, u: Date.now(), made: today(), lv: L.v || 1, name: name || (D.founder ? D.name : D.name + ' for ' + dkAud(aud).toLowerCase()), deck: deckId, aud, fmt, mode, slides};
 }
 const dkShown = d => d.slides.filter(s => !s.off);
 
@@ -6185,7 +6211,7 @@ function dkSlideHTML(s, d, n, of){
   const h = s.h ? `<h2 class="dk-h">${esc(s.h)}</h2>` : '';
   const sub = s.sub ? `<p class="dk-sub">${esc(s.sub)}</p>` : '';
   switch (s.k){
-    case 'title': return `<div class="dks dk-title" ${st}><div class="dk-tl"><div class="dk-by">${D.id === 'grounded' ? 'Chaplaincy for every age and stage' : 'By Grow With Grounded'}</div><h1 class="dk-name">${esc(s.h)}${D.id === 'grounded' ? '' : '<sup>TM</sup>'}</h1>${s.sub ? `<p class="dk-tag">${esc(s.sub)}</p>` : ''}${D.preview ? '<span class="dk-soon">Coming</span>' : ''}<div class="dk-who">${esc([DATA.settings.name, DATA.settings.role].filter(Boolean).join(', '))}</div></div>${dkMarkTile(D, 'dk-tile')}</div>`;
+    case 'title': return `<div class="dks dk-title" ${st}><div class="dk-tl"><div class="dk-by">${D.mark === 'grounded' ? (D.founder ? 'Grow With Grounded' : 'Chaplaincy for every age and stage') : 'By Grow With Grounded'}</div><h1 class="dk-name">${esc(s.h)}${D.mark === 'grounded' ? '' : '<sup>TM</sup>'}</h1>${s.sub ? `<p class="dk-tag">${esc(s.sub)}</p>` : ''}${D.preview ? '<span class="dk-soon">Coming</span>' : ''}<div class="dk-who">${esc([DATA.settings.name, DATA.settings.role].filter(Boolean).join(', '))}</div></div>${dkMarkTile(D, 'dk-tile')}</div>`;
     case 'big': return `<div class="dks dk-big" ${st}><div class="dk-bigin"><h2 class="dk-h">${esc(s.h)}</h2>${sub}</div><div class="dk-n2">${n ? n + ' / ' + of : ''}</div></div>`;
     case 'parts': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-parts">${(L.parts || []).map((p, i) => `<div class="dk-part"><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join('')}</div></div>${foot}</div>`;
     case 'trees': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-trees">${(L.trees || []).map(t => `<div class="dk-tree${t[0] === D.mark ? ' on' : ''}"><img src="${esc(dkMark(t[0]))}" alt=""><b>${esc(t[1])}</b><span>${esc(t[2])}</span>${t[3] === 'coming' ? '<i>Coming</i>' : ''}</div>`).join('')}</div></div>${foot}</div>`;
@@ -6200,19 +6226,19 @@ function dkSlideHTML(s, d, n, of){
 // ----- the Present tab -----
 function vDK(){
   const L = DKL();
-  const head = `<div class="page-head"><div class="eyebrow">Present &middot; Staff and Owner</div><h1>${esc(L ? L.title : 'Present')}</h1><p>${esc(L ? L.lead : 'Talks and decks for every tree.')}</p></div>`;
-  if (!L) return head + `<div class="card"><h3>Not in this library yet</h3><p class="muted">The slides live in the Staff library. On an Owner device, open Owner, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
+  const head = `<div class="page-head"><div class="eyebrow">Present &middot; Staff and Founders</div><h1>${esc(L ? L.title : 'Present')}</h1><p>${esc(L ? L.lead : 'Talks and decks for every tree.')}</p></div>`;
+  if (!L) return head + `<div class="card"><h3>Not in this library yet</h3><p class="muted">The slides live in the Staff library. On a Founder device, open Founder, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
   const d = dkCur();
   if (V.dke && d) return dkEditHTML(d);
   const sel = V.dks = V.dks || Object.assign({deck: 'grounded', aud: 'hospice', fmt: 's', mode: 'live'}, DATA.settings.dkLast || {});
-  if (!dkDeckDef(sel.deck)) sel.deck = L.decks[0].id;
+  if (!dkDeckDef(sel.deck)) sel.deck = dkDecks()[0].id;
   const chip = (k, id, label, sm) => `<button type="button" class="chip" data-act="dk-sel" data-v="${esc(k + '|' + id)}" aria-pressed="${sel[k] === id}">${label}${sm ? ` <small class="muted">${esc(sm)}</small>` : ''}</button>`;
   const pre = dkBuild(sel.deck, sel.aud, sel.fmt, sel.mode), F = dkFmt(sel.fmt);
   const saved = dkList().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
   return head + `<div class="card"><div class="dk-intro">${L.intro.map(t => `<p class="muted">${esc(t)}</p>`).join('')}</div></div>
   ${DATA.dkWork ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><h3>${esc(DATA.dkWork.name)}</h3><p class="muted">A deck you started and haven't saved.</p></div><div class="row"><button class="btn btn-gold btn-sm" data-act="dk-open" data-v="work">Open</button><button class="btn btn-line btn-sm" data-act="dk-drop">Let It Go</button></div></div></div>` : ''}
   <div class="card" style="margin-top:14px"><h3>Build a talk</h3>
-   <label class="f">Subject</label><div class="dk-pick">${L.decks.map(D => `<button type="button" class="dk-pk" data-act="dk-sel" data-v="${esc('deck|' + D.id)}" aria-pressed="${sel.deck === D.id}" style="--dk:${esc(D.color)}">${dkMarkTile(D, 'dk-pkm')}<span><b>${esc(D.name)}</b>${D.preview ? ' <span class="pill">Preview</span>' : ''}<small>${esc(D.who)}</small></span></button>`).join('')}</div>
+   <label class="f">Subject</label><div class="dk-pick">${dkDecks().map(D => `<button type="button" class="dk-pk" data-act="dk-sel" data-v="${esc('deck|' + D.id)}" aria-pressed="${sel.deck === D.id}" style="--dk:${esc(D.color)}">${dkMarkTile(D, 'dk-pkm')}<span><b>${esc(D.name)}</b>${D.preview ? ' <span class="pill">Preview</span>' : ''}<small>${esc(D.who)}</small></span></button>`).join('')}</div>
    <label class="f">Who you're speaking to</label><div class="row">${L.audiences.map(a => chip('aud', a[0], esc(a[1]))).join('')}</div>
    <label class="f">How long you have</label><div class="row">${L.formats.map(f => chip('fmt', f[0], esc(f[1]), f[2])).join('')}</div>
    <label class="f">Where</label><div class="row">${L.modes.map(m => chip('mode', m[0], esc(m[1]))).join('')}</div>
@@ -6274,6 +6300,9 @@ function dkAct(a, v, t){
     case 'dk-make': { const s = V.dks; if (DATA.dkWork && !confirm('You have an unsaved deck, "' + DATA.dkWork.name + '". Making a new one lets it go. Go ahead?')) return true;
       const w = dkBuild(s.deck, s.aud, s.fmt, s.mode); if (!w) return true; DATA.dkWork = w; save(); go('present', {dke: 'work'}); return true; }
     case 'dk-open': go('present', {dke: v}); return true;
+    case 'dk-biz-open': { V.bizOpen = V.bizOpen === v ? null : v; const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+    case 'dk-biz-save': bizSheet(v); return true;
+    case 'dk-biz-deck': { DATA.settings.dkLast = Object.assign({}, DATA.settings.dkLast || {}, {deck: v}); save(); go('present'); return true; }
     case 'dk-back': go('present'); return true;
     case 'dk-drop': if (confirm('Let this unsaved deck go?')){ DATA.dkWork = null; save(); render(); } return true;
     case 'dk-save': { if (!d) return true; const n = prompt('Name this deck:', d.name); if (n === null) return true;
@@ -6294,7 +6323,7 @@ function dkAct(a, v, t){
     case 'dk-go': case 'dk-pv': { const x = v === 'work' ? DATA.dkWork : dkList().find(y => y.id === v); if (x) dkPresent(x, a === 'dk-pv'); return true; }
     case 'dk-hand': if (d) dkHandout(d); return true;
     case 'dk-notes': if (d) dkSpeakerNotes(d); return true;
-    case 'dk-spk': { const ck = (DATA.owner.speak = DATA.owner.speak || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save(); V.spkOpen = Array.from(document.querySelectorAll('.spk-item[open]')).map(x => x.getAttribute('data-spk')); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
+    case 'dk-spk': { const ck = (DATA.founder.speak = DATA.founder.speak || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save(); V.spkOpen = Array.from(document.querySelectorAll('.spk-item[open]')).map(x => x.getAttribute('data-spk')); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
   }
   if (a.startsWith('dk-s-')) return dkShowAct(a);
   return false;
@@ -6419,7 +6448,7 @@ function dkHandBlocks(d){
   });
   out.push({k: 'h2', t: H.notes || 'My notes'}, {k: 'lines', n: 6});
   const cl = dkShown(d).find(s => s.k === 'close'), url = (cl && cl.url) || D.url;
-  if (url) out.push({k: 'qr', url, t: (H.qr || 'Scan to open') + ' ' + (D.id === 'grounded' ? 'Grow With Grounded' : D.name)});
+  if (url) out.push({k: 'qr', url, t: (H.qr || 'Scan to open') + ' ' + (D.mark === 'grounded' ? 'Grow With Grounded' : D.name)});
   if (H.help) out.push({k: 'i', t: H.help});
   out.push({k: 'foot', t: H.foot || 'Grow With Grounded. growwithgrounded.com'});
   return out;
@@ -6449,10 +6478,76 @@ function dkSpeakerNotes(d){
   fgSheet(ph('Speaker notes') + dkBlocksHTML(out) + pf(), d.name + ': speaker notes', {file: d.name + ' speaker notes', blocks: () => out});
 }
 
-// ----- OWNER: Speaking and proposals (OWN.speaking) -----
+// ----- FOUNDER: Business documents (FDR.business) -----
+// Six documents (brand kit, roadmap, legal brief, funding plan, client agreement, playbook), sealed in the
+// Founder library. Each keeps every dated copy in v (date -> Markdown), so a new copy is added through
+// Update a Library by setting business.docs.<id>.v.<date>, and earlier versions stay. The working copies are
+// Claude Docs; this card holds the sealed copies, readable offline, with Save or Print.
+const bizLib = () => (typeof FDR !== 'undefined' && FDR && FDR.business) || null;
+const bizDates = D => Object.keys((D && D.v) || {}).sort().reverse();
+function bizInline(s){
+  return esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+}
+// A small Markdown reader for the sealed documents: headings, paragraphs, bold, links, lists, tasks, tables.
+function bizMD(md){
+  const L = String(md || '').replace(/\r/g, '').split('\n'), out = []; let i = 0;
+  const cells = r => r.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+  while (i < L.length){
+    const ln = L[i];
+    if (!ln.trim()){ i++; continue; }
+    let m;
+    if ((m = ln.match(/^(#{1,4})\s+(.*)$/))){ const n = Math.min(4, m[1].length + 1); out.push(`<h${n} class="biz-h">${bizInline(m[2])}</h${n}>`); i++; continue; }
+    if (/^\s*\|/.test(ln)){
+      const rows = []; while (i < L.length && /^\s*\|/.test(L[i])) rows.push(L[i++]);
+      const body = rows.filter(r => !/^\s*\|?\s*:?-{2,}/.test(r.replace(/\|/g, '|')) || /[A-Za-z0-9]/.test(r));
+      const head = cells(body[0]), rest = body.slice(1).filter(r => !/^[\s|:-]+$/.test(r));
+      out.push(`<div class="biz-tw"><table class="biz-t"><thead><tr>${head.map(c => `<th>${bizInline(c)}</th>`).join('')}</tr></thead><tbody>${rest.map(r => `<tr>${cells(r).map(c => `<td>${bizInline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`);
+      continue;
+    }
+    if (/^\s*([-*]|\d+\.)\s+/.test(ln)){
+      const ol = /^\s*\d+\./.test(ln), items = [];
+      while (i < L.length && /^\s*([-*]|\d+\.)\s+/.test(L[i])){ items.push(L[i].replace(/^\s*([-*]|\d+\.)\s+/, '')); i++; }
+      out.push(`<${ol ? 'ol' : 'ul'} class="biz-l">${items.map(x => { const tk = x.match(/^\[( |x|X)\]\s+(.*)$/); return tk ? `<li class="biz-task"><span class="biz-box">${tk[1] === ' ' ? '' : '&#10003;'}</span> ${bizInline(tk[2])}</li>` : `<li>${bizInline(x)}</li>`; }).join('')}</${ol ? 'ol' : 'ul'}>`);
+      continue;
+    }
+    const para = []; while (i < L.length && L[i].trim() && !/^(#{1,4}\s|\s*\||\s*([-*]|\d+\.)\s)/.test(L[i])) para.push(L[i++].trim());
+    out.push(`<p>${bizInline(para.join(' '))}</p>`);
+  }
+  return out.join('');
+}
+function bizSheet(id){
+  const B = bizLib(); if (!B) return; const D = (B.docs || {})[id]; if (!D) return;
+  const ds = bizDates(D), date = ((V.bizV || {})[id]) || ds[0]; if (!date) return;
+  const html = `<div class="pr-head"><div class="r">Grow With Grounded<br>${esc(D.title)}, ${esc(nice(date))}</div></div><h1>${esc(D.title)}</h1><div class="biz-doc">${bizMD(D.v[date])}</div><div class="pr-foot">Grow With Grounded LLC. Sealed copy dated ${esc(nice(date))}.${D.private ? ' Private: for the founders and the people named in it.' : ''}</div>`;
+  fgSheet(html, D.title, {file: D.file || id, date});
+}
+function vBiz(){
+  const B = bizLib(); if (!B) return '';
+  const order = (B.order || Object.keys(B.docs || {})).filter(id => (B.docs || {})[id]);
+  const how = h => h && h.length ? `<details class="biz-how"><summary>How to walk someone through this</summary><ul>${h.map(x => `<li>${bizInline(x)}</li>`).join('')}</ul></details>` : '';
+  const docs = order.map(id => {
+    const D = B.docs[id], ds = bizDates(D), sel = ((V.bizV || {})[id]) || ds[0], open = V.bizOpen === id;
+    const vers = ds.length > 1 ? `<label class="f" for="biz-v-${esc(id)}">Version</label><select id="biz-v-${esc(id)}" data-biz-v="${esc(id)}" style="max-width:260px">${ds.map((d, i) => `<option value="${esc(d)}"${d === sel ? ' selected' : ''}>${esc(nice(d))}${i ? ' (earlier)' : ' (newest)'}</option>`).join('')}</select>` : '';
+    return `<div class="biz-item"><div class="spread"><div><b>${esc(D.title)}</b><br><small class="muted">${esc(D.who || '')}${sel ? ' &middot; ' + (sel === ds[0] ? 'sealed ' : 'earlier version, ') + esc(nice(sel)) : ''}${ds.length > 1 ? ' &middot; ' + ds.length + ' versions' : ''}</small></div>
+      <div class="row"><button class="btn btn-line btn-sm" data-act="dk-biz-open" data-v="${esc(id)}">${open ? 'Close' : 'Read'}</button><button class="btn btn-gold btn-sm" data-act="dk-biz-save" data-v="${esc(id)}">Save or Print</button></div></div>
+      ${vers}${how(D.how)}${open && sel ? `<div class="biz-doc biz-read">${bizMD(D.v[sel])}</div>` : ''}</div>`;
+  }).join('');
+  const decks = (FDR && Array.isArray(FDR.founderDecks) ? FDR.founderDecks : []).map(D => `<div class="biz-item"><div class="spread"><div><b>${esc(D.name)}</b><br><small class="muted">${esc(D.who || '')}</small></div><div class="row"><button class="btn btn-line btn-sm" data-act="dk-biz-deck" data-v="${esc(D.id)}">Open in Present</button></div></div>${how(D.how)}</div>`).join('');
+  return `<div class="card" id="biz-card"><h3>${esc(B.title || 'Business documents')}</h3><p class="muted">${esc(B.intro || '')}</p><div style="margin-top:8px">${docs}</div>
+   ${decks ? `<h4 style="margin-top:18px">${esc(B.decksTitle || 'Founder decks')}</h4><p class="muted">${esc(B.decksIntro || '')}</p><div style="margin-top:8px">${decks}</div>` : ''}</div>`;
+}
+const BIZ_CSS = `.biz-item{border-top:1px solid var(--line);padding:12px 0}.biz-item:first-child{border-top:0}
+.biz-how{margin-top:8px}.biz-how summary{cursor:pointer;color:var(--gold);font-weight:600}.biz-how ul{margin:6px 0 0 20px}
+.biz-doc{line-height:1.55}.biz-read{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.biz-doc p{margin:8px 0}.biz-h{margin:16px 0 6px}.biz-l{margin:6px 0 8px 22px}.biz-task{list-style:none;margin-left:-18px}
+.biz-box{display:inline-block;width:16px;height:16px;border:1.5px solid var(--ink-soft);border-radius:4px;text-align:center;line-height:14px;font-size:12px;margin-right:4px}
+.biz-tw{overflow-x:auto;margin:8px 0}.biz-t{border-collapse:collapse;width:100%;font-size:15px}.biz-t th,.biz-t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.biz-t th{background:var(--bg-deep, var(--bg))}`;
+(function(){ const s = document.createElement('style'); s.textContent = BIZ_CSS; document.head.appendChild(s); })();
+
+// ----- FOUNDER: Speaking and proposals (FDR.speaking) -----
 function vSpeak(){
-  const P = (typeof OWN !== 'undefined' && OWN && OWN.speaking) || null; if (!P) return '';
-  const ck = DATA.owner.speak = DATA.owner.speak || {};
+  const P = (typeof FDR !== 'undefined' && FDR && FDR.speaking) || null; if (!P) return '';
+  const ck = DATA.founder.speak = DATA.founder.speak || {};
   const days = s => { if (!s) return ''; const [y, m, dd] = s.split('-').map(Number), t = new Date(), a = new Date(y, m - 1, dd), b = new Date(t.getFullYear(), t.getMonth(), t.getDate()), n = Math.round((a - b) / 86400000); return n > 1 ? n + ' days left' : n === 1 ? 'Due tomorrow' : n === 0 ? 'Due today' : 'Past due'; };
   const tick = (id, text) => { const on = !!ck[id]; return `<button type="button" class="dk-todo" data-act="dk-spk" data-v="${esc(id)}" aria-pressed="${on}"><span class="dk-box">${on ? icon('check') : ''}</span><span>${esc(text)}</span></button>`; };
   const items = (P.items || []).map(it => {
@@ -6480,7 +6575,7 @@ function dkMerge(out, inc){
   out.decks = out.decks || []; let added = 0, updated = 0;
   (inc.decks || []).forEach(x => { const i = out.decks.findIndex(y => y.id === x.id); if (i < 0){ out.decks.push(x); added++; } else if ((x.u || 0) > (out.decks[i].u || 0)){ out.decks[i] = x; updated++; } });
   out.decks = out.decks.filter(x => !(out.deleted.decks[x.id] && out.deleted.decks[x.id] >= (x.u || 0)));
-  if (inc.owner && inc.owner.speak){ out.owner = out.owner || {}; out.owner.speak = Object.assign({}, inc.owner.speak, out.owner.speak || {}); }
+  if ((inc.founder || inc[FG_OLD]) && (inc.founder || inc[FG_OLD]).speak){ out.founder = out.founder || {}; out.founder.speak = Object.assign({}, (inc.founder || inc[FG_OLD]).speak, out.founder.speak || {}); }
   return {added, updated};
 }
 

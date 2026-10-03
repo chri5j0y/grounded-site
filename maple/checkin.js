@@ -14,7 +14,7 @@
      "Why this question?" line for the grown-up (WHY).
    - Four answers plus "I don't know." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (marked 'r').
-   - Levels: Strong (8 to 10), Steady (5 to 7), Needs care (1 to 4).
+   - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
    - A safety step fitted to the age, always with 988 and 911.
 
    Each question: [text, tip] or [text, tip, 'r'] or [text, tip, 'r', flag].
@@ -35,7 +35,7 @@ const ANSWERS = [
 const LEVELS = [
   ['strong', 'Strong', 8],
   ['steady', 'Steady', 5],
-  ['care', 'Needs care', 1]
+  ['edge', 'Growing Edge', 1]
 ];
 
 const GRADES = [

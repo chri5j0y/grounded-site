@@ -15,7 +15,7 @@
    - Three answers plus "Not sure." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (marked 'r').
      Aspen has two in every part.
-   - Levels: Strong (8 to 10), Steady (5 to 7), Needs care (1 to 4).
+   - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
    - A safety step fitted to the age, always with 988 and 911.
    - Flagged answers (alone, bullied, losing hope) always reach a grown-up.
 
@@ -33,8 +33,8 @@
    kept, labeled earlier, and never compared with newer ones.
 
    Roots asks about experience, never belief or affiliation. It measures
-   whether the sacred is a resource or a stressor. A student of any
-   worldview, or none, can score Strong.
+   whether the sacred is a resource or a stressor. A student of
+   all faith traditions and everything in-between can score Strong.
 
    Nothing in this bank asks a student to reveal substance use, dating,
    or who they like. Friends, relationships, and substances are asked as
@@ -61,7 +61,7 @@ const ANSWERS = [
 const LEVELS = [
   ['strong', 'Strong', 8],
   ['steady', 'Steady', 5],
-  ['care', 'Needs care', 1]
+  ['edge', 'Growing Edge', 1]
 ];
 
 const GRADES = [

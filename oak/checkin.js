@@ -14,7 +14,7 @@
      a short "why" line a person can tap to read.
    - Four answers plus "Not sure." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (Oak: two).
-   - Levels: Strong (8 to 10), Steady (5 to 7), Needs care (1 to 4).
+   - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
    - A safety step fitted to the age, always with 988 and 911.
    - Flagged answers (alone, losing hope, not safe at home) are never
      lost: the person sees help lines, and a guide sees them at goodbye.
@@ -29,8 +29,8 @@
    a reverse question.
 
    Roots asks about experience, never belief or affiliation. It measures
-   whether the sacred is a resource or a stressor. Anyone of any faith,
-   or none, can score Strong.
+   whether the sacred is a resource or a stressor. Anyone of
+   all faith traditions and everything in-between can score Strong.
 
    staff: a work-focused set for coworkers and helping professionals,
    on the same standard, asked with its own opener.
@@ -49,7 +49,7 @@ const ANSWERS = [
 const LEVELS = [
   ['strong', 'Strong', 8],
   ['steady', 'Steady', 5],
-  ['care', 'Needs care', 1]
+  ['edge', 'Growing Edge', 1]
 ];
 
 const STEMS = {

@@ -155,7 +155,7 @@ function scorePart(role, key, arr) {
   if (!vals.length) return null;
   return Math.round(10 * (1 + 9 * (vals.reduce((x, y) => x + y, 0) / vals.length) / 3)) / 10;
 }
-const levelOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'care';
+const levelOf = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge';
 const LEVEL_NAME = {}; C.levels.forEach(l => { LEVEL_NAME[l[0]] = l[1]; });
 const ownCheckins = r => (r && r.checkins || []).filter(c => c.by !== 'observed');
 const seenCheckins = r => (r && r.checkins || []).filter(c => c.by === 'observed');
@@ -163,7 +163,7 @@ const ringsOf = r => ownCheckins(r).length;
 const lastOwn = r => { const l = ownCheckins(r); return l.length ? l[l.length - 1] : null; };
 function needPart(r) {
   const c = lastOwn(r); if (!c || !c.levels) return null;
-  const order = { care: 0, steady: 1, strong: 2 };
+  const order = { edge: 0, steady: 1, strong: 2 };
   const ks = PARTS.map(p => p.key).filter(k => c.levels[k]).sort((a, b) => order[c.levels[a]] - order[c.levels[b]]);
   return ks[0] || null;
 }
@@ -443,7 +443,7 @@ function rememberedHtml(t) {
     <div class="w-card"><p class="w-eyebrow">Your own tree</p><p>Grief is part of your tree now. Your check-ins keep growing it.</p><div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.view('${(me() || {}).id}')">Go to my own tree</button></div></div>`;
 }
 function aboutShort() {
-  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings for any faith or none, and what to do at the bedside.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
+  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings for all faith traditions and everything in-between, and what to do at the bedside.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
 }
 VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h2>A tree for the last part of the path</h2></div>
   <div data-read="Read this aloud">
@@ -657,7 +657,7 @@ const GUIDE_FOR_FLAG = { end: 'end', burden: 'burden', struggle: 'punish', regre
 VIEWS.results = () => {
   const ck = S.ck; if (!ck || !ck.entry) return VIEWS.today();
   const e = ck.entry, r = rec(ck.pid), n = esc(nameOf(ck.pid)), self = ck.self, seen = e.by === 'observed';
-  const need = ['care', 'steady', 'strong'].map(l => PARTS.find(p => e.levels[p.key] === l)).find(Boolean);
+  const need = ['edge', 'steady', 'strong'].map(l => PARTS.find(p => e.levels[p.key] === l)).find(Boolean);
   const st = need && PART_STORY[need.key];
   const words = `<ul class="w-words">${PARTS.map(p => e.levels[p.key] ? `<li style="--pc:${p.color}"><b>${p.part}</b><span>${esc(seen ? C.words[e.levels[p.key]].replace(/your tree/g, 'their tree').replace(/You don't/g, 'They don\'t') : C.words[e.levels[p.key]])}</span></li>` : `<li style="--pc:${p.color}"><b>${p.part}</b><span>Not sure today. That's okay.</span></li>`).join('')}</ul>`;
   const flags = (e.flags || []).filter(f => !seen).map(f => `<p class="w-flagnote"><b>${esc(C.flags[f].title)}.</b> ${esc(C.flags[f].note)}${GUIDE_FOR_FLAG[f] ? ` <button type="button" class="text-btn" onclick="W.guide('${GUIDE_FOR_FLAG[f]}')">A guide for this</button>` : ''}</p>`).join('');
@@ -932,9 +932,9 @@ VIEWS.readings = () => {
   if (st.trad === 'mine' && !hasMine) st.trad = 'every';
   const filt = x => (st.trad === 'every' || (st.trad === 'mine' ? x.trad.some(t => mine.includes(t)) : x.trad.includes(st.trad) || (st.trad !== 'all' && CHRISTIAN.includes(st.trad) && x.trad.includes('christian')))) && (!st.q || (x.title + ' ' + x.by + ' ' + x.lines.join(' ')).toLowerCase().includes(st.q.toLowerCase()));
   const list = RD.readings.filter(filt);
-  const tradOpts = [['every', 'Every reading'], ['all', 'For any faith or none']].concat(F.intake.groups.flatMap(g => g[2].filter(id => RD.readings.some(x => x.trad.includes(id))).map(id => [id, faithName(id)])));
+  const tradOpts = [['every', 'Every reading'], ['all', 'For every tradition and in-between']].concat(F.intake.groups.flatMap(g => g[2].filter(id => RD.readings.some(x => x.trad.includes(id))).map(id => [id, faithName(id)])));
   return `<div class="lc-head"><p class="eyebrow">Readings</p><h2 class="section-title" style="margin-top:4px">Words to read aloud</h2>
-    <p class="lead">Psalms, prayers, poems, and blessings for any faith or none. Read slowly. Read it twice. Hearing is often the last sense to go.</p></div>
+    <p class="lead">Psalms, prayers, poems, and blessings for all faith traditions and everything in-between. Read slowly. Read it twice. Hearing is often the last sense to go.</p></div>
     <div class="w-readfilter">${hasMine ? `<button class="lc-chip" style="--rc:var(--gold)" aria-pressed="${st.trad === 'mine'}" onclick="W.S.read.trad='mine';W.render()">${isSelf() ? 'For me' : 'For ' + esc(nameOf(target()))}</button>` : ''}
       <label class="w-l w-inline" for="w-rtrad">Tradition</label><select id="w-rtrad" onchange="W.S.read.trad=this.value;W.render()">${tradOpts.map(o => `<option value="${o[0]}"${st.trad === o[0] ? ' selected' : ''}>${esc(o[1])}</option>`).join('')}</select></div>
     <input class="lc-search" type="search" placeholder="Search: shepherd, peace, river, home..." aria-label="Search the readings" value="${esc(st.q)}" onchange="W.S.read.q=this.value;W.render()">

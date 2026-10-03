@@ -9,7 +9,7 @@
    ===================================================================== */
 (function(){
 const R = [
-  // ---------- Grounded blessings (any faith or none) ----------
+  // ---------- Grounded blessings (all faith traditions and everything in-between) ----------
   { id: 'gb-lastdays', title: `For the last days`, by: `Grounded`, trad: ['all'], rights: 'grounded',
     lines: [`May you be warm.`, `May you be comfortable.`, `May the people you love be close,`, `and the people you've lost be closer than you think.`, `May what you gave keep going.`, `May you rest.`] },
   { id: 'gb-watch', title: `For the one keeping watch`, by: `Grounded`, trad: ['all'], rights: 'grounded',

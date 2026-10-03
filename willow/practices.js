@@ -18,7 +18,7 @@ const PERSON = {
     ['wr-read', `A reading aloud`, `Pick one from the Readings library. A helper reads it slowly, twice.`, `3 min`, 'wisdom'],
     ['wr-rite', `A rite from your tradition`, `Ask for the sacrament, blessing, or ritual your faith offers. Willow helps call the right person.`, `Varies`, 'wisdom'],
     ['wr-honest', `Honest prayer`, `Tell God, or the silence, what's really true, even if it's angry. The Psalms do this.`, `2 min`, 'growing'],
-    ['wr-bless', `Receive a blessing`, `Ask a chaplain, clergy, or family member to bless you, in words that fit your faith or none.`, `2 min`, 'wisdom'],
+    ['wr-bless', `Receive a blessing`, `Ask a chaplain, clergy, or family member to bless you, in words that fit your faith, or wherever you are in-between.`, `2 min`, 'wisdom'],
     ['wr-awe', `Awe at the window`, `Notice something vast or beautiful: the sky, a tree, a grandchild's hand. Stay with it.`, `3 min`, 'growing']
   ],
   trunk: [

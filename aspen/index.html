@@ -3,7 +3,7 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=sp1"></script>
-<script src="/shared/gg-shelf.js?v=l1"></script>
+<script src="/shared/gg-shelf.js?v=fd1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -410,10 +410,10 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=sp1"></script>
-<script src="checkin.js?v=r4a"></script>
+<script src="checkin.js?v=fd1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=l1"></script>
-<script src="/shared/gg-tend.js?v=wl1"></script>
+<script src="/shared/gg-tend.js?v=fd1"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -1125,7 +1125,7 @@ function legacyScore(ring, key){
   return vals.length ? Math.round(1 + 9 * ((vals.reduce((a,b)=>a+b,0)/vals.length) - 1) / 2) : null;
 }
 const ringScore = (ring, key) => !ring ? null : isStd(ring) ? (((ring.answers || {})[key] || {}).score ?? null) : legacyScore(ring, key);
-const LEVEL_CLS = {strong:'s-up', steady:'s-steady', care:'s-care'};
+const LEVEL_CLS = {strong:'s-up', steady:'s-steady', edge:'s-care'};
 function levelOf(sc){ if (sc == null) return null; const l = CK.levels.find(x => sc >= x[2]) || CK.levels[CK.levels.length-1]; return [l[1], LEVEL_CLS[l[0]], l[0]]; }
 function level(sc){ return levelOf(sc) || ['Not sure yet','s-steady','none']; }
 /* Up, down, or the same, only between rings on the same standard. Two points on the 1 to 10 line counts as a change. */
@@ -1139,7 +1139,7 @@ function trend(ring, prev, key){
 }
 function statusCell(ring, prev, key, grown){
   const p = PART[key], sc = ringScore(ring, key), l = level(sc), t = trend(ring, prev, key);
-  return `<div class="status" style="border-left:5px solid ${pcolor(key)}"><b>${p.name}</b><span class="muted small">${p.sub}</span><br><span class="s ${l[1]}">${l[0]}</span>${grown && sc != null ? ` <span class="muted small">${sc} of 10</span>` : ''}${t ? ` <span class="s ${t[1]} small">${t[2]} ${t[0]}</span>` : ''}${l[2] === 'care' ? '<span class="tend muted small">This is a part to tend, not a grade.</span>' : ''}</div>`;
+  return `<div class="status" style="border-left:5px solid ${pcolor(key)}"><b>${p.name}</b><span class="muted small">${p.sub}</span><br><span class="s ${l[1]}">${l[0]}</span>${grown && sc != null ? ` <span class="muted small">${sc} of 10</span>` : ''}${t ? ` <span class="s ${t[1]} small">${t[2]} ${t[0]}</span>` : ''}${l[2] === 'edge' ? '<span class="tend muted small">Your growing edge is where your next growth begins.</span>' : ''}</div>`;
 }
 function lowestTwo(ring){
   return PARTS.map(p => [p.key, ringScore(ring, p.key) ?? 5.5]).sort((a,b)=>a[1]-b[1]).slice(0,2).map(x=>x[0]);
@@ -1316,7 +1316,7 @@ function aspPracticeInfo(key, name){
   return {};
 }
 const ASP_SEE = `<p><b>Always shown to your grown-up</b>If you answer that someone is hurting you, that you've thought about hurting yourself, that you're being bullied, that you feel lonely or left out, or that you feel like giving up, your grown-up sees that answer so they can help.</p>
-  <p><b>The big picture</b>How each part of your tree is doing (Strong, Steady, or Needs care), how your tree looks today, how many days you tended it, and which parts you're tending.</p>
+  <p><b>The big picture</b>How each part of your tree is doing (Strong, Steady, or Growing Edge), how your tree looks today, how many days you tended it, and which parts you're tending.</p>
   <p><b>Just yours</b>The rest of your answers, the practices you check off each day, your notes, and your weekly reflections. You can share a reflection with your grown-up anytime.</p>`;
 function aspProfileHtml(){
   const s = me(); if (!s) return '';
@@ -1430,7 +1430,7 @@ function renderCheckin(){
     v.innerHTML = `
       <button class="back" onclick="go('dash')">&larr; Back</button>
       <h2>Before you start</h2>
-      <div class="note"><b>This is yours.</b> Your grown-up sees how each part of your tree is doing, not your answers, except a few safety answers, so they can help. <button class="asp-link" onclick="GGTend.openSettings()">What your grown-up can see</button>. There are no wrong answers. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Needs care.</div>
+      <div class="note"><b>This is yours.</b> Your grown-up sees how each part of your tree is doing, not your answers, except a few safety answers, so they can help. <button class="asp-link" onclick="GGTend.openSettings()">What your grown-up can see</button>. There are no wrong answers. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Growing Edge.</div>
       <div class="panel">
         <h3>How are you doing this check-in?</h3>
         <div class="seg" role="group" aria-label="Check-in mode"><button aria-pressed="${d.mode==='self'}" onclick="setMode('self')">On my own</button><button aria-pressed="${d.mode==='grown'}" onclick="setMode('grown')">With a grown-up</button></div>
@@ -1550,8 +1550,8 @@ function calmKey(e){ if (e.key==='Escape') closeCalm(); }
 function closeCalm(){ $('overlay-root').innerHTML=''; document.removeEventListener('keydown', calmKey); }
 
 /* ---------- growth plan ---------- */
-// No limits (Rebrand Session 4), only suggestions: about 3 for a Strong part, 4 for Steady, 5 for Needs care.
-const aspSuggest = (ring, k) => { const lv = ring ? (levelOf(ringScore(ring, k)) || [])[2] : null; return window.GGTend && GGTend.suggest ? GGTend.suggest(lv) : ({care:5, steady:4}[lv] || 3); };
+// No limits (Rebrand Session 4), only suggestions: about 3 for a Strong part, 4 for Steady, 5 for a Growing Edge.
+const aspSuggest = (ring, k) => { const lv = ring ? (levelOf(ringScore(ring, k)) || [])[2] : null; return window.GGTend && GGTend.suggest ? GGTend.suggest(lv) : ({edge:5, steady:4}[lv] || 3); };
 const PART_GUIDES = {roots:['faith','death','identity'], trunk:['identity','grades','cut','startms'], bark:['compare','grades','phone','news'], branches:['friends','leftout','bullying','crush'], leaves:['sleep','looks','eating','vaping'], fruit:['divorce','moving','disaster','news']};
 function guideTitle(id){ let t = id; guidesData().groups.forEach(g => g.topics.forEach(x => { if (x.id === id) t = x.title; })); return t; }
 function guideLinks(k){ return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
@@ -1574,7 +1574,7 @@ function renderPlan(){
   box.innerHTML = `
     ${inApp ? '' : `<button class="back" onclick="planDraft=null;go('dash')">&larr; Back to my tree</button>`}
     <h2>Your growth plan</h2>
-    <p class="lede">Start with about 3 practices for each part of your tree, and a few more for any part that needs care. There's no limit, and you can write your own. ${suggested.length ? `Aspen suggests starting with <b>${suggested.map(k => PART[k].name).join(' and ')}</b>.` : ''} Tap <b>Learn more</b> on any practice to see how it works.</p>
+    <p class="lede">Start with about 3 practices for each part of your tree, and a few more for each growing edge. There's no limit, and you can write your own. ${suggested.length ? `Aspen suggests starting with <b>${suggested.map(k => PART[k].name).join(' and ')}</b>.` : ''} Tap <b>Learn more</b> on any practice to see how it works.</p>
     <div class="row" style="margin-bottom:14px"><button class="btn ghost small" onclick="go('helpplan')">How growth plans work</button><button class="btn ghost small" onclick="showCalm()">Need to talk to someone?</button></div>
     ${order.map(k => { const n = inPart(k).length, open = suggested.includes(k) || planOpen[k] || n > 0;
       return `<details class="plan-part" style="border-left:6px solid ${pcolor(k)}" ${open ? 'open' : ''} ontoggle="planOpen['${k}']=this.open">
@@ -1679,7 +1679,7 @@ function renderHelpPlan(){
   const s = me();
   $('view-helpplan').innerHTML = `<button class="back" onclick="me() ? aspTab('plan') : go('students')">&larr; Back to my growth plan</button>
     <h2>How growth plans work</h2>
-    <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a part that Needs care. There's no limit, and you can write your own. After a check-in, Aspen points to two parts that could use some care, but you can choose any.</p></div>
+    <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a growing edge. There's no limit, and you can write your own. After a check-in, Aspen points to two parts that could use some care, but you can choose any.</p></div>
     <div class="panel"><h3>Learn more</h3><p>Every practice has a <b>Learn more</b> button. It tells you why it helps, how to do it step by step, what to do if it's hard, and a way to try it with a grown-up.</p></div>
     <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
     <div class="panel"><h3>No streaks</h3><p>Miss a few days and your tree looks dry or droops a little, but it never dies and nothing is taken away. One practice perks it up, and a few days bring it all the way back.</p></div>
@@ -1771,13 +1771,13 @@ function renderGrown(){
     </div>
     <div class="panel"><h3>How Aspen works</h3>
       <p>Each check-in has 36 questions, six for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Aspen suggests two parts to care for, and the student builds a growth plan of small daily practices. Each day they tend their tree, each week brings a theme and a short check-in, and a full check-in at the end of a twelve-week season adds a growth ring.</p>
-      <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Needs care (1 to 4). Students see the levels too, with a reminder that a part needing care is a part to tend, not a grade. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
+      <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Growing Edge (1 to 4). Students see the levels too, with a reminder that a growing edge is where the next growth begins. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
       <p>Aspen follows the Grounded tree standard, the same one behind Maple, Oak, and the tools to come, so every check-in measures the same six parts the same way, written for each grade.</p>
     </div>
     <div class="panel"><h3>What you can see</h3>
       <p>Aspen gives students some privacy, in three layers, and tells them so plainly before they start. Kids answer more honestly when they know up front.</p>
       <p><b>Always shown to you.</b> The two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. When an answer is worrying, you see exactly what they said and what to do next.</p>
-      <p><b>The big picture.</b> How each part of the tree is doing (Strong, Steady, or Needs care), how the tree looks today, how many days they tended it, and which parts they're tending.</p>
+      <p><b>The big picture.</b> How each part of the tree is doing (Strong, Steady, or Growing Edge), how the tree looks today, how many days they tended it, and which parts they're tending.</p>
       <p><b>Just theirs.</b> The rest of their answers, the practices they check off each day, their notes, and their weekly reflections, unless they choose to share a reflection with you.</p>
     </div>
     <div class="panel"><h3>Safety and the calm card</h3>
@@ -1787,7 +1787,7 @@ function renderGrown(){
     </div>
     <div class="panel"><h3>Why each part matters</h3>
       <p><b>Roots (What grounds you).</b> Research from Lisa Miller at Columbia University finds that a sense of being held by something greater is one of the strongest protections young people have in hard seasons, and early adolescence is when that spiritual life often wakes up. <a class="src" href="https://www.tc.columbia.edu/faculty/lfm14/" target="_blank" rel="noopener">Teachers College</a></p>
-      <p>Faith can also hurt. A 2023 review of studies on young people found that spiritual well-being protects against depression, while spiritual struggle, like feeling abandoned or punished by God, adds to it. So Roots asks whether the sacred is a comfort or a weight. It never asks what a student believes, and a student of any faith, or none, can be strong here. <a class="src" href="https://link.springer.com/article/10.1186/s12888-023-05091-2" target="_blank" rel="noopener">BMC Psychiatry</a></p>
+      <p>Faith can also hurt. A 2023 review of studies on young people found that spiritual well-being protects against depression, while spiritual struggle, like feeling abandoned or punished by God, adds to it. So Roots asks whether the sacred is a comfort or a weight. It asks about a student's experience, and students of all faith traditions and everything in-between can be strong here. <a class="src" href="https://link.springer.com/article/10.1186/s12888-023-05091-2" target="_blank" rel="noopener">BMC Psychiatry</a></p>
       <p><b>Friends, crushes, and being offered things.</b> Aspen never asks a student to say whether they date, who they like, or whether they have used anything. It asks whether they would know what to do and who to tell. CDC's Dating Matters program teaches 11 to 14 year olds healthy relationship skills before dating starts, beginning with friendships in sixth grade. <a class="src" href="https://www.cdc.gov/intimate-partner-violence/php/datingmatters" target="_blank" rel="noopener">CDC</a></p>
       <p><b>Branches (Relationships).</b> Search Institute in Minneapolis finds that relationships where adults express care, challenge growth, provide support, share power, and expand possibilities help young people thrive. Middle school is when "share power" starts to matter most. <a class="src" href="https://searchinstitute.org/developmental-relationships" target="_blank" rel="noopener">Search Institute</a></p>
       <p><b>Leaves (Body).</b> Sleep experts endorsed by the American Academy of Pediatrics recommend 9 to 12 hours a night for ages 6 to 12 and 8 to 10 hours for ages 13 to 18, and keeping phones out of the bedroom at night. <a class="src" href="https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx" target="_blank" rel="noopener">HealthyChildren.org</a></p>

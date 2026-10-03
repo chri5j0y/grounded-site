@@ -31,14 +31,14 @@ const ANSWERS = [
 const LEVELS = [
   ['strong', `Strong`, 8],
   ['steady', `Steady`, 5],
-  ['care', `Needs care`, 1]
+  ['edge', `Growing Edge`, 1]
 ];
 
 // The words the person sees instead of a level.
 const WORDS = {
   strong: `This part of your tree feels well tended right now.`,
-  steady: `This part of your tree is holding. A little care could help.`,
-  care: `This part of your tree could use some care. You don't have to do it alone.`
+  steady: `This part of your tree is holding. A little tending could help.`,
+  edge: `This part of your tree is a growing edge, where new growth begins. You can tend it with others beside you.`
 };
 
 const STEMS = {
