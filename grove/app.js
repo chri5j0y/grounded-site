@@ -32,6 +32,7 @@ const ICON = {
  back:`<path d="M15 5l-7 7 7 7"/>`,
  library:`<path d="M4.5 5.5c2.6-1 5-.8 7.5.8v13.2c-2.5-1.6-4.9-1.8-7.5-.8z"/><path d="M19.5 5.5c-2.6-1-5-.8-7.5.8v13.2c2.5-1.6 4.9-1.8 7.5-.8z"/>`,
  search:`<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>`,
+ play:`<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>`,
  how:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/>`
 };
 function icon(name, cls){ return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]||''}</svg>`; }
@@ -144,6 +145,7 @@ function tabs() {
   const t = [['grove','Our Grove','grove'], ['wall','The Wall','people'], ['together','Together','heart']];
   if (hasEarlier()) t.push(['earlier','Earlier','journal']);
   t.push(['how','How it works','how']);
+  t.push(['learn','Learn','play']);
   return t;
 }
 function renderTabs() {
@@ -352,7 +354,7 @@ function did(id) {
 }
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab]');
-  if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; render(); if (t.closest('.gg-hero')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
+  if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); if (t.dataset.tab === 'learn') { if (window.GGLearn) GGLearn.open('grove'); return; } const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; render(); if (t.closest('.gg-hero')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
   const b = e.target.closest('[data-act]'); if (!b || !b.closest('#view')) return;
   const id = b.dataset.id, act = b.dataset.act;
   if (act === 'here' || act === 'switch') { if (window.GGP) GGP.openDialog({ reason: "Who's here? Choose your picture." }).then(render); }

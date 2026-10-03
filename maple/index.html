@@ -768,6 +768,7 @@ a.big-btn{text-decoration:none;}
   <button class="tab" data-tab="kids" id="tab-kids" onclick="go('kids')" hidden>My Kids</button>
   <button class="tab" data-tab="life" onclick="go('life')">When Life Changes</button>
   <button class="tab" data-tab="guide" onclick="go('guide')">Grown-up Guide</button>
+  <button class="tab" data-tab="learn" onclick="window.GGLearn&&GGLearn.open('maple')">Learn</button>
 </nav>
 
 <main id="main">
@@ -2927,6 +2928,7 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
+<script src="/shared/gg-learn.js?v=ln1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln1';document.head.appendChild(s)"></script>
 <script src="/read.js?v=tc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=tc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=lh1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=lh1';document.head.appendChild(s)"></script>
 </body>

@@ -951,6 +951,7 @@ html.ts-2 main{zoom:1.25;}
   <button class="nav-btn" data-icon="rings" data-tab="season" onclick="showView('client-season')"><span>Season</span></button>
   <button class="nav-btn" data-icon="can" data-tab="plan" onclick="showView('client-growthplan')"><span>Growth Plan</span></button>
   <button class="nav-btn" data-icon="door" data-tab="guides" data-lc="1" onclick="LCS.client.open=null;showView('client-life')"><span>When Life Changes</span></button>
+  <button class="nav-btn" data-icon="play" data-tab="learn" onclick="window.GGLearn&&GGLearn.open('oak')"><span>Learn</span></button>
 </nav>
 
 
@@ -1877,6 +1878,7 @@ const ICONS = {
   maple: '<path d="M12 21v-9"/><path d="M12 12c0-4.5-3.2-7-8-7 0 4.5 3.2 7 8 7z"/><path d="M12 14.5c0-3.5 2.4-6 7-6 0 3.5-2.4 6-7 6z"/><path d="M6.5 21h11"/>',
   people: '<circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.5 20.5c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M15.5 15c3.2 0 6 1.6 6 5"/>',
   plus: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/>',
+  play: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
   door: '<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
   calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.2"/>',
@@ -3314,6 +3316,7 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
+<script src="/shared/gg-learn.js?v=ln1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln1';document.head.appendChild(s)"></script>
 <script src="/read.js?v=tc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=tc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=lh1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=lh1';document.head.appendChild(s)"></script>
 </body>

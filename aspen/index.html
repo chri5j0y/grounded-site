@@ -374,6 +374,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
   <button class="tab" data-tab="students" onclick="go('students')">Students</button>
   <button class="tab" data-tab="grown" onclick="go('grown')">Grown-ups</button>
   <button class="tab" data-tab="life" onclick="go('life')">When Life Changes</button>
+  <button class="tab" data-tab="learn" onclick="window.GGLearn&&GGLearn.open('aspen')">Learn</button>
 </div></nav>
 
 <main id="main">
@@ -1961,6 +1962,7 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
+<script src="/shared/gg-learn.js?v=ln1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln1';document.head.appendChild(s)"></script>
 <script src="/read.js?v=tc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=tc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=lh1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=lh1';document.head.appendChild(s)"></script>
 </body>

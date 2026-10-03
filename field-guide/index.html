@@ -589,6 +589,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=tc1"></script>
+<script src="../shared/gg-learn.js?v=ln1"></script>
+<script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
 <script>
@@ -1311,10 +1313,8 @@ function orSign(){
 }
 function orPrintCert(){
   const s = orState(), D = DATA.orient; if (!s.complete) return;
-  fgSheet(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(D.signed.name)}</div>
-    <p>has completed <b>Grounded Field Guide&trade; Orientation</b>${orStaffSec() ? ', including the Staff section,' : ''}<br>and has agreed to serve with presence, honesty, and care.</p>
-    <p style="margin-top:6mm">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.<br>Certificate ${esc(D.signed.id || '')}, Orientation version ${OR().version}</p>
-    <div class="pr-sign" style="margin-top:14mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Orientation Certificate', {file:'orientation-certificate', date:s.doneOn});
+  fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
+    GGPrint.certificate({tree:'house', name: D.signed.name, title:'Grounded Field Guide Orientation', body:'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.'), date: s.doneOn, renew: s.renewBy, version: OR().version, id: D.signed.id || '', kind:'training'}); });
 }
 function orPrintAgreement(){
   const A = OR().agreement, D = DATA.orient.signed;
@@ -1626,8 +1626,7 @@ document.addEventListener('keydown', e => {
      scales to the screen. Narration uses the shared read-aloud engine (read.js): the device's best voice,
      the voice picker, speed, and Get a better voice.
    - Progress (DATA.learn.done, DATA.learn.at) is saved with this device's records and travels in backups. */
-const LN_MARK = m => new URL('../shared/marks/' + m + '.svg', location.href).href;
-const LN_HERO = h => new URL('../shared/heroes/' + h + '-wide.svg', location.href).href;
+// The player, scenes, and closing scene live in shared/gg-learn.js (one player for the Field Guide and every tree app).
 function lnTracks(){
   const out = [], add = L => { if (L && L.learn && Array.isArray(L.learn.tracks)) L.learn.tracks.forEach(t => { if (t && Array.isArray(t.lessons) && !out.some(x => x.id === t.id)) out.push(t); }); };
   add(typeof FLD !== 'undefined' ? FLD : null);
@@ -1639,172 +1638,64 @@ const lnData = () => (DATA.learn = Object.assign({done:{}, at:{}}, DATA.learn ||
 function lnFind(id){ for (const t of lnTracks()) for (const l of t.lessons) if (l.id === id) return {t, l}; return null; }
 function learnMerge(a, b){ a = Object.assign({done:{}, at:{}}, a || {}); b = b || {}; const o = {done: Object.assign({}, b.done || {}, a.done || {}), at: Object.assign({}, b.at || {}, a.at || {})}; return o; }
 let LN = null;
+const lnCertable = t => window.GGLearn ? GGLearn.certable(t) : (t.lessons || []).length >= 3;
 function vLearn(){
+  if (window.GGLearn) GGLearn.css();
   const tracks = lnTracks(), D = lnData();
   if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
   const all = tracks.reduce((n, t) => n + t.lessons.length, 0), fin = tracks.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
-  return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
-  ${tracks.map(t => `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${t.lessons.filter(l => D.done[l.id]).length} of ${t.lessons.length}</span></div>
-    <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? ' · Pick up where you left off' : ''}</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}
-  <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'field' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p>`;
+  return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
+  ${tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
+    return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
+    <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
+    ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ln-cert" data-v="${esc(t.id)}">${icon('print')} Get Your Certificate</button></div>` : lnCertable(t) ? `<p class="muted" style="margin-top:10px;font-size:14px">Finish every lesson in this series for a Certificate of Completion.</p>` : ''}</div>`; }).join('')}
+  <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'field' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p></div>`;
 }
 function vLesson(t, l){
-  const i = Math.min((lnData().at[l.id] || 0), l.scenes.length - 1);
-  setTimeout(() => lnMount(l, i), 0);
-  return `<div class="page-head"><button class="linkbtn" data-act="ln-home">&larr; All lessons</button><div class="eyebrow" style="margin-top:8px">${esc(t.title)} · Lesson ${esc(String(l.n || ''))}</div><h1>${esc(l.title)}</h1></div>
-  <div class="ln-player"><div class="ln-stage" id="ln-stage"><div class="ln-canvas" id="ln-canvas"></div></div>
-   <div class="ln-prog" id="ln-prog">${l.scenes.map(() => '<span></span>').join('')}</div>
-   <p class="ln-cap" id="ln-cap"></p><div id="ln-quiz"></div>
-   <div class="ln-ctl"><button class="btn btn-gold" data-act="ln-play" id="ln-pl">Play</button><button class="btn btn-line" data-act="ln-back" aria-label="Back one scene">Back</button><button class="btn btn-line" data-act="ln-next" aria-label="Next scene">Next</button><button class="btn btn-line" data-act="ln-restart">Start Over</button><span class="muted" id="ln-cn"></span></div>
-   <div class="ln-vs" id="ln-vs"></div></div>`;
+  setTimeout(() => lnMount(t, l), 0);
+  return `<div class="ggl"><div class="page-head"><button class="linkbtn" data-act="ln-home">&larr; All lessons</button><div class="eyebrow" style="margin-top:8px">${esc(t.title)}, Lesson ${esc(String(l.n || ''))}</div><h1>${esc(l.title)}</h1></div><div id="ln-host"></div></div>`;
 }
-function lnMount(l, i){
-  LN = {l, i: -1, playing: false, tok: 0};
-  try { if (window.GGRead) $('#ln-vs').appendChild(GGRead.settings()); } catch(e){}
-  lnFit(); lnShow(i);
+function lnMount(t, l){
+  const host = $('#ln-host'); if (!host) return;
+  if (!window.GGLearn){ host.innerHTML = `<div class="card"><p>The lesson player didn't load. Check your connection and open this lesson again.</p></div>`; return; }
+  const D = lnData();
+  LN = GGLearn.player(host, {lesson: l, track: t, tracks: lnTracks(), done: D.done, at: D.at[l.id] || 0, accent: '#8B5E1A',
+    onAt: i => { lnData().at[l.id] = i; save(); },
+    onDone: id => { const d = lnData(); if (!d.done[id]){ d.done[id] = today(); save(); } },
+    open: id => { LN = null; go('learn', {ln: id}); },
+    home: () => { LN = null; go('learn'); },
+    cert: tr => lnCert(tr)});
 }
-function lnFit(){ const st = $('#ln-stage'), cv = $('#ln-canvas'); if (st && cv) cv.style.transform = 'scale(' + (st.clientWidth / 960) + ')'; }
-window.addEventListener('resize', lnFit);
-function lnHush(){ if (LN){ LN.tok++; clearInterval(LN.hl); clearInterval(LN.tick); clearTimeout(LN.nx); } try { if (window.GGRead) GGRead.stop(); else speechSynthesis.cancel(); } catch(e){} }
-function lnStop(){ lnHush(); LN = null; }
-const lnA = (d, extra) => ` class="a${extra ? ' ' + extra : ''}" style="transition-delay:${d}s"`;
-const LN_HAND = '<svg class="ln-ptr" viewBox="0 0 40 48" aria-hidden="true"><path d="M14 3c2.2 0 4 1.8 4 4v13l2-.4c1.6-.3 3.2.6 3.7 2.1l.2.6 2-.3c1.7-.2 3.3.8 3.8 2.4l.2.6 1.6-.2c2-.2 3.8 1.3 4 3.3L36 38c.3 4.5-3 8.5-7.5 9H18.6c-2.6 0-5-1.2-6.5-3.3L4.3 32.8c-1.2-1.7-.8-4 .9-5.1 1.5-1 3.5-.8 4.8.5L10 30V7c0-2.2 1.8-4 4-4z" fill="#FFF8EC" stroke="#2C1810" stroke-width="2"/></svg><span class="ln-ring"></span>';
-const LN_COL = {maple:'#C4501E', aspen:'#1F6F74', pine:'#3A6B35', oak:'#3D5A73', sequoia:'#7A2E1C', willow:'#5D5A6E', grove:'#223829', field:'#2E2118', site:'#8B5E1A'};
-const LN_PART = [['roots','Roots','What grounds you','#5B3A22'],['trunk','Trunk','Purpose','#8B5E1A'],['bark','Bark','Mind and feelings','#7D6B57'],['branches','Branches','Relationships','#9A5B34'],['leaves','Leaves','Body','#5F7D48'],['fruit','Fruit','Hope','#C07A26']];
-function lnScene(sc){
-  const h = x => esc(x == null ? '' : x);
-  switch (sc.k){
-    case 'title': return `<img class="ln-hero" src="${LN_HERO(sc.hero || 'oak')}" alt=""><div class="ln-tt"><div${lnA(.5, 'ln-eb')}>${h(sc.eyebrow || '')}</div><h2${lnA(.9)}>${h(sc.h)}</h2>${sc.sub ? `<p${lnA(1.5)}>${h(sc.sub)}</p>` : ''}<div${lnA(1.9, 'ln-by')}>GROW WITH GROUNDED</div></div>`;
-    case 'parts': { const L = [[1.0,2122,440,1960,470,1950,466,'end',0],[1.8,2132,380,2300,420,2310,416,'start',1],[2.6,2124,360,1960,370,1950,366,'end',2],[3.4,2210,250,2330,260,2340,256,'start',3],[4.2,2030,230,1910,220,1900,216,'end',4],[5.0,2150,195,2320,130,2330,126,'start',5]];
-      return `<svg viewBox="1660 30 940 529" preserveAspectRatio="xMidYMid slice" width="960" height="540" style="position:absolute;inset:0"><image href="${LN_HERO('oak')}" x="0" y="0" width="3600" height="560"/>${L.map(([d,x1,y1,x2,y2,tx,ty,an,p]) => { const P = LN_PART[p]; return `<g${lnA(d)}><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F6EFE2" stroke-width="2.4"/><circle cx="${x1}" cy="${y1}" r="6" fill="#F6EFE2"/><circle cx="${x1}" cy="${y1}" r="3.5" fill="${P[3]}"/><text x="${tx}" y="${ty}" text-anchor="${an}" font-family="Cormorant Garamond,serif" font-weight="600" font-size="34" fill="#FFF8EC">${P[1]}</text><text x="${tx}" y="${ty + 26}" text-anchor="${an}" font-family="Barlow,sans-serif" font-weight="500" font-size="20" fill="#F2DDB5">${P[2]}</text></g>`; }).join('')}</svg>`; }
-    case 'big': return `<div class="ln-big"><p${lnA(.3)}>${h(sc.h)}</p>${sc.sub ? `<small${lnA(1.8)}>${h(sc.sub)}</small>` : ''}</div>`;
-    case 'points': return `<div class="ln-pts"><h3${lnA(.2)}>${h(sc.h)}</h3>${(sc.items || []).map((it, j) => { const a = Array.isArray(it) ? it : [it]; return `<div${lnA(.9 + j * (sc.gap || 1.1), 'ln-pt')}><span class="ln-dot" style="background:${a[2] || 'var(--ln-gold)'}"></span><span><b>${h(a[0])}</b>${a[1] ? `<small>${h(a[1])}</small>` : ''}</span></div>`; }).join('')}</div>`;
-    case 'trees': { const T = [['maple','Maple','Grades K to 5'],['aspen','Aspen','Grades 6 to 8'],['pine','Pine','Grades 9 to 12'],['oak','Oak','Adults'],['sequoia','Sequoia','Seniors'],['willow','Willow','Hospice']].concat(sc.grove ? [['grove','The Grove','Every age, together']] : []);
-      return `<div class="ln-trees"><h3${lnA(.2)}>${h(sc.h || 'Six trees. The same six parts.')}</h3><div class="ln-trow">${T.map((x, j) => `<div${lnA(.6 + j * .4, 'ln-tr')}><img src="${LN_MARK(x[0] + '-tab')}" alt=""><b style="color:${LN_COL[x[0]]}">${x[1]}</b><small>${x[2]}</small></div>`).join('')}</div></div>`; }
-    case 'levels': return `<div class="ln-lv">${[['Strong','8 to 10','#5F7D48'],['Steady','5 to 7','#8B5E1A'],['Growing Edge','1 to 4','#B8612F']].map((c, j) => `<div${lnA(.8 + j, 'ln-lc')} style="--k:${c[2]};transition-delay:${.8 + j}s"><b>${c[0]}</b><small>${c[1]}</small></div>`).join('')}</div>`;
-    case 'flow': { const n = (sc.steps || []).length; return `<div class="ln-flow"><h3${lnA(.2)}>${h(sc.h)}</h3><div class="ln-frow" style="--n:${n}">${(sc.steps || []).map((s, j) => `${j ? `<span${lnA(.6 + j * 1.1, 'ln-arr')}>&rarr;</span>` : ''}<div${lnA(.8 + j * 1.1, 'ln-step')}><span class="ln-sn">${j + 1}</span><b>${h(s[0])}</b>${s[1] ? `<small>${h(s[1])}</small>` : ''}</div>`).join('')}</div></div>`; }
-    case 'screen': { const c = LN_COL[sc.app] || sc.color || '#3D5A73';
-      return `<div class="ln-phone"><div class="ln-ptop" style="background:${c}">${sc.app && sc.app !== 'field' && sc.app !== 'site' ? `<img src="${LN_MARK(sc.app + '-tab')}" alt="">` : ''}<b>${h(sc.app_name || '')}</b><span>${h(sc.title || '')}</span></div>${(sc.rows || []).map((r, j) => `<div class="ln-prow${j === sc.tap ? ' ln-tgt' : ''}"${j === sc.tap ? ' data-tap' : ''}><span>${h(r[0])}</span><span${r[2] ? ` style="color:${r[2]};font-weight:600"` : ''}>${h(r[1] || '')}</span></div>`).join('')}</div>
-        ${sc.panel ? `<div class="ln-panel" style="border-left-color:${sc.panel.c || c}"><h4>${h(sc.panel.h)}</h4>${sc.panel.sub ? `<p>${h(sc.panel.sub)}</p>` : ''}${(sc.panel.items || []).length ? `<ul>${sc.panel.items.map(x => `<li>${h(x)}</li>`).join('')}</ul>` : ''}</div>` : ''}${sc.tap != null ? LN_HAND : ''}`; }
-    case 'tabs': return `<div class="ln-fg"><div class="ln-fgtop"><b>${h(sc.app_name || 'Grounded Field Guide')}</b></div><div class="ln-fgtabs">${(sc.tabs || []).map((x, j) => `<span class="${j === sc.tap ? 'ln-tgt' : ''}"${j === sc.tap ? ' data-tap' : ''}>${h(x)}</span>`).join('')}</div>
-        ${sc.note ? `<div class="ln-note"><h4>${h(sc.note.h)}</h4><p>${h(sc.note.p || '')}</p></div>` : ''}</div>${sc.tap != null ? LN_HAND : ''}`;
-    case 'card': return `<div class="ln-card"><h4>${h(sc.title)}</h4>${sc.body ? `<p>${h(sc.body)}</p>` : ''}${(sc.fields || []).map(f => `<label>${h(f[0])}</label><div class="ln-in">${h(f[1] || '')}</div>`).join('')}<div class="ln-btns">${(sc.btns || []).map((b, j) => `<span class="ln-b${j === 0 ? ' pri' : ''}${j === sc.tap ? ' ln-tgt' : ''}"${j === sc.tap ? ' data-tap' : ''}>${h(b)}</span>`).join('')}</div></div>
-        ${sc.result ? `<div class="ln-res">${h(sc.result)}</div>` : ''}${sc.tap != null ? LN_HAND : ''}`;
-    case 'quiz': return `<div class="ln-qz"><div${lnA(.2, 'ln-eb')}>You've Got It</div><h3${lnA(.5)}>${h(sc.q)}</h3></div>`;
-  }
-  return '';
+function lnStop(){ if (LN && LN.stop) LN.stop(); LN = null; }
+function lnCert(t){
+  if (!t) return; const D = lnData(), when = t.lessons.map(l => D.done[l.id]).filter(Boolean).sort().pop() || today();
+  const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
+  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:'house', name:n.trim(), title:'Learn Grow With Grounded: ' + t.title, body:'For finishing every lesson in the ' + t.title + ' series of the Grounded Field Guide.', date:when, kind:'series'}));
 }
-function lnShow(n){
-  if (!LN) return; const l = LN.l; LN.i = Math.max(0, Math.min(l.scenes.length - 1, n)); const sc = l.scenes[LN.i], t = ++LN.tok;
-  clearInterval(LN.hl); clearInterval(LN.tick); clearTimeout(LN.nx); try { if (window.GGRead) GGRead.stop(); } catch(e){}
-  lnData().at[l.id] = LN.i; save();
-  const st = $('#ln-stage'), cv = $('#ln-canvas'); if (!st || !cv) return lnStop();
-  st.classList.remove('go'); cv.innerHTML = lnScene(sc); cv.className = 'ln-canvas ln-k-' + sc.k;
-  $('#ln-cap').innerHTML = String(sc.say || '').split(/\s+/).map(w => `<span class="w">${esc(w)}</span>`).join(' ');
-  Array.from($('#ln-prog').children).forEach((b, k) => b.classList.toggle('on', k <= LN.i));
-  $('#ln-cn').textContent = 'Scene ' + (LN.i + 1) + ' of ' + l.scenes.length;
-  $('#ln-quiz').innerHTML = sc.k === 'quiz' ? `<div class="ln-opts">${sc.opts.map((o, j) => `<button class="btn btn-line" data-act="ln-ans" data-v="${j}">${esc(o)}</button>`).join('')}</div><div id="ln-fb"></div>` : '';
-  const tg = cv.querySelector('[data-tap]'), ptr = cv.querySelector('.ln-ptr'), ring = cv.querySelector('.ln-ring');
-  if (tg && ptr){ const cr = cv.getBoundingClientRect(), r = tg.getBoundingClientRect(), k = cr.width / 960, x = (r.left - cr.left + r.width * .6) / k, y = (r.top - cr.top + r.height * .5) / k;
-    cv.style.setProperty('--px', (x - 14) + 'px'); cv.style.setProperty('--py', (y - 4) + 'px'); if (ring){ ring.style.left = (x - 24) + 'px'; ring.style.top = (y - 24) + 'px'; } }
-  requestAnimationFrame(() => requestAnimationFrame(() => { if (st) st.classList.add('go'); }));
-  if (!LN.playing) return;
-  const W = Array.from(document.querySelectorAll('#ln-cap .w')), sp = window.GGRead ? GGRead.speed() : 1, ms = Math.max(3500, W.length * 60000 / (160 * sp));
-  let kk = 0; LN.hl = setInterval(() => { if (!LN || t !== LN.tok) return clearInterval(LN && LN.hl); W.forEach((w, j) => w.classList.toggle('on', j === kk)); kk++; if (kk > W.length) clearInterval(LN.hl); }, ms / Math.max(1, W.length));
-  let spoke = false; try { if (window.GGRead && GGRead.available){ GGRead.say(sc.say || ''); spoke = true; } } catch(e){}
-  const start = Date.now(), hold = (tg ? 3600 : 0) + 900;
-  LN.tick = setInterval(() => {
-    if (!LN || t !== LN.tok) return clearInterval(LN && LN.tick);
-    const busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
-    if (!busy && Date.now() - start > (spoke ? Math.min(ms, 1500) : ms)){
-      clearInterval(LN.tick); W.forEach(w => w.classList.remove('on'));
-      if (sc.k === 'quiz'){ lnSetPlay(false); return; }
-      LN.nx = setTimeout(() => { if (LN && t === LN.tok && LN.playing){ if (LN.i < l.scenes.length - 1) lnShow(LN.i + 1); else lnSetPlay(false); } }, Math.max(hold - (Date.now() - start), 700));
-    }
-  }, 200);
-}
-function lnSetPlay(p){ if (!LN) return; LN.playing = p; const b = $('#ln-pl'); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) lnHush(); }
 function lnAct(a, v){
   switch (a){
     case 'ln-open': lnStop(); go('learn', {ln: v}); return true;
     case 'ln-home': lnStop(); go('learn'); return true;
-    case 'ln-play': if (!LN) return true; if (LN.playing){ lnSetPlay(false); } else { LN.playing = true; lnSetPlay(true); lnShow(LN.i >= LN.l.scenes.length - 1 && LN.l.scenes[LN.i].k !== 'quiz' ? 0 : LN.i); } return true;
-    case 'ln-back': if (LN) lnShow(LN.i - 1); return true;
-    case 'ln-next': if (LN) lnShow(LN.i + 1); return true;
-    case 'ln-restart': if (LN) lnShow(0); return true;
-    case 'ln-ans': { if (!LN) return true; const sc = LN.l.scenes[LN.i], ok = +v === sc.right;
-      document.querySelectorAll('.ln-opts .btn').forEach((b, j) => { b.classList.toggle('ln-right', ok && j === +v); b.classList.toggle('ln-wrong', !ok && j === +v); });
-      $('#ln-fb').innerHTML = ok ? `<p class="ln-yes"><b>That's it.</b> ${esc(sc.why || '')}</p>${lnNextHTML()}` : `<p class="ln-no"><b>Not quite.</b> Try another answer.</p>`;
-      if (ok){ lnData().done[LN.l.id] = today(); save(); try { if (window.GGRead) GGRead.say("That's it. " + (sc.why || '')); } catch(e){} }
-      return true; }
+    case 'ln-cert': lnCert(lnTracks().find(t => t.id === v)); return true;
   }
   return false;
 }
-function lnNextHTML(){ const tr = lnTracks(), flat = []; tr.forEach(t => t.lessons.forEach(l => flat.push(l))); const i = flat.findIndex(l => l.id === LN.l.id), nx = flat[i + 1];
-  return `<div class="row" style="margin-top:10px">${nx ? `<button class="btn btn-gold" data-act="ln-open" data-v="${esc(nx.id)}">Next: ${esc(nx.title)}</button>` : ''}<button class="btn btn-line" data-act="ln-home">All lessons</button></div>`; }
-document.addEventListener('keydown', e => {
-  if (!LN || V.tab !== 'learn' || /input|textarea|select/i.test(e.target.tagName || '')) return;
-  if (e.key === ' '){ e.preventDefault(); lnAct('ln-play'); } else if (e.key === 'ArrowRight') lnShow(LN.i + 1); else if (e.key === 'ArrowLeft') lnShow(LN.i - 1);
-});
-(function(){ const s = document.createElement('style'); s.textContent = `
-.ln-list{display:grid;gap:8px;margin-top:10px;}
-.ln-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;min-height:56px;}
-.ln-item:hover{border-color:var(--gold);}.ln-item svg{width:20px;height:20px;color:var(--gold);flex:none;}
-.ln-n{width:34px;height:34px;border-radius:50%;background:var(--bg-deep);color:var(--gold);display:grid;place-items:center;font-weight:700;flex:none;}
-.ln-item.done .ln-n{background:#5F7D48;color:#fff;}.ln-item.done .ln-n svg{color:#fff;width:18px;height:18px;}
-.ln-t{flex:1;min-width:0;}.ln-t b{display:block;}.ln-t small{color:var(--ink-soft);}
-.ln-stage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#F2ECE0;border:1px solid var(--line);}
-.ln-canvas{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;font-family:Barlow,system-ui,sans-serif;color:#2C1810;--ln-gold:#8B5E1A;}
-.ln-canvas .a{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}.go .ln-canvas .a{opacity:1;transform:none;}
-.ln-prog{display:flex;gap:5px;margin:10px 0;}.ln-prog span{flex:1;height:5px;border-radius:3px;background:var(--line);}.ln-prog span.on{background:var(--gold);}
-.ln-cap{font-size:calc(19px * var(--scale));line-height:1.5;min-height:3em;margin:6px 0;}.ln-cap .w.on{color:var(--gold);}
-.ln-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}.ln-ctl .btn{min-height:48px;}.ln-ctl .muted{margin-left:auto;}
-.ln-opts{display:grid;gap:8px;margin:8px 0;}.ln-opts .btn{justify-content:flex-start;text-align:left;white-space:normal;min-height:52px;}
-.ln-opts .ln-right{border-color:#5F7D48 !important;background:rgba(95,125,72,.14) !important;}.ln-opts .ln-wrong{border-color:#B8612F !important;}
-.ln-yes b{color:#5F7D48;}.ln-no b{color:#B8612F;}
-.ln-hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:59% 50%;}
-.ln-tt{position:absolute;left:56px;top:48px;color:#F6EFE2;max-width:520px;}.ln-tt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:60px;line-height:1.02;margin:6px 0 0;text-shadow:0 2px 12px rgba(0,0,0,.3);}
-.ln-tt p{font-size:24px;margin:12px 0 0;color:#F2DDB5;}.ln-eb{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:20px;color:#F2C46A;}
-.ln-by{font-family:'Barlow Condensed',sans-serif;letter-spacing:2.4px;font-size:16px;margin-top:14px;opacity:.9;}
-.ln-big{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:0 90px;}.ln-big p{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:52px;line-height:1.15;margin:0;}.ln-big small{display:block;font-size:26px;color:#6B5A4D;margin-top:20px;}
-.ln-pts{padding:48px 70px;}.ln-pts h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:46px;margin:0 0 22px;}
-.ln-pt{display:flex;gap:16px;align-items:flex-start;margin:0 0 18px;font-size:28px;line-height:1.25;}.ln-pt small{display:block;font-size:21px;color:#6B5A4D;margin-top:2px;}
-.ln-dot{width:16px;height:16px;border-radius:50%;flex:none;margin-top:10px;}
-.ln-trees h3{position:absolute;top:56px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0;}
-.ln-trow{position:absolute;left:30px;right:30px;bottom:90px;display:flex;justify-content:center;gap:18px;}
-.ln-tr{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:130px;}.ln-tr img{width:110px;height:110px;border-radius:24px;}
-.ln-tr b{font-family:'Cormorant Garamond',serif;font-size:30px;margin-top:8px;}.ln-tr small{font-size:17px;color:#6B5A4D;}
-.ln-lv{position:absolute;inset:0;display:flex;gap:36px;align-items:center;justify-content:center;padding:0 60px;}
-.ln-lc{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-top:8px solid var(--k);border-radius:20px;padding:44px 20px;text-align:center;}
-.ln-lc b{display:block;font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--k);}.ln-lc small{font-size:22px;color:#6B5A4D;}
-.ln-flow{padding:50px 50px;}.ln-flow h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0 0 40px;}
-.ln-frow{display:flex;align-items:center;gap:14px;}.ln-step{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 18px;min-height:200px;}
-.ln-step b{display:block;font-size:26px;line-height:1.2;margin-top:10px;}.ln-step small{display:block;font-size:19px;color:#6B5A4D;margin-top:8px;line-height:1.3;}
-.ln-sn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#8B5E1A;color:#FFF8EC;font-weight:700;font-size:20px;}
-.ln-arr{font-size:36px;color:#8B5E1A;flex:none;}
-.ln-phone{position:absolute;left:56px;top:34px;width:380px;height:472px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:30px;overflow:hidden;font-size:21px;}
-.ln-ptop{display:flex;align-items:center;gap:10px;padding:14px 16px;color:#F6EFE2;}.ln-ptop img{width:36px;height:36px;border-radius:9px;}.ln-ptop b{font-family:'Cormorant Garamond',serif;font-size:28px;}.ln-ptop span{margin-left:auto;font-size:17px;opacity:.9;}
-.ln-prow{display:flex;justify-content:space-between;padding:13px 18px;border-top:1px solid #EFE6D4;}
-.ln-tgt{transition:background .3s ease 2.6s,box-shadow .3s ease 2.6s;}.go .ln-tgt{background:#F6EEDB;box-shadow:inset 0 0 0 2px #8B5E1A;}
-.ln-panel{position:absolute;right:56px;top:70px;width:400px;background:#FFFCF6;border:1px solid #DDD0B8;border-left:8px solid #8B5E1A;padding:22px 24px;transform:translateX(560px);transition:transform .7s ease 3s;}
-.go .ln-panel{transform:none;}.ln-panel h4{font-family:'Cormorant Garamond',serif;font-size:32px;margin:0;}.ln-panel p{font-size:19px;color:#6B5A4D;margin:6px 0 10px;}.ln-panel li{font-size:22px;line-height:1.6;}
-.ln-ptr{position:absolute;left:820px;top:520px;width:56px;z-index:5;transition:left 1.3s ease 1.1s,top 1.3s ease 1.1s;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}
-.go .ln-ptr{left:var(--px,600px);top:var(--py,300px);}
-.ln-ring{position:absolute;width:48px;height:48px;border-radius:50%;border:4px solid #8B5E1A;opacity:0;transform:scale(.3);transition:all .5s ease 2.5s;z-index:4;}.go .ln-ring{opacity:.85;transform:scale(1.5);}
-.ln-fg{position:absolute;inset:30px 40px;background:#F6F0E4;border:1px solid #DDD0B8;border-radius:22px;overflow:hidden;}
-.ln-fgtop{background:#2E2118;color:#D9A847;padding:16px 22px;font-family:'Cormorant Garamond',serif;font-size:28px;}
-.ln-fgtabs{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid #DDD0B8;flex-wrap:wrap;}.ln-fgtabs span{padding:10px 14px;border-radius:12px;font-size:20px;font-weight:600;color:#6B5A4D;}
-.ln-note{margin:26px 26px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 24px;opacity:0;transform:translateY(16px);transition:all .7s ease 3s;}.go .ln-note{opacity:1;transform:none;}
-.ln-note h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-note p{font-size:22px;color:#6B5A4D;margin:0;line-height:1.35;}
-.ln-card{position:absolute;left:70px;top:40px;width:540px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:22px;padding:24px 28px;}
-.ln-card h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-card p{font-size:19px;color:#6B5A4D;margin:0 0 10px;line-height:1.35;}
-.ln-card label{display:block;font-size:17px;font-weight:600;margin-top:10px;}.ln-in{border:1px solid #DDD0B8;border-radius:10px;padding:9px 12px;font-size:19px;margin-top:4px;background:#fff;min-height:42px;}
-.ln-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}.ln-b{border:1px solid #8B5E1A;color:#8B5E1A;border-radius:999px;padding:10px 18px;font-weight:600;font-size:18px;}.ln-b.pri{background:#8B5E1A;color:#FFF8EC;}
-.ln-res{position:absolute;right:60px;bottom:60px;max-width:300px;background:#2E2118;color:#FFF8EC;border-radius:18px;padding:16px 20px;font-size:20px;line-height:1.3;opacity:0;transform:translateY(14px);transition:all .6s ease 3.1s;}.go .ln-res{opacity:1;transform:none;}
-.ln-qz{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 80px;}.ln-qz .ln-eb{color:#8B5E1A;}.ln-qz h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:48px;line-height:1.1;margin:10px 0 0;}
-`; document.head.appendChild(s); })();
+// Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr1'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+// The certificate and two posters for a finished Guide training. tree: maple, aspen, oak, willow.
+function fgGuideCert(tree, st, signed, M, guide){
+  if (!st.complete || !signed) return;
+  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree, name: signed.name, title: guide + ' Training', body: ({
+    maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
+    aspen: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 6 to 8 through Aspen.',
+    oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
+    willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'})[tree],
+    date: signed.date, renew: st.renewBy, version: M && M.version, kind: 'training'}));
+}
+function fgGuidePrints(prefix){ return `<div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate and Posters</h3><p class="muted">Print your Certificate of Completion, and posters that let people know a trained guide serves here. Each has a small QR code to the tree's page.</p>
+  <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="${prefix}-cert">${icon('print')} Certificate</button><button class="btn btn-line btn-sm" data-act="${prefix}-poster">${icon('print')} Tree Poster</button><button class="btn btn-line btn-sm" data-act="${prefix}-parts">${icon('print')} Six Parts Poster</button></div></div>`; }
 
 // ---------------- OAK GUIDE ----------------
 // Wording lives in the Field library (FLD.oakGuide), so it is sealed and edited through Update a Library.
@@ -1928,7 +1819,7 @@ function vSTM(){
   ${step('st-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with adults, patients, and staff`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('st-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
-  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="st-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="st-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('st') : ''}`;
 }
 function vSTMLesson(i){
   const M = STM(), L = M.lessons[i], n = M.lessons.length, read = !!stmData().lessons[L.id];
@@ -2834,7 +2725,7 @@ function vSPM(){
   ${step('sp-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with kids`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('sp-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
-  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sp-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sp-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('sp') : ''}`;
 }
 function vSPMLesson(i){
   const M = SPM(), L = M.lessons[i], n = M.lessons.length, read = !!spmData().lessons[L.id];
@@ -3401,6 +3292,9 @@ function spAct(a, v, t){
     case 'sp-msign': go('maple', {spm:1, sps:1}); return true;
     case 'sp-msigned': { const nm = $('#spm-name').value.trim(); if (!nm){ $('#spm-name').focus(); return true; } if (!$('#spm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
       spmData().signed = {v:SPM().version, date:today(), name:nm}; save(); go('maple', {spm:1}); toast(spReady() ? 'Signed. Maple visits are open.' : 'Signed.'); return true; }
+    case 'sp-cert': fgGuideCert('maple', spmState(), spmData().signed, SPM(), 'Maple Guide'); return true;
+    case 'sp-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('maple', 'tree')); return true;
+    case 'sp-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('maple', 'parts')); return true;
     case 'sp-mprint': spmPrint(); return true;
     case 'sp-new': { const n = $('#sp-nn').value.trim(); if (!n){ $('#sp-nn').focus(); return true; }
       const c = {id:uid(), u:Date.now(), name:n, service:'Maple', status:'active', followups:[], created:today(), sp:{grade:$('#sp-ng').value, rel:$('#sp-nr').value.trim(), consent:null}};
@@ -3645,7 +3539,7 @@ function vSAM(){
   ${step('sa-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with middle schoolers`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('sa-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
-  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sa-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sa-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('sa') : ''}`;
 }
 function vSAMLesson(i){
   const M = SAM(), L = M.lessons[i], n = M.lessons.length, read = !!samData().lessons[L.id];
@@ -4170,6 +4064,9 @@ function saAct(a, v, t){
     case 'sa-msign': go('aspen', {sam:1, sas:1}); return true;
     case 'sa-msigned': { const nm = $('#sam-name').value.trim(); if (!nm){ $('#sam-name').focus(); return true; } if (!$('#sam-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
       samData().signed = {v:SAM().version, date:today(), name:nm}; save(); go('aspen', {sam:1}); toast(saReady() ? 'Signed. Aspen visits are open.' : 'Signed.'); return true; }
+    case 'sa-cert': fgGuideCert('aspen', samState(), samData().signed, SAM(), 'Aspen Guide'); return true;
+    case 'sa-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('aspen', 'tree')); return true;
+    case 'sa-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('aspen', 'parts')); return true;
     case 'sa-mprint': samPrint(); return true;
     case 'sa-new': { const n = $('#sa-nn').value.trim(); if (!n){ $('#sa-nn').focus(); return true; }
       const c = {id:uid(), u:Date.now(), name:n, service:'Aspen', status:'active', followups:[], created:today(), sa:{grade:$('#sa-ng').value, rel:$('#sa-nr').value.trim(), consent:null}};
@@ -4421,7 +4318,7 @@ function vWLM(){
   ${step('wl-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios at the bedside`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
   ${step('wl-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
-  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="wl-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}`;
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="wl-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('wl') : ''}`;
 }
 function vWLMLesson(i){
   const M = WLM(), L = M.lessons[i], n = M.lessons.length, read = !!wlmData().lessons[L.id];
@@ -5125,6 +5022,9 @@ function wlAct(a, v, t){
     case 'wl-mfinish': wlmFinish(); return true;
     case 'wl-msign': V = {tab:'willow', wlm:1, wlsg:1}; render(); return true;
     case 'wl-msigned': { const nm = ($('#wlm-name').value || '').trim(); if (!nm){ $('#wlm-name').focus(); return true; } if (!$('#wlm-ok').checked) return alert('Check the box to agree.'), true; wlmData().signed = {v:WLM().version, date:today(), name:nm}; save(); V = {tab:'willow', wlm:1}; render(); toast('Signed. Real visits are open.'); return true; }
+    case 'wl-cert': fgGuideCert('willow', wlmState(), wlmData().signed, WLM(), 'Willow Guide'); return true;
+    case 'wl-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('willow', 'tree')); return true;
+    case 'wl-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('willow', 'parts')); return true;
     case 'wl-mprint': wlmPrint(); return true;
     case 'wl-field': wlSetField(v === 'on'); return true;
   }
@@ -6209,11 +6109,9 @@ function printAgreement(){
     <div class="pr-sign"><div>Practitioner${n ? ': ' + esc(n) : ''}</div><div>Date</div></div><div class="pr-sign"><div>Chris Joy, Grounded.</div><div>Date</div></div>` + pf(), 'Grounded Practitioner Agreement', {file:'practitioner-agreement'});
 }
 function printCert(){
-  const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null) return;
-  const svc = prompt('Service completed (for example: End-of-Life Support):', '') || 'the Grounded way';
-  fgSheet(`<div class="pr-cert">${logo('t').replace('<svg', '<svg class="t"')}<h1>Certificate of Completion</h1><p>This certifies that</p><div class="name">${esc(n)}</div>
-    <p>has completed training in <b>${esc(svc)}</b><br>through the Grounded Field Guide&trade;, and is ready to serve with presence, honesty, and care.</p>
-    <div class="pr-sign" style="margin-top:18mm"><div>Chris Joy, Founder, Grounded.</div><div>Date</div></div></div>` + pf(), 'Certificate', {file:'certificate'});
+  const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
+  const svc = prompt('Training completed (for example: End-of-Life Support):', '') || 'Grow With Grounded Training';
+  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:'house', name:n.trim(), title:svc, body:'Through the Grounded Field Guide, ready to serve with presence and honesty.', date: today(), kind:'training'}));
 }
 
 // ---------------- helpers ----------------
@@ -6439,6 +6337,9 @@ document.addEventListener('click', async e => {
     case 'st-msign': go('oak', {stm:1, sts:1}); break;
     case 'st-msigned': { const nm = $('#stm-name').value.trim(); if (!nm){ $('#stm-name').focus(); break; } if (!$('#stm-ok').checked){ alert('Check the box to show you agree, then sign.'); break; }
       stmData().signed = {v:STM().version, date:today(), name:nm}; save(); go('oak', {stm:1}); toast(stReady() ? 'Signed. Oak visits are open.' : 'Signed.'); break; }
+    case 'st-cert': fgGuideCert('oak', stmState(), stmData().signed, STM(), 'Oak Guide'); break;
+    case 'st-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('oak', 'tree')); break;
+    case 'st-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('oak', 'parts')); break;
     case 'st-mprint': stmPrint(); break;
     case 'st-report': go('oak', {strep:v || ''}); break;
     case 'st-run-report': { if (!RUN) break; const cid = RUN.clientId; stKeep(); DATA.draft = RUN; save(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = ''; go('oak', {strep:cid || ''}); toast('Your visit is paused and kept. Pick it up again from the Field Guide home.'); break; }
