@@ -116,7 +116,7 @@
         + '<div class="c-what serif">' + esc(o.title) + '</div>'
         + (o.body ? '<div class="c-body">' + esc(o.body) + '</div>' : '')
         + (meta.length ? '<div class="c-meta">' + meta.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</div>' : '')
-        + '<div class="c-foot"><div class="c-signs"><div><i></i><span>Kayti Joy, Co-Founder and Director</span></div><div><i></i><span>Chris Joy, Co-Founder</span></div></div>'
+        + '<div class="c-foot"><div class="c-signs"><div><i></i><span>Kayti Joy, Co-Founder</span></div><div><i></i><span>Chris Joy, Co-Founder</span></div></div>'
         + '<div class="c-qr">' + qr(u, t.scan || ('Scan to learn about ' + t.name)) + '<div><b>' + esc(t.scan || ('Scan to learn about ' + t.name)) + '</b><span>' + esc(short(u)) + '</span></div></div></div>'
         + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : esc(t.name) + '&trade; by Grow With Grounded&trade;') + '. A record of completed Grow With Grounded training, separate from any license or professional credential.</div>'
         + '</div></div>';
