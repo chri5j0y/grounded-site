@@ -90,15 +90,11 @@
     '.gn-menu-sub > *:not(.gn-panel){display:none !important;}' +
     '.gn-row{display:flex;align-items:stretch;gap:6px;}' +
     '.gn-row > .gn-tool{flex:1;min-width:0;}' +
-    'a.gn-lc,.gn-lc{flex:none;width:84px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:7px 4px !important;border-radius:12px !important;border:1px solid #EADFC6 !important;text-decoration:none !important;color:var(--lc) !important;font-family:Barlow,system-ui,sans-serif !important;font-weight:600 !important;font-size:11.5px !important;line-height:1.15 !important;letter-spacing:0 !important;text-transform:none !important;text-align:center;white-space:normal !important;min-height:56px;}' +
+    'a.gn-lc,.gn-lc{flex:none;width:104px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:6px 8px !important;border-radius:12px !important;border:1px solid #EADFC6 !important;border-left:3px solid var(--lc) !important;text-decoration:none !important;color:var(--lc) !important;font-family:Barlow,system-ui,sans-serif !important;font-weight:600 !important;font-size:13px !important;line-height:1.2 !important;letter-spacing:0 !important;text-transform:none !important;text-align:center;white-space:normal !important;min-height:48px;}' +
     'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#F6EEDB;border-color:var(--lc) !important;}' +
     '.gn-lc-soon{opacity:.5;cursor:default;}' +
-    '.gn-lc-ic{position:relative;width:30px;height:30px;display:block;}' +
-    '.gn-lc-ic img{width:30px;height:30px;border-radius:8px;display:block;}' +
-    '.gn-bub{position:absolute;right:-8px;bottom:-6px;width:18px;height:16px;}' +
-    '.gn-key{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.35;color:#5B6A73;margin:0 0 6px;}' +
-    '.gn-key b{color:#2A2A2A;font-weight:600;}' +
-    '.gn-key-ic{position:relative;width:18px;height:16px;flex:none;}.gn-key-ic .gn-bub{position:static;display:block;}' +
+    '.gn-h4-split{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}' +
+    '.gn-colhead{text-align:right;}' +
     '@media (max-width:600px){.gn-grid{grid-template-columns:1fr;}}' +
     '';
   var GN_DARK = ''+
@@ -110,9 +106,8 @@
       '.gn-group h4,a.gn-all,.gn-back,.gn-lock{color:#D9A847 !important;}' +
       '.gn-foot{border-color:#3A322A;}' +
       '.gn-sub-mode.gn-panel{background:transparent;}' +
-      'a.gn-lc,.gn-lc{border-color:#3A322A !important;color:#F3EDE3 !important;}' +
-      'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#332A20;}' +
-      '.gn-key{color:#C2B6A4;}.gn-key b{color:#F3EDE3;}' ;
+      'a.gn-lc,.gn-lc{border-color:#3A322A !important;border-left-color:var(--lc) !important;color:#F3EDE3 !important;}' +
+      'a.gn-lc:hover,a.gn-lc:focus-visible,a.gn-lc.gn-here{background:#332A20;}' ;
 
 
 
@@ -153,18 +148,16 @@
     panel.setAttribute('aria-label', 'Grounded tools');
     function render() {
       var cur = here();
-      var bub = function (c) { return '<svg class="gn-bub" viewBox="0 0 20 18" aria-hidden="true"><path d="M3.5 1.5h13a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H9.5l-4 3.8v-3.8h-2a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2z" fill="' + c + '" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M5.6 5.8h8.8M5.6 8.6h5.6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>'; };
       var lcBtn = function (t) {
         var c = t.lc; if (!c) return '';
-        var art = '<span class="gn-lc-ic"><img src="' + HOME + '/shared/marks/' + c.mark + '-small.svg" alt="" width="30" height="30">' + bub(c.color) + '</span><span class="gn-lc-t">When Life<br>Changes</span>';
+        var art = 'When Life Changes';
         if (c.soon) return '<span class="gn-lc gn-lc-soon" style="--lc:' + c.color + '" title="When Life Changes for ' + t.title + ' is coming soon" aria-hidden="true">' + art + '</span>';
         var on = c.id === cur;
-        return '<a class="gn-lc' + (on ? ' gn-here' : '') + '" style="--lc:' + c.color + '" href="' + c.href + '"' + (on ? ' aria-current="page"' : '') + ' aria-label="When Life Changes in ' + t.title + ', ' + c.who + '. How to show up.">' + art + '</a>';
+        return '<a class="gn-lc' + (on ? ' gn-here' : '') + '" style="--lc:' + c.color + '" href="' + c.href + '"' + (on ? ' aria-current="page"' : '') + ' aria-label="When Life Changes in ' + t.title + ', ' + c.who + '. Guides for showing up.">' + art + '</a>';
       };
       panel.innerHTML = '<button type="button" class="gn-back">&#8592; Menu</button><div class="gn-grid">' +
         GN_GROUPS.map(function (g) {
-          return '<div class="gn-group"><h4>' + g.name + '</h4>' +
-            (g.lcKey ? '<p class="gn-key"><span class="gn-key-ic">' + bub('#8B5E1A') + '</span><span><b>When Life Changes:</b> how to show up. Guides for each age.</span></p>' : '') +
+          return '<div class="gn-group">' + (g.lcKey ? '<h4 class="gn-h4-split"><span>' + g.name + '</span><span class="gn-colhead">Guides for Showing Up</span></h4>' : '<h4>' + g.name + '</h4>') +
             g.items.map(function (t) {
             var row;
             if (t.soon) row = '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
