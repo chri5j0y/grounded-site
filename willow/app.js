@@ -407,11 +407,19 @@ function bedsidePick() {
     <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('bedside')">More for the bedside</button></div>
   </div>`;
 }
+/* Support for Right Now: short videos from Learn (shared/learn-lessons.js), one tap from Today (Willow Learn, October 2026) */
+function supportCard(after) {
+  const vids = after
+    ? [['wl-s-after', 'The First Hour After'], ['wl-s-blessing', 'A Blessing for the Room'], ['wl-s-tonight', 'Caring for Yourself Tonight'], ['wl-s-breathe', 'Breathe at the Bedside']]
+    : [['wl-s-breathe', 'Breathe at the Bedside'], ['wl-s-say', "When You Don't Know What to Say"], ['wl-s-vigil', 'The Vigil Hours'], ['wl-s-tonight', 'Caring for Yourself Tonight']];
+  return `<div class="w-card"><p class="w-eyebrow">${icon('play', 16)} Support for Right Now</p><p>Short videos, narrated aloud, for the hard hours. Open one anytime.</p>
+    <div class="w-links">${vids.map(v => `<button type="button" onclick="window.GGLearn&&GGLearn.open('willow','${v[0]}')">${esc(v[1])}</button>`).join('')}<button type="button" onclick="window.GGLearn&&GGLearn.open('willow')">All Support Videos</button></div></div>`;
+}
 VIEWS.today = () => {
   const a = me();
-  if (!a) return visitInCard() + welcomeHtml() + lineHtml() + aboutShort();
+  if (!a) return visitInCard() + welcomeHtml() + lineHtml() + supportCard() + aboutShort();
   const t = target(), r = rec(t), mine = rec(a.id);
-  if (!mine.started && !helped().length) return visitInCard() + welcomeHtml() + lineHtml();
+  if (!mine.started && !helped().length) return visitInCard() + welcomeHtml() + lineHtml() + supportCard();
   if (!r) return welcomeHtml();
   if (remembered(t)) return rememberedHtml(t);
   const role = roleOf(t), self = t === a.id;
@@ -423,6 +431,7 @@ VIEWS.today = () => {
   h += practiceCard(r, role);
   if (!self || role === 'person') h += logCard(t);
   if (!self) h += bedsidePick();
+  h += supportCard();
   h += shareCard(t, role);
   if (self && role === 'helper') {
     const ppl = helped();
@@ -440,6 +449,7 @@ function rememberedHtml(t) {
     <div class="w-card"><p class="w-eyebrow">The next few days</p>
       <div class="w-links"><button type="button" onclick="W.guide('firsthour')">The first hour after</button><button type="button" onclick="W.guide('official')">Making it official</button><button type="button" onclick="W.guide('relief')">Relief, and the guilt that follows</button><button type="button" onclick="W.go('cuttings')">Their Cuttings</button></div>
       <p class="w-small">Your hospice keeps caring for the family. Most offer bereavement support for about 13 months after a death. Ask for it by name.</p></div>
+    ${supportCard(true)}
     ${logCard(t)}
     <div class="w-card"><p class="w-eyebrow">Your own tree</p><p>Grief is part of your tree now. Your check-ins keep growing it.</p><div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.view('${(me() || {}).id}')">Go to my own tree</button></div></div>`;
 }

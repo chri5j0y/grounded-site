@@ -4,7 +4,16 @@
    - The Field Guide's Learn tab and the Learn tab in every tree app play lessons here, so the
      closing scene, narration, and quiz work the same everywhere.
    - A lesson is {id, n, title, mins, scenes:[...]} and each scene is {k, say, ...}. Kinds: title, parts,
-     six, big, points, trees, levels, flow, screen, tabs, card, quiz. The player adds a closing scene
+     six, big, points, trees, levels, flow, screen, tabs, card, quiz, plus (Willow Learn, October 2026):
+       story    From the Bedside: {title, lines:[...], lesson, note, link:{href, label}}. A link shows
+                under the caption as Read the Full Story.
+       breathe  a slow breathing circle (in 4, out 6): {h, sub}. Give it hold (seconds) so it stays on
+                screen after the narration ends.
+       words    words to say, one per line: {h, items:[...], sub}.
+     Any scene can carry hold (extra seconds on screen before the next one).
+   - Support videos: a track with kind: 'support' shows under its own heading (support.title in the app's
+     Learn data, shown first when supportFirst is true). Support videos have no quiz, no certificate, and
+     a gentler closing ("Take all the time you need."). GGLearn.open(app, id) opens one straight away. The player adds a closing scene
      ("That's it for this lesson. Nice work.") with Next Lesson, Back to Lessons, and Watch Again,
      and Get Your Certificate when a whole series is finished.
    - Scenes are drawn on a 960 by 540 canvas that scales to the screen. Narration uses read.js.
@@ -18,7 +27,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln1';
+  var V = 'ln2';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -77,6 +86,9 @@
         + (sc.note ? '<div class="ln-note"><h4>' + h(sc.note.h) + '</h4><p>' + h(sc.note.p || '') + '</p></div>' : '') + '</div>' + (sc.tap != null ? HAND : '');
       case 'card': return '<div class="ln-card"><h4>' + h(sc.title) + '</h4>' + (sc.body ? '<p>' + h(sc.body) + '</p>' : '') + (sc.fields || []).map(function (f) { return '<label>' + h(f[0]) + '</label><div class="ln-in">' + h(f[1] || '') + '</div>'; }).join('') + '<div class="ln-btns">' + (sc.btns || []).map(function (b, j) { return '<span class="ln-b' + (j === 0 ? ' pri' : '') + (j === sc.tap ? ' ln-tgt' : '') + '"' + (j === sc.tap ? ' data-tap' : '') + '>' + h(b) + '</span>'; }).join('') + '</div></div>'
         + (sc.result ? '<div class="ln-res">' + h(sc.result) + '</div>' : '') + (sc.tap != null ? HAND : '');
+      case 'story': return '<div class="ln-story" style="--k:' + acc + '"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow || 'From the Bedside') + '</div><h3' + A(.5) + '>' + h(sc.title) + '</h3><div class="ln-st-b">' + (sc.lines || []).map(function (x, j) { return '<p' + A(1.1 + j * (sc.gap || 1.6)) + '>' + h(x) + '</p>'; }).join('') + '</div>' + (sc.lesson ? '<div' + A(1.4 + (sc.lines || []).length * (sc.gap || 1.6), 'ln-st-l') + '>' + h(sc.lesson) + '</div>' : '') + (sc.note ? '<small' + A(2, 'ln-st-n') + '>' + h(sc.note) + '</small>' : '') + '</div>';
+      case 'breathe': return '<div class="ln-br" style="--k:' + acc + '"><h3' + A(.2) + '>' + h(sc.h || 'Breathe with me') + '</h3><div class="ln-brw"><div class="ln-brc"></div><div class="ln-brt"><i>Breathe in</i><i>Breathe out</i></div></div>' + (sc.sub ? '<small' + A(.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
+      case 'words': return '<div class="ln-wd"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (x, j) { return '<p' + A(.9 + j * (sc.gap || 1.2), '', 'border-color:' + acc) + '>' + h(x) + '</p>'; }).join('') + (sc.sub ? '<small' + A(1.2 + (sc.items || []).length * (sc.gap || 1.2)) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'quiz': return '<div class="ln-qz"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>You\'ve Got It</div><h3' + A(.5) + '>' + h(sc.q) + '</h3></div>';
       case 'end': return '<div class="ln-end"><div' + A(.15, 'ln-endck', 'background:' + (sc.ok ? '#5F7D48' : acc)) + '>' + (sc.ok ? IC.check : IC.play) + '</div><div' + A(.5, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow) + '</div><h2' + A(.8) + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.3) + '>' + h(sc.sub) + '</p>' : '') + (sc.count ? '<small' + A(1.6) + '>' + h(sc.count) + '</small>' : '') + '</div>';
     }
@@ -141,6 +153,29 @@
       '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ggl-btn:not(.pri):not(.quiet){color:var(--ggl-lite);border-color:var(--ggl-lite);}}',
       '.ggl-endbar.over .ggl-btn:not(.pri):not(.quiet){color:var(--ggl-acc) !important;border-color:var(--ggl-acc) !important;}',
       '.ggl-app .ln-cap .w.on{color:var(--ggl-lite,var(--ggl-acc));}',
+      /* Willow Learn: From the Bedside, breathing, words to say, the story link, and support videos */
+      '.ln-story{position:absolute;inset:34px 60px;background:#FFFCF6;border:1px solid #DDD0B8;border-left:10px solid var(--k);border-radius:20px;padding:30px 40px;}',
+      '.ln-story h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:42px;line-height:1.05;margin:6px 0 14px;}',
+      '.ln-st-b p{font-size:23px;line-height:1.38;margin:0 0 10px;color:#3A2A1E;}',
+      '.ln-st-l{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:30px;line-height:1.2;color:var(--k);margin-top:14px;}',
+      '.ln-st-n{position:absolute;right:30px;bottom:16px;font-size:16px;color:#6B5A4D;}',
+      '.ln-br{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:40px;text-align:center;}',
+      '.ln-br h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:44px;margin:0;}.ln-br small{font-size:22px;color:#6B5A4D;margin-top:14px;max-width:700px;}',
+      '.ln-brw{position:relative;width:300px;height:300px;margin-top:22px;display:grid;place-items:center;}',
+      '.ln-brc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,var(--k) 0%,rgba(255,252,246,0) 72%);opacity:.55;transform:scale(.45);}',
+      '.go .ln-brc{animation:lnBr 10s ease-in-out infinite;}',
+      '.ln-brt{position:relative;font-family:\'Cormorant Garamond\',serif;font-size:36px;font-weight:600;height:44px;width:300px;}',
+      '.ln-brt i{position:absolute;left:0;right:0;font-style:normal;opacity:0;}',
+      '.go .ln-brt i:first-child{animation:lnIn 10s linear infinite;}.go .ln-brt i:last-child{animation:lnOut 10s linear infinite;}',
+      '@keyframes lnBr{0%{transform:scale(.45)}40%{transform:scale(1)}100%{transform:scale(.45)}}',
+      '@keyframes lnIn{0%,36%{opacity:1}40%,100%{opacity:0}}@keyframes lnOut{0%,38%{opacity:0}42%,96%{opacity:1}100%{opacity:0}}',
+      '.ln-wd{position:absolute;inset:0;padding:44px 80px;}.ln-wd h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:44px;margin:0 0 20px;}',
+      '.ln-wd p{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:36px;line-height:1.15;margin:0 0 14px;padding-left:20px;border-left:5px solid #8B5E1A;}.ln-wd small{display:block;font-size:21px;color:#6B5A4D;margin-top:8px;}',
+      '.ggl-small .ln-st-b{display:none;}.ggl-small .ln-story{padding:44px 54px;}.ggl-small .ln-story h3{font-size:66px;margin-top:14px;}.ggl-small .ln-st-l{font-size:52px;margin-top:26px;}.ggl-small .ln-st-n{font-size:26px;}.ggl-small .ln-st-l{transition-delay:1.2s !important;}.ggl-small .ln-story .ln-eb{font-size:28px;}',
+      '.ln-link{margin:0 0 8px;}.ln-link:empty{display:none;}.ln-link a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ggl-acc);}',
+      ':root[data-theme="dark"] .ggl-app .ln-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ln-link a{color:var(--ggl-lite);}}',
+      '.ggl-sup{margin-top:22px;}.ggl-sup>p{margin:4px 0 0;}.ggl-sup .ggl-card{border-left:6px solid var(--ggl-bar,var(--ggl-acc));}',
+      '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
       '@media (prefers-reduced-motion:reduce){.ln-canvas .a,.ln-ptr,.ln-ring,.ln-panel,.ln-note,.ln-res,.ln-tgt{transition:none !important;}}',
       ".ln-canvas{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;font-family:Barlow,system-ui,sans-serif;color:#2C1810;--ln-gold:#8B5E1A;}\n.ln-canvas .a{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}.go .ln-canvas .a{opacity:1;transform:none;}\n.ln-hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:59% 50%;}\n.ln-tt{position:absolute;left:56px;top:48px;color:#F6EFE2;max-width:520px;}.ln-tt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:60px;line-height:1.02;margin:6px 0 0;text-shadow:0 2px 12px rgba(0,0,0,.3);}\n.ln-tt p{font-size:24px;margin:12px 0 0;color:#F2DDB5;}.ln-eb{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:20px;color:#F2C46A;}\n.ln-by{font-family:'Barlow Condensed',sans-serif;letter-spacing:2.4px;font-size:16px;margin-top:14px;opacity:.9;}\n.ln-big{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:0 90px;}.ln-big p{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:52px;line-height:1.15;margin:0;}.ln-big small{display:block;font-size:26px;color:#6B5A4D;margin-top:20px;}\n.ln-pts{padding:48px 70px;}.ln-pts h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:46px;margin:0 0 22px;}\n.ln-pt{display:flex;gap:16px;align-items:flex-start;margin:0 0 18px;font-size:28px;line-height:1.25;}.ln-pt small{display:block;font-size:21px;color:#6B5A4D;margin-top:2px;}\n.ln-dot{width:16px;height:16px;border-radius:50%;flex:none;margin-top:10px;}\n.ln-trees h3{position:absolute;top:56px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0;}\n.ln-trow{position:absolute;left:30px;right:30px;bottom:90px;display:flex;justify-content:center;gap:18px;}\n.ln-tr{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:130px;}.ln-tr img{width:110px;height:110px;border-radius:24px;}\n.ln-tr b{font-family:'Cormorant Garamond',serif;font-size:30px;margin-top:8px;}.ln-tr small{font-size:17px;color:#6B5A4D;}\n.ln-lv{position:absolute;inset:0;display:flex;gap:36px;align-items:center;justify-content:center;padding:0 60px;}\n.ln-lc{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-top:8px solid var(--k);border-radius:20px;padding:44px 20px;text-align:center;}\n.ln-lc b{display:block;font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--k);}.ln-lc small{font-size:22px;color:#6B5A4D;}\n.ln-flow{padding:50px 50px;}.ln-flow h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0 0 40px;}\n.ln-frow{display:flex;align-items:center;gap:14px;}.ln-step{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 18px;min-height:200px;}\n.ln-step b{display:block;font-size:26px;line-height:1.2;margin-top:10px;}.ln-step small{display:block;font-size:19px;color:#6B5A4D;margin-top:8px;line-height:1.3;}\n.ln-sn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#8B5E1A;color:#FFF8EC;font-weight:700;font-size:20px;}\n.ln-arr{font-size:36px;color:#8B5E1A;flex:none;}\n.ln-phone{position:absolute;left:56px;top:34px;width:380px;height:472px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:30px;overflow:hidden;font-size:21px;}\n.ln-ptop{display:flex;align-items:center;gap:10px;padding:14px 16px;color:#F6EFE2;}.ln-ptop img{width:36px;height:36px;border-radius:9px;}.ln-ptop b{font-family:'Cormorant Garamond',serif;font-size:28px;}.ln-ptop span{margin-left:auto;font-size:17px;opacity:.9;}\n.ln-prow{display:flex;justify-content:space-between;padding:13px 18px;border-top:1px solid #EFE6D4;}\n.ln-tgt{transition:background .3s ease 2.6s,box-shadow .3s ease 2.6s;}.go .ln-tgt{background:#F6EEDB;box-shadow:inset 0 0 0 2px #8B5E1A;}\n.ln-panel{position:absolute;right:56px;top:70px;width:400px;background:#FFFCF6;border:1px solid #DDD0B8;border-left:8px solid #8B5E1A;padding:22px 24px;transform:translateX(560px);transition:transform .7s ease 3s;}\n.go .ln-panel{transform:none;}.ln-panel h4{font-family:'Cormorant Garamond',serif;font-size:32px;margin:0;}.ln-panel p{font-size:19px;color:#6B5A4D;margin:6px 0 10px;}.ln-panel li{font-size:22px;line-height:1.6;}\n.ln-ptr{position:absolute;left:820px;top:520px;width:56px;z-index:5;transition:left 1.3s ease 1.1s,top 1.3s ease 1.1s;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}\n.go .ln-ptr{left:var(--px,600px);top:var(--py,300px);}\n.ln-ring{position:absolute;width:48px;height:48px;border-radius:50%;border:4px solid #8B5E1A;opacity:0;transform:scale(.3);transition:all .5s ease 2.5s;z-index:4;}.go .ln-ring{opacity:.85;transform:scale(1.5);}\n.ln-fg{position:absolute;inset:30px 40px;background:#F6F0E4;border:1px solid #DDD0B8;border-radius:22px;overflow:hidden;}\n.ln-fgtop{background:#2E2118;color:#D9A847;padding:16px 22px;font-family:'Cormorant Garamond',serif;font-size:28px;}\n.ln-fgtabs{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid #DDD0B8;flex-wrap:wrap;}.ln-fgtabs span{padding:10px 14px;border-radius:12px;font-size:20px;font-weight:600;color:#6B5A4D;}\n.ln-note{margin:26px 26px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 24px;opacity:0;transform:translateY(16px);transition:all .7s ease 3s;}.go .ln-note{opacity:1;transform:none;}\n.ln-note h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-note p{font-size:22px;color:#6B5A4D;margin:0;line-height:1.35;}\n.ln-card{position:absolute;left:70px;top:40px;width:540px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:22px;padding:24px 28px;}\n.ln-card h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-card p{font-size:19px;color:#6B5A4D;margin:0 0 10px;line-height:1.35;}\n.ln-card label{display:block;font-size:17px;font-weight:600;margin-top:10px;}.ln-in{border:1px solid #DDD0B8;border-radius:10px;padding:9px 12px;font-size:19px;margin-top:4px;background:#fff;min-height:42px;}\n.ln-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}.ln-b{border:1px solid #8B5E1A;color:#8B5E1A;border-radius:999px;padding:10px 18px;font-weight:600;font-size:18px;}.ln-b.pri{background:#8B5E1A;color:#FFF8EC;}\n.ln-res{position:absolute;right:60px;bottom:60px;max-width:300px;background:#2E2118;color:#FFF8EC;border-radius:18px;padding:16px 20px;font-size:20px;line-height:1.3;opacity:0;transform:translateY(14px);transition:all .6s ease 3.1s;}.go .ln-res{opacity:1;transform:none;}\n.ln-qz{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 80px;}.ln-qz .ln-eb{color:#8B5E1A;}.ln-qz h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:48px;line-height:1.1;margin:10px 0 0;}\n"
     ].join('\n');
@@ -152,7 +187,7 @@
   function speak(t) { try { if (window.GGRead && GGRead.available) { GGRead.say(t); return true; } } catch (e) {} return false; }
   function hush() { try { if (window.GGRead) GGRead.stop(); else if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {} }
   function allLessons(tracks) { var f = []; (tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) { f.push({ t: t, l: l }); }); }); return f; }
-  function certable(t) { return !!t && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
+  function certable(t) { return !!t && t.kind !== 'support' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
   function trackDone(t, done) { return !!t && (t.lessons || []).length > 0 && t.lessons.every(function (l) { return done[l.id]; }); }
 
   // What the closing scene says, worked out from what is finished on this device.
@@ -163,6 +198,7 @@
     var nx = null; for (var j = i + 1; j < flat.length; j++) if (!done[flat[j].l.id]) { nx = flat[j]; break; }
     if (!nx) for (var k = 0; k < flat.length; k++) if (!done[flat[k].l.id]) { nx = flat[k]; break; }
     var tr = cfg.track, tdone = trackDone(tr, done), cert = !!cfg.cert && tdone && certable(tr);
+    if (tr && tr.kind === 'support') return { ok: true, support: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: nx ? 'Another one, if it helps: ' + nx.l.title : 'Come back anytime.', count: '', say: 'Take all the time you need. This is here whenever you need it.', next: nx, cert: false };
     var upnext = nx ? 'Up next: ' + (nx.t !== tr ? nx.t.title + ', ' : '') + 'Lesson ' + (nx.l.n || '') + ', ' + nx.l.title : '';
     var certLine = cert ? ' Your certificate is ready whenever you want it.' : '';
     if (!nx) return { ok: true, eyebrow: 'Every Lesson Complete', h: "You've finished every lesson. Well done.", sub: cert ? 'Your certificate for ' + tr.title + ' is ready.' : 'Come back anytime to watch one again.', count: count, say: "That's it. You've finished every lesson. Well done." + certLine, next: null, cert: cert };
@@ -178,7 +214,7 @@
     var N = (l.scenes || []).length + 1; // the closing scene is the last one
     host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div><div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
-      + '<p class="ln-cap" aria-live="polite"></p><div class="ggl-quiz"></div>'
+      + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
       + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><span class="ggl-cn"></span></div>'
       + '<div class="ln-vs"></div></div>';
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
@@ -196,8 +232,8 @@
       var b = [];
       if (e.unfinished) b.push(['answer', 'Answer the Question', 'pri']);
       if (e.cert) b.push(['cert', IC.award + 'Get Your Certificate', e.next ? '' : 'pri']);
-      if (e.next) b.push(['open', 'Next Lesson', 'pri']);
-      b.push(['home', 'Back to Lessons', e.next || e.cert || e.unfinished ? '' : 'pri']);
+      if (e.next) b.push(['open', e.support ? 'Play Another' : 'Next Lesson', e.support ? '' : 'pri']);
+      b.push(['home', e.support ? 'Back to Learn' : 'Back to Lessons', (e.next && !e.support) || e.cert || e.unfinished ? '' : 'pri']);
       if (!e.unfinished) b.push(['again', 'Watch Again', 'quiet']);
       bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
       bar.classList.add('on'); place();
@@ -212,6 +248,7 @@
       st.classList.remove('go'); cv.innerHTML = scene(sc, acc); cv.className = 'ln-canvas ln-k-' + sc.k;
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
+      $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
       $('.ln-cap', host).innerHTML = String(sc.say || '').split(/\s+/).map(function (w) { return '<span class="w">' + esc(w) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
       $('.ggl-cn', host).textContent = last ? 'Finished' : 'Scene ' + (P.i + 1) + ' of ' + (N - 1);
@@ -224,7 +261,7 @@
       if (!P.playing && !last) return;
       var W = Array.prototype.slice.call(host.querySelectorAll('.ln-cap .w')), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ms = Math.max(3500, W.length * 60000 / (160 * sp));
       var kk = 0; P.hl = setInterval(function () { if (t !== P.tok) return clearInterval(P.hl); W.forEach(function (w, j) { w.classList.toggle('on', j === kk); }); kk++; if (kk > W.length) clearInterval(P.hl); }, ms / Math.max(1, W.length));
-      var spoke = speak(sc.say || ''), start = Date.now(), hold = (tg ? 3600 : 0) + 900;
+      var spoke = speak(sc.say || ''), start = Date.now(), hold = (tg ? 3600 : 0) + 900 + (+sc.hold || 0) * 1000;
       P.tick = setInterval(function () {
         if (t !== P.tok) return clearInterval(P.tick);
         var busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
@@ -320,17 +357,21 @@
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
   function list() {
     if (CUR) CUR.stop();
-    var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, tr = tracksFor(app), D = load(app);
+    var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app), D = load(app);
+    var tr = every.filter(function (t) { return t.kind !== 'support'; }), sup = every.filter(function (t) { return t.kind === 'support'; });
     var all = tr.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = tr.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
     var el = $('#ggl-in', APP.root);
+    var card = function (t) {
+      var isSup = t.kind === 'support', n = t.lessons.filter(function (l) { return D.done[l.id]; }).length, ok = n === t.lessons.length && certable(t);
+      return '<div class="ggl-card"><div class="ggl-spread"><div><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ggl-muted">' + esc(t.who) + '</p>' : '') + '</div>' + (isSup ? '' : '<span class="ggl-muted">' + n + ' of ' + t.lessons.length + '</span>') + '</div>'
+        + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id] && !isSup; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : isSup ? IC.play : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b><small>' + (l.blurb ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !D.done[l.id] && !isSup ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
+        + (ok ? '<div class="ggl-row"><button class="ggl-btn pri" data-l="cert" data-v="' + esc(t.id) + '">' + IC.award + 'Get Your Certificate</button></div>' : certable(t) ? '<p class="ggl-muted" style="margin-top:10px;font-size:15px">Finish every lesson in this series for a Certificate of Completion.</p>' : '') + '</div>';
+    };
+    var S = L.support || {};
+    var supHtml = sup.length ? '<section class="ggl-sup"><div class="ggl-eb">' + esc(S.eyebrow || 'Support') + '</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(S.title || 'Support for Right Now') + '</h2>' + (S.intro ? '<p class="ggl-muted">' + esc(S.intro) + '</p>' : '') + sup.map(card).join('') + '</section>' : '';
+    var lesHtml = (tr.length ? (sup.length ? '<section class="ggl-sup"><div class="ggl-eb">Lessons</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(L.lessonsTitle || 'Learn Step by Step') + '</h2>' + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '') : (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '')) + tr.map(card).join('') + (sup.length ? '</section>' : '') : (sup.length ? '' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>'));
     el.innerHTML = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1><p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>'
-      + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '')
-      + (tr.length ? tr.map(function (t) {
-        var n = t.lessons.filter(function (l) { return D.done[l.id]; }).length, ok = n === t.lessons.length && certable(t);
-        return '<div class="ggl-card"><div class="ggl-spread"><div><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ggl-muted">' + esc(t.who) + '</p>' : '') + '</div><span class="ggl-muted">' + n + ' of ' + t.lessons.length + '</span></div>'
-          + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id]; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b><small>About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !d ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
-          + (ok ? '<div class="ggl-row"><button class="ggl-btn pri" data-l="cert" data-v="' + esc(t.id) + '">' + IC.award + 'Get Your Certificate</button></div>' : certable(t) ? '<p class="ggl-muted" style="margin-top:10px;font-size:15px">Finish every lesson in this series for a Certificate of Completion.</p>' : '') + '</div>';
-      }).join('') : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>')
+      + (L.supportFirst ? supHtml + lesHtml : lesHtml + supHtml)
       + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
       + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';
     APP.root.scrollTop = 0; var h = $('h1', el); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
@@ -338,10 +379,11 @@
   function lesson(id) {
     var app = APP.app, f = find(app, id); if (!f) return list();
     var D = load(app), el = $('#ggl-in', APP.root), meta = APPS[app];
-    el.innerHTML = '<button class="ggl-link" data-l="home">&larr; All lessons</button><div class="ggl-eb" style="margin-top:6px">' + esc(f.t.title) + ', Lesson ' + esc(String(f.l.n || '')) + '</div><h1>' + esc(f.l.title) + '</h1><div id="ggl-host"></div>';
+    var sup = f.t.kind === 'support';
+    el.innerHTML = '<button class="ggl-link" data-l="home">&larr; ' + (sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || ''))) + '</div><h1>' + esc(f.l.title) + '</h1><div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
-      lesson: f.l, track: f.t, tracks: tracksFor(app), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
+      lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
       onAt: function (i) { var d = load(app); d.at[f.l.id] = i; keep(app, d); },
       onDone: function (lid) { var d = load(app); if (!d.done[lid]) { d.done[lid] = today(); keep(app, d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { lesson(nid); },
