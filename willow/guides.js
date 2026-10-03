@@ -82,7 +82,7 @@ const G = [
     keys: `not ready, too soon, unfinished, scared, so much left`,
     parts: [
       ['say', `"That makes sense. What part feels least ready?" Then sort: affairs, people, or spirit.`],
-      ['helps', `One small task today. One message to one person. A What matters to me sheet.`],
+      ['helps', `One small task today. One message to one person. A What Matters to Me sheet.`],
       ['dont', `"You need to accept this." Readiness comes a little at a time, or not at all, and both are allowed.`]
     ] },
   { id: 'estranged', ring: 'spirit', title: `Estranged family at the end`, story: ``,
@@ -97,7 +97,7 @@ const G = [
   { id: 'conflict', ring: 'spirit', title: `Family conflict at the bedside`, story: ``,
     keys: `siblings fighting, family fighting, who decides, disagree, health care agent`,
     parts: [
-      ['say', `"Everyone here loves her. Let's keep this room about what she wants." "Let's read what she wrote in What matters to me."`],
+      ['say', `"Everyone here loves her. Let's keep this room about what she wants." "Let's read what she wrote in What Matters to Me."`],
       ['helps', `A family meeting with the social worker or chaplain. Rituals can stack: the priest at 2:00, the grandkids' song at 3:00.`],
       ['pro', `Name the shared love before the disagreement. Center the patient's own words.`]
     ] },

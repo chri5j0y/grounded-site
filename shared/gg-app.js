@@ -284,7 +284,7 @@
       share(window.ggPdf(bl), o.file || 'grounded.pdf', o.title);
     }
     if (NATIVE || !o.print) { pdf(); return; }
-    dialog({ title: o.title || 'Save or print', html: '<p>Save it as a PDF to keep, text, or email, or print it now.</p>' + (o.note ? '<p class="ggx-small">' + esc(o.note) + '</p>' : ''),
+    dialog({ title: o.title || 'Save or Print', html: '<p>Save it as a PDF to keep, text, or email, or print it now.</p>' + (o.note ? '<p class="ggx-small">' + esc(o.note) + '</p>' : ''),
       buttons: [{ t: 'Save or Share PDF', kind: 'main', fn: pdf }, { t: 'Print', kind: 'line', fn: o.print }, { t: 'Cancel', kind: 'quiet' }] });
   }
 

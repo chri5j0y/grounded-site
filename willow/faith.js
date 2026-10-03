@@ -232,7 +232,7 @@ const CARDS = {
     words: `Meaning, love, legacy, nature, science, the universe, the people here. No God-language unless they bring it.`,
     avoid: `"I'll pray for you" (unless asked), a suggestion of a deathbed conversion, or treating their worldview as a problem to solve.`,
     comfort: `Awe at the natural world, the science of being made of old stardust, legacy work, the Four Things, humor, plain honesty about dying.`,
-    care: `Protect their integrity. Some fear family will claim a conversion after they die. A clear note in What matters to me helps.`,
+    care: `Protect their integrity. Some fear family will claim a conversion after they die. A clear note in What Matters to Me helps.`,
     after: `A celebration of life, a humanist celebrant, body donation.`,
     keys: `atheist, no religion, not religious, no God` },
   humanist: { name: `Humanist`,

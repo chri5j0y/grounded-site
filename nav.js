@@ -22,7 +22,7 @@
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
-    { name: 'The trees', lcKey: true, items: [
+    { name: 'The Trees', lcKey: true, items: [
       { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4',
         lc: { id: 'lc-kids', href: HOME + '/maple/#life', mark: 'maple', color: '#A14219', who: 'for talking with kids, K to 5' } },
       { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC',
@@ -39,10 +39,10 @@
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
     ] },
-    { name: 'Further reading', items: [
-      { id: 'library', title: 'The Grounded library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.shelf, bg: '#F1E6CC' }
+    { name: 'Further Reading', items: [
+      { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.shelf, bg: '#F1E6CC' }
     ] },
-    { name: 'For professionals', items: [
+    { name: 'For Professionals', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
     ] }
   ];
@@ -341,7 +341,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=wl1';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=tc1';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

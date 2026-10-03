@@ -3,6 +3,8 @@
    Palette: dusk lilac band, sage accent (--gold), the shared part colors.
    ===================================================================== */
 :root{--w-dusk:#5D5A6E;--w-sage-soft:#E8ECDD;--w-candle:#E8C27A;}
+/* Keeps the page from sliding sideways on wide screens. clip (not hidden) leaves the sticky tab bar working. */
+html,body{overflow-x:clip;}
 :root[data-theme="dark"]{--w-sage-soft:#2C3326;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--w-sage-soft:#2C3326;}}
 

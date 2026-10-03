@@ -55,7 +55,7 @@ const PERSON = {
   ],
   fruit: [
     ['wf-hope', `What I'm hoping for today`, `Say one hope for today, however small.`, `1 min`, 'growing'],
-    ['wf-matters', `What matters to me`, `Fill in the What matters to me sheet with someone. Make it official with an Honoring Choices Minnesota directive.`, `15 min`, 'well'],
+    ['wf-matters', `What Matters to Me`, `Fill in the What Matters to Me sheet with someone. Make it official with an Honoring Choices Minnesota directive.`, `15 min`, 'well'],
     ['wf-good', `Plan one good thing`, `Plan one good thing for tomorrow.`, `2 min`, 'wisdom'],
     ['wf-welcome', `Picture the welcome`, `In your own faith, picture what comes after. Or picture the people and the earth you return to.`, `3 min`, 'wisdom'],
     ['wf-giveaway', `Give something away`, `Give a meaningful object to someone while you can watch them receive it.`, `5 min`, 'wisdom'],
@@ -99,7 +99,7 @@ const PLANS = [
   [`"What was it all for?"`, `A sense that life mattered`, `Life review; meaning-centered prompts`, `One story into Cuttings; three things I learned`],
   [`"I'm scared of dying."`, `Less fear`, `Name the specific fear`, `Nurse for symptoms; what to expect guide; breath practice`],
   [`"I want it to be over."`, `Relief from suffering`, `Explore the wish; screen safely`, `Safety step; tell the nurse; presence`],
-  [`"The family is fighting."`, `A calmer room`, `Facilitate communication; center the patient's wishes`, `Family meeting; What matters to me read aloud`],
+  [`"The family is fighting."`, `A calmer room`, `Facilitate communication; center the patient's wishes`, `Family meeting; What Matters to Me read aloud`],
   [`"I'm not ready."`, `Readiness, one piece at a time`, `Sort affairs, people, spirit`, `One task for today; one Four Things message`],
   [`Doula: vigil planning`, `The death they want`, `Plan the room, people, words, touch`, `Vigil plan written and shared with helpers`]
 ];

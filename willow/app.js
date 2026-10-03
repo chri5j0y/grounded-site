@@ -226,7 +226,7 @@ function go(v, force) {
 // Read aloud: a button on anything marked data-read (read.js, shared)
 function addRead(el) {
   const R = window.GGRead; if (!R || !R.control || el.querySelector('.gg-rbar')) return;
-  try { el.insertBefore(R.control({ root: el, label: el.dataset.read || 'Read aloud' }), el.firstChild); } catch (e) {}
+  try { el.insertBefore(R.control({ root: el, label: el.dataset.read || 'Read Aloud' }), el.firstChild); } catch (e) {}
 }
 
 /* ---------- who's here ---------- */
@@ -240,8 +240,8 @@ function renderBar() {
   }
   const t = target(), ppl = helped(), mine = rec(a.id), own = mine && mine.started;
   const chips = ppl.map(p => `<button type="button" class="w-chip" aria-pressed="${t === p.id}" onclick="W.view('${p.id}')">${window.GGAv ? GGAv.html(p.avatar, p.name, 26) : ''}<span>${remembered(p.id) ? icon('candle', 14) + ' ' : ''}${esc(p.name)}'s tree</span></button>`).join('');
-  const myChip = (ppl.length && (own || true)) ? `<button type="button" class="w-chip" aria-pressed="${t === a.id}" onclick="W.view('${a.id}')">${window.GGAv ? GGAv.html(a.avatar, a.name, 26) : ''}<span>My own tree</span></button>` : '';
-  bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="W.settings()" aria-label="Willow settings">${window.GGAv ? GGAv.html(a.avatar, a.name, 40) : ''}</button>
+  const myChip = (ppl.length && (own || true)) ? `<button type="button" class="w-chip" aria-pressed="${t === a.id}" onclick="W.view('${a.id}')">${window.GGAv ? GGAv.html(a.avatar, a.name, 26) : ''}<span>My Own Tree</span></button>` : '';
+  bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="W.settings()" aria-label="Willow Settings">${window.GGAv ? GGAv.html(a.avatar, a.name, 40) : ''}</button>
     <div class="pbar-who"><strong>${t === a.id ? 'Here as ' + esc(a.name) : 'Caring for ' + esc(nameOf(t))}</strong><span>${t === a.id ? 'Saving to your own locked profile on this device.' : 'You are here as ' + esc(a.name) + ', their helper. You see what ' + esc(nameOf(t)) + ' chose to share.'}</span></div>
     <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="W.settings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.lock()">Lock</button></div>
     ${chips ? `<div class="w-chips" role="group" aria-label="Whose tree">${chips}${myChip}</div>` : ''}</div>`;
@@ -367,9 +367,9 @@ function treeCard(r, id, role) {
       <p class="w-eyebrow">${self ? 'Your tree' : who + ' tree'}</p>
       ${words}
       <div class="btn-row">
-        <button type="button" class="btn btn-primary" onclick="W.checkin(true)">Quick check-in</button>
-        <button type="button" class="btn btn-secondary" onclick="W.checkin(false)">Full check-in</button>
-        ${(r.checkins || []).length ? `<button type="button" class="btn btn-secondary" onclick="W.go('history')">Past check-ins</button>` : ''}
+        <button type="button" class="btn btn-primary" onclick="W.checkin(true)">Quick Check-in</button>
+        <button type="button" class="btn btn-secondary" onclick="W.checkin(false)">Full Check-in</button>
+        ${(r.checkins || []).length ? `<button type="button" class="btn btn-secondary" onclick="W.go('history')">Past Check-ins</button>` : ''}
       </div>
       <p class="w-small">A ring grows with every check-in ${role === 'helper' ? 'you answer for yourself' : 'they answer themselves, with or without a helper tapping'}. Check in whenever it helps.</p>
     </div>
@@ -449,7 +449,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <div data-read="Read this aloud">
   <p class="lead">A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone.</p>
   <p class="lead">${esc(P.intro)}</p>
-  <h3 class="section-title">The six parts</h3>
+  <h3 class="section-title">The Six Parts</h3>
   <div class="w-parts">${PARTS.map(p => `<div class="w-part" style="--pc:${p.color}"><b>${p.part}</b><span>${esc(p.name)}</span><p>${esc(PART_WORDS[p.key].person)}</p></div>`).join('')}</div>
   <h3 class="section-title">Built for two</h3>
   <p class="lead">Willow is the person's own tree. It's also built for the people who love them: a family member can set it up, tap answers while their person talks, and keep a log of what helped today. Helpers open it with their own passcode, and see only what the person chooses to share. Helpers have their own tree here too, because caregivers carry this as well.</p>
@@ -538,12 +538,12 @@ VIEWS.checkin = () => {
   const dots = `<div class="step-progress">${steps.map((s, j) => { const p = PART[s]; return `<span class="step-dot${j === ck.i ? ' current' : j < ck.i ? ' done' : ''}" style="--domain-color:${p ? p.color : 'var(--gold)'}"><span class="lbl">${p ? p.part : s === 'who' ? 'Who' : s === 'faith' ? 'Faith' : s === 'quick' ? 'Six parts' : 'Close'}</span></span>`; }).join('')}</div>`;
   let body = '';
   if (st === 'who') {
-    body = `<div class="step-head"><div><div class="step-count">${ck.quick ? 'Quick check-in' : 'Full check-in'} for ${n}</div><h2 class="step-title" style="--domain-color:var(--gold)">Who is answering?</h2></div></div>
+    body = `<div class="step-head"><div><div class="step-count">${ck.quick ? 'Quick Check-in' : 'Full Check-in'} for ${n}</div><h2 class="step-title" style="--domain-color:var(--gold)">Who is answering?</h2></div></div>
       <p class="lead">Every answer keeps track of who gave it, so ${n}'s own voice is never mixed up with anyone else's.</p>
       <div class="w-choices w-choices-3">${C.answeredBy.map(b => `<button type="button" class="w-choice" aria-pressed="${ck.by === b[0]}" onclick="W.who('${b[0]}')"><b>${esc(b[1])}</b><span>${b[0] === 'self' ? n + ' reads and answers on their own.' : b[0] === 'tapped' ? n + ' answers out loud. You read each question and tap.' : n + ' can\'t answer now. You answer from what you see and hear. This never adds to their rings.'}</span></button>`).join('')}</div>`;
   } else if (st === 'faith') body = faithStep(ck);
   else if (st === 'quick') {
-    body = `<div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title" style="--domain-color:var(--gold)">Quick check-in</h2><div class="step-domain">One question for each part of the tree</div></div></div>
+    body = `<div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title" style="--domain-color:var(--gold)">Quick Check-in</h2><div class="step-domain">One question for each part of the tree</div></div></div>
       ${ck.by === 'tapped' ? `<p class="w-small">Read each question to ${n} slowly, and tap their answer. "Not sure" is always okay.</p>` : ''}
       <p class="q-stem">${ckStem(ck)}</p>${PARTS.map(p => `<div class="quick-part" style="--domain-color:${p.color}"><div class="quick-label" style="color:${p.color}">${p.part}</div>${qHtml(ck, p.key, 0)}</div>`).join('')}`;
   } else if (PART[st]) {
@@ -682,7 +682,7 @@ VIEWS.history = () => {
     ${show ? `<div class="w-dots">${PARTS.map(p => e.levels && e.levels[p.key] ? `<span class="w-dot w-lv-${e.levels[p.key]}" style="--pc:${p.color}" title="${p.part}: ${esc(LEVEL_NAME[e.levels[p.key]])}">${p.part}<i>${esc(LEVEL_NAME[e.levels[p.key]])}</i></span>` : '').join('')}</div>` : ''}
     ${e.note && (self || sees('answers')) ? `<p class="w-small">${esc(e.note)}</p>` : ''}</li>`;
   const own = ownCheckins(r).slice().reverse(), obs = seenCheckins(r).slice().reverse();
-  return `<div class="w-head"><p class="w-eyebrow">${self ? 'Your' : esc(nameOf(t)) + '\'s'} check-ins</p><h2>Past check-ins</h2></div>
+  return `<div class="w-head"><p class="w-eyebrow">${self ? 'Your' : esc(nameOf(t)) + '\'s'} check-ins</p><h2>Past Check-ins</h2></div>
     ${!show ? `<p class="lead">${esc(nameOf(t))} keeps how their tree is doing private.</p>` : ''}
     <h3 class="section-title">${self ? 'Your own answers' : 'In their own words'} (${own.length})</h3><ul class="w-histlist">${own.map(row).join('') || '<li class="w-small">None yet.</li>'}</ul>
     ${obs.length ? `<h3 class="section-title">What helpers have seen (${obs.length})</h3><p class="w-small">Kept apart. These never add rings.</p><ul class="w-histlist">${obs.map(row).join('')}</ul>` : ''}
@@ -718,16 +718,16 @@ const MATTERS = [
 ];
 const VIGIL = (C.guide.vigil || []).map((v, i) => ['vigil' + i, v[0], v[1]]);
 VIEWS.matters = () => {
-  const a = me(); if (!a) return needProfileHtml('What matters to me');
-  const t = target(), r = rec(t); if (!r || !r.started) return needProfileHtml('What matters to me');
-  if (!sees('matters')) return privateHtml('What matters to me');
+  const a = me(); if (!a) return needProfileHtml('What Matters to Me');
+  const t = target(), r = rec(t); if (!r || !r.started) return needProfileHtml('What Matters to Me');
+  if (!sees('matters')) return privateHtml('What Matters to Me');
   const self = t === a.id, m = r.matters || {}, n = esc(nameOf(t)), role = roleOf(t);
   if (role === 'helper' && self) {
-    return `<div class="w-head"><p class="w-eyebrow">What matters</p><h2>This page belongs to the person you care for</h2><p class="lead">Open their tree to read or add to what matters to them. Helpers write here with them, in their words.</p></div>
+    return `<div class="w-head"><p class="w-eyebrow">What Matters</p><h2>This page belongs to the person you care for</h2><p class="lead">Open their tree to read or add to what matters to them. Helpers write here with them, in their words.</p></div>
       <div class="btn-row">${helped().map(p => `<button type="button" class="btn btn-primary" onclick="W.view('${p.id}');W.go('matters')">${esc(p.name)}'s page</button>`).join('')}</div>`;
   }
   const field = (k, label, ph) => `<div class="w-field"><label class="w-l" for="w-m-${k}">${esc(label)}</label><textarea id="w-m-${k}" rows="3" maxlength="2000" placeholder="${esc(ph)}">${esc(m[k] || '')}</textarea></div>`;
-  return `<div class="w-head"><p class="w-eyebrow">${self ? 'In your words' : 'In ' + n + '\'s words'}</p><h2>What matters to ${self ? 'me' : esc(nameOf(t))}</h2>
+  return `<div class="w-head"><p class="w-eyebrow">${self ? 'In your words' : 'In ' + n + '\'s words'}</p><h2>What Matters to ${self ? 'me' : esc(nameOf(t))}</h2>
     <p class="lead">${self ? 'So the people caring for you know who you are, not just what you have. Write a little or a lot. A helper can type while you talk.' : 'Write it with ' + n + ', in their words. Read it aloud to new nurses, aides, and visitors so they know who they\'re caring for.'}</p></div>
     ${m.updated ? `<p class="w-small">Last changed ${nice(m.updated)}${m.by ? ' by ' + esc(m.by) : ''}.</p>` : ''}
     ${sees('faith') && r.faith ? `<div class="w-card w-faithsum"><p class="w-eyebrow">Faith, spirit, or something else</p><p>${faithSummary(r.faith)}</p>${r.faith.call ? `<p><b>Call:</b> ${esc(r.faith.call)}</p>` : ''}<p class="w-small">Asked in each check-in, ${self ? 'in your' : 'in their'} own words.</p></div>` : ''}
@@ -735,7 +735,7 @@ VIEWS.matters = () => {
     <h3 class="section-title">When the time comes</h3>
     <p class="lead">Some people like to say how they want the last days to feel. Skip anything that doesn't fit.</p>
     <div class="w-matters">${VIGIL.map(x => field(x[0], x[1], x[2])).join('')}</div>
-    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.saveMatters()">Save</button><button type="button" class="btn btn-secondary" onclick="W.readMatters()">Read it aloud</button><button type="button" class="btn btn-secondary" onclick="W.printMatters()">Save or print</button></div>`;
+    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.saveMatters()">Save</button><button type="button" class="btn btn-secondary" onclick="W.readMatters()">Read it aloud</button><button type="button" class="btn btn-secondary" onclick="W.printMatters()">Save or Print</button></div>`;
 };
 function saveMatters() {
   const t = target(), r = rec(t); if (!r) return;
@@ -754,7 +754,7 @@ function readMatters() {
   if (R && R.read) { const box = $('#w-view'); const tmp = document.createElement('div'); tmp.className = 'w-hidden'; tmp.innerHTML = div.innerHTML; box.appendChild(tmp); R.read(tmp); setTimeout(() => tmp.remove(), 500); }
   else toast('Read aloud isn\'t available in this browser.');
 }
-function printMatters() { saveMatters(); printHtml('What matters to ' + (isSelf() ? (me() || {}).name : nameOf(target())), mattersBlocks()); }
+function printMatters() { saveMatters(); printHtml('What Matters to ' + (isSelf() ? (me() || {}).name : nameOf(target())), mattersBlocks()); }
 
 /* ---------- Cuttings ---------- */
 const CUT_KINDS = [
@@ -790,7 +790,7 @@ VIEWS.cuttings = () => {
       <h3>${esc(c.title || 'Untitled')}</h3>
       <div class="w-cuttext">${esc(c.text).replace(/\n/g, '<br>')}</div>
       <p class="w-small">${nice(c.date)}${c.by ? ', written down by ' + esc(c.by) : ''}</p>
-      <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.printCut('${c.id}')">Save or print</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.S.cut='${c.id}';W.render()">Edit</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.delCut('${c.id}')">Remove</button></div>
+      <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.printCut('${c.id}')">Save or Print</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.S.cut='${c.id}';W.render()">Edit</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.delCut('${c.id}')">Remove</button></div>
     </article>`).join('') : `<p class="w-small" style="margin-top:18px">Nothing kept yet. One story is enough to start.</p>`;
   return h;
 }
@@ -949,7 +949,7 @@ function readingHtml(x) {
   let body = '';
   x.lines.forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
-    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.read.open=null;W.render();W.top()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or print</button></div>
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.read.open=null;W.render();W.top()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
     <h2>${esc(x.title)}</h2><p class="w-small">${esc(x.by)} &middot; ${esc(RIGHTS[x.rights] || '')}</p>
     <div class="w-readtext" data-read="Read this aloud">${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
   </article>`;
@@ -963,7 +963,7 @@ function printReading(id) {
 /* ---------- Settings ---------- */
 const SHARE_ROWS = [
   ['tree', 'How my tree is doing', 'The gentle words for each part, never the answers.'],
-  ['matters', 'What matters to me', 'So helpers can read it to nurses, aides, and visitors.'],
+  ['matters', 'What Matters to Me', 'So helpers can read it to nurses, aides, and visitors.'],
   ['cuttings', 'Cuttings', 'Stories, letters, and blessings you\'re leaving.'],
   ['log', 'What helped today', 'The shift log helpers write in.'],
   ['faith', 'My faith answers', 'Your tradition, how you live it, and who to call.'],
@@ -975,7 +975,7 @@ function openSettings(focus) {
   closeSettings();
   const a = me(), wrap = document.createElement('div');
   wrap.id = 'w-sheet'; wrap.className = 'w-sheet'; wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-labelledby', 'w-sheet-t');
-  let h = `<div class="w-sheet-in"><div class="w-sheet-top"><h2 id="w-sheet-t">Willow settings</h2><button type="button" class="w-x" aria-label="Close" onclick="W.closeSettings()">&times;</button></div>`;
+  let h = `<div class="w-sheet-in"><div class="w-sheet-top"><h2 id="w-sheet-t">Willow Settings</h2><button type="button" class="w-x" aria-label="Close" onclick="W.closeSettings()">&times;</button></div>`;
   if (!a) {
     h += `<section><p>Open a profile to change Willow settings. Each person's settings stay in their own locked profile.</p><div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.closeSettings();W.open()">Open a profile</button></div></section>`;
   } else {
@@ -1006,7 +1006,7 @@ function openSettings(focus) {
         : `<p class="w-small">When ${self ? 'you die, a helper' : n + ' dies, you'} can mark ${self ? 'your' : 'their'} tree as remembered. Nothing is erased. Check-ins stop, and The Grove shows a remembered willow.</p><label class="w-l" for="w-rd">Date</label><input type="date" id="w-rd" value="${today()}"><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.remember()">Remember ${self ? 'my' : esc(nameOf(t)) + '\'s'} tree</button></div>`}</section>`;
     }
   }
-  h += `<section><h3>Reading and text</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="cycleTextSize()">Change text size</button></div></section>
+  h += `<section><h3>Reading and Text</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="cycleTextSize()">Change text size</button></div></section>
     <p class="w-small">Everything in Willow stays on this device, locked in each person's own profile. <a class="text-link" href="/privacy.html#willow">How Willow keeps things private</a></p></div>`;
   wrap.innerHTML = h;
   document.body.appendChild(wrap);
@@ -1060,7 +1060,7 @@ VIEWS.share = () => {
     <div class="w-card">
       ${row('checkins', 'Check-ins', `The last ${cks.length === 1 ? 'one' : cks.length}, with answers. Your chaplain or doula sees how each part is doing.`, sees('tree') ? 'No check-ins yet.' : n + ' keeps this private.')}
       ${row('faith', 'Faith answers', 'Tradition, how it\'s lived out, who to call, and anything never to do.', !sees('faith') ? n + ' keeps this private.' : 'Not answered yet.')}
-      ${row('matters', 'What matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Nothing written yet.')}
+      ${row('matters', 'What Matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Nothing written yet.')}
       ${row('notes', 'Notes from check-ins', 'Anything written at the end of a check-in.', !sees('answers') ? 'Kept private.' : 'No notes yet.')}
       <p class="w-small">Never shared: the answer about feeling safe at home.</p>
       <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.shareMake()">Make the code</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button></div>
@@ -1111,9 +1111,9 @@ VIEWS.visitin = () => {
   const tries = (c.t || []).map(x => `<li><b>${esc(x[2])}</b> ${esc(x[3])}</li>`).join('');
   return `<div class="w-head"><p class="w-eyebrow">A card from your visit</p><h2>From ${esc(c.g || 'your visit')}${c.r ? ', ' + esc(c.r === 'doula' ? 'your doula' : 'your chaplain') : ''}</h2><p class="lead">${nice(c.d)}. For ${esc(c.n || 'you')}.</p></div>
     <div class="w-card">${tries ? `<p class="w-eyebrow">To try</p><ul class="w-list">${tries}</ul>` : ''}
-      ${c.m ? `<p class="w-eyebrow">What matters</p><p class="w-small">Fills in What matters where nothing is written yet. Nothing already written is changed.</p>` : ''}
+      ${c.m ? `<p class="w-eyebrow">What Matters</p><p class="w-small">Fills in What Matters where nothing is written yet. Nothing already written is changed.</p>` : ''}
       ${c.v ? `<p class="w-eyebrow">Vigil plan</p><p class="w-small">Fills in "When the time comes" where nothing is written yet.</p>` : ''}
-      <label class="w-l" for="w-invto">Add it to</label><select id="w-invto" onchange="W.INV.to=this.value">${mine.map(p => `<option value="${p.id}" ${p.id === def ? 'selected' : ''}>${p.id === a.id ? 'My own tree' : esc(p.name) + '\'s tree'}</option>`).join('')}</select>
+      <label class="w-l" for="w-invto">Add it to</label><select id="w-invto" onchange="W.INV.to=this.value">${mine.map(p => `<option value="${p.id}" ${p.id === def ? 'selected' : ''}>${p.id === a.id ? 'My Own Tree' : esc(p.name) + '\'s tree'}</option>`).join('')}</select>
       <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.visitAdd()">Add to the tree</button><button type="button" class="btn btn-secondary" onclick="W.visitDrop()">Throw it away</button></div></div>`;
 };
 function visitOpen() {

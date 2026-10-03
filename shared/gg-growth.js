@@ -21,7 +21,21 @@
    ===================================================================== */
 (function () {
   var KEY = 'gg-shared-v1';
-  function read() { try { var d = JSON.parse(localStorage.getItem(KEY)) || {}; return d; } catch (e) { return {}; } }
+  function read() {
+    try {
+      var d = JSON.parse(localStorage.getItem(KEY)) || {};
+      // Old word kept on purpose: check-offs saved under 'care' move to 'tend' the first time they are read.
+      if (d.care) {
+        d.tend = d.tend || {};
+        Object.keys(d.care).forEach(function (w) {
+          var dest = d.tend[w] = d.tend[w] || {};
+          Object.keys(d.care[w] || {}).forEach(function (day) { dest[day] = Object.assign(dest[day] || {}, d.care[w][day]); });
+        });
+        delete d.care; write(d);
+      }
+      return d;
+    } catch (e) { return {}; }
+  }
   function write(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
   function slug(s) { return String(s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
   function pad(n) { return String(n).padStart(2, '0'); }
@@ -47,8 +61,8 @@
   window.GGGrowth = {
     slug: slug,
     check: function (who, name, date, on) {
-      var d = read(); d.care = d.care || {};
-      var p = d.care[whoKey(who)] = d.care[whoKey(who)] || {};
+      var d = read(); d.tend = d.tend || {};
+      var p = d.tend[whoKey(who)] = d.tend[whoKey(who)] || {};
       var day = p[date || today()] = p[date || today()] || {};
       if (on) day[slug(name)] = 1; else delete day[slug(name)];
       // keep about a year of days
@@ -56,15 +70,15 @@
       write(d);
     },
     isChecked: function (who, name, date) {
-      var p = (read().care || {})[whoKey(who)] || {};
+      var p = (read().tend || {})[whoKey(who)] || {};
       return !!(p[date || today()] || {})[slug(name)];
     },
     daysTended: function (who) {
-      var p = (read().care || {})[whoKey(who)] || {};
+      var p = (read().tend || {})[whoKey(who)] || {};
       return Object.keys(p).filter(function (k) { return Object.keys(p[k]).length; }).length;
     },
     days: function (who) {
-      var p = (read().care || {})[whoKey(who)] || {};
+      var p = (read().tend || {})[whoKey(who)] || {};
       return Object.keys(p).filter(function (k) { return Object.keys(p[k]).length; }).sort();
     },
     send: function (entry) {
@@ -81,17 +95,17 @@
       return b.list.slice().sort(function (a, c) { return a.date < c.date ? 1 : -1; });
     },
     rename: function (from, to) {
-      var d = read(), a = whoKey(from), b = whoKey(to); d.care = d.care || {};
-      if (a === b || !d.care[a]) return;
-      var dest = d.care[b] = d.care[b] || {};
-      Object.keys(d.care[a]).forEach(function (day) { dest[day] = Object.assign(dest[day] || {}, d.care[a][day]); });
-      delete d.care[a];
+      var d = read(), a = whoKey(from), b = whoKey(to); d.tend = d.tend || {};
+      if (a === b || !d.tend[a]) return;
+      var dest = d.tend[b] = d.tend[b] || {};
+      Object.keys(d.tend[a]).forEach(function (day) { dest[day] = Object.assign(dest[day] || {}, d.tend[a][day]); });
+      delete d.tend[a];
       (d.inbox || []).forEach(function (x) { if (x.who === a) x.who = b; });
       write(d);
     },
     forget: function (who) {
       var d = read(), w = whoKey(who);
-      if (d.care) delete d.care[w];
+      if (d.tend) delete d.tend[w];
       d.inbox = (d.inbox || []).filter(function (x) { return x.who !== w; });
       write(d);
     },

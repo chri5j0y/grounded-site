@@ -161,7 +161,7 @@
     var mine = false, recorded = false;
     function paint() {
       var active = mine && state !== 'idle';
-      if (!active) { b.innerHTML = I.spk + '<span>' + (recorded ? (opts.recordedLabel || 'Listen') : (opts.label || 'Read aloud')) + '</span>'; b.setAttribute('aria-pressed', 'false'); s.hidden = true; }
+      if (!active) { b.innerHTML = I.spk + '<span>' + (recorded ? (opts.recordedLabel || 'Listen') : (opts.label || 'Read Aloud')) + '</span>'; b.setAttribute('aria-pressed', 'false'); s.hidden = true; }
       else if (state === 'playing') { b.innerHTML = I.pause + '<span>Pause</span>'; b.setAttribute('aria-pressed', 'true'); s.hidden = false; }
       else { b.innerHTML = I.play + '<span>Resume</span>'; b.setAttribute('aria-pressed', 'true'); s.hidden = false; }
       menu.hidden = recorded;
@@ -193,7 +193,7 @@
     var on = false; try { on = localStorage.getItem(key) === '1'; } catch (e) {}
     var bar = document.createElement('div'); bar.className = 'gg-rbar no-print';
     var b = document.createElement('button'); b.type = 'button'; b.className = 'gg-rbtn gg-rtoggle';
-    function paint() { b.innerHTML = I.spk + '<span>Read aloud: ' + (on ? 'on' : 'off') + '</span>'; b.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+    function paint() { b.innerHTML = I.spk + '<span>Read Aloud: ' + (on ? 'on' : 'off') + '</span>'; b.setAttribute('aria-pressed', on ? 'true' : 'false'); }
     b.addEventListener('click', function () {
       on = !on; try { localStorage.setItem(key, on ? '1' : '0'); } catch (e) {}
       document.querySelectorAll('.gg-rtoggle').forEach(function (x) { if (x !== b) x.dispatchEvent(new CustomEvent('gg-sync')); });

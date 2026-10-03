@@ -39,25 +39,25 @@
     { title: 'The Grounded Marriage', sub: 'Premarital counseling, a custom wedding, and a first-anniversary check-in, from $1,400', href: '/the-grounded-marriage.html', keys: 'marriage married wedding package premarital engaged couple grounded marriage' },
     { title: 'Weddings', sub: 'Custom ceremonies, from $650', href: '/weddings.html', keys: 'wedding weddings officiant marry married ceremony vows' },
     { title: 'Elopements', sub: 'Just the two of you, anywhere, from $350', href: '/elopements.html', keys: 'elope elopement courthouse small simple legal ceremony' },
-    { title: 'Vow renewals', sub: 'For couples who would say it all again, from $500', href: '/vow-renewals.html', keys: 'vow renewal renew vows anniversary' },
-    { title: 'Premarital counseling', sub: 'PREPARE/ENRICH with Chris and Kayti, from $700', href: '/premarital-counseling.html', keys: 'premarital counseling prepare enrich engaged license discount' },
-    { title: 'Funerals and memorials', sub: 'Honest, personal services, from $500', href: '/funerals-memorials.html', keys: 'funeral funerals memorial service died death officiant eulogy' },
-    { title: 'Celebrations of life', sub: 'Stories, music, laughter, and room for tears', href: '/celebrations-of-life.html', keys: 'celebration of life memorial death died' },
-    { title: 'Bedside blessings', sub: 'Prayers and rituals for the last days', href: '/bedside-blessings.html', keys: 'bedside blessing dying last rites prayer hospice' },
-    { title: 'Pregnancy and infant loss', sub: 'Gentle support and ceremony after losing a baby, by donation', href: '/pregnancy-infant-loss.html', keys: 'miscarriage stillbirth infant loss baby died pregnancy loss nicu' },
-    { title: 'Child blessings', sub: 'Welcoming a new life into a family', href: '/child-blessings.html', keys: 'baby blessing naming child dedication new baby' },
-    { title: 'House blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
+    { title: 'Vow Renewals', sub: 'For couples who would say it all again, from $500', href: '/vow-renewals.html', keys: 'vow renewal renew vows anniversary' },
+    { title: 'Premarital Counseling', sub: 'PREPARE/ENRICH with Chris and Kayti, from $700', href: '/premarital-counseling.html', keys: 'premarital counseling prepare enrich engaged license discount' },
+    { title: 'Funerals and Memorials', sub: 'Honest, personal services, from $500', href: '/funerals-memorials.html', keys: 'funeral funerals memorial service died death officiant eulogy' },
+    { title: 'Celebrations of Life', sub: 'Stories, music, laughter, and room for tears', href: '/celebrations-of-life.html', keys: 'celebration of life memorial death died' },
+    { title: 'Bedside Blessings', sub: 'Prayers and rituals for the last days', href: '/bedside-blessings.html', keys: 'bedside blessing dying last rites prayer hospice' },
+    { title: 'Pregnancy and Infant Loss', sub: 'Gentle support and ceremony after losing a baby, by donation', href: '/pregnancy-infant-loss.html', keys: 'miscarriage stillbirth infant loss baby died pregnancy loss nicu' },
+    { title: 'Child Blessings', sub: 'Welcoming a new life into a family', href: '/child-blessings.html', keys: 'baby blessing naming child dedication new baby' },
+    { title: 'House Blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
     { title: 'Milestones', sub: 'Graduations, retirements, recovery, and more', href: '/milestones.html', keys: 'milestone graduation retirement recovery anniversary' },
     { title: 'End-of-Life Support', sub: 'Presence at the bedside, planning, and vigil, from $125 an hour', href: '/end-of-life-support.html', keys: 'end of life dying vigil doula bedside hospice planning family support legacy' },
     { title: 'Grief and Caregiver Support', sub: 'One-on-one support after a loss or while caregiving, $125 a session', href: '/grief-caregiver-support.html', keys: 'grief griefwork bereavement loss caregiver caregiving burnout widow widower' },
-    { title: 'Growth and renewal', sub: 'Grow deeper. Rest well. Spiritual guidance, meditation, and retreats', href: '/services.html#growth', keys: 'growth renewal grow deeper rest retreat retreats workshop workshops seminar seminars faith spiritual practice' },
+    { title: 'Growth and Renewal', sub: 'Grow deeper. Rest well. Spiritual guidance, meditation, and retreats', href: '/services.html#growth', keys: 'growth renewal grow deeper rest retreat retreats workshop workshops seminar seminars faith spiritual practice' },
     { title: 'Spiritual Guidance', sub: 'One-on-one guidance for your inner life, $125 a session', href: '/spiritual-guidance.html', keys: 'spiritual guidance direction director faith doubt questions discernment religious hurt prayer meaning' },
     { title: 'Meditation, Sound and Movement', sub: 'Sound bowls, body scans, yoga, and breathwork', href: '/meditation-sound-movement.html', keys: 'meditation sound bowl bowls yoga breathwork body scan mindfulness rest relax' },
     { title: 'Speaking and Training', sub: 'Talks and trainings for teams, from $750', href: '/speaking-training.html', keys: 'speaking speaker talk keynote training conference in-service workshop hospice team staff' },
     { title: 'Rates', sub: 'What it costs, plainly', href: '/rates.html', keys: 'rates price prices cost costs fee fees how much pay payment deposit' },
     { title: 'About', sub: 'Who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story' },
     { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/contact.html', keys: 'contact email call reach out question' },
-    { title: 'The Grounded library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },
+    { title: 'The Grounded Library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },
     { title: 'Privacy', sub: 'Your answers stay on your device', href: '/privacy.html', keys: 'privacy data private' },
     { title: 'Terms', sub: 'Terms of use', href: '/terms.html', keys: 'terms legal' }
   ];
@@ -168,7 +168,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js?v=tc1'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -333,8 +333,8 @@
       '<span class="ss-sub">' + esc(it.type === 'talk' ? it.sub : it.text) + '</span></button>';
     var card;
     if (it.type === 'talk') {
-      card = '<p class="ss-card-h">Quick card</p>' + list(it.quick) +
-        (local ? '<button type="button" class="btn btn-primary ss-go" data-open="' + esc(it.id) + '">' + esc(opts.openLabel || 'Talking it through') + '</button>'
+      card = '<p class="ss-card-h">Quick Card</p>' + list(it.quick) +
+        (local ? '<button type="button" class="btn btn-primary ss-go" data-open="' + esc(it.id) + '">' + esc(opts.openLabel || 'Talking It Through') + '</button>'
                : '<a class="btn btn-primary ss-go" href="' + esc(it.href) + '">Full guide in ' + esc(it.from) + '</a>');
     } else {
       card = (it.why ? '<p>' + esc(it.why) + '</p>' : '') +
