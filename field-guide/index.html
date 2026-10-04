@@ -5468,8 +5468,8 @@ const htLink = r => HT_SITE + HT_PATH[r.src] + encodeURIComponent(r.id);
 const HT_A = /<a\s[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
 const htPlain = s => String(s == null ? '' : s).replace(HT_A, '$2').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
 function htRich(s){
-  s = String(s == null ? '' : s); const out = []; let last = 0, m; HT_A.lastIndex = 0;
-  while ((m = HT_A.exec(s))){ out.push(esc(htPlain(s.slice(last, m.index)))); out.push(/^https?:\/\//.test(m[1]) ? `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(htPlain(m[2]))}</a>` : esc(htPlain(m[2]))); last = HT_A.lastIndex; }
+  s = String(s == null ? '' : s); const out = [], re = new RegExp(HT_A.source, 'gi'); let last = 0, m; // its own copy: htPlain's replace resets HT_A.lastIndex, which looped forever (BLD 724)
+  while ((m = re.exec(s))){ out.push(esc(htPlain(s.slice(last, m.index)))); out.push(/^https?:\/\//.test(m[1]) ? `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(htPlain(m[2]))}</a>` : esc(htPlain(m[2]))); last = re.lastIndex; }
   out.push(esc(htPlain(s.slice(last)))); return out.join('');
 }
 const htDomain = u => String(u || '').replace(/^https?:\/\/(www\.)?/, '').split(/[/?#]/)[0];
