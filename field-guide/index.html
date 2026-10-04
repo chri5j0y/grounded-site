@@ -6589,7 +6589,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
-  if (a && a.startsWith('ln-') && lnAct(a, v, t)) return;
+  if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
   switch(a){
