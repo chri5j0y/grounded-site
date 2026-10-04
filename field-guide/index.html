@@ -595,7 +595,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
 <script src="../shared/gg-sources.js?v=src6"></script>
-<script src="../shared/gg-learn.js?v=ln13"></script>
+<script src="../shared/gg-learn.js?v=ln14"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -4518,7 +4518,7 @@ const wfgDone = id => !!lnData().done[id];
 function wfgCount(id, how){ const D = lnData(); D.how = D.how || {}; if (!D.done[id]){ D.done[id] = today(); D.how[id] = how; save(); } }
 // The series as a player track: one ring at a time, closing scene with the For Guides buttons.
 function wfgTrack(ring, s){ s = s || fgSerRing(ring); const R = wfgRings(s).find(r => r.key === ring); if (!R) return null;
-  return {id:(s === 'oak' ? 'ofg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], scenes:(g.video && g.video.scenes) || []}))}; }
+  return {id:(s === 'oak' ? 'ofg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
 function wfgMark(id){ return wfgDone(id) ? `<span class="pill sage">${icon('check')} ${wfgHow(id) === 'read' ? 'Read' : 'Watched'}</span>` : ''; }
 // The written section, eight parts (the eighth, Sources, is drawn from the credits).
 function wfgBody(g, head){

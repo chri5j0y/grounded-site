@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln13';
+  var V = 'ln14';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -194,7 +194,8 @@
       '.ggl-small .ln-st-b{display:none;}.ggl-small .ln-story{padding:44px 54px;}.ggl-small .ln-story h3{font-size:66px;margin-top:14px;}.ggl-small .ln-st-l{font-size:52px;margin-top:26px;}.ggl-small .ln-st-n{font-size:26px;}.ggl-small .ln-st-l{transition-delay:1.2s !important;}.ggl-small .ln-story .ln-eb{font-size:28px;}',
       '.ln-link{margin:0 0 8px;}.ln-link:empty{display:none;}.ln-link a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ggl-acc);}',
       ':root[data-theme="dark"] .ggl-app .ln-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ln-link a{color:var(--ggl-lite);}}',
-      '.ln-mu{display:inline-flex;align-items:center;gap:6px;font-size:14px;margin:6px 0 0 4px;cursor:pointer;}.ln-mu input{width:18px;height:18px;accent-color:var(--ggl-acc,#8B5E1A);}',
+      '.ln-mu{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:14px;margin:8px 0 0;}.ln-mu-k{font-weight:600;}.ln-mu select{font:inherit;font-size:14px;padding:4px 6px;border-radius:8px;background:transparent;color:inherit;border:1px solid currentColor;}.ln-mu select option{color:#2C1810;background:#FFFCF6;}.ln-mu-b{font:inherit;font-size:14px;padding:5px 10px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;}.ggl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}',
+      '.ln-crisis{margin:8px 0 0;padding:8px 12px;border-radius:12px;border-left:5px solid #B8612F;background:rgba(184,97,47,.10);font-size:15px;line-height:1.4;}.ln-crisis b{margin-right:6px;}',
       '.ggl-sup{margin-top:22px;}.ggl-sup>p{margin:4px 0 0;}.ggl-sup .ggl-card{border-left:6px solid var(--ggl-bar,var(--ggl-acc));}',
       '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
       '@media (prefers-reduced-motion:reduce){.ln-canvas .a,.ln-ptr,.ln-ring,.ln-panel,.ln-note,.ln-res,.ln-tgt{transition:none !important;}}',
@@ -284,12 +285,14 @@
      Soft music under the voice in every video. It fades in when Play is tapped, follows Pause, and fades out
      at the closing scene. Four moods, seven tracks each: learning (lessons, When Life Changes, For Guides), calm (Support for
      Right Now and Support for Guides), kids (Maple and Aspen), willow (Willow and Willow Guide). A video picks
-     its mood from cfg.mood, then its track kind, then its app, and one track from that mood by its lesson id.
-     Tracks live in /audio/music/<mood>-<n>.mp3 (96k, loudness evened), licensed for apps and websites; each
-     carries its credit for the Sources line. A mood with no tracks stays quiet, and with none at all the
-     Music switch stays hidden. Listeners turn it off or on with the Music
-     switch beside Voice and Speed; the choice is kept on this device (gg-music). Volume runs through Web Audio
-     where it can, because phones ignore an audio element's volume setting. */
+     its mood from the lesson's music key, the listener's chosen mood, cfg.mood, its track kind, then its app, and
+     one track from that mood by its lesson id. Safety videos (music: 'safety') always use the two softest Calm
+     tracks, lower. Tracks live in /audio/music/<mood>-<n>.mp3 (96k, loudness evened), licensed for apps and
+     websites; each carries its credit for the Sources line. With no tracks at all the Music settings stay
+     hidden. Beside Voice and Speed, listeners choose Volume (Off, Soft, Medium), Mood (Automatic or one mood),
+     and Another Track; all kept on this device. Volume runs through Web Audio where it can, because phones
+     ignore an audio element's volume setting. A lesson with crisis: [lines] shows them in a bar under the video
+     from the first scene to the last (Oak Safety, BLD 721). */
   // Seven licensed tracks per mood (Pixabay Content License, chosen by Chris, GWG BLD 721). Each video always gets the same one.
   var MUSIC = {
     learning: [
@@ -327,16 +330,34 @@
       { src: '/audio/music/willow-5.mp3', credit: "\"Sad Piano Instrumental\" by trtasfiq, Pixabay" },
       { src: '/audio/music/willow-6.mp3', credit: "\"Piano Music\" by paulyudin, Pixabay" },
       { src: '/audio/music/willow-7.mp3', credit: "\"Piano Music\" by arpmedia, Pixabay" }
+    ],
+    // Safety videos (GWG BLD 721, Chris): only the two softest Calm tracks, played lower (SAFETY_SCALE).
+    safety: [
+      { src: '/audio/music/calm-2.mp3', credit: "\"Gentle Ambient Nature Music for Relaxation\" by desifreemusic, Pixabay" },
+      { src: '/audio/music/calm-4.mp3', credit: "\"Soft Ambient Textures with Subtle Bird Chirps\" by desifreemusic, Pixabay" }
     ]
   };
-  var MUSIC_V = 'mu2', MUSIC_LEVEL = 0.14;
+  var MUSIC_V = 'mu2', LEVELS = { soft: 0.11, medium: 0.18 }, SAFETY_SCALE = 0.65;
+  var MOODS = [['', 'Automatic'], ['learning', 'Learning'], ['calm', 'Calm'], ['kids', 'Kids'], ['willow', 'Willow']];
   var BG = { el: null, ctx: null, gain: null, src: '', fade: 0 };
   function musicHas() { for (var k in MUSIC) if (MUSIC[k] && MUSIC[k].length) return true; return false; }
-  // The track for one video: the same one every time, spread across the mood's list by the lesson id.
-  function musicPick(cfg) { var list = MUSIC[moodOf(cfg)] || [], id = String((cfg.lesson || {}).id || ''), h = 0; if (!list.length) return null; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0; return list[h % list.length]; }
-  function musicOn() { try { return localStorage.getItem('gg-music') !== 'off'; } catch (e) { return true; } }
-  function musicSet(on) { try { localStorage.setItem('gg-music', on ? 'on' : 'off'); } catch (e) {} }
+  // Settings kept on this device (GWG BLD 721): gg-music is 'off', 'soft' (the default; the old 'on' reads as soft)
+  // or 'medium'; gg-music-mood is '' (Automatic) or one mood; gg-music-pick holds Another Track turns per video.
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function musicVol() { var v = lsGet('gg-music'); return v === 'off' ? 'off' : v === 'medium' ? 'medium' : 'soft'; }
+  function musicOn() { return musicVol() !== 'off'; }
+  function musicMood() { var m = lsGet('gg-music-mood') || ''; return m && MUSIC.hasOwnProperty(m) && m !== 'safety' ? m : ''; }
+  function musicTurns(id) { try { return +(JSON.parse(lsGet('gg-music-pick') || '{}')[id] || 0); } catch (e) { return 0; } }
+  function musicTurn(id) { var o = {}; try { o = JSON.parse(lsGet('gg-music-pick') || '{}') || {}; } catch (e) {} o[id] = (+(o[id] || 0)) + 1; lsSet('gg-music-pick', JSON.stringify(o)); }
+  function musicLevel(cfg) { return (LEVELS[musicVol()] || 0) * (moodOf(cfg) === 'safety' ? SAFETY_SCALE : 1); }
+  // The track for one video: the same one every time (spread across the mood's list by the lesson id), moved
+  // along by Another Track.
+  function musicPick(cfg) { var list = MUSIC[moodOf(cfg)] || [], id = String((cfg.lesson || {}).id || ''), h = 0; if (!list.length) return null; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0; return list[(h + musicTurns(id)) % list.length]; }
   function moodOf(cfg) {
+    if (cfg.lesson && cfg.lesson.music === 'safety') return 'safety'; // Safety videos always keep their softest tracks
+    if (musicMood()) return musicMood();
+    if (cfg.lesson && cfg.lesson.music && MUSIC.hasOwnProperty(cfg.lesson.music)) return cfg.lesson.music;
     if (cfg.mood && MUSIC.hasOwnProperty(cfg.mood)) return cfg.mood;
     if (cfg.track && cfg.track.kind === 'support') return 'calm';
     if (cfg.app === 'maple' || cfg.app === 'aspen') return 'kids';
@@ -357,19 +378,33 @@
         var AC = window.AudioContext || window.webkitAudioContext;
         if (AC) { try { BG.ctx = new AC(); BG.gain = BG.ctx.createGain(); BG.gain.gain.value = 0; BG.ctx.createMediaElementSource(BG.el).connect(BG.gain); BG.gain.connect(BG.ctx.destination); } catch (e) { BG.ctx = BG.gain = null; } }
       }
-      if (BG.src !== src) { BG.el.src = src; BG.src = src; bgVol(0); }
-      if (BG.ctx && BG.ctx.state === 'suspended') BG.ctx.resume();
-      var pr = BG.el.play(); if (pr && pr.catch) pr.catch(function () {});
-      bgFade(MUSIC_LEVEL, 1800);
+      var go = function () {
+        if (BG.src !== src) { BG.el.src = src; BG.src = src; bgVol(0); }
+        if (BG.ctx && BG.ctx.state === 'suspended') BG.ctx.resume();
+        var pr = BG.el.play(); if (pr && pr.catch) pr.catch(function () {});
+        bgFade(musicLevel(cfg), 1800);
+      };
+      if (BG.src && BG.src !== src && !BG.el.paused) bgFade(0, 400, go); else go(); // a new track fades the old one out first
     } catch (e) {}
   }
   function bgStop(ms) { if (!BG.el) return; bgFade(0, ms || 700, function () { try { BG.el.pause(); } catch (e) {} }); }
   function musicCredit(cfg) { var m = musicPick(cfg); return m && m.src && m.credit && musicOn() ? '<small class="gg-src-line"><span class="gg-src-k">Music:</span> ' + esc(m.credit) + '</small>' : ''; }
+  // Music settings beside Voice and Speed: Volume (Off, Soft, Medium), Mood (Automatic or one mood), Another Track.
   function musicSwitch(host, cfg, P) {
     if (!musicHas()) return;
-    var w = document.createElement('label'); w.className = 'ln-mu';
-    w.innerHTML = '<input type="checkbox"' + (musicOn() ? ' checked' : '') + '> Music';
-    w.querySelector('input').addEventListener('change', function (e) { musicSet(e.target.checked); if (e.target.checked) { if (P.playing && !P.last) bgPlay(cfg); } else bgStop(300); });
+    var w = document.createElement('div'); w.className = 'ln-mu'; w.setAttribute('role', 'group'); w.setAttribute('aria-label', 'Music');
+    var safe = moodOf(cfg) === 'safety';
+    w.innerHTML = '<span class="ln-mu-k">Music</span>'
+      + '<label><span class="ggl-sr">Music volume</span><select data-mu="vol">' + [['off', 'Off'], ['soft', 'Soft'], ['medium', 'Medium']].map(function (o) { return '<option value="' + o[0] + '"' + (musicVol() === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>'
+      + (safe ? '' : '<label><span class="ggl-sr">Music mood</span><select data-mu="mood">' + MOODS.map(function (o) { return '<option value="' + o[0] + '"' + (musicMood() === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>')
+      + '<button type="button" class="ln-mu-b" data-mu="next">Another Track</button>';
+    var replay = function () { if (P.playing && !P.last && musicOn()) bgPlay(cfg); };
+    w.addEventListener('change', function (e) {
+      var k = e.target.getAttribute('data-mu');
+      if (k === 'vol') { lsSet('gg-music', e.target.value); if (!musicOn()) bgStop(300); else if (BG.el && !BG.el.paused) bgFade(musicLevel(cfg), 400); else replay(); }
+      if (k === 'mood') { lsSet('gg-music-mood', e.target.value); replay(); }
+    });
+    w.addEventListener('click', function (e) { if (e.target.getAttribute('data-mu') !== 'next') return; musicTurn(String((cfg.lesson || {}).id || '')); if (musicOn()) { if (P.playing && !P.last) bgPlay(cfg); } });
     var vs = host.querySelector('.ln-vs'); if (vs) vs.appendChild(w);
   }
 
@@ -386,6 +421,7 @@
     var N = (l.scenes || []).length + 1; // the closing scene is the last one
     host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div><div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
+      + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Help right now:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
       + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
       + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><span class="ggl-cn"></span></div>'
       + '<div class="ln-vs"></div></div>';
@@ -609,7 +645,7 @@
   function load(app) { try { var d = JSON.parse(localStorage.getItem(KEY(app)) || '{}'); return { done: d.done || {}, at: d.at || {} }; } catch (e) { return { done: {}, at: {} }; } }
   function keep(app, d) { try { localStorage.setItem(KEY(app), JSON.stringify({ done: d.done, at: d.at })); } catch (e) {} }
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv1', oak: '/oak/guide-videos.js?v=gv2' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv1', oak: '/oak/guide-videos.js?v=gv3' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
