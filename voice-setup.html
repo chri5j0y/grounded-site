@@ -283,7 +283,7 @@ body.bro-open{overflow:hidden;}
 </section>
 <section class="page-head after-strip">
   <div class="wrap">
-    <p class="lead">Every Grow With Grounded video and Read Aloud button uses your device&rsquo;s own voice. Most phones and computers come with free, natural-sounding voices that are not turned on yet. Set one up once, and every tool uses it, even offline.</p>
+    <p class="lead">Every Grow With Grounded video and Read Aloud button uses your device&rsquo;s own voice. Many computers and Android phones come with natural-sounding voices that are not turned on yet. Set one up once, and every tool uses it, even offline. On an iPhone or iPad, web pages can use only Apple&rsquo;s built-in voices for now, so pick the clearest one in the Voice menu; for the most natural voices, watch on a computer in Microsoft Edge.</p>
   </div>
 </section>
 <section>
@@ -295,7 +295,7 @@ body.bro-open{overflow:hidden;}
     </div>
 
     <h2>What to look for</h2>
-    <p><b>Premium</b> voices sound the most like a person. <b>Enhanced</b> voices are clear and warm. On Windows, <b>Natural</b> voices in Microsoft Edge sound the best. A basic voice works, but it can sound robotic and make lessons hard to enjoy.</p>
+    <p><b>Premium</b> voices sound the most like a person (on computers; an iPhone or iPad can&rsquo;t use them in web pages yet). <b>Enhanced</b> voices are clear and warm. On Windows, <b>Natural</b> voices in Microsoft Edge sound the best. A basic voice works, but it can sound robotic and make lessons hard to enjoy.</p>
     <p>After you download a new voice, <b>fully close your browser</b> and open the page again. Then choose the voice in the Voice menu under any video or Read Aloud button.</p>
 
     <div id="vs-steps"><p>Turn on JavaScript to see the steps for your device.</p></div>
@@ -343,8 +343,8 @@ body.bro-open{overflow:hidden;}
 </div></footer>
 <script src="site.js"></script>
 <script src="nav.js?v=w1" defer></script>
-<script src="read.js?v=vc1"></script>
-<script src="shared/gg-learn.js?v=ln16"></script>
+<script src="read.js?v=vc2"></script>
+<script src="shared/gg-learn.js?v=ln17"></script>
 <script>
 (function () {
   var R = window.GGRead;
@@ -352,7 +352,7 @@ body.bro-open{overflow:hidden;}
     var el = document.getElementById('vs-info');
     if (!R || !R.available) { el.textContent = 'This browser cannot read aloud. Try Safari, Chrome, or Edge.'; return; }
     var I = R.voiceInfo(), p = R.platform(), col = { great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' }[I.grade];
-    var said = { great: 'Sounds great. You are all set.', okay: 'Sounds okay. A Premium, Enhanced, or Natural voice sounds much more like a person.', basic: 'Sounds basic. The steps below help.', none: 'No voice found yet. If you just added one, fully close your browser and open this page again.' }[I.grade];
+    var said = R.saidText ? R.saidText(I) : '';
     el.innerHTML = 'You are on ' + p.label + '.<br><span class="vs-dot" style="background:' + col + '"></span><b>' + (I.name ? 'Your voice: ' + I.name + '.' : 'Your voice.') + '</b> ' + said;
   }
   function steps() {

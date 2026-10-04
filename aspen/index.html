@@ -1584,7 +1584,8 @@ function renderPlan(){
       return `<details class="plan-part" style="border-left:6px solid ${pcolor(k)}" ${open ? 'open' : ''} ontoggle="planOpen['${k}']=this.open">
       <summary><span class="pp-name">${PART[k].name} <span class="muted small">${PART[k].sub}</span></span>${suggested.includes(k) ? '<span class="pill">Suggested this week</span>' : ''}<span class="muted small pp-count">${n} picked, about ${aspSuggest(last, k)} suggested</span></summary>
       <div class="pp-body">
-        ${PRACTICES[g][k].map((pr, idx) => `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${esc(pr[2])}</span></button>${learnHTML(g, k, idx)}</div>`).join('')}
+        ${aspRot(g, k, isPicked).show.map(idx => [PRACTICES[g][k][idx], idx]).map(([pr, idx]) => `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${esc(pr[2])}</span></button>${learnHTML(g, k, idx)}</div>`).join('')}
+        ${(r => r.pages > 1 ? `<p class="row pp-more"><button class="btn ghost small" onclick="aspRotNext('${k}')">Show Me Others (${r.page + 1} of ${r.pages})</button></p>` : '')(aspRot(g, k, isPicked))}
         ${inPart(k).filter(p => p.own).map(p => `<p class="row own-row"><span>${esc(p.own)} <span class="muted small">(your own)</span></span><button class="btn ghost small" onclick="removeOwn('${p.id}')">Remove</button></p>`).join('')}
         <div class="row own-add"><input id="own-${k}" maxlength="120" placeholder="Write your own ${PART[k].name} practice" aria-label="Write your own ${PART[k].name} practice"><button class="btn ghost small" onclick="addOwn('${k}')">Add</button></div>
         ${guideLinks(k)}
@@ -1594,9 +1595,31 @@ function renderPlan(){
 function togglePick(k, idx){
   const pd = planDraft, g = me().grade;
   const i = pd.picks.findIndex(p => !p.own && p.part === k && p.idx === idx && p.grade === g);
-  if (i >= 0) pd.picks.splice(i, 1);
+  if (i >= 0){ pd.picks.splice(i, 1); aspRotTo(g, k, idx); }
   else pd.picks.push({part:k, idx, grade:g, added:Date.now()});
-  planOpen[k] = true; renderPlan();
+  planOpen[k] = true; const y = window.scrollY; renderPlan(); window.scrollTo(0, y);
+}
+// Six at a time (BLD 725): every picked practice first, then up to 6 unpicked ones in the
+// usual order. Show Me Others brings the next 6, around to the first set after the last.
+// The place in the rotation lives in memory only.
+const ASP_ROT = {}, ASP_ROT_N = 6;
+function aspRot(g, k, isPicked){
+  const all = ((PRACTICES[g] || {})[k] || []).map((pr, idx) => idx);
+  const chosen = all.filter(idx => isPicked(k, idx)), open = all.filter(idx => !isPicked(k, idx));
+  const pages = Math.max(1, Math.ceil(open.length / ASP_ROT_N)), id = g + '-' + k;
+  const page = ASP_ROT[id] = Math.min(ASP_ROT[id] || 0, pages - 1);
+  return {show: chosen.concat(open.slice(page * ASP_ROT_N, page * ASP_ROT_N + ASP_ROT_N)), page, pages};
+}
+// Taking a practice out keeps it in view: the list turns to the set it now belongs to.
+function aspRotTo(g, k, idx){
+  const pd = planDraft, open = ((PRACTICES[g] || {})[k] || []).map((pr, i) => i).filter(i => !pd.picks.some(p => !p.own && p.part === k && p.idx === i && p.grade === g));
+  const at = open.indexOf(idx); if (at >= 0) ASP_ROT[g + '-' + k] = Math.floor(at / ASP_ROT_N);
+}
+function aspRotNext(k){
+  const s = me(); if (!s || !planDraft) return;
+  const g = s.grade, id = g + '-' + k, open = ((PRACTICES[g] || {})[k] || []).filter((pr, i) => !planDraft.picks.some(p => !p.own && p.part === k && p.idx === i && p.grade === g)).length;
+  ASP_ROT[id] = (ASP_ROT[id] || 0) + 1; if (ASP_ROT[id] >= Math.ceil(open / ASP_ROT_N)) ASP_ROT[id] = 0;
+  planOpen[k] = true; const y = window.scrollY; renderPlan(); window.scrollTo(0, y);
 }
 function addOwn(k){
   const el = $('own-' + k), t = el.value.trim(); if (!t){ el.focus(); return; }
@@ -1984,8 +2007,8 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln16" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln16';document.head.appendChild(s)"></script>
-<script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln17" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln17';document.head.appendChild(s)"></script>
+<script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
 </html>

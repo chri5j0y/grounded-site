@@ -131,14 +131,15 @@
      search for. Checked October 2026. The Voice Check, the voice menu's help, and the Voice Setup page
      (voice-setup.html) all read these, so the steps are written once. */
   var STEPS = {
-    ios: { name: 'iPhone or iPad', why: 'Safari, Chrome, and every other browser on an iPhone or iPad use the same Apple voices, so one download works everywhere.', steps: [
-      'Open the Settings app, then Accessibility.',
-      'Tap Read &amp; Speak (on older versions, Spoken Content), then Voices, then English.',
-      'Pick a voice marked Premium or Enhanced, like Ava, Zoe, Evan, or Nathan, and tap the download arrow. Use Wi-Fi; Premium voices are large.',
-      'Fully close your browser: swipe up from the bottom of the screen, then swipe the browser away. Open this page again.',
-      'Open the Voice menu and pick the new voice. It shows as (Premium) or (Enhanced).'
-    ], note: 'Siri voices can\'t be used by websites. Download a voice marked Premium or Enhanced instead, then fully close Safari and reopen it.' },
-    mac: { name: 'Mac', why: 'Safari and Chrome on a Mac both use the voices you download in System Settings.', steps: [
+    ios: { name: 'iPhone or iPad', why: 'On an iPhone or iPad, web pages can use only Apple\'s built-in voices for now. The Premium and Enhanced voices in Settings don\'t reach web pages yet, in Safari or any other browser, so there is nothing to download.', steps: [
+      'Open the Voice menu under any video or Read Aloud button.',
+      'Tap Play a Sample and try a few voices. Keep the one that sounds clearest to you. Samantha, Daniel, Karen, and Moira are often the clearest.',
+      'If the voice feels rushed, choose Slower in the Speed menu.',
+      'For the most natural voices, watch on a computer in Microsoft Edge, on Windows or Mac.'
+    ], note: 'Grow With Grounded picks the clearest voice it finds on your iPhone or iPad, and remembers the one you choose.' },
+    mac: { name: 'Mac', why: 'Microsoft Edge for Mac has the most natural voices. Safari and Chrome on a Mac use the voices you download in System Settings.', steps: [
+      'Best: open this page in Microsoft Edge for Mac. Its voices marked (natural) use the internet and sound the most like a person; choose one yourself in the Voice menu.',
+      'Or, to keep everything on your Mac:',
       'Open System Settings, then Accessibility.',
       'Open Read &amp; Speak (or Spoken Content), then the System Voice menu, then Manage Voices.',
       'Under English, download a voice marked Premium or Enhanced, like Ava, Zoe, Evan, or Nathan.',
@@ -187,6 +188,12 @@
     var best = list.filter(function (x) { return tier(x) && !online(x); }).length;
     return { ok: !!v, grade: grade, name: v ? label(v) : '', count: list.length, best: best };
   }
+  // What to say about the voice in use (Voice Check, the Learn voice card, and Voice Setup all use this).
+  function saidText(I) {
+    if (!I || I.grade === 'none') return 'No voice found yet. If you just added one, fully close your browser and open this page again.';
+    if (platform().os === 'ios') return 'This is one of the voices an iPhone or iPad lets web pages use. Pick the clearest one in the Voice menu. For the most natural voices, watch on a computer in Microsoft Edge.';
+    return { great: 'Sounds great. You\'re all set.', okay: 'Sounds okay. A Premium, Enhanced, or Natural voice sounds much more like a person.', basic: 'Sounds basic, and it can make lessons hard to enjoy. A better voice takes a few minutes to set up.' }[I.grade];
+  }
   function stepsHtml(os, open) {
     var S = STEPS[os]; if (!S) return '';
     return '<p class="gg-vs-why">' + S.why + '</p><ol>' + S.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' + (S.note ? '<p class="gg-vs-note">' + S.note + '</p>' : '');
@@ -194,7 +201,7 @@
   // Steps for this device first, then every other device behind a tap.
   function helpHtml() {
     var p = platform(), others = Object.keys(STEPS).filter(function (k) { return k !== p.os; });
-    return '<h4>Get a Better Voice</h4><p>Most phones and computers come with free, natural-sounding voices that aren\'t turned on yet. Download one once, and every Grow With Grounded tool uses it, even offline.</p>'
+    return '<h4>Get a Better Voice</h4><p>Many computers and Android phones come with natural-sounding voices that aren\'t turned on yet. Download one once, and every Grow With Grounded tool uses it, even offline. On an iPhone or iPad, pick the clearest voice in the Voice menu, since web pages there can use only Apple\'s built-in voices for now.</p>'
       + '<p><b>On your ' + STEPS[p.os].name + '</b></p>' + stepsHtml(p.os) + (BROWSER_NOTE[p.browser] ? '<p>' + BROWSER_NOTE[p.browser] + '</p>' : '')
       + others.map(function (k) { return '<details class="gg-vs-more"><summary>' + STEPS[k].name + '</summary>' + stepsHtml(k) + '</details>'; }).join('')
       + '<p>Voices marked \"uses internet\" read the words through that company\'s servers, so Grow With Grounded never picks them for you.</p>';
@@ -225,13 +232,13 @@
     var prev = document.activeElement;
     function paint() {
       var I = voiceInfo(), col = { great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' }[I.grade];
-      var said = { great: 'Sounds great. You\'re all set.', okay: 'Sounds okay. A Premium, Enhanced, or Natural voice sounds much more like a person.', basic: 'Sounds basic, and it can make lessons hard to enjoy. A better voice is free and takes a few minutes.', none: 'No voice found yet. If you just downloaded one, fully close your browser and open this page again.' }[I.grade];
+      var said = saidText(I), ios = p.os === 'ios';
       wrap.innerHTML = '<div class="gg-vc-box"><h2 tabindex="-1">Voice Check</h2>'
         + '<p>Lessons, videos, and Read Aloud use your device\'s own voice. A good voice makes them a joy to listen to; a basic one can sound robotic. Let\'s check yours.</p>'
         + '<p style="font-size:15px;opacity:.85">You\'re on ' + p.label + '.</p>'
         + '<div class="gg-vc-now"><span class="gg-vc-dot" style="background:' + col + '"></span><span><b>' + (I.name ? 'Your voice: ' + I.name : 'Your voice') + '</b><small>' + said + '</small></span></div>'
-        + '<div class="gg-vc-row"><button type="button" data-v="sample">Play a Sample</button>' + (I.grade !== 'great' ? '<button type="button" data-v="again">I Added a Voice, Check Again</button>' : '') + '</div>'
-        + (I.grade !== 'great' ? '<details class="gg-vc-steps"' + (I.grade !== 'great' ? ' open' : '') + '><summary>Set Up a Better Voice on Your ' + STEPS[p.os].name + '</summary>' + stepsHtml(p.os) + (BROWSER_NOTE[p.browser] ? '<p>' + BROWSER_NOTE[p.browser] + '</p>' : '') + '</details>' : '')
+        + '<div class="gg-vc-row"><button type="button" data-v="sample">Play a Sample</button>' + (I.grade !== 'great' && !ios ? '<button type="button" data-v="again">I Added a Voice, Check Again</button>' : '') + '</div>'
+        + (I.grade !== 'great' ? '<details class="gg-vc-steps"' + (I.grade !== 'great' ? ' open' : '') + '><summary>' + (ios ? 'Voices on Your iPhone or iPad' : 'Set Up a Better Voice on Your ' + STEPS[p.os].name) + '</summary>' + stepsHtml(p.os) + (BROWSER_NOTE[p.browser] ? '<p>' + BROWSER_NOTE[p.browser] + '</p>' : '') + '</details>' : '')
         + '<p style="font-size:15px">Other devices, a video, and a printable guide: <a href="/voice-setup.html" target="_blank" rel="noopener">Voice Setup</a>.</p>'
         + '<div class="gg-vc-row"><button type="button" class="pri" data-v="go">' + (I.grade === 'great' ? 'Continue' : 'Continue Anyway') + '</button></div></div>';
     }
@@ -346,7 +353,7 @@
     return bar;
   }
   function isOn(key) { try { return localStorage.getItem(key || 'gg_read_on') === '1'; } catch (e) { return false; } }
-  window.GGRead = { setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, check: check, ensure: ensure, checked: checked, voiceInfo: voiceInfo, platform: platform, steps: STEPS, stepsHtml: stepsHtml, helpHtml: helpHtml, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
+  window.GGRead = { saidText: saidText, setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, check: check, ensure: ensure, checked: checked, voiceInfo: voiceInfo, platform: platform, steps: STEPS, stepsHtml: stepsHtml, helpHtml: helpHtml, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
 
   /* Practice steps: any "Show me how" or "Learn more" box gets its own Read aloud button when it opens. */
   document.addEventListener('toggle', function (e) {
