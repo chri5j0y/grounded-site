@@ -2,9 +2,9 @@
    OAK . When Life Changes videos (GWG BLD 719, October 2026)
    Two narrated videos for each Oak guide: For You (the person facing it) and For the Helper
    (the person walking beside them). Played by shared/gg-learn.js, which loads this file the
-   first time Oak's Learn opens. So far: Inside Me and Loss and Grief (BLD 719), Health and the End of Life (BLD 720): 32 guides, 64 videos.
+   first time Oak's Learn opens. So far: Inside Me and Loss and Grief (BLD 719), Health and the End of Life (BLD 720), Relationships and Family and Safety (BLD 721): 49 guides, 98 videos.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
-   the same as shared/learn-lessons.js. Generated from patches/bld720/source (and bld719/source for the first two rings) in grounded-workshop:
+   the same as shared/learn-lessons.js. Generated from patches/bld721/source (bld719 and bld720 source for the earlier rings) in grounded-workshop:
    edit the data there and rebuild. Proofreading lines are in the Founder library.
    ===================================================================== */
 (function(){
@@ -24,6 +24,14 @@ window.GG_LEARN_GUIDES.oak = {
 [
 "health",
 "Health and the End of Life"
+],
+[
+"family",
+"Relationships and Family"
+],
+[
+"safety",
+"Safety"
 ]
 ],
 "guides": [
@@ -7552,6 +7560,3733 @@ window.GG_LEARN_GUIDES.oak = {
 "say": "Lead with love, protect what you need to, and keep the door to help open. The full guide has more, whenever you want it."
 }
 ]
+}
+},
+{
+"id": "divorce",
+"ring": "family",
+"title": "Divorce or a Breakup",
+"you": {
+"id": "ok-g-divorce-you",
+"guide": "divorce",
+"side": "you",
+"title": "Divorce or a Breakup",
+"sideName": "For You",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Divorce or a Breakup",
+"sub": "For You",
+"say": "If your marriage or relationship has ended, or is ending, this is for you. Whether you chose it, they did, or it simply came apart, you belong here."
+},
+{
+"k": "big",
+"h": "This is a real loss.",
+"sub": "Even if it was the right choice.",
+"say": "The end of a relationship is a real loss, even if it was the right choice. You may be losing a partner, a home, a daily rhythm, and a future you pictured. Sometimes friends or family go with it too. It makes sense that this hurts."
+},
+{
+"k": "words",
+"h": "It can all show up together",
+"items": [
+"Grief",
+"Anger",
+"Relief",
+"Fear",
+"A strange freedom"
+],
+"say": "Grief, anger, relief, and fear can all show up together, sometimes in the same hour. You may second-guess everything, feel angry at them or at yourself, and find the evenings lonely. There may even be a strange mix of freedom and loss. None of it means you're doing this wrong."
+},
+{
+"k": "points",
+"h": "For the first hard weeks",
+"items": [
+[
+"Lean on friends",
+"Say yes when they call"
+],
+[
+"Get good advice",
+"Legal and financial, early"
+],
+[
+"Keep routines steady",
+"Meals, sleep, mornings"
+]
+],
+"say": "For the first hard weeks, lean on friends. Say yes when they call, and tell them plainly: we're separating, and I could use some company and patience right now. Get good legal and financial advice early, so fear doesn't make the big decisions. And keep your routines steady. Meals, sleep, and mornings are small anchors."
+},
+{
+"k": "card",
+"title": "Keep the kids out of the middle.",
+"body": "Let them love both parents. Keep adult details between adults.",
+"say": "If you have kids, keep them out of the middle. Let them love both parents. Carry adult messages yourself, and keep the adult details between adults. Keep their routines as steady as you can. Kids often wonder if it's their fault, so tell them plainly that it isn't, and tell them more than once."
+},
+{
+"k": "words",
+"h": "Something to tell yourself",
+"items": [
+"This ending doesn't define my worth.",
+"I can grieve and grow at the same time."
+],
+"sub": "Out loud, or quietly.",
+"say": "Here are two things you can tell yourself. This ending doesn't define my worth. I can grieve and grow at the same time. Pick the one you need most, and say it now, out loud or quietly.",
+"beats": [
+"Here are two things you can tell yourself.",
+"This ending doesn't define my worth.",
+"I can grieve and grow at the same time.",
+{
+"t": "Pick the one you need most, and say it now, out loud or quietly.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Rebuild slowly",
+"items": [
+[
+"Your routines",
+"Small anchors for each day"
+],
+[
+"Your friendships",
+"Old ones and new ones"
+],
+[
+"Your interests",
+"The things you set aside"
+],
+[
+"Your support",
+"A counselor or a group"
+]
+],
+"say": "Then rebuild slowly. Your routines. Your friendships, old ones and new ones. The interests you set aside along the way. And your support: counseling can help you sort through what happened, and a divorce support group can remind you that you aren't the only one. If your faith community feels uncertain right now, you still belong."
+},
+{
+"k": "big",
+"h": "If it gets very dark",
+"sub": "Call or text 988. Danger right now: 911.",
+"say": "If the sadness turns very deep, or you have thoughts of ending your life, call or text 988, any time. If home isn't safe for you or your kids, Oak's guide When Home Isn't Safe can help you take the next step. If you are in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "You are more than this ending.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "This chapter ended. You didn't. You are more than this ending. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-divorce-helper",
+"guide": "divorce",
+"side": "helper",
+"title": "Divorce or a Breakup",
+"sideName": "For the Helper",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Divorce or a Breakup",
+"sub": "For the Helper",
+"say": "When someone you care about is going through a divorce or a breakup, this is for you. You don't need the right words. You need to keep showing up."
+},
+{
+"k": "big",
+"h": "They may be tired of the story.",
+"sub": "You need the person, not the details.",
+"say": "They may feel judged or embarrassed. They may be worn out from telling the story again and again. You don't need the details. You need the person."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"I'm sorry. How are you really doing?",
+"You don't have to explain anything to me.",
+"Want to grab dinner Thursday?"
+],
+"say": "Here are words that help. I'm sorry. How are you really doing? You don't have to explain anything to me. And a plain invitation: want to grab dinner Thursday? Keep inviting them, even after a no."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Trashing the ex",
+"Especially near the kids"
+],
+[
+"\"I never liked him anyway\"",
+"It reopens the wound"
+],
+[
+"Taking over their story",
+"It is still theirs to tell"
+]
+],
+"say": "Some things are better left out. Trashing the ex, especially anywhere near the kids. Lines like, I never liked him anyway. It can leave them feeling foolish for every year they spent. And taking over their story. Let them tell it, and let them change their mind about how they feel."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Invitations",
+"Keep them coming"
+],
+[
+"Moves and boxes",
+"Practical help counts"
+],
+[
+"The lonely hours",
+"Evenings and weekends"
+],
+[
+"Their kids",
+"A steady, kind adult"
+]
+],
+"say": "What helps is often practical. Keep the invitations coming. Help with the move, the boxes, the new apartment. Check in during the lonely hours, like evenings and the weekends without the kids. And if there are kids, be a steady, kind adult who speaks well of both parents."
+},
+{
+"k": "big",
+"h": "Who could you invite this week?",
+"say": "Take a moment. Think of the person going through this. Picture one place you could invite them this week. Send that text today.",
+"beats": [
+"Take a moment.",
+"Think of the person going through this.",
+"Picture one place you could invite them this week.",
+{
+"t": "Send that text today.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to help them reach out",
+"body": "Deep depression or thoughts of suicide: 988. Not safe at home: When Home Isn't Safe. Danger now: 911.",
+"say": "Watch, gently, for sadness that gets very deep or doesn't lift. You can help them find a counselor or a support group. If they talk about not wanting to live, help them call or text 988. If home isn't safe, Oak's guide When Home Isn't Safe has next steps. If there is danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Stay steady. Look after you.",
+"sub": "Their ending may stir your own.",
+"say": "If you're close to both people, you don't have to choose sides in front of them. Stay supportive without taking over. And notice what this stirs in you, about your own relationship or an old breakup. Talk with someone you trust."
+},
+{
+"k": "big",
+"h": "Keep inviting them.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Keep inviting them, long after the papers are signed. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "marriage-strain",
+"ring": "family",
+"title": "When Your Marriage Is Struggling",
+"you": {
+"id": "ok-g-marriage-strain-you",
+"guide": "marriage-strain",
+"side": "you",
+"title": "When Your Marriage Is Struggling",
+"sideName": "For You",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Your Marriage Is Struggling",
+"sub": "For You",
+"say": "If your marriage is struggling, this is for you. Maybe you're stuck in the same argument, lonely inside the relationship, or quietly drifting apart. You belong here."
+},
+{
+"k": "big",
+"h": "Every long relationship has hard seasons.",
+"sub": "A hard season is part of the story, not the end of it.",
+"say": "Every long relationship has hard seasons. A new baby, an illness, money worries, a loss, or just years of busy days can pull two people apart. A hard season is part of the story. It doesn't have to be the end of it."
+},
+{
+"k": "points",
+"h": "How it can feel",
+"items": [
+[
+"The same argument",
+"Again and again"
+],
+[
+"Lonely together",
+"Side by side, far apart"
+],
+[
+"Drifting",
+"More like roommates"
+]
+],
+"say": "It can feel like the same argument, again and again, about the dishes, the money, or the kids, when it's really about something deeper. It can feel lonely, even sitting side by side. Or it can feel like quiet drifting, more like roommates than partners."
+},
+{
+"k": "big",
+"h": "Repair matters more than never fighting.",
+"sub": "A small repair counts.",
+"say": "Every couple fights. What matters more is repair: coming back afterward, owning your part, and trying again. A small repair counts. I was short with you, and I'm sorry. Can we start over?"
+},
+{
+"k": "flow",
+"h": "When you talk",
+"steps": [
+[
+"Pick a calm time",
+"Not the heat of an argument"
+],
+[
+"Start with your need",
+"Not what they do wrong"
+],
+[
+"Own your part",
+"Even a small one"
+]
+],
+"say": "When you want to talk, pick a calm time, not the heat of an argument. Start with what you need, not with what they do wrong. And own your part, even a small one. It makes room for them to own theirs."
+},
+{
+"k": "words",
+"h": "Turn a complaint into a need",
+"items": [
+"\"You never help.\"",
+"\"I need help with dinner on weeknights.\""
+],
+"sub": "Start with \"I need.\"",
+"say": "Let's try it. Think of one complaint you keep making. Now turn it into a need. Start with, I need. Say it quietly, the way you would want to hear it.",
+"beats": [
+"Let's try it.",
+"Think of one complaint you keep making.",
+"Now turn it into a need.",
+"Start with, I need.",
+{
+"t": "Say it quietly, the way you would want to hear it.",
+"w": 12
+}
+]
+},
+{
+"k": "points",
+"h": "Small things that help",
+"items": [
+[
+"Time together",
+"No screens, no logistics"
+],
+[
+"Daily kindnesses",
+"A coffee, a thank you"
+],
+[
+"Help, early",
+"A couples counselor"
+]
+],
+"say": "Small things help. Regular time together, without screens or logistics. Small daily kindnesses, like a coffee made the way they like it, or a thank you. And help, early. Couples counseling works best before things are broken. You could say, I miss us. Can we find a counselor and work on this together?"
+},
+{
+"k": "words",
+"h": "Something to tell yourself",
+"items": [
+"We can both be hurting and still choose to work on this."
+],
+"say": "Here's something you can tell yourself. We can both be hurting, and still choose to work on this."
+},
+{
+"k": "big",
+"h": "Safety comes first.",
+"sub": "Abuse, threats, or fear: When Home Isn't Safe. Danger now: 911.",
+"say": "A hard season is different from harm. If there is abuse, threats, or you feel afraid, safety comes first. Oak's guide When Home Isn't Safe can help you take the next step. If you are in danger right now, call 911. If you have thoughts of ending your life, call or text 988."
+},
+{
+"k": "big",
+"h": "Hard seasons can turn.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Hard seasons can turn, one repair at a time. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-marriage-strain-helper",
+"guide": "marriage-strain",
+"side": "helper",
+"title": "When Your Marriage Is Struggling",
+"sideName": "For the Helper",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Your Marriage Is Struggling",
+"sub": "For the Helper",
+"say": "When a friend or family member tells you their marriage is struggling, this is for you. They chose to trust you with something tender."
+},
+{
+"k": "big",
+"h": "They may want to vent, not be told what to do.",
+"say": "They may feel embarrassed to say it out loud. Often they want to vent, and to be heard, without being told what to do. Sometimes saying it out loud to someone safe is the first step. Your steady listening is the gift."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"That sounds really hard.",
+"I'm glad you told me.",
+"What would help this week?"
+],
+"say": "Here are words that help. That sounds really hard. I'm glad you told me. And, what would help this week?"
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Taking sides",
+"You are hearing one side"
+],
+[
+"Sharing their struggle",
+"Keep their confidence"
+],
+[
+"Quick verdicts",
+"\"Just leave,\" or \"just try harder\""
+]
+],
+"say": "Some things are better left out. Taking sides, since you are hearing one side of a long story. Sharing their struggle with others. Keep their confidence. And quick verdicts, like just leave, or just try harder. Those decisions belong to them."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Babysit",
+"For a date or a counseling session"
+],
+[
+"Listen",
+"Without a verdict"
+],
+[
+"Encourage help early",
+"A couples counselor"
+]
+],
+"say": "What helps is often practical. Babysit, so they can have a date or get to counseling. Listen, without handing down a verdict. And gently encourage help early. Couples counseling works best before things are broken. Keep inviting them, as a couple and on their own, the way you always have."
+},
+{
+"k": "big",
+"h": "Offer one specific thing.",
+"say": "Take a moment. Think of the couple you care about. Say one specific offer out loud, like, I can watch the kids Friday night so you two can go out.",
+"beats": [
+"Take a moment.",
+"Think of the couple you care about.",
+{
+"t": "Say one specific offer out loud, like, I can watch the kids Friday night so you two can go out.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If you are worried about safety",
+"body": "Abuse, threats, or fear: When Home Isn't Safe. Danger now: 911.",
+"say": "A hard season is different from harm. If they describe abuse, threats, or being afraid at home, believe them, and stay close. Oak's guide When Home Isn't Safe has the next steps. If there is danger right now, call 911. If they talk about not wanting to live, help them call or text 988."
+},
+{
+"k": "big",
+"h": "Support the person. Stay out of the fight.",
+"sub": "Look after yourself too.",
+"say": "Support the person, and stay out of the fight. You can care about both of them. And if their struggle stirs things in your own relationship, that's human. Talk with someone you trust."
+},
+{
+"k": "big",
+"h": "Steady and kind.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Steady, kind, and on no one's side but theirs. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "betrayal",
+"ring": "family",
+"title": "Betrayal",
+"you": {
+"id": "ok-g-betrayal-you",
+"guide": "betrayal",
+"side": "you",
+"title": "Betrayal",
+"sideName": "For You",
+"mins": 4,
+"sources": [
+"neff"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Betrayal",
+"sub": "For You",
+"say": "If someone you trusted has betrayed you, through an affair, a lie, or something taken from you, this is for you. Go at your own pace."
+},
+{
+"k": "big",
+"h": "Betrayal can feel like trauma.",
+"sub": "Shock, replaying, and a shaken sense of what's real.",
+"say": "Betrayal can feel like trauma. There's the shock. Then the replaying, and a shaken sense of what's real. You may look back over months or years and wonder what was true. That is a normal reaction to a deep injury."
+},
+{
+"k": "words",
+"h": "Sometimes all in an hour",
+"items": [
+"Replaying details",
+"Feeling foolish",
+"Rage",
+"Deep grief"
+],
+"say": "You may replay the details over and over. You may feel foolish, then full of rage, then flooded with grief, sometimes all in one hour. None of it means you're falling apart. It means something mattered, and it was broken."
+},
+{
+"k": "big",
+"h": "You don't have to decide right away.",
+"sub": "Stay or go can wait.",
+"say": "You don't have to decide right away whether to stay or go, or what this relationship will become. Give yourself time before big decisions. Right now, the job is to get through the days."
+},
+{
+"k": "points",
+"h": "Look after your body",
+"items": [
+[
+"Sleep",
+"Even a little, even badly"
+],
+[
+"Eat",
+"Something simple, on a schedule"
+],
+[
+"Move",
+"A walk to clear your head"
+],
+[
+"See a doctor",
+"If you need medical care"
+]
+],
+"say": "Look after your body, even when you can't think straight. Sleep, even a little. Eat something simple, on a schedule. Take a walk to clear your head. And if you need medical care, or the betrayal raises health questions, see your doctor."
+},
+{
+"k": "points",
+"h": "First steps",
+"items": [
+[
+"Tell one trusted person",
+"Not everyone"
+],
+[
+"Set limits",
+"On what you seek out and see"
+],
+[
+"Find a counselor",
+"One who works with betrayal"
+]
+],
+"say": "A few first steps help. Tell one trusted person, not everyone. You can say, something painful happened, and I need a friend who won't judge either way. Set limits on what you seek out and see. Checking, searching, and rereading can keep the wound open. And find a counselor who works with betrayal."
+},
+{
+"k": "words",
+"h": "Something to tell yourself",
+"items": [
+"Their choice is not a measure of my worth."
+],
+"sub": "Quietly, or out loud.",
+"say": "Put a hand on your chest, if that feels right. Take one slow breath. Speak to yourself the way you would to a friend this happened to. Now say it, quietly or out loud: their choice is not a measure of my worth.",
+"beats": [
+"Put a hand on your chest, if that feels right.",
+"Take one slow breath.",
+"Speak to yourself the way you would to a friend this happened to.",
+{
+"t": "Now say it, quietly or out loud: their choice is not a measure of my worth.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Forgiveness is not the same as trust.",
+"body": "Forgiveness, if it comes, takes time. Trust is rebuilt by actions.",
+"say": "Forgiveness, if it comes, takes time, and it isn't the same as trust. You can forgive someone and still need time, or distance, or proof. Trust is rebuilt slowly, by actions. Neither one needs to be rushed."
+},
+{
+"k": "big",
+"h": "If it gets very dark",
+"sub": "Call or text 988. Danger right now: 911.",
+"say": "Betrayal can bring very dark thoughts. If you have thoughts of harming yourself or someone else, call or text 988, any time. If what you've found comes with threats, control, or fear at home, Oak's guide When Home Isn't Safe can help. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "What they did does not define you.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "What they did does not define you. You can heal from this, at your own pace. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-betrayal-helper",
+"guide": "betrayal",
+"side": "helper",
+"title": "Betrayal",
+"sideName": "For the Helper",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Betrayal",
+"sub": "For the Helper",
+"say": "When someone you care about has been betrayed, by a partner, a friend, or family, this is for you. They trusted you with something painful."
+},
+{
+"k": "big",
+"h": "They may flip between staying and leaving.",
+"sub": "Some days, some hours.",
+"say": "They may flip between wanting to leave and wanting to stay, from one day to the next, even one hour to the next. They may replay the same details every time you talk. That's normal. Their decision is theirs, and it may take a long time."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"That's devastating. I'm here, whatever you decide.",
+"You don't have to figure it out today.",
+"I'll keep this between us."
+],
+"say": "Here are words that help. That's devastating. I'm here, whatever you decide. You don't have to figure it out today. And, I'll keep this between us."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Telling them what to do",
+"Stay or go is theirs"
+],
+[
+"Spreading the news",
+"Their story, their timing"
+],
+[
+"Tearing down the other person",
+"They may still love them"
+]
+],
+"say": "Some things are better left out. Telling them what to do. Stay or go is their choice. Spreading the news, even to people who care. It's their story to tell, in their own time. And tearing down the other person. They may stay, or still love them, and then feel they can't come back to you."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Listen",
+"Even to the same story again"
+],
+[
+"Keep confidences",
+"Every time"
+],
+[
+"Practical help",
+"Meals, kids, a place to stay"
+]
+],
+"say": "What helps is steady and practical. Listen, even to the same story again. Keep their confidences, every time. And help with practical needs: a meal, an afternoon with the kids, a place to stay for a few nights."
+},
+{
+"k": "big",
+"h": "Practice the steady line.",
+"say": "Take a moment. Picture your friend telling you, again, that they still don't know what to do. Say it out loud: I'm here, whatever you decide.",
+"beats": [
+"Take a moment.",
+"Picture your friend telling you, again, that they still don't know what to do.",
+{
+"t": "Say it out loud: I'm here, whatever you decide.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to help them reach out",
+"body": "Thoughts of harm: call or text 988. Threats or fear at home: When Home Isn't Safe. Danger now: 911.",
+"say": "Watch, gently, for sadness that won't lift, or for rage that worries you. Help them find a counselor who works with betrayal. If they talk about harming themselves or someone else, help them call or text 988. If there are threats or fear at home, Oak's guide When Home Isn't Safe has next steps. If there is danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Keep your friendship steady.",
+"sub": "And look after yourself too.",
+"say": "Their decision is theirs. If they choose something you wouldn't, keep your friendship steady anyway. Their hurt may stir your own memories of being let down. Talk about your feelings with someone you trust, and keep their story private while you do."
+},
+{
+"k": "big",
+"h": "I'm here, whatever you decide.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "I'm here, whatever you decide. Those five words can carry a friend a long way. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "infertility",
+"ring": "family",
+"title": "Infertility",
+"you": {
+"id": "ok-g-infertility-you",
+"guide": "infertility",
+"side": "you",
+"title": "Infertility",
+"sideName": "For You",
+"mins": 4,
+"sources": [
+"doka"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Infertility",
+"sub": "For You",
+"say": "If you are trying to have a child, and it isn't happening, this is for you. Months in or years in, in treatment or taking a break, your grief belongs here."
+},
+{
+"k": "big",
+"h": "A real grief, often hidden.",
+"sub": "And it can come back every month.",
+"say": "Infertility is a real grief. It is often hidden, and it can repeat month after month: hope, then waiting, then heartbreak, then hope again. Many people around you may not even know. That doesn't make it smaller. It can make it lonelier."
+},
+{
+"k": "words",
+"h": "All of it makes sense",
+"items": [
+"Hope, then heartbreak",
+"Jealousy, then guilt",
+"Left out",
+"Tired of trying"
+],
+"say": "You may feel hope and heartbreak on the same cycle. Jealousy when someone shares their news, and then guilt for feeling it. Left out, as the people around you build their families. And tired, in body and spirit, from trying. All of it makes sense. It comes from wanting something with your whole heart."
+},
+{
+"k": "points",
+"h": "Protect your heart",
+"items": [
+[
+"You can skip events",
+"Showers, parties, some holidays"
+],
+[
+"You choose what to share",
+"And with whom"
+],
+[
+"You can take breaks",
+"From treatment, from trying"
+]
+],
+"say": "You are allowed to protect your heart. You can skip a baby shower or a party when you need to, and send a kind note instead. You and your partner can decide together what you share, and with whom. And you can take a break, from treatment or from trying, when you need one. Rest is part of the road."
+},
+{
+"k": "card",
+"title": "Partners may cope differently.",
+"body": "One may want to talk. One may want a plan. Both are love.",
+"say": "If you have a partner, the two of you may cope differently. One may want to talk about it every day. The other may want a plan, or a night off from it. One may be ready to stop before the other. Neither of you is doing it wrong. Try asking each other: what is the hardest part for you right now?"
+},
+{
+"k": "big",
+"h": "My worth isn't measured by this.",
+"sub": "Say it softly, in your own voice.",
+"say": "Here is a sentence worth keeping close. My worth isn't measured by this. Say it now, softly, in your own voice. Then say it once more, and let it settle.",
+"beats": [
+"Here is a sentence worth keeping close.",
+"My worth isn't measured by this.",
+"Say it now, softly, in your own voice.",
+{
+"t": "Then say it once more, and let it settle.",
+"w": 10
+}
+]
+},
+{
+"k": "words",
+"h": "Words for the people around you",
+"items": [
+"We're going through infertility.",
+"We'd love support.",
+"Please don't ask for updates."
+],
+"say": "People may ask questions that sting, without meaning to. You can give them words. Try this. We're going through infertility. We'd love support, but please don't ask for updates. You get to decide what your family's path looks like, and who hears about it."
+},
+{
+"k": "card",
+"title": "If the heaviness stays",
+"body": "A counselor who knows fertility can help. Thoughts of harming yourself: call or text 988. Danger right now: 911.",
+"say": "Lean on what steadies you. A support group, or a counselor who focuses on fertility, can carry some of this with you. If the sadness stays heavy for weeks, or strain builds between you and your partner, talk with your doctor or a counselor. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Your heart deserves gentleness.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Whatever your path looks like from here, your heart deserves gentleness today. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-infertility-helper",
+"guide": "infertility",
+"side": "helper",
+"title": "Infertility",
+"sideName": "For the Helper",
+"mins": 4,
+"sources": [
+"doka"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Infertility",
+"sub": "For the Helper",
+"say": "When someone you love is facing infertility, it can be hard to know what to say. This is for anyone walking beside them."
+},
+{
+"k": "big",
+"h": "Their grief is real, and often quiet.",
+"say": "Infertility is a grief that often stays hidden. It can come back every month, with every test and every announcement. Your friend may be hurt by casual questions and well-meant advice. You don't need the right answer. Your gentleness matters more than advice."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I'm sorry. I'm here.\"",
+"\"Talk, or not talk. Either is okay.\"",
+"\"How are you doing, really?\""
+],
+"say": "Here are words that help. I'm sorry. I'm here whenever you want to talk, or not talk. And now and then, how are you doing, really? Then let them choose how much to say."
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"\"Just relax.\"",
+"\"Have you thought about adoption?\"",
+"\"At least you have each other.\""
+],
+"say": "And words to set aside, even when they're meant kindly. Just relax suggests they are causing this. Have you thought about adoption? They almost certainly have, and their path is theirs to choose. And any sentence that starts with at least makes the loss smaller. Asking for updates can hurt too. Let them bring the news, when they want to."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Follow their lead",
+"Their pace, their words"
+],
+[
+"Remember the hard days",
+"Holidays, test days, showers"
+],
+[
+"Ask before you assume",
+"Invitations, plans, news"
+],
+[
+"Keep including them",
+"In all kinds of plans"
+]
+],
+"say": "What helps is often simple. Follow their lead, at their pace, in their words. Remember the hard days: Mother's Day, Father's Day, a test day, a shower they may skip. Ask before you assume, about invitations and plans. And keep including them, in all kinds of plans, so they never feel left out of your life."
+},
+{
+"k": "card",
+"title": "If you are expecting",
+"body": "Tell them privately, first, with room to feel what they feel.",
+"say": "If you are expecting, be thoughtful about how you share. Tell them privately, before a group, or in a message they can read alone. That gives them room to feel what they feel. They can love you and still grieve. Let them set the distance, and keep the door open."
+},
+{
+"k": "big",
+"h": "A note that needs no answer.",
+"say": "Take a moment right now. Think of your friend, and one hard day coming up for them. Maybe a holiday, a test day, or a shower they'll skip. Picture the short note you'll send that day, one that needs no answer.",
+"beats": [
+"Take a moment right now.",
+"Think of your friend, and one hard day coming up for them.",
+"Maybe a holiday, a test day, or a shower they'll skip.",
+{
+"t": "Picture the short note you'll send that day, one that needs no answer.",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "Steady yourself, too.",
+"sub": "Your heart counts too.",
+"say": "Walking beside someone's longing can stir your own: a child you hoped for, or worry about saying the wrong thing. Talk with someone you trust. If your friend ever speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Your gentleness matters.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Your gentleness matters more than any advice. Keep showing up, quietly and kindly. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "estrangement",
+"ring": "family",
+"title": "Estrangement",
+"you": {
+"id": "ok-g-estrangement-you",
+"guide": "estrangement",
+"side": "you",
+"title": "Estrangement",
+"sideName": "For You",
+"mins": 4,
+"sources": [
+"boss"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Estrangement",
+"sub": "For You",
+"say": "If you are estranged from someone in your family, a parent, a child, a sibling, this is for you. Whether you chose the distance or it was chosen for you, your grief belongs here."
+},
+{
+"k": "big",
+"h": "A grief with no funeral.",
+"sub": "Still living, and still missing.",
+"say": "Estrangement is a grief with no funeral. The person is still living, and still missing from your life. There's no card, no casserole, no day when people gather. And the loss can stay open for years, with no clear ending. It makes sense if it's hard to set down."
+},
+{
+"k": "words",
+"h": "All of it can be true",
+"items": [
+"Grief",
+"Guilt",
+"Anger",
+"Relief",
+"Longing"
+],
+"say": "You may feel grief, guilt, anger, relief, or a longing that won't go away. Sometimes all of them in the same afternoon. Relief and longing can live side by side. None of it cancels your love, or your reasons."
+},
+{
+"k": "big",
+"h": "Some distance protects.",
+"sub": "Some distance can be repaired. Both are real.",
+"say": "Some distance protects. Some distance can be repaired. Both are real. You can take your time deciding which one yours is. And you get to choose who hears the story."
+},
+{
+"k": "points",
+"h": "First steps",
+"items": [
+[
+"Name what you're grieving",
+"The person, the hopes, the holidays"
+],
+[
+"Decide what contact is safe",
+"If any, and on what terms"
+],
+[
+"Seek counsel before big steps",
+"Reaching out, or stepping back"
+]
+],
+"say": "Here are a few first steps. Name what you are grieving: the person, the relationship you hoped for, the holidays that used to be. Decide what contact, if any, is safe and healthy for you, and on what terms. And seek counsel before big steps, whether that's reaching out or stepping back."
+},
+{
+"k": "big",
+"h": "I can love someone and still need distance.",
+"sub": "Say it softly, in your own voice.",
+"say": "Here is a sentence many people find steadying. I can love someone and still need distance. Say it now, softly, in your own voice. Say it once more, and notice what it feels like to mean it.",
+"beats": [
+"Here is a sentence many people find steadying.",
+"I can love someone and still need distance.",
+"Say it now, softly, in your own voice.",
+{
+"t": "Say it once more, and notice what it feels like to mean it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Holidays and milestones",
+"body": "\"I'm not in contact with my family right now. Holidays are hard.\"",
+"say": "Holidays, birthdays, weddings, and funerals can hurt most. Plan ahead for them. Decide where you'll be, and who you'll be with. Chosen family counts. And give people simple words: I'm not in contact with my family right now. Holidays are hard."
+},
+{
+"k": "card",
+"title": "If the weight gets heavy",
+"body": "A counselor can help. Thoughts of harming yourself: call or text 988. Danger right now: 911.",
+"say": "Support from others who live with estrangement can help, and so can a counselor. If grief turns into a heaviness that won't lift, talk with your doctor or a counselor. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, including from family, call 911."
+},
+{
+"k": "big",
+"h": "You deserve people who understand.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You deserve people who understand this kind of loss. Let them find you, and let yourself be found. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-estrangement-helper",
+"guide": "estrangement",
+"side": "helper",
+"title": "Estrangement",
+"sideName": "For the Helper",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Estrangement",
+"sub": "For the Helper",
+"say": "When someone you know is estranged from family, it can be hard to know what to say. This is for anyone walking beside them."
+},
+{
+"k": "big",
+"h": "You don't need the whole story.",
+"sub": "To be kind.",
+"say": "People living with estrangement are often judged by those who don't know the full story. Many have been asked to explain, again and again. You don't need the whole story to be kind."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"That sounds painful.\"",
+"\"I'm glad you told me.\"",
+"\"Come spend the holiday with us.\""
+],
+"say": "Here are words that help. That sounds painful. I'm glad you told me. And when the season comes, come spend the holiday with us. Then let them tell as much or as little as they choose."
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"\"But they're family.\"",
+"\"Life is short. Just call them.\"",
+"\"What happened between you?\""
+],
+"say": "And words to set aside. But they're family. They know that better than anyone. Life is short, just call them. It pushes a decision that is theirs to make, and that may not be safe. And what happened between you? Asking for the story can feel like a trial. Let them share what they choose."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Invite them",
+"Holidays, birthdays, Sundays"
+],
+[
+"Remember the hard days",
+"Mother's Day, Father's Day"
+],
+[
+"Respect their choices",
+"About contact and timing"
+],
+[
+"Keep their confidence",
+"Even with shared family"
+]
+],
+"say": "What helps is steady and simple. Invite them, to holidays, birthdays, or an ordinary Sunday dinner. Remember the hard days, like Mother's Day and Father's Day, and check in. Respect their choices about contact and timing. And keep their confidence, even with family you both know."
+},
+{
+"k": "big",
+"h": "An open seat at your table.",
+"say": "Take a moment right now. Think of the next holiday or gathering on your calendar. Picture inviting your friend, and the simple words you'll use.",
+"beats": [
+"Take a moment right now.",
+"Think of the next holiday or gathering on your calendar.",
+{
+"t": "Picture inviting your friend, and the simple words you'll use.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If they ask what you think",
+"body": "Listen first. Their decision, and their timing.",
+"say": "If they ask your opinion about reaching out, listen first. Ask what they hope for, and what they worry about. For big steps, suggest a counselor. The decision is theirs, and so is the timing."
+},
+{
+"k": "big",
+"h": "Steady yourself, too.",
+"sub": "Your own family story counts.",
+"say": "This may stir your own family story. Notice it, and talk with someone you trust. If your friend ever speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Keep a seat open.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You don't need the whole story to be kind. Keep a seat open for them. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "aging-parents",
+"ring": "family",
+"title": "Aging Parents",
+"you": {
+"id": "ok-g-aging-parents-you",
+"guide": "aging-parents",
+"side": "you",
+"title": "Aging Parents",
+"sideName": "For You",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Aging Parents",
+"sub": "For You",
+"say": "If your mom or dad is getting older and needs more help, and you're the one figuring it out, this is for you. Take what helps today, and leave the rest for later."
+},
+{
+"k": "big",
+"h": "The roles are shifting.",
+"sub": "That is emotional for everyone.",
+"say": "The parent who once looked after you may now need you to look after them. Rides, medicines, bills, a fall, a move. Role reversal is emotional for everyone, including your parent. If it feels strange and heavy, that makes sense."
+},
+{
+"k": "words",
+"h": "All of it makes sense",
+"items": [
+"Worry",
+"Frustration, then guilt",
+"Grief for who they were",
+"Exhaustion"
+],
+"say": "You may feel worry about their safety. Frustration, when they won't accept help, and then guilt for feeling it. Grief for the parent they used to be. And exhaustion, from juggling your own work, family, and life. You may be stretched between generations. All of it makes sense."
+},
+{
+"k": "points",
+"h": "First steps",
+"items": [
+[
+"Have the conversation",
+"About their wishes, before a crisis"
+],
+[
+"Know the basics",
+"Doctors, medicines, documents"
+],
+[
+"Call for local help",
+"Your Area Agency on Aging"
+]
+],
+"say": "Here are a few first steps. Have the conversation about their wishes now, before a crisis decides for you. Know their doctors, their medicines, and where their documents are. And call your local Area Agency on Aging. They can point you to services near your parent."
+},
+{
+"k": "big",
+"h": "Their dignity, where it's safe.",
+"sub": "Ask before you decide.",
+"say": "Your parent is still an adult, with a lifetime of choices behind them. Respect their dignity and their choices wherever it's safe. Ask before you decide. Even small choices, like what to wear or when to eat, help them stay themselves."
+},
+{
+"k": "card",
+"title": "Share the load",
+"body": "\"Mom needs more help. Can we meet as a family to plan?\"",
+"say": "You can share this. Spread the load among siblings when you can, even if the shares aren't equal. Try saying: Mom needs more help. Can we meet as a family to plan? A geriatric care manager can help a family build a plan, too."
+},
+{
+"k": "big",
+"h": "I'm doing my best in a hard season.",
+"sub": "Say it softly, in your own voice.",
+"say": "Here is a sentence to keep close. I'm doing my best in a hard season. Say it now, softly, in your own voice. Then take one slow breath, and let it be true.",
+"beats": [
+"Here is a sentence to keep close.",
+"I'm doing my best in a hard season.",
+"Say it now, softly, in your own voice.",
+{
+"t": "Then take one slow breath, and let it be true.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Your own breaks count",
+"body": "Safety worries: their doctor. Harm to a vulnerable adult in Minnesota: MAARC 1-844-880-1574. 988 and 911.",
+"say": "Your own breaks are part of the plan, not a reward for finishing it. If you're worried about your parent's safety at home, talk with their doctor. If you're running on empty, the caregiving guide has more. If you believe your parent is being harmed or taken advantage of, in Minnesota call MAARC at 1-844-880-1574. If you have thoughts of harming yourself, call or text 988. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "You are doing a hard, loving thing.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You are doing a hard, loving thing. Be as patient with yourself as you are trying to be with them. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-aging-parents-helper",
+"guide": "aging-parents",
+"side": "helper",
+"title": "Aging Parents",
+"sideName": "For the Helper",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Aging Parents",
+"sub": "For the Helper",
+"say": "If someone you know is helping an aging parent, this is for you. They may be stretched between generations. Your support counts."
+},
+{
+"k": "big",
+"h": "The sandwich generation needs support too.",
+"say": "Many people helping an aging parent are also raising kids, working, and keeping a household going. They may not ask for help. They may not even notice how tired they are. The sandwich generation needs support too."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"How are you holding up?\"",
+"\"Can I drive her Thursday?\"",
+"\"You're doing a hard thing well.\""
+],
+"say": "Here are words that help. How are you holding up? Then wait for the real answer. Offer something specific: can I drive her to her appointment Thursday? And, you're doing a hard thing well."
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"\"I could never put my mom in a home.\"",
+"\"Why don't you just move her in?\"",
+"\"At least you still have her.\""
+],
+"say": "Some words close the door. I could never put my mom in a home judges a choice made with love and hard facts. Why don't you just move her in? They've likely weighed it many times. And at least you still have her skips past the grief that's already here. Trust that they know things you don't."
+},
+{
+"k": "story",
+"title": "A Betrayal of the Mind",
+"lines": [
+"A woman in memory care told anyone who would listen that her children had stolen everything and dumped her there.",
+"They had tried home health, day programs, and live-in help first. They visited almost every day.",
+"Her accusations were symptoms of the illness, not their failure."
+],
+"lesson": "You may not see the whole story.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "Our hospice team had a patient in memory care who told anyone who would listen that her children had stolen everything she owned and dumped her there. The chart told a different story. She'd been found outside, lost, more than once. Her family had tried home health, day programs, and live-in help first. They visited almost every day. My team and I sat with them. Her accusations were symptoms of the illness, not their failure as children."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Rides, visits, research",
+"Offer one, specifically"
+],
+[
+"Visit their parent",
+"A familiar face matters"
+],
+[
+"Give them a break",
+"Stay so they can go"
+]
+],
+"say": "What helps is often practical. Offer rides, visits, or research, and name one specifically. Visit their parent, too. And give them a break. Stay for an afternoon so they can nap, see a friend, or just sit somewhere quiet alone."
+},
+{
+"k": "big",
+"h": "Offer one specific thing.",
+"say": "Take a moment right now. Think of someone you know who is helping an aging parent. Picture one specific thing you could offer them this week, and the words you'll use.",
+"beats": [
+"Take a moment right now.",
+"Think of someone you know who is helping an aging parent.",
+{
+"t": "Picture one specific thing you could offer them this week, and the words you'll use.",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "Steady yourself, too.",
+"sub": "Your own parents count too.",
+"say": "This may stir thoughts about your own parents, or your own aging. That's natural. Talk with someone you trust. If you worry an older adult is being harmed or taken advantage of, in Minnesota call MAARC at 1-844-880-1574. If your friend speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Ask, and then help.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "How are you holding up? Ask it, mean it, and then help. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "empty-nest",
+"ring": "family",
+"title": "Empty Nest and Big Life Transitions",
+"you": {
+"id": "ok-g-empty-nest-you",
+"guide": "empty-nest",
+"side": "you",
+"title": "Empty Nest and Big Life Transitions",
+"sideName": "For You",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Empty Nest and Big Life Transitions",
+"sub": "For You",
+"say": "If your kids have left home, or a big season of your life has just ended, this is for you. A child off to college, a last one moving out, a retirement, a move. Even good changes can ache."
+},
+{
+"k": "big",
+"h": "Even good changes hold loss.",
+"sub": "Pride and missing them, together.",
+"say": "Transitions include loss, even the ones you hoped for. You can be proud of your child and miss them terribly in the same breath. You can be glad to retire and still miss the work. Both are true, and both belong."
+},
+{
+"k": "points",
+"h": "What you may notice",
+"items": [
+[
+"A quiet house",
+"Hardest at the old times"
+],
+[
+"A shift in purpose",
+"Who am I now?"
+],
+[
+"Your partnership",
+"Closer, or more distant"
+],
+[
+"Mixed feelings",
+"Pride, relief, and grief"
+]
+],
+"say": "You may notice a quiet house, and it may land hardest at the old times: dinner, the drive home, bedtime. You may feel your sense of purpose shift, and wonder who you are now. If you have a partner, you may find each other again, or notice how much distance the busy years covered. And you may feel pride, relief, and grief all at once. All of it is normal."
+},
+{
+"k": "big",
+"h": "My purpose is changing, not ending.",
+"sub": "Say it in your own voice.",
+"say": "Here is a sentence worth trying on. My purpose is changing, not ending. Say it softly, out loud. Then say it once more, slowly, and notice how it lands.",
+"beats": [
+"Here is a sentence worth trying on.",
+"My purpose is changing, not ending.",
+"Say it softly, out loud.",
+{
+"t": "Then say it once more, slowly, and notice how it lands.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Mark the change.",
+"body": "A trip, a dinner, a letter to the season you are leaving.",
+"say": "Let yourself grieve the season that ended. It can help to mark it. Take a trip, plan a special dinner, or write a letter to the season you're leaving. Many traditions mark thresholds like this with a blessing, if that fits you. An ending that is marked is easier to step past."
+},
+{
+"k": "points",
+"h": "Small steps into what is next",
+"items": [
+[
+"Try one new thing",
+"A class, a craft, a trail"
+],
+[
+"Reconnect with friends",
+"The ones you lost track of"
+],
+[
+"Volunteer, learn, create",
+"Purpose often grows from giving"
+],
+[
+"Talk with your partner",
+"Honestly, about this season"
+]
+],
+"say": "Then take small steps into what is next. Try one new thing: a class, a craft, a trail you have never walked. Reconnect with friends you lost track of during the busy years. Volunteer, learn, or create something. Purpose often grows from giving. And if you have a partner, talk honestly about this season, and what you each want from it."
+},
+{
+"k": "words",
+"h": "A line for the people around you",
+"items": [
+"The house is so quiet.",
+"Want to get dinner this week?"
+],
+"say": "People may not guess that you're struggling, especially when it looks like a happy milestone. You can tell them, simply. Try this. The house is so quiet. Want to get dinner this week?"
+},
+{
+"k": "card",
+"title": "If the sadness stays",
+"body": "Sadness that lasts or deepens: talk with your doctor or a counselor. Thoughts of ending your life: call or text 988. Danger right now: 911.",
+"say": "Sometimes a transition turns into lasting sadness. If the low days stretch into weeks, talk with your doctor or a counselor. That is a strong step, and it helps. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "A new season can be full of meaning.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Grieve the season that ended, and give the next one time. A new season can be full of meaning, even if you can't see its shape yet. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-empty-nest-helper",
+"guide": "empty-nest",
+"side": "helper",
+"title": "Empty Nest and Big Life Transitions",
+"sideName": "For the Helper",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Empty Nest and Big Life Transitions",
+"sub": "For the Helper",
+"say": "When someone you love is facing an empty nest, or another big life transition, this is for you. They may not want to admit how much it hurts."
+},
+{
+"k": "big",
+"h": "Celebrate and grieve with them.",
+"say": "Most people will only see the celebration: the graduation, the move-in day, the retirement party. Your part is to hold both. Celebrate with them, and make room for the grief that comes with every ending."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"That's a big change. How's it going?",
+"What do you miss most?",
+"What are you curious about now?"
+],
+"say": "Here are words that help. That's a big change. How's it going? What do you miss most? And later, when they're ready, what are you curious about now?"
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"Now you can finally do whatever you want!",
+"At least they're doing well.",
+"You'll get used to it."
+],
+"say": "Some words close the door, even when they're meant kindly. Now you can finally do whatever you want skips right past the loss. At least they're doing well is true, and still not the point. And you'll get used to it rushes something that takes months. Listening first goes further."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Invite them into new things",
+"A class, a walk, a project"
+],
+[
+"Make a real plan",
+"Dinner Thursday, not someday"
+],
+[
+"Remember the hard days",
+"Move-in day, the first holiday"
+],
+[
+"Keep inviting",
+"Even after a no"
+]
+],
+"say": "What helps most is often simple. Invite them into new things: a class, a walk, a project you could do together. Make a real plan, like dinner on Thursday, instead of someday. Remember the hard days, like move-in day or the first holiday when the kids come and go again. And keep inviting, even after a no."
+},
+{
+"k": "big",
+"h": "Whose season just changed?",
+"say": "Take a moment. Think of someone you know whose house just got quieter, or whose season just changed. Picture one thing you could invite them to this week.",
+"beats": [
+"Take a moment.",
+"Think of someone you know whose house just got quieter, or whose season just changed.",
+{
+"t": "Picture one thing you could invite them to this week.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Staying steady",
+"items": [
+[
+"You can't hurry it",
+"New seasons take months"
+],
+[
+"Notice what it stirs",
+"Your own changes may wake"
+],
+[
+"Steady beats big",
+"Small, regular contact"
+]
+],
+"say": "Stay steady by remembering a few things. You can't hurry a transition. New seasons take months to feel like home. Notice what it stirs in you, because your own changes may wake up too. And steady beats big. Small, regular contact helps more than one grand gesture."
+},
+{
+"k": "card",
+"title": "If you are worried",
+"body": "Lasting sadness: their doctor or a counselor. Talk of not wanting to live: call or text 988. Danger right now: 911.",
+"say": "If the sadness lasts for weeks, or they seem to lose interest in everything, gently encourage them to talk with their doctor or a counselor. If you hear talk of not wanting to live, call or text 988, together if you can. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Celebrate and grieve with them.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Celebrate and grieve with them, and keep showing up while the new season takes shape. You don't need the right words. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "struggling-child",
+"ring": "family",
+"title": "Parenting a Struggling Child",
+"you": {
+"id": "ok-g-struggling-child-you",
+"guide": "struggling-child",
+"side": "you",
+"title": "Parenting a Struggling Child",
+"sideName": "For You",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Parenting a Struggling Child",
+"sub": "For You",
+"say": "If you are parenting a child who is struggling, this is for you. A teen who is depressed or angry, a child in trouble at school, a grown son or daughter caught in something hard. Whatever their age, your worry is real."
+},
+{
+"k": "big",
+"h": "Their struggle is not proof you failed.",
+"sub": "Many loving parents walk this road.",
+"say": "Start with this. Your child's struggle is not proof that you failed. Many loving, careful parents walk this road. Blame, from yourself or anyone else, won't help your child. Your steadiness will."
+},
+{
+"k": "points",
+"h": "What you may feel",
+"items": [
+[
+"Scared",
+"For their safety and their future"
+],
+[
+"Helpless",
+"Nothing you try seems to work"
+],
+[
+"Judged",
+"By other parents, or by yourself"
+],
+[
+"Grief",
+"For the family life you imagined"
+]
+],
+"say": "You may feel scared, for their safety and their future. Helpless, because nothing you try seems to work. Judged, by other parents, or by the voice in your own head. And exhausted. You may even grieve the family life you imagined. That grief is real, and it makes sense."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Connection over control",
+"Stay close, even when pushed away"
+],
+[
+"Loving, steady limits",
+"Clear and consistent"
+],
+[
+"Help for them",
+"Their doctor, the school counselor"
+],
+[
+"Help for you",
+"A parent group, your own counselor"
+]
+],
+"say": "A few things help. Connection over control. Stay connected, even when they push you away: a short text, a ride, a meal together. Loving limits, clear and consistent. Help for them: talk with their doctor or the school counselor. And help for you: a parent support group, or a counselor of your own."
+},
+{
+"k": "card",
+"title": "If you are worried about safety, ask.",
+"body": "Talk of suicide: call or text 988 now. Safety threats or danger right now: 911.",
+"say": "If you're worried about their safety, ask them directly, in plain words. Are you thinking about ending your life? If your child talks about suicide, call or text 988 now, together if you can. If there are safety threats, or anyone is in danger right now, call 911."
+},
+{
+"k": "card",
+"title": "When your child is grown",
+"body": "You choose what you give, what you allow, and what you protect.",
+"say": "If your child is grown, the road can look different. An adult makes their own choices. You still choose what you give, what you allow in your home, and what you protect. Loving them and protecting yourself can go together."
+},
+{
+"k": "big",
+"h": "I can love them well and still not fix this alone.",
+"sub": "Say it softly, out loud.",
+"say": "Here is a sentence to carry. I can love them well, and still not fix this alone. Say it softly, out loud. Now say it once more, and let your shoulders drop.",
+"beats": [
+"Here is a sentence to carry.",
+"I can love them well, and still not fix this alone.",
+"Say it softly, out loud.",
+{
+"t": "Now say it once more, and let your shoulders drop.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Tend the rest of the family",
+"items": [
+[
+"Your partner",
+"Keep talking, as a team"
+],
+[
+"Your other kids",
+"They need you too"
+],
+[
+"Yourself",
+"Sleep, food, a walk"
+]
+],
+"say": "Tend the rest of the family, too. If you have a partner, keep talking, and try to stay on the same team. Your other kids need you, even when one child takes most of your energy. And you need sleep, food, and a walk. You can't stay steady on empty."
+},
+{
+"k": "words",
+"h": "Asking for support",
+"items": [
+"We're going through a hard stretch with our son.",
+"Please keep us in your thoughts."
+],
+"say": "You don't have to share the whole story to get support. Try this. We're going through a hard stretch with our son. Please keep us in your thoughts. Your child's story stays theirs, and you still get to lean on people."
+},
+{
+"k": "big",
+"h": "Stay close. Get help. Keep going.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Stay close, get help for them and for you, and keep going. You are a good parent in a hard season. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-struggling-child-helper",
+"guide": "struggling-child",
+"side": "helper",
+"title": "Parenting a Struggling Child",
+"sideName": "For the Helper",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Parenting a Struggling Child",
+"sub": "For the Helper",
+"say": "When someone you love is parenting a struggling child, this is for you. The child might be six, sixteen, or forty. Their parent may feel judged by other parents, and very alone."
+},
+{
+"k": "big",
+"h": "A good parent in a hard season.",
+"say": "The parent you know may be quietly sure this is their fault. Your steadiness can help. Remind them of what is true: they are a good parent in a hard season."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"You're a good parent in a hard season.",
+"How are you holding up?",
+"I'm not going anywhere."
+],
+"say": "Here are words that help. You're a good parent in a hard season. How are you holding up? And, I'm not going anywhere."
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"What they need is more discipline.",
+"Have you tried...?",
+"My kid would never."
+],
+"say": "Some words close the door. Blame, even gentle blame, like what they need is more discipline. Quick fixes, like have you tried this one thing? And comparisons with your own kids. The parent has likely heard them all, and each one lands as judgment. Listening goes further."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Rides",
+"To appointments, to school"
+],
+[
+"Meals",
+"On the hardest weeks"
+],
+[
+"A listening ear",
+"Without advice"
+],
+[
+"Time with their other kids",
+"A fun afternoon"
+]
+],
+"say": "What helps is often practical. Offer rides to appointments or school. Bring a meal on the hardest weeks. Offer a listening ear, without advice. And give their other kids a fun afternoon, so the whole family gets a breath."
+},
+{
+"k": "card",
+"title": "Keep their child's story private.",
+"body": "The story belongs to the child. Share only what the family shares, with their okay.",
+"say": "Keep their child's story private. It belongs to the child, and the family. Share nothing without asking. When others ask you for news, you can say, they're in a hard stretch, and I'm walking with them."
+},
+{
+"k": "big",
+"h": "Who is carrying this quietly?",
+"say": "Take a moment. Think of one parent you know who is in a hard stretch with a child. Picture one practical thing you could offer them this week.",
+"beats": [
+"Take a moment.",
+"Think of one parent you know who is in a hard stretch with a child.",
+{
+"t": "Picture one practical thing you could offer them this week.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Staying steady",
+"items": [
+[
+"You can't fix it",
+"Steady company is the gift"
+],
+[
+"It may be long",
+"Pace yourself"
+],
+[
+"Notice what it stirs",
+"Your own kids, your own past"
+]
+],
+"say": "Stay steady by remembering a few things. You can't fix this, and you don't need to. Steady company is the gift. This may be a long road, so pace yourself. And notice what it stirs in you, about your own kids or your own growing up. Talk with someone you trust, too."
+},
+{
+"k": "card",
+"title": "If you are worried",
+"body": "A child who talks about suicide: call or text 988 now. Danger right now: 911. Harm to a vulnerable adult in Minnesota: MAARC, 1-844-880-1574.",
+"say": "If you hear that their child is talking about suicide, encourage them to call or text 988 now. If anyone is in danger right now, call 911. And if a grown child is harming or taking from a vulnerable adult in Minnesota, you can call MAARC at 1 844 880 1574."
+},
+{
+"k": "big",
+"h": "Steady company is the gift.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You don't need answers. Keep showing up, keep their story private, and keep reminding them who they are. Steady company is the gift. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "newparent",
+"ring": "family",
+"title": "Becoming a Parent",
+"you": {
+"id": "ok-g-newparent-you",
+"guide": "newparent",
+"side": "you",
+"title": "Becoming a Parent",
+"sideName": "For You",
+"mins": 4,
+"sources": [
+"neff"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Becoming a Parent",
+"sub": "For You",
+"say": "If you've just become a parent, by birth, adoption, or any road, this is for you. And if you're the other parent in the house, this is for you too."
+},
+{
+"k": "big",
+"h": "Joy and struggle can arrive together.",
+"say": "Becoming a parent changes everything. It's normal to feel joy and struggle at the same time. Love and exhaustion often arrive in the same hour. Feeling both means you're a new parent, doing something very big."
+},
+{
+"k": "points",
+"h": "You may feel",
+"items": [
+[
+"Overwhelmed",
+"So much, all at once"
+],
+[
+"Anxious or teary",
+"More than you expected"
+],
+[
+"Unlike yourself",
+"Or numb"
+],
+[
+"Afraid to say so",
+"When everyone expects joy"
+]
+],
+"say": "You may feel overwhelmed, anxious, or teary. You may feel unlike yourself, or numb. Some parents have frightening thoughts they're ashamed of. Those are symptoms, not who you are. And it can be hard to say any of it out loud when everyone expects you to be glowing."
+},
+{
+"k": "points",
+"h": "Not luxuries right now",
+"items": [
+[
+"Sleep",
+"Whenever someone can watch the baby"
+],
+[
+"Food",
+"Simple, often, and offered by others"
+],
+[
+"Help",
+"Accept one offer today"
+],
+[
+"Daylight",
+"A few minutes outside"
+]
+],
+"say": "Sleep, food, and help from others are not luxuries right now. Sleep whenever someone else can watch the baby. Eat simple food, often, and let others bring it. Accept one offer of help today. And step outside for a few minutes each day. A little morning daylight helps many people feel steadier."
+},
+{
+"k": "big",
+"h": "I'm learning, and that's enough for today.",
+"sub": "Hand on your chest. Say it softly.",
+"say": "Put a hand on your chest, and take one slow breath. Here is a line to say quietly. I'm learning, and that's enough for today. Say it once more, in your own voice.",
+"beats": [
+"Put a hand on your chest, and take one slow breath.",
+"Here is a line to say quietly.",
+"I'm learning, and that's enough for today.",
+{
+"t": "Say it once more, in your own voice.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Asking for help is good parenting.",
+"body": "Try: \"I'm struggling more than I expected. Could you bring a meal or watch the baby for two hours?\"",
+"say": "Asking for help is part of good parenting. Needing help doesn't make you a bad parent. Tell one person honestly how you're doing. You could say, I'm struggling more than I expected. Could you bring a meal, or watch the baby for two hours?"
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Other new parents",
+"People who get it"
+],
+[
+"Sharing the nights",
+"When you can"
+],
+[
+"Honest talks",
+"With your partner, if you have one"
+],
+[
+"Your doctor",
+"About you, not only the baby"
+]
+],
+"say": "Other new parents who get it can be a lifeline. Share night duties when you can. If you have a partner, talk honestly about how each of you is doing. And at appointments, talk with your doctor about how you are feeling, not only about the baby."
+},
+{
+"k": "card",
+"title": "If it lasts more than two weeks",
+"body": "Sadness, anxiety, or scary thoughts: talk with your doctor. National Maternal Mental Health Hotline: 1-833-852-6262, any time.",
+"say": "If sadness, anxiety, or scary thoughts last more than two weeks, talk with your doctor. It's common, and it's treatable. You can call the National Maternal Mental Health Hotline any time, at 1 833 852 6262. Postpartum Support International is there for parents too."
+},
+{
+"k": "card",
+"title": "Right away",
+"body": "Thoughts of harming yourself or your baby: call or text 988, or call 911 now.",
+"say": "If you have thoughts of harming yourself or your baby, reach out right away. Call or text 988, or call 911 now. Reaching out is how you keep you both safe."
+},
+{
+"k": "big",
+"h": "Needing help doesn't make me a bad parent.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Needing help doesn't make you a bad parent. It makes you a parent. Be gentle with yourself today. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-newparent-helper",
+"guide": "newparent",
+"side": "helper",
+"title": "Becoming a Parent",
+"sideName": "For the Helper",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Becoming a Parent",
+"sub": "For the Helper",
+"say": "When someone you love has just become a parent, this is for you. They may be exhausted, anxious, and afraid to admit they're not okay."
+},
+{
+"k": "big",
+"h": "Come to help, not only to hold the baby.",
+"say": "Everyone wants to see the baby. What new parents often need most is someone who sees them. Come to help, not only to visit."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"You're doing a good job.",
+"How are you really doing?",
+"What would help most today?"
+],
+"say": "Here are words that help. You're doing a good job. How are you really doing? Ask it twice if you need to, and wait through the pause. And, what would help most today?"
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"Enjoy every moment.",
+"Unasked-for advice",
+"Visiting without helping"
+],
+"say": "Some things close the door, even when they're meant kindly. Enjoy every moment adds guilt to every hard one. Unasked-for advice about feeding or sleep tells them they're doing it wrong. And visiting without helping leaves them hosting when they need rest."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Bring food",
+"Or do the dishes"
+],
+[
+"Hold the baby",
+"So they can sleep"
+],
+[
+"Check in often",
+"Through the first months"
+],
+[
+"Run one errand",
+"Without being asked"
+]
+],
+"say": "What helps most is practical. Bring food, or do the dishes. Hold the baby so they can sleep. Check in often through the first months, not only the first week. And run one errand without being asked."
+},
+{
+"k": "card",
+"title": "Watch for the other parent too.",
+"body": "Partners can struggle quietly.",
+"say": "Watch for the other parent too. Partners, fathers, and adoptive parents can struggle quietly, and many people forget to ask them. Ask them directly, how are you really doing?"
+},
+{
+"k": "big",
+"h": "Who just brought a baby home?",
+"say": "Take a moment. Think of someone you know who has a new baby, or will soon. Picture one practical thing you could bring or do for them this week.",
+"beats": [
+"Take a moment.",
+"Think of someone you know who has a new baby, or will soon.",
+{
+"t": "Picture one practical thing you could bring or do for them this week.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If they seem low",
+"body": "Encourage their doctor. National Maternal Mental Health Hotline: 1-833-852-6262. Thoughts of harming themselves or the baby: 988, or 911 now.",
+"say": "If they seem low, anxious, or unlike themselves for more than two weeks, encourage them to talk to their doctor. The National Maternal Mental Health Hotline is open any time, at 1 833 852 6262. If they have thoughts of harming themselves or the baby, call or text 988 together, or call 911 now."
+},
+{
+"k": "points",
+"h": "Staying steady",
+"items": [
+[
+"Pace yourself",
+"The first months are long"
+],
+[
+"Keep it simple",
+"Small help, often"
+],
+[
+"Notice what it stirs",
+"Your own early days"
+]
+],
+"say": "Stay steady by pacing yourself. The first months are long, and small help, often, goes further than one big day. And notice what it stirs in you: your own early days, or a baby you hoped for. Talk with someone you trust, too."
+},
+{
+"k": "big",
+"h": "You're part of the welcome.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Many families welcome a child with a whole circle around them. Being carried by others is part of that welcome, and you're part of it. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "incarceration",
+"ring": "family",
+"title": "When Someone You Love Is Incarcerated",
+"you": {
+"id": "ok-g-incarceration-you",
+"guide": "incarceration",
+"side": "you",
+"title": "When Someone You Love Is Incarcerated",
+"sideName": "For You",
+"mins": 4,
+"sources": [
+"boss"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Someone You Love Is Incarcerated",
+"sub": "For You",
+"say": "If someone you love is in jail or prison, this is for you. A partner, a parent, a son or daughter, a brother or sister. Whatever happened, you are carrying a lot."
+},
+{
+"k": "big",
+"h": "A real loss, while they are still alive.",
+"sub": "An empty chair, and no ending in sight.",
+"say": "Having someone you love in jail or prison is a real loss, even though they're still alive. Their chair is empty. Holidays change. There may be no ending in sight. Grief, anger, worry, and loneliness can all come at once. All of it makes sense."
+},
+{
+"k": "big",
+"h": "You have done nothing wrong.",
+"sub": "You get to hold your head up.",
+"say": "Many families feel shame, and some keep it a secret. People may judge you. But you haven't done anything wrong. You get to hold your head up, and you deserve support too."
+},
+{
+"k": "words",
+"h": "Two lines to carry",
+"items": [
+"Their choices are not my shame.",
+"I can love someone and still set limits."
+],
+"say": "Here are two lines to carry. Their choices are not my shame. I can love someone and still set limits. Choose the one you need most today, and say it quietly, out loud.",
+"beats": [
+"Here are two lines to carry.",
+"Their choices are not my shame.",
+"I can love someone and still set limits.",
+{
+"t": "Choose the one you need most today, and say it quietly, out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "flow",
+"h": "First steps",
+"steps": [
+[
+"Learn the rules",
+"For calls, mail, and visits"
+],
+[
+"Tell one person",
+"Someone you trust"
+],
+[
+"Make a simple plan",
+"For money and childcare"
+]
+],
+"say": "A few first steps help. Learn the facility's rules for calls, mail, and visits, so you know what to expect. Tell one trusted person what is happening. And make a simple plan for money and childcare, because both often get harder."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"A support group",
+"Families who understand"
+],
+[
+"Steady routines",
+"Letters, calls, set days"
+],
+[
+"Your own health",
+"Sleep, food, a walk"
+],
+[
+"Connection, when safe",
+"For you and the kids"
+]
+],
+"say": "A support group for families of incarcerated people can ease the loneliness. Steady routines help: letters, calls, and visits on set days. Keep up your own health, with sleep, food, and a walk. And when it's safe, staying connected often helps everyone, including the children."
+},
+{
+"k": "card",
+"title": "You decide what is safe.",
+"body": "Closeness or distance. Love can include limits.",
+"say": "You decide what is safe for you and your children. Some families stay close. Some need distance, especially after harm at home. Both can be loving choices. Children may need help understanding, in words that fit their age, and a school counselor can help."
+},
+{
+"k": "words",
+"h": "Asking for support",
+"items": [
+"My family is going through something hard.",
+"I don't need to explain everything, but I could use support."
+],
+"say": "You don't have to tell the whole story to get support. Try this. My family is going through something hard. I don't need to explain everything, but I could use support."
+},
+{
+"k": "card",
+"title": "If it gets heavy",
+"body": "Stress affecting your health or your kids: a counselor. Thoughts of suicide: call or text 988. Danger right now: 911.",
+"say": "If the stress is affecting your health or your children, reach out to a counselor. If you have thoughts of suicide, call or text 988. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "You deserve support too.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Their choices are not your shame, and you deserve support too. Take one small step today. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "ok-g-incarceration-helper",
+"guide": "incarceration",
+"side": "helper",
+"title": "When Someone You Love Is Incarcerated",
+"sideName": "For the Helper",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Someone You Love Is Incarcerated",
+"sub": "For the Helper",
+"say": "When someone you know has a family member in jail or prison, this is for you. They may feel ashamed, isolated, or worn out."
+},
+{
+"k": "big",
+"h": "Stay close. Leave the case alone.",
+"say": "Families of people who are incarcerated often get quietly dropped from invitations and conversations. Your part is simple. Stay close, and leave the case alone."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"I'm here, and I'm not judging.",
+"How are you and the kids holding up?",
+"Want company on the drive?"
+],
+"say": "Here are words that help. I'm here, and I'm not judging. How are you and the kids holding up? And a practical one: want company on the drive?"
+},
+{
+"k": "words",
+"h": "Words to set aside",
+"items": [
+"What did he do?",
+"Questions about the case",
+"Passing the news along"
+],
+"say": "Some things close the door. What did he do? Any question about the case. And passing the news along, which is gossip, even when it's kindly meant. Let them choose what to share. Your curiosity can wait."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Rides to visits",
+"Long drives are lonely"
+],
+[
+"Help with childcare",
+"On visit days and hard weeks"
+],
+[
+"Keep inviting them",
+"Birthdays, dinners, holidays"
+],
+[
+"Help kids stay connected",
+"When it is safe"
+]
+],
+"say": "What helps is often practical. Offer rides to visits, because long drives are lonely. Help with childcare on visit days and hard weeks. Keep including them in birthdays, dinners, and holidays. Families often get dropped from invitations. And when it's safe, help children keep a connection with the parent they miss."
+},
+{
+"k": "big",
+"h": "Who is missing someone inside?",
+"say": "Take a moment. Think of a family you know with someone in jail or prison. Picture one invitation, or one ride, you could offer them this month.",
+"beats": [
+"Take a moment.",
+"Think of a family you know with someone in jail or prison.",
+{
+"t": "Picture one invitation, or one ride, you could offer them this month.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Staying steady",
+"items": [
+[
+"It can be long",
+"Pace yourself"
+],
+[
+"You don't need to fix it",
+"Company is the gift"
+],
+[
+"Notice your own views",
+"Set them down to listen"
+]
+],
+"say": "Stay steady by remembering a few things. Supporting a family through this can be long, so pace yourself. You don't need to fix it. Company is the gift. And notice your own views about crime and justice. Set them down while you listen, and talk them through with someone else later."
+},
+{
+"k": "card",
+"title": "If you are worried",
+"body": "Stress hurting their health or kids: a counselor. Thoughts of suicide: call or text 988. Danger right now: 911.",
+"say": "If the stress seems to be hurting their health or their children, encourage them to see a counselor. If you hear talk of suicide, call or text 988, together if you can. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Keep them in the circle.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Keep them in the circle. An invitation, a ride, a quiet I'm here, can carry a family a long way. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "suicidal-self",
+"ring": "safety",
+"title": "When You're Thinking About Suicide",
+"you": {
+"id": "ok-g-suicidal-self-you",
+"guide": "suicidal-self",
+"side": "you",
+"title": "When You're Thinking About Suicide",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When You're Thinking About Suicide",
+"sub": "For You",
+"say": "If you are having thoughts of suicide, this is for you. Thank you for being here."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Call or text 988, any time. Danger right now: 911. Or text HOME to 741741.",
+"say": "First, help is here right now. Call or text 988, any time, day or night. If you are in danger right now, call 911. You can also text HOME to 741741. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "These thoughts are a sign of pain.",
+"sub": "Not a plan you have to follow.",
+"say": "These thoughts are a sign of pain, not a plan you have to follow. Pain this heavy can tell you nothing will change. It can tell you people would be better off without you. That is the pain talking, not the truth."
+},
+{
+"k": "big",
+"h": "Feet on the floor. One slow breath.",
+"say": "Let's slow down together. Put your feet flat on the floor. Feel the ground under you. Breathe in slowly, and let it out even slower.",
+"beats": [
+"Let's slow down together.",
+"Put your feet flat on the floor.",
+"Feel the ground under you.",
+{
+"t": "Breathe in slowly, and let it out even slower.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Just the next hour",
+"items": [
+[
+"Put distance",
+"Between you and anything that could hurt you"
+],
+[
+"Ask someone to hold it",
+"Medications or other dangers"
+],
+[
+"Go where people are",
+"You don't have to be alone"
+],
+[
+"Tell one person today",
+"A friend, a doctor, or 988"
+]
+],
+"say": "You only need to get through the next hour. Put distance between you and anything you could use to hurt yourself. Move it out of reach, or ask someone to hold it for you. Go where other people are. And tell one person today."
+},
+{
+"k": "words",
+"h": "Words you can borrow",
+"items": [
+"I'm not okay.",
+"I'm having thoughts of ending my life, and I need help."
+],
+"say": "If you don't know what to say, borrow these words. I'm not okay. I'm having thoughts of ending my life, and I need help. Reaching out is strength."
+},
+{
+"k": "big",
+"h": "This feeling is real, and it can change.",
+"sub": "988: call or text, any time. Danger right now: 911.",
+"say": "This feeling is real, and it can change. When you're ready, a doctor or counselor can help, even if you've tried before. Right now, you only need to stay safe. Call or text 988, any time. If you are in danger right now, call 911. You don't have to carry this alone."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"911: danger right now",
+"Text HOME to 741741"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-suicidal-self-helper",
+"guide": "suicidal-self",
+"side": "helper",
+"title": "When You're Thinking About Suicide",
+"sideName": "For the Helper",
+"mins": 2,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When You're Thinking About Suicide",
+"sub": "For the Helper",
+"say": "This is for anyone beside someone who is thinking about suicide. You don't need to be an expert to help."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Danger right now: call 911. Call or text 988 together, any time.",
+"say": "First, if they are in danger right now, call 911, and stay with them. Any time, you can call or text 988 together. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"say": "Steady yourself first. Feet on the floor. Breathe in slowly, and let it out even slower.",
+"beats": [
+"Steady yourself first.",
+"Feet on the floor.",
+{
+"t": "Breathe in slowly, and let it out even slower.",
+"w": 9
+}
+]
+},
+{
+"k": "words",
+"h": "Ask plainly",
+"items": [
+"Are you thinking about killing yourself?",
+"I'm glad you told me. I'm staying with you."
+],
+"say": "Ask plainly. Are you thinking about killing yourself? Asking directly does not put the idea in their head. It tells them they can tell you the truth. If they say yes, say this. I'm glad you told me. I'm staying with you."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Listen",
+"They may feel like a burden"
+],
+[
+"Call or text 988 together",
+"Right then"
+],
+[
+"Put distance",
+"Help move dangers out of reach"
+],
+[
+"Stay with them",
+"If they are in danger"
+]
+],
+"say": "They may feel hopeless, ashamed, and afraid of being a burden. Listen without arguing. Call or text 988 together, right then. Help move medications, firearms, or other dangers out of reach. And stay with them if they are in danger."
+},
+{
+"k": "card",
+"title": "Keep safety ahead of secrecy.",
+"body": "Bring in help, and tell them you will.",
+"say": "Keep safety ahead of secrecy. Promising to keep it secret can leave you both alone with it. Tell them gently that you will bring in help."
+},
+{
+"k": "big",
+"h": "You are not the only lifeline.",
+"sub": "988 is there for you too.",
+"say": "You are not the only lifeline. Bring in other people you both trust, and get support for yourself too. 988 is there for you as well, call or text, any time. If there is danger right now, call 911."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"911: danger right now",
+"Text HOME to 741741"
+],
+"music": "safety"
+}
+},
+{
+"id": "suicidal-other",
+"ring": "safety",
+"title": "When Someone Else Is Thinking About Suicide",
+"you": {
+"id": "ok-g-suicidal-other-you",
+"guide": "suicidal-other",
+"side": "you",
+"title": "When Someone Else Is Thinking About Suicide",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Someone Else Is Thinking About Suicide",
+"sub": "For You",
+"say": "If you are worried that someone you love is thinking about suicide, this is for you. The fact that you are here already helps."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Immediate danger: call 911. Call or text 988 any time, including for advice on how to help.",
+"say": "First, where to get help right now. If they are in immediate danger, call 911. Any time, you can call or text 988, including just for advice on how to help. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "You don't need to be an expert.",
+"say": "You may feel scared, helpless, or afraid of saying the wrong thing. Take a breath. You don't need to be an expert. Put your feet on the floor. Breathe in slowly, and let it out even slower.",
+"beats": [
+"You may feel scared, helpless, or afraid of saying the wrong thing.",
+"Take a breath.",
+"You don't need to be an expert.",
+"Put your feet on the floor.",
+{
+"t": "Breathe in slowly, and let it out even slower.",
+"w": 9
+}
+]
+},
+{
+"k": "points",
+"h": "Warning signs",
+"items": [
+[
+"Talk of death",
+"Or of not being here"
+],
+[
+"Giving things away",
+"Things that matter to them"
+],
+[
+"Saying goodbye",
+"In ways that feel final"
+],
+[
+"Sudden calm",
+"After deep despair"
+]
+],
+"say": "It helps to know the warning signs. Talk of death. Giving things away. Saying goodbye. And a sudden calm after deep despair. If you notice any of these, it's time to ask.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "flow",
+"h": "Four steps",
+"steps": [
+[
+"Ask directly",
+"It does not plant the idea"
+],
+[
+"Listen",
+"Without arguing or judging"
+],
+[
+"Help keep them safe",
+"Medications and firearms"
+],
+[
+"Connect them today",
+"And stay with them"
+]
+],
+"say": "Here are four steps. Ask directly, are you thinking about killing yourself? It does not plant the idea. Listen without arguing or judging. Help keep them safe by putting distance between them and medications and firearms. And connect them to help today, and stay with them. The For the Helper video walks through each one.",
+"cue": {
+"at": [
+1,
+3,
+4,
+5
+]
+}
+},
+{
+"k": "big",
+"h": "I can't fix this alone, and I don't have to.",
+"say": "Bring in other trusted people, so you are not the only lifeline. Say it to yourself now. I can't fix this alone, and I don't have to."
+},
+{
+"k": "big",
+"h": "Your care helps. So does help for you.",
+"sub": "Call or text 988 any time. Immediate danger: 911.",
+"say": "Supporting someone through this is heavy. Get support for yourself, too. Call or text 988 any time, for them or for you. If there is immediate danger, call 911. Your care helps."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"Call or text 988 for how to help",
+"911: immediate danger"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-suicidal-other-helper",
+"guide": "suicidal-other",
+"side": "helper",
+"title": "When Someone Else Is Thinking About Suicide",
+"sideName": "For the Helper",
+"mins": 2,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Someone Else Is Thinking About Suicide",
+"sub": "For the Helper",
+"say": "This is for anyone about to sit down with someone they are worried about. It walks through what to say and what to do."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Immediate danger: call 911 and stay with them. Call or text 988 together, any time.",
+"say": "First, if they are in immediate danger, call 911, and stay with them. Any time, you can call or text 988 together. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"say": "Steady yourself before you start. Feet on the floor. Breathe in slowly, and let it out even slower.",
+"beats": [
+"Steady yourself before you start.",
+"Feet on the floor.",
+{
+"t": "Breathe in slowly, and let it out even slower.",
+"w": 9
+}
+]
+},
+{
+"k": "words",
+"h": "Ask directly",
+"items": [
+"Are you thinking about ending your life?",
+"Thank you for telling me. I want to help you stay safe."
+],
+"say": "Ask directly, in plain words. Are you thinking about ending your life? Asking does not put the idea in their head. They may test whether you really want to hear. Stay. If they say yes, say this. Thank you for telling me. I want to help you stay safe."
+},
+{
+"k": "points",
+"h": "What to leave unsaid",
+"items": [
+[
+"You don't really mean that.",
+"It tells them you can't hear it"
+],
+[
+"Debating life",
+"Listen to the pain instead"
+],
+[
+"Promising secrecy",
+"Safety comes first"
+]
+],
+"say": "Some things are better left unsaid. You don't really mean that. Debating whether life is worth living. And promising to keep it secret. Keep safety ahead of secrecy, and tell them kindly that you will bring in help.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Let's call 988 together.",
+"Right then"
+],
+[
+"Secure medications and firearms",
+"Or ask someone to hold them"
+],
+[
+"Stay if they are in danger",
+"Call 911 if needed"
+],
+[
+"Follow up",
+"In the days and weeks after"
+]
+],
+"say": "Then, what helps. Say, let's call 988 together, and do it right then. Help secure medications and firearms, or ask someone to hold them for a while. Stay with them if they are in danger, and call 911 if needed. And follow up in the days and weeks after.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Sitting with them in the dark matters.",
+"sub": "988 is there for you too.",
+"say": "Sitting with someone in the dark, and getting them to help, matters more than perfect words. Get support for yourself, too. Call or text 988 any time. If there is immediate danger, call 911."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"Call or text 988 for how to help",
+"911: immediate danger"
+],
+"music": "safety"
+}
+},
+{
+"id": "escalating",
+"ring": "safety",
+"title": "When Someone Is Escalating",
+"you": {
+"id": "ok-g-escalating-you",
+"guide": "escalating",
+"side": "you",
+"title": "When Someone Is Escalating",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Someone Is Escalating",
+"sub": "For You",
+"say": "If someone near you is getting louder, angrier, or harder to reach, this is for you. It's short. Watch it now, or come back later."
+},
+{
+"k": "card",
+"title": "Unsafe? Leave and call 911.",
+"body": "A weapon, a threat, or you feel unsafe: leave, then call 911. Talk of not wanting to be alive: call or text 988.",
+"say": "First, your safety. If there is a weapon, a threat, or you feel unsafe, leave and call 911. Leaving is allowed. If the person talks about hurting themselves or not wanting to be alive, stay with them if it's safe, and call or text 988."
+},
+{
+"k": "big",
+"h": "Calm yourself first.",
+"sub": "Your body sets the temperature of the room.",
+"say": "Calm yourself first. Your body sets the temperature of the room. Feel your feet on the floor. Let your hands relax. Take one slow breath, and let it out longer than it came in.",
+"beats": [
+"Calm yourself first.",
+"Your body sets the temperature of the room.",
+"Feel your feet on the floor.",
+"Let your hands relax.",
+{
+"t": "Take one slow breath, and let it out longer than it came in.",
+"w": 9
+}
+]
+},
+{
+"k": "points",
+"h": "What helps right now",
+"items": [
+[
+"Step back",
+"About two arm's lengths, a little to the side"
+],
+[
+"Lower your voice",
+"People often match you"
+],
+[
+"Say less",
+"Short, respectful sentences"
+],
+[
+"Know your way out",
+"Keep the door within reach"
+]
+],
+"say": "Step back, about two arm's lengths, a little to the side. Lower your voice. People often match you without knowing it. Say less, in short, respectful sentences. And know your way out."
+},
+{
+"k": "words",
+"h": "Words that often help",
+"items": [
+"\"You're really frustrated. This matters to you.\"",
+"\"Do you want to sit down, or step outside with me?\"",
+"\"I want to help. I can't keep talking while you're yelling at me.\""
+],
+"say": "Under anger there is often fear or grief. Name what you see. You're really frustrated. This matters to you. Offer a small choice. Do you want to sit down, or step outside with me? If you need a limit, say it calmly. I want to help. I can't keep talking while you're yelling at me."
+},
+{
+"k": "words",
+"h": "Tell yourself",
+"items": [
+"This is not about me, even if it's aimed at me.",
+"I don't have to win this. I have to keep everyone safe.",
+"I can leave. Leaving is allowed."
+],
+"say": "And tell yourself this. This is not about me, even if it's aimed at me. I don't have to win this. I have to keep everyone safe. I can leave. Leaving is allowed."
+},
+{
+"k": "card",
+"title": "Afterward, tell someone.",
+"body": "Try: \"Something got really heated today, and I'm still shaky. Can I tell you about it?\"",
+"say": "Afterward, tell someone you trust, even if it ended fine. If blowups keep happening at home and you feel afraid, see the guide When Home Isn't Safe."
+},
+{
+"k": "big",
+"h": "You don't have to win. Keep everyone safe.",
+"sub": "Unsafe: leave and call 911. Thoughts of suicide: 988.",
+"say": "You don't have to win. Keep everyone safe, you included. If you feel unsafe, leave and call 911. For thoughts of suicide, call or text 988."
+}
+],
+"crisis": [
+"Unsafe or a threat: leave, call 911",
+"Thoughts of suicide: call or text 988"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-escalating-helper",
+"guide": "escalating",
+"side": "helper",
+"title": "When Someone Is Escalating",
+"sideName": "For the Helper",
+"mins": 3,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Someone Is Escalating",
+"sub": "For the Helper",
+"say": "This is for you if you are stepping in when someone is escalating, at home, at work, or at a bedside. It's short, and you can come back to it any time."
+},
+{
+"k": "card",
+"title": "Unsafe? Leave and call 911.",
+"body": "Call for help early rather than late. Talk of not wanting to be alive: call or text 988.",
+"say": "Safety comes first, for everyone, you included. If there is a weapon, a threat, or you feel unsafe, leave and call 911. Call for help early rather than late. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. Stay with them if it's safe, and call or text 988."
+},
+{
+"k": "big",
+"h": "Breathe first. Then speak.",
+"sub": "Slow and low.",
+"say": "Before you step in, steady yourself. Feet on the floor. Shoulders down. Breathe in slowly, and let a longer breath out.",
+"beats": [
+"Before you step in, steady yourself.",
+"Feet on the floor.",
+"Shoulders down.",
+{
+"t": "Breathe in slowly, and let a longer breath out.",
+"w": 9
+}
+]
+},
+{
+"k": "big",
+"h": "Under the anger, often fear.",
+"sub": "Scared, grieving, in pain, or powerless.",
+"say": "The person escalating is often scared, grieving, in pain, or feeling powerless. Many feel embarrassed once they come down. Seeing that helps you stay kind and steady."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I can hear how upset you are. I'm listening.\"",
+"\"Help me understand what you need right now.\"",
+"\"Let's take a minute. I'll stay right here.\""
+],
+"say": "Here are words that help. I can hear how upset you are. I'm listening. Help me understand what you need right now. Let's take a minute. I'll stay right here."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"A quieter place",
+"Fewer people watching"
+],
+[
+"One voice",
+"One person does the talking"
+],
+[
+"Something concrete",
+"Water, a chair, a clear answer"
+],
+[
+"Space and a clear door",
+"For them and for you"
+]
+],
+"say": "Move somewhere quieter, with fewer people watching. Let one person do the talking. Offer something concrete: water, a chair, a clear answer to their question. Give space instead of touch, and keep the door clear for both of you. Skip telling them to calm down, and make only promises you can keep."
+},
+{
+"k": "big",
+"h": "Your body holds it afterward.",
+"sub": "Walk, drink water, talk it through.",
+"say": "Even when it goes well, your body holds the adrenaline for a while. Walk, drink water, and talk it through with a coworker or friend."
+},
+{
+"k": "big",
+"h": "Your calm is the strongest thing in the room.",
+"sub": "Unsafe: leave and call 911. Thoughts of suicide: 988.",
+"say": "Your calm is the strongest thing in the room. If anyone is unsafe, leave and call 911. For thoughts of suicide, call or text 988."
+}
+],
+"crisis": [
+"Unsafe or a threat: leave, call 911",
+"Thoughts of suicide: call or text 988"
+],
+"music": "safety"
+}
+},
+{
+"id": "domestic-violence",
+"ring": "safety",
+"title": "When Home Isn't Safe",
+"you": {
+"id": "ok-g-domestic-violence-you",
+"guide": "domestic-violence",
+"side": "you",
+"title": "When Home Isn't Safe",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Home Isn't Safe",
+"sub": "For You",
+"say": "If home doesn't feel safe, this is for you. It's short, and you can stop any time."
+},
+{
+"k": "card",
+"title": "Help is here, day or night.",
+"body": "National Domestic Violence Hotline: 1-800-799-7233, or text START to 88788. In danger now: 911.",
+"say": "First, where to get help right now. If you are in danger now, call 911. The National Domestic Violence Hotline is confidential, 24 hours a day. Call 1-800-799-7233, or text START to 88788."
+},
+{
+"k": "big",
+"h": "This is not your fault.",
+"sub": "Feet on the floor. One slow breath.",
+"say": "Let's slow down for a moment. Feel your feet on the floor. Breathe in, and let it out slowly, as many times as you need.",
+"beats": [
+"Let's slow down for a moment.",
+"Feel your feet on the floor.",
+{
+"t": "Breathe in, and let it out slowly, as many times as you need.",
+"w": 9
+}
+]
+},
+{
+"k": "points",
+"h": "Abuse is more than hitting",
+"items": [
+[
+"Control",
+"Of where you go and who you see"
+],
+[
+"Threats",
+"Words meant to make you afraid"
+],
+[
+"Isolation",
+"Cut off from friends and family"
+],
+[
+"Money control",
+"Your own money kept from you"
+]
+],
+"say": "Abuse is never your fault. It includes control, threats, isolation, and control of money, not only hitting. You may feel like you're walking on eggshells, or doubt yourself. You may love the person and fear them at the same time. That makes sense."
+},
+{
+"k": "big",
+"h": "Leaving can be the most dangerous time.",
+"sub": "Plan with an advocate.",
+"say": "You get to decide what happens next, and when. Leaving can be the most dangerous time, so plan with an advocate. The hotline can help you make a safety plan that fits your life."
+},
+{
+"k": "points",
+"h": "Small steps toward safety",
+"items": [
+[
+"Safe people and places",
+"Where you could go if you need to"
+],
+[
+"Documents and a charger",
+"Kept somewhere safe"
+],
+[
+"Your browser",
+"Clear it if someone checks your devices"
+]
+],
+"say": "A few small steps can help. Think about safe people and places you could go. Keep important documents and a phone charger somewhere safe. And if someone monitors your devices, clearing your browser can help keep this private."
+},
+{
+"k": "card",
+"title": "Tell one trusted person.",
+"body": "Try: \"Things at home aren't safe. I need help thinking this through.\"",
+"say": "You don't have to figure this out alone. Try telling one trusted person. Things at home aren't safe. I need help thinking this through."
+},
+{
+"k": "big",
+"h": "You deserve to be safe.",
+"sub": "Hotline: 1-800-799-7233. Danger now: 911.",
+"say": "This is not your fault, and you deserve to be safe. Help is here, any time. Call the hotline at 1-800-799-7233, or text START to 88788. If you are in danger now, call 911."
+}
+],
+"crisis": [
+"National DV Hotline: 1-800-799-7233",
+"Or text START to 88788",
+"Immediate danger: call 911"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-domestic-violence-helper",
+"guide": "domestic-violence",
+"side": "helper",
+"title": "When Home Isn't Safe",
+"sideName": "For the Helper",
+"mins": 2,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "When Home Isn't Safe",
+"sub": "For the Helper",
+"say": "This is for the friend or family member who is worried that home isn't safe for someone they love. It's short."
+},
+{
+"k": "card",
+"title": "Danger right now? Call 911.",
+"body": "Share the hotline privately: 1-800-799-7233, or text START to 88788.",
+"say": "First, if anyone is in danger right now, call 911. The National Domestic Violence Hotline is confidential, 24 hours a day. Call 1-800-799-7233, or text START to 88788. Share the number with them privately."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"sub": "Feet on the floor. A longer breath out.",
+"say": "Hearing this can stir up fear and anger. Feel your feet on the floor. Take one slow breath in, and a longer breath out.",
+"beats": [
+"Hearing this can stir up fear and anger.",
+"Feel your feet on the floor.",
+{
+"t": "Take one slow breath in, and a longer breath out.",
+"w": 9
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I believe you.\"",
+"\"It's not your fault.\"",
+"\"I'm here, whatever you decide.\""
+],
+"say": "Here are words that help. I believe you. It's not your fault. I'm here, whatever you decide."
+},
+{
+"k": "big",
+"h": "Leaving can be the most dangerous time.",
+"sub": "An advocate can help them plan.",
+"say": "They may feel ashamed, afraid, or not ready to leave. Leaving often takes several attempts, and it can be the most dangerous time. So trust that they know their situation. Instead of asking why they don't just leave, point them to an advocate who can help them plan."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Share the hotline",
+"Privately"
+],
+[
+"Offer a safe place",
+"Or practical help"
+],
+[
+"Stay in touch",
+"Without judgment"
+],
+[
+"Let advocates handle the abuser",
+"Their safety comes first"
+]
+],
+"say": "Share the hotline number privately. Offer a safe place, or practical help. Stay in touch without judgment, even when they go back. And leave the abuser to the advocates and the police, rather than confronting them yourself."
+},
+{
+"k": "big",
+"h": "Children in danger? Report it.",
+"sub": "Your safety matters too.",
+"say": "If children are in danger, report it. Your safety matters too. Get support for yourself from someone you trust."
+},
+{
+"k": "big",
+"h": "I'm here, whatever you decide.",
+"sub": "Hotline: 1-800-799-7233. Danger now: 911.",
+"say": "You can't make them safe by yourself. You can be the steady person who believes them and stays. I'm here, whatever you decide. The hotline is 1-800-799-7233. If anyone is in danger now, call 911."
+}
+],
+"crisis": [
+"National DV Hotline: 1-800-799-7233",
+"Or text START to 88788",
+"Immediate danger: call 911"
+],
+"music": "safety"
+}
+},
+{
+"id": "past-abuse",
+"ring": "safety",
+"title": "Living with Past Abuse",
+"you": {
+"id": "ok-g-past-abuse-you",
+"guide": "past-abuse",
+"side": "you",
+"title": "Living with Past Abuse",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Living with Past Abuse",
+"sub": "For You",
+"say": "If you are living with abuse from the past, this is for you. You don't have to share anything to watch. You can stop any time."
+},
+{
+"k": "card",
+"title": "Support, any time.",
+"body": "RAINN: 1-800-656-4673. A child being harmed now: 911 or child protective services.",
+"say": "First, where to find support right now. RAINN offers confidential support at 1-800-656-4673. If a child is being harmed now, call 911 or child protective services. If you have thoughts of hurting yourself, call or text 988."
+},
+{
+"k": "big",
+"h": "Feet on the floor.",
+"sub": "Name five things you can see.",
+"say": "Let's ground for a moment. Feel your feet on the floor. Look around and name five things you can see. Breathe out slowly, and let your shoulders drop.",
+"beats": [
+"Let's ground for a moment.",
+"Feel your feet on the floor.",
+"Look around and name five things you can see.",
+{
+"t": "Breathe out slowly, and let your shoulders drop.",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "What happened was not your fault.",
+"sub": "Many reactions are common.",
+"say": "What happened was not your fault. Memories, flashbacks, feeling unsafe in your body, trouble trusting, sudden anger or numbness: these are common. Anniversaries, touch, or smells can bring it back."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Safe people and routines",
+"Steady things you can count on"
+],
+[
+"Body-based practices",
+"Walking, breathing, gentle movement"
+],
+[
+"Your own pace",
+"No deadline for healing"
+],
+[
+"A trauma-informed counselor",
+"Skilled help makes a difference"
+]
+],
+"say": "Trauma lives in the body, and healing often involves the body, too. Safe relationships and routines help. So do walking, breathing, and gentle movement. Go at your own pace. And consider a trauma-informed counselor. Healing is possible, and it often happens with skilled help."
+},
+{
+"k": "card",
+"title": "You decide who you tell, and when.",
+"body": "When you're ready: \"Something happened to me a long time ago, and it still affects me.\"",
+"say": "You don't owe anyone your story. You get to decide who you tell, and when. When you're ready, you might say, something happened to me a long time ago, and it still affects me."
+},
+{
+"k": "words",
+"h": "Words to tell yourself",
+"items": [
+"I survived. I am more than what happened to me.",
+"My reactions made sense for what I lived through."
+],
+"say": "Here are words to tell yourself. I survived. I am more than what happened to me. My reactions made sense for what I lived through."
+},
+{
+"k": "big",
+"h": "Healing is possible.",
+"sub": "RAINN: 1-800-656-4673.",
+"say": "Go gently. Healing is possible, at your own pace. RAINN is there at 1-800-656-4673. If a child is being harmed now, call 911."
+}
+],
+"crisis": [
+"RAINN: 1-800-656-4673",
+"Child harmed now: 911 or CPS"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-past-abuse-helper",
+"guide": "past-abuse",
+"side": "helper",
+"title": "Living with Past Abuse",
+"sideName": "For the Helper",
+"mins": 2,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Living with Past Abuse",
+"sub": "For the Helper",
+"say": "This is for the friend or family member of someone living with past abuse. Maybe they've just told you. Thank you for listening."
+},
+{
+"k": "card",
+"title": "Support, any time.",
+"body": "RAINN: 1-800-656-4673. A child being harmed now: 911 or child protective services.",
+"say": "First, where to find support. RAINN offers confidential support at 1-800-656-4673. If a child is being harmed now, call 911 or child protective services."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"sub": "A calm face says it is safe to talk.",
+"say": "What you hear may shake you. Feel your feet on the floor. Let one slow breath out, so your face and voice can stay calm.",
+"beats": [
+"What you hear may shake you.",
+"Feel your feet on the floor.",
+{
+"t": "Let one slow breath out, so your face and voice can stay calm.",
+"w": 9
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I believe you.\"",
+"\"Thank you for trusting me.\"",
+"\"It wasn't your fault.\""
+],
+"say": "They may be testing whether it's safe to say more. Here are words that help. I believe you. Thank you for trusting me. It wasn't your fault."
+},
+{
+"k": "points",
+"h": "Let them lead",
+"items": [
+[
+"Let them choose what to share",
+"No questions about details"
+],
+[
+"Their timing",
+"To confront or report, or not"
+],
+[
+"Touch and privacy",
+"Ask first, keep it private"
+]
+],
+"say": "Let them lead. Let them choose what to share, without asking for details. Let them decide if and when to confront anyone or report. And respect their boundaries around touch and privacy."
+},
+{
+"k": "big",
+"h": "Help them find trauma-informed support.",
+"sub": "Offer, and let them choose.",
+"say": "If they want it, help them find a trauma-informed counselor. Offer, and let them choose. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. Call or text 988 together."
+},
+{
+"k": "big",
+"h": "Hearing this can affect you.",
+"sub": "Get support for yourself too.",
+"say": "Hearing someone's trauma can affect you. Get support for yourself too, from someone you trust."
+},
+{
+"k": "big",
+"h": "I believe you.",
+"sub": "RAINN: 1-800-656-4673.",
+"say": "You don't need perfect words. I believe you is a strong place to start. RAINN is there at 1-800-656-4673. If a child is being harmed now, call 911."
+}
+],
+"crisis": [
+"RAINN: 1-800-656-4673",
+"Child harmed now: 911 or CPS"
+],
+"music": "safety"
+}
+},
+{
+"id": "assault",
+"ring": "safety",
+"title": "After a Sexual Assault",
+"you": {
+"id": "ok-g-assault-you",
+"guide": "assault",
+"side": "you",
+"title": "After a Sexual Assault",
+"sideName": "For You",
+"mins": 2,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "After a Sexual Assault",
+"sub": "For You",
+"say": "If you have been sexually assaulted, this is for you. It's short, and you can stop any time."
+},
+{
+"k": "card",
+"title": "Help, any time, day or night.",
+"body": "RAINN: 1-800-656-4673. Central Minnesota: 320-251-4357. In danger: 911.",
+"say": "First, where to get help right now. If you're in danger, call 911. Any time you need to talk, call RAINN at 1-800-656-4673, or in Central Minnesota, 320-251-4357. It's confidential. If you have thoughts of suicide, call or text 988."
+},
+{
+"k": "big",
+"h": "Somewhere safe. One slow breath.",
+"sub": "Feet on the floor.",
+"say": "If you can, get somewhere safe. Feel your feet on the floor. Breathe in slowly, and let a long breath out.",
+"beats": [
+"If you can, get somewhere safe.",
+"Feel your feet on the floor.",
+{
+"t": "Breathe in slowly, and let a long breath out.",
+"w": 9
+}
+]
+},
+{
+"k": "big",
+"h": "This was not your fault.",
+"sub": "Nothing you did or wore makes it your fault.",
+"say": "What happened was not your fault. Nothing you did or wore makes it your fault. You may feel shock, numbness, fear, shame, or anger. Some people lose sleep or feel unsafe in their own body. Every reaction is a valid response to harm."
+},
+{
+"k": "card",
+"title": "You choose what happens next.",
+"body": "Including whether to report. If you're hurt, or want evidence kept, a hospital can help, even if you don't want to report.",
+"say": "You get to decide what happens next, including whether to report. If you're hurt, or want evidence kept, a hospital can help, even if you don't want to report. An advocate can walk with you through medical care, reporting, or neither."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"An advocate",
+"Beside you, whatever you choose"
+],
+[
+"A counselor",
+"One who understands trauma"
+],
+[
+"People who believe you",
+"Even one is enough to start"
+]
+],
+"say": "Support makes a real difference. An advocate, beside you whatever you choose. A counselor who understands trauma. And people who believe you."
+},
+{
+"k": "card",
+"title": "Tell someone safe.",
+"body": "Try: \"Something happened to me, and I need you to just listen and believe me.\"",
+"say": "When you're ready, you might tell someone safe. Something happened to me, and I need you to just listen and believe me."
+},
+{
+"k": "big",
+"h": "I get to choose what happens next.",
+"sub": "RAINN: 1-800-656-4673, any time.",
+"say": "Healing takes time. Say it to yourself. This was not my fault. I get to choose what happens next. RAINN is there any time, at 1-800-656-4673. If you're in danger, call 911."
+}
+],
+"crisis": [
+"RAINN: 1-800-656-4673",
+"Central Minnesota: 320-251-4357",
+"Danger: 911. Thoughts of suicide: 988"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-assault-helper",
+"guide": "assault",
+"side": "helper",
+"title": "After a Sexual Assault",
+"sideName": "For the Helper",
+"mins": 2,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "After a Sexual Assault",
+"sub": "For the Helper",
+"say": "This is for the friend or family member of someone who has been sexually assaulted. If they told you, they trust you."
+},
+{
+"k": "card",
+"title": "In danger? Call 911.",
+"body": "RAINN: 1-800-656-4673. Central Minnesota: 320-251-4357. Offer to call together.",
+"say": "First, where to get help right now. If they're in danger, call 911. RAINN is there any time, at 1-800-656-4673, or in Central Minnesota, 320-251-4357. Offer to call a hotline with them."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"sub": "Feet on the floor. A longer breath out.",
+"say": "Hearing this can shake you. Feel your feet on the floor. Breathe in slowly, and let a longer breath out.",
+"beats": [
+"Hearing this can shake you.",
+"Feel your feet on the floor.",
+{
+"t": "Breathe in slowly, and let a longer breath out.",
+"w": 9
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I believe you.\"",
+"\"It's not your fault.\"",
+"\"What would help right now?\""
+],
+"say": "They may feel ashamed, afraid, or unsure whether they'll be believed. Here are words that help. I believe you. It's not your fault. What would help right now?"
+},
+{
+"k": "points",
+"h": "Let them choose",
+"items": [
+[
+"Reporting is their choice",
+"No pressure either way"
+],
+[
+"Questions about blame",
+"Never what they wore or drank"
+],
+[
+"Ask before acting",
+"Even toward the person who hurt them"
+]
+],
+"say": "Let them choose. Reporting is their choice, with no pressure either way. Leave out any question about what they were wearing or drinking. And ask before you act, even toward the person who hurt them."
+},
+{
+"k": "points",
+"h": "Practical help",
+"items": [
+[
+"Call a hotline together"
+],
+[
+"Go with them",
+"To a hospital or advocate, if they want"
+],
+[
+"Keep it private",
+"Their story is theirs"
+]
+],
+"say": "Offer to call a hotline with them. Go with them to a hospital or an advocate, if they want. And respect their choices and their privacy."
+},
+{
+"k": "big",
+"h": "Worried? Ask plainly.",
+"sub": "\"Are you thinking about suicide?\"",
+"say": "If you're worried, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. If they say yes, stay with them, and call or text 988 together."
+},
+{
+"k": "big",
+"h": "I believe you.",
+"sub": "RAINN: 1-800-656-4673, any time.",
+"say": "Hearing this can be very hard. Get support for yourself too, without sharing their story. You don't need perfect words. I believe you is the place to start. RAINN is there any time, at 1-800-656-4673."
+}
+],
+"crisis": [
+"RAINN: 1-800-656-4673",
+"Central Minnesota: 320-251-4357",
+"Danger: 911. Thoughts of suicide: 988"
+],
+"music": "safety"
+}
+},
+{
+"id": "self-harm",
+"ring": "safety",
+"title": "Self-Harm",
+"you": {
+"id": "ok-g-self-harm-you",
+"guide": "self-harm",
+"side": "you",
+"title": "Self-Harm",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Self-Harm",
+"sub": "For You",
+"say": "If you hurt yourself on purpose when things get bad, this is for you. You are welcome here, just as you are."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Badly hurt: call 911. Thinking about suicide: call or text 988. Or text HOME to 741741.",
+"say": "First, help right now. If you are badly hurt, call 911. If you are thinking about suicide, call or text 988, any time. You can also text HOME to 741741. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "You deserve care, not punishment.",
+"sub": "Self-harm is a sign of pain, not a character flaw.",
+"say": "Self-harm is a sign of pain that needs care, not a character flaw. Maybe it helps you get through feelings that are too big, or too numb. You deserve care, not punishment."
+},
+{
+"k": "big",
+"h": "This urge will pass.",
+"say": "If an urge is here right now, let's slow down together. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. This urge will pass, even if it doesn't feel like it.",
+"beats": [
+"If an urge is here right now, let's slow down together.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+{
+"t": "This urge will pass, even if it doesn't feel like it.",
+"w": 9
+}
+]
+},
+{
+"k": "points",
+"h": "Ways through a hard moment",
+"items": [
+[
+"Call or text someone",
+"A friend, or 988"
+],
+[
+"Go where people are",
+"Out of the room you are in"
+],
+[
+"Walk, or breathe slowly",
+"Let your body move"
+],
+[
+"Write or draw it",
+"Put the feeling on paper"
+]
+],
+"say": "Here are ways through a hard moment that don't hurt your body. Call or text someone. Go where people are. Walk, or breathe slowly. Write or draw what you feel.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Tell one safe person",
+"items": [
+"I've been hurting myself when things get bad.",
+"I want help stopping."
+],
+"say": "It tends to get harder to stop over time, and you don't have to stop alone. Tell one safe person: a friend, a doctor, or a counselor. You can borrow these words. I've been hurting myself when things get bad. I want help stopping."
+},
+{
+"k": "big",
+"h": "Reaching out is the brave thing.",
+"sub": "988: call or text. Badly hurt or in danger: 911.",
+"say": "Reaching out is the brave thing. Care for any wounds, and see a doctor this week. Call or text 988 any time, or text HOME to 741741. If you are badly hurt or in danger right now, call 911."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"Text HOME to 741741",
+"911: serious injury or danger now"
+],
+"music": "safety"
+},
+"helper": {
+"id": "ok-g-self-harm-helper",
+"guide": "self-harm",
+"side": "helper",
+"title": "Self-Harm",
+"sideName": "For the Helper",
+"mins": 2,
+"sources": [
+"dazzi"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "oak",
+"eyebrow": "When Life Changes",
+"h": "Self-Harm",
+"sub": "For the Helper",
+"say": "If someone you love is hurting themselves on purpose, this is for you. It is frightening, and you can help."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Serious injury or danger right now: call 911. Thoughts of suicide: call or text 988.",
+"say": "First, help right now. For a serious injury, or if someone is in danger right now, call 911. If they are thinking about suicide, call or text 988 together. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"say": "Your calm matters most. Feet on the floor. Breathe in slowly, and let it out even slower.",
+"beats": [
+"Your calm matters most.",
+"Feet on the floor.",
+{
+"t": "Breathe in slowly, and let it out even slower.",
+"w": 9
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"Thank you for telling me. I'm not going anywhere.",
+"Are you thinking about killing yourself?",
+"Let's find someone who can help with the pain underneath."
+],
+"say": "They may feel ashamed, or afraid you will be angry. Start here. Thank you for telling me. I'm not going anywhere. Then ask plainly. Are you thinking about killing yourself? Asking does not plant the idea. Then, let's find someone who can help with the pain underneath."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Anger, panic, or ultimatums"
+],
+[
+"Demanding a promise to stop"
+],
+[
+"Calling it attention-seeking"
+]
+],
+"say": "Some things make it harder. Anger, panic, or ultimatums. Demanding a promise to stop. Calling it attention-seeking. They may fear you will take away the only way they know to get through. Patience keeps the door open.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Help care for wounds",
+"Calmly"
+],
+[
+"An appointment this week",
+"A doctor or counselor"
+],
+[
+"Secure medicines and sharp items",
+"Calmly, at home"
+],
+[
+"Parents: the school counselor",
+"If school is part of it"
+]
+],
+"say": "Here's what helps. Stay calm and help care for wounds. Help them get an appointment this week. Secure medicines and sharp items at home, calmly. And parents, loop in the school counselor if school is part of the picture.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Your steady love helps.",
+"sub": "Get support for yourself too.",
+"say": "It is frightening to love someone who hurts themselves. Get support for yourself too, from a counselor, a parent group, or a trusted friend. Call or text 988 any time. For a serious injury or danger right now, call 911. Your steady love helps."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"Text HOME to 741741",
+"911: serious injury or danger now"
+],
+"music": "safety"
 }
 }
 ]

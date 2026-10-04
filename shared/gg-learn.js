@@ -645,7 +645,7 @@
   function load(app) { try { var d = JSON.parse(localStorage.getItem(KEY(app)) || '{}'); return { done: d.done || {}, at: d.at || {} }; } catch (e) { return { done: {}, at: {} }; } }
   function keep(app, d) { try { localStorage.setItem(KEY(app), JSON.stringify({ done: d.done, at: d.at })); } catch (e) {} }
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv1', oak: '/oak/guide-videos.js?v=gv2' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv1', oak: '/oak/guide-videos.js?v=gv3' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {

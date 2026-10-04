@@ -3254,7 +3254,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 719): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from oak/guide-videos.js. LC_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:oak). */
-/* LC_VIDS start */const LC_VIDS = ["anxiety", "sadness", "loneliness", "burnout", "anger", "shame", "lost", "trauma", "adhd", "spouse-death", "parent-death", "child-death", "pregnancy-loss", "suicide-loss", "dying-loved", "ambiguous-loss", "grief-days", "pet-death", "diagnosis", "chronic", "own-death", "eol-plan", "bedside", "after-death", "addiction", "caregiving", "dementia-care", "disability", "eating", "accident", "porn", "gambling"];/* LC_VIDS end */
+/* LC_VIDS start */const LC_VIDS = ["anxiety", "sadness", "loneliness", "burnout", "anger", "shame", "lost", "trauma", "adhd", "spouse-death", "parent-death", "child-death", "pregnancy-loss", "suicide-loss", "dying-loved", "ambiguous-loss", "grief-days", "pet-death", "diagnosis", "chronic", "own-death", "eol-plan", "bedside", "after-death", "addiction", "caregiving", "dementia-care", "disability", "eating", "accident", "porn", "gambling", "divorce", "marriage-strain", "betrayal", "infertility", "estrangement", "aging-parents", "empty-nest", "struggling-child", "newparent", "incarceration", "suicidal-self", "suicidal-other", "escalating", "domestic-violence", "past-abuse", "assault", "self-harm"];/* LC_VIDS end */
 function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:oak') || '{}').done || {})[id]); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!LC_VIDS.includes(gid)) return '';
