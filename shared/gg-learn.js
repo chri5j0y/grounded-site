@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln12';
+  var V = 'ln13';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -282,17 +282,58 @@
   // Lessons carry their own sources (sealed lessons), or shared/gg-sources.js lists them by id; story scenes credit Chris.
   /* ---------------- background music (GWG BLD 720) ----------------
      Soft music under the voice in every video. It fades in when Play is tapped, follows Pause, and fades out
-     at the closing scene. Four moods: learning (lessons, When Life Changes, For Guides), calm (Support for
+     at the closing scene. Four moods, seven tracks each: learning (lessons, When Life Changes, For Guides), calm (Support for
      Right Now and Support for Guides), kids (Maple and Aspen), willow (Willow and Willow Guide). A video picks
-     its mood from cfg.mood, then its track kind, then its app. Tracks live in /audio/music/ and are licensed
-     for use in apps and websites; each carries its credit for the Sources line. Until a track is listed here
-     the feature stays quiet and the Music switch stays hidden. Listeners turn it off or on with the Music
+     its mood from cfg.mood, then its track kind, then its app, and one track from that mood by its lesson id.
+     Tracks live in /audio/music/<mood>-<n>.mp3 (96k, loudness evened), licensed for apps and websites; each
+     carries its credit for the Sources line. A mood with no tracks stays quiet, and with none at all the
+     Music switch stays hidden. Listeners turn it off or on with the Music
      switch beside Voice and Speed; the choice is kept on this device (gg-music). Volume runs through Web Audio
      where it can, because phones ignore an audio element's volume setting. */
-  var MUSIC = { learning: null, calm: null, kids: null, willow: null }; // {src: '/audio/music/<mood>.mp3', credit: 'Title by Artist (Pixabay)'}
-  var MUSIC_V = 'mu1', MUSIC_LEVEL = 0.14;
+  // Seven licensed tracks per mood (Pixabay Content License, chosen by Chris, GWG BLD 721). Each video always gets the same one.
+  var MUSIC = {
+    learning: [
+      { src: '/audio/music/learning-1.mp3', credit: "\"Fresh Acoustic Guitar and Felt Piano Harmony\" by juraganvisi, Pixabay" },
+      { src: '/audio/music/learning-2.mp3', credit: "\"Guitar Music\" by andriig, Pixabay" },
+      { src: '/audio/music/learning-3.mp3', credit: "\"Checkmate Chills\" by turning_pages, Pixabay" },
+      { src: '/audio/music/learning-4.mp3', credit: "\"Sleepy Lofi Music\" by absolutesound, Pixabay" },
+      { src: '/audio/music/learning-5.mp3', credit: "\"Lo-Fi Hip Hop\" by zephiramusic, Pixabay" },
+      { src: '/audio/music/learning-6.mp3', credit: "\"Effortless Piano and Guitar Harmony\" by juraganvisi, Pixabay" },
+      { src: '/audio/music/learning-7.mp3', credit: "\"Effortless Piano and Guitar Harmony\" by juraganvisi, Pixabay" }
+    ],
+    calm: [
+      { src: '/audio/music/calm-1.mp3', credit: "\"Acoustic Music\" by andriig, Pixabay" },
+      { src: '/audio/music/calm-2.mp3', credit: "\"Gentle Ambient Nature Music for Relaxation\" by desifreemusic, Pixabay" },
+      { src: '/audio/music/calm-3.mp3', credit: "\"Angelic Vocalise, Nature Ambient\" by moonpetalmedia, Pixabay" },
+      { src: '/audio/music/calm-4.mp3', credit: "\"Soft Ambient Textures with Subtle Bird Chirps\" by desifreemusic, Pixabay" },
+      { src: '/audio/music/calm-5.mp3', credit: "\"Slow Morning Ritual\" by alex-morgan, Pixabay" },
+      { src: '/audio/music/calm-6.mp3', credit: "\"Acoustic Music\" by andriig, Pixabay" },
+      { src: '/audio/music/calm-7.mp3', credit: "\"Acoustic Music\" by andriih, Pixabay" }
+    ],
+    kids: [
+      { src: '/audio/music/kids-1.mp3', credit: "\"Cheerful Joyful Playful Music\" by viacheslavstarostin, Pixabay" },
+      { src: '/audio/music/kids-2.mp3', credit: "\"Indie Folk\" by octosound, Pixabay" },
+      { src: '/audio/music/kids-3.mp3', credit: "\"Playful Lo-Fi Piano with Mellow Focus Pads\" by juraganvisi, Pixabay" },
+      { src: '/audio/music/kids-4.mp3', credit: "\"Happy Cute Love Gentle Piano Solo\" by art_roseman, Pixabay" },
+      { src: '/audio/music/kids-5.mp3', credit: "\"Happy Piano\" by leberch, Pixabay" },
+      { src: '/audio/music/kids-6.mp3', credit: "\"Ukulele\" by atlasaudio, Pixabay" },
+      { src: '/audio/music/kids-7.mp3', credit: "\"Ukulele Music\" by tatamusic, Pixabay" }
+    ],
+    willow: [
+      { src: '/audio/music/willow-1.mp3', credit: "\"Tender\" by alexgrohl, Pixabay" },
+      { src: '/audio/music/willow-2.mp3', credit: "\"Beautiful Piano and Cello\" by denis-pavlov-music, Pixabay" },
+      { src: '/audio/music/willow-3.mp3', credit: "\"Piano and Cello, Beautiful Poetic Music\" by denis-pavlov-music, Pixabay" },
+      { src: '/audio/music/willow-4.mp3', credit: "\"Whispered Memories, Piano and Cello\" by icsilviu, Pixabay" },
+      { src: '/audio/music/willow-5.mp3', credit: "\"Sad Piano Instrumental\" by trtasfiq, Pixabay" },
+      { src: '/audio/music/willow-6.mp3', credit: "\"Piano Music\" by paulyudin, Pixabay" },
+      { src: '/audio/music/willow-7.mp3', credit: "\"Piano Music\" by arpmedia, Pixabay" }
+    ]
+  };
+  var MUSIC_V = 'mu2', MUSIC_LEVEL = 0.14;
   var BG = { el: null, ctx: null, gain: null, src: '', fade: 0 };
-  function musicHas() { for (var k in MUSIC) if (MUSIC[k] && MUSIC[k].src) return true; return false; }
+  function musicHas() { for (var k in MUSIC) if (MUSIC[k] && MUSIC[k].length) return true; return false; }
+  // The track for one video: the same one every time, spread across the mood's list by the lesson id.
+  function musicPick(cfg) { var list = MUSIC[moodOf(cfg)] || [], id = String((cfg.lesson || {}).id || ''), h = 0; if (!list.length) return null; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0; return list[h % list.length]; }
   function musicOn() { try { return localStorage.getItem('gg-music') !== 'off'; } catch (e) { return true; } }
   function musicSet(on) { try { localStorage.setItem('gg-music', on ? 'on' : 'off'); } catch (e) {} }
   function moodOf(cfg) {
@@ -307,8 +348,8 @@
     clearInterval(BG.fade); var from = BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0), t0 = Date.now();
     BG.fade = setInterval(function () { var k = Math.min(1, (Date.now() - t0) / ms); bgVol(from + (to - from) * k); if (k >= 1) { clearInterval(BG.fade); if (done) done(); } }, 50);
   }
-  function bgPlay(mood) {
-    var m = MUSIC[mood]; if (!m || !m.src || !musicOn()) return;
+  function bgPlay(cfg) {
+    var m = musicPick(cfg); if (!m || !m.src || !musicOn()) return;
     try {
       var src = url(m.src + '?v=' + MUSIC_V);
       if (!BG.el) {
@@ -323,12 +364,12 @@
     } catch (e) {}
   }
   function bgStop(ms) { if (!BG.el) return; bgFade(0, ms || 700, function () { try { BG.el.pause(); } catch (e) {} }); }
-  function musicCredit(cfg) { var m = MUSIC[moodOf(cfg)]; return m && m.src && m.credit && musicOn() ? '<small class="gg-src-line"><span class="gg-src-k">Music:</span> ' + esc(m.credit) + '</small>' : ''; }
+  function musicCredit(cfg) { var m = musicPick(cfg); return m && m.src && m.credit && musicOn() ? '<small class="gg-src-line"><span class="gg-src-k">Music:</span> ' + esc(m.credit) + '</small>' : ''; }
   function musicSwitch(host, cfg, P) {
     if (!musicHas()) return;
     var w = document.createElement('label'); w.className = 'ln-mu';
     w.innerHTML = '<input type="checkbox"' + (musicOn() ? ' checked' : '') + '> Music';
-    w.querySelector('input').addEventListener('change', function (e) { musicSet(e.target.checked); if (e.target.checked) { if (P.playing && !P.last) bgPlay(moodOf(cfg)); } else bgStop(300); });
+    w.querySelector('input').addEventListener('change', function (e) { musicSet(e.target.checked); if (e.target.checked) { if (P.playing && !P.last) bgPlay(cfg); } else bgStop(300); });
     var vs = host.querySelector('.ln-vs'); if (vs) vs.appendChild(w);
   }
 
@@ -354,7 +395,7 @@
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
     function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); if (P.audio) { try { P.audio.onended = P.audio.onerror = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
-    function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(moodOf(cfg)); }
+    function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(cfg); }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
       if (hasQuiz && !answered && !(cfg.done || {})[l.id]) return { ok: false, eyebrow: 'Almost There', h: 'One question left.', sub: 'Answer it to finish this lesson.', say: 'One question left. Answer it to finish this lesson.', unfinished: true };
@@ -399,7 +440,7 @@
       if (last) endButtons(sc._e);
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
       if (last) bgStop(2500);
-      else if (P.playing) bgPlay(moodOf(cfg));
+      else if (P.playing) bgPlay(cfg);
       if (last) $('.ln-link', host).innerHTML = srcLine(l) + musicCredit(cfg) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
       var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now();
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
