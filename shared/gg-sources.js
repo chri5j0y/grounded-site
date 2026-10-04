@@ -22,6 +22,7 @@
      GGSources.line(list, opts)       draw any list of source ids or {label, href} objects
    Sealed lessons (Field library) carry their own sources: ['id', ...] or [{label, href}].
    Edit sources here. Proofreading lines are in the Founder library (p9k-sources).
+   W1 and W2 (Willow Guide For Guides) added the credits marked below; sealed lessons carry their ids in sources.
    ===================================================================== */
 (function () {
   if (window.GGSources) return;
@@ -71,7 +72,15 @@
     fitchett: ['Fitchett and Risk, screening for spiritual struggle (2009)', 'https://pubmed.ncbi.nlm.nih.gov/?term=Fitchett+Risk+Screening+for+spiritual+struggle'],
     chochinovdt: ['Chochinov and colleagues, dignity therapy (2005)', 'https://doi.org/10.1200/JCO.2005.08.391', 'a'],
     singh: ['Kathleen Dowling Singh, The Grace in Dying', SHELF + 'DY-004'],
-    tangney: ['June Price Tangney and Ronda L. Dearing, Shame and Guilt (2002)', '']
+    tangney: ['June Price Tangney and Ronda L. Dearing, Shame and Guilt (2002)', ''],
+    // W2 (GWG BLD 715): Willow For Guides, The Last Days and After
+    hui: ['Hui and colleagues, clinical signs of impending death in cancer patients (2014)', 'https://doi.org/10.1634/theoncologist.2013-0457'],
+    mccann: ['McCann, Hall, and Groth-Juncker, comfort care and the appropriate use of nutrition and hydration (JAMA, 1994)', 'https://jamanetwork.com/journals/jama/article-abstract/381346'],
+    nahm: ['Nahm, Greyson, Kelly, and Haraldsson, terminal lucidity (2012)', 'https://doi.org/10.1016/j.archger.2011.06.031'],
+    schulz: ['Schulz and colleagues, end-of-life care and bereavement in family caregivers of persons with dementia (NEJM, 2003)', 'https://pubmed.ncbi.nlm.nih.gov/?term=Schulz+End-of-life+care+and+the+effects+of+bereavement+on+family+caregivers+of+persons+with+dementia'],
+    dougy: ['The Dougy Center for Grieving Children and Families', 'https://www.dougy.org/', 'a'],
+    honoring: ['Honoring Choices Minnesota', 'https://www.honoringchoices.org/', 'a'],
+    convo: ['The Conversation Project', 'https://theconversationproject.org/', 'a']
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
