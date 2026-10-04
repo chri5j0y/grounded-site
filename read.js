@@ -15,11 +15,23 @@
   var SPEEDS = [['0.8', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']], SPEED_KEY = 'gg_voice_speed';
   function speed() { var v = 1; try { v = parseFloat(localStorage.getItem(SPEED_KEY)) || 1; } catch (e) {} return Math.min(1.5, Math.max(0.6, v)); }
   var chosen = null, list = [];
+  /* iPhone and iPad report a Premium voice as plain "Ava"; the quality is only in its voiceURI
+     (com.apple.voice.premium.en-US.Ava). So both are checked. */
+  function tag(v) { return (v.name || '') + ' ' + (v.voiceURI || ''); }
+  function tier(v) {
+    if (!v) return '';
+    var t = tag(v);
+    if (/premium/i.test(t)) return 'Premium';
+    if (/enhanced/i.test(t)) return 'Enhanced';
+    if (/natural|neural/i.test(v.name)) return 'Natural';
+    return '';
+  }
   function quality(v) {
-    var q = 0;
+    var q = 0, t = tag(v);
     if (/natural|neural|online/i.test(v.name)) q += 60;
-    if (/premium/i.test(v.name)) q += 55;
-    if (/enhanced/i.test(v.name)) q += 45;
+    if (/premium/i.test(t)) q += 55;
+    if (/enhanced/i.test(t)) q += 45;
+    if (/compact|super-compact|espeak/i.test(t)) q -= 20;
     if (/google/i.test(v.name)) q += 25;
     if (GOOD.test(v.name)) q += 12;
     if (/en[-_]us/i.test(v.lang)) q += 10; else if (/en[-_](gb|au|ie|ca|nz)/i.test(v.lang)) q += 6;
@@ -36,15 +48,20 @@
     if (!synth) return;
     list = synth.getVoices().filter(function (v) { return /^en/i.test(v.lang) && !NOVELTY.test(v.name); })
       .sort(function (a, b) { return score(b) - score(a); });
+    // A saved choice that hasn't loaded yet stays saved (Safari loads voices in more than one pass),
+    // so it is picked on a later voiceschanged. Nothing here ever overwrites it.
     var saved = null; try { saved = localStorage.getItem(P.key); } catch (e) {}
     chosen = (saved && list.find(function (v) { return v.name === saved; })) || list[0] || null;
     document.querySelectorAll('select.gg-vsel').forEach(fillMenu);
   }
   function online(v) { return v && v.localService === false; }
   function nice(n) { return n.replace(/^Microsoft /, '').replace(/ Online \(Natural\)/, ' (natural)').replace(/ - English \(([^)]+)\)/, ', $1').replace(/^Google /, 'Google ').replace(/\s+/g, ' ').trim(); }
+  // "Ava (Premium)". A Mac already puts the quality in the name, so it isn't doubled.
+  function label(v) { var n = nice(v.name), q = tier(v); if (q && q !== 'Natural' && n.toLowerCase().indexOf(q.toLowerCase()) < 0) n += ' (' + q + ')'; return n + (online(v) ? ' (uses internet)' : ''); }
+  // Every English voice on the device, best first (novelty voices left out).
   function fillMenu(sel) {
     var cur = chosen ? chosen.name : '';
-    sel.innerHTML = list.filter(function (v, k) { return k < 7 || v.name === cur; }).slice(0, 8).map(function (v) { return '<option value="' + v.name.replace(/"/g, '&quot;') + '"' + (v.name === cur ? ' selected' : '') + '>' + nice(v.name) + (online(v) ? ' (uses internet)' : '') + '</option>'; }).join('') || '<option>Device voice</option>';
+    sel.innerHTML = list.map(function (v) { return '<option value="' + v.name.replace(/"/g, '&quot;') + '"' + (v.name === cur ? ' selected' : '') + '>' + label(v) + '</option>'; }).join('') || '<option>Device voice</option>';
   }
   if (synth) { refresh(); try { synth.addEventListener('voiceschanged', refresh); } catch (e) { synth.onvoiceschanged = refresh; } }
 
@@ -61,7 +78,7 @@
     '.gg-vhelp-btn{font:inherit;font-size:14px;color:inherit;background:transparent;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 2px;min-height:32px;}' +
     '.gg-vhelp{flex-basis:100%;font-size:15px;line-height:1.5;border:1px solid rgba(139,94,26,.35);border-radius:12px;padding:12px 16px;margin-top:2px;}' +
     '.gg-vhelp h4{margin:0 0 6px;font-size:16px;}.gg-vhelp p{margin:6px 0;}.gg-vhelp ol{margin:4px 0 10px 20px;padding:0;}.gg-vhelp li{margin:3px 0;}' +
-    '.gg-vhelp b{font-weight:700;}' +
+    '.gg-vhelp b{font-weight:700;}.gg-vhelp details{margin:4px 0;}.gg-vhelp summary{cursor:pointer;font-weight:600;min-height:36px;display:flex;align-items:center;}.gg-vs-note{font-size:14px;opacity:.9;}' +
     '@media print{.gg-rbar{display:none !important}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var I = {
@@ -109,27 +126,146 @@
   function pause() { if (state !== 'playing') return; state = 'paused'; if (audio) audio.pause(); else synth.cancel(); emit(); }
   function resume() { if (state !== 'paused') return; state = 'playing'; emit(); if (audio) audio.play(); else next(); }
   function stop() { state = 'idle'; if (synth) synth.cancel(); if (audio) { audio.pause(); audio.currentTime = 0; } mark(null); emit(); }
-  /* Steps to get a better voice. Phone menus change, so each one also says what to search for. Checked Oct 2026. */
-  var HELP = '<h4>Get a better voice</h4>' +
-    '<p>Most phones and computers come with free, natural-sounding voices that aren\'t turned on yet. Download one once, and every Grounded tool can use it, even offline.</p>' +
-    '<p><b>iPhone or iPad</b></p><ol><li>Open Settings, then Accessibility.</li><li>Tap Read &amp; Speak (on older versions, Spoken Content), then Voices, then English.</li><li>Pick a voice marked Enhanced or Premium, like Ava, Evan, Nathan, or Zoe, and tap download. Use Wi-Fi; they\'re large.</li></ol>' +
-    '<p><b>Android</b></p><ol><li>Open Settings and search for Text-to-speech.</li><li>Choose Speech Services by Google as the engine, then tap its settings.</li><li>Tap Install voice data, then English, and download a voice you like.</li></ol>' +
-    '<p><b>Mac</b></p><ol><li>Open System Settings, then Accessibility.</li><li>Open Read &amp; Speak (or Spoken Content), then System voice, then Manage Voices.</li><li>Download an English voice marked Enhanced, Premium, or Siri.</li></ol>' +
-    '<p><b>Windows</b></p><ol><li>Open Settings, then Time &amp; language, then Speech.</li><li>Under Manage voices, tap Add voices and add an English voice.</li></ol>' +
-    '<p>Then close this page all the way, open it again, and pick the new voice from the Voice menu. Voices marked "uses internet" read the words through that company\'s servers, so Grounded never picks them for you.</p>';
+  /* ---------------- Voice Setup ----------------
+     Steps to get a better voice on each device and browser. Menus change, so each set also says what to
+     search for. Checked October 2026. The Voice Check, the voice menu's help, and the Voice Setup page
+     (voice-setup.html) all read these, so the steps are written once. */
+  var STEPS = {
+    ios: { name: 'iPhone or iPad', why: 'Safari, Chrome, and every other browser on an iPhone or iPad use the same Apple voices, so one download works everywhere.', steps: [
+      'Open the Settings app, then Accessibility.',
+      'Tap Read &amp; Speak (on older versions, Spoken Content), then Voices, then English.',
+      'Pick a voice marked Premium or Enhanced, like Ava, Zoe, Evan, or Nathan, and tap the download arrow. Use Wi-Fi; Premium voices are large.',
+      'Fully close your browser: swipe up from the bottom of the screen, then swipe the browser away. Open this page again.',
+      'Open the Voice menu and pick the new voice. It shows as (Premium) or (Enhanced).'
+    ], note: 'Siri voices can\'t be used by websites. Download a voice marked Premium or Enhanced instead, then fully close Safari and reopen it.' },
+    mac: { name: 'Mac', why: 'Safari and Chrome on a Mac both use the voices you download in System Settings.', steps: [
+      'Open System Settings, then Accessibility.',
+      'Open Read &amp; Speak (or Spoken Content), then the System Voice menu, then Manage Voices.',
+      'Under English, download a voice marked Premium or Enhanced, like Ava, Zoe, Evan, or Nathan.',
+      'Quit your browser all the way (Command Q), open it again, and come back to this page.',
+      'Open the Voice menu and pick the new voice.'
+    ], note: 'Siri voices can\'t be used by websites. Choose a Premium or Enhanced voice instead.' },
+    windows: { name: 'Windows', why: 'Microsoft Edge has the most natural voices on Windows. Chrome and Firefox use the voices installed in Windows.', steps: [
+      'Best: open this page in Microsoft Edge. Its voices marked (natural) sound the most like a person.',
+      'Natural voices in Edge use the internet: the words being read go to Microsoft to be spoken. Lessons and check-in questions are the same for everyone, so nothing about you is sent. Grow With Grounded never picks these for you; choose one yourself in the Voice menu.',
+      'To keep everything on your computer instead: open Settings, then Time &amp; language, then Speech. Under Manage voices, choose Add voices and add an English voice.',
+      'Close your browser all the way, open it again, and pick the voice in the Voice menu.'
+    ], note: 'Voices named David, Zira, or Mark are the older Windows voices. They work, but they sound robotic.' },
+    android: { name: 'Android', why: 'Chrome on Android uses your phone\'s text-to-speech engine. Google\'s engine has the best voices.', steps: [
+      'Open Settings and search for Text-to-speech.',
+      'Set the Preferred engine to Speech Services by Google. (Samsung phones start with Samsung\'s engine; switch it.)',
+      'Tap the gear next to Speech Services by Google, then Install voice data, then English (United States).',
+      'Download a voice you like. Tap play to hear each one.',
+      'Close Chrome all the way (swipe it away in recent apps), open this page again, and pick the voice in the Voice menu.'
+    ], note: 'Voice downloads are large. Use Wi-Fi.' },
+    chromeos: { name: 'Chromebook', why: 'A Chromebook uses Google\'s voices.', steps: [
+      'Open Settings, then Accessibility, then Text-to-speech.',
+      'Open Text-to-speech voice settings (or Speech engines) and choose an English voice. Download a natural voice if one is offered.',
+      'Close Chrome all the way, open this page again, and pick the voice in the Voice menu.'
+    ], note: '' },
+    linux: { name: 'Linux', why: 'Browsers on Linux use the voices installed on the computer, which are often very basic.', steps: [
+      'Chrome offers Google voices that use the internet (they show as uses internet). Pick one in the Voice menu if you\'re comfortable with that.',
+      'Or install a better voice package for your system, then restart the browser.'
+    ], note: '' }
+  };
+  var BROWSER_NOTE = { firefox: 'Firefox uses the voices on your device. If they sound robotic, the steps above help, or open this page in Safari, Edge, or Chrome.' };
+  function platform() {
+    var ua = navigator.userAgent || '', pl = navigator.platform || '', touch = (navigator.maxTouchPoints || 0) > 1;
+    var os = /iPhone|iPad|iPod/.test(ua) || (/Mac/.test(pl) && touch) ? 'ios' : /Android/.test(ua) ? 'android' : /CrOS/.test(ua) ? 'chromeos' : /Mac/.test(pl) || /Macintosh/.test(ua) ? 'mac' : /Win/.test(pl) || /Windows/.test(ua) ? 'windows' : /Linux/.test(ua) ? 'linux' : 'windows';
+    var br = /Edg\//.test(ua) ? 'edge' : /Firefox|FxiOS/.test(ua) ? 'firefox' : /Chrome|CriOS/.test(ua) ? 'chrome' : /Safari/.test(ua) ? 'safari' : 'browser';
+    var dev = os === 'ios' ? (/iPad/.test(ua) || (/Mac/.test(pl) && touch) ? 'iPad' : 'iPhone') : STEPS[os].name;
+    var bname = { edge: 'Microsoft Edge', firefox: 'Firefox', chrome: 'Chrome', safari: 'Safari', browser: 'your browser' }[br];
+    return { os: os, browser: br, label: dev + ', ' + bname };
+  }
+  // How good the voice in use is: great (Premium, Enhanced, Natural), okay (a newer standard voice), or basic.
+  function voiceInfo() {
+    if (!synth) return { ok: false, grade: 'none', name: '', text: 'This browser can\'t read aloud.' };
+    if (!list.length) refresh();
+    var v = chosen, q = tier(v), t = v ? tag(v) : '';
+    var grade = !v ? 'none' : q ? 'great' : /google/i.test(v.name) && !online(v) ? 'great' : /compact|espeak|\b(david|zira|mark)\b/i.test(t) ? 'basic' : /google/i.test(v.name) ? 'okay' : /\b(samantha|alex|daniel|karen|moira|tessa|fred)\b/i.test(v.name) ? 'okay' : 'basic';
+    if (v && platform().os === 'android' && /^en/i.test(v.lang) && !q) grade = 'okay';
+    var best = list.filter(function (x) { return tier(x) && !online(x); }).length;
+    return { ok: !!v, grade: grade, name: v ? label(v) : '', count: list.length, best: best };
+  }
+  function stepsHtml(os, open) {
+    var S = STEPS[os]; if (!S) return '';
+    return '<p class="gg-vs-why">' + S.why + '</p><ol>' + S.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' + (S.note ? '<p class="gg-vs-note">' + S.note + '</p>' : '');
+  }
+  // Steps for this device first, then every other device behind a tap.
+  function helpHtml() {
+    var p = platform(), others = Object.keys(STEPS).filter(function (k) { return k !== p.os; });
+    return '<h4>Get a Better Voice</h4><p>Most phones and computers come with free, natural-sounding voices that aren\'t turned on yet. Download one once, and every Grow With Grounded tool uses it, even offline.</p>'
+      + '<p><b>On your ' + STEPS[p.os].name + '</b></p>' + stepsHtml(p.os) + (BROWSER_NOTE[p.browser] ? '<p>' + BROWSER_NOTE[p.browser] + '</p>' : '')
+      + others.map(function (k) { return '<details class="gg-vs-more"><summary>' + STEPS[k].name + '</summary>' + stepsHtml(k) + '</details>'; }).join('')
+      + '<p>Voices marked \"uses internet\" read the words through that company\'s servers, so Grow With Grounded never picks them for you.</p>';
+  }
+  var SAMPLE = 'Hello. This is how lessons and read aloud will sound on this device. Take a slow breath. You are right where you need to be.';
+  var CHECK_KEY = 'gg_voice_checked';
+  function checked() { try { return !!localStorage.getItem(CHECK_KEY); } catch (e) { return true; } }
+  /* The Voice Check: once per device, before the first video or Read Aloud, and anytime from the voice menu. */
+  function check(done) {
+    var old = document.querySelector('.gg-vc'); if (old) old.remove();
+    if (!document.getElementById('gg-vc-css')) {
+      var c = document.createElement('style'); c.id = 'gg-vc-css';
+      c.textContent = '.gg-vc{position:fixed;inset:0;z-index:2147483600;background:rgba(28,22,18,.55);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 14px calc(24px + env(safe-area-inset-bottom,0px));font-family:Barlow,system-ui,sans-serif;}'
+        + '.gg-vc-box{background:#FFFCF6;color:#2C1810;max-width:560px;width:100%;border-radius:20px;padding:22px 22px 18px;box-shadow:0 18px 50px rgba(0,0,0,.3);margin:auto 0;}'
+        + ':root[data-theme="dark"] .gg-vc-box{background:#26211C;color:#F2EADC;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gg-vc-box{background:#26211C;color:#F2EADC;}}'
+        + '.gg-vc h2{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:32px;line-height:1.1;margin:0 0 6px;}.gg-vc h2:focus{outline:none;}'
+        + '.gg-vc p{font-size:17px;line-height:1.5;margin:8px 0;}.gg-vc ol{margin:6px 0 8px 22px;padding:0;font-size:16px;line-height:1.5;}.gg-vc li{margin:4px 0;}'
+        + '.gg-vc-now{display:flex;gap:12px;align-items:center;border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(139,94,26,.09);}'
+        + '.gg-vc-dot{width:14px;height:14px;border-radius:50%;flex:none;}.gg-vc-now b{display:block;}.gg-vc-now small{display:block;font-size:15px;opacity:.85;}'
+        + '.gg-vc-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}'
+        + '.gg-vc button{font:inherit;font-weight:600;min-height:48px;padding:10px 16px;border-radius:12px;border:1.5px solid #8B5E1A;background:transparent;color:inherit;cursor:pointer;}'
+        + '.gg-vc button.pri{background:#8B5E1A;border-color:#8B5E1A;color:#FFF8EC;}.gg-vc button:focus-visible{outline:3px solid #C98A3E;outline-offset:2px;}'
+        + '.gg-vc details{border-top:1px solid rgba(139,94,26,.25);padding:6px 0;}.gg-vc summary{cursor:pointer;font-weight:600;min-height:40px;display:flex;align-items:center;}'
+        + '.gg-vs-note{font-size:15px !important;opacity:.9;}.gg-vc .gg-vc-steps{margin-top:6px;}';
+      document.head.appendChild(c);
+    }
+    var p = platform(), wrap = document.createElement('div'); wrap.className = 'gg-vc'; wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-label', 'Voice Check');
+    var prev = document.activeElement;
+    function paint() {
+      var I = voiceInfo(), col = { great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' }[I.grade];
+      var said = { great: 'Sounds great. You\'re all set.', okay: 'Sounds okay. A Premium, Enhanced, or Natural voice sounds much more like a person.', basic: 'Sounds basic, and it can make lessons hard to enjoy. A better voice is free and takes a few minutes.', none: 'No voice found yet. If you just downloaded one, fully close your browser and open this page again.' }[I.grade];
+      wrap.innerHTML = '<div class="gg-vc-box"><h2 tabindex="-1">Voice Check</h2>'
+        + '<p>Lessons, videos, and Read Aloud use your device\'s own voice. A good voice makes them a joy to listen to; a basic one can sound robotic. Let\'s check yours.</p>'
+        + '<p style="font-size:15px;opacity:.85">You\'re on ' + p.label + '.</p>'
+        + '<div class="gg-vc-now"><span class="gg-vc-dot" style="background:' + col + '"></span><span><b>' + (I.name ? 'Your voice: ' + I.name : 'Your voice') + '</b><small>' + said + '</small></span></div>'
+        + '<div class="gg-vc-row"><button type="button" data-v="sample">Play a Sample</button>' + (I.grade !== 'great' ? '<button type="button" data-v="again">I Added a Voice, Check Again</button>' : '') + '</div>'
+        + (I.grade !== 'great' ? '<details class="gg-vc-steps"' + (I.grade !== 'great' ? ' open' : '') + '><summary>Set Up a Better Voice on Your ' + STEPS[p.os].name + '</summary>' + stepsHtml(p.os) + (BROWSER_NOTE[p.browser] ? '<p>' + BROWSER_NOTE[p.browser] + '</p>' : '') + '</details>' : '')
+        + '<p style="font-size:15px">Other devices, a video, and a printable guide: <a href="/voice-setup.html" target="_blank" rel="noopener">Voice Setup</a>.</p>'
+        + '<div class="gg-vc-row"><button type="button" class="pri" data-v="go">' + (I.grade === 'great' ? 'Continue' : 'Continue Anyway') + '</button></div></div>';
+    }
+    function finish() { try { localStorage.setItem(CHECK_KEY, new Date().toISOString().slice(0, 10)); } catch (e) {} if (synth) synth.cancel(); document.removeEventListener('keydown', key); wrap.remove(); if (prev && prev.focus) try { prev.focus(); } catch (e) {} if (done) done(); }
+    function key(e) { if (e.key === 'Escape') { e.preventDefault(); finish(); } }
+    wrap.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-v]'); if (!b) return;
+      var v = b.getAttribute('data-v');
+      if (v === 'sample') say(SAMPLE);
+      else if (v === 'again') { refresh(); paint(); var h = wrap.querySelector('h2'); if (h) h.focus(); }
+      else if (v === 'go') finish();
+    });
+    document.addEventListener('keydown', key);
+    paint(); document.body.appendChild(wrap);
+    var h = wrap.querySelector('h2'); if (h) h.focus();
+    // Voices often arrive a moment after the page; repaint once they do.
+    setTimeout(function () { if (wrap.isConnected) { refresh(); paint(); } }, 900);
+  }
+  // Run the Voice Check first if this device hasn't had one, then go on.
+  function ensure(go) { if (!synth || checked()) { if (go) go(); return; } check(go); }
   function voiceMenu() {
     var g = document.createElement('span'); g.className = 'gg-vm gg-vset'; g.style.flexWrap = 'wrap';
     g.innerHTML = '<label class="gg-vm"><span>Voice</span><select class="gg-vsel" aria-label="Choose a reading voice"></select></label>' +
       '<label class="gg-vm"><span>Speed</span><select class="gg-vspeed" aria-label="Reading speed">' + SPEEDS.map(function (x) { return '<option value="' + x[0] + '"' + (Math.abs(parseFloat(x[0]) - speed()) < .01 ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></label>' +
-      '<button type="button" class="gg-vhelp-btn" aria-expanded="false">Get a better voice</button>';
+      '<button type="button" class="gg-vhelp-btn" aria-expanded="false">Get a Better Voice</button><button type="button" class="gg-vhelp-btn gg-vcheck-btn">Voice Check</button>';
     var sel = g.querySelector('.gg-vsel'), sp = g.querySelector('.gg-vspeed'), hb = g.querySelector('.gg-vhelp-btn');
     fillMenu(sel);
     sel.addEventListener('change', function () { var v = list.find(function (x) { return x.name === sel.value; }); if (v) { chosen = v; try { localStorage.setItem(P.key, v.name); } catch (e) {} document.querySelectorAll('.gg-vsel').forEach(function (o) { if (o !== sel) fillMenu(o); }); if (state === 'playing') { synth.cancel(); next(); } } });
     sp.addEventListener('change', function () { try { localStorage.setItem(SPEED_KEY, sp.value); } catch (e) {} document.querySelectorAll('.gg-vspeed').forEach(function (o) { o.value = sp.value; }); if (state === 'playing') { synth.cancel(); next(); } });
+    g.querySelector('.gg-vcheck-btn').addEventListener('click', function () { check(); });
     hb.addEventListener('click', function () {
       var bar = g.closest('.gg-rbar') || g.parentNode, h = bar.querySelector('.gg-vhelp');
       if (h) { h.remove(); hb.setAttribute('aria-expanded', 'false'); return; }
-      h = document.createElement('div'); h.className = 'gg-vhelp'; h.innerHTML = HELP; bar.appendChild(h); hb.setAttribute('aria-expanded', 'true');
+      h = document.createElement('div'); h.className = 'gg-vhelp'; h.innerHTML = helpHtml(); bar.appendChild(h); hb.setAttribute('aria-expanded', 'true');
     });
     return g;
   }
@@ -140,17 +276,23 @@
     return bar;
   }
   /* Speak one line with the chosen voice and speed. Used by tools that read one question at a time. */
+  // opts.onend runs when the line finishes (or fails), so a player can pause between lines.
+  var held = null; // Safari can drop an utterance it isn't holding on to, and never fire its end
   function say(text, opts) {
-    if (!synth || !text) return;
+    if (!synth || !text) return null;
     opts = opts || {};
     stop();
     try {
       if (!chosen) refresh();
-      var u = new SpeechSynthesisUtterance(text);
+      var u = new SpeechSynthesisUtterance(text), fired = false;
       try { if (chosen) { u.voice = chosen; u.lang = chosen.lang; } } catch (e) { chosen = null; }
       u.rate = (opts.rate || P.rate) * speed(); u.pitch = opts.pitch || P.pitch;
-      synth.speak(u);
-    } catch (e) {}
+      var end = function () { if (fired) return; fired = true; if (held === u) held = null; if (opts.onend) try { opts.onend(); } catch (e) {} };
+      u.onend = end; u.onerror = end;
+      if (opts.onstart) u.onstart = function () { try { opts.onstart(); } catch (e) {} };
+      held = u; synth.speak(u);
+      return u;
+    } catch (e) { return null; }
   }
   /* A play, pause, and stop control that reads a region. audioSrc plays a recording instead when it exists. */
   function control(opts) {
@@ -170,9 +312,8 @@
     b.addEventListener('click', function () {
       if (mine && state === 'playing') return pause();
       if (mine && state === 'paused') return resume();
-      mine = true;
-      if (recorded) { stop(); mine = true; audio.play(); state = 'playing'; emit(); }
-      else read(typeof opts.root === 'function' ? opts.root() : opts.root);
+      if (recorded) { mine = true; stop(); mine = true; audio.play(); state = 'playing'; emit(); return; }
+      ensure(function () { mine = true; read(typeof opts.root === 'function' ? opts.root() : opts.root); });
     });
     s.addEventListener('click', stop);
     bar.appendChild(b); bar.appendChild(s); if (synth) bar.appendChild(menu);
@@ -197,7 +338,7 @@
     b.addEventListener('click', function () {
       on = !on; try { localStorage.setItem(key, on ? '1' : '0'); } catch (e) {}
       document.querySelectorAll('.gg-rtoggle').forEach(function (x) { if (x !== b) x.dispatchEvent(new CustomEvent('gg-sync')); });
-      paint(); if (on) opts.onRead(); else stop();
+      paint(); if (on) ensure(function () { opts.onRead(); }); else stop();
     });
     b.addEventListener('gg-sync', function () { try { on = localStorage.getItem(key) === '1'; } catch (e) {} paint(); });
     paint(); bar.appendChild(b); if (synth) bar.appendChild(voiceMenu());
@@ -205,7 +346,7 @@
     return bar;
   }
   function isOn(key) { try { return localStorage.getItem(key || 'gg_read_on') === '1'; } catch (e) { return false; } }
-  window.GGRead = { setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, get state() { return state; } };
+  window.GGRead = { setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, check: check, ensure: ensure, checked: checked, voiceInfo: voiceInfo, platform: platform, steps: STEPS, stepsHtml: stepsHtml, helpHtml: helpHtml, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
 
   /* Practice steps: any "Show me how" or "Learn more" box gets its own Read aloud button when it opens. */
   document.addEventListener('toggle', function (e) {

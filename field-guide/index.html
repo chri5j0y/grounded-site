@@ -588,8 +588,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-backup.js?v=bk1"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
-<script src="../read.js?v=tc1"></script>
-<script src="../shared/gg-learn.js?v=ln2"></script>
+<script src="../read.js?v=vc1"></script>
+<script src="../shared/gg-learn.js?v=ln3"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -1632,7 +1632,10 @@ function lnTracks(){
   add(typeof FLD !== 'undefined' ? FLD : null);
   if (TIER !== 'field') add(typeof LIB !== 'undefined' ? LIB : null);
   if (TIER === 'founder') add(typeof FDR !== 'undefined' ? FDR : null);
-  return out.sort((a, b) => (a.order || 0) - (b.order || 0));
+  out.sort((a, b) => (a.order || 0) - (b.order || 0));
+  // Get Set Up (a good voice) comes first on every device, from the shared player.
+  if (window.GGLearn && GGLearn.setupTrack) out.unshift(GGLearn.setupTrack);
+  return out;
 }
 const lnData = () => (DATA.learn = Object.assign({done:{}, at:{}}, DATA.learn || {}));
 function lnFind(id){ for (const t of lnTracks()) for (const l of t.lessons) if (l.id === id) return {t, l}; return null; }
@@ -1645,8 +1648,9 @@ function vLearn(){
   if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
-  const all = tracks.reduce((n, t) => n + t.lessons.length, 0), fin = tracks.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
+  const counted = tracks.filter(t => t.kind !== 'setup'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
+  ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
   ${tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
     return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
@@ -1679,6 +1683,7 @@ function lnAct(a, v){
     case 'ln-open': lnStop(); go('learn', {ln: v}); return true;
     case 'ln-home': lnStop(); go('learn'); return true;
     case 'ln-cert': lnCert(lnTracks().find(t => t.id === v)); return true;
+    case 'ln-vcheck': if (window.GGRead && GGRead.check) GGRead.check(() => { if (!V.ln) go('learn'); }); return true;
   }
   return false;
 }

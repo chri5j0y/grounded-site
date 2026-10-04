@@ -27,7 +27,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln2';
+  var V = 'ln3';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -67,7 +67,7 @@
       case 'six': // the six parts as cards, with this tree's own words under each one
         return '<div class="ln-six">' + (sc.h ? '<h3' + A(.2) + '>' + h(sc.h) + '</h3>' : '') + '<div class="ln-sixg">' + PART.map(function (P, j) { var t = (sc.words || [])[j] || ''; return '<div' + A(.7 + j * (sc.gap || .7), 'ln-sx', '--k:' + P[3]) + '><b>' + P[1] + '</b><span>' + P[2] + '</span>' + (t ? '<small>' + h(t) + '</small>' : '') + '</div>'; }).join('') + '</div></div>';
       case 'big': return '<div class="ln-big"><p' + A(.3) + '>' + h(sc.h) + '</p>' + (sc.sub ? '<small' + A(1.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
-      case 'points': return '<div class="ln-pts"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (it, j) { var a = Array.isArray(it) ? it : [it]; return '<div' + A(.9 + j * (sc.gap || 1.1), 'ln-pt') + '><span class="ln-dot" style="background:' + (a[2] || acc) + '"></span><span><b>' + h(a[0]) + '</b>' + (a[1] ? '<small>' + h(a[1]) + '</small>' : '') + '</span></div>'; }).join('') + '</div>';
+      case 'points': return '<div class="ln-pts' + ((sc.items || []).length >= 5 ? ' ln-pts5' : '') + '"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (it, j) { var a = Array.isArray(it) ? it : [it]; return '<div' + A(.9 + j * (sc.gap || 1.1), 'ln-pt') + '><span class="ln-dot" style="background:' + (a[2] || acc) + '"></span><span><b>' + h(a[0]) + '</b>' + (a[1] ? '<small>' + h(a[1]) + '</small>' : '') + '</span></div>'; }).join('') + '</div>';
       case 'trees': {
         var T = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['oak', 'Oak', 'Adults'], ['sequoia', 'Sequoia', 'Seniors'], ['willow', 'Willow', 'Hospice']].concat(sc.grove ? [['grove', 'The Grove', 'Every age, together']] : []);
         return '<div class="ln-trees"><h3' + A(.2) + '>' + h(sc.h || 'Six trees. The same six parts.') + '</h3><div class="ln-trow">' + T.map(function (x, j) { return '<div' + A(.6 + j * .4, 'ln-tr') + '><img src="' + MARK(x[0] + '-tab') + '" alt=""><b style="color:' + COL[x[0]] + '">' + x[1] + '</b><small>' + x[2] + '</small></div>'; }).join('') + '</div></div>';
@@ -111,6 +111,16 @@
       '.ln-stage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#F2ECE0;border:1px solid var(--ggl-line);}',
       '.ln-prog{display:flex;gap:5px;margin:10px 0;}.ln-prog span{flex:1;height:5px;border-radius:3px;background:var(--ggl-line);}.ln-prog span.on{background:var(--ggl-acc);}',
       '.ln-cap{font-size:calc(19px * var(--ggl-scale));line-height:1.5;min-height:3em;margin:6px 0;color:var(--ggl-ink);}.ln-cap .w.on{color:var(--ggl-acc);}',
+      /* beats: items wait for their sentence; a pause-and-do ring */
+      '.go .ln-canvas .a.hold{opacity:0;transform:translateY(14px);}',
+      '.ln-cap .w{transition:color .3s ease;}',
+      '.ln-wait{position:absolute;right:3%;bottom:5%;display:flex;align-items:center;gap:10px;background:rgba(255,252,246,.94);border:1px solid #DDD0B8;border-radius:999px;padding:6px 16px 6px 6px;color:#2C1810;font-size:clamp(13px,2.2vw,17px);font-weight:600;box-shadow:0 4px 14px rgba(44,24,16,.12);z-index:3;}',
+      '.ln-wait svg{width:clamp(30px,6vw,44px);height:clamp(30px,6vw,44px);transform:rotate(-90deg);}',
+      '.ln-wt0{fill:none;stroke:#E8DCC6;stroke-width:4;}.ln-wt1{fill:none;stroke:var(--ggl-acc,#8B5E1A);stroke-width:4;stroke-linecap:round;stroke-dasharray:119.4;stroke-dashoffset:0;transition-property:stroke-dashoffset;transition-timing-function:linear;}',
+      '.ln-wait.run .ln-wt1{stroke-dashoffset:119.4;}',
+      '@media (prefers-reduced-motion:reduce){.ln-wt1{transition:none !important;}}',
+      '.ln-pts5{padding-top:34px;}.ln-pts5 h3{margin-bottom:14px;}.ln-pts5 .ln-pt{margin-bottom:11px;}',
+      '.ln-copyline{display:block;font-size:13px;line-height:1.4;color:var(--ggl-soft,#6B5A4D);margin-top:6px;}',
       '.ggl-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:12px;border:1.5px solid var(--ggl-acc);background:transparent;color:var(--ggl-acc);font:inherit;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;}',
       '.ggl-btn.pri{background:var(--ggl-acc);color:#FFF8EC;}.ggl-btn.quiet{border-color:var(--ggl-line);color:var(--ggl-soft);}',
       '.ggl-btn svg{width:20px;height:20px;flex:none;}.ggl-btn:focus-visible,.ln-item:focus-visible{outline:3px solid var(--ggl-acc);outline-offset:2px;}',
@@ -184,7 +194,50 @@
 
   /* ---------------- the player ---------------- */
   var CUR = null; // the player on screen
-  function speak(t) { try { if (window.GGRead && GGRead.available) { GGRead.say(t); return true; } } catch (e) {} return false; }
+  function speak(t, onend) { try { if (window.GGRead && GGRead.available) { GGRead.say(t, onend ? { onend: onend } : undefined); return true; } } catch (e) {} return false; }
+  /* ---------------- beats (Learn Voice build, October 2026) ----------------
+     Narration is spoken one sentence at a time with a real pause between, and each bullet, step, or card
+     shows as its sentence starts. A scene can tune this with cue (the words never change):
+       cue.w  {beatIndex: seconds}  a pause-and-do: wait this long after that sentence, with a countdown ring
+       cue.p  {beatIndex: seconds}  a longer plain pause after that sentence, no ring
+       cue.at [beatIndex, ...]      which sentence shows each item (otherwise matched by its words)
+     A scene can also give beats: ['sentence', {t:'sentence', w:8}] instead of splitting say. */
+  var ABBR = /\b(Mr|Mrs|Ms|Dr|St|Rev|Fr|Sr|Jr|vs|etc|No)\.$/i;
+  function beatsOf(sc) {
+    var cue = sc.cue || {};
+    if (Array.isArray(sc.beats)) return sc.beats.map(function (b, i) { return typeof b === 'string' ? { t: b, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0 } : { t: b.t || '', w: +b.w || 0, p: +b.p || 0 }; });
+    var txt = String(sc.say || '').replace(/\s+/g, ' ').trim(); if (!txt) return [];
+    var parts = txt.match(/[^.!?]+(?:[.!?]+["'\u201d\u2019)]*|$)/g) || [txt], out = [];
+    parts.forEach(function (x) {
+      x = x.trim(); if (!x) return;
+      var prev = out[out.length - 1];
+      if (prev && (ABBR.test(prev) || (/\d\.$/.test(prev) && /^\d/.test(x)) || x.length < 3)) out[out.length - 1] = prev + (/^\d/.test(x) && /\d\.$/.test(prev) ? '' : ' ') + x;
+      else out.push(x);
+    });
+    return out.map(function (t, i) { return { t: t, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0 }; });
+  }
+  var REV = { points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p' };
+  var NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  var STOPW = /^(the|and|for|you|your|are|but|not|all|can|with|that|this|them|they|what|when|have|has|will|from|more|like|about|just|into|than|then|there|their|who|how|its|our|out|one's|things|thing|way|get|let|use|was|were|been|being|each|every|some|any|also|very|much|most|make|made|feel)$/;
+  function words(t) { return String(t || '').toLowerCase().replace(/\b(\d{1,2})\b/g, function (m) { return NUMW[+m] || m; }).replace(/[^a-z' ]+/g, ' ').split(/\s+/).filter(function (w) { return w.length >= 3 && !STOPW.test(w); }); }
+  // Which sentence shows each item: by hand (cue.at), by its words, or spread evenly.
+  function revealMap(sc, items, beats) {
+    var n = items.length, m = beats.length, at = (sc.cue || {}).at, map = [], prev = 0;
+    if (!n || !m) return map;
+    if (Array.isArray(at)) return items.map(function (x, j) { return Math.max(0, Math.min(m - 1, at[j] == null ? m - 1 : at[j])); });
+    var bw = beats.map(function (b) { return ' ' + words(b.t).join(' ') + ' '; });
+    var even = sc.k === 'story';
+    items.forEach(function (el, j) {
+      var k = -1;
+      if (!even) {
+        var key = el.querySelector('b'), kw = words((key || el).textContent);
+        for (var i = prev; i < m && k < 0; i++) for (var q = 0; q < kw.length; q++) if (bw[i].indexOf(' ' + kw[q] + ' ') >= 0) { k = i; break; }
+      }
+      if (k < 0) k = Math.max(prev, Math.min(m - 1, Math.round(j * m / n)));
+      map.push(k); prev = k;
+    });
+    return map;
+  }
   function hush() { try { if (window.GGRead) GGRead.stop(); else if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {} }
   function allLessons(tracks) { var f = []; (tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) { f.push({ t: t, l: l }); }); }); return f; }
   function certable(t) { return !!t && t.kind !== 'support' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
@@ -221,7 +274,7 @@
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
-    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); }
+    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); if (P.audio) { try { P.audio.onended = P.audio.onerror = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
     function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); } }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
@@ -249,28 +302,89 @@
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
-      $('.ln-cap', host).innerHTML = String(sc.say || '').split(/\s+/).map(function (w) { return '<span class="w">' + esc(w) + '</span>'; }).join(' ');
+      if (last) $('.ln-link', host).innerHTML = '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
+      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now();
+      $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
       $('.ggl-cn', host).textContent = last ? 'Finished' : 'Scene ' + (P.i + 1) + ' of ' + (N - 1);
       var qz = $('.ggl-quiz', host);
       qz.innerHTML = sc.k === 'quiz' ? '<div class="ln-opts">' + sc.opts.map(function (o, j) { return '<button class="ggl-btn" data-g="ans" data-v="' + j + '">' + esc(o) + '</button>'; }).join('') + '</div><div class="ggl-fb" aria-live="polite"></div>' : '';
       var tg = cv.querySelector('[data-tap]'), ptr = cv.querySelector('.ln-ptr'), ring = cv.querySelector('.ln-ring');
       if (tg && ptr) { var cr = cv.getBoundingClientRect(), r = tg.getBoundingClientRect(), k = cr.width / 960, x = (r.left - cr.left + r.width * .6) / k, y = (r.top - cr.top + r.height * .5) / k; cv.style.setProperty('--px', (x - 14) + 'px'); cv.style.setProperty('--py', (y - 4) + 'px'); if (ring) { ring.style.left = (x - 24) + 'px'; ring.style.top = (y - 24) + 'px'; } }
+      P.tg = !!tg;
+      // While playing, items wait for their sentence. Stepping by hand shows everything.
+      var sel = REV[sc.k], items = sel ? Array.prototype.slice.call(cv.querySelectorAll(sel)) : [];
+      P.items = items; P.map = revealMap(sc, items, B);
+      if (P.playing || last) items.forEach(function (el) { el.classList.add('hold'); var pv = el.previousElementSibling; if (sc.k === 'flow' && pv && pv.classList.contains('ln-arr')) pv.classList.add('hold'); });
       requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); }); });
       // The closing scene always speaks once, even when the lesson was stepped through by hand.
       if (!P.playing && !last) return;
-      var W = Array.prototype.slice.call(host.querySelectorAll('.ln-cap .w')), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ms = Math.max(3500, W.length * 60000 / (160 * sp));
-      var kk = 0; P.hl = setInterval(function () { if (t !== P.tok) return clearInterval(P.hl); W.forEach(function (w, j) { w.classList.toggle('on', j === kk); }); kk++; if (kk > W.length) clearInterval(P.hl); }, ms / Math.max(1, W.length));
-      var spoke = speak(sc.say || ''), start = Date.now(), hold = (tg ? 3600 : 0) + 900 + (+sc.hold || 0) * 1000;
-      P.tick = setInterval(function () {
-        if (t !== P.tok) return clearInterval(P.tick);
-        var busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
-        if (!busy && Date.now() - start > (spoke ? Math.min(ms, 1500) : ms)) {
-          clearInterval(P.tick); W.forEach(function (w) { w.classList.remove('on'); });
-          if (sc.k === 'quiz' || last) { setPlay(false); return; }
-          P.nx = setTimeout(function () { if (t === P.tok && P.playing) show(P.i + 1); }, Math.max(hold - (Date.now() - start), 700));
-        }
-      }, 200);
+      run(t);
+    }
+    function reveal(i) {
+      (P.items || []).forEach(function (el, j) { if (P.map[j] <= i && el.classList.contains('hold')) { el.style.transitionDelay = '0s'; el.classList.remove('hold'); var pv = el.previousElementSibling; if (pv && pv.classList.contains('ln-arr')) { pv.style.transitionDelay = '0s'; pv.classList.remove('hold'); } } });
+    }
+    function capOn(i) { host.querySelectorAll('.ln-cap .w').forEach(function (w, j) { w.classList.toggle('on', j === i); }); }
+    function ringOff() { var r = $('.ln-wait', st); if (r) r.remove(); }
+    // A pause-and-do: a soft countdown ring, so people know it's their turn.
+    function waitRing(sec, t, go) {
+      ringOff();
+      var w = document.createElement('div'); w.className = 'ln-wait'; w.setAttribute('aria-hidden', 'true');
+      w.innerHTML = '<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19" class="ln-wt0"/><circle cx="22" cy="22" r="19" class="ln-wt1" style="transition-duration:' + sec + 's"/></svg><span>Take your time</span>';
+      st.appendChild(w);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('run'); }); });
+      P.nx = setTimeout(function () { if (t !== P.tok) return; ringOff(); go(); }, sec * 1000);
+    }
+    var GAP = 650;
+    // Speak the scene's sentences from P.b on, one at a time, then hold and move on.
+    function run(t) {
+      var sc = P.sc, B = P.B, last = P.last, sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1;
+      function after(i) {
+        var b = B[i], gap = GAP + (P.map.indexOf(i) >= 0 ? (sc.k === 'words' ? 950 : 250) : 0) + (/\?["'\u201d\u2019)]*$/.test(b.t) ? 350 : 0);
+        gap = gap / sp + (b.p || 0) * 1000;
+        if (b.w) { P.ph = 'wait'; capOn(-1); return waitRing(b.w, t, function () { P.ph = 'say'; P.b = i + 1; step(); }); }
+        P.nx = setTimeout(function () { if (t !== P.tok) return; P.b = i + 1; step(); }, gap);
+      }
+      function step() {
+        if (t !== P.tok) return;
+        var i = P.b;
+        if (i >= B.length) return done();
+        reveal(i); capOn(i); P.ph = 'say';
+        var b = B[i], ended = false, began = Date.now(), seen = false;
+        var fin = function () { if (ended || t !== P.tok) return; ended = true; clearInterval(P.tick); after(i); };
+        var est = Math.max(1400, b.t.split(/\s+/).length * 60000 / (165 * sp));
+        if (clip(i, fin)) return;
+        var spoke = speak(b.t, fin);
+        clearInterval(P.tick);
+        P.tick = setInterval(function () {
+          if (t !== P.tok) return clearInterval(P.tick);
+          var ss = window.speechSynthesis, el = Date.now() - began;
+          if (!spoke) { if (el >= est) fin(); return; }
+          if (ss && ss.speaking) seen = true;
+          // Some browsers drop the end of a line; never get stuck waiting for it.
+          if ((seen && ss && !ss.speaking && el > 500) || el > est * 2.4 + 2500) fin();
+        }, 250);
+      }
+      function done() {
+        capOn(-1); reveal(B.length);
+        if (sc.k === 'quiz' || last) { setPlay(false); return; }
+        // hold counts from when the scene started, so a breathing scene keeps its full time on screen
+        var hold = (P.tg ? 2600 : 0) + 900 + (+sc.hold || 0) * 1000, rem = Math.max(900, hold - (Date.now() - P.t0)), go = function () { if (t === P.tok && P.playing) show(P.i + 1); };
+        if (sc.k !== 'breathe' && +sc.hold >= 6 && rem >= 5000) return waitRing(Math.round(rem / 1000), t, go);
+        P.nx = setTimeout(go, rem);
+      }
+      // A recorded clip for this sentence, when a lesson has them (audio: true). Falls back to the device voice.
+      function clip(i, fin) {
+        if (!l.audio || !window.Audio) return false;
+        var a = new Audio(url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3')), ok = false;
+        P.audio = a;
+        a.onended = function () { fin(); };
+        a.onerror = function () { if (!ok && t === P.tok) { ok = true; speak(B[i].t, fin); } };
+        a.play().then(function () { ok = true; }).catch(function () { if (!ok && t === P.tok) { ok = true; speak(B[i].t, fin); } });
+        return true;
+      }
+      if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
+      step();
     }
     function answer(v) {
       var sc = l.scenes[P.i], ok = +v === sc.right, fb = $('.ggl-fb', host);
@@ -289,7 +403,13 @@
     function onClick(ev) {
       var b = ev.target.closest('[data-g]'); if (!b || !host.contains(b)) return;
       var g = b.getAttribute('data-g');
-      if (g === 'play') { if (P.playing) setPlay(false); else { setPlay(true); show(P.i >= N - 1 ? 0 : P.i); } }
+      if (g === 'play') {
+        if (P.playing) setPlay(false);
+        else {
+          var go = function () { setPlay(true); if (P.i < N - 1 && P.B && (P.b > 0 || P.ph === 'wait')) { stopTimers(); run(P.tok); } else show(P.i >= N - 1 ? 0 : P.i); };
+          if (window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
+        }
+      }
       else if (g === 'back') show(P.i - 1);
       else if (g === 'next') show(P.i + 1);
       else if (g === 'restart') { setPlay(false); show(0); }
@@ -315,6 +435,31 @@
     if ((cfg.done || {})[l.id]) answered = true;
     show(at);
     return ctl;
+  }
+
+  /* ---------------- Get Set Up: a good voice (first in every Learn tab and the Field Guide) ---------------- */
+  var SETUP = { id: 'gg-setup-voice', n: 1, title: 'Get Set Up: A Good Voice', mins: 4, blurb: 'Make every lesson sound warm and clear on this device.', scenes: [
+    { k: 'title', hero: 'grove', eyebrow: 'Get Set Up', h: 'A Good Voice', sub: 'A few minutes now, and every lesson sounds better.', say: 'Before you watch, let us make sure lessons sound good on this device. It takes a few minutes, and you only do it once.' },
+    { k: 'big', h: 'Every lesson is read by your device\u2019s own voice.', sub: 'The voice lives on your phone or computer.', say: 'Every lesson, and every Read Aloud button, uses your device\u2019s own voice. Some devices start with a basic voice that sounds robotic. Most have free, natural voices waiting to be downloaded.' },
+    { k: 'levels', levels: [['Premium', 'Sounds like a person', '#5F7D48'], ['Enhanced', 'Clear and warm', '#8B5E1A'], ['Basic', 'Robotic', '#B8612F']], say: 'Look for a voice marked Premium. Enhanced is good too, and on Windows, Natural. A basic voice works, but it can make a lesson hard to enjoy.' },
+    { k: 'screen', app: 'site', app_name: 'Settings', title: 'iPhone or iPad', rows: [['Accessibility', ''], ['Read & Speak', ''], ['Voices, then English', ''], ['Ava (Premium)', 'Download', '#5F7D48']], tap: 3, panel: { h: 'Siri voices are kept for Siri', sub: 'Websites can use Premium and Enhanced voices.' }, say: 'On an iPhone or iPad, open Settings, then Accessibility. Tap Read and Speak, then Voices, then English. Pick a voice marked Premium or Enhanced, and tap download. Siri voices are kept for Siri, so choose a Premium or Enhanced voice.' },
+    { k: 'flow', h: 'On a Mac', steps: [['System Settings', 'Then Accessibility'], ['Read & Speak', 'Then Manage Voices'], ['Download', 'Premium or Enhanced']], say: 'On a Mac, open System Settings, then Accessibility. Open Read and Speak, then Manage Voices. Download a voice marked Premium or Enhanced.' },
+    { k: 'points', h: 'On Windows', items: [['Open it in Microsoft Edge', 'Its natural voices sound the most like a person'], ['Pick a natural voice yourself', 'They read through the internet, so you choose them'], ['Or add a Windows voice', 'Settings, Time and language, Speech']], say: 'On Windows, open this page in Microsoft Edge. Its natural voices sound the most like a person. They read the words through the internet, so you pick one yourself in the Voice menu. Or, add a voice in Windows settings, under Time and language, then Speech.' },
+    { k: 'flow', h: 'On Android', steps: [['Settings', 'Search Text-to-speech'], ['Google engine', 'Speech Services by Google'], ['Install voice data', 'English, then download']], say: 'On Android, open Settings and search for Text to speech. Choose Speech Services by Google. Then tap Install voice data, choose English, and download a voice you like.' },
+    { k: 'points', h: 'Then, once', items: [['Fully close your browser', 'Swipe it away, or quit it'], ['Open the page again', 'New voices load when the browser starts'], ['Pick your voice', 'In the Voice menu, under the video']], say: 'Then, one more step that matters. Fully close your browser. Open the page again. And pick your new voice in the Voice menu, under the video.' },
+    { k: 'big', h: 'Pause here and set it up.', sub: 'Then come back and tap Voice Check.', cue: { p: { 0: 2 } }, say: 'If you would like, pause this video now and set up your voice. Then come back and tap Voice Check to hear how it sounds.' },
+    { k: 'quiz', q: 'Which voice should you look for?', opts: ['A Siri voice', 'A voice marked Premium or Enhanced', 'The first voice in the list'], right: 1, why: 'Premium and Enhanced voices sound the most natural, and every Grow With Grounded tool can use them.', say: 'Quick question. Which voice should you look for?' }
+  ] };
+  var SETUP_TRACK = { id: 'gg-setup', title: 'Get Set Up', who: 'Watch this first, once on each device', kind: 'setup', lessons: [SETUP] };
+  // The voice card at the top of every Learn tab: what voice is in use, and how it sounds.
+  function voiceCard() {
+    var I = window.GGRead && GGRead.voiceInfo ? GGRead.voiceInfo() : null;
+    var col = I ? ({ great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' })[I.grade] : '#C07A26';
+    var said = !I ? 'Open Voice Setup to get a good voice on this device.' : ({ great: 'Sounds great. You\u2019re all set.', okay: 'Sounds okay. A Premium, Enhanced, or Natural voice sounds much more like a person.', basic: 'Sounds basic. Set up a better voice first; it\u2019s free and makes every lesson more enjoyable.', none: 'No voice found yet. If you just added one, fully close your browser and open this page again.' })[I.grade];
+    return '<div class="ggl-card ggl-voice" style="border-left:6px solid ' + col + '"><h3>Before You Watch: Set Up a Good Voice</h3>'
+      + '<p class="ggl-muted" style="margin:6px 0 0">Lessons and videos are read aloud by your device\u2019s own voice. A Premium, Enhanced, or Natural voice makes them sound like a person instead of a robot.</p>'
+      + '<p style="margin:10px 0 0"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:' + col + ';margin-right:8px;vertical-align:-1px"></span><b>' + (I && I.name ? 'Your voice: ' + esc(I.name) + '.' : 'Your voice') + '</b> ' + esc(said) + '</p>'
+      + '<div class="ggl-row"><button class="ggl-btn' + (I && I.grade === 'great' ? '' : ' pri') + '" data-l="vcheck" data-act="ln-vcheck">Voice Check</button><a class="ggl-btn quiet" href="' + url('/voice-setup.html') + '" target="_blank" rel="noopener">Voice Setup Guide</a></div></div>';
   }
 
   /* ---------------- the Learn tab in a tree app ---------------- */
@@ -353,13 +498,13 @@
     if (!quiet && f && f.focus) try { f.focus(); } catch (e) {}
   }
   function appKey(e) { if (e.key === 'Escape' && APP) { e.preventDefault(); close(); } }
-  function tracksFor(app) { var L = (window.GG_LEARN || {})[app] || {}; return (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; }); }
+  function tracksFor(app) { var L = (window.GG_LEARN || {})[app] || {}; return [SETUP_TRACK].concat((L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; })); }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
   function list() {
     if (CUR) CUR.stop();
     var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app), D = load(app);
-    var tr = every.filter(function (t) { return t.kind !== 'support'; }), sup = every.filter(function (t) { return t.kind === 'support'; });
-    var all = tr.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = tr.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
+    var tr = every.filter(function (t) { return t.kind !== 'support'; }), sup = every.filter(function (t) { return t.kind === 'support'; }), counted = tr.filter(function (t) { return t.kind !== 'setup'; });
+    var all = counted.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = counted.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
     var el = $('#ggl-in', APP.root);
     var card = function (t) {
       var isSup = t.kind === 'support', n = t.lessons.filter(function (l) { return D.done[l.id]; }).length, ok = n === t.lessons.length && certable(t);
@@ -371,6 +516,7 @@
     var supHtml = sup.length ? '<section class="ggl-sup"><div class="ggl-eb">' + esc(S.eyebrow || 'Support') + '</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(S.title || 'Support for Right Now') + '</h2>' + (S.intro ? '<p class="ggl-muted">' + esc(S.intro) + '</p>' : '') + sup.map(card).join('') + '</section>' : '';
     var lesHtml = (tr.length ? (sup.length ? '<section class="ggl-sup"><div class="ggl-eb">Lessons</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(L.lessonsTitle || 'Learn Step by Step') + '</h2>' + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '') : (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '')) + tr.map(card).join('') + (sup.length ? '</section>' : '') : (sup.length ? '' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>'));
     el.innerHTML = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1><p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>'
+      + voiceCard()
       + (L.supportFirst ? supHtml + lesHtml : lesHtml + supHtml)
       + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
       + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';
@@ -403,8 +549,9 @@
     else if (a === 'home') list();
     else if (a === 'open') lesson(v);
     else if (a === 'cert') { var t = tracksFor(APP.app).filter(function (x) { return x.id === v; })[0]; if (t) cert(APP.app, t); }
+    else if (a === 'vcheck') { if (window.GGRead && GGRead.check) GGRead.check(function () { if (APP) list(); }); }
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();

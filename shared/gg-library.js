@@ -24,7 +24,7 @@
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=fd1', '/grove/library.js?v=r5a'];
+  var FILES = ['/grove/data.js?v=fd1', '/grove/library.js?v=vb1'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -64,7 +64,8 @@
       busy: (k ? it.kidBusy : it.busy) || it.busy || '',
       why: (k ? h[3] : h[0]) || h[0] || '',
       steps: steps ? String(steps).split('|') : [],
-      hard: (k ? h[5] : h[2]) || h[2] || ''
+      hard: (k ? h[5] : h[2]) || h[2] || '',
+      bedside: it.bedside || null
     };
   }
   function guideHtml(v) {
@@ -72,7 +73,15 @@
     return (v.why ? '<p><b>Why it helps.</b> ' + esc(v.why) + '</p>' : '')
       + (v.steps.length ? '<p style="margin-bottom:2px"><b>How to do it.</b></p><ol>' + v.steps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' : '')
       + (v.hard ? '<p><b>If it\'s hard.</b> ' + esc(v.hard) + '</p>' : '')
+      + (v.bedside ? bedsideHtml(v.bedside) : '')
       + (window.GGShelf && v.key ? GGShelf.html('practice', v.key) : '');
+  }
+  // From the Bedside: a practice born from one of Chris's stories, with its lesson and (when published) the story.
+  function bedsideHtml(b) {
+    var L = b.lesson || [];
+    return '<p class="gg-bedside" style="border-left:4px solid #8B5E1A;padding:6px 0 6px 12px;margin:10px 0"><b>From the Bedside.</b> Born from the story ' + esc(b.story) + '.'
+      + (L.length === 2 ? ' <button type="button" class="gg-bedside-go" style="font:inherit;font-weight:600;color:inherit;background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px 2px" onclick="window.GGLearn ? GGLearn.open(\'' + esc(L[0]) + '\', \'' + esc(L[1]) + '\') : location.assign(\'/' + esc(L[0]) + '/\')">Watch the Video</button>' : '')
+      + (b.href ? ' <a href="' + esc(b.href) + '" target="_blank" rel="noopener">Read the Full Story</a>' : '') + '</p>';
   }
   function info(key, age) {
     var it = get(key); if (!it) return {};
