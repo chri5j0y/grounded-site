@@ -23,6 +23,7 @@
    Sealed lessons (Field library) carry their own sources: ['id', ...] or [{label, href}].
    Edit sources here. Proofreading lines are in the Founder library (p9k-sources).
    W1 and W2 (Willow Guide For Guides) added the credits marked below; sealed lessons carry their ids in sources.
+   W4 (Willow Support for Right Now, BLD 717): public lessons carry their own sources list in shared/learn-lessons.js.
    ===================================================================== */
 (function () {
   if (window.GGSources) return;
@@ -59,6 +60,7 @@
     centering: ['Thomas Keating and Contemplative Outreach, Centering Prayer', 'https://www.contemplativeoutreach.org/centering-prayer-method/', 'a'],
     lectio: ['lectio divina, the monastic practice of sacred reading', 'https://www.contemplativeoutreach.org/lectio-divina-contemplation/', 'a'],
     metta: ['metta, the Buddhist practice of loving-kindness', '', 'a'],
+    mbsr: ['Jon Kabat-Zinn, Mindfulness-Based Stress Reduction (the body scan)', '', 'a'], // W4 (BLD 717); link to come
     quaker: ['the Quaker practice of holding someone in the Light', '', 'a'],
     wrz: ['Wrzesniewski and Dutton, job crafting (2001)', 'https://doi.org/10.5465/amr.2001.4378011', 'a'],
     litz: ['Litz and colleagues, moral injury and moral repair (2009)', 'https://doi.org/10.1016/j.cpr.2009.07.003'],
