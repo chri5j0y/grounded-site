@@ -533,6 +533,7 @@ body.cd-noscroll{overflow:hidden;}
 .sa-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#35603A 0%,#24452A 55%,#18301D 100%);}
 /* Willow Guide (Willow Build Session 3): dusk lilac, sage accent */
 .wl-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A7590 0%,#5D5A6E 50%,#3E3B4C 100%);}
+.sg-help{margin-top:16px;padding:10px 12px;border-left:3px solid var(--sage);background:var(--bg-deep);border-radius:6px;font-size:15px;}
 .wfg-in{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}
 .wfg-body h3{margin:18px 0 6px;font-size:19px;} .wfg-body p{margin-top:8px;} .wfg-body .wfg-lab{font-weight:600;margin-top:12px;}
 .wfg-ul{margin:6px 0 0 20px;} .wfg-ul li{margin-top:5px;}
@@ -593,8 +594,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
-<script src="../shared/gg-sources.js?v=src3"></script>
-<script src="../shared/gg-learn.js?v=ln7"></script>
+<script src="../shared/gg-sources.js?v=src4"></script>
+<script src="../shared/gg-learn.js?v=ln8"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -946,6 +947,7 @@ function vHome(){
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
   const quick = [['first-conversation','Free First Conversation','30 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
+  ${sgHomeCard()}
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 style="margin-top:18px">Start a Session</h3>
@@ -1158,6 +1160,7 @@ function vFieldHome(){
   const w = FLD.welcome;
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
+  ${sgHomeCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
   ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="maple">${icon('maple')} Open</button></div></div>` : ''}
   ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="aspen">${icon('aspen')} Open</button></div></div>` : ''}
@@ -1653,10 +1656,12 @@ function vLearn(){
   const tracks = lnTracks(), D = lnData();
   if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
   if (V.wfg) return vWFG();
+  if (V.sg) return vSG();
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
   const counted = tracks.filter(t => t.kind !== 'setup'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
+  ${sgLearnCard()}
   ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
   ${wfgLearnCard()}
   ${tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
@@ -4423,6 +4428,66 @@ function wlmPrint(){
     <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'willow-guide-agreement'});
 }
 
+// ---------------- SUPPORT FOR GUIDES ----------------
+/* Support for Guides (W3, GWG BLD 716). Support for the guides themselves, open to every license: a short practice
+   video (3 to 5 minutes) and a one-page written piece for each topic, sealed in the Field library under
+   FLD.supportGuides {title, intro, home: {h, p}, help, groups: [[key, name]], items: [{id, group, n, title, blurb, mins,
+   sources, read: [['p'|'lab', text] or ['ul', [text or [bold, rest]]]], video: {scenes}}]}.
+   - Shown at the top of the Learn tab, grouped (Core, For Hospice), and from a Home card ("Hard day?").
+   - Like Support for Right Now: no quiz, no count, no certificate. The player's support closing scene ("Take all the
+     time you need") offers Play Another, Back to Learn, and Watch Again. Nothing about watching is saved.
+   - Every written piece ends with the same help line for the guide (FLD.supportGuides.help), then its Sources. */
+const SGD = () => { const S = FLD && FLD.supportGuides; return S && Array.isArray(S.items) && S.items.length ? S : null; };
+const sgOn = () => !!SGD();
+const sgGroups = () => (SGD().groups || []).map(g => ({key: g[0], name: g[1], items: SGD().items.filter(x => x.group === g[0]).sort((a, b) => (a.n || 0) - (b.n || 0))})).filter(g => g.items.length);
+const sgFind = id => SGD() ? SGD().items.find(x => x.id === id) || null : null;
+function sgTracks(){ return sgGroups().map(g => ({id:'sg-' + g.key, kind:'support', title:g.name, lessons:g.items.map(x => ({id:x.id, n:x.n, title:x.title, mins:x.mins, sources:x.sources || [], scenes:(x.video && x.video.scenes) || []}))})); }
+function sgHomeCard(){
+  if (!sgOn()) return '';
+  const H = SGD().home || {};
+  return `<div class="card sg-home" style="margin-top:14px"><div class="spread"><div><h3>${esc(H.h || 'Hard day? Support for Guides')}</h3><p class="muted">${esc(H.p || 'Short practices and a page to read, for you.')}</p></div><button class="btn btn-gold btn-sm" data-act="sg-list">${icon('play')} Open</button></div></div>`;
+}
+function sgLearnCard(){
+  if (!sgOn()) return '';
+  const S = SGD();
+  return `<div class="card ln-track sg-series" id="sg-series"><div class="eyebrow" style="color:var(--sage)">For You</div><h3>${esc(S.title)}</h3><p class="muted">${esc(S.intro || '')}</p>
+   ${sgGroups().map(g => `<div class="wfg-ring"><h4>${esc(g.name)}</h4><div class="ln-list">${g.items.map(x => `<button class="ln-item" data-act="sg-open" data-v="${esc(x.id)}"><span class="ln-n">${esc(String(x.n || ''))}</span><span class="ln-t"><b>${esc(x.title)}</b><small>${esc(x.blurb || '')}${x.blurb ? '. ' : ''}About ${esc(String(x.mins || 4))} minutes, and a page to read</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}</div>`;
+}
+function sgBody(x){
+  const li = it => Array.isArray(it) ? `<li><b>${esc(it[0])}</b> ${esc(it[1] || '')}</li>` : `<li>${esc(it)}</li>`;
+  const blk = b => b[0] === 'ul' ? `<ul class="wfg-ul">${(b[1] || []).map(li).join('')}</ul>` : b[0] === 'lab' ? `<p class="wfg-lab">${esc(b[1])}</p>` : `<p>${esc(b[1])}</p>`;
+  const src = window.GGSources ? GGSources.lesson('', {id:x.id, sources:x.sources || [], scenes:(x.video && x.video.scenes) || []}) : '';
+  return `<div class="wfg-body sg-body"><h2 class="wfg-h1">${esc(x.title)}</h2>${(x.read || []).map(blk).join('')}
+   ${SGD().help ? `<p class="sg-help">${esc(SGD().help)}</p>` : ''}${src}</div>`;
+}
+function vSG(){
+  const x = sgFind(V.sg); if (!x){ delete V.sg; return vLearn(); }
+  const g = sgGroups().find(y => y.key === x.group) || {name:''}, vid = !!(x.video && (x.video.scenes || []).length && window.GGLearn);
+  if (vid){ GGLearn.css(); setTimeout(sgMount, 0); }
+  return `<div class="ggl"><button class="linkbtn" data-act="sg-back">Back to Learn</button><div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(SGD().title)} &middot; ${esc(g.name)}</div><h1>${esc(x.title)}</h1></div>
+   ${vid ? `<div id="sg-host"></div>` : ''}
+   <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="sg-read">${V.sgread ? 'Hide the Page' : 'Read It'}</button></div>
+   ${V.sgread || !vid ? `<div class="card" id="sg-page" style="margin-top:14px">${sgBody(x)}</div>` : ''}</div>`;
+}
+function sgMount(){
+  const host = $('#sg-host'), x = sgFind(V.sg); if (!host || !x || !window.GGLearn) return;
+  const trs = sgTracks(), tr = trs.find(t => t.lessons.some(l => l.id === x.id)), l = tr && tr.lessons.find(y => y.id === x.id); if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {lesson: l, track: tr, tracks: trs, done: {}, at: 0, accent: '#5E6B73',
+    onAt: () => { lastAct = Date.now(); }, // a playing video must not lock the Field Guide
+    open: id => { lnStop(); V = {tab:'learn', sg:id}; render(); },
+    home: () => { lnStop(); go('learn'); }});
+}
+function sgAct(a, v){
+  switch (a){
+    case 'sg-open': lnStop(); go('learn', {sg: v}); return true;
+    case 'sg-back': lnStop(); go('learn'); return true;
+    case 'sg-list': lnStop(); go('learn'); setTimeout(() => { const el = $('#sg-series'); if (el) el.scrollIntoView({block:'start'}); }, 60); return true;
+    case 'sg-read': { const y = window.scrollY; V.sgread = !V.sgread; const p = $('#sg-page'); if (V.sgread && !p){ const x = sgFind(V.sg); const row = document.querySelector('[data-act="sg-read"]'); if (row && x){ row.textContent = 'Hide the Page'; row.parentElement.insertAdjacentHTML('afterend', `<div class="card" id="sg-page" style="margin-top:14px">${sgBody(x)}</div>`); setTimeout(() => { const el = $('#sg-page'); if (el) el.scrollIntoView({block:'start', behavior:'smooth'}); }, 30); } } else if (!V.sgread && p){ p.remove(); const row = document.querySelector('[data-act="sg-read"]'); if (row) row.textContent = 'Read It'; window.scrollTo(0, y); } return true; }
+  }
+  return false;
+}
+
 // ---------------- WILLOW GUIDE: FOR GUIDES ----------------
 /* For Guides (W1, GWG BLD 714). A training series for chaplains, doulas, and anyone in that role: one full written
    section and one video (about 9 minutes) for each Willow guide, sealed in the Field library under
@@ -6385,6 +6450,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
   if (a && a.startsWith('ln-') && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
+  if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;

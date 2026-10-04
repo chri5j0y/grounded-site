@@ -80,7 +80,14 @@
     schulz: ['Schulz and colleagues, end-of-life care and bereavement in family caregivers of persons with dementia (NEJM, 2003)', 'https://pubmed.ncbi.nlm.nih.gov/?term=Schulz+End-of-life+care+and+the+effects+of+bereavement+on+family+caregivers+of+persons+with+dementia'],
     dougy: ['The Dougy Center for Grieving Children and Families', 'https://www.dougy.org/', 'a'],
     honoring: ['Honoring Choices Minnesota', 'https://www.honoringchoices.org/', 'a'],
-    convo: ['The Conversation Project', 'https://theconversationproject.org/', 'a']
+    convo: ['The Conversation Project', 'https://theconversationproject.org/', 'a'],
+    // W3 (GWG BLD 716): Support for Guides
+    figley: ['Charles R. Figley, Compassion Fatigue (1995)', ''],
+    maslach: ['Maslach and Jackson, the measurement of experienced burnout (1981)', 'https://doi.org/10.1002/job.4030020205'],
+    jameton: ['Andrew Jameton, Nursing Practice: The Ethical Issues (1984)', ''],
+    doka: ['Kenneth J. Doka, Disenfranchised Grief (1989)', ''],
+    lipsky: ['Laura van Dernoot Lipsky, Trauma Stewardship', SHELF + 'CP-014'],
+    rts: ['Resolve Through Sharing, Gundersen Health System (bereavement training)', '', 'a']
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
