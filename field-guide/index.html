@@ -589,7 +589,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
-<script src="../shared/gg-learn.js?v=ln3"></script>
+<script src="../shared/gg-learn.js?v=ln4"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -5141,7 +5141,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=tc1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=gv1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -5207,6 +5207,8 @@ function htSections(r, print){
     add('say', 'Words that help', 'say', P.say);
     add('dont', 'Try not to say', 'list', P.dont);
     add('helps', 'What helps', 'list', P.helps);
+    add('you', 'For You', 'p', P.you);
+    add('helper', 'For the Helper', 'p', P.helper);
     add('faith', 'Faith and meaning', 'p', P.faith);
     if (!print) add('pro', 'For chaplains and doulas', 'p', P.pro);
   } else if (r.src === 'aspen'){

@@ -23,11 +23,17 @@
      Progress is kept on this device under gg-learn:<app> and travels in the one backup file.
    - A series earns a certificate when every lesson in it is finished and it has three or more
      lessons (or says cert: true). Certificates, posters, and flyers come from shared/gg-print.js.
+   - When Life Changes videos (Build B1, October 2026): two per guide, For You and For the Helper.
+     They live in each app's own file (GUIDE_SRC below, window.GG_LEARN_GUIDES[app]), loaded the first
+     time Learn opens, and show in the Learn tab as tracks with kind: 'guide', one per ring. No quiz, no
+     count, no certificate: a quiet check marks the ones watched. The closing scene offers Open the Full
+     Guide (window.GG_GUIDE_OPEN[app](id), or #guide=id), the other video, and Back.
+     GGLearn.open(app, id, {from: 'guide'}) opens one straight from a guide page.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln3';
+  var V = 'ln4';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -240,7 +246,7 @@
   }
   function hush() { try { if (window.GGRead) GGRead.stop(); else if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {} }
   function allLessons(tracks) { var f = []; (tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) { f.push({ t: t, l: l }); }); }); return f; }
-  function certable(t) { return !!t && t.kind !== 'support' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
+  function certable(t) { return !!t && t.kind !== 'support' && t.kind !== 'guide' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
   function trackDone(t, done) { return !!t && (t.lessons || []).length > 0 && t.lessons.every(function (l) { return done[l.id]; }); }
 
   // What the closing scene says, worked out from what is finished on this device.
@@ -251,6 +257,7 @@
     var nx = null; for (var j = i + 1; j < flat.length; j++) if (!done[flat[j].l.id]) { nx = flat[j]; break; }
     if (!nx) for (var k = 0; k < flat.length; k++) if (!done[flat[k].l.id]) { nx = flat[k]; break; }
     var tr = cfg.track, tdone = trackDone(tr, done), cert = !!cfg.cert && tdone && certable(tr);
+    if (tr && tr.kind === 'guide') { var pr = cfg.pair || null; return { ok: true, guide: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: 'The full guide has more' + (pr ? ', and there is a video ' + pr.sideName.replace(/^For/, 'for') + ' too.' : '.'), count: '', say: 'Take all the time you need. The full guide is here whenever you want it.', next: null, pair: pr, cert: false }; }
     if (tr && tr.kind === 'support') return { ok: true, support: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: nx ? 'Another one, if it helps: ' + nx.l.title : 'Come back anytime.', count: '', say: 'Take all the time you need. This is here whenever you need it.', next: nx, cert: false };
     var upnext = nx ? 'Up next: ' + (nx.t !== tr ? nx.t.title + ', ' : '') + 'Lesson ' + (nx.l.n || '') + ', ' + nx.l.title : '';
     var certLine = cert ? ' Your certificate is ready whenever you want it.' : '';
@@ -283,6 +290,14 @@
     }
     function endButtons(e) {
       var b = [];
+      if (e.guide) {
+        b.push(['guide', 'Open the Full Guide', 'pri']);
+        if (e.pair) b.push(['pair', 'Watch: ' + esc(e.pair.sideName), '']);
+        b.push(['home', cfg.fromGuide ? 'Back to the Guide' : 'Back to Learn', '']);
+        b.push(['again', 'Watch Again', 'quiet']);
+        bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
+        bar.classList.add('on'); place(); bar._next = null; return;
+      }
       if (e.unfinished) b.push(['answer', 'Answer the Question', 'pri']);
       if (e.cert) b.push(['cert', IC.award + 'Get Your Certificate', e.next ? '' : 'pri']);
       if (e.next) b.push(['open', e.support ? 'Play Another' : 'Next Lesson', e.support ? '' : 'pri']);
@@ -419,6 +434,8 @@
       else if (g === 'e-open') { var nx = bar._next; ctl.stop(); if (nx && cfg.open) cfg.open(nx.l.id); }
       else if (g === 'e-home') { ctl.stop(); if (cfg.home) cfg.home(); }
       else if (g === 'e-cert') { if (cfg.cert) cfg.cert(cfg.track); }
+      else if (g === 'e-guide') { ctl.stop(); if (cfg.guide) cfg.guide(l.guide); }
+      else if (g === 'e-pair') { ctl.stop(); if (cfg.pair && cfg.open) cfg.open(cfg.pair.id); }
     }
     function onKey(e) {
       if (CUR !== ctl || !host.isConnected || /input|textarea|select/i.test((e.target && e.target.tagName) || '')) return;
@@ -467,13 +484,26 @@
   function load(app) { try { var d = JSON.parse(localStorage.getItem(KEY(app)) || '{}'); return { done: d.done || {}, at: d.at || {} }; } catch (e) { return { done: {}, at: {} }; } }
   function keep(app, d) { try { localStorage.setItem(KEY(app), JSON.stringify({ done: d.done, at: d.at })); } catch (e) {} }
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv1' };
+  function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
+  // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
+  function guideTracks(app) {
+    var D = (window.GG_LEARN_GUIDES || {})[app]; if (!D || !D.guides) return [];
+    return (D.rings || []).map(function (r) {
+      var ls = [];
+      D.guides.filter(function (g) { return g.ring === r[0]; }).forEach(function (g) {
+        ['you', 'helper'].forEach(function (k) { var l = g[k]; if (!l) return; l.guide = g.id; l.guideTitle = g.title; l.pairId = (g[k === 'you' ? 'helper' : 'you'] || {}).id; ls.push(l); });
+      });
+      return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
+    }).filter(function (t) { return t.lessons.length; });
+  }
   function needPrint() { return script(url('/shared/gg-print.js?v=pr1'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
-  function open(app, lessonId) {
+  function open(app, lessonId, opts) {
     var meta = APPS[app]; if (!meta) return;
     css();
-    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () {
+    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () {
       if (APP) close(true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
       var root = document.createElement('div');
@@ -482,7 +512,7 @@
       root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', oak: '#9DB8D0', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
       root.innerHTML = '<div class="ggl-top"><img src="' + MARK(app + '-tab') + '" alt=""><b>Learn ' + esc(meta.name) + '</b><button class="ggl-x" data-l="close">' + esc(meta.back) + '</button></div><div class="ggl-in" id="ggl-in"></div>';
       document.body.appendChild(root);
-      APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow };
+      APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide') };
       document.body.style.overflow = 'hidden';
       root.addEventListener('click', appClick);
       document.addEventListener('keydown', appKey);
@@ -496,14 +526,15 @@
     APP.root.remove(); document.body.style.overflow = APP.overflow || '';
     var f = APP.prevFocus; APP = null;
     if (!quiet && f && f.focus) try { f.focus(); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('gg-learn-close')); } catch (e) {} // pages can refresh watched marks
   }
   function appKey(e) { if (e.key === 'Escape' && APP) { e.preventDefault(); close(); } }
-  function tracksFor(app) { var L = (window.GG_LEARN || {})[app] || {}; return [SETUP_TRACK].concat((L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; })); }
+  function tracksFor(app) { var L = (window.GG_LEARN || {})[app] || {}; return [SETUP_TRACK].concat((L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; }), guideTracks(app)); }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
   function list() {
     if (CUR) CUR.stop();
     var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app), D = load(app);
-    var tr = every.filter(function (t) { return t.kind !== 'support'; }), sup = every.filter(function (t) { return t.kind === 'support'; }), counted = tr.filter(function (t) { return t.kind !== 'setup'; });
+    var gd = every.filter(function (t) { return t.kind === 'guide'; }), tr = every.filter(function (t) { return t.kind !== 'support' && t.kind !== 'guide'; }), sup = every.filter(function (t) { return t.kind === 'support'; }), counted = tr.filter(function (t) { return t.kind !== 'setup'; });
     var all = counted.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = counted.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
     var el = $('#ggl-in', APP.root);
     var card = function (t) {
@@ -512,12 +543,18 @@
         + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id] && !isSup; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : isSup ? IC.play : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b><small>' + (l.blurb ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !D.done[l.id] && !isSup ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
         + (ok ? '<div class="ggl-row"><button class="ggl-btn pri" data-l="cert" data-v="' + esc(t.id) + '">' + IC.award + 'Get Your Certificate</button></div>' : certable(t) ? '<p class="ggl-muted" style="margin-top:10px;font-size:15px">Finish every lesson in this series for a Certificate of Completion.</p>' : '') + '</div>';
     };
+    // When Life Changes: a quiet check for each video watched, no counts.
+    var gcard = function (t) {
+      return '<div class="ggl-card"><h3>' + esc(t.title) + '</h3><div class="ln-list">' + t.lessons.map(function (l) { var d = !!D.done[l.id]; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : IC.play) + '</span><span class="ln-t"><b>' + esc(l.guideTitle || l.title) + '</b><small>' + esc(l.sideName || '') + '. About ' + esc(String(l.mins || 3)) + ' minutes' + (d ? '. Watched.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div></div>';
+    };
+    var GD = (window.GG_LEARN_GUIDES || {})[app] || {};
+    var gdHtml = gd.length ? '<section class="ggl-sup"><div class="ggl-eb">How to Show Up</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(GD.title || 'When Life Changes') + '</h2>' + (GD.intro ? '<p class="ggl-muted">' + esc(GD.intro) + '</p>' : '') + gd.map(gcard).join('') + '</section>' : '';
     var S = L.support || {};
     var supHtml = sup.length ? '<section class="ggl-sup"><div class="ggl-eb">' + esc(S.eyebrow || 'Support') + '</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(S.title || 'Support for Right Now') + '</h2>' + (S.intro ? '<p class="ggl-muted">' + esc(S.intro) + '</p>' : '') + sup.map(card).join('') + '</section>' : '';
     var lesHtml = (tr.length ? (sup.length ? '<section class="ggl-sup"><div class="ggl-eb">Lessons</div><h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(L.lessonsTitle || 'Learn Step by Step') + '</h2>' + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '') : (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '')) + tr.map(card).join('') + (sup.length ? '</section>' : '') : (sup.length ? '' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>'));
     el.innerHTML = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1><p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>'
       + voiceCard()
-      + (L.supportFirst ? supHtml + lesHtml : lesHtml + supHtml)
+      + (L.supportFirst ? supHtml + gdHtml + lesHtml : lesHtml + gdHtml + supHtml)
       + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
       + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';
     APP.root.scrollTop = 0; var h = $('h1', el); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
@@ -525,15 +562,17 @@
   function lesson(id) {
     var app = APP.app, f = find(app, id); if (!f) return list();
     var D = load(app), el = $('#ggl-in', APP.root), meta = APPS[app];
-    var sup = f.t.kind === 'support';
-    el.innerHTML = '<button class="ggl-link" data-l="home">&larr; ' + (sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || ''))) + '</div><h1>' + esc(f.l.title) + '</h1><div id="ggl-host"></div>';
+    var sup = f.t.kind === 'support', gv = f.t.kind === 'guide', pair = gv && f.l.pairId ? (find(app, f.l.pairId) || {}).l : null;
+    el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? 'When Life Changes, ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1><div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
-      lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
+      lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
+      pair: pair, fromGuide: gv && APP.fromGuide,
+      guide: function (gid) { close(); var go = (window.GG_GUIDE_OPEN || {})[app]; if (typeof go === 'function') go(gid); else location.hash = '#guide=' + encodeURIComponent(gid); },
       onAt: function (i) { var d = load(app); d.at[f.l.id] = i; keep(app, d); },
       onDone: function (lid) { var d = load(app); if (!d.done[lid]) { d.done[lid] = today(); keep(app, d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { lesson(nid); },
-      home: function () { list(); },
+      home: function () { if (gv && APP && APP.fromGuide) close(); else list(); },
       cert: function (t) { cert(app, t); }
     });
   }
@@ -553,5 +592,5 @@
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { guideTracks: guideTracks, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();

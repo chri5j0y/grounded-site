@@ -94,6 +94,7 @@ const ICONS = {
   heart: '<path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10z"/>',
   scroll: '<path d="M7 3.5h10.5A2.5 2.5 0 0 1 20 6v0a2.5 2.5 0 0 1-2.5 2.5H17v10A2.5 2.5 0 0 1 14.5 21H6.5A2.5 2.5 0 0 1 4 18.5V18h10v.5a2.5 2.5 0 0 0 2.5 2.5"/><path d="M7 3.5A2.5 2.5 0 0 0 4.5 6v12M9 9h5M9 12.5h5"/>',
   hand: '<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11V4a1.5 1.5 0 0 1 3 0v7M14 11V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7-6.5 7S5 18.5 4.2 16.6L3 13.6a1.4 1.4 0 0 1 2.4-1.4L8 15"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   play: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
   door: '<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/>',
   book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 7.5h7"/>',
@@ -881,6 +882,7 @@ VIEWS.guides = () => {
   if (st.open) { const g = G.guides.find(x => x.id === st.open); if (g) return guideHtml(g); st.open = null; }
   let h = `<div class="lc-head"><p class="eyebrow">When Life Changes</p><h2 class="section-title" style="margin-top:4px">Words for the hardest conversations</h2>
     <p class="lead"><b>How to show up.</b> What's happening, what to say, what not to say, and what helps. For families, and for the chaplains and doulas who sit with them.</p>
+    <p class="w-small">${icon('play', 16)} Every guide has two short videos, narrated aloud: For You, and For the Helper. Watch them inside any guide, or <button type="button" class="text-btn" onclick="window.GGLearn&&GGLearn.open('willow')">browse them all in Learn</button>.</p>
     <p class="w-tool">${esc(G.tool)}</p></div>
     <input class="lc-search" type="search" placeholder="Search: miracle, hell, burden, not eating, kids..." aria-label="Search the guides" value="${esc(st.find || '')}" oninput="W.gFind(this)" enterkeyhint="search">
     <div class="lc-chips" role="group" aria-label="Filter">
@@ -916,6 +918,7 @@ function guideHtml(g) {
   return `<article class="lc-article" id="w-guide" style="--rc:${rc}">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.guide.open=null;W.render();W.top()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or print this guide</button></div>
     <span class="lc-tag">${esc(ring ? ring[1] : '')}</span><h2>${esc(g.title)}</h2>
+    ${guideVids(g.id)}
     <div data-read="Read this guide aloud">${body}</div>
     ${pro ? `<details class="w-det"><summary>${esc(G.labels.pro)}</summary><div><p>${esc(pro[1])}</p></div></details>` : ''}
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
@@ -924,6 +927,20 @@ function guideHtml(g) {
   </article>`;
 }
 function openGuide(id) { S.guide.open = id; S.tab = 'guides'; render(); scrollTop(true); }
+/* When Life Changes videos (Build B1, October 2026): two per guide, played by shared/gg-learn.js from willow/guide-videos.js.
+   A quiet check shows once a video has been watched on this device (gg-learn:willow). */
+function vidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:willow') || '{}').done || {})[id]); } catch (e) { return false; } }
+function guideVids(gid) {
+  const b = (side, name, cls) => { const id = 'wl-g-' + gid + '-' + side, w = vidWatched(id);
+    return `<button type="button" class="btn ${cls} w-gv-btn" onclick="W.watch('${gid}','${side}')">${icon(w ? 'check' : 'play', 18)} Watch: ${name}${w ? '<span class="w-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="w-gv no-print"><div class="btn-row">${b('you', 'For You', 'btn-primary')}${b('helper', 'For the Helper', 'btn-secondary')}</div>
+    <p class="w-small">For You, if this is what you're facing. For the Helper, if you're walking beside someone who is. A few minutes each, narrated aloud.</p></div>`;
+}
+function watchGuide(gid, side) { if (window.GGLearn) GGLearn.open('willow', 'wl-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.willow = id => { if (G.guides.some(g => g.id === id)) openGuide(id); };
+window.addEventListener('gg-learn-close', () => { if (S.tab === 'guides' && S.guide.open) { const y = window.scrollY; render(); window.scrollTo(0, y); } });
 function printGuide(id) {
   const g = G.guides.find(x => x.id === id); if (!g) return;
   printHtml(g.title, g.parts.map(p => `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('') + `<p>${esc(G.foot)}</p>`);
@@ -1199,7 +1216,7 @@ Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
   checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
-  guide: openGuide, gList, gFind, printGuide, reading: openReading, printReading,
+  guide: openGuide, watch: watchGuide, gList, gFind, printGuide, reading: openReading, printReading,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify

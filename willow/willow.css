@@ -193,3 +193,11 @@ html,body{overflow-x:clip;}
 .w-list{margin:6px 0 4px 20px;padding:0;font-size:17px;line-height:1.55;}
 .w-list li{margin:0 0 8px;}
 .w-done{font-size:14px;font-weight:600;color:var(--gold);margin-left:6px;}
+
+/* When Life Changes videos on each guide (Build B1, October 2026) */
+.w-gv{margin:4px 0 18px;padding:14px 16px;border:1.5px solid var(--line);border-left:5px solid var(--rc, var(--gold));border-radius:12px;background:var(--bg);}
+.w-gv .btn-row{gap:10px;}
+.w-gv-btn{display:inline-flex;align-items:center;gap:8px;}
+.w-gv-w{font-size:13px;font-weight:600;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(95,115,80,.16);}
+.w-gv .w-small{margin:10px 0 0;}
+@media (max-width:520px){.w-gv .btn-row .btn{width:100%;justify-content:center;}}
