@@ -781,6 +781,7 @@ html.ts-2 main{zoom:1.25;}
 @media(max-width:640px){ .lc-two{grid-template-columns:1fr;} .lc-article h2{font-size:31px;} }
 .lc-two > div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;}
 .lc-reach{background:rgba(156,47,47,.08);border:1px solid rgba(156,47,47,.25);border-radius:14px;padding:12px 18px;}
+.lc-gv{margin:16px 0 4px;}.lc-gv .btn-row{flex-wrap:wrap;gap:10px;}.lc-gv-note{font-size:14.5px;color:var(--ink-soft);margin:8px 0 0;}.lc-gv-w{font-size:12.5px;font-weight:600;opacity:.85;margin-left:4px;}
 .lc-note{font-size:13.5px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:12px;margin-top:24px;}
 .lc-practice{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 12px;margin:0 6px 6px 0;font-size:14.5px;}
 .lc-suggest{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:22px 0;}
@@ -3234,6 +3235,7 @@ function lcDetail(mode, t) {
     <span class="lc-tag">${lcEsc(r.name)}</span>
     <h2>${lcEsc(t.title)}</h2>
     <div class="lc-quick"><b>Quick Reference</b>${lcList(t.quick)}</div>
+    ${lcVids(t.id, self)}
     <div class="lc-toggle no-print" role="group" aria-label="Choose a view">
       <button aria-pressed="${self}" onclick="lcPersp('${mode}','self')">I'm going through this</button>
       <button aria-pressed="${!self}" onclick="lcPersp('${mode}','helper')">I'm helping someone</button>
@@ -3249,6 +3251,23 @@ function lcDetail(mode, t) {
     <p class="lc-note">From When Life Changes in Oak&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. &copy; ${new Date().getFullYear()} Chris Joy. Free to print for personal use and care visits.</p>
   </article>`;
 }
+/* When Life Changes videos (GWG BLD 719): two per guide, For You and For the Helper, played by shared/gg-learn.js
+   from oak/guide-videos.js. LC_VIDS lists the guides that have them so far (written by the build's generator).
+   A quiet check shows once a video has been watched on this device (gg-learn:oak). */
+/* LC_VIDS start */const LC_VIDS = ["anxiety", "sadness", "loneliness", "burnout", "anger", "shame", "lost", "trauma", "adhd", "spouse-death", "parent-death", "child-death", "pregnancy-loss", "suicide-loss", "dying-loved", "ambiguous-loss", "grief-days", "pet-death"];/* LC_VIDS end */
+function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:oak') || '{}').done || {})[id]); } catch (e) { return false; } }
+function lcVids(gid, self) {
+  if (!LC_VIDS.includes(gid)) return '';
+  const b = (side, name, pri) => { const id = 'ok-g-' + gid + '-' + side, w = lcVidWatched(id);
+    return `<button type="button" class="btn ${pri ? 'btn-primary' : 'btn-secondary'}" onclick="lcWatch('${gid}','${side}')">${w ? '&#10003;' : '&#9654;'} Watch: ${name}${w ? ' <span class="lc-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="lc-gv no-print"><div class="btn-row">${b('you', 'For You', self)}${b('helper', 'For the Helper', !self)}</div>
+    <p class="lc-gv-note">For You, if this is what you're facing. For the Helper, if you're walking beside someone who is. A few minutes each, narrated aloud.</p></div>`;
+}
+function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('oak', 'ok-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.oak = id => { if (LC_TOPICS.some(t => t.id === id)) { LCS.client.persp = LCS.client.persp || 'self'; lcOpen('client', id); } };
+window.addEventListener('gg-learn-close', () => { ['client', 'prac'].forEach(m => { if (LCS[m].open && document.getElementById(m + '-life')) { const y = window.scrollY; renderLC(m); window.scrollTo(0, y); } }); });
 const LC_SUGGEST = { roots: ['faith-crisis', 'spiritual-dryness', 'church-hurt'], trunk: ['lost', 'burnout', 'shame'], bark: ['anxiety', 'anger', 'news-overwhelm'], branches: ['loneliness', 'estrangement', 'marriage-strain'], leaves: ['burnout', 'chronic', 'caregiving'], fruit: ['sadness', 'lost', 'diagnosis'] };
 function lcSuggestHtml(scores, mode) {
   const low = PART_ORDER.filter(k => scores[k] <= 4).sort((a, b) => scores[a] - scores[b]);
@@ -3319,7 +3338,7 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=ln10" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln10';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln11" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln11';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
