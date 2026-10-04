@@ -1803,7 +1803,18 @@ function stRunFlags(r){
 
 // ----- training (its own module; gates real visits for everyone; demo visits always open) -----
 const STM = () => STG() && STG().module;
-function stmData(){ DATA.stmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.stmod || {}); return DATA.stmod; }
+function stmData(){ DATA.stmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.stmod || {}); return DATA.stmod; }
+/* Oak Guide Training, version 2 (GWG BLD 723, October 2026): played like Willow Guide Training.
+   - Each lesson is a narrated video in the shared player (shared/gg-learn.js), drawn from the sealed
+     library (FLD.oakGuide.module.lessons[i].video.scenes), with Read It Instead underneath it.
+   - A lesson counts when the video reaches its closing scene (DATA.stmod.how[id] 'watched'), or when Read It
+     Instead is opened and Mark as Read is tapped ('read'). Either way counts.
+   - Lessons open in order. Anyone who has passed or signed before (renewing) opens any lesson.
+   - A lesson without video (an older library) shows as text with Mark as Read, as before. */
+const stmFree = () => { const D = stmData(); return stmState().complete || !!(D.pass || D.signed); };
+const stmOpen = i => { const M = STM(), D = stmData(); return i <= 0 || stmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+const stmVid = L => !!(L && L.video && L.video.scenes && L.video.scenes.length && window.GGLearn);
+function stmTrack(){ const M = STM(); return {id:'stg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
 function stmState(){
   const M = STM(), D = stmData(), t = today();
   if (!M) return {complete:false, total:0, done:0};
@@ -1832,7 +1843,7 @@ function vSTM(){
   <div class="hello st-hello" style="margin-top:14px"><div class="eyebrow" style="color:#E0A85C">Oak Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
-  ${M.lessons.map((l, i) => step('st-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = stmOpen(i); return step('st-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
   <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
   ${step('st-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with adults, patients, and staff`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
@@ -1840,14 +1851,38 @@ function vSTM(){
   ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="st-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('st') : ''}`;
 }
 function vSTMLesson(i){
-  const M = STM(), L = M.lessons[i], n = M.lessons.length, read = !!stmData().lessons[L.id];
+  const M = STM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vSTM();
+  if (!stmOpen(i)) return `<button class="linkbtn" data-act="st-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = stmVid(L), watch = vid && !V.stread;
+  if (watch){ GGLearn.css(); setTimeout(() => stmMount(i), 0); }
   return `<button class="linkbtn" data-act="st-mhome">Back to training</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
-  ${lessonBody(L)}
-  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="st-mread" data-v="${i}">Mark as Read</button>`}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="stm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="st-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="st-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="stm-foot">${stmFoot(i)}</div>`;
+}
+// The buttons under a lesson. Redrawn in place when a video finishes, so the player is never torn down.
+function stmFoot(i){
+  const M = STM(), L = M.lessons[i], n = M.lessons.length, D = stmData(), done = !!D.lessons[L.id];
+  const reading = V.stread || !stmVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="st-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
    ${i > 0 ? `<button class="btn btn-line" data-act="st-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
-   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="st-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
-   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="st-mhome">Back to training</button>` : ''}</div>`;
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="st-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="st-mhome">Back to training</button>` : ''}</div>
+  ${all && !stmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="st-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function stmMount(i){
+  const host = $('#stm-host'); if (!host || !window.GGLearn) return;
+  const M = STM(), L = M.lessons[i], D = stmData(), tr = stmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#8B5E1A',
+    onAt: k => { lastAct = Date.now(); stmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = stmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#stm-foot'); if (f) f.innerHTML = stmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'oak', stm:1, stml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'oak', stm:1}; render(); }});
 }
 function stmNewQuiz(){ const items = STM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
 function vSTMQ(){
@@ -6556,8 +6591,9 @@ document.addEventListener('click', async e => {
     case 'st-ans': case 'st-impr': case 'st-safe': case 'st-plan': case 'st-tog': case 'st-yes': if (RUN) stToggle(t); break;
     case 'st-retry': STC_FAIL = false; stLoad(); render(); break;
     case 'st-mhome': go('oak', {stm:1}); break;
-    case 'st-ml': go('oak', {stm:1, stml:+v}); break;
-    case 'st-mread': { const L = STM().lessons, i = +v; stmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !stmData().lessons[x.id]); if (nx >= 0) go('oak', {stm:1, stml:nx}); else { go('oak', {stm:1}); toast('Lesson marked as read.'); } break; }
+    case 'st-ml': if (!stmOpen(+v)) break; go('oak', {stm:1, stml:+v}); break;
+    case 'st-mreadit': lnStop(); V.stread = v === '1'; render(); break;
+    case 'st-mread': { const L = STM().lessons, i = +v; { const d = stmData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } } save(); const nx = L.findIndex((x, j) => j > i && !stmData().lessons[x.id]); if (nx >= 0) go('oak', {stm:1, stml:nx}); else { go('oak', {stm:1}); toast('Lesson marked as read.'); } break; }
     case 'st-mq': go('oak', {stm:1, stq:stmNewQuiz()}); break;
     case 'st-mpick': V.stq.ans[V.stq.order[V.stq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=st-mnext],[data-act=st-mfinish]'); if (nb) nb.disabled = false; } break;
     case 'st-mnext': if (V.stq.ans[V.stq.order[V.stq.i]] === undefined) break; V.stq.i++; render(); break;
