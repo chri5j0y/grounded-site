@@ -4,6 +4,7 @@
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=tc1"></script>
 <script src="/shared/gg-shelf.js?v=fd1"></script>
+<script src="/shared/gg-sources.js?v=src1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -414,7 +415,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-profiles.js?v=lb1"></script>
 <script src="checkin.js?v=fd1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
-<script src="/shared/gg-library.js?v=vb1"></script>
+<script src="/shared/gg-library.js?v=src1"></script>
 <script src="/shared/gg-tend.js?v=vb1"></script>
 <script>
 /* Aspen by Grow With Grounded content.
@@ -1312,7 +1313,7 @@ function aspPracticeInfo(key, name){
     const list = (PRACTICES[g] || {})[key] || [], idx = list.findIndex(pr => pr[2] === name);
     if (idx < 0) continue;
     const pr = list[idx], L = ((LEARN[g] || {})[key] || [])[idx];
-    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>` : '';
+    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(name, 'aspen') : ''}` : '';
     return { desc: `${STYLE_NAMES[pr[0]]}, about ${pr[1]} ${pr[1] === 1 ? 'minute' : 'minutes'}`, guide, hard: L ? L[2] : '' };
   }
   return {};
@@ -1559,7 +1560,7 @@ function guideTitle(id){ let t = id; guidesData().groups.forEach(g => g.topics.f
 function guideLinks(k){ return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
 function learnHTML(g, k, idx){
   const L = ((typeof LEARN !== 'undefined' && LEARN[g] && LEARN[g][k]) || [])[idx]; if (!L) return '';
-  return `<details class="learn"><summary>Learn more</summary><div><p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(L[2])}</p><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p></div></details>`;
+  return `<details class="learn"><summary>Learn more</summary><div><p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(L[2])}</p><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(((PRACTICES[g] || {})[k] || [])[idx] ? PRACTICES[g][k][idx][2] : '', 'aspen') : ''}</div></details>`;
 }
 let planDraft = null, planOpen = {};
 function renderPlan(){
@@ -1911,9 +1912,9 @@ function renderGuide(opts){
     ${t.say ? `<h3>Words you can use</h3>${list(t.say)}` : ''}
     ${t.avoid ? `<h3>Try not to</h3>${list(t.avoid)}` : ''}
     ${t.help ? `<h3>Where to get help</h3>${list(t.help)}` : ''}
-    ${t.sources ? `<h3>Sources</h3><ul class="src">${t.sources.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></li>`).join('')}</ul>` : ''}
     ${!t.quick && !t.talk ? '<p class="muted">This guide is being written.</p>' : ''}
     ${window.GGShelf ? GGShelf.html('aspen', t.id) : ''}
+    ${window.GGSources ? GGSources.line((t.sources || []).concat((GGSources.C['aspen:' + t.id]) || [])) : (t.sources ? `<h3>Sources</h3><ul class="src">${t.sources.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></li>`).join('')}</ul>` : '')}
     </div>`;
 }
 
@@ -1962,7 +1963,7 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln4" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln4';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln5" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln5';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=vb1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=vb1';document.head.appendChild(s)"></script>
 </body>

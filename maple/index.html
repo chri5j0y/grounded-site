@@ -4,6 +4,7 @@
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=tc1"></script>
 <script src="/shared/gg-shelf.js?v=fd1"></script>
+<script src="/shared/gg-sources.js?v=src1"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -862,7 +863,7 @@ a.big-btn{text-decoration:none;}
 <script src="/maple/guides.js"></script>
 <script src="/maple/checkin.js?v=fd1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
-<script src="/shared/gg-library.js?v=vb1"></script>
+<script src="/shared/gg-library.js?v=src1"></script>
 <script src="/shared/gg-tend.js?v=vb1"></script>
 <script>
 const ICONS = {
@@ -2203,7 +2204,7 @@ function mpWeeklyBank() {
 function mpPracticeInfo(key, name) {
   const a = ACTIVITIES.find(x => x.part === key && x.title === name); if (!a) return {};
   const young = isK2(MP_KID && MP_KID.grade);
-  return { desc: young ? a.k2 : a.g35[0], guide: `<ol>${a.g35.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Do it together.</b> A grown-up can read it out loud and cheer for every try.</p>`, hard: a.easy || '' };
+  return { desc: young ? a.k2 : a.g35[0], guide: `<ol>${a.g35.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Do it together.</b> A grown-up can read it out loud and cheer for every try.</p>${window.GGSources ? GGSources.practice(a.title, 'maple') : ''}`, hard: a.easy || '' };
 }
 function mpInit(kid) {
   if (!window.GGTend) return;
@@ -2904,6 +2905,7 @@ function openTalk(id, from) {
     <h3>When to reach out for more help</h3><div class="reach-box">${list(t.reach)}</div>
     <h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}</ul>
     ${window.GGShelf ? GGShelf.html('maple', t.id) : ''}
+    ${window.GGSources ? GGSources.html('maple:' + t.id) : ''}
     <p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance, not a substitute for professional care. Emergency: 911. Crisis: call or text 988. &copy; ${new Date().getFullYear()} ${OWNER}. Free to print for families and classrooms.</p>
   </article>`;
   go('talk');
@@ -2928,7 +2930,7 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln4" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln4';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln5" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln5';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=vb1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=vb1';document.head.appendChild(s)"></script>
 </body>

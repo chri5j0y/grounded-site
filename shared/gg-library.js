@@ -20,6 +20,8 @@
      GGLibrary.view(it, age)      {name, text, busy, why, steps, hard}
                                   in the words for that age
      GGLibrary.info(key, age)     {desc, guide, hard} for a tending card
+   Sources and Credits (GWG BLD 713): every "Show me how" ends with the quiet Sources line from
+   shared/gg-sources.js (Adapted from, Sources, and the story a bedside practice was born from).
    ===================================================================== */
 (function () {
   if (window.GGLibrary) return;
@@ -65,7 +67,8 @@
       why: (k ? h[3] : h[0]) || h[0] || '',
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
-      bedside: it.bedside || null
+      bedside: it.bedside || null,
+      app: age === 'maple' || age === 'aspen' ? age : 'lib'
     };
   }
   function guideHtml(v) {
@@ -74,7 +77,8 @@
       + (v.steps.length ? '<p style="margin-bottom:2px"><b>How to do it.</b></p><ol>' + v.steps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' : '')
       + (v.hard ? '<p><b>If it\'s hard.</b> ' + esc(v.hard) + '</p>' : '')
       + (v.bedside ? bedsideHtml(v.bedside) : '')
-      + (window.GGShelf && v.key ? GGShelf.html('practice', v.key) : '');
+      + (window.GGShelf && v.key ? GGShelf.html('practice', v.key) : '')
+      + (window.GGSources && v.key ? GGSources.practice(v.key, v.app, v.bedside) : '');
   }
   // From the Bedside: a practice born from one of Chris's stories, with its lesson and (when published) the story.
   function bedsideHtml(b) {

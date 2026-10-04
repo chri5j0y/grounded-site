@@ -334,6 +334,7 @@ function practiceCard(r, role) {
     <h3>${esc(it[1])}</h3>
     <p>${esc(it[2])}</p>
     <p class="w-meta">${timeOf(it) ? esc(timeOf(it)) + ' &middot; ' : ''}${esc(P.evidence[evOf(it)] || '')}</p>
+    ${window.GGSources ? GGSources.practice(it[1], 'willow') : ''}
     <div class="btn-row">
       ${done ? `<span class="w-done">${icon('leaf', 18)} Done for today. That's enough.</span>` : `<button type="button" class="btn btn-primary" onclick="W.did('${o.part}','${it[0]}')">Did it today</button>`}
       <button type="button" class="btn btn-secondary" onclick="W.another()">Something else</button>
@@ -855,8 +856,8 @@ VIEWS.bedside = () => {
   } else if (person && r.matters && r.matters.never && sees('matters')) {
     h += `<div class="w-card w-never"><p class="w-eyebrow">Never do</p><p>${esc(r.matters.never)}</p></div>`;
   }
-  h += `<h3 class="section-title">What helps</h3><div class="w-grid" data-read="Read these aloud">${P.bedside.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}</div>`).join('')}</div>`;
-  h += `<h3 class="section-title">Care for the one keeping watch</h3><p class="lead">You can't pour from an empty cup, and this cup has been pouring a long time.</p><div class="w-grid" data-read="Read these aloud">${P.selfcare.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}</div>`).join('')}</div>`;
+  h += `<h3 class="section-title">What helps</h3><div class="w-grid" data-read="Read these aloud">${P.bedside.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
+  h += `<h3 class="section-title">Care for the one keeping watch</h3><p class="lead">You can't pour from an empty cup, and this cup has been pouring a long time.</p><div class="w-grid" data-read="Read these aloud">${P.selfcare.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
   h += `<h3 class="section-title">Faith at the bedside</h3><div class="w-card" data-read="Read these aloud">${F.rules.map(x => `<p><b>${esc(x[0])}</b> ${esc(x[1])}</p>`).join('')}</div>`;
   h += `<h3 class="section-title">Look up a tradition</h3><p class="lead">For a family with more than one faith, a visitor from another tradition, or just to understand. ${esc(F.end)}</p>
     <label class="w-l" for="w-flook">Tradition</label><select id="w-flook" onchange="W.S.faithLook=this.value;W.render()"><option value="">Choose one</option>${F.intake.groups.map(g => `<optgroup label="${esc(g[1])}">${g[2].filter(id => F.cards[id]).map(id => `<option value="${id}"${S.faithLook === id ? ' selected' : ''}>${esc(F.cards[id].name)}</option>`).join('')}</optgroup>`).join('')}</select>
@@ -923,6 +924,7 @@ function guideHtml(g) {
     ${pro ? `<details class="w-det"><summary>${esc(G.labels.pro)}</summary><div><p>${esc(pro[1])}</p></div></details>` : ''}
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
     ${window.GGShelf ? GGShelf.html('willow', g.id) : ''}
+    ${window.GGSources ? GGSources.html('willow:' + g.id) : ''}
     <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support, not medical care, therapy, or legal advice. &copy; ${new Date().getFullYear()} Chris Joy.</p>
   </article>`;
 }
@@ -943,7 +945,7 @@ window.GG_GUIDE_OPEN.willow = id => { if (G.guides.some(g => g.id === id)) openG
 window.addEventListener('gg-learn-close', () => { if (S.tab === 'guides' && S.guide.open) { const y = window.scrollY; render(); window.scrollTo(0, y); } });
 function printGuide(id) {
   const g = G.guides.find(x => x.id === id); if (!g) return;
-  printHtml(g.title, g.parts.map(p => `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('') + `<p>${esc(G.foot)}</p>`);
+  printHtml(g.title, g.parts.map(p => `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('') + `<p>${esc(G.foot)}</p>` + (window.GGSources ? GGSources.html('willow:' + g.id) : ''));
 }
 
 /* ---------- Readings ---------- */

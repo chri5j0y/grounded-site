@@ -33,7 +33,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln4';
+  var V = 'ln5';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -266,8 +266,15 @@
     return { ok: true, eyebrow: 'Lesson ' + (cfg.lesson.n || '') + ' Complete', h: "That's it for this lesson. Nice work.", sub: upnext, count: count, say: "That's it for this lesson. Nice work. Ready for the next one?", next: nx, cert: cert };
   }
 
+  // Sources and Credits (GWG BLD 713): one quiet line under the closing scene, above the copyright line.
+  // Lessons carry their own sources (sealed lessons), or shared/gg-sources.js lists them by id; story scenes credit Chris.
+  function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
+  function needSources() {
+    if (window.GGSources || document.getElementById('gg-src-js')) return;
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src1'); document.head.appendChild(s);
+  }
   function player(host, cfg) {
-    css();
+    css(); needSources();
     if (CUR) CUR.stop();
     var l = cfg.lesson, acc = cfg.accent || '#8B5E1A', hasQuiz = (l.scenes || []).some(function (s) { return s.k === 'quiz'; });
     var answered = false, P = { i: -1, playing: false, tok: 0, hl: 0, tick: 0, nx: 0 };
@@ -317,7 +324,7 @@
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
-      if (last) $('.ln-link', host).innerHTML = '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
+      if (last) $('.ln-link', host).innerHTML = srcLine(l) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
       var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now();
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });

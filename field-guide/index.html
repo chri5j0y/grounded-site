@@ -589,7 +589,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
-<script src="../shared/gg-learn.js?v=ln4"></script>
+<script src="../shared/gg-sources.js?v=src1"></script>
+<script src="../shared/gg-learn.js?v=ln5"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -1238,7 +1239,8 @@ function vOrient(){
 function lessonBody(L){
   return `<div class="lesson"><h1>${esc(L.title)}</h1><p class="lead">${esc(L.lead)}</p>
     ${L.parts.map(pt => `<h2>${esc(pt.h)}</h2>${pt.p.map(t => `<p>${esc(t)}</p>`).join('')}`).join('')}
-    <div class="card" style="margin-top:24px;border-left:4px solid var(--gold)"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${L.remember.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div></div>`;
+    <div class="card" style="margin-top:24px;border-left:4px solid var(--gold)"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${L.remember.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+    ${window.GGSources && (L.sources || L.video) ? GGSources.lesson('', {id: L.id, sources: L.sources || [], scenes: (L.video && L.video.scenes) || []}) : ''}</div>`;
 }
 function vLesson(i){
   const L = OR().lessons[i], n = OR().lessons.length, read = !!DATA.orient.lessons[L.id];
@@ -4306,7 +4308,7 @@ function wlmData(){ DATA.wlmod = Object.assign({lessons:{}, how:{}, at:{}, last:
    - A lesson without video (an older library) still shows as text with Mark as Read. */
 const wlmFree = () => { const D = wlmData(); return wlmState().complete || !!(D.pass || D.signed); };
 const wlmOpen = i => { const M = WLM(), D = wlmData(); return i <= 0 || wlmFree() || !!(M.lessons[i - 1] && D.lessons[M.lessons[i - 1].id]); };
-function wlmTrack(){ const M = WLM(); return {id:'wlg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
+function wlmTrack(){ const M = WLM(); return {id:'wlg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
 function wlmState(){
   const M = WLM(), D = wlmData(), t = today();
   if (!M) return {complete:false, total:0, done:0};
@@ -5334,7 +5336,7 @@ function vHTTopic(T){
   return `<button class="linkbtn" data-act="ht-home">Back to When Life Changes</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(htGroupName(T.group))}</div><h1>${esc(T.title)}</h1></div>
   ${T.crisis || T.abuse ? htCrisisCard(!!T.abuse) : ''}
-  <div class="card ht-helper"><h3>For the helper</h3><p style="margin-top:6px">${esc(T.helper || '')}</p></div>
+  <div class="card ht-helper"><h3>For the helper</h3><p style="margin-top:6px">${esc(T.helper || '')}</p>${window.GGSources && T.sources ? GGSources.line(T.sources) : ''}</div>
   <div class="ht-grid">${have.map(card).join('')}</div>
   ${none.length ? `<p class="muted ht-none">${none.map(({st}) => st.soon ? `${esc(st.name)}: ${esc(st.none || 'coming soon')}` : `${esc(st.name)} (${esc(st.ages)}): not written for this age.`).join(' ')}</p>` : ''}
   <div class="card" style="margin-top:14px"><h3>Handouts</h3>
