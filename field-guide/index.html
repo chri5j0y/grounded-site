@@ -595,7 +595,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
 <script src="../shared/gg-sources.js?v=src6"></script>
-<script src="../shared/gg-learn.js?v=ln15"></script>
+<script src="../shared/gg-learn.js?v=ln16"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -1392,6 +1392,7 @@ function download(name, text){
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 function vFounder(){
+  if (V.slab) return vStoryLab();
   const d = DATA.founder.draft, C = workCodes(), live = new Set(CODES.codes.map(e => e.id)), k = effKeys();
   const saved = id => DATA.founder.saved.find(x => x.id === id);
   const order = {founder:0, staff:1, field:2, org:3};
@@ -1426,6 +1427,7 @@ function vFounder(){
    <div style="margin-top:8px">${pr.tiers.map(t => t.length < 2 || !t[1] ? `<h4 style="margin-top:14px">${esc(t[0])}</h4>` : `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   ${vBiz()}
+  ${slCard()}
   ${vProof()}
   ${vSpeak()}
   <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
@@ -1434,6 +1436,77 @@ function vFounder(){
   ${FLD ? wlFounderCard() : ''}`;
 }
 
+
+// ---------------- FOUNDER: Story Lab (GWG BLD 724) ----------------
+// The stories Chris still needs to write, one card per guide, from the Founder library (FDR.storyLab:
+// {title, intro, tips, groups:[{id, name, note, cards:[{id, app, guide, title, use, needs, pov, avoid, length}]}]}).
+// What he writes saves in this device's encrypted records (DATA.founder.stories[id] = {idea, text, status, at}),
+// travels in the one backup file, and Copy Ready Stories puts every Ready story on the clipboard for a chat.
+// Cards of his own: DATA.founder.stories['own-...'] with own: true and a title.
+const SL = () => (typeof FDR !== 'undefined' && FDR && FDR.storyLab && Array.isArray(FDR.storyLab.groups)) ? FDR.storyLab : null;
+const slStore = () => (DATA.founder.stories = DATA.founder.stories || {});
+const SL_ST = [['idea', 'Idea'], ['drafting', 'Drafting'], ['ready', 'Ready'], ['sent', 'Sent']];
+const slStatus = id => (slStore()[id] || {}).status || '';
+function slCards(){ const L = SL(), out = []; if (L) L.groups.forEach(g => g.cards.forEach(c => out.push(Object.assign({grp: g.name}, c))));
+  Object.entries(slStore()).forEach(([id, x]) => { if (x && x.own) out.push({id, own: true, grp: 'Your Own Stories', title: x.title || 'A Story of My Own', use: 'Anywhere it fits. Say where you picture it.'}); });
+  return out; }
+function slCount(){ const n = {idea:0, drafting:0, ready:0, sent:0, all:0}; slCards().forEach(c => { n.all++; const st = slStatus(c.id); if (n[st] !== undefined) n[st]++; }); return n; }
+function slCard(){
+  const L = SL(); if (!L) return '';
+  const n = slCount();
+  return `<div class="card" id="sl-card" style="border-left:4px solid var(--gold)"><h3>${esc(L.title || 'Story Lab')}</h3><p class="muted">${esc((L.intro || [])[0] || '')}</p>
+   <p style="margin-top:8px"><b>${n.all}</b> story cards: ${n.ready} ready, ${n.drafting} drafting, ${n.idea} with ideas, ${n.sent} sent.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sl-open">Open Story Lab</button>${n.ready ? `<button class="btn btn-line btn-sm" data-act="sl-copy">${icon('copy')} Copy Ready Stories (${n.ready})</button>` : ''}</div></div>`;
+}
+function vStoryLab(){
+  const L = SL() || {title: 'Story Lab', intro: [], tips: [], groups: []}, St = slStore(), n = slCount(), f = V.slf || 'all';
+  const show = c => { const st = slStatus(c.id); return f === 'all' || (f === 'open' ? !st || st === 'idea' : f === st); };
+  const card = c => { const x = St[c.id] || {}, st = x.status || '', open = V.slOpen === c.id;
+    return `<details class="sl-c" data-sl="${esc(c.id)}"${open ? ' open' : ''}><summary><b>${esc(c.title)}</b>${st ? ` <span class="pill ${st === 'ready' ? 'sage' : st === 'sent' ? '' : 'gold'}">${esc((SL_ST.find(s => s[0] === st) || ['', ''])[1])}</span>` : ''}<small class="muted">${esc(c.use || '')}</small></summary>
+      ${c.needs && c.needs.length ? `<h4>What the story needs</h4><ul class="spk-ul">${c.needs.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+      ${c.pov ? `<p style="margin-top:8px"><b>Point of view:</b> ${esc(c.pov)}</p>` : ''}${c.avoid ? `<p style="margin-top:4px"><b>Leave out:</b> ${esc(c.avoid)}</p>` : ''}${c.length ? `<p style="margin-top:4px"><b>Length:</b> ${esc(c.length)}</p>` : ''}
+      ${c.own ? `<label class="f" for="sl-t-${esc(c.id)}">Title</label><input type="text" id="sl-t-${esc(c.id)}" data-slf="title" data-v="${esc(c.id)}" value="${esc(x.title || '')}">` : ''}
+      <label class="f" for="sl-i-${esc(c.id)}">Ideas and notes</label><textarea id="sl-i-${esc(c.id)}" rows="3" data-slf="idea" data-v="${esc(c.id)}" placeholder="A moment that comes to mind, a name to change, a line someone said">${esc(x.idea || '')}</textarea>
+      <label class="f" for="sl-s-${esc(c.id)}">The story</label><textarea id="sl-s-${esc(c.id)}" rows="8" data-slf="text" data-v="${esc(c.id)}" placeholder="Tell it in your own words, in your own I.">${esc(x.text || '')}</textarea>
+      <label class="f" for="sl-st-${esc(c.id)}">Where it stands</label><select id="sl-st-${esc(c.id)}" data-slf="status" data-v="${esc(c.id)}"><option value="">Not started</option>${SL_ST.map(s => `<option value="${s[0]}"${st === s[0] ? ' selected' : ''}>${s[1]}</option>`).join('')}</select>
+      <p class="muted" style="font-size:14px;margin-top:6px">${x.at ? 'Saved on this device ' + esc(nice(new Date(x.at).toISOString().slice(0, 10))) + '.' : 'Saves on this device as you type.'}</p>
+      ${c.own ? `<div class="row" style="margin-top:8px"><button class="btn btn-line btn-sm" data-act="sl-del" data-v="${esc(c.id)}">Remove This Card</button></div>` : ''}</details>`; };
+  const groups = L.groups.concat(Object.values(St).some(x => x && x.own) ? [{id: 'own', name: 'Your Own Stories', note: 'Stories you added. Say where you picture each one.', cards: slCards().filter(c => c.own)}] : []);
+  const gHtml = groups.map(g => { const cs = g.cards.filter(show); if (!cs.length) return ''; const done = g.cards.filter(c => ['ready', 'sent'].includes(slStatus(c.id))).length;
+    return `<details class="proof-sec sl-g"${(V.slGroups || []).includes(g.id) ? ' open' : ''} data-slg="${esc(g.id)}"><summary>${esc(g.name)}<span>${done} of ${g.cards.length} ready</span></summary>${g.note ? `<p class="muted" style="margin:6px 0 8px">${esc(g.note)}</p>` : ''}${cs.map(card).join('')}</details>`; }).join('');
+  const fb = (k, t) => `<button class="btn btn-sm ${f === k ? 'btn-gold' : 'btn-line'}" data-act="sl-f" data-v="${k}">${t}</button>`;
+  return `<button class="linkbtn" data-act="sl-home">Back to Founder</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>${esc(L.title || 'Story Lab')}</h1>${(L.intro || []).map(t => `<p>${esc(t)}</p>`).join('')}</div>
+  <div class="card"><p><b>${n.all}</b> story cards: ${n.ready} ready, ${n.drafting} drafting, ${n.idea} with ideas, ${n.sent} sent.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="sl-copy"${n.ready ? '' : ' disabled'}>${icon('copy')} Copy Ready Stories (${n.ready})</button><button class="btn btn-line btn-sm" data-act="sl-sent"${n.ready ? '' : ' disabled'}>Mark Ready as Sent</button><button class="btn btn-line btn-sm" data-act="sl-add">Add a Story of My Own</button></div>
+   <p class="muted" style="font-size:14px;margin-top:8px">Everything you write here stays on this device, locked like the rest of the Field Guide, and travels in the one backup file. Paste the copied stories in a chat, and they go into the right videos.</p>
+   ${L.tips && L.tips.length ? `<details style="margin-top:10px"><summary><b>Tips for a story that works in a video</b></summary><ul class="spk-ul">${L.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></details>` : ''}</div>
+  <div class="row" style="margin:16px 0 10px">${fb('all', 'All')}${fb('open', 'Not Started or Ideas')}${fb('drafting', 'Drafting')}${fb('ready', 'Ready')}${fb('sent', 'Sent')}</div>
+  ${gHtml || '<div class="card"><p class="muted">No cards here yet.</p></div>'}`;
+}
+function slText(){
+  const cs = slCards().filter(c => slStatus(c.id) === 'ready'), St = slStore();
+  return 'Grow With Grounded Story Lab, ready stories, ' + today() + ' (' + cs.length + ')\n\n' + cs.map((c, i) => { const x = St[c.id] || {};
+    return `${i + 1}. [${c.id}] ${x.title || c.title}\n   For: ${c.use || ''}${x.idea ? '\n   Notes: ' + x.idea : ''}\n   Story:\n${x.text || ''}`; }).join('\n\n');
+}
+let slTimer = null;
+function slSet(id, k, val){ const St = slStore(); St[id] = Object.assign({}, St[id] || {}, {[k]: val, at: Date.now()}); if (k === 'text' && val && !St[id].status) St[id].status = 'drafting'; clearTimeout(slTimer); slTimer = setTimeout(() => save(), 700); }
+document.addEventListener('input', e => { const el = e.target.closest && e.target.closest('[data-slf]'); if (el && DATA && el.tagName !== 'SELECT') slSet(el.dataset.v, el.dataset.slf, el.value); });
+document.addEventListener('change', e => { const el = e.target.closest && e.target.closest('[data-slf]'); if (!el || !DATA) return; slSet(el.dataset.v, el.dataset.slf, el.value); if (el.tagName === 'SELECT'){ clearTimeout(slTimer); save(); slKeep(); } });
+function slKeep(){ V.slGroups = Array.from(document.querySelectorAll('.sl-g[open]')).map(x => x.getAttribute('data-slg')); const o = document.querySelector('.sl-c[open]'); V.slOpen = o ? o.getAttribute('data-sl') : null; const y = window.scrollY; render(); window.scrollTo(0, y); }
+function slAct(a, v){
+  switch (a){
+    case 'sl-open': V = {tab: 'founder', slab: 1}; render(); window.scrollTo(0, 0); return true;
+    case 'sl-home': V = {tab: 'founder'}; render(); setTimeout(() => { const c = $('#sl-card'); if (c) c.scrollIntoView(); }, 0); return true;
+    case 'sl-f': V.slf = v; slKeep(); return true;
+    case 'sl-copy': { const txt = slText(); (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied. Paste it in a chat.'), () => { prompt('Copy these stories:', txt); }); return true; }
+    case 'sl-sent': if (!confirm('Mark every Ready story as Sent? They stay here, marked Sent.')) return true; Object.values(slStore()).forEach(x => { if (x && x.status === 'ready'){ x.status = 'sent'; x.at = Date.now(); } }); save(); slKeep(); return true;
+    case 'sl-add': { const id = 'own-' + uid(); slStore()[id] = {own: true, title: '', status: 'idea', at: Date.now()}; save(); V.slOpen = id; V.slGroups = (V.slGroups || []).concat('own'); V.slf = 'all'; render(); setTimeout(() => { const t = $('#sl-t-' + id); if (t){ t.scrollIntoView({block: 'center'}); t.focus(); } }, 30); return true; }
+    case 'sl-del': if (!confirm('Remove this card and what you wrote on it?')) return true; delete slStore()[v]; save(); slKeep(); return true;
+  }
+  return false;
+}
+function storiesMerge(a, b){ const o = Object.assign({}, a || {}); Object.entries(b || {}).forEach(([k, x]) => { if (x && (!o[k] || (x.at || 0) > (o[k].at || 0))) o[k] = x; }); return o; }
 
 // ---------------- FOUNDER: Proofreading ----------------
 // Every line of writing added to the site and tools, by session. The lines live in the Founder
@@ -1663,7 +1736,7 @@ function vLearn(){
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
   ${sgLearnCard()}
   ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
-  ${wfgLearnCard()}${wfgLearnCard('oak')}
+  ${wfgLearnCard()}${wfgLearnCard('oak')}${wfgLearnCard('aspen')}
   ${tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
     return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
@@ -4540,9 +4613,10 @@ function sgAct(a, v){
    in Learn, open where Oak Guide is open (stOpen). Ring keys are unique across both series. */
 const FGSER = {
   willow: {lib: () => WLG(), on: () => wlOpen(), label: 'Willow Guide', accent: '#5D5A6E', tree: 'willow', who: 'chaplains, doulas, and anyone in that role'},
-  oak: {lib: () => STG(), on: () => stOpen(), label: 'Oak Guide', accent: '#8B5E1A', tree: 'oak', who: 'chaplains, pastors, counselors, and anyone in that role'}
+  oak: {lib: () => STG(), on: () => stOpen(), label: 'Oak Guide', accent: '#8B5E1A', tree: 'oak', who: 'chaplains, pastors, counselors, and anyone in that role'},
+  aspen: {lib: () => SAG(), on: () => saOpen(), label: 'Aspen Guide', accent: '#1F6F74', tree: 'aspen', who: 'school counselors, youth pastors, chaplains, mentors, and anyone in that role'} // BLD 724; ring keys start as-
 };
-const fgSer = id => String(id || '').startsWith('ofg-') ? 'oak' : 'willow';
+const fgSer = id => String(id || '').startsWith('ofg-') ? 'oak' : String(id || '').startsWith('afg-') ? 'aspen' : 'willow';
 const fgSerRing = ring => Object.keys(FGSER).find(k => WFG(k) && (WFG(k).rings || []).some(r => r[0] === ring)) || 'willow';
 const WFG = (s = 'willow') => { const W = FGSER[s].lib(); return W && W.forGuides && Array.isArray(W.forGuides.guides) && W.forGuides.guides.length ? W.forGuides : null; };
 const wfgOn = (s = 'willow') => !!WFG(s) && FGSER[s].on();
@@ -4553,7 +4627,7 @@ const wfgDone = id => !!lnData().done[id];
 function wfgCount(id, how){ const D = lnData(); D.how = D.how || {}; if (!D.done[id]){ D.done[id] = today(); D.how[id] = how; save(); } }
 // The series as a player track: one ring at a time, closing scene with the For Guides buttons.
 function wfgTrack(ring, s){ s = s || fgSerRing(ring); const R = wfgRings(s).find(r => r.key === ring); if (!R) return null;
-  return {id:(s === 'oak' ? 'ofg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
+  return {id:(s === 'oak' ? 'ofg-' : s === 'aspen' ? 'afg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
 function wfgMark(id){ return wfgDone(id) ? `<span class="pill sage">${icon('check')} ${wfgHow(id) === 'read' ? 'Read' : 'Watched'}</span>` : ''; }
 // The written section, eight parts (the eighth, Sources, is drawn from the credits).
 function wfgBody(g, head){
@@ -5394,8 +5468,8 @@ const htLink = r => HT_SITE + HT_PATH[r.src] + encodeURIComponent(r.id);
 const HT_A = /<a\s[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
 const htPlain = s => String(s == null ? '' : s).replace(HT_A, '$2').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
 function htRich(s){
-  s = String(s == null ? '' : s); const out = []; let last = 0, m; HT_A.lastIndex = 0;
-  while ((m = HT_A.exec(s))){ out.push(esc(htPlain(s.slice(last, m.index)))); out.push(/^https?:\/\//.test(m[1]) ? `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(htPlain(m[2]))}</a>` : esc(htPlain(m[2]))); last = HT_A.lastIndex; }
+  s = String(s == null ? '' : s); const out = [], re = new RegExp(HT_A.source, 'gi'); let last = 0, m; // its own copy: htPlain's replace resets HT_A.lastIndex, which looped forever (BLD 724)
+  while ((m = re.exec(s))){ out.push(esc(htPlain(s.slice(last, m.index)))); out.push(/^https?:\/\//.test(m[1]) ? `<a href="${esc(m[1])}" target="_blank" rel="noopener">${esc(htPlain(m[2]))}</a>` : esc(htPlain(m[2]))); last = re.lastIndex; }
   out.push(esc(htPlain(s.slice(last)))); return out.join('');
 }
 const htDomain = u => String(u || '').replace(/^https?:\/\/(www\.)?/, '').split(/[/?#]/)[0];
@@ -5545,7 +5619,7 @@ function vHTTopic(T){
      <h3 class="ht-gt">${esc(r.g.title)}</h3>
      ${r.src === 'oak' && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick Card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
      ${x || (r.src === 'oak' && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
-     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}
+     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}${x && r.src === 'aspen' && st.id === 'aspen' ? wfgInGuide(r.id, 'aspen') : ''}
      <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
@@ -6449,6 +6523,7 @@ function mergeData(cur, inc){
   ['last','pass','signed'].forEach(k => { out.spmod[k] = newer(out.spmod[k], im[k]) || null; });
   const it2 = inc.stmod || {}; out.stmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.stmod || {});
   Object.entries(it2.lessons || {}).forEach(([k,v]) => { if (v && !out.stmod.lessons[k]) out.stmod.lessons[k] = v; });
+  out.stmod.how = Object.assign({}, it2.how || {}, out.stmod.how || {}); // how each Oak lesson was finished (watched or read)
   ['last','pass','signed'].forEach(k => { out.stmod[k] = newer(out.stmod[k], it2[k]) || null; });
   const ia = inc.samod || {}; out.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.samod || {});
   Object.entries(ia.lessons || {}).forEach(([k,v]) => { if (v && !out.samod.lessons[k]) out.samod.lessons[k] = v; });
@@ -6465,6 +6540,7 @@ function mergeData(cur, inc){
   out.founder.speak = Object.assign({}, fo.speak || {}, out.founder.speak || {});
   out.founder.proof = proofMerge(out.founder.proof, fo.proof);
   out.founder.edits = editsMerge(out.founder.edits, fo.edits);
+  out.founder.stories = storiesMerge(out.founder.stories, fo.stories); // Story Lab (BLD 724)
   out.learn = learnMerge(out.learn, inc.learn);
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
   return {data:out, stats};
@@ -6492,6 +6568,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
+  if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && a.startsWith('ln-') && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
@@ -7250,6 +7327,7 @@ body.dk-noscroll{overflow:hidden;}
 .dk-todo[aria-pressed="true"] .dk-box{background:var(--sage);border-color:var(--sage);color:#fff;}
 .dk-todo[aria-pressed="true"] span:last-child{color:var(--ink-soft);text-decoration:line-through;}
 .spk-item{border-top:1px solid var(--line);padding:6px 0;}
+.sl-c{border-top:1px solid var(--line);padding:6px 0 10px;}.sl-c summary{cursor:pointer;padding:8px 0;}.sl-c summary small{display:block;font-size:calc(14px * var(--scale));margin-top:2px;}.sl-c h4{margin-top:8px;}.sl-c textarea{width:100%;}.sl-c .pill{margin-left:4px;}
 .spk-item summary{cursor:pointer;padding:8px 0;}
 .spk-item summary span{display:block;color:var(--ink-soft);font-size:calc(15px * var(--scale));}
 .spk-f{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);}

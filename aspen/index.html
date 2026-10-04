@@ -339,6 +339,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 .asp-app .btn-primary,.asp-app .btn-secondary,.gt-sheet .btn-primary,.gt-sheet .btn-secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:11px 18px;font-weight:700;font-size:16px;cursor:pointer;}
 .gt-sheet .btn-primary{background:var(--sun);color:var(--sun-ink);border:none;}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;}
+.av-gv{margin:12px 0 16px;}.av-gv-note{font-size:14.5px;color:var(--ink-soft);margin:8px 0 0;}.av-gv-w{font-size:12.5px;font-weight:600;opacity:.85;margin-left:4px;}
 .asp-app .gt-card h2,.asp-app .gt-card h3,.asp-app .gt-status,.asp-app .gt-part h3,.asp-app .gt-stats dd,.gt-sheet h2,.gt-sheet h3{font-family:var(--serif);}
 .asp-app .gt-part h3 small,.asp-app .gt-kicker{font-family:var(--sans);}
 .asp-pi{display:inline-flex;width:22px;height:22px;color:var(--pc);}
@@ -1906,6 +1907,7 @@ function renderGuide(opts){
   const list = arr => arr && arr.length ? `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
   $('view-guide').innerHTML = `<button class="back" onclick="go('life')">&larr; All topics</button>
     <p class="muted small" style="margin:0">${esc(grp.name)}</p><h2>${esc(t.title)}</h2>
+    ${avVids(t.id)}
     <div class="guide">
     ${t.quick ? `<div class="quick"><h3 style="margin-top:0">Quick Card</h3>${list(t.quick)}</div>` : ''}
     ${t.talk ? `<h3>Talking It Through</h3>${t.talk.map(p=>`<p>${p}</p>`).join('')}` : ''}
@@ -1917,6 +1919,25 @@ function renderGuide(opts){
     ${window.GGSources ? GGSources.line((t.sources || []).concat((GGSources.C['aspen:' + t.id]) || [])) : (t.sources ? `<h3>Sources</h3><ul class="src">${t.sources.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></li>`).join('')}</ul>` : '')}
     </div>`;
 }
+
+/* ---------- When Life Changes videos (GWG BLD 724) ----------
+   Two narrated videos per guide, For You (the student) and For the Grown-up, played by shared/gg-learn.js
+   from aspen/guide-videos.js. AV_VIDS lists the guides that have them so far (written by the build's generator).
+   A quiet check shows once a video has been watched on this device (gg-learn:aspen). */
+/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "selfharm", "friendhurting"];/* AV_VIDS end */
+function avVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:aspen') || '{}').done || {})[id]); } catch (e) { return false; } }
+function avVids(gid) {
+  if (!AV_VIDS.includes(gid)) return '';
+  const b = (side, name, pri) => { const id = 'as-g-' + gid + '-' + side, w = avVidWatched(id);
+    return `<button type="button" class="btn ${pri ? 'btn-primary' : 'btn-secondary'}" onclick="avWatch('${gid}','${side}')">${w ? '&#10003;' : '&#9654;'} Watch: ${name}${w ? ' <span class="av-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="av-gv no-print"><div class="btn-row">${b('you', 'For You', false)}${b('helper', 'For the Grown-up', true)}</div>
+    <p class="av-gv-note">For You, for the student going through it. For the Grown-up, for the parent or helper beside them. A few minutes each, narrated aloud.</p></div>`;
+}
+function avWatch(gid, side) { if (window.GGLearn) GGLearn.open('aspen', 'as-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.aspen = id => { if (guidesData().groups.some(g => g.topics.some(t => t.id === id))) go('guide', {id}); };
+window.addEventListener('gg-learn-close', () => { const v = document.getElementById('view-guide'); if (v && v.offsetParent !== null && renderGuide.last) { const y = window.scrollY; renderGuide({id: renderGuide.last}); window.scrollTo(0, y); } });
 
 /* ---------- the shared tending engine, set up for Aspen (Rebrand Session 4) ---------- */
 if (window.GGTend) GGTend.init({
@@ -1963,7 +1984,7 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln15" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln15';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln16" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln16';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
