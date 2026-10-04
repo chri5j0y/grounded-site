@@ -533,6 +533,10 @@ body.cd-noscroll{overflow:hidden;}
 .sa-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#35603A 0%,#24452A 55%,#18301D 100%);}
 /* Willow Guide (Willow Build Session 3): dusk lilac, sage accent */
 .wl-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A7590 0%,#5D5A6E 50%,#3E3B4C 100%);}
+.wfg-in{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}
+.wfg-body h3{margin:18px 0 6px;font-size:19px;} .wfg-body p{margin-top:8px;} .wfg-body .wfg-lab{font-weight:600;margin-top:12px;}
+.wfg-ul{margin:6px 0 0 20px;} .wfg-ul li{margin-top:5px;}
+.wfg-ring{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);} .wfg-ring h4{font-size:17px;}
 .wl-hot{margin-top:8px;padding:8px 12px;border-left:3px solid var(--gold);background:var(--bg-deep);border-radius:6px;font-size:15px;}
 .wl-plan{padding:12px 0;border-top:1px solid var(--line);} .wl-plan:first-of-type{border-top:0;} .wl-plan p{margin-top:2px;font-size:15px;} .wl-plan.done{opacity:.7;}
 .wl-planform input{width:100%;}
@@ -589,8 +593,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
-<script src="../shared/gg-sources.js?v=src1"></script>
-<script src="../shared/gg-learn.js?v=ln5"></script>
+<script src="../shared/gg-sources.js?v=src2"></script>
+<script src="../shared/gg-learn.js?v=ln6"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -754,8 +758,8 @@ function lockScreen(mode, msg){
       <button class="btn btn-gold" type="submit">Continue</button></form>
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
       <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who use Grounded tools with the people they serve: guided visits, tool guides, When Life Changes for every age, handouts, and session plans. Anything you write stays encrypted on your own device.</p>
-      <div class="lock-ask"><div><b>For individuals</b><span>Free. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request access</a></div>
-      <div><b>For organizations</b><span>Hospices, churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" data-mail="org" href="../contact.html">Reach out for pricing</a></div></div></div>`,
+      <div class="lock-ask"><div><b>For practitioners</b><span>Chaplains and doulas: $240 a year, or $24 a month. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
+      <div><b>For organizations</b><span>Hospices, churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">Reach Out for Pricing</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
       <form id="lf"><label for="l1">Founder code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Add Founder Access</button></form>
@@ -1391,7 +1395,7 @@ function vFounder(){
   const list = C.codes.slice().sort((a,b) => (order[a.kind||a.tier] - order[b.kind||b.tier]) || String(a.label).localeCompare(String(b.label)));
   const legacyLive = BOX.staff && BOX.staff.salt && !(d && d.libs.staff);
   const shown = V.show ? saved(V.show) : null;
-  const pr = FDR.pricing;
+  const pr = FDR.pricing; // tiers are [label, price] rows; a row with no price is a group heading (W1)
   const fileRows = d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
   return `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>
   ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
@@ -1416,7 +1420,7 @@ function vFounder(){
    <p class="muted" style="font-size:14px;margin-top:10px">Removing a code stops it from setting up new devices and ends it on devices that already use it. For a clean break, rotate the level too.</p></div>
   ${vUpdateCard()}
   <div class="card"><h3>Private Pricing</h3><p class="muted">${esc(pr.intro)}</p>
-   <div style="margin-top:8px">${pr.tiers.map(t => `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
+   <div style="margin-top:8px">${pr.tiers.map(t => t.length < 2 || !t[1] ? `<h4 style="margin-top:14px">${esc(t[0])}</h4>` : `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
   ${vBiz()}
   ${vProof()}
@@ -1641,18 +1645,20 @@ function lnTracks(){
 }
 const lnData = () => (DATA.learn = Object.assign({done:{}, at:{}}, DATA.learn || {}));
 function lnFind(id){ for (const t of lnTracks()) for (const l of t.lessons) if (l.id === id) return {t, l}; return null; }
-function learnMerge(a, b){ a = Object.assign({done:{}, at:{}}, a || {}); b = b || {}; const o = {done: Object.assign({}, b.done || {}, a.done || {}), at: Object.assign({}, b.at || {}, a.at || {})}; return o; }
+function learnMerge(a, b){ a = Object.assign({done:{}, at:{}}, a || {}); b = b || {}; const o = {done: Object.assign({}, b.done || {}, a.done || {}), at: Object.assign({}, b.at || {}, a.at || {}), how: Object.assign({}, b.how || {}, a.how || {})}; return o; }
 let LN = null;
 const lnCertable = t => window.GGLearn ? GGLearn.certable(t) : (t.lessons || []).length >= 3;
 function vLearn(){
   if (window.GGLearn) GGLearn.css();
   const tracks = lnTracks(), D = lnData();
   if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
+  if (V.wfg) return vWFG();
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
   const counted = tracks.filter(t => t.kind !== 'setup'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
   ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
+  ${wfgLearnCard()}
   ${tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
     return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
@@ -4417,6 +4423,107 @@ function wlmPrint(){
     <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'willow-guide-agreement'});
 }
 
+// ---------------- WILLOW GUIDE: FOR GUIDES ----------------
+/* For Guides (W1, GWG BLD 714). A training series for chaplains, doulas, and anyone in that role: one full written
+   section and one video (about 9 minutes) for each Willow guide, sealed in the Field library under
+   FLD.willowGuide.forGuides {title, intro, rings: [[key, name]], guides: [{id, guide, ring, n, title, mins, sources,
+   parts: [{h, b: [['p', text] | ['lab', text] | ['ul', [text or [bold, rest]]]]}], video: {scenes}}]}.
+   - Shown in two places: inside each Willow guide in When Life Changes (the full section, Watch, Mark as Read), and
+     in the Learn tab as the series "Willow Guide: For Guides", grouped by ring, with a quiet Watched or Read mark.
+   - A video counts when it reaches its closing scene, or when the written section is read and Mark as Read is tapped.
+     Progress lives in DATA.learn.done (the Learn tab's own record), so counting in either place counts everywhere.
+     DATA.learn.how[id] says 'watched' or 'read'.
+   - A Certificate of Completion for each ring once every guide in it is counted. No quiz, no score.
+   - Opens only where Willow Guide is open to this device (wlOpen). */
+const WFG = () => { const W = WLG(); return W && W.forGuides && Array.isArray(W.forGuides.guides) && W.forGuides.guides.length ? W.forGuides : null; };
+const wfgOn = () => !!WFG() && wlOpen();
+const wfgFind = id => WFG() ? WFG().guides.find(g => g.id === id || g.guide === id) || null : null;
+const wfgRings = () => (WFG().rings || []).map(r => ({key: r[0], name: r[1], guides: WFG().guides.filter(g => g.ring === r[0]).sort((a, b) => (a.n || 0) - (b.n || 0))})).filter(r => r.guides.length);
+const wfgHow = id => ((lnData().how || {})[id]) || '';
+const wfgDone = id => !!lnData().done[id];
+function wfgCount(id, how){ const D = lnData(); D.how = D.how || {}; if (!D.done[id]){ D.done[id] = today(); D.how[id] = how; save(); } }
+// The series as a player track: one ring at a time, closing scene with the For Guides buttons.
+function wfgTrack(ring){ const R = wfgRings().find(r => r.key === ring); if (!R) return null;
+  return {id:'wfg-' + R.key, kind:'forguides', title:WFG().title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], scenes:(g.video && g.video.scenes) || []}))}; }
+function wfgMark(id){ return wfgDone(id) ? `<span class="pill sage">${icon('check')} ${wfgHow(id) === 'read' ? 'Read' : 'Watched'}</span>` : ''; }
+// The written section, eight parts (the eighth, Sources, is drawn from the credits).
+function wfgBody(g, head){
+  const li = it => Array.isArray(it) ? `<li><b>${esc(it[0])}</b> ${esc(it[1] || '')}</li>` : `<li>${esc(it)}</li>`;
+  const blk = b => b[0] === 'ul' ? `<ul class="wfg-ul">${(b[1] || []).map(li).join('')}</ul>` : b[0] === 'lab' ? `<p class="wfg-lab">${esc(b[1])}</p>` : `<p>${esc(b[1])}</p>`;
+  const src = window.GGSources ? GGSources.lesson('', {id:g.id, sources:g.sources || [], scenes:(g.video && g.video.scenes) || []}) : '';
+  return `<div class="wfg-body">${head ? `<h2 class="wfg-h1">${esc(g.title)}</h2>` : ''}${(g.parts || []).map((p, i) => `<h3>${i + 1}. ${esc(p.h)}</h3>${(p.b || []).map(blk).join('')}`).join('')}
+   <h3>${(g.parts || []).length + 1}. Sources</h3><p class="muted" style="font-size:15px">${esc(WFG().srcNote || 'Research-informed. Credits for the research and the stories in this section.')}</p>${src || '<p class="muted">No outside sources.</p>'}</div>`;
+}
+// Inside a Willow guide in When Life Changes.
+function wfgInGuide(gid){
+  if (!wfgOn()) return '';
+  const g = wfgFind(gid); if (!g) return '';
+  const open = !!(V.wfgx || {})[gid];
+  return `<div class="blk wfg-in"><div class="lab">For Guides</div>
+   <p style="margin-top:4px">${esc(WFG().inGuide || 'The full For Guides section and video for chaplains, doulas, and anyone in that role.')}</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="wfg-watch" data-v="${esc(g.id)}">${icon('play')} Watch (about ${esc(String(g.mins || 9))} minutes)</button><button class="btn btn-line btn-sm" data-act="wfg-x" data-v="${esc(gid)}">${open ? 'Hide the Full Section' : 'Read the Full Section'}</button>${wfgMark(g.id)}</div>
+   ${open ? wfgBody(g, false) + `<div class="row" style="margin-top:12px">${wfgDone(g.id) ? '' : `<button class="btn btn-gold btn-sm" data-act="wfg-read" data-v="${esc(g.id)}">Mark as Read</button>`}</div>` : ''}</div>`;
+}
+// The Learn tab: the series, grouped by ring.
+function wfgLearnCard(){
+  if (!wfgOn()) return '';
+  const F = WFG();
+  return `<div class="card ln-track wfg-series"><div class="eyebrow" style="color:#5D5A6E">Willow Guide</div><h3>${esc(F.title)}</h3><p class="muted">${esc(F.intro || '')}</p>
+   ${wfgRings().map(R => { const n = R.guides.filter(g => wfgDone(g.id)).length, all = n === R.guides.length;
+    return `<div class="wfg-ring"><div class="spread"><h4>${esc(R.name)}</h4><span class="muted">${n} of ${R.guides.length}</span></div>
+     <div class="ln-list">${R.guides.map(g => `<button class="ln-item${wfgDone(g.id) ? ' done' : ''}" data-act="wfg-open" data-v="${esc(g.id)}"><span class="ln-n">${wfgDone(g.id) ? icon('check') : esc(String(g.n || ''))}</span><span class="ln-t"><b>${esc(g.title)}</b><small>About ${esc(String(g.mins || 9))} minutes${wfgDone(g.id) ? ', ' + (wfgHow(g.id) === 'read' ? 'read' : 'watched') : ''}</small></span>${icon('play')}</button>`).join('')}</div>
+     ${all ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wfg-cert" data-v="${esc(R.key)}">${icon('print')} Get Your Certificate</button></div>` : `<p class="muted" style="margin-top:10px;font-size:14px">Watch or read every guide in ${esc(R.name)} for a Certificate of Completion.</p>`}</div>`; }).join('')}</div>`;
+}
+// One guide: the video (or the written section), then the buttons. tab is 'learn' or 'talks'.
+function vWFG(){
+  const g = wfgFind(V.wfg); if (!g || !wfgOn()){ delete V.wfg; return vLearn(); }
+  const R = wfgRings().find(r => r.key === g.ring) || {name:''}, read = !!V.wfgread || !(g.video && (g.video.scenes || []).length && window.GGLearn);
+  if (!read){ if (window.GGLearn) GGLearn.css(); setTimeout(wfgMount, 0); }
+  const back = V.from === 'talks' ? `<button class="linkbtn" data-act="wfg-back">Back to the Guide</button>` : `<button class="linkbtn" data-act="wfg-home">Back to the Series</button>`;
+  return `<div class="ggl">${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(WFG().title)} &middot; ${esc(R.name)}</div><h1>${esc(g.title)}</h1></div>
+   ${read ? `${g.video && (g.video.scenes || []).length ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="wfg-mode" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}<div class="card">${wfgBody(g, false)}</div>`
+   : `<div id="wfg-host"></div><div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="wfg-mode" data-v="1">Read the Full Section</button></div>`}
+   <div id="wfg-foot">${wfgFoot(g, read)}</div></div>`;
+}
+function wfgFoot(g, read){
+  const R = wfgRings().find(r => r.key === g.ring), list = R ? R.guides : [], i = list.findIndex(x => x.id === g.id), nx = list[i + 1];
+  return `<div class="row" style="margin-top:18px">${wfgDone(g.id) ? wfgMark(g.id) : read ? `<button class="btn btn-gold" data-act="wfg-read" data-v="${esc(g.id)}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or read the full section and tap Mark as Read.</span>`}
+   ${nx ? `<button class="btn btn-line" data-act="wfg-open" data-v="${esc(nx.id)}">Next Video</button>` : ''}<button class="btn btn-line" data-act="wfg-home">Back to the Series</button></div>`;
+}
+function wfgMount(){
+  const host = $('#wfg-host'), g = wfgFind(V.wfg); if (!host || !g || !window.GGLearn) return;
+  const tr = wfgTrack(g.ring), l = tr && tr.lessons.find(x => x.id === g.id); if (!l) return;
+  if (LN) lnStop();
+  const D = lnData();
+  LN = GGLearn.player(host, {lesson: l, track: tr, tracks: [tr], done: D.done, at: D.at[g.id] || 0, accent: '#5D5A6E',
+    onAt: k => { lastAct = Date.now(); lnData().at[g.id] = k; save(); }, // a playing video must not lock the Field Guide
+    onDone: id => { wfgCount(id, 'watched'); const f = $('#wfg-foot'); if (f) f.innerHTML = wfgFoot(g, false); },
+    section: () => { lnStop(); V.wfgread = 1; render(); },
+    open: id => { lnStop(); V = Object.assign({}, V, {wfg: id, wfgread: 0}); render(); },
+    home: () => { lnStop(); go('learn'); },
+    cert: t => wfgCert(g.ring)});
+}
+function wfgCert(ring){
+  const R = wfgRings().find(r => r.key === ring); if (!R || !R.guides.every(g => wfgDone(g.id))) return;
+  const D = lnData(), when = R.guides.map(g => D.done[g.id]).filter(Boolean).sort().pop() || today();
+  const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
+  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:'willow', name:n.trim(), title:WFG().title + ': ' + R.name,
+    body:(WFG().certLine || 'For watching or reading every For Guides section in {ring}: listening beneath the words, words that help, stories from the bedside, and bringing in the team.').replace('{ring}', R.name), date:when, kind:'series'}));
+}
+function wfgAct(a, v){
+  switch (a){
+    case 'wfg-open': lnStop(); go('learn', {wfg: v}); return true;
+    case 'wfg-watch': go('learn', {wfg: v, from: 'talks', back: {htt:V.htt, hts:V.hts, htx:V.htx, wfgx:V.wfgx}}); return true;
+    case 'wfg-back': { const b = V.back || {}; lnStop(); go('talks', {htt:b.htt, hts:b.hts, htx:b.htx, wfgx:b.wfgx}); return true; }
+    case 'wfg-home': lnStop(); go('learn'); return true;
+    case 'wfg-mode': lnStop(); V.wfgread = +v; render(); return true;
+    case 'wfg-read': wfgCount(v, 'read'); if (V.tab === 'talks') htKeep(); else { const g = wfgFind(v), f = $('#wfg-foot'); if (f && g) f.innerHTML = wfgFoot(g, true); } toast('Marked as read.'); return true;
+    case 'wfg-x': V.wfgx = Object.assign({}, V.wfgx, {[v]: !(V.wfgx || {})[v]}); htKeep(); return true;
+    case 'wfg-cert': wfgCert(v); return true;
+  }
+  return false;
+}
+
 // ----- views -----
 function wlHello(){ const S = WLG(); return `<div class="hello wl-hello"><div class="eyebrow" style="color:#E8C27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`; }
 function vWL(){
@@ -5143,7 +5250,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=gv1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -5329,6 +5436,7 @@ function vHTTopic(T){
      <h3 class="ht-gt">${esc(r.g.title)}</h3>
      ${r.src === 'oak' && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick Card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
      ${x || (r.src === 'oak' && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
+     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}
      <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
@@ -6276,6 +6384,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
   if (a && a.startsWith('ln-') && lnAct(a, v, t)) return;
+  if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;

@@ -29,11 +29,15 @@
      count, no certificate: a quiet check marks the ones watched. The closing scene offers Open the Full
      Guide (window.GG_GUIDE_OPEN[app](id), or #guide=id), the other video, and Back.
      GGLearn.open(app, id, {from: 'guide'}) opens one straight from a guide page.
+   - For Guides videos (W1, GWG BLD 714): a track with kind: 'forguides' (sealed in the Field library, one track per
+     ring, played by the Field Guide). The closing scene offers Open the Full Section (cfg.section), Watch Again,
+     Next Video (the next guide in the ring), and Back to the Series, plus Get Your Certificate (cfg.cert) when the
+     whole ring is counted.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln5';
+  var V = 'ln6';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -246,7 +250,7 @@
   }
   function hush() { try { if (window.GGRead) GGRead.stop(); else if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {} }
   function allLessons(tracks) { var f = []; (tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) { f.push({ t: t, l: l }); }); }); return f; }
-  function certable(t) { return !!t && t.kind !== 'support' && t.kind !== 'guide' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
+  function certable(t) { return !!t && t.kind !== 'support' && t.kind !== 'guide' && t.kind !== 'forguides' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
   function trackDone(t, done) { return !!t && (t.lessons || []).length > 0 && t.lessons.every(function (l) { return done[l.id]; }); }
 
   // What the closing scene says, worked out from what is finished on this device.
@@ -258,6 +262,13 @@
     if (!nx) for (var k = 0; k < flat.length; k++) if (!done[flat[k].l.id]) { nx = flat[k]; break; }
     var tr = cfg.track, tdone = trackDone(tr, done), cert = !!cfg.cert && tdone && certable(tr);
     if (tr && tr.kind === 'guide') { var pr = cfg.pair || null; return { ok: true, guide: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: 'The full guide has more' + (pr ? ', and there is a video ' + pr.sideName.replace(/^For/, 'for') + ' too.' : '.'), count: '', say: 'Take all the time you need. The full guide is here whenever you want it.', next: null, pair: pr, cert: false }; }
+    if (tr && tr.kind === 'forguides') {
+      // For Guides (W1): Open the Full Section, Watch Again, Next Video, Back to the Series. Next is the next guide in order.
+      var L = tr.lessons || [], at = -1; L.forEach(function (x, j) { if (x.id === cfg.lesson.id) at = j; });
+      var nl = L[at + 1] || null; if (!nl) for (var q = 0; q < L.length; q++) if (!done[L[q].id] && L[q].id !== cfg.lesson.id) { nl = L[q]; break; }
+      var fdone = trackDone(tr, done), fc = !!cfg.cert && fdone;
+      return { ok: true, fg: true, eyebrow: fdone ? 'Ring Complete' : 'For Guides', h: fdone ? 'That\'s every video in ' + (tr.ring || 'this ring') + '.' : 'That\'s the video. Well done.', sub: fc ? 'Your Certificate of Completion is ready.' : nl ? 'Up next: ' + nl.title : 'The full section is here whenever you want it.', count: '', say: fdone ? 'That\'s every video in this ring. Well done. Your certificate is ready whenever you want it.' : 'That\'s the video. Well done. The full section is here whenever you want it.', next: nl ? { l: nl, t: tr } : null, cert: fc };
+    }
     if (tr && tr.kind === 'support') return { ok: true, support: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: nx ? 'Another one, if it helps: ' + nx.l.title : 'Come back anytime.', count: '', say: 'Take all the time you need. This is here whenever you need it.', next: nx, cert: false };
     var upnext = nx ? 'Up next: ' + (nx.t !== tr ? nx.t.title + ', ' : '') + 'Lesson ' + (nx.l.n || '') + ', ' + nx.l.title : '';
     var certLine = cert ? ' Your certificate is ready whenever you want it.' : '';
@@ -271,7 +282,7 @@
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src1'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src2'); document.head.appendChild(s);
   }
   function player(host, cfg) {
     css(); needSources();
@@ -304,6 +315,15 @@
         b.push(['again', 'Watch Again', 'quiet']);
         bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
         bar.classList.add('on'); place(); bar._next = null; return;
+      }
+      if (e.fg) {
+        b.push(['section', 'Open the Full Section', e.cert ? '' : 'pri']);
+        if (e.cert) b.push(['cert', IC.award + 'Get Your Certificate', 'pri']);
+        b.push(['again', 'Watch Again', '']);
+        if (e.next) b.push(['open', 'Next Video', '']);
+        b.push(['home', 'Back to the Series', 'quiet']);
+        bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
+        bar.classList.add('on'); place(); bar._next = e.next; return;
       }
       if (e.unfinished) b.push(['answer', 'Answer the Question', 'pri']);
       if (e.cert) b.push(['cert', IC.award + 'Get Your Certificate', e.next ? '' : 'pri']);
@@ -441,6 +461,7 @@
       else if (g === 'e-open') { var nx = bar._next; ctl.stop(); if (nx && cfg.open) cfg.open(nx.l.id); }
       else if (g === 'e-home') { ctl.stop(); if (cfg.home) cfg.home(); }
       else if (g === 'e-cert') { if (cfg.cert) cfg.cert(cfg.track); }
+      else if (g === 'e-section') { ctl.stop(); if (cfg.section) cfg.section(l.id); }
       else if (g === 'e-guide') { ctl.stop(); if (cfg.guide) cfg.guide(l.guide); }
       else if (g === 'e-pair') { ctl.stop(); if (cfg.pair && cfg.open) cfg.open(cfg.pair.id); }
     }
