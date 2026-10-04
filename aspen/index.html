@@ -1924,7 +1924,7 @@ function renderGuide(opts){
    Two narrated videos per guide, For You (the student) and For the Grown-up, played by shared/gg-learn.js
    from aspen/guide-videos.js. AV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:aspen). */
-/* AV_VIDS start */const AV_VIDS = [];/* AV_VIDS end */
+/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "selfharm", "friendhurting"];/* AV_VIDS end */
 function avVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:aspen') || '{}').done || {})[id]); } catch (e) { return false; } }
 function avVids(gid) {
   if (!AV_VIDS.includes(gid)) return '';
