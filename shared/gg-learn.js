@@ -194,6 +194,7 @@
       '.ggl-small .ln-st-b{display:none;}.ggl-small .ln-story{padding:44px 54px;}.ggl-small .ln-story h3{font-size:66px;margin-top:14px;}.ggl-small .ln-st-l{font-size:52px;margin-top:26px;}.ggl-small .ln-st-n{font-size:26px;}.ggl-small .ln-st-l{transition-delay:1.2s !important;}.ggl-small .ln-story .ln-eb{font-size:28px;}',
       '.ln-link{margin:0 0 8px;}.ln-link:empty{display:none;}.ln-link a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ggl-acc);}',
       ':root[data-theme="dark"] .ggl-app .ln-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ln-link a{color:var(--ggl-lite);}}',
+      '.ln-mu{display:inline-flex;align-items:center;gap:6px;font-size:14px;margin:6px 0 0 4px;cursor:pointer;}.ln-mu input{width:18px;height:18px;accent-color:var(--ggl-acc,#8B5E1A);}',
       '.ggl-sup{margin-top:22px;}.ggl-sup>p{margin:4px 0 0;}.ggl-sup .ggl-card{border-left:6px solid var(--ggl-bar,var(--ggl-acc));}',
       '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
       '@media (prefers-reduced-motion:reduce){.ln-canvas .a,.ln-ptr,.ln-ring,.ln-panel,.ln-note,.ln-res,.ln-tgt{transition:none !important;}}',
@@ -279,6 +280,58 @@
 
   // Sources and Credits (GWG BLD 713): one quiet line under the closing scene, above the copyright line.
   // Lessons carry their own sources (sealed lessons), or shared/gg-sources.js lists them by id; story scenes credit Chris.
+  /* ---------------- background music (GWG BLD 720) ----------------
+     Soft music under the voice in every video. It fades in when Play is tapped, follows Pause, and fades out
+     at the closing scene. Four moods: learning (lessons, When Life Changes, For Guides), calm (Support for
+     Right Now and Support for Guides), kids (Maple and Aspen), willow (Willow and Willow Guide). A video picks
+     its mood from cfg.mood, then its track kind, then its app. Tracks live in /audio/music/ and are licensed
+     for use in apps and websites; each carries its credit for the Sources line. Until a track is listed here
+     the feature stays quiet and the Music switch stays hidden. Listeners turn it off or on with the Music
+     switch beside Voice and Speed; the choice is kept on this device (gg-music). Volume runs through Web Audio
+     where it can, because phones ignore an audio element's volume setting. */
+  var MUSIC = { learning: null, calm: null, kids: null, willow: null }; // {src: '/audio/music/<mood>.mp3', credit: 'Title by Artist (Pixabay)'}
+  var MUSIC_V = 'mu1', MUSIC_LEVEL = 0.14;
+  var BG = { el: null, ctx: null, gain: null, src: '', fade: 0 };
+  function musicHas() { for (var k in MUSIC) if (MUSIC[k] && MUSIC[k].src) return true; return false; }
+  function musicOn() { try { return localStorage.getItem('gg-music') !== 'off'; } catch (e) { return true; } }
+  function musicSet(on) { try { localStorage.setItem('gg-music', on ? 'on' : 'off'); } catch (e) {} }
+  function moodOf(cfg) {
+    if (cfg.mood && MUSIC.hasOwnProperty(cfg.mood)) return cfg.mood;
+    if (cfg.track && cfg.track.kind === 'support') return 'calm';
+    if (cfg.app === 'maple' || cfg.app === 'aspen') return 'kids';
+    if (cfg.app === 'willow') return 'willow';
+    return 'learning';
+  }
+  function bgVol(v) { if (BG.gain) BG.gain.gain.value = v; else if (BG.el) BG.el.volume = v; }
+  function bgFade(to, ms, done) {
+    clearInterval(BG.fade); var from = BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0), t0 = Date.now();
+    BG.fade = setInterval(function () { var k = Math.min(1, (Date.now() - t0) / ms); bgVol(from + (to - from) * k); if (k >= 1) { clearInterval(BG.fade); if (done) done(); } }, 50);
+  }
+  function bgPlay(mood) {
+    var m = MUSIC[mood]; if (!m || !m.src || !musicOn()) return;
+    try {
+      var src = url(m.src + '?v=' + MUSIC_V);
+      if (!BG.el) {
+        BG.el = new Audio(); BG.el.loop = true; BG.el.preload = 'auto'; BG.el.crossOrigin = 'anonymous';
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) { try { BG.ctx = new AC(); BG.gain = BG.ctx.createGain(); BG.gain.gain.value = 0; BG.ctx.createMediaElementSource(BG.el).connect(BG.gain); BG.gain.connect(BG.ctx.destination); } catch (e) { BG.ctx = BG.gain = null; } }
+      }
+      if (BG.src !== src) { BG.el.src = src; BG.src = src; bgVol(0); }
+      if (BG.ctx && BG.ctx.state === 'suspended') BG.ctx.resume();
+      var pr = BG.el.play(); if (pr && pr.catch) pr.catch(function () {});
+      bgFade(MUSIC_LEVEL, 1800);
+    } catch (e) {}
+  }
+  function bgStop(ms) { if (!BG.el) return; bgFade(0, ms || 700, function () { try { BG.el.pause(); } catch (e) {} }); }
+  function musicCredit(cfg) { var m = MUSIC[moodOf(cfg)]; return m && m.src && m.credit && musicOn() ? '<small class="gg-src-line"><span class="gg-src-k">Music:</span> ' + esc(m.credit) + '</small>' : ''; }
+  function musicSwitch(host, cfg, P) {
+    if (!musicHas()) return;
+    var w = document.createElement('label'); w.className = 'ln-mu';
+    w.innerHTML = '<input type="checkbox"' + (musicOn() ? ' checked' : '') + '> Music';
+    w.querySelector('input').addEventListener('change', function (e) { musicSet(e.target.checked); if (e.target.checked) { if (P.playing && !P.last) bgPlay(moodOf(cfg)); } else bgStop(300); });
+    var vs = host.querySelector('.ln-vs'); if (vs) vs.appendChild(w);
+  }
+
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
@@ -297,10 +350,11 @@
       + '<div class="ln-vs"></div></div>';
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
+    musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
     function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); if (P.audio) { try { P.audio.onended = P.audio.onerror = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
-    function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); } }
+    function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(moodOf(cfg)); }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
       if (hasQuiz && !answered && !(cfg.done || {})[l.id]) return { ok: false, eyebrow: 'Almost There', h: 'One question left.', sub: 'Answer it to finish this lesson.', say: 'One question left. Answer it to finish this lesson.', unfinished: true };
@@ -344,7 +398,9 @@
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
-      if (last) $('.ln-link', host).innerHTML = srcLine(l) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
+      if (last) bgStop(2500);
+      else if (P.playing) bgPlay(moodOf(cfg));
+      if (last) $('.ln-link', host).innerHTML = srcLine(l) + musicCredit(cfg) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
       var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now();
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
@@ -473,7 +529,7 @@
     host.addEventListener('click', onClick);
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', fit);
-    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
+    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
     CUR = ctl;
     fit();
     var at = Math.max(0, Math.min((cfg.at || 0), N - 2));
@@ -594,7 +650,7 @@
     el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? 'When Life Changes, ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1><div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
-      lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
+      app: app, lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
       pair: pair, fromGuide: gv && APP.fromGuide,
       guide: function (gid) { close(); var go = (window.GG_GUIDE_OPEN || {})[app]; if (typeof go === 'function') go(gid); else location.hash = '#guide=' + encodeURIComponent(gid); },
       onAt: function (i) { var d = load(app); d.at[f.l.id] = i; keep(app, d); },
@@ -620,5 +676,5 @@
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { guideTracks: guideTracks, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();
