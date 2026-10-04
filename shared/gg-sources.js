@@ -169,10 +169,11 @@
     'prayer': 'https://chri5j0y.substack.com/p/thank-god-for-sending-you',
     'enlightenment': 'https://chri5j0y.substack.com/p/enlightenment',
     'love': 'https://chri5j0y.substack.com/p/love',
-    'the impossible dance of particles': 'https://chri5j0y.substack.com/p/the-impossible-dance-of-particles'
+    'the impossible dance of particles': 'https://chri5j0y.substack.com/p/the-impossible-dance-of-particles',
+    'he deserves that': 'https://chri5j0y.substack.com/p/he-deserves-that'
     // Drafts on Substack, not yet published (credited as from the notebook until they go live; then add the link here):
     // Why Is God Doing This to Me?, A Presence That Cannot Be Boxed, The Beautiful Hodgepodge, Divine Sign,
-    // He Deserves That, I Know That One, Silly.
+    // I Know That One, Silly.
   };
   var NOTEBOOK = 'Story: Chris Joy, from my notebook. Names and details changed.';
 
