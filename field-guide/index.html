@@ -595,7 +595,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc1"></script>
 <script src="../shared/gg-sources.js?v=src6"></script>
-<script src="../shared/gg-learn.js?v=ln11"></script>
+<script src="../shared/gg-learn.js?v=ln12"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -4376,7 +4376,7 @@ function wlmMount(i){
   const M = WLM(), L = M.lessons[i], D = wlmData(), tr = wlmTrack(), l = tr.lessons.find(x => x.id === L.id);
   if (!l) return;
   if (LN) lnStop();
-  LN = GGLearn.player(host, {lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#5D5A6E',
+  LN = GGLearn.player(host, {mood: 'willow', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#5D5A6E',
     onAt: k => { lastAct = Date.now(); wlmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
     onDone: id => { const d = wlmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#wlm-foot'); if (f) f.innerHTML = wlmFoot(i); },
     open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'willow', wlm:1, wlml:k < 0 ? 0 : k}; render(); },
@@ -4569,7 +4569,7 @@ function wfgMount(){
   const tr = wfgTrack(g.ring, s), l = tr && tr.lessons.find(x => x.id === g.id); if (!l) return;
   if (LN) lnStop();
   const D = lnData();
-  LN = GGLearn.player(host, {lesson: l, track: tr, tracks: [tr], done: D.done, at: D.at[g.id] || 0, accent: FGSER[s].accent,
+  LN = GGLearn.player(host, {mood: s === 'willow' ? 'willow' : 'learning', lesson: l, track: tr, tracks: [tr], done: D.done, at: D.at[g.id] || 0, accent: FGSER[s].accent,
     onAt: k => { lastAct = Date.now(); lnData().at[g.id] = k; save(); }, // a playing video must not lock the Field Guide
     onDone: id => { wfgCount(id, 'watched'); const f = $('#wfg-foot'); if (f) f.innerHTML = wfgFoot(g, false); },
     section: () => { lnStop(); V.wfgread = 1; render(); },
