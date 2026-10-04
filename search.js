@@ -35,6 +35,7 @@
 
   /* ---------- site pages (Rebrand Session 2: search covers the whole site) ---------- */
   var PAGES = [
+    { title: 'For Organizations', sub: 'Grounded Field Guide licenses for churches, schools, hospices, and practitioners, from $240 a year', href: '/organizations.html', keys: 'organizations organization license licensing pricing price prices church churches school schools hospice hospices practitioner team staff founding partner grace fund field guide seats' },
     { title: 'Services', sub: 'Marriage, celebrations, farewells, hard seasons, growth, and teams', href: '/services.html', keys: 'services thresholds ceremonies ceremony officiant help book hire support' },
     { title: 'The Grounded Marriage', sub: 'Premarital counseling, a custom wedding, and a first-anniversary check-in, from $1,400', href: '/the-grounded-marriage.html', keys: 'marriage married wedding package premarital engaged couple grounded marriage' },
     { title: 'Weddings', sub: 'Custom ceremonies, from $650', href: '/weddings.html', keys: 'wedding weddings officiant marry married ceremony vows' },
@@ -169,7 +170,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js?v=tc1'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -282,7 +283,7 @@
       return { type: k, items: list.map(function (h) { return h[0]; }), top: list[0][1] };
     }).sort(function (a, b) {
       // Guides lead unless another kind is clearly the better answer (like a tool's name)
-      var svc = /\b(wedding|weddings|marriage|married|premarital|elope|elopement|vow|vows|officiant|ceremony|funeral|funerals|memorial|blessing|cost|costs|price|prices|rate|rates|fee|fees|book|hire|service|services)\b/.test(p.raw);
+      var svc = /\b(wedding|weddings|marriage|married|premarital|elope|elopement|vow|vows|officiant|ceremony|funeral|funerals|memorial|blessing|cost|costs|price|prices|rate|rates|fee|fees|book|hire|service|services|organization|organizations|license|licenses|licensing|pricing)\b/.test(p.raw);
       var bonus = function (g) { return g.type === 'talk' ? (svc ? 0 : 3) : g.type === 'book' ? -2 : (g.type === 'page' && svc ? 8 : 0); };
       var ta = a.top + bonus(a), tb = b.top + bonus(b);
       return tb - ta || TYPE_ORDER[a.type] - TYPE_ORDER[b.type];

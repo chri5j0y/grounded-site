@@ -65,7 +65,13 @@
     exline: ['Exline, Pargament, Grubbs, and Yali, religious and spiritual struggles (2014)', 'https://doi.org/10.1037/a0036465'],
     hope: ['Anandarajah and Hight, the HOPE questions for a spiritual history (2001)', 'https://www.aafp.org/pubs/afp/issues/2001/0101/p81.html', 'a'],
     fica: ['Puchalski and Romer, the FICA spiritual history (2000)', 'https://doi.org/10.1089/jpm.2000.3.129', 'a'],
-    sicg: ['Ariadne Labs, Serious Illness Conversation Guide', 'https://www.ariadnelabs.org/serious-illness-care/', 'a']
+    sicg: ['Ariadne Labs, Serious Illness Conversation Guide', 'https://www.ariadnelabs.org/serious-illness-care/', 'a'],
+    // W1 (GWG BLD 714): Willow Guide For Guides
+    pargament: ['Pargament, Koenig, Tarakeshwar, and Hahn, religious struggle and mortality among medically ill elderly patients (2001)', 'https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/751558'],
+    fitchett: ['Fitchett and Risk, screening for spiritual struggle (2009)', 'https://pubmed.ncbi.nlm.nih.gov/?term=Fitchett+Risk+Screening+for+spiritual+struggle'],
+    chochinovdt: ['Chochinov and colleagues, dignity therapy (2005)', 'https://doi.org/10.1200/JCO.2005.08.391', 'a'],
+    singh: ['Kathleen Dowling Singh, The Grace in Dying', SHELF + 'DY-004'],
+    tangney: ['June Price Tangney and Ronda L. Dearing, Shame and Guilt (2002)', '']
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
@@ -77,6 +83,7 @@
     'willow:hear': ['blundon'],
     'willow:visions': ['kerr'],
     'willow:hanging': ['byock4'],
+    'willow:parent': ['tangney'],
     'oak:anxiety': ['borkovec'],
     'oak:ambiguous-loss': ['boss'],
     'oak:moral-injury': ['litz'],

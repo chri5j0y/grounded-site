@@ -5,6 +5,8 @@
    pro (For chaplains and doulas), faith (Faith notes), plus you (For You) or helper (For the
    Helper): the side each guide was missing (Build B1, October 2026), so every guide speaks to
    the person facing it and to the person beside them. Two videos per guide: willow/guide-videos.js.
+   Every guide has a short pro note (W1, GWG BLD 714). The full For Guides section and video for each guide are sealed
+   in Willow Guide (Field library), never in this public file.
    Under all of them: name the feeling first, then talk.
    ===================================================================== */
 (function(){
@@ -93,7 +95,8 @@ const G = [
       ['say', `"That makes sense. What part feels least ready?" Then sort: affairs, people, or spirit.`],
       ['helps', `One small task today. One message to one person. A What Matters to Me sheet.`],
       ['dont', `"You need to accept this." Readiness comes a little at a time, or not at all, and both are allowed.`],
-      ['you', `If you're the one who isn't ready: that makes sense, and nobody needs you to accept this on a schedule. Sort what feels least ready: your affairs, your people, or your heart. Then take one small step today: one task, one message, or a few lines in What Matters to Me.`]
+      ['you', `If you're the one who isn't ready: that makes sense, and nobody needs you to accept this on a schedule. Sort what feels least ready: your affairs, your people, or your heart. Then take one small step today: one task, one message, or a few lines in What Matters to Me.`],
+      ['pro', `"Not ready" can mean unfinished business, fear of what's next, or love that won't let go. Ask which before offering peace, and never push acceptance.`]
     ] },
   { id: 'estranged', ring: 'spirit', title: `Estranged family at the end`, story: ``,
     keys: `estranged, haven't talked in years, not speaking, rift, cut off, last chance`,
@@ -119,7 +122,8 @@ const G = [
       ['what', `Listen for "I did" (guilt) or "I am" (shame). They need different care.`],
       ['say', `To guilt: "Is there anything you'd still like to say to them?" To shame: "You're not the worst thing you've done. I see more than that."`],
       ['helps', `Guilt moves toward repair. Shame moves toward worth, witness, and blessing.`],
-      ['you', `If you're the one looking back: ask whether it's "I did" (guilt) or "I am" (shame). Guilt moves toward repair: a letter, a call, an apology, even one sentence. Shame moves toward worth: you are more than the worst thing you've done. A chaplain can help you find the words, and it isn't too late to say them.`]
+      ['you', `If you're the one looking back: ask whether it's "I did" (guilt) or "I am" (shame). Guilt moves toward repair: a letter, a call, an apology, even one sentence. Shame moves toward worth: you are more than the worst thing you've done. A chaplain can help you find the words, and it isn't too late to say them.`],
+      ['pro', `Guilt about parenting usually wants to be heard before it's eased. Ask what they wish they'd done, then whether there's anyone they'd still like to say it to.`]
     ] },
   { id: 'signs', ring: 'last', title: `What dying looks like`, story: ``,
     keys: `signs of dying, death rattle, gurgling, mottling, blotchy skin, breathing stops, pauses, Cheyne-Stokes, cold hands, active dying, transitioning, how long, final hours, restless, sleeping all the time`,
@@ -128,7 +132,8 @@ const G = [
       ['say', `"These changes are the body slowing down. They usually bother us more than they bother her."`],
       ['helps', `Keep talking to them. Moisten their lips. Play their music. Call the nurse for restlessness, grimacing, or anything that looks like distress.`],
       ['dont', `"Any minute now." Nobody knows the minute.`],
-      ['helper', `If you're helping the family: explain the changes in calm, simple words ("The body is slowing down"). Give them ways to help: keep talking, moisten lips, play music softly. Leave the timing alone; guesses like "any minute now" lead to exhausting vigils. Look after the watchers: who hasn't eaten, slept, or stepped outside? Call the nurse for anything that looks like distress.`]
+      ['helper', `If you're helping the family: explain the changes in calm, simple words ("The body is slowing down"). Give them ways to help: keep talking, moisten lips, play music softly. Leave the timing alone; guesses like "any minute now" lead to exhausting vigils. Look after the watchers: who hasn't eaten, slept, or stepped outside? Call the nurse for anything that looks like distress.`],
+      ['pro', `Name what you see in plain words before anyone has to ask, and say what the nurse will check. A calm voice tells the family what is expected and what is not.`]
     ] },
   { id: 'starving', ring: 'last', title: `"Are they starving?"`, story: ``,
     keys: `not eating, stopped drinking, starving, dehydrated, thirsty, feeding tube, IV fluids, dry mouth, can't swallow`,
@@ -138,6 +143,7 @@ const G = [
       ['dont', `Force food or fluids. It can cause bloating, nausea, choking, and trouble breathing.`],
       ['helps', `Comfort feeding by hand, only what they want. Mouth care. Sitting together at the table, even if they don't eat.`],
       ['helper', `If you're helping the family: explain simply that the body can no longer use food, and that not eating is part of dying, not the cause. Show them mouth care and comfort feeding, only what the person wants. Honor the grief; food is love in almost every family. Bring the family a meal, and bring in the nurse if a feeding tube or IV comes up.`],
+      ['pro', `Honor the grief under the question before giving facts: for many families, feeding is how they say I love you. Offer new ways to give it, like mouth care or a favorite taste, and bring in the nurse for any talk of tubes or IV fluids.`],
       ['faith', `Food is love in almost every culture. Honor that grief. If a feeding tube or IV comes up, bring in the nurse and their clergy.`]
     ] },
   { id: 'hear', ring: 'last', title: `"Can they hear me?"`, story: `Drift Away`,
@@ -146,7 +152,8 @@ const G = [
       ['know', `Hearing may be one of the last senses to go. In a hospice study, unresponsive patients' brains still responded to sound in their last hours. We can't know how much they understand.`],
       ['say', `"Keep talking to her. Tell her who's here. Say what you want to say."`],
       ['helps', `Speak to them, not about them. Phone calls held to their ear. Their favorite voice reading their favorite words.`],
-      ['helper', `If you're helping the family: model it. Say the person's name, tell them who you are, and speak to them, not about them, even with others in the room. Help hold a phone to their ear for family far away. Families often follow your lead.`]
+      ['helper', `If you're helping the family: model it. Say the person's name, tell them who you are, and speak to them, not about them, even with others in the room. Help hold a phone to their ear for family far away. Families often follow your lead.`],
+      ['pro', `Show the family how: greet the person by name, say who is in the room, and speak to them, not about them. Families often follow your lead.`]
     ] },
   { id: 'visions', ring: 'last', title: `"They're seeing people who've died."`, story: `Welcome Home`,
     keys: `talking to dead relatives, seeing mom, visions, dreams, reaching up, angels, ghosts`,
@@ -155,7 +162,8 @@ const G = [
       ['say', `"Who's here?" "What are they saying?" Ask, don't correct.`],
       ['dont', `"There's no one there." Don't call it crazy.`],
       ['means', `Often that death is getting closer. Say it gently, and in person if you can. "We might be getting close. Can I come by?"`],
-      ['helper', `If you're helping the family: encourage them to ask, not correct ("Who's here? What are they saying?"). Visions usually bring comfort. If you need to share that death may be getting closer, say it gently and in person if you can: "We might be getting close. Can I come by?"`]
+      ['helper', `If you're helping the family: encourage them to ask, not correct ("Who's here? What are they saying?"). Visions usually bring comfort. If you need to share that death may be getting closer, say it gently and in person if you can: "We might be getting close. Can I come by?"`],
+      ['pro', `Ask what they're seeing and how it feels to them before anyone explains it. Let the nurse know, and call right away when a vision brings fear or agitation.`]
     ] },
   { id: 'hanging', ring: 'last', title: `"Why are they hanging on?"`, story: `Please Help My Dad Die`,
     keys: `hanging on, waiting, permission to go, letting go, why so long`,
@@ -163,7 +171,8 @@ const G = [
       ['what', `Some people seem to wait: for a visitor, a date, permission. Bedside workers see it often, though no one can prove why.`],
       ['say', `"Is there anyone they might be waiting for? Anything left unsaid?"`],
       ['helps', `The Four Things. Telling them, once, that they can go when they're ready. A quiet room.`],
-      ['helper', `If you're helping the family: offer the two questions (anyone they might be waiting for? anything left unsaid?), the Four Things, and a quiet room. Look after the people who have been waiting the longest; take a shift so they can sleep.`]
+      ['helper', `If you're helping the family: offer the two questions (anyone they might be waiting for? anything left unsaid?), the Four Things, and a quiet room. Look after the people who have been waiting the longest; take a shift so they can sleep.`],
+      ['pro', `Gently explore what may still be held: someone to see, something to say, permission to go. Carry the person's wish, not anyone's timeline, yours included.`]
     ] },
   { id: 'rally', ring: 'last', title: `The rally`, story: ``,
     keys: `rally, surge, burst of energy, suddenly better, woke up, terminal lucidity`,
@@ -171,7 +180,8 @@ const G = [
       ['what', `Sometimes a person who's been unresponsive wakes up, talks, eats, recognizes everyone. It's real, and it's often brief.`],
       ['say', `"This is a gift. Use it to say what you want to say."`],
       ['dont', `Read it as recovery without talking to the nurse. Gently prepare the family that it may not last.`],
-      ['helper', `If you're helping the family: celebrate the gift, and gently prepare them that it may not last. Help them call family who want to come, take a photo or recording if they want one, and say the important words today. Encourage a talk with the nurse before reading it as recovery.`]
+      ['helper', `If you're helping the family: celebrate the gift, and gently prepare them that it may not last. Help them call family who want to come, take a photo or recording if they want one, and say the important words today. Encourage a talk with the nurse before reading it as recovery.`],
+      ['pro', `Help the family use the rally for what matters, a few words, a call, a photo, without reading it as recovery. Check in afterward, since the decline that follows can feel like losing them twice.`]
     ] },
   { id: 'kids', ring: 'last', title: `Talking with children`, story: ``,
     keys: `kids, children, grandkids, explain to child, tell my kids`,
@@ -179,6 +189,7 @@ const G = [
       ['say', `"Grandma is dying. Her body is very sick and it's stopping working." Use the word "died," not "sleeping" or "lost." Children take words literally.`],
       ['helps', `Honest, short answers, repeated as often as they ask. Letting them help: drawing, choosing music, telling a story. Letting them choose whether to visit. Dougy Center tip sheets; Maple and Aspen guides for kids.`],
       ['helper', `If you're helping the grown-up who has to tell the kids: remind them that short and honest is enough, and "I don't know" is okay. Be there for the talk if they want you. Give the kids a job (drawing, music, a story), and expect the same questions again and again; that is how kids understand.`],
+      ['pro', `Ask the grown-ups what the children already know and what words their family uses, then help them say "died" plainly. Offer each child a small job at the bedside and a real choice about being there.`],
       ['faith', `"Different people believe different things about what happens. In our family, we believe..."`]
     ] },
   { id: 'notthere', ring: 'last', title: `"I wasn't there when they died."`, story: `If She Is Still Here`,
@@ -188,28 +199,32 @@ const G = [
       ['say', `"You were there for so much of it. That's what they knew." "Some people seem to wait until their loved ones step out. Bedside workers see it often."`],
       ['dont', `"You should have stayed."`],
       ['helps', `A ritual of your own goodbye, now. A letter. Sitting with the body if it's still there.`],
-      ['helper', `If you're comforting someone who missed it: name everything they did do, specifically: the meals, the nights, the hand they held. Share that some people seem to wait until loved ones step out. Help them find their own goodbye: a letter, a ritual, a quiet moment.`]
+      ['helper', `If you're comforting someone who missed it: name everything they did do, specifically: the meals, the nights, the hand they held. Share that some people seem to wait until loved ones step out. Help them find their own goodbye: a letter, a ritual, a quiet moment.`],
+      ['pro', `Guilt often lands on the one who was there the most. Name how much of the journey they were present for, offer a goodbye ritual now, and let bereavement know if the guilt holds on.`]
     ] },
   { id: 'firsthour', ring: 'last', title: `The first hour after death`, story: ``,
     keys: `what to do after death, who to call, they died, funeral home, first hour`,
     parts: [
       ['helps', `No rush. Nothing has to happen right away. Call the hospice, not 911. Sit. Hold their hand. Say goodbye. Let the kids come in if they want. Do your tradition's ritual: prayers, washing, the Shahada, chanting, keeping the body undisturbed, a shomer. Check the tradition card. The hospice nurse comes to confirm the death and help with the next steps, including the funeral home.`],
       ['say', `"Take all the time you need."`],
-      ['helper', `If you're with the family: tell them there is no rush. Make the call to the hospice, not 911. Ask what matters to them in this hour, welcome the kids if they want to come in, and keep the room calm. Water, a chair, and a hug go a long way.`]
+      ['helper', `If you're with the family: tell them there is no rush. Make the call to the hospice, not 911. Ask what matters to them in this hour, welcome the kids if they want to come in, and keep the room calm. Water, a chair, and a hug go a long way.`],
+      ['pro', `Slow the room down: there is no rush, and the family can sit, touch, wash, or pray as their tradition asks. Check the tradition card, and offer to stay until the nurse arrives.`]
     ] },
   { id: 'official', ring: 'last', title: `Making it official in Minnesota`, story: ``,
     keys: `health care directive, advance directive, health care agent, POA, POLST, DNR, Honoring Choices, Go Wish`,
     parts: [
       ['helps', `Health care directive: free forms from Honoring Choices Minnesota, in eight languages, with help available in St. Cloud. Health care agent: the person who speaks for them if they can't. Choose someone who will honor their wishes, not their own. POLST: the medical order about treatments in an emergency, signed with their doctor. Talk tools: The Conversation Project's free guides, and the Go Wish card game.`],
       ['say', `"Writing it down is a gift to your family. They won't have to guess."`],
-      ['helper', `If you're helping someone with their papers: keep their wishes in their own words. Help them choose an agent who will honor their wishes, even if that isn't you. Know where the papers are, and ask the hospice social worker for help with any step.`]
+      ['helper', `If you're helping someone with their papers: keep their wishes in their own words. Help them choose an agent who will honor their wishes, even if that isn't you. Know where the papers are, and ask the hospice social worker for help with any step.`],
+      ['pro', `Help them name who should speak for them and say what matters most out loud before any form is signed. The forms come easier once the conversation has happened.`]
     ] },
   { id: 'relief', ring: 'last', title: `"Is it okay that I feel relieved?"`, story: `Grief Debt`,
     keys: `relief, relieved, guilty for relief, numb, after`,
     parts: [
       ['say', `"Yes. Relief and grief can live in the same heart. Relief usually means the suffering is over, for both of you."`],
       ['helps', `Naming it out loud. Hospice bereavement support, which runs for about a year after the death.`],
-      ['helper', `If you're supporting someone who feels relieved: say yes, out loud. Listen without flinching, point them to hospice bereavement support (about a year), and check in later, weeks and months after, when others have moved on.`]
+      ['helper', `If you're supporting someone who feels relieved: say yes, out loud. Listen without flinching, point them to hospice bereavement support (about a year), and check in later, weeks and months after, when others have moved on.`],
+      ['pro', `Give relief permission before anyone has to defend it, especially after a long stretch of caregiving. Mention bereavement support early, and notice who seems to carry the most guilt about feeling relieved.`]
     ] }
 ];
 
