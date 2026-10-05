@@ -664,7 +664,7 @@ function goToStep(i, noScroll) {
   const sc = SCREENS[i], panel = document.getElementById('step-' + i);
   if (sc && sc.kind === 'q' && panel) { const b = panel.querySelector('.step-nav .btn-secondary:last-child'); if (b) b.textContent = (ST_ANS[sc.key] || {})[sc.i] ? nextLabelFor(i) : 'Skip this one'; }
   renderStepProgress();
-  if (!noScroll) scrollToViewTop('client-assess', true, true);
+  if (!noScroll) scrollToViewTop('step-progress', true, true);
   const f = panel && panel.querySelector('.step-title'); if (f && !noScroll) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
 }
 // Scroll so the top of a view sits just under the sticky tab bar.
@@ -852,7 +852,7 @@ function buildPersonalSections(scores, includeStories) {
 }
 
 function inviteHtml() {
-  return `<p class="quiet-sub">New stories from the bedside arrive free every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
+  return `<p class="quiet-sub">New stories from the bedside arrive every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
 }
 
 // Flagged answers from this check-in: alone, hope, home. Quick check-ins have none
@@ -872,7 +872,7 @@ function stFlagsNow() {
 function flagBoxHtml(flags, helperSet) {
   if (!flags.length) return '';
   return `<div class="flag-box" role="note"><h3>Worth tending</h3>${flags.map(f => `<p><strong>${escapeHtml(ST_FLAGS[f].title)}.</strong> ${escapeHtml(helperSet && ST_FLAGS[f].helperNote ? ST_FLAGS[f].helperNote : ST_FLAGS[f].note)}</p>`).join('')}
-    ${linesHtml(flags.includes('home'), true)}
+    ${flags.includes('home') || flags.includes('hope') ? linesHtml(flags.includes('home'), true) : ''}
     <p><button type="button" class="text-btn" onclick="showCalm('${flags.includes('home') ? 'home' : ''}')">See all help lines</button></p></div>`;
 }
 
@@ -1563,8 +1563,9 @@ function renderHelpTabs() {
   const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give, or answer from what you see if they can no longer say. Every check-in is marked with who answered.</p>
     <div class="btn-row"><button class="btn btn-primary" onclick="startCheckin('tapped','${HELP}')">${n} Answers, I Tap</button><button class="btn btn-secondary" onclick="startQuick('tapped','${HELP}')">Quick Check-in Together</button><button class="btn btn-secondary" onclick="startCheckin('observed','${HELP}')">I'm Answering From What I See</button></div></div>
     <div class="gt-card"><h3>A Check-in for You</h3><p>Helping someone you love is a lot to carry. This one is about you, and it stays in your own profile.</p><div class="btn-row"><button class="btn btn-secondary" onclick="startCheckin('helper','${HELP}')">My Own Check-in as a Helper</button></div></div>`;
-  const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(last.date)}${last.by && last.by !== 'self' ? ', ' + escapeHtml((BY_LABEL[last.by] || '').toLowerCase()) : ''}.</p>${helpLevels(last, sh)}` : '<p>No check-ins yet.</p>'}
-    ${own.length ? `<h4 class="sq-h4">Check-ins</h4><ul class="gt-hist">${own.slice().reverse().slice(0, 8).map(e => `<li><b>${escapeHtml(e.date)}</b><span>${e.type === 'quick' ? 'Quick' : 'Full'}${e.by && e.by !== 'self' ? ', ' + escapeHtml(BY_LABEL[e.by] || '') + (e.helper ? ' (' + escapeHtml(e.helper) + ')' : '') : ''}</span></li>`).join('')}</ul>` : ''}
+  const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(formatDate(last.date))}${last.by && last.by !== 'self' ? ', ' + escapeHtml((BY_LABEL[last.by] || '').toLowerCase()) : ''}.</p>${helpLevels(last, sh)}` : '<p>No check-ins yet.</p>'}
+    ${own.length ? `<h4 class="sq-h4">Check-ins</h4><ul class="gt-hist">${own.slice().reverse().slice(0, 8).map(e => `<li><b>${escapeHtml(formatDate(e.date))}</b><span>${e.type === 'quick' ? 'Quick' : 'Full'}${e.by && e.by !== 'self' ? ', ' + escapeHtml(BY_LABEL[e.by] || '') + (e.helper ? ' (' + escapeHtml(e.helper) + ')' : '') : ''}</span></li>`).join('')}</ul>` : ''}
+    ${sh.notes && last && last.reflections ? ALL_DOMAINS.filter(dd => (dd.key !== 'roots' || sh.faith) && String(last.reflections[dd.key] || '').trim()).map(dd => `<p class="gt-small"><b>${dd.part}:</b> ${escapeHtml(last.reflections[dd.key])}</p>`).join('') : ''}
     ${seen.length ? `<p class="gt-small">${seen.length} check-in${seen.length === 1 ? '' : 's'} answered from what a helper sees, kept apart.</p>` : ''}</div>` : `<div class="gt-card"><p>${n} keeps their tree private. You can still check in together.</p></div>`;
   const legacy = sh.legacy ? `<div class="gt-card"><h3>${n}'s Legacy Book</h3><p>Write while ${n} tells. Use their words, not yours.</p><div class="btn-row"><button class="btn btn-secondary" onclick="showView('client-legacy')">Open the Legacy Book</button></div></div>` : '';
   const todayEl = document.getElementById('client-today'), weekEl = document.getElementById('client-week'), seasonEl = document.getElementById('client-season');
@@ -1647,7 +1648,7 @@ function legChapterHtml(c, L, who) {
       ${editing ? `<label class="gt-small" for="lt-${p.id}">Your words</label><textarea id="lt-${p.id}" class="reflection-area sq-legtext" rows="7" maxlength="20000">${escapeHtml(a ? a.text : '')}</textarea>
         <label class="gt-small" for="lw-${p.id}">Written down by (optional, if someone wrote while you told)</label><input type="text" id="lw-${p.id}" class="sq-select" maxlength="60" value="${escapeHtml(a ? a.told || '' : (HELP ? (PROF || {}).name || '' : ''))}">
         <div class="btn-row"><button class="btn btn-primary" onclick="legSave('${p.id}')">Save</button><button class="btn btn-secondary" onclick="LG.edit=null;renderLegacy()">Cancel</button>${has ? `<button class="btn btn-secondary" onclick="legDelete('${p.id}')">Remove</button>` : ''}</div>`
-      : has ? `<div class="sq-legans">${escapeHtml(a.text).replace(/\n/g, '<br>')}</div><p class="gt-small">${escapeHtml(a.date || '')}${a.told ? ', told to ' + escapeHtml(a.told) : ''}</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="legEdit('${p.id}')">Edit</button></div>`
+      : has ? `<div class="sq-legans">${escapeHtml(a.text).replace(/\n/g, '<br>')}</div><p class="gt-small">${escapeHtml(a.date ? formatDate(a.date) : '')}${a.told ? ', told to ' + escapeHtml(a.told) : ''}</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="legEdit('${p.id}')">Edit</button></div>`
       : `<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="legEdit('${p.id}')">Write This One</button></div>`}
     </article>`;
   }).join('');

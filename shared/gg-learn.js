@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln24';
+  var V = 'ln25';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -417,7 +417,7 @@
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src7'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src8'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -674,7 +674,7 @@
       return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
     }).filter(function (t) { return t.lessons.length; });
   }
-  function needPrint() { return script(url('/shared/gg-print.js?v=pr1'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=pr2'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
   function open(app, lessonId, opts) {
