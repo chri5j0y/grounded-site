@@ -533,6 +533,11 @@ body.cd-noscroll{overflow:hidden;}
 .sp-rep-in{display:flex;flex-direction:column;flex:1;min-height:0;}
 .sp-rep-in .run-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .sa-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#35603A 0%,#24452A 55%,#18301D 100%);}
+/* Sequoia Guide (GWG BLD 736): deep redwood */
+.sq-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#A5492E 0%,#7A2E1C 50%,#4E1B10 100%);}
+#print-root .sq-sheet .sq-qr{display:flex;align-items:center;gap:4mm;margin-top:5mm;break-inside:avoid;}
+#print-root .sq-sheet .sq-qr svg{width:26mm;height:26mm;flex:none;}
+#print-root .sq-sheet p,#print-root .sq-sheet li{font-size:12pt;}
 /* Willow Guide (Willow Build Session 3): dusk lilac, sage accent */
 .wl-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A7590 0%,#5D5A6E 50%,#3E3B4C 100%);}
 .sg-help{margin-top:16px;padding:10px 12px;border-left:3px solid var(--sage);background:var(--bg-deep);border-radius:6px;font-size:15px;}
@@ -596,8 +601,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc2"></script>
-<script src="../shared/gg-sources.js?v=src9"></script>
-<script src="../shared/gg-learn.js?v=ln27"></script>
+<script src="../shared/gg-sources.js?v=src10"></script>
+<script src="../shared/gg-learn.js?v=ln28"></script>
 <script src="../shared/gg-print.js?v=pr2"></script>
 <script src="../shared/grove-scene.js?v=w2c"></script>
 <script src="qr.js"></script>
@@ -876,12 +881,16 @@ function start(){
     if (SPG() && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Maple visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); spLoad(); let n = 0; const go2 = () => { if (SC) spOpenRun(); else if (SC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Maple questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
     return;
   }
+  if (dr && dr.kind === 'sq'){
+    if (SQG() && dr.clientId && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sequoia visit in progress. Pick up where you left off?')) sqResume(); else { DATA.draft = null; save(); } }, 200);
+    return;
+  }
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have an Oak visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Oak questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 function tabsFor(){
   const gt = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : []), ['learn','Learn','play']];
-  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['learn','Learn','play'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...gt];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...gt, ...(OR() ? [['orient','Orientation','cap']] : []), ['learn','Learn','play']];
+  const t = LIB ? [['home','Home','home'],['guides','Guides','book'], ...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...gt,['clients','People','people'],['library','Library','shelf'], ['present','Present','speaking'],['training','Training','cap'],['learn','Learn','play'],['safety','Safety','shield']] : [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...gt];
   if (TIER === 'founder') t.push(['founder','Founder','key']);
   return t;
 }
@@ -890,7 +899,7 @@ function render(){
   const tabs = tabsFor();
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab)) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -946,6 +955,7 @@ const IC = {
  maple:'<path d="M12 21v-9"/><path d="M12 12c0-4 3-6.5 7.5-6.5 0 4.2-3 6.5-7.5 6.5z"/><path d="M12 14.5c0-3.2-2.6-5.3-6.3-5.3 0 3.3 2.6 5.3 6.3 5.3z"/>',
  aspen:'<path d="M12 21v-8"/><path d="M12 13c-3 0-5.2-2.1-5.2-4.8C6.8 5.4 9.1 3 12 3s5.2 2.4 5.2 5.2c0 2.7-2.2 4.8-5.2 4.8z"/><path d="M12 10.5l-2.4-2M12 12l2.4-2.3"/><path d="M8.5 21h7"/>',
  tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
+ sequoia:'<path d="M12 21v-3.5"/><path d="M12 2.8 9.2 7.6h1.6L8 12.2h1.9L7 17.5h10l-2.9-5.3H16l-2.8-4.6h1.6z"/><path d="M8.5 21h7"/>',
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
@@ -963,9 +973,9 @@ const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'
 function vHome(){
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   const due = [];
-  DATA.clients.filter(c => !stIsMe(c)).forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f, i}); }));
+  DATA.clients.filter(c => !anyMe(c)).forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f, i}); }));
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
-  const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !stIsMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
+  const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !anyMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
   const quick = [['first-conversation','Free First Conversation','30 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
   return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
@@ -973,7 +983,7 @@ function vHome(){
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 style="margin-top:18px">Start a Session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1085,7 +1095,7 @@ function saveRun(){
 function vClients(){
   if (V.client) { const c = CL(V.client); if (c) return vClient(c); }
   const q = (V.q||'').toLowerCase(), f = V.filter || 'active';
-  const list = DATA.clients.filter(c => !stIsMe(c) && (f === 'all' || c.status === f) && (!q || (c.name+' '+(c.service||'')).toLowerCase().includes(q))).sort((a,b) => (b.last||'').localeCompare(a.last||''));
+  const list = DATA.clients.filter(c => !anyMe(c) && (f === 'all' || c.status === f) && (!q || (c.name+' '+(c.service||'')).toLowerCase().includes(q))).sort((a,b) => (b.last||'').localeCompare(a.last||''));
   return `<div class="page-head spread"><div><div class="eyebrow">Records</div><h1>People</h1><p>Encrypted on this device only. Use first names or initials.</p></div><button class="btn btn-gold" data-act="new-client">${icon('plus')} Add Person</button></div>
   <div class="row" style="margin-bottom:14px"><input type="text" id="cq" placeholder="Search" value="${esc(V.q||'')}" style="max-width:320px">
    ${[['active','Active'],['follow-up','Following up'],['closed','Closed'],['all','All']].map(([v,l]) => `<button class="chip" aria-pressed="${f===v}" data-act="cfilter" data-v="${v}">${l}</button>`).join('')}</div>
@@ -1101,6 +1111,7 @@ function vClient(c){
   ${spPersonCard(c)}
   ${saPersonCard(c)}
   ${wlPersonCard(c)}
+  ${sqPersonCard(c)}
   ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Oak Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
   <div class="card"><h3>Start a Session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
@@ -1207,6 +1218,7 @@ function vFieldHome(){
   ${orStatusCard()}
   ${sgHomeCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
+  ${sqOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SQG().title)}</h3><p class="muted">${esc(SQG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sequoia">${icon('sequoia')} Open</button></div></div>` : ''}
   ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="maple">${icon('maple')} Open</button></div></div>` : ''}
   ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="aspen">${icon('aspen')} Open</button></div></div>` : ''}
   ${wlOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(WLG().title)}</h3><p class="muted">${esc(WLG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="willow">${icon('willow')} Open</button></div></div>` : ''}
@@ -1221,7 +1233,7 @@ function vFieldHome(){
 // Follow-ups due this week, for Field users (Staff and Founders see them on Home). Only people Field can open.
 function fieldDue(){
   const due = [];
-  DATA.clients.filter(c => !stIsMe(c)).forEach(c => (c.followups || []).forEach(f => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f}); }));
+  DATA.clients.filter(c => !anyMe(c)).forEach(c => (c.followups || []).forEach(f => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f}); }));
   if (!due.length) return '';
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
   return `<div class="card" style="margin-top:14px"><h3>Follow-ups This Week</h3>${due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text || 'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div>${htPersonOpen(x.c)}</div>`).join('')}</div>`;
@@ -1473,6 +1485,7 @@ function vFounder(){
   const fieldH = () => `  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
   const guidesH = () => `  ${FLD ? spFounderCard() : ''}
   ${FLD ? saFounderCard() : ''}
+  ${FLD ? `<div class="card"><h3>Sequoia Guide</h3>${sqFieldRow()}</div>` : ''}
   ${FLD ? wlFounderCard() : ''}`;
   // Founder opens to cards (GWG BLD 732). A new update to seal opens Update a Library, so its card is in view.
   if (V.upd && !V.upd.seen){ V.upd.seen = 1; SEC.founder = 'upd'; }
@@ -1491,7 +1504,7 @@ function vFounder(){
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
     {k: 'pricing', title: 'Private Pricing', desc: 'Rates and pricing notes for Chris and Kayti.'},
     {k: 'field', title: 'What Field Users See', desc: 'Which guides are open to Field users, Orientation, and the welcome.'},
-    FLD ? {k: 'guides', title: 'Maple, Aspen, and Willow', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
+    FLD ? {k: 'guides', title: 'Maple, Aspen, Sequoia, and Willow', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
   ];
   const C2 = secPick('founder', cards), back = h => secPage('founder', 'Back to Founder', h);
   if (C2 === 'ready') return back(readyH);
@@ -1812,7 +1825,7 @@ function vLearn(){
   const back = (act, v, label) => `<button class="linkbtn" data-act="${act}"${v ? ` data-v="${esc(v)}"` : ''}>&larr; ${esc(label)}</button>`;
   const cats = [{k: 'les', eb: 'Lessons', title: 'Learn Step by Step', intro: 'How Grow With Grounded and the Field Guide work, in order. Start with Get Set Up.', n: `${fin} of ${all} lessons finished`, accent: 'var(--gold)'}];
   if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
-  ['willow', 'oak', 'aspen', 'maple'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
+  ['willow', 'oak', 'sequoia', 'aspen', 'maple'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
   const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
   if (C === 'les') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow">Lessons</div><h1>Learn Step by Step</h1><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>${lessonCards()}</div>`;
   if (C === 'sg') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${sgLearnCard()}</div></div>`;
@@ -1864,13 +1877,14 @@ function lnAct(a, v){
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
 function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr2'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
-// The certificate and two posters for a finished Guide training. tree: maple, aspen, oak, willow.
+// The certificate and two posters for a finished Guide training. tree: maple, aspen, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
   fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree, name: signed.name, title: guide + ' Training', body: ({
     maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
     aspen: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 6 to 8 through Aspen.',
     oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
+    sequoia: 'Lessons, practice scenarios, and a signed agreement for walking with older adults and their families through Sequoia.',
     willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'})[tree],
     date: signed.date, renew: st.renewBy, version: M && M.version, kind: 'training'}));
 }
@@ -1917,7 +1931,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
-const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'st' ? 'Oak: report record' : 'Maple: report record') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'st' ? 'Oak: report record' : s.tool === 'sq' ? 'Sequoia: report record' : 'Maple: report record') : s.kind === 'sq' ? 'Sequoia: ' + (SQG() ? sqVisitName(s.visit) : 'visit') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
 function stQuestions(visit, set, key){ if (!STC) return []; return ((set === 'staff' ? STC.staff : STC.questions)[key]) || []; }
 function stScore(run){
   const out = {}, sc = stScale();
@@ -2493,6 +2507,685 @@ async function stSetField(on){
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 
+// ---------------- SEQUOIA GUIDE ----------------
+// GWG BLD 736. Oak Guide's twin for older adults: chaplains, parish nurses, senior living and senior center staff,
+// visitors, and anyone serving older adults. Wording lives in the Field library (FLD.sequoiaGuide, Oak Guide's shape,
+// plus answered {lead, note}, consent.memoryNote, and safety.directLead), sealed and edited through Update a Library.
+// Questions come from the public sequoia/checkin.js (window.SEQUOIA_CHECKIN), so Sequoia and Sequoia Guide always
+// ask the same thing: the older adult's set, the helper set (a family caregiver's own check-in), stems, who answered
+// (self, tapped, observed), flags, and the safety step's wording.
+// People are ordinary People records with a .sq profile (type person, family, community, or me). Visits are sessions
+// with kind 'sq', so backups merge them. Report records are sessions with kind 'spr' and tool 'sq'.
+// Staff and Founders always see it. Field users see it once FLD.sequoiaGuide.open.field is on and Orientation is done.
+// Everyone takes the Sequoia training (DATA.sqmod) before a real visit. Demo visits are always open.
+// Like the public Sequoia, a quick check-in asks question 1 of each part, and answers given "from what I see" are kept
+// on the visit but never add a ring to their tree.
+const SQG = () => fgPartsLib((FLD && FLD.sequoiaGuide) || null);
+const sqOpen = () => !!SQG() && (TIER !== 'field' || !!(SQG().open && SQG().open.field && (!OR() || orState().complete)));
+const sqPart = k => SQG().parts.find(p => p.key === k);
+const sqIsMe = c => !!(c && c.sq && c.sq.type === 'me');
+const anyMe = c => stIsMe(c) || sqIsMe(c);
+const sqPeople = () => DATA.clients.filter(c => c.sq && c.sq.type !== 'me');
+const sqMe = () => DATA.clients.find(sqIsMe);
+const sqVisits = id => DATA.sessions.filter(s => s.kind === 'sq' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const sqTypeName = t => t === 'me' ? 'Me' : ((SQG().people.find(x => x[0] === t) || [])[1] || 'Person');
+const sqVisitName = k => (SQG().visits.find(x => x[0] === k) || [])[1] || 'Visit';
+const sqConsentName = h => h === 'form' ? 'Consent form' : ((SQG().consent.how.find(x => x[0] === h) || [])[1] || '');
+const sqHasConsent = c => sqIsMe(c) || !!(c.sq.consent && c.sq.consent.how && c.sq.consent.how !== 'declined' && sqConsentCurrent(c.sq.consent));
+const sqSetFor = type => type === 'family' ? 'helper' : 'standard';
+const SQ_BY = [['self', 'They answered'], ['tapped', 'They answered, I tapped'], ['observed', 'I\'m answering from what I see']];
+const sqByList = () => (SQC && SQC.answeredBy) || SQ_BY;
+const sqByName = b => ((sqByList().find(x => x[0] === b) || [])[1]) || '';
+const sqRingVisit = s => s.visit !== 'open' && s.by !== 'observed' && stAvg(s.scores) != null;
+function sqQuestions(set, key){ if (!SQC) return []; return ((set === 'helper' ? SQC.helper : SQC.questions) || {})[key] || []; }
+function sqScore(run){
+  const out = {}, sc = sqScale();
+  SQG().parts.forEach(p => {
+    const k = p.key;
+    if (run.visit === 'open'){ const im = SQG().impressions.find(x => x[0] === (run.impr||{})[k]); out[k] = im ? im[2] : null; return; }
+    if (run.visit === 'quick'){ const o = sc.find(x => x[0] === ((run.ans||{})[k]||{})[0]); out[k] = o && o[2] !== null ? Math.round(1 + 9 * o[2] / 3) : null; return; }
+    let sum = 0, n = 0;
+    sqQuestions(run.set, k).forEach((q, i) => { const o = sc.find(x => x[0] === ((run.ans||{})[k]||{})[i]); if (q.c || !o || o[2] === null) return; sum += q.r ? 3 - o[2] : o[2]; n++; });
+    out[k] = n ? Math.max(1, Math.min(10, Math.round(1 + 9 * (sum / n) / 3))) : null;
+  });
+  return out;
+}
+
+// ----- questions from the public sequoia/checkin.js -----
+let SQC = null, SQC_WAIT = null, SQC_FAIL = false;
+function sqLoad(){
+  if (SQC || SQC_WAIT) return;
+  SQC_FAIL = false;
+  SQC_WAIT = fetch('../sequoia/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); if (!w.SEQUOIA_CHECKIN || !w.SEQUOIA_CHECKIN.questions) throw 0; SQC = w.SEQUOIA_CHECKIN; SQC_WAIT = null; if (DATA && V.tab === 'sequoia') render(); })
+    .catch(() => { SQC_WAIT = null; SQC_FAIL = true; if (DATA && V.tab === 'sequoia') render(); });
+}
+function sqNeedData(){
+  if (SQC) return '';
+  sqLoad();
+  return SQC_FAIL ? `<div class="card"><h3>The Sequoia questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sq-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Sequoia questions...</p></div>`;
+}
+const sqScale = () => (SQC && SQC.answers) || SQG().scale;
+// Flagged answers in a full visit: alone, hope, home. Quick visits ask question 1 of each part, which is never a flag question.
+function sqRunFlags(r){
+  if (!SQC || r.visit !== 'full') return [];
+  const out = [];
+  SQG().parts.forEach(p => sqQuestions(r.set, p.key).forEach((q, i) => {
+    const a = ((r.ans || {})[p.key] || {})[i];
+    if (q.flag && a && SQC.flags[q.flag] && SQC.flags[q.flag].on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
+  }));
+  return out;
+}
+// The stem read before each part. A family caregiver's own check-in names who they help; "from what I see" names the person.
+function sqStem(r, c){
+  const S = (SQC && SQC.stems) || SQG().stems || {};
+  if (r.set === 'helper') return (S.helper || S.standard || '').replace('{name}', (c && c.sq && c.sq.forName) || 'them');
+  if (r.by === 'observed') return (S.observed || S.standard || '').replace('{name}', (c && c.name) || 'them');
+  return S.standard || '';
+}
+const sqQText = (r, t) => r.by === 'observed' ? wlTheyify(t) : t;
+
+// ----- training (its own module; gates real visits for everyone; demo visits always open) -----
+const SQM = () => SQG() && SQG().module;
+function sqmData(){ DATA.sqmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.sqmod || {}); return DATA.sqmod; }
+/* Sequoia Guide Training, version 2 (GWG BLD 736): played like Oak Guide Training. Each lesson is a narrated video in
+   the shared player, drawn from FLD.sequoiaGuide.module.lessons[i].video.scenes, with Read It Instead underneath it.
+   A lesson counts when the video reaches its closing scene, or when Read It Instead is opened and Mark as Read is tapped. */
+const sqmFree = () => { const D = sqmData(); return sqmState().complete || !!(D.pass || D.signed); };
+const sqmOpen = i => { const M = SQM(), D = sqmData(); return i <= 0 || sqmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+function sqmTrack(){ const M = SQM(); return {id:'sqg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
+function sqmState(){
+  const M = SQM(), D = sqmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const sqReady = () => sqmState().complete;
+function sqmCard(){
+  const m = sqmState();
+  if (!SQM()) return '';
+  if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Renew your Sequoia training soon</h3><p class="muted">Renew by ${nice(m.renewBy)}.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sq-mhome">Open Training</button></div>` : '';
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Sequoia training' : 'Start with the Sequoia training'}</h3><p class="muted">${esc(SQM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sq-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sq-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+}
+function vSQM(){
+  const M = SQM(), D = sqmData(), s = sqmState();
+  if (!M) return `<div class="card"><p>The Sequoia training isn't on this device yet.</p></div>`;
+  if (V.sqml !== undefined) return vSQMLesson(V.sqml);
+  if (V.sqq) return V.sqq.done ? vSQMResult() : vSQMQ();
+  if (V.sqs) return vSQMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-tab="sequoia">Back to Sequoia Guide</button>
+  <div class="hello sq-hello" style="margin-top:14px"><div class="eyebrow" style="color:#F0B48E">Sequoia Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = sqmOpen(i); return step('sq-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
+  <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
+  ${step('sq-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with older adults and their families`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('sq-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sq-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('sq') : ''}`;
+}
+function vSQMLesson(i){
+  const M = SQM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vSQM();
+  if (!sqmOpen(i)) return `<button class="linkbtn" data-act="sq-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = stmVid(L), watch = vid && !V.sqread;
+  if (watch){ GGLearn.css(); setTimeout(() => sqmMount(i), 0); }
+  return `<button class="linkbtn" data-act="sq-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="sqm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="sq-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="sq-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="sqm-foot">${sqmFoot(i)}</div>`;
+}
+// The buttons under a lesson. Redrawn in place when a video finishes, so the player is never torn down.
+function sqmFoot(i){
+  const M = SQM(), L = M.lessons[i], n = M.lessons.length, D = sqmData(), done = !!D.lessons[L.id];
+  const reading = V.sqread || !stmVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="sq-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="sq-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="sq-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="sq-mhome">Back to training</button>` : ''}</div>
+  ${all && !sqmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sq-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function sqmMount(i){
+  const host = $('#sqm-host'); if (!host || !window.GGLearn) return;
+  const M = SQM(), L = M.lessons[i], D = sqmData(), tr = sqmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mark: {tree: 'sequoia', name: 'Sequoia Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#7A2E1C',
+    onAt: k => { lastAct = Date.now(); sqmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = sqmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#sqm-foot'); if (f) f.innerHTML = sqmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'sequoia', sqm:1, sqml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'sequoia', sqm:1}; render(); }});
+}
+function sqmNewQuiz(){ const items = SQM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vSQMQ(){
+  const Q = V.sqq, items = SQM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="sq-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="sq-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="sq-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'sq-mfinish' : 'sq-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function sqmFinish(){
+  const M = SQM(), Q = V.sqq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = sqmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vSQMResult(){
+  const M = SQM(), Q = V.sqq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = sqmState();
+  return `<button class="linkbtn" data-act="sq-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="sq-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="sq-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="sq-mq">Try Again</button><button class="btn btn-line" data-act="sq-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your Answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vSQMSign(){
+  const A = SQM().agreement, s = sqmState(), D = sqmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="sq-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="sq-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="sqm-name">Your full name</label><input type="text" id="sqm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="sqm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="sq-msigned">Sign Agreement</button>`}</div>`;
+}
+function sqmPrint(){
+  const A = SQM().agreement, D = sqmData().signed;
+  fgSheet(ph('Sequoia Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'sequoia-guide-agreement'});
+}
+
+// ----- consent: the written form, kept encrypted here; a PDF if they want one -----
+const sqForm = () => (SQG().consent || {}).form || null;
+function sqConsentCurrent(con){ const F = sqForm(); return !(con && con.how === 'form' && F && con.v !== F.version); }
+function vSQForm(c){
+  const F = sqForm();
+  return `<button class="linkbtn" data-act="sq-consent" data-v="${c.id}">Back to consent</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p></div>
+  <div class="card"><p class="muted" style="font-size:14px">Hand them the device, or read each line aloud. They check each box and type their name.</p>
+   ${F.boxes.map((b, i) => `<label class="cb"><input type="checkbox" class="sqf-box" data-i="${i}"> ${esc(b)}</label>`).join('')}
+   <label class="f" for="sqf-name">${esc(F.nameLabel)}</label><input type="text" id="sqf-name" autocomplete="off" value="">
+   <label class="f" for="sqf-by">${esc(F.byLabel)}</label><input type="text" id="sqf-by" value="" placeholder="Daughter, healthcare agent">
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(F.pdfNote)}</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="sq-form-save" data-v="${c.id}">Save Consent</button></div>`;
+}
+function sqFormPdf(c){
+  const F = sqForm(), con = c.sq.consent || {};
+  if (!F || con.how !== 'form') return;
+  fgSheet(ph('Consent') + `<h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p><ul>${F.boxes.map(b => `<li>[x] ${esc(b)}</li>`).join('')}</ul>
+    <p><b>${esc(F.nameLabel)}:</b> ${esc(con.name || '')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p><p><b>Date:</b> ${nice(con.date)}</p><p style="font-size:9pt">Form version ${esc(String(con.v))}. ${esc(F.pdfNote)}</p>` + pf(), F.title, {file:'sequoia-consent', date:con.date, confidential:true});
+}
+function vSQConsent(c){
+  const C = SQG().consent, cur = c.sq.consent || {};
+  return `<button class="linkbtn" data-act="sq-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
+  <div class="card step-card"><div class="blk say"><div class="lab">Say</div><ul><li>${esc(C.say)}</li></ul></div></div>
+  <div class="card"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${C.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>${C.memoryNote ? `<p class="tipbox" style="margin-top:12px">${esc(C.memoryNote)}</p>` : ''}</div>
+  ${sqForm() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(sqForm().title)}</h3><p class="muted">${esc(sqForm().lead)}</p>
+   ${cur.how === 'form' ? `<p style="margin-top:8px"><span class="pill ${sqConsentCurrent(cur) ? 'sage' : 'warn'}">${sqConsentCurrent(cur) ? 'Signed' : 'The form changed. Ask again.'}</span> ${nice(cur.date)}${cur.name ? ' by ' + esc(cur.name) : ''}</p>` : ''}
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="sq-form" data-v="${c.id}">${cur.how === 'form' ? 'Fill It In Again' : 'Fill In the Form'}</button>${cur.how === 'form' ? `<button class="btn btn-line btn-sm" data-act="sq-form-pdf" data-v="${c.id}">${icon('print')} Save or Print the Form</button>` : ''}</div></div>` : ''}
+  <div class="card"><h3>${sqForm() ? 'Or record another way' : 'Record it'}</h3>
+   ${C.how.filter(h => h[0] !== 'form').map(h => `<label class="cb"><input type="radio" name="sq-ch" value="${h[0]}" ${cur.how === h[0] ? 'checked' : ''}> ${esc(h[1])}</label>`).join('')}
+   <label class="f" for="sq-cby">If someone else gave consent, who (relationship only)</label><input type="text" id="sq-cby" value="${esc(cur.by||'')}" placeholder="Daughter, healthcare agent">
+   <label class="f" for="sq-cd">Date</label><input type="date" id="sq-cd" value="${esc(cur.date || today())}" style="max-width:220px">
+   <button class="btn btn-gold" style="margin-top:14px" data-act="sq-consent-save" data-v="${c.id}">Save Consent</button></div>`;
+}
+
+// ----- report a concern about a vulnerable adult: abuse, neglect, self-neglect, and financial exploitation -----
+const sqReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool === 'sq' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+function vSQReport(cid){
+  const R = SQG().report, c = cid ? CL(cid) : null, k = SPG() ? spContact() : {};
+  const where = V.sqwhere || 'mn';
+  return `<button class="linkbtn" ${c ? `data-act="sq-open" data-v="${c.id}"` : 'data-tab="sequoia"'}>Back${c ? ' to ' + esc(c.name) : ''}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Sequoia Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
+  <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div><p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p></div>
+  <div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card"><h3>What counts</h3>${R.kinds.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>
+  <div class="card"><div class="row" role="group" aria-label="Where are they?"><button class="chip" data-act="sq-where" data-v="mn" aria-pressed="${where === 'mn'}">In Minnesota</button><button class="chip" data-act="sq-where" data-v="out" aria-pressed="${where === 'out'}">Outside Minnesota</button></div>
+   ${where === 'mn' ? `<h3 style="margin-top:12px">${esc(R.mn.title)}</h3><p style="margin-top:6px">${esc(R.mn.lead)}</p>
+    <div class="row" style="margin-top:10px"><a class="btn btn-gold" href="tel:${esc(R.mn.tel)}">${icon('phone')} Call ${esc(R.mn.phone)}</a>${R.mn.form ? `<a class="btn btn-line" href="${esc(R.mn.form)}" target="_blank" rel="noopener">Mandated reporter online form</a>` : ''}</div>
+    <ul style="margin-top:10px">${(R.mn.notes || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+   : `<h3 style="margin-top:12px">${esc(R.out.title)}</h3><p style="margin-top:6px">${esc(R.out.lead)}</p><div class="row" style="margin-top:10px"><a class="btn btn-line" href="${esc(R.out.link)}" target="_blank" rel="noopener">${esc(R.out.linkText)}</a></div>`}</div>
+  ${k && (k.who || k.phone || k.step) ? `<div class="card"><h3>Your Reporting Contact</h3><p style="margin-top:6px">${esc(k.who || '')}${k.phone ? ` &middot; <a href="tel:${esc(k.phone.replace(/[^0-9+]/g, ''))}">${esc(k.phone)}</a>` : ''}</p>${k.step ? `<p class="muted" style="margin-top:4px">${esc(k.step)}</p>` : ''}</div>` : ''}
+  ${c ? `<div class="card"><h3>Record what you did</h3><p class="muted" style="font-size:14px">${esc(R.recordNote)}</p>
+   <label class="f" for="sqr-what">What you reported (a few plain words)</label><input type="text" id="sqr-what" placeholder="Concern about money being taken">
+   <div class="grid g2"><div><label class="f" for="sqr-how">How</label><select id="sqr-how">${R.how.map(h => `<option>${esc(h)}</option>`).join('')}</select></div><div><label class="f" for="sqr-at">Date and time reported</label><input type="datetime-local" id="sqr-at"></div></div>
+   <label class="f" for="sqr-ref">Reference number (if you got one)</label><input type="text" id="sqr-ref" autocomplete="off">
+   <button class="btn btn-gold" style="margin-top:12px" data-act="sq-rep-save" data-v="${c.id}">Save Report Record</button></div>
+   ${sqReports(c.id).length ? `<div class="card"><h3>Report Records</h3>${sqReports(c.id).map(r => `<div class="list-row"><div class="lr-main"><b>${esc(r.what || 'Report')}</b><br><small class="muted">${esc(r.how || '')}${r.at ? ' &middot; ' + esc(r.at.replace('T', ' ')) : ''}${r.ref ? ' &middot; Ref ' + esc(r.ref) : ''}</small></div></div>`).join('')}</div>` : ''}`
+   : '<p class="muted" style="margin-top:10px">Open a person to record a report on their page.</p>'}`;
+}
+const sqShield = cid => `<button class="btn btn-line btn-sm" data-act="sq-report" data-v="${cid || ''}">${icon('shield')} Report a Concern</button>`;
+
+// ----- their own yes, every visit, and who is answering -----
+function sqYesHtml(c){
+  const Y = SQG().yes || {}, con = (c && c.sq.consent) || {}, agent = con.how === 'agent';
+  const opts = [['yes', Y.yes || 'Yes, go ahead'], ...(agent ? [['assent', Y.assent || 'Can\'t say, but at ease']] : []), ['no', Y.no || 'Not today']];
+  return `<div class="card" style="margin-top:14px"><h3>${esc(Y.title || 'Their yes, today')}</h3>
+   ${Y.say ? `<div class="blk say" style="margin-top:8px"><div class="lab">Say</div><ul><li>${esc(Y.say)}</li></ul></div>` : ''}
+   ${agent ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(Y.agentNote || 'Someone else gave consent for them. Their own no, by words or by turning away, is always honored.')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p>` : ''}
+   <div class="st-opts" role="group" aria-label="Their Answer" style="margin-top:10px">${opts.map(o => stChip('sq-yes', `data-k="yes" data-v="${o[0]}"`, RUN.yes === o[0], o[1])).join('')}</div></div>`;
+}
+function sqByHtml(){
+  const A = SQG().answered || {};
+  return `<div class="card" style="margin-top:14px"><h3>Who is answering?</h3>${A.lead ? `<p class="muted" style="font-size:15px;margin-top:4px">${esc(A.lead)}</p>` : ''}
+   <div class="st-opts" role="group" aria-label="Who is answering" style="margin-top:8px">${sqByList().map(b => stChip('sq-by', `data-v="${b[0]}"`, RUN.by === b[0], b[1])).join('')}</div>
+   ${A.note ? `<p class="muted" style="font-size:14px;margin-top:10px">${esc(A.note)}</p>` : ''}</div>`;
+}
+function sqNotToday(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ go('sequoia'); toast('Demo ended. "Not today" is always honored.'); return; }
+  DATA.sessions.push({id:r.id, u:Date.now(), kind:'sq', clientId:r.clientId, date:today(), minutes:0, visit:r.visit, set:r.set, by:r.by, notToday:true, std:(SQC && SQC.version) || 1, scores:{}, safety:null, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', pn:{}});
+  DATA.draft = null; if (c){ touch(c); c.last = today(); }
+  save(); go('sequoia', {sqp:r.clientId}); toast('Recorded as "Not today." Thank them, and end kindly.');
+}
+
+// ----- rings: one for each full or quick visit in their own voice, oldest in the middle -----
+function sqRings(c){
+  const vs = sqVisits(c.id).filter(sqRingVisit).reverse();
+  const n = vs.length, R = 76, cx = 90;
+  const col = a => a >= 8 ? '#4A5D3A' : a >= 5 ? '#8B5E1A' : '#A8542E';
+  const rings = vs.map((s, i) => { const r = 16 + (R - 16) * (n === 1 ? 1 : i / (n - 1)); return `<circle cx="${cx}" cy="${cx}" r="${r.toFixed(1)}" fill="none" stroke="${col(stAvg(s.scores))}" stroke-width="${n > 8 ? 3 : 5}" opacity="${(0.55 + 0.45 * (i + 1) / n).toFixed(2)}"><title>${esc(nice(s.date))}: ${stLevel(Math.round(stAvg(s.scores)))}</title></circle>`; }).join('');
+  return `<svg class="st-rings" viewBox="0 0 180 180" role="img" aria-label="${n} ring${n === 1 ? '' : 's'}"><circle cx="${cx}" cy="${cx}" r="${R + 8}" fill="color-mix(in srgb,var(--gold) 7%,transparent)" stroke="var(--ink)" stroke-width="1.2"/>${rings}<circle cx="${cx}" cy="${cx}" r="7" fill="var(--ink)"/></svg>`;
+}
+function sqPartTable(c){
+  const vs = sqVisits(c.id).filter(s => stAvg(s.scores) != null).slice(0, 4);
+  if (!vs.length) return '<p class="muted" style="margin-top:8px">No scored visits yet. Each full visit or quick check-in adds a ring.</p>';
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}${s.by === 'observed' ? '<br><small class="muted">Seen</small>' : ''}</th>`).join('')}</tr>
+   ${SQG().parts.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const v = (s.scores||{})[p.key]; return `<td>${v == null ? '<span class="muted">&middot;</span>' : `<span class="pill ${stLvlCls(v)}">${stLevel(v)}</span>`}</td>`; }).join('')}</tr>`).join('')}</table></div>`;
+}
+
+// ----- views -----
+function vSQ(){
+  if (!SQG()) return `<div class="card"><p>Sequoia Guide isn't on this device yet.</p></div>`;
+  sqLoad();
+  if (V.sqm) return vSQM();
+  if (V.sqrep !== undefined) return vSQReport(V.sqrep);
+  if (V.sqform) { const c = CL(V.sqform); if (c && c.sq && sqForm()) return vSQForm(c); }
+  if (V.sqc) { const c = CL(V.sqc); if (c && c.sq) return vSQConsent(c); }
+  if (V.sqv) return vSQVisit();
+  if (V.sqp) { const c = CL(V.sqp); if (c && c.sq) return vSQPerson(c); }
+  const S = SQG(), list = sqPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), me = sqMe();
+  const hello = `<div class="hello sq-hello"><div class="eyebrow" style="color:#F0B48E">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`;
+  const about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}<div class="row" style="margin-top:12px">${S.report ? sqShield('') : ''}${SQM() && sqReady() ? `<button class="btn btn-line btn-sm" data-act="sq-mhome">${icon('cap')} Training</button>` : ''}</div></div>`;
+  const add = `  <div class="card"><h3>Someone new</h3>
+   <div class="grid g2"><div><label class="f" for="sq-nn">Code or initials</label><input type="text" id="sq-nn" autocomplete="off" placeholder="R.M. or Room 12"></div>
+   <div><label class="f" for="sq-nt">Who they are</label><select id="sq-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sq-new">${icon('plus')} Add Person</button><button class="btn btn-line" data-act="sq-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+  const people = `  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = sqVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(sqTypeName(c.sq.type))}</span>${sqHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${sqVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>`;
+  const mine = `  <div class="card st-me"><div class="spread"><div><h3>My Own Tree</h3><p class="muted">${esc(S.meNote)}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="sq-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="sq-me">Start My Tree</button>`}</div></div>`;
+  const need = list.filter(c => !sqHasConsent(c)).length;
+  const cards = [
+    {k: 'people', title: 'People', desc: 'Add someone new, try a demo visit, or open someone you visit.', n: list.length + (list.length === 1 ? ' person' : ' people') + (need ? ', ' + need + ' needing consent' : '')},
+    {k: 'me', title: 'My Own Tree', desc: S.meNote || '', n: me ? 'Started' : ''},
+    SQM() ? {title: 'Sequoia Guide Training', desc: 'Lessons, scenarios, and the agreement for Sequoia visits.', n: trainNote(sqmState()), act: 'sq-mhome'} : null,
+    {k: 'about', title: 'About Sequoia Guide', desc: 'How Sequoia Guide works.'}];
+  const C = secPick('sequoia', cards), part = {people: add + people, me: mine, about}[C];
+  if (part) return secPage('sequoia', 'Back to Sequoia Guide', part);
+  return hello + `  ${sqmCard()}` + secCards('sequoia', cards) + (S.report ? `<div class="row" style="margin-top:14px">${sqShield('')}</div>` : '');
+}
+function vSQPerson(c){
+  const S = SQG(), me = sqIsMe(c), vs = sqVisits(c.id), ok = sqHasConsent(c), con = c.sq.consent;
+  const latest = vs.find(s => s.plan && Object.values(s.plan).some(a => a && a.length)) || null;
+  return `<button class="linkbtn" data-tab="sequoia">Back to Sequoia Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(sqTypeName(c.sq.type))}</div><h1>${esc(c.name)}</h1></div>
+   <div class="row">${me ? '<span class="pill sage">Private</span>' : con ? `<span class="pill ${con.how === 'declined' ? 'warn' : 'sage'}">${esc(sqConsentName(con.how))} ${con.date ? nice(con.date) : ''}</span>` : '<span class="pill warn">Consent needed</span>'}</div></div>
+  ${!me && !ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Ask first'}</h3><p class="muted">${con && con.how === 'declined' ? 'Visits stay off. If they change their mind, record it here.' : 'Explain what this is and ask before the first visit.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="sq-consent" data-v="${c.id}">${con ? 'Update Consent' : 'Consent'}</button></div>` : ''}
+  ${me ? '' : sqmCard()}
+  ${me || !S.report ? '' : `<div class="row" style="margin:12px 0">${sqShield(c.id)}${sqReports(c.id).length ? ` <span class="pill">${sqReports(c.id).length} report record${sqReports(c.id).length === 1 ? '' : 's'}</span>` : ''}</div>`}
+  <div class="card"><h3>Start a Visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sq-start" data-v="${v[0]}" data-c="${c.id}" ${ok ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'grief' : v[0] === 'quick' ? 'start' : 'sequoia')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
+   ${c.sq.type === 'family' ? '<p class="muted" style="font-size:14px;margin-top:8px">Full and quick visits use the helper set: their own check-in, as someone who helps an older adult.</p>' : me ? '' : '<p class="muted" style="font-size:14px;margin-top:8px">Each full or quick visit starts by noting who is answering. Their own voice comes first.' + (wlOpen() ? ' For someone in hospice, Willow Guide asks questions written for the end of life. <button class="linkbtn" data-tab="willow">Open Willow Guide</button>' : '') + '</p>'}</div>
+  ${me ? '' : gvPersonCard(c)}
+  ${me ? '' : htPersonCard(c)}
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Rings</h3><div class="st-ringwrap">${sqRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(sqRingVisit).length)}. Each full visit or quick check-in in their own voice adds one. Green is strong, gold is steady, rust is a growing edge.</p></div>${sqPartTable(c)}</div>
+   <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${sqPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
+    <h3 style="margin-top:20px">Follow-ups</h3>
+    ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-sqfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sqVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.by === 'observed' ? ' <span class="pill">From what I see</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${sqSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sq-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Details</h3>
+   <label class="f">Code or initials</label><input type="text" data-sqc="name" value="${esc(c.name)}">
+   ${me ? '' : `<label class="f">Who they are</label><select data-sqc="type">${S.people.map(p => `<option value="${p[0]}" ${p[0] === c.sq.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select>
+   ${c.sq.type === 'family' ? `<label class="f">Who they help (code or initials)</label><input type="text" data-sqc="forName" value="${esc(c.sq.forName || '')}" placeholder="Mom, or R.M.">` : ''}
+   <label class="f">Status</label><select data-sqc="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v === c.status ? 'selected' : ''}>${l}</option>`).join('')}</select>`}
+   <div class="grid g2" style="margin-top:10px"><input type="date" id="sq-fd" aria-label="Follow-up date"><input type="text" id="sq-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sq-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>${me ? '' : `<button class="btn btn-line btn-sm" data-act="sq-consent" data-v="${c.id}">Update Consent</button>`}<button class="btn btn-danger btn-sm" data-act="sq-del" data-v="${c.id}">Delete This Record</button></div></div>`;
+}
+function sqPlanList(s){
+  const rows = SQG().parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? `<p style="margin-top:8px"><span class="st-dot" style="background:${p.color}"></span><b>${esc(p.part)}:</b> ${a.map(esc).join(', ')}</p>` : ''; }).join('');
+  return (rows || '<p class="muted" style="margin-top:8px">No practices chosen.</p>') + (s.custom ? `<p style="margin-top:8px"><b>Also:</b> ${esc(s.custom)}</p>` : '');
+}
+function sqFindVisit(){ return V.sqv === 'demo' ? (V.sqDemo || null) : DATA.sessions.find(x => x.id === V.sqv && x.kind === 'sq') || null; }
+function vSQVisit(){
+  const s = sqFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
+  const demo = V.sqv === 'demo', c = demo ? s.person : CL(s.clientId), me = sqIsMe(c), S = SQG(), sf = s.safety || {};
+  const back = demo ? `<button class="linkbtn" data-tab="sequoia">Back to Sequoia Guide</button>` : `<button class="linkbtn" data-act="sq-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
+  return `${back}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Print the take-home sheet or copy the note to see how they look.</span></div>' : ''}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'helper' ? ' &middot; Helper questions' : ''}${s.by && s.set !== 'helper' && s.visit !== 'open' ? ' &middot; ' + esc(sqByName(s.by)) : ''}</div><h1>${esc(sqVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}</p></div>
+  ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
+  ${s.by === 'observed' ? '<div class="card"><p class="muted">Answered from what was seen, not in their own voice. It is kept here, and it doesn\'t add a ring to their tree.</p></div>' : ''}
+  ${(s.flags || []).length && SQC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => SQC.flags[f] ? `<p style="margin-top:8px"><b>${esc(SQC.flags[f].title)}.</b> ${esc(SQC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+  <div class="card"><h3>The Six Parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
+  ${s.notToday ? '' : `<div class="card" ${sqSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(sqSafetyText(sf))}</p></div>`}
+  ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
+   ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
+   ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
+  <div class="card"><h3>Growth Plan</h3>${sqPlanList(s)}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
+  ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
+  ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
+  <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="sq-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="sq-print-note">${icon('print')} Save or Print Visit Note</button>`}
+   <button class="btn btn-line" data-act="sq-print-hand">${icon('print')} Save or Print Take-Home Sheet</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sq-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+}
+// Safety. mode: 'standard' (their own two questions), 'helper' (a family caregiver about themselves), or
+// 'observed' (someone answering from what they see). other holds the helper or observed answer.
+const sqSafetyFlag = sf => !!sf && !sf.notAsked && ((sf.direct && sf.direct !== 'no' && sf.direct !== 'skip') || ['often','always'].includes(sf.opener) || sf.other === 'yes');
+function sqSafetyText(sf){
+  if (!sf || (!sf.direct && !sf.other && !sf.notAsked)) return 'Not recorded.';
+  if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
+  const flag = sqSafetyFlag(sf), acts = flag ? ' Actions: ' + ((sf.actions||[]).join(', ') || 'none recorded') + '.' : '';
+  const yn = {yes:'yes', no:'no', unsure:'not sure', skip:'rather not say'}[sf.other] || sf.other || '';
+  if (sf.mode === 'observed') return (flag ? 'Concern noted. ' : 'No concern noted. ') + 'Asked of the person answering from what they see. They have heard them say they wish it were over: ' + yn + '.' + acts;
+  if (sf.mode === 'helper') return (flag ? 'Positive screen. ' : 'Negative screen. ') + 'Thoughts of not wanting to go on: ' + yn + '.' + acts;
+  const o = (sqScale().find(x => x[0] === sf.opener) || [])[1], d = (SQG().safety.directOpts.find(x => x[0] === sf.direct) || [])[1];
+  return (flag ? 'Positive screen. ' : 'Negative screen. ') + (o ? 'Hopeless or a burden: ' + o + '. ' : '') + (d ? 'Wished to not wake up, or thoughts of ending life: ' + d + '.' : '') + acts;
+}
+function sqNote(s, c){
+  const S = SQG(), L = [];
+  L.push('Sequoia visit: ' + sqVisitName(s.visit) + (s.set === 'helper' ? ' (helper questions)' : '') + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Person: ' + (c ? c.name : '') + ' (' + sqTypeName(c ? c.sq.type : '') + ')');
+  const con = c && c.sq.consent; if (con) L.push('Consent: ' + sqConsentName(con.how) + (con.by ? ' by ' + con.by : '') + (con.date ? ', ' + nice(con.date) : ''));
+  if (s.by && s.set !== 'helper' && s.visit !== 'open') L.push('Answered: ' + sqByName(s.by) + '.');
+  if (s.notToday) { L.push('', 'They said "Not today." The visit ended there.'); return L.join('\n'); }
+  L.push('', 'How they are doing:');
+  S.parts.forEach(p => { const v = (s.scores||{})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (s.visit === 'open' && v == null ? 'not talked about' : stLevel(v).toLowerCase() + (v != null && s.visit !== 'open' ? ' (' + v + ' of 10)' : ''))); });
+  if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
+  if ((s.did||[]).length) L.push('Interventions: ' + s.did.join(', ') + '.');
+  if ((s.flags || []).length) L.push('Flagged answers: ' + s.flags.length + '. See the visit in the Field Guide.');
+  L.push('Safety: ' + sqSafetyText(s.safety));
+  const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
+  if (plan.length || s.custom) L.push('', 'Plan: ' + [...plan, s.custom].filter(Boolean).join('; ') + '.');
+  if ((s.refs||[]).length) L.push('Referrals: ' + s.refs.join(', ') + '.');
+  if (s.fdate) L.push('Follow-up: ' + nice(s.fdate) + (s.ftext ? ', ' + s.ftext : '') + '.');
+  if (s.summary) L.push('', 'Summary: ' + s.summary);
+  return L.join('\n');
+}
+function sqPrintNote(s, c){
+  fgSheet(ph('Confidential visit note') + `<h1>Sequoia visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(sqNote(s, c))}</p>` + pf(), 'Sequoia visit note', {file:'sequoia-visit-note', date:s.date, confidential:true});
+}
+// The take-home sheet: large print, their growth plan, help lines, and a QR code to their own Sequoia.
+const SQ_HOME = 'https://growwithgrounded.com/sequoia/';
+function sqPrintHandout(s){
+  const S = SQG(), H = S.handout, short = SQ_HOME.replace(/^https?:\/\//, '');
+  const parts = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; if (!a.length) return ''; return `<div class="pr-step" style="border-left-color:${p.color}"><h3>${esc(p.part)}: ${esc(p.hand)}</h3><ul>${a.map(n => { const pr = p.practices.find(x => x.name === n); return `<li><b>${esc(n)}.</b> ${esc(pr ? pr.how : '')}</li>`; }).join('')}</ul></div>`; }).join('');
+  const scan = 'Scan to open Sequoia on your own phone or tablet';
+  const qr = window.GGQR ? GGQR.svg(SQ_HOME, {label: 'QR code for ' + short}) : '';
+  fgSheet(ph('For You') + `<div class="sq-sheet"><h1>${esc(H.title)}</h1><p><i>${esc(H.lead)}</i></p>
+    <h2>Six parts of your tree</h2><ul>${S.parts.map(p => `<li><b>${esc(p.part)}:</b> ${esc(p.hand)}</li>`).join('')}</ul>
+    <h2>Ways to tend it</h2>${parts || '<p>Pick one part of your tree, and do one small thing for it this week.</p>'}${s.custom ? `<p><b>Also:</b> ${esc(s.custom)}</p>` : ''}
+    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>
+    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}
+    <div class="ht-qr sq-qr" data-url="${esc(SQ_HOME)}" data-label="${esc(scan)}">${qr}<p><b>${esc(scan)}</b><br>${esc(short)}</p></div></div>`
+    + `<div class="pr-foot">Sequoia&trade; is a trademark of Chris Joy. growwithgrounded.com</div>`, H.title, {file:'sequoia-take-home', date:s.date});
+}
+
+// ----- the visit runner -----
+function sqStart(visit, cid, demo){
+  const S = SQG(), c = demo ? {id:'demo', name:S.demo.name, sq:{type:S.demo.type, consent:{how:'verbal', date:today()}}} : CL(cid);
+  if (!c || !c.sq) return;
+  if (!demo && !sqHasConsent(c)) return go('sequoia', {sqc:c.id});
+  if (!demo && SQM() && !sqReady()) { toast('Finish the Sequoia training to start real visits. Demo visits are always open.'); return go('sequoia', {sqm:1}); }
+  if (!SQC && visit !== 'open') { sqLoad(); return toast(SQC_FAIL ? "The Sequoia questions didn't load. Check your connection and try again." : 'Loading the Sequoia questions. Try again in a moment.'); }
+  const set = visit !== 'open' ? sqSetFor(c.sq.type) : 'standard';
+  RUN = {kind:'sq', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set, by:'self', started:Date.now(), step:0, yes:'', own:'',
+    ans:{}, impr:{}, pn:{}, safety:{mode:'', opener:'', direct:'', other:'', notAsked:false, reason:'', reasonText:'', actions:[]}, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
+  sqOpenRun();
+}
+const sqSteps = r => ['open', ...(r.visit === 'full' ? SQG().parts.map(p => 'p:' + p.key) : [r.visit === 'quick' ? 'quick' : 'talk']), 'safety', 'close', 'plan'];
+function sqOpenRun(){ $('#runner').classList.remove('hide'); sqDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
+function sqKeep(){ if (RUN && !RUN.demo){ DATA.draft = RUN; save(); } }
+function sqRedraw(){ const b = $('#run-body'), y = b ? b.scrollTop : 0; sqDraw(); const n = $('#run-body'); if (n) n.scrollTop = y; }
+function sqQ(k, i, text, q){
+  const cur = ((RUN.ans||{})[k]||{})[i], f = q && q.flag && SQC && SQC.flags[q.flag], hot = f && f.on.includes(cur);
+  return `<div class="st-q"><p>${i === 'q' || RUN.visit === 'quick' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}${q && q.r ? ' <small class="muted">(reverse)</small>' : ''}</p><div class="st-opts" role="group" aria-label="${esc(text)}">${sqScale().map(o => stChip('sq-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>${q && q.tip ? `<p class="muted st-tip" style="font-size:14px;margin-top:6px">${esc(q.tip)}</p>` : ''}${hot ? `<p class="wl-hot">${esc(f.guide)}</p>` : ''}</div>`;
+}
+const sqSafeMode = r => r.visit !== 'open' && r.set === 'helper' ? 'helper' : r.visit !== 'open' && r.by === 'observed' ? 'observed' : 'standard';
+function sqSafetyStep(c){
+  const S = SQG(), F = S.safety, A = (SQC && SQC.safety) || {}, sf = RUN.safety, flag = sqSafetyFlag(sf), mode = sqSafeMode(RUN);
+  const blk = (lab, arr, cls) => `<div class="blk ${cls || ''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  const nm = (c && c.name) || 'them';
+  let h = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>`;
+  if (mode === 'observed' && A.observed){
+    h += `<div class="st-q"><p>${esc(A.observed.ask.replace('{name}', nm))}</p><div class="st-opts" role="group" aria-label="What they have heard">${[['no','No'],['yes','Yes'],['unsure','Not sure']].map(o => stChip('sq-safe', `data-k="other" data-v="${o[0]}"`, sf.other === o[0], o[1])).join('')}</div>
+     ${sf.other === 'yes' ? `<p class="tipbox">${esc(A.observed.help.replace(/\{name\}/g, nm))}</p>` : ''}</div>`;
+  } else if (mode === 'helper' && A.helper){
+    h += `<div class="st-q"><p>${esc(A.helper.ask)}</p><div class="st-opts" role="group" aria-label="Thoughts of not wanting to go on">${[['no','No'],['yes','Yes'],['skip','I\'d rather not say']].map(o => stChip('sq-safe', `data-k="other" data-v="${o[0]}"`, sf.other === o[0], o[1])).join('')}</div>
+     ${sf.other === 'yes' ? `<p class="tipbox">${esc(A.helper.yes)}</p>` : sf.other === 'no' && A.helper.no ? `<p class="tipbox">${esc(A.helper.no)}</p>` : ''}</div>`;
+  } else {
+    h += `<div class="card step-card">${blk('Say', [F.say], 'say')}</div>
+     <div class="st-q"><p>${esc(A.opener || F.opener)}</p><div class="st-opts" role="group" aria-label="Hopeless or a burden">${sqScale().map(o => stChip('sq-safe', `data-k="opener" data-v="${o[0]}"`, sf.opener === o[0], o[1])).join('')}</div>
+      ${['often','always'].includes(sf.opener) && A.burden ? `<p class="tipbox">${esc(A.burden)}</p>` : ''}</div>
+     <div class="st-q">${F.directLead || A.directLead ? `<p class="muted" style="font-size:16px">${esc(F.directLead || A.directLead)}</p>` : ''}<p${F.directLead || A.directLead ? ' style="margin-top:8px"' : ''}>${esc(A.direct || F.direct)}</p><div class="st-opts" role="group" aria-label="Thoughts of ending life">${(A.directOpts || F.directOpts).map(o => stChip('sq-safe', `data-k="direct" data-v="${o[0]}"`, sf.direct === o[0], o[1])).join('')}</div>
+      ${sf.direct && sf.direct !== 'no' && sf.direct !== 'skip' ? `<p class="tipbox">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p>` : ''}</div>`;
+  }
+  h += `<div class="tipbox">${esc(F.note)}</div>
+   ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+     <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div>
+     <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('sq-tog', `data-g="actions" data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
+   <label class="cb" style="margin-top:16px"><input type="checkbox" data-sqsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
+   ${sf.notAsked ? `<select data-sqsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-sqsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  return h;
+}
+function sqDraw(){
+  const S = SQG(), steps = sqSteps(RUN); if (RUN.step >= steps.length) RUN.step = steps.length - 1;
+  const st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), n = steps.length, me = sqIsMe(c);
+  const pct = Math.round(RUN.step / (n - 1) * 100);
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if (st === 'open'){
+    const v = S.visits.find(x => x[0] === RUN.visit);
+    body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])}</h2><p class="purpose">${esc(v[3])}</p>
+     <div class="card step-card" style="margin-top:14px">${blk('Say', S.openers.say, 'say')}<div class="tipbox">${esc(S.openers.tip)}</div></div>
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}${RUN.set === 'helper' ? `<p class="muted" style="margin-top:12px">Using the helper set: their own check-in, as someone who helps ${esc((c && c.sq.forName) || 'an older adult')}.</p>` : ''}
+     ${me ? '' : sqYesHtml(c)}${me || RUN.set === 'helper' || RUN.visit === 'open' ? '' : sqByHtml()}`;
+  } else if (st.startsWith('p:')){
+    const p = sqPart(st.slice(2)), qs = sqQuestions(RUN.set, p.key);
+    body = `<div class="run-step-n">Part ${S.parts.indexOf(p) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
+     <div class="card step-card" style="border-left-color:${p.color}">${RUN.by === 'observed' ? '' : blk('Say', [p.aloud], 'say')}<p class="muted" style="margin-top:8px"><b>Ask:</b> "${esc(sqStem(RUN, c))}"</p></div>
+     ${sqNeedData()}${qs.map((q, i) => sqQ(p.key, i, sqQText(RUN, q.t), q)).join('')}
+     <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
+     <label class="f" for="sq-pn">Your notes (private)</label><textarea id="sq-pn" data-sqpn="${p.key}" style="min-height:80px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key]||'')}</textarea>`;
+  } else if (st === 'quick'){
+    body = `<div class="run-step-n">Six quick questions</div><h2 class="run-step-t">One for each part</h2><p class="muted">Read each one aloud. Let them answer in their own words, then tap.</p>
+     <p class="muted" style="margin-top:6px"><b>Ask:</b> "${esc(sqStem(RUN, c))}"</p>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${(q1 => sqQ(p.key, 0, sqQText(RUN, q1 ? q1.t : p.quick), q1))(sqQuestions(RUN.set, p.key)[0])}<details class="st-lf"><summary>Listen for</summary><ul>${p.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details></div>`).join('')}
+     <label class="f" for="sq-pq">Your notes (private)</label><textarea id="sq-pq" data-sqf="priv" style="min-height:80px">${esc(RUN.priv)}</textarea>`;
+  } else if (st === 'talk'){
+    body = `<div class="run-step-n">Open conversation</div><h2 class="run-step-t">Follow where they lead</h2><p class="muted">Use any of these, in any order. After, mark how each part seemed to you.</p>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${blk('Ask', [p.aloud, ...p.open], 'say')}
+      <details class="st-lf"><summary>Listen for</summary><ul>${p.listen.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>
+      <div class="st-opts" role="group" aria-label="${esc(p.part)}">${S.impressions.map(o => stChip('sq-impr', `data-k="${p.key}" data-v="${o[0]}"`, RUN.impr[p.key] === o[0], o[1])).join('')}</div>
+      <textarea data-sqpn="${p.key}" style="min-height:64px;margin-top:10px" placeholder="Your notes (private)" aria-label="${esc(p.part)} notes">${esc(RUN.pn[p.key]||'')}</textarea></div>`).join('')}`;
+  } else if (st === 'safety'){
+    body = sqSafetyStep(c);
+  } else if (st === 'close'){
+    const fl = sqRunFlags(RUN);
+    body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
+     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(SQC.flags[f].title)}.</b> ${esc(SQC.flags[f].guide)}</p>`).join('')}${fl.includes('home') && S.report ? `<div class="row" style="margin-top:10px">${sqShield(RUN.clientId || '')}</div>` : ''}</div>` : ''}
+     ${S.tags.map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('sq-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
+     <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${S.did.map(t => stChip('sq-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
+     <label class="f" for="sq-sum">Summary for the visit note</label><textarea id="sq-sum" data-sqf="summary" placeholder="A few plain lines your team can read">${esc(RUN.summary)}</textarea>
+     ${RUN.visit === 'quick' ? '' : `<label class="f" for="sq-priv">Private Notes</label><textarea id="sq-priv" data-sqf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`}`;
+  } else {
+    body = `<div class="run-step-n">Growth Plan</div><h2 class="run-step-t">Choose one or two small things</h2><p class="muted">Choose together. Less is more. These go on the take-home sheet.</p>
+     ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.hand)}</small></div><div class="st-opts">${p.practices.map(pr => stChip('sq-plan', `data-k="${p.key}" data-v="${esc(pr.name)}"`, (RUN.plan[p.key]||[]).includes(pr.name), pr.name)).join('')}</div></div>`).join('')}
+     <label class="f" for="sq-cu">Anything else</label><input type="text" id="sq-cu" data-sqf="custom" value="${esc(RUN.custom)}" placeholder="Call her sister Sunday">
+     ${me ? '' : `<h4 style="margin-top:18px">Referrals</h4><div class="st-opts">${S.referrals.map(t => stChip('sq-tog', `data-g="refs" data-v="${esc(t)}"`, RUN.refs.includes(t), t)).join('')}</div>`}
+     ${RUN.demo ? '' : `<div class="grid g2"><div><label class="f" for="sq-fd2">Follow-up date</label><input type="date" id="sq-fd2" data-sqf="fdate" value="${esc(RUN.fdate)}"></div><div><label class="f" for="sq-ft2">Follow-up note</label><input type="text" id="sq-ft2" data-sqf="ftext" value="${esc(RUN.ftext)}" placeholder="Visit again"></div></div>`}`;
+  }
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(sqVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span>${S.report && !RUN.demo ? `<button class="bar-btn" data-act="sq-run-report" aria-label="Report a concern">${icon('shield')}</button>` : ''}<button class="bar-btn" data-act="sq-pause" aria-label="Close">&times;</button></div></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="run-body" id="run-body"><div class="wrap">${body}</div></div>
+    <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="sq-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
+    ${st === 'plan' ? `<button class="btn btn-gold" data-act="sq-save">${icon('check')} ${RUN.demo ? 'Finish Demo' : 'Save Visit'}</button>` : `<button class="btn btn-gold" data-act="sq-next">${st === 'open' ? 'Begin' : 'Next'} &rsaquo;</button>`}</div></div>`;
+  tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
+}
+function sqNext(){
+  const st = sqSteps(RUN)[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
+  if (st === 'open' && !sqIsMe(c0)){
+    if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
+    if (RUN.yes === 'no') return sqNotToday();
+    if (RUN.visit !== 'open' && RUN.set !== 'helper' && !RUN.by) return alert('Choose who is answering today.');
+  }
+  if (st === 'safety'){
+    const mode = sqSafeMode(RUN); sf.mode = mode;
+    if (!sf.notAsked && (mode === 'standard' ? !sf.direct : !sf.other)) return alert(mode === 'standard' ? 'Ask the second safety question, or check "I didn\'t ask these today" and say why.' : 'Ask the safety question, or check "I didn\'t ask these today" and say why.');
+    if (sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
+    if (sqSafetyFlag(sf) && !sf.actions.length && !confirm('This is a positive screen. You haven\'t marked what you did. Go on anyway?')) return;
+  }
+  RUN.step++; sqKeep(); sqDraw();
+}
+function sqSaveRun(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  r.safety.mode = sqSafeMode(r);
+  const s = {id:r.id, u:Date.now(), kind:'sq', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)),
+    visit:r.visit, set:r.set, by:r.visit === 'open' ? '' : (r.set === 'helper' ? 'self' : r.by), ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, scores:sqScore(r),
+    safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
+    std:(SQC && SQC.version) || 1, flags:sqRunFlags(r), yes:r.yes || '', own:r.own || ''};
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ s.person = c; V = {tab:'sequoia', sqv:'demo', sqDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  DATA.sessions.push(s); DATA.draft = null;
+  if (c){ touch(c); c.last = today(); if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
+  save(); go('sequoia', {sqv:s.id}); toast('Visit saved.');
+}
+function sqPause(){
+  if (RUN.demo){ if (!confirm('Close the demo?')) return; }
+  else if (!confirm('Close this visit? Your notes are kept, and you can pick it up again next time you open the Field Guide.')) return;
+  if (!RUN.demo){ DATA.draft = RUN; save(); toast('Visit paused.'); }
+  clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+}
+function sqToggle(t){
+  const on = t.getAttribute('aria-pressed') !== 'true';
+  const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
+  if (a === 'sq-ans'){ const i = t.dataset.i; RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][i] = v; sqKeep(); sqRedraw(); return; }
+  else if (a === 'sq-impr'){ RUN.impr[k] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
+  else if (a === 'sq-safe'){ RUN.safety[k] = v; sqKeep(); sqRedraw(); return; }
+  else if (a === 'sq-yes'){ RUN[k] = v; sqKeep(); sqRedraw(); return; }
+  else if (a === 'sq-by'){ RUN.by = v; sqKeep(); sqRedraw(); return; }
+  else if (a === 'sq-plan'){ const arr = RUN.plan[k] = RUN.plan[k] || []; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
+  else if (a === 'sq-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
+  sqKeep();
+}
+
+// ----- Founder: open or close Sequoia Guide to Field users (through Update a Library) -----
+function sqFieldRow(){
+  const S = SQG();
+  if (!S) return `<p class="muted">Sequoia Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Sequoia Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes the Sequoia training before real visits.</small></div><button class="btn btn-line btn-sm" data-act="sq-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+}
+async function sqSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.sequoiaGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.sequoiaGuide.open = Object.assign({}, next.sequoiaGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title: on ? 'Open Sequoia Guide to Field users' : 'Close Sequoia Guide to Field users', note:'', rows:[['Replaces', 'sequoiaGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+function sqPersonCard(c){ return c.sq && sqOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sequoia Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">${icon('sequoia')} Open</button></div></div>` : ''; }
+function sqResume(){
+  RUN = DATA.draft; DATA.draft = null; save(); sqLoad(); let n = 0;
+  const go2 = () => { if (SQC || RUN.visit === 'open') sqOpenRun(); else if (SQC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Sequoia questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); };
+  go2();
+}
+
+// ----- actions -----
+function sqAct(a, v, t){
+  switch (a){
+    case 'sq-field': sqSetField(v === 'on'); return true;
+    case 'sq-new': { const n = $('#sq-nn').value.trim(); if (!n){ $('#sq-nn').focus(); return true; } const c = {id:uid(), u:Date.now(), name:n, service:'Sequoia', status:'active', followups:[], created:today(), sq:{type:$('#sq-nt').value, consent:null}}; DATA.clients.push(c); save(); go('sequoia', {sqc:c.id}); return true; }
+    case 'sq-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), sq:{type:'me'}}; DATA.clients.push(c); save(); go('sequoia', {sqp:c.id}); return true; }
+    case 'sq-open': { const c = CL(v); if (!c) return true; if (!c.sq){ c.sq = {type:'person', consent:null}; touch(c); save(); } go('sequoia', {sqp:v}); return true; }
+    case 'sq-consent': go('sequoia', {sqc:v}); return true;
+    case 'sq-consent-save': { const c = CL(v), h = (document.querySelector('input[name=sq-ch]:checked') || {}).value; if (!c) return true; if (!h){ alert('Choose how consent was given, or Declined.'); return true; } if (h === 'agent' && !$('#sq-cby').value.trim()){ $('#sq-cby').focus(); alert('Write who gave consent for them (relationship only).'); return true; }
+      c.sq.consent = {how:h, by:$('#sq-cby').value.trim(), date:$('#sq-cd').value || today()}; touch(c); save(); go('sequoia', {sqp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); return true; }
+    case 'sq-form': go('sequoia', {sqform:v}); return true;
+    case 'sq-form-save': { const c = CL(v), F = sqForm(); if (!c || !F) return true; const boxes = [...document.querySelectorAll('.sqf-box')], name = $('#sqf-name').value.trim();
+      if (boxes.some(b => !b.checked)){ alert('Every box needs a check before the form is complete. If they don\'t agree to something, stop and talk it through.'); return true; } if (!name){ $('#sqf-name').focus(); return true; }
+      c.sq.consent = {how:'form', v:F.version, name, by:$('#sqf-by').value.trim(), date:today()}; touch(c); save(); go('sequoia', {sqp:c.id}); toast('Consent recorded.'); return true; }
+    case 'sq-form-pdf': { const c = CL(v); if (c && c.sq) sqFormPdf(c); return true; }
+    case 'sq-start': sqStart(v, t.dataset.c, false); return true;
+    case 'sq-demo': sqStart('quick', null, true); return true;
+    case 'sq-demo-full': sqStart('full', null, true); return true;
+    case 'sq-next': sqNext(); return true;
+    case 'sq-prev': if (RUN && RUN.step > 0){ RUN.step--; sqKeep(); sqDraw(); } return true;
+    case 'sq-save': sqSaveRun(); return true;
+    case 'sq-pause': sqPause(); return true;
+    case 'sq-ans': case 'sq-impr': case 'sq-safe': case 'sq-plan': case 'sq-tog': case 'sq-yes': case 'sq-by': if (RUN && RUN.kind === 'sq') sqToggle(t); return true;
+    case 'sq-retry': SQC_FAIL = false; sqLoad(); render(); return true;
+    case 'sq-mhome': go('sequoia', {sqm:1}); return true;
+    case 'sq-ml': if (sqmOpen(+v)) go('sequoia', {sqm:1, sqml:+v}); return true;
+    case 'sq-mreadit': lnStop(); V.sqread = v === '1'; render(); return true;
+    case 'sq-mread': { const L = SQM().lessons, i = +v, d = sqmData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } save(); const nx = L.findIndex((x, j) => j > i && !sqmData().lessons[x.id]); if (nx >= 0) go('sequoia', {sqm:1, sqml:nx}); else { go('sequoia', {sqm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sq-mq': go('sequoia', {sqm:1, sqq:sqmNewQuiz()}); return true;
+    case 'sq-mpick': V.sqq.ans[V.sqq.order[V.sqq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sq-mnext],[data-act=sq-mfinish]'); if (nb) nb.disabled = false; } return true;
+    case 'sq-mnext': if (V.sqq.ans[V.sqq.order[V.sqq.i]] !== undefined){ V.sqq.i++; render(); } return true;
+    case 'sq-mprev': if (V.sqq.i > 0){ V.sqq.i--; render(); } return true;
+    case 'sq-mfinish': sqmFinish(); return true;
+    case 'sq-msign': go('sequoia', {sqm:1, sqs:1}); return true;
+    case 'sq-msigned': { const nm = $('#sqm-name').value.trim(); if (!nm){ $('#sqm-name').focus(); return true; } if (!$('#sqm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
+      sqmData().signed = {v:SQM().version, date:today(), name:nm}; save(); go('sequoia', {sqm:1}); toast(sqReady() ? 'Signed. Sequoia visits are open.' : 'Signed.'); return true; }
+    case 'sq-cert': fgGuideCert('sequoia', sqmState(), sqmData().signed, SQM(), 'Sequoia Guide'); return true;
+    case 'sq-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('sequoia', 'tree')); return true;
+    case 'sq-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('sequoia', 'parts')); return true;
+    case 'sq-mprint': sqmPrint(); return true;
+    case 'sq-report': go('sequoia', {sqrep:v || ''}); return true;
+    case 'sq-run-report': { if (!RUN) return true; const cid = RUN.clientId; sqKeep(); DATA.draft = RUN; save(); clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = ''; go('sequoia', {sqrep:cid || ''}); toast('Your visit is paused and kept. Pick it up again from the Field Guide home.'); return true; }
+    case 'sq-where': V.sqwhere = v; render(); return true;
+    case 'sq-rep-save': { const c = CL(v), what = $('#sqr-what').value.trim(); if (!c) return true; if (!what){ $('#sqr-what').focus(); return true; }
+      DATA.sessions.push({id:uid(), u:Date.now(), kind:'spr', tool:'sq', clientId:c.id, date:today(), what, how:$('#sqr-how').value, at:$('#sqr-at').value || '', ref:$('#sqr-ref').value.trim()});
+      touch(c); save(); render(); toast('Report record saved, encrypted on this device.'); return true; }
+    case 'sq-visit': go('sequoia', {sqv:v}); return true;
+    case 'sq-copy-note': { const s = sqFindVisit(); if (s) copy(sqNote(s, V.sqv === 'demo' ? s.person : CL(s.clientId))); return true; }
+    case 'sq-print-note': { const s = sqFindVisit(); if (s) sqPrintNote(s, V.sqv === 'demo' ? s.person : CL(s.clientId)); return true; }
+    case 'sq-print-hand': { const s = sqFindVisit(); if (s) sqPrintHandout(s); return true; }
+    case 'sq-del-visit': if (confirm('Delete this visit?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('sequoia', {sqp:s.clientId}); else go('sequoia'); } return true;
+    case 'sq-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('sequoia'); } return true;
+    case 'sq-add-fu': { const c = CL(v), d = $('#sq-fd').value, tx = $('#sq-ft').value.trim(); if (!c) return true; if (!d){ $('#sq-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
+  }
+  return false;
+}
+// Typing and choosing inside Sequoia Guide. ev is 'input' or 'change'.
+function sqInput(t, ev){
+  if (RUN && RUN.kind === 'sq'){
+    if (t.dataset.sqf){ RUN[t.dataset.sqf] = t.value; sqKeep(); return true; }
+    if (t.dataset.sqpn){ RUN.pn[t.dataset.sqpn] = t.value; sqKeep(); return true; }
+    if (t.dataset.sqsafe){ if (ev === 'input' && t.dataset.sqsafe !== 'reasonText') return true; const k = t.dataset.sqsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; sqKeep(); if (k === 'notAsked') sqRedraw(); return true; }
+  }
+  if (t.dataset.sqc && V.sqp){ const c = CL(V.sqp); if (!c || !c.sq) return true;
+    if (ev === 'input'){ if (t.tagName !== 'SELECT'){ if (t.dataset.sqc === 'forName') c.sq.forName = t.value; else c[t.dataset.sqc] = t.value; touch(c); save(); } return true; }
+    if (t.dataset.sqc === 'type') c.sq.type = t.value; else if (t.dataset.sqc === 'forName') c.sq.forName = t.value; else c[t.dataset.sqc] = t.value; touch(c); save(); if (t.tagName === 'SELECT') render(); return true; }
+  if (ev === 'change' && t.dataset.sqfu !== undefined && V.sqp){ const c = CL(V.sqp); if (c){ c.followups[+t.dataset.sqfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); } return true; }
+  return false;
+}
+
 // ---------------- GROVE GUIDE ----------------
 // Walking alongside someone through The Grove's twelve weeks. Moved here from The Grove's
 // "For someone in my care" mode in session 11. Wording lives in the Field library (FLD.groveGuide).
@@ -2593,7 +3286,7 @@ function vGV(){
   if (V.gvc){ const c = CL(V.gvc); if (c) return vGVPlant(c); }
   if (V.gvp){ const c = CL(V.gvp); if (c && c.gv) return vGVTree(c); }
   const list = DATA.clients.filter(c => c.gv && c.status !== 'closed').sort((a,b) => (b.gv.start || '').localeCompare(a.gv.start || ''));
-  const others = DATA.clients.filter(c => !c.gv && c.status !== 'closed' && !(c.st && c.st.type === 'me'));
+  const others = DATA.clients.filter(c => !c.gv && c.status !== 'closed' && !anyMe(c));
   const local = gvLocalPeople().length, I = S.introduce;
   // The Grove opens to cards (GWG BLD 732).
   const hello = `<div class="hello gv-hello"><div class="eyebrow" style="color:#B9D3A6">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>Someone new</h3>
@@ -2632,7 +3325,7 @@ function vGVPlant(c){
   <div class="card"><h3>Their Tree</h3>
    <label class="f">Life stage</label><div class="row">${GD.AGES.map(a => `<button type="button" class="chip" aria-pressed="${F.age === a.id}" data-act="gv-age" data-v="${a.id}">${esc(a.name)}</button>`).join('')}</div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc((GD.AGE[F.age] || {}).who || '')}${GD.isKid(F.age) ? '. Practices use kid wording.' : ''}</p>
-   <label class="f">Parts to tend</label>${F.fromST ? `<p class="muted" style="font-size:14px;margin-bottom:6px">Picked from their Oak visit on ${nice(F.fromST)}: the parts that weren't strong. Change any of them.</p>` : ''}
+   <label class="f">Parts to tend</label>${F.fromST ? `<p class="muted" style="font-size:14px;margin-bottom:6px">Picked from their ${F.fromTree || 'Oak'} visit on ${nice(F.fromST)}: the parts that weren't strong. Change any of them.</p>` : ''}
    <div class="gv-parts">${GD.PARTS.map(p => `<button type="button" class="gv-part-t" style="--pc:${p.color}" aria-pressed="${F.parts.includes(p.id)}" data-act="gv-part" data-v="${p.id}"><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></button>`).join('')}</div>
    <label class="f">Movement Level</label><div class="row">${GD.LEVELS.map(l => `<button type="button" class="chip" aria-pressed="${F.level === l.id}" data-act="gv-level" data-v="${l.id}">${esc(l.name)}</button>`).join('')}</div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc((GD.LEVELS.find(l => l.id === F.level) || {}).desc || '')}</p>
@@ -2642,10 +3335,12 @@ function vGVPlant(c){
 }
 function gvForm(c){
   const T = c.gv || {}, F = {age: T.age || 'adult', parts: (T.parts || []).slice(), level: T.level || 'gentle', start: today(), how: '', by: '', cdate: today(), fromST: null};
-  if (!gvPlanted(c) && c.st && typeof stVisits === 'function'){
-    const v = stVisits(c.id).find(s => s.scores && Object.values(s.scores).some(x => x != null));
+  // The parts that weren't strong in their last Oak or Sequoia visit come picked. Sequoia uses the same six part keys.
+  if (!gvPlanted(c) && (c.st || c.sq)){
+    const scored = s => s.scores && Object.values(s.scores).some(x => x != null);
+    const v = [...(c.st ? stVisits(c.id) : []), ...(c.sq ? sqVisits(c.id) : [])].filter(scored).sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0];
     if (v){ const p = Object.entries(v.scores).filter(([k, x]) => x != null && x < 8).map(([k]) => ST2GV[k]).filter(Boolean);
-      if (p.length){ F.parts = GV_PARTS.filter(x => p.includes(x)); F.fromST = v.date; } }
+      if (p.length){ F.parts = GV_PARTS.filter(x => p.includes(x)); F.fromST = v.date; F.fromTree = v.kind === 'sq' ? 'Sequoia' : 'Oak'; } }
   }
   return F;
 }
@@ -2659,7 +3354,9 @@ function vGVTree(c){
   const days = wi.before ? [] : gvWeekDates(wi), n = gvTended(T);
   const nudge = wi.done ? S.nudges.done : (!wi.before && (k === 5 || k === 9) && wi.round === 1) ? S.nudges[String(k)] : '';
   const stBtn = c.st && stOpen() && stHasConsent(c) ? `<button class="btn btn-line btn-sm" data-act="st-start" data-v="${wi.done ? 'full' : 'quick'}" data-c="${c.id}">${icon('tree')} ${wi.done ? 'Full Oak Visit' : 'Oak Quick Check-in'}</button>`
-    : c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open in Oak Guide</button>` : '';
+    : c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open in Oak Guide</button>`
+    : c.sq && sqOpen() && sqHasConsent(c) ? `<button class="btn btn-line btn-sm" data-act="sq-start" data-v="${wi.done ? 'full' : 'quick'}" data-c="${c.id}">${icon('sequoia')} ${wi.done ? 'Full Sequoia Visit' : 'Sequoia Quick Check-in'}</button>`
+    : c.sq && sqOpen() ? `<button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">${icon('sequoia')} Open in Sequoia Guide</button>` : '';
   const part = id => { const P = GD.PART[id], p = gvPractice(T, id, wi), it = p.it;
     return `<div class="gv-prac" style="--pc:${P.color}"><div class="gv-pl">${esc(GD.strandName(p.strand))}${p.pin ? ' <span class="pill gold">Their pick</span>' : ''}</div><b>${esc(p.t)}</b><p>${p.b}</p><p class="muted" style="font-size:15px"><b>Busy day:</b> ${p.s}</p>${gvHow(T, it)}
      <div class="row" style="margin-top:6px"><button class="linkbtn" data-act="gv-lib" data-v="${id}">Choose a different practice</button>${p.pin ? `<button class="linkbtn" data-act="gv-unpin" data-v="${id}">Go back to the season's practice</button>` : ''}</div></div>`; };
@@ -2692,7 +3389,7 @@ function vGVTree(c){
    <div class="grid g2"><div><label class="f">Life stage</label><select data-gvd="age">${GD.AGES.map(a => `<option value="${a.id}" ${a.id === T.age ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select></div>
    <div><label class="f">Movement Level</label><select data-gvd="level">${GD.LEVELS.map(l => `<option value="${l.id}" ${l.id === T.level ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></div></div>
    <label class="f">Parts to tend</label><div class="gv-parts">${GD.PARTS.map(p => `<button type="button" class="gv-part-t" style="--pc:${p.color}" aria-pressed="${(T.parts || []).includes(p.id)}" data-act="gv-edit-part" data-v="${p.id}"><b>${esc(p.name)}</b><small>${esc(p.sub)}</small></button>`).join('')}</div>
-   <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="gv-plant" data-v="${c.id}">Plant a New Round</button>${c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Oak Guide</button>` : ''}<button class="btn btn-danger btn-sm" data-act="gv-remove" data-v="${c.id}">Remove Grove Tree</button></div></div>
+   <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="gv-plant" data-v="${c.id}">Plant a New Round</button>${c.st && stOpen() ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Oak Guide</button>` : ''}${c.sq && sqOpen() ? `<button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">Sequoia Guide</button>` : ''}<button class="btn btn-danger btn-sm" data-act="gv-remove" data-v="${c.id}">Remove Grove Tree</button></div></div>
   ${stOpen() ? '' : htPersonCard(c)}`;
 }
 function vGVLib(c, partId){
@@ -2728,9 +3425,9 @@ function gvPrintGrew(c){
     <div class="pr-foot">${esc(S.sheetClose)}<br>The Grove&trade; is a trademark of Chris Joy.</div>`, 'What Grew', {file:'grove-what-grew'});
 }
 
-// ----- Oak person page: their Grove tree, or plant one from their visit -----
+// ----- Oak and Sequoia person pages: their Grove tree, or plant one from their visit -----
 function gvPersonCard(c){
-  if (!gvOpen() || !c || (c.st && c.st.type === 'me')) return '';
+  if (!gvOpen() || !c || anyMe(c)) return '';
   if (gvPlanted(c)) return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">${esc(gvStatus(c.gv))}. ${gvDaysText(c.gv)}.</p></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">${icon('grove')} Open Their Tree</button></div><div class="gv-stage gv-mini" style="margin-top:10px">${gvScene(c, {uid:'gvm' + c.id, h:300, gy:220, visitors:[]})}</div></div>`;
   return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">Oak notices. The Grove tends. Plant their tree, and the parts that weren't strong in their last visit come picked.</p></div><button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">${icon('grove')} Plant Their Grove Tree</button></div></div>`;
 }
@@ -2853,7 +3550,7 @@ const spK2 = g => ['K','1','2'].includes(String(g));
 const spBand = g => spK2(g) ? 'k2' : 'g35';
 const spPeople = () => DATA.clients.filter(c => c.sp);
 const spVisits = id => DATA.sessions.filter(s => s.kind === 'sp' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
-const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && s.tool !== 'st' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && s.tool !== 'st' && s.tool !== 'sq' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
 const SP_GRADES = ['K','1','2','3','4','5'];
@@ -4714,7 +5411,8 @@ function wlmPrint(){
    video (3 to 5 minutes) and a one-page written piece for each topic, sealed in the Field library under
    FLD.supportGuides {title, intro, home: {h, p}, help, groups: [[key, name]], items: [{id, group, n, title, blurb, mins,
    sources, read: [['p'|'lab', text] or ['ul', [text or [bold, rest]]]], video: {scenes}}]}.
-   - Shown at the top of the Learn tab, grouped (Core, For Hospice), and from a Home card ("Hard day?").
+   - Shown at the top of the Learn tab, grouped by FLD.supportGuides.groups (For Every Guide, For Hospice, For Walking With
+     Older Adults, and any group a library adds), and from a Home card ("Hard day?").
    - Like Support for Right Now: no quiz, no count, no certificate. The player's support closing scene ("Take all the
      time you need") offers Play Another, Back to Learn, and Watch Again. Nothing about watching is saved.
    - Every written piece ends with the same help line for the guide (FLD.supportGuides.help), then its Sources. */
@@ -4783,14 +5481,17 @@ function sgAct(a, v){
    - Opens only where Willow Guide is open to this device (wlOpen).
    Oak For Guides (GWG BLD 719) uses the same code as a second series: FLD.oakGuide.forGuides, the same shape,
    guide ids 'ofg-<oak guide>', shown inside each Oak guide in When Life Changes and as "Oak Guide: For Guides"
-   in Learn, open where Oak Guide is open (stOpen). Ring keys are unique across both series. */
+   in Learn, open where Oak Guide is open (stOpen). Sequoia For Guides (GWG BLD 736) is a third series the same way:
+   FLD.sequoiaGuide.forGuides, ids 'sqfg-<sequoia guide>', open where Sequoia Guide is open (sqOpen). Sequoia's ring keys
+   (loss, family) match Oak's, so a ring is always looked up inside its own series (wfgCert takes 'series|ring'). */
 const FGSER = {
   willow: {lib: () => WLG(), on: () => wlOpen(), label: 'Willow Guide', accent: '#5D5A6E', tree: 'willow', who: 'chaplains, doulas, and anyone in that role'},
   oak: {lib: () => STG(), on: () => stOpen(), label: 'Oak Guide', accent: '#8B5E1A', tree: 'oak', who: 'chaplains, pastors, counselors, and anyone in that role'},
+  sequoia: {lib: () => SQG(), on: () => sqOpen(), label: 'Sequoia Guide', accent: '#7A2E1C', tree: 'sequoia', who: 'chaplains, parish nurses, senior living and senior center staff, visitors, and anyone using Sequoia Guide with older adults'}, // BLD 736; ids sqfg-
   aspen: {lib: () => SAG(), on: () => saOpen(), label: 'Aspen Guide', accent: '#1F6F74', tree: 'aspen', who: 'school counselors, youth pastors, chaplains, mentors, and anyone in that role'}, // BLD 724; ring keys start as-
   maple: {lib: () => SPG(), on: () => spOpen(), label: 'Maple Guide', accent: '#C4501E', tree: 'maple', who: 'school counselors, children\'s ministry leaders, chaplains, teachers, mentors, and anyone in that role'} // BLD 727; ids mfg-, ring keys start mp-
 };
-const fgSer = id => String(id || '').startsWith('ofg-') ? 'oak' : String(id || '').startsWith('afg-') ? 'aspen' : String(id || '').startsWith('mfg-') ? 'maple' : 'willow';
+const fgSer = id => String(id || '').startsWith('sqfg-') ? 'sequoia' : String(id || '').startsWith('ofg-') ? 'oak' : String(id || '').startsWith('afg-') ? 'aspen' : String(id || '').startsWith('mfg-') ? 'maple' : 'willow';
 const fgSerRing = ring => Object.keys(FGSER).find(k => WFG(k) && (WFG(k).rings || []).some(r => r[0] === ring)) || 'willow';
 const WFG = (s = 'willow') => { const W = FGSER[s].lib(); return W && W.forGuides && Array.isArray(W.forGuides.guides) && W.forGuides.guides.length ? W.forGuides : null; };
 const wfgOn = (s = 'willow') => !!WFG(s) && FGSER[s].on();
@@ -4801,7 +5502,7 @@ const wfgDone = id => !!lnData().done[id];
 function wfgCount(id, how){ const D = lnData(); D.how = D.how || {}; if (!D.done[id]){ D.done[id] = today(); D.how[id] = how; save(); } }
 // The series as a player track: one ring at a time, closing scene with the For Guides buttons.
 function wfgTrack(ring, s){ s = s || fgSerRing(ring); const R = wfgRings(s).find(r => r.key === ring); if (!R) return null;
-  return {id:(s === 'oak' ? 'ofg-' : s === 'aspen' ? 'afg-' : s === 'maple' ? 'mfg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
+  return {id:(s === 'sequoia' ? 'sqfg-' : s === 'oak' ? 'ofg-' : s === 'aspen' ? 'afg-' : s === 'maple' ? 'mfg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
 function wfgMark(id){ return wfgDone(id) ? `<span class="pill sage">${icon('check')} ${wfgHow(id) === 'read' ? 'Read' : 'Watched'}</span>` : ''; }
 // The written section, eight parts (the eighth, Sources, is drawn from the credits).
 function wfgBody(g, head){
@@ -4829,7 +5530,7 @@ function wfgLearnCard(s = 'willow', only = null){
    ${wfgRings(s).filter(R => !only || R.key === only).map(R => { const n = R.guides.filter(g => wfgDone(g.id)).length, all = n === R.guides.length;
     return `<div class="wfg-ring"><div class="spread"><h4>${esc(R.name)}</h4><span class="muted">${n} of ${R.guides.length}</span></div>
      <div class="ln-list">${R.guides.map(g => `<button class="ln-item${wfgDone(g.id) ? ' done' : ''}" data-act="wfg-open" data-v="${esc(g.id)}"><span class="ln-n">${wfgDone(g.id) ? icon('check') : esc(String(g.n || ''))}</span><span class="ln-t"><b>${esc(g.title)}</b><small>About ${esc(String(g.mins || 9))} minutes${wfgDone(g.id) ? ', ' + (wfgHow(g.id) === 'read' ? 'read' : 'watched') : ''}</small></span>${icon('play')}</button>`).join('')}</div>
-     ${all ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wfg-cert" data-v="${esc(R.key)}">${icon('print')} Get Your Certificate</button></div>` : `<p class="muted" style="margin-top:10px;font-size:14px">Watch or read every guide in ${esc(R.name)} for a Certificate of Completion.</p>`}</div>`; }).join('')}</div>`;
+     ${all ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wfg-cert" data-v="${esc(s + '|' + R.key)}">${icon('print')} Get Your Certificate</button></div>` : `<p class="muted" style="margin-top:10px;font-size:14px">Watch or read every guide in ${esc(R.name)} for a Certificate of Completion.</p>`}</div>`; }).join('')}</div>`;
 }
 // One guide: the video (or the written section), then the buttons. tab is 'learn' or 'talks'.
 function vWFG(){
@@ -4858,10 +5559,11 @@ function wfgMount(){
     section: () => { lnStop(); V.wfgread = 1; render(); },
     open: id => { lnStop(); V = Object.assign({}, V, {wfg: id, wfgread: 0}); render(); },
     home: () => { lnStop(); go('learn'); },
-    cert: t => wfgCert(g.ring)});
+    cert: t => wfgCert(g.ring, s)});
 }
-function wfgCert(ring){
-  const s = fgSerRing(ring), R = wfgRings(s).find(r => r.key === ring); if (!R || !R.guides.every(g => wfgDone(g.id))) return;
+function wfgCert(ring, s){
+  if (!s && String(ring).includes('|')) [s, ring] = String(ring).split('|');
+  s = s || fgSerRing(ring); const R = wfgRings(s).find(r => r.key === ring); if (!R || !R.guides.every(g => wfgDone(g.id))) return;
   const D = lnData(), when = R.guides.map(g => D.done[g.id]).filter(Boolean).sort().pop() || today();
   const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
   fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:FGSER[s].tree, name:n.trim(), title:WFG(s).title + ': ' + R.name,
@@ -5570,7 +6272,8 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'g
 // ---------------- WHEN LIFE CHANGES ----------------
 // Every hard conversation, for every life stage, side by side. The topic map, helper notes, and wording
 // live in the Field library (FLD.hardTalks). The guides themselves are read from the public
-// maple/guides.js, aspen/guides.js, and oak/guides.js, so there's one place to edit them.
+// maple/guides.js, aspen/guides.js, oak/guides.js, and sequoia/guides.js, so there's one place to edit them.
+// Sequoia (GWG BLD 736) has Oak's guide shape: For You and For Someone Helping, and the For Guides section inside each guide.
 // Pine is coming soon: it shows a stand-in guide (Aspen) with a note. Willow is live (Willow Build Session 3): its stage
 // reads willow/guides.js. See htStagesAll and htWillowIds.
 // Handouts print one page per guide, sized to fit, with a QR code made on this device by qr.js.
@@ -5580,8 +6283,10 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'g
 const HTG = () => (FLD && FLD.hardTalks) || null;
 const htOpen = () => !!HTG() && (TIER !== 'field' || !!(HTG().open && HTG().open.field && (!OR() || orState().complete)));
 const HT_SITE = 'https://growwithgrounded.com';
-const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', oak:'/oak/#life=', willow:'/willow/#guide='};
-const HT_TM = {maple:'Maple', aspen:'Aspen', oak:'Oak', willow:'Willow'};
+const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', oak:'/oak/#life=', sequoia:'/sequoia/#life=', willow:'/willow/#guide='};
+const HT_TM = {maple:'Maple', aspen:'Aspen', oak:'Oak', sequoia:'Sequoia', willow:'Willow'};
+// Oak and Sequoia guides have two sides: For You (self) and For Someone Helping (helper).
+const htTwo = src => src === 'oak' || src === 'sequoia';
 // Willow's guides for a topic. A topic can name them itself (T.willow, through a When Life Changes patch). Until then they come
 // from the topic's Oak guides, so every end-of-life topic finds its Willow guides without a library change.
 const HT_OAK_WILLOW = {'own-death':['end','notready','afraid','burden'], 'dying-loved':['signs','hear','hanging','visions','rally','kids'],
@@ -5611,14 +6316,14 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
-    .then(([a, b, c, d]) => {
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn1', '../sequoia/guides.js?v=sg2'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+    .then(([a, b, c, d, e]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
       if (!sp || !sa || !st) throw 0;
       const by = list => { const m = {}; (list || []).forEach(t => { if (t && t.id) m[t.id] = t; }); return m; };
-      const wl = run(d).WILLOW_GUIDES;
-      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics), willow: by(wl && wl.guides)};
+      const wl = run(d).WILLOW_GUIDES, sq = run(e).SEQUOIA_GUIDES;
+      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics), willow: by(wl && wl.guides), sequoia: by(sq && sq.topics)};
       HD_WAIT = null; if (DATA && V.tab === 'talks') render();
     })
     .catch(() => { HD_WAIT = null; HD_FAIL = true; if (DATA && V.tab === 'talks') render(); });
@@ -5638,7 +6343,7 @@ function htStage(T, st){
 function htRef(T, st){
   const refs = htStage(T, st); if (!refs.length) return null;
   const i = Math.min(Math.max(+((V.hts || {})[st.id] || 0), 0), refs.length - 1);
-  return Object.assign({aud: st.src === 'oak' ? ((V.hta || {})[st.id] || 'self') : 'all'}, refs[i]);
+  return Object.assign({aud: htTwo(st.src) ? ((V.hta || {})[st.id] || 'self') : 'all'}, refs[i]);
 }
 const htLink = r => HT_SITE + HT_PATH[r.src] + encodeURIComponent(r.id);
 
@@ -5653,7 +6358,7 @@ function htRich(s){
 const htDomain = u => String(u || '').replace(/^https?:\/\/(www\.)?/, '').split(/[/?#]/)[0];
 const htPrintText = s => htPlain(String(s == null ? '' : s).replace(HT_A, (m, u, x) => htPlain(x) + (/^https?:\/\//.test(u) ? ' (' + htDomain(u) + ')' : '')));
 
-// ----- one guide as sections. aud: 'self' or 'helper' for Oak; print leaves out the long extras -----
+// ----- one guide as sections. aud: 'self' or 'helper' for Oak and Sequoia; print leaves out the long extras -----
 function htSections(r, print){
   const g = r.g, S = [], add = (k, h, type, items) => { if (items == null) return; const a = Array.isArray(items) ? items.filter(x => x != null && x !== '' && !(Array.isArray(x) && !x.length)) : [items]; if (a.length && a.some(x => x)) S.push({k, h, type, items: a}); };
   if (r.src === 'maple'){
@@ -5796,11 +6501,11 @@ function vHTTopic(T){
      <div class="spread"><div><div class="ht-sname">${esc(st.name)}</div><small class="muted">${esc(st.ages)}</small></div>${st.soon ? '<span class="pill">Coming soon</span>' : ''}</div>
      ${st.soon ? `<p class="tipbox" style="margin-top:10px">${esc(st.stand || '')}</p>` : ''}
      ${refs.length > 1 ? `<div class="row ht-pick">${refs.map((rr, i) => `<button class="chip" aria-pressed="${rr.id === r.id}" data-act="ht-pick" data-v="${esc(st.id)}" data-i="${i}">${esc(rr.g.title)}</button>`).join('')}</div>` : ''}
-     ${r.src === 'oak' ? `<div class="row ht-pick"><button class="chip" aria-pressed="${r.aud !== 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="self">For them</button><button class="chip" aria-pressed="${r.aud === 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="helper">For someone helping</button></div>` : ''}
+     ${htTwo(r.src) ? `<div class="row ht-pick"><button class="chip" aria-pressed="${r.aud !== 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="self">For them</button><button class="chip" aria-pressed="${r.aud === 'helper'}" data-act="ht-aud" data-v="${esc(st.id)}" data-i="helper">For someone helping</button></div>` : ''}
      <h3 class="ht-gt">${esc(r.g.title)}</h3>
-     ${r.src === 'oak' && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick Card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
-     ${x || (r.src === 'oak' && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
-     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}${x && r.src === 'aspen' && st.id === 'aspen' ? wfgInGuide(r.id, 'aspen') : ''}${x && r.src === 'maple' && st.id === 'maple' ? wfgInGuide(r.id, 'maple') : ''}
+     ${htTwo(r.src) && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick Card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
+     ${x || (htTwo(r.src) && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
+     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}${x && r.src === 'sequoia' ? wfgInGuide(r.id, 'sequoia') : ''}${x && r.src === 'aspen' && st.id === 'aspen' ? wfgInGuide(r.id, 'aspen') : ''}${x && r.src === 'maple' && st.id === 'maple' ? wfgInGuide(r.id, 'maple') : ''}
      <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
@@ -5823,7 +6528,7 @@ function vHTTopic(T){
 function htForm(){ return {cid:'', nn:'', nt:'family', stages:(V.htSeen || []).slice(), hand:(V.htPrinted || []).slice(), date:today(), fdate:'', ftext:''}; }
 function htRecordCard(T, stages){
   const R = HTG().record || {}, F = V.htf || (V.htf = htForm());
-  const people = DATA.clients.filter(c => !stIsMe(c) && c.status !== 'closed').sort((a,b) => String(a.name).localeCompare(String(b.name)));
+  const people = DATA.clients.filter(c => !anyMe(c) && c.status !== 'closed').sort((a,b) => String(a.name).localeCompare(String(b.name)));
   const types = STG() ? STG().people : null;
   const hands = [...stages.map(st => [st.id, st.name + ' handout']), ...(stages.length > 1 ? [['pack', 'Family pack']] : [])];
   return `<div class="card" id="ht-recc" style="margin-top:14px"><h3>${esc(R.title || 'Add to their record')}</h3><p class="muted" style="font-size:15px">${esc(R.note || '')}</p>
@@ -5843,6 +6548,7 @@ function htPersonOpen(c){
   if (c.sp && spOpen()) return `<button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.sa && saOpen()) return `<button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.st && stOpen()) return `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open Their Record</button>`;
+  if (c.sq && sqOpen()) return `<button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.gv && gvOpen()) return `<button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">Open Their Record</button>`;
   return '';
 }
@@ -5862,15 +6568,17 @@ function htPersonCard(c){
   return `<div class="card ht-card" style="margin-top:14px"><h3>When Life Changes</h3>${rs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s.topicTitle || 'Guide')}</b><br><small class="muted">${nice(s.date)}${(s.stages || []).length ? ' &middot; ' + esc(htStageNames(s.stages)) : ''}${(s.hand || []).length ? ' &middot; handout' + (s.hand.length > 1 ? 's' : '') + ' given' : ''}</small></div><button class="btn btn-line btn-sm" data-act="ht-rec" data-v="${s.id}">View</button></div>`).join('')}</div>`;
 }
 // Staff and Founders: guides in the public files that the map doesn't reach, and map ids that aren't there.
+// Sequoia is counted once its stage is in the library (hardTalks.stages, BLD 736).
 function htCheck(){
-  const H = HTG(), used = {maple:new Set(), aspen:new Set(), oak:new Set()}, missing = [];
-  (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['hw','aspen'],['og','oak']].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
+  const H = HTG(), sq = !!(HD.sequoia && (H.stages || []).some(st => st.id === 'sequoia')), srcs = ['maple','aspen','oak', ...(sq ? ['sequoia'] : [])];
+  const used = Object.fromEntries(srcs.map(k => [k, new Set()])), missing = [];
+  (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['hw','aspen'],['og','oak'], ...(sq ? [['sequoia','sequoia']] : [])].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
   const loose = Object.keys(used).flatMap(src => Object.keys(HD[src]).filter(id => !used[src].has(id)).map(id => HT_TM[src] + ': ' + HD[src][id].title));
-  return {missing, loose, total: ['maple','aspen','oak'].reduce((n, k) => n + Object.keys(HD[k]).length, 0)};
+  return {missing, loose, srcs, total: srcs.reduce((n, k) => n + Object.keys(HD[k]).length, 0)};
 }
 function htCheckCard(){
   const r = htCheck();
-  if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from Maple, Aspen, and Oak are in When Life Changes.</p>`;
+  if (!r.missing.length && !r.loose.length) return `<p class="muted" style="font-size:14px;margin-top:18px;text-align:center">All ${r.total} guides from ${r.srcs.length > 3 ? 'Maple, Aspen, Oak, and Sequoia' : 'Maple, Aspen, and Oak'} are in When Life Changes.</p>`;
   return `<div class="card" style="margin-top:18px;border-left:4px solid var(--gold)"><h3>Map Check</h3><p class="muted" style="font-size:15px">Only Staff and Founders see this. Send it to a chat for a When Life Changes patch.</p>
    ${r.loose.length ? `<p style="margin-top:8px"><b>Guides not in When Life Changes yet:</b> ${esc(r.loose.join('; '))}</p>` : ''}
    ${r.missing.length ? `<p style="margin-top:8px"><b>Not found in the guide files:</b> ${esc(r.missing.join('; '))}</p>` : ''}</div>`;
@@ -5879,7 +6587,7 @@ function htCheckCard(){
 // ----- handouts: one page per guide, sized to fit a page, with a QR code to the full guide -----
 function htPageHTML(T, stIds, r){
   const H = HTG(), O = H.handout || {}, sts = stIds.map(htStageDef).filter(Boolean), first = sts[0];
-  const helper = r.src === 'oak' && r.aud === 'helper';
+  const helper = htTwo(r.src) && r.aud === 'helper';
   const who = sts.length > 1 && r.src === 'aspen' ? 'For grown-ups helping middle and high schoolers' : (helper && first.handHelper ? first.handHelper : first.hand);
   const notes = sts.filter(s => s.soon && s.handNote).map(s => s.handNote);
   const secs = htSections(r, true).filter(x => x.k !== 'faith' || DATA.settings.htFaith);
@@ -5994,8 +6702,9 @@ function htAct(a, v, t){
 const CDG = () => (HTG() && HTG().cards) || null;
 const PLG = () => (HTG() && HTG().plans) || null;
 // Willow joins the tree cards once its deck (hardTalks.cards.base.willow) is in the library (Willow Build Session 3).
-const cdAges = () => ['maple','aspen','oak', ...((((CDG() || {}).base || {}).willow) ? ['willow'] : [])];
-const CD_SRC = {maple:'maple', aspen:'aspen', oak:'oak', willow:'willow'};
+// Sequoia joins the same way, once hardTalks.cards.base.sequoia is in the library (GWG BLD 736).
+const cdAges = () => ['maple','aspen','oak', ...((((CDG() || {}).base || {}).sequoia) ? ['sequoia'] : []), ...((((CDG() || {}).base || {}).willow) ? ['willow'] : [])];
+const CD_SRC = {maple:'maple', aspen:'aspen', oak:'oak', sequoia:'sequoia', willow:'willow'};
 const cdFaith = () => !!(DATA && DATA.settings.htFaith);
 const cdTxt = c => c == null ? '' : typeof c === 'string' ? c : (cdFaith() ? c.t : (c.n || c.t));
 const cdKind = s => /\.\.\.$/.test(s) ? 'finish' : /^(Show me|Draw|Point)\b/.test(s) ? 'show' : 'q';
@@ -6171,6 +6880,7 @@ function plNew(over){ return Object.assign({fmt:'one', min:45, stages:['oak'], t
 function plState(){ if (!PS) PS = plNew(); return PS; }
 const plFmt = id => (PLG().formats || []).find(f => f.id === id) || PLG().formats[0];
 const plLine = x => cdTxt(x);
+// The Grove library's age for a stage. Sequoia keeps its own key, so practices marked for Sequoia come in too.
 const plAgeKey = st => st === 'oak' ? 'adult' : st;
 function plStages(S){
   const order = cdAges(), sel = order.filter(x => (S.stages || []).includes(x));
@@ -6224,7 +6934,7 @@ function plFromGuide(T, stage, gi){
   const r = refs[Math.min(+gi || 0, refs.length - 1)], g = r.g;
   const WP = r.src === 'willow' ? htWillowParts(g) : null;
   const say = r.src === 'maple' ? g.start : r.src === 'aspen' ? g.say : WP ? WP.say : ((g.helper || {}).say);
-  const avoid = r.src === 'oak' ? ((g.helper || {}).avoid) : WP ? WP.dont : g.avoid;
+  const avoid = htTwo(r.src) ? ((g.helper || {}).avoid) : WP ? WP.dont : g.avoid;
   return {title: g.title, link: htLink(r), say: (say || []).slice(0, 3).map(htPlain), avoid: (avoid || []).slice(0, 3).map(htPlain)};
 }
 function plBuild(S){
@@ -6237,7 +6947,7 @@ function plBuild(S){
     const pd = ((P.parts || {})[k] || {})[voice] || {};
     steps.push({kind:'part', k, name: cdPart(k).name, sub: cdPart(k).sub, min: times.parts[k], bridge: br[i] || '', say: plLine(pd.say), listen: pd.listen || '', cards: plCards(S, k, deck), practice: pp === k ? prac : null, focus: S.focus === k});
   });
-  if (guideOnly){ const sf = (P.safety || {})[ST.main] || {}; steps.push({kind:'safety', name:(P.safety || {}).title || 'Safety step', min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || []}); }
+  if (guideOnly){ const sf = (P.safety || {})[ST.main] || (ST.main === 'sequoia' ? (P.safety || {}).oak : null) || {}; steps.push({kind:'safety', name:(P.safety || {}).title || 'Safety step', min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || []}); }
   steps.push({kind:'close', name:'Close', min:times.close, bridge: br[6] || '', say:((F.close || {})[key] || []).map(plLine)});
   let at = 0; steps.forEach(s => { s.at = at; at += s.min; });
   const title = (S.name || '').trim() || (T ? T.title : 'The whole tree') + ', ' + F.name.toLowerCase();
@@ -6342,7 +7052,7 @@ function plSave(){
 }
 function plRecordCard(B){
   const P = PLG(), R = P.record || {}, F = V.plf || (V.plf = {cid:'', nn:'', nt:'family', date:today(), fdate:'', ftext:''});
-  const people = DATA.clients.filter(c => !stIsMe(c) && c.status !== 'closed').sort((a,b) => String(a.name).localeCompare(String(b.name)));
+  const people = DATA.clients.filter(c => !anyMe(c) && c.status !== 'closed').sort((a,b) => String(a.name).localeCompare(String(b.name)));
   const types = STG() ? STG().people : null;
   return `<div class="card" id="pl-recc" style="margin-top:14px"><h3>${esc(R.title || 'Add to their record')}</h3><p class="muted" style="font-size:15px">${esc(R.note || '')}</p>
    <label class="f" for="pl-who">Who</label><select id="pl-who" data-plr="cid"><option value="">Choose someone</option>${people.map(c => `<option value="${c.id}" ${F.cid === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}<option value="new" ${F.cid === 'new' ? 'selected' : ''}>Someone new</option></select>
@@ -6612,6 +7322,7 @@ function printGuide(g){
 function printSession(s){
   if (!s || s.kind === 'spr') return toast('Report records stay encrypted on this device. They are never printed or saved as a file.');
   if (s && s.kind === 'st') return stPrintNote(s, CL(s.clientId));
+  if (s && s.kind === 'sq') return sqPrintNote(s, CL(s.clientId));
   const g = G(s.guideId) || {steps:[], title:'Session'}, c = s.clientId ? CL(s.clientId) : null;
   fgSheet(ph('Confidential session note') + `<h1>${esc(g.title)}</h1><p>${c ? esc(c.name) + ' &middot; ' : ''}${nice(s.date)} &middot; ${s.minutes||0} minutes</p>
     <h2>Summary</h2><p style="white-space:pre-wrap">${esc(s.summary||'')}</p><h2>Next steps</h2><p style="white-space:pre-wrap">${esc(s.next||'')}</p>
@@ -6716,6 +7427,10 @@ function mergeData(cur, inc){
   Object.entries(iw.lessons || {}).forEach(([k,v]) => { if (v && !out.wlmod.lessons[k]) out.wlmod.lessons[k] = v; });
   out.wlmod.how = Object.assign({}, iw.how || {}, out.wlmod.how || {}); // how each lesson was finished (watched or read)
   ['last','pass','signed'].forEach(k => { out.wlmod[k] = newer(out.wlmod[k], iw[k]) || null; });
+  const iq = inc.sqmod || {}; out.sqmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.sqmod || {});
+  Object.entries(iq.lessons || {}).forEach(([k,v]) => { if (v && !out.sqmod.lessons[k]) out.sqmod.lessons[k] = v; });
+  out.sqmod.how = Object.assign({}, iq.how || {}, out.sqmod.how || {}); // how each Sequoia lesson was finished (BLD 736)
+  ['last','pass','signed'].forEach(k => { out.sqmod[k] = newer(out.sqmod[k], iq[k]) || null; });
   // Founder and Staff records (Labels, Learn, and Backup build): approvals, edits, codes, checklists, Learn progress.
   const fo = inc.founder || {}; out.founder = Object.assign({saved:[], draft:null}, out.founder || {});
   (fo.saved || []).forEach(x => { if (!out.founder.saved.some(y => y.id === x.id)) { out.founder.saved.push(x); stats.added++; } });
@@ -6750,6 +7465,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('sp-') && spAct(a, v, t)) return;
   if (a && a.startsWith('sa-') && saAct(a, v, t)) return;
   if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
+  if (a && a.startsWith('sq-') && sqAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
@@ -6781,7 +7497,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'wl'){ go('willow', {wlv:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'wl'){ go('willow', {wlv:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else if (s.tool === 'sq') go('sequoia', {sqrep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'sq'){ go('sequoia', {sqv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -6904,6 +7620,7 @@ document.addEventListener('input', e => {
   if (spInput(t, 'input')) return;
   if (saInput(t, 'input')) return;
   if (wlInput(t, 'input')) return;
+  if (sqInput(t, 'input')) return;
   if (dkInput(t)) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
@@ -6931,6 +7648,7 @@ document.addEventListener('change', e => {
   if (spInput(t, 'change')) return;
   if (saInput(t, 'change')) return;
   if (wlInput(t, 'change')) return;
+  if (sqInput(t, 'change')) return;
   if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
   if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
   if (t.dataset.cddeck){ cdAct('ht-cdeck', t.value || 'tree', t); return; }
