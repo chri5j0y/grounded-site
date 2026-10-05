@@ -197,6 +197,11 @@
     whoageism: ["World Health Organization and partners, Global Report on Ageism (2021)", "https://www.who.int/news/item/18-03-2021-ageism-is-a-global-challenge-un"],
     wrosch05: ["Wrosch, Bauer, and Scheier, regret and quality of life across the adult life span (2005)", "https://pubmed.ncbi.nlm.nih.gov/16420140/"],
     // end BLD 735
+    // Sequoia Guide For Guides (GWG BLD 736)
+    herman09: ["Herman and Williams, elderspeak's influence on resistiveness to care: focus on behavioral events (2009)", "https://doi.org/10.1177/1533317509341949"],
+    vanorden10: ["Van Orden, Witte, Cukrowicz, Braithwaite, Selby, and Joiner, the interpersonal theory of suicide (2010)", "https://eric.ed.gov/?id=EJ884797"],
+    zelaya: ["Zelaya, Dahlhamer, and colleagues, chronic pain and high-impact chronic pain among US adults, 2019 (NCHS Data Brief 390, 2020)", "https://www.cdc.gov/nchs/data/databriefs/db390-H.pdf"],
+    // end BLD 736
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
