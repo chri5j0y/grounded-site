@@ -32,6 +32,7 @@
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
     byock4: ['Ira Byock, The Four Things That Matter Most', SHELF + 'DY-002'],
+    rogers: ['Fred Rogers, "Look for the helpers"', 'https://www.fredrogers.org'], // BLD 731, Maple guides that use the line
     hansen: ['Hansen, Enright, Baskin, and Klatt, a forgiveness program for terminally ill elders (2009)', 'https://doi.org/10.1177/082585970902500106'],
     blundon: ['Blundon, Gallagher, and Ward, preserved hearing at the end of life (2020)', 'https://doi.org/10.1038/s41598-020-67234-9'],
     amen: ['Cooper, Ferguson, Bodurtha, and Smith, AMEN in Challenging Conversations (Johns Hopkins, 2014)', 'https://doi.org/10.1200/JOP.2014.001375', 'a'],
