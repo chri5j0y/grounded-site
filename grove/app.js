@@ -105,7 +105,7 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 
 
 /* ---------- the family grove, saved on this device ---------- */
 const STORE = 'gg-grove-family-v1', OLD = 'the-grove-v1', OLDER = 'tending-the-garden-v1';
-const blank = () => ({ v:1, id: uid(), start: today(), wall: [], reacts: {}, done: {}, grew: {}, kinds: {}, scenery: 'forest', seen: {}, intro: false, scale: 1 });
+const blank = () => ({ v:1, id: uid(), start: today(), wall: [], reacts: {}, done: {}, grew: {}, kinds: {}, scenery: 'forest', seen: {}, intro: false, scale: 1, family: [], famGone: {} });
 let G = blank();
 function load() {
   try { const j = JSON.parse(localStorage.getItem(STORE)); if (j && j.v) G = Object.assign(blank(), j); else {
@@ -138,6 +138,70 @@ function groveDays() {
   return Math.max(Object.keys(G.grew).filter(d => d <= today()).length, most);
 }
 const myDays = p => p ? treeOf(p).days : 0;
+
+/* ---------- family trees, shared by hand from other phones (Share to Family, BLD 732) ----------
+   Each person shares from their own tree app: a link with their tree after the #.
+   gg-app.js reads it, wipes it from the address bar, and checks it strictly.
+   Saved here in G.family as {id: share id, u: when it was made, n, t, g, p, d, w, added}.
+   A newer code from the same person replaces the older one, never the other way.
+   Removed trees are remembered in G.famGone {id: u} so a backup merge doesn't bring them back.
+   The backup merge (gg-backup.js mergeGrove) keeps the entry with the larger u for each id. */
+const FAM_MAX = 20;
+const FAM_STAGE = { maple:'maple', aspen:'aspen', oak:'adult' };
+const FAM_TOOL = { maple:'Maple', aspen:'Aspen', oak:'Oak' };
+const famDate = u => dstr(new Date(u * 1000));
+function famList() {
+  const F = window.GGApp && GGApp.family, best = {};
+  (Array.isArray(G.family) ? G.family : []).forEach(x => {
+    if (!x || typeof x !== 'object') return;
+    const c = F ? F.clean({ v:1, i:x.id, n:x.n, t:x.t, g:x.g, p:x.p, d:x.d, w:x.w, m:x.u }) : null; if (!c) return;
+    if ((G.famGone || {})[c.i] >= c.m) return;
+    if (!best[c.i] || best[c.i].u < c.m) best[c.i] = { id:c.i, u:c.m, n:c.n, t:c.t, g:c.g, p:c.p, d:c.d, w:c.w, added:x.added };
+  });
+  return Object.values(best).sort((a, b) => a.n.localeCompare(b.n) || a.u - b.u);
+}
+function famParts(f) { const order = (window.GGApp && GGApp.family && GGApp.family.parts) || PARTS6.map(x => x.key); return String(f.p || '').split('').map(i => order[+i]).filter(Boolean); }
+function famLine(f) {
+  const made = famDate(f.u), t = today();
+  if (f.d && made === t) return 'Tended today';
+  if (f.d) return 'Tended ' + nice(made);
+  return 'Shared ' + nice(made);
+}
+function famWeek(f) { const made = famDate(f.u); return weekStart(made) === weekStart(today()) && f.w ? `${f.w} ${f.w === 1 ? 'day' : 'days'} tended this week` : ''; }
+function famHtml() {
+  const list = famList();
+  let h = `<div class="card gv-fam"><h3>Family Trees</h3>`;
+  if (!list.length) return h + `<p class="muted">Family on other phones can send you their tree. In their own tree app (Oak, Aspen, or Maple), they tap Share to Family and send you the link or QR code.</p></div>`;
+  h += `<p class="muted">Trees shared from family's own phones. Each one shows how it looked when it was shared.</p><ul class="gv-fam-list">`;
+  h += list.map(f => { const wk = famWeek(f); return `<li><span class="gv-fam-ic" aria-hidden="true">${icon(f.t === 'oak' ? 'tree' : f.t === 'aspen' ? 'leaves' : 'maple')}</span><div><b>${esc(f.n)}</b> <small>${FAM_TOOL[f.t]}</small><span>${esc(famLine(f))}${wk ? ' · ' + esc(wk) : ''}</span></div><button type="button" class="btn btn-line btn-sm" data-act="famdrop" data-id="${esc(f.id)}" aria-label="Remove ${esc(f.n)}'s tree">Remove</button></li>`; }).join('');
+  return h + `</ul><p class="muted">A shared tree is a snapshot. To see it grow, ask them to share again from their tree app.</p></div>`;
+}
+function famDrop(id) {
+  const f = famList().find(x => x.id === id); if (!f) return;
+  if (!confirm(`Remove ${f.n}'s tree from your grove? They can share it again any time.`)) return;
+  G.famGone = G.famGone || {}; G.famGone[id] = Math.max(G.famGone[id] || 0, f.u);
+  G.family = (G.family || []).filter(x => !x || x.id !== id); save(); render(); toast(`${f.n}'s tree is removed.`);
+}
+function famAdd(c) {
+  const list = famList(), have = list.find(x => x.id === c.i);
+  if (have && have.u >= c.m) { toast(have.u === c.m ? `${c.n}'s tree is already in your grove.` : `You already have a newer share from ${have.n}.`); return; }
+  if (!have && list.length >= FAM_MAX) { toast(`Your grove holds up to ${FAM_MAX} family trees. Remove one to add another.`); return; }
+  G.family = (G.family || []).filter(x => !x || x.id !== c.i);
+  G.family.push({ id:c.i, u:c.m, n:c.n, t:c.t, g:c.g, p:c.p, d:c.d, w:c.w, added: new Date().toISOString() });
+  if (G.famGone && G.famGone[c.i]) delete G.famGone[c.i];
+  save(); S.tab = 'grove'; render(); toast(have ? `${c.n}'s tree is updated.` : `${c.n}'s tree is in your grove.`);
+}
+function famIntake() {
+  const F = window.GGApp && GGApp.family; if (!F) return;
+  if (F.bad()) toast('That family link could not be read. Ask them to share it again.');
+  const c = F.pending(); if (!c) return; F.clear();
+  const have = famList().find(x => x.id === c.i);
+  if (have && have.u >= c.m) { famAdd(c); return; }
+  const ask = have ? `Update ${c.n}'s tree in your grove?` : `Add ${c.n}'s tree to your grove?`;
+  const html = `<p>${esc(c.n)} shared their ${FAM_TOOL[c.t]} tree: how it looks, whether they tended today, and days tended this week. It stays on this device, in your grove.</p><p class="ggx-small">It doesn't update by itself. ${esc(c.n)} can share again any time.</p>`;
+  if (GGApp.dialog) GGApp.dialog({ title: ask, html, buttons: [{ t: have ? 'Update Their Tree' : 'Add to My Grove', kind: 'main', fn: () => famAdd(c) }, { t: 'Not Now', kind: 'quiet' }] });
+  else if (confirm(ask)) famAdd(c);
+}
 
 /* ---------- view state ---------- */
 const S = { tab: 'grove', sel: null, wk: 0, part: '', open: '', lib: { q: '' } };
@@ -181,12 +245,15 @@ function viewGrove() {
   const ps = people(), days = groveDays(), vis = VISITORS.filter(c => days >= c.days).map(c => c.id), next = VISITORS.find(c => days < c.days);
   const scen = SCENES.find(x => x.id === G.scenery && days >= x.days) ? G.scenery : 'forest';
   const trees = ps.slice(0, 8).map(p => { const t = treeOf(p); return { stage: t.willow ? 'willow' : stageOf(p.age), remembered: t.remembered, g: t.remembered ? 1 : t.show ? Math.min(1, .12 + t.days / 60) : .1, parts: t.remembered ? [] : t.parts, kind: t.willow ? 'grove' : (G.kinds[p.id] || 'grove'), label: p.name }; });
+  const fam = famList(), famRoom = Math.max(0, 14 - trees.length), famShown = fam.slice(0, famRoom);
+  famShown.forEach(f => trees.push({ stage: FAM_STAGE[f.t] || 'adult', g: Math.min(1, .12 + f.g / 60), parts: famParts(f), kind: 'grove', label: f.n }));
   let h = '';
   if (!G.intro) h += `<div class="banner gv-intro"><h3>Where our trees grow together</h3><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups and high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += `<div class="section-head"><h2>Our Grove</h2><p>${ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.'}</p></div>`;
   h += `<div class="gv-scene">${sceneSVG({ w: 1000, h: 470, gy: 330, trees: trees.length ? trees : [{ stage: 'adult', g: .05, parts: [], kind: 'grove' }], sky: skyNow(), scenery: scen, visitors: vis, uid: 'gv', seed: 11, label: 'Your family grove' })}</div>`;
   h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : 'The grove grows when anyone tends their tree or the family does a practice together.'}${next ? ` Next visitor: ${esc(next.name)}, at ${next.days} days.` : ''}</p>`;
-  if (!ps.length) return h + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>`;
+  if (fam.length > famShown.length) h += `<p class="muted">${fam.length - famShown.length} more family ${fam.length - famShown.length === 1 ? 'tree is' : 'trees are'} in the Family Trees list.</p>`;
+  if (!ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>`;
   h += `<div class="gv-people" role="list">${ps.map(p => { const t = treeOf(p); return `<button type="button" role="listitem" class="gv-person${S.sel === p.id ? ' on' : ''}" aria-pressed="${S.sel === p.id}" data-act="sel" data-id="${esc(p.id)}">${window.GGAv ? GGAv.html(p.avatar, p.name, 44) : ''}<b>${esc(p.name)}</b><span>${t.show ? `${t.days} ${t.days === 1 ? 'day' : 'days'} tended` : 'Growing quietly'}</span></button>`; }).join('')}</div>`;
   const sp = S.sel && who(S.sel);
   if (sp) {
@@ -198,6 +265,7 @@ function viewGrove() {
         : `<p class="muted">${esc(sp.name)} keeps their growth private. Their tree still stands in the grove.</p>`)
       + `<p class="muted">The big picture only. Never answers, levels, or notes.</p><a class="btn btn-gold btn-sm" href="${tool.href}">Go tend your tree in ${tool.name}</a></div>`;
   }
+  h += famHtml();
   const a = me();
   if (a) {
     const mine = who(a.id), md = myDays(mine), gd = days;
@@ -297,11 +365,13 @@ function viewHow() {
     <p>The Grove never sees anyone's answers, levels, notes, or journal. It sees names, pictures, and, only if someone's "Show my growth on The Grove" switch is on, the big picture: days tended, rings, and which parts they tended. Anyone can turn that switch off in their tree app's settings, kids included.</p>
     <p>For kids and teens, the grown-ups who agreed for them get a quiet alert here if a check-in asks for a caring conversation. Never the answers.</p>
     <p>Everything stays on this device. Nothing is sent anywhere.</p>
+    <h3>Share to Family</h3>
+    <p>Family on other phones can still grow side by side. Each person opens their own tree app and taps Share to Family, then sends the link or QR code. Open it here, and their tree stands in your grove. A shared tree is a snapshot: it updates when they share again, any time they like.</p>
     <h3>Keeping it safe</h3>
     <p>One backup file holds The Grove, every profile on this device (each still locked), and settings. Load it on another device to bring everything back, or to combine two devices.</p>
     <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('pick')">Load a backup</button></div>
     <h3>Coming later</h3>
-    <p>Groves that link across different phones, and groves for classrooms and churches, after careful review.</p>
+    <p>Groves that stay in step across phones on their own, and groves for classrooms and churches, after careful review.</p>
   </div>`;
 }
 
@@ -373,6 +443,7 @@ document.addEventListener('click', e => {
   else if (act === 'how' || act === 'libhow') { S.open = S.open === id ? '' : id; render(); }
   else if (act === 'part') { S.part = id; render(); }
   else if (act === 'oldnotes') { S.open = S.open === 'oldnotes' ? '' : 'oldnotes'; render(); }
+  else if (act === 'famdrop') famDrop(id);
   else if (act === 'seen') { const p = who(id), s = p && (p.shared || {}).safety; if (s) { G.seen[id] = s.flag; save(); render(); } }
 });
 document.addEventListener('input', e => { if (e.target.id !== 'gv-libq') return; S.lib.q = e.target.value;
@@ -393,5 +464,7 @@ $('#menu-btn').addEventListener('click', () => { const open = $('#site-menu').cl
 $('#hero-cta').addEventListener('click', () => { S.tab = 'grove'; render(); $('#app').scrollIntoView({ behavior: 'smooth' }); });
 setScale(); render(); fromHash();
 window.addEventListener('hashchange', fromHash);
+window.addEventListener('gg-fam', famIntake);
+famIntake();
 if (window.GGP) { GGP.on(() => render()); GGP.ready.then(() => { render(); fromHash(); }); }
 })();

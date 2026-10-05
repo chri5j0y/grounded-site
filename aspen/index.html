@@ -414,6 +414,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=lb1"></script>
+<script src="/shared/gg-filelock.js?v=fl1"></script>
 <script src="checkin.js?v=fd2"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=src1"></script>
@@ -1794,7 +1795,7 @@ function renderGrown(){
         return `<p class="muted">Open your own grown-up profile (the button at the top of the page) to see every student you agreed for.</p>`; })()}
       ${list.length ? `<div class="people">${list.map(s=>{const l=s.rings[s.rings.length-1];return `<button class="person" onclick="openG('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}${l?', last '+fmtDate(l.date):''}</span>${l&&l.flagged?'<span class="flagged">Worth a check-in</span>':''}</button>`;}).join('')}</div>` : '<p class="muted">No students yet. Students add themselves from the Students tab.</p>'}
       <div class="row"><button class="btn ghost small" onclick="exportFile()">Save to a file</button><label class="btn ghost small" style="cursor:pointer">Load from a file<input type="file" accept="application/json,.json" hidden onchange="importFile(this)"></label></div>
-      <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it.</p>
+      <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it. Each file is locked with a passcode you choose.</p>
     </div>
     <div class="panel"><h3>How Aspen works</h3>
       <p>Each check-in has 36 questions, six for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Aspen suggests two parts to care for, and the student builds a growth plan of small daily practices. Each day they tend their tree, each week brings a theme and a short check-in, and a full check-in at the end of a twelve-week season adds a growth ring.</p>
@@ -1889,17 +1890,16 @@ function removeStudent(id){
   DB.students = DB.students.filter(x => x.id !== id); save(); go('grown');
 }
 function exportFile(){
-  const blob = new Blob([JSON.stringify({app:'aspen', v:1, saved:new Date().toISOString(), data:DB}, null, 1)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'aspen-backup-'+today()+'.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
-  toast('Backup file saved.');
+  // Locked with a passcode the grown-up chooses (shared/gg-filelock.js, BLD 732).
+  GGFileLock.save({app:'aspen', filename:'aspen-backup-'+today()+'.json', data:{app:'aspen', v:1, saved:new Date().toISOString(), data:DB}}).then(ok => { if (ok) toast('Saved to a locked file.'); });
 }
 function importFile(input){
   const f = input.files && input.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { try { const j = JSON.parse(r.result); const data = j.data || j; if (!data.students) throw 0;
+  r.onload = () => GGFileLock.read(r.result, {app:'aspen'}).then(j => { try { const data = j.data || j; if (!data.students) throw 0;
     if (localStorage.getItem(STORE) === null) localStorage.setItem(STORE, JSON.stringify({students:[]}));
     let added = 0; data.students.forEach(s => { s._legacy = true; const i = DB.students.findIndex(x => x.id === s.id); if (i >= 0 && !DB.students[i]._pid) DB.students[i] = s; else if (i < 0) { DB.students.push(s); added++; } });
-    save(); toast('Loaded '+data.students.length+' '+(data.students.length===1?'student':'students')+'.'); renderGrown(); } catch(e){ toast('That file is not an Aspen backup.'); } };
+    save(); toast('Loaded '+data.students.length+' '+(data.students.length===1?'student':'students')+'.'); renderGrown(); } catch(e){ toast('That file is not an Aspen backup.'); } }, e => { if (e.message !== 'cancel') toast('That file is not an Aspen backup.'); });
   r.readAsText(f); input.value = '';
 }
 
