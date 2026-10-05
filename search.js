@@ -6,7 +6,7 @@
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
    Where the words come from (edit them there, not here):
-     Guides       maple/guides.js, aspen/guides.js, oak/guides.js, willow/guides.js
+     Guides       maple/guides.js, aspen/guides.js, oak/guides.js, sequoia/guides.js, willow/guides.js
      Practices    grove/data.js and grove/library.js
      Stories      stories.html (read as the page is today)
      Tools        TOOLS below
@@ -28,7 +28,7 @@
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
     { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },
-    { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan and a Legacy Book', href: '/sequoia/', keys: 'sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
+    { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and When Life Changes guides', href: '/sequoia/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
 
@@ -174,7 +174,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg1'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -198,6 +198,14 @@
         add({ type: 'talk', age: 'ad', ageLabel: 'Adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak', id: t.id, app: 'oak' });
+      });
+      // Sequoia guides (GWG BLD 734), the same shape as Oak's
+      var sq = window.SEQUOIA_GUIDES;
+      if (sq) sq.topics.forEach(function (t) {
+        var ring = (sq.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        add({ type: 'talk', age: 'ad', ageLabel: 'Older adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
+          body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
+          href: '/sequoia/#life=' + encodeURIComponent(t.id), from: 'Sequoia', id: t.id, app: 'sequoia' });
       });
       // Willow guides (Willow Build Session 2)
       var sw = window.WILLOW_GUIDES;
@@ -301,7 +309,7 @@
   var ADULT = /\b(affair|infidel|cheat\w*|sex|sexual\w*|intimacy|porn\w*|alcohol\w*|drinking|drunk|drugs?|addict\w*|overdos\w*|gambl\w*|abortion|suicid\w*|assisted|euthanas\w*|maid|erotic|hookup)\b/;
   function adultOnly(it) {
     var hay = (it.title + ' ' + (it.keys || '') + ' ' + (it.sub || '')).toLowerCase();
-    if (it.type === 'talk') return (it.app === 'oak' || it.app === 'willow') && ADULT.test(hay);
+    if (it.type === 'talk') return (it.app === 'oak' || it.app === 'sequoia' || it.app === 'willow') && ADULT.test(hay);
     if (it.type === 'story' || it.type === 'book') return ADULT.test(hay);
     return false;
   }
@@ -358,7 +366,7 @@
   }
 
   /* One function draws results for every box.
-     opts.here       the app this box lives in (maple, aspen, oak, willow, grove)
+     opts.here       the app this box lives in (maple, aspen, oak, sequoia, willow, grove)
      opts.localType  'talk' (a When Life Changes tab) or 'practice' (a practice library)
      opts.localHTML  for practice libraries: draws the app's own list (with its Add buttons)
      opts.localKeep  filter for the app's own items (age, part)
@@ -395,7 +403,7 @@
     }
     if (!n) {
       html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
-        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/oak/#life">for adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
+        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/oak/#life">for adults</a>, <a class="text-link" href="/sequoia/#life">for older adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
     }
     panel.innerHTML = html;
     if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'No results';
