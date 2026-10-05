@@ -17740,7 +17740,7 @@ window.GG_LEARN = {
     {
      "id": "sq-p-talk",
      "n": 1,
-     "title": "Talking With Your Parent or Partner About How They Are Really Doing",
+     "title": "Talking with Your Parent or Partner About How They Are Really Doing",
      "mins": 6,
      "blurb": "How to ask an older parent or partner how they really are, and how to listen to the answer.",
      "sources": [
@@ -19339,7 +19339,7 @@ window.GG_LEARN = {
     {
      "id": "sq-r-body",
      "n": 6,
-     "title": "When Your Body Won’t Do What It Used To",
+     "title": "When Your Body Won’t Do What It Used to",
      "mins": 3,
      "blurb": "Kindness for the body you have today, and small ways to honor it.",
      "sources": [
@@ -19350,7 +19350,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When Your Body Won’t Do What It Used To",
+       "h": "When Your Body Won’t Do What It Used to",
        "sub": "Kindness for the body you have today.",
        "say": "Maybe the stairs are harder now, or your hands, or your balance. Maybe today you noticed a change you did not ask for. If that is where you are, stay with me for a few minutes."
       },
