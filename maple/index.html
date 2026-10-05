@@ -282,6 +282,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .big-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #2B6B10;}
 .soft-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--kid);font-size:18px;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:999px;padding:10px 20px;min-height:48px;}
 .soft-btn:hover{border-color:var(--sky);}
+.mv-gv{margin:12px 0 18px;}.mv-gv .action-row{margin-top:0;}.mv-gv .soft-btn.mv-pri{background:#A14219;color:#fff;border-color:#A14219;}.mv-gv-note{font-size:15px;color:var(--ink-soft);margin:8px 0 0;}.mv-gv-w{font-size:13px;font-weight:600;opacity:.85;margin-left:4px;}
 .start-row{margin-top:24px;}
 .start-row .big-btn{width:100%;}
 .welcome-side{display:flex;flex-direction:column;gap:16px;}
@@ -2908,6 +2909,7 @@ function openTalk(id, from) {
     </div>
     <span class="ring-tag">${esc(r.name)}</span>
     <h2>${esc(t.title)}</h2>
+    ${mvVids(t.id)}
     <div class="quick-box"><b>Quick Reference</b>${list(t.quick)}</div>
 
     <h3>Talking It Through</h3>
@@ -2928,6 +2930,7 @@ function openTalk(id, from) {
     ${window.GGSources ? GGSources.html('maple:' + t.id) : ''}
     <p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance, not a substitute for professional care. Emergency: 911. Crisis: call or text 988. &copy; ${new Date().getFullYear()} ${OWNER}. Free to print for families and classrooms.</p>
   </article>`;
+  openTalk.last = id;
   go('talk');
 }
 function printTalk() {
@@ -2940,6 +2943,25 @@ function printTalkNow() {
   setTimeout(() => document.body.classList.remove('print-talk'), 800);
 }
 
+/* ---------- When Life Changes videos (GWG BLD 727) ----------
+   Two narrated videos per guide, For You (the child) and For the Grown-up, played by shared/gg-learn.js
+   from maple/guide-videos.js. MV_VIDS lists the guides that have them so far (written by the build's generator).
+   A quiet check shows once a video has been watched on this device (gg-learn:maple). */
+/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn"];/* MV_VIDS end */
+function mvVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:maple') || '{}').done || {})[id]); } catch (e) { return false; } }
+function mvVids(gid) {
+  if (!MV_VIDS.includes(gid)) return '';
+  const b = (side, name, pri) => { const id = 'mp-g-' + gid + '-' + side, w = mvVidWatched(id);
+    return `<button type="button" class="soft-btn${pri ? ' mv-pri' : ''}" onclick="mvWatch('${gid}','${side}')">${w ? '&#10003;' : '&#9654;'} Watch: ${name}${w ? ' <span class="mv-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="mv-gv no-print"><div class="action-row">${b('you', 'For You', false)}${b('helper', 'For the Grown-up', true)}</div>
+    <p class="mv-gv-note">For You, for the child going through it. For the Grown-up, for the parent or helper beside them. A few minutes each, narrated aloud.</p></div>`;
+}
+function mvWatch(gid, side) { if (window.GGLearn) GGLearn.open('maple', 'mp-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.maple = id => { if (TOPICS.some(t => t.id === id)) openTalk(id); };
+window.addEventListener('gg-learn-close', () => { const v = document.getElementById('view-talk'); if (v && v.offsetParent !== null && openTalk.last) { const y = window.scrollY; openTalk(openTalk.last, LIFE.from); window.scrollTo(0, y); } });
+
 /* Deep links: #life opens the guides, #talk=topic opens one guide */
 function lifeFromHash() {
   const h = decodeURIComponent(location.hash || '');
@@ -2950,7 +2972,7 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln18" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln18';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln19" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln19';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
