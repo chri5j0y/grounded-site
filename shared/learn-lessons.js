@@ -15,40 +15,9262 @@
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
 window.GG_LEARN = {
+  /* Maple Learn and Aspen Learn (GWG BLD 729): Start Here, Using the app, The Six Parts, For Grown-ups, and Support for Right Now.
+     Generated from patches/bld729/source in grounded-workshop. */
   maple: {
-    title: 'Learn Maple',
-    intro: 'Short lessons to watch together, narrated aloud. Kids and grown-ups can watch side by side.',
-    tracks: [
-      { id: 'maple-start', title: 'Start Here', who: 'For kids and the grown-ups who help them', lessons: [
-        { id: 'mp-welcome', n: 1, title: 'Welcome to Maple', mins: 2, scenes: [
-          { k: 'title', hero: 'maple', eyebrow: 'Maple', h: 'Welcome to Maple', sub: 'Bright leaves, strong roots.', say: 'Welcome to Maple! Maple helps kids notice how they are growing, and helps the grown-ups who love them.' },
-          { k: 'big', h: 'Every kid is growing like a tree.', sub: 'Six parts make a kid whole.', say: 'Every kid is growing like a tree. And a whole tree needs all six of its parts.' },
-          { k: 'six', h: 'The six parts of your tree', words: ['Feeling safe, loved, and calm inside', 'What you love to do', 'Your feelings, and calming down', 'Friends and family', 'Moving, resting, eating well', 'Looking forward to good things'], say: 'Here are the six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, the people in your life. Leaves, your body. And Fruit, your hope.' },
-          { k: 'screen', app: 'maple', app_name: 'Maple', title: 'Check-in', rows: [['Roots', 'Sunny', '#C07A26'], ['Trunk', 'Sunny', '#C07A26'], ['Bark', 'Partly cloudy', '#7D6B57'], ['Branches', 'Sunny', '#C07A26'], ['Leaves', 'Rainy', '#3D5A73'], ['Fruit', 'Sunny', '#C07A26']], tap: 4, panel: { h: 'Rainy days add rings too.', sub: 'Weather comes and goes.', items: ['Pick a practice for Leaves', 'Try it today', 'Watch your tree grow'] }, say: 'In a check-in, you answer a few questions for each part. Then each part gets its weather. Sunny, partly cloudy, or rainy. Rainy days are okay. Weather comes and goes.' },
-          { k: 'flow', h: 'How Maple works', steps: [['Check in', 'A few questions for each part'], ['See the weather', 'Sunny, cloudy, or rainy'], ['Practice a little', 'One small thing each day'], ['Watch it grow', 'Rings, leaves, and critters']], say: 'Here is how Maple works. Check in. See the weather. Practice a little each day. And watch your tree grow, with new rings, new leaves, and critters who come to visit.' },
-          { k: 'points', h: 'For grown-ups', items: [['Grown-up Guide', 'Tips for every question, in the Grown-up Guide tab'], ['When Life Changes', 'Guides for hard talks, from a pet dying to scary news'], ['Private by design', 'No account. Answers stay on this device.']], say: 'For grown-ups: the Grown-up Guide has a tip for every question. When Life Changes has guides for hard talks. And everything stays private, right on this device.' },
-          { k: 'quiz', q: 'What does Maple help kids notice?', opts: ['How fast they can run', 'The six parts that make them whole', 'Their spelling scores'], right: 1, why: 'Maple helps kids notice and tend all six parts of their tree.', say: 'Quick question. What does Maple help kids notice?' }
-        ] }
-      ] }
-    ]
+ "title": "Learn Maple",
+ "intro": "Short lessons to watch together, narrated aloud. Kids and grown-ups can watch side by side.",
+ "supportFirst": true,
+ "support": {
+  "eyebrow": "Support",
+  "title": "Support for Right Now",
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+ },
+ "lessonsTitle": "Learn Step by Step",
+ "tracks": [
+  {
+   "id": "maple-start",
+   "title": "Start Here",
+   "who": "For kids and the grown-ups who help them",
+   "lessons": [
+    {
+     "id": "mp-welcome",
+     "n": 1,
+     "title": "Welcome to Maple",
+     "mins": 3,
+     "blurb": "Meet your tree, its six parts, and how Maple works for kids and grown-ups.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Maple",
+       "sub": "Bright leaves, strong roots.",
+       "say": "Welcome to Maple! Maple is for kids in kindergarten through fifth grade, and for the grown-ups who love them. Let us take a look around."
+      },
+      {
+       "k": "big",
+       "h": "Every kid is growing like a little tree.",
+       "sub": "Six parts make a kid whole.",
+       "say": "Every kid is growing like a little tree. You grow a little bit every day, even when you cannot see it. And a whole tree needs all six of its parts."
+      },
+      {
+       "k": "six",
+       "h": "The six parts of your tree",
+       "words": [
+        "Feeling safe and loved",
+        "What makes you you",
+        "Big feelings",
+        "Your people",
+        "Sleep, food, and play",
+        "Looking forward"
+       ],
+       "say": "Here are the six parts. Roots are feeling safe and loved. Your trunk is what makes you you. Bark is for big feelings. Branches are your people. Leaves are sleep, food, and play. And fruit is looking forward to good things."
+      },
+      {
+       "k": "big",
+       "h": "Be a tree!",
+       "sub": "Roots down. Branches up.",
+       "beats": [
+        "Let us be a tree right now.",
+        "Sit up tall, or stand up tall, like a strong trunk.",
+        "Press your feet down into the floor, like roots.",
+        "Reach your arms up high, like branches.",
+        {
+         "t": "Now wiggle your fingers like leaves in the wind, and take one big, slow breath.",
+         "w": 10
+        }
+       ],
+       "say": "Let us be a tree right now. Sit up tall, or stand up tall, like a strong trunk. Press your feet down into the floor, like roots. Reach your arms up high, like branches. Now wiggle your fingers like leaves in the wind, and take one big, slow breath."
+      },
+      {
+       "k": "flow",
+       "h": "How Maple works",
+       "steps": [
+        [
+         "Check in",
+         "Questions for each part"
+        ],
+        [
+         "See the weather",
+         "Sunny, cloudy, or rainy"
+        ],
+        [
+         "Practice a little",
+         "Small things each day"
+        ],
+        [
+         "Watch it grow",
+         "A new ring each check-in"
+        ]
+       ],
+       "say": "Here is how Maple works. First, you check in. You answer a few questions for each part. Then you see the weather on your tree. Next, you practice a little each day. And you watch your tree grow, with a new ring for every check-in."
+      },
+      {
+       "k": "card",
+       "title": "How are we doing this?",
+       "body": "Pick one. Then type your first name and pick your grade.",
+       "fields": [
+        [
+         "What's your first name?",
+         "Sam"
+        ],
+        [
+         "What grade are you in?",
+         "Grade 2"
+        ]
+       ],
+       "btns": [
+        "On my own",
+        "With a grown-up"
+       ],
+       "tap": 1,
+       "say": "To start, Maple asks, how are we doing this? You can pick On my own, or With a grown-up. Then you type your first name and pick your grade. The questions are written just for your grade."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "My Kids",
+        "When Life Changes",
+        "Grown-up Guide",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Check-in",
+        "p": "Start here. Your tree and your check-ins live here too."
+       },
+       "say": "Along the top are the tabs. Check-in is where you start. When Life Changes and the Grown-up Guide are for grown-ups. My Kids shows up when a grown-up is helping. And Learn is where you are right now."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Grown-up Guide",
+         "A tip and conversation starters for every part"
+        ],
+        [
+         "When Life Changes",
+         "Guides for hard talks, like a pet dying"
+        ],
+        [
+         "Private by design",
+         "Everything stays on this device"
+        ]
+       ],
+       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has guides for hard talks, from a pet dying to scary news. And everything stays on this device. Nothing is sent to Grounded or anyone else."
+      },
+      {
+       "k": "big",
+       "h": "Maple is made to do together.",
+       "sub": "The best part happens after the screen.",
+       "say": "Maple is made to do together. The best part happens after the screen, when a kid and a grown-up talk about the weather on their tree."
+      },
+      {
+       "k": "quiz",
+       "q": "How many parts does your tree have?",
+       "opts": [
+        "Three",
+        "Six",
+        "Ten"
+       ],
+       "right": 1,
+       "why": "Roots, Trunk, Bark, Branches, Leaves, and Fruit. All six make you whole.",
+       "say": "Quick question. How many parts does your tree have?"
+      }
+     ]
+    }
+   ]
   },
+  {
+   "id": "maple-using",
+   "title": "Using Maple",
+   "who": "Every part of Maple, step by step",
+   "certTitle": "Maple: Using Maple",
+   "certLine": "For finishing every lesson on using Maple, step by step.",
+   "lessons": [
+    {
+     "id": "mp-u-checkin",
+     "n": 1,
+     "title": "Your First Check-in",
+     "mins": 4,
+     "blurb": "How a Maple check-in works, one part at a time.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Using Maple, Lesson 1",
+       "h": "Your First Check-in",
+       "sub": "Six parts, one at a time.",
+       "say": "Everything in Maple starts with a check-in. This lesson shows you what happens, step by step, so you know just what to expect."
+      },
+      {
+       "k": "card",
+       "title": "Let's check on your tree!",
+       "body": "Pick On my own or With a grown-up.",
+       "fields": [
+        [
+         "What's your first name?",
+         "Sam"
+        ],
+        [
+         "What grade are you in?",
+         "Grade 1"
+        ]
+       ],
+       "btns": [
+        "Start my check-in"
+       ],
+       "tap": 0,
+       "say": "First, pick On my own, or With a grown-up. Type your first name, and tap your grade. Then tap Start my check-in."
+      },
+      {
+       "k": "flow",
+       "h": "One part at a time",
+       "steps": [
+        [
+         "Learn",
+         "What this part does for a tree, and for you"
+        ],
+        [
+         "Answer",
+         "Four short questions"
+        ],
+        [
+         "Next",
+         "On to the next part"
+        ]
+       ],
+       "say": "Your check-in goes one part at a time, from roots to fruit. For each part, you learn what it does for a tree, and what it does for you. Then you answer four short questions. Then you tap Next."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Part 3 of 6: Bark",
+       "rows": [
+        [
+         "Can you calm down after you get upset?",
+         ""
+        ],
+        [
+         "Yes, a lot",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "I don't know",
+         ""
+        ]
+       ],
+       "tap": 2,
+       "say": "Here is a question from Bark. Can you calm down after you get upset? Every question has the same answers. Yes, a lot. Sometimes. Not really. And I do not know."
+      },
+      {
+       "k": "big",
+       "h": "Every honest answer is a good answer.",
+       "sub": "\"I don't know\" is always okay.",
+       "beats": [
+        "Let us practice one question together.",
+        "Do you have a friend to play with?",
+        "You could say yes, a lot.",
+        "Or sometimes, or not really, or I do not know.",
+        {
+         "t": "Say your answer out loud right now.",
+         "w": 8
+        }
+       ],
+       "say": "Let us practice one question together. Do you have a friend to play with? You could say yes, a lot. Or sometimes, or not really, or I do not know. Say your answer out loud right now."
+      },
+      {
+       "k": "points",
+       "h": "Helpers on every page",
+       "items": [
+        [
+         "Read Aloud",
+         "Maple reads the questions to you"
+        ],
+        [
+         "Skip",
+         "Pass on any part"
+        ],
+        [
+         "Back",
+         "Go back and change an answer"
+        ]
+       ],
+       "say": "There are helpers on every page. Tap Read Aloud, and Maple reads the questions to you. It starts on for kindergarten through second grade. Tap Skip to pass on a part. And tap Back to change an answer."
+      },
+      {
+       "k": "big",
+       "h": "Your tree grows as you go.",
+       "sub": "One new piece for every part.",
+       "say": "Watch your tree while you go. Each time you finish a part, a new piece of your tree grows. Roots, then a trunk, then bark, branches, leaves, and fruit."
+      },
+      {
+       "k": "points",
+       "h": "With a grown-up",
+       "items": [
+        [
+         "A Grown-up tip",
+         "Under every question"
+        ],
+        [
+         "Why this question?",
+         "Tap to see why it matters"
+        ],
+        [
+         "Sit close",
+         "And talk about it together"
+        ]
+       ],
+       "say": "When a grown-up is helping, they see a Grown-up tip under every question. They can tap Why this question? to learn why it matters. The best thing a grown-up can do is sit close, and talk about it together."
+      },
+      {
+       "k": "points",
+       "h": "Staying safe",
+       "items": [
+        [
+         "Almost done",
+         "One or two last questions"
+        ],
+        [
+         "Yes, No, or Not sure",
+         "Answer what is true"
+        ],
+        [
+         "Tell a grown-up",
+         "Someone you trust can help"
+        ]
+       ],
+       "say": "At the end comes Staying safe. It asks whether anyone is hurting you or making you feel scared. Older kids get one more gentle question about very sad feelings. If you answer yes, or not sure, Maple thanks you for telling, and asks you to show a grown-up you trust today, like a parent, a teacher, or a school counselor. You are not in trouble. Telling is brave."
+      },
+      {
+       "k": "points",
+       "h": "To have a good check-in",
+       "items": [
+        [
+         "Find a cozy spot",
+         "About 10 to 15 minutes"
+        ],
+        [
+         "Go with your first answer",
+         "No need to think too hard"
+        ],
+        [
+         "Take your time",
+         "There is no rush"
+        ]
+       ],
+       "say": "A few tips. Find a cozy spot. A check-in takes about ten to fifteen minutes. Go with your first answer. And take your time. When you finish, tap See my tree."
+      },
+      {
+       "k": "quiz",
+       "q": "What can you say if you are not sure?",
+       "opts": [
+        "I don't know",
+        "Nothing, you have to guess",
+        "Yes, a lot, every time"
+       ],
+       "right": 0,
+       "why": "I don't know is an honest answer, and it is always okay.",
+       "say": "Quick question. What can you say if you are not sure?"
+      }
+     ]
+    },
+    {
+     "id": "mp-u-weather",
+     "n": 2,
+     "title": "Your Tree and Its Weather",
+     "mins": 3,
+     "blurb": "What sunny, partly cloudy, and rainy mean, and what to do next.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Using Maple, Lesson 2",
+       "h": "Your Tree and Its Weather",
+       "sub": "Sunny, cloudy, or rainy.",
+       "say": "When your check-in is done, you get to see your whole tree. This lesson is about reading the weather on it."
+      },
+      {
+       "k": "points",
+       "h": "Three kinds of weather",
+       "items": [
+        [
+         "Sunny",
+         "This part is growing strong",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "This part is holding on and growing",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "This part could use extra tending",
+         "#3D5A73"
+        ]
+       ],
+       "say": "Each part of your tree gets its own weather. Sunny means that part is growing strong. Partly cloudy means it is holding on, and still growing. And rainy means that part could use a little extra tending right now."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Great job, Sam!",
+       "rows": [
+        [
+         "Roots",
+         "Sunny",
+         "#C07A26"
+        ],
+        [
+         "Trunk",
+         "Sunny",
+         "#C07A26"
+        ],
+        [
+         "Bark",
+         "Partly cloudy",
+         "#7D6B57"
+        ],
+        [
+         "Branches",
+         "Sunny",
+         "#C07A26"
+        ],
+        [
+         "Leaves",
+         "Rainy",
+         "#3D5A73"
+        ],
+        [
+         "Fruit",
+         "Partly cloudy",
+         "#7D6B57"
+        ]
+       ],
+       "tap": 4,
+       "panel": {
+        "h": "Leaves",
+        "sub": "Rain waters leaves too.",
+        "items": [
+         "Rest",
+         "Water",
+         "Play"
+        ]
+       },
+       "say": "Here is a whole tree. Next to each part is its weather, and a kind word. For a rainy Leaves part, Maple says, rain waters leaves too. Rest, water, and play will help you feel better."
+      },
+      {
+       "k": "big",
+       "h": "Rainy days add rings too.",
+       "sub": "Weather comes and goes.",
+       "say": "Rainy days are okay. Every tree gets rain, and rain helps trees grow. Rainy days add rings too. Weather comes and goes, and you are still you."
+      },
+      {
+       "k": "points",
+       "h": "A few more things to know",
+       "items": [
+        [
+         "Skipped a part?",
+         "It is still a seed, and that is okay"
+        ],
+        [
+         "A few rainy parts?",
+         "Show your tree to a grown-up you trust"
+        ],
+        [
+         "Save my tree",
+         "Keep a picture of it"
+        ]
+       ],
+       "say": "If you skipped a part, Maple says that part is still a seed, and that is okay. If a few parts are rainy, Maple asks you to show your tree to a grown-up you trust. And tap Save my tree to keep a picture of it."
+      },
+      {
+       "k": "big",
+       "h": "What is your weather today?",
+       "sub": "Sunny, cloudy, rainy, or stormy.",
+       "beats": [
+        "Let us try a weather check right now.",
+        "Close your eyes, or look down at your hands.",
+        "What is the weather inside you today?",
+        "Sunny, cloudy, rainy, or stormy?",
+        {
+         "t": "Say your weather word out loud.",
+         "w": 8
+        }
+       ],
+       "say": "Let us try a weather check right now. Close your eyes, or look down at your hands. What is the weather inside you today? Sunny, cloudy, rainy, or stormy? Say your weather word out loud."
+      },
+      {
+       "k": "big",
+       "h": "Feelings Weather is a practice in Bark.",
+       "sub": "Ready for your growth plan.",
+       "say": "Nice job. That is called Feelings Weather. It is a practice in Bark, and you can pick it for your growth plan."
+      },
+      {
+       "k": "points",
+       "h": "Then and now",
+       "items": [
+        [
+         "Your last tree",
+         "And your tree today"
+        ],
+        [
+         "Side by side",
+         "On your next check-in"
+        ],
+        [
+         "Look how you grew!",
+         "Maple points out each change"
+        ]
+       ],
+       "say": "On your next check-in, Maple shows your last tree and your new tree, side by side. When a part gets sunnier, Maple says, look how your bark grew! Or your roots, or your fruit."
+      },
+      {
+       "k": "levels",
+       "levels": [
+        [
+         "Sunny",
+         "Strong",
+         "#5F7D48"
+        ],
+        [
+         "Partly cloudy",
+         "Steady",
+         "#8B5E1A"
+        ],
+        [
+         "Rainy",
+         "Growing Edge",
+         "#B8612F"
+        ]
+       ],
+       "say": "For grown-ups, the weather matches the levels in every Grounded tree. Sunny is Strong. Partly cloudy is Steady. And rainy is a Growing Edge, a part to tend."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Open For grown-ups",
+         "Under the tree"
+        ],
+        [
+         "Levels and every answer",
+         "Plus any part that was skipped"
+        ],
+        [
+         "Be curious, not worried",
+         "\"Tell me about that rain cloud\""
+        ]
+       ],
+       "say": "Under the tree, open the box called For grown-ups. You will see each level, every answer, and any part that was skipped. Then be curious, not worried. Tell me about that rain cloud opens more doors than, what is wrong?"
+      },
+      {
+       "k": "quiz",
+       "q": "What does a rainy part mean?",
+       "opts": [
+        "You did something wrong",
+        "That part could use extra tending right now",
+        "Your tree is broken"
+       ],
+       "right": 1,
+       "why": "Rain helps trees grow. A rainy part is a part to tend, and weather comes and goes.",
+       "say": "Quick question. What does a rainy part mean?"
+      }
+     ]
+    },
+    {
+     "id": "mp-u-today",
+     "n": 3,
+     "title": "Today, Plan, and Season",
+     "mins": 4,
+     "blurb": "Pick practices, tend your tree each day, and watch your seasons grow.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Using Maple, Lesson 3",
+       "h": "Today, Plan, and Season",
+       "sub": "A little each day adds up.",
+       "say": "After your check-in, tap Go to my tree. Your tree has five tabs of its own. This lesson shows you how they work together."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Sam's tree",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "Growth Plan",
+        "p": "Pick things to practice for each part of your tree."
+       },
+       "say": "Start with Growth Plan. This is where you pick things to practice for each part of your tree. Parts with rain or clouds come first, marked Suggested for you."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Growth Plan: Bark",
+       "rows": [
+        [
+         "Balloon Breaths",
+         "Picked",
+         "#5F7D48"
+        ],
+        [
+         "Feelings Weather",
+         "Picked",
+         "#5F7D48"
+        ],
+        [
+         "Calm Corner",
+         ""
+        ],
+        [
+         "Worry Box",
+         ""
+        ],
+        [
+         "Show Me Others",
+         ""
+        ]
+       ],
+       "tap": 2,
+       "say": "Tap a practice to pick it. About three for each part is a good start, and a few more for a part with clouds or rain. Tap Show Me Others to see more. You can even type your own idea, and tap Add mine. Then tap Save my plan."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Sam's tree",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Today",
+        "p": "Your practices for today. Check off one, and your tree is watered."
+       },
+       "say": "Now your practices show up in Today. Do one, then tap its circle to check it off. Any one practice waters your tree for the day."
+      },
+      {
+       "k": "points",
+       "h": "Little helpers in Today",
+       "items": [
+        [
+         "Easier today",
+         "A smaller way to do it"
+        ],
+        [
+         "How to do this",
+         "The steps, one by one"
+        ],
+        [
+         "Add a note",
+         "A few words about how it went"
+        ]
+       ],
+       "say": "Each practice has little helpers. On a tired day, tap Easier today for a smaller way to do it. Tap How to do this to see the steps. And tap Add a note to write how it went."
+      },
+      {
+       "k": "big",
+       "h": "Good morning, tree!",
+       "sub": "A stretch in the morning. A good thing at bedtime.",
+       "beats": [
+        "Let us try a morning stretch right now.",
+        "Stand up tall, like a tree.",
+        "Reach your arms up high to the sky.",
+        {
+         "t": "Now stretch as tall as you can, and say good morning to your day.",
+         "w": 8
+        }
+       ],
+       "say": "Let us try a morning stretch right now. Stand up tall, like a tree. Reach your arms up high to the sky. Now stretch as tall as you can, and say good morning to your day."
+      },
+      {
+       "k": "points",
+       "h": "Your tree in Today",
+       "items": [
+        [
+         "Bright leaves",
+         "One for each part you tend today"
+        ],
+        [
+         "Days Tended",
+         "Every day you practiced"
+        ],
+        [
+         "Rings",
+         "One for every check-in"
+        ]
+       ],
+       "say": "Today has a morning stretch at the top, and a good thing to share at bedtime at the bottom. Your tree grows a bright leaf for each part you tend today. And you can count your Days Tended and your Rings."
+      },
+      {
+       "k": "big",
+       "h": "Your tree is always happy when you come back.",
+       "sub": "Missed a few days? One practice wakes it up.",
+       "say": "If you miss a few days, your tree gets a little dry, and it rests. It never goes away. Do one practice, and it starts to wake up. Your tree is always happy when you come back."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Sam's tree",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "Week",
+        "p": "A theme, a short check-in, and a question to think about."
+       },
+       "say": "Each week brings a new theme, a short check-in with one question for each part, and a question to think about. What you write is just for you, unless you choose to share it with your grown-up."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Sam's tree",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Season",
+        "p": "Twelve weeks: Planting, Rooting, and Blooming."
+       },
+       "say": "A season is twelve weeks of tending, from Planting, to Rooting, to Blooming. Every full check-in adds a ring to your tree, and you can check in anytime. Tap How I have grown to see your tree change."
+      },
+      {
+       "k": "quiz",
+       "q": "What waters your tree for the day?",
+       "opts": [
+        "Checking off any one practice",
+        "Doing every practice",
+        "A new check-in"
+       ],
+       "right": 0,
+       "why": "Any one practice waters your tree. One is enough.",
+       "say": "Quick question. What waters your tree for the day?"
+      }
+     ]
+    },
+    {
+     "id": "mp-u-changes",
+     "n": 4,
+     "title": "When Life Changes",
+     "mins": 4,
+     "blurb": "Guides and short videos for the hard talks, for kids and the grown-ups beside them.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Using Maple, Lesson 4",
+       "h": "When Life Changes",
+       "sub": "How to show up.",
+       "say": "Sometimes life changes all at once for a child. A pet dies. A family moves. Scary news comes on. When Life Changes helps you find the words, and this lesson shows you how it works."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "When Life Changes",
+        "Grown-up Guide",
+        "Learn"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "When Life Changes",
+        "p": "More than 50 guides for hard talks with kids."
+       },
+       "say": "Tap the When Life Changes tab. It has more than fifty guides for parents, guardians, and teachers. You can also reach it from Guides, inside your child's tree."
+      },
+      {
+       "k": "points",
+       "h": "Guides in groups",
+       "items": [
+        [
+         "Inside Me",
+         "Worry, anger, sadness, feeling different"
+        ],
+        [
+         "Close to Home",
+         "Loss, health, and family changes"
+        ],
+        [
+         "School and Community",
+         "Friends, classrooms, neighbors"
+        ],
+        [
+         "Country, World, and Safety",
+         "Big news, and the first minutes"
+        ]
+       ],
+       "say": "The guides come in groups. Inside Me, for feelings that live inside a child. Close to Home, for loss, illness, and changes at home. School and community, for friends, classrooms, and the town around you. And country, world, and safety, for big news, and for the first minutes when something scary happens."
+      },
+      {
+       "k": "card",
+       "title": "Search",
+       "body": "Type what is happening in your own words.",
+       "fields": [
+        [
+         "Search",
+         "pet died"
+        ]
+       ],
+       "btns": [
+        "Search"
+       ],
+       "tap": 0,
+       "result": "A pet died",
+       "say": "Or just search, in your own words. Type pet died, or moving, and Maple finds the guide."
+      },
+      {
+       "k": "flow",
+       "h": "Read it two ways",
+       "steps": [
+        [
+         "Quick Reference",
+         "Read it right before you talk"
+        ],
+        [
+         "Talking It Through",
+         "The full guide, step by step"
+        ]
+       ],
+       "say": "Each guide starts as a card. The card is a quick reference to read right before a hard talk. Tap Talking It Through for the full guide."
+      },
+      {
+       "k": "points",
+       "h": "Inside a full guide",
+       "items": [
+        [
+         "What this can look like",
+         "For grades K to 2, and 3 to 5"
+        ],
+        [
+         "How to start",
+         "Words you can say"
+        ],
+        [
+         "Questions kids often ask",
+         "With gentle answers"
+        ],
+        [
+         "When to reach out",
+         "And where to get more help"
+        ]
+       ],
+       "say": "Inside, you'll see what this can look like for younger and older kids. How to start, with words you can say. Questions kids often ask, with gentle answers. And when to reach out for more help. There's a part on faith and the holy too, for all faith traditions and everything in-between."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "A Pet Died",
+       "rows": [
+        [
+         "Watch: For You",
+         ""
+        ],
+        [
+         "Watch: For the Grown-up",
+         ""
+        ],
+        [
+         "Quick Reference",
+         ""
+        ],
+        [
+         "Talking It Through",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "panel": {
+        "h": "Two short videos",
+        "sub": "A few minutes each, read aloud.",
+        "items": [
+         "For You: for the child",
+         "For the Grown-up: for you"
+        ]
+       },
+       "say": "More and more guides have two short videos at the top. Watch: For You is for the child going through it. Watch: For the Grown-up is for you, the parent or helper beside them. Each one is a few minutes long, and read aloud."
+      },
+      {
+       "k": "points",
+       "h": "A way to use them",
+       "items": [
+        [
+         "Watch yours first",
+         "On your own, when you can"
+        ],
+        [
+         "Then watch together",
+         "Sit close and pause anytime"
+        ],
+        [
+         "Talk after",
+         "Ask what they noticed"
+        ]
+       ],
+       "say": "Here's one way to use them. Watch For the Grown-up first, on your own. Then watch For You together, sitting close. Pause anytime. And talk after. Ask what they noticed."
+      },
+      {
+       "k": "points",
+       "h": "In the Learn tab too",
+       "items": [
+        [
+         "When Life Changes",
+         "Every video, in groups"
+        ],
+        [
+         "A quiet check",
+         "For each one you watched"
+        ],
+        [
+         "Open the Full Guide",
+         "Right from the last scene"
+        ]
+       ],
+       "say": "You'll find every one of these videos in the Learn tab too, under When Life Changes. There's no quiz. A quiet check marks the ones you've watched. And at the end, Open the Full Guide takes you right back to the guide."
+      },
+      {
+       "k": "big",
+       "h": "Start with one change.",
+       "sub": "Name it, then find its guide.",
+       "beats": [
+        "Let's try it.",
+        "Take one slow breath.",
+        "Now think of one change your child is facing right now, big or small.",
+        {
+         "t": "Say it out loud in a word or two, like a move, a new baby, or a pet who died.",
+         "w": 10
+        }
+       ],
+       "say": "Let's try it. Take one slow breath. Now think of one change your child is facing right now, big or small. Say it out loud in a word or two, like a move, a new baby, or a pet who died."
+      },
+      {
+       "k": "big",
+       "h": "You don't need perfect words.",
+       "sub": "Being close and honest helps most.",
+       "say": "Now you know where to look. Find that guide when you're ready. You don't need perfect words. Being close and honest helps most."
+      },
+      {
+       "k": "quiz",
+       "q": "Who is the For You video made for?",
+       "opts": [
+        "The child going through it",
+        "Teachers only",
+        "The doctor"
+       ],
+       "right": 0,
+       "why": "For You speaks to the child. For the Grown-up speaks to you.",
+       "say": "Quick question. Who is the For You video made for?"
+      }
+     ]
+    },
+    {
+     "id": "mp-u-guide",
+     "n": 5,
+     "title": "The Grown-up Guide",
+     "mins": 4,
+     "blurb": "What is inside the Grown-up Guide, and how to use it after a check-in.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Using Maple, Lesson 5",
+       "h": "The Grown-up Guide",
+       "sub": "For parents, guardians, and teachers.",
+       "say": "Maple is made for kids, and for the grown-ups who love them. This lesson is for you, the grown-up. It walks through the Grown-up Guide."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "When Life Changes",
+        "Grown-up Guide",
+        "Learn"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Grown-up Guide",
+        "p": "How Maple works, and how to talk about it."
+       },
+       "say": "Tap the Grown-up Guide tab. You can also tap I'm a grown-up at the top of Maple, or the Grown-up Guide button under Guides in your child's tree."
+      },
+      {
+       "k": "points",
+       "h": "What Maple is",
+       "items": [
+        [
+         "A gentle check-in",
+         "Not a test, and no wrong answers"
+        ],
+        [
+         "Kids see weather",
+         "Sunny, partly cloudy, or rainy"
+        ],
+        [
+         "Grown-ups see a level",
+         "Strong, Steady, or Growing Edge"
+        ]
+       ],
+       "say": "The guide starts with what Maple is. It's a gentle check-in, not a test, and no answer is wrong. Kids see their tree and its weather. Grown-ups also see a simple level for each part. Strong, Steady, or Growing Edge. So you know where to lean in."
+      },
+      {
+       "k": "points",
+       "h": "How a check-in works",
+       "items": [
+        [
+         "On my own, or With a grown-up",
+         "With a grown-up adds a tip each time"
+        ],
+        [
+         "Questions for each grade",
+         "Kindergarten to grade 5"
+        ],
+        [
+         "Four short questions a part",
+         "Any part can be skipped"
+        ],
+        [
+         "A short safety step",
+         "Help is shown right away"
+        ]
+       ],
+       "say": "Next, how a check-in works. A child picks On my own, or With a grown-up. With a grown-up adds a short tip under every question. Each grade has its own questions. Each part has four short questions, and any part can be skipped. At the end there's a short safety step. If a child answers yes or not sure, Maple shows them a calm card with help, and shows you what to do next."
+      },
+      {
+       "k": "points",
+       "h": "Talking about answers",
+       "items": [
+        [
+         "Be curious",
+         "Wonder with them"
+        ],
+        [
+         "Listen more than you fix",
+         "Kids often just need to be heard"
+        ],
+        [
+         "Take their weather seriously",
+         "Even if it seems small"
+        ],
+        [
+         "Share a little of yours",
+         "Everyone has rainy days"
+        ]
+       ],
+       "say": "The most important part of Maple happens after the screen. Be curious. Listen more than you fix. Take their weather seriously, even if it seems small to you. And share a little of your own weather, so they know everyone has rainy days."
+      },
+      {
+       "k": "words",
+       "h": "Try a curious question",
+       "items": [
+        "Tell me about that rain cloud."
+       ],
+       "sub": "A curious question opens doors.",
+       "beats": [
+        "Let's practice one.",
+        "Picture your child beside you, looking at a rainy part of their tree.",
+        {
+         "t": "Now say it out loud, in your kindest voice: Tell me about that rain cloud.",
+         "w": 8
+        }
+       ],
+       "say": "Let's practice one. Picture your child beside you, looking at a rainy part of their tree. Now say it out loud, in your kindest voice: Tell me about that rain cloud."
+      },
+      {
+       "k": "flow",
+       "h": "For each of the six parts",
+       "steps": [
+        [
+         "Conversation starters",
+         "Easy questions to ask"
+        ],
+        [
+         "Why this works",
+         "In plain words"
+        ],
+        [
+         "If it's rainy",
+         "What to try next"
+        ]
+       ],
+       "say": "The Six Parts section goes one part at a time. Each part has conversation starters. A short note on why this works. And what to try if that part is rainy."
+      },
+      {
+       "k": "points",
+       "h": "For home and for school",
+       "items": [
+        [
+         "Parents and guardians",
+         "Pick an unhurried moment, stay close"
+        ],
+        [
+         "Your family's faith",
+         "Share what holds you, if you like"
+        ],
+        [
+         "Teachers",
+         "One child at a time, a shared device"
+        ]
+       ],
+       "say": "There are tips for parents and guardians, like picking an unhurried moment and staying close. Roots leaves room for each family to share what holds them, from prayer to quiet. And there are tips for teachers, who use Maple with one child at a time."
+      },
+      {
+       "k": "points",
+       "h": "When to reach out",
+       "items": [
+        [
+         "Rain that lasts",
+         "More than a couple of weeks"
+        ],
+        [
+         "Big changes",
+         "In joy, sleep, eating, or school"
+        ],
+        [
+         "Someone hurting them",
+         "Or being mean to them"
+        ],
+        [
+         "Talk of wanting to die",
+         "Call or text 988. Danger: 911"
+        ]
+       ],
+       "say": "The guide also says when to reach out to someone you trust, like a pastor, a teacher, a school counselor, or your child's doctor. If rainy weather lasts more than a couple of weeks. If joy, sleep, eating, or schoolwork change a lot. Or if a child says someone is hurting them. If a child ever talks about wanting to die, take it seriously. Call their doctor, or call or text nine eight eight, any time. If someone is in danger, call nine one one."
+      },
+      {
+       "k": "card",
+       "title": "The Grown-up Guide",
+       "body": "Keep a copy on paper, or share it with a teacher.",
+       "btns": [
+        "Save or print this guide"
+       ],
+       "tap": 0,
+       "say": "Want it on paper? Tap Save or print this guide, and keep a copy on the fridge, or share it with a teacher."
+      },
+      {
+       "k": "quiz",
+       "q": "Which question opens more doors with a child?",
+       "opts": [
+        "What's wrong?",
+        "Tell me about that rain cloud.",
+        "Why did you answer that?"
+       ],
+       "right": 1,
+       "why": "A curious question invites a child to share.",
+       "say": "Quick question. Which question opens more doors with a child?"
+      }
+     ]
+    },
+    {
+     "id": "mp-u-kids",
+     "n": 6,
+     "title": "My Kids, Private and Saved",
+     "mins": 4,
+     "blurb": "The My Kids tab, Kids profiles with a picture code, who sees what, and keeping a backup.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Using Maple, Lesson 6",
+       "h": "My Kids, Private and Saved",
+       "sub": "Every child gets their own tree.",
+       "say": "Every child gets their own tree in Maple. This last lesson shows where those trees live, how they stay private, and how to keep them safe."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "My Kids",
+        "When Life Changes",
+        "Grown-up Guide",
+        "Learn"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "My Kids",
+        "p": "Every child's tree, saved on this device."
+       },
+       "say": "On the Check-in tab, pick With a grown-up, and a My Kids tab appears. Every child's tree saves there, on this device. Tap a name to open their tree, growth plan, and check-ins."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "My Kids",
+       "rows": [
+        [
+         "Maya",
+         "Grade 2"
+        ],
+        [
+         "Sam",
+         "Kindergarten"
+        ],
+        [
+         "Save everyone to a file",
+         ""
+        ],
+        [
+         "Restore from a file",
+         ""
+        ]
+       ],
+       "tap": 0,
+       "panel": {
+        "h": "On each child's card",
+        "items": [
+         "Their grade",
+         "Their last check-in",
+         "Weather for each part"
+        ]
+       },
+       "say": "Each child's card shows their grade, their last check-in, and the weather for each part. Brothers and sisters each get their own tree, saved by first name."
+      },
+      {
+       "k": "card",
+       "title": "Save Maya's tree",
+       "body": "A Kids profile keeps a tree locked with a secret picture code.",
+       "btns": [
+        "Save Maya's tree",
+        "Not Now"
+       ],
+       "tap": 0,
+       "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree."
+      },
+      {
+       "k": "big",
+       "h": "Tap three pictures. That's your code.",
+       "sub": "A fox, an owl, a bee, a sunflower, and more.",
+       "beats": [
+        "Kids, let's try it in your head.",
+        "Pick three pictures you like, in an order you'll remember.",
+        {
+         "t": "Keep them secret, and say them to yourself one more time.",
+         "w": 10
+        }
+       ],
+       "say": "Kids, let's try it in your head. Pick three pictures you like, in an order you'll remember. Keep them secret, and say them to yourself one more time."
+      },
+      {
+       "k": "points",
+       "h": "Who can open a tree",
+       "items": [
+        [
+         "The child",
+         "With their own picture code"
+        ],
+        [
+         "Grown-ups who agreed",
+         "With their own passcode"
+        ],
+        [
+         "Whose tree today?",
+         "Pick a name on the Check-in tab"
+        ]
+       ],
+       "say": "Here's how the code works. Tap your three pictures twice, the same way, and you're set. The child opens their tree with their picture code. The grown-ups who agreed can always open it too, with their own passcode. And on the Check-in tab, Whose tree today shows every child's name, ready to tap."
+      },
+      {
+       "k": "points",
+       "h": "What your grown-up can see",
+       "items": [
+        [
+         "Always shown",
+         "If you need help, so they can help"
+        ],
+        [
+         "The big picture",
+         "Check-ins, tree, days tended"
+        ],
+        [
+         "Just yours",
+         "The weekly thoughts you write"
+        ]
+       ],
+       "say": "Tap the picture at the top of a tree to open Settings. There, kids can read what their grown-up can see. Always shown: if you say someone is hurting you or scaring you, that someone is being mean to you, that you feel alone inside, or that you don't want tomorrow to come, your grown-up sees it so they can help. The big picture: your check-ins, your tree, and the days you tended it. And just yours: the weekly thoughts you write. You can share one with your grown-up anytime."
+      },
+      {
+       "k": "big",
+       "h": "Everything stays on this device.",
+       "sub": "Nothing is sent to Grounded or anyone else.",
+       "say": "Everything in Maple stays on this device. Nothing is sent to Grounded, or to anyone else."
+      },
+      {
+       "k": "points",
+       "h": "Keep a backup",
+       "items": [
+        [
+         "Save everyone to a file",
+         "In the My Kids tab"
+        ],
+        [
+         "Back up everything",
+         "In the profile menu, still locked"
+        ],
+        [
+         "Restore or load",
+         "On a new device, or after a reset"
+        ]
+       ],
+       "say": "Because everything lives in this browser, clearing it or switching devices would erase it. So save a file now and then. In My Kids, tap Save everyone to a file. Or open the profile menu at the top of the page, and tap Back up everything. That saves one file with every profile, each one still locked. On a new device, tap Restore from a file, or Load a backup, and the trees come back."
+      },
+      {
+       "k": "big",
+       "h": "You know Maple now. Go grow together.",
+       "sub": "A little at a time, side by side.",
+       "say": "That's the whole tour. You know Maple now. Go grow together, a little at a time."
+      },
+      {
+       "k": "quiz",
+       "q": "Who can open a child's Kids profile?",
+       "opts": [
+        "Anyone who picks up the device",
+        "The child, and the grown-ups who agreed",
+        "Only Grounded"
+       ],
+       "right": 1,
+       "why": "The child uses their picture code. Grown-ups who agreed use their own passcode.",
+       "say": "Last question. Who can open a child's Kids profile?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "maple-six",
+   "title": "The Six Parts",
+   "who": "One lesson for each part of a kid's tree, with something to try",
+   "certTitle": "Maple: The Six Parts",
+   "certLine": "For finishing every lesson on the six parts of a kid's tree.",
+   "lessons": [
+    {
+     "id": "mp-6-roots",
+     "n": 1,
+     "title": "Roots: Feeling Safe and Loved",
+     "mins": 4,
+     "blurb": "Feeling safe and loved, and what holds you close.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "The Six Parts, Lesson 1",
+       "h": "Roots",
+       "sub": "Feeling safe and loved.",
+       "say": "This lesson is about Roots. Roots are about feeling safe and loved."
+      },
+      {
+       "k": "big",
+       "h": "Roots hold a tree tight.",
+       "sub": "You can't see them. They are always working.",
+       "say": "Roots hold a tree tight. They grow deep underground, where they find water. You can't see them, and they are always working. Your roots work the same way. They hold you when things feel wobbly."
+      },
+      {
+       "k": "points",
+       "h": "Roots can look like",
+       "items": [
+        [
+         "Feeling loved",
+         "Just for being you"
+        ],
+        [
+         "Feeling safe",
+         "At home and at bedtime"
+        ],
+        [
+         "Quiet times",
+         "A prayer, a song, a hug"
+        ],
+        [
+         "Wonder",
+         "The sky, a song, an animal"
+        ]
+       ],
+       "say": "Roots can look like feeling loved, just for being you. Feeling safe, at home and when you go to sleep. Quiet times, like a prayer, a song, or a hug before bed. And wonder, when the sky or an animal makes you say wow."
+      },
+      {
+       "k": "points",
+       "h": "Every family has its own ways",
+       "items": [
+        [
+         "Some pray",
+         "Or go to worship together"
+        ],
+        [
+         "Some sit quietly",
+         "Or sing, or walk outside"
+        ],
+        [
+         "Some keep traditions",
+         "A special meal, a blessing"
+        ]
+       ],
+       "say": "Every family has its own ways. Some families pray, or go to worship together. Some sit quietly, or sing, or take a walk outside. Some share a special meal or a blessing. Ask your grown-up what your family does. All of these can help roots grow deep."
+      },
+      {
+       "k": "points",
+       "h": "Roots weather",
+       "items": [
+        [
+         "Sunny",
+         "I know I am loved.",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "My roots are holding on.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "I feel alone inside.",
+         "#3D5A73"
+        ]
+       ],
+       "say": "After a check-in, your roots get their weather. Sunny might mean you know you are loved. Partly cloudy might mean your roots are holding on. Rainy might mean you feel alone inside. Even in the rain, roots keep reaching down. You are loved, even today."
+      },
+      {
+       "k": "big",
+       "h": "Feel alone inside? Tell a grown-up.",
+       "sub": "You are not in trouble. They want to know.",
+       "say": "If you feel all alone inside, tell a grown-up you trust. A parent, a grandparent, a teacher, or your school counselor. You are not in trouble. They want to know, and they can stay close."
+      },
+      {
+       "k": "points",
+       "h": "Practice: My Safe Place",
+       "items": [
+        [
+         "Get comfy",
+         "Close your eyes if you like"
+        ],
+        [
+         "Picture a safe place",
+         "Where you feel calm and happy"
+        ],
+        [
+         "Look around",
+         "What do you see and hear?"
+        ],
+        [
+         "Keep it with you",
+         "Visit any time you feel scared"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 4,
+         "3": 8,
+         "7": 10
+        },
+        "at": [
+         2,
+         3,
+         5,
+         9
+        ]
+       },
+       "say": "Let's try one from Maple. It is called My Safe Place. Get comfy, and close your eyes if you like. Now picture a place where you feel safe and calm. Maybe your bed, a grandparent's kitchen, or a spot outside. Look around your safe place. What do you see? What do you hear? Now open your eyes. Your safe place stays with you, and you can visit it any time you feel scared."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Say it plainly",
+         "\"I love you just for being you.\""
+        ],
+        [
+         "Share your family's way",
+         "A prayer, a verse, a quiet practice"
+        ],
+        [
+         "Welcome big questions",
+         "\"I wonder too\" is a fine answer"
+        ]
+       ],
+       "say": "For grown-ups. Say it in plain words: I love you just for being you. Share a prayer, a verse, or a quiet practice from your own family's way. And welcome their big questions. I wonder too is a fine answer. When you check in With a grown-up, a Grown-up tip shows under every question."
+      },
+      {
+       "k": "big",
+       "h": "Strong roots hold you up.",
+       "sub": "Pick it for your growth plan.",
+       "say": "Strong roots hold you up, even on rainy days. After your check-in, tap Make My Growth Plan. You can pick My Safe Place, Wonder Walk, or Bedtime Blessing."
+      },
+      {
+       "k": "quiz",
+       "q": "What do roots help you feel?",
+       "opts": [
+        "Fast and strong",
+        "Safe and loved",
+        "Sleepy"
+       ],
+       "right": 1,
+       "why": "Roots hold you tight, so you feel safe and loved.",
+       "say": "Quick question. What do roots help you feel?"
+      }
+     ]
+    },
+    {
+     "id": "mp-6-trunk",
+     "n": 2,
+     "title": "Trunk: What Makes You You",
+     "mins": 3,
+     "blurb": "What you love, what you are good at, and how you help.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "The Six Parts, Lesson 2",
+       "h": "Trunk",
+       "sub": "What makes you you.",
+       "say": "This lesson is about your Trunk. Your trunk is what makes you you."
+      },
+      {
+       "k": "big",
+       "h": "The trunk helps a tree stand tall.",
+       "sub": "It grows a new ring every year.",
+       "say": "The trunk helps a tree stand tall. And every year, it grows a new ring. You grow too. Every day, you are becoming more you."
+      },
+      {
+       "k": "points",
+       "h": "Your trunk is",
+       "items": [
+        [
+         "What you love to do",
+         "Drawing, building, animals"
+        ],
+        [
+         "What you are good at",
+         "And getting better at"
+        ],
+        [
+         "How you help",
+         "At home and at school"
+        ]
+       ],
+       "say": "Your trunk is what you love to do, like drawing, building, or caring for animals. It is what you are good at, and what you are getting better at. And it is how you help, at home and at school."
+      },
+      {
+       "k": "big",
+       "h": "There is only one you!",
+       "sub": "Trying hard things makes your trunk strong.",
+       "say": "There is only one you! And here is something about trunks. Trying something hard makes your trunk stronger, even before you get it right."
+      },
+      {
+       "k": "points",
+       "h": "Trunk weather",
+       "items": [
+        [
+         "Sunny",
+         "I like being me.",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "I am growing a new ring.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "I wish I were someone else.",
+         "#3D5A73"
+        ]
+       ],
+       "say": "After a check-in, your trunk gets its weather. Sunny might mean you like being you. Partly cloudy might mean you are growing a new ring. Rainy might mean you wish you were someone else, or you feel like you are not good at anything. Rainy days add rings too. You matter just the way you are."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Proud Jar",
+       "items": [
+        [
+         "Think back",
+         "Over your day or your week"
+        ],
+        [
+         "Find one proud moment",
+         "Big or small"
+        ],
+        [
+         "Say it out loud",
+         "\"I am proud that I...\""
+        ],
+        [
+         "Keep it",
+         "Write it down, drop it in a jar"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 6,
+         "6": 8
+        },
+        "at": [
+         2,
+         3,
+         5,
+         8
+        ]
+       },
+       "say": "Let's try one from Maple. It is called Proud Jar. Think back over your day, or your week. Find one thing you did that made you proud. It can be big or small, like helping a friend or trying a hard puzzle. Now say it out loud. Start with the words, I am proud that I. Nice! You can write each one down and drop it in a jar."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Name a real strength",
+         "\"You didn't give up when...\""
+        ],
+        [
+         "Praise the trying",
+         "Not only the result"
+        ],
+        [
+         "Give a small job",
+         "And thank them for it"
+        ]
+       ],
+       "say": "For grown-ups. Name one strength you have really seen, like, you were kind when, or you did not give up when. Praise the trying, not only the result. And give them a small job that matters, then thank them for it. When a grown-up names a strength, a child starts to see it too."
+      },
+      {
+       "k": "big",
+       "h": "You are becoming more you every day.",
+       "sub": "Pick it for your growth plan.",
+       "say": "You are becoming more you every day. After your check-in, tap Make My Growth Plan. You can pick Proud Jar, Strength Detective, or Helper Job."
+      },
+      {
+       "k": "quiz",
+       "q": "What makes your trunk stronger?",
+       "opts": [
+        "Being the best at everything",
+        "Trying hard things",
+        "Never making mistakes"
+       ],
+       "right": 1,
+       "why": "Trying hard things helps your trunk grow, even before you get it right.",
+       "say": "Quick question. What makes your trunk stronger?"
+      }
+     ]
+    },
+    {
+     "id": "mp-6-bark",
+     "n": 3,
+     "title": "Bark: Big Feelings",
+     "mins": 4,
+     "blurb": "Naming big feelings and calming down.",
+     "sources": [
+      "lieberman",
+      "siegel"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "The Six Parts, Lesson 3",
+       "h": "Bark",
+       "sub": "Big feelings.",
+       "say": "This lesson is about Bark. Your bark helps you with big feelings, like mad, sad, and scared."
+      },
+      {
+       "k": "big",
+       "h": "Bark keeps a tree safe.",
+       "sub": "When it gets a scrape, it grows back.",
+       "say": "Bark keeps a tree safe. And when a tree gets a scrape, its bark slowly grows back over it. Your bark is how you handle big feelings. It can heal and grow strong too."
+      },
+      {
+       "k": "big",
+       "h": "Feelings are like weather.",
+       "sub": "They come, and they go.",
+       "say": "Here is something to remember. Feelings are like weather. They come, and they go. All feelings are okay to feel, mad, sad, scared, and glad."
+      },
+      {
+       "k": "points",
+       "h": "Strong bark can look like",
+       "items": [
+        [
+         "Naming feelings",
+         "\"I feel mad.\" \"I feel worried.\""
+        ],
+        [
+         "Calming down",
+         "Slow breaths, a pillow hug"
+        ],
+        [
+         "Telling someone",
+         "A grown-up you trust"
+        ],
+        [
+         "Trying again",
+         "After something goes wrong"
+        ]
+       ],
+       "say": "Strong bark can look like naming your feelings, like, I feel mad, or I feel worried. Calming your body down, with slow breaths or a pillow hug. Telling a grown-up when something is bothering you. And trying again after something goes wrong."
+      },
+      {
+       "k": "points",
+       "h": "Bark weather",
+       "items": [
+        [
+         "Sunny",
+         "I can calm down.",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "My bark is healing.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "My feelings get too big.",
+         "#3D5A73"
+        ]
+       ],
+       "say": "After a check-in, your bark gets its weather. Sunny might mean you can calm down when you are upset. Partly cloudy might mean your bark is healing and growing. Rainy might mean your feelings get too big, too fast, or you worry a lot. Big feelings are okay. Naming them is how bark grows strong."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name It to Tame It",
+       "items": [
+        [
+         "Stop for a moment",
+         "Feet still, hands still"
+        ],
+        [
+         "Find the feeling",
+         "Where is it in your body?"
+        ],
+        [
+         "Say its name",
+         "\"I feel worried.\""
+        ],
+        [
+         "Notice",
+         "Did it get a little smaller?"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "6": 6,
+         "8": 8
+        },
+        "at": [
+         2,
+         4,
+         7,
+         9
+        ]
+       },
+       "say": "Let's try one from Maple. It is called Name It to Tame It. First, stop for a moment. Keep your feet still and your hands still. Now think of a feeling you have right now, or one from today. Where do you feel it in your body? Your tummy, your chest, or your hands? Now say its name out loud. You might say, I feel mad, or I feel worried, or I feel happy. Did the feeling get a little smaller? Naming a feeling can help it calm down."
+      },
+      {
+       "k": "big",
+       "h": "Feelings too big? Tell a grown-up.",
+       "sub": "A parent, a teacher, or your school counselor.",
+       "say": "If your feelings feel too big, or a worry won't go away, tell a grown-up you trust. A parent, a grandparent, a teacher, or your school counselor. You are not in trouble. Grown-ups want to help."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Name your own feelings",
+         "Out loud. It shows them how."
+        ],
+        [
+         "Practice when calm",
+         "So they are ready when things are not"
+        ],
+        [
+         "Listen before you fix",
+         "Ask what the worry is about"
+        ]
+       ],
+       "say": "For grown-ups. Name your own feelings out loud sometimes. It shows them how. Practice calm-down tricks when things are calm, so they are ready when things are not. And when they worry, ask what the worry is about, and listen before you fix. If big feelings or worries keep showing up for weeks, talk with your child's doctor or school counselor."
+      },
+      {
+       "k": "big",
+       "h": "Big feelings are okay.",
+       "sub": "Pick it for your growth plan.",
+       "say": "Big feelings are okay, and you can learn to handle them. After your check-in, tap Make My Growth Plan. You can pick Name It to Tame It, Shake It Out, or Calm Corner."
+      },
+      {
+       "k": "quiz",
+       "q": "What are feelings like?",
+       "opts": [
+        "Rocks that never move",
+        "Weather that comes and goes",
+        "Homework due tomorrow"
+       ],
+       "right": 1,
+       "why": "Feelings come and go, like weather. All feelings are okay.",
+       "say": "Quick question. What are feelings like?"
+      }
+     ]
+    },
+    {
+     "id": "mp-6-branches",
+     "n": 4,
+     "title": "Branches: Your People",
+     "mins": 4,
+     "blurb": "Family, friends, and helpers, and how to reach out.",
+     "sources": [
+      [
+       "Layous and colleagues, kindness counts: prosocial behavior in preadolescents (2012)",
+       ""
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "The Six Parts, Lesson 4",
+       "h": "Branches",
+       "sub": "Your people.",
+       "say": "This lesson is about Branches. Your branches are your people."
+      },
+      {
+       "k": "big",
+       "h": "Branches reach out wide.",
+       "sub": "And give birds a place to rest.",
+       "say": "Look at a tree. Its branches reach out wide, and they give birds a place to rest. You reach out too. Your branches are your people: family, friends, teachers, and neighbors."
+      },
+      {
+       "k": "points",
+       "h": "Your people can be",
+       "items": [
+        [
+         "Family",
+         "At home, near or far"
+        ],
+        [
+         "Friends",
+         "Someone glad to see you"
+        ],
+        [
+         "Helpers",
+         "A teacher, a coach, a neighbor"
+        ],
+        [
+         "You!",
+         "You help others too"
+        ]
+       ],
+       "say": "Your people can be family, the ones at home and the ones far away, like a grandparent or a cousin. Friends, someone who is glad to see you. Helpers, like a teacher, a coach, or a neighbor. And you! Branches reach both ways. You help other people too."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Check-in: Branches",
+       "rows": [
+        [
+         "Do you have a friend to play with?",
+         ""
+        ],
+        [
+         "Yes, a lot",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "I don't know",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "In a check-in, Maple asks four questions about your branches. Like, do you have a friend to play with? Is there a grown-up you can go to when you need help? You can answer yes, a lot. Sometimes. Not really. Or I do not know. Every answer is okay."
+      },
+      {
+       "k": "points",
+       "h": "Weather for your branches",
+       "items": [
+        [
+         "Sunny",
+         "Full of people who love you",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "Growing. Keep reaching out.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "Your people want to help",
+         "#3D5A73"
+        ]
+       ],
+       "say": "Then your branches get their weather. Sunny means your branches are full of people who love you. Partly cloudy means your branches are growing, so keep reaching out. And rainy? Rain helps branches grow. Your people want to help you."
+      },
+      {
+       "k": "big",
+       "h": "Someone being mean? Tell a grown-up.",
+       "sub": "Telling is brave. You are not in trouble.",
+       "say": "Sometimes branches have a hard day. Maybe you feel left out. Maybe someone is being mean to you. Here is what to do. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor. Telling is brave, and you are not in trouble. If you tell Maple that someone is being mean to you, your grown-up sees it, so they can help."
+      },
+      {
+       "k": "points",
+       "h": "Practice: My People Tree",
+       "items": [
+        [
+         "Picture a big tree",
+         "With lots of branches"
+        ],
+        [
+         "Put your people on it",
+         "Say their names"
+        ],
+        [
+         "Find your helper",
+         "Give them a star"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 12,
+         "7": 6
+        },
+        "at": [
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Let us try one together. It is called My People Tree. Picture a big tree with lots of branches. Now put your people on it, one on each branch. Say their names out loud. Last, find your helper. Who is one person you can go to for help? Put a star by them."
+      },
+      {
+       "k": "big",
+       "h": "Small kind things help branches grow.",
+       "sub": "Kindness Three and Ask to Play are in your plan.",
+       "say": "Here is something neat. Kids who do small kind things on purpose often feel closer to the people around them. So try Kindness Three. Do three kind things this week, and tell your grown-up. Or try Ask to Play, and ask someone new to play with you. You will find these, and My People Tree, when you pick things to practice in your plan."
+      },
+      {
+       "k": "big",
+       "h": "Reach out, and your branches grow.",
+       "sub": "Grown-ups: ask who they would go to for help.",
+       "say": "Grown-ups, here is a good question for tonight. Who would you go to if you needed help? Listen for the names. If someone is being mean, listen first and stay calm, then work with the school. Reach out a little every day, and branches grow."
+      },
+      {
+       "k": "quiz",
+       "q": "If someone is being mean to you, what can you do?",
+       "opts": [
+        "Keep it a secret",
+        "Tell a safe grown-up",
+        "Be mean back"
+       ],
+       "right": 1,
+       "why": "Telling a safe grown-up is brave, and you are not in trouble.",
+       "say": "Quick question. If someone is being mean to you, what can you do?"
+      }
+     ]
+    },
+    {
+     "id": "mp-6-leaves",
+     "n": 5,
+     "title": "Leaves: Sleep, Food, and Play",
+     "mins": 4,
+     "blurb": "Move, rest, and nourish, so your whole tree has energy.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "The Six Parts, Lesson 5",
+       "h": "Leaves",
+       "sub": "Sleep, food, and play.",
+       "say": "This lesson is about Leaves. Your leaves are your body."
+      },
+      {
+       "k": "big",
+       "h": "Leaves soak up sunshine.",
+       "sub": "And turn it into food for the whole tree.",
+       "say": "Leaves soak up sunshine and turn it into food for the whole tree. Your body is a little like that. When your body gets what it needs, all of you has more energy to learn, to play, and to handle hard days."
+      },
+      {
+       "k": "flow",
+       "h": "Three ways to tend Leaves",
+       "steps": [
+        [
+         "Move",
+         "Run, dance, and play"
+        ],
+        [
+         "Rest",
+         "Sleep and quiet breaks"
+        ],
+        [
+         "Nourish",
+         "Water and good food"
+        ]
+       ],
+       "say": "Maple tends leaves in three ways. Move, like running, dancing, and playing. Rest, like a good night of sleep, and quiet breaks. And nourish, like water, and food that helps you grow strong."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Check-in: Leaves",
+       "rows": [
+        [
+         "Do you sleep well at night?",
+         ""
+        ],
+        [
+         "Yes, a lot",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "I don't know",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "In a check-in, Maple asks about your leaves. Do you sleep well at night? Do you get to run and play every day? Do you eat food that helps you grow strong? And does your tummy or your head hurt a lot?"
+      },
+      {
+       "k": "points",
+       "h": "Weather for your leaves",
+       "items": [
+        [
+         "Sunny",
+         "Green and bright",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "A little more rest and play",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "Rest, water, and play help",
+         "#3D5A73"
+        ]
+       ],
+       "say": "Then your leaves get their weather. Sunny means your leaves are green and bright. Your body is getting what it needs. Partly cloudy means a little more rest and play will help. And rainy? Rain waters leaves too. Rest, water, and play will help you feel better."
+      },
+      {
+       "k": "big",
+       "h": "Tummy or head hurt a lot? Tell a grown-up.",
+       "sub": "Feelings can show up in your body too.",
+       "say": "Did you know feelings can show up in your body? A worry can feel like a tummy ache. So if your tummy or your head hurts a lot, tell your grown-up. They can help you figure it out, and they can talk with your doctor."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Animal Moves",
+       "items": [
+        [
+         "Hop like a frog",
+         "Big hops"
+        ],
+        [
+         "Stomp like a bear",
+         "Stomp, stomp, stomp"
+        ],
+        [
+         "Flap like a bird",
+         "Wings out wide"
+        ],
+        [
+         "Slow like a turtle",
+         "Slow, slower, still"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 5,
+         "4": 5,
+         "5": 5,
+         "8": 4,
+         "10": 5
+        },
+        "at": [
+         3,
+         4,
+         5,
+         6
+        ]
+       },
+       "say": "Let us move! Stand up if you can. If you are sitting, use your arms. Hop like a frog. Stomp like a bear. Flap like a bird, with your wings out wide. Now slow down, like a sleepy turtle. Slower. And still. Notice your body. How does it feel now?"
+      },
+      {
+       "k": "big",
+       "h": "Little bits add up.",
+       "sub": "Animal Moves and more are in your plan.",
+       "say": "Little bits add up. Dance to one song. Take a few sips of water. Turn screens off before bed, and pick a calm bedtime story. You will find Animal Moves, Water Check, and Screens Off, Lights Low when you pick things to practice in your plan."
+      },
+      {
+       "k": "big",
+       "h": "Grown-ups: start with the simple things.",
+       "sub": "Bedtime, screens, water, and time outside.",
+       "say": "Grown-ups, when leaves are rainy, start with the simple things. Bedtime, screens before bed, water, and time outside. Talk about what bodies can do, not how they look. And aches that keep coming back are worth mentioning to their doctor."
+      },
+      {
+       "k": "quiz",
+       "q": "Maple tends Leaves in three ways. What are they?",
+       "opts": [
+        "Move, Rest, Nourish",
+        "Run, Win, Score",
+        "Sit, Watch, Snack"
+       ],
+       "right": 0,
+       "why": "Move, Rest, and Nourish keep your leaves green and bright.",
+       "say": "Quick question. Maple tends Leaves in three ways. What are they?"
+      }
+     ]
+    },
+    {
+     "id": "mp-6-fruit",
+     "n": 6,
+     "title": "Fruit: Looking Forward",
+     "mins": 4,
+     "blurb": "Hope, and the good things still to come.",
+     "sources": [
+      "snyder"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "The Six Parts, Lesson 6",
+       "h": "Fruit",
+       "sub": "Looking forward.",
+       "say": "This last lesson is about Fruit. Your fruit is hope: the good things you are looking forward to."
+      },
+      {
+       "k": "big",
+       "h": "Fruit holds seeds for new trees.",
+       "sub": "Hope holds good things still to come.",
+       "say": "Fruit holds seeds, so new trees can grow someday. Hope is like that. It holds the good things that are still coming. And fruit grows from the whole tree. Roots, trunk, bark, branches, and leaves all help it grow."
+      },
+      {
+       "k": "points",
+       "h": "Hope can look like",
+       "items": [
+        [
+         "Something fun coming",
+         "A visit, a trip, a birthday"
+        ],
+        [
+         "A good tomorrow",
+         "One good thing that could happen"
+        ],
+        [
+         "A dream",
+         "Something to do someday"
+        ],
+        [
+         "Trying again",
+         "Hard things can get better"
+        ]
+       ],
+       "say": "Hope can look like something fun coming up, like a visit, a trip, or a birthday. A good tomorrow, and one good thing that could happen. A dream, something you want to do someday. And trying again, because hard things can get better."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Check-in: Fruit",
+       "rows": [
+        [
+         "Is something fun coming up soon?",
+         ""
+        ],
+        [
+         "Yes, a lot",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "I don't know",
+         ""
+        ]
+       ],
+       "tap": 0,
+       "say": "In a check-in, Maple asks about your fruit. Is something fun coming up soon? Do you have a wish for when you grow up? Answer what feels true. Every answer helps your grown-up know you better."
+      },
+      {
+       "k": "points",
+       "h": "Weather for your fruit",
+       "items": [
+        [
+         "Sunny",
+         "Bright and full of seeds",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "Ripening. Hope is growing.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "Good days are still ahead",
+         "#3D5A73"
+        ]
+       ],
+       "say": "Then your fruit gets its weather. Sunny means your fruit is bright and full of seeds. Good things are coming! Partly cloudy means your fruit is ripening, and hope is growing inside you. And rainy? Fruit takes time to grow. Good days are still ahead of you."
+      },
+      {
+       "k": "big",
+       "h": "Hope can grow.",
+       "sub": "A goal, a path, and \"I can do it.\"",
+       "say": "Hope can grow, just like a tree. Hope has three pieces. A goal, something you want. A path, a way to get there. And a voice inside that says, I can do it."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Hope Map",
+       "items": [
+        [
+         "Pick a goal",
+         "Something to do or learn"
+        ],
+        [
+         "Find two paths",
+         "Two ways to get there"
+        ],
+        [
+         "Say it",
+         "I can do it!"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 8,
+         "4": 5,
+         "5": 5,
+         "7": 3
+        },
+        "at": [
+         1,
+         3,
+         6
+        ]
+       },
+       "say": "Let us make a Hope Map, right in your head. Think of something you want to do or learn. Maybe riding a bike, reading a big book, or making a new friend. Now think of two ways to get there. Path one. And path two. Last, say it out loud with me. I can do it!"
+      },
+      {
+       "k": "big",
+       "h": "Hard to see good things ahead? Tell a grown-up.",
+       "sub": "Grown-ups: doctor or 988. In danger, 911.",
+       "say": "Sometimes fruit has a rainy day. If it ever feels like nothing good is coming, or you do not want tomorrow to come, tell a safe grown-up right away. A parent, a grandparent, a teacher, or a school counselor. You are not in trouble. If you tell Maple, your grown-up sees it, so they can help. Grown-ups, take those words seriously and keep talking. If a child ever talks about wanting to die, call their doctor, or call or text nine eight eight. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Tend the whole tree, and fruit will come.",
+       "sub": "Hope Map and Tomorrow Wish are in your plan.",
+       "say": "Here is one more to try tonight. It is called Tomorrow Wish. Before bed, say one good thing you hope happens tomorrow. In the morning, look for it. Tend your whole tree, a little each day, and fruit will come. That is all six parts. Well done!"
+      },
+      {
+       "k": "quiz",
+       "q": "What are the three pieces of hope?",
+       "opts": [
+        "A goal, a path, and \"I can do it\"",
+        "Luck, wishes, and waiting",
+        "Being first, fastest, and best"
+       ],
+       "right": 0,
+       "why": "A goal, a path to get there, and \"I can do it\" help hope grow.",
+       "say": "Last question. What are the three pieces of hope?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "maple-grownups",
+   "title": "For Grown-ups",
+   "who": "For parents, grandparents, and the grown-ups who help kids grow",
+   "certTitle": "Maple: For Grown-ups",
+   "certLine": "For finishing every lesson for the grown-ups who help kids grow.",
+   "lessons": [
+    {
+     "id": "mp-p-talk",
+     "n": 1,
+     "title": "Talking With Little Ones",
+     "mins": 5,
+     "blurb": "How to talk with a child after a check-in, and in all the small moments in between.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "For Grown-ups, Lesson 1",
+       "h": "Talking With Little Ones",
+       "sub": "The best part happens after the screen.",
+       "say": "This lesson is for parents, grandparents, teachers, and every grown-up who loves a child. It is about the talk that comes after a check-in, and all the small talks in between."
+      },
+      {
+       "k": "big",
+       "h": "The most important part of Maple happens after the screen.",
+       "sub": "The check-in opens a door.",
+       "say": "The Grown-up Guide in Maple says it plainly. The most important part of Maple happens after the screen. A check-in opens a door. You are the one who walks through it with them."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "For grown-ups",
+       "rows": [
+        [
+         "Roots",
+         "Strong",
+         "#5F7D48"
+        ],
+        [
+         "Trunk",
+         "Steady",
+         "#8B5E1A"
+        ],
+        [
+         "Bark",
+         "Growing Edge",
+         "#B8612F"
+        ],
+        [
+         "Branches",
+         "Strong",
+         "#5F7D48"
+        ],
+        [
+         "Leaves",
+         "Steady",
+         "#8B5E1A"
+        ],
+        [
+         "Fruit",
+         "Skipped",
+         "#7D6B57"
+        ]
+       ],
+       "tap": 2,
+       "say": "After a check-in, open the For grown-ups box under your child's tree. Your child sees their tree and its weather. You see a simple level for each part. Strong, Steady, or Growing Edge. That tells you where to lean in. If a part was skipped, it shows here too. A skip can be a quiet signal, so you might gently ask about it later."
+      },
+      {
+       "k": "points",
+       "h": "After the screen",
+       "items": [
+        [
+         "Be curious, not worried",
+         "Tell me about that rain cloud"
+        ],
+        [
+         "Listen more than you fix",
+         "Kids often just need to be heard"
+        ],
+        [
+         "Take their weather seriously",
+         "Even if it seems small to you"
+        ],
+        [
+         "Share a little of your weather",
+         "Everyone has rainy days"
+        ]
+       ],
+       "say": "A few things help. Be curious, not worried. Tell me about that rain cloud opens more doors than, what is wrong? Listen more than you fix. Kids often just need to be heard. Take their weather seriously, even if it seems small to you. And share a little of your own weather. It shows them everyone has rainy days."
+      },
+      {
+       "k": "points",
+       "h": "Little ones talk side by side",
+       "items": [
+        [
+         "Pick an unhurried moment",
+         "Bedtime, or a slow weekend morning"
+        ],
+        [
+         "Sit beside, not across",
+         "In the car, on a walk, while drawing"
+        ],
+        [
+         "Short and often",
+         "A few minutes, many times"
+        ]
+       ],
+       "say": "Little ones often talk best side by side. Pick an unhurried moment, like a quiet afternoon, bedtime, or a slow weekend morning. Sit beside them, not across from them. The car, a walk, or a table full of crayons can work wonders. And keep it short. A few minutes, many times, will carry you further than one big talk."
+      },
+      {
+       "k": "words",
+       "h": "Doors that open",
+       "items": [
+        "Tell me about that.",
+        "What was the best part of your day?",
+        "What does mad feel like in your body?",
+        "When do you feel most safe and loved?"
+       ],
+       "say": "Here are a few openers to keep in your pocket. Tell me about that. What was the best part of your day? What does mad feel like in your body? And, when do you feel most safe and loved?"
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "When Life Changes",
+        "Grown-up Guide",
+        "Learn"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Grown-up Guide",
+        "p": "Conversation starters for each part, and what helps when a part is rainy."
+       },
+       "say": "You never have to come up with these on your own. The Grown-up Guide tab has conversation starters for every one of the six parts. Each part also says why it works, and what helps if that part is rainy. You can save or print the whole guide."
+      },
+      {
+       "k": "card",
+       "title": "When Life Changes",
+       "body": "Sixty guides for hard talks, each with Talking It Through.",
+       "fields": [
+        [
+         "Search",
+         "a new baby"
+        ]
+       ],
+       "btns": [
+        "Talking It Through"
+       ],
+       "tap": 0,
+       "say": "For the harder talks, open When Life Changes. There are sixty guides, from a pet dying to scary news. Each one has a quick reference, and a full Talking It Through, with how to start, questions kids often ask, and what helps."
+      },
+      {
+       "k": "big",
+       "h": "Tell me about that. I'm listening.",
+       "sub": "Say it out loud.",
+       "beats": [
+        "Let us practice one opener right now.",
+        "Picture a child you love, and a time they seemed a little cloudy.",
+        {
+         "t": "Now say this out loud, softly, the way you would to them: tell me about that, I am listening.",
+         "w": 10
+        }
+       ],
+       "say": "Let us practice one opener right now. Picture a child you love, and a time they seemed a little cloudy. Now say this out loud, softly, the way you would to them: tell me about that, I am listening."
+      },
+      {
+       "k": "points",
+       "h": "If they share something hard",
+       "items": [
+        [
+         "Stay calm and listen",
+         "Thank them for telling you"
+        ],
+        [
+         "Promise help, not secrecy",
+         "Safety stays in the open"
+        ],
+        [
+         "Help is right there",
+         "Call or text 988. In danger, call 911."
+        ]
+       ],
+       "say": "Sometimes a child shares something heavy. Stay calm, find a quiet moment, and listen more than you talk. Thank them for telling you. Promise to help, rather than promising to keep a secret. Every Maple check-in ends with a short safety step, and if an answer needs a closer look, the For grown-ups box tells you what to do next. If a child talks about wanting to die or to hurt themselves, call their doctor, or call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Keep it light. A gift, not a test.",
+       "say": "And keep it light. Maple works best when it feels like a gift, not a test. A child who feels heard today is more ready to talk tomorrow."
+      },
+      {
+       "k": "quiz",
+       "q": "Which opener invites a child to talk?",
+       "opts": [
+        "What's wrong now?",
+        "Tell me about that rain cloud.",
+        "Cheer up, it's not a big deal."
+       ],
+       "right": 1,
+       "why": "A curious question opens more doors than a worried one.",
+       "say": "Quick question. Which opener invites a child to talk?"
+      }
+     ]
+    },
+    {
+     "id": "mp-p-feelings",
+     "n": 2,
+     "title": "Big Feelings, Calm Grown-ups",
+     "mins": 6,
+     "blurb": "How a grown-up who resets first can help a child find their calm.",
+     "sources": [
+      "lieberman",
+      "siegel"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "For Grown-ups, Lesson 2",
+       "h": "Big Feelings, Calm Grown-ups",
+       "sub": "Your calm is the lighthouse.",
+       "say": "Every child has big feelings. Mad, sad, scared, and wound up. This lesson is about the grown-up in the room, and how your calm can help a child find theirs."
+      },
+      {
+       "k": "big",
+       "h": "Kids borrow our calm.",
+       "sub": "Steady yourself first.",
+       "say": "Kids borrow our calm. When a feeling gets really big, a child's body takes over, and words bounce off. But your calm body and your soft voice still get through. So the first step is always the same. Steady yourself first."
+      },
+      {
+       "k": "story",
+       "title": "A Lion-Sized Reset",
+       "lines": [
+        "My alarm didn't go off, the dog got into the trash, and I walked out the door with two different shoes on.",
+        "So I parked a little early, rolled down the window, and decided it was time for a reset.",
+        "After the third roar my jaw loosened, my shoulders dropped, and I actually started laughing at myself."
+       ],
+       "lesson": "The grown-up resets first.",
+       "note": "Names and details changed",
+       "hold": 2,
+       "say": "My alarm didn't go off, the dog got into the trash, and I walked out the door with two different shoes on. A detour added twenty minutes. When I finally pulled up to the patient's house, I felt like my head was spinning. So I parked a little early, rolled down the window, and decided it was time for a reset. I did a Lion's Breath, three times, right there in the front seat. After the third roar my jaw loosened, my shoulders dropped, and I actually started laughing at myself. I walked into that visit feeling steady and present."
+      },
+      {
+       "k": "points",
+       "h": "Reset before you step in",
+       "items": [
+        [
+         "Notice your signals",
+         "Tight jaw, rising voice, hot face"
+        ],
+        [
+         "Take one slow breath",
+         "Before you say a word"
+        ],
+        [
+         "Get low and soft",
+         "A little to the side, few words"
+        ]
+       ],
+       "say": "The same kind of reset works at home, before you step into a child's storm. Notice your own signals. A tight jaw, a rising voice, a hot face. Take one slow breath before you say a word. Then get down low, a little to the side, with a soft voice and very few words."
+      },
+      {
+       "k": "big",
+       "h": "Try a Lion's Breath",
+       "sub": "In through your nose. Mouth wide, tongue out, haaa.",
+       "beats": [
+        "Let us try one together, right now.",
+        "Breathe in deep through your nose.",
+        "Now open your mouth wide, stick your tongue out, and breathe out with a long haaa.",
+        {
+         "t": "Do two more on your own, as big as you like.",
+         "w": 12
+        }
+       ],
+       "say": "Let us try one together, right now. Breathe in deep through your nose. Now open your mouth wide, stick your tongue out, and breathe out with a long haaa. Do two more on your own, as big as you like."
+      },
+      {
+       "k": "words",
+       "h": "Few words, the same each time",
+       "items": [
+        "I'm here.",
+        "You're safe.",
+        "I'll wait with you."
+       ],
+       "say": "In the middle of the storm, use a few words, the same ones each time. I'm here. You're safe. I'll wait with you. Save the lessons and the questions for later. Waiting is doing something."
+      },
+      {
+       "k": "points",
+       "h": "Give their body a job",
+       "items": [
+        [
+         "Balloon Breaths",
+         "Hands on belly, fill it slowly"
+        ],
+        [
+         "Shake It Out",
+         "Like a wet puppy, then stand still"
+        ],
+        [
+         "Calm Corner",
+         "A blanket and a soft toy"
+        ],
+        [
+         "Squeeze a pillow",
+         "Or push against the wall"
+        ]
+       ],
+       "say": "Then give their body a job. Balloon Breaths, with hands on the belly, filling it up slowly like a balloon. Shake It Out, like a wet puppy, then stand still. A Calm Corner with a blanket and a soft toy. Or squeeze a pillow, or push against the wall."
+      },
+      {
+       "k": "points",
+       "h": "After the storm",
+       "items": [
+        [
+         "Reconnect before you correct",
+         "A hug, a snack, or quiet time"
+        ],
+        [
+         "Name it together",
+         "You felt really frustrated"
+        ],
+        [
+         "Make it right together",
+         "Clean up, a kind word, or a redo"
+        ]
+       ],
+       "say": "After the storm, reconnect before you correct. A hug, a snack, or quiet time together comes first. Then name the feeling together. You felt really frustrated. Putting a feeling into words helps calm it down. In Maple, that practice is called Name It to Tame It. Then make it right together, with a clean up, a kind word, or a redo."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "Growth Plan",
+        "p": "Pick Bark practices to try together on calm days."
+       },
+       "say": "In Maple, Bark is how a child handles big feelings. Open your child's Growth Plan and pick a Bark practice or two, like Balloon Breaths or Name It to Tame It. Practice them when things are calm, so they are ready when things are not. You can even tap Add mine and write in your own, like a family Lion's Breath."
+      },
+      {
+       "k": "card",
+       "title": "When Life Changes",
+       "body": "Two guides for stormy days.",
+       "fields": [
+        [
+         "",
+         "In the Middle of a Meltdown"
+        ],
+        [
+         "",
+         "Anger and Big Outbursts"
+        ]
+       ],
+       "btns": [
+        "Talking It Through"
+       ],
+       "tap": 0,
+       "say": "When Life Changes has two guides for stormy days. In the Middle of a Meltdown, and Anger and Big Outbursts. Each one has words to say during and after, and the questions kids often ask, like, am I in trouble?"
+      },
+      {
+       "k": "points",
+       "h": "When to reach out",
+       "items": [
+        [
+         "Storms most days",
+         "Talk with your doctor or school counselor"
+        ],
+        [
+         "Talk of hurting themselves",
+         "Call or text 988, any time"
+        ],
+        [
+         "Danger right now",
+         "Call 911"
+        ]
+       ],
+       "say": "Reach out for more help if meltdowns happen most days, last a long time, or keep getting worse. Your pediatrician or school counselor is a good first call. If a child talks about hurting themselves or not wanting to be alive, call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Reset first. Then reach for them.",
+       "sub": "Even on the messy mornings.",
+       "say": "You will not get it right every time. Nobody does. Take a breath, come back, and make it right together. Your child learns calm by watching you find yours, even on the messy mornings."
+      },
+      {
+       "k": "quiz",
+       "q": "In a meltdown, what helps first?",
+       "opts": [
+        "A long talk about the rules",
+        "Your own slow breath and a soft voice",
+        "Counting down to a consequence"
+       ],
+       "right": 1,
+       "why": "Kids borrow our calm. Steady yourself first, then help them.",
+       "say": "Quick question. In the middle of a meltdown, what helps first?"
+      }
+     ]
+    },
+    {
+     "id": "mp-p-faith",
+     "n": 3,
+     "title": "Wonder, Faith, and Big Questions",
+     "mins": 6,
+     "blurb": "Making room for wonder and big questions, starting from your own family.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "For Grown-ups, Lesson 3",
+       "h": "Wonder, Faith, and Big Questions",
+       "sub": "Every family fills in its own roots.",
+       "say": "Kids ask big questions. Why is the sky so big? Where do people go when they die? This lesson is about wonder, faith, and making room for big questions, in families of all faith traditions and everything in-between."
+      },
+      {
+       "k": "big",
+       "h": "Roots: what grounds you.",
+       "sub": "Feeling safe, loved, and calm inside.",
+       "say": "In Maple, Roots is what grounds you. For a child, that means feeling safe, loved, and calm inside. Roots leaves room for every family to fill it in with their own tradition, and it is where wonder and faith most often show up."
+      },
+      {
+       "k": "points",
+       "h": "Many doors to the holy",
+       "items": [
+        [
+         "Prayer and worship",
+         "In your family's own way"
+        ],
+        [
+         "Quiet and stillness",
+         "One calm minute together"
+        ],
+        [
+         "Nature and wonder",
+         "Clouds, bugs, and the night sky"
+        ],
+        [
+         "Family traditions",
+         "A song, a blessing, a meal"
+        ]
+       ],
+       "say": "There are many doors into this part of a child's life. For some families, it is God, prayer, and worship. For others, it is quiet and stillness, a walk outside, a sky full of stars, or a tradition your family keeps, like a song, a blessing, or a special meal. Every one of these can help a child feel held."
+      },
+      {
+       "k": "big",
+       "h": "Start from your family.",
+       "sub": "Share what holds you.",
+       "say": "Start from your family. Share what holds you, simply and honestly, in your own words. A prayer, a verse, a practice, or a quiet habit. Your child learns most from watching what you turn to when life feels wobbly."
+      },
+      {
+       "k": "words",
+       "h": "Ask about experience",
+       "items": [
+        "When do you feel most safe and loved?",
+        "What helps you feel peaceful inside?",
+        "What big question are you wondering about?"
+       ],
+       "say": "Then ask about their experience. These come from the Roots starters in the Grown-up Guide. When do you feel most safe and loved? What helps you feel peaceful inside? And, what big question are you wondering about? Questions like these fit every child, in every family."
+      },
+      {
+       "k": "points",
+       "h": "When a big question comes",
+       "items": [
+        [
+         "Let them wonder",
+         "No need to rush an answer"
+        ],
+        [
+         "Ask what they think",
+         "What made you wonder that?"
+        ],
+        [
+         "Say I don't know, kindly",
+         "And share what you do know"
+        ],
+        [
+         "Find out together",
+         "In a book, or by asking someone"
+        ]
+       ],
+       "say": "When a big question comes, let them wonder. There is no need to rush to an answer. Ask what they think, or what made them wonder that. It is okay to say, I don't know everything, and then share what you do know. Some families say, I know love doesn't end. And you can find out together, in a book, or by asking someone you trust."
+      },
+      {
+       "k": "big",
+       "h": "Holy things can feel like a safe place.",
+       "sub": "Notice: comfort, or worry?",
+       "say": "Here is something worth watching. For most children, faith and holy things are a comfort. For a few, something they heard can turn into a worry. Notice which one it is for your child. If something holy starts to feel scary, slow down, listen, and talk with someone you trust, like a pastor or faith leader."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Growth Plan: Roots",
+       "rows": [
+        [
+         "Quiet Together",
+         "Chosen",
+         "#5F7D48"
+        ],
+        [
+         "Wonder Walk",
+         "Chosen",
+         "#5F7D48"
+        ],
+        [
+         "Bedtime Blessing",
+         ""
+        ],
+        [
+         "Look Up",
+         ""
+        ],
+        [
+         "Our Family Way",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "Your child's Growth Plan has Roots practices that fit many homes. Quiet Together, a prayer or one still minute side by side. Wonder Walk, looking for three things that make you say wow. Bedtime Blessing, with a blessing, a prayer, or kind words. Look Up, at the clouds, the moon, or the stars. And Our Family Way, a tradition your family keeps. Pick what fits your home."
+      },
+      {
+       "k": "card",
+       "title": "Faith and the Holy",
+       "body": "A gentle word for families, in every When Life Changes guide.",
+       "fields": [
+        [
+         "Search",
+         "a pet died"
+        ]
+       ],
+       "btns": [
+        "Talking It Through"
+       ],
+       "tap": 0,
+       "say": "Big questions often arrive with big changes, like a death in the family or a pet that died. Every guide in When Life Changes has a section called Faith and the Holy, with a gentle word for families who want one."
+      },
+      {
+       "k": "big",
+       "h": "What holds you?",
+       "sub": "Say its name out loud.",
+       "beats": [
+        "Let us try something before we finish.",
+        "Think of one thing that holds you when life feels wobbly.",
+        "It might be a prayer, a place outside, a song, or a quiet habit.",
+        {
+         "t": "Say its name out loud, softly, right now.",
+         "w": 8
+        }
+       ],
+       "say": "Let us try something before we finish. Think of one thing that holds you when life feels wobbly. It might be a prayer, a place outside, a song, or a quiet habit. Say its name out loud, softly, right now."
+      },
+      {
+       "k": "points",
+       "h": "For every grown-up",
+       "items": [
+        [
+         "Teachers",
+         "Each child answers from their family's tradition"
+        ],
+        [
+         "Rainy roots for weeks",
+         "Talk with a pastor, counselor, or doctor"
+        ],
+        [
+         "Talk of wanting to die",
+         "Call or text 988. In danger, call 911."
+        ]
+       ],
+       "say": "That one thing is a gift you can share with your child this week. For teachers, Roots leaves room for every child to answer from their own family's tradition, so check with your school about how it fits your classroom. If roots stay rainy for more than a couple of weeks, reach out to a pastor, a school counselor, or your child's doctor. And if a child ever talks about wanting to die, call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Wonder is a door. Walk through it together.",
+       "say": "Wonder is a door. You do not need every answer to walk through it together."
+      },
+      {
+       "k": "quiz",
+       "q": "Which question asks about experience?",
+       "opts": [
+        "What should you believe?",
+        "When do you feel most safe and loved?",
+        "Why did you get that wrong?"
+       ],
+       "right": 1,
+       "why": "Asking about experience opens the door for every child, in every family.",
+       "say": "Quick question. Which question asks about a child's experience?"
+      }
+     ]
+    },
+    {
+     "id": "mp-p-worry",
+     "n": 4,
+     "title": "When to Worry, and Who to Call",
+     "mins": 6,
+     "blurb": "The signs that call for more help, how to ask about safety, and who to call.",
+     "sources": [
+      "dazzi",
+      [
+       "988 Suicide and Crisis Lifeline",
+       "https://988lifeline.org"
+      ],
+      [
+       "HealthyChildren.org (American Academy of Pediatrics)",
+       "https://www.healthychildren.org"
+      ],
+      [
+       "Childhelp National Child Abuse Hotline",
+       "https://www.childhelphotline.org"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "For Grown-ups, Lesson 4",
+       "h": "When to Worry, and Who to Call",
+       "sub": "Calm, ready, and close by.",
+       "say": "Most rainy days pass with time, closeness, and patience. This lesson is about the days that need more. What to watch for, how to ask, and who to call."
+      },
+      {
+       "k": "big",
+       "h": "Rain is part of growing.",
+       "sub": "Some storms need more hands.",
+       "say": "Every child has rainy days, and Maple treats rain as part of how a tree grows. Your job is not to stop every storm. Your job is to notice when a storm needs more hands, and to know whose hands to reach for."
+      },
+      {
+       "k": "points",
+       "h": "Signs to reach out",
+       "items": [
+        [
+         "Rain for weeks",
+         "Rainy weather lasts more than a couple of weeks"
+        ],
+        [
+         "Joy goes quiet",
+         "They stop enjoying what they loved"
+        ],
+        [
+         "Big changes",
+         "Sleep, eating, or schoolwork shifts a lot"
+        ],
+        [
+         "Someone is hurting them",
+         "Or being mean to them"
+        ]
+       ],
+       "say": "The Grown-up Guide names four signs to reach out. Rainy weather that lasts more than a couple of weeks. A child who stops enjoying the things they used to love. Big changes in sleep, eating, or schoolwork. And a child who says someone is hurting them, or being mean to them."
+      },
+      {
+       "k": "flow",
+       "h": "Who to reach for",
+       "steps": [
+        [
+         "Your child's doctor",
+         "Their pediatrician knows them"
+        ],
+        [
+         "The school counselor",
+         "Sees them most days"
+        ],
+        [
+         "Someone you trust",
+         "A pastor, a teacher, a friend"
+        ]
+       ],
+       "say": "When you see those signs, reach out. Start with your child's doctor. Their pediatrician knows their body and their history, and can help you find the next step. Talk with the school counselor, who sees your child most days. And lean on someone you trust, like a pastor or a teacher. You do not have to figure this out alone."
+      },
+      {
+       "k": "card",
+       "title": "Staying safe",
+       "body": "Is anyone hurting you, or making you feel scared?",
+       "fields": [
+        [
+         "",
+         "Yes"
+        ],
+        [
+         "",
+         "No"
+        ],
+        [
+         "",
+         "Not sure"
+        ]
+       ],
+       "btns": [
+        "See my tree"
+       ],
+       "tap": 0,
+       "say": "Every Maple check-in ends with a short safety step. Every grade answers one question. Is anyone hurting you, or making you feel scared? Grades three to five also answer one gentle question about wishing they were not alive. A yes or a not sure shows your child a calm card with nine eight eight and nine one one, and shows you what to do next."
+      },
+      {
+       "k": "big",
+       "h": "Asking does not put the idea in their head.",
+       "sub": "It opens a door.",
+       "say": "Many grown-ups worry that asking about dying will give a child the idea. Research says it does not. Asking opens a door, and it tells your child that nothing is too big to bring to you."
+      },
+      {
+       "k": "words",
+       "h": "Ask in their words",
+       "items": [
+        "Sometimes when kids feel really sad, they wish they were not alive. Have you felt like that?",
+        "Are you thinking about hurting yourself?",
+        "I am really glad you told me. Can you tell me more?"
+       ],
+       "say": "Ask in words your child can hold. Maple's own question is a good one. Sometimes when kids feel really sad, they wish they were not alive. Have you felt like that? If the answer is yes, ask plainly. Are you thinking about hurting yourself? Then listen. I am really glad you told me. Can you tell me more?"
+      },
+      {
+       "k": "big",
+       "beats": [
+        "Practice the words that matter most, out loud, so they are ready when you need them.",
+        "Say them now, slowly.",
+        {
+         "t": "Thank you for telling me. You are not in trouble. I am going to help.",
+         "w": 10
+        }
+       ],
+       "h": "Say the words that matter most.",
+       "sub": "Thank you for telling me. You are not in trouble.",
+       "say": "Practice the words that matter most, out loud, so they are ready when you need them. Say them now, slowly. Thank you for telling me. You are not in trouble. I am going to help."
+      },
+      {
+       "k": "points",
+       "h": "If your child says yes",
+       "items": [
+        [
+         "Stay close and stay calm",
+         "Your face tells them it was safe to tell"
+        ],
+        [
+         "Call or text 988",
+         "Or call their doctor today"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ],
+        [
+         "Keep it with helpers",
+         "Never promise to keep it a secret"
+        ]
+       ],
+       "say": "If your child talks about wanting to die or to hurt themselves, take it seriously, every time, even from a very young child. Stay close, and stay calm. Call their doctor right away, or call or text nine eight eight, the Suicide and Crisis Lifeline, any time. If your child is in danger right now, call nine one one. And never promise to keep it a secret. Tell them, kindly, that you will bring in people whose job is to help kids."
+      },
+      {
+       "k": "points",
+       "h": "If someone is hurting them",
+       "items": [
+        [
+         "Believe them",
+         "Thank them for telling"
+        ],
+        [
+         "Listen, then get help",
+         "Let trained people ask the questions"
+        ],
+        [
+         "Report it the same day",
+         "Child protection or the Childhelp hotline"
+        ]
+       ],
+       "say": "If your child says someone is hurting them, believe them, and thank them for telling. Listen without asking for details. Trained people will ask the questions. Then report it the same day, to your county child protection agency, or the police. The Childhelp hotline can help you figure out who to call."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "My Kids",
+        "When Life Changes",
+        "Grown-up Guide"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Safety",
+        "p": "Four guides: when a child tells you someone hurt them, wanting to die, body safety, and online secrets."
+       },
+       "say": "Read ahead, before you need it. In When Life Changes, the Safety guides walk you through it. When a child tells you someone hurt them. When a child talks about wanting to die. Teaching body safety. And when someone online asks for secrets. Each has a quick card, words to say, and where to get help."
+      },
+      {
+       "k": "big",
+       "h": "A calm grown-up is the strongest help.",
+       "sub": "988, any time. 911 if a child is in danger.",
+       "say": "You do not need to be an expert. A calm grown-up who listens, and then reaches for help, is one of the strongest helps a child can have. Nine eight eight is there any time. And nine one one is there if a child is in danger right now."
+      },
+      {
+       "k": "quiz",
+       "q": "Your child says they wish they were not alive. What comes first?",
+       "opts": [
+        "Promise to keep it a secret",
+        "Stay calm, thank them, and get help today",
+        "Wait to see if it passes"
+       ],
+       "right": 1,
+       "why": "Take it seriously every time. Stay close, and call their doctor or 988 today.",
+       "say": "Quick question. Your child says they wish they were not alive. What comes first?"
+      }
+     ]
+    },
+    {
+     "id": "mp-p-together",
+     "n": 5,
+     "title": "Using Maple Together",
+     "mins": 6,
+     "blurb": "Side by side with your child: the check-in, the weather, practices, and the growth plan.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "For Grown-ups, Lesson 5",
+       "h": "Using Maple Together",
+       "sub": "Side by side, one small step at a time.",
+       "say": "Maple is made to do together. This lesson shows how to sit side by side with your child, from the first check-in to the daily practices."
+      },
+      {
+       "k": "big",
+       "h": "The most important part happens after the screen.",
+       "sub": "Maple opens the door. You walk through it together.",
+       "say": "The most important part of Maple happens after the screen. Maple opens the door to a good talk. You and your child walk through it together."
+      },
+      {
+       "k": "flow",
+       "h": "Two ways to check in",
+       "steps": [
+        [
+         "On my own",
+         "The child taps through, you stay near"
+        ],
+        [
+         "With a grown-up",
+         "A short tip under every question"
+        ]
+       ],
+       "say": "A check-in starts with a choice. On my own, or With a grown-up. Even on my own, stay nearby and be ready to talk. With a grown-up adds a short tip under every question, and a Why this question link, so you know what each one is listening for. Kindergarten through grade two starts with read aloud on."
+      },
+      {
+       "k": "points",
+       "h": "While they answer",
+       "items": [
+        [
+         "Pick an unhurried moment",
+         "Before bed, or a slow morning"
+        ],
+        [
+         "Let them answer",
+         "Their words, not yours"
+        ],
+        [
+         "I don’t know is okay",
+         "Any part can be skipped"
+        ]
+       ],
+       "say": "Pick an unhurried moment, like a quiet afternoon, or a slow weekend morning. Let your child answer in their own way, even when you would have answered differently. I don’t know is always an honest answer, and any part can be skipped. A check-in takes about ten to fifteen minutes."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Check-in",
+       "rows": [
+        [
+         "Roots",
+         "Sunny",
+         "#C07A26"
+        ],
+        [
+         "Trunk",
+         "Sunny",
+         "#C07A26"
+        ],
+        [
+         "Bark",
+         "Rainy",
+         "#3D5A73"
+        ],
+        [
+         "Branches",
+         "Partly cloudy",
+         "#7D6B57"
+        ],
+        [
+         "Leaves",
+         "Sunny",
+         "#C07A26"
+        ],
+        [
+         "Fruit",
+         "Sunny",
+         "#C07A26"
+        ]
+       ],
+       "tap": 2,
+       "panel": {
+        "h": "Tell me about that rain cloud.",
+        "sub": "Curious, not worried.",
+        "items": [
+         "Listen more than you fix",
+         "Take their weather seriously",
+         "Share a little of your own"
+        ]
+       },
+       "say": "At the end, each part of the tree gets its weather. Sunny, partly cloudy, or rainy. Your child sees the weather. You see a simple level for each part, Strong, Steady, or Growing Edge, so you know where to lean in. When you see rain, be curious, not worried. Tell me about that rain cloud opens more doors than what’s wrong."
+      },
+      {
+       "k": "points",
+       "h": "Talking about the weather",
+       "items": [
+        [
+         "Listen more than you fix",
+         "Being heard is often enough"
+        ],
+        [
+         "Take it seriously",
+         "Even when it seems small"
+        ],
+        [
+         "Share your own weather",
+         "Everyone has rainy days"
+        ]
+       ],
+       "say": "Listen more than you fix. Kids often just need to be heard. Take their weather seriously, even if it seems small to you. And share a little of your own weather. It shows them that everyone has rainy days."
+      },
+      {
+       "k": "big",
+       "beats": [
+        "Try it now, the way you might at the kitchen table.",
+        "Say your own weather out loud, in one short line.",
+        {
+         "t": "Today I feel partly cloudy, because I am tired, and I am glad to be here with you.",
+         "w": 10
+        }
+       ],
+       "h": "Today I feel partly cloudy, because...",
+       "sub": "Say your own weather out loud.",
+       "say": "Try it now, the way you might at the kitchen table. Say your own weather out loud, in one short line. Today I feel partly cloudy, because I am tired, and I am glad to be here with you."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "Growth Plan",
+        "p": "Pick things to practice. About 3 for each part is a good start. No limit, and add your own."
+       },
+       "say": "After the check-in, your child’s tree is ready to tend. Open the Growth Plan together. Maple suggests starting with the parts that had rain or clouds. About three for each part is a good start, and a few more for any part with clouds or rain. There is no limit, and you can add your own ideas."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Today",
+        "p": "Check off a practice. How to do this, Easier today, and a note."
+       },
+       "say": "Each day, open Today together. Tap How to do this, and read the steps out loud. On a tired day, tap Easier today for a smaller version. Check off what you do, and add a short note if you like. A few minutes a day is plenty."
+      },
+      {
+       "k": "points",
+       "h": "Watch it grow",
+       "items": [
+        [
+         "A bright leaf",
+         "For each part tended today"
+        ],
+        [
+         "Days tended",
+         "Counted on the Today tab"
+        ],
+        [
+         "A new ring",
+         "With every check-in"
+        ],
+        [
+         "A weekly question",
+         "To talk about together"
+        ]
+       ],
+       "say": "Then cheer together as the tree grows. Each part tended today brings a bright leaf. The Today tab counts the days tended. Every new check-in adds a ring. And each week brings a short check-in and a question to talk about. Celebrate each one."
+      },
+      {
+       "k": "points",
+       "h": "What you can see",
+       "items": [
+        [
+         "The big picture",
+         "Check-ins, the tree, days tended"
+        ],
+        [
+         "Always shown to you",
+         "If someone is hurting or scaring them"
+        ],
+        [
+         "Just theirs",
+         "The weekly thoughts they write"
+        ]
+       ],
+       "say": "Here is what you can see. The big picture, which means their check-ins, their tree, how many days they tended it, and which parts they are tending. If your child says someone is hurting or scaring them, or that they don’t want tomorrow to come, you always see it, so you can help. The weekly thoughts they write are theirs, and they can share one with you anytime. Everything stays on this device."
+      },
+      {
+       "k": "big",
+       "h": "Keep it light. Maple works best as a gift.",
+       "sub": "A few minutes, side by side.",
+       "say": "Keep it light. Maple works best when it feels like a gift, not a test. A few minutes, side by side, is how a tree grows."
+      },
+      {
+       "k": "quiz",
+       "q": "Your child’s Bark shows rain. What is a good first step?",
+       "opts": [
+        "Fix it right away",
+        "Ask with curiosity: tell me about that rain cloud",
+        "Skip that part next time"
+       ],
+       "right": 1,
+       "why": "Be curious, not worried. Listening opens the door.",
+       "say": "Quick question. Your child’s Bark shows rain. What is a good first step?"
+      }
+     ]
+    },
+    {
+     "id": "mp-p-you",
+     "n": 6,
+     "title": "Caring for Yourself Too",
+     "mins": 5,
+     "blurb": "Your tree matters too, and tending it helps the little ones who lean on you.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "For Grown-ups, Lesson 6",
+       "h": "Caring for Yourself Too",
+       "sub": "Your tree matters too.",
+       "say": "This last lesson is for you. Not as a parent, a grandparent, or a teacher. Just you. Because your tree matters too."
+      },
+      {
+       "k": "big",
+       "h": "A tree gives shade from what its roots can drink.",
+       "sub": "Tending yourself is part of tending them.",
+       "say": "A tree can only give shade from what its roots can drink. Grown-ups are the same. Tending yourself is part of tending the kids who lean on you. It is not selfish. It is how the shade keeps coming."
+      },
+      {
+       "k": "points",
+       "h": "Kids notice our weather",
+       "items": [
+        [
+         "They read your face",
+         "Long before your words"
+        ],
+        [
+         "They borrow your calm",
+         "And feel your rush"
+        ],
+        [
+         "They learn from you",
+         "How a grown-up tends a hard day"
+        ]
+       ],
+       "say": "Kids notice our weather. They read your face long before they hear your words. On a calm day, they borrow your calm. On a rushed day, they feel the rush. And every day, they are learning from you how a grown-up tends a hard day."
+      },
+      {
+       "k": "points",
+       "h": "Signs you are running low",
+       "items": [
+        [
+         "Short fuse",
+         "Small things feel huge"
+        ],
+        [
+         "Running on empty",
+         "Sleep, meals, and breaks slip away"
+        ],
+        [
+         "Pulling away",
+         "From people who fill you up"
+        ],
+        [
+         "Joy goes quiet",
+         "Even the good parts feel flat"
+        ]
+       ],
+       "say": "Here are some signs you are running low. A short fuse, when small things feel huge. Running on empty, when sleep, meals, and breaks slip away. Pulling away from the people who fill you up. And joy going quiet, when even the good parts feel flat. These are signals, not failures. They tell you where to tend."
+      },
+      {
+       "k": "six",
+       "h": "Your tree has six parts too",
+       "words": [
+        "What holds you up",
+        "What you live for",
+        "Your mind and feelings",
+        "Your people",
+        "Sleep, movement, food",
+        "Something to look forward to"
+       ],
+       "say": "Your tree has the same six parts as your child’s. Roots, what holds you up. Trunk, what you live for. Bark, your mind and feelings. Branches, your people. Leaves, your body. And Fruit, something to look forward to."
+      },
+      {
+       "k": "points",
+       "h": "Small things count",
+       "items": [
+        [
+         "Rest when you can",
+         "An early night beats a late scroll"
+        ],
+        [
+         "Reach for one person",
+         "A call, a text, a coffee"
+        ],
+        [
+         "Move a little",
+         "A walk around the block"
+        ],
+        [
+         "Ask for help",
+         "Trade a pickup, share a meal"
+        ]
+       ],
+       "say": "Small things count. Rest when you can. An early night often helps more than a late scroll. Reach for one person, with a call, a text, or a coffee. Move a little, even a walk around the block. And ask for help. Trade a school pickup. Share a meal. Letting others help you shows your kids that asking is strong."
+      },
+      {
+       "k": "points",
+       "h": "Practice: A Two-Minute Refill",
+       "items": [
+        [
+         "Settle",
+         "Feet down, one slow breath"
+        ],
+        [
+         "Name your weather",
+         "Sunny, partly cloudy, or rainy"
+        ],
+        [
+         "What helps you?",
+         "One thing that brings you back"
+        ],
+        [
+         "One small way today",
+         "Small is fine"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 6,
+         "2": 8,
+         "3": 10,
+         "4": 8
+        },
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Let us practice, right where you are. Put your feet down, and take one slow breath. Now name your own weather today, sunny, partly cloudy, or rainy. What is one thing that helps you feel more like yourself? Choose one small way to give yourself that today."
+      },
+      {
+       "k": "big",
+       "h": "Snapped today? Repair counts more.",
+       "sub": "I was grumpy. I am sorry. I love you.",
+       "say": "Some days you will snap, or rush, or say it wrong. Every grown-up does. What matters most is what comes after. Go back and repair it. I was grumpy, and I am sorry. I love you. That small repair teaches your child more than a perfect day ever could."
+      },
+      {
+       "k": "points",
+       "h": "Support for you",
+       "items": [
+        [
+         "Oak",
+         "A check-in for grown-ups, root to fruit"
+        ],
+        [
+         "When Life Changes",
+         "Guides for hard seasons"
+        ],
+        [
+         "Need to talk now?",
+         "Call or text 988, any time"
+        ]
+       ],
+       "say": "Grounded has support for you too. Oak is a check-in for grown-ups, with the same six parts, from root to fruit. When Life Changes has guides for the hard seasons. If your own rain lasts for weeks, talk with your doctor or a counselor. And if you need to talk right now, call or text nine eight eight, any time. If anyone is in danger, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Tend your tree, and the shade keeps coming.",
+       "sub": "Thank you for all you give.",
+       "say": "Tend your tree, a little at a time, and the shade keeps coming. You are doing more good than you know. Thank you for all you give to the kids in your life."
+      },
+      {
+       "k": "quiz",
+       "q": "Why does tending your own tree matter?",
+       "opts": [
+        "It takes time away from your kids",
+        "It is part of tending the kids who lean on you",
+        "Only if you have extra time"
+       ],
+       "right": 1,
+       "why": "A tree gives shade from what its roots can drink.",
+       "say": "Last question. Why does tending your own tree matter?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "maple-support",
+   "kind": "support",
+   "title": "For Big Feelings",
+   "who": "Short videos for kids, to use right in the middle of it",
+   "lessons": [
+    {
+     "id": "mp-r-balloon",
+     "n": 1,
+     "title": "Balloon Breaths",
+     "mins": 3,
+     "blurb": "Slow belly breaths that help a big feeling get smaller.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "Balloon Breaths",
+       "sub": "Your belly is the balloon.",
+       "say": "Hi, friend! Let us make some balloons. No balloons needed. Your belly is the balloon!"
+      },
+      {
+       "k": "big",
+       "h": "Slow breaths help your body feel calm.",
+       "sub": "They work for mad, scared, sad, and wiggly.",
+       "say": "When a feeling gets really big, slow breaths can help it get smaller. They help with mad, scared, sad, and even wiggly."
+      },
+      {
+       "k": "points",
+       "h": "Get ready",
+       "items": [
+        [
+         "Sit or stand tall",
+         "Like a tall maple tree"
+        ],
+        [
+         "Hands on your belly",
+         "Right on the balloon"
+        ],
+        [
+         "Lips like a tiny straw",
+         "For blowing out slow"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "First, get ready. Sit or stand up tall, like a tall maple tree. Put your hands on your belly. Now make your lips small, like a tiny straw."
+      },
+      {
+       "k": "big",
+       "h": "Let’s blow up three balloons.",
+       "sub": "In through your nose. Out through your straw.",
+       "beats": [
+        "Let us blow up three balloons together.",
+        "Breathe in through your nose, slow and quiet.",
+        "Feel your belly get big and round.",
+        "Now let the air out through your straw, slow, slow, slow.",
+        "Feel your belly get small again.",
+        {
+         "t": "Now do two more balloons, nice and slow, and I will wait for you.",
+         "w": 12
+        }
+       ],
+       "say": "Let us blow up three balloons together. Breathe in through your nose, slow and quiet. Feel your belly get big and round. Now let the air out through your straw, slow, slow, slow. Feel your belly get small again. Now do two more balloons, nice and slow, and I will wait for you."
+      },
+      {
+       "k": "breathe",
+       "h": "Follow the circle",
+       "sub": "Big belly in. Little belly out.",
+       "hold": 20,
+       "say": "Now follow the circle. Breathe in while it grows. Breathe out while it shrinks."
+      },
+      {
+       "k": "points",
+       "h": "How do you feel now?",
+       "items": [
+        [
+         "Your belly",
+         "Softer?"
+        ],
+        [
+         "Your shoulders",
+         "Lower?"
+        ],
+        [
+         "Your feeling",
+         "A little smaller?"
+        ]
+       ],
+       "cue": {
+        "p": {
+         "1": 1.5,
+         "2": 1.5,
+         "3": 1.5
+        }
+       },
+       "say": "Let us check. Is your belly softer? Are your shoulders lower? Is your big feeling a little smaller? Even a tiny bit counts."
+      },
+      {
+       "k": "big",
+       "h": "One big balloon breath is enough.",
+       "sub": "Practice when you feel calm, so it’s ready for big feelings.",
+       "say": "Here is a secret. Even one big balloon breath helps. Try it when you feel calm, too. Then your balloon is ready when a feeling gets big."
+      },
+      {
+       "k": "big",
+       "h": "You can always go to a safe grown-up.",
+       "sub": "A parent, grandparent, teacher, or school counselor.",
+       "say": "And if a feeling stays big, go to a safe grown-up. A parent, a grandparent, a teacher, or your school counselor. They are glad to help you."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-scared",
+     "n": 2,
+     "title": "When I Feel Scared",
+     "mins": 3,
+     "blurb": "Feet down, slow breaths, and a picture of your safe place.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When I Feel Scared",
+       "sub": "Let’s get calm together.",
+       "say": "Hi, friend. Are you feeling scared? I am right here with you. Let us get calm together."
+      },
+      {
+       "k": "big",
+       "h": "Everybody feels scared sometimes.",
+       "sub": "Even grown-ups. Even brave people.",
+       "say": "Everybody feels scared sometimes. Kids do. Grown-ups do. Even really brave people do. Scared is a feeling, and feelings come and go, like weather."
+      },
+      {
+       "k": "points",
+       "h": "Scared can feel like",
+       "items": [
+        [
+         "A fast heart",
+         "Thump, thump, thump"
+        ],
+        [
+         "A tight tummy",
+         "Like a knot"
+        ],
+        [
+         "Shaky hands",
+         "Wiggly and cold"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Scared can feel funny in your body. Your heart might go thump, thump, thump. Your tummy might feel tight, like a knot. Your hands might feel shaky."
+      },
+      {
+       "k": "points",
+       "h": "Feet on the ground",
+       "items": [
+        [
+         "Press your feet down",
+         "Strong, like roots"
+        ],
+        [
+         "Find two things you see",
+         "Look slowly around"
+        ],
+        [
+         "Find one thing you hear",
+         "Near or far"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ],
+        "p": {
+         "1": 2,
+         "2": 3,
+         "3": 3
+        }
+       },
+       "say": "Let us grow some roots. Press your feet down into the floor, strong, like a tree. Now look around and find two things you can see. And find one thing you can hear."
+      },
+      {
+       "k": "breathe",
+       "h": "Balloon breaths",
+       "sub": "Big belly in. Little belly out.",
+       "hold": 16,
+       "say": "Now put your hands on your belly. Breathe in slow, like a balloon. And let it out slow."
+      },
+      {
+       "k": "big",
+       "h": "Picture your safe place.",
+       "sub": "Where you feel cozy, calm, and loved.",
+       "beats": [
+        "Now close your eyes, if you like.",
+        "Picture a place where you feel safe and cozy.",
+        "Maybe your bed, or a hug, or a sunny spot outside.",
+        "What do you see there?",
+        {
+         "t": "Stay in your safe place for a little while, and I will wait with you.",
+         "w": 10
+        }
+       ],
+       "say": "Now close your eyes, if you like. Picture a place where you feel safe and cozy. Maybe your bed, or a hug, or a sunny spot outside. What do you see there? Stay in your safe place for a little while, and I will wait with you."
+      },
+      {
+       "k": "words",
+       "h": "Say it with me",
+       "items": [
+        "I feel scared.",
+        "I can breathe.",
+        "I can get help."
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 1,
+         "3": 1.5
+        }
+       },
+       "say": "Say it with me. I feel scared. I can breathe. I can get help."
+      },
+      {
+       "k": "big",
+       "h": "Go to a safe grown-up. You’re never in trouble for telling.",
+       "sub": "A parent, grandparent, teacher, or school counselor.",
+       "say": "Now go find a safe grown-up. A parent, a grandparent, a teacher, or your school counselor. Tell them, I feel scared. And if someone is hurting you, tell a safe grown-up right away. You are never in trouble for telling."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-mad",
+     "n": 3,
+     "title": "When I Feel Really Mad",
+     "mins": 2,
+     "blurb": "Shake it out, breathe it slow, and name the mad.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When I Feel Really Mad",
+       "sub": "Let’s cool it down.",
+       "say": "Are you feeling really mad right now? That is okay. Let us cool it down together."
+      },
+      {
+       "k": "big",
+       "h": "Mad is okay to feel.",
+       "sub": "It tells you something matters to you.",
+       "say": "Mad is okay to feel. It tells you something matters to you. What we do with mad is up to us. We can keep our hands and words gentle, and let the mad out in a safe way."
+      },
+      {
+       "k": "points",
+       "h": "Mad can feel like",
+       "items": [
+        [
+         "Hot cheeks",
+         "Like a red sun"
+        ],
+        [
+         "Tight fists",
+         "Squeezed hard"
+        ],
+        [
+         "A loud voice inside",
+         "Wanting to yell"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Mad can feel hot in your body. Your cheeks might feel hot. Your hands might squeeze into tight fists. You might want to yell."
+      },
+      {
+       "k": "big",
+       "h": "Shake it out like a wet puppy!",
+       "sub": "Hands, arms, legs. Then stand still.",
+       "beats": [
+        "Let us shake the mad out.",
+        "Stand up and shake your hands, your arms, and your legs, like a wet puppy.",
+        "Shake, shake, shake, while I count to ten.",
+        {
+         "t": "One, two, three, four, five, six, seven, eight, nine, ten.",
+         "w": 8
+        }
+       ],
+       "say": "Let us shake the mad out. Stand up and shake your hands, your arms, and your legs, like a wet puppy. Shake, shake, shake, while I count to ten. One, two, three, four, five, six, seven, eight, nine, ten."
+      },
+      {
+       "k": "breathe",
+       "h": "Now stand still and breathe",
+       "sub": "Slow in. Slower out.",
+       "hold": 16,
+       "say": "Now stand still like a tree. Breathe in slow. And blow it out even slower, like cooling hot soup."
+      },
+      {
+       "k": "words",
+       "h": "Name it to tame it",
+       "items": [
+        "I feel mad.",
+        "I feel mad because...",
+        "I need a break."
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 2,
+         "3": 1.5
+        }
+       },
+       "say": "Now name it, to tame it. Say, I feel mad. You can say why, too: I feel mad because, and then what happened. And you can say, I need a break."
+      },
+      {
+       "k": "big",
+       "h": "Tell a safe grown-up what happened.",
+       "sub": "A parent, grandparent, teacher, or school counselor.",
+       "say": "When you feel a little cooler, tell a safe grown-up what happened. A parent, a grandparent, a teacher, or your school counselor. They can help you fix it, or make it right."
+      },
+      {
+       "k": "big",
+       "h": "Big feelings get smaller. You can do this.",
+       "say": "Big mad feelings get smaller. You can do this."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-sleep",
+     "n": 4,
+     "title": "When I Can’t Sleep",
+     "mins": 3,
+     "blurb": "A sleepy turtle, a heavy body, and slow breaths for bedtime.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When I Can’t Sleep",
+       "sub": "Slow and sleepy, like a turtle.",
+       "say": "Is it bedtime, and your eyes just will not close? Let us get slow and sleepy together. Snuggle in, and keep the sound soft."
+      },
+      {
+       "k": "big",
+       "h": "Lots of kids have trouble falling asleep.",
+       "sub": "Your body knows how to rest.",
+       "say": "Lots of kids have nights when sleep is slow to come. That is okay. Your body knows how to rest. We just need to help it slow down."
+      },
+      {
+       "k": "points",
+       "h": "A worry for the morning",
+       "items": [
+        [
+         "Got a worry?",
+         "Picture it in a little box"
+        ],
+        [
+         "Close the lid",
+         "It can wait"
+        ],
+        [
+         "Tomorrow",
+         "A grown-up can help with it"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Is a worry keeping you awake? Picture putting it in a little box. Close the lid. In the morning, you can open it with a grown-up, and they can help."
+      },
+      {
+       "k": "points",
+       "h": "Heavy like a sleepy turtle",
+       "items": [
+        [
+         "Your feet and legs",
+         "Heavy and still"
+        ],
+        [
+         "Your tummy",
+         "Soft, going up and down"
+        ],
+        [
+         "Your arms and hands",
+         "Floppy, like noodles"
+        ],
+        [
+         "Your face",
+         "Soft and sleepy"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 6,
+         "2": 6,
+         "3": 6,
+         "4": 6
+        },
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Now be a sleepy turtle, slow and still. Let your feet and legs get heavy. Let your tummy go soft and rise up and down. Let your arms and hands get floppy, like cooked noodles. And let your face go soft and sleepy."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow, sleepy breaths",
+       "sub": "In through your nose. Out nice and long.",
+       "hold": 30,
+       "say": "Now just breathe, nice and slow. In through your nose. And out, nice and long. If your mind wanders off, that is okay. Come back to the next breath."
+      },
+      {
+       "k": "big",
+       "h": "Still wide awake? Go tell your grown-up.",
+       "sub": "They can tuck you in, or sit with you a while.",
+       "say": "If you are still wide awake after a while, or a bad dream woke you up, go tell your grown-up. They can tuck you in again, or sit with you for a little bit."
+      },
+      {
+       "k": "big",
+       "h": "Resting counts, even before sleep comes.",
+       "say": "Resting counts, even before sleep comes. Good night, friend."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-sad",
+     "n": 5,
+     "title": "When I Feel Sad",
+     "mins": 2,
+     "blurb": "Name the sad, give yourself a hug, and let a grown-up help.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When I Feel Sad",
+       "sub": "Sad can come with you here.",
+       "say": "Hi, friend. Are you feeling sad today? You can bring your sad right here. Let us sit with it together."
+      },
+      {
+       "k": "big",
+       "h": "Sad is a rainy day inside.",
+       "sub": "Rainy days come, and they go.",
+       "say": "Sad is like a rainy day inside you. Everybody has rainy days. Rain helps trees grow, and rainy days come and go."
+      },
+      {
+       "k": "points",
+       "h": "Sad can feel like",
+       "items": [
+        [
+         "Tears",
+         "It’s okay to cry"
+        ],
+        [
+         "A heavy body",
+         "Slow and tired"
+        ],
+        [
+         "Wanting a hug",
+         "Or wanting to be close"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Sad can feel like tears. It is okay to cry. Sad can make your body feel heavy and tired. And sad can make you want a hug."
+      },
+      {
+       "k": "words",
+       "h": "Name it out loud",
+       "items": [
+        "I feel sad.",
+        "I feel sad because..."
+       ],
+       "beats": [
+        "Let us name it.",
+        "Say it out loud with me.",
+        "I feel sad.",
+        {
+         "t": "Now, if you want, say why you feel sad, and I will wait.",
+         "w": 10
+        }
+       ],
+       "say": "Let us name it. Say it out loud with me. I feel sad. Now, if you want, say why you feel sad, and I will wait."
+      },
+      {
+       "k": "points",
+       "h": "A cozy hug",
+       "items": [
+        [
+         "Hug yourself",
+         "Arms around, squeeze gently"
+        ],
+        [
+         "Or hug something soft",
+         "A pillow or a stuffed friend"
+        ],
+        [
+         "Rock slowly",
+         "Side to side"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ],
+        "p": {
+         "3": 3
+        }
+       },
+       "say": "Now give yourself a cozy hug. Wrap your arms around yourself and squeeze gently. Or hug a pillow, or a soft stuffed friend. Rock slowly, side to side."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow breaths",
+       "sub": "In slow. Out slow.",
+       "hold": 14,
+       "say": "Now breathe slow with the circle. In. And out."
+      },
+      {
+       "k": "big",
+       "h": "Tell a safe grown-up you feel sad.",
+       "sub": "A parent, grandparent, teacher, or school counselor.",
+       "say": "Sad feels better when you share it. Go tell a safe grown-up. A parent, a grandparent, a teacher, or your school counselor. You can say, I feel sad. Can you sit with me?"
+      },
+      {
+       "k": "big",
+       "h": "You are loved, on rainy days too.",
+       "say": "You are loved on sunny days, and on rainy days too."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-miss",
+     "n": 6,
+     "title": "When I Miss Someone",
+     "mins": 3,
+     "blurb": "A heart hug and a happy memory for when you miss someone you love.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When I Miss Someone",
+       "sub": "Missing is a kind of love.",
+       "say": "Sometimes we miss someone a whole lot. Maybe they live far away. Maybe they are gone for a while. Or maybe they died. If you are missing someone right now, come sit with me."
+      },
+      {
+       "k": "big",
+       "h": "Missing someone is love.",
+       "sub": "Your heart is remembering them.",
+       "say": "That achy feeling inside has a name. It is called missing. And missing someone is a kind of love. Your heart is remembering them."
+      },
+      {
+       "k": "breathe",
+       "h": "Hug breaths",
+       "sub": "Arms around you. Slow and soft.",
+       "hold": 14,
+       "say": "Let us give your heart a hug. Wrap your arms around yourself, like a big, cozy hug. Now breathe in slowly. And let it out, nice and long. Again, in. And out."
+      },
+      {
+       "k": "points",
+       "h": "Think of them",
+       "items": [
+        [
+         "Hand on your heart",
+         "Thump, thump"
+        ],
+        [
+         "Picture their face",
+         "Their smile, their voice"
+        ],
+        [
+         "One happy time",
+         "Something you did together"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 10
+        },
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Now put one hand on your heart. Can you feel it go thump, thump? Close your eyes, if you like, and picture their face. Think of one happy time you had together. Stay with that happy time for a little while."
+      },
+      {
+       "k": "words",
+       "h": "Say it softly",
+       "items": [
+        "I miss you.",
+        "I love you.",
+        "I remember you."
+       ],
+       "cue": {
+        "p": {
+         "1": 1.5,
+         "2": 1.5,
+         "3": 2
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "You can tell them, out loud or in your head. I miss you. I love you. I remember you."
+      },
+      {
+       "k": "points",
+       "h": "Ways to feel close",
+       "items": [
+        [
+         "Draw a picture",
+         "You and them together"
+        ],
+        [
+         "Hold something of theirs",
+         "A photo, a gift, a sweater"
+        ],
+        [
+         "Tell a grown-up",
+         "Share a story about them"
+        ]
+       ],
+       "say": "Here are some ways to feel close to them. Draw a picture of the two of you. Hold something that reminds you of them, like a photo or a gift. And tell a grown-up a story about them. Missing feels lighter when we share it."
+      },
+      {
+       "k": "big",
+       "h": "You can miss them and still have fun.",
+       "sub": "Both can be true.",
+       "say": "You can miss someone and still laugh and play today. Both can be true. Your heart has room for all of it."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-new",
+     "n": 7,
+     "title": "Before Something New",
+     "mins": 2,
+     "blurb": "Calm the butterflies and find your brave before something new.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "Before Something New",
+       "sub": "Brave can feel wobbly.",
+       "say": "Is something new coming up? A new school, a new class, a new team, or a new place? New things can make your tummy feel full of butterflies. Let us get ready together."
+      },
+      {
+       "k": "big",
+       "h": "Butterflies mean it matters.",
+       "sub": "Brave and nervous can go together.",
+       "say": "Butterflies in your tummy are normal. They show up when something matters to you. Being brave means you feel the butterflies, and you take a step anyway."
+      },
+      {
+       "k": "breathe",
+       "h": "Smell the flower, blow the candle",
+       "sub": "In through your nose. Out, soft and slow.",
+       "hold": 14,
+       "say": "Let us calm those butterflies. Pretend you are holding a flower. Smell it slowly through your nose. Now pretend it is a candle. Blow it out, soft and slow. Smell the flower. Blow the candle."
+      },
+      {
+       "k": "words",
+       "h": "Brave words",
+       "items": [
+        "I can do new things.",
+        "I can ask for help.",
+        "I can try."
+       ],
+       "cue": {
+        "w": {
+         "4": 9
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Now let us find some brave words. I can do new things. I can ask for help. I can try. Say them out loud with me, nice and strong."
+      },
+      {
+       "k": "points",
+       "h": "Get ready a little",
+       "items": [
+        [
+         "Ask questions",
+         "What will happen there?"
+        ],
+        [
+         "Picture it going okay",
+         "See yourself walking in"
+        ],
+        [
+         "Pack a little brave",
+         "A note or a small thing from home"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Here are ways to get ready. Ask your grown-up questions, like, what will happen there? And who will be with me? Picture yourself walking in, and picture it going okay. And pack a little brave, like a note from home or a small treasure in your pocket."
+      },
+      {
+       "k": "big",
+       "h": "New things can become your things.",
+       "sub": "Every friend was new once.",
+       "say": "Every favorite place was new once. Every friend was new once, too. New things can become your things. You are ready to try."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-wiggles",
+     "n": 8,
+     "title": "Wiggles Out",
+     "mins": 3,
+     "blurb": "Shake, stomp, and hop the wiggles out, then help your body settle.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "Wiggles Out",
+       "sub": "Shake, stomp, and settle.",
+       "say": "Do you have the wiggles? Is your body bouncy and buzzy, and it is hard to sit still? That is okay. Bodies love to move. Let us get those wiggles out, and then help your body settle."
+      },
+      {
+       "k": "big",
+       "h": "Stand up and make some room.",
+       "sub": "Arms out wide. Nothing to bump.",
+       "cue": {
+        "p": {
+         "1": 2
+        }
+       },
+       "say": "Stand up, if you can. Hold your arms out wide and check that you have room. Nothing to bump? Great."
+      },
+      {
+       "k": "points",
+       "h": "Shake like a wet puppy",
+       "items": [
+        [
+         "Shake your hands",
+         "Wiggle, wiggle"
+        ],
+        [
+         "Shake your arms",
+         "Up high, down low"
+        ],
+        [
+         "Shake your legs",
+         "One, then the other"
+        ],
+        [
+         "Freeze!",
+         "Still as a statue"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "0": 5,
+         "1": 5,
+         "2": 6,
+         "4": 4
+        },
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Shake your hands like a wet puppy. Now shake your arms, up high and down low. Now shake your legs, one and then the other. And freeze! Still as a statue."
+      },
+      {
+       "k": "points",
+       "h": "Animal moves",
+       "items": [
+        [
+         "Stomp like an elephant",
+         "Big, heavy steps"
+        ],
+        [
+         "Hop like a bunny",
+         "Little, quick hops"
+        ],
+        [
+         "Stretch like a cat",
+         "Tall and slow"
+        ]
+       ],
+       "cue": {
+        "p": {
+         "1": 5,
+         "2": 5,
+         "3": 5
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Now some animal moves. Stomp like an elephant, with big, heavy steps. Hop like a bunny, with little, quick hops. Then stretch up tall like a cat, slow and long."
+      },
+      {
+       "k": "breathe",
+       "h": "Now settle",
+       "sub": "Slow and soft, like a sleepy cat.",
+       "hold": 14,
+       "say": "Now let your body settle. Stand still, or sit down. Breathe in slowly. And let it out, long and slow. Feel your body getting calm and quiet."
+      },
+      {
+       "k": "big",
+       "h": "Moving helps. Resting helps too.",
+       "sub": "Wiggle out, then settle in.",
+       "say": "Your body loves to move, and it loves to rest. When the wiggles come back, you know just what to do. Wiggle out, then settle in."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-unkind",
+     "n": 9,
+     "title": "When Someone Was Unkind",
+     "mins": 2,
+     "blurb": "Kind words for your hurt heart, and who to tell.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When Someone Was Unkind",
+       "sub": "Your heart matters.",
+       "say": "Did someone say something mean, or leave you out, or push you? That can really hurt inside. I am glad you are here. Let us help your heart feel a little better."
+      },
+      {
+       "k": "big",
+       "h": "You deserve kindness.",
+       "sub": "Sad, mad, or both is okay.",
+       "say": "First, you deserve kindness. Everyone does, and that includes you. It makes sense to feel sad, or mad, or both."
+      },
+      {
+       "k": "breathe",
+       "h": "Breathe it out",
+       "sub": "In slowly. Out long.",
+       "hold": 12,
+       "say": "Let us breathe out some of that hurt. Breathe in slowly through your nose. And blow it out, long and slow. One more time."
+      },
+      {
+       "k": "words",
+       "h": "Kind words to me",
+       "items": [
+        "I matter.",
+        "I am loved.",
+        "I am still me."
+       ],
+       "cue": {
+        "w": {
+         "4": 9
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Put a hand on your heart and say these kind words to yourself. I matter. I am loved. I am still me. Now say them again, out loud or in your head, and feel your hand on your heart."
+      },
+      {
+       "k": "points",
+       "h": "What can help",
+       "items": [
+        [
+         "Tell a grown-up",
+         "A parent, a teacher, a counselor"
+        ],
+        [
+         "Find a kind friend",
+         "Play with someone nice to you"
+        ],
+        [
+         "Stay near grown-ups",
+         "At recess and on the bus"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4
+        ]
+       },
+       "say": "Here is what can help. Tell a grown-up what happened, like your parent, your teacher, or your school counselor. Telling is asking for help, and that is brave. Find a kind friend to play with. And if it keeps happening, stay close to grown-ups at recess and on the bus."
+      },
+      {
+       "k": "big",
+       "h": "If someone hurts you, tell a grown-up.",
+       "sub": "You are not in trouble.",
+       "say": "If someone keeps being mean, or hurts your body, always tell a grown-up. You are not in trouble. Grown-ups want to know, so they can help."
+      },
+      {
+       "k": "big",
+       "h": "You are worth being kind to.",
+       "sub": "Be kind to yourself, too.",
+       "say": "You are worth being kind to. And that means being kind to yourself, too, right now."
+      }
+     ]
+    },
+    {
+     "id": "mp-r-tell",
+     "n": 10,
+     "title": "When I Need to Tell a Grown-up",
+     "mins": 3,
+     "blurb": "When something feels wrong, tell a safe grown-up, and keep telling until someone helps.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Support for Right Now",
+       "h": "When I Need to Tell a Grown-up",
+       "sub": "Telling is brave.",
+       "say": "Sometimes something happens that feels wrong, or scary, or mixed up. When that happens, tell a safe grown-up. Let us learn how, together."
+      },
+      {
+       "k": "big",
+       "h": "Your body belongs to you.",
+       "sub": "You can say no. You can say stop.",
+       "say": "Here is something important. Your body belongs to you. You can say no, and you can say stop."
+      },
+      {
+       "k": "points",
+       "h": "Tell a grown-up when",
+       "items": [
+        [
+         "Something feels wrong",
+         "Yucky, scary, or mixed up"
+        ],
+        [
+         "Someone hurts you",
+         "Or touches you in a way that is not okay"
+        ],
+        [
+         "Someone says keep it secret",
+         "Bad-feeling secrets get told"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "Tell a safe grown-up when something feels wrong, or yucky, or mixed up inside. Tell when someone hurts you, or touches you in a way that is not okay. And tell when someone says to keep it a secret. Surprises, like a birthday present, are happy and short. Secrets that feel bad always get told."
+      },
+      {
+       "k": "big",
+       "h": "It is never your fault.",
+       "sub": "You are not in trouble for telling.",
+       "say": "If something like this happens, it is never your fault, even if someone said it was. You are not in trouble for telling. Telling is brave, and it is the right thing to do."
+      },
+      {
+       "k": "points",
+       "h": "My helping hand",
+       "items": [
+        [
+         "Hold up one hand",
+         "Spread your fingers wide"
+        ],
+        [
+         "One finger, one grown-up",
+         "Who could you tell?"
+        ],
+        [
+         "Safe grown-ups",
+         "Parent, grandparent, teacher, counselor"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 12
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Now let us make a helping hand. Hold up one hand and spread your fingers wide. For each finger, think of one safe grown-up you could tell. It might be a parent, a grandparent, a teacher, or your school counselor. Take your time, and count them on your fingers."
+      },
+      {
+       "k": "words",
+       "h": "Words to start",
+       "items": [
+        "I need to tell you something.",
+        "Something happened, and I need help."
+       ],
+       "cue": {
+        "p": {
+         "1": 2,
+         "2": 2
+        },
+        "at": [
+         1,
+         2
+        ]
+       },
+       "say": "If it feels hard to start, you can say this. I need to tell you something. Something happened, and I need help."
+      },
+      {
+       "k": "big",
+       "h": "Keep telling until someone helps.",
+       "sub": "Tell another grown-up, and another.",
+       "say": "If you tell a grown-up and they do not help, tell another one. And another. Keep telling until someone helps you. You deserve to be safe."
+      },
+      {
+       "k": "big",
+       "h": "If a friend tells you something scary, tell too.",
+       "sub": "Even if they asked you not to.",
+       "say": "And if a friend tells you something scary, like someone is hurting them, or they want to hurt themselves, tell a grown-up right away. Even if they asked you to keep it a secret. That is how friends help friends."
+      },
+      {
+       "k": "big",
+       "h": "You are brave, and you are loved.",
+       "sub": "Grown-ups: When Life Changes has guides for this.",
+       "say": "You are brave. You are loved. And there are grown-ups who want to help you, always."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+},
   aspen: {
-    title: 'Learn Aspen',
-    intro: 'Short lessons, narrated aloud. Watch on your own or with a grown-up, in any order.',
-    tracks: [
-      { id: 'aspen-start', title: 'Start Here', who: 'For students in grades 6 to 8, and their grown-ups', lessons: [
-        { id: 'as-welcome', n: 1, title: 'Welcome to Aspen', mins: 2, scenes: [
-          { k: 'title', hero: 'aspen', eyebrow: 'Aspen', h: 'Welcome to Aspen', sub: 'Rooted together.', say: 'Welcome to Aspen. Aspen is your tree for grades six to eight.' },
-          { k: 'big', h: 'Every middle schooler is like an aspen: growing fast and putting down roots.', say: 'Every middle schooler is like an aspen: growing fast and putting down roots.' },
-          { k: 'six', h: 'Six parts make you whole', words: ['What keeps you steady', 'Goals and trying new things', 'Naming feelings, asking for help', 'Friends, family, belonging', 'Sleep, movement, real meals', "Hope for what's ahead"], say: 'Your tree has six parts. Roots, Trunk, Bark, Branches, Leaves, and Fruit. Being whole means noticing all six.' },
-          { k: 'levels', say: 'After a check-in, each part shows a level. Strong. Steady. Or Growing Edge. A Growing Edge is a part to tend, not a grade.' },
-          { k: 'flow', h: 'How Aspen works', steps: [['Check in', 'Questions written for your grade'], ['See your levels', 'Tap Why for any question'], ['Tend each day', 'Practices fitted to you'], ['Grow your tree', 'A ring and leaves each check-in']], say: 'Here is how it works. Check in with questions written for your grade. See your levels. Tend a little each day, right in Aspen. And every check-in adds a growth ring and leaves to your tree.' },
-          { k: 'points', h: 'Yours to keep', items: [['Private by design', 'No account. Answers stay on this device.'], ['The Grove', 'Your tree can stand with your family, and you choose what shows'], ['When Life Changes', 'Guides for the hard stuff, any time']], say: 'Aspen is yours. Your answers stay on this device. Your tree can stand in The Grove with your family, and you choose what shows. And When Life Changes has guides for the hard stuff, any time.' },
-          { k: 'quiz', q: 'What does a Growing Edge mean?', opts: ['You failed that part', 'A part to tend, not a grade', 'You need to start over'], right: 1, why: 'A Growing Edge is simply the part that needs some care right now.', say: 'Quick question. What does a Growing Edge mean?' }
-        ] }
-      ] }
-    ]
+ "title": "Learn Aspen",
+ "intro": "Short lessons, narrated aloud. Watch on your own or with a grown-up, in any order.",
+ "supportFirst": true,
+ "support": {
+  "eyebrow": "Support",
+  "title": "Support for Right Now",
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+ },
+ "lessonsTitle": "Learn Step by Step",
+ "tracks": [
+  {
+   "id": "aspen-start",
+   "title": "Start Here",
+   "who": "For students in grades 6 to 8, and their grown-ups",
+   "lessons": [
+    {
+     "id": "as-welcome",
+     "n": 1,
+     "title": "Welcome to Aspen",
+     "mins": 4,
+     "blurb": "A first look at your tree, its six parts, and how Aspen works.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Aspen",
+       "sub": "Rooted together.",
+       "say": "Welcome to Aspen. Aspen is a tree for students in grades six to eight, and for the grown-ups who walk with them. This lesson shows you around."
+      },
+      {
+       "k": "big",
+       "h": "Aspens grow fast, and they grow together.",
+       "sub": "A whole grove can share one set of roots.",
+       "say": "Aspen trees grow fast, and a whole grove of them can grow from the same roots. Middle school is a lot like that. You are changing fast, and you grow best with good people around you."
+      },
+      {
+       "k": "six",
+       "h": "Six parts make you whole",
+       "words": [
+        "What keeps you steady",
+        "Goals and trying new things",
+        "Naming feelings, asking for help",
+        "Friends, family, belonging",
+        "Sleep, movement, real meals",
+        "Hope for what's ahead"
+       ],
+       "say": "Your tree has six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your people. Leaves, your body. And Fruit, your hope. Being whole means noticing all six, not just one or two."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Home",
+        "Students",
+        "Grown-ups",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "Students",
+        "p": "Tap your name, or add yourself."
+       },
+       "say": "To begin, open the Students tab. Tap your name, or add yourself with your first name and your grade. A grown-up agrees when your profile is made, and your tree is locked with a passcode only you know."
+      },
+      {
+       "k": "flow",
+       "h": "How Aspen works",
+       "steps": [
+        [
+         "Check in",
+         "Questions for your grade"
+        ],
+        [
+         "See your levels",
+         "Strong, Steady, Growing Edge"
+        ],
+        [
+         "Tend each day",
+         "Small practices"
+        ],
+        [
+         "Add a ring",
+         "Each full check-in"
+        ]
+       ],
+       "say": "Here is how Aspen works. Check in, with questions written for your grade. See how each part is doing: Strong, Steady, or Growing Edge. A Growing Edge is a part to tend, not a grade. Tend a little each day with small practices. And each full check-in adds a growth ring to your tree."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Your tree",
+        "p": "Five tabs for tending your tree."
+       },
+       "say": "Once you are in, your tree has five tabs. Today, Week, Season, Growth Plan, and Guides. The next lessons walk through each one, step by step."
+      },
+      {
+       "k": "big",
+       "h": "One slow breath before your phone.",
+       "sub": "Wake up slow, from Today.",
+       "beats": [
+        "Aspen has a tiny practice for the start of each day.",
+        "Before you grab your phone, take one slow breath and notice how you feel.",
+        {
+         "t": "Try it right now.",
+         "w": 10
+        }
+       ],
+       "say": "Aspen has a tiny practice for the start of each day. Before you grab your phone, take one slow breath and notice how you feel. Try it right now."
+      },
+      {
+       "k": "points",
+       "h": "Yours to keep",
+       "items": [
+        [
+         "No account",
+         "Your tree stays on this device"
+        ],
+        [
+         "Your grown-up sees the big picture",
+         "Plus a few safety answers"
+        ],
+        [
+         "Need help now?",
+         "One tap, any time"
+        ]
+       ],
+       "say": "Aspen is yours. There is no account, and your tree stays on this device. Your grown-up sees the big picture of your tree, plus a few safety answers, so they can help. And the Need help now button is always one tap away."
+      },
+      {
+       "k": "points",
+       "h": "More in Aspen",
+       "items": [
+        [
+         "When Life Changes",
+         "Guides for the hard stuff"
+        ],
+        [
+         "Learn",
+         "Lessons, and Support for Right Now"
+        ],
+        [
+         "The Grove",
+         "Your tree beside your family"
+        ]
+       ],
+       "say": "There is more. When Life Changes has guides about hard things, written for grown-ups, and you can read them too. Learn has short lessons like this one, plus Support for Right Now videos for hard moments. And your tree can stand in The Grove beside your family's trees, showing only your growth, never your answers."
+      },
+      {
+       "k": "quiz",
+       "q": "What does a Growing Edge mean?",
+       "opts": [
+        "You failed that part",
+        "A part to tend, where growth begins",
+        "You need to start over"
+       ],
+       "right": 1,
+       "why": "A Growing Edge is a part to tend, not a grade.",
+       "say": "Quick question. What does a Growing Edge mean?"
+      }
+     ]
+    }
+   ]
   },
+  {
+   "id": "aspen-using",
+   "title": "Using Aspen",
+   "who": "Every part of Aspen, tab by tab",
+   "certTitle": "Aspen: Using Aspen",
+   "certLine": "For finishing every lesson on using Aspen, tab by tab.",
+   "lessons": [
+    {
+     "id": "as-u-checkin",
+     "n": 1,
+     "title": "Your First Check-in",
+     "mins": 5,
+     "blurb": "How the check-in works, step by step, and how to take it well.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Using Aspen, Lesson 1",
+       "h": "Your First Check-in",
+       "sub": "An honest look at all six parts.",
+       "say": "Everything in Aspen starts with a check-in. This lesson walks you through your first one, so you know what to expect."
+      },
+      {
+       "k": "card",
+       "title": "Add a student",
+       "body": "First name or nickname, and your grade.",
+       "fields": [
+        [
+         "First name or nickname",
+         "Sam"
+        ],
+        [
+         "Grade",
+         "7th"
+        ]
+       ],
+       "btns": [
+        "Add and start"
+       ],
+       "tap": 0,
+       "say": "First, open the Students tab and add yourself. Type your first name or a nickname, pick your grade, and tap Add and start. A grown-up agrees when your profile is made, and your tree is locked with a passcode only you know. You can also just try it without saving, and then your tree is kept only until the page closes."
+      },
+      {
+       "k": "card",
+       "title": "Before you start",
+       "body": "How are you doing this check-in?",
+       "btns": [
+        "On my own",
+        "With a grown-up"
+       ],
+       "tap": 0,
+       "say": "Before you start, Aspen asks how you are doing this check-in. On my own, or With a grown-up. With a grown-up, they see a gold note after each answer, with a question to talk about together. For a check-in you do together, your grown-up can see every answer."
+      },
+      {
+       "k": "points",
+       "h": "Six parts, six questions each",
+       "items": [
+        [
+         "36 questions",
+         "Written for your grade"
+        ],
+        [
+         "Then two safety questions",
+         "You can skip them"
+        ],
+        [
+         "Pause anytime",
+         "Aspen keeps your place"
+        ]
+       ],
+       "say": "The check-in has thirty six questions, six for each part, written for your grade. Then come two short safety questions, and you can skip them if you want. Tap Pause anytime, and Aspen keeps your place."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Check-in: Roots",
+       "rows": [
+        [
+         "Is there a place or a moment where you feel calm and peaceful inside?",
+         ""
+        ],
+        [
+         "Yeah, most of the time",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 2,
+       "say": "Each question has three answers, plus Not sure. Yeah, most of the time. Sometimes. Or Not really. Answer with what is true lately, not what you wish were true. And Not sure is always okay."
+      },
+      {
+       "k": "points",
+       "h": "Helpers on every page",
+       "items": [
+        [
+         "Why this question?",
+         "See why Aspen asks it"
+        ],
+        [
+         "Read Aloud",
+         "Hear each question"
+        ],
+        [
+         "Next part",
+         "When all six are answered"
+        ]
+       ],
+       "say": "Every page has helpers. Tap Why this question to see why Aspen asks it. Turn on Read Aloud to hear the questions. When you have answered all six, tap Next part."
+      },
+      {
+       "k": "points",
+       "h": "Some questions are turned around",
+       "items": [
+        [
+         "Most ask what is going well",
+         "Yes counts up"
+        ],
+        [
+         "A few ask what is hard",
+         "Yes counts down"
+        ],
+        [
+         "Answer each one plainly",
+         "Aspen does the math"
+        ]
+       ],
+       "say": "A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard, like whether you feel lonely or left out. Just answer each one plainly. Aspen does the math."
+      },
+      {
+       "k": "big",
+       "h": "Is there a place where you feel calm inside?",
+       "sub": "Answer it in your head.",
+       "beats": [
+        "Let's try one.",
+        "Is there a place or a moment where you feel calm and peaceful inside?",
+        "Yeah, most of the time, sometimes, not really, or not sure.",
+        {
+         "t": "Answer it in your head, honestly.",
+         "w": 8
+        }
+       ],
+       "say": "Let's try one. Is there a place or a moment where you feel calm and peaceful inside? Yeah, most of the time, sometimes, not really, or not sure. Answer it in your head, honestly."
+      },
+      {
+       "k": "points",
+       "h": "Two last questions",
+       "items": [
+        [
+         "Asked gently",
+         "To help keep you safe"
+        ],
+        [
+         "Your grown-up sees these",
+         "So they can help"
+        ],
+        [
+         "Help is right there",
+         "988, 741741, and 911"
+        ]
+       ],
+       "say": "At the end come two safety questions. They ask whether anyone is hurting you, and whether you have had thoughts of hurting yourself. Your grown-up always sees these answers, so they can help. If you need help, a calm card opens with people you can reach any time. Call or text nine eight eight. Text HOME to seven four one seven four one. And if you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Tell a grown-up you trust.",
+       "sub": "A parent, teacher, or school counselor.",
+       "say": "You can always tell a grown-up you trust, like a parent, a grandparent, a teacher, or a school counselor. Telling the truth is brave, and people want to help."
+      },
+      {
+       "k": "points",
+       "h": "To take it well",
+       "items": [
+        [
+         "Find a quiet moment",
+         "Take your time"
+        ],
+        [
+         "Go with your first honest answer",
+         "No need to overthink"
+        ],
+        [
+         "Finish and add my ring",
+         "Your first ring is your start"
+        ]
+       ],
+       "say": "A few tips. Find a quiet moment. Go with your first honest answer. And when you reach the end, tap Finish and add my ring. Your first ring shows where your tree is starting."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Not sure mean in a check-in?",
+       "opts": [
+        "You did it wrong",
+        "An honest answer that is always okay",
+        "Your tree loses a ring"
+       ],
+       "right": 1,
+       "why": "Not sure is always okay, and it never counts against a part.",
+       "say": "Quick question. What does Not sure mean in a check-in?"
+      }
+     ]
+    },
+    {
+     "id": "as-u-tree",
+     "n": 2,
+     "title": "Your Tree and Your Levels",
+     "mins": 4,
+     "blurb": "Reading Strong, Steady, and Growing Edge, and how your tree and rings grow.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Using Aspen, Lesson 2",
+       "h": "Your Tree and Your Levels",
+       "sub": "A picture of right now, not a grade.",
+       "say": "After a check-in, Aspen shows how each part of your tree is doing. This lesson is about reading it well, and about how your tree grows over time."
+      },
+      {
+       "k": "points",
+       "h": "Three levels",
+       "items": [
+        [
+         "Strong",
+         "Growing strong right now",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Doing okay, with room to grow",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Where your next growth begins",
+         "#B8612F"
+        ]
+       ],
+       "say": "Each part gets one of three levels. Strong means it is growing strong right now. Steady means it is doing okay, with room to grow. And Growing Edge means it is where your next growth begins."
+      },
+      {
+       "k": "big",
+       "h": "A Growing Edge is a part to tend, not a grade.",
+       "sub": "Everyone has one.",
+       "say": "A Growing Edge is not a bad grade. It is a part to tend. Everyone has one, grown-ups too. And Aspen will help you tend it."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "A new ring for your tree",
+       "rows": [
+        [
+         "Roots",
+         "Strong",
+         "#5F7D48"
+        ],
+        [
+         "Trunk",
+         "Steady",
+         "#8B5E1A"
+        ],
+        [
+         "Bark",
+         "Growing Edge",
+         "#B8612F"
+        ],
+        [
+         "Branches",
+         "Strong",
+         "#5F7D48"
+        ],
+        [
+         "Leaves",
+         "Growing Edge",
+         "#B8612F"
+        ],
+        [
+         "Fruit",
+         "Steady",
+         "#8B5E1A"
+        ]
+       ],
+       "tap": 2,
+       "panel": {
+        "h": "Aspen suggests two parts",
+        "sub": "Start with Bark and Leaves.",
+        "items": [
+         "Build my growth plan",
+         "See my rings",
+         "Back to my tree"
+        ]
+       },
+       "say": "Your results show each part and its level. Aspen also suggests two parts to start tending, the ones that could use it most right now. You can always choose any part you like. From here, tap Build my growth plan, or See my rings."
+      },
+      {
+       "k": "points",
+       "h": "Read it with kindness",
+       "items": [
+        [
+         "Notice your strengths",
+         "They help the other parts grow"
+        ],
+        [
+         "Look for patterns",
+         "Parts lean on each other"
+        ],
+        [
+         "Pick one or two to start",
+         "Not all six at once"
+        ]
+       ],
+       "say": "Read your results with kindness. Notice your strengths first. A strong part can help the others grow. Look for patterns. When you sleep badly, your feelings often feel it too. And pick one or two parts to start with, not all six at once."
+      },
+      {
+       "k": "points",
+       "h": "Talk it over",
+       "items": [
+        [
+         "Your grown-up sees your levels",
+         "So they can help"
+        ],
+        [
+         "Show them one part",
+         "And what you want to try"
+        ],
+        [
+         "Ask what helps them",
+         "Grown-ups have edges too"
+        ]
+       ],
+       "say": "Your grown-up sees your levels too, so they can help. You might show them one part and tell them what you want to try. And ask them what helps them with that part. Grown-ups have growing edges too."
+      },
+      {
+       "k": "big",
+       "h": "Name one strength. Name one edge.",
+       "sub": "Just for you.",
+       "beats": [
+        "Try this now.",
+        "Think of one part of your tree that feels strong for you lately.",
+        "Now think of one part you would like to grow.",
+        {
+         "t": "Name them both, out loud or in your head.",
+         "w": 10
+        }
+       ],
+       "say": "Try this now. Think of one part of your tree that feels strong for you lately. Now think of one part you would like to grow. Name them both, out loud or in your head."
+      },
+      {
+       "k": "points",
+       "h": "Your rings",
+       "items": [
+        [
+         "Each full check-in adds a ring",
+         "Your tree grows with you"
+        ],
+        [
+         "Grew, Dipped, or Same",
+         "Compared with your last ring"
+        ],
+        [
+         "Darker lines",
+         "Mark a new school year"
+        ]
+       ],
+       "say": "Every full check-in adds a growth ring. To see them, open Season and tap My progress over time. Tap any ring to see that check-in. Aspen shows whether each part grew, dipped, or stayed the same since your last ring. And darker lines mark a new school year, so by eighth grade your tree holds years of you."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Your tree, today",
+        "p": "It shows how your tending is going."
+       },
+       "say": "Your tree also lives on the Today tab. It shows how your tending is going, along with your Days Tended and your Rings."
+      },
+      {
+       "k": "points",
+       "h": "Your tree is gentle",
+       "items": [
+        [
+         "Thriving",
+         "When you tend it"
+        ],
+        [
+         "A little dry, then drooping",
+         "After some days away"
+        ],
+        [
+         "Resting bare",
+         "Nothing is lost"
+        ]
+       ],
+       "say": "When you tend it, your tree thrives. Miss a few days, and it looks a little dry, then it droops. After a couple of weeks away, it rests bare. It never dies, and nothing is ever taken away. One practice perks it up, and a few days of tending bring it all the way back."
+      },
+      {
+       "k": "big",
+       "h": "Every level is a starting point.",
+       "say": "Remember, every level is a starting point. It tells you where you are, so you can choose where to grow."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Aspen compare each new ring with?",
+       "opts": [
+        "Other students",
+        "Your last ring",
+        "A perfect score"
+       ],
+       "right": 1,
+       "why": "Aspen shows whether each part grew, dipped, or stayed the same since your last ring.",
+       "say": "Quick question. What does Aspen compare each new ring with?"
+      }
+     ]
+    },
+    {
+     "id": "as-u-today",
+     "n": 3,
+     "title": "Today, Growth Plan, and Season",
+     "mins": 4,
+     "blurb": "Your growth plan, daily tending, the weekly check-in, and the twelve-week season.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Using Aspen, Lesson 3",
+       "h": "Today, Growth Plan, and Season",
+       "sub": "A little each day adds up.",
+       "say": "Aspen has a gentle rhythm. Pick a few practices, tend a little each day, check in each week, and add a ring each season. Here is how it fits together."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "Growth Plan",
+        "p": "Pick small practices for each part."
+       },
+       "say": "Start with Growth Plan. After a check-in, tap Build my growth plan. Each part of your tree has practices to pick from, written for your grade."
+      },
+      {
+       "k": "points",
+       "h": "Suggestions, never limits",
+       "items": [
+        [
+         "Strong: about 3",
+         "To keep it strong",
+         "#5F7D48"
+        ],
+        [
+         "Steady: about 4",
+         "To help it grow",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge: about 5",
+         "More ways to tend it",
+         "#B8612F"
+        ]
+       ],
+       "say": "Aspen suggests about three practices for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Pick as many or as few as fit your life."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Growth Plan: Bark",
+       "rows": [
+        [
+         "Breathe in for four, out for six, five times.",
+         "Picked",
+         "#5F7D48"
+        ],
+        [
+         "Write one thing you did well today.",
+         ""
+        ],
+        [
+         "Name five things you can see.",
+         ""
+        ],
+        [
+         "Learn more",
+         ""
+        ],
+        [
+         "Show Me Others",
+         ""
+        ]
+       ],
+       "tap": 3,
+       "say": "Tap a practice to pick it. Each one shows its kind, like Move, Write or draw, Quiet, or Connect, and about how many minutes it takes. Tap Learn more to see why it helps, how to do it, what to do if it is hard, and a way to try it with a grown-up. Show Me Others brings up more choices."
+      },
+      {
+       "k": "points",
+       "h": "Make it yours",
+       "items": [
+        [
+         "Write your own",
+         "Anything that tends a part"
+        ],
+        [
+         "Save my growth plan",
+         "Your practices go to Today"
+        ],
+        [
+         "Change it anytime",
+         "Your plan grows with you"
+        ]
+       ],
+       "say": "Make it yours. You can write your own practice for any part, like shooting hoops with your brother or texting a friend. Then tap Save my growth plan, and your practices show up in Today. You can change your plan anytime."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Today",
+        "p": "Check off any one practice, and your tree is watered."
+       },
+       "say": "Now open Today. Your practices are here, grouped by part. Check off any one, and your tree is watered for the day. Tend all six parts, and that is a full day. At the top is Wake up slow, and at the bottom, End the day."
+      },
+      {
+       "k": "points",
+       "h": "On a hard day",
+       "items": [
+        [
+         "Easier today",
+         "A smaller version that counts"
+        ],
+        [
+         "Add a note",
+         "One line, just for you"
+        ],
+        [
+         "One is enough",
+         "Any practice waters your tree"
+        ]
+       ],
+       "say": "On a hard day, tap Easier today for a smaller version of a practice. It still counts. Add a note if you like, just one line. And remember, one practice is enough to water your tree."
+      },
+      {
+       "k": "big",
+       "h": "In for four. Out for six.",
+       "sub": "A Bark practice from Aspen.",
+       "beats": [
+        "Let's try one practice right now.",
+        "This one is from Bark.",
+        "Breathe in slowly for four, then out for six.",
+        {
+         "t": "Do one round, at your own pace.",
+         "w": 10
+        }
+       ],
+       "say": "Let's try one practice right now. This one is from Bark. Breathe in slowly for four, then out for six. Do one round, at your own pace."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "Week",
+        "p": "A theme, a short check-in, and a question."
+       },
+       "say": "Each week brings a theme, a short check-in, and a question to think about. The weekly check-in asks one question for each part. Your reflection is just for you, unless you choose to share it with your grown-up. Week also has your calendar, where every day you tended is filled in."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Season",
+        "p": "Twelve weeks. A full check-in adds a ring."
+       },
+       "say": "A season is twelve weeks, from Planting to Rooting to Blooming. It begins the day you finish your first full check-in. At week twelve, your season check-in is ready. A full check-in then adds a ring and begins a new season. And you can check in anytime."
+      },
+      {
+       "k": "big",
+       "h": "No streaks to break. Growth only adds.",
+       "sub": "Missed a few days? Pick up today.",
+       "say": "There are no streaks to break in Aspen. Growth only adds. If you miss a few days, just pick up today. Your tree is always glad to see you."
+      },
+      {
+       "k": "quiz",
+       "q": "What waters your tree for the day?",
+       "opts": [
+        "Checking off any one practice",
+        "Finishing every practice",
+        "A full check-in"
+       ],
+       "right": 0,
+       "why": "Any one practice waters your tree. One is enough.",
+       "say": "Quick question. What waters your tree for the day?"
+      }
+     ]
+    },
+    {
+     "id": "as-u-changes",
+     "n": 4,
+     "title": "When Life Changes",
+     "mins": 4,
+     "blurb": "Where Aspen keeps guides for the hard stuff, and how to use them with a grown-up.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Using Aspen, Lesson 4",
+       "h": "When Life Changes",
+       "sub": "Guides for the hard stuff.",
+       "say": "Sometimes life changes fast. Someone gets sick, a friend group falls apart, or the news gets scary. This lesson shows you where Aspen keeps help for moments like that."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Home",
+        "Students",
+        "Grown-ups",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "When Life Changes",
+        "p": "Guides for hard things, open any time."
+       },
+       "say": "Look at the tabs across the top of Aspen. Right after Grown-ups is When Life Changes. It holds forty nine guides for hard things, and you can open it any time."
+      },
+      {
+       "k": "points",
+       "h": "Guides in five groups",
+       "items": [
+        [
+         "Home and family",
+         "Moving, divorce, a death, a new baby"
+        ],
+        [
+         "Friends and school",
+         "Drama, being left out, bullying"
+        ],
+        [
+         "Growing up and online",
+         "Phones, sleep, faith, who you are"
+        ],
+        [
+         "Big world, hard news",
+         "Plus Safety, when someone is hurting"
+        ]
+       ],
+       "say": "The guides come in five groups. Home and family, for things like moving, divorce, or a death. Friends and school, for drama, being left out, and bullying. Growing up and online, for phones, sleep, big questions about faith, and figuring out who you are. Big world, hard news, for things like storms and scary headlines. And Safety, for when you or a friend is hurting."
+      },
+      {
+       "k": "points",
+       "h": "Written for grown-ups, open to you",
+       "items": [
+        [
+         "Written for your grown-ups",
+         "To help them talk with you"
+        ],
+        [
+         "You can read them too",
+         "Any guide, any time"
+        ],
+        [
+         "Or read one together",
+         "Ask a grown-up to sit with you"
+        ]
+       ],
+       "say": "These guides are written for grown-ups, to help them talk with you about hard things. You can read them too. Or ask your grown-up to read one with you. Sometimes it is easier to start a hard talk when you are both looking at the same page."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Being left out",
+       "rows": [
+        [
+         "Watch: For You",
+         ""
+        ],
+        [
+         "Watch: For the Grown-up",
+         ""
+        ],
+        [
+         "Quick Card",
+         ""
+        ],
+        [
+         "Talking It Through",
+         ""
+        ],
+        [
+         "Words you can use",
+         ""
+        ],
+        [
+         "Where to get help",
+         ""
+        ]
+       ],
+       "tap": 0,
+       "say": "Open a guide, like Being left out. At the top are two short videos. For You is for the student going through it. For the Grown-up is for the parent or helper beside you. Below the videos, the guide has a Quick Card, Talking It Through, words you can use, and where to get help."
+      },
+      {
+       "k": "card",
+       "title": "Search",
+       "body": "Type it in your own words.",
+       "fields": [
+        [
+         "Search",
+         "group chats"
+        ]
+       ],
+       "btns": [
+        "Search"
+       ],
+       "tap": 0,
+       "result": "First phone and group chats",
+       "say": "Not sure which guide fits? Type what is happening in your own words, like group chats, and Aspen finds the guides that fit."
+      },
+      {
+       "k": "points",
+       "h": "Inside your tree too",
+       "items": [
+        [
+         "The Guides tab",
+         "Your six parts, and When life gets hard"
+        ],
+        [
+         "Your Growth Plan",
+         "Guides for your grown-up, by part"
+        ],
+        [
+         "Watched videos",
+         "A quiet check marks them"
+        ]
+       ],
+       "say": "You will find guides inside your own tree too. The Guides tab shows your six parts, and the same guides under When life gets hard. In your Growth Plan, each part lists a few guides for your grown-up. And once you watch a guide's video, a quiet check marks it."
+      },
+      {
+       "k": "big",
+       "h": "Who could read one with you?",
+       "sub": "Picture a safe grown-up.",
+       "beats": [
+        "Think of one grown-up you could read a guide with.",
+        "A parent, a grandparent, a teacher, or a school counselor.",
+        {
+         "t": "Picture their face, and say their name in your head.",
+         "w": 10
+        }
+       ],
+       "say": "Think of one grown-up you could read a guide with. A parent, a grandparent, a teacher, or a school counselor. Picture their face, and say their name in your head."
+      },
+      {
+       "k": "points",
+       "h": "When it can’t wait",
+       "items": [
+        [
+         "Tell a safe grown-up",
+         "Today, in person if you can"
+        ],
+        [
+         "Call or text 988",
+         "Any time, day or night"
+        ],
+        [
+         "Text HOME to 741741",
+         "Crisis Text Line"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "Some moments can't wait for a guide. Tell a safe grown-up, today. Call or text nine eight eight, any time, day or night, or text HOME to seven four one seven four one. If someone is in danger right now, call nine one one. And the See the calm card button, at the bottom of When Life Changes, shows all of these in one place."
+      },
+      {
+       "k": "big",
+       "h": "Hard things are lighter when you carry them together.",
+       "say": "Hard things are lighter when you carry them together. That is what these guides are for."
+      },
+      {
+       "k": "quiz",
+       "q": "Who are the When Life Changes guides written for?",
+       "opts": [
+        "Only teachers",
+        "Grown-ups, and you can read them too",
+        "Only students"
+       ],
+       "right": 1,
+       "why": "They help grown-ups talk with you, and you can read any of them.",
+       "say": "Quick question. Who are the When Life Changes guides written for?"
+      }
+     ]
+    },
+    {
+     "id": "as-u-grown",
+     "n": 5,
+     "title": "The Grown-ups Tab",
+     "mins": 7,
+     "blurb": "What a grown-up sees in Aspen, and how to use it to help.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Using Aspen, Lesson 5",
+       "h": "The Grown-ups Tab",
+       "sub": "Equal partners in Aspen.",
+       "say": "Parents, guardians, and teachers are equal partners in Aspen. This lesson walks a grown-up through the Grown-ups tab. Students, you are welcome to watch too, so you know exactly what your grown-up sees."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Home",
+        "Students",
+        "Grown-ups",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Grown-ups",
+        "p": "What students see, what you can see, and how to help."
+       },
+       "say": "Tap Grown-ups at the top of Aspen. It shows what students see, what you can see, and how to help."
+      },
+      {
+       "k": "points",
+       "h": "Your own grown-up profile",
+       "items": [
+        [
+         "You agree for each student",
+         "When their profile is made"
+        ],
+        [
+         "You can open it",
+         "With your own passcode"
+        ],
+        [
+         "Open your profile first",
+         "The round button at the top"
+        ]
+       ],
+       "say": "When a student makes their own profile, a grown-up agrees for them. That grown-up can open the student's profile with their own passcode, so no child is ever alone with something hard. To see every student you agreed for, open your own grown-up profile with the round button at the top of the page. Each one then shows under Students on this device."
+      },
+      {
+       "k": "flow",
+       "h": "How Aspen works",
+       "steps": [
+        [
+         "Check in",
+         "36 questions, six per part"
+        ],
+        [
+         "See the levels",
+         "Strong, Steady, Growing Edge"
+        ],
+        [
+         "Tend each day",
+         "A growth plan of small practices"
+        ],
+        [
+         "Add a ring",
+         "Each twelve-week season"
+        ]
+       ],
+       "say": "Here is the rhythm. Each check-in has thirty six questions, six for each part, written for the student's grade. Each part gets a level: Strong, Steady, or Growing Edge. Aspen points to two parts to tend, and the student builds a growth plan of small daily practices. A full check-in at the end of a twelve week season adds a growth ring."
+      },
+      {
+       "k": "points",
+       "h": "On my own, or with a grown-up",
+       "items": [
+        [
+         "On my own",
+         "The student checks in alone"
+        ],
+        [
+         "With a grown-up",
+         "A gold note after each answer"
+        ],
+        [
+         "Done together",
+         "Every answer is there for you after"
+        ]
+       ],
+       "say": "Students choose how to check in. On my own, or With a grown-up. In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. And for a check-in you did together, every answer is there for you afterward."
+      },
+      {
+       "k": "points",
+       "h": "What you can see",
+       "items": [
+        [
+         "Always shown to you",
+         "Safety, lonely, bullied, giving up",
+         "#B8612F"
+        ],
+        [
+         "The big picture",
+         "Levels, the tree, days tended",
+         "#8B5E1A"
+        ],
+        [
+         "Just theirs",
+         "Other answers, notes, reflections",
+         "#5F7D48"
+        ]
+       ],
+       "say": "Aspen gives students privacy in three layers, and tells them so plainly before they start. Always shown to you: the two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. The big picture: each part's level, how the tree looks today, how many days they tended it, and which parts they are tending. And just theirs: the rest of their answers, the practices they check off, their notes, and their weekly reflections, unless they choose to share one with you."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Ring 3: grade 7",
+       "rows": [
+        [
+         "Branches",
+         "Growing Edge",
+         "#B8612F"
+        ],
+        [
+         "Worth a check-in",
+         "What they said",
+         "#B8612F"
+        ],
+        [
+         "Answers always shown to you",
+         ""
+        ],
+        [
+         "How to start the check-in",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "panel": {
+        "h": "How to start the check-in",
+        "sub": "Pick a calm, private moment.",
+        "items": [
+         "Say what you noticed, without alarm",
+         "Listen more than you talk",
+         "Thank them for being honest"
+        ]
+       },
+       "say": "Tap a student to see their rings. When an answer is worrying, that ring shows a Worth a check-in marker, with exactly what they said and what to do next. Then How to start the check-in walks you through it. Pick a calm, private moment. Say what you noticed without alarm. Listen more than you talk. And thank them for being honest."
+      },
+      {
+       "k": "big",
+       "h": "Try the words out loud.",
+       "sub": "I saw some of your answers and I care.",
+       "beats": [
+        "Aspen offers words to begin.",
+        "I saw some of your answers and I care about how you're doing.",
+        {
+         "t": "Say that line out loud once now, slowly, in your own voice.",
+         "w": 8
+        }
+       ],
+       "say": "Aspen offers words to begin. I saw some of your answers and I care about how you're doing. Say that line out loud once now, slowly, in your own voice."
+      },
+      {
+       "k": "points",
+       "h": "If an answer worries you",
+       "items": [
+        [
+         "Stay with them",
+         "Stay calm, and listen first"
+        ],
+        [
+         "Call or text 988",
+         "Any time, day or night"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ],
+        [
+         "Someone hurting them?",
+         "Childhelp, 1-800-422-4453"
+        ]
+       ],
+       "say": "Aspen points the way, and you are the follow-up. If a student talks about wanting to die or hurting themselves, stay with them, and call or text nine eight eight, any time. If they are in danger right now, call nine one one. If someone is hurting them, Childhelp can help you figure out who to call, at one eight hundred, four two two, four four five three. Teachers follow their school's reporting and crisis steps. And See the calm card shows you what the student sees, with people they can call or text on their own."
+      },
+      {
+       "k": "points",
+       "h": "More on each student’s page",
+       "items": [
+        [
+         "Tending",
+         "Days tended, and the parts they chose"
+        ],
+        [
+         "This week in Aspen",
+         "The theme and their question"
+        ],
+        [
+         "Reflections they shared",
+         "Only the ones they chose"
+        ],
+        [
+         "Optional question",
+         "Grades 7 and 8, off unless you turn it on"
+        ]
+       ],
+       "say": "Each student's page shows more. Tending shows their tree, how many of the last seven days they tended it, and the parts they are tending, with guides for those parts. This week in Aspen shows the week's theme and their reflection question, so you can ask it too. Reflections they chose to share show up here. And in grades seven and eight, an optional question about being offered a vape or other substances stays off unless you turn it on. It never asks whether a student has used anything."
+      },
+      {
+       "k": "points",
+       "h": "Further down the tab",
+       "items": [
+        [
+         "Why each part matters",
+         "The research behind each part"
+        ],
+        [
+         "Stories from Grounded",
+         "Real stories from Chris"
+        ],
+        [
+         "When Life Changes",
+         "Guides for the hard talks"
+        ]
+       ],
+       "say": "Further down the Grown-ups tab, Why each part matters shares the research behind each part, with links to read more. Stories from Grounded has real stories from Chris, the hospice chaplain behind Grow With Grounded. And When Life Changes opens guides for talking with a middle schooler about hard things."
+      },
+      {
+       "k": "big",
+       "h": "Listen more than you talk.",
+       "say": "If you remember one thing, make it this. Listen more than you talk. Your steady presence is what helps most."
+      },
+      {
+       "k": "quiz",
+       "q": "Which answers are always shown to a grown-up?",
+       "opts": [
+        "Every answer, every time",
+        "Safety answers, plus lonely, bullied, and giving up",
+        "None of them"
+       ],
+       "right": 1,
+       "why": "Those always show so a grown-up can help. The rest stay the student’s own.",
+       "say": "Quick question. Which answers are always shown to a grown-up?"
+      }
+     ]
+    },
+    {
+     "id": "as-u-private",
+     "n": 6,
+     "title": "Private, Saved, and Shared",
+     "mins": 6,
+     "blurb": "Where your tree is saved, what stays yours, and what your grown-up sees.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Using Aspen, Lesson 6",
+       "h": "Private, Saved, and Shared",
+       "sub": "Your tree is yours.",
+       "say": "Your tree holds real answers about your life. This lesson shows where it is saved, what stays private, and exactly what your grown-up can see."
+      },
+      {
+       "k": "card",
+       "title": "Add a student",
+       "body": "Saved on this device, locked with your own passcode.",
+       "fields": [
+        [
+         "First name or nickname",
+         "Sam"
+        ],
+        [
+         "Grade",
+         "7th"
+        ]
+       ],
+       "btns": [
+        "Add and start",
+        "Just try it without saving"
+       ],
+       "tap": 0,
+       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know. There is no account, and your answers stay right here. A grown-up agrees when your profile is made."
+      },
+      {
+       "k": "points",
+       "h": "Just trying it out?",
+       "items": [
+        [
+         "Just try it without saving",
+         "Kept until the page closes"
+        ],
+        [
+         "Save my tree",
+         "Turns it into a locked profile"
+        ],
+        [
+         "With a grown-up",
+         "They agree when it is made"
+        ]
+       ],
+       "say": "You can also tap Just try it without saving. Then your tree is only kept until the page closes. To keep it, tap Save my tree, and make your profile with a grown-up."
+      },
+      {
+       "k": "points",
+       "h": "Who can open your profile",
+       "items": [
+        [
+         "You",
+         "With your passcode"
+        ],
+        [
+         "Grown-ups who agreed",
+         "With their own passcode"
+        ],
+        [
+         "Forgot your passcode?",
+         "A grown-up can help you set a new one"
+        ]
+       ],
+       "say": "Who can open your profile? You can, with your passcode. The grown-ups who agreed for you can open it too, with their own passcode, so you are never alone with something hard. That also means if you forget your passcode, a grown-up can open it and help you set a new one."
+      },
+      {
+       "k": "points",
+       "h": "What your grown-up sees",
+       "items": [
+        [
+         "Always shown",
+         "Being hurt, bullied, alone, or giving up",
+         "#B8612F"
+        ],
+        [
+         "The big picture",
+         "Levels, your tree, days tended",
+         "#8B5E1A"
+        ],
+        [
+         "Just yours",
+         "Other answers, notes, reflections",
+         "#5F7D48"
+        ]
+       ],
+       "say": "Here is exactly what your grown-up sees in Aspen. Always shown: if you answer that someone is hurting you, that you have thought about hurting yourself, that you are being bullied, that you feel lonely or left out, or that you feel like giving up. Your grown-up sees that answer so they can help. The big picture: how each part is doing, how your tree looks today, how many days you tended it, and which parts you are tending. And just yours: the rest of your answers, the practices you check off, your notes, and your weekly reflections."
+      },
+      {
+       "k": "big",
+       "h": "Some answers always show.",
+       "sub": "So a safe grown-up can help.",
+       "beats": [
+        "Those few answers always show because you matter, and nobody should carry something heavy alone.",
+        "Think of two safe grown-ups you could tell, like a parent, a grandparent, a teacher, or a school counselor.",
+        {
+         "t": "Say their names, out loud or in your head.",
+         "w": 10
+        }
+       ],
+       "say": "Those few answers always show because you matter, and nobody should carry something heavy alone. Think of two safe grown-ups you could tell, like a parent, a grandparent, a teacher, or a school counselor. Say their names, out loud or in your head."
+      },
+      {
+       "k": "points",
+       "h": "Sharing you choose",
+       "items": [
+        [
+         "With a grown-up",
+         "They see every answer of that check-in"
+        ],
+        [
+         "Share this reflection",
+         "A switch on each weekly reflection"
+        ],
+        [
+         "Show my growth on The Grove",
+         "On or off, in Settings"
+        ]
+       ],
+       "say": "Some sharing is your choice. If you check in With a grown-up, your grown-up sees every answer from that check-in, since you did it together. On a weekly reflection, you can turn on Share this reflection with my grown-up. And in Settings, Show my growth on The Grove lets your tree stand beside your family's trees. It starts on, and you can turn it off anytime. Only the big picture shows there: days tended, rings, and which parts you tended. Never your answers, levels, or notes."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Profile and Settings",
+       "rows": [
+        [
+         "Your Profile",
+         ""
+        ],
+        [
+         "Movement Level",
+         ""
+        ],
+        [
+         "The Grove",
+         ""
+        ],
+        [
+         "What your grown-up can see",
+         ""
+        ],
+        [
+         "Daily Reminder",
+         ""
+        ],
+        [
+         "Reading and Display",
+         ""
+        ]
+       ],
+       "tap": 3,
+       "say": "To check any of this, tap your picture in your tree, where it says Settings. Under What your grown-up can see, Aspen spells it all out in plain words."
+      },
+      {
+       "k": "points",
+       "h": "Keep your tree safe",
+       "items": [
+        [
+         "Back up everything",
+         "In the round button at the top"
+        ],
+        [
+         "One file, still locked",
+         "Every profile on this device"
+        ],
+        [
+         "Load a backup",
+         "On a new device, or after a reset"
+        ]
+       ],
+       "say": "Your tree lives in this browser. Clearing the browser or resetting the device erases it, so back it up now and then, with a grown-up. Tap the round profile button at the top of the page, then Back up everything. It saves one file with every profile on this device, each one still locked. On a new device, Load a backup brings it all back."
+      },
+      {
+       "k": "points",
+       "h": "Help is always close",
+       "items": [
+        [
+         "Need help now?",
+         "The button next to your name"
+        ],
+        [
+         "Call or text 988",
+         "Any time, day or night"
+        ],
+        [
+         "Text HOME to 741741",
+         "Crisis Text Line"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "If you ever need help right away, tap Need help now, next to your name, to see the calm card. Call or text nine eight eight any time, or text HOME to seven four one seven four one. If you are in danger right now, call nine one one. And if a friend tells you they want to hurt themselves or die, always tell a grown-up, even if your friend asks you not to. You are not in trouble. You are being a good friend."
+      },
+      {
+       "k": "big",
+       "h": "Your tree is yours. The grove is ours.",
+       "say": "Your tree is yours. The grove is ours. And the safe grown-ups in your life are there to help you grow."
+      },
+      {
+       "k": "quiz",
+       "q": "What stays just yours in Aspen?",
+       "opts": [
+        "Answers about being hurt or bullied",
+        "Your notes and weekly reflections, unless you share",
+        "Nothing at all"
+       ],
+       "right": 1,
+       "why": "Your notes and reflections are yours. You can share a reflection anytime.",
+       "say": "Quick question. What stays just yours in Aspen?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aspen-six",
+   "title": "The Six Parts",
+   "who": "One lesson for each part of your tree, with a practice",
+   "certTitle": "Aspen: The Six Parts",
+   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "lessons": [
+    {
+     "id": "as-6-roots",
+     "n": 1,
+     "title": "Roots: What Keeps You Steady",
+     "mins": 5,
+     "blurb": "What grounds you, and what keeps you steady when life gets loud.",
+     "sources": [
+      [
+       "Lisa Miller, Teachers College, Columbia University",
+       "https://www.tc.columbia.edu/faculty/lfm14/"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "The Six Parts, Lesson 1",
+       "h": "Roots",
+       "sub": "What keeps you steady.",
+       "say": "This lesson is about Roots. In Aspen, Roots means what grounds you. It is what keeps you steady when life gets loud."
+      },
+      {
+       "k": "big",
+       "h": "Roots hold a tree steady when the wind blows.",
+       "sub": "Aspens share their roots, so a whole grove stands together.",
+       "say": "You cannot see a tree’s roots, and they hold it steady when the wind blows. Aspen trees are known for sharing roots underground, so a whole grove stands together. Your roots help you stand, too."
+      },
+      {
+       "k": "points",
+       "h": "Roots can look like",
+       "items": [
+        [
+         "A calm place",
+         "Inside you, or a spot you go"
+        ],
+        [
+         "Wonder",
+         "Stars, music, somewhere beautiful"
+        ],
+        [
+         "God, prayer, worship",
+         "If your family prays or worships"
+        ],
+        [
+         "Quiet and traditions",
+         "Nature, stillness, family ways"
+        ]
+       ],
+       "say": "Roots can look like a calm place, inside you or a spot you like to go. Wonder, like the stars at night or a song you love. For many families, roots are God, prayer, and worship. For others, roots are quiet, time outside, or traditions passed down in your family. Aspen is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "big",
+       "h": "You matter, just for being you.",
+       "sub": "One of the strongest roots there is.",
+       "say": "Roots also means knowing you matter, just for being you. Not for your grades, your followers, or how good you are at something. Just for being you. That is one of the strongest roots a person can have. And noticing what you are thankful for, even small things, helps that root grow."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Check-in: Roots",
+       "rows": [
+        [
+         "Do you feel like you matter, just for being you?",
+         ""
+        ],
+        [
+         "Yeah, most of the time",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 2,
+       "say": "In a check-in, Roots asks about your experience. Where you feel calm. Whether you feel like you matter. Whether something holy feels close to you. Aspen asks about what you live and feel. And if you wonder why a question is there, tap Why this question? to find out."
+      },
+      {
+       "k": "big",
+       "h": "Faith should help you feel loved.",
+       "sub": "If it ever feels heavy, talk with a grown-up you trust.",
+       "say": "Roots asks one more kind of question. Sometimes thoughts about God or faith can leave a person feeling worried, scared, or not good enough. Faith should help you feel loved. If it ever feels heavy, that is worth talking about with a grown-up you trust. Big questions are a normal part of growing up."
+      },
+      {
+       "k": "big",
+       "h": "Feeling held by something bigger helps in hard times.",
+       "sub": "Middle school is often when this part of you wakes up.",
+       "say": "Here is something researchers have found. Feeling held by something bigger than yourself is one of the strongest supports young people have in hard times. And the middle school years are often when that part of you starts to wake up."
+      },
+      {
+       "k": "points",
+       "h": "How Roots can look",
+       "items": [
+        [
+         "Strong",
+         "You know what steadies you, and you reach for it",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "It is there, though you reach for it less lately",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "You feel empty, unsure, or weighed down",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong roots might mean you know what steadies you, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel empty inside, unsure, or weighed down. That is an honest place to be, and it is a part to tend, not a grade."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Look Up and Breathe",
+       "items": [
+        [
+         "Find the sky",
+         "Step outside, or look out a window"
+        ],
+        [
+         "Look up",
+         "Let your eyes rest there"
+        ],
+        [
+         "Breathe slowly",
+         "In, then out even slower"
+        ],
+        [
+         "Notice",
+         "How do you feel now?"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 6,
+         "4": 15,
+         "5": 5
+        },
+        "at": [
+         1,
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Let us try one from Aspen’s Roots practices. Find the sky, outside or through a window. Look up, and let your eyes rest there. Now breathe in slowly, and breathe out even more slowly. Do that three times. Then notice how you feel."
+      },
+      {
+       "k": "big",
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "Find Roots practices in Growth Plan.",
+       "say": "Tend your roots, and they will hold you. Practices like this one are in Growth Plan, under Roots, and each one has a Learn more button with the steps. You can also ask someone in your family what helps them feel peaceful. Their answer might help your roots grow, too."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Aspen ask about in Roots?",
+       "opts": [
+        "Which religion you belong to",
+        "What steadies you, and whether it helps or weighs on you",
+        "How often you go to services"
+       ],
+       "right": 1,
+       "why": "Roots asks about your experience, never what you believe.",
+       "say": "Quick question. What does Aspen ask about in Roots?"
+      }
+     ]
+    },
+    {
+     "id": "as-6-trunk",
+     "n": 2,
+     "title": "Trunk: Goals and Trying New Things",
+     "mins": 4,
+     "blurb": "What you care about, what you are good at, and why it matters.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "The Six Parts, Lesson 2",
+       "h": "Trunk",
+       "sub": "Goals and trying new things.",
+       "say": "This lesson is about your Trunk. In Aspen, Trunk means purpose. What you care about, what you are good at, and why it matters."
+      },
+      {
+       "k": "big",
+       "h": "The trunk carries everything up to the branches.",
+       "say": "A tree’s trunk carries water from the roots all the way up to the branches and leaves. Purpose works like that for you. It gives your days somewhere to go."
+      },
+      {
+       "k": "points",
+       "h": "Trunk can look like",
+       "items": [
+        [
+         "Losing track of time",
+         "Doing something you love"
+        ],
+        [
+         "Getting better",
+         "A skill you are proud of"
+        ],
+        [
+         "Helping",
+         "At home, at school, around you"
+        ],
+        [
+         "Trying new things",
+         "Before you are good at them"
+        ]
+       ],
+       "say": "Trunk can look like doing something you love so much that you lose track of time. Getting better at a skill, and feeling proud of it. Helping people, at home, at school, or around your community. And trying new things, even before you are good at them."
+      },
+      {
+       "k": "big",
+       "h": "Every skill starts with a first try.",
+       "sub": "You do not have to be good at it yet.",
+       "say": "Trying things before you are good at them is how people find what they love. A new club, an instrument, a sport, a recipe. Your first try counts, even when it is wobbly. You do not have to be good at it yet."
+      },
+      {
+       "k": "big",
+       "h": "The real you is the one worth growing.",
+       "sub": "The right people like the real you.",
+       "say": "Trunk also asks if you feel like you have to act like someone you are not, just to fit in. Or if you do things mostly because other people expect you to. That can be tiring. The real you is the one worth growing, and the right people like the real you."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Check-in: Trunk",
+       "rows": [
+        [
+         "Is there something you love doing so much that you lose track of time?",
+         ""
+        ],
+        [
+         "Yeah, most of the time",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "In a check-in, Trunk asks questions written for your grade. In sixth grade, one asks, is there something you love doing so much that you lose track of time? In eighth grade, one asks what you care about enough to stand up for."
+      },
+      {
+       "k": "points",
+       "h": "How Trunk can look",
+       "items": [
+        [
+         "Strong",
+         "You know what you care about, and you go for it",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Things you like, though some days feel flat",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Bored a lot, or going through the motions",
+         "#B8612F"
+        ]
+       ],
+       "say": "A strong trunk might mean you know what you care about, and you go for it. Steady might mean you have things you like, though some days feel flat. And a Growing Edge might mean you feel bored a lot, or like you are going through the motions. If you have stopped enjoying things you used to love, tell a grown-up you trust. That is worth some support."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Things I’m Good At",
+       "items": [
+        [
+         "Think",
+         "Big or small things count"
+        ],
+        [
+         "Name three",
+         "Out loud, or on your fingers"
+        ],
+        [
+         "Stuck?",
+         "What do friends come to you for?"
+        ],
+        [
+         "Later",
+         "Ask someone to add one"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 15,
+         "4": 5
+        },
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Let us try one from Aspen’s Trunk practices. Think of things you are good at. They can be big or small, like being kind, being funny, or being good at drawing. Now name three of them, out loud or on your fingers. If you get stuck, think about what your friends come to you for. Later, ask someone who knows you to add one more."
+      },
+      {
+       "k": "big",
+       "h": "Purpose grows when you use it.",
+       "sub": "Find Trunk practices in Growth Plan.",
+       "say": "Purpose grows when you use it. In Growth Plan, under Trunk, you will find practices like this one, and ideas like teaching someone a skill, or helping at home without being asked. You can write your own, too."
+      },
+      {
+       "k": "quiz",
+       "q": "What helps your Trunk grow?",
+       "opts": [
+        "Only doing what you are already great at",
+        "Trying things, even before you are good at them",
+        "Acting like whoever fits in best"
+       ],
+       "right": 1,
+       "why": "Trying new things is how people find what they love.",
+       "say": "Quick question. What helps your Trunk grow?"
+      }
+     ]
+    },
+    {
+     "id": "as-6-bark",
+     "n": 3,
+     "title": "Bark: Naming Feelings, Asking for Help",
+     "mins": 5,
+     "blurb": "How you talk to yourself and handle big feelings.",
+     "sources": [
+      "lieberman"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "The Six Parts, Lesson 3",
+       "h": "Bark",
+       "sub": "Naming feelings, asking for help.",
+       "say": "This lesson is about Bark, your mind and feelings. How you talk to yourself, and how you handle big feelings."
+      },
+      {
+       "k": "big",
+       "h": "Bark protects the tree, and stretches as it grows.",
+       "sub": "Healthy bark bends without breaking.",
+       "say": "Bark protects a tree from storms and sun. And it has to stretch as the tree grows. Your mind and feelings work the same way. Healthy bark bends without breaking."
+      },
+      {
+       "k": "points",
+       "h": "Healthy bark can look like",
+       "items": [
+        [
+         "Calming down",
+         "Knowing what helps you"
+        ],
+        [
+         "Naming feelings",
+         "Sad, mad, nervous, embarrassed"
+        ],
+        [
+         "Kind self-talk",
+         "Even after a mistake"
+        ],
+        [
+         "Asking for help",
+         "Before it gets too heavy"
+        ]
+       ],
+       "say": "Healthy bark can look like knowing what helps you calm down. Naming what you feel, like sad, mad, nervous, or embarrassed. Talking to yourself kindly, even after a mistake. And asking for help before things get too heavy."
+      },
+      {
+       "k": "big",
+       "h": "Naming a feeling helps your brain calm it down.",
+       "sub": "Even one word helps.",
+       "say": "Here is something researchers have found. Putting a feeling into words helps your brain calm it down. Just saying, I feel nervous, can turn the volume down a little."
+      },
+      {
+       "k": "big",
+       "h": "Would you say that to a friend?",
+       "sub": "Kind self-talk helps you bounce back.",
+       "say": "Bark is also about how you talk to yourself. When you mess up, what do you say inside? Would you say that to a friend? Being kind to yourself after a mistake helps you learn from it and bounce back faster."
+      },
+      {
+       "k": "big",
+       "h": "Asking for help is a strength.",
+       "sub": "Talking keeps a worry from growing.",
+       "say": "And Bark is about asking for help. Asking for help is a strength, and it gets problems solved faster. Talking about what bothers you keeps it from growing bigger inside."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Check-in: Bark",
+       "rows": [
+        [
+         "Can you name what you’re feeling, like sad, mad, nervous, or embarrassed?",
+         ""
+        ],
+        [
+         "Yeah, most of the time",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "In a check-in, Bark asks questions like, can you name what you are feeling? And, do worries take up a lot of your day? In seventh grade, one asks if you compare yourself to people online and feel worse. Answer with what is true lately. Not sure is always an honest answer."
+      },
+      {
+       "k": "points",
+       "h": "How Bark can look",
+       "items": [
+        [
+         "Strong",
+         "You feel your feelings and find your way back",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly steady, with some heavy days",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Worry, stress, or big feelings wear you down",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly steady, with some heavy days. And a Growing Edge might mean worry, stress, or big feelings are wearing you down. That is a part to tend, and a good time to let someone help."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name It in One Word",
+       "items": [
+        [
+         "Get still",
+         "Feet pressed into the floor"
+        ],
+        [
+         "Check inside",
+         "What feeling is here?"
+        ],
+        [
+         "One word",
+         "Calm, tired, glad, nervous, sad"
+        ],
+        [
+         "Say it softly",
+         "Out loud, or inside"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 4,
+         "3": 6,
+         "4": 6,
+         "5": 5
+        },
+        "at": [
+         1,
+         2,
+         4,
+         5
+        ]
+       },
+       "say": "Let us try one from Aspen’s Bark practices. Get still, and press your feet into the floor. Now check inside. What feeling is here right now? Find one word for it, like calm, tired, glad, nervous, or sad. Say your word softly, out loud or inside. You just named it, and that helps."
+      },
+      {
+       "k": "big",
+       "h": "Heavy for a while? Tell a safe grown-up.",
+       "sub": "Need to talk now? Call or text 988. In danger? Call 911.",
+       "say": "If worry or sadness stays heavy for a couple of weeks, tell a grown-up you trust. A parent, a grandparent, a teacher, or your school counselor. If a friend ever says they want to hurt themselves or die, always tell a grown-up, even if your friend asked you not to. You are not in trouble for telling. And if you need to talk right now, call or text nine eight eight. If someone is in danger, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "What can help a big feeling calm down?",
+       "opts": [
+        "Pretending it is not there",
+        "Putting it into words",
+        "Keeping it to yourself"
+       ],
+       "right": 1,
+       "why": "Naming a feeling helps your brain calm it down.",
+       "say": "Quick question. What can help a big feeling calm down?"
+      }
+     ]
+    },
+    {
+     "id": "as-6-branches",
+     "n": 4,
+     "title": "Branches: Friends, Family, Belonging",
+     "mins": 5,
+     "blurb": "Friends, family, and grown-ups you can count on.",
+     "sources": [
+      [
+       "Search Institute, developmental relationships",
+       "https://searchinstitute.org/developmental-relationships"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "The Six Parts, Lesson 4",
+       "h": "Branches",
+       "sub": "Friends, family, belonging.",
+       "say": "This lesson is about Branches. Your friends, your family, and the places where you belong."
+      },
+      {
+       "k": "big",
+       "h": "Branches reach out. That is how a tree catches light.",
+       "say": "Branches reach out from the trunk. That is how a tree catches light. People are the same. You were made to reach toward others, and to let others reach toward you."
+      },
+      {
+       "k": "points",
+       "h": "Branches can look like",
+       "items": [
+        [
+         "One friend you can be yourself around",
+         "Even one makes a big difference"
+        ],
+        [
+         "A grown-up you trust",
+         "Someone to go to when things get hard"
+        ],
+        [
+         "Feeling close to family",
+         "Even when you disagree"
+        ],
+        [
+         "A place you belong",
+         "A team, a club, a group"
+        ]
+       ],
+       "say": "Branches can look like one friend you can be yourself around. Even one friend like that makes a big difference. A grown-up you trust, someone to go to when things get hard. Feeling close to someone in your family, even when you disagree. And a place where you belong, like a team, a club, or a group."
+      },
+      {
+       "k": "big",
+       "h": "Grown-ups in your corner help you grow strong.",
+       "sub": "They care, cheer you on, and give you a say.",
+       "say": "People who study kids your age have found something hopeful. When the grown-ups in your life show they care, cheer you on, back you up, and give you a real say, you grow stronger. Middle school is when having a real say starts to matter most."
+      },
+      {
+       "k": "points",
+       "h": "What Aspen asks about Branches",
+       "items": [
+        [
+         "Friends who treat you well",
+         "Even when you disagree"
+        ],
+        [
+         "A grown-up you trust",
+         "Someone you could tell almost anything"
+        ],
+        [
+         "Feeling left out",
+         "Lonely, even around other kids"
+        ],
+        [
+         "Bullying",
+         "In person, in group chats, or online"
+        ]
+       ],
+       "say": "In a check-in, Aspen asks six Branches questions, written for your grade. Do you have friends who treat you well? Is there a grown-up you trust? A few are turned around on purpose, like whether you feel lonely or left out, or whether anyone is bullying you, in person, in group chats, or online. For those, Not really is the strong answer."
+      },
+      {
+       "k": "points",
+       "h": "How Branches can look",
+       "items": [
+        [
+         "Strong",
+         "You have people, and you reach for them",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Good people, with some lonely days",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "You feel left out, or someone is unkind",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong branches might mean you have people, and you reach for them. Steady might mean you have good people, with some lonely days. And a Growing Edge might mean you feel left out a lot, or someone is being unkind to you. A Growing Edge is a part to tend, not a grade."
+      },
+      {
+       "k": "big",
+       "h": "Lonely or bullied? Your grown-up gets to help.",
+       "sub": "Bullying is never your fault.",
+       "say": "Here is something good to know before you check in. If you say you feel lonely, or someone is bullying you, your grown-up sees that answer, so they can help. Bullying is never your fault, and you deserve help with it. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor."
+      },
+      {
+       "k": "words",
+       "h": "If a friend is in trouble",
+       "items": [
+        "Tell a grown-up, even if they asked you not to.",
+        "That is being a good friend.",
+        "You are not in trouble for telling."
+       ],
+       "say": "One more thing about friends. If a friend ever says they want to hurt themselves, or die, always tell a grown-up, even if your friend asked you not to. That is being a good friend. And you are not in trouble for telling."
+      },
+      {
+       "k": "points",
+       "h": "Practice: My People List",
+       "items": [
+        [
+         "A friend",
+         "Someone you can be yourself around"
+        ],
+        [
+         "A grown-up at home",
+         "A parent, grandparent, or family member"
+        ],
+        [
+         "A grown-up at school",
+         "A teacher, coach, or school counselor"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 8,
+         "3": 8,
+         "4": 8
+        },
+        "at": [
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Let us practice. This one is your people list. Think of one friend you can be yourself around, and say their name in your head. Now think of a grown-up at home you could go to, like a parent or a grandparent. Last, think of a grown-up at school, like a teacher, a coach, or a school counselor. Those are your people. Coaches, neighbors, and pets count too."
+      },
+      {
+       "k": "big",
+       "h": "Reach out a little, and your branches grow.",
+       "sub": "Pick Branches practices in your Growth Plan.",
+       "say": "Branches grow a little at a time. A hi to someone who seems alone. A kind message to a friend. Ten minutes with family, phones put away. Pick a few Branches practices in your Growth Plan, and check one off in Today. Every practice has a Learn more button with the steps."
+      },
+      {
+       "k": "quiz",
+       "q": "A friend says they want to hurt themselves. What do you do?",
+       "opts": [
+        "Keep it a secret",
+        "Tell a grown-up, even if asked not to",
+        "Wait and see if it passes"
+       ],
+       "right": 1,
+       "why": "Telling a grown-up is being a good friend, and you are not in trouble for telling.",
+       "say": "Quick question. A friend says they want to hurt themselves, and asks you not to tell. What do you do?"
+      }
+     ]
+    },
+    {
+     "id": "as-6-leaves",
+     "n": 5,
+     "title": "Leaves: Sleep, Movement, Real Meals",
+     "mins": 5,
+     "blurb": "Sleep, movement, screens, and feeling at home in your body.",
+     "sources": [
+      [
+       "HealthyChildren.org (American Academy of Pediatrics), healthy sleep habits",
+       "https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "The Six Parts, Lesson 5",
+       "h": "Leaves",
+       "sub": "Sleep, movement, real meals.",
+       "say": "This lesson is about Leaves, your body. Sleep, movement, real meals, and feeling at home in your body."
+      },
+      {
+       "k": "big",
+       "h": "Leaves turn sunlight into energy for the whole tree.",
+       "say": "Leaves catch sunlight and turn it into energy for the whole tree. Your body does that for all of you. When your body gets what it needs, your mood, your focus, and your friendships all have more to work with."
+      },
+      {
+       "k": "flow",
+       "h": "Three ways to tend Leaves",
+       "steps": [
+        [
+         "Rest",
+         "Sleep, and phones out at night"
+        ],
+        [
+         "Move",
+         "In ways you enjoy"
+        ],
+        [
+         "Nourish",
+         "Real meals that keep you going"
+        ]
+       ],
+       "say": "Aspen tends Leaves in three ways. Rest, with real sleep. Move, in ways you enjoy, like sports, biking, or dancing. And nourish, with regular meals that keep your energy up all day."
+      },
+      {
+       "k": "big",
+       "h": "Most kids your age need 9 to 12 hours of sleep.",
+       "sub": "Teens need 8 to 10. Phones sleep outside.",
+       "say": "Sleep experts say most kids your age need nine to twelve hours of sleep a night, and teens need eight to ten. That is a lot! Sleep helps your mood, your focus, and how you feel about yourself. One of the biggest helps is simple. Charge your phone outside your bedroom at night."
+      },
+      {
+       "k": "points",
+       "h": "What Aspen asks about Leaves",
+       "items": [
+        [
+         "Sleep",
+         "Enough to feel rested?"
+        ],
+        [
+         "Moving and getting outside",
+         "Most days?"
+        ],
+        [
+         "Your body",
+         "Feeling okay in it?"
+        ],
+        [
+         "Screens",
+         "Late nights and long scrolls"
+        ]
+       ],
+       "say": "In a check-in, Aspen asks six Leaves questions, written for your grade. Do you get enough sleep to feel rested? Do you move in ways you enjoy, or get outside most days? Some are turned around, like whether you feel bad about how your body looks, or stay up late on screens. And one asks whether you would know what to say if someone offered you a vape. Knowing your line ahead of time makes it much easier to say no."
+      },
+      {
+       "k": "points",
+       "h": "How Leaves can look",
+       "items": [
+        [
+         "Strong",
+         "You rest, move, and eat in ways that fuel you",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly okay, with a weak spot or two",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Tired a lot, or uneasy in your body",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong leaves might mean you rest, move, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two, like late nights. And a Growing Edge might mean you feel tired a lot, or uneasy in your body. That is a part to tend, not a grade."
+      },
+      {
+       "k": "big",
+       "h": "Your body is your home, and it is growing.",
+       "sub": "Think strength and energy.",
+       "say": "Lots of kids your age worry about how they look. Bodies change fast in middle school, and that is normal. Try thinking about what your body lets you do. Run, laugh, hug, and carry your backpack all day. If worries about food or how you look keep coming back, tell a grown-up you trust. Talking about it helps."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Shoulders, Jaw, Hands",
+       "items": [
+        [
+         "Shoulders",
+         "Lift them up, then let them drop"
+        ],
+        [
+         "Jaw",
+         "Let your teeth come apart"
+        ],
+        [
+         "Hands",
+         "Squeeze tight, then let go"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 5,
+         "5": 6,
+         "7": 4,
+         "8": 8
+        },
+        "at": [
+         2,
+         4,
+         6
+        ]
+       },
+       "say": "Let us practice, right where you are. You can sit or lie down. Breathe in slowly, and lift your shoulders up toward your ears. Now breathe out, and let them drop. Next, your jaw. Let your teeth come apart, and let your face go soft. Last, your hands. Squeeze them into tight fists, and hold. Now let go, and notice how your body feels."
+      },
+      {
+       "k": "big",
+       "h": "Tend Leaves a little each day.",
+       "sub": "Find Leaves practices in your Growth Plan.",
+       "say": "That one helps at bedtime too. You will find practices like it in your Growth Plan, under Leaves, along with ones like a dance break or a calm bedtime plan. Hard day? Tap Easier today for a smaller version that still counts."
+      },
+      {
+       "k": "quiz",
+       "q": "Aspen tends Leaves in three ways. What are they?",
+       "opts": [
+        "Rest, Move, Nourish",
+        "Win, Train, Compete",
+        "Wake, Study, Scroll"
+       ],
+       "right": 0,
+       "why": "Rest, Move, and Nourish keep your leaves green.",
+       "say": "Quick question. Aspen tends Leaves in three ways. What are they?"
+      }
+     ]
+    },
+    {
+     "id": "as-6-fruit",
+     "n": 6,
+     "title": "Fruit: Hope for What's Ahead",
+     "mins": 5,
+     "blurb": "Looking forward, being thankful, and believing things can get better.",
+     "sources": [
+      "snyder",
+      "froh"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "The Six Parts, Lesson 6",
+       "h": "Fruit",
+       "sub": "Hope for what's ahead.",
+       "say": "This last lesson in The Six Parts is about Fruit, your hope for what is ahead."
+      },
+      {
+       "k": "big",
+       "h": "Fruit takes time. It grows from the whole tree.",
+       "say": "Fruit takes time. It grows from everything else. Roots, Trunk, Bark, Branches, and Leaves all feed it. Hope works the same way. When you tend the whole tree, hope has something to grow from."
+      },
+      {
+       "k": "points",
+       "h": "Hope can look like",
+       "items": [
+        [
+         "Something to look forward to",
+         "This week, big or small"
+        ],
+        [
+         "Noticing good things",
+         "Even small ones"
+        ],
+        [
+         "Believing things can get better",
+         "Even when they are hard"
+        ],
+        [
+         "Being kind",
+         "It grows hope in you too"
+        ]
+       ],
+       "say": "Hope can look like something to look forward to this week, big or small. Noticing good things, even small ones. Believing things can get better, even when they are hard. And being kind to others, which is one of the surest ways to feel hopeful yourself."
+      },
+      {
+       "k": "big",
+       "h": "Hope can be grown, like anything you tend.",
+       "sub": "A goal, a way forward, and the will to keep going.",
+       "say": "People who study hope describe it as three things together. A goal, a way to get there, and the will to keep going. And here is the good news. Hope can be grown. Noticing good things each day is one simple way kids your age grow it."
+      },
+      {
+       "k": "points",
+       "h": "What Aspen asks about Fruit",
+       "items": [
+        [
+         "Looking forward",
+         "Something coming up?"
+        ],
+        [
+         "Things getting better",
+         "Even when life is hard?"
+        ],
+        [
+         "Kindness",
+         "Doing kind things for others?"
+        ],
+        [
+         "Giving up",
+         "Ever feel there is no point?"
+        ]
+       ],
+       "say": "In a check-in, Aspen asks six Fruit questions, written for your grade. Do you have something to look forward to? Do you believe things can get better, even when they are hard? Do you do kind things for other people? A few are turned around on purpose, like whether one bad moment ruins your whole day, or whether you ever feel like giving up."
+      },
+      {
+       "k": "points",
+       "h": "How Fruit can look",
+       "items": [
+        [
+         "Strong",
+         "You look ahead with hope, even on hard days",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Hope is there, though some days it fades",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "It is hard to see anything good ahead",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong fruit might mean you look ahead with hope, even on hard days. Steady might mean hope is there, though some days it fades. And a Growing Edge might mean it is hard to see anything good ahead right now. That is a real and honest place to be, and it is worth telling someone."
+      },
+      {
+       "k": "big",
+       "h": "A bad moment is just a moment.",
+       "sub": "Name what went wrong, and what still went okay.",
+       "say": "Picture a day where a quiz goes badly in second period. By lunch, it can feel like the whole day is ruined. Try this. Name what went wrong. Then name what still went okay. A friend saved you a seat. Practice went well. A bad moment is just a moment, and hope lasts longer when you see it that way."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Three Good Things",
+       "items": [
+        [
+         "Good thing one",
+         "Say it out loud"
+        ],
+        [
+         "Good thing two",
+         "Small ones count"
+        ],
+        [
+         "Good thing three",
+         "Then ask why it happened"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 6,
+         "4": 6,
+         "5": 6,
+         "6": 8
+        },
+        "at": [
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Let us practice. This one is called Three Good Things. Think back over today, or yesterday. Say one good thing out loud, even a small one. Now say a second one. And a third. Last, pick one, and ask yourself, why did that happen?"
+      },
+      {
+       "k": "words",
+       "h": "Feeling like giving up?",
+       "items": [
+        "Tell a safe grown-up today.",
+        "Call or text 988.",
+        "Text HOME to 741741.",
+        "In danger right now? Call 911."
+       ],
+       "say": "If you ever feel like giving up, or it is hard to see anything good ahead, you deserve help with that. Tell a safe grown-up today, like a parent, a grandparent, a teacher, or a school counselor. If you answer that way in a check-in, Aspen shows a calm card with people to call or text, and your grown-up sees that answer so they can help. You can call or text nine eight eight, any time, or text HOME to seven four one seven four one. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Tend the whole tree, and fruit will come.",
+       "sub": "Find Fruit practices in your Growth Plan.",
+       "say": "Tend the whole tree, a little at a time, and fruit will come. You will find practices like Three Good Things in your Growth Plan, under Fruit. That is all six parts. Well done."
+      },
+      {
+       "k": "quiz",
+       "q": "Where does hope often start?",
+       "opts": [
+        "With a big change",
+        "With noticing small good things",
+        "With never having problems"
+       ],
+       "right": 1,
+       "why": "Noticing good things, even small ones, trains your brain to see more of them.",
+       "say": "Last question. Where does hope often start?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aspen-grownups",
+   "title": "For Grown-ups",
+   "who": "For parents, grandparents, and the grown-ups walking with a middle schooler",
+   "certTitle": "Aspen: For Grown-ups",
+   "certLine": "For finishing every lesson for the grown-ups walking with a middle schooler.",
+   "lessons": [
+    {
+     "id": "as-p-talk",
+     "n": 1,
+     "title": "Talking So They'll Talk",
+     "mins": 6,
+     "blurb": "Be fully there, listen first, and keep the door open.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "For Grown-ups, Lesson 1",
+       "h": "Talking So They'll Talk",
+       "sub": "Be fully there. Listen first.",
+       "say": "Middle schoolers still want to talk with the grown-ups who love them. This lesson is about making room for that, so they bring the real things to you."
+      },
+      {
+       "k": "big",
+       "h": "They open up when they can tell you are really there.",
+       "sub": "Presence opens the door. Words come after.",
+       "say": "Kids this age read us closely. Before they open up, they want to know we are really there, and not half somewhere else. Presence opens the door. Our words come after."
+      },
+      {
+       "k": "story",
+       "title": "Boundaries and Presence",
+       "lines": [
+        "After work, I rushed straight to my son's middle school band concert. I slipped into the gym just as it began and silenced both my phones.",
+        "My son spotted us and flashed a big smile. As the band launched into the Star Wars theme, I realized I was still half at work.",
+        "So I unclipped my badge, tucked it into my pocket, took a few deep breaths, and made a conscious decision to arrive fully. For the rest of the concert, I was laughing, clapping, and soaking in my son's excitement."
+       ],
+       "lesson": "Arriving fully is a choice we can make in the moment.",
+       "note": "Names and details changed",
+       "say": "One day after work, I rushed straight to my son's middle school band concert. I slipped into the gym just as the performance began, found my wife in the bleachers, and silenced my personal phone and my work phone. My son spotted us and flashed a big smile. As the band launched into the Star Wars theme, I realized I was still half at work. So I unclipped my badge, tucked it into my pocket, took a few deep breaths, and made a conscious decision to arrive fully in that moment. It worked. For the rest of the concert, I was truly present, laughing, clapping, and soaking in my son's excitement.",
+       "hold": 2
+      },
+      {
+       "k": "points",
+       "h": "Try it: arrive fully",
+       "items": [
+        [
+         "Name your badge",
+         "What keeps you half somewhere else"
+        ],
+        [
+         "Put it away",
+         "Pocket it, or picture setting it down"
+        ],
+        [
+         "One slow breath",
+         "With a long breath out"
+        ],
+        [
+         "Say it to yourself",
+         "I am here."
+        ]
+       ],
+       "beats": [
+        "Let us try that now.",
+        "Think of your own badge, the thing that keeps you half somewhere else.",
+        "Maybe your phone, your work, or a worry you carry home.",
+        "Put it away, or picture yourself setting it down.",
+        "Take one slow breath, with a long breath out.",
+        {
+         "t": "Then say quietly to yourself, I am here.",
+         "w": 10
+        }
+       ],
+       "say": "Let us try that now. Think of your own badge, the thing that keeps you half somewhere else. Maybe your phone, your work, or a worry you carry home. Put it away, or picture yourself setting it down. Take one slow breath, with a long breath out. Then say quietly to yourself, I am here."
+      },
+      {
+       "k": "points",
+       "h": "Side by side is easier",
+       "items": [
+        [
+         "In the car",
+         "Eyes on the road, not on them"
+        ],
+        [
+         "On a walk",
+         "Moving loosens the words"
+        ],
+        [
+         "Making a snack",
+         "Hands busy, ears open"
+        ]
+       ],
+       "say": "For many middle schoolers, face to face talks feel like a spotlight. Side by side is easier. Aspen's practice cards suggest it again and again. Try asking in the car, or on a walk. Cook a meal or make a snack together. With hands busy and eyes elsewhere, the words often come."
+      },
+      {
+       "k": "points",
+       "h": "Listen first, advise later",
+       "items": [
+        [
+         "Listen more than you talk",
+         "Let a little quiet sit"
+        ],
+        [
+         "Ask before advising",
+         "Ideas, or just an ear?"
+        ],
+        [
+         "Ask again, gently",
+         "When the answer is fine"
+        ]
+       ],
+       "say": "Then listen first, and advise later. Listen more than you talk, and let a little quiet sit. Ask before you give advice. Do you want ideas, or do you just want me to listen? And when the answer is fine, ask a second time, gently."
+      },
+      {
+       "k": "words",
+       "h": "Words that keep them talking",
+       "items": [
+        "\"That sounds like it really hurt.\"",
+        "\"I'm really glad you told me.\"",
+        "\"What do you want to happen next?\""
+       ],
+       "say": "A few words help keep them talking. That sounds like it really hurt. I'm really glad you told me. And, what do you want to happen next?"
+      },
+      {
+       "k": "card",
+       "title": "Check-in",
+       "body": "Do it on your own or with a grown-up.",
+       "btns": [
+        "On my own",
+        "With a grown-up"
+       ],
+       "tap": 1,
+       "result": "A gold note after each answer, with a question to talk about",
+       "say": "Aspen can help start the talk. Before a check-in, a student chooses On my own, or With a grown-up. In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Every practice has a Learn more card with a way to try it with a grown-up. And students can share a weekly reflection with you anytime."
+      },
+      {
+       "k": "points",
+       "h": "Trust grows with a little privacy",
+       "items": [
+        [
+         "Always shown to you",
+         "Safety answers, so you can help"
+        ],
+        [
+         "The big picture",
+         "How each part of the tree is doing"
+        ],
+        [
+         "Just theirs",
+         "Most answers, notes, and reflections"
+        ]
+       ],
+       "say": "Trust also grows when kids have a little privacy. Aspen tells students plainly, before they start, what you can see. Safety answers are always shown to you. You see the big picture of their tree. The rest of their answers, their notes, and their reflections are theirs, unless they choose to share. Kids answer more honestly when they know up front."
+      },
+      {
+       "k": "points",
+       "h": "Keep the door open",
+       "items": [
+        [
+         "Stay calm when it is hard",
+         "Calm tells them it is safe"
+        ],
+        [
+         "Thank them for telling",
+         "Every time"
+        ],
+        [
+         "Share something real",
+         "A story of your own"
+        ],
+        [
+         "Help is close",
+         "Call or text 988. In danger, 911."
+        ]
+       ],
+       "say": "When they bring you something hard, how you respond decides whether they come back. Stay calm. Thank them for telling you. Share something real of your own. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text nine eight eight, or call nine one one in an emergency."
+      },
+      {
+       "k": "big",
+       "h": "Be fully there. Then listen.",
+       "sub": "The talking grows from there.",
+       "say": "Be fully there. Then listen. The talking grows from there, one car ride at a time."
+      },
+      {
+       "k": "quiz",
+       "q": "When are many middle schoolers most ready to talk?",
+       "opts": [
+        "Face to face, right after school",
+        "Side by side, like in the car or on a walk",
+        "In a family meeting"
+       ],
+       "right": 1,
+       "why": "Side by side feels easier than a spotlight, so the words often come.",
+       "say": "Quick question. When are many middle schoolers most ready to talk?"
+      }
+     ]
+    },
+    {
+     "id": "as-p-phones",
+     "n": 2,
+     "title": "Phones, Friends, and Group Chats",
+     "mins": 5,
+     "blurb": "Skills, an agreement you make together, and a door that stays open.",
+     "sources": [
+      [
+       "HealthyChildren.org: How to make a family media plan",
+       "https://www.healthychildren.org/English/family-life/Media/Pages/How-to-Make-a-Family-Media-Use-Plan.aspx"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "For Grown-ups, Lesson 2",
+       "h": "Phones, Friends, and Group Chats",
+       "sub": "Skills, an agreement, and an open door.",
+       "say": "For most middle schoolers, friendships now live in two places, the hallway and the phone. This lesson is about helping them handle both, with real skills, an agreement you make together, and a door that stays open."
+      },
+      {
+       "k": "big",
+       "h": "Friend groups shift a lot in middle school.",
+       "sub": "Losing a friend can feel as big as any loss.",
+       "say": "Friend groups shift a lot between sixth and eighth grade. Losing a friend can feel as big as any loss. Coaching works better than rescuing. Help them think it through, and then let them try."
+      },
+      {
+       "k": "points",
+       "h": "When a friendship hurts",
+       "items": [
+        [
+         "Listen first",
+         "Ask what happened"
+        ],
+        [
+         "Ask what they want",
+         "What do you want to happen?"
+        ],
+        [
+         "Practice a calm message",
+         "Say it out loud together"
+        ],
+        [
+         "Friends in more than one place",
+         "School, a team, the neighborhood"
+        ]
+       ],
+       "say": "When a friendship hurts, listen first, and ask what happened before giving advice. Ask, what do you want to happen? Help them practice a calm message they could send or say. And encourage friends in more than one place, like school, a team, or the neighborhood, so one breakup never takes everything."
+      },
+      {
+       "k": "points",
+       "h": "Make a phone agreement together",
+       "items": [
+        [
+         "Screen-free times",
+         "Dinner, homework, and bedtime"
+        ],
+        [
+         "Phones charge outside bedrooms",
+         "Yours too"
+        ],
+        [
+         "Fewer pulls",
+         "Autoplay and notifications off"
+        ],
+        [
+         "Rules for you too",
+         "Made together, kept together"
+        ]
+       ],
+       "say": "Next, write a phone agreement together. Choose screen-free times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night, yours included. Turn off autoplay and notifications. A plan made together works better than rules handed down. So invite them in, and include a few rules for yourself."
+      },
+      {
+       "k": "points",
+       "h": "Group chat skills",
+       "items": [
+        [
+         "Mute or leave",
+         "Any chat that feels bad"
+        ],
+        [
+         "Screenshot and report",
+         "When something crosses a line"
+        ],
+        [
+         "Let cruel stuff stop with you",
+         "Keep it from spreading"
+        ],
+        [
+         "Come to a grown-up",
+         "When something feels wrong"
+        ]
+       ],
+       "say": "Group chats can be fun, and they can be brutal. Teach the practical skills. How to mute a chat, and how to leave one. How to screenshot and report. How to let cruel stuff stop with them, instead of passing it on. And to come to you when something feels wrong. Conversations like these do what a monitoring app alone cannot."
+      },
+      {
+       "k": "big",
+       "h": "Telling you never costs them their phone.",
+       "sub": "Say it before anything happens.",
+       "say": "Here is the promise that matters most. Telling you about something scary never costs them their phone. Middle schoolers often keep quiet about bullying because they fear losing their phone. So say the promise plainly, and say it before anything happens."
+      },
+      {
+       "k": "words",
+       "h": "Say it out loud",
+       "items": [
+        "\"If you see something scary, tell me.\"",
+        "\"You won't lose your phone.\"",
+        "\"You can always leave a chat that makes you feel bad.\""
+       ],
+       "beats": [
+        "Let us practice it now.",
+        "Out loud, in your own voice, try these words.",
+        "If you see something scary, tell me.",
+        "You won't lose your phone.",
+        "You can always leave a chat that makes you feel bad.",
+        {
+         "t": "Now say them once more, the way you would at your own kitchen table.",
+         "w": 10
+        }
+       ],
+       "say": "Let us practice it now. Out loud, in your own voice, try these words. If you see something scary, tell me. You won't lose your phone. You can always leave a chat that makes you feel bad. Now say them once more, the way you would at your own kitchen table."
+      },
+      {
+       "k": "points",
+       "h": "Where Aspen helps",
+       "items": [
+        [
+         "When Life Changes",
+         "First phone and group chats"
+        ],
+        [
+         "More guides",
+         "Friendship breakups, being left out, bullying"
+        ],
+        [
+         "Leaves practices",
+         "Charge your phone outside your bedroom"
+        ]
+       ],
+       "say": "Aspen has help ready. In When Life Changes, the guide called First phone and group chats has a quick card, words to use, and trusted links. Nearby are guides for friendship breakups and drama, being left out, and bullying, in person and online. And your student will find Leaves practices like charging the phone outside the bedroom, or asking a grown-up to help set up a screen-free time each day."
+      },
+      {
+       "k": "points",
+       "h": "What you will see",
+       "items": [
+        [
+         "Always shown to you",
+         "Answers about bullying or feeling left out"
+        ],
+        [
+         "Worth a check-in",
+         "A marker on that ring"
+        ],
+        [
+         "Help is close",
+         "Call or text 988. In danger, 911."
+        ]
+       ],
+       "say": "Aspen also keeps you in the loop on what matters most. If your student answers that they are being bullied, or feel lonely or left out, you always see that answer, with a Worth a check-in marker and what to do next. If anyone ever threatens them with a picture, they are not in trouble, and the guide on online pressure and pictures walks you through the steps. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text nine eight eight, or call nine one one in an emergency."
+      },
+      {
+       "k": "big",
+       "h": "Skills, an agreement, and an open door.",
+       "say": "Skills, an agreement you make together, and a door that stays open. That is how kids learn to carry a phone well."
+      },
+      {
+       "k": "quiz",
+       "q": "Your student tells you about a cruel group chat. What helps most?",
+       "opts": [
+        "Take the phone away for a while",
+        "Thank them, and keep your promise about the phone",
+        "Tell them to just ignore it"
+       ],
+       "right": 1,
+       "why": "Telling you never costs them their phone, so they keep telling you.",
+       "say": "Quick question. Your student tells you about a cruel group chat. What helps most?"
+      }
+     ]
+    },
+    {
+     "id": "as-p-faith",
+     "n": 3,
+     "title": "Big Questions and Faith",
+     "mins": 6,
+     "blurb": "Meeting big questions with wonder, in whatever way fits your family.",
+     "sources": [
+      [
+       "Lisa Miller, Teachers College, Columbia University",
+       "https://www.tc.columbia.edu/faculty/lfm14/"
+      ],
+      [
+       "Miller: Spiritual awakening in adolescents (PubMed)",
+       "https://pubmed.ncbi.nlm.nih.gov/24354605/"
+      ],
+      [
+       "Fuller Youth Institute: Why doubt",
+       "https://fulleryouthinstitute.org/blog/why-doubt"
+      ],
+      [
+       "BMC Psychiatry: Spirituality and depression in young people",
+       "https://link.springer.com/article/10.1186/s12888-023-05091-2"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "For Grown-ups, Lesson 3",
+       "h": "Big Questions and Faith",
+       "sub": "Wonder with them.",
+       "say": "Middle school is when many kids start asking big questions, about God, about meaning, and about why hard things happen. This lesson is about meeting those questions with wonder, in whatever way fits your family. Aspen is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "big",
+       "h": "Early adolescence is when spiritual life often wakes up.",
+       "sub": "Questions are a sign of growing.",
+       "say": "Early adolescence is when spiritual life often wakes up. Research finds that a lived spiritual life is one of the strongest protections young people have, and that this awakening is a normal part of growing up. Questions are a sign of growing, not of losing faith."
+      },
+      {
+       "k": "big",
+       "h": "Silence, more than doubt, is what does harm.",
+       "sub": "Doubt spoken out loud is healthier than doubt kept quiet.",
+       "say": "Many young people in faith communities carry serious doubts, and only about a quarter ever talk with anyone about them. Researchers who studied this concluded that silence, not doubt, is what harms faith. When kids can bring their questions to you, faith has room to grow up with them."
+      },
+      {
+       "k": "points",
+       "h": "How Aspen asks about Roots",
+       "items": [
+        [
+         "About experience",
+         "Never about belief"
+        ],
+        [
+         "Many doors",
+         "Prayer, worship, quiet, nature, tradition"
+        ],
+        [
+         "Comfort or weight",
+         "Does it help, or weigh them down?"
+        ]
+       ],
+       "say": "That is why Aspen asks about experience, never belief. A Roots question might ask whether a student ever feels close to God, the Sacred, or something holy, like when they pray, worship, sit quietly, or spend time outside. Another asks whether thoughts about God, or something bigger, ever leave them worried or weighed down. Students of all faith traditions and everything in-between can be strong in Roots."
+      },
+      {
+       "k": "big",
+       "h": "Faith should help a child feel loved.",
+       "sub": "Faith that wounds is worth taking seriously.",
+       "say": "Faith can be a deep comfort. It can also become a weight. Research on young people finds that spiritual well-being protects against depression, while spiritual struggle, like feeling abandoned or punished by God, adds to it. So if your student says faith makes them feel scared, judged, or not good enough, listen first, without defending or correcting. Ask, what happened, or who made you feel that way? And if a person or group is causing harm, step in."
+      },
+      {
+       "k": "words",
+       "h": "When they ask",
+       "items": [
+        "\"That's a real question.\"",
+        "\"I'm so glad you asked me that.\"",
+        "\"I've wondered about that too.\"",
+        "\"Who else could we ask?\""
+       ],
+       "say": "When a big question comes, a few words help. That's a real question. People of faith have asked it for thousands of years. I'm so glad you asked me that. I've wondered about that too. And, who else could we ask? Wonder with them, instead of rushing to answers."
+      },
+      {
+       "k": "points",
+       "h": "Try it: remember your own question",
+       "items": [
+        [
+         "Think back",
+         "To about their age"
+        ],
+        [
+         "Your big question",
+         "What did you wonder about?"
+        ],
+        [
+         "Name it",
+         "Quietly, to yourself"
+        ]
+       ],
+       "beats": [
+        "Let us pause here.",
+        "Think back to when you were about their age.",
+        "What big question did you carry, about God, or life, or why things happen?",
+        "Did you tell anyone, or keep it to yourself?",
+        {
+         "t": "Name that question quietly to yourself now.",
+         "w": 10
+        }
+       ],
+       "say": "Let us pause here. Think back to when you were about their age. What big question did you carry, about God, or life, or why things happen? Did you tell anyone, or keep it to yourself? Name that question quietly to yourself now."
+      },
+      {
+       "k": "points",
+       "h": "Roots practices in Aspen",
+       "items": [
+        [
+         "A hidden question",
+         "Write it down, keep it or share it"
+        ],
+        [
+         "A belief in progress",
+         "Talk it through with a grown-up"
+        ],
+        [
+         "Ask an elder",
+         "What helps you trust when life is hard?"
+        ],
+        [
+         "Quiet time",
+         "Pray or sit in stillness, your way"
+        ]
+       ],
+       "say": "Remembering your own questions makes it easier to welcome theirs. Aspen's Roots practices give students ways in. Write down a question about faith or life you've never said out loud. Talk with a trusted grown-up about one belief you're still figuring out. Ask an elder what helps them trust when life is hard. Or pray, or sit in stillness, in whatever way fits you and your family. Each practice's Learn more card asks the same of grown-ups. Listen and wonder. Don't rush to answers."
+      },
+      {
+       "k": "points",
+       "h": "More help",
+       "items": [
+        [
+         "When Life Changes",
+         "Big questions about faith"
+        ],
+        [
+         "Someone you trust",
+         "A pastor, imam, rabbi, elder, or mentor"
+        ],
+        [
+         "If it ever gets heavy",
+         "Call or text 988. In danger, 911."
+        ]
+       ],
+       "say": "For more, open the When Life Changes guide called Big questions about faith. Point your student to trusted mentors in your tradition, like a pastor, imam, rabbi, elder, or mentor you trust. And if a hard season ever points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text nine eight eight, or call nine one one in an emergency."
+      },
+      {
+       "k": "big",
+       "h": "Wonder with them.",
+       "sub": "Faith can grow up with them.",
+       "say": "Wonder with them. When their questions have a safe place to land, faith can grow up right along with them."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Aspen ask about in Roots?",
+       "opts": [
+        "Which religion a student belongs to",
+        "Whether the sacred comforts them or weighs on them",
+        "How often they attend services"
+       ],
+       "right": 1,
+       "why": "Roots asks about experience, never belief, so every student can be strong there.",
+       "say": "Quick question. What does Aspen ask about in Roots?"
+      }
+     ]
+    },
+    {
+     "id": "as-p-worry",
+     "n": 4,
+     "title": "When to Worry, and Who to Call",
+     "mins": 6,
+     "blurb": "Signs that need more help, the plain words to ask, and who to call.",
+     "sources": [
+      "dazzi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "For Grown-ups, Lesson 4",
+       "h": "When to Worry, and Who to Call",
+       "sub": "Know the signs. Know the words. Know the numbers.",
+       "say": "Most hard days in middle school pass on their own. Some signs mean a student needs more help, and soon. This lesson walks through those signs, the plain words to use, and who to call."
+      },
+      {
+       "k": "big",
+       "h": "Moody is normal. A real change is worth a closer look.",
+       "sub": "Watch for changes that last, or that come on fast.",
+       "say": "Middle schoolers have big ups and downs, and most of them are normal. What matters most is change. A student who seems different from who they have been, for more than a couple of weeks, or all at once, is worth a closer look."
+      },
+      {
+       "k": "points",
+       "h": "Signs that need more help",
+       "items": [
+        [
+         "Talk of dying or being a burden",
+         "Even when it sounds like a joke"
+        ],
+        [
+         "Pulling away",
+         "From friends, family, and things they loved"
+        ],
+        [
+         "Big changes in sleep or eating",
+         "Lasting more than two weeks"
+        ],
+        [
+         "Hidden marks, or saying goodbye",
+         "Giving away things that matter to them"
+        ]
+       ],
+       "say": "Here are signs that need more help. Talk about dying, wanting to disappear, or being a burden, even when it sounds like a joke. Pulling away from friends, family, and the things they used to love. Big changes in sleep or eating that last more than two weeks. And marks they keep hidden, or giving away things that matter to them, as if they are saying goodbye."
+      },
+      {
+       "k": "card",
+       "title": "Worth a check-in",
+       "body": "You see what they answered, and what to do next.",
+       "fields": [
+        [
+         "Safety question",
+         "Not sure"
+        ],
+        [
+         "Next step",
+         "Ask gently, and listen"
+        ]
+       ],
+       "btns": [
+        "See the calm card"
+       ],
+       "tap": 0,
+       "say": "Aspen helps you notice too. Every check-in ends with two direct safety questions. When a student answers one in a worrying way, you see a marker on that ring that says Worth a check-in, with what they said and what to do next. Your student sees a calm card right away, with people to talk to. Aspen cannot follow up on its own. That part is yours."
+      },
+      {
+       "k": "big",
+       "h": "Asking directly about suicide is safe.",
+       "sub": "It does not put the idea in their head. It opens the door.",
+       "say": "If you see these signs, ask directly. Asking a young person about suicide is safe. It does not put the idea in their head. It tells them you can handle the answer, and that they do not have to carry it alone."
+      },
+      {
+       "k": "words",
+       "h": "Say it in plain words",
+       "items": [
+        "I have noticed you seem really down lately.",
+        "Are you thinking about killing yourself?"
+       ],
+       "sub": "Say it once out loud. It gets easier.",
+       "beats": [
+        "Plain words work best.",
+        "Start with what you noticed.",
+        "I have noticed you seem really down lately.",
+        "Then ask the question plainly.",
+        "Are you thinking about killing yourself?",
+        "Saying it out loud the first time is the hardest part.",
+        {
+         "t": "So say that question now, out loud, one time, right where you are.",
+         "w": 10
+        }
+       ],
+       "say": "Plain words work best. Start with what you noticed. I have noticed you seem really down lately. Then ask the question plainly. Are you thinking about killing yourself? Saying it out loud the first time is the hardest part. So say that question now, out loud, one time, right where you are."
+      },
+      {
+       "k": "points",
+       "h": "If they say yes, or not sure",
+       "items": [
+        [
+         "Stay calm, and stay with them",
+         "Close by, and listening"
+        ],
+        [
+         "Thank them for telling you",
+         "They are not in trouble"
+        ],
+        [
+         "Promise help, not secrecy",
+         "I love you too much to keep this quiet"
+        ],
+        [
+         "Get help together, today",
+         "Call or text 988 side by side"
+        ]
+       ],
+       "say": "If they say yes, or not sure, stay calm and stay with them. Thank them for telling you. They are not in trouble. Promise help, not secrecy. You can say, I love you too much to keep this quiet. Then get help together, today. Call or text nine eight eight side by side."
+      },
+      {
+       "k": "points",
+       "h": "Who to call",
+       "items": [
+        [
+         "In danger right now?",
+         "Call 911"
+        ],
+        [
+         "Call or text 988",
+         "The Suicide and Crisis Lifeline, any time"
+        ],
+        [
+         "Text HOME to 741741",
+         "Crisis Text Line"
+        ],
+        [
+         "School counselor and doctor",
+         "This week, for a closer look"
+        ]
+       ],
+       "say": "Know who to call. If they are in danger right now, call nine one one. For a crisis, or when you are not sure, call or text nine eight eight, the Suicide and Crisis Lifeline, any time, day or night. You can call it yourself, as the worried grown-up. Or text the word home to seven four one, seven four one. And when signs worry you, call the school counselor and your child’s doctor this week, and tell them what you have seen. Teachers and counselors, follow your school’s own steps too."
+      },
+      {
+       "k": "points",
+       "h": "More help, right in Aspen",
+       "items": [
+        [
+         "Self-harm and cutting",
+         "What to say, and what to do"
+        ],
+        [
+         "When a friend is hurting",
+         "When your child carries a friend’s secret"
+        ],
+        [
+         "See the calm card",
+         "Helplines a student can reach alone"
+        ]
+       ],
+       "say": "Aspen has more for you. In When Life Changes, the Safety group has two guides. Self-harm and cutting walks you through what to say and what to do. When a friend is hurting helps when your child is carrying a friend’s secret. Teach them this: telling a grown-up is being a good friend, even if the friend asked them not to, and they are never in trouble for telling. And in the Grown-ups tab, See the calm card shows the helplines a student can reach on their own."
+      },
+      {
+       "k": "big",
+       "h": "You do not have to be the expert.",
+       "sub": "Ask plainly. Stay close. Call for help.",
+       "say": "You do not have to be the expert. Ask plainly, stay close, and call for help. Getting help early is a strong and loving thing to do."
+      },
+      {
+       "k": "quiz",
+       "q": "What is the best way to ask about suicide?",
+       "opts": [
+        "Hint at it, so you do not scare them",
+        "Ask directly, in plain words",
+        "Wait for them to bring it up"
+       ],
+       "right": 1,
+       "why": "Asking directly is safe, and it shows you can handle the answer.",
+       "say": "Quick question. What is the best way to ask about suicide?"
+      }
+     ]
+    },
+    {
+     "id": "as-p-together",
+     "n": 5,
+     "title": "Using Aspen Together",
+     "mins": 5,
+     "blurb": "Side by side with your student: the two tabs, what you can see, and growth plans.",
+     "sources": [
+      [
+       "Search Institute: Developmental relationships",
+       "https://searchinstitute.org/developmental-relationships"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "For Grown-ups, Lesson 5",
+       "h": "Using Aspen Together",
+       "sub": "Side by side, with room to grow.",
+       "say": "Aspen works best when a student and a grown-up use it side by side. This lesson shows how, and how to give your student room to make it their own."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Home",
+        "Students",
+        "Grown-ups",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "Students",
+        "p": "Each student adds themselves and keeps their own tree."
+       },
+       "say": "Aspen has two doors. The Students tab is for your student. They add themselves with their grade, and the tree is theirs. With you beside them, they can save it in their own profile, locked with a passcode only they know. The grown-ups who agree for them can open it too, so they can help."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Home",
+        "Students",
+        "Grown-ups",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Grown-ups",
+        "p": "What students see, what you can see, and how to help."
+       },
+       "say": "The Grown-ups tab is for you. It shows the students on this device. Open your own grown-up profile, with the button at the top of the page, to see every student you agreed for. Then tap a student to see their rings and their tree."
+      },
+      {
+       "k": "points",
+       "h": "What you can see",
+       "items": [
+        [
+         "Always shown to you",
+         "Safety answers, and a few key questions"
+        ],
+        [
+         "The big picture",
+         "Levels, days tended, parts they tend"
+        ],
+        [
+         "Just theirs",
+         "Other answers, notes, and reflections"
+        ]
+       ],
+       "say": "Aspen gives students privacy in three layers, and tells them so before they start. Always shown to you: the two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. The big picture: how each part is doing, how many days they tended their tree, and which parts they are tending. And just theirs: the rest of their answers, the practices they check off, their notes, and their weekly reflections, unless they choose to share one with you."
+      },
+      {
+       "k": "big",
+       "h": "Kids answer more honestly when they know up front.",
+       "sub": "Their privacy is part of what makes Aspen work.",
+       "say": "That privacy is on purpose. Kids answer more honestly when they know up front who will see what. Honoring it builds the trust you will lean on when the hard days come."
+      },
+      {
+       "k": "card",
+       "title": "How are you doing this check-in?",
+       "body": "Your grown-up will see a gold note with a question to talk about after each answer.",
+       "btns": [
+        "On my own",
+        "With a grown-up"
+       ],
+       "tap": 1,
+       "say": "When you want to go deeper, do a check-in together. At the start, your student picks On my own, or With a grown-up. Together, a gold note after each answer gives you a question to take the talk deeper. And because you did it together, you can see every answer on that ring."
+      },
+      {
+       "k": "points",
+       "h": "The growth plan, side by side",
+       "items": [
+        [
+         "Aspen suggests two parts",
+         "Your student can choose any part"
+        ],
+        [
+         "Learn more",
+         "Why it helps, how, and if it is hard"
+        ],
+        [
+         "Try it with a grown-up",
+         "A way to join in, on every practice"
+        ],
+        [
+         "For your grown-up",
+         "Guides that fit each part"
+        ]
+       ],
+       "say": "After a check-in, Aspen suggests two parts to tend, and your student builds a growth plan of small daily practices. Let them choose. Every practice has a Learn more button, with why it helps, the steps, what to do if it is hard, and a way to try it with a grown-up. And under each part, For your grown-up links you to the guides that fit."
+      },
+      {
+       "k": "flow",
+       "h": "Today, Week, and Season",
+       "steps": [
+        [
+         "Today",
+         "One practice waters the tree"
+        ],
+        [
+         "Week",
+         "A theme and a question"
+        ],
+        [
+         "Season",
+         "Twelve weeks, then a new ring"
+        ]
+       ],
+       "say": "Your student tends their tree in Today, Week, and Season. Checking off any one practice waters it for the day. Each week brings a theme and a reflection question, and your view of their tree shows this week’s theme and question, so you can bring it up at dinner. Twelve weeks make a season, and the next full check-in adds a ring."
+      },
+      {
+       "k": "words",
+       "h": "Ask, and let them lead",
+       "items": [
+        "What practice are you liking lately?",
+        "Want to try one together this week?"
+       ],
+       "sub": "Say one out loud.",
+       "beats": [
+        "Questions open more doors than keeping watch does.",
+        "Here are two to try.",
+        "What practice are you liking lately?",
+        "Want to try one together this week?",
+        {
+         "t": "Pick the one that sounds most like you, and say it out loud now, the way you would at dinner.",
+         "w": 8
+        }
+       ],
+       "say": "Questions open more doors than keeping watch does. Here are two to try. What practice are you liking lately? Want to try one together this week? Pick the one that sounds most like you, and say it out loud now, the way you would at dinner."
+      },
+      {
+       "k": "big",
+       "h": "Share power, a little more each year.",
+       "sub": "Middle school is when it starts to matter most.",
+       "say": "Close relationships with caring adults help young people thrive, and in middle school, sharing power starts to matter most. Let your student lead their tree. Your part is to walk beside it."
+      },
+      {
+       "k": "quiz",
+       "q": "After a check-in done On my own, what can you see?",
+       "opts": [
+        "Every answer",
+        "Safety answers and the big picture",
+        "Nothing at all"
+       ],
+       "right": 1,
+       "why": "Safety answers always show, plus how each part is doing. The rest is theirs.",
+       "say": "Quick question. After a check-in your student did on their own, what can you see?"
+      }
+     ]
+    },
+    {
+     "id": "as-p-you",
+     "n": 6,
+     "title": "Caring for Yourself Too",
+     "mins": 5,
+     "blurb": "Tending your own tree, so you have steadiness to share.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "For Grown-ups, Lesson 6",
+       "h": "Caring for Yourself Too",
+       "sub": "Your steadiness is a gift to them.",
+       "say": "This last lesson is for you, the grown-up. Walking beside a middle schooler takes a lot out of you. Here is how to tend yourself along the way."
+      },
+      {
+       "k": "big",
+       "h": "Calm is contagious. So is worry.",
+       "sub": "Your steadiness helps them find theirs.",
+       "say": "Kids borrow calm from the grown-ups around them. Calm is contagious, and so is worry. When you are steady, your student has something solid to lean on. So tending yourself is part of helping them. You do not have to be calm all the time. You only need a way back to calm, and this lesson is about finding yours."
+      },
+      {
+       "k": "points",
+       "h": "Signs you are running low",
+       "items": [
+        [
+         "A short fuse",
+         "Snapping at small things"
+        ],
+        [
+         "Running on empty",
+         "Tired, even after sleep"
+        ],
+        [
+         "Carrying it alone",
+         "No one to talk it through with"
+        ],
+        [
+         "Dreading the hard talks",
+         "Putting them off, or rushing through"
+        ]
+       ],
+       "say": "Notice the signs that you are running low. A short fuse, snapping at small things. Running on empty, tired even after a night of sleep. Carrying it all alone, with no one to talk it through with. And dreading the hard talks, putting them off, or rushing through them. These are signals, not failures. They tell you it is time to tend your own tree."
+      },
+      {
+       "k": "six",
+       "h": "You have six parts too",
+       "words": [
+        "What holds you up",
+        "Why you do all this",
+        "Your own feelings",
+        "Your own people",
+        "Sleep, movement, meals",
+        "Hope you can hand on"
+       ],
+       "say": "You have a tree too, with the same six parts. Roots, what holds you up. Trunk, the reason you do all this. Bark, your own mind and feelings. Branches, your own people, beyond your kids. Leaves, your body, with sleep, movement, and real meals. And Fruit, the hope you hand on."
+      },
+      {
+       "k": "points",
+       "h": "Small things that refill you",
+       "items": [
+        [
+         "One slow breath first",
+         "Before you walk in the door"
+        ],
+        [
+         "Your own people",
+         "A friend who listens to you"
+        ],
+        [
+         "A few minutes that are yours",
+         "A walk, music, or quiet"
+        ],
+        [
+         "Rest without guilt",
+         "Rest helps you show up"
+        ]
+       ],
+       "say": "Small things refill you. One slow breath before you walk in the door. Time with your own people, like a friend who listens to you for a change. A few minutes each day that are just yours, like a walk, some music, or quiet. And rest without guilt. Rest is part of how you keep showing up."
+      },
+      {
+       "k": "breathe",
+       "h": "One minute for you",
+       "sub": "Shoulders down. Jaw soft. Long breath out.",
+       "beats": [
+        "Let us try one right now.",
+        "Drop your shoulders.",
+        "Unclench your jaw.",
+        "Breathe in slowly, and let a long breath out.",
+        {
+         "t": "Do that two more times, at your own pace.",
+         "w": 12
+        }
+       ],
+       "say": "Let us try one right now. Drop your shoulders. Unclench your jaw. Breathe in slowly, and let a long breath out. Do that two more times, at your own pace."
+      },
+      {
+       "k": "points",
+       "h": "Share the load",
+       "items": [
+        [
+         "You are one of their grown-ups",
+         "Not the only one"
+        ],
+        [
+         "Name their circle",
+         "Grandparents, coaches, teachers, mentors"
+        ],
+        [
+         "Let others in",
+         "Ask for help before you run dry"
+        ]
+       ],
+       "say": "Share the load. You are one of your student’s grown-ups, not the only one. Grandparents, coaches, teachers, a school counselor, a neighbor, or a mentor. Each one adds a root that holds your student up. Name that circle, and let them in. Ask for a ride, a meal, or a listening ear before you run dry. Letting others help you is part of helping your kid too."
+      },
+      {
+       "k": "big",
+       "h": "Repair matters more than getting it right.",
+       "sub": "I got that wrong. Let me try again.",
+       "say": "You will lose your cool sometimes. Every grown-up does. What matters most is what happens after. Come back, name it, and make it right. You can say, I got that wrong. Let me try again. Your student learns more from watching you repair than from watching you be perfect."
+      },
+      {
+       "k": "points",
+       "h": "Support for you too",
+       "items": [
+        [
+         "Talk with someone",
+         "A friend, a counselor, your doctor"
+        ],
+        [
+         "Oak, for grown-ups",
+         "Your own tree, check-ins, and practices"
+        ],
+        [
+         "Call or text 988",
+         "For you too, any time"
+        ]
+       ],
+       "say": "You deserve support too. Talk with a friend, a counselor, or your doctor, especially if worry or sadness stays with you for weeks. Grow With Grounded has a tree for grown-ups, called Oak, with your own check-ins and practices. And if you are ever in crisis yourself, call or text nine eight eight, any time. In danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Tend your own tree. They are watching how you grow.",
+       "say": "Tend your own tree, a little at a time. Your student is watching how you grow, and that may be the best lesson Aspen can offer."
+      },
+      {
+       "k": "quiz",
+       "q": "Why does tending yourself help your student?",
+       "opts": [
+        "It only helps you",
+        "Your calm gives them something steady to lean on",
+        "It means you can skip the hard talks"
+       ],
+       "right": 1,
+       "why": "Kids borrow calm from the grown-ups around them.",
+       "say": "Last question. Why does tending yourself help your student?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aspen-support",
+   "kind": "support",
+   "title": "For Hard Moments",
+   "who": "Short videos for students, to use right in the middle of it",
+   "lessons": [
+    {
+     "id": "as-r-ground",
+     "n": 1,
+     "title": "Ground Yourself Right Now",
+     "mins": 3,
+     "blurb": "Use your five senses to come back to right here, right now.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "Ground Yourself Right Now",
+       "sub": "Five senses, one at a time.",
+       "say": "When everything feels like too much, your senses can bring you back to right now. This takes about three minutes. Let us do it together."
+      },
+      {
+       "k": "big",
+       "h": "Your senses always live in right now.",
+       "sub": "That makes them a great way back.",
+       "say": "Sometimes your brain races ahead to what might happen, or keeps replaying what already did. Your senses only know one time: right now. That makes them a great way back."
+      },
+      {
+       "k": "points",
+       "h": "Five, four, three, two, one",
+       "items": [
+        [
+         "5 things you can see",
+         "Look slowly around"
+        ],
+        [
+         "4 things you can feel",
+         "Feet, chair, sleeves, air"
+        ],
+        [
+         "3 things you can hear",
+         "Near and far"
+        ],
+        [
+         "2 things you can smell",
+         "Or two smells you like"
+        ],
+        [
+         "1 thing you can taste",
+         "Or one sip of water"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 10,
+         "4": 8,
+         "5": 7,
+         "6": 6,
+         "7": 5
+        },
+        "at": [
+         1,
+         2,
+         5,
+         6,
+         7
+        ]
+       },
+       "say": "Let us go slowly. Look around and name five things you can see. Now four things you can feel. Your feet in your shoes. The chair under you. Three things you can hear, near and far. Two things you can smell. And one thing you can taste."
+      },
+      {
+       "k": "breathe",
+       "h": "One slow breath to finish",
+       "hold": 12,
+       "cue": {
+        "p": {
+         "1": 3,
+         "2": 4
+        }
+       },
+       "say": "Now one slow breath. In for four. And out for six."
+      },
+      {
+       "k": "points",
+       "h": "Use it anywhere",
+       "items": [
+        [
+         "In class",
+         "Quietly, in your head"
+        ],
+        [
+         "Before a game or a test",
+         "Feet on the floor first"
+        ],
+        [
+         "In bed at night",
+         "Name the sounds of the house"
+        ]
+       ],
+       "say": "You can do this anywhere, and no one has to know. In class, quietly in your head. Before a game or a test. Even in bed at night, listening to the sounds of the house."
+      },
+      {
+       "k": "big",
+       "h": "You are here. And you have people.",
+       "sub": "Tell a parent, grandparent, teacher, or school counselor. In Aspen, tap Need to talk to someone?",
+       "say": "If the big feeling stays, you do not have to handle it alone. Tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And in Aspen, the button that says Need to talk to someone shows people you can reach any time. You are here. And you have people."
+      }
+     ]
+    },
+    {
+     "id": "as-r-anxious",
+     "n": 2,
+     "title": "When You Feel Anxious",
+     "mins": 3,
+     "blurb": "Box breathing to slow worry down, anywhere.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Feel Anxious",
+       "sub": "Breathing in a box.",
+       "say": "Anxious can feel like a tight chest, a knotted stomach, or a brain that keeps asking, what if? If that is you right now, stay with me for a few minutes."
+      },
+      {
+       "k": "big",
+       "h": "Worry is your body trying to keep you safe.",
+       "sub": "Sometimes the alarm rings louder than it needs to.",
+       "say": "Worry is your body trying to keep you safe. Sometimes the alarm rings louder than it needs to. Your breath is one way to turn the volume down."
+      },
+      {
+       "k": "points",
+       "h": "Where do you feel it?",
+       "items": [
+        [
+         "Your chest",
+         "Tight or fast"
+        ],
+        [
+         "Your stomach",
+         "Butterflies or knots"
+        ],
+        [
+         "Your hands and jaw",
+         "Clenched or shaky"
+        ]
+       ],
+       "cue": {
+        "p": {
+         "1": 1.5,
+         "2": 1.5,
+         "3": 1.5
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "First, notice where you feel it. Maybe in your chest. Maybe in your stomach. Maybe in your hands or your jaw. Just noticing is a good start."
+      },
+      {
+       "k": "words",
+       "h": "Around the box",
+       "items": [
+        "In, two, three, four.",
+        "Hold, two, three, four.",
+        "Out, two, three, four.",
+        "Hold, two, three, four."
+       ],
+       "cue": {
+        "w": {
+         "1": 4,
+         "2": 4,
+         "3": 4,
+         "4": 4
+        },
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Let us go around the box together. Breathe in slowly through your nose. Hold it gently. Breathe out slowly through your mouth. And hold again."
+      },
+      {
+       "k": "big",
+       "h": "Three more times, at your own pace.",
+       "sub": "In four. Hold four. Out four. Hold four.",
+       "hold": 40,
+       "say": "Now go around the box three more times, at your own pace. I will wait with you."
+      },
+      {
+       "k": "words",
+       "h": "Say it to yourself",
+       "items": [
+        "This is worry.",
+        "It rises, and it settles.",
+        "I can take one small step."
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 1,
+         "3": 1.5
+        }
+       },
+       "say": "Say this to yourself, slowly. This is worry. It rises, and it settles. I can take one small step."
+      },
+      {
+       "k": "big",
+       "h": "You don’t have to carry worry alone.",
+       "sub": "Tell a parent, teacher, or school counselor. Need to talk now? Call or text 988, or text HOME to 741741.",
+       "say": "You do not have to carry worry alone. If it keeps showing up, tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And if you need to talk to someone right now, call or text nine eight eight, or text HOME to seven four one seven four one."
+      }
+     ]
+    },
+    {
+     "id": "as-r-test",
+     "n": 3,
+     "title": "Before a Big Test",
+     "mins": 3,
+     "blurb": "Settle your body and your thoughts before you start.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "Before a Big Test",
+       "sub": "A few minutes to get steady.",
+       "say": "A big test is coming, and your body might be buzzing. That buzz means it matters to you. Here is how to get steady, so your brain can show what it knows."
+      },
+      {
+       "k": "big",
+       "h": "A little nervous is normal.",
+       "sub": "When it gets too big, your body can bring it down.",
+       "say": "A little nervous energy is normal, and it can keep you alert. When it gets to be too much, your body can help bring it back down."
+      },
+      {
+       "k": "points",
+       "h": "Squeeze and let go",
+       "items": [
+        [
+         "Your hands",
+         "Two tight fists"
+        ],
+        [
+         "Your shoulders",
+         "Up to your ears"
+        ],
+        [
+         "Your feet",
+         "Press into the floor"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 5,
+         "2": 4,
+         "3": 5,
+         "4": 4,
+         "5": 5,
+         "6": 4
+        },
+        "at": [
+         1,
+         3,
+         5
+        ]
+       },
+       "say": "Let us let some of that buzz out. Make two tight fists, and squeeze. Now let go. Lift your shoulders up toward your ears, and hold. Now let them drop. Press your feet into the floor. And let them rest."
+      },
+      {
+       "k": "breathe",
+       "h": "In for four, out for six",
+       "hold": 20,
+       "say": "Now breathe with the circle. In for four. And out for six. A longer breath out helps your body settle."
+      },
+      {
+       "k": "words",
+       "h": "Tell yourself",
+       "items": [
+        "I prepared what I could.",
+        "One question at a time.",
+        "I can come back to a hard one."
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 1,
+         "3": 1.5
+        }
+       },
+       "say": "Now give your brain something kind to hear. I prepared what I could. One question at a time. I can come back to a hard one."
+      },
+      {
+       "k": "points",
+       "h": "During the test",
+       "items": [
+        [
+         "Stuck?",
+         "Skip it and come back"
+        ],
+        [
+         "Mind racing?",
+         "Feet on the floor, one breath"
+        ],
+        [
+         "Read it twice",
+         "Slow and steady"
+        ]
+       ],
+       "say": "And during the test, if you get stuck on a question, skip it and come back. If your mind starts racing, press your feet into the floor and take one slow breath. And read each question twice. Slow and steady works."
+      },
+      {
+       "k": "big",
+       "h": "One test is one day. You are more than a score.",
+       "sub": "Tests worry you a lot? Tell a teacher, a school counselor, or a parent.",
+       "say": "One test is one day, and you are so much more than a score. If tests worry you a lot, tell someone who can help, like a teacher, a school counselor, or a parent. They may have ideas that make the next one easier. You can do this."
+      }
+     ]
+    },
+    {
+     "id": "as-r-mad",
+     "n": 4,
+     "title": "When You’re Really Mad",
+     "mins": 3,
+     "blurb": "Make room for anger, then choose what you do next.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When You’re Really Mad",
+       "sub": "Make room before you react.",
+       "say": "Anger is a real feeling, and an important one. It often means something feels unfair, or something matters to you. This is about making room, so you get to choose what happens next."
+      },
+      {
+       "k": "points",
+       "h": "Where is the heat?",
+       "items": [
+        [
+         "Your face",
+         "Hot or red"
+        ],
+        [
+         "Your fists and jaw",
+         "Tight"
+        ],
+        [
+         "Your heart",
+         "Fast and loud"
+        ]
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 1,
+         "3": 1
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Anger shows up in your body first. Maybe your face feels hot. Maybe your fists or your jaw get tight. Maybe your heart beats fast. That is your signal to pause."
+      },
+      {
+       "k": "flow",
+       "h": "Stop",
+       "steps": [
+        [
+         "Step back",
+         "Walk away for a minute"
+        ],
+        [
+         "Take a breath",
+         "Long and slow out"
+        ],
+        [
+         "Observe",
+         "Name it: this is anger"
+        ],
+        [
+         "Proceed",
+         "One good next step"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 6,
+         "6": 4,
+         "7": 6
+        },
+        "at": [
+         1,
+         3,
+         5,
+         7
+        ]
+       },
+       "say": "Remember the word stop. Step back. Walk away for a minute, if you can. Take a breath. Try it now: breathe in, and then a long, slow breath out. Observe. Say it quietly now: this is anger. Then proceed, with one choice you will be glad about later."
+      },
+      {
+       "k": "points",
+       "h": "Let the energy out safely",
+       "items": [
+        [
+         "Move",
+         "Fast walk, run, push a wall"
+        ],
+        [
+         "Squeeze",
+         "A pillow or a stress ball"
+        ],
+        [
+         "Write it",
+         "Everything, just for you"
+        ]
+       ],
+       "say": "Anger is energy, so let it out in a safe way. Move your body. Take a fast walk, run, or push hard against a wall. Squeeze a pillow. Or write down everything you want to say, just for you."
+      },
+      {
+       "k": "words",
+       "h": "Words that buy time",
+       "items": [
+        "I need a minute.",
+        "I want to talk when I’m calmer.",
+        "Can we try this again later?"
+       ],
+       "say": "Some words can buy you time. I need a minute. I want to talk about this when I am calmer. Or, can we try this again later?"
+      },
+      {
+       "k": "big",
+       "h": "Your anger matters. So do you.",
+       "sub": "Tell a parent, teacher, or school counselor what happened. Anyone in danger? Call 911.",
+       "say": "When you have cooled down, tell a grown-up you trust what happened, like a parent, grandparent, teacher, or school counselor. Talking it through helps. If someone is hurting you, or anyone is in danger, tell a grown-up right away, or call nine one one. Your anger matters. So do you."
+      }
+     ]
+    },
+    {
+     "id": "as-r-sleep",
+     "n": 5,
+     "title": "When You Can’t Sleep",
+     "mins": 3,
+     "blurb": "Set your thoughts down and let your body rest.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Can’t Sleep",
+       "sub": "Set it down for tonight.",
+       "say": "If it is late, and your mind will not slow down, this is for you. Keep the lights low and the volume soft."
+      },
+      {
+       "k": "points",
+       "h": "Put it on paper",
+       "items": [
+        [
+         "Write what is spinning",
+         "A few words each"
+        ],
+        [
+         "Add one small step",
+         "For tomorrow, not tonight"
+        ],
+        [
+         "Close it",
+         "It will keep until morning"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "First, if you have paper nearby, write down what is spinning in your head. Just a few words each. Next to anything you need to do, write one small step for tomorrow. Then close it. It will keep until morning."
+      },
+      {
+       "k": "points",
+       "h": "Soften, from your toes up",
+       "items": [
+        [
+         "Toes and legs",
+         "Heavy and still"
+        ],
+        [
+         "Belly and chest",
+         "Rising and falling"
+        ],
+        [
+         "Shoulders and hands",
+         "Dropping down"
+        ],
+        [
+         "Jaw and forehead",
+         "Soft"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 8,
+         "2": 8,
+         "3": 8,
+         "4": 8
+        },
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Now lie back. Let your toes and legs get heavy. Let your belly and chest rise and fall on their own. Let your shoulders and hands drop. And let your jaw and forehead go soft."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow breaths",
+       "hold": 40,
+       "say": "Now just breathe. In for four, and out for six. If your mind wanders, that is okay. Come back to the next breath."
+      },
+      {
+       "k": "points",
+       "h": "For tomorrow night",
+       "items": [
+        [
+         "Phone outside your room",
+         "Charge it somewhere else"
+        ],
+        [
+         "A calm wind-down",
+         "Music, a book, a shower"
+        ],
+        [
+         "A steady bedtime",
+         "About the same most nights"
+        ]
+       ],
+       "say": "Tomorrow, you can make sleep a little easier. Charge your phone outside your room. Wind down with something calm, like music, a book, or a warm shower. And go to bed around the same time most nights."
+      },
+      {
+       "k": "big",
+       "h": "Rest counts, even before sleep comes.",
+       "sub": "Lots of hard nights? Tell a parent, grandparent, or school counselor.",
+       "say": "If a lot of nights feel like this, tell a grown-up you trust, like a parent, grandparent, or school counselor. Worries feel lighter when someone else knows. And remember, rest counts, even before sleep comes. Good night."
+      }
+     ]
+    },
+    {
+     "id": "as-r-sad",
+     "n": 6,
+     "title": "When You Feel Sad",
+     "mins": 3,
+     "blurb": "Be kind to the sad part, and let someone help carry it.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Feel Sad",
+       "sub": "Sad is allowed here.",
+       "say": "If you feel sad right now, I am glad you are here. Sadness is a real feeling, and it is okay to have it. Let us take a few minutes together."
+      },
+      {
+       "k": "big",
+       "h": "Sadness shows up when something matters.",
+       "sub": "It comes in waves, and waves pass.",
+       "say": "Sadness often shows up when something matters to you. Maybe you lost something, or someone. Maybe the day just went wrong. Sadness comes in waves, and waves pass."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow breaths first",
+       "hold": 20,
+       "say": "First, follow the circle. Breathe in for four. And out for six. Let your shoulders drop a little."
+      },
+      {
+       "k": "points",
+       "h": "Be kind to the sad part",
+       "items": [
+        [
+         "Name it",
+         "I feel sad."
+        ],
+        [
+         "Hand on your heart",
+         "Feel how warm it is"
+        ],
+        [
+         "Say something kind",
+         "This is hard. I will be okay."
+        ]
+       ],
+       "cue": {
+        "w": {
+         "5": 10
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Now try this with me. Say quietly, I feel sad. Put one hand on your heart, and feel how warm it is. Then say something kind to yourself, the way you would to a friend. This is hard, and I am going to be okay. Stay here for a few breaths."
+      },
+      {
+       "k": "points",
+       "h": "One small thing next",
+       "items": [
+        [
+         "Drink some water",
+         "Or have a snack"
+        ],
+        [
+         "Move a little",
+         "A walk, a stretch, a song"
+        ],
+        [
+         "Be near someone",
+         "A pet, a sibling, a grown-up"
+        ]
+       ],
+       "say": "Then pick one small thing. Drink some water, or have a snack. Move a little, with a walk, a stretch, or a song you like. Or just be near someone, like a pet, a brother or sister, or a grown-up."
+      },
+      {
+       "k": "big",
+       "h": "Tell a grown-up you trust.",
+       "sub": "Sad for weeks? Tell them. Not wanting to be alive: call or text 988.",
+       "say": "Sadness is easier to carry with someone. Tell a grown-up you trust, like a parent, a grandparent, a teacher, or your school counselor. If the sadness sticks around for a couple of weeks, tell them that too. And if it ever gets so heavy that you do not want to be alive, tell a grown-up today, and call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "Waves rise, and waves pass.",
+       "sub": "You do not have to carry this alone.",
+       "say": "Waves rise, and waves pass. You do not have to carry this alone. Come back here whenever you need to."
+      }
+     ]
+    },
+    {
+     "id": "as-r-left",
+     "n": 7,
+     "title": "When You Feel Left Out",
+     "mins": 3,
+     "blurb": "Ease the sting, remember what is true, and make one small reach.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Feel Left Out",
+       "sub": "It stings. You still belong.",
+       "say": "Maybe you saw pictures of a party you were not invited to. Maybe a group went quiet when you walked up. Feeling left out stings. Let us take a few minutes together."
+      },
+      {
+       "k": "big",
+       "h": "Being left out really hurts.",
+       "sub": "Almost everyone your age feels it sometimes.",
+       "say": "Being left out really hurts. Almost everyone in middle school feels it at some point, even the kids who look like they have it all together. It does not mean something is wrong with you."
+      },
+      {
+       "k": "points",
+       "h": "Squeeze and let go",
+       "items": [
+        [
+         "Make two tight fists",
+         "Squeeze for five"
+        ],
+        [
+         "Let your hands open",
+         "Notice the difference"
+        ],
+        [
+         "Drop your shoulders",
+         "Let the sting soften"
+        ]
+       ],
+       "cue": {
+        "p": {
+         "2": 3
+        },
+        "w": {
+         "6": 10
+        },
+        "at": [
+         1,
+         3,
+         5
+        ]
+       },
+       "say": "Try this with me. Make two tight fists, and squeeze. Hold it, two, three, four, five. Now let your hands fall open. Notice the difference. Let your shoulders drop, too. Do it one more time, at your own pace."
+      },
+      {
+       "k": "words",
+       "h": "Things that are also true",
+       "items": [
+        "One moment is not my whole story.",
+        "I can be a good friend to me.",
+        "I matter, even today."
+       ],
+       "cue": {
+        "p": {
+         "1": 1.5,
+         "2": 1.5,
+         "3": 1.5
+        }
+       },
+       "say": "Here are some things that are also true. Say them to yourself. One moment is not my whole story. I can be a good friend to me. I matter, even today."
+      },
+      {
+       "k": "points",
+       "h": "One small reach",
+       "items": [
+        [
+         "Text one person",
+         "Hey, want to hang out?"
+        ],
+        [
+         "Sit by someone new",
+         "At lunch, on the bus, in a club"
+        ],
+        [
+         "Do a thing you love",
+         "Friends often find you there"
+        ]
+       ],
+       "say": "When you are ready, try one small reach. Text one person. Hey, want to hang out? Sit by someone new at lunch or on the bus. Or do a thing you love, like a club, a team, or art. Good friends often find you there."
+      },
+      {
+       "k": "big",
+       "h": "If it keeps happening, tell a grown-up.",
+       "sub": "Asking for backup is smart, not tattling.",
+       "say": "If being left out keeps happening, or it turns into teasing or meanness, tell a grown-up you trust, like a parent, a teacher, or your school counselor. That is not tattling. It is asking for backup."
+      },
+      {
+       "k": "big",
+       "h": "You belong, even on the days it stings.",
+       "say": "You belong, even on the days it stings. Be gentle with yourself today."
+      }
+     ]
+    },
+    {
+     "id": "as-r-online",
+     "n": 8,
+     "title": "When Something Online Upsets You",
+     "mins": 3,
+     "blurb": "Put the phone down, get steady, and know what to do next.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When Something Online Upsets You",
+       "sub": "Phone down. Breathe first.",
+       "say": "Maybe you saw something scary or cruel online. Maybe a message made your stomach drop. Put the phone face down for a minute. Let us take a breath together first."
+      },
+      {
+       "k": "breathe",
+       "h": "Breathe with the circle",
+       "hold": 20,
+       "say": "Follow the circle. In for four. And out for six. You do not have to answer anything right now."
+      },
+      {
+       "k": "points",
+       "h": "Come back to the room",
+       "items": [
+        [
+         "Feet on the floor",
+         "Press down"
+        ],
+        [
+         "Hands on something solid",
+         "A desk, your knees"
+        ],
+        [
+         "Name three things you see",
+         "Out loud, if you can"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 10
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Now come back to the room you are in. Press your feet into the floor. Put your hands on something solid. Name three things you can see, out loud if you can. Take your time."
+      },
+      {
+       "k": "points",
+       "h": "What helps next",
+       "items": [
+        [
+         "Close the app",
+         "For now"
+        ],
+        [
+         "Do not reply or forward",
+         "Especially anything cruel"
+        ],
+        [
+         "Mute, block, or leave",
+         "You can always leave a chat"
+        ]
+       ],
+       "say": "Here is what helps next. Close the app for now. Do not reply, and do not forward anything cruel. You can mute, block, or leave. You can always leave a chat that makes you feel bad."
+      },
+      {
+       "k": "big",
+       "h": "Pictures or threats? Tell a grown-up today.",
+       "sub": "You are not in trouble. Do not pay or send anything.",
+       "say": "If anyone asks you for pictures, threatens you, or says they will share a picture of you, real or fake, tell a trusted grown-up today. Stop replying, and do not pay or send anything. Save the messages. You are not in trouble. The person threatening you is the one to blame, every time."
+      },
+      {
+       "k": "big",
+       "h": "Help is here",
+       "sub": "Need help now? in Aspen. Not wanting to be alive: 988. Danger now: 911.",
+       "say": "The Need help now button at the top of your tree in Aspen has people you can reach, including help getting pictures taken down. If it ever feels so heavy you do not want to be alive, call or text nine eight eight, any time. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Telling is the brave, smart move.",
+       "sub": "You are not alone in this.",
+       "say": "You are not alone in this. Telling a grown-up is the bravest, smartest move. Come back here whenever you need to."
+      }
+     ]
+    },
+    {
+     "id": "as-r-racing",
+     "n": 9,
+     "title": "When Your Heart Is Racing",
+     "mins": 3,
+     "blurb": "Your body has an alarm, and you can help it settle.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When Your Heart Is Racing",
+       "sub": "It feels big. It settles.",
+       "say": "If your heart is pounding, your hands feel shaky, or your breath is fast, this is for you. Stay with me."
+      },
+      {
+       "k": "big",
+       "h": "A racing heart is your body's alarm.",
+       "sub": "You can help it settle.",
+       "say": "A racing heart is your body's alarm going off. Maybe you got scared, or nervous, or just had a big surprise. It feels big, and it settles. You can help it settle faster."
+      },
+      {
+       "k": "words",
+       "h": "Say it to yourself",
+       "items": [
+        "This is my alarm.",
+        "It will pass.",
+        "I can slow it down."
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 1,
+         "3": 1.5
+        }
+       },
+       "say": "Say this to yourself, slowly. This is my alarm. It will pass. I can slow it down."
+      },
+      {
+       "k": "points",
+       "h": "Press and let go",
+       "items": [
+        [
+         "Press your palms together",
+         "Hard, for five"
+        ],
+        [
+         "Let go",
+         "Hands soft in your lap"
+        ],
+        [
+         "Long breath out",
+         "Like cooling hot cocoa"
+        ]
+       ],
+       "cue": {
+        "p": {
+         "1": 3
+        },
+        "w": {
+         "4": 12
+        },
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Now press your palms together in front of you, hard. Hold it, two, three, four, five. Let go, and rest your hands in your lap. Now breathe out slowly, like you are cooling a cup of hot cocoa. Do that two more times."
+      },
+      {
+       "k": "breathe",
+       "h": "Longer out than in",
+       "hold": 30,
+       "say": "Now follow the circle. In for four. And out for six. A long breath out tells your body it is safe to slow down."
+      },
+      {
+       "k": "big",
+       "h": "If it keeps happening, tell a grown-up.",
+       "sub": "Chest pain, or can't catch your breath? Get a grown-up and call 911.",
+       "say": "If your heart races a lot, or out of nowhere, tell a parent or another grown-up you trust, so they can help you check it out. And if you have chest pain, or you cannot catch your breath, get a grown-up right away, and call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Your body knows how to settle.",
+       "say": "Your body knows how to settle. You just helped it. Come back here whenever you need to."
+      }
+     ]
+    },
+    {
+     "id": "as-r-tell",
+     "n": 10,
+     "title": "When You Need to Tell Someone",
+     "mins": 4,
+     "blurb": "Who to tell, what to say, and why you are not in trouble.",
+     "crisis": [
+      "988: call or text, any time",
+      "Text HOME to 741741",
+      "911: danger right now"
+     ],
+     "music": "safety",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Need to Tell Someone",
+       "sub": "Telling is brave.",
+       "say": "Maybe something is wrong, and you have been holding it in. Maybe someone is hurting you, or a friend told you something scary. This is for you."
+      },
+      {
+       "k": "big",
+       "h": "Some things are too big to carry alone.",
+       "sub": "Grown-ups are there to help carry them.",
+       "say": "Some things are too big for a kid to carry alone. That is not weakness. It is just true. Helping carry big things is a grown-up's job."
+      },
+      {
+       "k": "points",
+       "h": "Tell a grown-up when",
+       "items": [
+        [
+         "Someone is hurting you",
+         "At home, at school, or online"
+        ],
+        [
+         "A friend is in danger",
+         "Or says they want to hurt themselves"
+        ],
+        [
+         "Something feels wrong",
+         "Even if you can't explain it"
+        ]
+       ],
+       "say": "Tell a trusted grown-up if someone is hurting you, at home, at school, or online. Tell if a friend is being hurt, or if a friend says they want to hurt themselves or die. Tell even if they asked you to keep it a secret. And tell if something just feels wrong, even if you cannot explain it yet."
+      },
+      {
+       "k": "big",
+       "h": "A secret about safety is one to tell.",
+       "sub": "You are not in trouble for telling.",
+       "say": "A secret about someone's safety is a secret to tell. Your friend might be upset at first. Telling is still how you help them. And you are not in trouble for telling."
+      },
+      {
+       "k": "points",
+       "h": "Who you can tell",
+       "items": [
+        [
+         "A parent or grandparent",
+         "Or another family grown-up"
+        ],
+        [
+         "A teacher or coach",
+         "Someone at school you trust"
+        ],
+        [
+         "Your school counselor",
+         "Helping is their job"
+        ]
+       ],
+       "say": "Who can you tell? A parent, a grandparent, or another grown-up in your family. A teacher or a coach you trust. Or your school counselor. Helping kids with hard things is their job."
+      },
+      {
+       "k": "points",
+       "h": "Practice telling",
+       "items": [
+        [
+         "Picture a safe grown-up",
+         "See their face"
+        ],
+        [
+         "Say it out loud",
+         "I need to tell you something."
+        ],
+        [
+         "Then say what happened",
+         "Short and plain is fine"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "6": 12
+        },
+        "at": [
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Let us practice. Close your eyes, or rest them on one spot. Picture one grown-up you trust, and see their face. Now say this out loud, as if they are right here. I need to tell you something. Then say what happened, short and plain. Take your time."
+      },
+      {
+       "k": "points",
+       "h": "If the first grown-up doesn't help",
+       "items": [
+        [
+         "Tell another one",
+         "Keep telling until someone helps"
+        ],
+        [
+         "Write it down",
+         "If saying it is too hard"
+        ],
+        [
+         "Tap Need help now?",
+         "At the top of your tree in Aspen"
+        ]
+       ],
+       "say": "If the first grown-up does not help, tell another one. Keep telling until someone does. If saying it out loud is too hard, write it down and hand it to them. And the Need help now button at the top of your tree in Aspen has people you can call or text, all day and night."
+      },
+      {
+       "k": "big",
+       "h": "Help right now",
+       "sub": "988: call or text, any time. Text HOME to 741741. Danger right now: 911.",
+       "say": "If you or a friend ever have thoughts of not wanting to be alive, call or text nine eight eight, any time. You can also text HOME to seven four one seven four one. And if anyone is in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Telling is brave. You deserve to be safe.",
+       "say": "Telling is brave. You are not in trouble, and you are not alone. You deserve to be safe."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+},
   oak: {
     title: 'Learn Oak',
     intro: 'Short videos, narrated aloud. Watch them in any order, as often as you like.',
