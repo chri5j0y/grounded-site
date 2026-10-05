@@ -2947,7 +2947,7 @@ function printTalkNow() {
    Two narrated videos per guide, For You (the child) and For the Grown-up, played by shared/gg-learn.js
    from maple/guide-videos.js. MV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:maple). */
-/* MV_VIDS start */const MV_VIDS = [];/* MV_VIDS end */
+/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn"];/* MV_VIDS end */
 function mvVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:maple') || '{}').done || {})[id]); } catch (e) { return false; } }
 function mvVids(gid) {
   if (!MV_VIDS.includes(gid)) return '';
