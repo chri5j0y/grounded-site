@@ -169,7 +169,32 @@
     elderindex: ["Elder Index, Gerontology Institute, UMass Boston (via NCOA)", "https://www.ncoa.org/article/80-percent-of-older-adults-face-financial-insecurity/"],
     alzff: ["Alzheimer's Association, 2025 Alzheimer's Disease Facts and Figures", "https://www.alz.org/news/2025/facts-figures-report-alzheimers-treatment"],
     relocation: ["Psychological interventions to reduce relocation stress, scoping review (2024)", "https://pubmed.ncbi.nlm.nih.gov/38634443/"],
-    retire: ["Does retirement trigger depressive symptoms? systematic review (2021)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC8679838/"]
+    retire: ["Does retirement trigger depressive symptoms? systematic review (2021)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC8679838/"],
+    // Sequoia When Life Changes E to H (GWG BLD 735)
+    acierno: ["Acierno and colleagues, the National Elder Mistreatment Study (2010)", "https://www.ojp.gov/ncjrs/virtual-library/abstracts/prevalence-and-correlates-emotional-physical-sexual-and-financial"],
+    benson: ["Benson and Coleman, older adults developing a preference for living apart together (2016)", "https://profiles.wustl.edu/en/publications/older-adults-developing-a-preference-for-living-apart-together/"],
+    bierman23: ["Bierman, Upenieks, Lee, and Harmon, financial strain and psychological distress among older adults (2023)", "https://journals.sagepub.com/doi/10.1177/23780231231197034"],
+    bjsfraud: ["Bureau of Justice Statistics, Financial Fraud in the United States, 2017 (2021)", "https://bjs.ojp.gov/library/publications/financial-fraud-united-states-2017"],
+    cotton: ["Cassandra Cotton, the specter of kin: family in later-life dating and repartnering (2025)", "https://link.springer.com/article/10.1007/s42650-025-00089-5"],
+    detering: ["Detering, Hancock, Reade, and Silvester, advance care planning for older inpatients, randomised trial (BMJ, 2010)", "https://doi.org/10.1136/bmj.c1345"],
+    ekerdt: ["David Ekerdt, Downsizing: Confronting Our Possessions in Later Life (Columbia University Press, 2020)", "https://news.ku.edu/news/article/2020/05/18/downsizing-book-encourages-older-people-confront-their-possessions"],
+    fingerman12: ["Fingerman, Cheng, Birditt, and Zarit, Only as happy as the least happy child: grown children's problems and successes and parents' well-being (Journals of Gerontology, Series B, 2012)", "https://doi.org/10.1093/geronb/gbr086"],
+    gilligan: ["Gilligan, Suitor, and Pillemer, Patterns and processes of intergenerational estrangement: mother and adult child relationships across time (Research on Aging, 2022)", "https://doi.org/10.1177/01640275211036966"],
+    gilovich: ["Gilovich and Medvec, the experience of regret: what, when, and why (1995)", "https://doi.org/10.1037/0033-295X.102.2.379"],
+    hayworry: ["Hay, Fingerman, and Lefkowitz, The worries adult children and their parents experience for one another (International Journal of Aging and Human Development, 2008)", "https://doi.org/10.2190/AG.67.2.a"],
+    jialtc: ["Justice in Aging and partners, LGBT Older Adults in Long-Term Care Facilities: Stories from the Field (2011, updated 2015)", "https://lgbtagingcenter.org/resource/lgbt-older-adults-in-long-term-care-facilities-stories-from-the-field/"],
+    levy02: ["Levy, Slade, Kunkel, and Kasl, longevity increased by positive self-perceptions of aging (2002)", "https://doi.org/10.1037/0022-3514.83.2.261"],
+    levy14: ["Levy, Pilver, Chung, and Slade, subliminal strengthening: improving physical function with a positive age-belief intervention (2014)", "https://journals.sagepub.com/doi/abs/10.1177/0956797614551970"],
+    linpc: ["Lin, Brown, and Mellencamp, gray divorce and parent-child disconnectedness (2024)", "https://doi.org/10.1111/jomf.12936"],
+    moorman: ["Moorman and Stokes, Solidarity in the grandparent and adult grandchild relationship and trajectories of depressive symptoms (The Gerontologist, 2016)", "https://doi.org/10.1093/geront/gnu056"],
+    musil: ["Musil, Warner, Zauszniewski, Wykle, and Standing, Grandmother caregiving, family stress and strain, and depressive symptoms (Western Journal of Nursing Research, 2009)", "https://doi.org/10.1177/0193945908328262"],
+    niaaffairs: ["National Institute on Aging, Getting Your Affairs in Order Checklist: Documents to Prepare for the Future", "https://www.nia.nih.gov/health/advance-care-planning/getting-your-affairs-order-checklist-documents-prepare-future"],
+    npha: ["University of Michigan National Poll on Healthy Aging, Everyday Ageism and Health (2020)", "https://ihpi.umich.edu/national-poll-healthy-aging/national-findings/everyday-ageism-and-health"],
+    schulzbeach: ["Schulz and Beach, Caregiving as a risk factor for mortality: the Caregiver Health Effects Study (JAMA, 1999)", "https://pubmed.ncbi.nlm.nih.gov/10605972/"],
+    toussaint: ["Toussaint, Williams, Musick, and Everson, forgiveness and health: age differences in a US probability sample (2001)", "https://doi.org/10.1023/A:1011394629736"],
+    whoageism: ["World Health Organization and partners, Global Report on Ageism (2021)", "https://www.who.int/news/item/18-03-2021-ageism-is-a-global-challenge-un"],
+    wrosch05: ["Wrosch, Bauer, and Scheier, regret and quality of life across the adult life span (2005)", "https://pubmed.ncbi.nlm.nih.gov/16420140/"],
+    // end BLD 735
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.

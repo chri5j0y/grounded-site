@@ -5761,6 +5761,5203 @@ window.GG_LEARN_GUIDES.sequoia = {
      }
     ]
    }
+  },
+  {
+   "id": "moving-home",
+   "ring": "home",
+   "title": "Moving From the Family Home",
+   "you": {
+    "id": "sq-g-moving-home-you",
+    "guide": "moving-home",
+    "side": "you",
+    "title": "Moving From the Family Home",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the one leaving a house that held a family and a life.",
+    "sources": [
+     "relocation"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Moving From the Family Home",
+      "sub": "For You",
+      "say": "If you are leaving the house where you raised a family, or lived a big part of your life, this is for you. Settle in somewhere comfortable, and go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "A house holds a life.",
+      "sub": "Grief for a place is real grief.",
+      "say": "A house holds a life. The kitchen table, the creak on the stairs, the garden you planted, the doorframe with the children's heights. Leaving it is a real loss, and grief for a place is real grief. It makes sense if this is harder than you expected."
+     },
+     {
+      "k": "words",
+      "h": "You may feel all of these",
+      "items": [
+       "Sad",
+       "Unsettled",
+       "Relieved",
+       "Angry, if it came too soon"
+      ],
+      "say": "You may feel sad, or unsettled. You may feel relief, too: fewer stairs, less upkeep, more help close by. If the move came sooner than you wanted, after a fall or a loss, you may feel angry. Many people feel all of these in the same day. Every one of them is normal."
+     },
+     {
+      "k": "big",
+      "h": "Your say makes the move easier.",
+      "sub": "Take part in every choice you can.",
+      "say": "Research finds that a move in later life can bring real stress, and that being part of the choices, and preparing ahead, makes it easier. So take part in every choice you can. Where you will live. What comes with you. When the move happens. Ask one person you trust to help you plan, and keep the choices in your hands."
+     },
+     {
+      "k": "points",
+      "h": "Say goodbye on purpose",
+      "items": [
+       [
+        "Walk the rooms",
+        "Tell the stories out loud"
+       ],
+       [
+        "Take pictures",
+        "Every room, the yard too"
+       ],
+       [
+        "Keep a small piece",
+        "A cutting, a knob, a tile"
+       ],
+       [
+        "Have a last gathering",
+        "Family, friends, or a neighbor"
+       ]
+      ],
+      "say": "Say goodbye on purpose. Walk through the rooms, and tell the stories out loud, alone or with family. Take pictures of every room, and the yard too. Keep a small piece: a cutting from the garden, a doorknob, the height marks traced on paper. And if you'd like, gather family, friends, or a neighbor one last time."
+     },
+     {
+      "k": "big",
+      "h": "Thank one room.",
+      "sub": "Out loud, in your own words.",
+      "say": "Let's thank one room together. Choose a room from the house, any room. Picture yourself standing in its doorway. Now say out loud one thing that room gave you, and then say thank you.",
+      "beats": [
+       "Let's thank one room together.",
+       "Choose a room from the house, any room.",
+       "Picture yourself standing in its doorway.",
+       {
+        "t": "Now say out loud one thing that room gave you, and then say thank you.",
+        "w": 13
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Bring home with you",
+      "items": [
+       [
+        "Your chair and pictures first",
+        "Night one feels like yours"
+       ],
+       [
+        "One old routine",
+        "Coffee, a walk, a call"
+       ],
+       [
+        "One new neighbor",
+        "In the first week"
+       ]
+      ],
+      "say": "Then bring home with you. On moving day, set up your chair, your bed, and your pictures first, so the first night feels like yours. Keep one old routine going right away: the morning coffee, the evening walk, the Sunday call. And meet one neighbor in the first week. A new place starts to feel like home through small, steady things."
+     },
+     {
+      "k": "big",
+      "h": "Give yourself a season.",
+      "sub": "Tell your doctor if sleep or mood slip.",
+      "say": "Give yourself a season to settle. Many people feel homesick for months, and that is normal. If sleep, appetite, or mood slip and stay low, tell your doctor. And if anyone pressures you to sell, sign, or move faster than you want, pause, and talk with someone you trust."
+     },
+     {
+      "k": "big",
+      "h": "The love in that house comes with you.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "The walls stay behind. The love in that house comes with you, into every room you live in next. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-moving-home-helper",
+    "guide": "moving-home",
+    "side": "helper",
+    "title": "Moving From the Family Home",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone helping an older adult leave the family home.",
+    "sources": [
+     "relocation"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Moving From the Family Home",
+      "sub": "For the Helper",
+      "say": "If you are helping someone you love leave the family home, this is for you. Maybe it's your mom or dad, a friend, or a neighbor. Your steadiness and your patience matter more than any moving plan."
+     },
+     {
+      "k": "big",
+      "h": "For them, each room is a goodbye.",
+      "sub": "The house, the street, a whole life.",
+      "say": "To you, it may be a house to empty. For them, each room may be a goodbye. They may be grieving the house, the neighborhood, their independence, and the life they lived there. Their pace may seem slow. That slowness is often grief, doing its work."
+     },
+     {
+      "k": "big",
+      "h": "Keep them at the center.",
+      "sub": "Their move, their choices.",
+      "say": "Research finds that being part of the choices, and preparing ahead, makes a later life move easier. So keep them at the center. Where they will live, what comes along, and when, are theirs to decide wherever possible. Talk with them, not about them, in front of them or with the family."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Tell me about this room.",
+       "What do you most want to bring?",
+       "There's no rush. We can do one room today."
+      ],
+      "say": "Here are words that help. Tell me about this room. Then listen, even to a story you've heard before. What do you most want to bring? That keeps the choice in their hands. And, there's no rush. We can do one room today."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "It's just a house.",
+       "You won't have room for that.",
+       "We already decided."
+      ],
+      "say": "Some words land hard. It's just a house. You won't have room for that, said before they've had a chance to decide. And we already decided, when they weren't part of it. Each one tells them the move is happening to them, not with them."
+     },
+     {
+      "k": "big",
+      "h": "Their pace, not mine.",
+      "sub": "A breath for you.",
+      "say": "Moves are stressful for helpers too. Take a breath with me. Breathe in gently. Breathe out slowly, a little longer than you breathed in. Now say quietly, to yourself: their pace, not mine.",
+      "beats": [
+       "Moves are stressful for helpers too.",
+       "Take a breath with me.",
+       "Breathe in gently.",
+       "Breathe out slowly, a little longer than you breathed in.",
+       {
+        "t": "Now say quietly, to yourself: their pace, not mine.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "On moving day and after",
+      "items": [
+       [
+        "Bed, chair, pictures first",
+        "Home on night one"
+       ],
+       [
+        "Visit often",
+        "Especially the first weeks"
+       ],
+       [
+        "Help them belong",
+        "One group, one neighbor"
+       ],
+       [
+        "Watch gently",
+        "Sleep, appetite, mood"
+       ]
+      ],
+      "say": "On moving day, set up their bed, their chair, and their pictures first, so the first night feels like home. Visit often in the first weeks. Help them find one place to belong: a church, a senior center, a neighbor down the hall. And watch gently for sleep, appetite, and mood in the months after. If they slip and stay low, help them tell their doctor."
+     },
+     {
+      "k": "big",
+      "h": "You may be grieving too.",
+      "sub": "Have your own goodbye.",
+      "say": "If this was your childhood home, you may be grieving too. It's okay to have your own goodbye: a last walk through, a picture on the porch. Share the work with siblings or friends, so no one carries the whole move. And rest when you can."
+     },
+     {
+      "k": "big",
+      "h": "Walk beside them.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can't make this loss small. You can walk beside them through it, one room at a time. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "downsizing",
+   "ring": "home",
+   "title": "Downsizing and Letting Go of Things",
+   "you": {
+    "id": "sq-g-downsizing-you",
+    "guide": "downsizing",
+    "side": "you",
+    "title": "Downsizing and Letting Go of Things",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the one sorting through a lifetime of belongings.",
+    "sources": [
+     "ekerdt"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Downsizing and Letting Go of Things",
+      "sub": "For You",
+      "say": "If you are sorting through a lifetime of belongings, for a move or just to lighten the load, this is for you. Go at your own pace, and stop whenever you need to."
+     },
+     {
+      "k": "big",
+      "h": "Every drawer opens a memory.",
+      "sub": "This is heart work, not only housework.",
+      "say": "Every drawer opens a memory. A child's drawing. Your mother's dishes. The tools that fixed everything. Sorting a lifetime of things is heart work, not only housework. It makes sense if one box takes an afternoon."
+     },
+     {
+      "k": "words",
+      "h": "All of these are normal",
+      "items": [
+       "Overwhelmed",
+       "Frozen",
+       "Guilty",
+       "Lighter"
+      ],
+      "say": "You may feel overwhelmed by how much there is, or frozen at the first box. You may feel guilty letting go of a gift. It can sting when the family doesn't want what you saved for them. And you may feel lighter than you expected. All of these are normal."
+     },
+     {
+      "k": "flow",
+      "h": "Keep it small",
+      "steps": [
+       [
+        "Start easy",
+        "Linens, the garage, extra dishes"
+       ],
+       [
+        "One space at a time",
+        "One drawer, one shelf"
+       ],
+       [
+        "About an hour",
+        "Stop while you have energy"
+       ],
+       [
+        "Photos and letters last",
+        "When you have a rhythm"
+       ]
+      ],
+      "say": "Keep it small. Start with the easy places: linens, the garage, extra dishes. Do one space at a time, one drawer or one shelf. Work for about an hour, and stop while you still have energy. Save the photos and letters for last, once you have a rhythm."
+     },
+     {
+      "k": "points",
+      "h": "Four places things can go",
+      "items": [
+       [
+        "Keep",
+        "The few you use and love"
+       ],
+       [
+        "Pass on",
+        "With its story"
+       ],
+       [
+        "Give away",
+        "A shelter, a school, a sale"
+       ],
+       [
+        "Let go",
+        "With thanks"
+       ]
+      ],
+      "say": "There are four places things can go. Keep the few you use and love. Pass on the special things to someone, with their story. Give away what others can use: a shelter, a school, a church sale. And let go of the rest, with thanks. A small maybe box is fine too."
+     },
+     {
+      "k": "big",
+      "h": "Hold one thing.",
+      "sub": "Who should have it, and why?",
+      "say": "Let's try one, right where you are. Reach for one small thing nearby, or picture one from your home. Hold it, and remember where it came from. Now say out loud who should have it someday, and why.",
+      "beats": [
+       "Let's try one, right where you are.",
+       "Reach for one small thing nearby, or picture one from your home.",
+       "Hold it, and remember where it came from.",
+       {
+        "t": "Now say out loud who should have it someday, and why.",
+        "w": 13
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "The story matters more than the thing.",
+      "sub": "Tell it, write it, or record it.",
+      "say": "The story matters more than the thing. Before something special goes, tell its story, and write it on a card that travels with it. Take a photo of what you love but can't keep. Keep one teacup from the set, a handful of the drawings. Sequoia's Legacy Book is a good home for those stories too."
+     },
+     {
+      "k": "big",
+      "h": "Many people feel lighter after.",
+      "sub": "Tired along the way, proud at the end.",
+      "say": "Research with older adults who downsized finds that the work is tiring and emotional along the way, and that afterward, many feel satisfied and stronger for having done it. Ask for help with the lifting and the hauling, and keep the choosing for yourself."
+     },
+     {
+      "k": "big",
+      "h": "The memories are in you.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "The things were never the whole of it. The memories are in you, and the love goes with what you pass on. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-downsizing-helper",
+    "guide": "downsizing",
+    "side": "helper",
+    "title": "Downsizing and Letting Go of Things",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone helping an older adult sort a lifetime of belongings.",
+    "sources": [
+     "ekerdt"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Downsizing and Letting Go of Things",
+      "sub": "For the Helper",
+      "say": "If you are helping someone you love sort a lifetime of belongings, this is for you. Maybe it's a parent, a grandparent, or a friend. Patience will do more here than any plan."
+     },
+     {
+      "k": "big",
+      "h": "It looks like stuff. It holds a life.",
+      "sub": "Go at their pace.",
+      "say": "To you, it may look like stuff. To them, it holds a life. Each thing can bring back a person, a house, a decade. When a helper hurries, or shows no interest in what was saved, it can feel like their life is being thrown away. So go at their pace."
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Short sessions",
+        "A clear start and end"
+       ],
+       [
+        "They decide",
+        "Each thing, every time"
+       ],
+       [
+        "You lift and haul",
+        "And do the drop-offs"
+       ],
+       [
+        "Celebrate",
+        "Each finished space"
+       ]
+      ],
+      "say": "Here's what helps. Short sessions, with a clear start and end. Let them decide each thing, every time. You do the lifting, the hauling, and the drop-offs. And celebrate each finished space, with a cup of coffee or a walk."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Tell me about this one.",
+       "Where would you like it to go?",
+       "I'd love to have that, and here's why."
+      ],
+      "say": "Here are words that help. Tell me about this one. Where would you like it to go? And when it's true, I'd love to have that, and here's why. Knowing a treasured thing is wanted can make letting go much easier."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "This is all junk.",
+       "Nobody wants that anymore.",
+       "Just get rid of it."
+      ],
+      "say": "Some words land hard. This is all junk. Nobody wants that anymore. Just get rid of it. And never throw things out when they aren't looking. Trust is worth more than an empty closet."
+     },
+     {
+      "k": "big",
+      "h": "Offer one short session.",
+      "sub": "A day, a space, a time limit.",
+      "say": "Let's plan one. Think of the person you're helping, and one small space in their home. Choose a day and a time limit, like two hours. Now say your offer out loud, ending with: and you decide.",
+      "beats": [
+       "Let's plan one.",
+       "Think of the person you're helping, and one small space in their home.",
+       "Choose a day and a time limit, like two hours.",
+       {
+        "t": "Now say your offer out loud, ending with: and you decide.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Keep the stories.",
+      "sub": "A photo, a card, a recording.",
+      "say": "Help keep the stories. Take a photo of a special thing before it goes. Write its story on a card. Or record them telling it on your phone. Research with older adults who downsized finds the work is tiring, and that many feel satisfied and stronger once it's done. Stories help them get there."
+     },
+     {
+      "k": "big",
+      "h": "Notice what is yours to carry.",
+      "sub": "Your childhood is in these rooms too.",
+      "say": "Your own childhood may be in these rooms. Old family tensions may surface, especially between siblings. Notice what's yours to carry, and keep sessions short for your sake too. Talk with someone you trust if it gets heavy."
+     },
+     {
+      "k": "big",
+      "h": "Honor the life in the boxes.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "When you honor the life in the boxes, letting go gets easier for everyone. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "care-move",
+   "ring": "home",
+   "title": "Moving to Assisted Living or a Nursing Home",
+   "you": {
+    "id": "sq-g-care-move-you",
+    "guide": "care-move",
+    "side": "you",
+    "title": "Moving to Assisted Living or a Nursing Home",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the one moving into assisted living or a nursing home.",
+    "sources": [
+     "relocation"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Moving to Assisted Living or a Nursing Home",
+      "sub": "For You",
+      "say": "If you are moving into assisted living or a nursing home, or the move is on the way, this is for you. Settle in, and go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "One of the biggest moves of a life.",
+      "sub": "It makes sense that this is hard.",
+      "say": "This is one of the biggest moves of a life. It can feel like losing your home, your privacy, and your say all at once. It makes sense that this is hard, even if part of you knows it's the right step."
+     },
+     {
+      "k": "words",
+      "h": "You may feel",
+      "items": [
+       "Sad",
+       "Angry",
+       "Scared",
+       "Relieved"
+      ],
+      "say": "You may feel sad, or angry that it came to this. You may feel scared, or worried about being forgotten. You may feel relieved, too: help at night, meals ready, people close by. Many people feel all of these. Each one is normal."
+     },
+     {
+      "k": "big",
+      "h": "You still have a say.",
+      "sub": "Visit, ask, and choose.",
+      "say": "Research finds that being part of the decision, and preparing ahead, makes a move like this easier. So take part in every choice you can. Visit before you move, more than once, and at a mealtime if you can. Ask your questions. And choose what comes with you."
+     },
+     {
+      "k": "points",
+      "h": "Make the room yours",
+      "items": [
+       [
+        "Photos and a quilt",
+        "Things that say you"
+       ],
+       [
+        "Your own pillow",
+        "Small comforts count"
+       ],
+       [
+        "Tell staff about you",
+        "Routines, your name, your life"
+       ]
+      ],
+      "say": "Make the room yours. Bring photos, a quilt, a lamp, your own pillow. Small comforts count. And tell the staff about you: what you like to be called, your routines, what calms you, the life you've lived. The more they know you, the more the place can fit you."
+     },
+     {
+      "k": "big",
+      "h": "Name three joys for your room.",
+      "sub": "Things to have close by.",
+      "say": "Let's take a quiet moment. Think about the room you'll live in. Picture the small things that bring you joy. Now name three of them out loud, things you want close by in your new room.",
+      "beats": [
+       "Let's take a quiet moment.",
+       "Think about the room you'll live in.",
+       "Picture the small things that bring you joy.",
+       {
+        "t": "Now name three of them out loud, things you want close by in your new room.",
+        "w": 13
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "The first weeks",
+      "steps": [
+       [
+        "Keep one old routine",
+        "From the very first day"
+       ],
+       [
+        "One activity a day",
+        "Or one meal with others"
+       ],
+       [
+        "One person to sit with",
+        "Friends start at the table"
+       ],
+       [
+        "Give it time",
+        "Most settle over months"
+       ]
+      ],
+      "say": "The first weeks are often the hardest. Keep one old routine from the very first day, like coffee at seven, or the evening news. Say yes to one activity a day, or one meal with others, even when you'd rather not. Look for one person to sit with. Many friendships start at the dining table. And give it time. Many people feel more settled after a few months."
+     },
+     {
+      "k": "big",
+      "h": "Your rights come with you.",
+      "sub": "Ombudsman, Minnesota: 1-800-657-3591.",
+      "say": "Your rights come with you to your new home. If something isn't right, tell someone you trust and the staff. In Minnesota, the Office of Ombudsman for Long-Term Care helps residents with any concern, at 1-800-657-3591, on weekdays. And if low mood or confusion lasts past the first weeks, tell the nurse and your doctor."
+     },
+     {
+      "k": "big",
+      "h": "You are still you, here too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A new address doesn't change who you are. Your stories, your faith, your humor, and your love come with you, here too. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-care-move-helper",
+    "guide": "care-move",
+    "side": "helper",
+    "title": "Moving to Assisted Living or a Nursing Home",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone helping an older adult move into assisted living or a nursing home.",
+    "sources": [
+     "relocation"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Moving to Assisted Living or a Nursing Home",
+      "sub": "For the Helper",
+      "say": "If someone you love is moving into assisted living or a nursing home, this is for you. Maybe it's your mom or dad, your spouse, or a friend. Your presence in the first weeks matters a great deal."
+     },
+     {
+      "k": "big",
+      "h": "Moving, not being moved.",
+      "sub": "Keep them part of every choice.",
+      "say": "Research finds that being part of the decision, and preparing ahead, makes a move like this easier. So help them be the one moving, not the one being moved. Visit places together. Let them choose the room, the photos, and what comes along. Talk with them, not about them, with family and with staff."
+     },
+     {
+      "k": "points",
+      "h": "Bring the familiar",
+      "items": [
+       [
+        "Photos and a blanket",
+        "Their own things"
+       ],
+       [
+        "Their music",
+        "Songs they love"
+       ],
+       [
+        "Their story",
+        "Tell staff who they are"
+       ]
+      ],
+      "say": "Bring the familiar. Photos, a favorite blanket, their own clothes. Their music, the songs they love. And their story. With them, tell the staff who they are: what they like to be called, their routines, what calms them, the life they've lived."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What would make your room feel like you?",
+       "I'll be here Wednesday after lunch.",
+       "Tell me when something isn't right."
+      ],
+      "say": "Here are words that help. What would make your room feel more like you? I'll be here Wednesday after lunch. A set time gives them something to hold. And, tell me when something isn't right. I'll listen."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You'll love it here.",
+       "It's for your own good.",
+       "Talking to staff over their head"
+      ],
+      "say": "Some words land hard. You'll love it here, before they've had a chance to feel anything. It's for your own good. And talking to staff over their head while they're in the room. Each one takes away a little more of their say."
+     },
+     {
+      "k": "big",
+      "h": "Visit often, at first.",
+      "sub": "Steady visits help them settle.",
+      "say": "Some people stay away at first, hoping it helps their loved one adjust. Steady, predictable visits usually help them settle. The first weeks are often the hardest, and confusion or low mood can rise, especially at night. Most people settle over the first months. If low mood or not eating lasts, tell the nurse and the doctor."
+     },
+     {
+      "k": "big",
+      "h": "Wish them well, and yourself.",
+      "sub": "A quiet moment for both of you.",
+      "say": "Take a quiet moment. Picture the person you love in their new room. Silently wish them well: may you feel at home here. Now wish the same for yourself: may I be at peace with this choice.",
+      "beats": [
+       "Take a quiet moment.",
+       "Picture the person you love in their new room.",
+       "Silently wish them well: may you feel at home here.",
+       {
+        "t": "Now wish the same for yourself: may I be at peace with this choice.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Speak up, kindly.",
+      "sub": "Ombudsman, Minnesota: 1-800-657-3591.",
+      "say": "Your role is changing, from doing everything to visiting and advocating. If something seems wrong, speak up kindly with staff. If it isn't resolved, in Minnesota, call the Office of Ombudsman for Long-Term Care at 1-800-657-3591, on weekdays. If you believe someone is being hurt or neglected, call MAARC at 1-844-880-1574, any time."
+     },
+     {
+      "k": "big",
+      "h": "Guilt and relief can share a heart.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Guilt is common, even when the move is loving and right. So is relief, and relief doesn't mean you love them less. Let others share the visits, and find support for yourself. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "fixed-income",
+   "ring": "home",
+   "title": "Money Worries on a Fixed Income",
+   "you": {
+    "id": "sq-g-fixed-income-you",
+    "guide": "fixed-income",
+    "side": "you",
+    "title": "Money Worries on a Fixed Income",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the one worried about making money last.",
+    "sources": [
+     "elderindex",
+     "bierman23"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Money Worries on a Fixed Income",
+      "sub": "For You",
+      "say": "If you worry about making your money last, this is for you. There's no advice about your money here, just a steadier way to carry the worry, and places to find help."
+     },
+     {
+      "k": "big",
+      "h": "You are far from alone.",
+      "sub": "Many households are stretched thin.",
+      "say": "If the check stays the same while prices climb, you are far from alone. Research finds that most older adults' households are on shaky ground with money, one big bill away from real trouble. That says a lot about the times, and nothing bad about you."
+     },
+     {
+      "k": "words",
+      "h": "Money worry can feel like",
+      "items": [
+       "Shame",
+       "Fear",
+       "Anger",
+       "Tired of doing sums"
+      ],
+      "say": "Money worry can feel like shame, as if needing help means you failed, even after a lifetime of hard work. It can feel like fear of losing your home, or being a burden. It can feel like anger. And it can feel like lying awake, doing sums."
+     },
+     {
+      "k": "big",
+      "h": "Money strain weighs on the body.",
+      "sub": "Your worry deserves real help.",
+      "say": "Research finds that money strain weighs on mood and peace of mind in later life. So your worry is real, and it deserves real help. Please keep eating, keep taking your medicines, and keep the heat on. If medicine costs are hard, tell your doctor or pharmacist, and ask about a lower cost option."
+     },
+     {
+      "k": "points",
+      "h": "Help many people never hear about",
+      "items": [
+       [
+        "Food",
+        "Meals, food shelves, delivery"
+       ],
+       [
+        "Heat and utilities",
+        "Help with the bills"
+       ],
+       [
+        "Medicine and Medicare",
+        "Programs that lower costs"
+       ],
+       [
+        "A benefits check",
+        "A short list of questions"
+       ]
+      ],
+      "say": "There is help many people never hear about. Programs for food, including community meals and home delivery. Help with heat and utility bills. Programs that lower medicine and Medicare costs. A benefits check asks you a short list of questions, and shows what you may qualify for."
+     },
+     {
+      "k": "big",
+      "h": "Start with one call.",
+      "sub": "Eldercare Locator: 1-800-677-1116.",
+      "say": "Start with one call. The Eldercare Locator, at 1-800-677-1116, can point you to help near you, anywhere in the US. In Minnesota, call Minnesota Aging Pathways at 1-800-333-2433, on weekdays. You can ask a friend to sit with you while you call."
+     },
+     {
+      "k": "big",
+      "h": "Speak kindly to yourself.",
+      "sub": "The way a wise friend would.",
+      "say": "Let's take a moment. Think of the money worry you carry most. Imagine a wise, kind friend sitting beside you, who knows all you've done. Now say out loud what that friend would say to you about it.",
+      "beats": [
+       "Let's take a moment.",
+       "Think of the money worry you carry most.",
+       "Imagine a wise, kind friend sitting beside you, who knows all you've done.",
+       {
+        "t": "Now say out loud what that friend would say to you about it.",
+        "w": 13
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Pause before any money talk.",
+      "sub": "Check with someone you trust.",
+      "say": "Worry can make a quick fix sound tempting. Before any money talk on the phone or online, pause, hang up, and check with someone you trust. And for advice about your own money choices, ask a trusted, licensed professional, or a nonprofit counselor your local aging office can point you to."
+     },
+     {
+      "k": "big",
+      "h": "Your worth was never in dollars.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Asking for help is wise, not weak. Your worth was never measured in dollars. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-fixed-income-helper",
+    "guide": "fixed-income",
+    "side": "helper",
+    "title": "Money Worries on a Fixed Income",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone walking beside an older adult who is worried about money.",
+    "sources": [
+     "elderindex",
+     "bierman23"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Money Worries on a Fixed Income",
+      "sub": "For the Helper",
+      "say": "If someone you love is worried about money on a fixed income, this is for you. Maybe it's a parent, a grandparent, or a friend. You don't need to solve it. You can help them find help, and keep their dignity whole."
+     },
+     {
+      "k": "big",
+      "h": "Money trouble often hides.",
+      "sub": "Pride, fear, and love keep it quiet.",
+      "say": "Research finds that most older adults' households are on shaky ground with money. Yet many keep it quiet, to protect family, or to protect their independence. Some go without food, medicine, or heat rather than ask. A question about money can feel like a question about whether they can still run their own life."
+     },
+     {
+      "k": "points",
+      "h": "Signs to notice gently",
+      "items": [
+       [
+        "An empty fridge",
+        "Or skipped meals"
+       ],
+       [
+        "A cold house",
+        "The heat turned low"
+       ],
+       [
+        "Stretched medicines",
+        "Skipped or split doses"
+       ],
+       [
+        "Unopened bills",
+        "Or new worry about mail"
+       ]
+      ],
+      "say": "Notice gently. An empty fridge, or skipped meals. A cold house, with the heat turned low. Medicines stretched out or skipped. Unopened bills, or new worry about the mail. Research finds that money strain weighs on mood and peace of mind, so these signs matter."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Lots of people are stretched right now.",
+       "Would you like company while you call?",
+       "You decide. I'll help you find what's out there."
+      ],
+      "say": "Here are words that help. Lots of people are stretched right now. How are things for you? Would you like company while you call about benefits? And, you decide. I'll help you find what's out there."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "How did you let it get this bad?",
+       "You should have saved more.",
+       "I'll just take over your accounts."
+      ],
+      "say": "Some words land hard. How did you let it get this bad? You should have saved more. And, I'll just take over your accounts, when they haven't asked. Each one adds shame to the worry. Offer help side by side instead, and let them decide."
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Find programs together",
+        "Eldercare Locator, a benefits check"
+       ],
+       [
+        "Sit in on the call",
+        "If they want you there"
+       ],
+       [
+        "Share a meal",
+        "Kindness, not charity"
+       ],
+       [
+        "Watch for pressure",
+        "From strangers, or people they know"
+       ]
+      ],
+      "say": "Help find programs together: the Eldercare Locator at 1-800-677-1116, or Minnesota Aging Pathways at 1-800-333-2433. Sit in on the call, if they want you there. Share a meal, as kindness, not charity. And watch for anyone pressuring them about money, strangers or people they know."
+     },
+     {
+      "k": "big",
+      "h": "Give your own worry a time.",
+      "sub": "Fifteen minutes, on your calendar.",
+      "say": "Their money worry can stir your own. Give your worry a set time, so it doesn't follow you all day. Choose fifteen minutes tomorrow to think it through. Now say that time out loud, and let the worry wait for it.",
+      "beats": [
+       "Their money worry can stir your own.",
+       "Give your worry a set time, so it doesn't follow you all day.",
+       "Choose fifteen minutes tomorrow to think it through.",
+       {
+        "t": "Now say that time out loud, and let the worry wait for it.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Look after your own footing.",
+      "sub": "Set limits you can keep.",
+      "say": "If you're helping pay, set limits you can keep, and talk about them openly. Money can stir old family patterns too. Look after your own footing, so you can stay beside them for the long haul."
+     },
+     {
+      "k": "big",
+      "h": "Help them keep their dignity whole.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your respect matters as much as any program you find. Help them keep their dignity whole. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "scams",
+   "ring": "home",
+   "title": "Scams and Fraud",
+   "you": {
+    "id": "sq-g-scams-you",
+    "guide": "scams",
+    "side": "you",
+    "title": "Scams and Fraud",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For anyone who has been targeted or tricked by a scam, or wants to stay ahead of one.",
+    "sources": [
+     "ic3",
+     "bjsfraud"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Scams and Fraud",
+      "sub": "For You",
+      "say": "If you've been targeted by a scam, or tricked by one, or you just want to stay a step ahead, this is for you. Go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "It can happen to anyone.",
+      "sub": "Scammers are skilled professionals.",
+      "say": "First, the most important thing. Scams can happen to anyone, at any age. Scammers are skilled professionals. They practice their lines all day, and they steal billions of dollars from people over sixty every year. If you were tricked, you were lied to by an expert. The shame belongs to them."
+     },
+     {
+      "k": "points",
+      "h": "The warning signs",
+      "items": [
+       [
+        "Hurry",
+        "Act now, or else"
+       ],
+       [
+        "Secrecy",
+        "Don't tell anyone"
+       ],
+       [
+        "A scare or a prize",
+        "Arrest, a virus, a big win"
+       ],
+       [
+        "Odd ways to pay",
+        "Gift cards, wires, crypto"
+       ]
+      ],
+      "say": "Here are the warning signs. Hurry: act now, or something bad will happen. Secrecy: don't tell your family or your bank. A scare or a prize: a grandchild in trouble, a frozen computer, a big win. And odd ways to pay, like gift cards, wire transfers, cash in the mail, or crypto. Real agencies and companies don't ask for those."
+     },
+     {
+      "k": "big",
+      "h": "Pause. Hang up. Check.",
+      "sub": "Call back on a number you know.",
+      "say": "Your best tool is simple. Pause. Hang up. Then check, by calling back on a number you already know, or by calling someone you trust. Hanging up is always allowed, even on someone who sounds official, or sounds like family."
+     },
+     {
+      "k": "big",
+      "h": "Practice the hang-up line.",
+      "sub": "Short, polite, and final.",
+      "say": "Let's practice. Picture the phone ringing, and a voice in a hurry asking for money. Take a breath, and sit up tall. Now say out loud: I don't do business on the phone. Goodbye.",
+      "beats": [
+       "Let's practice.",
+       "Picture the phone ringing, and a voice in a hurry asking for money.",
+       "Take a breath, and sit up tall.",
+       {
+        "t": "Now say out loud: I don't do business on the phone. Goodbye.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "If it already happened",
+      "steps": [
+       [
+        "Call your bank",
+        "Right away, on the card number"
+       ],
+       [
+        "Stop all contact",
+        "Send nothing more"
+       ],
+       [
+        "Call for help",
+        "Elder Fraud Hotline"
+       ],
+       [
+        "Report it",
+        "reportfraud.ftc.gov"
+       ]
+      ],
+      "say": "If it already happened, here's what to do. Call your bank or card company right away, using the number on your card. Stop all contact, and send nothing more, even if they promise to return your money. Call the National Elder Fraud Hotline at 1-833-372-8311, on weekdays. And report it at reportfraud.ftc.gov. Reports help stop scammers."
+     },
+     {
+      "k": "big",
+      "h": "Tell one person you trust.",
+      "sub": "Most people do, and it helps.",
+      "say": "Research finds that most older adults who are defrauded do tell someone, though very few tell the police. Tell one person you trust, and let them help with the calls. The AARP Fraud Watch Network Helpline, at 877-908-3360, will talk it through with anyone, member or not."
+     },
+     {
+      "k": "big",
+      "h": "It is normal to feel shaken.",
+      "sub": "Be as kind to yourself as to a friend.",
+      "say": "It's normal to feel shaken, angry, or embarrassed for a while. If the scam was a romance or a friendship, you may be grieving too. Be as kind to yourself as you would be to a friend it happened to. If you ever have thoughts of not wanting to live, call or text 988, any time."
+     },
+     {
+      "k": "big",
+      "h": "Hanging up is always allowed.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You are allowed to hang up, to pause, and to ask. That's not rude. It's wise. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-scams-helper",
+    "guide": "scams",
+    "side": "helper",
+    "title": "Scams and Fraud",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone helping an older adult stay safe from scams, or recover from one.",
+    "sources": [
+     "ic3",
+     "bjsfraud"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Scams and Fraud",
+      "sub": "For the Helper",
+      "say": "If someone you love has been targeted or tricked by a scam, or you want to help them stay safe, this is for you. How you respond matters as much as what you do."
+     },
+     {
+      "k": "big",
+      "h": "They were targeted by experts.",
+      "sub": "The shame belongs to the scammer.",
+      "say": "Scammers steal billions of dollars from people over sixty every year. They are trained, practiced, and very convincing. The person who was tricked deserves kindness. The shame belongs to the scammer. Your calm, kind response decides whether they'll tell you next time."
+     },
+     {
+      "k": "big",
+      "h": "Many tell family. Few tell police.",
+      "sub": "Be the safe person to tell.",
+      "say": "Research finds that most older adults who are defrauded tell someone, often family or friends, while very few report it to the police. Many hide it at first, afraid of losing their independence. So be the safe person to tell, and help them report it, at their pace."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Thank you for telling me.",
+       "This happens to smart, careful people.",
+       "Let's call the bank together. You lead."
+      ],
+      "say": "Here are words that help. Thank you for telling me. This happens to smart, careful people. And, let's call the bank together. You lead, and I'll help. Those words keep them in charge of their own life."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "How could you fall for that?",
+       "I'm taking your phone.",
+       "Bringing it up again and again"
+      ],
+      "say": "Some words land hard. How could you fall for that? I'm taking your phone, or your checkbook, without talking it through. And bringing it up again and again. Each one adds shame, and shame makes people hide the next one."
+     },
+     {
+      "k": "flow",
+      "h": "If it already happened",
+      "steps": [
+       [
+        "Call the bank",
+        "Together, right away"
+       ],
+       [
+        "Stop contact",
+        "Nothing more sent"
+       ],
+       [
+        "Call for help",
+        "Elder Fraud: 1-833-372-8311"
+       ],
+       [
+        "Report it",
+        "reportfraud.ftc.gov"
+       ]
+      ],
+      "say": "If it already happened, help them call the bank or card company right away. Stop all contact with the scammer, and send nothing more. Call the National Elder Fraud Hotline at 1-833-372-8311, on weekdays. And report it at reportfraud.ftc.gov. If someone they know is taking advantage of them, in Minnesota, call MAARC at 1-844-880-1574."
+     },
+     {
+      "k": "big",
+      "h": "Choose a family code word.",
+      "sub": "Only real family will know it.",
+      "say": "One small step helps against fake emergency calls. Think of a word your family will remember, but a stranger would never guess. Not a pet's name or a birthday that's online. Now say your code word out loud, and plan to share it with them today.",
+      "beats": [
+       "One small step helps against fake emergency calls.",
+       "Think of a word your family will remember, but a stranger would never guess.",
+       "Not a pet's name or a birthday that's online.",
+       {
+        "t": "Now say your code word out loud, and plan to share it with them today.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Watch gently for",
+      "items": [
+       [
+        "New secrecy",
+        "About calls or mail"
+       ],
+       [
+        "A new online friend",
+        "Who needs money"
+       ],
+       [
+        "Gift card buying",
+        "Or unusual withdrawals"
+       ]
+      ],
+      "say": "Watch gently for new secrecy about calls or mail. A new online friend or sweetheart who needs money. Gift card buying, or unusual withdrawals. Ask with curiosity, not alarm. And offer to be the one they check with before any payment."
+     },
+     {
+      "k": "big",
+      "h": "Keep them safe, and keep their trust.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your anger at the scammer, and even some guilt for not catching it, are natural. Talk with someone you trust about that. Then keep your focus on two things: keeping them safe, and keeping their trust. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "affairs",
+   "ring": "home",
+   "title": "Getting Your Affairs in Order",
+   "you": {
+    "id": "sq-g-affairs-you",
+    "guide": "affairs",
+    "side": "you",
+    "title": "Getting Your Affairs in Order",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For anyone ready to put their papers and wishes in order.",
+    "sources": [
+     "niaaffairs",
+     "niaacp"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Getting Your Affairs in Order",
+      "sub": "For You",
+      "say": "If you've been meaning to get your affairs in order, this is for you. There's no legal advice here, just a simple way to begin. Go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "A gift to the people you love.",
+      "sub": "Wise at any age, in any health.",
+      "say": "Putting your affairs in order is a gift to yourself, and to the people you love. It's wise at any age, in good health or in illness. It doesn't mean giving up. It means your wishes are clear, and your family won't have to guess."
+     },
+     {
+      "k": "words",
+      "h": "It can feel",
+      "items": [
+       "Morbid",
+       "Overwhelming",
+       "Easy to put off",
+       "A relief, once done"
+      ],
+      "say": "It can feel morbid, or overwhelming. It's easy to put off for years. And many people feel a deep relief once it's done. One step at a time is enough."
+     },
+     {
+      "k": "big",
+      "h": "Name a health care agent.",
+      "sub": "Someone to speak for you, if you cannot.",
+      "say": "A good first step is naming a health care agent. That's someone you trust to speak for you about your health care, if a time comes when you can't speak for yourself. Then tell them what matters most to you: what a good day looks like, and what you would and wouldn't want."
+     },
+     {
+      "k": "big",
+      "h": "Say their name.",
+      "sub": "The person you trust to speak for you.",
+      "say": "Let's take a quiet moment. Think of the people you trust most. Ask yourself who knows you well, and would honor your wishes. Now say that person's name out loud.",
+      "beats": [
+       "Let's take a quiet moment.",
+       "Think of the people you trust most.",
+       "Ask yourself who knows you well, and would honor your wishes.",
+       {
+        "t": "Now say that person's name out loud.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Papers people often prepare",
+      "items": [
+       [
+        "A health care directive",
+        "Your wishes, your agent"
+       ],
+       [
+        "A will",
+        "Where things go"
+       ],
+       [
+        "A financial power of attorney",
+        "Who handles money, if needed"
+       ]
+      ],
+      "say": "Here are papers people often prepare. A health care directive, which records your wishes and names your agent. A will, for where your things go. And a financial power of attorney, naming who handles money matters if you can't. An attorney or legal aid can help with the legal side. The National Institute on Aging has a clear checklist, linked in the guide."
+     },
+     {
+      "k": "flow",
+      "h": "Where things are",
+      "steps": [
+       [
+        "One place",
+        "A folder, a drawer, a box"
+       ],
+       [
+        "Write a list",
+        "Accounts, insurance, the deed"
+       ],
+       [
+        "Tell one person",
+        "Where to find it all"
+       ]
+      ],
+      "say": "Then, where things are. Keep your important papers in one place: a folder, a drawer, or a box. Write a simple list of your accounts, insurance, the deed, and the car title, and who helps you with each. Then tell one trusted person where to find it all."
+     },
+     {
+      "k": "card",
+      "title": "The personal side",
+      "body": "Your stories, your values, and your blessings belong in your affairs too. Sequoia's Legacy Book is a place to write them.",
+      "say": "Your affairs aren't only papers. Your stories, your values, and your blessings for the people you love belong here too. Sequoia's Legacy Book is a place to write them, one page at a time."
+     },
+     {
+      "k": "big",
+      "h": "Planning ahead is an act of love.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "One conversation, or one paper, is a real start. Planning ahead is an act of love. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-affairs-helper",
+    "guide": "affairs",
+    "side": "helper",
+    "title": "Getting Your Affairs in Order",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone helping an older adult get their affairs in order.",
+    "sources": [
+     "niaaffairs",
+     "niaacp"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Getting Your Affairs in Order",
+      "sub": "For the Helper",
+      "say": "If you are helping someone you love get their affairs in order, this is for you. Maybe it's your mom or dad, your spouse, or a friend. It's their plan. You're there to listen and help."
+     },
+     {
+      "k": "big",
+      "h": "Their plan, their choices.",
+      "sub": "You listen, and you help.",
+      "say": "Talk of wills and directives can feel like talk of the end. They may worry that planning means giving up, or that someone is after their money, or that they'll lose control of their own decisions. So keep it clear from the start. It's their plan, their papers, and their choices."
+     },
+     {
+      "k": "points",
+      "h": "A good time to talk",
+      "items": [
+       [
+        "Before a crisis",
+        "A calm, ordinary day"
+       ],
+       [
+        "In private",
+        "Not at a holiday table"
+       ],
+       [
+        "At their pace",
+        "One topic at a time"
+       ]
+      ],
+      "say": "Choose a good time to talk. Before a crisis, on a calm, ordinary day. In private, not around a holiday table. And at their pace, one topic at a time. Many people are relieved when someone finally asks."
+     },
+     {
+      "k": "big",
+      "h": "Practice the invitation.",
+      "sub": "Open, warm, no pressure.",
+      "say": "Let's practice. Picture sitting with them somewhere quiet. Let your voice be warm and unhurried. Now say out loud: when you're ready, I'd love to hear what matters most to you.",
+      "beats": [
+       "Let's practice.",
+       "Picture sitting with them somewhere quiet.",
+       "Let your voice be warm and unhurried.",
+       {
+        "t": "Now say out loud: when you're ready, I'd love to hear what matters most to you.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Who would you want to speak for you?",
+       "Anything you want me to know where to find?",
+       "You decide. I can help with the rides."
+      ],
+      "say": "Here are words that help. If something happened, who would you want to speak for you? Is there anything you'd like me to know where to find? And, you decide. I can help with the rides and the forms."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Just sign here.",
+       "So, who gets the house?",
+       "Talking about their plans over their head"
+      ],
+      "say": "Some words land hard. Just sign here, on papers they haven't chosen or don't understand. So, who gets the house? And talking about their plans with others, over their head. Each one makes planning feel like something done to them."
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Sit with the checklist",
+        "Read it together"
+       ],
+       [
+        "Rides and privacy",
+        "They meet the attorney alone"
+       ],
+       [
+        "One folder",
+        "And a note of where it is"
+       ],
+       [
+        "Watch for pressure",
+        "From anyone, about papers"
+       ]
+      ],
+      "say": "Here are ways to help. Sit with them while they read the National Institute on Aging's checklist. Offer rides to an attorney or legal aid, and let them meet privately. Help them make one folder for important papers, and note where it is. And watch for anyone pressuring them to sign or change papers. In Minnesota, MAARC takes those calls at 1-844-880-1574."
+     },
+     {
+      "k": "big",
+      "h": "If you are named their agent",
+      "sub": "Ask, listen, and write it down.",
+      "say": "If they name you as their health care agent, it's an honor and a responsibility. Ask them to tell you their wishes, in their own words. Listen, and write it down. And consider doing your own planning too. These talks can stir your own fears, and that's natural."
+     },
+     {
+      "k": "big",
+      "h": "Listening is the heart of it.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "The papers matter. Listening matters more. When you help them make their wishes known, you give them peace, and you give the whole family a gift. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "spouse-caregiving",
+   "ring": "family",
+   "title": "Caring for a Spouse or Partner",
+   "you": {
+    "id": "sq-g-spouse-caregiving-you",
+    "guide": "spouse-caregiving",
+    "side": "you",
+    "title": "Caring for a Spouse or Partner",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For anyone caring for a husband, wife, or partner who needs more help now.",
+    "sources": [
+     "aarpcg",
+     "schulzbeach"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Caring for a Spouse or Partner",
+      "sub": "For You",
+      "say": "If you are caring for your husband, wife, or partner, this is for you. Take your time. You have earned a few quiet minutes."
+     },
+     {
+      "k": "big",
+      "h": "Love, in its most practical form",
+      "sub": "Many older adults are caring for a spouse.",
+      "say": "Millions of people are family caregivers, and many of them are older adults caring for a spouse or partner. The pills, the rides, the nights, the paperwork. It is love in its most practical form. And it can wear you down."
+     },
+     {
+      "k": "words",
+      "h": "All of these can live together",
+      "items": [
+       "Love",
+       "Tired",
+       "Lonely",
+       "Grief for the life we had"
+      ],
+      "say": "You may love them as much as ever, and still feel tired, lonely, or short tempered. You may miss the partner who used to share the load, the talks, the plans you made. That is a real grief, even while they are right here. All of these can live together, and none of them means you love them less."
+     },
+     {
+      "k": "big",
+      "h": "Strain is what wears on health.",
+      "sub": "Breaks and help make a real difference.",
+      "say": "Research finds that caregiving itself is not what wears on a spouse's health. It is strain: too much, for too long, with too little help. So breaks are not a luxury. They are part of the care."
+     },
+     {
+      "k": "points",
+      "h": "Ways to share the load",
+      "items": [
+       [
+        "Respite",
+        "Someone else takes a turn"
+       ],
+       [
+        "Adult day programs",
+        "Company for them, rest for you"
+       ],
+       [
+        "A support group",
+        "People who understand"
+       ],
+       [
+        "Help at home",
+        "Meals, chores, a bath aide"
+       ]
+      ],
+      "say": "There are ways to share the load. Respite, when someone else takes a turn for a few hours or a few days. Adult day programs, which offer company for them and rest for you. A caregiver support group, in person, by phone, or online. And help at home, like meals, chores, or a bath aide. The Eldercare Locator, 1 800 677 1116, can help you find them."
+     },
+     {
+      "k": "big",
+      "h": "Loving-kindness for you both",
+      "sub": "Picture their face, then your own.",
+      "say": "Let's pause together. Breathe in gently. Picture their face, and say quietly, may you be at peace. Now picture your own face, and say, may I be at peace too.",
+      "beats": [
+       "Let's pause together.",
+       "Breathe in gently.",
+       "Picture their face, and say quietly, may you be at peace.",
+       {
+        "t": "Now picture your own face, and say, may I be at peace too.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Keep a thread of your marriage",
+      "items": [
+       [
+        "A song you both love",
+        "Play it, hum it"
+       ],
+       [
+        "An old photo album",
+        "Turn the pages together"
+       ],
+       [
+        "Let them do what they can",
+        "You are still partners"
+       ]
+      ],
+      "say": "Keep a thread of your marriage, too. A song you both love. An old photo album, turned page by page. Holding hands during the news. And let them do what they still can, at their own pace. You are still partners, not only patient and nurse."
+     },
+     {
+      "k": "card",
+      "title": "You matter too.",
+      "body": "Keep your own doctor visits. Sleep, eat, and ask for one regular break.",
+      "say": "You matter too. Keep your own doctor visits, and tell your doctor you are a caregiver. Sleep when you can, eat simple meals, and ask one person for one regular break. If you ever feel hopeless, or think about ending your life, call or text 988, any time. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Taking care of you is part of caring for them.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Taking care of you is part of taking care of the two of you. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-spouse-caregiving-helper",
+    "guide": "spouse-caregiving",
+    "side": "helper",
+    "title": "Caring for a Spouse or Partner",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone walking beside an older adult who is caring for their spouse or partner.",
+    "sources": [
+     "schulzbeach"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Caring for a Spouse or Partner",
+      "sub": "For the Helper",
+      "say": "If someone you love is caring for their husband, wife, or partner, this is for you. Maybe it's your mom or dad, a friend, or a neighbor. Your steady help can keep them going."
+     },
+     {
+      "k": "big",
+      "h": "Everyone asks about the one who is sick.",
+      "sub": "Ask about the caregiver too.",
+      "say": "When a spouse is sick, everyone asks about the one who is sick. The one doing the caring can start to feel invisible. They may tell you they're fine, while running on very little sleep."
+     },
+     {
+      "k": "big",
+      "h": "Strain is the risk. Breaks help.",
+      "sub": "Watch for signs they are wearing thin.",
+      "say": "Research finds that strain, too much for too long with too little help, is what wears on a caregiving spouse's health. Watch gently for signs they are wearing thin: skipped meals, missed doctor visits of their own, a short temper, or saying they can't go on."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "How are you doing? Not him. You.",
+       "I'll stay with Mom Saturday, one to five.",
+       "What's the hardest part of the week?"
+      ],
+      "say": "Here are words that help. How are you doing? Not him. You. I'll stay with Mom Saturday from one to five, what would you like to do with that time? And, what's the hardest part of the week? Its answer tells you where to help."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You're a saint.",
+       "Just put her in a home.",
+       "Let me know if you need anything."
+      ],
+      "say": "Some words, meant kindly, leave them more alone. You're a saint, with no help offered. Just put her in a home, or any big choice made for them. And let me know if you need anything, because they rarely will."
+     },
+     {
+      "k": "flow",
+      "h": "Help that keeps them in charge",
+      "steps": [
+       [
+        "Take a regular shift",
+        "Same time each week"
+       ],
+       [
+        "Cover what piles up",
+        "Lawn, groceries, a meal"
+       ],
+       [
+        "Look into respite together",
+        "They decide what fits"
+       ],
+       [
+        "Visit the couple",
+        "Not only the patient"
+       ]
+      ],
+      "say": "Help in ways that keep them in charge. Take a regular shift, the same time each week, so they can count on it. Cover what piles up: the lawn, the groceries, a meal. Look into respite and adult day programs together, and let them decide what fits. And visit the couple, not only the patient. Talk with them both, never over them."
+     },
+     {
+      "k": "big",
+      "h": "Find their hardest hour.",
+      "sub": "Then write down the time you could cover.",
+      "say": "Take a moment. Picture their week, from the first pill in the morning to the last light at night. Find the hour that looks hardest. Write down one regular time you could cover it.",
+      "beats": [
+       "Take a moment.",
+       "Picture their week, from the first pill in the morning to the last light at night.",
+       "Find the hour that looks hardest.",
+       {
+        "t": "Write down one regular time you could cover it.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "When it is too much",
+      "body": "Hopeless or thinking of ending their life: 988. Danger now: 911.",
+      "say": "If the caregiver seems hopeless, or talks about ending their life, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911. If memory loss is part of the picture, the Alzheimer's Association Helpline is there day and night, at 1 800 272 3900."
+     },
+     {
+      "k": "big",
+      "h": "Steady help keeps love going.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Watching someone you love wear thin can stir your own worry or guilt. Do what you can, steadily, and let others share it. Rest is part of helping for you too. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "grandparenting",
+   "ring": "family",
+   "title": "Grandparenting",
+   "you": {
+    "id": "sq-g-grandparenting-you",
+    "guide": "grandparenting",
+    "side": "you",
+    "title": "Grandparenting",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For grandparents near or far, with little ones or grown grandchildren.",
+    "sources": [
+     "moorman"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Grandparenting",
+      "sub": "For You",
+      "say": "If you are a grandparent, near or far, with little ones or grown grandchildren, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "One of the great joys of later life",
+      "sub": "And it changes as they grow.",
+      "say": "For many people, grandchildren are one of the great joys of later life. A first smile. A drawing on the fridge. A teenager who calls, just to talk. And the role keeps changing as they grow, and as the family changes around them."
+     },
+     {
+      "k": "big",
+      "h": "Feeling close matters most.",
+      "sub": "More than how often you see each other.",
+      "say": "Research that followed families for years found that a close bond between grandparents and grandchildren was linked with fewer low moods for both. What mattered most was feeling close, more than how often they saw each other. And it went best when help flowed both ways."
+     },
+     {
+      "k": "points",
+      "h": "Staying close across the miles",
+      "items": [
+       [
+        "A small ritual",
+        "A Sunday call, a monthly card"
+       ],
+       [
+        "A shared project",
+        "The same book, read together"
+       ],
+       [
+        "Your stories",
+        "Where the family came from"
+       ],
+       [
+        "Their world",
+        "Ask about it, and listen"
+       ]
+      ],
+      "say": "Distance can be bridged. Keep one small ritual, like a Sunday call or a monthly card. Try a shared project, like reading the same book and talking about it. Share your stories, and where the family came from. And step into their world. Ask about their games, their music, their worries, and listen."
+     },
+     {
+      "k": "big",
+      "h": "Plan a note to one grandchild.",
+      "sub": "Out loud, or on paper.",
+      "say": "Let's try something small. Picture one grandchild, at the age they are right now. Think of one thing you love about them, or one thing you're curious about. Now say out loud the first line of a note you'll send them this week.",
+      "beats": [
+       "Let's try something small.",
+       "Picture one grandchild, at the age they are right now.",
+       "Think of one thing you love about them, or one thing you're curious about.",
+       {
+        "t": "Now say out loud the first line of a note you'll send them this week.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "The parents set the rules.",
+      "sub": "Your respect for them is part of the gift.",
+      "say": "Sometimes you may disagree with how the children are being raised. The parents set the rules in their home. If something matters, speak to them privately, kindly, and once. If a child is truly unsafe, that is different, and calls for help right away."
+     },
+     {
+      "k": "words",
+      "h": "A steady place to land",
+      "items": [
+       "Calm",
+       "Patient",
+       "Glad to see them",
+       "Still here"
+      ],
+      "say": "You can be a steady place to land. Calm, patient, glad to see them, and still here year after year. When home is busy or hard, that steadiness can mean more than you know."
+     },
+     {
+      "k": "big",
+      "h": "Let them give to you, too.",
+      "sub": "A new skill, a song, a game.",
+      "say": "Let them give to you, too. Ask them to teach you a game, a song, or how to send a photo. Giving and receiving both ways keeps a bond strong, at every age."
+     },
+     {
+      "k": "big",
+      "h": "Your love is part of their roots.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your stories, your patience, and your love become part of their roots. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-grandparenting-helper",
+    "guide": "grandparenting",
+    "side": "helper",
+    "title": "Grandparenting",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the grown child, partner, or friend helping a grandparent stay close.",
+    "sources": [
+     "moorman"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Grandparenting",
+      "sub": "For the Helper",
+      "say": "If you help a grandparent stay close to the grandchildren, this is for you. Maybe they are your parents and your kids are the grandchildren. Maybe you're a partner or a friend. You can help a bond grow across the years."
+     },
+     {
+      "k": "big",
+      "h": "Closeness helps both generations.",
+      "sub": "Feeling close, more than how often.",
+      "say": "Research that followed families for years found that a close bond between grandparents and grandchildren was linked with fewer low moods for both. Feeling close mattered more than how often they saw each other. That is something you can help grow."
+     },
+     {
+      "k": "points",
+      "h": "Ways to help them stay close",
+      "items": [
+       [
+        "Set up the calls",
+        "Stay for the first few"
+       ],
+       [
+        "Send small updates",
+        "Photos, school art, news"
+       ],
+       [
+        "Keep a rhythm",
+        "A time that holds each week"
+       ]
+      ],
+      "say": "Here are ways to help. Set up video calls with them, and stay for the first few until they feel at ease. Send small updates without waiting to be asked: photos, school art, a bit of news. And keep a rhythm, a time that holds each week, so everyone can count on it."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "The kids light up when you call.",
+       "Would you tell them about the farm?",
+       "Can we find a rhythm together?"
+      ],
+      "say": "Here are words that help. The kids light up when you call. Would you tell them the story about the farm? They'd love it. And, here is what works for us, can we find a rhythm together?"
+     },
+     {
+      "k": "big",
+      "h": "Ask about their own grandparents.",
+      "sub": "One question can open a story.",
+      "say": "Take a moment. Think of the grandparent in your life. Wonder what they remember about their own grandparents. Now say out loud the question you could ask them: what do you remember about your grandmother?",
+      "beats": [
+       "Take a moment.",
+       "Think of the grandparent in your life.",
+       "Wonder what they remember about their own grandparents.",
+       {
+        "t": "Now say out loud the question you could ask them: what do you remember about your grandmother?",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "When you see things differently",
+      "steps": [
+       [
+        "Talk privately",
+        "Grown-up to grown-up"
+       ],
+       [
+        "Say what you value",
+        "Then what you need"
+       ],
+       [
+        "Keep the kids out of it",
+        "Never leverage"
+       ]
+      ],
+      "say": "Sometimes you'll see parenting differently. Talk privately, grown-up to grown-up, never in front of the children. Say what you value about them first, then what you need. And keep the kids out of it. Grandchildren are never leverage in an adult conflict."
+     },
+     {
+      "k": "big",
+      "h": "Respect them as a grown-up.",
+      "sub": "Not a babysitter on call.",
+      "say": "Respect them as the grown-up they are. Ask before you count on them for childcare, and thank them when they help. Let them choose how they want to be part of things, and how much they can do."
+     },
+     {
+      "k": "big",
+      "h": "You can hold two loves at once.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If you are the parent in the middle, you hold two loves at once. Your rules for your children can stand beside respect for your parent. Say both plainly, and keep the door open. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "raising-grandkids",
+   "ring": "family",
+   "title": "Raising Grandchildren",
+   "you": {
+    "id": "sq-g-raising-grandkids-you",
+    "guide": "raising-grandkids",
+    "side": "you",
+    "title": "Raising Grandchildren",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For grandparents raising their grandchildren.",
+    "sources": [
+     "grandfam",
+     "musil"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Raising Grandchildren",
+      "sub": "For You",
+      "say": "If you are raising your grandchildren, this is for you. You may not have much time to yourself, so stop and come back whenever you need to."
+     },
+     {
+      "k": "big",
+      "h": "You are far from alone.",
+      "sub": "Millions of grandparents are raising grandchildren.",
+      "say": "About two and a half million grandparents in this country are responsible for grandchildren living with them. Many said yes in a single phone call. You are part of a large, quiet army of grandfamilies."
+     },
+     {
+      "k": "words",
+      "h": "The reasons can carry grief",
+      "items": [
+       "Addiction",
+       "Illness",
+       "Prison",
+       "A death"
+      ],
+      "say": "The reasons often carry grief. A parent's addiction, illness, prison, or death. You may grieve for your own grown child, angry and heartbroken at once. And you may grieve the retirement you planned. Both griefs are real, and both deserve a place."
+     },
+     {
+      "k": "big",
+      "h": "Love and exhaustion, side by side",
+      "sub": "Support makes the strain lighter.",
+      "say": "Love and exhaustion can sit side by side. Research with grandmothers raising grandchildren found that feeling supported eased the weight of the strain on their mood. So support is not extra. It is part of raising them well."
+     },
+     {
+      "k": "points",
+      "h": "Help made for grandfamilies",
+      "items": [
+       [
+        "Kinship navigators",
+        "Benefits, forms, next steps"
+       ],
+       [
+        "Area Agency on Aging",
+        "Support for grandparents 55+"
+       ],
+       [
+        "Grandfamily groups",
+        "No backstory needed"
+       ],
+       [
+        "Legal aid",
+        "Before custody steps"
+       ]
+      ],
+      "say": "There is help made for grandfamilies. Kinship navigator programs help with benefits, forms, and next steps. Your Area Agency on Aging may support grandparents 55 and older raising grandchildren. The Eldercare Locator, 1 800 677 1116, can connect you. Grandfamily support groups mean no one needs the backstory. And before any custody or guardianship step, talk with legal aid or a family law attorney."
+     },
+     {
+      "k": "big",
+      "h": "Name one thing you did right today.",
+      "sub": "Small things count.",
+      "say": "Let's pause for you. Rest your hands in your lap. Think back over today, even the hard parts. Find one thing you did right for those children. Say it out loud, starting with: today, I.",
+      "beats": [
+       "Let's pause for you.",
+       "Rest your hands in your lap.",
+       "Think back over today, even the hard parts.",
+       "Find one thing you did right for those children.",
+       {
+        "t": "Say it out loud, starting with: today, I.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "For the children",
+      "items": [
+       [
+        "A steady rhythm",
+        "Meals, homework, bedtime"
+       ],
+       [
+        "Room for their feelings",
+        "Anger and tears both"
+       ],
+       [
+        "Help for their hurt",
+        "School counselor, a group"
+       ]
+      ],
+      "say": "The children may carry hurt that shows up as anger, clinginess, or trouble at school. A steady rhythm for meals, homework, and bedtime helps them feel safe. Make room for their feelings, angry ones and sad ones. Speak of their parent with respect. And find help for their hurt: a school counselor, a children's grief group, or a counselor who knows kinship families."
+     },
+     {
+      "k": "card",
+      "title": "You matter too.",
+      "body": "Your doctor visits, your rest, a few hours off. Hopeless? Call or text 988.",
+      "say": "You matter too. Keep your own doctor visits, and rest when the children rest. Ask someone for a few hours off each week. If you feel hopeless, or think about ending your life, call or text 988, any time. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "You are giving them a home.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You are giving them a home, and that matters more than doing it perfectly. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-raising-grandkids-helper",
+    "guide": "raising-grandkids",
+    "side": "helper",
+    "title": "Raising Grandchildren",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone walking beside a grandparent who is raising grandchildren.",
+    "sources": [
+     "grandfam",
+     "musil"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Raising Grandchildren",
+      "sub": "For the Helper",
+      "say": "If someone you love is raising their grandchildren, this is for you. Maybe it's your parent, a friend, or a neighbor. Your help can make a hard season lighter."
+     },
+     {
+      "k": "big",
+      "h": "A second round of parenting",
+      "sub": "Often with grief, and little warning.",
+      "say": "About two and a half million grandparents in this country are raising grandchildren who live with them. Many took them in with little warning, often because of a parent's addiction, illness, prison, or death. They may be grieving their own grown child while packing school lunches."
+     },
+     {
+      "k": "big",
+      "h": "Support eases the strain.",
+      "sub": "Your help counts more than you think.",
+      "say": "Research with grandmothers raising grandchildren found that feeling supported eased the weight of the strain on their mood. That means your steady help counts, more than you may think."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "You're giving them a home. I see it.",
+       "I can do pickup on Tuesdays.",
+       "How are you, apart from the kids?"
+      ],
+      "say": "Here are words that help. You're giving them a home, and I see how much that takes. I can do school pickup on Tuesdays, would that help? And, how are you doing, apart from the kids?"
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "At least you have the energy.",
+       "Blame, in front of the kids",
+       "Questions about the backstory"
+      ],
+      "say": "Some words, meant kindly, can sting. At least you have the energy for it. Blame for their grown child, or for them, especially in front of the children. And questions about the backstory they haven't offered. Let them tell what they choose."
+     },
+     {
+      "k": "flow",
+      "h": "Help that lifts the load",
+      "steps": [
+       [
+        "A regular shift",
+        "Same time each week"
+       ],
+       [
+        "Meals and rides",
+        "The jobs that pile up"
+       ],
+       [
+        "Find the programs",
+        "Navigators, groups, aging agency"
+       ],
+       [
+        "They decide",
+        "You support"
+       ]
+      ],
+      "say": "Help in ways that lift the load. Take a regular shift with the children, the same time each week. Bring meals, drive to appointments, help with forms. Help them find a kinship navigator, a grandfamily group, and their Area Agency on Aging. Then let them decide what fits. They are the grown-up in charge."
+     },
+     {
+      "k": "big",
+      "h": "Write a line for the fridge.",
+      "sub": "Words they can read on a hard morning.",
+      "say": "Take a moment. Think of the grandparent you're supporting, and what they gave up to say yes. Write one short line of thanks or encouragement you'll give them this week, the kind that could stay on the fridge.",
+      "beats": [
+       "Take a moment.",
+       "Think of the grandparent you're supporting, and what they gave up to say yes.",
+       {
+        "t": "Write one short line of thanks or encouragement you'll give them this week, the kind that could stay on the fridge.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "When it is too much",
+      "body": "Hopeless or thinking of ending a life: 988. Danger now: 911.",
+      "say": "If the grandparent, or a child, seems hopeless, or talks about ending their life, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "A village makes it possible.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If the children's parent is someone you love too, you may carry your own grief and anger. Find your own place to say it, away from the children. Then keep showing up. A village makes this possible, and you are part of it. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "estrangement",
+   "ring": "family",
+   "title": "Estrangement From an Adult Child",
+   "you": {
+    "id": "sq-g-estrangement-you",
+    "guide": "estrangement",
+    "side": "you",
+    "title": "Estrangement From an Adult Child",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For parents whose grown son or daughter is not in touch.",
+    "sources": [
+     "pillemer",
+     "gilligan"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Estrangement From an Adult Child",
+      "sub": "For You",
+      "say": "If your grown son or daughter is not in touch with you, this is for you. Whatever the story, your heart is welcome here."
+     },
+     {
+      "k": "big",
+      "h": "A quiet grief",
+      "sub": "No funeral, and often no one who knows.",
+      "say": "Estrangement from a grown child is a quiet grief. There is no funeral, and often no one around you knows. A birthday with no call. A holiday with an empty chair. Grandchildren you may not see. It makes sense that this hurts so much."
+     },
+     {
+      "k": "big",
+      "h": "More common than most people think",
+      "sub": "About one in four Americans live with it.",
+      "say": "It is more common than most people think. About one in four Americans is estranged from a family member, and about one in ten from a parent or a child. Many carry it silently, the way you may be carrying it now."
+     },
+     {
+      "k": "words",
+      "h": "It can feel like",
+      "items": [
+       "Grief",
+       "Shame",
+       "Anger",
+       "Longing"
+      ],
+      "say": "It can feel like grief, shame, anger, or a longing that won't let go. You may replay the past again and again. All of it is a normal response to losing someone who is still alive."
+     },
+     {
+      "k": "big",
+      "h": "Estrangement often shifts over time.",
+      "sub": "Distance today is not the whole story.",
+      "say": "Research that followed older mothers for years found that estrangement often shifts over time, with contact and closeness slowly changing. And people who do reconcile often let go of needing to agree about the past. They build from now."
+     },
+     {
+      "k": "points",
+      "h": "Leaving a door open",
+      "items": [
+       [
+        "Listen for their side",
+        "Both memories can be honest"
+       ],
+       [
+        "A short, warm message",
+        "No demands, no grievances"
+       ],
+       [
+        "Respect a request for space",
+        "That can be a step too"
+       ]
+      ],
+      "say": "You can leave a door open. Listen for their side, even when it doesn't match yours. Both memories can be honest. If they haven't asked for no contact, a short, warm message on a birthday says the door is open, with no demands and no list of grievances. And if they've asked for space, respecting it can be a step toward repair too. A counselor can help you think it through."
+     },
+     {
+      "k": "big",
+      "h": "Breathe with an open door.",
+      "sub": "In: I am here. Out: the door is open.",
+      "say": "Let's take a quiet moment. Breathe in slowly, and think the words, I am here. Breathe out, and think the words, the door is open. Breathe that way three more times, at your own pace.",
+      "beats": [
+       "Let's take a quiet moment.",
+       "Breathe in slowly, and think the words, I am here.",
+       "Breathe out, and think the words, the door is open.",
+       {
+        "t": "Breathe that way three more times, at your own pace.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Caring for yourself",
+      "items": [
+       [
+        "Tell one or two people",
+        "Grief needs a witness"
+       ],
+       [
+        "A counselor or group",
+        "For parents in your place"
+       ],
+       [
+        "A full life now",
+        "Waiting is not your whole life"
+       ]
+      ],
+      "say": "Care for yourself too. Tell one or two people you trust. Grief needs a witness. A counselor or a support group for parents in your place can help. And fill your days with people and purposes that give you life now, so waiting doesn't become your whole life. If grief ever turns into hopelessness, or thoughts of ending your life, call or text 988, any time."
+     },
+     {
+      "k": "big",
+      "h": "The door can stay open, and you can still live.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "The door can stay open, and you can still live a full life while it does. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-estrangement-helper",
+    "guide": "estrangement",
+    "side": "helper",
+    "title": "Estrangement From an Adult Child",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For a friend, partner, or family member walking beside an older parent who is estranged from a grown child.",
+    "sources": [
+     "pillemer"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Estrangement From an Adult Child",
+      "sub": "For the Helper",
+      "say": "If someone you love is estranged from their grown son or daughter, this is for you. You might be a friend, a partner, or another family member. You don't need to know the whole story to be kind."
+     },
+     {
+      "k": "big",
+      "h": "A grief many carry quietly",
+      "sub": "About one in four know family estrangement.",
+      "say": "About one in four Americans is estranged from a family member. Many older parents carry it quietly, out of shame or fear of being judged. So when they do tell you, it is a real act of trust."
+     },
+     {
+      "k": "big",
+      "h": "Be kind to the person, not a judge of the case.",
+      "sub": "You may know only one side.",
+      "say": "You may know only one side of the story, and that is all right. Your role is to be kind to the person in front of you, not to judge the case. There is grief on both sides of an estrangement, and you can honor that without taking a side."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "That sounds painful. I'm sorry.",
+       "You don't have to explain.",
+       "Would you like to join us for the holiday?"
+      ],
+      "say": "Here are words that help. That sounds painful, I'm sorry. You don't have to explain, I'm here. And, the holidays must be hard, would you like to join us?"
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "They'll come around.",
+       "What did you do?",
+       "Your kid is ungrateful."
+      ],
+      "say": "Some words, meant kindly, can hurt or divide. They'll come around, because no one knows that. What did you do? And your kid is ungrateful. Both of those take a side. Stay out of carrying messages, and let them set the pace on reconciliation."
+     },
+     {
+      "k": "big",
+      "h": "Mark their hard days.",
+      "sub": "Birthdays, holidays, Mother's Day, Father's Day.",
+      "say": "Take a moment. Think of the person you're supporting. Picture the days of the year that may hurt most: their child's birthday, the holidays, Mother's Day or Father's Day. Write down one of those dates now, with a note to call them that day.",
+      "beats": [
+       "Take a moment.",
+       "Think of the person you're supporting.",
+       "Picture the days of the year that may hurt most: their child's birthday, the holidays, Mother's Day or Father's Day.",
+       {
+        "t": "Write down one of those dates now, with a note to call them that day.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Include them",
+        "Your table, your traditions"
+       ],
+       [
+        "Listen without a verdict",
+        "Ask what they need"
+       ],
+       [
+        "A counselor or group",
+        "If they want one"
+       ]
+      ],
+      "say": "Here is what helps. Include them at your table and in your traditions. Listen without a verdict, and ask what they need from you. If they want help, help them find a counselor or support group. If grief turns into hopelessness, or talk of ending their life, call or text 988 together."
+     },
+     {
+      "k": "big",
+      "h": "You can love both, and stay out of the middle.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If you are part of the family, you may love people on both sides. You can love both and stay out of the middle. Say so kindly, and keep your own ties with each of them. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "worry-adult-children",
+   "ring": "family",
+   "title": "Worry About Adult Children",
+   "you": {
+    "id": "sq-g-worry-adult-children-you",
+    "guide": "worry-adult-children",
+    "side": "you",
+    "title": "Worry About Adult Children",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For parents worried about a grown son or daughter.",
+    "sources": [
+     "fingerman12",
+     "hayworry"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Worry About Adult Children",
+      "sub": "For You",
+      "say": "If you are worried about a grown son or daughter, this is for you. You never stop being a parent, and some worries stay with you for years."
+     },
+     {
+      "k": "words",
+      "h": "Worries parents carry",
+      "items": [
+       "Addiction",
+       "Money trouble",
+       "A hard marriage",
+       "Health"
+      ],
+      "say": "Many parents carry worry about grown children. Addiction. Money trouble. A hard marriage, or a divorce. Health, a lost job, a grandchild caught in the middle. Research finds that parents' worries for grown children reach into many parts of their lives, and worry about money can strain the bond itself."
+     },
+     {
+      "k": "big",
+      "h": "Their struggles weigh on you.",
+      "sub": "That is love, and it can wear you out.",
+      "say": "Research also finds that when even one grown child is struggling, it weighs on a parent's own well-being. So if you are losing sleep, that makes sense. It is love. And it can still wear you out."
+     },
+     {
+      "k": "big",
+      "h": "Some of this is yours. Some is theirs.",
+      "sub": "Love can stay while the load goes back.",
+      "say": "Here is a hard truth with some freedom in it. You can't live their life for them. Some of this is yours to carry, like your love, your words, and your choices. Some is theirs, like their choices and their recovery. Love can stay while the load goes back to them."
+     },
+     {
+      "k": "big",
+      "h": "Open your hands.",
+      "sub": "What is mine, and what is theirs.",
+      "say": "Let's try this together. Rest both hands in your lap, palms up. In one hand, picture what is yours: your love, your prayers or good wishes, one thing you can do. In the other hand, picture what is theirs. Say out loud, softly: this part is theirs to carry.",
+      "beats": [
+       "Let's try this together.",
+       "Rest both hands in your lap, palms up.",
+       "In one hand, picture what is yours: your love, your prayers or good wishes, one thing you can do.",
+       "In the other hand, picture what is theirs.",
+       {
+        "t": "Say out loud, softly: this part is theirs to carry.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Listen more than advise",
+        "They often want to be heard"
+       ],
+       [
+        "Say what you will do",
+        "And what you will not"
+       ],
+       [
+        "A family support group",
+        "If addiction is part of it"
+       ],
+       [
+        "A set worry time",
+        "So it has a place to go"
+       ]
+      ],
+      "say": "Here is what helps. Listen more than you advise. Grown children often want to be heard first. Say kindly what you will do, and what you won't. If addiction is part of it, a family group like Al-Anon can help. And give worry a set time each day, so it doesn't take the whole day."
+     },
+     {
+      "k": "card",
+      "title": "Your security matters too.",
+      "body": "Pause before giving money you may need. Pressured or frightened: MAARC, 1-844-880-1574.",
+      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, you don't have to carry that alone. In Minnesota, call MAARC, at 1 844 880 1574, any time."
+     },
+     {
+      "k": "card",
+      "title": "If they are in crisis",
+      "body": "Call or text 988, for them or with them. Danger now: 911.",
+      "say": "If your grown child is in crisis, or talks about ending their life, call or text 988, any time. You can call for them, or with them. If anyone is in danger right now, call 911. And if your own worry turns into hopelessness, 988 is there for you too."
+     },
+     {
+      "k": "big",
+      "h": "You can love them without fixing them.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can love them without fixing them, and you can tend your own peace while you do. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-worry-adult-children-helper",
+    "guide": "worry-adult-children",
+    "side": "helper",
+    "title": "Worry About Adult Children",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For anyone walking beside an older parent who is worried about a grown child.",
+    "sources": [
+     "fingerman12"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Worry About Adult Children",
+      "sub": "For the Helper",
+      "say": "If someone you love is worried about one of their grown children, this is for you. You might be a friend, a spouse, or another of their children. You can be steady for them without taking sides."
+     },
+     {
+      "k": "big",
+      "h": "A grown child's struggle weighs on a parent.",
+      "sub": "Even when they say they are fine.",
+      "say": "Research finds that when even one grown child is struggling, it weighs on a parent's own well-being. They may be losing sleep, keeping secrets to protect their child, or giving money they can't spare, while telling you they're fine."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "That's a lot to carry.",
+       "What's keeping you up at night?",
+       "What would help you this week?"
+      ],
+      "say": "Here are words that help. You love them so much, that's a lot to carry. What's keeping you up at night? And, what would help you, this week?"
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You need to cut them off.",
+       "You're enabling them.",
+       "They're an adult, stop worrying."
+      ],
+      "say": "Some words, meant kindly, can shut a parent down. You need to cut them off, and you're enabling them. Choices like these belong to the parent. And they're an adult, stop worrying. Worry doesn't stop on command. Also set aside criticism of their child. You can stay steady without taking sides."
+     },
+     {
+      "k": "flow",
+      "h": "Help that keeps them in charge",
+      "steps": [
+       [
+        "Listen first",
+        "Then ask what would help"
+       ],
+       [
+        "Help them sort",
+        "What's theirs, what isn't"
+       ],
+       [
+        "Find support, if wanted",
+        "A family group, a counselor"
+       ],
+       [
+        "Plan something else",
+        "Time away from the worry"
+       ]
+      ],
+      "say": "Help in ways that keep them in charge. Listen first, then ask what would help. Help them sort what is theirs to do and what isn't. If they want it, help them find a family support group or a counselor. And plan time together that has nothing to do with the worry."
+     },
+     {
+      "k": "big",
+      "h": "Practice a steady reply.",
+      "sub": "Warm, calm, on no one's side.",
+      "say": "Take a moment. Picture them telling you the newest worry about their child. Take one slow breath before you answer. Now say out loud, warmly: you love them so much, and I'm here for you.",
+      "beats": [
+       "Take a moment.",
+       "Picture them telling you the newest worry about their child.",
+       "Take one slow breath before you answer.",
+       {
+        "t": "Now say out loud, warmly: you love them so much, and I'm here for you.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Watch for money pressure.",
+      "body": "Pressured or frightened by anyone: in Minnesota, MAARC, 1-844-880-1574.",
+      "say": "Gently watch for money pressure. If a grown child, or anyone, is pressuring them for money, taking it without asking, or frightening them, help is there. In Minnesota, MAARC, 1 844 880 1574, any time. If anyone talks about ending their life, call or text 988. If there is danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Steady is enough.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If the struggling one is your sibling or your own family, you are inside this too. Find your own place to talk. You don't have to fix anyone. Steady is enough. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "kids-deciding",
+   "ring": "family",
+   "title": "When Your Children Start Deciding for You",
+   "you": {
+    "id": "sq-g-kids-deciding-you",
+    "guide": "kids-deciding",
+    "side": "you",
+    "title": "When Your Children Start Deciding for You",
+    "sideName": "For You",
+    "mins": 5,
+    "blurb": "For the older adult whose grown children have started making choices for them.",
+    "sources": [
+     "ryff"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "When Your Children Start Deciding for You",
+      "sub": "For You",
+      "say": "If your grown children have started making choices for you, or talking over you, this is for you. Your voice still matters, and so do your choices."
+     },
+     {
+      "k": "big",
+      "h": "It often happens bit by bit.",
+      "sub": "A suggestion, then a plan, then a decision.",
+      "say": "It often happens bit by bit. A suggestion about the car. A plan for the house. A doctor's visit where they answer for you. Usually it comes from love and worry. It can still leave you feeling small, or treated like a child."
+     },
+     {
+      "k": "words",
+      "h": "You may feel",
+      "items": [
+       "Hurt",
+       "Angry",
+       "Grateful, too",
+       "Quietly afraid"
+      ],
+      "say": "You may feel hurt, or angry. You may feel grateful for their help, and still wish they would ask first. Some people feel quietly afraid that they really are slipping. All of these can be true at once."
+     },
+     {
+      "k": "big",
+      "h": "Having a say is part of well-being.",
+      "sub": "Safety matters. So does choice.",
+      "say": "Research on well-being counts having a say in your own life as one of its core parts, at every age. Safety matters, and so does choice. You're allowed to want both: help where you need it, and your own say wherever you can."
+     },
+     {
+      "k": "flow",
+      "h": "Speaking up for what you want",
+      "steps": [
+       [
+        "Know what matters most",
+        "Home, friends, faith, routines"
+       ],
+       [
+        "Ask for a real talk",
+        "Sitting down, not in passing"
+       ],
+       [
+        "Agree on the help",
+        "And what stays yours"
+       ],
+       [
+        "Bring in a neutral voice",
+        "A doctor, social worker, or chaplain"
+       ]
+      ],
+      "say": "Here's one way to speak up. First, know what matters most to you: your home, your friends, your faith, your routines. Then ask for a real talk, sitting down, not in passing. Agree together on the help they'll give, and what stays yours to decide. If talks go in circles, bring in a neutral voice, like your doctor, a social worker, or a chaplain."
+     },
+     {
+      "k": "points",
+      "h": "Plan ahead, while things are calm",
+      "items": [
+       [
+        "Name a health care agent",
+        "Your voice if you ever cannot speak"
+       ],
+       [
+        "Write down your wishes",
+        "So no one has to guess"
+       ],
+       [
+        "Tell your family",
+        "Out loud, and soon"
+       ]
+      ],
+      "say": "One of the strongest ways to keep your voice is to plan ahead. Name a health care agent, sometimes called a health care proxy. That's the person who speaks for you only if you can't speak for yourself. Write down your wishes, so no one has to guess. And tell your family, out loud, while things are calm. Your doctor can help with the details."
+     },
+     {
+      "k": "big",
+      "h": "Who would speak for you?",
+      "sub": "Say their name, and one reason.",
+      "say": "Let's take a moment. Think of someone who knows what you value, and would honor it even under pressure. It might be a child, a friend, or someone else you trust. Say their name out loud, and one reason you trust them.",
+      "beats": [
+       "Let's take a moment.",
+       "Think of someone who knows what you value, and would honor it even under pressure.",
+       "It might be a child, a friend, or someone else you trust.",
+       {
+        "t": "Say their name out loud, and one reason you trust them.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "When safety is the worry",
+      "sub": "Look for a choice you can both live with.",
+      "say": "Sometimes their worry is real: a fall, a missed medicine, a scare on the road. You can still be part of the answer. Ask what exactly worries them. Then look for a choice you can both live with, like a ride service, a daily check-in call, or help a few days a week."
+     },
+     {
+      "k": "card",
+      "title": "If you feel pushed or pressured",
+      "body": "About money, papers, or moving: in Minnesota, MAARC, 1-844-880-1574. Danger right now: 911.",
+      "say": "If anyone pushes you to sign papers, hand over money, or move when you don't want to, that's different from worry. In Minnesota, call MAARC any time, at 1-844-880-1574. In any state, Adult Protective Services can help. If you are in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Your life is still yours.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Needing some help doesn't mean giving up your say. Your life is still yours to shape. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-kids-deciding-helper",
+    "guide": "kids-deciding",
+    "side": "helper",
+    "title": "When Your Children Start Deciding for You",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the grown child, spouse, or friend helping an older adult with big choices: decide with them, not for them.",
+    "sources": [
+     "ryff"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "When Your Children Start Deciding for You",
+      "sub": "For the Helper",
+      "say": "If you're a grown child, spouse, or friend helping an older adult with big choices, this is for you. The heart of it is simple: decide with them, not for them."
+     },
+     {
+      "k": "big",
+      "h": "Worry can turn into taking over.",
+      "sub": "It usually starts with love.",
+      "say": "When someone you love is getting older, worry can slowly turn into taking over. You answer the doctor's questions. You fix things before they ask. You make the plan and tell them later. It comes from love, and it can still leave them feeling erased."
+     },
+     {
+      "k": "big",
+      "h": "Decide with them, not for them.",
+      "sub": "They choose. You help them choose well.",
+      "say": "There's a better way, sometimes called supported decision making. They make the choice. You help them understand it: the facts, the options, and what each one means. Research on well-being counts having a say in your own life as one of its core parts, at every age."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What matters most to you here?",
+       "What worries you about this?",
+       "What would you like me to do?"
+      ],
+      "say": "Here are words that help. What matters most to you here? What worries you about this? And, what would you like me to do? Then listen to the whole answer before you share your view."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "We've decided.",
+       "You can't do that anymore.",
+       "Talking about them in front of them"
+      ],
+      "say": "Some words close the door. We've decided. You can't do that anymore. And talking about them in front of them, to a doctor or a sibling, as if they weren't there. Speak to them directly, every time."
+     },
+     {
+      "k": "points",
+      "h": "When safety is the worry",
+      "items": [
+       [
+        "Name the specific worry",
+        "A fall, a missed bill, the road"
+       ],
+       [
+        "Offer two or three options",
+        "And let them choose"
+       ],
+       [
+        "Start small, try it out",
+        "Then check in together"
+       ]
+      ],
+      "say": "When safety is the worry, be specific. Name the actual thing you saw, like a fall or a missed bill. Offer two or three options, and let them choose. Start small, try it for a few weeks, then check in together."
+     },
+     {
+      "k": "big",
+      "h": "Ask what matters most.",
+      "sub": "Before any plan is made.",
+      "say": "Let's practice. Think of one choice in front of the person you love right now. Picture sitting down with them, with no plan already made. Now say out loud, warmly: what matters most to you about this?",
+      "beats": [
+       "Let's practice.",
+       "Think of one choice in front of the person you love right now.",
+       "Picture sitting down with them, with no plan already made.",
+       {
+        "t": "Now say out loud, warmly: what matters most to you about this?",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Help them plan ahead.",
+      "sub": "A health care agent of their own choosing.",
+      "say": "Encourage them to name a health care agent, the person who would speak for them only if they can't, and to write down their wishes. Let them choose who. It may not be you, and that's okay. Their doctor can help with the details."
+     },
+     {
+      "k": "big",
+      "h": "Look after yourself, too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Worry for a parent is heavy, and families often disagree. Share the load, talk with someone you trust, and take real breaks. Then keep coming back to one question: what do they want? The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "new-love",
+   "ring": "family",
+   "title": "New Love Late in Life",
+   "you": {
+    "id": "sq-g-new-love-you",
+    "guide": "new-love",
+    "side": "you",
+    "title": "New Love Late in Life",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the older adult who has found new love, or wonders whether they could.",
+    "sources": [
+     "carstensen",
+     "benson",
+     "cotton"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "New Love Late in Life",
+      "sub": "For You",
+      "say": "If you've found new love later in life, or you're wondering whether you could, this is for you. Love has no age limit."
+     },
+     {
+      "k": "big",
+      "h": "Love can come again.",
+      "sub": "After loss, after divorce, after years alone.",
+      "say": "Many people find love again in their sixties, seventies, eighties, and beyond. After a spouse dies, after a divorce, or after many years alone. Research on aging finds that, with time, many people choose fewer and closer relationships, the ones that feel truly meaningful."
+     },
+     {
+      "k": "words",
+      "h": "You may feel",
+      "items": [
+       "Excited",
+       "Shy",
+       "Guilty",
+       "Surprised by joy"
+      ],
+      "say": "You may feel excited, or shy, like a teenager again. If your spouse died, you may feel guilty, as if new love betrays the old. Many people feel both at once. Joy and grief can live in the same heart."
+     },
+     {
+      "k": "big",
+      "h": "New love doesn't erase old love.",
+      "sub": "Your heart can hold both.",
+      "say": "New love doesn't erase the love you had. Many people keep the photos, tell the stories, and visit the grave, and a good partner honors that. Loving again can even be a tribute to how well you once loved."
+     },
+     {
+      "k": "points",
+      "h": "Love comes in many shapes",
+      "items": [
+       [
+        "Companionship",
+        "Dinners, walks, a daily call"
+       ],
+       [
+        "Living apart together",
+        "Close, with two homes"
+       ],
+       [
+        "Living together",
+        "Or marrying again"
+       ],
+       [
+        "Going slow",
+        "Always allowed"
+       ]
+      ],
+      "say": "Love in later life comes in many shapes. Some people want companionship: dinners, walks, a daily call. Many couples live apart together, close and committed, each in their own home. Research finds older couples often choose this to keep their independence, their home, and their family ties. Others move in together, or marry again. And going slow is always allowed."
+     },
+     {
+      "k": "big",
+      "h": "Your grown children may have feelings.",
+      "sub": "Listen, then decide for yourself.",
+      "say": "Your grown children may have feelings about this. Some are glad. Some worry about money, or about you getting hurt. Some miss the parent who died. Studies of older daters find that family opinions matter to them, and they still make their own choices. Listen to the worries, then decide for yourself."
+     },
+     {
+      "k": "card",
+      "title": "Love never asks for gift cards.",
+      "body": "Someone you have not met in person asks for money: stop, and check with someone you trust.",
+      "say": "One safety note. If someone you met online asks for money, gift cards, or help with an investment, especially someone you've never met in person, stop. That's a common sign of a romance scam. Check with someone you trust first."
+     },
+     {
+      "k": "big",
+      "h": "Let yourself enjoy it.",
+      "sub": "Hold a happy moment a little longer.",
+      "say": "Let's take a quiet moment. Picture one recent moment that made you smile, with a new friend or anyone at all. Stay there for a breath or two, and let it be good. Now say softly: I am allowed to enjoy this.",
+      "beats": [
+       "Let's take a quiet moment.",
+       "Picture one recent moment that made you smile, with a new friend or anyone at all.",
+       "Stay there for a breath or two, and let it be good.",
+       {
+        "t": "Now say softly: I am allowed to enjoy this.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "It's never too late for joy.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Whether you're dating, falling in love, or happily on your own, your heart is still growing. It's never too late for joy. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-new-love-helper",
+    "guide": "new-love",
+    "side": "helper",
+    "title": "New Love Late in Life",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the grown child or friend of an older adult with a new love: welcome, honesty, and room for your own feelings.",
+    "sources": [
+     "cotton"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "New Love Late in Life",
+      "sub": "For the Helper",
+      "say": "If your mom, your dad, or a friend has found new love late in life, this is for you. Maybe you're happy for them, maybe you're unsure, or maybe both."
+     },
+     {
+      "k": "big",
+      "h": "Your feelings make sense.",
+      "sub": "Glad, protective, sad, or all three.",
+      "say": "It can stir a lot. You may be glad they're less lonely. You may feel protective, or worried about money or health. If your other parent died, seeing someone new in their place can feel like a fresh loss. All of that makes sense."
+     },
+     {
+      "k": "big",
+      "h": "This is their life to live.",
+      "sub": "Their heart, their choice.",
+      "say": "Remember who decides. Your parent is an adult with a lifetime of experience. Studies of older daters find that their grown children's opinions matter to them, and that they still make their own choices. Your support counts for a lot. Your approval isn't required."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I'm glad you're happy.",
+       "Tell me about them.",
+       "I'd love to meet them."
+      ],
+      "say": "Here are words that help. I'm glad you're happy. Tell me about them. I'd love to meet them. A simple welcome goes a long way, even while you're still getting used to it."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "What about Mom?",
+       "At your age?",
+       "They're just after your money."
+      ],
+      "say": "Some words wound. What about Mom, or what about Dad, as if loving again were a betrayal. At your age, as if love had a cutoff. And they're just after your money, said as an accusation. If you have a real worry, raise it gently, with a specific reason."
+     },
+     {
+      "k": "points",
+      "h": "Real worries, raised well",
+      "items": [
+       [
+        "Money pressure",
+        "Cash, gift cards, investments"
+       ],
+       [
+        "Isolation",
+        "Cut off from old friends"
+       ],
+       [
+        "Fear or control",
+        "They seem afraid or watched"
+       ]
+      ],
+      "say": "Some worries are worth raising. Money pressure, especially requests for cash, gift cards, or investments from someone they've never met. Being cut off from old friends and family. Or seeming afraid, controlled, or watched. Raise these in private, as concern, not a verdict. If you believe they're being taken advantage of, in Minnesota call MAARC, at 1-844-880-1574. In any state, call Adult Protective Services."
+     },
+     {
+      "k": "big",
+      "h": "Name your worry, then make room for their joy.",
+      "sub": "Both can be true.",
+      "say": "Take a slow breath. Name your own worry, or your own sadness, in a few words. It's allowed to be there. Now add, out loud: and I'm glad you're happy.",
+      "beats": [
+       "Take a slow breath.",
+       "Name your own worry, or your own sadness, in a few words.",
+       "It's allowed to be there.",
+       {
+        "t": "Now add, out loud: and I'm glad you're happy.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Make room in the family.",
+      "sub": "Meals, holidays, and the old stories.",
+      "say": "Over time, make room. Invite them both to a family meal. Keep telling stories about the parent who died, if that's your loss, and let the new person hear them. A family can grow without forgetting. And talk with someone you trust about your own feelings, so they don't land on your parent."
+     },
+     {
+      "k": "big",
+      "h": "Love is good news.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Someone you love has found more love. That's good news, even when it takes some getting used to. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "gray-divorce",
+   "ring": "family",
+   "title": "Divorce Late in Life",
+   "you": {
+    "id": "sq-g-gray-divorce-you",
+    "guide": "gray-divorce",
+    "side": "you",
+    "title": "Divorce Late in Life",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the older adult whose marriage has ended, or is ending now.",
+    "sources": [
+     "brownlin",
+     "linpc"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Divorce Late in Life",
+      "sub": "For You",
+      "say": "If your marriage has ended later in life, or is ending now, this is for you. Whether you chose it or not, it's a big change, and you can lean on others through it."
+     },
+     {
+      "k": "big",
+      "h": "You have a lot of company.",
+      "sub": "Divorce after fifty is far more common now.",
+      "say": "Divorce after fifty has become far more common in recent decades. About one in four people divorcing in the United States is now fifty or older. So if this is your story, you have a lot of company, even when it feels lonely."
+     },
+     {
+      "k": "words",
+      "h": "It can bring",
+      "items": [
+       "Grief",
+       "Relief",
+       "Anger",
+       "Who am I now?"
+      ],
+      "say": "It can bring grief for the life you planned, even if the marriage was hard. It can bring relief. It can bring anger, or shame. And it can bring a big question: who am I now, after so many years as part of a couple? All of it is normal."
+     },
+     {
+      "k": "big",
+      "h": "This is a real loss.",
+      "sub": "Grieve it at your own pace.",
+      "say": "Even when it was the right choice, divorce is a real loss. Research finds that low mood often rises after a later-life divorce, and that staying connected with family makes a real difference. So grieve it at your own pace, and let people in."
+     },
+     {
+      "k": "points",
+      "h": "Look after the basics",
+      "items": [
+       [
+        "Steady days",
+        "Wake, meals, a little walk"
+       ],
+       [
+        "Tell your doctor",
+        "Especially if sleep or mood change"
+       ],
+       [
+        "One call a day",
+        "With someone on your side"
+       ],
+       [
+        "Big choices can wait",
+        "When you can"
+       ]
+      ],
+      "say": "Look after the basics. Keep steady days: the same wake time, regular meals, a little walk. Tell your doctor what's happening, especially if sleep or mood change. Have one call or visit a day with someone who's on your side. And when you can, let big choices wait until you're steadier."
+     },
+     {
+      "k": "points",
+      "h": "When money is the worry",
+      "items": [
+       [
+        "Advice of your own",
+        "A lawyer or financial planner"
+       ],
+       [
+        "A simple list",
+        "Accounts, bills, papers"
+       ],
+       [
+        "Local help",
+        "Eldercare Locator: 1-800-677-1116"
+       ]
+      ],
+      "say": "Money worry is common, with fewer working years ahead to rebuild. A few good next steps. Get advice of your own from a lawyer or a financial planner you trust, before signing anything. Make a simple list of your accounts, bills, and papers. And ask the Eldercare Locator about legal help near you, at 1-800-677-1116."
+     },
+     {
+      "k": "big",
+      "h": "Your grown children",
+      "sub": "Keep them out of the middle.",
+      "say": "Your grown children may react strongly. Some take sides. Some feel their childhood is being rewritten. Some pull away for a while. Try to keep them out of the middle, and never ask them to carry messages. Keep the door open, and give them time."
+     },
+     {
+      "k": "big",
+      "h": "Begin the next chapter.",
+      "sub": "One thing you want this year to hold.",
+      "say": "Let's take a moment. Picture yourself a year from now, a little steadier. What is one thing you'd like that year to hold: a friend, a place, a skill, a little peace? Say it out loud, starting with the words: in this next chapter, I want.",
+      "beats": [
+       "Let's take a moment.",
+       "Picture yourself a year from now, a little steadier.",
+       "What is one thing you'd like that year to hold: a friend, a place, a skill, a little peace?",
+       {
+        "t": "Say it out loud, starting with the words: in this next chapter, I want.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "If it feels too heavy",
+      "body": "Call or text 988, any time. Danger right now: 911.",
+      "say": "If the weight of this ever turns into thoughts of not wanting to be here, call or text 988, any time. If you are in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "You are still becoming.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A marriage ending is not the end of your story. You are still growing, and still becoming. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-gray-divorce-helper",
+    "guide": "gray-divorce",
+    "side": "helper",
+    "title": "Divorce Late in Life",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the grown child, friend, or sibling of an older adult going through divorce: steady support, no sides required.",
+    "sources": [
+     "linpc"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Divorce Late in Life",
+      "sub": "For the Helper",
+      "say": "If your parent, friend, or sibling is going through a divorce later in life, this is for you. Maybe it's your own parents. You can support them without taking sides."
+     },
+     {
+      "k": "big",
+      "h": "It shakes the whole family.",
+      "sub": "Even when the children are grown.",
+      "say": "A divorce after a long marriage shakes the whole family, even when the children are grown. If it's your parents, you may feel like your childhood is being rewritten. You may feel angry, sad, or caught in the middle. Those feelings are real."
+     },
+     {
+      "k": "big",
+      "h": "You don't have to choose a side.",
+      "sub": "You can love them both.",
+      "say": "You don't have to choose a side. You can love both parents, and keep a relationship with each. Research finds that parents who lose touch with a grown child after a later-life divorce struggle more with low mood. Staying connected matters, even when it's hard."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "How are you doing, really?",
+       "I love you, and I'm not going anywhere.",
+       "Want to get lunch this week?"
+      ],
+      "say": "Here are words that help. How are you doing, really? I love you, and I'm not going anywhere. And, want to get lunch this week? A specific plan is easy to say yes to."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "I saw this coming.",
+       "What did he do?",
+       "At your age, why bother?"
+      ],
+      "say": "Some words make it harder. I saw this coming. What did he do, or what did she do, which asks them to take sides out loud. And at your age, why bother. Let them tell the story in their own way, at their own pace."
+     },
+     {
+      "k": "points",
+      "h": "Steady, practical help",
+      "items": [
+       [
+        "Keep inviting them",
+        "Sundays, holidays, games"
+       ],
+       [
+        "One task at a time",
+        "Forms, a move, a new routine"
+       ],
+       [
+        "Point to the experts",
+        "Lawyer, planner, counselor"
+       ],
+       [
+        "Let them decide",
+        "Their life, their choices"
+       ]
+      ],
+      "say": "Offer steady, practical help. Keep inviting them: Sunday dinners, holidays, the grandkids' games. Help with one task at a time, like forms, a move, or a new routine. For money and legal questions, point them to a lawyer, a planner, or a counselor. And let them decide. It's their life."
+     },
+     {
+      "k": "big",
+      "h": "Breathe yourself steady.",
+      "sub": "Before you call or visit.",
+      "say": "Before your next call or visit, take a moment for you. Breathe in slowly. Breathe out a little longer than you breathed in. On your next breath out, say quietly: I can love them both.",
+      "beats": [
+       "Before your next call or visit, take a moment for you.",
+       "Breathe in slowly.",
+       "Breathe out a little longer than you breathed in.",
+       {
+        "t": "On your next breath out, say quietly: I can love them both.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Look after yourself, too.",
+      "sub": "Kind limits help everyone.",
+      "say": "Their divorce may stir your own grief, or questions about your own marriage. Set kind limits. You can say, I love you, and I'd rather not hear about Dad, or Mom. Talk with someone you trust, and watch for low mood that lasts. If they ever talk about not wanting to live, call or text 988 together."
+     },
+     {
+      "k": "big",
+      "h": "Keep showing up.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Endings change a family, and a family can still hold together. Keep showing up, one lunch, one call, one holiday at a time. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "elder-abuse",
+   "ring": "family",
+   "title": "Abuse or Being Taken Advantage Of",
+   "you": {
+    "id": "sq-g-elder-abuse-you",
+    "guide": "elder-abuse",
+    "side": "you",
+    "title": "Abuse or Being Taken Advantage Of",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the older adult who is being hurt, scared, neglected, or taken advantage of: it is not your fault, and help is there.",
+    "sources": [
+     "acierno",
+     "yon"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Abuse or Being Taken Advantage Of",
+      "sub": "For You",
+      "say": "If someone is hurting you, scaring you, neglecting you, or taking your money, this is for you. It is not your fault, and help is there."
+     },
+     {
+      "k": "big",
+      "h": "It happens more than people think.",
+      "sub": "And many never tell anyone.",
+      "say": "Abuse in later life happens far more than people think. Studies find that about one in ten older adults in this country face some kind of abuse in a single year. Many never tell anyone."
+     },
+     {
+      "k": "points",
+      "h": "It can look like",
+      "items": [
+       [
+        "Hitting, pushing, holding",
+        "Physical"
+       ],
+       [
+        "Threats, yelling, insults",
+        "Emotional"
+       ],
+       [
+        "Money taken or pressured",
+        "Financial"
+       ],
+       [
+        "Needs left unmet",
+        "Food, medicine, help"
+       ]
+      ],
+      "say": "It can look like hitting, pushing, or holding you down. Threats, yelling, or insults. Money taken, or pressure to sign papers or hand it over. Or needs left unmet: food, medicine, or help you depend on. All of these are abuse."
+     },
+     {
+      "k": "big",
+      "h": "Often by someone close.",
+      "sub": "A child, a spouse, a helper, a new friend.",
+      "say": "It's often someone close: a grown child, a spouse, a paid helper, or someone new who seemed so kind at first. Research finds that family members are the most common people behind money taken from older adults. That makes it confusing. You may love them, depend on them, or not want them in trouble."
+     },
+     {
+      "k": "big",
+      "h": "It is not your fault.",
+      "sub": "No one deserves this.",
+      "say": "Whatever has happened, it is not your fault. Not because you trusted. Not because you need help. No one deserves to be hurt, frightened, or taken from. Shame keeps abuse hidden. Telling someone is brave."
+     },
+     {
+      "k": "flow",
+      "h": "Getting help",
+      "steps": [
+       [
+        "Danger right now",
+        "Call 911"
+       ],
+       [
+        "In Minnesota",
+        "MAARC: 1-844-880-1574, any time"
+       ],
+       [
+        "Any state",
+        "Adult Protective Services"
+       ],
+       [
+        "Tell one safe person",
+        "A doctor, friend, or faith leader"
+       ]
+      ],
+      "say": "Here's how to get help. If you are in danger right now, call 911. In Minnesota, call MAARC, the adult abuse reporting line, any time, at 1-844-880-1574. In any state, Adult Protective Services can help. And tell one safe person, like your doctor, a friend, or a faith leader."
+     },
+     {
+      "k": "big",
+      "h": "Practice the first words.",
+      "sub": "Picture your safe person beside you.",
+      "say": "Let's take a moment. Think of one person you feel safe with. Picture them sitting beside you. Now say, out loud or in a whisper: something is happening, and I need help.",
+      "beats": [
+       "Let's take a moment.",
+       "Think of one person you feel safe with.",
+       "Picture them sitting beside you.",
+       {
+        "t": "Now say, out loud or in a whisper: something is happening, and I need help.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "If money is being taken",
+      "body": "National Elder Fraud Hotline: 1-833-372-8311, weekdays.",
+      "say": "If someone is taking your money, pushing you to sign papers, or a caller has scammed you, call the National Elder Fraud Hotline, at 1-833-372-8311, on weekdays. You can talk with your bank, too."
+     },
+     {
+      "k": "card",
+      "title": "If you feel hopeless",
+      "body": "Call or text 988, any time.",
+      "say": "Living with abuse can wear down hope. If you ever think about not wanting to be here, call or text 988, any time. Someone will listen."
+     },
+     {
+      "k": "big",
+      "h": "You deserve to be safe.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You deserve to be safe, respected, and treated with kindness, every day of your life. The full guide has more, whenever you want it."
+     }
+    ],
+    "crisis": [
+     "911: danger right now",
+     "Minnesota: MAARC 1-844-880-1574, any time",
+     "988: call or text, any time"
+    ]
+   },
+   "helper": {
+    "id": "sq-g-elder-abuse-helper",
+    "guide": "elder-abuse",
+    "side": "helper",
+    "title": "Abuse or Being Taken Advantage Of",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For anyone worried that an older adult is being hurt, neglected, or taken advantage of: notice, ask privately, and report.",
+    "sources": [
+     "acierno",
+     "yon"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Abuse or Being Taken Advantage Of",
+      "sub": "For the Helper",
+      "say": "If you're worried that an older adult is being hurt, neglected, or taken advantage of, this is for you. You don't need proof to speak up."
+     },
+     {
+      "k": "points",
+      "h": "Signs to notice",
+      "items": [
+       [
+        "Unexplained injuries",
+        "Bruises, burns, odd excuses"
+       ],
+       [
+        "Changes in mood",
+        "Fearful, withdrawn, quiet"
+       ],
+       [
+        "Money changes",
+        "Missing funds, new names"
+       ],
+       [
+        "Needs unmet",
+        "Weight loss, missed medicine"
+       ]
+      ],
+      "say": "Here are signs to notice. Unexplained injuries, like bruises or burns, with excuses that don't fit. Changes in mood: fearful, withdrawn, or unusually quiet. Money changes: missing funds, unpaid bills, or new names on accounts. And needs unmet: weight loss, missed medicine, or an unclean home."
+     },
+     {
+      "k": "big",
+      "h": "Often by someone close.",
+      "sub": "Watch for control and isolation.",
+      "say": "Abuse is often by someone close. Research finds that family members are the most common people behind money taken from older adults. Watch for someone who won't let you talk with them alone, who answers for them, or who keeps friends away."
+     },
+     {
+      "k": "flow",
+      "h": "Asking privately",
+      "steps": [
+       [
+        "Find a private moment",
+        "Away from the person you worry about"
+       ],
+       [
+        "Ask plainly and gently",
+        "Is anyone hurting or scaring you?"
+       ],
+       [
+        "Believe them",
+        "Thank them for telling you"
+       ],
+       [
+        "Let them lead",
+        "Their pace, where it is safe"
+       ]
+      ],
+      "say": "Here's how to ask. Find a private moment, away from the person you're worried about. Ask plainly and gently. Then believe them, and thank them for telling you. Let them lead where it's safe. Say, I believe you, and it's not your fault. Set aside, why didn't you tell me sooner."
+     },
+     {
+      "k": "big",
+      "h": "Practice the private question.",
+      "sub": "Soft voice, open door.",
+      "say": "Let's practice. Picture a quiet, private moment with them. Soften your voice, and lean in a little. Now say out loud, gently: is anyone hurting you, scaring you, or taking from you?",
+      "beats": [
+       "Let's practice.",
+       "Picture a quiet, private moment with them.",
+       "Soften your voice, and lean in a little.",
+       {
+        "t": "Now say out loud, gently: is anyone hurting you, scaring you, or taking from you?",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How to report",
+      "items": [
+       [
+        "Danger right now",
+        "Call 911"
+       ],
+       [
+        "In Minnesota",
+        "MAARC: 1-844-880-1574, any time"
+       ],
+       [
+        "Any state",
+        "Adult Protective Services"
+       ],
+       [
+        "Money taken",
+        "Elder Fraud Hotline: 1-833-372-8311"
+       ]
+      ],
+      "say": "Here's how to report. If there is danger right now, call 911. In Minnesota, call MAARC any time, at 1-844-880-1574. Your name is kept confidential. In any state, call Adult Protective Services. If money is being taken, call the National Elder Fraud Hotline, at 1-833-372-8311. Share what you saw. Trained people look into the rest."
+     },
+     {
+      "k": "big",
+      "h": "Stay close, and stay safe.",
+      "sub": "Let the professionals step in.",
+      "say": "Confronting the person you suspect yourself can make things more dangerous. Report it, and let the professionals step in. Then keep visiting and calling. Your steady presence is one of the best protections they have."
+     },
+     {
+      "k": "big",
+      "h": "Look after yourself, too.",
+      "sub": "This is heavy to carry.",
+      "say": "Suspecting abuse is frightening, especially within a family. Talk with someone you trust. If it all becomes too much, for them or for you, call or text 988, any time."
+     },
+     {
+      "k": "big",
+      "h": "Your noticing matters.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your noticing could change everything for them. Stay close, speak up, and keep showing up. The full guide has more, whenever you want it."
+     }
+    ],
+    "crisis": [
+     "911: danger right now",
+     "Minnesota: MAARC 1-844-880-1574, any time",
+     "988: call or text, any time"
+    ]
+   }
+  },
+  {
+   "id": "loneliness",
+   "ring": "belong",
+   "title": "Loneliness and Living Alone",
+   "you": {
+    "id": "sq-g-loneliness-you",
+    "guide": "loneliness",
+    "side": "you",
+    "title": "Loneliness and Living Alone",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the older adult who feels lonely, or lives alone and wants more connection.",
+    "sources": [
+     "nasem",
+     "masi"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Loneliness and Living Alone",
+      "sub": "For You",
+      "say": "If the days feel lonely, or you live alone and wish for more company, this is for you. Loneliness is common, and there are small, real steps that help."
+     },
+     {
+      "k": "big",
+      "h": "Loneliness is a signal.",
+      "sub": "It says you need people. It is not a failing.",
+      "say": "Loneliness is a signal, like hunger. It tells you that you need people, the way hunger tells you that you need food. It is not a failing, and it says nothing bad about you. Later life often brings it: a spouse or friends have died, family lives far away, or driving and hearing have gotten harder."
+     },
+     {
+      "k": "big",
+      "h": "Alone and lonely are different.",
+      "sub": "Many people live alone well.",
+      "say": "Living alone and feeling lonely are different. Many people live alone well, with friends, neighbors, and family around them, and quiet time they enjoy. And some people feel lonely in a full house. What matters is feeling connected."
+     },
+     {
+      "k": "big",
+      "h": "Connection is good for body and mind.",
+      "sub": "Small, steady contact counts.",
+      "say": "Research links loneliness and isolation in later life with heart disease, memory problems, and a shorter life. So reaching for connection is more than nice. It is good for your body and your mind, and small, steady contact counts."
+     },
+     {
+      "k": "points",
+      "h": "Lonely thoughts can keep us apart",
+      "items": [
+       [
+        "They are too busy for me",
+        "They may be glad you called"
+       ],
+       [
+        "I would only be a bother",
+        "Your call can brighten a day"
+       ],
+       [
+        "It is too late to make friends",
+        "New friends come at any age"
+       ]
+      ],
+      "say": "Lonely thoughts can keep us apart. They are too busy for me. I would only be a bother. It is too late to make friends. Research finds that gently testing thoughts like these is one of the most helpful steps for loneliness. Often, the truer thought is kinder: they may be glad you called."
+     },
+     {
+      "k": "big",
+      "h": "Try a kinder thought.",
+      "sub": "Say it out loud.",
+      "say": "Let's try it now. Think of one person you have been meaning to call. Notice the thought that keeps you from calling. Now say a kinder, truer thought out loud, like: they may be glad to hear from me.",
+      "beats": [
+       "Let's try it now.",
+       "Think of one person you have been meaning to call.",
+       "Notice the thought that keeps you from calling.",
+       {
+        "t": "Now say a kinder, truer thought out loud, like: they may be glad to hear from me.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Small steps toward people",
+      "steps": [
+       [
+        "One reach-out a day",
+        "A call, a card, a short note"
+       ],
+       [
+        "One standing date",
+        "Same day, same time, each week"
+       ],
+       [
+        "One place you return to",
+        "A class, a group, a coffee hour"
+       ],
+       [
+        "One way to help",
+        "Serving connects without pressure"
+       ]
+      ],
+      "say": "Here are small steps toward people. One reach-out a day: a call, a card, a short note. One standing date, the same day and time each week, so you know a voice is coming. One place you return to, a class, a group, or a coffee hour, so faces become familiar. And one way to help others. Serving connects people without pressure."
+     },
+     {
+      "k": "card",
+      "title": "Help close to home",
+      "body": "Eldercare Locator: 1-800-677-1116. Minnesota Aging Pathways: 1-800-333-2433.",
+      "say": "Help is close to home. The Eldercare Locator, 1 800 677 1116, can find senior centers, meals, rides, and visiting programs near you. In Minnesota, call Minnesota Aging Pathways, 1 800 333 2433. If loneliness has turned into sadness that won't lift, talk with your doctor. If you ever feel hopeless, call or text 988, any time."
+     },
+     {
+      "k": "big",
+      "h": "One real connection is a good start.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Needing people is part of being human, and one real connection is a good start. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-loneliness-helper",
+    "guide": "loneliness",
+    "side": "helper",
+    "title": "Loneliness and Living Alone",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone who loves an older adult who is lonely or lives alone.",
+    "sources": [
+     "nasem"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Loneliness and Living Alone",
+      "sub": "For the Helper",
+      "say": "If someone you love is lonely, or lives alone and seems to be pulling back, this is for you. Steady, ordinary contact from you can make a real difference."
+     },
+     {
+      "k": "big",
+      "h": "They may not say it.",
+      "sub": "\"I'm fine\" can mean \"please keep calling.\"",
+      "say": "Many older adults won't say they're lonely. They feel embarrassed, or they don't want to be a bother. I'm fine can mean please keep calling. Watch for quieter signs: skipped meals, long days in the same chair, or talk of no one calling."
+     },
+     {
+      "k": "points",
+      "h": "Times to lean in",
+      "items": [
+       [
+        "After a spouse dies",
+        "And when old friends die"
+       ],
+       [
+        "After giving up driving",
+        "Getting out gets harder"
+       ],
+       [
+        "After a move or hospital stay",
+        "Old routines are gone"
+       ],
+       [
+        "When hearing fades",
+        "Company becomes hard work"
+       ]
+      ],
+      "say": "Some times call for leaning in. After a spouse dies, and as old friends die. After giving up driving, when getting out gets harder. After a move or a hospital stay, when old routines are gone. And when hearing fades, and company becomes hard work. Research links isolation in later life with poorer health, so your steady contact truly matters."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I've missed you. Can I come by Thursday?",
+       "I'd love to hear about your week.",
+       "Would you come with me? I would enjoy the company."
+      ],
+      "say": "Here are words that help. I've missed you. Can I come by Thursday? A real day is easy to say yes to. I'd love to hear about your week. And would you come with me? I would enjoy the company. An invitation says they are wanted."
+     },
+     {
+      "k": "points",
+      "h": "Keep their dignity at the center",
+      "items": [
+       [
+        "Ask, then follow their lead",
+        "Their pace, their choices"
+       ],
+       [
+        "Ask for their help",
+        "Being needed is belonging"
+       ],
+       [
+        "Skip you should get out more",
+        "It sounds like blame"
+       ]
+      ],
+      "say": "Keep their dignity at the center. Ask, then follow their lead. Some want a busy week, and some want one good visit. Ask for their help or their advice, because being needed is part of belonging. And skip you should get out more. It sounds like blame, even when it is meant kindly."
+     },
+     {
+      "k": "flow",
+      "h": "What helps most",
+      "steps": [
+       [
+        "Make it regular",
+        "Same day, same time"
+       ],
+       [
+        "Clear the path",
+        "A ride, a hearing check"
+       ],
+       [
+        "Widen the circle",
+        "Your friends, their old groups"
+       ]
+      ],
+      "say": "Here is what helps most. Make it regular, the same day and time each week, so they have something to count on. Clear the path: a ride, a hearing check, or help setting up video calls. And widen the circle: bring them into your gatherings, or help them return to groups they used to love."
+     },
+     {
+      "k": "big",
+      "h": "Hold them in your heart.",
+      "sub": "A quiet wish, before you reach out.",
+      "say": "Here's a quiet moment for you. Picture the person you love, at home in their favorite chair. Breathe in slowly. Silently wish them this: may you know you are not forgotten.",
+      "beats": [
+       "Here's a quiet moment for you.",
+       "Picture the person you love, at home in their favorite chair.",
+       "Breathe in slowly.",
+       {
+        "t": "Silently wish them this: may you know you are not forgotten.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "If you are worried",
+      "body": "Low mood that lasts: their doctor. Hopeless talk: 988 together. Danger right now: 911.",
+      "say": "If loneliness has turned into low mood that lasts, encourage a talk with their doctor, and offer to go along. If you hear hopeless words, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "You don't have to be their only thread.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can't be someone's only connection, and you don't need to be. Help them build more than one thread, share the visits with others, and look after your own heart too. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "lgbtq-aging",
+   "ring": "belong",
+   "title": "LGBTQ+ Aging",
+   "you": {
+    "id": "sq-g-lgbtq-aging-you",
+    "guide": "lgbtq-aging",
+    "side": "you",
+    "title": "LGBTQ+ Aging",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the LGBTQ+ older adult thinking about growing older as fully themselves.",
+    "sources": [
+     "agingpride",
+     "jialtc"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "LGBTQ+ Aging",
+      "sub": "For You",
+      "say": "If you are lesbian, gay, bisexual, transgender, or queer, and you are thinking about growing older, this is for you. You have come a long way, and you deserve to age as fully yourself."
+     },
+     {
+      "k": "big",
+      "h": "You bring real strength.",
+      "sub": "Courage, friendship, and a long view.",
+      "say": "Many LGBTQ+ older adults came of age when being yourself carried real risk. You may have lost friends, jobs, or family along the way, and you kept going. That took courage. Research on LGBTQ+ aging finds that many people carry that strength, and deep friendships, into later life."
+     },
+     {
+      "k": "big",
+      "h": "Some worries are real.",
+      "sub": "Naming them is the first step.",
+      "say": "Some worries are real too. LGBTQ+ older adults are more likely to live alone and to feel isolated. And many worry that needing help, from a home aide, a hospital, or a care community, could mean having to hide again. If you feel that worry, it makes sense. Naming it is the first step toward planning for it."
+     },
+     {
+      "k": "points",
+      "h": "Your chosen family counts",
+      "items": [
+       [
+        "Name your circle",
+        "The people who show up"
+       ],
+       [
+        "Put it in writing",
+        "Who speaks for you"
+       ],
+       [
+        "Bring them along",
+        "To visits and tours"
+       ]
+      ],
+      "say": "Your chosen family counts. Name your circle, the people who know you fully and show up. Put it in writing, so the right people can speak for you if you can't. A health care directive can name chosen family, and your doctor or a legal helper can walk you through it. And bring someone along to appointments and tours."
+     },
+     {
+      "k": "flow",
+      "h": "Finding affirming support",
+      "steps": [
+       [
+        "Ask plainly",
+        "How do you support LGBTQ+ people?"
+       ],
+       [
+        "Look for inclusion",
+        "Care communities that take part"
+       ],
+       [
+        "Find your people",
+        "An LGBTQ+ older adult group"
+       ]
+      ],
+      "say": "Here is how to find affirming support. Ask plainly. A new doctor, agency, or care community should be glad to tell you how they support LGBTQ+ people. Look for senior living communities that take part in the Long-Term Care Equality Index, a national measure of inclusion. And find your people: an LGBTQ+ older adult group, a center, or an online gathering. SAGE and the Eldercare Locator, 1 800 677 1116, can help."
+     },
+     {
+      "k": "big",
+      "h": "All of you belongs here.",
+      "sub": "A hand on your heart.",
+      "say": "Let's take a moment for you. Rest one hand over your heart. Breathe in slowly, and let it out. Say softly: all of me belongs here, and I deserve good support.",
+      "beats": [
+       "Let's take a moment for you.",
+       "Rest one hand over your heart.",
+       "Breathe in slowly, and let it out.",
+       {
+        "t": "Say softly: all of me belongs here, and I deserve good support.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "You decide who knows.",
+      "sub": "And when, and how much.",
+      "say": "You get to decide who knows what about you, and when. There is no rule that says you must tell everyone, and no rule that says you must hide. Many people find it easier with each new helper to say it simply: this is my partner, and I want her included."
+     },
+     {
+      "k": "card",
+      "title": "If you are treated badly",
+      "body": "Minnesota: MAARC 1-844-880-1574. Hopeless: call or text 988. Danger: 911.",
+      "say": "If you are disrespected, neglected, or hurt by someone who is supposed to help you, you can speak up. In Minnesota, MAARC takes reports any time at 1 844 880 1574. If you feel hopeless, call or text 988, any time. If you are in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "You deserve to age as yourself.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You have lived with courage, and you deserve to grow older as fully yourself, surrounded by people who know you. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-lgbtq-aging-helper",
+    "guide": "lgbtq-aging",
+    "side": "helper",
+    "title": "LGBTQ+ Aging",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone walking beside an LGBTQ+ older adult: family, chosen family, friend, or caregiver.",
+    "sources": [
+     "agingpride",
+     "jialtc"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "LGBTQ+ Aging",
+      "sub": "For the Helper",
+      "say": "If you walk beside an LGBTQ+ older adult, as family, chosen family, a friend, or a caregiver, this is for you. Your respect can help them feel safe being fully themselves."
+     },
+     {
+      "k": "big",
+      "h": "They have lived through a lot.",
+      "sub": "Watchfulness was often how they stayed safe.",
+      "say": "Many LGBTQ+ older adults spent decades deciding who was safe to tell. That watchfulness kept them safe. Starting over with new doctors, home aides, or a care community can bring it back. Many have told surveys they fear having to hide again to get good help."
+     },
+     {
+      "k": "points",
+      "h": "Respect, every time",
+      "items": [
+       [
+        "Use their words",
+        "Names, pronouns, partner"
+       ],
+       [
+        "Ask before you share",
+        "Their story is theirs to tell"
+       ],
+       [
+        "Include chosen family",
+        "Invite, inform, include"
+       ]
+      ],
+      "say": "Respect shows up in small things, every time. Use their words: the names, pronouns, and terms they use, and call a partner a partner. Ask before you share anything about their identity with others. Their story is theirs to tell. And include chosen family. Invite them, inform them, and include them, just as you would family by blood."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "How is your partner doing?",
+       "Who would you want with you?",
+       "Anything you want the staff to know?"
+      ],
+      "say": "Here are words that help. How is your partner doing? Who would you want with you, if you were in the hospital? And, is there anything you'd like the staff to know about you? Then follow their lead."
+     },
+     {
+      "k": "big",
+      "h": "Say their person's name.",
+      "sub": "Practice it out loud.",
+      "say": "Let's practice. Think of the person they love most, a partner, or a dear friend. Picture asking about them, warmly and easily. Now, out loud, say their name, and ask how they are doing today.",
+      "beats": [
+       "Let's practice.",
+       "Think of the person they love most, a partner, or a dear friend.",
+       "Picture asking about them, warmly and easily.",
+       {
+        "t": "Now, out loud, say their name, and ask how they are doing today.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Help them find affirming support",
+      "steps": [
+       [
+        "Ask the provider",
+        "How do you support LGBTQ+ people?"
+       ],
+       [
+        "Check for inclusion",
+        "Long-Term Care Equality Index"
+       ],
+       [
+        "Go along",
+        "To visits and tours"
+       ]
+      ],
+      "say": "Help them find affirming support, if they want it. Ask the provider how they support LGBTQ+ patients and residents. Check whether a senior living community takes part in the Long-Term Care Equality Index. And go along to visits and tours, so they are not walking in alone."
+     },
+     {
+      "k": "big",
+      "h": "Back them up.",
+      "sub": "Their choice, your support.",
+      "say": "If they meet disrespect, back them up. Help them speak up, or report it if they choose. In Minnesota, MAARC takes reports any time at 1 844 880 1574. If they seem hopeless, call or text 988 together. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Learning is a kindness too.",
+      "sub": "You don't need every word right.",
+      "say": "If some of this is new to you, learning quietly on your own is a kindness. You don't need every word right. A sincere sorry and a correction go a long way. Look after yourself too, and lean on others who understand."
+     },
+     {
+      "k": "big",
+      "h": "Your respect makes room.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your steady respect makes room for them to be fully themselves. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "veterans",
+   "ring": "belong",
+   "title": "Veterans Aging",
+   "you": {
+    "id": "sq-g-veterans-you",
+    "guide": "veterans",
+    "side": "you",
+    "title": "Veterans Aging",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the veteran growing older, with pride, memories, and maybe some pain.",
+    "sources": [
+     "davison"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Veterans Aging",
+      "sub": "For You",
+      "say": "If you served in the military, in war or in peace, and you are growing older, this is for you. Your service is part of your story, and it still matters."
+     },
+     {
+      "k": "big",
+      "h": "Service shapes a whole life.",
+      "sub": "Later life can bring it closer.",
+      "say": "Military service shapes a whole life. Many veterans find that in later life, they think about it more, not less. There is more quiet time. The people you served with begin to pass away. And memories, the proud ones and the hard ones, come closer."
+     },
+     {
+      "k": "points",
+      "h": "What many veterans feel",
+      "items": [
+       [
+        "Pride",
+        "In what you did, and with whom"
+       ],
+       [
+        "Missing the unit",
+        "The closeness, the purpose"
+       ],
+       [
+        "Grief",
+        "As old friends pass"
+       ],
+       [
+        "Old memories",
+        "Good ones, and hard ones"
+       ]
+      ],
+      "say": "Here is what many veterans feel. Pride, in what you did and who you did it with. Missing the unit, the closeness and the clear purpose. Grief, as the people you served with pass away. And old memories, good ones and hard ones. Research finds it is common for service memories to return later in life. It makes sense, and it is not weakness."
+     },
+     {
+      "k": "big",
+      "h": "Pride and pain can live together.",
+      "sub": "You don't have to choose one.",
+      "say": "Pride and pain can live together. You can be proud of your service and still carry hard things from it. You don't have to choose one story. Both are true, and both deserve respect."
+     },
+     {
+      "k": "big",
+      "h": "What did service teach you?",
+      "sub": "Say it out loud.",
+      "say": "Let's take a moment. Sit tall, the way you once stood at attention, or just as you are. Think back to your time in service. Now say out loud one thing your service taught you, that you still carry today.",
+      "beats": [
+       "Let's take a moment.",
+       "Sit tall, the way you once stood at attention, or just as you are.",
+       "Think back to your time in service.",
+       {
+        "t": "Now say out loud one thing your service taught you, that you still carry today.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways to stay connected",
+      "items": [
+       [
+        "Find other veterans",
+        "A post, a coffee group, a reunion"
+       ],
+       [
+        "Tell your story",
+        "For family, or for history"
+       ],
+       [
+        "Serve again",
+        "Mentor a younger veteran"
+       ]
+      ],
+      "say": "Here are ways to stay connected. Find other veterans: a post, a coffee group, a reunion, or a group at the VA. Other veterans understand without needing to be told. Tell your story, in your own words and at your own pace, for your family or for the Veterans History Project. And serve again: mentor a younger veteran, or help another veteran find their benefits."
+     },
+     {
+      "k": "card",
+      "title": "Check what you have earned",
+      "body": "Your County Veterans Service Officer can help. Tell your doctor that you served.",
+      "say": "VA health care and benefits have grown in recent years, including for some illnesses linked to service. Your County Veterans Service Officer can help you check what you may qualify for. And tell your doctor that you served, where, and when. It can matter for your health."
+     },
+     {
+      "k": "card",
+      "title": "If it gets to be too much",
+      "body": "Veterans Crisis Line: 988, then press 1, or text 838255. Danger right now: 911.",
+      "say": "If memories or feelings ever get to be too much, reach out right away. Call 988 and press 1 for the Veterans Crisis Line, or text 8 3 8 2 5 5. You don't need to be enrolled in VA care. If you are in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Your service still matters.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your service mattered then, and who you are now matters too. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-veterans-helper",
+    "guide": "veterans",
+    "side": "helper",
+    "title": "Veterans Aging",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone who loves or helps an older veteran.",
+    "sources": [
+     "davison"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Veterans Aging",
+      "sub": "For the Helper",
+      "say": "If you love or help an older veteran, this is for you. Your interest and respect can mean a great deal, even if they say very little."
+     },
+     {
+      "k": "big",
+      "h": "Proud, and often private.",
+      "sub": "Many grew up when no one talked about it.",
+      "say": "Many older veterans are proud and private at once. They grew up in a time when no one talked about service. Some talk more easily with another veteran than with family, and that is okay. In later life, old memories often return, around retirement, illness, or the loss of old friends. It is common, and it makes sense."
+     },
+     {
+      "k": "words",
+      "h": "Words that open a door",
+      "items": [
+       "What was it like to serve?",
+       "Who were the people you served with?",
+       "I'd love to hear more, if you'd like."
+      ],
+      "say": "Here are words that open a door. What was it like to serve? Who were the people you served with? I'd love to hear more someday, if you'd like. Then let them choose what to share, and when."
+     },
+     {
+      "k": "points",
+      "h": "Gently set these aside",
+      "items": [
+       [
+        "Asking about killing",
+        "Or pushing for hard details"
+       ],
+       [
+        "Assuming they are troubled",
+        "Or assuming they are fine"
+       ],
+       [
+        "Taking over",
+        "Their help, their choices"
+       ]
+      ],
+      "say": "A few things, even meant kindly, can close the door. Asking whether they killed anyone, or pushing for hard details. Assuming every veteran is troubled, or assuming they are fine. And taking over, deciding for them which help they need. Their story and their choices are theirs."
+     },
+     {
+      "k": "flow",
+      "h": "Practical ways to help",
+      "steps": [
+       [
+        "Connect them",
+        "A County Veterans Service Officer"
+       ],
+       [
+        "Offer a ride",
+        "To a post, a reunion, the VA"
+       ],
+       [
+        "Mark their dates",
+        "Veterans Day, unit anniversaries"
+       ],
+       [
+        "Help record their story",
+        "If they want to"
+       ]
+      ],
+      "say": "Here are practical ways to help. Connect them with a County Veterans Service Officer, who can check their VA health care and benefits, and go along if they'd like. Offer a ride to a veterans post, a reunion, or the VA. Mark the dates that matter to them, like Veterans Day and unit anniversaries. And if they want to, help them record or write their story."
+     },
+     {
+      "k": "big",
+      "h": "Keep the number close.",
+      "sub": "988, then press 1.",
+      "say": "Here's one thing to do right now. Take your phone, or a pen and a card for beside the phone. Write it down: Veterans Crisis Line, 988, then press 1.",
+      "beats": [
+       "Here's one thing to do right now.",
+       "Take your phone, or a pen and a card for beside the phone.",
+       {
+        "t": "Write it down: Veterans Crisis Line, 988, then press 1.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "If you are worried",
+      "body": "Veterans Crisis Line: 988, then press 1, or text 838255. Danger right now: 911.",
+      "say": "If you hear hopeless words, or talk of not wanting to live, ask plainly, and call together. The Veterans Crisis Line is 988, then press 1, or text 8 3 8 2 5 5. Families can call too. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Look after yourself, too.",
+      "sub": "Veteran families can reach out for support.",
+      "say": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA and Vet Centers. You don't need the right words. Steady interest and respect are enough."
+     },
+     {
+      "k": "big",
+      "h": "Honor the whole person.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Honor the service, and the whole person who served. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "invisible",
+   "ring": "belong",
+   "title": "Feeling Invisible Because of Age",
+   "you": {
+    "id": "sq-g-invisible-you",
+    "guide": "invisible",
+    "side": "you",
+    "title": "Feeling Invisible Because of Age",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the older adult who feels overlooked, talked over, or written off because of age.",
+    "sources": [
+     "npha",
+     "levy02",
+     "levy14"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Feeling Invisible Because of Age",
+      "sub": "For You",
+      "say": "If people have started looking past you, talking over you, or treating you as if you have less to offer because of your age, this is for you. You are still here, and you still count."
+     },
+     {
+      "k": "big",
+      "h": "It has a name: ageism.",
+      "sub": "It is common, and it is not your fault.",
+      "say": "Being overlooked because of age has a name. It is called ageism. And it is common. In a national poll, most older adults said they meet it in everyday life. It is not your fault, and it is not the truth about you."
+     },
+     {
+      "k": "points",
+      "h": "How it can show up",
+      "items": [
+       [
+        "Talked over",
+        "Questions go to someone else"
+       ],
+       [
+        "Talked down to",
+        "Sweetie, or a sing-song voice"
+       ],
+       [
+        "Left out",
+        "Of decisions about your life"
+       ],
+       [
+        "Old-age jokes",
+        "Even the friendly kind"
+       ]
+      ],
+      "say": "Here is how it can show up. Being talked over, when the doctor asks your son instead of you. Being talked down to, with sweetie, or a sing-song voice. Being left out of decisions about your own life. And jokes about getting old, even the friendly kind."
+     },
+     {
+      "k": "big",
+      "h": "How you see your age matters.",
+      "sub": "And those views can change.",
+      "say": "Here is something hopeful. Research finds that older adults with kinder views of their own aging tend to live longer, healthier lives. And those views can change, at any age. So the way you speak to yourself about getting older matters."
+     },
+     {
+      "k": "big",
+      "h": "At my age, I can still...",
+      "sub": "Finish the sentence out loud.",
+      "say": "Let's try it now. Sit comfortably, and take one easy breath. Think of something you do well, or love, or know. Now finish this sentence out loud: at my age, I can still...",
+      "beats": [
+       "Let's try it now.",
+       "Sit comfortably, and take one easy breath.",
+       "Think of something you do well, or love, or know.",
+       {
+        "t": "Now finish this sentence out loud: at my age, I can still...",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Calm lines for speaking up",
+      "items": [
+       "Please speak to me directly.",
+       "I'd like to be part of this decision.",
+       "Please call me by my name."
+      ],
+      "say": "You can speak up, simply and calmly. Please speak to me directly. I'd like to be part of this decision. And, please call me by my name. You don't need to be sharp. Calm and clear is enough."
+     },
+     {
+      "k": "points",
+      "h": "Places where you are seen",
+      "items": [
+       [
+        "Where you are needed",
+        "Mentor, volunteer, teach"
+       ],
+       [
+        "People of all ages",
+        "Who value what you know"
+       ],
+       [
+        "A partner at visits",
+        "Who lets you speak first"
+       ]
+      ],
+      "say": "Spend your time where you are seen. Places where you are needed: mentoring, volunteering, teaching a skill. People of all ages who value what you know. And a trusted partner at appointments, who lets you speak first."
+     },
+     {
+      "k": "card",
+      "title": "If it weighs on you",
+      "body": "Low mood that lasts: talk with your doctor. Hopeless: call or text 988.",
+      "say": "If feeling overlooked has turned into low mood that lasts, talk with your doctor. If you ever feel worthless, or that life isn't worth living, call or text 988, any time. If you are in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "You are still growing.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You still have a lot to offer, and you are still growing. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-invisible-helper",
+    "guide": "invisible",
+    "side": "helper",
+    "title": "Feeling Invisible Because of Age",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone who wants to help an older adult stay seen and heard.",
+    "sources": [
+     "whoageism",
+     "levy02"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Feeling Invisible Because of Age",
+      "sub": "For the Helper",
+      "say": "If someone you love is being overlooked, talked over, or written off because of their age, this is for you. Small habits from you can help them stay seen and heard."
+     },
+     {
+      "k": "big",
+      "h": "Ageism is everywhere.",
+      "sub": "Most of us carry it without choosing it.",
+      "say": "Ageism is everywhere. Around the world, about one in two people hold ageist attitudes, and most of us carry them without ever choosing them. Ageism is linked with poorer health and more loneliness for older adults. And being overlooked, again and again, can wear away confidence."
+     },
+     {
+      "k": "points",
+      "h": "Where it often happens",
+      "items": [
+       [
+        "At the doctor",
+        "Questions go to you, not them"
+       ],
+       [
+        "In family decisions",
+        "Talked about, not with"
+       ],
+       [
+        "In small words",
+        "Sweetie, young lady"
+       ]
+      ],
+      "say": "It often happens in places you can help. At the doctor, when questions come to you instead of them. In family decisions, when people talk about them instead of with them. And in small words, like sweetie or young lady, meant kindly but heard as less."
+     },
+     {
+      "k": "flow",
+      "h": "Help them stay at the center",
+      "steps": [
+       [
+        "Sit beside, not in front",
+        "At visits and meetings"
+       ],
+       [
+        "Turn the question back",
+        "Let them answer first"
+       ],
+       [
+        "Ask for their advice",
+        "And use it"
+       ]
+      ],
+      "say": "Help them stay at the center. Sit beside them, not in front, at visits and meetings. When a question comes to you, turn it back to them, and let them answer first. And ask for their advice, and use it. Being needed is part of being seen."
+     },
+     {
+      "k": "big",
+      "h": "Turn the question back.",
+      "sub": "Practice it out loud.",
+      "say": "Let's practice. Picture a doctor's visit with them. The doctor looks at you and asks how they have been. Now say out loud, warmly: let's ask her, she can tell you herself.",
+      "beats": [
+       "Let's practice.",
+       "Picture a doctor's visit with them.",
+       "The doctor looks at you and asks how they have been.",
+       {
+        "t": "Now say out loud, warmly: let's ask her, she can tell you herself.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Gently set these aside",
+      "items": [
+       [
+        "Answering for them",
+        "Even when it is faster"
+       ],
+       [
+        "A sing-song voice",
+        "Speak as you would to any adult"
+       ],
+       [
+        "Old-age jokes",
+        "Including your own"
+       ]
+      ],
+      "say": "Gently set these aside. Answering for them, even when it is faster. A sing-song voice, or pet names. Speak as you would to any adult. And old-age jokes, including the ones you tell about yourself. How we talk about aging shapes how people age, research suggests, including how you will age."
+     },
+     {
+      "k": "big",
+      "h": "Notice your own views too.",
+      "sub": "It helps them, and it helps you.",
+      "say": "Notice your own views of aging too. It isn't about blame. Each time you catch an old stereotype and choose a kinder, truer thought, it helps them, and it helps you, for your own later years."
+     },
+     {
+      "k": "card",
+      "title": "If you are worried",
+      "body": "Low mood that lasts: their doctor. Hopeless talk: 988 together. Danger: 911.",
+      "say": "If being overlooked has turned into low mood, or talk of being useless, encourage a visit with their doctor, and offer to go along. If you hear hopeless words, ask plainly, and call or text 988 together. In Minnesota, if someone is taking advantage of them, call MAARC at 1 844 880 1574. If anyone is in danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "Help them stay seen.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your respect is a model for everyone around them. Help them stay seen, and heard, and needed. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "faith-questions",
+   "ring": "meaning",
+   "title": "Faith Questions Late in Life",
+   "you": {
+    "id": "sq-g-faith-questions-you",
+    "guide": "faith-questions",
+    "side": "you",
+    "title": "Faith Questions Late in Life",
+    "sideName": "For You",
+    "mins": 5,
+    "blurb": "For anyone whose questions about faith have grown louder, quieter, or different in later life.",
+    "sources": [
+     "krause",
+     "exline",
+     "rcope"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Faith Questions Late in Life",
+      "sub": "For You",
+      "say": "If questions about faith have grown louder in this season of life, or quieter, or different, this is for you. Whatever your tradition, or none, you are welcome here. Go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "Late in life, big questions come close.",
+      "sub": "What has it meant? What comes next?",
+      "say": "Later life has a way of bringing the big questions close. What has my life meant? Where was the sacred in the hard years? What happens when I die? For some, the questions come with an illness or the death of a spouse. For others, they come with the quiet of more time to think."
+     },
+     {
+      "k": "words",
+      "h": "Many paths belong here",
+      "items": [
+       "Faith that has deepened",
+       "Faith full of questions",
+       "Faith set down long ago",
+       "A life without a faith"
+      ],
+      "say": "People come to these questions from many places. Some find their faith has grown deeper and simpler with the years. Some carry faith alongside hard questions. Some set faith down long ago, and some never had a faith at all. Every one of these paths belongs here, and every one can hold meaning and peace."
+     },
+     {
+      "k": "big",
+      "h": "Doubt can sit beside faith.",
+      "sub": "Questions are welcome.",
+      "say": "If you feel doubt, you are far from alone. Research with older adults finds that doubt and spiritual struggle are common, and that people who explore their questions openly, rather than push them down, tend to fare better. Doubt and faith often live side by side, sometimes for years."
+     },
+     {
+      "k": "points",
+      "h": "A help, a weight, or both?",
+      "items": [
+       [
+        "A help",
+        "Comfort, strength, belonging"
+       ],
+       [
+        "A weight",
+        "Guilt, fear, feeling far away"
+       ],
+       [
+        "Both",
+        "Common, and worth noticing"
+       ]
+      ],
+      "cue": {
+       "at": [
+        2,
+        3,
+        5
+       ]
+      },
+      "say": "Here is a gentle question to ask yourself. Right now, is faith a help to you, a weight, or both? For many, it brings comfort, strength, and belonging. For others, it stirs guilt, fear of judgment, old hurts, or a sense that the sacred has gone quiet. Research finds both sides are real, and that the heavy side is worth tending. Many people feel both in the same week."
+     },
+     {
+      "k": "big",
+      "h": "Say your question out loud.",
+      "sub": "Let it stay open.",
+      "say": "Think of one question about faith or meaning that you still carry. It might be about suffering, forgiveness, or what comes after. You do not need to answer it. Say your question out loud, softly, and let it stay open.",
+      "beats": [
+       "Think of one question about faith or meaning that you still carry.",
+       "It might be about suffering, forgiveness, or what comes after.",
+       "You do not need to answer it.",
+       {
+        "t": "Say your question out loud, softly, and let it stay open.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What can help",
+      "items": [
+       [
+        "A good listener",
+        "Chaplain, director, wise friend"
+       ],
+       [
+        "Practices that still fit",
+        "Keep them; rest from the rest"
+       ],
+       [
+        "Honest words",
+        "Lament and questions count"
+       ],
+       [
+        "Meaning in many places",
+        "Nature, music, love, service"
+       ]
+      ],
+      "cue": {
+       "at": [
+        0,
+        1,
+        2,
+        4
+       ]
+      },
+      "say": "A good listener helps: a chaplain, a spiritual director, a faith leader, or a wise friend who can sit with questions without rushing to answers. Keep the practices that still feel true, and rest from the ones that don't, for now. Honest words count. In many traditions, telling the sacred what hurts is a form of prayer. And meaning lives in many places: nature, music, service, and the people you love."
+     },
+     {
+      "k": "card",
+      "title": "When it feels heavy",
+      "body": "Guilt or fear that weighs on you: a chaplain or counselor can help. Not wanting to live: call or text 988.",
+      "say": "If guilt, fear, or a sense of being punished weighs on you, a chaplain or counselor can help you carry it. Hospitals and hospices often have chaplains for people of any faith or none. If you ever think about not wanting to live, call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "Your questions are welcome here.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your questions are welcome, and so are you, just as you are today. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-faith-questions-helper",
+    "guide": "faith-questions",
+    "side": "helper",
+    "title": "Faith Questions Late in Life",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone beside an older adult whose faith is shifting, deepening, or full of questions.",
+    "sources": [
+     "krause",
+     "exline",
+     "rcope"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Faith Questions Late in Life",
+      "sub": "For the Helper",
+      "say": "If someone you love is wrestling with faith late in life, or finding new peace in it, or set it down long ago, this is for you. You don't need to share their beliefs, or have answers. You need to listen."
+     },
+     {
+      "k": "big",
+      "h": "Follow their lead.",
+      "sub": "Their faith, their words, their pace.",
+      "say": "Faith is deeply personal. Let them choose whether to talk about it, and how much. Use their words for the sacred, not yours. And never use their illness or their age as a reason to press your own beliefs, or to argue them out of theirs."
+     },
+     {
+      "k": "big",
+      "h": "Doubt is common late in life.",
+      "sub": "Listening helps more than answers.",
+      "say": "Research with older adults finds that doubt and spiritual struggle are common, and that exploring questions openly, rather than pushing them down, goes with doing better. Faith can be a deep help in hard times, and it can also become a weight. Your calm, open listening makes room for both."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What has helped you through hard times?",
+       "What are you wondering about these days?",
+       "Would you like me to call someone?"
+      ],
+      "say": "Here are words that help. What has helped you through hard times before? It honors their own wisdom. What are you wondering about these days? It opens a door without pushing. And, would you like me to call someone from your community, or a chaplain? Then let them decide."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You just need more faith.",
+       "Everything happens for a reason.",
+       "Assuming their faith, or that they have one"
+      ],
+      "say": "Some words, meant kindly, can land hard. You just need more faith, or just pray more, because it turns a struggle into a failure. Everything happens for a reason, because it closes the question. And assuming what their faith is, or that they have one. Ask, and listen."
+     },
+     {
+      "k": "points",
+      "h": "Practical ways to help",
+      "items": [
+       [
+        "Make worship reachable",
+        "Rides, phone, radio, online"
+       ],
+       [
+        "Bring what comforts",
+        "Music, readings, a candle"
+       ],
+       [
+        "Connect only if asked",
+        "Chaplain, faith leader, director"
+       ]
+      ],
+      "say": "Help in practical ways. Make worship or community reachable, if they want it: a ride, a phone line, a radio program, a service online, or a visit at home. Bring what comforts them: music, readings, a candle, a familiar object. And connect them with a chaplain or faith leader only if they ask."
+     },
+     {
+      "k": "big",
+      "h": "Listen without answering.",
+      "sub": "Notice the urge to fix, and let it go.",
+      "say": "Picture them telling you a doubt, or a fear about what comes after. Notice where your body tightens as you listen. Let your shoulders drop, and breathe out slowly. Then say quietly to yourself: I can listen without answering.",
+      "beats": [
+       "Picture them telling you a doubt, or a fear about what comes after.",
+       "Notice where your body tightens as you listen.",
+       "Let your shoulders drop, and breathe out slowly.",
+       {
+        "t": "Then say quietly to yourself: I can listen without answering.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "When it grows heavy",
+      "sub": "Not wanting to live: call or text 988 together.",
+      "say": "If guilt, fear, or a sense of being punished weighs on them, offer to find a chaplain or counselor. If low mood lasts two weeks or more, encourage a talk with their doctor. If they say they do not want to live, ask them plainly about it, stay with them, and call or text nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Your presence is the gift.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Their questions may stir your own, and that is all right. Talk with someone you trust. You don't have to settle anything for them. Your steady presence is the gift. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "facing-death",
+   "ring": "meaning",
+   "title": "Facing Death and Sharing Your Wishes",
+   "you": {
+    "id": "sq-g-facing-death-you",
+    "guide": "facing-death",
+    "side": "you",
+    "title": "Facing Death and Sharing Your Wishes",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For anyone thinking about their own death, and how to share what they would want.",
+    "sources": [
+     "convo",
+     "detering",
+     "sudore",
+     "honoring"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Facing Death and Sharing Your Wishes",
+      "sub": "For You",
+      "say": "If you've been thinking about your own death, or wondering how to tell your family what you would want, this is for you. Go slowly. You can stop any time."
+     },
+     {
+      "k": "big",
+      "h": "Thinking about death is part of a long life.",
+      "sub": "It is not giving up.",
+      "say": "Many older adults think about death more often now: after friends die, after a diagnosis, or on a quiet evening. That is natural. Thinking about it is not giving up on life. For many people, it brings a clearer sense of what matters most."
+     },
+     {
+      "k": "words",
+      "h": "Fear and peace can share a day",
+      "items": [
+       "Fear of pain",
+       "Worry for the people you love",
+       "Calm, even relief",
+       "Questions about what comes after"
+      ],
+      "say": "You may feel fear of pain, or of being a burden. You may worry about the people you will leave. You may also feel calm, even relief. And you may carry questions about what comes after. Fear and peace can share the same day. All of it is normal."
+     },
+     {
+      "k": "flow",
+      "h": "Sharing your wishes",
+      "steps": [
+       [
+        "Think",
+        "What matters most to you"
+       ],
+       [
+        "Choose",
+        "Someone to speak for you"
+       ],
+       [
+        "Talk",
+        "With your person and your doctor"
+       ],
+       [
+        "Write it down",
+        "And share copies"
+       ]
+      ],
+      "say": "Sharing your wishes comes in four simple steps. First, think about what matters most to you if you become very ill. Comfort, time, being at home, being able to talk with family. Then choose someone to speak for you. Talk with that person and with your doctor. And write it down, then share copies."
+     },
+     {
+      "k": "big",
+      "h": "Choose someone to speak for you.",
+      "sub": "Someone who knows you, and will listen.",
+      "say": "A health care agent speaks for you if you cannot speak for yourself. Choose someone who knows you well, can stay calm, and will follow your wishes even when they differ from their own. It does not have to be your oldest child. It can be a friend."
+     },
+     {
+      "k": "big",
+      "h": "Name your person.",
+      "sub": "Picture their face.",
+      "say": "Think of who you would trust to speak for you. Picture their face. Notice whether you have told them yet. Now say their name out loud.",
+      "beats": [
+       "Think of who you would trust to speak for you.",
+       "Picture their face.",
+       "Notice whether you have told them yet.",
+       {
+        "t": "Now say their name out loud.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Talking is a gift to your family.",
+      "sub": "Known wishes ease their load.",
+      "say": "Most people say these talks matter, and far fewer have had them. Yet research finds that when wishes are known and planned for, families carry less stress, anxiety, and depression after a death. You can start small. Try: I'd like to tell you what matters to me, in case you ever need to speak for me."
+     },
+     {
+      "k": "card",
+      "title": "Putting it in writing",
+      "body": "Ask your doctor, nurse, or clinic about an advance directive. You can change it any time.",
+      "say": "An advance directive puts your wishes in writing. Forms differ by state, and you can change yours any time. Your doctor, nurse, or clinic can help, and the full guide lists step-by-step guides. For questions about treatment, ask your doctor. For legal questions, ask a lawyer."
+     },
+     {
+      "k": "big",
+      "h": "Peace has many sources.",
+      "sub": "Faith, family, nature, a life that mattered.",
+      "say": "Peace comes in many ways. For some, it comes through faith, its prayers and rituals, and a chaplain or faith leader nearby. For others, it comes through family, nature, music, and knowing their life has mattered. And if you ever think about ending your life, call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "Your wishes matter.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your wishes matter, and you can say them, one small step at a time. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-facing-death-helper",
+    "guide": "facing-death",
+    "side": "helper",
+    "title": "Facing Death and Sharing Your Wishes",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone beside an older adult who is thinking about death, or ready to share their wishes.",
+    "sources": [
+     "detering",
+     "convo"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Facing Death and Sharing Your Wishes",
+      "sub": "For the Helper",
+      "say": "If someone you love wants to talk about dying, or about what they would want at the end, this is for you. Maybe it's your mom or dad, your spouse, or a dear friend. You don't need to be ready. You need to be willing to listen."
+     },
+     {
+      "k": "big",
+      "h": "Let them talk about dying.",
+      "sub": "Changing the subject leaves them alone.",
+      "say": "When an older adult says, I won't be here forever, many of us rush to say, don't talk like that. It is meant kindly, and it closes the door. Let them talk. Listening about death does not bring it closer. It helps them feel less alone."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What matters most to you, if you get sicker?",
+       "Who would you want to speak for you?",
+       "What worries you? What gives you peace?"
+      ],
+      "say": "Here are words that help. What matters most to you, if you get sicker? Who would you want to speak for you? And, what worries you most, and what gives you peace? Then listen to the whole answer."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Don't talk like that.",
+       "You'll outlive us all.",
+       "Steering them to your choice"
+      ],
+      "say": "Some words, meant kindly, can land hard. Don't talk like that. You'll outlive us all. Both close the door. And steering them toward the choice you would make. Their wishes belong to them."
+     },
+     {
+      "k": "big",
+      "h": "Their wishes, not yours.",
+      "sub": "Even when you would choose differently.",
+      "say": "Talk with them, not about them, at the doctor's office and with the family. If they ask you to be their health care agent, ask questions until you truly understand what they would want. Honoring their choices, even ones you would not make, is a deep form of love."
+     },
+     {
+      "k": "points",
+      "h": "Practical help",
+      "items": [
+       [
+        "Offer to sit in",
+        "At the doctor, if they want"
+       ],
+       [
+        "Help find the forms",
+        "Their clinic can help"
+       ],
+       [
+        "Keep copies handy",
+        "Agent, doctor, family"
+       ],
+       [
+        "Look again later",
+        "Wishes can change"
+       ]
+      ],
+      "say": "Here is practical help. Offer to sit in on a talk with their doctor, if they want you there. Help them find the forms for their state. Their clinic can help. Keep copies where they can be found, with the agent, the doctor, and the family. And look at it again after a big change. Wishes can change."
+     },
+     {
+      "k": "big",
+      "h": "It helps the family, too.",
+      "sub": "Known wishes ease grief later.",
+      "say": "Research finds that when a person's wishes are known and planned for, families carry less stress, anxiety, and depression after the death. Most people say these talks matter, and far fewer have had them. Your willingness to listen is a gift to everyone."
+     },
+     {
+      "k": "big",
+      "h": "Open the door.",
+      "sub": "Eye level, phone away.",
+      "say": "Picture sitting beside them, at eye level, with your phone put away. Breathe slowly once. Now say out loud: I'd like to know what matters most to you, whenever you're ready.",
+      "beats": [
+       "Picture sitting beside them, at eye level, with your phone put away.",
+       "Breathe slowly once.",
+       {
+        "t": "Now say out loud: I'd like to know what matters most to you, whenever you're ready.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Care for your own heart.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Talking about a loved one's death can bring grief before the loss. That is normal. Talk with someone you trust, and take your time. If they ever say they want to end their life, stay with them and call or text nine eight eight together. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "regrets",
+   "ring": "meaning",
+   "title": "Making Peace With Regrets",
+   "you": {
+    "id": "sq-g-regrets-you",
+    "guide": "regrets",
+    "side": "you",
+    "title": "Making Peace With Regrets",
+    "sideName": "For You",
+    "mins": 5,
+    "blurb": "For anyone looking back on a long life and carrying something they wish had gone differently.",
+    "sources": [
+     "butler",
+     "gilovich",
+     "wrosch05",
+     "toussaint",
+     "westerhof"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Making Peace With Regrets",
+      "sub": "For You",
+      "say": "If old regrets have been coming back to you, in the quiet hours or as you look back on your life, this is for you. Go gently, and stop whenever you need to."
+     },
+     {
+      "k": "big",
+      "h": "Looking back is natural.",
+      "sub": "It can bring peace, and regret too.",
+      "say": "In later life, many of us look back over the whole road. It is a natural part of a long life. Often it brings peace and gratitude. It can also bring old regrets to the surface, sometimes ones we thought were long settled."
+     },
+     {
+      "k": "words",
+      "h": "What people carry",
+      "items": [
+       "Words said, or never said",
+       "A choice that hurt someone",
+       "Chances not taken",
+       "Time lost with family"
+      ],
+      "say": "People carry many kinds of regret. Words said, or never said. A choice that hurt someone. Chances not taken. Time lost with family. Research finds that over the long run, many people regret what they did not do even more than what they did. Whatever yours is, you are not alone."
+     },
+     {
+      "k": "points",
+      "h": "Sort it gently",
+      "items": [
+       [
+        "Can still be mended",
+        "A call, a letter, an apology"
+       ],
+       [
+        "Can be mended in part",
+        "A new way to give back"
+       ],
+       [
+        "Cannot be fixed",
+        "Can still be set down"
+       ]
+      ],
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      },
+      "say": "It helps to sort each regret gently. Some can still be mended, with a call, a letter, or an apology. Some can be mended in part, with a new way to give back. And some cannot be fixed at all. Those can still be set down."
+     },
+     {
+      "k": "big",
+      "h": "Make amends where it is safe and wise.",
+      "sub": "Some doors are best left closed.",
+      "say": "If a regret can still be mended, a simple apology, with no excuses, can mean a great deal, to them and to you. Do it only where it is safe and wise. If contact would hurt them, or put you at risk, a letter you keep, or a kindness to someone else, can carry the amends instead."
+     },
+     {
+      "k": "big",
+      "h": "What cannot be fixed can be set down.",
+      "sub": "Turn toward what is still in reach.",
+      "say": "Research with older adults finds that people who let go of trying to undo what cannot be undone, and turn toward goals still in reach, tend to have a better quality of life. Being the friend, grandparent, or neighbor you want to be today is still in reach."
+     },
+     {
+      "k": "big",
+      "h": "Speak to your younger self.",
+      "sub": "As kindly as you can.",
+      "say": "Picture yourself at the age when it happened. Notice what you knew then, and what you were facing. Rest a hand on your heart, if you like. Say to that younger you, as kindly as you can: I understand you better now.",
+      "beats": [
+       "Picture yourself at the age when it happened.",
+       "Notice what you knew then, and what you were facing.",
+       "Rest a hand on your heart, if you like.",
+       {
+        "t": "Say to that younger you, as kindly as you can: I understand you better now.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Self-forgiveness takes time.",
+      "sub": "Honest, kind, and unhurried.",
+      "say": "Forgiving yourself is not pretending it didn't matter. It is owning it, making what amends you can, and then letting kindness in. Research finds that forgiveness goes with better health, and the link grows stronger with age. Looking back over your whole life with a good listener can ease low mood, too. If faith is part of your life, its practices of confession and mercy can help."
+     },
+     {
+      "k": "card",
+      "title": "When regret turns heavy",
+      "body": "A chaplain or counselor can help. Hopeless, or thinking of ending your life: call or text 988.",
+      "say": "If regret keeps you up at night, a chaplain or counselor can help you carry it. If low mood lasts two weeks or more, talk with your doctor. And if regret turns to hopelessness, or thoughts of ending your life, call or text nine eight eight, any time. Veterans, press 1 after you dial."
+     },
+     {
+      "k": "big",
+      "h": "Your whole story counts.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your story is more than its hardest chapter. The good you have done counts too. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-regrets-helper",
+    "guide": "regrets",
+    "side": "helper",
+    "title": "Making Peace With Regrets",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone beside an older adult who is looking back and carrying regret.",
+    "sources": [
+     "butler",
+     "wrosch05"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Making Peace With Regrets",
+      "sub": "For the Helper",
+      "say": "If someone you love keeps coming back to an old regret, or tells you about one for the first time, this is for you. You don't have to make it go away. You can help them carry it."
+     },
+     {
+      "k": "big",
+      "h": "Looking back is part of later life.",
+      "sub": "Regret can surface with it.",
+      "say": "In later life, many people look back over the whole road. Usually it brings peace. Sometimes it stirs old regrets, and older adults often feel there is less time to set things right. That can make a regret feel heavier now than it did years ago."
+     },
+     {
+      "k": "big",
+      "h": "Listen before you reassure.",
+      "sub": "Let them say the whole thing.",
+      "say": "When they say, I should have, it's tempting to jump in with, oh, you were a wonderful mother. It is kindly meant, and it can leave them alone with it. Listen to the whole story first. Then, if it is true, name the good you have seen."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "That still weighs on you. Tell me about it.",
+       "What do you wish you could do now?",
+       "I see how much you've grown since then."
+      ],
+      "say": "Here are words that help. That still weighs on you. Tell me about it. What do you wish you could do about it now? And, when it is true, I see how much you've grown since then."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Oh, that was nothing.",
+       "You should have known better.",
+       "Just forget about it."
+      ],
+      "say": "Some words land hard. Oh, that was nothing, said before they have finished. You should have known better. And, just forget about it. If they could, they would have."
+     },
+     {
+      "k": "points",
+      "h": "Help, and let them lead",
+      "items": [
+       [
+        "Help with amends",
+        "A letter, a call, a ride"
+       ],
+       [
+        "Check that it is safe",
+        "For them, and for the other person"
+       ],
+       [
+        "Offer a listener",
+        "A chaplain or counselor"
+       ],
+       [
+        "Turn toward today",
+        "What is still in reach"
+       ]
+      ],
+      "say": "Help, and let them lead. If they want to make amends, help with the practical part: a letter, a call, a ride. Check together that contact is safe and wise, for them and for the other person. Offer to find a chaplain or counselor. And help them turn toward today. Research finds that letting go of what cannot be undone, and turning toward what is still in reach, goes with a better quality of life."
+     },
+     {
+      "k": "big",
+      "h": "We all carry something.",
+      "sub": "Remember your own.",
+      "say": "Take a moment. Think of a regret of your own, a small one is fine. Notice how it feels to carry it. Breathe out slowly, and say quietly: we all carry something.",
+      "beats": [
+       "Take a moment.",
+       "Think of a regret of your own, a small one is fine.",
+       "Notice how it feels to carry it.",
+       {
+        "t": "Breathe out slowly, and say quietly: we all carry something.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "When regret turns to despair",
+      "sub": "Not wanting to live: call or text 988 together.",
+      "say": "Watch gently for regret that turns into hopelessness, or talk of not deserving to live. Ask them plainly whether they are thinking about ending their life. Asking does not plant the idea. If they say yes, stay with them, and call or text nine eight eight together. If there is danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Their whole life counts.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Their regrets may touch your own, or old hurts between you. If they apologize to you, you can take time before you answer. Get support for yourself too. Their whole life counts, and so does your kindness now. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "legacy",
+   "ring": "meaning",
+   "title": "Leaving a Legacy",
+   "you": {
+    "id": "sq-g-legacy-you",
+    "guide": "legacy",
+    "side": "you",
+    "title": "Leaving a Legacy",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For anyone wondering what they will leave behind: values, stories, blessings, and small daily kindnesses.",
+    "sources": [
+     "chochinovdt",
+     "chochinov11",
+     "ethicalwill"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Leaving a Legacy",
+      "sub": "For You",
+      "say": "If you have been wondering what you will leave behind, not money or things, but who you are and what you have learned, this is for you. Go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "A legacy is more than money.",
+      "sub": "Values, stories, blessings, love.",
+      "say": "When people hear the word legacy, they often think of a will, a house, or a bank account. Those matter. But the legacy people treasure most is often something else: your values, your stories, the lessons you learned the hard way, and your love."
+     },
+     {
+      "k": "words",
+      "h": "What a legacy can hold",
+      "items": [
+       "Your values",
+       "Your stories",
+       "Lessons learned",
+       "A blessing for those you love"
+      ],
+      "say": "A legacy can hold your values. Your stories, the funny ones and the hard ones. The lessons life has taught you. And a blessing for the people you love, in your own words."
+     },
+     {
+      "k": "big",
+      "h": "Small daily legacies count.",
+      "sub": "A recipe. A saying. A kindness.",
+      "say": "You are already leaving a legacy, every day. The way you greet people. A recipe a grandchild will make someday. A saying your family repeats without knowing where it came from. The neighbor you check on. None of it is too small to matter."
+     },
+     {
+      "k": "card",
+      "title": "A legacy letter",
+      "body": "An old tradition, sometimes called an ethical will. It passes on values, not things.",
+      "say": "There is an old tradition, sometimes called an ethical will. It is a letter that passes on values rather than things. What you believe in. What you learned. What you hope for the people you love. Thanks, and if you want, forgiveness asked or given. It is not a legal document. It is a gift of the heart."
+     },
+     {
+      "k": "big",
+      "h": "Your words can be a gift.",
+      "sub": "For you, and for those who come after.",
+      "say": "Research with people near the end of life finds that telling their story, and shaping it into words for their family, felt meaningful to them. Their families treasured those words afterward. You do not need to be near the end to begin. You only need one story."
+     },
+     {
+      "k": "big",
+      "h": "Name one value to pass on.",
+      "sub": "One word is enough.",
+      "say": "Think of the people who will come after you. Think of one value you hope they carry. Kindness, courage, honesty, faith, hard work, a sense of humor. Say the word out loud. Then say the name of one person you hope carries it.",
+      "beats": [
+       "Think of the people who will come after you.",
+       "Think of one value you hope they carry.",
+       "Kindness, courage, honesty, faith, hard work, a sense of humor.",
+       "Say the word out loud.",
+       {
+        "t": "Then say the name of one person you hope carries it.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Start small",
+      "steps": [
+       [
+        "Pick one thing",
+        "A story, a lesson, a blessing"
+       ],
+       [
+        "Say it or write it",
+        "Paper, a recording, a helper"
+       ],
+       [
+        "Give it, or keep it",
+        "Now, or for later"
+       ],
+       [
+        "Add more",
+        "One page at a time"
+       ]
+      ],
+      "say": "Start small. Pick one thing: a story, a lesson, or a blessing. Say it or write it, on paper, in a recording, or with a helper. Give it now, or keep it for later. Then add more, one page at a time. Sequoia's Legacy Book can help, one prompt at a time, and every prompt can be skipped."
+     },
+     {
+      "k": "big",
+      "h": "A legacy reaches beyond family.",
+      "sub": "Friends, neighbors, students, causes.",
+      "say": "If you have no children, or family is far away, your legacy still lives. In the friends you have stood by. The students, neighbors, and coworkers you encouraged. The causes you served. Your life has touched more people than you know."
+     },
+     {
+      "k": "big",
+      "h": "Your life leaves a mark.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your life leaves a mark, in big ways and small ones. It is worth passing on. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "sq-g-legacy-helper",
+    "guide": "legacy",
+    "side": "helper",
+    "title": "Leaving a Legacy",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For anyone helping an older adult pass on their stories, values, and blessings.",
+    "sources": [
+     "allen",
+     "chochinovdt"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "sequoia",
+      "eyebrow": "When Life Changes",
+      "h": "Leaving a Legacy",
+      "sub": "For the Helper",
+      "say": "If someone you love wants to pass on their stories, values, or blessings, or you wish they would, this is for you. You can be the listener who helps it happen."
+     },
+     {
+      "k": "big",
+      "h": "Their story is a gift.",
+      "sub": "Ask, and let them choose.",
+      "say": "Many older adults would gladly tell their stories, and wonder whether anyone wants to hear them. Some feel their life was too ordinary to matter. Your interest tells them it does. Ask, and let them choose what to share."
+     },
+     {
+      "k": "big",
+      "h": "Doing it together helps everyone.",
+      "sub": "Stories, scrapbooks, recordings.",
+      "say": "Research with families near the end of life finds that making legacy projects together, like scrapbooks or recorded stories, eased caregiver stress and helped families talk. And people who shaped their story into words for family found it meaningful, while their families treasured it."
+     },
+     {
+      "k": "words",
+      "h": "Questions that open stories",
+      "items": [
+       "What do you hope we remember about you?",
+       "Who shaped you most when you were young?",
+       "Would you teach me how you make that?"
+      ],
+      "say": "Here are questions that open stories. What do you hope we remember about you? Who shaped you most when you were young? And, would you teach me how you make that? A recipe or a skill often carries a story inside it."
+     },
+     {
+      "k": "points",
+      "h": "Be the helper, not the author",
+      "items": [
+       [
+        "Be the scribe",
+        "Write or record their words"
+       ],
+       [
+        "Keep their voice",
+        "No polishing, no rewriting"
+       ],
+       [
+        "Let them choose",
+        "What to share, and with whom"
+       ],
+       [
+        "Hard chapters wait",
+        "Only if they open them"
+       ]
+      ],
+      "say": "Be the helper, not the author. Be the scribe, and write or record their words just as they say them. Keep their voice. No polishing, no rewriting. Let them choose what to share, and with whom. And let the hard chapters wait, unless they choose to open them."
+     },
+     {
+      "k": "big",
+      "h": "Their words, their pace.",
+      "sub": "Not a task to finish.",
+      "say": "Try not to treat it as a task to finish before it's too late. Rushing can make it feel like a goodbye. Let it be a conversation you return to. If memory is changing, enjoy the telling more than the details, and write it as told to you."
+     },
+     {
+      "k": "big",
+      "h": "What did you get from them?",
+      "sub": "A saying, a recipe, a way of doing things.",
+      "say": "Take a moment. Think of something small you already carry from them. A saying, a recipe, a way of folding towels or fixing things. Say it out loud, and add: I got this from you.",
+      "beats": [
+       "Take a moment.",
+       "Think of something small you already carry from them.",
+       "A saying, a recipe, a way of folding towels or fixing things.",
+       {
+        "t": "Say it out loud, and add: I got this from you.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Let it touch you, too.",
+      "sub": "Keep their words somewhere safe.",
+      "say": "Listening to their stories can be tender, especially when time feels short. Let yourself feel it. Keep what they give you somewhere safe, and ask before sharing it. If old memories bring up more than they want to carry, slow down, and help them reach someone they trust."
+     },
+     {
+      "k": "big",
+      "h": "You are part of their legacy.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "One day, you will tell their stories. You are part of their legacy already. The full guide has more, whenever you want it."
+     }
+    ]
+   }
   }
  ]
 };

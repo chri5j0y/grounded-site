@@ -2337,6 +2337,2219 @@ const LC_TOPICS = [
     "https://mn.gov/mdva/"
    ]
   ]
+ },
+ {
+  "id": "moving-home",
+  "ring": "home",
+  "title": "Moving from the family home",
+  "keys": "moving leaving the house selling the house family home moving out where we raised our kids leaving home relocating moving closer to family apartment condo smaller place grief for a house saying goodbye to a home homesick",
+  "parts": [
+   "roots",
+   "branches",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Grief for a home is real grief. A house holds years of your life, and it makes sense to mourn it.",
+   "The more say you have in the move, the easier it tends to go. Take part in each choice you can.",
+   "Plan the move in small steps, with help, and give yourself more time than you think you need.",
+   "Say goodbye on purpose: walk the rooms, tell the stories, take pictures.",
+   "Bring home with you. Set up your chair, your pictures, and your routines first in the new place."
+  ],
+  "feel": "You may feel sad, unsettled, or even guilty for leaving. The kitchen where the kids did homework, the doorframe marked with their heights, the garden you planted, the neighbors who knew you. Some people feel relief, too: fewer stairs, less upkeep, more help close by. Many feel both on the same day. If the move came sooner than you wanted, after a fall, an illness, or a loss, you may also feel angry, or as if life is happening to you. All of it is normal.",
+  "self": {
+   "first": [
+    "Name what matters most to you in the next place: close to family, near your church or club, one floor, a garden, a bus line.",
+    "Ask for one person you trust to help plan, and keep the choices in your hands.",
+    "Make a simple timeline with small steps. One room, one week.",
+    "Keep your doctor visits and your routines going through the move. Moves are tiring for the body too."
+   ],
+   "helps": [
+    "A goodbye walk through the house, alone or with family, telling the stories each room holds.",
+    "Photos or a short video of each room, and a few small keepsakes: a doorknob, a cutting from the garden, the height marks traced on paper.",
+    "Visiting the new place before the move, more than once, and choosing where your favorite things will go.",
+    "Setting up your chair, your bed, and your pictures first, so the new place feels like yours on night one.",
+    "Keeping one old routine going right away: the morning coffee, the evening walk, the Sunday call.",
+    "Meeting one neighbor in the first week, and finding the nearest place to belong: a church, a senior center, a library group."
+   ],
+   "tell": [
+    "“The love in that house comes with me.”",
+    "“I can grieve this place and still make a good home in the next one.”",
+    "“It's okay to take this one room at a time.”"
+   ],
+   "people": "Try: “I want to be part of every choice about the move. Would you help me make a plan we can go through together?”"
+  },
+  "helper": {
+   "feel": "They may be grieving the house, their independence, their neighborhood, and the life they lived there. They may also feel rushed, talked over, or afraid that this move is the first of many. Their pace may seem slow to you. For them, each room may be a goodbye.",
+   "say": [
+    "“What do you most want to bring with you?”",
+    "“Tell me about this room.”",
+    "“What would help the new place feel like home?”",
+    "“There's no rush today. We can do one room.”"
+   ],
+   "avoid": [
+    "“It's just a house.”",
+    "Making choices about their home or their things without them.",
+    "Talking about the move with others in front of them, as if they aren't there.",
+    "Rushing the last weeks to fit your schedule."
+   ],
+   "help": [
+    "Keep them at the center of every choice, even when it takes longer.",
+    "Help them visit the new place before the move, and plan where the favorite things will go.",
+    "Set up their bed, chair, and pictures first on moving day.",
+    "Visit often in the first weeks, and help them find one new place to belong.",
+    "Watch gently for sleep, appetite, and mood in the months after. Moves can take a toll."
+   ],
+   "you": "You may be grieving the house too, especially if it was your childhood home. It's okay to have your own goodbye. Take turns with siblings so no one carries the whole move, and rest when you can."
+  },
+  "faith": "For many people, a home has been a holy place in its own way: blessings at the table, prayers at bedtime, holidays and wakes. Some find comfort in a blessing or a simple ritual for leaving one home and entering the next, alone or with a faith leader. Others find meaning in the people and memories the house held. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "bark|Name It",
+   "branches|Gratitude Letter",
+   "trunk|Record a Story",
+   "branches|One Reach-Out a Day",
+   "leaves|Steady Wake Time",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "Help planning a move, rides, meals, and services in a new area anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text), or your local Area Agency on Aging.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays, for help weighing housing options.",
+   "Your doctor, if sleep, appetite, or mood change in the months after the move.",
+   "If someone is pressuring you to sell, move, or sign papers, in Minnesota call MAARC, 1-844-880-1574, any time. Elsewhere, call the Eldercare Locator to reach Adult Protective Services.",
+   "If a move stirs thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+  ],
+  "more": [
+   [
+    "National Institute on Aging, health information for older adults",
+    "https://www.nia.nih.gov/health"
+   ],
+   [
+    "National Association of Senior and Specialty Move Managers",
+    "https://www.nasmm.org/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "downsizing",
+  "ring": "home",
+  "title": "Downsizing and letting go of things",
+  "keys": "downsizing decluttering too much stuff sorting belongings letting go of things what to keep heirlooms who gets what the kids dont want it estate sale donate giving away cleaning out the house attic basement keepsakes",
+  "parts": [
+   "trunk",
+   "branches",
+   "bark"
+  ],
+  "quick": [
+   "Sorting a lifetime of belongings is emotional work, not only physical work. Expect it to stir memories.",
+   "Go in short sessions: one drawer, one shelf, one closet. Stop while you still have energy.",
+   "Sort into four: keep, pass on, give away, and let go. A small maybe box is fine too.",
+   "The story matters more than the object. Tell it, write it, or record it, and the memory stays.",
+   "Many people feel lighter and proud once it's done."
+  ],
+  "feel": "You may feel overwhelmed by the amount, or frozen at the first box. Each thing can open a memory: a child's drawing, your mother's dishes, the tools in the garage. It can hurt when the family doesn't want what you saved for them. Some people feel guilty letting go of a gift, or afraid that letting go of the thing means letting go of the person. Others feel a surprising lightness. Most feel a mix.",
+  "self": {
+   "first": [
+    "Start with the easy places: a linen closet, the garage, extra dishes. Save photos and letters for later.",
+    "Set a short time, like an hour, and a small space, like one drawer.",
+    "Ask family which few things truly matter to them, and when they can pick them up.",
+    "Ask for help with lifting, hauling, and the drive to the donation drop-off."
+   ],
+   "helps": [
+    "Telling the story of a special thing before it goes, and writing it on a card that travels with it.",
+    "Taking a photo of things you love but can't keep, and making a small book of them.",
+    "Choosing where things go: a grandchild, a friend, a church sale, a shelter, a school.",
+    "Keeping a few of the best pieces, instead of all of them: one teacup from the set, a handful of the drawings.",
+    "Writing the stories of your heirlooms in Sequoia's Legacy Book.",
+    "Hiring a senior move manager, if it's in reach, for planning, sorting, and the sale."
+   ],
+   "tell": [
+    "“The memories are in me, not in the boxes.”",
+    "“Passing this on is a gift, not a loss.”",
+    "“One drawer is enough for today.”"
+   ],
+   "people": "Try: “I'm starting to sort the house. Would you come Saturday for two hours? I'll decide, and I'd love your company and your arms.”"
+  },
+  "helper": {
+   "feel": "They may be tired, flooded with memories, and worried about wasting things or hurting feelings. A full house can feel like proof of a life well lived. When you hurry them, or show no interest in what they saved, it can feel like their life is being thrown away.",
+   "say": [
+    "“Tell me about this one.”",
+    "“Where would you like it to go?”",
+    "“Let's stop while you still have energy.”",
+    "“I'd love to have that, and here's why.”"
+   ],
+   "avoid": [
+    "“This is all junk.”",
+    "Throwing things out when they aren't looking.",
+    "Arguing with siblings in front of them about who gets what.",
+    "Turning a sorting day into a race."
+   ],
+   "help": [
+    "Offer short sessions with a clear end, and let them decide each thing.",
+    "Do the lifting, hauling, and drop-offs.",
+    "Say yes, honestly, to the few things you'd treasure, and say why.",
+    "Help them photograph or record the stories that go with special things.",
+    "Celebrate each finished space."
+   ],
+   "you": "Sorting a parent's home can stir your own childhood, old family tensions, and fears about their aging. Notice what's yours to carry. Keep sessions short for your sake too, and talk with someone you trust if it gets heavy."
+  },
+  "faith": "Many faith traditions teach about holding things lightly, giving generously, and treasures that last longer than possessions. Some people find meaning in giving things to a congregation's sale, a shelter, or a family that needs them. Others feel letting go as a blessing passed on. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "trunk|What I Want Remembered",
+   "trunk|Record a Story",
+   "trunk|Pass On a Skill",
+   "branches|Ask for Help",
+   "bark|Name It",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "Help finding sorting help, movers, donation pickups, and services in your area anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text), or your local Area Agency on Aging.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "Senior move managers help with planning, sorting, and sales: find one through the National Association of Senior and Specialty Move Managers.",
+   "If someone is pressuring you to give them money or things, in Minnesota call MAARC, 1-844-880-1574, any time."
+  ],
+  "more": [
+   [
+    "Downsizing: Confronting Our Possessions in Later Life, by David Ekerdt",
+    "https://news.ku.edu/news/article/2020/05/18/downsizing-book-encourages-older-people-confront-their-possessions"
+   ],
+   [
+    "National Association of Senior and Specialty Move Managers",
+    "https://www.nasmm.org/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "care-move",
+  "ring": "home",
+  "title": "Moving to assisted living or a nursing home",
+  "keys": "assisted living nursing home memory care long term care facility moving into a home putting mom in a home cant live alone anymore residents rights ombudsman first weeks adjusting new room transitional care rehab stay",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk",
+   "roots"
+  ],
+  "quick": [
+   "This is one of the biggest moves of a life. Grief, anger, and relief can all come with it.",
+   "Be part of the decision as much as you can: visit, ask questions, and choose what comes with you.",
+   "The first weeks are often the hardest. Many people settle in over the first months.",
+   "Make the room yours, and keep one old routine and one old friendship going.",
+   "You keep your rights in your new home. A long-term care ombudsman can help with any concern."
+  ],
+  "feel": "You may feel sad, scared, or angry that it came to this. Some people feel they've lost their home, their privacy, and their say all at once. Some feel relief: help at night, meals ready, people nearby. Many feel guilty for being a burden, or worry they'll be forgotten. In the first weeks it's common to feel lost, homesick, tired, or a little confused, especially at night. Those feelings usually ease as the new place becomes familiar.",
+  "self": {
+   "first": [
+    "Ask to visit before the move, more than once, and at a mealtime if you can.",
+    "Make a short list of what matters most to you: your chair, your faith, your routines, your pets, your visitors.",
+    "Choose the things that will make your room yours: photos, a quilt, a lamp, your own pillow.",
+    "Ask who to talk to when something isn't right, and write their name down."
+   ],
+   "helps": [
+    "Telling the staff about you: your routines, what you like to be called, what calms you, the life you've lived.",
+    "Keeping one old routine from the first day, like coffee at seven or the evening news.",
+    "Saying yes to one activity or one meal with others each day, even when you'd rather not.",
+    "Finding one person to sit with. Many friendships start at the dining table.",
+    "Keeping ties to your old life: calls, visits, your faith community, your club.",
+    "Giving it time. Many people find the first weeks hardest and feel more settled after a few months."
+   ],
+   "tell": [
+    "“This is still my life, and I still have a say in it.”",
+    "“It's okay to grieve the home I left.”",
+    "“I can make this place mine, one thing at a time.”"
+   ],
+   "people": "Try: “The evenings here are the hardest for me. Would you call me after supper for the first few weeks?”"
+  },
+  "helper": {
+   "feel": "They may feel moved rather than moving, and grieve their home, their privacy, and their independence. They may be angry with you, even if the move was the safest choice. Fear of being forgotten is common. So is feeling like a burden. Confusion and low mood can rise in the first weeks, and often ease with time and steady visits.",
+   "say": [
+    "“What would make your room feel more like you?”",
+    "“Tell me how the days are going.”",
+    "“I'll be here Wednesday after lunch.”",
+    "“You can tell me when something isn't right. I'll listen.”"
+   ],
+   "avoid": [
+    "“You'll love it here,” before they've had a chance to feel anything.",
+    "Making the decision about them without them, when they can take part.",
+    "Talking to staff over their head while they're in the room.",
+    "Staying away in the first weeks so they can adjust. Steady visits help them settle."
+   ],
+   "help": [
+    "Involve them in every choice they can make: visits, the room, what comes along.",
+    "Bring the familiar: photos, a favorite blanket, their music, their own clothes.",
+    "Tell the staff who they are, with them, and keep in touch with the staff yourself.",
+    "Visit often and predictably at first, and help old friends visit too.",
+    "If something seems wrong, speak up kindly, and call the long-term care ombudsman if it isn't resolved."
+   ],
+   "you": "Guilt is common, even when the move was right and loving. So is relief, and relief doesn't mean you love them less. Your role changes from doing everything to advocating and visiting, and that role matters. Let others share the visits, and get support for yourself."
+  },
+  "faith": "For many people, faith is a thread of continuity through a move like this: a familiar prayer, a hymn, a visit from their faith community, worship offered in the residence, or a chaplain. Ask whether the residence offers spiritual support, and let their faith leader know about the move. For others, meaning comes through family, music, nature, or the view from a window. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "fruit|Joy List",
+   "branches|Standing Call",
+   "branches|Shared Meal",
+   "bark|Name It",
+   "roots|Prayers You Know by Heart",
+   "trunk|Find Your Role"
+  ],
+  "reach": [
+   "Minnesota Office of Ombudsman for Long-Term Care, 1-800-657-3591 (weekdays, 8 to 4): help with concerns and your rights in a nursing home or assisted living. Outside Minnesota, find your state's ombudsman through the National Consumer Voice for Quality Long-Term Care.",
+   "Help weighing options and finding services: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "If someone is being hurt, neglected, or taken advantage of, in Minnesota call MAARC, 1-844-880-1574, any time. Call 911 if there is danger right now.",
+   "If low mood, confusion, or not eating lasts beyond the first weeks: tell the nurse and the doctor.",
+   "If the move stirs thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+  ],
+  "more": [
+   [
+    "National Institute on Aging, how to choose a nursing home or other long-term care facility",
+    "https://www.nia.nih.gov/health/assisted-living-and-nursing-homes/how-choose-nursing-home-or-other-long-term-care-facility"
+   ],
+   [
+    "Minnesota Office of Ombudsman for Long-Term Care",
+    "https://mn.gov/ooltc/contactus/"
+   ],
+   [
+    "The Consumer Voice, about the long-term care ombudsman program",
+    "https://theconsumervoice.org/about-ombudsman-program/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "fixed-income",
+  "ring": "home",
+  "title": "Money worries on a fixed income",
+  "keys": "money worries fixed income social security not enough money cant pay bills rent prices going up running out of money savings gone debt medicine costs food costs heating bill ashamed about money benefits help paying",
+  "parts": [
+   "bark",
+   "branches",
+   "leaves"
+  ],
+  "quick": [
+   "Money worry is common in later life, and it is nothing to be ashamed of. Many households with older adults are stretched thin.",
+   "Money strain weighs on sleep, mood, and health. Your worry is real, and it deserves help.",
+   "There is help most people never hear about: programs for food, heat, medicine, and Medicare costs.",
+   "Start with one call: the Eldercare Locator, or Minnesota Aging Pathways in Minnesota.",
+   "Before anyone asks for money or account details, pause and check with someone you trust."
+  ],
+  "feel": "You may lie awake doing sums, or open bills with a knot in your stomach. You may skip a meal, a medicine, or the heat to make it last, and tell no one. Many people feel ashamed, as if needing help means they failed, even after a lifetime of hard work and careful saving. Some feel afraid of becoming a burden, or of losing their home. Others feel angry at prices that keep climbing while the check stays the same.",
+  "self": {
+   "first": [
+    "Call the Eldercare Locator or, in Minnesota, Minnesota Aging Pathways, and ask what help you might qualify for.",
+    "Tell your doctor or pharmacist if medicine costs are hard. Ask whether there's a lower cost option.",
+    "Keep eating, keep taking your medicines, and keep the heat on. Ask for help before you go without.",
+    "Pause before any money talk on the phone or online, and check with someone you trust."
+   ],
+   "helps": [
+    "A benefits check: a short set of questions that shows programs you may qualify for, online or with a counselor.",
+    "Medicare counseling through your state's SHIP, which can help with plan costs and programs that lower them.",
+    "Community meals, food shelves, and home-delivered meals. Many were built for exactly this.",
+    "One trusted person who knows your situation, so you're not carrying it alone.",
+    "A simple list of what comes in and what goes out each month, made with a helper if you like.",
+    "For advice on your own money choices, a trusted, licensed professional, or a nonprofit counselor your Area Agency on Aging can point you to."
+   ],
+   "tell": [
+    "“Asking for help is wise, not weak.”",
+    "“My worth was never measured in dollars.”",
+    "“These programs exist for people exactly like me.”"
+   ],
+   "people": "Try: “Money has been tight lately, and I'd like a hand looking into what help is out there. Would you sit with me while I make a call?”"
+  },
+  "helper": {
+   "feel": "They may be embarrassed, proud, or afraid. Many older adults hide money trouble from family to protect them, or to protect their own independence. They may go without food, medicine, or heat rather than ask. Questions about money can feel like questions about whether they can still run their own life.",
+   "say": [
+    "“Lots of people are stretched right now. How are things for you?”",
+    "“Would you like company while you call about benefits?”",
+    "“You decide. I'm here to help you find out what's out there.”"
+   ],
+   "avoid": [
+    "“How did you let it get this bad?”",
+    "Taking over their accounts or their mail without being asked.",
+    "Talking about their money with others in front of them, as if they aren't there.",
+    "Lecturing about past choices."
+   ],
+   "help": [
+    "Help them find programs: a benefits check online, the Eldercare Locator, or Minnesota Aging Pathways.",
+    "Offer rides, a shared meal, or help with forms, side by side, while they decide.",
+    "Watch gently for skipped meals or medicines, a cold house, or unopened bills.",
+    "Watch for anyone pressuring them about money, including people they know."
+   ],
+   "you": "Worry about their money can stir your own money fears, or old family patterns. If you're helping pay, set limits you can keep, and talk about it openly. Look after your own footing too."
+  },
+  "faith": "For many people, money worry stirs deep questions about worth, security, and trust. Faith communities often offer practical help, like meals, a benevolence fund, or a ride, along with friendship. Some find strength in prayer or in traditions of shared provision. Sequoia welcomes all faith traditions and everything in-between, and your worth never depended on any of it.",
+  "practices": [
+   "bark|Kind Voice Letter",
+   "bark|Worry Window",
+   "branches|Ask for Help",
+   "branches|Scam Pause",
+   "branches|Shared Meal",
+   "leaves|Easy Meals Plan"
+  ],
+  "reach": [
+   "Eldercare Locator, 1-800-677-1116 (call or text): help finding programs for food, heat, medicine, housing, and more anywhere in the US.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays, for benefits and Medicare questions.",
+   "Your state's SHIP, for unbiased Medicare counseling, including programs that help with Medicare costs.",
+   "NCOA's BenefitsCheckUp, an online check for programs you may qualify for.",
+   "If someone is pressuring you about money, in Minnesota call MAARC, 1-844-880-1574, any time. For fraud, the National Elder Fraud Hotline, 1-833-372-8311, weekdays.",
+   "If money worry brings thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+  ],
+  "more": [
+   [
+    "NCOA BenefitsCheckUp",
+    "https://www.ncoa.org/article/what-is-benefitscheckup-and-how-does-it-help-people-find-benefits-assistance/"
+   ],
+   [
+    "SHIP, Medicare counseling in every state",
+    "https://www.shiphelp.org/what-we-do/"
+   ],
+   [
+    "NCOA, older adults and financial insecurity (Elder Index)",
+    "https://www.ncoa.org/article/80-percent-of-older-adults-face-financial-insecurity/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "scams",
+  "ring": "home",
+  "title": "Scams and fraud",
+  "keys": "scam scammed fraud conned tricked lost money gift cards wire transfer grandparent scam grandchild in jail romance scam irs call medicare scam tech support pop up lottery prize sweepstakes phishing identity theft ashamed i was scammed report fraud",
+  "parts": [
+   "branches",
+   "bark"
+  ],
+  "quick": [
+   "Scammers are skilled professionals. Being targeted, or tricked, can happen to anyone, at any age.",
+   "Warning signs: hurry, secrecy, a scare or a prize, and a request for gift cards, wire transfers, cash, or crypto.",
+   "Pause. Hang up. Call back on a number you already know, or check with someone you trust.",
+   "If it already happened: call your bank right away, then report it. Help is ready for you.",
+   "You did nothing shameful. The shame belongs to the person who lied to you."
+  ],
+  "feel": "If you've been scammed, you may feel embarrassed, foolish, angry, or sick with worry. Many people tell no one, afraid family will think they can't manage anymore. Some keep going back, hoping to win the money back. If the scam was a romance or a friendship, you may also be grieving a person who never really existed. All of this is a normal response to a crime, and none of it is your fault.",
+  "self": {
+   "first": [
+    "If money is gone or going: call your bank or card company right away, using the number on your card.",
+    "Stop all contact with the scammer. Don't send more money, even to get money back.",
+    "Call the National Elder Fraud Hotline, 1-833-372-8311, weekdays, for help with next steps and reporting.",
+    "Tell one person you trust. You don't have to sort it out alone."
+   ],
+   "helps": [
+    "A rule you keep every time: no money talk on a call you didn't make. Hang up, and call back on a number you know.",
+    "A family code word, so you can tell a real emergency call from a fake one.",
+    "Never paying anyone with gift cards, wire transfers, or crypto. Real agencies and companies don't ask for those.",
+    "Reporting it at reportfraud.ftc.gov, even when the money is gone. Reports help stop scammers.",
+    "The AARP Fraud Watch Network Helpline, 877-908-3360, for anyone, members or not, to talk it through.",
+    "Talking with others it's happened to. You'll find you're in good company."
+   ],
+   "tell": [
+    "“I was lied to by a professional. That's on them, not me.”",
+    "“Hanging up is always allowed.”",
+    "“Telling someone is how I protect myself and others.”"
+   ],
+   "people": "Try: “Something happened with a phone call, and I'm embarrassed, but I want to tell you. Would you help me figure out what to do next?”"
+  },
+  "helper": {
+   "feel": "They may feel ashamed, foolish, and afraid that telling you will cost them their independence or their accounts. Many older adults hide a scam for that reason. If it was a romance or a friendship scam, they may defend the scammer, or grieve them. Your calm, kind response decides whether they'll tell you next time.",
+   "say": [
+    "“Thank you for telling me. This happens to smart, careful people.”",
+    "“These are professionals. They fool people every day.”",
+    "“Let's call the bank together. You lead, and I'll help.”"
+   ],
+   "avoid": [
+    "“How could you fall for that?”",
+    "Taking away their phone, their accounts, or their say without talking it through.",
+    "Telling the whole family before they're ready.",
+    "Bringing it up again and again."
+   ],
+   "help": [
+    "Help them call the bank right away, then report it together.",
+    "Agree on a family code word, and a simple rule: hang up, call back on a known number.",
+    "Help them set up call blocking, and offer to be the one they check with before any payment.",
+    "Watch gently for new secrecy, new 'friends', gift card purchases, or unusual withdrawals.",
+    "If someone they know is taking advantage of them, call MAARC in Minnesota, 1-844-880-1574."
+   ],
+   "you": "Anger at the scammer, and fear for them, are natural. You may also feel guilt for not catching it. Scammers are good at what they do. Talk with someone you trust, and keep your focus on keeping them safe and keeping their trust."
+  },
+  "faith": "Some scams use faith itself: a fake charity, a stranger asking for prayer and money, a message claiming to be from a church. A trusted faith leader can help you check. For many people, a faith community is also a place of friendship and support after a loss like this. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "branches|Scam Pause",
+   "branches|Ask for Help",
+   "bark|Self-Compassion Break",
+   "bark|Slow Exhale",
+   "branches|Standing Call"
+  ],
+  "reach": [
+   "National Elder Fraud Hotline (US Department of Justice), 1-833-372-8311, weekdays 10 to 6 Eastern, for people 60 and older: help with next steps and reporting.",
+   "AARP Fraud Watch Network Helpline, 877-908-3360, weekdays 8 to 8 Eastern, members and nonmembers.",
+   "Report fraud to the Federal Trade Commission at reportfraud.ftc.gov.",
+   "Your bank or card company, right away, using the number on your card or statement.",
+   "If someone you know is taking advantage of you, in Minnesota call MAARC, 1-844-880-1574, any time. Elsewhere, find your state's Adult Protective Services through NAPSA. Call 911 if there is danger right now.",
+   "If the loss brings thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+  ],
+  "more": [
+   [
+    "US Department of Justice, find help or report elder abuse and fraud",
+    "https://www.justice.gov/elderjustice/find-help-or-report-abuse"
+   ],
+   [
+    "AARP Fraud Watch Network Helpline",
+    "https://www.aarp.org/money/scams-fraud/helpline/"
+   ],
+   [
+    "FTC, report fraud",
+    "https://reportfraud.ftc.gov"
+   ],
+   [
+    "FBI, the grandparent scam",
+    "https://www.fbi.gov/news/stories/the-grandparent-scam"
+   ],
+   [
+    "NAPSA, Adult Protective Services in your area",
+    "https://www.napsa-now.org/help-in-your-area/"
+   ]
+  ]
+ },
+ {
+  "id": "affairs",
+  "ring": "home",
+  "title": "Getting your affairs in order",
+  "keys": "affairs in order will power of attorney health care directive advance directive living will health care agent health care proxy where are my papers important documents funeral wishes estate planning passwords accounts beneficiaries what happens when i die planning ahead",
+  "parts": [
+   "fruit",
+   "branches",
+   "trunk"
+  ],
+  "quick": [
+   "Putting your affairs in order is a gift to yourself and to the people who love you. It's wise at any age, in good health or in illness.",
+   "Name a health care agent: someone you trust to speak for you if you can't. Tell them what matters to you.",
+   "Common papers include a will, a financial power of attorney, and a health care directive. An attorney or legal aid can help with the legal side.",
+   "Keep your important papers in one place, and tell one trusted person where.",
+   "Do it one step at a time. One conversation or one paper is a real start."
+  ],
+  "feel": "You may feel it's morbid, or that it means giving up. You may feel overwhelmed by the paperwork, or unsure where to start. Some people put it off for years, then feel a deep relief once it's done. It can stir feelings about dying, and about the people you'll leave behind. It can also bring peace: knowing your wishes are clear, and your family won't have to guess.",
+  "self": {
+   "first": [
+    "Choose your health care agent, and ask them if they're willing.",
+    "Gather your important papers in one folder, drawer, or box.",
+    "Tell one trusted person where that folder is.",
+    "Make a list of who to call: your doctor, your attorney if you have one, your bank, your faith leader."
+   ],
+   "helps": [
+    "Using the National Institute on Aging's checklist to see what papers people commonly prepare.",
+    "Talking about what matters most to you in your health care, before a crisis: what a good day looks like, what you'd want and not want.",
+    "A health care directive. In Minnesota, Honoring Choices Minnesota has forms and guidance.",
+    "Meeting with an attorney or legal aid for a will, a power of attorney, and anything about property.",
+    "Writing down where things are: accounts, insurance, the deed, the car title, and how to reach the people who help you.",
+    "Writing the personal side too, your stories, values, and blessings, in Sequoia's Legacy Book."
+   ],
+   "tell": [
+    "“Planning ahead is an act of love.”",
+    "“One paper at a time is enough.”",
+    "“My wishes deserve to be known.”"
+   ],
+   "people": "Try: “I've been thinking about my wishes, and I'd like you to know them. Could we sit down together one afternoon?”"
+  },
+  "helper": {
+   "feel": "They may feel that planning means admitting the end is near, or that you're after their money. They may worry about losing control of their own decisions. Some are relieved when someone finally asks. Others need time. It's their plan, their papers, and their choices.",
+   "say": [
+    "“When you're ready, I'd love to hear what matters most to you.”",
+    "“If something happened, who would you want to speak for you?”",
+    "“Is there anything you'd like me to know where to find?”"
+   ],
+   "avoid": [
+    "Pushing them to sign papers they don't understand, or haven't chosen.",
+    "Making it about who gets what.",
+    "Raising it for the first time during a crisis or a holiday gathering.",
+    "Talking about their plans with others, in front of them, as if they aren't there."
+   ],
+   "help": [
+    "Offer to sit with them while they read the NIA checklist, or fill in a health care directive.",
+    "Offer rides to an attorney or legal aid appointment, and let them meet privately.",
+    "Help them make one folder for important papers, and write down where it is.",
+    "If you're named their agent, ask them to tell you their wishes in their own words, and listen.",
+    "Watch for anyone pressuring them to change a will or a power of attorney."
+   ],
+   "you": "These talks can stir your own fears about losing them, and your own unfinished planning. If you're named as their agent, it's an honor and a responsibility. Ask questions, and consider doing your own planning too."
+  },
+  "faith": "For many people, getting affairs in order touches faith: wishes for prayers, sacraments, or rituals at the end of life, a funeral in a place of worship, or a blessing passed on. If faith is part of your life, write those wishes down and tell your faith leader. For others, the meaning is in leaving things clear and kind for the people they love. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "fruit|Make Your Wishes Known",
+   "trunk|What I Want Remembered",
+   "trunk|Life Lessons",
+   "fruit|Blessing for Those You Love",
+   "branches|Ask for Help",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "Legal help for older adults, and planning services in your area: Eldercare Locator, 1-800-677-1116 (call or text). An attorney or legal aid can help with wills and powers of attorney.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays, and Honoring Choices Minnesota for health care directive forms.",
+   "Your doctor, to talk through your health care wishes and add your directive to your records.",
+   "If someone is pressuring you to sign papers or change your will, in Minnesota call MAARC, 1-844-880-1574, any time. For fraud, the National Elder Fraud Hotline, 1-833-372-8311, weekdays."
+  ],
+  "more": [
+   [
+    "National Institute on Aging, Getting Your Affairs in Order Checklist",
+    "https://www.nia.nih.gov/health/advance-care-planning/getting-your-affairs-order-checklist-documents-prepare-future"
+   ],
+   [
+    "National Institute on Aging, advance care planning",
+    "https://www.nia.nih.gov/health/advance-care-planning/advance-care-planning-advance-directives-health-care"
+   ],
+   [
+    "Honoring Choices Minnesota",
+    "https://www.honoringchoices.org/"
+   ],
+   [
+    "The Conversation Project",
+    "https://theconversationproject.org"
+   ],
+   [
+    "PREPARE for Your Care",
+    "https://prepareforyourcare.org"
+   ],
+   [
+    "Sequoia's Legacy Book",
+    "/sequoia/#legacy"
+   ]
+  ]
+ },
+ {
+  "id": "spouse-caregiving",
+  "ring": "family",
+  "title": "Caring for a spouse or partner",
+  "keys": "caregiver caregiving caring for my husband caring for my wife spouse partner sick taking care of him taking care of her exhausted worn out respite break help at home dementia stroke parkinsons cancer tired resentful lonely marriage changed",
+  "parts": [
+   "branches",
+   "leaves",
+   "bark",
+   "roots"
+  ],
+  "quick": [
+   "Caring for the one you married, or the one you chose, is love at its most practical. It can also wear you down.",
+   "Your marriage is still here, even when it has changed shape. So is the grief for the life you had.",
+   "Strain, not caregiving itself, is what wears on health. Breaks and help make a real difference.",
+   "You matter too. Keep your own doctor visits, sleep, and one thing each week that is just yours."
+  ],
+  "feel": "Some days you are a nurse, a driver, a bookkeeper, and a night watch, all before lunch. You may love them as much as ever and still feel tired, lonely, short tempered, or trapped, and then guilty for feeling it. You may miss the partner who used to share the load, the talks, the trips you planned. Friends may call less. Your own health may slip down the list. All of this is common, and none of it means you love them less.",
+  "self": {
+   "first": [
+    "Write down what you do in a week. Seeing it on paper helps you, and it shows others where they could help.",
+    "Ask one person for one regular, specific break, even two hours.",
+    "Keep your own doctor, dental, and eye visits, and tell your doctor you are a caregiver.",
+    "Call the Eldercare Locator or, in Minnesota, Minnesota Aging Pathways, and ask about respite, adult day programs, and help at home."
+   ],
+   "helps": [
+    "Respite: a few hours or a few days when someone else takes a turn, through family, friends, a faith community, an adult day program, or a respite service.",
+    "A caregiver support group, in person, by phone, or online, with people who understand without explaining.",
+    "Keeping a thread of your marriage: a song you both love, an old photo album, holding hands during the news.",
+    "Sleep, simple meals, and a short walk or stretch, even on the hard days.",
+    "Letting your partner do what they still can, at their own pace, so you are both still partners."
+   ],
+   "tell": [
+    "“Taking care of me is part of taking care of us.”",
+    "“I can love them and still miss the life we had.”",
+    "“Accepting help is not giving up. It is how we keep going.”"
+   ],
+   "people": "Try: “Could you stay with Jim on Thursday afternoons, from one to four? I need a few hours to rest.”"
+  },
+  "helper": {
+   "feel": "The caregiving spouse may be running on empty while telling everyone they are fine. They may feel invisible, since everyone asks about the one who is sick. They may grieve the partner they still have, and feel guilty about it.",
+   "say": [
+    "“How are you doing? Not him. You.”",
+    "“I'll stay with Mom Saturday from one to five. What would you like to do with that time?”",
+    "“You're doing so much. What is the hardest part of the week?”"
+   ],
+   "avoid": [
+    "“You're a saint,” with no offer of help.",
+    "“Just put her in a home,” or any big choice made for them.",
+    "“Let me know if you need anything.” They rarely will.",
+    "Taking over, or talking about the two of them as if they aren't in the room."
+   ],
+   "help": [
+    "Take a regular shift, the same time each week, so they can count on it.",
+    "Cover the jobs that pile up: the lawn, the groceries, a meal, a ride to their own appointments.",
+    "Help them look into respite, adult day programs, and help at home, and let them decide.",
+    "Visit the couple, not only the patient. Treat them both as the grown-ups they are."
+   ],
+   "you": "Watching a parent or a friend wear thin can stir worry, guilt, or old family roles. Do what you can, steadily, and let siblings and others share the load. Rest is part of helping for you too."
+  },
+  "faith": "Many traditions honor care for a sick spouse as sacred work, and many also teach rest, sabbath, and letting others carry part of the load. If faith is part of your life, a faith community can offer visits, meals, rides, and prayer, and a chaplain can listen to the hard feelings without judging. If it isn't, meaning can come from the vows you kept in your own way, and from love that keeps showing up.",
+  "practices": [
+   "branches|Caregiver Pause",
+   "branches|Ask for Help",
+   "branches|Support Group",
+   "branches|Loving-Kindness",
+   "bark|Self-Compassion Break",
+   "leaves|Sleep",
+   "roots|Sabbath Hour"
+  ],
+  "reach": [
+   "Call or text 988 any time if you feel hopeless or think about ending your life. Veterans: 988, then press 1.",
+   "Call 911 if anyone is in danger right now, including if your partner becomes aggressive and you can't stay safe.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): respite, adult day programs, meals, and help at home. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "If your partner has memory loss: the Alzheimer's Association 24/7 Helpline, 1-800-272-3900.",
+   "If you or your partner are being hurt, neglected, or taken advantage of, or you fear the caregiving has gone past what you can safely give: in Minnesota, MAARC, 1-844-880-1574, any time.",
+   "Your own doctor, if sleep, mood, or your health is slipping. Caregiver strain is real and worth naming."
+  ],
+  "more": [
+   [
+    "Family Caregiver Alliance",
+    "https://www.caregiver.org/caregiver-resources/all-resources/"
+   ],
+   [
+    "ARCH National Respite Network: find respite",
+    "https://archrespite.org/caregiver-resources/respitelocator/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ],
+   [
+    "Caregiving in the US 2025 (AARP and NAC)",
+    "https://www.aarp.org/pri/topics/ltss/family-caregiving/caregiving-in-the-us-2025/"
+   ]
+  ]
+ },
+ {
+  "id": "grandparenting",
+  "ring": "family",
+  "title": "Grandparenting",
+  "keys": "grandparent grandparenting grandchildren grandkids grandma grandpa nana papa far away long distance video call miss my grandkids new grandbaby different rules disagree with my kids parenting step grandchildren teenagers grown grandchildren",
+  "parts": [
+   "branches",
+   "trunk",
+   "fruit"
+  ],
+  "quick": [
+   "Grandparenting can be one of the great joys of later life, and it changes as the grandchildren grow.",
+   "What matters most is feeling close, more than how often you see each other.",
+   "Distance can be bridged with calls, letters, shared projects, and steady small rituals.",
+   "The parents set the rules. Your steady love, and your respect for them, is the gift."
+  ],
+  "feel": "Joy at a first smile, a phone call, a drawing in the mail. Longing when they live far away, or grow busy with school and friends. You may disagree with how they are being raised, and bite your tongue, or not. You may feel left out after a divorce, a move, or a change in the family. You may wonder what role you have now, especially as they grow up. All of this is part of loving across generations.",
+  "self": {
+   "first": [
+    "Ask the parents what kind of contact works for their family, and when.",
+    "Choose one small ritual you can keep, like a weekly call, a monthly card, or a story at bedtime by video.",
+    "Learn one way to stay in touch that suits you: the phone, letters, video, or a shared photo album."
+   ],
+   "helps": [
+    "Being interested in their world: their games, their music, their worries, even when it is new to you.",
+    "Sharing yours: family stories, a recipe, a card game, a skill with your hands.",
+    "Shared projects across the miles: reading the same book, a long running letter, a puzzle by mail.",
+    "Being a steady, calm place to land, especially when home is hard.",
+    "Giving and receiving both. Let them teach you something too."
+   ],
+   "tell": [
+    "“I don't have to be there every week to matter to them.”",
+    "“I can support the parents and still love the children my own way.”",
+    "“My stories are part of their roots.”"
+   ],
+   "people": "Try, to your grown child: “I'd love to be part of their week. What would work for your family? A Sunday call, letters, a visit each season?”"
+  },
+  "helper": {
+   "feel": "A grandparent may long for more time, worry about being in the way, or feel hurt when plans change. They may disagree with parenting choices and not know how to say so. If they live far away, or the family has changed, they may feel left out.",
+   "say": [
+    "“The kids light up when you call.”",
+    "“Would you tell them the story about the farm? They'd love it.”",
+    "“Here is what works for us. Can we find a rhythm together?”"
+   ],
+   "avoid": [
+    "Using the grandchildren as leverage in an adult conflict.",
+    "“You don't know how it's done now,” said to shut them out.",
+    "Letting plans with them drop with no word."
+   ],
+   "help": [
+    "Set up the technology with them, and stay for the first few calls.",
+    "Send photos, school art, and small updates without waiting to be asked.",
+    "Make a regular time for calls or visits, and keep it.",
+    "Talk through differences privately, grown-up to grown-up, and kindly."
+   ],
+   "you": "If you are the parent in the middle, you hold two loves at once. Your rules for your children stand. Respect for your parent can stand beside them. Say both plainly."
+  },
+  "faith": "For many families, grandparents pass on faith and tradition: prayers at bedtime, holiday rituals, songs, a place at worship. If that is part of your life, share it as a gift, and follow the parents' lead on what fits their home. Families of all faith traditions and everything in-between pass on values through stories, kindness, and how they live.",
+  "practices": [
+   "branches|Grandchildren",
+   "branches|Grandparent From a Distance",
+   "trunk|Record a Story",
+   "trunk|Pass On a Skill",
+   "trunk|Read With a Child",
+   "fruit|Blessing for Those You Love",
+   "roots|Teach"
+  ],
+  "reach": [
+   "If you are worried that a grandchild is being hurt or neglected, call 911 for danger right now, or your county's child protection line.",
+   "If someone in the family is pressuring you for money or frightening you: in Minnesota, MAARC, 1-844-880-1574, any time.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): local programs, including help with technology and rides. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "Call or text 988 any time if being cut off from grandchildren leaves you hopeless, or thinking about ending your life."
+  ],
+  "more": [
+   [
+    "Generations United",
+    "https://www.gu.org/explore-our-topics/grandfamilies/"
+   ],
+   [
+    "AmeriCorps Seniors: Foster Grandparents",
+    "https://americorps.gov/serve/americorps-seniors"
+   ],
+   [
+    "National Institute on Aging",
+    "https://www.nia.nih.gov/health"
+   ]
+  ]
+ },
+ {
+  "id": "raising-grandkids",
+  "ring": "family",
+  "title": "Raising grandchildren",
+  "keys": "raising grandchildren grandfamily grandfamilies kinship care kinship caregiver custody guardianship grandkids live with me raising my grandson raising my granddaughter parent addiction parent in prison parent died foster care relative caregiver tired second time parenting",
+  "parts": [
+   "branches",
+   "leaves",
+   "bark",
+   "trunk"
+  ],
+  "quick": [
+   "About 2.5 million grandparents in the US are responsible for grandchildren who live with them. You are far from alone.",
+   "The reasons often carry grief: a parent's addiction, illness, prison, or death. Your feelings, and the children's, make sense.",
+   "Love and exhaustion can sit side by side. Support makes the strain lighter.",
+   "Kinship navigator programs, your Area Agency on Aging, and grandfamily support groups can help with the practical side."
+  ],
+  "feel": "You may have said yes in a single phone call, and your whole life changed. You may feel love, purpose, and fierce protectiveness, and also exhaustion, worry about money, and grief for the retirement you planned. You may grieve for your own grown child, angry and heartbroken at once. Friends your age may be traveling while you are at the school pickup. The children may carry hurt that shows up as anger, clinginess, or trouble at school. All of this is real, and you are doing something remarkable.",
+  "self": {
+   "first": [
+    "Call a kinship navigator program or your Area Agency on Aging (through the Eldercare Locator) and ask what help exists for grandparents raising grandchildren.",
+    "Keep your own doctor visits, and tell your doctor you are raising grandchildren.",
+    "Before any legal step about custody or guardianship, talk with a legal aid office or an attorney who knows family law.",
+    "Find one other grandparent raising grandchildren, in a group or online."
+   ],
+   "helps": [
+    "A grandfamily support group, where no one needs the backstory explained.",
+    "Respite: a few hours when someone else takes the children.",
+    "Simple routines for meals, homework, and bedtime. Children feel safer with a rhythm.",
+    "Help for the children's hurt: a school counselor, a children's grief group, or a counselor who understands kinship families.",
+    "Letting your own grief have a place, apart from the children."
+   ],
+   "tell": [
+    "“I'm giving them a home. That matters more than doing it perfectly.”",
+    "“I can love my child and grieve what happened.”",
+    "“Asking for help is part of raising them well.”"
+   ],
+   "people": "Try: “I'm raising my grandkids now, and I'm tired. Could you take them to the park Saturday morning, so I can rest?”"
+  },
+  "helper": {
+   "feel": "A grandparent raising grandchildren may be exhausted, worried about money and their own health, and grieving for their own grown child, all at once. They may feel judged, or ashamed of how the family got here. They may not ask for help, because they are used to being the one who helps.",
+   "say": [
+    "“You're giving them a home. I see how much that takes.”",
+    "“I can do school pickup on Tuesdays. Would that help?”",
+    "“How are you doing, apart from the kids?”"
+   ],
+   "avoid": [
+    "“At least you're young enough to do it,” said as if it settles everything.",
+    "Blaming their grown child, or them, in front of the children.",
+    "Questions about the backstory they haven't offered."
+   ],
+   "help": [
+    "Take a regular shift with the children, the same time each week.",
+    "Help them find a kinship navigator, a grandfamily group, and their Area Agency on Aging, and let them choose.",
+    "Bring a meal, help with forms, or drive to appointments.",
+    "Treat the children's parent with respect when they come up, whatever has happened."
+   ],
+   "you": "If the grandchildren's parent is your sibling or your friend's child, you may carry grief and anger too. Find your own place to say it, away from the children and away from the grandparent's hardest days."
+  },
+  "faith": "Many traditions honor taking in a child as sacred. If faith is part of your life, a faith community can be a village: rides, meals, a Sunday school teacher who knows the story, people who pray for you. If it isn't, the same village can come from neighbors, a school, and other grandfamilies. Some grandparents also carry hard questions about why this happened. Those questions are welcome too.",
+  "practices": [
+   "branches|Support Group",
+   "branches|Ask for Help",
+   "branches|Caregiver Pause",
+   "bark|Self-Compassion Break",
+   "leaves|Smart Nap",
+   "leaves|Easy Meals Plan",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "Call 911 if a child or anyone is in danger right now.",
+   "Call or text 988 any time if you, or the children, feel hopeless or think about ending a life. Veterans: 988, then press 1.",
+   "Eldercare Locator, 1-800-677-1116 (call or text), to reach your Area Agency on Aging. Many support grandparents 55 and older raising grandchildren. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "A kinship navigator program in your state: Grandfamilies.org and the Grandfamilies and Kinship Support Network list them.",
+   "If anyone pressures you for money, threatens you, or takes advantage of you: in Minnesota, MAARC, 1-844-880-1574, any time.",
+   "A legal aid office or family law attorney, before any custody or guardianship step."
+  ],
+  "more": [
+   [
+    "Generations United: grandfamilies and kinship care",
+    "https://www.gu.org/explore-our-topics/grandfamilies/"
+   ],
+   [
+    "Grandfamilies.org: kinship navigator programs",
+    "https://www.grandfamilies.org/Topic-Library/Kinship-Navigator-Programs"
+   ],
+   [
+    "Grandfamilies and Kinship Support Network",
+    "https://www.gksnetwork.org/"
+   ],
+   [
+    "Grandfamilies fact sheet (Generations United)",
+    "https://www.gu.org/app/uploads/2022/05/General-Grandfamilies-Fact-Sheet-2022.pdf"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "estrangement",
+  "ring": "family",
+  "title": "Estrangement from an adult child",
+  "keys": "estranged estrangement adult child not speaking no contact cut off my son wont talk to me my daughter wont talk to me cut me off grandchildren kept from me family rift falling out reconcile reconciliation repair hurt silence",
+  "parts": [
+   "branches",
+   "bark",
+   "roots",
+   "fruit"
+  ],
+  "quick": [
+   "Estrangement from a grown child is a quiet grief, with no funeral and often no one who knows.",
+   "It is more common than most people think: about one in four Americans is estranged from a family member.",
+   "Estrangement often shifts over time. Many people who reconcile let go of needing agreement about the past, and build from now.",
+   "You can leave a door open, care for yourself, and still have a full life while you wait."
+  ],
+  "feel": "A birthday with no call. A holiday table with an empty chair. Grandchildren you may not see. You may feel grief, shame, anger, confusion, or a longing that won't let go. You may replay the past, wondering what you did, or what they misunderstood. People may ask how your son or daughter is doing, and you may not know what to say. This grief is real, even when no one around you sees it.",
+  "self": {
+   "first": [
+    "Name what you are grieving: the relationship, the holidays, the grandchildren, the future you pictured.",
+    "Choose one or two people you can talk with honestly about it.",
+    "Before reaching out, take time to think, or talk with a counselor, about what you hope for and what you can offer."
+   ],
+   "helps": [
+    "A counselor or support group for parents living with estrangement.",
+    "Listening for their side, even when it doesn't match yours. Your memories and theirs can both be honest.",
+    "A short, warm, low-pressure message on a birthday or holiday, if they haven't asked for no contact, with no demands and no list of grievances.",
+    "Respecting a request for space, which can itself be a step toward repair.",
+    "Filling your days with people and purposes that are life-giving now, so waiting doesn't become your whole life."
+   ],
+   "tell": [
+    "“I can grieve this and still live a full life.”",
+    "“The door can stay open without me standing in it all day.”",
+    "“I can take responsibility for my part without carrying all of it.”"
+   ],
+   "people": "Try: “My daughter and I aren't in touch right now. It's hard to talk about, but I'd rather you know. Holidays are tender.”"
+  },
+  "helper": {
+   "feel": "They may feel shame and stay quiet about it, or tell the story over and over. They may fear being judged. You may know only one side, and that is fine. Your role is to be kind to the person in front of you, not to judge the case.",
+   "say": [
+    "“That sounds painful. I'm sorry.”",
+    "“You don't have to explain. I'm here.”",
+    "“The holidays must be hard. Would you like to join us?”"
+   ],
+   "avoid": [
+    "“They'll come around.” No one knows that.",
+    "“What did you do?” or “Your kid is ungrateful.” Both take a side.",
+    "Carrying messages between them, or pressing for reconciliation.",
+    "Bringing it up at every visit, or never at all."
+   ],
+   "help": [
+    "Remember the hard days: the child's birthday, holidays, Mother's Day or Father's Day.",
+    "Include them in your gatherings and traditions.",
+    "Listen without choosing a side. Ask what they need from you.",
+    "If they want help, help them find a counselor or support group."
+   ],
+   "you": "If you are part of the family, you may be caught between two people you love. You can love both and stay out of the middle. Say so kindly, and protect your own ties with each of them."
+  },
+  "faith": "Many traditions treasure reconciliation, and many also teach patience, humility, and that forgiveness and reunion are not the same thing. If faith is part of your life, you might bring this grief to prayer or lament, hold your child in prayer each day, or talk with a chaplain or faith leader you trust. If it isn't, you can still hold your child in your heart, wish them well, and keep your own peace.",
+  "practices": [
+   "fruit|Make Peace",
+   "roots|Hold Someone in Light",
+   "roots|Lament",
+   "roots|Breath Prayer",
+   "bark|Grief Time",
+   "branches|Friends",
+   "bark|Self-Compassion Break"
+  ],
+  "reach": [
+   "Call or text 988 any time if the grief turns into hopelessness, or thoughts of ending your life. Veterans: 988, then press 1.",
+   "Call 911 if anyone is in danger right now.",
+   "A counselor or therapist who works with families, for you, or for both of you if your child is ever willing.",
+   "If contact with family includes threats, pressure about money, or someone taking advantage of you: in Minnesota, MAARC, 1-844-880-1574, any time.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): local counseling and support. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "Cornell Family Estrangement and Reconciliation Project",
+    "https://www.familyreconciliation.org/resources"
+   ],
+   [
+    "Family estrangement, a problem hiding in plain sight (Cornell)",
+    "https://news.cornell.edu/stories/2020/09/pillemer-family-estrangement-problem-hiding-plain-sight"
+   ],
+   [
+    "American Psychological Association: healing the pain of estrangement",
+    "https://www.apa.org/monitor/2024/04/healing-pain-estrangement"
+   ]
+  ]
+ },
+ {
+  "id": "worry-adult-children",
+  "ring": "family",
+  "title": "Worry about adult children",
+  "keys": "worried about my son worried about my daughter adult child grown children struggling addiction drinking drugs money problems borrowing money divorce marriage trouble lost job mental illness cant sleep worrying about my kids never stop being a parent",
+  "parts": [
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "quick": [
+   "You never stop being a parent. Worry about grown children is common, and it can weigh on your own well-being.",
+   "Their struggles, like addiction, money trouble, or a hard marriage, are real, and so are your limits.",
+   "Sort what you can carry from what is theirs to carry. Love can stay while the load goes back.",
+   "If a grown child pressures you for money or frightens you, that is not something to carry alone. Help is there."
+  ],
+  "feel": "Lying awake at 3 a.m. replaying a phone call. Checking your phone for a text. Wondering if you should have done something differently years ago. Wanting to fix it, and knowing you can't. You may feel helpless, guilty, angry, or ashamed to tell friends whose children seem fine. If they ask for money, you may feel torn between love and your own security. Worry this deep is a sign of love, and it can still wear you out.",
+  "self": {
+   "first": [
+    "Write down what you are worried about, then sort it: what can I do, and what is theirs to carry?",
+    "Choose one person you can talk with honestly.",
+    "Before giving or lending money you may need, pause and talk with someone you trust, or a financial counselor.",
+    "If you can't sleep or eat well because of the worry, tell your doctor."
+   ],
+   "helps": [
+    "Saying out loud what you will do and what you won't, kindly and calmly.",
+    "Listening more than advising, when they call. Grown children often want to be heard first.",
+    "A group for families of people with addiction, if that is part of the picture, like Al-Anon or Families Anonymous.",
+    "A set worry time, so worry has a place to go and doesn't take the whole day.",
+    "Keeping your own life full: friends, rest, faith or meaning, and things you enjoy."
+   ],
+   "tell": [
+    "“I can love them without fixing them.”",
+    "“Their choices are theirs. My peace is mine to tend.”",
+    "“Taking care of myself is not turning my back on them.”"
+   ],
+   "people": "Try, to your grown child: “I love you, and I want to help. I can drive you to the meeting Thursday. I can't give money right now.”"
+  },
+  "helper": {
+   "feel": "They may be losing sleep, keeping secrets to protect their child, or giving money they can't spare. They may feel ashamed, or judged as a parent. If you are another of their children, or their child's spouse, you may have your own feelings about it all.",
+   "say": [
+    "“You love them so much. That's a lot to carry.”",
+    "“What is keeping you up at night?”",
+    "“What would help you, this week?”"
+   ],
+   "avoid": [
+    "“You need to cut them off,” or “You're enabling them.” Choices like these are theirs.",
+    "Criticizing their child, or taking a side in a family quarrel.",
+    "“They're an adult, stop worrying.” Worry doesn't stop on command."
+   ],
+   "help": [
+    "Listen, and help them sort what is theirs to do and what isn't.",
+    "Help them find a family support group or counselor, if they want one.",
+    "Gently watch for money pressure, and remind them help is there.",
+    "Plan things together that have nothing to do with the worry."
+   ],
+   "you": "If the struggling one is your sibling, your spouse, or your own child, you are inside this too. Find your own place to talk, and keep your love for each person apart from any one person's crisis."
+  },
+  "faith": "For many parents, faith is where worry goes when there is nowhere else: prayers for a child by name, a candle, a congregation that prays too. Many traditions speak of entrusting loved ones to a care larger than our own. If faith is part of your life, that can lighten the load. If it isn't, you can still hold your child in your heart, wish them well, and set the worry down for a while.",
+  "practices": [
+   "bark|Worry Window",
+   "roots|Hold Someone in Light",
+   "bark|Leaves on a Stream",
+   "branches|Active Listening",
+   "branches|Support Group",
+   "bark|Self-Compassion Break",
+   "leaves|Sleep"
+  ],
+  "reach": [
+   "If your grown child is in crisis or talks about ending their life, call or text 988 any time. You can call for them, or with them. Call 911 if anyone is in danger right now.",
+   "Call or text 988 any time if your own worry turns into hopelessness. Veterans: 988, then press 1.",
+   "If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential, and it is not a betrayal to ask for help.",
+   "Families of people with addiction: Al-Anon, Families Anonymous, and SAMHSA's National Helpline can point you to support.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): local counseling and help. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "Your doctor, if worry keeps you from sleeping or eating."
+  ],
+  "more": [
+   [
+    "Al-Anon Family Groups",
+    "https://al-anon.org/newcomers/faq/"
+   ],
+   [
+    "SAMHSA: helping families cope",
+    "https://www.samhsa.gov/mental-health/children-and-families/coping-resources"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "NAMI (National Alliance on Mental Illness)",
+    "https://www.nami.org"
+   ]
+  ]
+ },
+ {
+  "id": "kids-deciding",
+  "ring": "family",
+  "title": "When your children start deciding for you",
+  "keys": "kids deciding for me children taking over my son my daughter treat me like a child talking over me not listened to independence choices my say health care agent health care proxy power of attorney dignity respect bossy family making decisions",
+  "parts": [
+   "trunk",
+   "branches",
+   "fruit"
+  ],
+  "quick": [
+   "When grown children worry, they can slip into deciding for you. It usually comes from love, and your voice still matters.",
+   "Say clearly what matters most to you, and ask for a real talk, sitting down.",
+   "Name a health care agent now, while things are calm, so the person you choose speaks for you if you ever can't.",
+   "Pressure to sign papers, hand over money, or move against your wishes is different from worry. In Minnesota, call MAARC, 1-844-880-1574."
+  ],
+  "feel": "A suggestion about the car becomes a plan. A talk with the doctor turns into your daughter answering for you. Your son fixes the bills before you ask. It may come from love, and still leave you feeling small, unheard, or treated like a child in your own home. You may feel hurt, angry, grateful, and quietly afraid you really are slipping, all at once. After a lifetime of running a household, a job, or a family, losing your say can hurt more than the problem everyone is trying to solve.",
+  "self": {
+   "first": [
+    "Get clear on what matters most to you: your home, your routines, your friends, your faith, your garden, your money.",
+    "Ask for a sit-down talk: “I want to hear your worries, and I want you to hear what matters to me.”",
+    "Agree together on what help they'll give, and what stays yours to decide.",
+    "Name a health care agent, sometimes called a health care proxy, and write down your wishes. Your doctor can help with the details, and a lawyer can help with the forms."
+   ],
+   "helps": [
+    "Asking what exactly worries them. A specific worry, like a fall or a missed bill, often has a specific answer.",
+    "Looking for a choice you can both live with: a ride service, a daily check-in call, help a few days a week.",
+    "Bringing in a neutral voice when talks go in circles: your doctor, a social worker, a chaplain, or a family meeting with a counselor.",
+    "Keeping your own people close: friends, neighbors, a faith community, so your children aren't your only voice."
+   ],
+   "tell": [
+    "“Needing some help doesn't mean giving up my say.”",
+    "“I can listen to their worry and still make my own choice.”",
+    "“My life is still mine to shape.”"
+   ],
+   "people": "Try: “I know you worry because you love me. I'd like us to decide this together. Can we sit down Sunday and talk it through?”"
+  },
+  "helper": {
+   "feel": "They may feel erased, embarrassed, or angry, especially when people talk about them in front of them. Some go quiet to keep the peace. Some dig in harder on small things because the big things feel taken. Underneath, many are afraid of losing who they are.",
+   "say": [
+    "“What matters most to you here?”",
+    "“What worries you about this?”",
+    "“What would you like me to do, and what would you rather handle yourself?”",
+    "“Here's what I noticed. What do you make of it?”"
+   ],
+   "avoid": [
+    "“We've decided.” Decide with them, not about them.",
+    "“You can't do that anymore,” said as a verdict.",
+    "Talking about them in front of them, to a doctor or a sibling, as if they weren't there.",
+    "Fixing things quietly and telling them later."
+   ],
+   "help": [
+    "Help them decide, rather than deciding for them: share the facts, lay out two or three options, and let them choose. This is sometimes called supported decision making.",
+    "Start small, try a change for a few weeks, then check in together.",
+    "Speak to them directly at the doctor's office, and let them answer first.",
+    "Encourage them to name a health care agent of their own choosing, and to write down their wishes. It may not be you, and that's okay.",
+    "If someone else is pushing them about money, papers, or where they live, report it: in Minnesota, MAARC, 1-844-880-1574; any state, Adult Protective Services."
+   ],
+   "you": "Worry for a parent is heavy, and siblings often disagree about what's best. Share the load, talk with someone you trust, and take real breaks. When you're not sure what to do, come back to one question: what do they want?"
+  },
+  "faith": "Many faith traditions teach honoring your elders, and part of honoring is listening. If faith is part of your life, a faith leader or chaplain can help a family talk about hard choices with respect on all sides. If it isn't, the same respect holds: a long life earns a real say in what comes next.",
+  "practices": [
+   "fruit|Make Your Wishes Known",
+   "trunk|Values Sort",
+   "branches|Active Listening",
+   "branches|Ask for Help",
+   "branches|Friends"
+  ],
+  "reach": [
+   "Your doctor, to talk through any health worry your family has raised, with you at the center.",
+   "To name a health care agent: the National Institute on Aging's page on choosing a health care proxy, and your doctor or a lawyer for the forms. In Minnesota, Honoring Choices Minnesota offers planning guides.",
+   "If anyone pressures you to sign papers, give money, or move against your wishes: in Minnesota, MAARC, 1-844-880-1574, any time. In any state, Adult Protective Services (find your state's line through NAPSA).",
+   "Call 911 if you are in danger right now.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): rides, meals, help at home, and legal help near you. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "NIA: Choosing a Health Care Proxy",
+    "https://www.nia.nih.gov/health/advance-care-planning/choosing-health-care-proxy"
+   ],
+   [
+    "NIA: Advance Care Planning",
+    "https://www.nia.nih.gov/health/advance-care-planning/advance-care-planning-advance-directives-health-care"
+   ],
+   [
+    "ACL: Supported Decision Making",
+    "https://acl.gov/programs/consumer-control/supported-decision-making-program"
+   ],
+   [
+    "Honoring Choices Minnesota",
+    "https://www.honoringchoices.org/"
+   ],
+   [
+    "The Conversation Project",
+    "https://theconversationproject.org/"
+   ]
+  ]
+ },
+ {
+  "id": "new-love",
+  "ring": "family",
+  "title": "New love late in life",
+  "keys": "dating again new love boyfriend girlfriend companion romance remarry remarriage falling in love after my wife died after my husband died after divorce widow dating online dating guilt kids dont approve living apart together moving in together second marriage lonely",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Love can come again at any age, after a death, a divorce, or many years alone.",
+   "New love doesn't erase old love. Joy and grief can live in the same heart.",
+   "Your grown children may have feelings about it. Listen, and then make your own choice.",
+   "Someone you haven't met in person who asks for money or gift cards is a scam sign. Stop, and check with someone you trust."
+  ],
+  "feel": "A spark you didn't expect. Butterflies before a phone call, like a teenager again. Shyness about dating rules that have changed. If your spouse died, guilt can arrive right beside the joy, as if smiling at someone new were a betrayal. You may worry what your children, your friends, or your faith community will think, or about money, health, and who would care for whom. Many people feel more alive than they have in years, and a little afraid of that, too.",
+  "self": {
+   "first": [
+    "Go at your own pace. Coffee, a walk, or a phone call is a fine start.",
+    "Meet in public places at first, and tell a friend where you'll be.",
+    "Never send money, gift cards, or bank details to someone you haven't met in person, however kind they seem.",
+    "Tell your doctor about a new partner if it affects your health, your medicines, or your plans."
+   ],
+   "helps": [
+    "Letting new love and old love sit side by side: keeping photos, telling stories, marking anniversaries.",
+    "Talking about what you each want: companionship, living apart together, living together, or marrying again. Many couples in later life choose to stay close with two homes.",
+    "Telling your grown children yourself, listening to their worries, and giving them time to adjust.",
+    "Getting your own advice about money, property, and inheritance before moving in or marrying, from a lawyer or financial planner you trust."
+   ],
+   "tell": [
+    "“Loving again doesn't take away the love I had.”",
+    "“I'm allowed to be happy.”",
+    "“My heart is still growing.”"
+   ],
+   "people": "Try: “I've met someone who makes me happy. I wanted you to hear it from me. I'd love for you to meet them when you're ready.”"
+  },
+  "helper": {
+   "feel": "They may feel happy, nervous, and guilty all at once, especially if their spouse died. Many worry about what their children will think, and some hide a new relationship for that reason. They may also feel more like themselves than they have in years.",
+   "say": [
+    "“I'm glad you're happy.”",
+    "“Tell me about them.”",
+    "“I'd love to meet them.”",
+    "“I'm still getting used to this, and I'm glad for you.”"
+   ],
+   "avoid": [
+    "“What about Mom?” or “What about Dad?” as if loving again were a betrayal.",
+    "“At your age?” Love has no cutoff.",
+    "“They're just after your money,” said as an accusation, with nothing specific behind it.",
+    "Going around them to quiz their new partner."
+   ],
+   "help": [
+    "Make room in the family: invite them both to a meal or a holiday.",
+    "Keep telling stories about the parent who died, if that's your loss, and let the new person hear them.",
+    "Raise a real worry privately and specifically: requests for money or gift cards, being cut off from friends, or seeming afraid or controlled.",
+    "If you believe they're being taken advantage of: in Minnesota, MAARC, 1-844-880-1574; any state, Adult Protective Services."
+   ],
+   "you": "Seeing a parent with someone new can stir fresh grief for the parent who died, or old hurts from a divorce. Talk with someone you trust about your own feelings, so they don't land on your parent. Your support counts for a lot."
+  },
+  "faith": "For many people, faith shapes how they think about remarriage, commitment, and living together, and a faith leader can be a good person to talk it through with. Some find that new love feels like a blessing, a grace in a later season. If faith isn't part of your life, love can still feel like a gift you didn't expect.",
+  "practices": [
+   "bark|Savor a Moment",
+   "bark|Name It",
+   "branches|Shared Meal",
+   "branches|Scam Pause",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "If someone you met online or by phone asks for money, gift cards, or an investment: stop, and call the National Elder Fraud Hotline, 1-833-372-8311, weekdays. Report it to the FTC at ReportFraud.ftc.gov.",
+   "If a partner hurts, scares, or controls you, or takes your money: call 911 if you are in danger right now. In Minnesota, MAARC, 1-844-880-1574, any time. In any state, Adult Protective Services.",
+   "Your doctor, for health questions about a new relationship, including intimacy and medicines.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): community programs, clubs, and community centers near you, good places to meet people. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "FTC: What to Know About Romance Scams",
+    "https://consumer.ftc.gov/articles/what-know-about-romance-scams"
+   ],
+   [
+    "ASU: Romance and Dating in Later Life",
+    "https://thesanfordschool.asu.edu/research/centers-initiatives/romance-dating-later-life"
+   ],
+   [
+    "Utah State University Extension: Dating in Later Life",
+    "https://extension.usu.edu/relationships/research/dating-in-later-life"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "gray-divorce",
+  "ring": "family",
+  "title": "Divorce late in life",
+  "keys": "divorce gray divorce grey divorce separated separation after 50 years of marriage husband left wife left ending my marriage alone again starting over who am I money after divorce my parents are divorcing kids taking sides",
+  "parts": [
+   "bark",
+   "trunk",
+   "branches",
+   "fruit"
+  ],
+  "quick": [
+   "Divorce after fifty has become far more common. If this is your story, you have a lot of company.",
+   "Even when it was the right choice, it is a real loss. Grieve it at your own pace.",
+   "Money worry is common. Get your own advice from a lawyer or financial planner before signing anything.",
+   "Keep your grown children out of the middle, and keep the door open to each of them."
+  ],
+  "feel": "The house sounds different. A name on the mailbox changes. Friends who knew you as a couple may not know what to say, or whose side to be on. You may grieve the life you planned, even if the marriage was hard, and feel relief, anger, shame, or fear about money all in the same week. After decades as part of a pair, a big question can rise: who am I now? If you didn't choose this, it can feel like the ground gave way. If you did, you may still be surprised by how much it hurts.",
+  "self": {
+   "first": [
+    "Keep steady days: a set wake time, regular meals, and time outside.",
+    "Tell your doctor what's happening, especially if sleep, appetite, or mood change.",
+    "Get your own advice from a lawyer and a financial planner you trust before signing anything.",
+    "Make a simple list of your accounts, bills, insurance, and important papers."
+   ],
+   "helps": [
+    "One call or visit a day with someone who's on your side.",
+    "A divorce support group, a counselor, or a faith community, so you're not carrying it alone.",
+    "Small new routines that are fully yours: a class, a walking group, a new way to spend Sunday.",
+    "Waiting on big choices, like selling the house, until you're steadier, when you can."
+   ],
+   "tell": [
+    "“This is a loss, and I'm allowed to grieve it.”",
+    "“My story is still being written.”",
+    "“I can be on my own and still be connected.”"
+   ],
+   "people": "Try: “The divorce is harder than I let on. Could we get together once a week for a while?”"
+  },
+  "helper": {
+   "feel": "They may feel grief, relief, shame, or fear about money and the future. Some feel judged by family, friends, or their faith community. Many wonder who they are now, after decades as part of a couple. If you're their grown child, they may worry about losing you, too.",
+   "say": [
+    "“How are you doing, really?”",
+    "“I love you, and I'm not going anywhere.”",
+    "“Want to get lunch this week?”",
+    "“What would help most right now?”"
+   ],
+   "avoid": [
+    "“I saw this coming.”",
+    "“What did he do?” or “What did she do?” It asks them to take sides out loud.",
+    "“At your age, why bother?”",
+    "Carrying messages between two parents, or taking sides you don't want to take."
+   ],
+   "help": [
+    "Keep inviting them: Sunday dinners, holidays, grandkids' games.",
+    "Help with one practical task at a time: forms, a move, setting up a new routine.",
+    "Point them to the right experts for money and legal questions, and let them decide.",
+    "If you're their child, keep a relationship with each parent, and say plainly that you won't be the go-between."
+   ],
+   "you": "A parent's divorce can stir your own grief, rewrite family memories, and raise questions about your own marriage. You don't have to choose a side. Set kind limits on what you'll hear about the other parent, and talk with someone you trust."
+  },
+  "faith": "For some, divorce brings hard questions about vows, faith, and belonging in a faith community. Many faith leaders today walk gently with people through divorce, and some traditions offer prayers or rituals for endings and new beginnings. If faith is part of your life, a chaplain or faith leader can listen without judgment. If it isn't, meaning can come through friends, nature, and the life you're building next.",
+  "practices": [
+   "fruit|Best Possible Year",
+   "bark|Slow Exhale",
+   "bark|Grief Time",
+   "branches|Support Group",
+   "trunk|Values Sort",
+   "leaves|Steady Wake Time"
+  ],
+  "reach": [
+   "Call or text 988 any time if the weight of this turns into thoughts of not wanting to live. Veterans: 988, then press 1.",
+   "Call 911 if you are in danger right now. If a spouse or ex is hurting, scaring, or taking from you: in Minnesota, MAARC, 1-844-880-1574, any time; any state, Adult Protective Services.",
+   "Your doctor, if low mood, poor sleep, or appetite changes last two weeks or more.",
+   "A lawyer and a financial planner of your own for money and legal questions. The Eldercare Locator can point you to legal help near you: 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "A counselor or divorce support group, through your doctor, a faith community, or a community center."
+  ],
+  "more": [
+   [
+    "BGSU: Gray Divorce Research",
+    "https://www.bgsu.edu/arts-and-sciences/sociology/Research/Gray-Divorce.html"
+   ],
+   [
+    "NIA: Getting Your Affairs in Order",
+    "https://www.nia.nih.gov/health/advance-care-planning/getting-your-affairs-order-checklist-documents-prepare-future"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ]
+ },
+ {
+  "id": "elder-abuse",
+  "ring": "family",
+  "title": "Abuse or being taken advantage of",
+  "keys": "elder abuse abused hurting me hit pushed yelled at threatened scared of my son scared of my daughter caregiver neglect left alone not fed money taken stealing from me financial abuse exploitation power of attorney misuse pressured to sign taken advantage of afraid at home adult protective services report abuse MAARC",
+  "parts": [
+   "branches",
+   "roots",
+   "bark"
+  ],
+  "quick": [
+   "Abuse can be physical, emotional, sexual, financial, or neglect. It is often by someone close.",
+   "It is not your fault. No one deserves to be hurt, frightened, or taken from.",
+   "Danger right now: call 911. In Minnesota, call MAARC any time at 1-844-880-1574. In any state, call Adult Protective Services.",
+   "Tell one safe person: your doctor, a friend, a neighbor, or a faith leader."
+  ],
+  "feel": "Fear when a certain car pulls in. Bruises you explain away. A grown child who keeps asking for money, or a helper who says you'll be put in a home if you tell. Bills unpaid while someone else holds the checkbook. Being yelled at, ignored, or left without food or medicine. Many people feel ashamed, confused, or loyal to the very person hurting them, especially when it's family, and some worry that speaking up will leave them alone or get someone in trouble. You may wonder whether it is \"bad enough\" to count. If it frightens you or takes from you, it counts.",
+  "self": {
+   "first": [
+    "If you are in danger right now, call 911.",
+    "In Minnesota, call MAARC, 1-844-880-1574, any time. In any state, call Adult Protective Services (find your state's line through NAPSA).",
+    "Tell one safe person: your doctor, a nurse, a friend, a neighbor, or a faith leader.",
+    "If money is being taken or you're pressured to sign papers, call the National Elder Fraud Hotline, 1-833-372-8311, weekdays, and talk with your bank."
+   ],
+   "helps": [
+    "Keeping a phone and important numbers where you can reach them.",
+    "Keeping friends, neighbors, and your faith community close. People who see you often notice when something changes.",
+    "Asking your bank about alerts and a trusted contact on your accounts.",
+    "Choosing your own health care agent and power of attorney, someone you truly trust, with a lawyer's help."
+   ],
+   "tell": [
+    "“This is not my fault.”",
+    "“I deserve to be safe and respected.”",
+    "“Asking for help is brave.”"
+   ],
+   "people": "Try: “Something is happening at home, and I need help. Can I tell you about it?”"
+  },
+  "helper": {
+   "feel": "They may feel ashamed, afraid, or protective of the person hurting them, especially a son, a daughter, or a spouse. Some depend on that person for rides, meals, or a place to live, and fear being left alone. Some don't call it abuse, or wonder whether it's bad enough to count.",
+   "say": [
+    "“I believe you.”",
+    "“It's not your fault.”",
+    "“I'm here, whatever you decide.”",
+    "In private: “Is anyone hurting you, scaring you, or taking from you?”"
+   ],
+   "avoid": [
+    "Asking in front of the person you're worried about.",
+    "“Why didn't you tell me sooner?”",
+    "Confronting the person you suspect yourself. It can make things more dangerous.",
+    "Promising to keep it secret if they're in danger."
+   ],
+   "help": [
+    "Notice signs: unexplained injuries, fear or withdrawal, missing money or new names on accounts, weight loss, missed medicines, unclean living conditions, a helper who won't let you talk alone.",
+    "Find a private moment and ask plainly and gently. Then listen, believe them, and let them lead where you can.",
+    "Report it. You don't need proof. In Minnesota, MAARC, 1-844-880-1574, any time; a reporter's identity is kept confidential. In any state, Adult Protective Services. Danger right now: 911.",
+    "Keep visiting and calling. Staying close is one of the best protections there is."
+   ],
+   "you": "Suspecting abuse is frightening, especially when it's someone in your own family. You don't have to sort it out alone: the people who take reports are trained to look into it. Talk with someone you trust, and call or text 988 if it all becomes too much."
+  },
+  "faith": "No faith tradition asks anyone to accept being hurt or taken from. Honoring family never means hiding harm. If faith is part of your life, a chaplain or faith leader can be a safe person to tell, and many are trained to help you report. Your safety honors the sacredness of your life.",
+  "practices": [
+   "branches|Ask for Help",
+   "branches|Active Listening",
+   "branches|Scam Pause",
+   "branches|Friends",
+   "bark|Self-Compassion Break"
+  ],
+  "reach": [
+   "Call 911 if you are in danger right now.",
+   "Minnesota Adult Abuse Reporting Center (MAARC): 1-844-880-1574, any time, for an adult being hurt, neglected, or taken advantage of.",
+   "In any state, Adult Protective Services: find your state's line at NAPSA's Help in Your Area page.",
+   "National Elder Fraud Hotline (US Department of Justice): 1-833-372-8311, weekdays, for people 60 and older when money is taken or scammed.",
+   "Call or text 988 any time if you feel hopeless or think about ending your life. Veterans: 988, then press 1.",
+   "Eldercare Locator, 1-800-677-1116 (call or text): local help, including legal help. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "NAPSA: Help in Your Area",
+    "https://www.napsa-now.org/help-in-your-area/"
+   ],
+   [
+    "Minnesota DHS: Adult Protection",
+    "https://mn.gov/dhs/people-we-serve/adults/services/adult-protection/index.jsp"
+   ],
+   [
+    "NIA: Elder Abuse",
+    "https://www.nia.nih.gov/health/elder-abuse"
+   ],
+   [
+    "National Center on Elder Abuse",
+    "https://ncea.acl.gov/home"
+   ],
+   [
+    "DOJ Elder Justice: Find Help or Report Abuse",
+    "https://www.justice.gov/elderjustice/find-help-or-report-abuse"
+   ]
+  ]
+ },
+ {
+  "id": "loneliness",
+  "ring": "belong",
+  "title": "Loneliness and living alone",
+  "keys": "lonely loneliness alone living alone by myself isolated isolation no one to talk to no friends left quiet house empty house widow widower nobody calls nobody visits weekends long evenings long miss company",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit",
+   "roots"
+  ],
+  "quick": [
+   "Loneliness is common in later life, and it is a signal, like hunger, that you need people. It is not a failing.",
+   "Living alone and feeling lonely are different. Many people live alone well, with a good web of people around them.",
+   "Lonely thoughts, like \"no one wants to hear from me,\" can keep people apart. Gently testing those thoughts is one of the most helpful steps.",
+   "Small and steady works best: one call a day, one standing date a week, one group you return to."
+  ],
+  "feel": "A quiet house that feels too quiet. Long evenings and long weekends. Meals eaten alone, or skipped. Wishing the phone would ring, then not calling anyone yourself. You may feel forgotten, or embarrassed to say you're lonely, as if it says something about you. It doesn't. It says you are human, and that life has changed: a spouse or friends have died, family lives far away, driving or hearing has gotten harder.",
+  "self": {
+   "first": [
+    "Make one short call or send one note today, just to say, \"I was thinking of you.\"",
+    "Set one standing date: the same call, the same coffee, or the same walk, every week.",
+    "Notice one lonely thought, like \"they're too busy for me,\" and ask: is that really true?"
+   ],
+   "helps": [
+    "Going back to the same place again and again, a class, a coffee hour, a library group, so faces become familiar.",
+    "Serving others: a volunteer shift, a faith community team, reading to children. It connects without pressure.",
+    "Making your home a place you enjoy: music, light, a plant or a pet, a chair by the window.",
+    "Some quiet time on purpose. Solitude you choose can feel full, not empty.",
+    "Asking your doctor to check your hearing and vision. Both can quietly pull people back from company.",
+    "Calling the Eldercare Locator to find senior centers, meal programs, rides, and visiting programs near you."
+   ],
+   "tell": [
+    "“Needing people is part of being human.”",
+    "“Reaching out first is a gift, not a bother.”",
+    "“One real connection is a good start.”"
+   ],
+   "people": "Try: “It's been quieter around here than I'd like. Would you call me Sunday afternoons?” Or: “I'd love some company. Could we have coffee this week?”"
+  },
+  "helper": {
+   "feel": "They may not say they're lonely. Many older adults feel embarrassed, or don't want to be a bother. Some say \"I'm fine\" and mean \"please keep calling.\"",
+   "say": [
+    "“I've missed you. Can I come by Thursday?”",
+    "“I'd love to hear about your week.”",
+    "“Would you come with me? I'd enjoy the company.”"
+   ],
+   "avoid": [
+    "“You should get out more.” It sounds like blame.",
+    "One visit, then silence for months.",
+    "Signing them up for things without asking."
+   ],
+   "help": [
+    "Make it regular: the same day, the same time, every week.",
+    "Invite them into your own circles: a meal, a game, an outing.",
+    "Ask for their help or their advice. Being needed is part of belonging.",
+    "Help with what makes going out hard: a ride, a hearing check, setting up video calls.",
+    "Notice the moments that raise the risk: losing a spouse, giving up driving, a move, a hospital stay."
+   ],
+   "you": "You can't be someone's only connection, and you don't need to be. Help them build more than one thread, and share the calls and visits with others. Your steady presence matters more than any single grand plan."
+  },
+  "faith": "For many people, a faith community is a ready circle of belonging: a coffee hour, a small group, a choir, a prayer chain, a visit from a chaplain. Many congregations offer rides or bring worship home for those who can't travel. If faith isn't part of your life, clubs, classes, and volunteer teams offer the same steady faces.",
+  "practices": [
+   "branches|Lonely Thoughts Check",
+   "branches|One Reach-Out a Day",
+   "branches|Standing Call",
+   "branches|Clubs",
+   "branches|Neighbors",
+   "trunk|Volunteer",
+   "roots|Welcome Solitude"
+  ],
+  "reach": [
+   "Loneliness that has turned into lasting sadness, little interest in things, or poor sleep: talk with your doctor. Depression is common in later life, and help works.",
+   "Senior centers, meal programs, rides, and visiting programs near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "NIA: Loneliness and Social Isolation, Tips for Staying Connected",
+    "https://www.nia.nih.gov/health/loneliness-and-social-isolation/loneliness-and-social-isolation-tips-staying-connected"
+   ],
+   [
+    "National Academies: Social Isolation and Loneliness in Older Adults",
+    "https://www.nationalacademies.org/read/25663"
+   ],
+   [
+    "US Surgeon General: Our Epidemic of Loneliness and Isolation",
+    "https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ],
+   [
+    "Minnesota Aging Pathways",
+    "https://mn.gov/aging-pathways"
+   ]
+  ]
+ },
+ {
+  "id": "lgbtq-aging",
+  "ring": "belong",
+  "title": "LGBTQ+ aging",
+  "keys": "lgbtq lgbt gay lesbian bisexual transgender trans queer nonbinary two-spirit partner same-sex spouse chosen family coming out back in the closet hide who I am nursing home assisted living home care affirming doctor pride older lgbtq elders sage",
+  "parts": [
+   "branches",
+   "roots",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "LGBTQ+ older adults have lived through a great deal, and many bring real strength and deep friendships into later life.",
+   "Chosen family matters. The people who stood by you belong in your plans, your paperwork, and your care.",
+   "Many worry about having to hide again when they need help at home, in a hospital, or in a care community. That worry makes sense, and there are ways to find affirming support.",
+   "You get to decide who knows what, and when. Being yourself is worth protecting."
+  ],
+  "feel": "Pride in a life lived with courage, and grief for friends lost along the way, sometimes many at once. Worry about who will be there as you age, especially if you have no children or are distant from family. Fear of being treated differently by a new doctor, a home aide, or a care community, and the old pull to hide a partner, a past, or who you are. Some people feel more alone after a partner dies, if others never fully saw the relationship. Many also feel a hard-won peace with who they are.",
+  "self": {
+   "first": [
+    "Name your circle: the people who know you fully and show up. Write their names down.",
+    "Make sure the right people can speak for you. A health care directive names who decides if you can't, and it can name chosen family. Your doctor or a legal helper can walk you through it.",
+    "Find one place where you are fully welcome: an LGBTQ+ older adult group, a center, a faith community, or an online gathering."
+   ],
+   "helps": [
+    "Asking a new doctor, clinic, or home care agency plainly: \"How do you support LGBTQ+ patients?\" Their answer tells you a lot.",
+    "Looking for senior living communities that take part in the Long-Term Care Equality Index, a national measure of LGBTQ+ inclusion.",
+    "Bringing a trusted friend to appointments and tours.",
+    "Telling your story, in your own words, for the people who come after you.",
+    "Staying close to younger LGBTQ+ people. Many are hungry for the wisdom of those who came before."
+   ],
+   "tell": [
+    "“I have the right to be all of who I am, here too.”",
+    "“My chosen family is my family.”",
+    "“I have come through hard things before, and I am not alone now.”"
+   ],
+   "people": "Try: “This is my partner, and I'd like her included in everything.” Or, to a friend: “If I'm ever in the hospital, I want you there, and I've put that in writing.”"
+  },
+  "helper": {
+   "feel": "They may have spent decades deciding who was safe to tell. Starting over with new helpers, new doctors, or a new home can bring that old watchfulness back.",
+   "say": [
+    "“How is your partner doing?” Using names and the words they use.",
+    "“Who are the people you'd want with you?”",
+    "“Is there anything you'd like the staff to know about you?”"
+   ],
+   "avoid": [
+    "Calling a partner a \"friend\" or a \"roommate.\"",
+    "Telling others about their identity without asking first.",
+    "Assuming family by blood decides, or knows them best."
+   ],
+   "help": [
+    "Use the names, pronouns, and words they use, every time.",
+    "Treat their chosen family as family: invite them, inform them, include them.",
+    "Help them check that a doctor, home care agency, or care community is affirming before they commit.",
+    "If they meet disrespect, back them up, and help them speak up or report it if they choose."
+   ],
+   "you": "Following their lead on what to share and with whom is a gift. If any of this is new to you, learning quietly on your own is a kindness too. Your steady respect helps them feel safe being fully themselves."
+  },
+  "faith": "Faith can be tender ground. Some LGBTQ+ older adults were hurt by a religious community, and some found a faith home that welcomed them fully. If faith is part of your life, many traditions have affirming congregations and chaplains who will meet you as you are. If faith brings up old pain, that is real too, and a counselor or affirming spiritual guide can help you sort it out at your own pace.",
+  "practices": [
+   "branches|Support Group",
+   "branches|Friends",
+   "bark|Self-Compassion Break",
+   "trunk|Write Your Story",
+   "trunk|Mentor Someone",
+   "fruit|Make Your Wishes Known"
+  ],
+  "reach": [
+   "Senior centers, LGBTQ+ friendly programs, rides, and services near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "In Minnesota, if you or someone you love is being hurt, neglected, or taken advantage of, including at home or in a care community: MAARC, 1-844-880-1574, any time.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "SAGE: Advocacy and Services for LGBTQ+ Elders",
+    "https://www.sageusa.org/"
+   ],
+   [
+    "National Resource Center on LGBTQ+ Aging",
+    "https://lgbtagingcenter.org/"
+   ],
+   [
+    "Long-Term Care Equality Index (SAGE and the Human Rights Campaign Foundation)",
+    "https://thelei.org/the-lei"
+   ],
+   [
+    "Aging with Pride: National Health, Aging, and Sexuality/Gender Study",
+    "https://goldseninstitute.org/health/nhas/"
+   ],
+   [
+    "Minnesota Office of Ombudsman for Long-Term Care",
+    "https://mn.gov/ooltc/contactus/"
+   ]
+  ]
+ },
+ {
+  "id": "veterans",
+  "ring": "belong",
+  "title": "Growing older as a veteran",
+  "keys": "veteran veterans military service army navy air force marines coast guard national guard vietnam korea gulf war cold war va benefits agent orange service memories war memories buddies reunion legion vfw cvso pride proud of my service",
+  "parts": [
+   "trunk",
+   "branches",
+   "bark",
+   "roots"
+  ],
+  "quick": [
+   "Military service shapes a whole life. In later life, many veterans feel it more, not less: pride, gratitude, grief, and sometimes old pain.",
+   "Service memories often return in later life, around retirement, illness, or the deaths of the people you served with. It is common, and it makes sense.",
+   "Other veterans understand without needing to be told. Veteran groups and peer support are worth seeking out at any age.",
+   "VA health care and benefits have grown in recent years. A County Veterans Service Officer can help you check what you may qualify for. Veterans Crisis Line: 988, then press 1."
+  ],
+  "feel": "Pride in what you did and who you served with. Missing the closeness of your unit, and the clear sense of purpose. Grief as the people you served with pass away. Old memories, good and hard, coming back with more quiet time. Some veterans feel unseen, as if their service is forgotten. Some carry injuries, illnesses linked to their service, or things they have never told anyone. Many feel all of these at once.",
+  "self": {
+   "first": [
+    "Reach out to one person you served with, or one veteran near you.",
+    "Contact your County Veterans Service Officer to check your VA health care and benefits.",
+    "Tell your doctor that you served, where, and when. It can matter for your health."
+   ],
+   "helps": [
+    "Joining a veterans group: an American Legion or VFW post, a coffee group, a reunion, or a VA or Vet Center group.",
+    "Telling your story, in your own words and at your own pace, for your family or for the Veterans History Project at the Library of Congress.",
+    "Serving again: mentoring a younger veteran, honor guard, or helping other veterans find their benefits.",
+    "Keeping steady days: routine, sleep, daylight, and time with people.",
+    "A counselor who knows military life, if memories or feelings get heavy. Help works at any age, and you set the pace."
+   ],
+   "tell": [
+    "“My service mattered, and so does who I am now.”",
+    "“I can hold the pride and the pain together.”",
+    "“Asking for help is something I already know how to do.”"
+   ],
+   "people": "Try: “I've been thinking about my service more lately. Some of it I'm proud of, some of it is hard. I'd like you to know that.” Or, to an old friend: “It's been too long. Let's talk this week.”"
+  },
+  "helper": {
+   "feel": "They may be proud and private at once. Many veterans grew up in a time when no one talked about service, and some still find it easier to talk with another veteran than with family.",
+   "say": [
+    "“What was it like to serve?” Then let them choose what to share.",
+    "“Who were the people you served with?”",
+    "“Thank you for your service. I'd love to hear more someday, if you'd like.”"
+   ],
+   "avoid": [
+    "Asking whether they killed anyone, or pushing for hard details.",
+    "Assuming every veteran is troubled, or that none are.",
+    "Deciding for them which help they need."
+   ],
+   "help": [
+    "Help them connect with a County Veterans Service Officer, and go along if they'd like.",
+    "Offer rides to veteran groups, reunions, or the VA.",
+    "Mark the dates that matter to them: Veterans Day, Memorial Day, unit anniversaries.",
+    "Help them record or write their story, if they want to.",
+    "Keep the Veterans Crisis Line close: 988, then press 1."
+   ],
+   "you": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA, Vet Centers, and veteran family groups. Your steady interest and respect matter more than having the right words."
+  },
+  "faith": "Many traditions honor those who served and offer ways to set down what a warrior carried: prayers, blessings, rituals of remembrance, and chaplains who know military life. If faith is part of your life, a chaplain or faith leader can listen to the hardest parts without judging. If it isn't, fellow veterans, a counselor, or a Veterans Day gathering can hold the same honor and remembering.",
+  "practices": [
+   "trunk|Life Lessons",
+   "trunk|Record a Story",
+   "branches|Support Group",
+   "trunk|Mentor Someone",
+   "trunk|Peace With the Past",
+   "roots|Ritual"
+  ],
+  "reach": [
+   "Veterans Crisis Line: call 988, then press 1, or text 838255, any time. Chat at VeteransCrisisLine.net. You don't need to be enrolled in VA care to call. Families can call too.",
+   "Anyone: call or text 988, any time, for thoughts of not wanting to live or feeling overwhelmed.",
+   "Danger right now: call 911.",
+   "VA health care and benefits: your County Veterans Service Officer, or the Minnesota Department of Veterans Affairs.",
+   "Memories, sleep, or mood that get in the way of daily life: talk with your doctor, the VA, or a Vet Center.",
+   "Eldercare Locator: 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways: 1-800-333-2433."
+  ],
+  "more": [
+   [
+    "Veterans Crisis Line",
+    "https://www.veteranscrisisline.net"
+   ],
+   [
+    "Minnesota Department of Veterans Affairs",
+    "https://mn.gov/mdva/"
+   ],
+   [
+    "Find your Minnesota County Veterans Service Officer (MACVSO)",
+    "https://www.macvso.org/find-a-cvso.html"
+   ],
+   [
+    "VA Vet Centers",
+    "https://www.vetcenter.va.gov/About_US.asp"
+   ],
+   [
+    "National Center for PTSD (VA)",
+    "https://www.ptsd.va.gov"
+   ],
+   [
+    "Veterans History Project, Library of Congress",
+    "https://www.loc.gov/programs/veterans-history-project/how-to-participate/"
+   ]
+  ]
+ },
+ {
+  "id": "invisible",
+  "ring": "belong",
+  "title": "Feeling invisible or written off because of age",
+  "keys": "invisible ignored overlooked written off talked over talked down to talked about ageism age discrimination too old patronized treated like a child elderspeak honey sweetie doctor talks to my kids not me no one listens not taken seriously old age jokes left out",
+  "parts": [
+   "trunk",
+   "bark",
+   "branches",
+   "fruit"
+  ],
+  "quick": [
+   "Being talked over, talked down to, or overlooked because of age is common. It is called ageism, and it is not your fault.",
+   "Most older adults meet it in everyday life: a doctor speaking to a grown child instead of you, a clerk calling you \"sweetie,\" jokes about getting old.",
+   "How you see your own aging matters. Research links kinder views of aging with better health and a longer life, and those views can change.",
+   "You can speak up, simply and calmly, and you can choose people and places that see you."
+  ],
+  "feel": "Stung when someone talks to the person beside you instead of you. Tired of being called \"young lady\" or \"sweetie.\" Left out of decisions about your own life. Unsure whether to speak up or let it go. Over time you may start to believe it, and wonder if you still have much to offer. You do. Feeling unseen is painful, and the pain makes sense.",
+  "self": {
+   "first": [
+    "Notice when it happens, and name it to yourself: that was ageism, not the truth about me.",
+    "Practice one calm line to use when you're overlooked, like: \"Please speak to me directly.\"",
+    "Spend time this week with someone who values what you think."
+   ],
+   "helps": [
+    "Bringing a written list of questions to appointments, and asking the doctor to talk with you first.",
+    "Telling a trusted family member ahead of time: \"At the appointment, please let me speak for myself.\"",
+    "Catching your own old-age put-downs, like \"I'm just too old for that,\" and trying a kinder, truer sentence.",
+    "Staying in roles where you are needed: mentoring, volunteering, teaching a skill, sharing your story.",
+    "Spending time with people of all ages, where your experience is welcome."
+   ],
+   "tell": [
+    "“My age is not a reason to overlook me.”",
+    "“I still have a lot to offer, and I am still growing.”",
+    "“I can speak up kindly and clearly.”"
+   ],
+   "people": "Try: “I'd like to be part of this decision. Please ask me first.” Or, at the doctor: “I'd like you to explain this to me, and my daughter can listen too.”"
+  },
+  "helper": {
+   "feel": "They may notice every time someone looks past them, even if they don't say so. Being overlooked can wear away confidence over time.",
+   "say": [
+    "“What do you think?” And then wait for the answer.",
+    "“Let's ask her. She can tell you herself.”",
+    "“I'd love your advice on something.”"
+   ],
+   "avoid": [
+    "Answering questions meant for them, or speaking for them.",
+    "\"Sweetie,\" \"young lady,\" or a sing-song voice.",
+    "Making decisions about their life without them in the room."
+   ],
+   "help": [
+    "At appointments, sit beside them, not in front, and turn questions back to them.",
+    "Ask for their advice, and use it.",
+    "Notice and gently correct ageist jokes and remarks, including your own.",
+    "If hearing or vision makes it harder to join in, help them get a check, so they can take part fully."
+   ],
+   "you": "Most of us carry age stereotypes we never chose. Noticing them in yourself is part of the work, and it helps you, too, for your own later years. Your respect is a model for everyone around them."
+  },
+  "faith": "Many faith traditions honor elders as carriers of wisdom and blessing, and many communities lean on older members as teachers, prayer partners, and keepers of memory. If faith is part of your life, that can be a place where you are seen and needed. If it isn't, any community that values experience can offer the same.",
+  "practices": [
+   "trunk|Name Your Gifts",
+   "trunk|Mentor Someone",
+   "trunk|Pass On a Skill",
+   "bark|Kind Voice Letter",
+   "trunk|Find Your Role",
+   "branches|Clubs"
+  ],
+  "reach": [
+   "Feeling worthless, or that life isn't worth living: call or text 988, any time. Veterans: call 988, then press 1. Danger right now: call 911.",
+   "Low mood that lasts, or losing interest in things: talk with your doctor. Depression is common in later life, and help works.",
+   "In Minnesota, if someone is hurting, neglecting, or taking advantage of you: MAARC, 1-844-880-1574, any time.",
+   "Roles, groups, and services near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "WHO: Ageism Is a Global Challenge (Global Report on Ageism)",
+    "https://www.who.int/news/item/18-03-2021-ageism-is-a-global-challenge-un"
+   ],
+   [
+    "University of Michigan National Poll on Healthy Aging: Everyday Ageism and Health",
+    "https://ihpi.umich.edu/national-poll-healthy-aging/national-findings/everyday-ageism-and-health"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ],
+   [
+    "Minnesota Aging Pathways",
+    "https://mn.gov/aging-pathways"
+   ]
+  ]
+ },
+ {
+  "id": "faith-questions",
+  "ring": "meaning",
+  "title": "Faith questions late in life",
+  "keys": "faith questions doubt doubts late in life god feels far away where is god why did this happen afraid of what comes after heaven afterlife lost my faith left the church never religious spiritual struggle angry at god prayer feels empty faith deeper now religion old age meaning of my life guilt judgment forgiveness worship can't get to church",
+  "parts": [
+   "roots",
+   "trunk",
+   "fruit"
+  ],
+  "quick": [
+   "Big questions often come close in later life. That is a natural part of a long life, not a sign that something is wrong.",
+   "Doubt and spiritual struggle are common, and they can sit beside faith for years.",
+   "What matters most is whether faith is a help to you right now, a weight, or both.",
+   "Every path belongs here: faith that has deepened, faith full of questions, faith set down, and a life without a faith."
+  ],
+  "feel": "The questions may arrive with a diagnosis, the death of a spouse, or simply the quiet of more time. What has my life meant? Where was the sacred in the hard years? What happens when I die? Some people find their faith growing deeper and simpler. Some feel the sacred has gone quiet, or feel guilt, fear of judgment, or anger they never expected. Some set faith down long ago and now wonder about it again, or feel pressure from family to come back. Some never had a faith and want meaning in their own words. All of it is common, and all of it is welcome.",
+  "self": {
+   "first": [
+    "Notice, without judging, whether faith is a help to you right now, a weight, or both.",
+    "Write down one question you carry. You do not need to answer it today.",
+    "Keep the practices that still feel true, and rest from the ones that don't, for now.",
+    "Tell one person you trust what you are wondering about."
+   ],
+   "helps": [
+    "A listener who can sit with questions without rushing to answers: a chaplain, a spiritual director, a faith leader, or a wise friend.",
+    "Honest words to the sacred, including lament. Telling the truth about what hurts is a form of prayer in many traditions.",
+    "Prayers, songs, or readings you learned long ago, if they still bring comfort.",
+    "Ways to join a faith community that fit your body now: by phone, radio, TV, online, or a visit at home.",
+    "Meaning in other places too: nature, music, service, the people you love, and a long look back at your life."
+   ],
+   "tell": [
+    "“My questions are welcome.”",
+    "“I don't have to settle everything today.”",
+    "“Doubt and faith can live in the same heart.”"
+   ],
+   "people": "Try: “I've been thinking a lot about faith lately. I don't need answers. Would you just listen?”"
+  },
+  "helper": {
+   "feel": "They may feel embarrassed by doubt after a lifetime of faith, or afraid you will judge them. They may feel far from the sacred and blame themselves. If they set faith down long ago, they may feel pressure from family to return. If their faith has deepened, they may want to talk about it more than you expect.",
+   "say": [
+    "“What has helped you through hard times before?”",
+    "“What are you wondering about these days?”",
+    "“Would you like me to call someone from your faith community, or a chaplain?”"
+   ],
+   "avoid": [
+    "“You just need more faith,” or “Just pray more.”",
+    "“Everything happens for a reason.”",
+    "Pressing your own beliefs, or arguing them out of theirs, especially near illness or the end of life.",
+    "Assuming what their faith is, or that they have one."
+   ],
+   "help": [
+    "Follow their lead, and use their words for the sacred.",
+    "Help them reach worship or a community in ways that fit their body: rides, phone, radio, online, home visits.",
+    "Bring what comforts them: music, readings, a candle, a familiar object.",
+    "If guilt, fear, or a sense of being punished weighs on them, offer to find a chaplain or counselor."
+   ],
+   "you": "Their questions may stir your own. You don't have to share their beliefs or have answers to be a good companion. Listening is the gift."
+  },
+  "faith": "This guide's topic is faith, so it sits at the center here, offered as one door among many. Every tradition has people who wrestled with doubt and still belonged, and many keep words for lament, for waiting, and for peace near the end. A chaplain or spiritual director can walk with you whatever you believe or don't. If faith has never been part of your life, the same questions of meaning, love, and peace are yours too, and they can be explored in your own words.",
+  "practices": [
+   "roots|Bring Your Questions",
+   "roots|Lament",
+   "roots|Spiritual Direction",
+   "roots|Prayers You Know by Heart",
+   "roots|Welcome Solitude",
+   "roots|Awe Walk"
+  ],
+  "reach": [
+   "A chaplain, spiritual director, or faith leader, when questions, guilt, or fear weigh heavily. Hospitals, hospices, and many care homes have chaplains for people of any faith or none.",
+   "Your doctor, if low mood, poor sleep, or losing interest in almost everything lasts two weeks or more.",
+   "Call or text 988 any time if you think about ending your life. Veterans: 988, then press 1. Danger right now: call 911.",
+   "Eldercare Locator, 1-800-677-1116 (call or text), for rides and local help, including getting to worship. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "Spiritual Directors International: find a spiritual companion",
+    "https://www.sdicompanions.org/find-a-spiritual-director-companion/"
+   ],
+   [
+    "Krause and Ellison, religious doubt in older adults (research)",
+    "https://doi.org/10.1111/j.1468-5906.2009.01448.x"
+   ],
+   [
+    "Exline and colleagues, religious and spiritual struggles (research)",
+    "https://doi.org/10.1037/a0036465"
+   ],
+   [
+    "National Institute on Aging",
+    "https://www.nia.nih.gov/health"
+   ]
+  ]
+ },
+ {
+  "id": "facing-death",
+  "ring": "meaning",
+  "title": "Facing death and sharing your wishes",
+  "keys": "dying my own death thinking about death afraid to die fear of dying end of life wishes advance directive health care directive living will health care agent health care proxy power of attorney for health care who will speak for me talk with my family about dying hospice palliative care what i want at the end conversation project honoring choices peace about dying",
+  "parts": [
+   "fruit",
+   "branches",
+   "roots",
+   "trunk"
+  ],
+  "quick": [
+   "Thinking about your own death is a natural part of a long life. It is not giving up.",
+   "Fear and peace can share the same day. Both are normal.",
+   "Choose someone to speak for you if you can't, and tell them what matters most to you.",
+   "Put your wishes in writing, share copies, and look at them again when life changes."
+  ],
+  "feel": "Many older adults think about death more often now: after friends die, after a diagnosis, or on a quiet evening. You may feel fear of pain, of being a burden, or of the unknown. You may worry about the people you will leave. You may also feel calm, even relief, or a clearer sense of what matters. Family may change the subject when you bring it up, and that can feel lonely.",
+  "self": {
+   "first": [
+    "Think about what matters most to you if you become very ill: comfort, time, being at home, being able to talk with family, or something else.",
+    "Choose a health care agent: someone who knows you well, can stay calm, and will follow your wishes even if they differ from their own.",
+    "Tell that person, and your doctor, what you would want.",
+    "Ask your doctor, nurse, or clinic about an advance directive for your state, and give copies to your agent and your doctor."
+   ],
+   "helps": [
+    "Starting small: one conversation, one question, one page.",
+    "Step-by-step guides made for this, like The Conversation Project, PREPARE for Your Care, and Honoring Choices Minnesota.",
+    "Asking your doctor about palliative care, which focuses on comfort at any stage of a serious illness, and about hospice when the time comes.",
+    "Talking with a chaplain, counselor, or faith leader about fear, peace, and what comes after.",
+    "Saying what matters while you can: thank you, I love you, I forgive you, please forgive me."
+   ],
+   "tell": [
+    "“Thinking about my death is part of living well.”",
+    "“My wishes matter, and I can say them.”",
+    "“I can feel afraid and still find peace.”"
+   ],
+   "people": "Try: “I'd like to tell you what matters to me, in case you ever need to speak for me. Is now a good time, or could we set a time?”"
+  },
+  "helper": {
+   "feel": "They may want to talk about dying and sense others changing the subject. They may worry about being a burden, about pain, or about the family after they are gone. Some feel calm and ready to plan, and wait for someone to ask.",
+   "say": [
+    "“What matters most to you, if you get sicker?”",
+    "“Who would you want to speak for you?”",
+    "“What worries you most? What gives you peace?”"
+   ],
+   "avoid": [
+    "“Don't talk like that,” or “You'll outlive us all.”",
+    "Deciding for them, or steering them toward the choice you would make.",
+    "Talking about their wishes with others while they sit there, as if they were not in the room."
+   ],
+   "help": [
+    "Listen first, and let them set the pace.",
+    "Offer to sit in on a talk with their doctor, if they want you there.",
+    "Help them find the forms for their state, and keep copies where they can be found.",
+    "If you are asked to be their health care agent, ask questions until you truly understand what they would want."
+   ],
+   "you": "Talking about a parent's or partner's death can bring up grief before the loss. That is normal. Talk with someone you trust, and remember that honoring their wishes is a deep form of love."
+  },
+  "faith": "Every tradition has something to say about death: prayers, rituals, blessing, confession, and the gift of being accompanied. If faith is part of your life, a faith leader or chaplain can help you include it in your wishes, from last rites to music to who you want nearby. If it isn't, peace can come through the people you love, nature, and knowing your life has mattered. Chaplains walk with people of every faith and none.",
+  "practices": [
+   "fruit|Make Your Wishes Known",
+   "branches|The Four Things",
+   "trunk|What I Want Remembered",
+   "fruit|Worth Living",
+   "branches|Ask for Help"
+  ],
+  "reach": [
+   "Your doctor or nurse: for questions about your health, your treatment choices, palliative care, and hospice.",
+   "A lawyer, for legal questions about documents. Your clinic can help with the health care directive itself.",
+   "A chaplain, counselor, or faith leader, for fear, grief, and peace.",
+   "Call or text 988 any time if you think about ending your life. Veterans: 988, then press 1. Danger right now: call 911.",
+   "Eldercare Locator, 1-800-677-1116 (call or text), for local help. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "Honoring Choices Minnesota: health care directive forms and guides",
+    "https://www.honoringchoices.org/"
+   ],
+   [
+    "The Conversation Project: starter guides for the talk",
+    "https://theconversationproject.org/"
+   ],
+   [
+    "PREPARE for Your Care",
+    "https://prepareforyourcare.org"
+   ],
+   [
+    "National Institute on Aging: advance care planning",
+    "https://www.nia.nih.gov/health/advance-care-planning/advance-care-planning-advance-directives-health-care"
+   ],
+   [
+    "National Institute on Aging: choosing a health care proxy",
+    "https://www.nia.nih.gov/health/advance-care-planning/choosing-health-care-proxy"
+   ],
+   [
+    "CaringInfo: advance directives by state",
+    "https://www.caringinfo.org"
+   ]
+  ]
+ },
+ {
+  "id": "regrets",
+  "ring": "meaning",
+  "title": "Making peace with regrets",
+  "keys": "regret regrets i wish i had should have shouldn't have mistakes my past guilt looking back life review make amends apologize apology say sorry forgive myself self-forgiveness can't undo it too late missed chances bad parent what i did lying awake at night old mistakes estranged ashamed",
+  "parts": [
+   "trunk",
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "quick": [
+   "Looking back is a natural part of later life. It can bring peace, and it can stir regret too.",
+   "Sort each regret gently: what can still be mended, what can be mended in part, and what can only be set down.",
+   "Make amends where it is safe and wise. Where it is not, a letter you keep or a kindness to someone else can carry them.",
+   "Letting go of what cannot be undone, and turning toward what is still in reach, helps peace grow."
+  ],
+  "feel": "Old moments come back in the quiet hours: words said or never said, a choice that hurt someone, a child you wish you had parented differently, a chance you didn't take, time lost to work, drinking, or anger. Some regrets feel hot and sharp. Others feel like a long ache for a road not taken. You may feel guilt, shame, sadness, or a sense that it is too late. You are not alone. Many people carry something as they look back on a long life.",
+  "self": {
+   "first": [
+    "Write the regret down in a sentence or two. Naming it plainly often makes it smaller.",
+    "Ask: can this still be mended, mended in part, or only set down?",
+    "Tell one person you trust, or a chaplain or counselor, what you are carrying.",
+    "Look at the whole chapter, not only the worst moment: what you knew then, what you were facing, and who helped or didn't."
+   ],
+   "helps": [
+    "Making amends where it is safe and wise: a call, a letter, an apology without excuses, or repaying what you can.",
+    "Where contact would hurt the other person or you, a letter you never send, a gift to a cause they cared about, or a kindness to someone in a similar place.",
+    "Looking back over your whole life with a good listener, so the hard chapters sit beside the good ones.",
+    "Turning toward what is still in reach: being the grandparent, friend, or neighbor you want to be now.",
+    "A chaplain, counselor, or faith practice of confession or repair, for the things that weigh on your conscience."
+   ],
+   "tell": [
+    "“I did the best I could with what I knew then, and I know more now.”",
+    "“I can own what I did and still be worth kindness.”",
+    "“What I cannot fix, I can set down.”"
+   ],
+   "people": "Try: “Something from years ago has been on my mind. Would you listen while I talk it through? I'm not asking you to fix it.”"
+  },
+  "helper": {
+   "feel": "They may bring up the same regret again and again, or speak of it only once, quietly. They may feel shame, fear that it is too late, or worry that you will think less of them. If the regret involves you, they may be working up to an apology.",
+   "say": [
+    "“That still weighs on you. Tell me about it.”",
+    "“What do you wish you could do about it now?”",
+    "“I see how much you've grown since then.”"
+   ],
+   "avoid": [
+    "“Oh, that was nothing,” before they've finished. Quick reassurance can leave them alone with it.",
+    "“You should have known better,” or piling on.",
+    "Pushing them to contact someone before it is safe and wise, or arranging it for them.",
+    "Changing the subject every time it comes up."
+   ],
+   "help": [
+    "Listen to the whole story before you respond.",
+    "If they want to make amends, help with the practical part: finding an address, writing a letter, a ride, and check together that contact is safe for everyone.",
+    "Remind them of the good they have done, specifically and truthfully.",
+    "If guilt grows into hopelessness, help them reach a chaplain, counselor, or their doctor, and know when to call 988."
+   ],
+   "you": "Their regrets may stir your own, or touch old hurts between you. If they apologize to you, you can take time before you answer. Get support for yourself, too."
+  },
+  "faith": "Many traditions offer a path through regret: confession, repentance, making amends, a day of atonement, rituals of release, and the promise of mercy. If faith is part of your life, a faith leader or chaplain can walk with you through it. If it isn't, the same steps of honesty, repair, and kindness toward yourself are open to you, and a counselor can help.",
+  "practices": [
+   "trunk|Peace With the Past",
+   "trunk|Life Review",
+   "trunk|Moral Repair Letter",
+   "bark|Self-Compassion Break",
+   "fruit|Make Peace",
+   "branches|The Four Things"
+  ],
+  "reach": [
+   "A chaplain, counselor, or spiritual director, when a regret weighs on your conscience or keeps you up at night.",
+   "Your doctor, if low mood, guilt, or poor sleep lasts two weeks or more. Depression is very treatable in later life.",
+   "Call or text 988 any time if regret turns to hopelessness or thoughts of ending your life. Veterans, including those carrying memories from service: 988, then press 1. Danger right now: call 911.",
+   "Eldercare Locator, 1-800-677-1116 (call or text), for local counseling and support. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "Sequoia Legacy Book: look back at your life, chapter by chapter",
+    "/sequoia/#legacy"
+   ],
+   [
+    "Wrosch and colleagues, regret and quality of life (research)",
+    "https://pubmed.ncbi.nlm.nih.gov/16420140/"
+   ],
+   [
+    "Shay Moral Injury Center (Volunteers of America)",
+    "https://www.voa.org/moral-injury-center"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ]
+ },
+ {
+  "id": "legacy",
+  "ring": "meaning",
+  "title": "Leaving a legacy",
+  "keys": "legacy what will i leave behind be remembered how will they remember me my story life story write my memories record my stories ethical will legacy letter letter to my grandchildren pass on values blessing family history memoir what matters most no children who will remember me meaning of my life wisdom to pass on",
+  "parts": [
+   "trunk",
+   "fruit",
+   "branches"
+  ],
+  "quick": [
+   "A legacy is more than money or things. It is your values, your stories, your lessons, and your love.",
+   "You are already leaving one, every day, in small ways: how you greet people, a recipe, a saying, a kindness.",
+   "A legacy letter, sometimes called an ethical will, passes on values and blessings rather than things.",
+   "Start small. One story, one lesson, or one blessing is enough for today."
+  ],
+  "feel": "Later life can bring the question: what will I leave behind? Some people feel a quiet urge to tell their stories before they are lost. Some worry their life was too ordinary to matter, or that no one will want to hear it. Some have no children and wonder who will remember them. Others feel ready to put into words what they have learned, and simply need a place to start.",
+  "self": {
+   "first": [
+    "Name three values you hope live on after you, in a word each.",
+    "Choose one story only you can tell, and tell it to someone, or record it on your phone.",
+    "Write one short blessing for someone you love, and give it to them now, or keep it for later.",
+    "Try Sequoia's Legacy Book, one prompt at a time. Every prompt can be skipped."
+   ],
+   "helps": [
+    "A legacy letter to one person or to the family: values, lessons, thanks, hopes, and if you want, words of forgiveness asked or given.",
+    "Telling stories to a grandchild, a niece or nephew, or a friend who writes or records them.",
+    "Passing on a skill, a recipe, a garden, a tool, with the story behind it.",
+    "Noticing the small daily legacies you already give: the way you listen, encourage, or make people laugh.",
+    "A legacy beyond family: students, neighbors, a congregation or club, a cause you have served."
+   ],
+   "tell": [
+    "“An ordinary life, well loved, is worth passing on.”",
+    "“My stories matter because they are mine.”",
+    "“I am leaving a legacy today, in small ways.”"
+   ],
+   "people": "Try: “I'd like to tell you some stories from my life, while I remember them well. Would you help me write them down?”"
+  },
+  "helper": {
+   "feel": "They may want to share their stories and wonder whether anyone is interested. They may feel shy, or worry their life was too ordinary. If memory is changing, they may feel urgency, or frustration at forgotten details. Some memories may stir grief or old hurts.",
+   "say": [
+    "“What do you hope we remember about you?”",
+    "“Who shaped you most when you were young?”",
+    "“Would you teach me how you make that?”"
+   ],
+   "avoid": [
+    "Polishing or rewriting their words. Their voice is the gift.",
+    "Rushing them, or treating it as a task to finish “before it's too late.”",
+    "Pushing into hard chapters they haven't chosen to open.",
+    "Sharing what they've written without asking them first."
+   ],
+   "help": [
+    "Be the scribe: write, type, or record their words exactly as they say them.",
+    "Bring prompts: an old photo, a song, a recipe card, a map of where they grew up.",
+    "Let them decide what to share, and with whom.",
+    "If memory is changing, write it as a “told to” entry, and enjoy the telling more than the details."
+   ],
+   "you": "Listening to their stories can be tender, especially when time feels short. Keep what they give you somewhere safe, and let yourself feel what it stirs."
+  },
+  "faith": "For some people, faith is part of the legacy: a blessing, a prayer, a favorite passage, or the story of what has held them up. Many traditions have long practices of blessing the next generation and passing on values in writing. If faith is part of your life, include it in your own words. If it isn't, your values, love, and lessons carry just as much.",
+  "practices": [
+   "trunk|Legacy Letter",
+   "trunk|Record a Story",
+   "trunk|What I Want Remembered",
+   "trunk|Life Lessons",
+   "trunk|Values Sort",
+   "fruit|Blessing for Those You Love",
+   "trunk|Pass On a Skill"
+  ],
+  "reach": [
+   "If looking back brings up more than you want to carry alone, stop and call someone you trust, or call or text 988, any time. Veterans, especially if memories from service return: 988, then press 1.",
+   "If you are in hospice or palliative care, ask whether a chaplain, social worker, or volunteer can help with legacy or life story work.",
+   "Eldercare Locator, 1-800-677-1116 (call or text), for local programs, classes, and volunteer roles where your know-how is welcome. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
+  ],
+  "more": [
+   [
+    "Sequoia's Legacy Book",
+    "/sequoia/#legacy"
+   ],
+   [
+    "Dignity in Care: dignity therapy at the end of life",
+    "https://dignityincare.ca/en/dignity-therapy-at-end-of-life.html"
+   ],
+   [
+    "Legacy of values writing with older adults (The Gerontologist, 2023)",
+    "https://academic.oup.com/gerontologist/article/63/9/1488/7058504"
+   ],
+   [
+    "Allen and colleagues, legacy activities near the end of life (research)",
+    "https://doi.org/10.1089/jpm.2007.0294"
+   ]
+  ]
  }
 ];
 window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
