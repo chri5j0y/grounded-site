@@ -516,7 +516,7 @@
     g: { why: "A call on the calendar takes away the work of deciding, and gives you both something to look forward to.",
       today: "Choose one person and ask: could we talk every Tuesday at ten?",
       build: "Keep it short if you like. Showing up every week matters more than length.",
-      hard: "If a call is missed, pick up again next week. The Friendship Line, 1-800-971-0016, is there for older adults any time you'd like someone to talk with." } },
+      hard: "If a call is missed, pick up again next week. For more ways to stay in touch, Minnesota Aging Pathways, 1-800-333-2433, can help you find local groups and programs." } },
   { p: 'branches', n: 'Grandparent From a Distance', d: 'Stay close to grandchildren far away with calls, letters, and shared projects.',
     m: ['R', '15 min', 'E', ''], f: { seated: 1, bed: 1, chronic: 1 },
     g: { why: "Distance doesn't have to mean drifting apart. Small, steady contact keeps you part of a grandchild's life.",
@@ -559,7 +559,7 @@
     g: { why: "The strongest research on loneliness finds that working on lonely thoughts, like expecting to be turned away, helps more than only adding more contact.",
       today: "Notice one thought that keeps you apart, like \"They're too busy for me.\" Write it down.",
       build: "Test it: reach out once and see what happens. Write down what actually happened.",
-      hard: "Loneliness is common and nothing to be ashamed of. If it's heavy, the Friendship Line, 1-800-971-0016, is there any time." } },
+      hard: "Loneliness is common and nothing to be ashamed of. If it's heavy, call or text 988 any time. Minnesota Aging Pathways, 1-800-333-2433, can help you find local groups and programs." } },
   { p: 'branches', n: 'Support Group', d: 'Join a group of people walking through something similar: grief, caregiving, or a diagnosis.',
     m: ['R', '60 min', 'S', ''], f: { seated: 1, chronic: 1 },
     g: { why: "Being with people who understand your experience eases loneliness and offers practical wisdom.",
@@ -978,7 +978,7 @@
       ['NAMI Minnesota', 'https://namimn.org/', 'Mental health education and support groups.']
     ],
     branches: [
-      ['Friendship Line', '', '1-800-971-0016, any time, for adults 60 and up and adults with disabilities.'],
+      ['Minnesota Aging Pathways', 'https://mn.gov/aging-pathways/', '1-800-333-2433, weekdays, to find local groups, programs, and support.'],
       ['Eldercare Locator', 'https://eldercare.acl.gov/home', '1-800-677-1116, call or text, to find local help, meals, and rides.'],
       ['AARP Fraud Watch Network Helpline', 'https://www.aarp.org/money/scams-fraud/helpline/', '877-908-3360, weekdays, for members and nonmembers.'],
       ['National Elder Fraud Hotline', 'https://www.justice.gov/elderjustice/find-help-or-report-abuse', '1-833-372-8311, weekdays, for people 60 and older.'],
