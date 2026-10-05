@@ -597,7 +597,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc2"></script>
 <script src="../shared/gg-sources.js?v=src6"></script>
-<script src="../shared/gg-learn.js?v=ln19"></script>
+<script src="../shared/gg-learn.js?v=ln20"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -1768,7 +1768,7 @@ function lnMount(t, l){
   const host = $('#ln-host'); if (!host) return;
   if (!window.GGLearn){ host.innerHTML = `<div class="card"><p>The lesson player didn't load. Check your connection and open this lesson again.</p></div>`; return; }
   const D = lnData();
-  LN = GGLearn.player(host, {lesson: l, track: t, tracks: lnTracks(), done: D.done, at: D.at[l.id] || 0, accent: '#8B5E1A',
+  LN = GGLearn.player(host, {mark: {name: 'Field Guide'}, lesson: l, track: t, tracks: lnTracks(), done: D.done, at: D.at[l.id] || 0, accent: '#8B5E1A',
     onAt: i => { lnData().at[l.id] = i; save(); },
     onDone: id => { const d = lnData(); if (!d.done[id]){ d.done[id] = today(); save(); } },
     open: id => { LN = null; go('learn', {ln: id}); },
@@ -1971,7 +1971,7 @@ function stmMount(i){
   const M = STM(), L = M.lessons[i], D = stmData(), tr = stmTrack(), l = tr.lessons.find(x => x.id === L.id);
   if (!l) return;
   if (LN) lnStop();
-  LN = GGLearn.player(host, {mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#8B5E1A',
+  LN = GGLearn.player(host, {mark: {tree: 'oak', name: 'Oak Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#8B5E1A',
     onAt: k => { lastAct = Date.now(); stmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
     onDone: id => { const d = stmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#stm-foot'); if (f) f.innerHTML = stmFoot(i); },
     open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'oak', stm:1, stml:k < 0 ? 0 : k}; render(); },
@@ -3723,7 +3723,7 @@ function samMount(i){
   const M = SAM(), L = M.lessons[i], D = samData(), tr = samTrack(), l = tr.lessons.find(x => x.id === L.id);
   if (!l) return;
   if (LN) lnStop();
-  LN = GGLearn.player(host, {mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#1F6F74',
+  LN = GGLearn.player(host, {mark: {tree: 'aspen', name: 'Aspen Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#1F6F74',
     onAt: k => { lastAct = Date.now(); samData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
     onDone: id => { const d = samData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#sam-foot'); if (f) f.innerHTML = samFoot(i); },
     open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'aspen', sam:1, saml:k < 0 ? 0 : k}; render(); },
@@ -4537,7 +4537,7 @@ function wlmMount(i){
   const M = WLM(), L = M.lessons[i], D = wlmData(), tr = wlmTrack(), l = tr.lessons.find(x => x.id === L.id);
   if (!l) return;
   if (LN) lnStop();
-  LN = GGLearn.player(host, {mood: 'willow', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#5D5A6E',
+  LN = GGLearn.player(host, {mark: {tree: 'willow', name: 'Willow Guide'}, mood: 'willow', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#5D5A6E',
     onAt: k => { lastAct = Date.now(); wlmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
     onDone: id => { const d = wlmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#wlm-foot'); if (f) f.innerHTML = wlmFoot(i); },
     open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'willow', wlm:1, wlml:k < 0 ? 0 : k}; render(); },
@@ -4634,7 +4634,7 @@ function sgMount(){
   const host = $('#sg-host'), x = sgFind(V.sg); if (!host || !x || !window.GGLearn) return;
   const trs = sgTracks(), tr = trs.find(t => t.lessons.some(l => l.id === x.id)), l = tr && tr.lessons.find(y => y.id === x.id); if (!l) return;
   if (LN) lnStop();
-  LN = GGLearn.player(host, {lesson: l, track: tr, tracks: trs, done: {}, at: 0, accent: '#5E6B73',
+  LN = GGLearn.player(host, {mark: {name: 'Field Guide'}, lesson: l, track: tr, tracks: trs, done: {}, at: 0, accent: '#5E6B73',
     onAt: () => { lastAct = Date.now(); }, // a playing video must not lock the Field Guide
     open: id => { lnStop(); V = {tab:'learn', sg:id}; render(); },
     home: () => { lnStop(); go('learn'); }});
@@ -4732,7 +4732,7 @@ function wfgMount(){
   const tr = wfgTrack(g.ring, s), l = tr && tr.lessons.find(x => x.id === g.id); if (!l) return;
   if (LN) lnStop();
   const D = lnData();
-  LN = GGLearn.player(host, {mood: s === 'willow' ? 'willow' : 'learning', lesson: l, track: tr, tracks: [tr], done: D.done, at: D.at[g.id] || 0, accent: FGSER[s].accent,
+  LN = GGLearn.player(host, {mark: {tree: FGSER[s].tree, name: FGSER[s].label}, mood: s === 'willow' ? 'willow' : 'learning', lesson: l, track: tr, tracks: [tr], done: D.done, at: D.at[g.id] || 0, accent: FGSER[s].accent,
     onAt: k => { lastAct = Date.now(); lnData().at[g.id] = k; save(); }, // a playing video must not lock the Field Guide
     onDone: id => { wfgCount(id, 'watched'); const f = $('#wfg-foot'); if (f) f.innerHTML = wfgFoot(g, false); },
     section: () => { lnStop(); V.wfgread = 1; render(); },
