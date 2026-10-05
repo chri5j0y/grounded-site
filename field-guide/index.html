@@ -3658,7 +3658,15 @@ function saConsentLine(c){
 
 // ----- training (its own module, separate from Maple's; gates real visits for everyone) -----
 const SAM = () => SAG() && SAG().module;
-function samData(){ DATA.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.samod || {}); return DATA.samod; }
+function samData(){ DATA.samod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.samod || {}); return DATA.samod; }
+/* Aspen Guide Training, version 2 (GWG BLD 726): played like Oak and Willow Guide Training. Each lesson is a
+   narrated video in the shared player with Read It Instead; watched (closing scene, its one question answered)
+   or read (Mark as Read) both count; lessons open in order; renewing opens all. A library without lesson
+   videos shows text with Mark as Read, as before. */
+const samFree = () => { const D = samData(); return samState().complete || !!(D.pass || D.signed); };
+const samOpen = i => { const M = SAM(), D = samData(); return i <= 0 || samFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+const samVid = L => !!(L && L.video && L.video.scenes && L.video.scenes.length && window.GGLearn);
+function samTrack(){ const M = SAM(); return {id:'sag-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
 function samState(){
   const M = SAM(), D = samData(), t = today();
   if (!M) return {complete:false, total:0, done:0};
@@ -3680,7 +3688,7 @@ function vSAM(){
   <div class="hello sa-hello" style="margin-top:14px"><div class="eyebrow" style="color:#A9D88A">Aspen Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
-  ${M.lessons.map((l, i) => step('sa-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = samOpen(i); return step('sa-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
   <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
   ${step('sa-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with middle schoolers`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
@@ -3688,14 +3696,38 @@ function vSAM(){
   ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sa-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('sa') : ''}`;
 }
 function vSAMLesson(i){
-  const M = SAM(), L = M.lessons[i], n = M.lessons.length, read = !!samData().lessons[L.id];
+  const M = SAM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vSAM();
+  if (!samOpen(i)) return `<button class="linkbtn" data-act="sa-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = samVid(L), watch = vid && !V.saread;
+  if (watch){ GGLearn.css(); setTimeout(() => samMount(i), 0); }
   return `<button class="linkbtn" data-act="sa-mhome">Back to training</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
-  ${lessonBody(L)}
-  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="sa-mread" data-v="${i}">Mark as Read</button>`}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="sam-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="sa-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="sa-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="sam-foot">${samFoot(i)}</div>`;
+}
+// The buttons under a lesson. Redrawn in place when a video finishes, so the player is never torn down.
+function samFoot(i){
+  const M = SAM(), L = M.lessons[i], n = M.lessons.length, D = samData(), done = !!D.lessons[L.id];
+  const reading = V.saread || !samVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="sa-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
    ${i > 0 ? `<button class="btn btn-line" data-act="sa-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
-   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="sa-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
-   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="sa-mhome">Back to training</button>` : ''}</div>`;
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="sa-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="sa-mhome">Back to training</button>` : ''}</div>
+  ${all && !samState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sa-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function samMount(i){
+  const host = $('#sam-host'); if (!host || !window.GGLearn) return;
+  const M = SAM(), L = M.lessons[i], D = samData(), tr = samTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#1F6F74',
+    onAt: k => { lastAct = Date.now(); samData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = samData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#sam-foot'); if (f) f.innerHTML = samFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'aspen', sam:1, saml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'aspen', sam:1}; render(); }});
 }
 function samNewQuiz(){ const items = SAM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
 function vSAMQ(){
@@ -4200,8 +4232,9 @@ function saAct(a, v, t){
     case 'sa-retry': SAC_FAIL = false; saLoad(); render(); return true;
     case 'sa-home': go('aspen'); return true;
     case 'sa-mhome': go('aspen', {sam:1}); return true;
-    case 'sa-ml': go('aspen', {sam:1, saml:+v}); return true;
-    case 'sa-mread': { const L = SAM().lessons, i = +v; samData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !samData().lessons[x.id]); if (nx >= 0) go('aspen', {sam:1, saml:nx}); else { go('aspen', {sam:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sa-ml': if (!samOpen(+v)) return true; go('aspen', {sam:1, saml:+v}); return true;
+    case 'sa-mreadit': lnStop(); V.saread = v === '1'; render(); return true;
+    case 'sa-mread': { const L = SAM().lessons, i = +v; { const d = samData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } } save(); const nx = L.findIndex((x, j) => j > i && !samData().lessons[x.id]); if (nx >= 0) go('aspen', {sam:1, saml:nx}); else { go('aspen', {sam:1}); toast('Lesson marked as read.'); } return true; }
     case 'sa-mq': go('aspen', {sam:1, saq:samNewQuiz()}); return true;
     case 'sa-mpick': V.saq.ans[V.saq.order[V.saq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sa-mnext],[data-act=sa-mfinish]'); if (nb) nb.disabled = false; } return true;
     case 'sa-mnext': if (V.saq.ans[V.saq.order[V.saq.i]] === undefined) return true; V.saq.i++; render(); return true;
@@ -6547,6 +6580,7 @@ function mergeData(cur, inc){
   ['last','pass','signed'].forEach(k => { out.stmod[k] = newer(out.stmod[k], it2[k]) || null; });
   const ia = inc.samod || {}; out.samod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.samod || {});
   Object.entries(ia.lessons || {}).forEach(([k,v]) => { if (v && !out.samod.lessons[k]) out.samod.lessons[k] = v; });
+  out.samod.how = Object.assign({}, ia.how || {}, out.samod.how || {}); // how each Aspen lesson was finished (BLD 726)
   ['last','pass','signed'].forEach(k => { out.samod[k] = newer(out.samod[k], ia[k]) || null; });
   if (!out.settings.referrals && inc.settings && inc.settings.referrals) out.settings.referrals = inc.settings.referrals;
   const iw = inc.wlmod || {}; out.wlmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.wlmod || {});
