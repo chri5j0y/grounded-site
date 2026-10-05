@@ -4,7 +4,7 @@
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=tc1"></script>
 <script src="/shared/gg-shelf.js?v=fd1"></script>
-<script src="/shared/gg-sources.js?v=src6"></script>
+<script src="/shared/gg-sources.js?v=src7"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -2947,7 +2947,7 @@ function printTalkNow() {
    Two narrated videos per guide, For You (the child) and For the Grown-up, played by shared/gg-learn.js
    from maple/guide-videos.js. MV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:maple). */
-/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn"];/* MV_VIDS end */
+/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "family-illness", "own-illness", "family-mental-health", "addiction", "dementia", "disability", "food-worries", "accident", "bedwetting", "divorce", "new-baby", "blended", "deployed", "jail", "foster", "money", "home-loss", "home-conflict", "sibling-leaves", "bullied", "unkind", "friendship", "new-school", "school-worry", "lockdown", "online-trouble", "attention", "lying", "moving", "community-tragedy", "fire", "crime", "immigration", "deported-classmate", "politics", "school-violence", "protests", "prejudice", "scary-news", "war", "disasters", "outbreaks", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn"];/* MV_VIDS end */
 function mvVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:maple') || '{}').done || {})[id]); } catch (e) { return false; } }
 function mvVids(gid) {
   if (!MV_VIDS.includes(gid)) return '';
@@ -2972,7 +2972,7 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln22" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln22';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln23" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln23';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
