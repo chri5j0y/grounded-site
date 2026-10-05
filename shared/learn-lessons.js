@@ -15223,6 +15223,4628 @@ window.GG_LEARN = {
  }
     ]
   },
+  /* Sequoia Learn (GWG BLD 733): Start Here, Using Sequoia, The Six Parts, For the Helper, and Support for Right Now.
+     Generated from patches/bld733/source in grounded-workshop. */
+  sequoia: {
+ "title": "Learn Sequoia",
+ "intro": "Short lessons, narrated aloud, at your own pace. Watch on your own or with someone you love, in any order.",
+ "supportFirst": true,
+ "support": {
+  "eyebrow": "Support",
+  "title": "Support for Right Now",
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+ },
+ "lessonsTitle": "Learn Step by Step",
+ "tracks": [
+  {
+   "id": "sequoia-start",
+   "title": "Start Here",
+   "who": "For older adults, 60 and up, and the people beside them",
+   "lessons": [
+    {
+     "id": "sq-welcome",
+     "n": 1,
+     "title": "Welcome to Sequoia",
+     "mins": 4,
+     "blurb": "What Sequoia is, who it is for, and where to begin.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Sequoia",
+       "sub": "A long life, still growing.",
+       "say": "Welcome to Sequoia. A long life, still growing. This short lesson shows you what Sequoia is, who it is for, and where to begin."
+      },
+      {
+       "k": "big",
+       "h": "Sequoias keep growing all their lives.",
+       "sub": "So can you.",
+       "say": "Giant sequoias are among the oldest living things on earth, and they keep growing all their lives. Sequoia is built on that same hope. Growth keeps going at every age, and a long life has a great deal to grow from."
+      },
+      {
+       "k": "points",
+       "h": "Who Sequoia is for",
+       "items": [
+        [
+         "Built for 60 and up",
+         "Older adults, in every season of later life"
+        ],
+        [
+         "Anyone 55 or older may choose it",
+         "Make Sequoia your tree"
+        ],
+        [
+         "Helpers welcome",
+         "Family and friends, only when you invite them"
+        ]
+       ],
+       "say": "Sequoia is built for older adults, sixty and up. Anyone fifty five or older may choose it, and make Sequoia their own tree. And the people who walk with you, a grown child, a spouse, or a friend, can join you as helpers, but only when you invite them."
+      },
+      {
+       "k": "six",
+       "h": "Six parts, one tree",
+       "words": [
+        "What you are anchored in",
+        "Knowing your life matters, still",
+        "How you calm down and heal",
+        "Who shows up, and who you show up for",
+        "Movement, balance, rest, and food",
+        "Something worth looking forward to"
+       ],
+       "say": "Sequoia sees your life as a tree with six parts. Roots, what grounds you, the things you are anchored in. Trunk, your purpose, knowing your life matters, now and still. Bark, your mind and feelings, how you calm down, carry worry, and heal. Branches, your relationships, who shows up for you, and who you show up for. Leaves, your body, in the ways your body allows. And Fruit, your hope, something still worth looking forward to."
+      },
+      {
+       "k": "points",
+       "h": "Made for later life",
+       "items": [
+        [
+         "Larger text from the start",
+         "And larger still, if you like"
+        ],
+        [
+         "One question on the screen at a time",
+         "Nothing is timed"
+        ],
+        [
+         "Practices for every body",
+         "Seated, standing, or in bed"
+        ],
+        [
+         "A Legacy Book",
+         "For the stories you want to pass on"
+        ]
+       ],
+       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and nothing is timed. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide."
+      },
+      {
+       "k": "big",
+       "h": "Everything stays on this device.",
+       "sub": "Locked in your profile, with a passcode only you know.",
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Nothing you write is sent to Grounded or anyone else."
+      },
+      {
+       "k": "tabs",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Legacy Book",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Where to begin",
+        "p": "Tap Start a check-in at the top. Your tree and your practices grow from there."
+       },
+       "say": "Sequoia has seven tabs along the top, or along the bottom on a phone. Today, Week, Season, Growth Plan, Legacy Book, When Life Changes, and Learn. The best place to begin is a check-in. Tap Start a check-in at the top of the page. Your tree, and your daily practices, grow from there."
+      },
+      {
+       "k": "big",
+       "h": "Hopes Big and Small",
+       "sub": "One hope for today, said out loud.",
+       "beats": [
+        "Before you go, here is a small practice called Hopes Big and Small.",
+        "Sit however is comfortable.",
+        "Think of one hope you have for today, even a small one.",
+        "A good cup of coffee, a call from someone, a little sunshine.",
+        {
+         "t": "Now say it out loud: Today, I hope for this.",
+         "w": 10
+        }
+       ],
+       "say": "Before you go, here is a small practice called Hopes Big and Small. Sit however is comfortable. Think of one hope you have for today, even a small one. A good cup of coffee, a call from someone, a little sunshine. Now say it out loud: Today, I hope for this."
+      },
+      {
+       "k": "quiz",
+       "q": "Where does what you write in Sequoia stay?",
+       "opts": [
+        "On a Grounded server",
+        "On this device, locked in your profile",
+        "With your doctor"
+       ],
+       "right": 1,
+       "why": "Everything stays on this device, locked with a passcode only you know.",
+       "say": "Quick question. Where does what you write in Sequoia stay?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sequoia-using",
+   "title": "Using Sequoia",
+   "who": "Every part of Sequoia, step by step",
+   "certTitle": "Sequoia: Using Sequoia",
+   "certLine": "For finishing every lesson on using Sequoia, step by step.",
+   "lessons": [
+    {
+     "id": "sq-u-checkin",
+     "n": 1,
+     "title": "Your First Check-in",
+     "mins": 6,
+     "blurb": "One question at a time, the answers, the weekly check-in, and help that is always close.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Using Sequoia, Lesson 1",
+       "h": "Your First Check-in",
+       "sub": "An honest look at all six parts.",
+       "say": "Everything in Sequoia starts with a check-in. It is an honest look at all six parts of your tree. This lesson walks you through your first one, so you know just what to expect."
+      },
+      {
+       "k": "flow",
+       "h": "Two ways to check in",
+       "steps": [
+        [
+         "Full check-in",
+         "Eight questions for each part"
+        ],
+        [
+         "Quick Check-in",
+         "One question for each part, 2 minutes"
+        ]
+       ],
+       "say": "There are two ways to check in. The full check-in asks eight short questions for each part. Tap Start a check-in at the top of the page, or Begin my check-in on Today. The Quick Check-in asks one question for each part, six in all, and takes about two minutes."
+      },
+      {
+       "k": "points",
+       "h": "Roots first, then up the tree",
+       "items": [
+        [
+         "A short page for each part",
+         "What it does for a sequoia, and for you"
+        ],
+        [
+         "Signs of health and signs of stress",
+         "Tap to open, if you like"
+        ],
+        [
+         "Then tap Begin Roots",
+         "And the questions start"
+        ]
+       ],
+       "say": "The check-in starts at the roots and climbs. Each part opens with a short page about what that part does for a sequoia, and what it does for you. You can open Signs of health and signs of stress, if you like. When you are ready, tap the button, like Begin Roots, and the questions start."
+      },
+      {
+       "k": "screen",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "title": "Roots, Question 1 of 8",
+       "rows": [
+        [
+         "Felt connected to something larger than yourself?",
+         ""
+        ],
+        [
+         "Rarely",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Often",
+         ""
+        ],
+        [
+         "Almost always",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 3,
+       "say": "Here is what a question looks like. Each one begins, in the past two weeks, how often have you. There is one question on the screen at a time, with big answers to tap. Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always an honest answer. Tap one, and Sequoia moves to the next question after a moment."
+      },
+      {
+       "k": "points",
+       "h": "You set the pace",
+       "items": [
+        [
+         "Back",
+         "Return to any question"
+        ],
+        [
+         "Skip this one",
+         "Leave any question blank"
+        ],
+        [
+         "Why this question?",
+         "See why it is asked"
+        ],
+        [
+         "Read Aloud",
+         "Hear each question spoken"
+        ]
+       ],
+       "say": "You set the pace. Tap Back to return to any question and change your answer. Tap Skip this one to leave a question blank. Tap Why this question to see why it is asked. And turn on Read Aloud near the top to hear each question spoken. Nothing here is timed."
+      },
+      {
+       "k": "big",
+       "h": "Answer with what is true lately.",
+       "sub": "A few questions ask about what is hard. Sequoia does the math.",
+       "say": "Answer with what has been true lately, not what you wish were true. Most questions ask about what is going well. A few ask about what is hard, on purpose. Just answer each one plainly. Sequoia does the math."
+      },
+      {
+       "k": "big",
+       "h": "Try one real question",
+       "sub": "Enjoyed the things you usually enjoy?",
+       "beats": [
+        "Let's try one real question now.",
+        "This is the first question for Bark, your mind and feelings.",
+        "In the past two weeks, how often have you enjoyed the things you usually enjoy?",
+        "Think back over the last two weeks.",
+        {
+         "t": "Now answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure.",
+         "w": 10
+        }
+       ],
+       "say": "Let's try one real question now. This is the first question for Bark, your mind and feelings. In the past two weeks, how often have you enjoyed the things you usually enjoy? Think back over the last two weeks. Now answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
+      },
+      {
+       "k": "points",
+       "h": "After each part",
+       "items": [
+        [
+         "Sit with this",
+         "A question to think about, optional"
+        ],
+        [
+         "Write or speak",
+         "Use your phone’s microphone key"
+        ],
+        [
+         "Stays on this device",
+         "Like everything you write"
+        ]
+       ],
+       "say": "Good. After each part, there is a page called Sit with this. It offers one question to think about. You can write an answer, or use the microphone key on your phone to speak it. Or simply move on. It is always optional, and it stays on this device."
+      },
+      {
+       "k": "points",
+       "h": "Before you see your tree",
+       "items": [
+        [
+         "Two last questions",
+         "Asked because we care"
+        ],
+        [
+         "Answer, or I’d rather not say",
+         "Never part of a score"
+        ],
+        [
+         "Need to talk to someone now?",
+         "Help lines, one tap away"
+        ]
+       ],
+       "say": "At the end come two last questions, before you see your tree. They ask gently about feeling hopeless, or like a burden, and about thoughts of not wanting to be here. Many older adults have had those thoughts, and it is safe to say so. You can always choose I would rather not say. These answers are never part of a score, and they are never shown to a helper."
+      },
+      {
+       "k": "screen",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "title": "Help lines",
+       "rows": [
+        [
+         "988 Suicide and Crisis Lifeline",
+         "Call or text 988"
+        ],
+        [
+         "Veterans Crisis Line",
+         "988, then press 1"
+        ],
+        [
+         "In immediate danger?",
+         "Call 911"
+        ],
+        [
+         "MAARC, Minnesota",
+         "1-844-880-1574"
+        ],
+        [
+         "Eldercare Locator",
+         "1-800-677-1116"
+        ]
+       ],
+       "say": "If your answers show you are carrying a lot, a card opens with help lines. Call or text nine eight eight, any time. Veterans, call nine eight eight and press one. In danger right now, call nine one one. The card also lists lines for when someone is hurting you or taking your money, and for finding help near you. Tap Close and keep going whenever you are ready. And Need to talk to someone now is on those last pages, any time."
+      },
+      {
+       "k": "flow",
+       "h": "Each week, a short check-in",
+       "steps": [
+        [
+         "Week tab",
+         "This Week’s Check-in"
+        ],
+        [
+         "One question per part",
+         "Plus moving and eating"
+        ],
+        [
+         "Save this week",
+         "See what changed"
+        ]
+       ],
+       "say": "Once your season begins, the Week tab has This Week’s Check-in. It asks one question for each part, plus how you are moving and eating. Tap Save this week, and next week Sequoia shows what went up, what went down, and what stayed the same."
+      },
+      {
+       "k": "big",
+       "h": "There are no wrong answers.",
+       "sub": "Tap See My Tree when you finish.",
+       "say": "There are no wrong answers in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
+      },
+      {
+       "k": "quiz",
+       "q": "What can you do with a question you’d rather not answer?",
+       "opts": [
+        "You have to answer it",
+        "Tap Skip this one",
+        "Start the check-in over"
+       ],
+       "right": 1,
+       "why": "You can skip any question. Back always takes you to the one before.",
+       "say": "Quick question. What can you do with a question you would rather not answer?"
+      }
+     ]
+    },
+    {
+     "id": "sq-u-tree",
+     "n": 2,
+     "title": "Your Tree and Your Levels",
+     "mins": 5,
+     "blurb": "Strong, Steady, and Growing Edge, and how to watch your tree grow over time.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Using Sequoia, Lesson 2",
+       "h": "Your Tree and Your Levels",
+       "sub": "A picture of right now, never a grade.",
+       "say": "When you tap See My Tree, Sequoia shows you a picture of your life right now. This lesson shows you how to read it, and how to watch it grow."
+      },
+      {
+       "k": "big",
+       "h": "The fuller the color, the healthier that part.",
+       "sub": "Tap a part to work on it in your growth plan.",
+       "say": "First you see your tree. Each part is shaded by its score. The fuller the color, the healthier that part is right now. You can tap any part of the tree to go straight to it in your growth plan."
+      },
+      {
+       "k": "levels",
+       "say": "Each part gets a level. Strong, from eight to ten. Steady, from five to seven. And Growing Edge, from one to four."
+      },
+      {
+       "k": "screen",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "title": "Your Tree",
+       "rows": [
+        [
+         "Roots",
+         "Strong, 8 of 10",
+         "#5F7D48"
+        ],
+        [
+         "Trunk",
+         "Steady, 7 of 10",
+         "#8B5E1A"
+        ],
+        [
+         "Bark",
+         "Steady, 6 of 10",
+         "#8B5E1A"
+        ],
+        [
+         "Branches",
+         "Growing Edge, 4 of 10",
+         "#B8612F"
+        ],
+        [
+         "Leaves",
+         "Steady, 5 of 10",
+         "#8B5E1A"
+        ],
+        [
+         "Fruit",
+         "Strong, 9 of 10",
+         "#5F7D48"
+        ]
+       ],
+       "tap": 3,
+       "say": "Under the tree, each part shows its level and its score, like Steady, seven of ten. If you answered Not sure, or skipped, every question in a part, it says Not sure yet. That is fine. Under a Growing Edge, Sequoia adds a line: this growing edge is where the next growth begins."
+      },
+      {
+       "k": "big",
+       "h": "A Growing Edge is where your next growth begins.",
+       "sub": "A part to tend, never a grade.",
+       "say": "A Growing Edge is never a failing grade. It is simply the part that could use the most tending right now. A long life has many seasons, and every part of a tree has its turn."
+      },
+      {
+       "k": "points",
+       "h": "Then, a few words for you",
+       "items": [
+        [
+         "Your healthiest part",
+         "A real resource to draw on"
+        ],
+        [
+         "Your biggest growing edge",
+         "Where to begin"
+        ],
+        [
+         "Your strongest parts",
+         "And how to lean on them"
+        ],
+        [
+         "Where your tree needs tending",
+         "Small first steps"
+        ]
+       ],
+       "say": "Below your levels, Sequoia writes a few words just for you. It names your healthiest part, a real resource to draw on, and your biggest growing edge. Then come your strongest parts, and how to lean on them, and where your tree needs tending, with small first steps. Tap Read my results aloud to hear it all."
+      },
+      {
+       "k": "points",
+       "h": "Worth tending",
+       "items": [
+        [
+         "Feeling alone",
+         "Ways to find company nearby"
+        ],
+        [
+         "Losing hope",
+         "Someone to talk with, any time"
+        ],
+        [
+         "Safety at home",
+         "Lines for safety and money"
+        ]
+       ],
+       "say": "Sometimes a box called Worth tending appears. It comes up when your answers say you have felt alone, or you are losing hope, or you have not always felt safe at home. It shows the right help lines, like nine eight eight, and it is there because you matter."
+      },
+      {
+       "k": "big",
+       "h": "Read it with kindness",
+       "sub": "Your strongest part, and one Growing Edge.",
+       "beats": [
+        "Read your results with kindness, the way you would read a letter from a good friend.",
+        "Let's practice that now.",
+        "Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit.",
+        "Which one feels strongest right now?",
+        "And which one would you most like to tend?",
+        {
+         "t": "Say both out loud: My strongest part is this one, and the part I will tend is this one.",
+         "w": 10
+        }
+       ],
+       "say": "Read your results with kindness, the way you would read a letter from a good friend. Let's practice that now. Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
+      },
+      {
+       "k": "tabs",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Legacy Book",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 2,
+       "note": {
+        "h": "Your Growth Over Time",
+        "p": "Days Tended, Week by Week, and Your Parts Over Time."
+       },
+       "say": "Good. Over time, the Season tab shows how your tree is growing, in a card called Your Growth Over Time. It has two simple graphs."
+      },
+      {
+       "k": "points",
+       "h": "Two simple graphs",
+       "items": [
+        [
+         "Days Tended, Week by Week",
+         "A bar for each of the last twelve weeks"
+        ],
+        [
+         "Your Parts Over Time",
+         "One point for each full check-in"
+        ],
+        [
+         "Dashed lines",
+         "They mark Steady and Strong"
+        ]
+       ],
+       "say": "Days Tended, Week by Week, shows a bar for each of the last twelve weeks. Every bar counts, short ones too. Your Parts Over Time gives each part its own small chart, with one point for each full check-in, oldest on the left. The dashed lines mark Steady and Strong, so you can see a part climb."
+      },
+      {
+       "k": "points",
+       "h": "My progress over time",
+       "items": [
+        [
+         "Grew, Dipped, or Same",
+         "Since your last check-in"
+        ],
+        [
+         "Like with like",
+         "Full with full, quick with quick"
+        ],
+        [
+         "Full History",
+         "Every check-in, in one table"
+        ]
+       ],
+       "say": "On the Season tab, My progress over time shows more. After your second check-in, each part says Grew, Dipped, or Same. Sequoia only compares a full check-in with a full one, and a quick one with a quick one. And Full History keeps every check-in in one table."
+      },
+      {
+       "k": "big",
+       "h": "Every level is a starting point.",
+       "sub": "Next, tap Build My Growth Plan.",
+       "say": "Every level is a starting point. It tells you where you are, so you can choose where to grow. When you are ready, tap Build My Growth Plan."
+      },
+      {
+       "k": "quiz",
+       "q": "In Your Parts Over Time, what do the dashed lines mark?",
+       "opts": [
+        "Your birthday each year",
+        "Steady and Strong",
+        "Days you missed"
+       ],
+       "right": 1,
+       "why": "The dashed lines mark Steady and Strong, so you can watch each part climb.",
+       "say": "Quick question. In Your Parts Over Time, what do the dashed lines mark?"
+      }
+     ]
+    },
+    {
+     "id": "sq-u-today",
+     "n": 3,
+     "title": "Today, Week, and Season",
+     "mins": 6,
+     "blurb": "Your growth plan, your daily practices, and the gentle rhythm that grows your tree.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Using Sequoia, Lesson 3",
+       "h": "Today, Week, and Season",
+       "sub": "A little each day adds up over a long life.",
+       "say": "Sequoia has a gentle rhythm. A little each day, a short look each week, and a full check-in each season. This lesson shows how it all fits together, starting with your growth plan."
+      },
+      {
+       "k": "points",
+       "h": "Your growth plan",
+       "items": [
+        [
+         "Strong: about 3",
+         "To keep it growing",
+         "#5F7D48"
+        ],
+        [
+         "Steady: about 4",
+         "To help it grow",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge: about 5",
+         "More ways to tend it",
+         "#B8612F"
+        ]
+       ],
+       "say": "Your growth plan is a short list of practices for each part of your tree. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Choose as many or as few as you like."
+      },
+      {
+       "k": "screen",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "title": "Growth Plan: Leaves",
+       "rows": [
+        [
+         "Chair Stretch",
+         "Seated, In bed"
+        ],
+        [
+         "Water Within Reach",
+         "Seated, In bed"
+        ],
+        [
+         "Walk Your Way",
+         ""
+        ],
+        [
+         "How to do this",
+         ""
+        ],
+        [
+         "Show Me Others",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "On the Growth Plan tab, tap a box to choose a practice. Look for the Seated and In bed tags on practices that fit those days. Tap How to do this for why it helps, how to try it today, and what to do if it is hard. Show Me Others brings more choices. You can write your own, too. Then tap Save My Growth Plan, and Save or Print My Plan if you want it on paper."
+      },
+      {
+       "k": "tabs",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Legacy Book",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Today",
+        "p": "Your tree, and your practices for today, ready to check off."
+       },
+       "say": "Your practices then wait for you on Today, grouped by part. At the top is your tree, with your Days Tended and your Rings."
+      },
+      {
+       "k": "points",
+       "h": "A big checkmark",
+       "items": [
+        [
+         "Tap the circle",
+         "A big checkmark fills it"
+        ],
+        [
+         "A few kind words",
+         "Every practice counts"
+        ],
+        [
+         "One is enough",
+         "Any practice tends your tree"
+        ]
+       ],
+       "say": "When you do a practice, tap the big circle beside it. A big checkmark fills it, and a few kind words appear, like, good work, a little each day adds up over a long life. Sequoia counts how many of your six parts you tended today. One practice is enough to tend your tree."
+      },
+      {
+       "k": "points",
+       "h": "On a hard day",
+       "items": [
+        [
+         "Easier today",
+         "A smaller way to do it"
+        ],
+        [
+         "Add a note",
+         "One line about how it went"
+        ],
+        [
+         "Move at your level",
+         "Gentle, Moderate, or Active"
+        ]
+       ],
+       "say": "On a hard day, tap Easier today for a smaller way to do a practice, often seated or in bed. Tap Add a note to keep one line about how it went. And with your Leaves practices, Move at your level shows movement fitted to you. Set your level in Settings: Gentle, Moderate, or Active."
+      },
+      {
+       "k": "big",
+       "h": "Arrive",
+       "sub": "Feet down, one slow breath, greet the day.",
+       "beats": [
+        "Today also has a short practice for the morning, called Arrive, and one for the evening, called Close the day.",
+        "Let's do Arrive together now.",
+        "Sit in your chair, or on the edge of your bed, or stay lying down if that is best today.",
+        "Feel your feet on the floor, or feel the bed holding you.",
+        "Take one slow breath.",
+        {
+         "t": "Now greet the day, out loud or in your heart: Good morning. I am here.",
+         "w": 10
+        }
+       ],
+       "say": "Today also has a short practice for the morning, called Arrive, and one for the evening, called Close the day. Let's do Arrive together now. Sit in your chair, or on the edge of your bed, or stay lying down if that is best today. Feel your feet on the floor, or feel the bed holding you. Take one slow breath. Now greet the day, out loud or in your heart: Good morning. I am here."
+      },
+      {
+       "k": "big",
+       "h": "Your tree rests. It never dies.",
+       "sub": "Tend it once, and watch it wake up.",
+       "say": "Your tree on Today is gentle. If a few days go by, it gets a little dry, then it droops, then it rests bare. It never dies, and it never loses a ring. Nothing is lost. Tend it once, and watch it wake up. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
+      },
+      {
+       "k": "points",
+       "h": "Find more practices",
+       "items": [
+        [
+         "At the bottom of Today",
+         "The Grounded practice library"
+        ],
+        [
+         "Search in plain words",
+         "Sleep, calm, or friends"
+        ],
+        [
+         "Add to my practices",
+         "It joins your list on Today"
+        ]
+       ],
+       "say": "At the bottom of Today, tap Find more practices to open the Grounded practice library. Search for a plain word, like sleep, calm, or friends, or browse by part. Tap Show me how to learn one, and Add to my practices to put it on your list."
+      },
+      {
+       "k": "tabs",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Legacy Book",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "Week",
+        "p": "A theme, a short check-in, a question to sit with, and your calendar."
+       },
+       "say": "The Week tab brings a theme for each week, a short check-in, and a question to sit with in Reflection. Its calendar fills in each day you tend your tree, and shows a ring on days you tended all six parts."
+      },
+      {
+       "k": "flow",
+       "h": "A season is twelve weeks",
+       "steps": [
+        [
+         "Planting",
+         "It begins with a full check-in"
+        ],
+        [
+         "Rooting",
+         "Practices take hold"
+        ],
+        [
+         "Blooming",
+         "A full check-in adds a ring"
+        ]
+       ],
+       "say": "A season is twelve weeks, from Planting to Rooting to Blooming. It begins the day you finish your first full check-in. At week twelve, the Season tab says your season check-in is ready. Finish a full check-in, and your tree gets a new ring, and a new season begins."
+      },
+      {
+       "k": "big",
+       "h": "No streaks to break. Growth only adds.",
+       "sub": "Missed a few days? Pick up today.",
+       "say": "There are no streaks to break in Sequoia. Growth only adds. If appointments, aches, or visitors fill a few days, just pick up today. Your tree waits for you."
+      },
+      {
+       "k": "quiz",
+       "q": "What happens to your tree if you miss a few days?",
+       "opts": [
+        "It dies",
+        "It loses its rings",
+        "It rests, and nothing is lost"
+       ],
+       "right": 2,
+       "why": "Your tree rests and waits. Tend it once, and it wakes up.",
+       "say": "Quick question. What happens to your tree if you miss a few days?"
+      }
+     ]
+    },
+    {
+     "id": "sq-u-legacy",
+     "n": 4,
+     "title": "Your Legacy Book",
+     "mins": 5,
+     "blurb": "Chapters and prompts for the stories you want to pass on, kept private until you choose to share.",
+     "sources": [
+      "pinquart",
+      "bohlmeijer"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Using Sequoia, Lesson 4",
+       "h": "Your Legacy Book",
+       "sub": "The stories you want to pass on.",
+       "say": "Your Legacy Book is a place to keep the stories, lessons, recipes, and blessings you want the people you love to have. It has its own tab in Sequoia. This lesson shows you how it works."
+      },
+      {
+       "k": "big",
+       "h": "Looking back can lift a life forward.",
+       "sub": "One chapter at a time, in your own words.",
+       "say": "Looking back over a long life, one chapter at a time, has been found to lift mood and deepen a sense of purpose for many older adults. And the people you love get to keep your words."
+      },
+      {
+       "k": "points",
+       "h": "Twelve chapters",
+       "items": [
+        [
+         "Early Years",
+         "Family and Home"
+        ],
+        [
+         "School, Work, and Service",
+         "Love and Friendship"
+        ],
+        [
+         "Recipes, Places, and Things",
+         "Proud Moments"
+        ],
+        [
+         "What Life Has Taught Me",
+         "Blessings and Words to Leave"
+        ]
+       ],
+       "say": "The book has twelve chapters. Early Years. Family and Home. School, Work, and Service. Love and Friendship. Recipes, Places, and Things. Proud Moments. What Life Has Taught Me. Blessings and Words to Leave. And four more, which we will come to in a moment."
+      },
+      {
+       "k": "screen",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "title": "Early Years",
+       "rows": [
+        [
+         "A place from when you were young",
+         ""
+        ],
+        [
+         "Who made you feel safe when you were small?",
+         ""
+        ],
+        [
+         "A smell, a song, or a food that takes you back",
+         ""
+        ],
+        [
+         "Write This One",
+         ""
+        ]
+       ],
+       "tap": 3,
+       "say": "Open a chapter, and you see its prompts, each with a short help line. Tap Write This One to answer. Type a little or a lot, or tap the microphone key on your phone’s keyboard and speak instead. Then tap Save. You can come back and tap Edit any time."
+      },
+      {
+       "k": "points",
+       "h": "Your book, your pace",
+       "items": [
+        [
+         "Skip any prompt",
+         "There is no order to follow"
+        ],
+        [
+         "Nothing is ever due",
+         "One story is enough to start"
+        ],
+        [
+         "Told to someone?",
+         "Mark who wrote it down"
+        ]
+       ],
+       "say": "Pick any chapter and any prompt. Skip whatever you like. There is no order you have to follow, and nothing is ever due. One story is enough to start. If someone you trust writes while you tell, add their name under Written down by, and the page is marked as told to them. The words stay yours."
+      },
+      {
+       "k": "big",
+       "h": "A smell, a song, or a food",
+       "sub": "That takes you right back.",
+       "beats": [
+        "Let's try one prompt now, from Early Years.",
+        "Think of a smell, a song, or a food that takes you right back.",
+        "Notice where it takes you, and who is there.",
+        {
+         "t": "Now tell it out loud, just the first line or two, as if someone were writing it down.",
+         "w": 12
+        }
+       ],
+       "say": "Let's try one prompt now, from Early Years. Think of a smell, a song, or a food that takes you right back. Notice where it takes you, and who is there. Now tell it out loud, just the first line or two, as if someone were writing it down."
+      },
+      {
+       "k": "points",
+       "h": "Opens only when you choose",
+       "items": [
+        [
+         "Faith and Meaning",
+         "For whatever has held you up"
+        ],
+        [
+         "Losses and Hard Seasons",
+         "Stop at any point"
+        ],
+        [
+         "War and Hard Memories",
+         "Write only what you want"
+        ],
+        [
+         "Regrets and Making Peace",
+         "Mend, or set down"
+        ]
+       ],
+       "say": "That is how a story begins. Four chapters stay closed until you choose to open them, because looking back can bring joy, and sometimes grief. Faith and Meaning. Losses and Hard Seasons. War and Hard Memories. And Regrets and Making Peace. Each one says Opens only when you choose."
+      },
+      {
+       "k": "points",
+       "h": "A gentle door",
+       "items": [
+        [
+         "A short note first",
+         "What the chapter holds"
+        ],
+        [
+         "Open This Chapter, or Not Now",
+         "Always your choice"
+        ],
+        [
+         "Close This Chapter",
+         "What you wrote stays"
+        ]
+       ],
+       "say": "When you tap one of these, a short note comes first, with nine eight eight close by. Veterans can call nine eight eight and press one. Then choose Open This Chapter, or Not Now. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
+      },
+      {
+       "k": "points",
+       "h": "Saving and sharing",
+       "items": [
+        [
+         "Kept in your profile",
+         "Locked, on this device"
+        ],
+        [
+         "Save or Print",
+         "One chapter, or the whole book"
+        ],
+        [
+         "Share by choice",
+         "By hand, by email, or on paper"
+        ]
+       ],
+       "say": "Everything you write is kept in your profile, locked on this device. Inside a chapter, tap Save or Print This Chapter. Or on the main page, tap Save or Print My Book, then choose the chapters to include. You decide what to share, and with whom, by hand, by email, or on paper."
+      },
+      {
+       "k": "points",
+       "h": "Others, only by your choice",
+       "items": [
+        [
+         "Helpers",
+         "Only if you turn on My Legacy Book"
+        ],
+        [
+         "Willow",
+         "Your pages come along into Cuttings"
+        ],
+        [
+         "Nothing is sent",
+         "Unless you print or share it"
+        ]
+       ],
+       "say": "A helper sees your Legacy Book only if you turn it on, and it starts turned off. And if you later use Willow, what you write here comes along into Willow’s Cuttings, so your words are never lost. Nothing is sent anywhere unless you print or share it."
+      },
+      {
+       "k": "big",
+       "h": "These words belong to you.",
+       "sub": "One story is enough to start.",
+       "say": "These words belong to you. Write one story when the moment feels right, and let the book grow the way a tree does, one ring at a time."
+      },
+      {
+       "k": "quiz",
+       "q": "What happens with the harder chapters, like Losses and Hard Seasons?",
+       "opts": [
+        "They must be written first",
+        "They stay closed until you choose to open them",
+        "They are shared with family"
+       ],
+       "right": 1,
+       "why": "Harder chapters open only when you choose, and you can close them again any time.",
+       "say": "Quick question. What happens with the harder chapters, like Losses and Hard Seasons?"
+      }
+     ]
+    },
+    {
+     "id": "sq-u-helpers",
+     "n": 5,
+     "title": "Helpers and Family",
+     "mins": 6,
+     "blurb": "Add a Helper, what helpers can see, and sharing your tree with family.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Using Sequoia, Lesson 5",
+       "h": "Helpers and Family",
+       "sub": "Company on the path, on your terms.",
+       "say": "Some of life is easier with company. Sequoia lets you invite people you trust to walk with you, and you decide every step of the way. This lesson shows how."
+      },
+      {
+       "k": "points",
+       "h": "What a helper is",
+       "items": [
+        [
+         "Someone you trust",
+         "A grown child, a spouse, or a friend"
+        ],
+        [
+         "Their own passcode",
+         "They open your Sequoia with it"
+        ],
+        [
+         "Beside you",
+         "For a check-in, or your Legacy Book"
+        ]
+       ],
+       "say": "A helper is someone you trust, like a grown child, a spouse, or a friend. They open your Sequoia with their own passcode. They can sit with you for a check-in, or write in your Legacy Book while you tell."
+      },
+      {
+       "k": "big",
+       "h": "Add a Helper starts off.",
+       "sub": "Only you can turn it on.",
+       "say": "Add a Helper starts turned off. It stays off unless you turn it on, and only you can turn it on. To find it, open your profile, tap Settings at the top, and look for Add a Helper. The switch says, Let helpers open my Sequoia."
+      },
+      {
+       "k": "screen",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "title": "What Helpers See",
+       "rows": [
+        [
+         "How my tree is doing",
+         "On",
+         "#5F7D48"
+        ],
+        [
+         "My growth plan",
+         "On",
+         "#5F7D48"
+        ],
+        [
+         "My Legacy Book",
+         "Off"
+        ],
+        [
+         "My Roots part",
+         "Off"
+        ],
+        [
+         "My notes",
+         "Off"
+        ]
+       ],
+       "tap": 2,
+       "say": "Once it is on, you choose What Helpers See, one switch at a time. How my tree is doing shows the level of each part and the dates of check-ins, never your answers. My growth plan shows the practices you chose, so a helper can do them with you. My Legacy Book, My Roots part, and My notes all start off. Turn any of them on or off, any time."
+      },
+      {
+       "k": "big",
+       "h": "Your safety answers are never shared.",
+       "sub": "With anyone, ever.",
+       "say": "And one thing is firm. Your safety answers are never shared with a helper."
+      },
+      {
+       "k": "big",
+       "h": "One to share, one to keep",
+       "sub": "Say both out loud.",
+       "beats": [
+        "Let's practice choosing.",
+        "Picture those five switches: your tree, your growth plan, your Legacy Book, your Roots part, and your notes.",
+        "Which one would you be glad for someone you trust to see?",
+        "And which one would you keep just for yourself, for now?",
+        {
+         "t": "Say both out loud: I would share this one, and I would keep this one.",
+         "w": 10
+        }
+       ],
+       "say": "Let's practice choosing. Picture those five switches: your tree, your growth plan, your Legacy Book, your Roots part, and your notes. Which one would you be glad for someone you trust to see? And which one would you keep just for yourself, for now? Say both out loud: I would share this one, and I would keep this one."
+      },
+      {
+       "k": "flow",
+       "h": "Adding a helper",
+       "steps": [
+        [
+         "Their own profile",
+         "They create it on this device"
+        ],
+        [
+         "Choose their name",
+         "Under Add a helper"
+        ],
+        [
+         "They type their passcode",
+         "Then tap Add as a Helper"
+        ]
+       ],
+       "say": "Whatever you chose is just right. To add a helper, they first create their own Grounded profile on this device. Then, together, choose their name in Add a Helper, let them type their own passcode, and tap Add as a Helper. You can tap Remove beside any helper, any time."
+      },
+      {
+       "k": "points",
+       "h": "What your helper can do",
+       "items": [
+        [
+         "Check in together",
+         "You answer, they tap"
+        ],
+        [
+         "Answer from what they see",
+         "Kept apart from your tree"
+        ],
+        [
+         "A check-in of their own",
+         "In their own profile"
+        ]
+       ],
+       "say": "Your helper sees only what you share. They can check in together with you, where you answer and they tap. If a day comes when you cannot answer, they can answer from what they see, and that is kept apart and never adds to your tree. They also have a check-in of their own, because helping someone you love is a lot to carry."
+      },
+      {
+       "k": "card",
+       "title": "Share to Family",
+       "body": "Send your tree to family on their own phones.",
+       "fields": [
+        [
+         "First name to show",
+         "Ruth"
+        ]
+       ],
+       "btns": [
+        "Copy Link",
+        "Share"
+       ],
+       "tap": 0,
+       "say": "Family far away can watch your tree grow, too. On Today, under your tree, tap Share to Family. Type the first name to show, and Sequoia makes a link and a code family can scan with their phone. When they open it, your tree stands in their grove, beside theirs."
+      },
+      {
+       "k": "points",
+       "h": "What your link shares",
+       "items": [
+        [
+         "Your first name and your tree",
+         "And the day you made the link"
+        ],
+        [
+         "Days tended",
+         "And which parts this week"
+        ],
+        [
+         "What stays with you",
+         "Answers, scores, notes, growth plan"
+        ]
+       ],
+       "say": "Your link shares your first name, your tree, how many days you have tended, which parts you tended this week, and the day you made the link. Your answers, scores, notes, journal, and growth plan stay on this device. Send it to family only, and share again any time for a fresh one."
+      },
+      {
+       "k": "points",
+       "h": "The Grove",
+       "items": [
+        [
+         "Your tree is yours",
+         "The grove is ours"
+        ],
+        [
+         "Only the big picture",
+         "Days tended, rings, and parts tended"
+        ],
+        [
+         "Your switch",
+         "Show my growth on The Grove"
+        ]
+       ],
+       "say": "The Grove is where your family’s trees grow together. Your tree is yours. The grove is ours. Only the big picture shows there: days tended, rings, and which parts you tended, never your answers, levels, or notes. In Settings, the switch Show my growth on The Grove lets you turn it off any time."
+      },
+      {
+       "k": "big",
+       "h": "You choose who walks with you.",
+       "sub": "And you can change your mind any time.",
+       "say": "You choose who walks with you, and how far in they come. And you can change your mind any time."
+      },
+      {
+       "k": "quiz",
+       "q": "What does a helper never see?",
+       "opts": [
+        "Your safety answers",
+        "The level of each part",
+        "Your growth plan, when you share it"
+       ],
+       "right": 0,
+       "why": "Your safety answers are never shared with a helper.",
+       "say": "Quick question. What does a helper never see?"
+      }
+     ]
+    },
+    {
+     "id": "sq-u-private",
+     "n": 6,
+     "title": "Private, Saved, and Shared",
+     "mins": 5,
+     "blurb": "Your profile and passcode, locked files and backups, and making Sequoia easy to read and hear.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Using Sequoia, Lesson 6",
+       "h": "Private, Saved, and Shared",
+       "sub": "Your tree stays yours.",
+       "say": "This last lesson is about keeping what is yours safe, and making Sequoia comfortable to use. Privacy, saving, backups, and how to make the words bigger and hear them read aloud."
+      },
+      {
+       "k": "big",
+       "h": "Everything stays on this device.",
+       "sub": "Nothing is sent to Grounded or anyone else.",
+       "say": "Here is the heart of it. Everything you do in Sequoia stays on this device. Your answers, your notes, your growth plan, and your Legacy Book are never sent to Grounded or anyone else."
+      },
+      {
+       "k": "card",
+       "title": "Create a profile",
+       "body": "A private Grounded profile, locked with your own passcode.",
+       "fields": [
+        [
+         "Your name",
+         "Ruth"
+        ],
+        [
+         "Passcode",
+         "••••••"
+        ]
+       ],
+       "btns": [
+        "Create profile",
+        "Back"
+       ],
+       "tap": 0,
+       "say": "Your tree grows in a private Grounded profile. Tap Create a profile, choose a name and a picture, and choose a passcode of at least six characters. Only you will know it. Your profile works across every Grounded tool."
+      },
+      {
+       "k": "big",
+       "h": "Please remember your passcode.",
+       "sub": "No one, including Grounded, can recover it.",
+       "say": "Please remember your passcode. It never leaves this device, so no one, including Grounded, can recover it. Many people write it down and keep it somewhere safe at home."
+      },
+      {
+       "k": "points",
+       "h": "Everyone gets their own tree",
+       "items": [
+        [
+         "Who’s tending today?",
+         "Tap your picture, then your passcode"
+        ],
+        [
+         "Lock",
+         "Close your profile when you step away"
+        ],
+        [
+         "Switch person",
+         "Locks yours first"
+        ]
+       ],
+       "say": "Everyone on this device can have their own tree. When more than one person uses Sequoia, it asks, who is tending today? Tap your picture, then enter your passcode. Tap Lock when you step away. And Switch person locks yours first, so no one sees anyone else’s."
+      },
+      {
+       "k": "points",
+       "h": "Saving your results",
+       "items": [
+        [
+         "Save to a private profile",
+         "The easiest way"
+        ],
+        [
+         "Save to a locked file instead",
+         "With a passcode you choose"
+        ],
+        [
+         "Load My File",
+         "Bring it back later"
+        ]
+       ],
+       "say": "If you take a check-in before you have a profile, Sequoia offers two ways to save. Save to a private profile is the easiest. Or tap Save to a locked file instead. Sequoia asks you to lock this file with a passcode you choose, and Grounded never sees it. Later, Load My File brings it back."
+      },
+      {
+       "k": "points",
+       "h": "Back up everything",
+       "items": [
+        [
+         "One file",
+         "Every profile on this device"
+        ],
+        [
+         "Each one still locked",
+         "Plus The Grove and settings"
+        ],
+        [
+         "Load a backup",
+         "On a new phone or computer"
+        ]
+       ],
+       "say": "In Settings, under Your Records, tap Back up everything. It saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone or computer, tap Load a backup, and everything comes back."
+      },
+      {
+       "k": "points",
+       "h": "Reading and Display",
+       "items": [
+        [
+         "Text Size",
+         "Larger, and larger still"
+        ],
+        [
+         "Read Aloud Voice",
+         "Choose the voice you like"
+        ],
+        [
+         "Light or dark",
+         "Whatever rests your eyes"
+        ]
+       ],
+       "say": "Sequoia should be easy on your eyes and ears. It starts with larger text, and in Settings, under Reading and Display, you can make the text larger still, choose a read aloud voice, and pick light or dark."
+      },
+      {
+       "k": "big",
+       "h": "Find the text size button",
+       "sub": "At the top of the page, marked with the letter A.",
+       "beats": [
+        "Let's try it right now.",
+        "Look at the top of the page for the button marked with the letter A.",
+        "Tap it once, and watch the words change size.",
+        "Tap again until the words feel easy to read.",
+        {
+         "t": "Take a moment now, and find the size that fits your eyes.",
+         "w": 12
+        }
+       ],
+       "say": "Let's try it right now. Look at the top of the page for the button marked with the letter A. Tap it once, and watch the words change size. Tap again until the words feel easy to read. Take a moment now, and find the size that fits your eyes."
+      },
+      {
+       "k": "points",
+       "h": "Hear it read aloud",
+       "items": [
+        [
+         "In every check-in",
+         "Turn on Read Aloud"
+        ],
+        [
+         "Your results",
+         "Read my results aloud"
+        ],
+        [
+         "Your Legacy Book",
+         "Read this aloud, on each page"
+        ]
+       ],
+       "say": "Good. Read aloud is there whenever you want it. Turn on Read Aloud in a check-in to hear each question. Tap Read my results aloud after your check-in. And each page you write in your Legacy Book has its own Read this aloud button."
+      },
+      {
+       "k": "big",
+       "h": "You know Sequoia now. Go tend your tree.",
+       "sub": "A little at a time.",
+       "say": "That is the whole tour. You know Sequoia now. Go tend your tree, a little at a time. It has a long life still ahead of it, and so do you."
+      },
+      {
+       "k": "quiz",
+       "q": "What happens if you forget the passcode to a locked file?",
+       "opts": [
+        "Grounded can reset it",
+        "No one can recover it, so keep it safe",
+        "The file opens anyway"
+       ],
+       "right": 1,
+       "why": "Grounded never sees your passcode, so keep it somewhere safe.",
+       "say": "Last question. What happens if you forget the passcode to a locked file?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sequoia-six",
+   "title": "The Six Parts",
+   "who": "One lesson for each part of your tree, with a practice",
+   "certTitle": "Sequoia: The Six Parts",
+   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "lessons": [
+    {
+     "id": "sq-6-roots",
+     "n": 1,
+     "title": "Roots: What Grounds You",
+     "mins": 6,
+     "blurb": "What holds you up, and how it can change shape over a long life.",
+     "sources": [
+      "krause",
+      "rcope"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "The Six Parts, Lesson 1",
+       "h": "Roots",
+       "sub": "What grounds you.",
+       "say": "Welcome to The Six Parts. Sequoia sees your life as a tree with six parts, and this first lesson is about Roots, what grounds you."
+      },
+      {
+       "k": "six",
+       "h": "Six parts, one tree",
+       "words": [
+        "Faith, peace, wonder",
+        "A life that matters",
+        "A calm, clear mind",
+        "People who know you",
+        "Move, rest, nourish",
+        "Something good ahead"
+       ],
+       "say": "Here are all six. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope. Each lesson takes one part, and shows how it can keep growing at any age."
+      },
+      {
+       "k": "big",
+       "h": "A giant sequoia’s roots spread wide, not deep.",
+       "sub": "What holds it up comes from many places.",
+       "say": "A giant sequoia can stand for thousands of years, and its roots are surprisingly shallow. They spread wide instead, far out from the trunk. Your roots can be like that. What holds you up can come from many places, and after a long life, you may have more of them than you think."
+      },
+      {
+       "k": "points",
+       "h": "Roots can look like",
+       "items": [
+        [
+         "Faith and prayer",
+         "God, the Holy, the Sacred"
+        ],
+        [
+         "Nature and wonder",
+         "A garden, the sky, the view from a window"
+        ],
+        [
+         "Music and quiet",
+         "Songs that have carried you for years"
+        ],
+        [
+         "Love and meaning",
+         "Something larger than yourself"
+        ]
+       ],
+       "say": "For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Music and quiet. Or love, and a sense of something larger than yourself. Sequoia is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "points",
+       "h": "Roots can change shape",
+       "items": [
+        [
+         "Worship from home",
+         "Radio, TV, phone, or online"
+        ],
+        [
+         "Prayers you know by heart",
+         "Words learned long ago"
+        ],
+        [
+         "Quiet on purpose",
+         "Time alone that feeds you"
+        ]
+       ],
+       "say": "In later life, the way you tend your roots may change. Maybe getting to services is harder now, so worship comes by radio, TV, phone, or online. Maybe the prayers or poems you learned long ago come back when you need them. And many people find that quiet time alone grows richer with age. A practice can change shape and still feed you."
+      },
+      {
+       "k": "big",
+       "h": "Honest questions are welcome here, at any age.",
+       "sub": "Faith can be a comfort. It can also feel like a weight.",
+       "say": "Research with older adults found something hopeful. People who explored their questions about faith, instead of pushing them down, tended to have better health. So honest questions and doubts are welcome here, at any age. And faith can be a comfort, or it can feel like a weight. Feeling far from the sacred, let down by it, or hurt by people of faith is real, and it matters too."
+      },
+      {
+       "k": "points",
+       "h": "How Roots can look",
+       "items": [
+        [
+         "Strong",
+         "You know what holds you up, and reach for it",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "It is there, though harder to reach lately",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "You feel unmoored, or faith feels heavy",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though it has been harder to reach lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is an honest place to be. A chaplain or spiritual director can be a good listener there."
+      },
+      {
+       "k": "big",
+       "h": "Sequoia never asks what you believe.",
+       "sub": "It asks whether your roots are holding you up.",
+       "say": "That is why Sequoia never asks what you believe. It asks whether your roots are holding you up, or weighing you down. Your roots are yours."
+      },
+      {
+       "k": "big",
+       "h": "A few words, matched to your breath.",
+       "sub": "For waiting rooms, long nights, and ordinary moments.",
+       "say": "Picture a long wait at the doctor’s office, or a night when sleep will not come. Many people find that a few words, matched to the breath, can steady them right where they are. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Breath Prayer",
+       "items": [
+        [
+         "Settle",
+         "Sit or lie however is comfortable"
+        ],
+        [
+         "Choose two short halves",
+         "Be still, and know. Or: I am here, I let go."
+        ],
+        [
+         "Breathe with the words",
+         "In on the first half, out on the second"
+        ],
+        [
+         "Keep it easy",
+         "Let your breath stay natural"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "6": 5,
+         "9": 30
+        },
+        "at": [
+         2,
+         3,
+         7,
+         8
+        ]
+       },
+       "say": "Let us practice. This one is called Breath Prayer. Sit or lie however is comfortable, and let your shoulders soften. Now choose a short phrase with two halves. It might be, be still, and know. Or, I am held, I am loved. Or, with no words about God at all, breathing in, I am here, breathing out, I let go. Breathe in on the first half, and out on the second. Keep your breath easy and natural, and never force it. Let us take half a minute together, right now. Good."
+      },
+      {
+       "k": "big",
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "Breath Prayer is ready for your growth plan.",
+       "say": "Tend your roots, and they will hold you. Breath Prayer works anywhere, even in bed, and it is ready to add to your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Sequoia look at in Roots?",
+       "opts": [
+        "Which religion you belong to",
+        "Whether what grounds you holds you up",
+        "How often you attend services"
+       ],
+       "right": 1,
+       "why": "Roots are about what holds you up, never about what you believe.",
+       "say": "Quick question. What does Sequoia look at in Roots?"
+      }
+     ]
+    },
+    {
+     "id": "sq-6-trunk",
+     "n": 2,
+     "title": "Trunk: Purpose",
+     "mins": 5,
+     "blurb": "A life that matters, and roles that can change shape.",
+     "sources": [
+      "boyle",
+      "alimujiang",
+      "retire",
+      "anderson"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "The Six Parts, Lesson 2",
+       "h": "Trunk",
+       "sub": "Purpose.",
+       "say": "This lesson is about your Trunk, your purpose. The reasons you get up, and the good you still give."
+      },
+      {
+       "k": "big",
+       "h": "A sequoia’s trunk keeps growing wider all its life.",
+       "sub": "Every year adds another ring.",
+       "say": "A giant sequoia’s trunk keeps growing wider for as long as the tree lives. Every year adds another ring. A long life is like that. Purpose does not stop at a certain age. It keeps growing, and it can change shape."
+      },
+      {
+       "k": "points",
+       "h": "Purpose in later life can look like",
+       "items": [
+        [
+         "Being needed",
+         "Paid or unpaid, both count fully"
+        ],
+        [
+         "Passing it on",
+         "What you know, to someone younger"
+        ],
+        [
+         "Making and learning",
+         "A quilt, a garden, a new skill"
+        ],
+        [
+         "Peace with your story",
+         "Hard chapters included"
+        ]
+       ],
+       "say": "Purpose in later life can look like being needed, paid or unpaid. Passing on what you know to someone younger. Making things, and learning new ones. And peace with the life you have lived, hard chapters included."
+      },
+      {
+       "k": "big",
+       "h": "A sense of purpose is linked with a longer life.",
+       "sub": "And a reason to get up in the morning counts.",
+       "say": "Research with older adults keeps finding the same thing. People with a strong sense of purpose tend to live longer. And purpose does not have to be big. A reason to get up in the morning counts."
+      },
+      {
+       "k": "points",
+       "h": "When roles change",
+       "items": [
+        [
+         "Work ends",
+         "Room to breathe, and a real loss"
+        ],
+        [
+         "The house gets quiet",
+         "The people you raised are busy"
+        ],
+        [
+         "The body asks for help",
+         "Some things take longer now"
+        ],
+        [
+         "New roles open",
+         "Unpaid roles count fully"
+        ]
+       ],
+       "say": "Later life often takes away roles that gave the days their shape. Work ends. The house gets quiet. The body asks for more help. Losing a role can feel like losing a piece of yourself. And new roles can open. Mentor, neighbor, volunteer, grandparent, the one who remembers. Unpaid roles count fully."
+      },
+      {
+       "k": "points",
+       "h": "Ways purpose can grow now",
+       "items": [
+        [
+         "Volunteer",
+         "Your time, where it is needed"
+        ],
+        [
+         "Mentor Someone",
+         "Over coffee, by phone, or in a program"
+        ],
+        [
+         "Pass On a Skill",
+         "A recipe, a repair, a card game"
+        ],
+        [
+         "Write Your Story",
+         "One memory at a time"
+        ]
+       ],
+       "say": "Purpose can grow in many ways now. Giving your time where it is needed is linked with better well-being and health in later life. You might volunteer, mentor someone younger, or pass on a skill, like a recipe, a repair, or a card game. Or you might write your story, one memory at a time. Each of these is a practice you can add to your growth plan."
+      },
+      {
+       "k": "points",
+       "h": "How Trunk can look",
+       "items": [
+        [
+         "Strong",
+         "You feel your life matters, and you are needed",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Purpose is there, though some days feel flat",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "You feel you have no place, or feel a burden",
+         "#B8612F"
+        ]
+       ],
+       "say": "A strong trunk might mean you feel your life matters, and you are needed. Steady might mean purpose is there, though some days feel flat. And a Growing Edge might mean you feel you have no place anymore, or you feel like a burden to the people around you. Many people feel that in later life. It is worth saying out loud to someone you trust."
+      },
+      {
+       "k": "big",
+       "h": "You matter, even on days it is hard to see.",
+       "sub": "Not wanting to be here? Call or text 988.",
+       "say": "You matter, even on days it is hard to see. If feeling like a burden ever turns into not wanting to be here, please tell someone. Call or text nine eight eight, any time, day or night."
+      },
+      {
+       "k": "big",
+       "h": "One small reason can change how a day begins.",
+       "sub": "A friend, a plant, a pet, a phone call.",
+       "say": "Picture a quiet morning, with no alarm and no job to get to. Many people find that one small reason changes how the day begins. A friend who will call. A tomato plant that needs water. A cat waiting by the door. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Reason to Get Up",
+       "items": [
+        [
+         "Settle",
+         "One easy breath"
+        ],
+        [
+         "Name one",
+         "A person or thing glad you are here"
+        ],
+        [
+         "Say it out loud",
+         "Today, my reason is..."
+        ],
+        [
+         "Keep it close",
+         "A card by your bed for tomorrow"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "5": 15,
+         "7": 8
+        },
+        "at": [
+         2,
+         3,
+         6,
+         8
+        ]
+       },
+       "say": "Let us practice. This one is called Reason to Get Up. Take one easy breath. Now name one person or thing that is glad you are here today. A friend, a pet, a garden, a neighbor, a grandchild. Take your time. Now say it out loud, if you can. Today, my reason is, and then the name. Tonight, you might write tomorrow’s reason on a card by your bed."
+      },
+      {
+       "k": "big",
+       "h": "Roles can change. Your gifts come with you.",
+       "sub": "Reason to Get Up is ready for your growth plan.",
+       "say": "Roles can change. Your gifts come with you. If you would like to pass on what you know, Sequoia’s Legacy Book is there whenever you choose, one memory at a time. And Reason to Get Up is ready to add to your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "Which roles count toward purpose?",
+       "opts": [
+        "Only paid work",
+        "Paid and unpaid roles, fully",
+        "Only roles from younger years"
+       ],
+       "right": 1,
+       "why": "Being needed counts, paid or unpaid.",
+       "say": "Quick question. Which roles count toward purpose?"
+      }
+     ]
+    },
+    {
+     "id": "sq-6-bark",
+     "n": 3,
+     "title": "Bark: Mind and Feelings",
+     "mins": 5,
+     "blurb": "Steadiness earned over a long life, and help when it runs thin.",
+     "sources": [
+      "carstensen",
+      "unutzer",
+      "gds",
+      "wolitzky",
+      "scd",
+      "lieberman"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "The Six Parts, Lesson 3",
+       "h": "Bark",
+       "sub": "Mind and feelings.",
+       "say": "This lesson is about Bark, your mind and your feelings."
+      },
+      {
+       "k": "big",
+       "h": "Sequoia bark can grow two feet thick.",
+       "sub": "It has carried these trees through fire after fire.",
+       "say": "Giant sequoia bark can grow two feet thick. It is soft and spongy, and it has carried these trees through fire after fire. Your mind and feelings are your bark. After a long life, you have come through a great deal. That steadiness is real."
+      },
+      {
+       "k": "points",
+       "h": "Healthy bark can look like",
+       "items": [
+        [
+         "Enjoying what you enjoy",
+         "Music, a show, a puzzle, a visit"
+        ],
+        [
+         "Calm inside",
+         "Worry comes, and it also goes"
+        ],
+        [
+         "Kindness to yourself",
+         "When the body or memory slips"
+        ],
+        [
+         "A busy, curious mind",
+         "Reading, cards, something new"
+        ]
+       ],
+       "say": "Healthy bark can look like enjoying the things you usually enjoy. Feeling calm inside, so worry comes, and also goes. Being kind to yourself when your body or memory lets you down. And keeping your mind busy with something you like."
+      },
+      {
+       "k": "big",
+       "h": "For many people, feelings grow steadier with age.",
+       "sub": "Time spent on what matters most.",
+       "say": "Research on aging finds that many people grow choosier about their time as they get older. They lean toward the people and the goals that matter most, and let more of the rest go. For many, feelings grow steadier with age."
+      },
+      {
+       "k": "big",
+       "h": "Depression is not a normal part of aging.",
+       "sub": "It is common, and it is very treatable.",
+       "say": "And here is something just as important. Depression is not a normal part of getting older. In later life it often shows up less as sadness, and more as losing interest, poor sleep, aches, or just not feeling like yourself. It is common, and it is very treatable, at any age."
+      },
+      {
+       "k": "points",
+       "h": "Worry in later life often sounds like",
+       "items": [
+        [
+         "Health",
+         "What will the test show?"
+        ],
+        [
+         "Money",
+         "Will it last?"
+        ],
+        [
+         "Memory",
+         "Was that a normal slip?"
+        ],
+        [
+         "Family",
+         "Are they all right?"
+        ]
+       ],
+       "say": "Worry is common in later life too. It often sounds like this. What will the test show? Will the money last? Was that a normal slip of memory? Are the people I love all right? Many people notice changes in their memory. A doctor can help sort out what is normal, so that worry has less to feed on."
+      },
+      {
+       "k": "points",
+       "h": "How Bark can look",
+       "items": [
+        [
+         "Strong",
+         "You feel your feelings and find your way back",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly steady, with some heavy stretches",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Low, empty, or caught in worry",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly steady, with some heavy stretches. And a Growing Edge might mean you feel low or empty, or you are caught in worry you cannot set down. That deserves tending, and sometimes more support."
+      },
+      {
+       "k": "big",
+       "h": "Putting a feeling into words can help it settle.",
+       "sub": "One word is often enough to start.",
+       "say": "Picture the moment after a hard phone call, when something heavy sits in your chest and you cannot quite tell what it is. Research finds that simply putting a feeling into words can help it settle. Many people find one word is enough to start. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name It",
+       "items": [
+        [
+         "Settle",
+         "One easy breath"
+        ],
+        [
+         "Notice",
+         "What am I feeling right now?"
+        ],
+        [
+         "Find one word",
+         "Sad, afraid, angry, lonely, tired, glad"
+        ],
+        [
+         "Say it out loud",
+         "This is... and then your word"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 10,
+         "9": 8,
+         "10": 8
+        },
+        "at": [
+         2,
+         3,
+         5,
+         8
+        ]
+       },
+       "say": "Let us practice. This one is called Name It. Sit or lie however is comfortable, and take one easy breath. Now notice what you are feeling, right now, in this moment. Take your time. Put it into one word. Sad, afraid, angry, lonely, tired, or glad. If no word fits, heavy or stirred up is enough. Now say your word out loud, softly. This is, and then your word. Notice it begin to settle, even just a little."
+      },
+      {
+       "k": "big",
+       "h": "Heavy for two weeks or more? Tell your doctor.",
+       "sub": "Need to talk now? Call or text 988, any time.",
+       "say": "If low mood or worry stays with you for two weeks or more, bring it up with your doctor. It is common, and help works. And if you need to talk right now, call or text nine eight eight, any time. Veterans can call nine eight eight and press one. Name It is ready for your growth plan, for any moment a feeling runs strong."
+      },
+      {
+       "k": "quiz",
+       "q": "Is depression a normal part of getting older?",
+       "opts": [
+        "Yes, everyone gets it",
+        "No, and it is very treatable",
+        "Only for people who live alone"
+       ],
+       "right": 1,
+       "why": "Depression is common in later life, and it is very treatable at any age.",
+       "say": "Quick question. Is depression a normal part of getting older?"
+      }
+     ]
+    },
+    {
+     "id": "sq-6-branches",
+     "n": 4,
+     "title": "Branches: Relationships",
+     "mins": 6,
+     "blurb": "The people you reach toward, and staying safe with the people close to you.",
+     "sources": [
+      "nasem",
+      "murthy",
+      "masi",
+      "yon",
+      "metta",
+      "fredrickson"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "The Six Parts, Lesson 4",
+       "h": "Branches",
+       "sub": "Relationships.",
+       "say": "This lesson is about Branches, your relationships. The people you reach toward, and the people who reach toward you."
+      },
+      {
+       "k": "big",
+       "h": "Sequoias grow in groves, not alone.",
+       "sub": "Branches reach for the light, together.",
+       "say": "Giant sequoias grow together, in groves. Their branches reach for the light, high above the ground. Your branches are your relationships. They are how you catch the light."
+      },
+      {
+       "k": "points",
+       "h": "Branches in later life can look like",
+       "items": [
+        [
+         "One person who knows you",
+         "Someone you can be fully yourself with"
+        ],
+        [
+         "Someone who listens",
+         "Not to fix, just to hear"
+        ],
+        [
+         "A circle",
+         "Faith community, club, neighbors, online"
+        ],
+        [
+         "Asking for help",
+         "Help goes both ways"
+        ]
+       ],
+       "say": "Branches in later life can look like one person you can be fully yourself with. Someone who really listens. A circle, like a faith community, a club, your neighbors, or a group online. And asking for help when you need it. Help goes both ways."
+      },
+      {
+       "k": "big",
+       "h": "Your branches are part of your health.",
+       "sub": "Being cut off weighs on heart and memory.",
+       "say": "Research takes loneliness seriously. Being cut off from others in later life is linked with heart disease, memory loss, and a shorter life. Your branches are part of your health."
+      },
+      {
+       "k": "points",
+       "h": "Later life can change the circle",
+       "items": [
+        [
+         "Losing a spouse or friends",
+         "Grief changes who is at the table"
+        ],
+        [
+         "Moving, or giving up the car",
+         "Distance grows"
+        ],
+        [
+         "Hearing changes",
+         "Talk gets harder to follow"
+        ],
+        [
+         "Looking after someone",
+         "Little time left for others"
+        ]
+       ],
+       "say": "Later life can change your circle. Losing a spouse or close friends. Moving, or giving up the car. Hearing that makes conversation harder to follow. Or looking after someone you love, with little time left for anyone else. If hearing is the trouble, a hearing check can bring you back into the conversation."
+      },
+      {
+       "k": "big",
+       "h": "Lonely thoughts are often wrong.",
+       "sub": "Like: they would not want to hear from me.",
+       "say": "Here is a surprise from the research. What helps loneliness most is often not only more contact. It is gently testing the lonely thoughts that keep us apart. Thoughts like, they are too busy for me, or, they would not want to hear from me. Those thoughts are often wrong."
+      },
+      {
+       "k": "points",
+       "h": "How Branches can look",
+       "items": [
+        [
+         "Strong",
+         "You have people, and you reach for them",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Good people, though some ties feel thin",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "You feel alone, or unsafe with someone",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong branches might mean you have people, and you reach for them. Steady might mean good people, though some ties feel thin. And a Growing Edge might mean you feel alone, or you do not feel safe with someone close to you."
+      },
+      {
+       "k": "points",
+       "h": "Safe at home, safe with your money",
+       "items": [
+        [
+         "Hurt, neglected, or used?",
+         "In Minnesota: MAARC, 1-844-880-1574"
+        ],
+        [
+         "Lost money to a scam?",
+         "Elder Fraud Hotline: 1-833-372-8311"
+        ],
+        [
+         "Anywhere in the country",
+         "Eldercare Locator: 1-800-677-1116"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "Sometimes the hard part of Branches is a person close to you. If someone is hurting you, neglecting you, or taking advantage of you or your money, it is not your fault, and you can tell someone. Scams fool smart people every day. In Minnesota, call the adult abuse reporting line at one, eight four four, eight eight zero, one five seven four, any time. If you have lost money to a scam, or to someone you know, call the National Elder Fraud Hotline at one, eight three three, three seven two, eight three one one. Anywhere in the country, the Eldercare Locator can point you to help, at one, eight hundred, six seven seven, one one one six. And if you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Wishing someone well can bring them close.",
+       "sub": "Even when they are far away.",
+       "say": "Picture someone you love who lives far away, or someone you cannot visit as often as you would like. Many people find that simply wishing them well, in quiet, brings them close again. Wishing others well is linked with more warmth and a deeper sense of connection. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Loving-Kindness",
+       "items": [
+        [
+         "Settle",
+         "Sit or lie comfortably"
+        ],
+        [
+         "Picture someone you love",
+         "Their face, their voice"
+        ],
+        [
+         "Say the wishes softly",
+         "May you be safe. May you be well."
+        ],
+        [
+         "Widen the circle",
+         "A neighbor, and then yourself"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "6": 10,
+         "11": 15
+        },
+        "at": [
+         3,
+         4,
+         7,
+         12
+        ]
+       },
+       "say": "Let us practice. This one is called Loving-Kindness. It comes from an old meditation tradition, and it needs no religion at all, so anyone can do it. Sit or lie comfortably, and take one easy breath. Now picture someone you love. See their face, and hear their voice. Take a moment. Now say these wishes softly, to them. May you be safe. May you be well. May you be at peace. Say them once more, in your own time. Last, if you like, send the same wishes to a neighbor, and then to yourself."
+      },
+      {
+       "k": "big",
+       "h": "Wishing someone well is a way of reaching out.",
+       "sub": "Loving-Kindness is ready for your growth plan.",
+       "say": "Wishing someone well is a way of reaching toward them, and it can make the next call a little easier. Loving-Kindness works in a chair or in bed, and it is ready to add to your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "What often helps loneliness most?",
+       "opts": [
+        "Waiting for others to call",
+        "Testing lonely thoughts, and reaching out",
+        "Staying busy on your own"
+       ],
+       "right": 1,
+       "why": "Lonely thoughts keep people apart, and they are often wrong.",
+       "say": "Quick question. What often helps loneliness most?"
+      }
+     ]
+    },
+    {
+     "id": "sq-6-leaves",
+     "n": 5,
+     "title": "Leaves: Body",
+     "mins": 5,
+     "blurb": "Move, rest, and nourish, in the body you have today.",
+     "sources": [
+      "seated",
+      "pag",
+      "niasleep",
+      "cdcfalls",
+      "steadi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "The Six Parts, Lesson 5",
+       "h": "Leaves",
+       "sub": "Body.",
+       "say": "This lesson is about Leaves, your body."
+      },
+      {
+       "k": "big",
+       "h": "Leaves turn light into strength for the whole tree.",
+       "sub": "Even a giant depends on small green needles.",
+       "say": "Leaves turn sunlight into strength for the whole tree. Even the largest sequoia depends on its small green needles. Your body is your leaves. Sequoia asks about what your body allows today, never about being perfectly healthy."
+      },
+      {
+       "k": "flow",
+       "h": "Three ways to tend Leaves",
+       "steps": [
+        [
+         "Move",
+         "In whatever way your body allows"
+        ],
+        [
+         "Rest",
+         "Restful sleep, and some daylight"
+        ],
+        [
+         "Nourish",
+         "Regular meals, and enough to drink"
+        ]
+       ],
+       "say": "Sequoia tends Leaves in three ways. Move, in whatever way your body allows. Rest, with restful sleep and some daylight. And nourish, with regular meals and enough to drink."
+      },
+      {
+       "k": "big",
+       "h": "Seated movement counts.",
+       "sub": "So does lying down. So do small amounts.",
+       "say": "Research finds that movement helps at every age and every ability. Exercise from a chair is safe for most people, and it helps strength and mood. Guidelines for older adults ask each person to move as their own ability allows. Seated counts. Lying down counts. Small amounts count."
+      },
+      {
+       "k": "points",
+       "h": "Rest in later life",
+       "items": [
+        [
+         "Seven to nine hours",
+         "About the same as younger adults"
+        ],
+        [
+         "A steady wake time",
+         "Weekends included"
+        ],
+        [
+         "Morning daylight",
+         "It helps set your body clock"
+        ],
+        [
+         "Short, early naps",
+         "So nights stay restful"
+        ]
+       ],
+       "say": "Rest matters just as much. Older adults need about seven to nine hours of sleep, about the same as younger adults. A steady wake time helps, weekends included. So does some morning daylight, and keeping naps short and early. If you snore with pauses in your breathing, or feel sleepy all day, tell your doctor."
+      },
+      {
+       "k": "points",
+       "h": "Leaves in later life",
+       "items": [
+        [
+         "Steady on your feet",
+         "With whatever help you use"
+        ],
+        [
+         "Hearing and seeing",
+         "Enough to join in"
+        ],
+        [
+         "Pain",
+         "Loud some days, quieter on others"
+        ],
+        [
+         "Appetite",
+         "Smaller now, and still important"
+        ]
+       ],
+       "say": "Leaves in later life also means feeling steady as you get around, with a cane, a walker, or whatever help you use. Hearing and seeing well enough to join in, and glasses, hearing aids, and captions all count. Pain, which can be loud some days and quieter on others. And appetite, which often gets smaller. If you are losing weight without trying, tell your doctor."
+      },
+      {
+       "k": "big",
+       "h": "Tell your doctor about every fall.",
+       "sub": "Fear of falling can ease, with a plan and practice.",
+       "say": "Falls are common. More than one in four adults sixty five and older fall each year, and fewer than half tell their doctor. Tell your doctor about any fall, even a small one. And if fear of falling is keeping you home, that fear can ease, with a plan and a little practice."
+      },
+      {
+       "k": "points",
+       "h": "How Leaves can look",
+       "items": [
+        [
+         "Strong",
+         "You move, rest, and eat in ways that help",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly okay, with a weak spot or two",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Worn out, unsteady, or in pain",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong leaves might mean you move, rest, and eat in ways that help you. Steady might mean mostly okay, with a weak spot or two. And a Growing Edge might mean you feel worn out, unsteady, or in pain. That is a good place to start, gently."
+      },
+      {
+       "k": "big",
+       "h": "A few gentle stretches, right where you sit.",
+       "sub": "For long afternoons in the same chair.",
+       "say": "Picture a long afternoon in the same chair, with a good book or a ballgame. Many people find that when they finally stand, everything feels stiff. A few gentle stretches, right where you sit, can change that. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Chair Stretch",
+       "items": [
+        [
+         "Sit tall",
+         "As tall as is comfortable"
+        ],
+        [
+         "Roll your shoulders",
+         "Slowly, back and down"
+        ],
+        [
+         "Turn your head",
+         "Gently, side to side"
+        ],
+        [
+         "Circle your ankles",
+         "Or simply wiggle your toes"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "6": 10,
+         "7": 10,
+         "8": 10
+        },
+        "at": [
+         5,
+         6,
+         7,
+         8
+        ]
+       },
+       "say": "Let us practice. This one is called Chair Stretch. You can do it in a chair or a wheelchair, and most of it works lying in bed too. Stretch gently. It should never hurt, so stop if you feel pain or dizziness. Sit as tall as is comfortable. Roll your shoulders slowly, back and down. Now turn your head gently to one side, and then the other. Last, circle your ankles, or simply wiggle your toes. Good."
+      },
+      {
+       "k": "big",
+       "h": "Your body is part of the whole you.",
+       "sub": "Chair Stretch is ready for your growth plan.",
+       "say": "Your body is part of the whole you. Talk with your doctor before starting something new, especially after a fall, a new diagnosis, or a change in medicines. Chair Stretch is ready to add to your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "Which movement counts in Sequoia?",
+       "opts": [
+        "Only walking",
+        "Any kind your body allows, seated too",
+        "Only exercise classes"
+       ],
+       "right": 1,
+       "why": "Seated counts, lying down counts, and small amounts count.",
+       "say": "Quick question. Which movement counts in Sequoia?"
+      }
+     ]
+    },
+    {
+     "id": "sq-6-fruit",
+     "n": 6,
+     "title": "Fruit: Hope",
+     "mins": 5,
+     "blurb": "Hope that changes shape, and grows from everything else.",
+     "sources": [
+      "herth",
+      "killen",
+      "savoring"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "The Six Parts, Lesson 6",
+       "h": "Fruit",
+       "sub": "Hope.",
+       "say": "This last lesson is about Fruit, your hope."
+      },
+      {
+       "k": "big",
+       "h": "Some sequoia cones wait many years to open.",
+       "sub": "Then heat, or time, sets the seeds loose.",
+       "say": "A giant sequoia’s cones can stay green and closed on the branch for many years, some for twenty years or more. Then heat, or time, opens them, and the seeds fall. Fruit takes time. Hope is like that. It grows from everything else, and it can come out of hard seasons."
+      },
+      {
+       "k": "points",
+       "h": "Hope in later life can look like",
+       "items": [
+        [
+         "Something ahead",
+         "A visit, a season, a small plan"
+        ],
+        [
+         "Gratitude and delight",
+         "Letting the good things land"
+        ],
+        [
+         "A life worth living",
+         "All things considered"
+        ],
+        [
+         "Peace about what lies ahead",
+         "Even the end of life"
+        ]
+       ],
+       "say": "Hope in later life can look like something to look forward to, even something small. Gratitude, and delight, letting the good things land. A sense that your life has been good, all things considered. And peace about what lies ahead, even the end of life."
+      },
+      {
+       "k": "big",
+       "h": "Hope changes shape. It can still grow.",
+       "sub": "Small practices of gratitude help it along.",
+       "say": "Hope in later life often changes shape. It may be less about a long list of plans, and more about the people you love, a good day, and peace with what is ahead. And hope can be grown. In one study, a short gratitude practice helped adults sixty and older flourish."
+      },
+      {
+       "k": "big",
+       "h": "Savoring holds on to joy, even when health is hard.",
+       "sub": "Small good things are not small.",
+       "say": "Older adults who savor, who slow down and soak in a good moment, tend to keep their satisfaction with life even when their health is poor. Small good things are not small."
+      },
+      {
+       "k": "big",
+       "h": "Peace about what lies ahead can grow too.",
+       "sub": "Share your wishes with someone you trust.",
+       "say": "For many people, hope in later life includes peace about what lies ahead. Talking with someone you trust about what matters most to you, in your health and your future, can bring real peace. Sequoia has a practice for that, called Make Your Wishes Known."
+      },
+      {
+       "k": "points",
+       "h": "How Fruit can look",
+       "items": [
+        [
+         "Strong",
+         "You look ahead with hope, even when it is hard",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Hope is there, though some days it fades",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "It is hard to see anything good ahead",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong fruit might mean you look ahead with hope, even when it is hard. Steady might mean hope is there, though some days it fades. And a Growing Edge might mean it is hard to see anything good ahead right now."
+      },
+      {
+       "k": "big",
+       "h": "Losing hope? You do not have to hold it alone.",
+       "sub": "Call or text 988, any time. In danger? Call 911.",
+       "say": "If it is hard to see anything good ahead, or you have thought about not wanting to be here, you do not have to hold that alone. Many people have felt that, and help is real. Call or text nine eight eight, any time. Veterans can call nine eight eight and press one. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "One small circle on the calendar.",
+       "sub": "One good thing ahead can lift a whole week.",
+       "say": "Picture a calendar page with one small circle on it. A call with a grandchild. Coffee with a neighbor. The first ripe tomatoes. Many people find that one good thing ahead lifts the whole week. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Something to Look Forward To",
+       "items": [
+        [
+         "Think of this week",
+         "What is one small good thing?"
+        ],
+        [
+         "Choose one",
+         "A call, a coffee, a drive, a show"
+        ],
+        [
+         "Say it out loud",
+         "This week, I am looking forward to..."
+        ],
+        [
+         "Make it real",
+         "Put it on the calendar, or ask someone"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "5": 15,
+         "7": 8
+        },
+        "at": [
+         2,
+         5,
+         6,
+         8
+        ]
+       },
+       "say": "Let us practice. This one is called Something to Look Forward To. Think about the week ahead. What is one small good thing you could plan? A call, a coffee, a drive, a favorite show. Choose one. Now say it out loud, like this. This week, I am looking forward to, and then your one thing. Last, make it real. Put it on the calendar, or ask someone to plan it with you."
+      },
+      {
+       "k": "big",
+       "h": "Tend the whole tree, and fruit will come.",
+       "sub": "It is ready for your growth plan.",
+       "say": "Tend the whole tree, a little at a time, and fruit will come. Something to Look Forward To is ready to add to your growth plan. That is all six parts. A long life, still growing. Well done."
+      },
+      {
+       "k": "quiz",
+       "q": "Where does hope often begin?",
+       "opts": [
+        "With a big change",
+        "With one small good thing ahead",
+        "With having no problems"
+       ],
+       "right": 1,
+       "why": "One good thing ahead can lift a whole week.",
+       "say": "Last question. Where does hope often begin?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sequoia-helper",
+   "title": "For the Helper",
+   "who": "For adult children, spouses, friends, and caregivers",
+   "certTitle": "Sequoia: For the Helper",
+   "certLine": "For finishing every lesson for the people walking beside an older adult.",
+   "lessons": [
+    {
+     "id": "sq-p-talk",
+     "n": 1,
+     "title": "Talking With Your Parent or Partner About How They Are Really Doing",
+     "mins": 6,
+     "blurb": "How to ask an older parent or partner how they really are, and how to listen to the answer.",
+     "sources": [
+      "gds",
+      "phq2",
+      "dazzi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "For the Helper, Lesson 1",
+       "h": "Talking About How They Are Really Doing",
+       "sub": "Honest talk, at their pace.",
+       "say": "Welcome. This series is for the people who walk with an older adult. A grown son or daughter, a spouse or partner, a friend, a neighbor, a paid caregiver. This first lesson is about a question that is simple to ask and hard to ask well. How are you really doing?"
+      },
+      {
+       "k": "big",
+       "h": "You walk beside them. They lead their own life.",
+       "sub": "Listen well, and help when they ask.",
+       "say": "Start here. The person you love has led their own life for a long time, and has weathered more than you may know. You are walking beside them. Your part is to listen well, and to help when they ask."
+      },
+      {
+       "k": "points",
+       "h": "Why fine is only the start",
+       "items": [
+        [
+         "Many keep hard things private",
+         "It is how they were raised"
+        ],
+        [
+         "They may want to spare you",
+         "Protecting you is love too"
+        ],
+        [
+         "Low mood can look different",
+         "Aches, poor sleep, not myself"
+        ]
+       ],
+       "say": "When you ask how they are, you will often hear, fine. There are good reasons. Many people were raised to keep hard things private. Many want to spare their children or their partner from worry. And in later life, low mood often shows up as aches, poor sleep, or losing interest, more than as sadness. So fine is a starting place, and there is often more."
+      },
+      {
+       "k": "points",
+       "h": "Set the talk up well",
+       "items": [
+        [
+         "Pick a calm time",
+         "A drive, a walk, a meal"
+        ],
+        [
+         "Sit where they can hear you",
+         "Quiet room, your face in good light"
+        ],
+        [
+         "Ask open questions",
+         "Ones that need more than yes or no"
+        ],
+        [
+         "Give it time",
+         "Silence is often thinking"
+        ]
+       ],
+       "say": "A few things help the talk go well. Pick a calm time, away from a crisis. A drive, a walk, or a meal together often works. Sit where they can hear you well, in a quiet room, with your face in good light. Ask open questions, ones that need more than yes or no. And give it time. Silence is often someone thinking."
+      },
+      {
+       "k": "words",
+       "h": "Questions that open doors",
+       "items": [
+        "What has this week been like for you?",
+        "What are you enjoying lately?",
+        "What's been on your mind?",
+        "What would make things easier right now?"
+       ],
+       "say": "Here are some questions that open doors. What has this week been like for you? What are you enjoying lately? What's been on your mind? What would make things easier right now? Each one leaves room for good news and hard news."
+      },
+      {
+       "k": "points",
+       "h": "When they open up",
+       "items": [
+        [
+         "Listen to understand",
+         "Hold off on fixing"
+        ],
+        [
+         "Reflect it back",
+         "So it sounds like..."
+        ],
+        [
+         "Let feelings be",
+         "Tears and frustration belong"
+        ],
+        [
+         "Ask before advising",
+         "Ideas, or a listening ear?"
+        ]
+       ],
+       "say": "When they do open up, listen to understand, and hold off on fixing. Reflect back what you heard, in your own words. Let feelings be, even tears or frustration. And before you offer advice, ask. Do you want ideas, or would you like me to just listen? That one question honors that this is their life. Sequoia's practice library calls this Active Listening."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: reflect it back",
+       "sub": "It sounds like... Tell me more.",
+       "beats": [
+        "Let's try it now.",
+        "Picture them saying, I'm just tired of everything.",
+        "Notice the pull to fix it, or to cheer them up.",
+        "Let one slow breath out instead.",
+        {
+         "t": "Now say it out loud, in your own words: It sounds like things have been heavy, and I'd like to hear more.",
+         "w": 10
+        }
+       ],
+       "say": "Let's try it now. Picture them saying, I'm just tired of everything. Notice the pull to fix it, or to cheer them up. Let one slow breath out instead. Now say it out loud, in your own words: It sounds like things have been heavy, and I'd like to hear more."
+      },
+      {
+       "k": "big",
+       "h": "If you hear hopelessness, ask plainly.",
+       "sub": "Asking opens the door. Call or text 988 together.",
+       "say": "Sometimes you will hear something that worries you. What's the point. I'm just in the way. It is okay to ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. If the answer is yes, call or text 988 together, and if they are in danger right now, call 911. Lesson four walks through this, step by step."
+      },
+      {
+       "k": "points",
+       "h": "Helpers in Sequoia",
+       "items": [
+        [
+         "Helpers are optional",
+         "Off unless they add one"
+        ],
+        [
+         "Only they can add you",
+         "In Settings"
+        ],
+        [
+         "They choose what you see",
+         "Some answers start private"
+        ],
+        [
+         "Safety answers stay theirs",
+         "Never shared"
+        ]
+       ],
+       "say": "If they use Sequoia, here is how helpers work. Helpers are optional, and off unless the person adds one. Only they can add a helper, in Settings. They choose what each helper sees, and some answers start private. Their answers to the safety questions are never shared with anyone. Whether or not they add you, everything in this series is yours to use."
+      },
+      {
+       "k": "flow",
+       "h": "A check-in together",
+       "steps": [
+        [
+         "They answered",
+         "Their words, their taps"
+        ],
+        [
+         "They answered, I tapped",
+         "Their words, your hands"
+        ],
+        [
+         "I'm answering from what I see",
+         "When they cannot answer"
+        ]
+       ],
+       "say": "If they ask you to sit with them for a check-in, Sequoia asks who answered. They answered. They answered, and you tapped. Or, when memory or illness makes answering hard, you answer from what you see, and Sequoia marks it that way. Whenever you can, let their answers be theirs, even if you would answer differently."
+      },
+      {
+       "k": "big",
+       "h": "Keep asking. Keep the door open.",
+       "sub": "One talk is a beginning.",
+       "say": "One talk is rarely the whole conversation. If today they say fine and change the subject, that is okay. Keep showing up, keep asking, and let them know the door is open. Over time, many people say more to someone who keeps listening."
+      },
+      {
+       "k": "quiz",
+       "q": "They say they're fine, but they've stopped enjoying things. What helps most?",
+       "opts": [
+        "Take their word for it and move on",
+        "Ask an open question, and listen to understand",
+        "Tell them how they should feel"
+       ],
+       "right": 1,
+       "why": "Fine is a starting place. Open questions and real listening let them say more.",
+       "say": "Quick question. They say they're fine, but they've stopped enjoying things they love. What helps most?"
+      }
+     ]
+    },
+    {
+     "id": "sq-p-dignity",
+     "n": 2,
+     "title": "Help That Honors Independence",
+     "mins": 6,
+     "blurb": "How to help without taking over, so the person you love stays in charge of their own life.",
+     "sources": [
+      "chochinov",
+      "cdcfalls"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "For the Helper, Lesson 2",
+       "h": "Help That Honors Independence",
+       "sub": "Doing with, not doing for.",
+       "say": "This lesson is about a balance every helper meets sooner or later. How to help someone you love while they stay in charge of their own life. Help that honors independence."
+      },
+      {
+       "k": "big",
+       "h": "Their life. Their choices.",
+       "sub": "Help works best when they steer.",
+       "say": "Here is the heart of it. It is still their life, and they still make the choices, as far as they safely can. Most older adults want to stay in charge of their own days. Help works best when they steer, and you ride along."
+      },
+      {
+       "k": "points",
+       "h": "Why it matters so much",
+       "items": [
+        [
+         "Choice is dignity",
+         "Deciding keeps you yourself"
+        ],
+        [
+         "Feeling like a burden is common",
+         "And it weighs on the spirit"
+        ],
+        [
+         "Doing keeps strength",
+         "Skills stay when they are used"
+        ]
+       ],
+       "say": "Why does this matter so much? Choice is dignity. Deciding for yourself is part of being yourself. Feeling like a burden is common late in life, and it weighs heavily. Help that takes over can make that feeling heavier. And doing things yourself keeps strength and skills alive."
+      },
+      {
+       "k": "flow",
+       "h": "Doing with, not doing for",
+       "steps": [
+        [
+         "Ask",
+         "What would help?"
+        ],
+        [
+         "Offer choices",
+         "This way, or that way?"
+        ],
+        [
+         "Do it together",
+         "Their pace, their way"
+        ],
+        [
+         "Step back",
+         "Let them finish"
+        ]
+       ],
+       "say": "Try thinking of help as doing with, more than doing for. Ask first. What would help? Offer choices. Would you like me to carry the bags, or hold the door? Do it together, at their pace and their way. And when they have it, step back and let them finish."
+      },
+      {
+       "k": "words",
+       "h": "Words that hand back the wheel",
+       "items": [
+        "What would be most helpful?",
+        "How do you like it done?",
+        "Would you show me how?",
+        "It's your call."
+       ],
+       "say": "A few phrases help a lot. What would be most helpful? How do you like it done? Would you show me how? And, it's your call. Each one hands the wheel back to them."
+      },
+      {
+       "k": "points",
+       "h": "Swaps that keep them in charge",
+       "items": [
+        [
+         "Cook the meal together",
+         "Their recipe, your hands"
+        ],
+        [
+         "Talk about driving together",
+         "Bring in their doctor"
+        ],
+        [
+         "Sit beside them with the bills",
+         "A second set of eyes"
+        ]
+       ],
+       "say": "Small swaps keep them in charge. Rather than making the meal for them, cook it together, with their recipe and your hands. When driving gets hard, talk it through together, openly, and bring in their doctor. And rather than taking over the bills, sit beside them as they pay, as a second set of eyes."
+      },
+      {
+       "k": "big",
+       "h": "When safety and choice pull apart, name it.",
+       "sub": "Find a way that feels safe to both of you.",
+       "say": "Sometimes safety and choice pull against each other. A fall, a scam, a stove left on. When that happens, name it out loud, together. I want you to keep doing this. I'm also worried. Can we find a way that feels safe to both of us? For bigger decisions, bring in their doctor, or an aging services helper. The Eldercare Locator, 1 800 677 1116, can point you to help nearby."
+      },
+      {
+       "k": "points",
+       "h": "Tools that protect independence",
+       "items": [
+        [
+         "A cane, walker, or wheelchair",
+         "Help that keeps them going"
+        ],
+        [
+         "Grab bars and night lights",
+         "A safer home"
+        ],
+        [
+         "Hearing aids and glasses",
+         "So they can join in"
+        ]
+       ],
+       "say": "Tools protect independence too. A cane, walker, or wheelchair is help that keeps people going. Grab bars and night lights make a home safer. Hearing aids, glasses, and captions help people join in. More than one in four adults sixty five and older fall each year, and fewer than half tell their doctor, so make falls easy to talk about. Sequoia has practices for this, like Home Safety Walk-Through and Fall Confidence. You could offer to do one together."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: hand back the wheel",
+       "sub": "Would you show me how you do that?",
+       "beats": [
+        "Let's try it now.",
+        "Think of one thing the person you love still does well, or does their own way.",
+        "Maybe it is a recipe, the garden, the checkbook, or a story they love to tell.",
+        "Picture asking them about it.",
+        {
+         "t": "Now say out loud: Would you show me how you do that?",
+         "w": 10
+        }
+       ],
+       "say": "Let's try it now. Think of one thing the person you love still does well, or does their own way. Maybe it is a recipe, the garden, the checkbook, or a story they love to tell. Picture asking them about it. Now say out loud: Would you show me how you do that?"
+      },
+      {
+       "k": "big",
+       "h": "See the whole person, beyond what they need.",
+       "sub": "Ask what they still give, and let them give it.",
+       "say": "The person you help is more than what they need from you. They are still a teacher, a friend, a storyteller, someone with opinions worth hearing. Ask what they still give, and let them give it. Being needed is part of a good life at any age."
+      },
+      {
+       "k": "points",
+       "h": "Sequoia works the same way",
+       "items": [
+        [
+         "Helpers are optional",
+         "Only they can add one"
+        ],
+        [
+         "They choose what you see",
+         "Their tree, their call"
+        ],
+        [
+         "Ask before you look",
+         "It says: this is still yours"
+        ]
+       ],
+       "say": "Sequoia is built the same way. Helpers are optional, and only the person can add one, in Settings. They choose what each helper sees. It is their tree, and their call. And even when you could look at something, ask first. That small habit says, this is still yours."
+      },
+      {
+       "k": "quiz",
+       "q": "What does help that honors independence look like?",
+       "opts": [
+        "Doing everything for them to save time",
+        "Asking what would help, and letting them steer",
+        "Deciding for them when they seem tired"
+       ],
+       "right": 1,
+       "why": "Help works best when they steer. Ask, offer choices, and do it together.",
+       "say": "Quick question. What does help that honors independence look like?"
+      }
+     ]
+    },
+    {
+     "id": "sq-p-faith",
+     "n": 3,
+     "title": "Faith, Meaning, and the Big Questions",
+     "mins": 6,
+     "blurb": "How to walk with an older adult through faith, doubt, and the big questions, following their lead.",
+     "sources": [
+      "krause",
+      "exline",
+      "pargament",
+      "hope"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "For the Helper, Lesson 3",
+       "h": "Faith, Meaning, and the Big Questions",
+       "sub": "Following their lead.",
+       "say": "This lesson is about faith, meaning, and the big questions that often come later in life. Whatever you hold, and whatever they hold, you can walk with them here."
+      },
+      {
+       "k": "big",
+       "h": "Later life often brings big questions.",
+       "sub": "What has my life meant? What comes next?",
+       "say": "Later life often brings big questions. What has my life meant? Did I do enough? What comes next? Some people meet these questions with a lifelong faith. Some with a faith that has changed shape. Some find meaning in other places. All faith traditions and everything in-between belong here."
+      },
+      {
+       "k": "points",
+       "h": "Faith can be",
+       "items": [
+        [
+         "A resource",
+         "Comfort, strength, belonging"
+        ],
+        [
+         "A struggle",
+         "Feeling far, let down, or judged"
+        ],
+        [
+         "A set of questions",
+         "Doubts that deserve room"
+        ],
+        [
+         "Found in other places",
+         "Family, nature, their work"
+        ]
+       ],
+       "say": "For the person you love, faith might be a resource, bringing comfort, strength, and belonging. It might be a struggle, like feeling far from God or the sacred, let down, or judged. It might be a set of honest questions. Or meaning might come from other places, like family, nature, or the work of their hands."
+      },
+      {
+       "k": "big",
+       "h": "Questions that get room are lighter to carry.",
+       "sub": "Struggle is common, and worth naming.",
+       "say": "Research with older adults finds that doubts which are explored, rather than pushed down, are linked with better health. And spiritual struggle is common, and weighs more during illness. So the most helpful thing you can offer is rarely an answer. It is room."
+      },
+      {
+       "k": "points",
+       "h": "Follow their lead",
+       "items": [
+        [
+         "Ask about experience",
+         "Never about belief"
+        ],
+        [
+         "Use their words",
+         "Their name for the sacred"
+        ],
+        [
+         "Let them choose the moment",
+         "Follow where they go"
+        ],
+        [
+         "Hold your own beliefs gently",
+         "Theirs come first here"
+        ]
+       ],
+       "say": "Here is how to walk with them. Ask about their experience, never whether they believe. Use their words, and their name for what is sacred. Let them choose when to talk about it, and follow where they go. And hold your own beliefs gently. In this moment, theirs come first."
+      },
+      {
+       "k": "words",
+       "h": "Questions that invite",
+       "items": [
+        "What has helped you through hard times before?",
+        "Where do you find strength these days?",
+        "Is there anything you've been wondering about?",
+        "What gives you peace?"
+       ],
+       "say": "These questions invite without pushing. What has helped you through hard times before? Where do you find strength these days? Is there anything you've been wondering about? What gives you peace? Any answer is welcome, including I don't know."
+      },
+      {
+       "k": "points",
+       "h": "When faith hurts",
+       "items": [
+        [
+         "Listen, and let them say it",
+         "Anger and fear belong too"
+        ],
+        [
+         "Take old wounds seriously",
+         "Religious hurt is real"
+        ],
+        [
+         "Offer more support",
+         "A chaplain or spiritual director"
+        ]
+       ],
+       "say": "Sometimes faith hurts. They may feel angry at God, abandoned, or afraid of judgment. Or a faith community may have wounded them long ago. Listen, and let them say it. You can simply hear it, without defending or explaining. Take old wounds seriously. And if they would like more support, a chaplain or spiritual director can walk with people of every tradition and none."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: one open question",
+       "sub": "What has helped you through hard times before?",
+       "beats": [
+        "Let's practice.",
+        "Picture sitting with them on an ordinary afternoon.",
+        "Take one slow breath, and set down any answer you want to give.",
+        {
+         "t": "Now say out loud, gently: What has helped you through hard times before?",
+         "w": 10
+        }
+       ],
+       "say": "Let's practice. Picture sitting with them on an ordinary afternoon. Take one slow breath, and set down any answer you want to give. Now say out loud, gently: What has helped you through hard times before?"
+      },
+      {
+       "k": "points",
+       "h": "Support what grounds them",
+       "items": [
+        [
+         "Bring what they love",
+         "Songs, readings, familiar prayers"
+        ],
+        [
+         "Help them stay connected",
+         "A ride, a call, worship by phone"
+        ],
+        [
+         "Let questions stay open",
+         "No need to settle them"
+        ]
+       ],
+       "say": "You can support what grounds them in practical ways. Bring what they love, like the songs or prayers they know by heart. Sequoia has practices for this, called Sacred Music and Prayers You Know by Heart. Help them stay connected, with a ride, a call, or worship by phone or video, if they want it. And if they carry a question without an answer, a practice called Bring Your Questions lets it stay open. A question can stay open and still be a living thing."
+      },
+      {
+       "k": "points",
+       "h": "Faith in Sequoia",
+       "items": [
+        [
+         "Roots asks about experience",
+         "Never belief"
+        ],
+        [
+         "Faith answers start private",
+         "Theirs to share"
+        ],
+        [
+         "Faith and Meaning chapter",
+         "Opens only if they choose"
+        ]
+       ],
+       "say": "In Sequoia, the Roots part of the check-in asks about experience, never belief, and people of every tradition and none can score Strong there. If they have added you as a helper, their faith answers start private, and they decide whether to share them. And the Legacy Book has a Faith and Meaning chapter that stays closed until they choose to open it."
+      },
+      {
+       "k": "big",
+       "h": "You don't need answers. Your presence speaks.",
+       "sub": "Listen for what holds them up.",
+       "say": "You do not need answers to the big questions. Listen for what holds them up, and help them reach for it. Your steady presence often speaks louder than any answer."
+      },
+      {
+       "k": "quiz",
+       "q": "What is the most helpful way to talk about faith with them?",
+       "opts": [
+        "Ask what they believe, so you know",
+        "Ask about their experience, and follow their lead",
+        "Share your beliefs so they feel less alone"
+       ],
+       "right": 1,
+       "why": "Ask about experience, use their words, and let them lead.",
+       "say": "Quick question. What is the most helpful way to talk about faith with them?"
+      }
+     ]
+    },
+    {
+     "id": "sq-p-worry",
+     "n": 4,
+     "title": "When to Worry, and Who to Call",
+     "mins": 7,
+     "blurb": "Signs worth noticing in low mood, falls, scams, and safety, and who can help.",
+     "sources": [
+      "gds",
+      "unutzer",
+      "cdcfalls",
+      "ic3",
+      "yon",
+      "cdcsuicide55",
+      "dazzi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "For the Helper, Lesson 4",
+       "h": "When to Worry, and Who to Call",
+       "sub": "Signs to notice, and who can help.",
+       "say": "This lesson is about the signs worth noticing, and who to call. You only need to notice, ask, and know where help is."
+      },
+      {
+       "k": "big",
+       "h": "Noticing is a gift.",
+       "sub": "Help is there for every one of these.",
+       "say": "Many older adults keep hard things to themselves. You may be the one who notices first. Noticing is a gift. And there are people whose whole job is to help."
+      },
+      {
+       "k": "points",
+       "h": "Low mood can look like",
+       "items": [
+        [
+         "Losing interest",
+         "In things they used to love"
+        ],
+        [
+         "Sleep or appetite changes",
+         "More, or less"
+        ],
+        [
+         "Aches, tiredness, not myself",
+         "Often more than sadness"
+        ],
+        [
+         "Pulling away",
+         "From people and plans"
+        ]
+       ],
+       "say": "First, low mood. In later life it often looks less like sadness and more like losing interest in things they used to love. Changes in sleep or appetite. Aches, tiredness, or I'm just not myself. And pulling away from people and plans. If you see these for two weeks or more, it is worth a talk with their doctor."
+      },
+      {
+       "k": "big",
+       "h": "Low mood responds well to help, at any age.",
+       "sub": "Offer to go with them to the doctor.",
+       "say": "Depression is not a normal part of getting older, and it responds well to help in later life. Sequoia has a practice called Talk About Your Mood. You could offer to go with them to the doctor, and help them bring it up."
+      },
+      {
+       "k": "points",
+       "h": "After a fall, or a near fall",
+       "items": [
+        [
+         "Tell their doctor",
+         "Even with no injury"
+        ],
+        [
+         "Ask for a fall risk check",
+         "Their doctor knows what to look at"
+        ],
+        [
+         "Make the home safer",
+         "One change at a time"
+        ]
+       ],
+       "say": "Second, falls. More than one in four adults sixty five and older fall each year, and one fall makes another more likely. Yet fewer than half tell their doctor. After any fall, even without injury, encourage them to tell their doctor and ask for a fall risk check. Then make the home safer, one change at a time. If they fall and cannot get up, or hit their head, call 911."
+      },
+      {
+       "k": "points",
+       "h": "Signs of a scam",
+       "items": [
+        [
+         "Pressure to act fast",
+         "Right now, and tell no one"
+        ],
+        [
+         "Odd ways to pay",
+         "Gift cards, wires, crypto"
+        ],
+        [
+         "New secrecy about money",
+         "Or a new friend who needs cash"
+        ]
+       ],
+       "say": "Third, scams. People over sixty lose billions of dollars a year to them. Watch for pressure to act fast and keep it secret. Requests to pay with gift cards, wire transfers, or cryptocurrency. And new secrecy about money, or a new friend online who suddenly needs help. Scams fool smart people, so meet it with kindness. Sequoia's Scam Pause practice is one rule: stop, hang up, and call back on a number you know."
+      },
+      {
+       "k": "points",
+       "h": "When someone close takes advantage",
+       "items": [
+        [
+         "Bruises with no clear cause",
+         "Or fear of one person"
+        ],
+        [
+         "Missing money or things",
+         "Or bills left unpaid"
+        ],
+        [
+         "Kept from others",
+         "Calls or visits blocked"
+        ]
+       ],
+       "say": "Fourth, sometimes the person taking advantage is someone close. A relative, a new helper, a neighbor. Signs include bruises with no clear cause, or fear of one person. Missing money or belongings, or bills left unpaid. And being kept from friends, calls, or visits. About one in six older adults faces some kind of mistreatment in a year, so trust what you see."
+      },
+      {
+       "k": "points",
+       "h": "Who to call",
+       "items": [
+        [
+         "Danger right now",
+         "Call 911"
+        ],
+        [
+         "Money lost to a scam",
+         "Elder Fraud Hotline 1-833-372-8311"
+        ],
+        [
+         "Being hurt, in Minnesota",
+         "MAARC 1-844-880-1574, any time"
+        ],
+        [
+         "Help anywhere in the US",
+         "Eldercare Locator 1-800-677-1116"
+        ]
+       ],
+       "say": "Here is who to call. If anyone is in danger right now, call 911. If they have lost money to a scam, or to someone they know, the National Elder Fraud Hotline is 1 833 372 8311, on weekdays. If an adult in Minnesota is being hurt, neglected, or taken advantage of, call MAARC, the Minnesota Adult Abuse Reporting Center, at 1 844 880 1574, any time. Anywhere in the US, the Eldercare Locator, 1 800 677 1116, connects you to Adult Protective Services and help nearby. In Minnesota, Minnesota Aging Pathways is 1 800 333 2433."
+      },
+      {
+       "k": "big",
+       "h": "If they speak of not wanting to live, ask plainly.",
+       "sub": "Asking opens the door.",
+       "say": "Fifth, and most important. Men seventy five and older have the highest suicide rate of any group in the country. Listen for words like I'm just in the way, or everyone would be better off. If you do, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It opens the door."
+      },
+      {
+       "k": "points",
+       "h": "If the answer is yes",
+       "items": [
+        [
+         "Stay with them",
+         "Thank them for telling you"
+        ],
+        [
+         "Call or text 988 together",
+         "Veterans: 988, then press 1"
+        ],
+        [
+         "Danger right now?",
+         "Call 911"
+        ],
+        [
+         "Let their doctor know",
+         "And keep checking in"
+        ]
+       ],
+       "say": "If the answer is yes, stay with them, and thank them for telling you. Call or text 988 together, any time. For a veteran, call 988 and press 1. If they are in danger right now, call 911. Ask the crisis line how to make home safer for now. Then let their doctor know, and keep checking in."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: save the numbers",
+       "sub": "988. Eldercare Locator 1-800-677-1116.",
+       "beats": [
+        "Let's do one thing right now, so the numbers are ready when you need them.",
+        "Take out your phone, or a pen and paper.",
+        "Save 988 for a crisis, and the Eldercare Locator, 1 800 677 1116, for help nearby.",
+        "If they live in Minnesota, add MAARC, 1 844 880 1574.",
+        {
+         "t": "Take a moment now, and save them.",
+         "w": 12
+        }
+       ],
+       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone, or a pen and paper. Save 988 for a crisis, and the Eldercare Locator, 1 800 677 1116, for help nearby. If they live in Minnesota, add MAARC, 1 844 880 1574. Take a moment now, and save them."
+      },
+      {
+       "k": "big",
+       "h": "You are part of the safety net.",
+       "sub": "Their safety answers stay private. Your noticing matters.",
+       "say": "Sequoia shows these same lines in its safety step, and the check-in asks gentle safety questions. Their answers to those stay private, even from helpers they have added. So your noticing and your asking matter. You are part of the safety net."
+      },
+      {
+       "k": "quiz",
+       "q": "They seem withdrawn and say they're just in the way. What do you do?",
+       "opts": [
+        "Wait and see if it passes",
+        "Ask plainly whether they are thinking of ending their life",
+        "Change the subject to something cheerful"
+       ],
+       "right": 1,
+       "why": "Asking plainly opens the door. If the answer is yes, call or text 988 together.",
+       "say": "Quick question. They seem withdrawn, and they say they're just in the way. What do you do?"
+      }
+     ]
+    },
+    {
+     "id": "sq-p-legacy",
+     "n": 5,
+     "title": "Helping Someone Tell Their Story",
+     "mins": 6,
+     "blurb": "How to invite an older adult to tell their story, and how the Legacy Book helps.",
+     "sources": [
+      "pinquart",
+      "bohlmeijer",
+      "allen",
+      "butler",
+      "davison"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "For the Helper, Lesson 5",
+       "h": "Helping Someone Tell Their Story",
+       "sub": "Invite, then listen.",
+       "say": "This lesson is about one of the best gifts you can give an older adult you love. The chance to tell their story, and to be heard."
+      },
+      {
+       "k": "big",
+       "h": "A life told is a life honored.",
+       "sub": "And a gift to everyone who hears it.",
+       "say": "Every long life holds stories no one else can tell. When someone tells their story and is truly heard, it honors the life they have lived. And it becomes a gift for everyone who comes after."
+      },
+      {
+       "k": "big",
+       "h": "Looking back can lift mood and purpose.",
+       "sub": "Done gently, at their pace.",
+       "say": "Research on looking back over a life finds it can raise life satisfaction and purpose, and ease low mood. Families who make legacy projects together often talk more openly, and feel less stress. The key is that it happens gently, at their pace."
+      },
+      {
+       "k": "points",
+       "h": "Invite, and let them choose",
+       "items": [
+        [
+         "Offer once, warmly",
+         "Would you tell me about...?"
+        ],
+        [
+         "Not today is an answer",
+         "Ask again another time"
+        ],
+        [
+         "Start light",
+         "A place, a recipe, a song"
+        ],
+        [
+         "Follow the story",
+         "Even when it wanders"
+        ]
+       ],
+       "say": "Invite, and let them choose. Offer once, warmly. Would you tell me about the house you grew up in? If they say not today, that is a full answer, and you can ask another time. Start with light, happy memories, like a place, a recipe, or a song. And follow the story where it goes, even when it wanders."
+      },
+      {
+       "k": "words",
+       "h": "Easy ways in",
+       "items": [
+        "Where did you grow up?",
+        "Who made you feel safe when you were small?",
+        "What's a recipe you want kept?",
+        "How did you meet your oldest friend?"
+       ],
+       "say": "Here are some easy ways in. Where did you grow up? Who made you feel safe when you were small? What's a recipe you want kept? How did you meet your oldest friend? Old photos, songs, and objects help memories come too."
+      },
+      {
+       "k": "points",
+       "h": "The Legacy Book",
+       "items": [
+        [
+         "Any chapter, any prompt",
+         "Skip anything. Nothing is due."
+        ],
+        [
+         "Told to",
+         "You write while they tell"
+        ],
+        [
+         "Their words, as they say them",
+         "Never polished or rewritten"
+        ],
+        [
+         "Stays on their device",
+         "They decide what to share"
+        ]
+       ],
+       "say": "If they use Sequoia, the Legacy Book is made for this. They can pick any chapter and any prompt, and skip whatever they like. Nothing is ever due. You can write while they tell, and mark it told to, so it stays theirs. Write their words as they say them. The book stays on their device, locked in their profile, and they decide what to print or share, and with whom."
+      },
+      {
+       "k": "points",
+       "h": "The harder chapters",
+       "items": [
+        [
+         "Closed until they choose",
+         "The choice stays with them"
+        ],
+        [
+         "Lighter chapters first",
+         "Trust comes before depth"
+        ],
+        [
+         "Stop any time",
+         "Their pace sets the pace"
+        ]
+       ],
+       "say": "Some chapters go deeper: Faith and Meaning, Losses and Hard Seasons, War and Hard Memories, and Regrets and Making Peace. Those stay closed until the person chooses to open them, and that choice stays with them. Lighter chapters usually come first, while trust grows. If they do open a harder one, you might offer to sit beside them while they write."
+      },
+      {
+       "k": "big",
+       "h": "Old memories can stir grief.",
+       "sub": "Stop any time. Call or text 988 if it gets heavy.",
+       "say": "Looking back can bring joy, and sometimes grief, regret, or old pain. That is normal. If a memory gets heavy, slow down, and let them stop. For veterans, war memories can come back stronger later in life. If it is more than either of you wants to carry, call someone you trust, or call or text 988. Veterans can call 988 and press 1."
+      },
+      {
+       "k": "points",
+       "h": "When memory is changing",
+       "items": [
+        [
+         "Ask about feelings",
+         "What was it like?"
+        ],
+        [
+         "Use photos, music, objects",
+         "Let the senses lead"
+        ],
+        [
+         "Enjoy the telling",
+         "Details can shift"
+        ]
+       ],
+       "say": "If memory is changing, stories still matter. Ask about feelings more than dates. What was it like? Use photos, music, and objects to help. And enjoy the telling, even if details shift. Looking back together is a way to connect, whatever it brings."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: one invitation",
+       "sub": "Warm, simple, and easy to say no to.",
+       "beats": [
+        "Let's practice an invitation.",
+        "Think of one thing you have always wondered about their life.",
+        "Maybe a place, a job, a friend, or a time before you knew them.",
+        {
+         "t": "Now say out loud, warmly: I'd love to hear about that sometime, if you'd like to tell me.",
+         "w": 10
+        }
+       ],
+       "say": "Let's practice an invitation. Think of one thing you have always wondered about their life. Maybe a place, a job, a friend, or a time before you knew them. Now say out loud, warmly: I'd love to hear about that sometime, if you'd like to tell me."
+      },
+      {
+       "k": "points",
+       "h": "Practices that fit",
+       "items": [
+        [
+         "Record a Story",
+         "One story, on your phone"
+        ],
+        [
+         "Life Review",
+         "One chapter at a time"
+        ],
+        [
+         "Write Your Story",
+         "One memory, in their words"
+        ]
+       ],
+       "say": "Sequoia has practices that fit this. Record a Story, where they tell one story while you record it on your phone. Life Review, looking back one chapter at a time, with you as the listener. And Write Your Story, one memory at a time, in their own words. If they would like, keep the recordings and pages where the whole family can find them."
+      },
+      {
+       "k": "quiz",
+       "q": "What is the best way to invite someone to tell their story?",
+       "opts": [
+        "Open every chapter so nothing is missed",
+        "Offer warmly, start light, and let them choose",
+        "Ask about the hardest times first"
+       ],
+       "right": 1,
+       "why": "Invite, start with lighter memories, and let them set the pace.",
+       "say": "Quick question. What is the best way to invite someone to tell their story?"
+      }
+     ]
+    },
+    {
+     "id": "sq-p-you",
+     "n": 6,
+     "title": "Caring for Yourself Too",
+     "mins": 6,
+     "blurb": "Noticing caregiver strain, sharing the load, and tending your own tree.",
+     "sources": [
+      "aarpcg"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "For the Helper, Lesson 6",
+       "h": "Caring for Yourself Too",
+       "sub": "Your tree needs water too.",
+       "say": "This last lesson is about you. The one who drives to appointments, answers the late calls, and lies awake worrying. Helping someone you love matters. So do you."
+      },
+      {
+       "k": "big",
+       "h": "You are far from alone in this.",
+       "sub": "Tens of millions of people help someone they love.",
+       "say": "You are far from alone. About sixty three million Americans are family caregivers, and many of them are spouses who are older adults themselves. It is some of the most loving work there is, and some of the hardest."
+      },
+      {
+       "k": "points",
+       "h": "Signs the load is heavy",
+       "items": [
+        [
+         "Tired in a way rest won't fix",
+         "Running on empty"
+        ],
+        [
+         "A short temper",
+         "Then guilt about it"
+        ],
+        [
+         "Your own life on hold",
+         "Friends, health, plans"
+        ],
+        [
+         "Feeling trapped or numb",
+         "Or alone in it"
+        ]
+       ],
+       "say": "Strain sneaks up. Notice if you feel tired in a way rest will not fix. A short temper, and then guilt about it. Your own life on hold, your friends, your health, your plans. Or feeling trapped, numb, or alone in it. These are signs the load is too heavy for one person. They say nothing about how much you love."
+      },
+      {
+       "k": "big",
+       "h": "Guilt often means you love them.",
+       "sub": "What would enough really look like?",
+       "say": "Many helpers carry guilt. I'm not doing enough. I'm doing it wrong. Guilt often means you care deeply. Ask yourself what enough would really look like, and whether it is possible for one person."
+      },
+      {
+       "k": "points",
+       "h": "Share the load",
+       "items": [
+        [
+         "Hand off one task",
+         "Rides, meals, one evening"
+        ],
+        [
+         "Say yes when people offer",
+         "Keep a list ready"
+        ],
+        [
+         "Ask about respite",
+         "A real break, with help in place"
+        ]
+       ],
+       "say": "Share the load. Name one task someone else could take, like rides, meals, or one evening a week. When people offer, say yes, and have a list ready. And ask about respite, a real break with someone else on duty. The Eldercare Locator, 1 800 677 1116, can point you to help nearby. In Minnesota, so can Minnesota Aging Pathways, 1 800 333 2433. Sequoia has a practice for the first step, called Ask for Help."
+      },
+      {
+       "k": "points",
+       "h": "Keep something of your own",
+       "items": [
+        [
+         "Your own doctor visits",
+         "Your health matters too"
+        ],
+        [
+         "One thing just for you",
+         "A walk, music, a hobby"
+        ],
+        [
+         "Your own people",
+         "One friend, one call"
+        ],
+        [
+         "People who understand",
+         "A support group"
+        ]
+       ],
+       "say": "Keep something of your own. Keep up with your own doctor visits. Your health is part of how you keep helping. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And many helpers find a Support Group, in person, by phone, or by video, is where they finally feel understood."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: a Caregiver Pause",
+       "sub": "Twenty minutes today, just for you.",
+       "beats": [
+        "Let's plan one now, a practice Sequoia calls Caregiver Pause.",
+        "It is twenty minutes today for something that refills you, while someone else is on duty, or while the person you help rests.",
+        "Think of when those twenty minutes could happen today.",
+        "Think of what would refill you: a walk, a nap, a call, a cup of coffee outside.",
+        {
+         "t": "Now say it out loud: Today, at this time, I will take twenty minutes for this.",
+         "w": 10
+        }
+       ],
+       "say": "Let's plan one now, a practice Sequoia calls Caregiver Pause. It is twenty minutes today for something that refills you, while someone else is on duty, or while the person you help rests. Think of when those twenty minutes could happen today. Think of what would refill you: a walk, a nap, a call, a cup of coffee outside. Now say it out loud: Today, at this time, I will take twenty minutes for this."
+      },
+      {
+       "k": "big",
+       "h": "Make the pause a habit.",
+       "sub": "Let family take a regular shift. Ask about respite.",
+       "say": "To make it a habit, let family and friends take a regular shift, and ask about respite through your Area Agency on Aging. If guilt shows up when you rest, remember that the person you love needs you well. For the hard moments in between, the Self-Compassion Break is in Sequoia too. And if you feel worn out most days, tell your doctor."
+      },
+      {
+       "k": "points",
+       "h": "A tree of your own",
+       "items": [
+        [
+         "A check-in just for you",
+         "If they have added you"
+        ],
+        [
+         "Your answers grow your tree",
+         "About how you are doing"
+        ],
+        [
+         "Or tend your own tree",
+         "In Oak, or in Sequoia"
+        ]
+       ],
+       "say": "If they have added you as a helper in Sequoia, there is a check-in just for you, about how you are doing as you help. Your answers grow a tree of your own. Or you can tend your own tree in Oak, Grounded's tree for adults, or in Sequoia, if you are an older adult yourself."
+      },
+      {
+       "k": "big",
+       "h": "Hard to go on? Reach out now.",
+       "sub": "Call or text 988, any time. In danger? Call 911.",
+       "say": "Sometimes helpers reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. Call or text 988, any time. Veterans, call 988 and press 1. If you are in danger, call 911. And if your temper ever frightens you, thank yourself for noticing, and bring in more help today."
+      },
+      {
+       "k": "big",
+       "h": "Tending yourself is part of helping well.",
+       "sub": "Rest is how you keep going.",
+       "say": "Tending yourself is part of helping well. The person you love needs you rested, steady, and still yourself. Rest is how you keep going, for them and for you. That is the whole series. Thank you for walking with someone you love."
+      },
+      {
+       "k": "quiz",
+       "q": "What do guilt and strain usually mean for a helper?",
+       "opts": [
+        "That you love them less",
+        "That the load is heavy, and you need more support",
+        "That you should try harder"
+       ],
+       "right": 1,
+       "why": "Strain is a sign to share the load. It says the load is heavy, not that you are failing.",
+       "say": "Last question. What do guilt and strain usually mean for a helper?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sequoia-support",
+   "kind": "support",
+   "title": "Support for Right Now",
+   "who": "Short videos to use right in the middle of it",
+   "lessons": [
+    {
+     "id": "sq-r-ground",
+     "n": 1,
+     "title": "Ground Yourself Right Now",
+     "mins": 3,
+     "blurb": "Your five senses, one at a time, to bring you back when everything is too much.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "Ground Yourself Right Now",
+       "sub": "Five senses, one at a time.",
+       "say": "When everything feels like too much, your senses can bring you back to this moment. You can do this sitting, standing, or lying down. It takes about three minutes."
+      },
+      {
+       "k": "big",
+       "h": "Strong feelings rise, and they also settle.",
+       "sub": "Your senses live in right now.",
+       "say": "Strong feelings rise, and they also settle. Your mind may be racing ahead, or pulling you back into the past. Your senses live only in this moment. That makes them a steady anchor."
+      },
+      {
+       "k": "words",
+       "h": "Five Senses Pause",
+       "items": [
+        "Five things you see.",
+        "Four things you feel.",
+        "Three things you hear.",
+        "Two things you smell.",
+        "One thing you taste."
+       ],
+       "cue": {
+        "w": {
+         "2": 10,
+         "4": 8,
+         "5": 7,
+         "6": 6,
+         "7": 6
+        },
+        "at": [
+         2,
+         3,
+         5,
+         6,
+         7
+        ]
+       },
+       "say": "This practice is called the Five Senses Pause. Let us do it together, slowly. Name five things you can see. Now four things you can feel. The chair beneath you, your hands, the air on your skin. Three things you can hear, near and far. Two things you can smell. And one thing you can taste, even a sip of water."
+      },
+      {
+       "k": "big",
+       "h": "If a sense has faded, use the ones that are strong.",
+       "sub": "Three things you can feel is enough.",
+       "say": "If one of your senses has faded, use the ones that are strong. Three things you can feel is enough. Every way of doing this counts."
+      },
+      {
+       "k": "breathe",
+       "h": "One slow breath to finish",
+       "hold": 12,
+       "cue": {
+        "p": {
+         "1": 3,
+         "2": 4
+        }
+       },
+       "say": "Now one slow breath. In for four. And out for six. Keep it easy and natural."
+      },
+      {
+       "k": "big",
+       "h": "You are here. That is enough for right now.",
+       "sub": "Need to talk? Call or text 988, any time.",
+       "cue": {
+        "p": {
+         "0": 1.5
+        }
+       },
+       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it. And if you would like to talk with someone, call or text nine eight eight, any time."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-lonely",
+     "n": 2,
+     "title": "When the Days Feel Lonely",
+     "mins": 3,
+     "blurb": "Gentle words for lonely thoughts, and one small reach toward someone today.",
+     "sources": [
+      "nasem",
+      "masi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When the Days Feel Lonely",
+       "sub": "Small steps toward people count.",
+       "say": "If the days feel long and quiet, and you are missing people, this is for you. I am glad you are here."
+      },
+      {
+       "k": "big",
+       "h": "Loneliness is a signal, like hunger.",
+       "sub": "It tells you that people matter to you.",
+       "say": "Many older adults feel lonely at times, especially after a move, a loss, or giving up driving. It says nothing bad about you. Loneliness is a signal, like hunger. It tells you that people matter to you."
+      },
+      {
+       "k": "points",
+       "h": "Notice the lonely thoughts",
+       "items": [
+        [
+         "They’re too busy for me",
+         "A thought, not a fact"
+        ],
+        [
+         "I’d only be a bother",
+         "Often, they are glad you called"
+        ],
+        [
+         "It’s been too long to call",
+         "A first call can open the door"
+        ]
+       ],
+       "cue": {
+        "at": [
+         2,
+         3,
+         4
+        ],
+        "p": {
+         "5": 1.5
+        }
+       },
+       "say": "Loneliness can bring thoughts that keep us apart. This is the heart of a practice called Lonely Thoughts Check. They are too busy for me. I would only be a bother. It has been too long to call. These are thoughts, not facts. Often, the person on the other end is glad to hear from someone who thought of them."
+      },
+      {
+       "k": "big",
+       "h": "One Reach-Out a Day",
+       "sub": "Thinking of you. How are you?",
+       "beats": [
+        "Here is a practice called One Reach-Out a Day.",
+        "Think of one person you could reach today.",
+        "A friend, a neighbor, a grandchild, or someone from a group you love.",
+        {
+         "t": "Now say their name out loud, and the words you might send them: thinking of you, how are you?",
+         "w": 12
+        }
+       ],
+       "say": "Here is a practice called One Reach-Out a Day. Think of one person you could reach today. A friend, a neighbor, a grandchild, or someone from a group you love. Now say their name out loud, and the words you might send them: thinking of you, how are you?"
+      },
+      {
+       "k": "points",
+       "h": "Ways to reach out",
+       "items": [
+        [
+         "A short call",
+         "Five minutes counts"
+        ],
+        [
+         "A card or a letter",
+         "By mail, or by hand"
+        ],
+        [
+         "A message",
+         "A text, an email, a photo"
+        ],
+        [
+         "Go where people are",
+         "A meal, a class, a walk"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Reaching out can take many shapes. A short call. Five minutes counts. A card or a letter. A message, like a text or a photo. Or tomorrow, go where people are, like a community meal, a class, or a walk."
+      },
+      {
+       "k": "big",
+       "h": "Help near you: Eldercare Locator, 1-800-677-1116",
+       "sub": "To talk right now, call or text 988.",
+       "say": "If you would like help finding a meal program, a ride, or a group near you, the Eldercare Locator can help, at one eight hundred, six seven seven, one one one six. And if the loneliness feels heavy, or you are thinking about not wanting to go on, call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "You are worth reaching for.",
+       "sub": "One small step today is enough.",
+       "say": "You are worth reaching for, and you are worth hearing from. One small step today is enough."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-night",
+     "n": 3,
+     "title": "When You Can’t Sleep",
+     "mins": 4,
+     "blurb": "Set the day down, soften from your feet up, and let rest come.",
+     "sources": [
+      "niasleep",
+      "trauer",
+      "mbsr"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Can’t Sleep",
+       "sub": "Set the day down for tonight.",
+       "say": "If it is late, and sleep will not come, this is for you. Keep the lights low and the volume soft. You can listen lying down."
+      },
+      {
+       "k": "big",
+       "h": "Waking in the night is common with age.",
+       "sub": "Easing off the struggle helps.",
+       "say": "Waking in the night becomes more common as we get older. Most adults still do best with about seven to nine hours of rest. Many people find that easing off the struggle helps sleep return."
+      },
+      {
+       "k": "points",
+       "h": "Set the day down",
+       "items": [
+        [
+         "Jot down what is spinning",
+         "A few words each"
+        ],
+        [
+         "Add one step for tomorrow",
+         "Not for tonight"
+        ],
+        [
+         "Close the notebook",
+         "It will keep until morning"
+        ]
+       ],
+       "cue": {
+        "at": [
+         2,
+         3,
+         4
+        ],
+        "p": {
+         "2": 4
+        }
+       },
+       "say": "If your mind is busy, set the day down first. Keep a notebook by the bed. Jot down what is spinning, just a few words each. Next to anything that needs doing, add one small step for tomorrow. Then close the notebook. It will keep until morning."
+      },
+      {
+       "k": "points",
+       "h": "Body Scan",
+       "items": [
+        [
+         "Your feet and legs",
+         "Let them grow heavy"
+        ],
+        [
+         "Your belly and chest",
+         "Rising and falling"
+        ],
+        [
+         "Your shoulders and hands",
+         "Let them soften"
+        ],
+        [
+         "Your jaw and forehead",
+         "Let them go smooth"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 8,
+         "4": 8,
+         "5": 8,
+         "6": 10
+        },
+        "at": [
+         3,
+         4,
+         5,
+         6
+        ]
+       },
+       "say": "Now a practice called Body Scan. Lie back, or settle into your chair. You can skip any part, and if a place hurts, rest your attention on one that feels comfortable. Bring your attention to your feet and legs, and let them grow heavy. Now your belly and chest, rising and falling on their own. Now your shoulders and hands, and let them soften. And your jaw and forehead, and let them go smooth."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow breaths",
+       "hold": 20,
+       "say": "Now just breathe. In for four, and out for six. If your mind wanders, that is okay. Come back to the next breath."
+      },
+      {
+       "k": "big",
+       "h": "Still awake after about twenty minutes?",
+       "sub": "Sit up in a dim light, or rise slowly.",
+       "say": "If you are still wide awake after about twenty minutes, try something different. Sit up with a dim light and do something quiet, like reading or soft music. If you get up, rise slowly, and use night lights along the way. Go back to bed when you feel sleepy. This is a practice called Bed for Sleep Only."
+      },
+      {
+       "k": "big",
+       "h": "If poor sleep lasts, talk with your doctor.",
+       "sub": "Mention snoring or daytime sleepiness too.",
+       "say": "If poor sleep lasts more than a few weeks, talk with your doctor. Good help is available. Bring up loud snoring, feeling sleepy all day, and any sleep medicine you take."
+      },
+      {
+       "k": "big",
+       "h": "Rest counts, even before sleep comes.",
+       "say": "Rest counts, even before sleep comes. Let the night be quiet around you. Good night."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-worry",
+     "n": 4,
+     "title": "When Worry Won’t Let Go",
+     "mins": 3,
+     "blurb": "Step back from a circling worry, and give it its own time.",
+     "sources": [
+      "wolitzky",
+      "act",
+      "borkovec"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When Worry Won’t Let Go",
+       "sub": "Let the thoughts float by.",
+       "say": "If the same worry keeps circling, about your health, your money, or someone you love, this is for you. Settle in, and stay with me for a few minutes."
+      },
+      {
+       "k": "big",
+       "h": "Worry is your mind trying to protect what you love.",
+       "sub": "Common ones: health, money, falls, family.",
+       "say": "Worry is your mind trying to protect what you love. In later life, it often settles on health, money, falls, or family. Many people carry these worries. You can set one down for a while without solving it first."
+      },
+      {
+       "k": "breathe",
+       "h": "First, slow down",
+       "hold": 18,
+       "say": "First, let your body settle. Follow the circle. In for four. And out for six. Keep it easy and natural."
+      },
+      {
+       "k": "points",
+       "h": "Leaves on a Stream",
+       "items": [
+        [
+         "Picture a slow stream",
+         "Leaves floating by"
+        ],
+        [
+         "Set each thought on a leaf",
+         "And watch it drift"
+        ],
+        [
+         "Hard to picture?",
+         "Say: I’m having the thought that"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "5": 25
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "This practice is called Leaves on a Stream. Picture a slow stream, with leaves floating by on the water. Each time a thought comes, set it on a leaf, and watch it float downstream. If picturing is hard, say the thought quietly, starting with, I am having the thought that. Now try it for a little while. I will wait with you."
+      },
+      {
+       "k": "points",
+       "h": "Give worry its own time",
+       "items": [
+        [
+         "Choose fifteen minutes",
+         "Not near bedtime"
+        ],
+        [
+         "Jot worries down",
+         "Save them for that time"
+        ],
+        [
+         "Take one small step",
+         "On one you can act on"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Another practice, Worry Window, gives worry its own time. Choose fifteen minutes in the day, not near bedtime. When a worry comes at other times, jot it down and save it for then. During your window, choose one worry you can act on, and take one small step."
+      },
+      {
+       "k": "big",
+       "h": "If worry fills your days, tell your doctor.",
+       "sub": "Worry in later life responds well to help.",
+       "say": "If worry is with you most of the day, or keeps you from sleeping, tell your doctor. Worry in later life responds well to help. And if it ever feels like too much, call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "You can set it down for now.",
+       "sub": "The stream is here whenever you need it.",
+       "say": "You can set it down for now. Come back to the stream whenever you need it."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-grief",
+     "n": 5,
+     "title": "When Grief Comes in Waves",
+     "mins": 3,
+     "blurb": "When grief rises out of nowhere, give it a place to go.",
+     "sources": [
+      "shear"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When Grief Comes in Waves",
+       "sub": "Let it come, and let it pass.",
+       "say": "Grief often comes in waves. A song, a smell, an empty chair, a date on the calendar, and suddenly it is here. If that is happening now, stay with me."
+      },
+      {
+       "k": "big",
+       "h": "A long life holds many goodbyes.",
+       "sub": "Grief is love, looking for where to go.",
+       "say": "A long life holds many goodbyes. A spouse, friends, brothers and sisters, sometimes a child, sometimes a home or a way of life. Grief is love, still looking for where to go. Every way of feeling it is welcome here."
+      },
+      {
+       "k": "breathe",
+       "h": "Let the wave move through",
+       "hold": 18,
+       "say": "If tears come, let them come. Breathe with the circle. In for four. And out for six."
+      },
+      {
+       "k": "big",
+       "h": "Grief Time",
+       "sub": "Say their name. Say one thing you miss.",
+       "beats": [
+        "This is a practice called Grief Time.",
+        "It gives grief a place to go.",
+        "Bring to mind someone you miss.",
+        {
+         "t": "Now say their name out loud, and one thing you miss about them.",
+         "w": 12
+        }
+       ],
+       "say": "This is a practice called Grief Time. It gives grief a place to go. Bring to mind someone you miss. Now say their name out loud, and one thing you miss about them."
+      },
+      {
+       "k": "points",
+       "h": "Give grief a place",
+       "items": [
+        [
+         "Choose a time",
+         "Sunday evening, or an anniversary"
+        ],
+        [
+         "Bring something of theirs",
+         "A photo, a candle, their song"
+        ],
+        [
+         "Say their name",
+         "Out loud, or in a letter"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "You can make Grief Time a regular part of your week. Choose a time, like Sunday evening or an anniversary. Bring something of theirs, a photo, a candle, or their song. And say their name. Some people write them a letter too."
+      },
+      {
+       "k": "big",
+       "h": "Most grief softens with time.",
+       "sub": "Still sharp after many months? Ask for help.",
+       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and daily life is very hard, talk with your doctor or a grief counselor. Help works. And if you need to talk with someone right now, call or text nine eight eight."
+      },
+      {
+       "k": "big",
+       "h": "The wave will pass. The love stays.",
+       "sub": "You don’t have to carry it alone.",
+       "say": "The wave will pass. The love stays. You do not have to carry it alone."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-body",
+     "n": 6,
+     "title": "When Your Body Won’t Do What It Used To",
+     "mins": 3,
+     "blurb": "Kindness for the body you have today, and small ways to honor it.",
+     "sources": [
+      "neff"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When Your Body Won’t Do What It Used To",
+       "sub": "Kindness for the body you have today.",
+       "say": "Maybe the stairs are harder now, or your hands, or your balance. Maybe today you noticed a change you did not ask for. If that is where you are, stay with me for a few minutes."
+      },
+      {
+       "k": "big",
+       "h": "It makes sense to grieve what your body used to do.",
+       "sub": "Frustration and sadness are honest answers to a real loss.",
+       "say": "It makes sense to feel frustrated, or sad, or even angry. Your body has carried you through a long life. Losing some of what it could do is a real loss, and many people in later life are walking through the very same change."
+      },
+      {
+       "k": "points",
+       "h": "What your body still gives you",
+       "items": [
+        [
+         "It carried you here",
+         "Through every year so far"
+        ],
+        [
+         "It still feels comfort",
+         "Sun, a warm cup, a kind hand"
+        ],
+        [
+         "It still finds new ways",
+         "A cane, a chair, a slower pace"
+        ]
+       ],
+       "say": "Take a moment to notice what your body still gives you. It carried you here, through every year so far. It still feels comfort, like sunlight, a warm cup, or a kind hand. And it still finds new ways, with a cane, a chair, or a slower pace."
+      },
+      {
+       "k": "words",
+       "h": "A Self-Compassion Break",
+       "items": [
+        "This is hard.",
+        "Many people feel this too.",
+        "May I be kind to myself."
+       ],
+       "sub": "Hand on your heart, on your arm, or resting in your lap.",
+       "cue": {
+        "p": {
+         "3": 2,
+         "4": 2
+        },
+        "w": {
+         "6": 10
+        },
+        "at": [
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Let us try a Self-Compassion Break together. If it feels right, rest one hand over your heart, or on your arm, or simply in your lap. Say these words softly, out loud or inside. This is hard. Many people feel this too. May I be kind to myself. Now stay with those words for a few slow breaths."
+      },
+      {
+       "k": "points",
+       "h": "Small ways to honor your body",
+       "items": [
+        [
+         "Move the way it can today",
+         "Seated and in bed both count"
+        ],
+        [
+         "Use the helpers",
+         "A cane, a railing, a grab bar"
+        ],
+        [
+         "Tell your doctor what changed",
+         "New pain, a fall, a new limit"
+        ]
+       ],
+       "say": "Then try a few small ways to honor the body you have. Move the way it can today. Chair Stretch and In-Bed Movement in your growth plan were made for this. Use the helpers. A cane, a railing, or a grab bar is a wise way to keep doing what you love. And tell your doctor about any new change, a fall, or new pain. Many changes can be helped."
+      },
+      {
+       "k": "big",
+       "h": "Feeling like a burden is worth saying out loud.",
+       "sub": "Tell someone you trust. Or call or text 988, any time.",
+       "say": "Some days, a changing body can leave you feeling like a burden. Many older adults feel that at times, and talking it over helps. Tell someone you trust. Or call or text nine eight eight, any time, day or night."
+      },
+      {
+       "k": "big",
+       "h": "Your worth lives in who you are.",
+       "sub": "Everything you have learned and loved is still yours.",
+       "say": "Your worth lives in who you are, and in all you have learned and loved. That is still yours. Be gentle with yourself today."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-memory",
+     "n": 7,
+     "title": "When You’re Worried About Your Memory",
+     "mins": 3,
+     "blurb": "Simple helpers for everyday remembering, and how to bring a worry to your doctor.",
+     "sources": [
+      "scd",
+      "lancetdem"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When You’re Worried About Your Memory",
+       "sub": "A forgotten name is not a diagnosis.",
+       "say": "You walked into a room and forgot why. A name you have known for years would not come. If that has you worried, you are in good company, and this is for you."
+      },
+      {
+       "k": "big",
+       "h": "Many people notice changes in their memory.",
+       "sub": "Fewer than half ever mention it to a doctor.",
+       "say": "Many people notice changes in their memory as the years go by. Fewer than half of them ever mention it to a doctor. Worry tends to grow in silence, and talking about it often helps it shrink."
+      },
+      {
+       "k": "points",
+       "h": "Bring it to your doctor",
+       "items": [
+        [
+         "Write down what you notice",
+         "What happened, and when"
+        ],
+        [
+         "Bring someone along",
+         "A second set of ears helps"
+        ],
+        [
+         "Ask plainly",
+         "What could be causing this?"
+        ]
+       ],
+       "say": "If your memory worries you, bring it to your doctor. Write down what you notice, and when it happens. Bring someone you trust along, if that helps. And ask plainly, what could be causing this? Some causes of memory trouble can be treated, and a doctor can help sort out what is going on."
+      },
+      {
+       "k": "points",
+       "h": "Memory Helpers",
+       "items": [
+        [
+         "One home for everyday things",
+         "Keys, glasses, and phone, one spot"
+        ],
+        [
+         "A calendar by the door",
+         "Tomorrow’s plans, written down"
+        ],
+        [
+         "Say it as you do it",
+         "I am locking the back door."
+        ]
+       ],
+       "say": "Now a practice called Memory Helpers. Simple habits make remembering easier, so worry has less to feed on. Choose one home for your keys, glasses, and phone, and use it every time. Keep a calendar by the door with tomorrow’s plans. And say things out loud as you do them, like, I am locking the back door."
+      },
+      {
+       "k": "big",
+       "h": "Give your keys a home.",
+       "sub": "Say it out loud: My keys live in...",
+       "beats": [
+        "Let us set up one helper right now.",
+        "Picture the one spot where your keys will live from now on.",
+        {
+         "t": "Say it out loud, like this: my keys live in the dish by the door.",
+         "w": 10
+        }
+       ],
+       "say": "Let us set up one helper right now. Picture the one spot where your keys will live from now on. Say it out loud, like this: my keys live in the dish by the door."
+      },
+      {
+       "k": "points",
+       "h": "Good for your brain, too",
+       "items": [
+        [
+         "Learn something new",
+         "A little challenging is good"
+        ],
+        [
+         "Move your body",
+         "In whatever way fits today"
+        ],
+        [
+         "Hear well, and see people",
+         "A hearing check, good company"
+        ]
+       ],
+       "say": "And keep doing the things that are good for your brain. Learn something new and a little challenging. Move your body in whatever way fits today. Have your hearing checked, and spend time with people you enjoy."
+      },
+      {
+       "k": "big",
+       "h": "You are so much more than your memory.",
+       "sub": "Your love, your values, and your story are still yours.",
+       "say": "You are so much more than your memory. Your love, your values, and your story are still yours. Take this one gentle step at a time."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-pain",
+     "n": 8,
+     "title": "When Pain Is Loud Today",
+     "mins": 4,
+     "blurb": "A slow breath out, and a few small comforts for a hard day.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When Pain Is Loud Today",
+       "sub": "Turning the volume down a little.",
+       "say": "Some days, pain seems to fill the whole room. If today is one of those days, find the most comfortable spot you can, sitting or lying down. Let us spend a few minutes together."
+      },
+      {
+       "k": "big",
+       "h": "Your pain is real. So is the rest of you.",
+       "sub": "Even now, your body holds some places that feel okay.",
+       "say": "Your pain is real. And so is the rest of you. Even on a loud day, the body usually holds some places that feel okay. We are going to go looking for them."
+      },
+      {
+       "k": "big",
+       "h": "Find one place that feels okay.",
+       "sub": "A fingertip, an earlobe, your lips.",
+       "say": "Let your attention wander, slowly, looking for one place in your body that feels okay right now. It might be a fingertip, an earlobe, or your lips. Let your attention rest there for a moment."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow Exhale",
+       "sub": "In for four. Out for six. Five times.",
+       "cue": {
+        "w": {
+         "6": 50
+        }
+       },
+       "say": "This practice is called Slow Exhale. Sit or lie back in whatever way is comfortable. Breathe in gently, for a count of four. Then breathe out, for a count of six. If you have lung or heart trouble, keep the breath easy and natural, and never force it. Stop if you feel dizzy. Now take five slow breaths with the circle, at your own pace."
+      },
+      {
+       "k": "points",
+       "h": "Small comforts for a loud day",
+       "items": [
+        [
+         "Shift a little",
+         "Small, slow changes of position"
+        ],
+        [
+         "Ask what helps",
+         "Your doctor or nurse knows your body"
+        ],
+        [
+         "Something to listen to",
+         "Music, a voice you love, a show"
+        ]
+       ],
+       "say": "A few small comforts can help on a loud day. Shift your position a little, slowly. Ask your doctor or nurse what helps. And give your mind something kind to hold, like music, a voice you love, or a favorite show."
+      },
+      {
+       "k": "big",
+       "h": "Tell your doctor when pain changes.",
+       "sub": "Sudden, severe pain, or chest pain? Call 911.",
+       "say": "Tell your doctor or nurse when pain is new, worse, or different, or when it keeps you from what matters to you. You deserve that conversation, and pain can often be eased. If pain is sudden and severe, or comes with chest pain or trouble breathing, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "You got through this moment. That counts.",
+       "sub": "Pain wearing you down? Call or text 988, any time.",
+       "say": "You got through this moment, and that counts. If the pain has you feeling you cannot go on, call or text nine eight eight, any time. Be gentle with yourself today."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-scam",
+     "n": 9,
+     "title": "When a Call or Message Feels Off",
+     "mins": 3,
+     "blurb": "Pause, hang up, check with someone you trust, and know where to call.",
+     "sources": [
+      "ic3",
+      "ftcfraud"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When a Call or Message Feels Off",
+       "sub": "Pause first. You can always call back.",
+       "say": "A call says your grandson is in trouble. A message says your bank account is locked. Someone needs money, right now. If something feels off, trust that feeling, and stay with me for a minute."
+      },
+      {
+       "k": "big",
+       "h": "Scams fool smart, careful people.",
+       "sub": "They are built to rush you. A pause protects you.",
+       "say": "Scams fool smart, careful people every day. People over sixty reported billions of dollars in losses in a single year. Scammers count on hurry and fear. A pause is your best protection."
+      },
+      {
+       "k": "points",
+       "h": "Signs to pause",
+       "items": [
+        [
+         "Hurry",
+         "Act now, or else"
+        ],
+        [
+         "Secrecy",
+         "Don’t tell your family"
+        ],
+        [
+         "Odd ways to pay",
+         "Gift cards, wires, cash, crypto"
+        ]
+       ],
+       "say": "Here are the signs to pause. Hurry: you must act right now. Secrecy: do not tell anyone, not even family. And odd ways to pay, like gift cards, a wire transfer, cash picked up at your door, or digital money."
+      },
+      {
+       "k": "flow",
+       "h": "The Scam Pause",
+       "steps": [
+        [
+         "Stop",
+         "No money, no details"
+        ],
+        [
+         "Hang up",
+         "Always allowed"
+        ],
+        [
+         "Check",
+         "Call a number you already know"
+        ],
+        [
+         "Tell",
+         "Someone you trust"
+        ]
+       ],
+       "say": "This is the Scam Pause. Stop, and give no money and no personal details. Hang up, or close the message. Hanging up is always allowed. Check by calling back on a number you already know, like the one on your bank card. Then tell someone you trust what happened."
+      },
+      {
+       "k": "words",
+       "h": "Say it out loud",
+       "items": [
+        "I don’t handle money on the phone.",
+        "I’ll call back on a number I know."
+       ],
+       "cue": {
+        "p": {
+         "2": 2,
+         "3": 2
+        },
+        "w": {
+         "4": 10
+        },
+        "at": [
+         2,
+         3
+        ]
+       },
+       "say": "Let us practice the words, so they are ready when you need them. Say them out loud with me. I do not handle money on the phone. I will call back on a number I know. Now say them once more, on your own."
+      },
+      {
+       "k": "points",
+       "h": "If money or details are already gone",
+       "items": [
+        [
+         "Your bank",
+         "Call the number on your card"
+        ],
+        [
+         "Elder Fraud Hotline",
+         "1-833-372-8311, weekdays"
+        ],
+        [
+         "Someone close pressuring you?",
+         "In Minnesota, MAARC: 1-844-880-1574"
+        ],
+        [
+         "In danger right now",
+         "Call 911"
+        ]
+       ],
+       "say": "If you already sent money or shared details, there is no shame in it. It happens to many careful people. Call your bank on the number from your card. Then call the National Elder Fraud Hotline, at one eight three three, three seven two, eight three one one. If the pressure is coming from someone close to you, in Minnesota call MAARC, at one eight four four, eight eight zero, one five seven four. And if you are in danger, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Pausing is wise.",
+       "sub": "Anyone who truly needs you will still be there when you call back.",
+       "say": "Pausing is wise. Anyone who truly needs you will still be there when you call back. You did well to stop and check."
+      }
+     ]
+    },
+    {
+     "id": "sq-r-tell",
+     "n": 10,
+     "title": "When You Need to Tell Someone",
+     "mins": 4,
+     "blurb": "If someone is hurting you or taking your money, or you don’t want to go on: who to tell, and how.",
+     "sources": [
+      "yon"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Need to Tell Someone",
+       "sub": "Hard things grow lighter when shared.",
+       "say": "Some things are hard to say out loud. Someone is hurting you, or scaring you, or taking your money. Or you have been thinking you do not want to go on. If you are carrying something like that, I am glad you are here."
+      },
+      {
+       "k": "big",
+       "h": "Telling is brave. You deserve to be safe.",
+       "sub": "Even when the person is family. And you matter.",
+       "say": "Telling someone is brave, even when the person hurting you is family, or someone you depend on. This happens to about one in six older adults in a year. You deserve to be safe and treated with respect. And you matter, just as you are."
+      },
+      {
+       "k": "points",
+       "h": "Who you can tell",
+       "items": [
+        [
+         "Someone you trust",
+         "A friend, a relative, a neighbor"
+        ],
+        [
+         "Someone who helps",
+         "Your doctor, a nurse, a chaplain"
+        ],
+        [
+         "A help line",
+         "Trained people who listen"
+        ]
+       ],
+       "say": "You can tell someone you trust, like a friend, a relative, or a neighbor. You can tell someone whose work is helping, like your doctor, a nurse, a chaplain, or a faith leader if you have one. Or you can call a help line, where trained people listen."
+      },
+      {
+       "k": "big",
+       "h": "Ask for Help",
+       "sub": "I need to tell you something hard, and I need your help.",
+       "beats": [
+        "This practice is called Ask for Help.",
+        "Think of one person you could tell.",
+        "Picture their face.",
+        "Now say this first line, out loud or in a whisper: I need to tell you something hard, and I need your help.",
+        {
+         "t": "Say it once more, a little stronger.",
+         "w": 10
+        }
+       ],
+       "say": "This practice is called Ask for Help. Think of one person you could tell. Picture their face. Now say this first line, out loud or in a whisper: I need to tell you something hard, and I need your help. Say it once more, a little stronger."
+      },
+      {
+       "k": "points",
+       "h": "If someone is hurting you or taking money",
+       "items": [
+        [
+         "In danger right now",
+         "Call 911"
+        ],
+        [
+         "In Minnesota, MAARC",
+         "1-844-880-1574, any time"
+        ],
+        [
+         "Anywhere in the US",
+         "Eldercare Locator, 1-800-677-1116"
+        ],
+        [
+         "Money taken?",
+         "Elder Fraud Hotline, 1-833-372-8311"
+        ]
+       ],
+       "say": "If someone is hurting you, neglecting you, or taking your money, here is where to call. If you are in danger right now, call nine one one. In Minnesota, call MAARC, any time, at one eight four four, eight eight zero, one five seven four. Anywhere in the country, the Eldercare Locator can connect you with help near you, at one eight hundred, six seven seven, one one one six. And if money has been taken, the National Elder Fraud Hotline is at one eight three three, three seven two, eight three one one."
+      },
+      {
+       "k": "points",
+       "h": "If you don’t want to go on",
+       "items": [
+        [
+         "Call or text 988",
+         "Any time, day or night"
+        ],
+        [
+         "Veterans",
+         "Call 988, then press 1"
+        ],
+        [
+         "In danger right now",
+         "Call 911"
+        ]
+       ],
+       "say": "And if you have been thinking about not wanting to be here, or about ending your life, please reach out now. Many older adults have had these thoughts, and talking with someone can help. Call or text nine eight eight, any time, day or night. Veterans, call nine eight eight, then press one. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "You matter, and you don’t have to carry this alone.",
+       "sub": "Make one call today. Someone will listen.",
+       "say": "You matter, and you do not have to carry this alone. Make one call today. Someone will listen."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+},
   /* The Grove Learn (GWG BLD 730): Start Here, Using The Grove, The Six Parts, Together, and Do This Together.
      Generated from patches/bld730/source in grounded-workshop. */
   grove: {
