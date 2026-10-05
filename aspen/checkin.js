@@ -76,7 +76,7 @@ const Q = {
       ['Is there a place or a moment where you feel calm and peaceful inside?', 'If they name one, ask what it feels like there. Help them get there more often.'],
       ['Do you ever feel close to God, the Sacred, or something holy, like when you pray, worship, sit quietly, or spend time outside?', 'Share a time you felt that way yourself. If they say not really, that\'s okay. Ask where they feel most at peace instead.'],
       ['Do you feel like you matter, just for being you?', 'If the answer is not really, say: "You matter to me, just for being you." Then ask what makes it hard to feel that.'],
-      ['Do you ever worry that God, or the Holy, is angry with you or disappointed in you?', 'Listen without correcting or arguing. Thank them for telling you, and ask where that feeling comes from. Let them know they\'re loved as they are. A faith leader you trust can help too.', 'r'],
+      ['Do thoughts about God, or something bigger than you, ever leave you feeling worried or weighed down?', 'Listen without correcting or arguing. Thank them for telling you, and ask what brings that feeling. Let them know they\'re loved as they are. A faith leader you trust can help too.', 'r'],
       ['Do you feel thankful for things in your life, even small ones?', 'Trade one thing you\'re each thankful for today. Thankfulness grows with practice, so make it a habit at dinner or bedtime.'],
       ['Do you feel empty inside, like something is missing?', 'Listen without fixing, and thank them for telling you. Ask when it feels that way most. If it keeps up for a couple of weeks, talk with their doctor or school counselor.', 'r']
     ],
