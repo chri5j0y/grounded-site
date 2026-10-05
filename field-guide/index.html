@@ -602,8 +602,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc2"></script>
 <script src="../shared/gg-sources.js?v=src10"></script>
-<script src="../shared/gg-learn.js?v=ln28"></script>
-<script src="../shared/gg-print.js?v=pr2"></script>
+<script src="../shared/gg-learn.js?v=ln29"></script>
+<script src="../shared/gg-print.js?v=pr3"></script>
 <script src="../shared/grove-scene.js?v=w2c"></script>
 <script src="qr.js"></script>
 <script>
@@ -1687,7 +1687,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr2'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr3'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -7337,9 +7337,6 @@ document.addEventListener('click', async e => {
     case 'or-print-cert': orPrintCert(); break;
     case 'or-print-agree': orPrintAgreement(); break;
     case 'fdr-hide': V.show = null; render(); break;
-    case 'proof': { const ck = (DATA.founder.proof = DATA.founder.proof || {}); if (ck[v]) delete ck[v]; else ck[v] = today(); save();
-      V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); const y = window.scrollY; render(); window.scrollTo(0, y); break; }
-    case 'proof-only': V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); V.proofOpen = !V.proofOpen; render(); break;
     case 'fdr-show': V.show = v; render(); break;
     case 'fdr-setup': { const d = ensureDraft(); await relink(d); await persist(); render(); toast('Setup is ready to upload.'); break; }
     case 'fdr-make': {
