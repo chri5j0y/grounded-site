@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln19';
+  var V = 'ln20';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -119,6 +119,9 @@
       '.ln-t{flex:1;min-width:0;}.ln-t b{display:block;}.ln-t small{color:var(--ggl-soft);}',
       '.ggl-player{margin-top:6px;}',
       '.ln-stage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#F2ECE0;border:1px solid var(--ggl-line);}',
+      '.ln-wm{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;color:#5B4636;font:600 12px/1.1 Barlow,system-ui,sans-serif;pointer-events:none;user-select:none;-webkit-user-select:none;opacity:.92;white-space:nowrap;}.ln-wm img{width:24px;height:24px;border-radius:6px;}.ln-wm i{font-style:normal;}.ln-wm-tl{left:12px;top:12px;}.ln-wm-br{right:12px;bottom:12px;}',
+      '.ln-on-cover .ln-wm{color:#FFFFFF;}.ln-on-cover .ln-wm-tl img{filter:brightness(0) invert(1);}.ln-on-end .ln-wm-br{display:none;}',
+      '.ggl-small .ln-wm{font-size:9.5px;gap:4px;}.ggl-small .ln-wm img{width:17px;height:17px;border-radius:4px;}.ggl-small .ln-wm-tl{left:8px;top:8px;}.ggl-small .ln-wm-br{right:8px;bottom:8px;}.ggl-small .ln-wm i{display:none;}.ggl-small .ln-tt{top:86px;}',
       '.ln-prog{display:flex;gap:5px;margin:10px 0;}.ln-prog span{flex:1;height:5px;border-radius:3px;background:var(--ggl-line);}.ln-prog span.on{background:var(--ggl-acc);}',
       '.ln-cap{font-size:calc(19px * var(--ggl-scale));line-height:1.5;min-height:3em;margin:6px 0;color:var(--ggl-ink);}.ln-cap .w.on{color:var(--ggl-acc);}',
       /* beats: items wait for their sentence; a pause-and-do ring */
@@ -415,13 +418,22 @@
     if (window.GGSources || document.getElementById('gg-src-js')) return;
     var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src6'); document.head.appendChild(s);
   }
+  // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
+  // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere;
+  // the closing scene keeps only the top-left mark so its buttons stay clear. cfg.mark {tree, name} sets the
+  // bottom-right mark (the Field Guide passes its series); otherwise it follows cfg.app.
+  function wmark(cfg) {
+    var m = cfg.mark || {}, tree = m.tree || (APPS[cfg.app] ? cfg.app : ''), name = m.name || (APPS[cfg.app] ? APPS[cfg.app].name : 'Field Guide');
+    return '<div class="ln-wm ln-wm-tl" aria-hidden="true"><img src="' + url('/favicon.svg') + '" alt=""><span>Grow With Grounded</span></div>'
+      + '<div class="ln-wm ln-wm-br" aria-hidden="true">' + (tree ? '<img src="' + url('/shared/marks/' + tree + '-small.svg') + '" alt="">' : '') + '<span>' + esc(name) + '<i> &middot; growwithgrounded.com</i></span></div>';
+  }
   function player(host, cfg) {
     css(); needSources();
     if (CUR) CUR.stop();
     var l = cfg.lesson, acc = cfg.accent || '#8B5E1A', hasQuiz = (l.scenes || []).some(function (s) { return s.k === 'quiz'; });
     var answered = false, P = { i: -1, playing: false, tok: 0, hl: 0, tick: 0, nx: 0 };
     var N = (l.scenes || []).length + 1; // the closing scene is the last one
-    host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div><div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
+    host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div>' + wmark(cfg) + '<div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
       + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Help right now:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
       + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
@@ -474,6 +486,7 @@
       if (last) { var e = endScene(); sc = { k: 'end', ok: e.ok, eyebrow: e.eyebrow, h: e.h, sub: e.sub, count: e.count, say: e.say }; sc._e = e; }
       else sc = l.scenes[P.i];
       st.classList.remove('go'); cv.innerHTML = scene(sc, acc); cv.className = 'ln-canvas ln-k-' + sc.k;
+      st.classList.toggle('ln-on-cover', sc.k === 'title'); st.classList.toggle('ln-on-end', last);
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
