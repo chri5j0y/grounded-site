@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln28';
+  var V = 'ln29';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -674,7 +674,7 @@
       return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
     }).filter(function (t) { return t.lessons.length; });
   }
-  function needPrint() { return script(url('/shared/gg-print.js?v=pr2'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=pr3'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
   function open(app, lessonId, opts) {
