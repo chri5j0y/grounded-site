@@ -10,6 +10,8 @@
    Willow Learn (October 2026): Support for Right Now (8 videos, kind: 'support'), For You (3), and
    For the People Who Love Them (6). From the Bedside scenes retell published Grounded stories (with a
    link) or unpublished ones with names and details changed (no link).
+   Willow Learn, premium (GWG BLD 728): Using Willow (7) and The Six Parts (6) added, For You grown to 6, and
+   Start Here and For the People Who Love Them rebuilt at full length.
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
 window.GG_LEARN = {
@@ -489,122 +491,5512 @@ window.GG_LEARN = {
       ] },
       /* ---------- end W4 ---------- */
       /* ---------- Start Here (unchanged from the Learn build) ---------- */
-      { id: 'willow-start', title: 'Start Here', who: 'For the person in hospice, and the people who love them', lessons: [
-        { id: 'wl-welcome', n: 1, title: 'Welcome to Willow', mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'Willow', h: 'Welcome to Willow', sub: 'Held gently, all the way home.', say: 'Welcome to Willow. A tree for the last part of the path.' },
-          { k: 'big', h: 'Built for two.', sub: 'The person in hospice, and the people who love them.', say: 'Willow is built for two. The person in hospice, and the people who love them.' },
-          { k: 'six', h: 'Every part still matters', words: ['Faith, tradition, and peace', 'Meaning, legacy, a life story', 'Feelings, fears, and calm', 'The people who love them', 'Comfort, rest, and ease', 'Hope that changes shape'], say: 'At the end of life, every part of a person still matters. Faith and peace. Meaning and legacy. Feelings and calm. The people they love. Comfort in the body. And hope, which changes shape along the way.' },
-          { k: 'points', h: 'Faith comes first', items: [['Asked with care', 'Willow asks about faith or tradition first'], ['Every tradition', 'All faith traditions and everything in-between'], ['Faith cards', 'Words and practices for 29 traditions']], say: 'Willow asks about faith or tradition first, with care. It is made for all faith traditions and everything in-between, with faith cards for twenty nine traditions.' },
-          { k: 'points', h: 'What you will find', items: [['What Matters', 'A page for what matters most'], ['Cuttings', 'Stories and letters to leave behind'], ['Bedside', 'A log of what helped today'], ['Helpers', 'Their own passcode, and only what is shared']], say: 'You will find a page for what matters most. Cuttings, for the stories and letters they want to leave. A log of what helped today. And helpers open Willow with their own passcode, seeing only what the person chooses to share.' },
-          { k: 'quiz', q: 'Who is Willow built for?', opts: ['Only the hospice team', 'The person in hospice, and the people who love them', 'Only the family'], right: 1, why: 'Willow is built for two: the person, and the people who love them.', say: 'One question. Who is Willow built for?' }
-        ] }
-      ] },
-
-      /* ---------- For You: the person in hospice (three lessons, no certificate) ---------- */
-      { id: 'willow-you', title: 'For You', who: 'For the person in hospice. Watch at your own pace, alone or with someone you love.', cert: false, lessons: [
-
-        { id: 'wl-y-yours', n: 1, title: 'Your Tree, Your Way', mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For You', h: 'Your Tree, Your Way', sub: 'Willow is yours.', say: 'This lesson is for you, the person this tree belongs to. Willow is yours. You decide how you use it, and how much.' },
-          { k: 'big', h: 'You are still growing.', sub: 'Every part of you still matters.', say: 'Here is what Willow believes. You are still growing, right up to the end. Your faith, your story, your feelings, your people, your comfort, and your hope all still matter.' },
-          { k: 'points', h: 'You decide', items: [['Answer, or skip', 'Every question is optional'], ['Go slow', 'A quick check-in is six questions'], ['Words, not scores', 'Your tree shows how each part feels'], ['Stop anytime', 'Come back whenever you like']], say: 'You decide. Answer a question, or skip it. Every question is optional. A quick check-in is only six questions. Your tree shows words, never scores. And you can stop anytime, and come back whenever you like.' },
-          { k: 'points', h: 'Faith comes first, every time', items: [['Your faith, in your words', 'Or no faith at all. Every answer is welcome.'], ['Asked again each time', 'Because things can change near the end'], ['Words from your tradition', 'Prayers and readings that fit you']], say: 'Willow asks about your faith or tradition every time, because faith can grow or change near the end of life. Every answer is welcome, including none. Then Willow offers prayers and readings that fit you.' },
-          { k: 'points', h: 'You choose what helpers see', items: [['Helpers have their own passcode', 'They see only what you share'], ['Faith and notes start private', 'You can share them, or keep them'], ['Change it anytime', 'In Settings']], say: 'If someone helps you with Willow, they open it with their own passcode, and see only what you choose to share. Your faith answers and notes start private. You can change what is shared anytime.' },
-          { k: 'story', title: 'No Scared. New Body.', lines: ['A man near the end of his life laughed through most of my visit, his hands trembling in his lap.', 'I asked him gently if he knew he was dying. He smiled, patted his chest, and said four words in English: No scared. New body.', 'His family had asked for someone who would sit with him without trying to change what he believed.'], lesson: 'Your faith is yours. Willow is here to honor it.', note: 'Names and details changed', say: 'A man near the end of his life once laughed through most of a chaplain visit. When asked gently if he knew he was dying, he patted his chest and said, no scared, new body. His family wanted someone who would sit with him without trying to change what he believed. Your faith is yours, too. Willow is here to honor it.' },
-          { k: 'quiz', q: 'Who decides what your helpers can see in Willow?', opts: ['The hospice team', 'You do', 'Your helpers decide'], right: 1, why: 'Willow is your tree. You choose what is shared, and you can change it anytime.', say: 'One question. Who decides what your helpers can see?' }
-        ] },
-
-        { id: 'wl-y-matters', n: 2, title: 'What Matters to You', mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For You', h: 'What Matters to You', sub: 'Your words, kept safe.', say: 'This lesson is about what matters to you, and how to keep it, in your own words, for the people you love.' },
-          { k: 'big', h: 'Writing it down is a gift.', sub: 'The people you love will not have to guess.', say: 'Writing down what matters is a gift to the people you love. When the time comes, they will not have to guess what you would want.' },
-          { k: 'screen', app: 'willow', app_name: 'Willow', title: 'What Matters', rows: [['Who I am', 'In my own words'], ['What gives me peace', ''], ['Who I want close', ''], ['What I want people to know', ''], ['My wishes for my last days', ''], ['Vigil wishes', 'Music, words, light']], tap: 5, panel: { h: 'Vigil Wishes', sub: 'What you want around you.', items: ['Music I love', 'Prayers or readings', 'Who I want in the room'] }, say: 'The What Matters tab holds a few short pages. Who you are, in your own words. What gives you peace. Who you want close. And your vigil wishes: the music, the words, and the people you want around you at the end.' },
-          { k: 'points', h: 'Cuttings: pieces of you to leave behind', items: [['Stories', 'The ones your family asks you to tell'], ['Letters', 'To someone you love, or someone not born yet'], ['Things I learned', 'Three things life taught you'], ['Recipes, blessings, and more', 'Whatever you want to pass on']], say: 'Cuttings are pieces of you to leave behind, like a cutting from a willow that grows into a new tree. Stories your family asks you to tell. Letters to someone you love, even someone not born yet. Things life taught you. Recipes, blessings, whatever you want to pass on.' },
-          { k: 'story', title: 'Passing It On', lines: ['A man who had built a business from almost nothing told me, I can\u2019t die right now. It will fall apart without me.', 'Over a few days, we turned toward legacy. He recorded what he knew, told his best stories, and made a message for each person who worked for him.', 'Then he told his family: I release you. Run it, sell it, or close the doors. Don\u2019t let it own you.'], lesson: 'What you pass on keeps growing after you.', note: 'Names and details changed', say: 'A man who had built a business from almost nothing once told the chaplain, I cannot die right now, it will fall apart without me. Over a few days, he turned toward legacy. He recorded what he knew, told his best stories, and made a message for each person who worked for him. Then he told his family, I release you. In his last days, his worry softened into pride and peace. What you pass on keeps growing after you.' },
-          { k: 'big', h: 'Start with one line.', sub: 'You can always add more.', say: 'You do not have to write it all at once. Start with one line. You can always add more, or ask someone to type while you talk.' },
-          { k: 'quiz', q: 'What is a Cutting in Willow?', opts: ['A medical record', 'A story, letter, or piece of you to leave behind', 'A list of medicines'], right: 1, why: 'Like a willow cutting that grows a new tree, a Cutting is something of you that keeps growing in the people you love.', say: 'One question. What is a Cutting?' }
-        ] },
-
-        { id: 'wl-y-help', n: 3, title: 'Letting Others Help', mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For You', h: 'Letting Others Help', sub: 'Receiving is a gift too.', say: 'This last lesson is about something many people find hard near the end of life: letting others help.' },
-          { k: 'big', h: 'Many people worry about being a burden.', sub: 'If you feel that way, you are not alone.', say: 'Many people near the end of life worry about being a burden. If you feel that way, you are not alone. It is one of the most common worries there is.' },
-          { k: 'big', h: 'Letting them help is a gift you give them.', sub: 'It lets them show their love.', say: 'Here is another way to see it. Letting the people you love help you is a gift you give them. It lets them show their love, in the time you have left together.' },
-          { k: 'words', h: 'You can tell them what you need', items: ['I need some quiet today.', 'Will you sit with me?', 'Please read to me.', 'I want to talk about what is happening.'], say: 'You can tell them what you need. I need some quiet today. Will you sit with me. Please read to me. Or, I want to talk about what is happening. Many families wait for you to open that door.' },
-          { k: 'points', h: 'Your hospice team is there for you', items: [['The 24/7 line', 'At the top of Today, day or night'], ['Your nurse', 'For comfort in your body'], ['Your chaplain', 'For faith, fears, and meaning'], ['Your social worker', 'For family, plans, and worries']], say: 'Your hospice team is there for you too. The twenty four hour line is at the top of Today. Your nurse helps with comfort. Your chaplain is there for faith, fears, and meaning. Your social worker helps with family, plans, and worries.' },
-          { k: 'story', title: 'Total Bliss', lines: ['Jane had been a young widow, and never stopped loving her husband.', 'A few days before she died, she told me she could feel her death getting close.', 'She smiled and said she felt nothing but peace and joy. Almost bliss.'], lesson: 'Peace can be part of the path, too.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/total-bliss', label: 'Read the Full Story: Total Bliss' }, say: 'Chris tells about Jane, who a few days before she died said she could feel her death getting close. And she smiled, and said she felt nothing but peace and joy. Almost bliss. Peace can be part of the path, too.' },
-          { k: 'quiz', q: 'What is one way to see letting others help you?', opts: ['As a burden on them', 'As a gift that lets them show their love', 'As something to avoid'], right: 1, why: 'Letting people help lets them love you well, in the time you have together.', say: 'One question. What is one way to see letting others help you?' }
-        ] }
-      ] },
-
-      /* ---------- For the People Who Love Them: helpers (six lessons, certificate) ---------- */
-      { id: 'willow-helpers', title: 'For the People Who Love Them', who: 'For family, friends, and caregivers walking with someone in hospice', certTitle: 'Willow: For the People Who Love Them', certLine: 'For finishing every lesson in the Willow series for families and caregivers.', lessons: [
-
-        { id: 'wl-h-present', n: 1, title: "You Don't Have to Know What to Say", mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For the People Who Love Them', h: "You Don't Have to Know What to Say", sub: 'Presence comes first.', say: "Welcome. This series is for the people who love someone in hospice. A spouse, a daughter or son, a friend, a neighbor who keeps showing up. Let's start with the worry almost everyone carries into the room. I don't know what to say." },
-          { k: 'big', h: 'Your being there is the gift.', sub: 'Words are optional.', say: 'Here is what years at the bedside teach. Your being there is the gift. Words are optional. Most people near the end of life do not need a speech. They need someone close.' },
-          { k: 'story', title: "The Blanket That Didn't Need Smoothing", lines: ['A husband sat beside his wife in her final hours, his chair so close his knee touched the bed rail.', 'He told me about their life together. As he talked, he reached over and smoothed her blanket. It had not slipped.', 'He kept holding her hand, like it was the only job left for him to do.'], lesson: 'Sometimes love just needs somewhere to put its hands.', note: 'Names and details changed', say: 'A husband once sat beside his wife in her final hours, his chair so close his knee touched the bed rail. As he talked about their life, he reached over and smoothed her blanket. It had not slipped. Sometimes love just needs somewhere to put its hands.' },
-          { k: 'points', h: 'Ways to be present', items: [['Sit close', 'Pull your chair near, at eye level'], ['Offer touch, if it is welcome', 'A hand to hold, a hand on the shoulder'], ['Let silence be', 'Quiet together is still company'], ['Do small things', 'A cool cloth, lip balm, a blanket smoothed']], say: 'Here are some ways to be present. Sit close, at eye level. Offer touch, if it is welcome. A hand to hold, or a hand on the shoulder. Let silence be. Quiet together is still company. And do small things, like a cool cloth or lip balm.' },
-          { k: 'points', h: 'Let them lead', items: [['Follow their topic', 'The weather, the game, the old days'], ['Let feelings be', 'Tears and laughter both belong'], ['Listen more than fix', 'You do not need every answer'], ['Short is fine', 'A ten minute visit still counts']], say: 'Let them lead. Follow their topic, even if it is the weather or the game. Let feelings be. Tears and laughter both belong. Listen more than you fix. And short is fine. A ten minute visit still counts.' },
-          { k: 'big', h: 'When they say something hard, you can stay with it.', sub: 'Tell me more. I am here.', say: 'Sometimes they will say something hard. I am scared. I am ready. Why is this happening. You do not have to fix it. You can say, tell me more. Or simply, I am here. If they ever talk about ending their own life, call your hospice right away, day or night.' },
-          { k: 'screen', app: 'willow', app_name: 'Willow', title: 'Today', rows: [['Hospice 24/7 line', 'Call'], ['Their tree', 'Six parts'], ["Today's practice", 'Sit together'], ['What Helped Today', 'Add a note'], ['Bedside', 'Ideas for right now']], tap: 3, panel: { h: 'What Helped Today', sub: 'A short log for the next person.', items: ['Music helped her settle', 'He liked the window open', 'She smiled at the photos'] }, say: 'Willow can help here too. On Today, What Helped Today keeps a short log, so the next person to sit with them knows what brought comfort.' },
-          { k: 'quiz', q: 'What matters most when you sit with someone near the end of life?', opts: ['Finding the perfect words', 'Being there with them', 'Keeping the conversation going'], right: 1, why: 'Your being there is the gift. Words are optional.', say: 'One question. What matters most when you sit with someone near the end of life?' }
-        ] },
-
-        { id: 'wl-h-together', n: 2, title: 'Using Willow Together', mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For the People Who Love Them', h: 'Using Willow Together', sub: 'One tree. Built for two.', say: 'This lesson walks through using Willow together, with the person you love.' },
-          { k: 'big', h: 'Willow is their tree.', sub: 'You help them tend it.', say: 'Willow is their tree. You are there to help them tend it. They decide what to answer, and what to share with you.' },
-          { k: 'points', h: 'Every answer says who answered', items: [['They answered', 'In their own words or taps'], ['They answered, I tapped', 'They talk, you tap for them'], ["I'm answering from what I see", 'When they can no longer say']], say: 'Every check-in says who answered. They answered, on their own. They answered and you tapped, while they talked. Or, when they can no longer say, you answer from what you see. Those answers are kept apart, and never speak for their own tree.' },
-          { k: 'screen', app: 'willow', app_name: 'Willow', title: 'Check-in', rows: [['Roots', 'Strong', '#5F7D48'], ['Trunk', 'Steady', '#8B5E1A'], ['Bark', 'Growing Edge', '#B8612F'], ['Branches', 'Strong', '#5F7D48'], ['Leaves', 'Steady', '#8B5E1A'], ['Fruit', 'Steady', '#8B5E1A']], tap: 2, panel: { h: 'Growing Edge', sub: 'Where new growth begins.', items: ['A practice for calm', 'Tend it with others beside you'] }, say: 'After a check-in, each part of the tree shows a word. Strong, Steady, or Growing Edge. A growing edge is where new growth begins, and Willow suggests a gentle practice for it.' },
-          { k: 'points', h: 'Faith comes first', items: [['Asked every time', 'On the second screen'], ['Every answer welcome', 'Including none'], ['Faith cards', 'What matters in their tradition, at the bedside']], say: 'Willow asks about faith every time, on the second screen, because a chaplain always asks. Every answer is welcome, including none. The Bedside tab has faith cards for twenty nine traditions, so you know what matters to them at the bedside.' },
-          { k: 'points', h: 'What you can see', items: [['They choose', 'Tree words, What Matters, Cuttings, the log'], ['Faith and notes start private', 'Until they share them'], ['Home safety stays private', 'Always']], say: 'What you can see is their choice. Tree words, What Matters, Cuttings, and the log are the usual ones. Faith answers and notes start private, until they share them. And their answer about safety at home always stays private.' },
-          { k: 'points', h: 'Your own tree', items: [['Helpers have a tree too', 'Your own check-ins, your own practices'], ['Caring for you', 'Practices made for caregivers'], ['Switch between trees', 'Their tree, and yours']], say: 'You have your own tree in Willow too, because caregivers carry this as well. Your own check-ins. Practices made for caregivers. And you can switch between their tree and yours anytime.' },
-          { k: 'big', h: 'The hospice line is at the top of Today.', sub: 'Call it first, day or night.', say: 'One last thing. The hospice twenty four hour line sits at the top of Today. For anything urgent, call it first, day or night.' },
-          { k: 'quiz', q: "When you answer a check-in from what you see, because they can no longer say, what happens?", opts: ['It replaces their own answers', 'It is kept apart from their own tree', 'It is sent to the hospice'], right: 1, why: 'Answers from what you see are kept apart, and never speak for their own tree.', say: 'One question. What happens to answers you give from what you see?' }
-        ] },
-
-        { id: 'wl-h-weeks', n: 3, title: 'What the Last Weeks Can Look Like', mins: 3, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For the People Who Love Them', h: 'What the Last Weeks Can Look Like', sub: 'Knowing helps.', say: 'Many families say the hardest part was not knowing what was normal. This lesson walks through changes many people go through near the end of life. Every person is different, and your hospice nurse knows your person best.' },
-          { k: 'flow', h: 'A world that slowly gets smaller', steps: [['Weeks before', 'More sleep, less eating, less talking'], ['Days before', 'Very little food or drink, restless or confused at times'], ['Hours before', 'Breathing changes, less response']], say: 'Here is the general shape. Weeks before, many people sleep more, eat less, and talk less. Their world gets smaller. Days before, they may take very little food or drink, and may be restless or confused at times. In the last hours, breathing changes, and they respond less.' },
-          { k: 'big', h: 'Turning inward is normal.', sub: 'It is part of their own inner work.', say: 'Turning inward is normal. If they talk less or seem far away, they are often doing quiet inner work. Your presence still matters, even in the quiet.' },
-          { k: 'points', h: 'When they stop eating', items: [['The body slows down', 'It cannot use food the same way'], ['Hunger usually fades', 'Most do not feel hunger or thirst'], ['Love looks different now', 'Ice chips, lip balm, a little taste']], say: 'When they stop eating, it is hard to watch. Food is love. But near the end, the body slows down and cannot use food the same way. Most people do not feel hunger or thirst. Love looks different now. Ice chips, lip balm, a little taste of something they enjoy, only what they want.' },
-          { k: 'story', title: 'Welcome Home', lines: ['A daughter texted me early one morning: Dad is seeing ghosts. What does this mean?', 'When I arrived, her father turned toward something we could not see and raised both arms. Very quietly, he said, I love you. I love you. I love you.', 'That evening, he died peacefully, just as we had seen him: arms open.'], lesson: 'Visions near the end usually bring comfort. Ask who is there.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/welcome-home', label: 'Read the Full Story: Welcome Home' }, say: "Chris tells about a daughter who texted early one morning: Dad is seeing ghosts. When Chris arrived, her father turned toward something they could not see, raised both arms, and quietly said, I love you, I love you, I love you. Many people near the end see loved ones who have died. It usually brings comfort. Ask who is there, and listen." },
-          { k: 'points', h: 'In the last hours or days', items: [['Breathing changes', 'Pauses, then a few quick breaths'], ['A rattling sound', 'Usually bothers us more than them'], ['Cool hands and feet', 'Blotchy skin on knees and feet'], ['Less response', 'But keep talking to them']], say: 'In the last hours or days, breathing often changes, with pauses and then a few quick breaths. There may be a rattling sound in the throat. It usually bothers us more than it bothers them. Hands and feet may feel cool, and skin on the knees and feet may look blotchy. They respond less. Keep talking to them.' },
-          { k: 'big', h: 'Sometimes there is a rally.', sub: 'A surprising burst of energy. Treat it as a gift.', say: 'Sometimes a person who has been very sleepy wakes up, talks, eats, and knows everyone. It is real, and it is often brief. Treat it as a gift. Use it to say what you want to say.' },
-          { k: 'big', h: 'Call your hospice anytime something worries you.', sub: 'Restlessness, grimacing, or anything that looks like distress.', say: 'Most of all, call your hospice anytime something worries you. Restlessness, grimacing, or anything that looks like distress. They can help with comfort, day or night. You never have to guess alone.' },
-          { k: 'quiz', q: 'When someone near the end stops eating, what usually helps most?', opts: ['Encouraging them to eat more', 'Ice chips, lip balm, and only what they want', 'Waiting to visit until they eat again'], right: 1, why: 'Near the end, love looks like comfort: ice chips, lip balm, and only what they want.', say: 'One question. When someone near the end stops eating, what usually helps most?' }
-        ] },
-
-        { id: 'wl-h-words', n: 4, title: 'When Words Run Out', mins: 3, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For the People Who Love Them', h: 'When Words Run Out', sub: 'Love still reaches them.', say: 'There may come a time when the person you love can no longer talk, or open their eyes. This lesson is about how love still reaches them.' },
-          { k: 'big', h: 'Hearing may be one of the last senses to go.', sub: 'Speak to them, not about them.', say: 'Hearing may be one of the last senses to go. In one study, the brains of unresponsive hospice patients still responded to sound in their last hours. So speak to them, not about them. Tell them who is in the room.' },
-          { k: 'points', h: 'Ways to reach them', items: [['Your voice', 'Tell them stories, read to them'], ['Their music', 'The songs they love, softly'], ['Touch', 'Hold a hand, stroke an arm'], ['A phone to their ear', 'For family far away']], say: 'Here are ways to reach them. Your voice, telling stories or reading. Their music, played softly. Touch, holding a hand or stroking an arm. And for family far away, a phone held gently to their ear.' },
-          { k: 'story', title: 'If She Is Still Here', lines: ['On my day off, a daughter texted that her mom had taken a turn. I wrote back that I could come tomorrow.', 'She answered: If she is still here. I went right away.', 'We prayed, and the whole family cried and let go together. Her mom died peacefully a few hours after I left.'], lesson: 'If something is telling you to go now, go now.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/if-she-is-still-here', label: 'Read the Full Story: If She Is Still Here' }, say: "Chris tells about a day off, when a daughter texted that her mom had taken a turn. He wrote back that he could come tomorrow. She answered, if she is still here. He went right away. Her mom died peacefully a few hours after he left. If something is telling you to go now, go now. And say what you want to say today." },
-          { k: 'words', h: 'Things you can say now', items: ['Thank you for loving me.', "I'll take care of Mom.", "We're going to be okay.", 'You can rest when you are ready.'], say: 'Here are things families often say. Thank you for loving me. I will take care of Mom. We are going to be okay. And, when it feels right, you can rest when you are ready.' },
-          { k: 'story', title: 'Please Help My Dad Die', lines: ['A man was struggling to let go. His son could not bring himself to come.', 'I told him his children would be okay, that his son loved him even from afar, and that he was free to go.', 'His arm lifted, as if reaching for something. His daughter cried, Dad, I am here. You can go. He died peacefully the next day, with her at his side.'], lesson: 'Telling someone, once, that they can go when they are ready can be a gift.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/please-help-my-dad-die', label: 'Read the Full Story: Please Help My Dad Die' }, say: 'Chris tells about a man who seemed to be holding on, while one of his sons could not bring himself to come. Chris told him his children would be okay, that his son loved him even from afar, and that he was free to go. His arm lifted, as if reaching for something, and his daughter said, Dad, I am here, you can go. He died peacefully the next day, with her at his side.' },
-          { k: 'big', h: 'Some people seem to wait.', sub: 'For a visitor, a date, or permission. No one can say for sure.', say: 'Some people seem to wait, for a visitor, a date, or permission. Bedside workers see it often, though no one can say for sure why. Is anyone missing? Is anything left unsaid? Saying it once, gently, is enough.' },
-          { k: 'quiz', q: 'If the person you love can no longer respond, what can you still do?', opts: ['Stop talking, since they cannot hear', 'Keep talking to them, play their music, and hold their hand', 'Talk about them in the room as if they are not there'], right: 1, why: 'Hearing may be one of the last senses to go. Speak to them, play their music, and stay close.', say: 'One question. If the person you love can no longer respond, what can you still do?' }
-        ] },
-
-        { id: 'wl-h-ready', n: 5, title: "When They're Ready and You're Not", mins: 3, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For the People Who Love Them', h: "When They're Ready and You're Not", sub: 'Holding on, and letting go.', say: 'Sometimes the person you love finds peace with dying before you do. Sometimes it is the other way around. This lesson is about that hard space.' },
-          { k: 'story', title: 'Peace That Passes Understanding', lines: ['A woman with advanced cancer chose to stop treatment. She was calm, and smiling.', 'Her husband sat outside in the driveway. He could not watch. Some in her family thought she was giving up.', 'She told me she was not afraid or hopeless. She felt held by God, and she was ready.'], lesson: 'Love sometimes holds on with everything it has. Sometimes it opens its hands.', note: 'Names and details changed', say: 'A woman with advanced cancer once chose to stop treatment. She was calm and smiling, while her husband sat out in the driveway because he could not watch. Some in her family thought she was giving up. She said she was not afraid or hopeless. She felt held by God, and she was ready. Love sometimes holds on with everything it has. Sometimes it opens its hands.' },
-          { k: 'big', h: 'Being ready to die is different from wanting to end your life.', sub: 'If you are ever unsure, call your hospice.', say: 'Here is something important. Being at peace with dying is different from wanting to end your life. Many people near the end feel ready, and that can be deep spiritual peace. If they ever talk about ending their own life, or you are unsure which you are hearing, call your hospice right away, day or night.' },
-          { k: 'points', h: 'If you are not ready', items: [['Say so, gently', 'I am not ready to lose you, and I love you'], ['Let both be true', 'Your grief and their peace can share a room'], ['Get support', 'The hospice chaplain or social worker'], ['Take breaks', 'Step outside when it is too much']], say: 'If you are not ready, you can say so, gently. I am not ready to lose you, and I love you. Let both be true. Your grief and their peace can share a room. Talk with the hospice chaplain or social worker. And step outside when it is too much.' },
-          { k: 'big', h: "If they ask, Why is God doing this to me?", sub: 'You do not need an answer. You can stay.', say: 'Sometimes it is the other way around. They are angry, or afraid, or asking, why is God doing this to me. You do not need an answer. That question is as old as faith itself.' },
-          { k: 'story', title: 'Why Is God Doing This to Me?', lines: ['A woman with Parkinson\u2019s shook with tremors and asked me, Why is God doing this to me?', 'I told her anyone in her shoes would ask the same thing, and that people all through scripture had asked it too.', 'Something shifted. She nodded and said, He has never left me.'], lesson: 'You can honor the question without rushing to answer it.', note: 'From a Grounded story by Chris Joy', say: 'Chris tells about a woman with Parkinsons who asked, between tremors, why is God doing this to me. He told her anyone in her shoes would ask the same thing, and that people all through scripture asked it too. Something shifted, and she said, he has never left me. You can honor the question without rushing to answer it.' },
-          { k: 'points', h: 'When faith feels complicated', items: [['Listen first', 'Let them say the hard thing'], ['Stay curious', 'Doubt and anger are part of faith for many'], ['Offer their own words', 'A prayer or reading from their tradition'], ['Invite the chaplain', 'Or their own faith leader']], say: 'When faith feels complicated, listen first. Let them say the hard thing. Stay curious with them. For many people, doubt and anger are part of faith. Offer words from their own tradition. And invite the hospice chaplain, or their own faith leader.' },
-          { k: 'quiz', q: 'Your person feels ready to die and you are not. What can help?', opts: ['Hiding your feelings completely', 'Letting both be true, and getting support for yourself', 'Convincing them to keep fighting'], right: 1, why: 'Your grief and their peace can share a room. Let both be true, and lean on your hospice team.', say: 'One question. Your person feels ready, and you are not. What can help?' }
-        ] },
-
-        { id: 'wl-h-you', n: 6, title: 'Caring for Yourself on the Way', mins: 2, scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'For the People Who Love Them', h: 'Caring for Yourself on the Way', sub: 'You matter here too.', say: 'This last lesson is about you. Caring for someone at the end of life is love, and it is also hard, tiring work. You matter here too.' },
-          { k: 'story', title: 'Grief Debt', lines: ['One week I caught myself walking around numb. Not sad, not angry. Just numb.', 'A few losses had stacked up quietly, and I kept telling myself I would feel them later.', 'Grief we put off piles up, like laundry we swear we will fold.'], lesson: 'Pay grief down a little at a time.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/grief-debt', label: 'Read the Full Story: Grief Debt' }, say: 'Chris, who sits with dying people every week, tells about a week he caught himself walking around numb. Losses had stacked up quietly while he told himself he would feel them later. He calls it grief debt. It piles up, like laundry we swear we will fold. The kindness is paying it down a little at a time.' },
-          { k: 'flow', h: 'Notice. Name. Express. Unpack.', steps: [['Notice it', 'Something is there'], ['Name it', 'As clearly as you can'], ['Express it', 'Talk, write, cry'], ['Unpack it', 'Walk, stretch, breathe']], say: 'Here is a simple way to pay it down. Notice it. Name it. Express it. Then unpack it with your body.' },
-          { k: 'points', h: 'Signs you need a break', items: [['Short temper', 'Snapping at people you love'], ['Not sleeping or eating', 'Running on empty'], ['Feeling numb', 'Or far away'], ['Thinking, no one else can do this', 'Others can help']], say: 'Watch for signs you need a break. A short temper. Not sleeping or eating. Feeling numb. Or thinking, no one else can do this. Others can help, and letting them is part of caring well.' },
-          { k: 'points', h: 'Help is there', items: [['Respite care', 'Ask your hospice about short breaks'], ['Hospice volunteers', 'Someone to sit while you rest'], ['Grief support', 'Now, and for about a year after'], ['988', 'Call or text if you are struggling']], say: 'Help is there. Ask your hospice about respite care, a short break for you. Hospice volunteers can sit while you rest. Grief support is there now, and for about a year after a death. And if you are struggling, call or text 988 anytime.' },
-          { k: 'big', h: 'Feeling relief after a long road is normal.', sub: 'It does not mean you loved them less.', say: 'One more thing. After a long road, many people feel relief when it ends, and then guilt for feeling relief. Relief is normal. It does not mean you loved them less. It means you carried a lot, for a long time.' },
-          { k: 'big', h: 'You are bending, and you are not alone.', sub: 'Held gently, all the way home.', say: 'A willow bends in the storm, so far you think it should break, and it does not. You are bending too. You are not alone. Thank you for walking with the person you love, all the way home.' },
-          { k: 'quiz', q: 'What is grief debt?', opts: ['Money owed for a funeral', 'Grief that piles up when we keep putting it off', 'A kind of hospice bill'], right: 1, why: 'Grief we keep putting off piles up. Notice, name, express, and unpack to pay it down.', say: 'Last question. What is grief debt?' }
-        ] }
-      ] }
+      /* Willow Learn, premium (GWG BLD 728): Start Here, Using Willow, The Six Parts, For You, and For the People Who Love Them.
+         Generated from patches/bld728/source in grounded-workshop. */
+      {
+  "id": "willow-start",
+  "title": "Start Here",
+  "who": "For the person in hospice, and the people who love them",
+  "lessons": [
+   {
+    "id": "wl-welcome",
+    "n": 1,
+    "title": "Welcome to Willow",
+    "mins": 4,
+    "blurb": "What Willow is, who it is for, and where to begin.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Start Here, Lesson 1",
+      "h": "Welcome to Willow",
+      "sub": "Held gently, all the way home.",
+      "say": "Welcome to Willow. A tree for the last part of the path, for the person in hospice, and the people who love them."
+     },
+     {
+      "k": "big",
+      "h": "A willow bends, and it doesn't break.",
+      "sub": "Near the end of life, everyone in the room is bending.",
+      "say": "A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone."
+     },
+     {
+      "k": "flow",
+      "h": "Built for two",
+      "steps": [
+       [
+        "For me",
+        "I'm in hospice, or facing the end of my life"
+       ],
+       [
+        "For someone I love",
+        "A parent, a partner, a friend, or family"
+       ]
+      ],
+      "say": "Willow is built for two. When you begin, it asks who Willow is for today. For me, or for someone I love. Helpers open the person's tree with their own passcode, and see only what the person chooses to share."
+     },
+     {
+      "k": "six",
+      "h": "Six parts of one tree",
+      "words": [
+       "What grounds you",
+       "A life that mattered",
+       "Peace inside",
+       "Love said out loud",
+       "Comfort",
+       "Hope and readiness"
+      ],
+      "say": "Willow looks gently at six parts of a tree. Roots, what grounds you. Trunk, a life that mattered. Bark, peace inside. Branches, love said out loud. Leaves, comfort. And Fruit, hope and readiness."
+     },
+     {
+      "k": "points",
+      "h": "A gentle check-in",
+      "items": [
+       [
+        "Quick Check-in",
+        "One question for each part"
+       ],
+       [
+        "Full Check-in",
+        "Three questions for each part"
+       ],
+       [
+        "Faith comes first",
+        "Asked gently, every time"
+       ],
+       [
+        "Gentle words, not scores",
+        "Every part of a tree has seasons"
+       ]
+      ],
+      "say": "A check-in is how Willow listens. The Quick Check-in asks one question for each part. The Full Check-in asks three. Faith comes first, and every answer is welcome, including none. Afterward, Willow shows gentle words, not scores, and each check-in the person answers adds a ring to their tree."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 0,
+      "note": {
+       "h": "Seven tabs",
+       "p": "Start with Today: the tree, one gentle practice, and the hospice line."
+      },
+      "say": "Today holds the tree, one gentle practice, and the hospice line. What Matters keeps the person's own words. Cuttings keeps stories and letters to leave behind. Bedside has what to do when you don't know what to do. When Life Changes has words for the hardest conversations. Readings has words to read aloud. And Learn is right here."
+     },
+     {
+      "k": "big",
+      "h": "Call your hospice first, day or night.",
+      "sub": "In danger, call 911. Call or text 988, any time.",
+      "beats": [
+       "Your hospice has a line you can call day or night.",
+       "Add it in Willow Settings, and it sits at the top of Today.",
+       "For anything worrying at home, call your hospice first.",
+       "In danger, call nine one one, and nine eight eight is there to call or text, any time.",
+       {
+        "t": "If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge.",
+        "w": 10
+       }
+      ],
+      "say": "Your hospice has a line you can call day or night. Add it in Willow Settings, and it sits at the top of Today. For anything worrying at home, call your hospice first. In danger, call nine one one, and nine eight eight is there to call or text, any time. If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge."
+     },
+     {
+      "k": "big",
+      "h": "A chaplain's questions, kept gently.",
+      "sub": "What grounds you? What matters most? Who do you want close?",
+      "say": "Willow was made by Chris Joy, a hospice chaplain, from the questions he asks every day. What grounds you? What matters most? Who do you want close? Willow keeps them gently in one place, on this device."
+     },
+     {
+      "k": "points",
+      "h": "Where to go next",
+      "items": [
+       [
+        "Using Willow",
+        "A short tour of each tab"
+       ],
+       [
+        "The Six Parts",
+        "One lesson for each part"
+       ],
+       [
+        "For You",
+        "For the person in hospice"
+       ],
+       [
+        "For the People Who Love Them",
+        "For family and helpers"
+       ]
+      ],
+      "say": "From here, Using Willow walks through each tab, and The Six Parts gives a lesson to each part. For You is for the person in hospice, and For the People Who Love Them is for family and helpers."
+     },
+     {
+      "k": "quiz",
+      "q": "Who is Willow built for?",
+      "opts": [
+       "Only the hospice team",
+       "The person in hospice, and the people who love them",
+       "Only the family"
+      ],
+      "right": 1,
+      "why": "Willow is built for two: the person, and the people who love them.",
+      "say": "One question. Who is Willow built for?"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "willow-using",
+  "title": "Using Willow",
+  "who": "Every part of Willow, tab by tab",
+  "certTitle": "Willow: Using Willow",
+  "certLine": "For finishing every lesson on using Willow, tab by tab.",
+  "lessons": [
+   {
+    "id": "wl-u-today",
+    "n": 1,
+    "title": "Today",
+    "mins": 6,
+    "blurb": "The 24/7 line, the tree and its check-ins, one gentle practice, and what helped today.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 1",
+      "h": "Today",
+      "sub": "Where every visit to Willow begins.",
+      "say": "Every time you open Willow, you land on Today. This lesson walks through it from top to bottom, so you know what each part is for."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 0,
+      "note": {
+       "h": "Today",
+       "p": "The 24/7 line, the tree, one gentle thing for today, and what helped."
+      },
+      "say": "Today is the first tab. At the top it shows the date, and it says whose tree you are looking at. Your own, or the tree of the person you help."
+     },
+     {
+      "k": "card",
+      "title": "Hospice 24/7 line",
+      "body": "Shown at the top of Today. Call it first, day or night.",
+      "fields": [
+       [
+        "Hospice name",
+        "Our hospice"
+       ],
+       [
+        "24/7 phone number",
+        "320-555-0100"
+       ]
+      ],
+      "btns": [
+       "Save the number"
+      ],
+      "tap": 0,
+      "say": "First, the hospice line. Until a number is saved, Today says, worried? Call your hospice first, day or night. Tap Add your hospice's 24/7 number, type the name and number, and tap Save the number. From then on it sits at the top of Today, one tap away. Call it first, before nine one one, for anything hospice can help with."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Your tree",
+      "rows": [
+       [
+        "Roots",
+        "Well tended",
+        "#5F7D48"
+       ],
+       [
+        "Trunk",
+        "Holding",
+        "#8B5E1A"
+       ],
+       [
+        "Bark",
+        "A growing edge",
+        "#B8612F"
+       ],
+       [
+        "Branches",
+        "Well tended",
+        "#5F7D48"
+       ],
+       [
+        "Quick Check-in",
+        ""
+       ],
+       [
+        "Full Check-in",
+        ""
+       ]
+      ],
+      "tap": 4,
+      "panel": {
+       "h": "Gentle words",
+       "sub": "Never scores.",
+       "items": [
+        "Well tended right now",
+        "Holding. A little tending could help.",
+        "A growing edge, where new growth begins"
+       ]
+      },
+      "say": "Next comes the tree. After a check-in, each of the six parts shows a few gentle words, never a score. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins. Below the tree are two buttons. Quick Check-in, and Full Check-in."
+     },
+     {
+      "k": "flow",
+      "h": "Two ways to check in",
+      "steps": [
+       [
+        "Quick Check-in",
+        "One question for each part, about 2 minutes"
+       ],
+       [
+        "Full Check-in",
+        "Three questions for each part"
+       ]
+      ],
+      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. If an answer shows someone may need help, Willow shows the hospice line first, then nine eight eight to call or text, and nine one one for danger."
+     },
+     {
+      "k": "points",
+      "h": "Who is answering?",
+      "items": [
+       [
+        "They answered",
+        "On their own"
+       ],
+       [
+        "They answered, I tapped",
+        "They talk, a helper taps"
+       ],
+       [
+        "I'm answering from what I see",
+        "Kept apart, never adds a ring"
+       ]
+      ],
+      "say": "When a helper opens the person's tree, Willow first asks, who is answering? They answered. They answered, I tapped, when the person talks and you tap. Or I'm answering from what I see, for when they can no longer say. That last kind is kept apart, and never speaks for their own tree."
+     },
+     {
+      "k": "big",
+      "h": "A ring grows with every check-in.",
+      "sub": "Past Check-ins keeps them all.",
+      "say": "Each check-in the person answers themselves adds a ring to the willow, with or without a helper tapping. Check in whenever it helps. Once there is a check-in, Past Check-ins shows every one, and who answered it."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "One gentle thing",
+      "rows": [
+       [
+        "Long out-breath",
+        "Bark"
+       ],
+       [
+        "1 to 3 min",
+        "Growing evidence"
+       ],
+       [
+        "Did it today",
+        ""
+       ],
+       [
+        "Something else",
+        ""
+       ]
+      ],
+      "tap": 2,
+      "panel": {
+       "h": "Done for today",
+       "sub": "That's enough.",
+       "items": [
+        "Works lying down",
+        "Can be done with a helper"
+       ]
+      },
+      "say": "Below the tree is one gentle thing for today. After a check-in, it leans toward the part that needs tending most. It shows how long it takes and how well it is backed. Tap Did it today when you have done it. Tap Something else for a different one. Every practice works lying down, and every one can be done with a helper."
+     },
+     {
+      "k": "big",
+      "h": "Long out-breath",
+      "sub": "Never force it. Stop if breathing feels hard.",
+      "beats": [
+       "Let's try that one now.",
+       "Breathe in gently.",
+       "Let the breath out slower and longer.",
+       {
+        "t": "Never force it, and stop if breathing feels hard.",
+        "w": 10
+       }
+      ],
+      "say": "Let's try that one now. Breathe in gently. Let the breath out slower and longer. Never force it, and stop if breathing feels hard."
+     },
+     {
+      "k": "big",
+      "h": "No streaks here.",
+      "sub": "One a day is plenty, and none is okay.",
+      "say": "There are no streaks in Willow. One a day is plenty, and none is okay. When a helper is on their own tree, the practice is for them. Five minutes for you counts. It helps them too."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What helped today",
+      "rows": [
+       [
+        "Pass it on to the next helper",
+        ""
+       ],
+       [
+        "She settled when we played Amazing Grace.",
+        ""
+       ],
+       [
+        "He asked for his brother.",
+        ""
+       ],
+       [
+        "Add to today",
+        ""
+       ]
+      ],
+      "tap": 3,
+      "say": "On the person's tree comes What helped today. One line is enough. She settled when we played Amazing Grace. He asked for his brother. Type it under Add a line, and tap Add to today. Each line keeps the time and who wrote it, so the next person on shift will know. Earlier days opens the lines from before."
+     },
+     {
+      "k": "points",
+      "h": "Further down Today",
+      "items": [
+       [
+        "At the bedside today",
+        "Two ideas, when you open their tree"
+       ],
+       [
+        "Support for Right Now",
+        "Short videos for the hard hours"
+       ],
+       [
+        "Your chaplain or doula",
+        "Share with my chaplain or doula"
+       ],
+       [
+        "The people you care for",
+        "A helper's way to each tree"
+       ]
+      ],
+      "say": "Further down, a helper on the person's tree sees two ideas for the bedside today. Support for Right Now opens short videos for the hard hours. Share with my chaplain or doula sends check-ins in person, and you choose what goes. And on a helper's own tree, The people you care for leads to each tree they help with."
+     },
+     {
+      "k": "quiz",
+      "q": "How many gentle practices does Today ask for?",
+      "opts": [
+       "Every one, to keep a streak",
+       "One a day is plenty, and none is okay",
+       "Three each morning"
+      ],
+      "right": 1,
+      "why": "Willow keeps no streaks. One a day is plenty, and none is okay.",
+      "say": "Quick question. How many gentle practices does Today ask for?"
+     }
+    ]
+   },
+   {
+    "id": "wl-u-matters",
+    "n": 2,
+    "title": "What Matters",
+    "mins": 5,
+    "blurb": "A page in their own words, so everyone at the bedside knows who they are.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 2",
+      "h": "What Matters",
+      "sub": "Who they are, in their own words.",
+      "say": "What Matters is a page about the person, in their own words. This lesson shows what is on it, and how to fill it in, alone or together."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 1,
+      "note": {
+       "h": "What Matters",
+       "p": "So the people caring for you know who you are, not just what you have."
+      },
+      "say": "What Matters is the second tab. It is there so the people caring for you know who you are, not just what you have. Write a little or a lot. A helper can type while you talk."
+     },
+     {
+      "k": "big",
+      "h": "It starts with who you are.",
+      "sub": "The work you did, the people you love, what makes you laugh.",
+      "say": "The first question asks what people should know about you as a person. The work you did. The people you love. What makes you laugh. What you want remembered."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What Matters",
+      "rows": [
+       [
+        "What makes a good day now?",
+        ""
+       ],
+       [
+        "Small things that bring joy",
+        ""
+       ],
+       [
+        "What I'm hoping for",
+        ""
+       ],
+       [
+        "What worries me",
+        ""
+       ],
+       [
+        "Who I want close",
+        ""
+       ],
+       [
+        "What comforts me",
+        ""
+       ]
+      ],
+      "tap": 0,
+      "panel": {
+       "h": "A good day now",
+       "sub": "Coffee by the window. The grandkids after school. Quiet."
+      },
+      "say": "Then come six short questions. What makes a good day now? Small things that bring joy. What I'm hoping for. What worries me. Who I want close. And what comforts me. Each box shows a gentle example, like coffee by the window, or the grandkids after school."
+     },
+     {
+      "k": "card",
+      "title": "Anything we should never do",
+      "body": "It shows on the Bedside tab as Never do.",
+      "fields": [
+       [
+        "Anything we should never do",
+        "No visits from my old church."
+       ]
+      ],
+      "btns": [
+       "Save"
+      ],
+      "tap": 0,
+      "say": "The last question is, anything we should never do? Some people write, don't pray over me, or no visits from my old church. The check-in asks this too, in its faith step, and Willow carries that answer here. It also shows on the Bedside tab as Never do, for the helpers it is shared with."
+     },
+     {
+      "k": "points",
+      "h": "When the time comes",
+      "items": [
+       [
+        "The room",
+        "Light or dark? Window open?"
+       ],
+       [
+        "The people",
+        "Who should be there?"
+       ],
+       [
+        "The words",
+        "Said, read, prayed, or sung"
+       ],
+       [
+        "Touch, and after",
+        "Hand held, or space. The first hour."
+       ]
+      ],
+      "say": "Below that is a section called When the time comes. Some people like to say how they want the last days to feel. The room, light or dark, the window open. The people who should be there. The words to be said, read, prayed, or sung. Touch, like a hand held, or space. And after, the first hour. Skip anything that doesn't fit."
+     },
+     {
+      "k": "big",
+      "h": "A good day now looks like...",
+      "sub": "One small thing is enough.",
+      "beats": [
+       "Try the easiest question now.",
+       "Finish this line, out loud or quietly.",
+       "A good day now looks like.",
+       {
+        "t": "Name one small thing, like a song, a window, or a voice.",
+        "w": 10
+       }
+      ],
+      "say": "Try the easiest question now. Finish this line, out loud or quietly. A good day now looks like. Name one small thing, like a song, a window, or a voice."
+     },
+     {
+      "k": "card",
+      "title": "What Matters",
+      "body": "Last changed Mon, Oct 5 by Dan.",
+      "fields": [],
+      "btns": [
+       "Save",
+       "Read it aloud",
+       "Save or Print"
+      ],
+      "tap": 1,
+      "say": "At the bottom are three buttons. Save keeps every answer, and the page shows when it was last changed, and by whom. Read it aloud reads the whole page out loud. Save or Print makes a clean page you can print, or save as a file to keep."
+     },
+     {
+      "k": "points",
+      "h": "Writing it together",
+      "items": [
+       [
+        "Their words, not yours",
+        "Type while they talk"
+       ],
+       [
+        "Read it to new faces",
+        "Nurses, aides, and visitors"
+       ],
+       [
+        "On a helper's own tree",
+        "A button opens their page"
+       ]
+      ],
+      "say": "For helpers, write it with the person, in their words. Then read it aloud to new nurses, aides, and visitors, so they know who they are caring for. If you open What Matters from your own tree, Willow reminds you this page belongs to the person you care for, with a button to open their page."
+     },
+     {
+      "k": "points",
+      "h": "Theirs to share",
+      "items": [
+       [
+        "Locked in their profile",
+        "Kept on this device"
+       ],
+       [
+        "What Matters to Me",
+        "A switch in Willow Settings"
+       ],
+       [
+        "Faith answers",
+        "Shown at the top when shared"
+       ]
+      ],
+      "say": "The page stays locked in the person's own profile, on this device. Helpers see it when the What Matters to Me switch is on in Willow Settings. And when the person also shares their faith answers, a short summary sits at the top of the page, with who to call."
+     },
+     {
+      "k": "big",
+      "h": "Start with one line.",
+      "sub": "You can always add more.",
+      "say": "You do not have to fill it in all at once. Start with one line. Come back and add more whenever it helps."
+     },
+     {
+      "k": "quiz",
+      "q": "Where does the answer to anything we should never do also show?",
+      "opts": [
+       "On the Bedside tab, as Never do",
+       "Nowhere else",
+       "In a message to the hospice"
+      ],
+      "right": 0,
+      "why": "Never do shows on the Bedside tab, so everyone who is shared with knows it.",
+      "say": "Quick question. Where does the answer to anything we should never do also show?"
+     }
+    ]
+   },
+   {
+    "id": "wl-u-cuttings",
+    "n": 3,
+    "title": "Cuttings",
+    "mins": 5,
+    "blurb": "Stories, letters, lessons, and blessings, kept for the people who stay.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 3",
+      "h": "Cuttings",
+      "sub": "What I want to leave.",
+      "say": "Cuttings is where a life's words are kept. This lesson shows the six kinds of cutting, how to write one, and what happens to it after."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 2,
+      "note": {
+       "h": "Cuttings",
+       "p": "Stories, letters, lessons, and blessings, kept for the people who stay."
+      },
+      "say": "Cuttings is the third tab. Its heading reads, what I want to leave. Stories, letters, lessons, and blessings, kept for the people who stay."
+     },
+     {
+      "k": "big",
+      "h": "A small piece of a tree can root and grow somewhere new.",
+      "say": "The name comes from gardening. A cutting is a small piece of a tree that can root and grow somewhere new. A story told today can keep growing in the people you love."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Cuttings",
+      "rows": [
+       [
+        "A story",
+        ""
+       ],
+       [
+        "Things I learned",
+        ""
+       ],
+       [
+        "A letter to keep",
+        ""
+       ],
+       [
+        "One of the Four Things",
+        ""
+       ],
+       [
+        "A blessing to leave",
+        ""
+       ],
+       [
+        "A recipe or a how-to",
+        ""
+       ]
+      ],
+      "tap": 0,
+      "panel": {
+       "h": "A story",
+       "sub": "Tell one story you want remembered."
+      },
+      "say": "There are six kinds to choose from. A story. Things I learned. A letter to keep. One of the Four Things. A blessing to leave. And a recipe or a how-to. Tap one to begin."
+     },
+     {
+      "k": "points",
+      "h": "Each kind, in a line",
+      "items": [
+       [
+        "Things I learned",
+        "Three things life taught you"
+       ],
+       [
+        "A letter to keep",
+        "To someone, for now or for later"
+       ],
+       [
+        "A blessing to leave",
+        "A wedding, a birthday, a hard day"
+       ],
+       [
+        "A recipe or a how-to",
+        "The pie. The fishing spot."
+       ]
+      ],
+      "say": "Things I learned holds three things life taught you, for the people you love. A letter to keep goes to someone, for now or for later. A blessing to leave gives someone words for a wedding you won't see, a birthday, or a hard day. And a recipe or a how-to keeps the pie, the fishing spot, or how to fix the furnace."
+     },
+     {
+      "k": "words",
+      "h": "One of the Four Things",
+      "items": [
+       "Please forgive me.",
+       "I forgive you.",
+       "Thank you.",
+       "I love you."
+      ],
+      "say": "One of the Four Things is for the words many people want to say before a goodbye. Please forgive me. I forgive you. Thank you. I love you. Choose the one that is true for you, and say who it is for."
+     },
+     {
+      "k": "card",
+      "title": "A new cutting",
+      "body": "What kind: A story",
+      "fields": [
+       [
+        "A title",
+        "The summer at the lake"
+       ],
+       [
+        "For (optional)",
+        "For Emma, on her wedding day"
+       ],
+       [
+        "The words",
+        ""
+       ]
+      ],
+      "btns": [
+       "Save this cutting",
+       "Cancel"
+      ],
+      "tap": 0,
+      "say": "Each cutting has a title, like the summer at the lake. A line for who it is for, if you like, like for Emma, on her wedding day. And the words. You can change the kind while you write. Then tap Save this cutting, and Willow says, kept."
+     },
+     {
+      "k": "big",
+      "h": "The summer at the lake.",
+      "sub": "One story is enough to start.",
+      "beats": [
+       "Let's begin one now.",
+       "Think of one story you want remembered.",
+       "Give it a short title, the way you would name a photo.",
+       {
+        "t": "Now say its first line, out loud or quietly.",
+        "w": 10
+       }
+      ],
+      "say": "Let's begin one now. Think of one story you want remembered. Give it a short title, the way you would name a photo. Now say its first line, out loud or quietly."
+     },
+     {
+      "k": "points",
+      "h": "Kept so far",
+      "items": [
+       [
+        "Read this aloud",
+        "Hear it read out loud"
+       ],
+       [
+        "Save or Print",
+        "A clean page to give or keep"
+       ],
+       [
+        "Edit",
+        "Add to it anytime"
+       ],
+       [
+        "Remove",
+        "Willow asks first"
+       ]
+      ],
+      "say": "Every saved cutting shows under Kept so far, with its kind, who it is for, and the date. Each one can be read aloud. Save or Print makes a clean page to give someone, or to keep. Edit lets you add to it anytime. And Remove asks first, because it cannot be undone unless you have a backup."
+     },
+     {
+      "k": "points",
+      "h": "When a helper types",
+      "items": [
+       [
+        "Type while they talk",
+        "Use their words, not yours"
+       ],
+       [
+        "Written down by",
+        "Willow notes who typed it"
+       ],
+       [
+        "Short is fine",
+        "One story is enough to start"
+       ]
+      ],
+      "say": "Many cuttings are typed by a helper while the person talks. Use their words, not yours. Willow notes who wrote it down, so it is always clear whose story it is. And short is fine. One story is enough to start."
+     },
+     {
+      "k": "points",
+      "h": "Kept for the people who stay",
+      "items": [
+       [
+        "Locked in their profile",
+        "On this device"
+       ],
+       [
+        "The Cuttings switch",
+        "In Willow Settings, for helpers"
+       ],
+       [
+        "Their Cuttings",
+        "Still there, just as they were"
+       ]
+      ],
+      "say": "Cuttings stay locked in the person's own profile, on this device. Helpers see them when the Cuttings switch is on in Willow Settings. And after a death, their tree stays just as it was, with a button on Today that opens their Cuttings."
+     },
+     {
+      "k": "quiz",
+      "q": "What is a cutting in Willow?",
+      "opts": [
+       "A list of medicines",
+       "A story, letter, or blessing kept for the people who stay",
+       "A note for the hospice nurse"
+      ],
+      "right": 1,
+      "why": "Like a piece of a tree that roots somewhere new, a cutting keeps growing in the people you love.",
+      "say": "Quick question. What is a cutting in Willow?"
+     }
+    ]
+   },
+   {
+    "id": "wl-u-bedside",
+    "n": 4,
+    "title": "Bedside",
+    "mins": 5,
+    "blurb": "Small, real things to do at the bedside, support for the one keeping watch, and faith done gently.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 4",
+      "h": "Bedside",
+      "sub": "What to do when you don't know what to do.",
+      "say": "Bedside is for the moments when you are in the room and don't know what to do. This lesson walks through everything on it."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 3,
+      "note": {
+       "h": "Bedside",
+       "p": "Small, real things families and helpers can do, with how well each one is backed."
+      },
+      "say": "Bedside is the fourth tab. Anyone can open it, with or without a profile. It holds small, real things families and helpers can do, with how well each one is backed."
+     },
+     {
+      "k": "big",
+      "h": "You don't have to say the perfect thing.",
+      "sub": "You only have to stay.",
+      "say": "The page opens with the most important thing. You don't have to say the perfect thing. You only have to stay."
+     },
+     {
+      "k": "points",
+      "h": "At the top",
+      "items": [
+       [
+        "The hospice 24/7 line",
+        "Call first, day or night"
+       ],
+       [
+        "Never do",
+        "What they asked everyone to avoid"
+       ],
+       [
+        "Their tradition card",
+        "When they share their faith answers"
+       ]
+      ],
+      "say": "At the top is the hospice line, the same one as on Today. Call it first, day or night. When you are on the person's tree, and they share it, you will also see their Never do, in their own words. And if they named a tradition, their tradition card is right there."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What helps",
+      "rows": [
+       [
+        "Keep talking",
+        ""
+       ],
+       [
+        "Read or sing",
+        ""
+       ],
+       [
+        "Hold a hand",
+        ""
+       ],
+       [
+        "Comfort, not calories",
+        ""
+       ],
+       [
+        "The vigil playlist",
+        ""
+       ],
+       [
+        "Give permission",
+        ""
+       ]
+      ],
+      "tap": 2,
+      "panel": {
+       "h": "How well it is backed",
+       "items": [
+        "Well studied",
+        "Growing evidence",
+        "Clinical consensus",
+        "Traditional wisdom"
+       ]
+      },
+      "say": "Next is What helps. Twelve small things, each with a short how-to and a tag for how well it is backed. Well studied, growing evidence, clinical consensus, or traditional wisdom. Keep talking. Read or sing. Hold a hand. Comfort, not calories. The vigil playlist. Give permission."
+     },
+     {
+      "k": "points",
+      "h": "A few more that help",
+      "items": [
+       [
+        "When they're restless",
+        "Soft voice, low light. Call the nurse."
+       ],
+       [
+        "Listen to the visitors",
+        "Ask gently, Who's here?"
+       ],
+       [
+        "Kids can help",
+        "Draw, choose music, tell a story"
+       ],
+       [
+        "Shift handoff",
+        "One line in What helped today"
+       ]
+      ],
+      "say": "A few more. When they're restless, a soft voice, low light, and familiar music, and call the hospice nurse. When they see people who died, ask gently, who's here? Kids can help, by drawing, choosing music, or telling a story. And before you leave, add one line to What helped today."
+     },
+     {
+      "k": "big",
+      "h": "Hold a hand",
+      "sub": "Let them pull away if they want.",
+      "beats": [
+       "Let's try one together.",
+       "If you are at the bedside, rest your hand on theirs.",
+       "If you are not, rest one hand gently on the other.",
+       "Let them pull away if they want.",
+       {
+        "t": "Stay there for a few slow breaths.",
+        "w": 12
+       }
+      ],
+      "say": "Let's try one together. If you are at the bedside, rest your hand on theirs. If you are not, rest one hand gently on the other. Let them pull away if they want. Stay there for a few slow breaths."
+     },
+     {
+      "k": "points",
+      "h": "Care for the one keeping watch",
+      "items": [
+       [
+        "Long out-breath",
+        "One minute before you walk in"
+       ],
+       [
+        "Eat something real",
+        "One real meal today"
+       ],
+       [
+        "Gates, not walls",
+        "Tag out for an hour"
+       ],
+       [
+        "Set guilt down",
+        "I'm doing what love can do today."
+       ]
+      ],
+      "say": "Then comes a section for you, called Care for the one keeping watch. You can't pour from an empty cup. One minute of long out-breaths before you walk in. One real meal today. Tag out for an hour while someone else is on. And write the guilt down, then write, I'm doing what love can do today."
+     },
+     {
+      "k": "points",
+      "h": "Faith at the bedside",
+      "items": [
+       [
+        "Offer, then follow their lead",
+        "Would you like a prayer?"
+       ],
+       [
+        "Their own faith comes first",
+        "Or their lack of one"
+       ],
+       [
+        "Ask first after a death",
+        "Traditions differ on the body"
+       ]
+      ],
+      "say": "Faith at the bedside gives a few firm rules. Offer a prayer, and let them choose. From your tradition, or in my own words? Protect the person's own faith, or their lack of one, even when a relative pushes. And ask before touching the body after a death, because traditions differ."
+     },
+     {
+      "k": "card",
+      "title": "Look up a tradition",
+      "body": "For a family with more than one faith, a visitor from another tradition, or just to understand.",
+      "fields": [
+       [
+        "Tradition",
+        "Catholic"
+       ]
+      ],
+      "btns": [],
+      "tap": null,
+      "result": "Words they may use, what may comfort, before and after death",
+      "say": "Look up a tradition opens any of twenty nine tradition cards. Choose one, and the card shows words they may use, what may comfort, what matters before and after death, and often who to call. Each card ends the same way. Families practice their faith in their own ways. Ask."
+     },
+     {
+      "k": "points",
+      "h": "When faith is complicated",
+      "items": [
+       [
+        "When faith has changed",
+        "Hurt, doubt, and struggle"
+       ],
+       [
+        "Old wounds",
+        "Believe them, and protect them"
+       ],
+       [
+        "Mixed-faith families",
+        "Their own wishes come first"
+       ],
+       [
+        "Children and faith",
+        "The truth, in simple words"
+       ]
+      ],
+      "say": "Last, When faith is complicated. Four short sections open with a tap. When faith has changed, for hurt, doubt, and struggle. Old wounds, where the first step is to believe them. Mixed-faith families, where the dying person's own wishes come first. And children and faith, the truth in simple words. The tradition cards are drafts until a reviewer from each tradition reads them. If something is different for your family, trust your family."
+     },
+     {
+      "k": "quiz",
+      "q": "What does Bedside say you have to do?",
+      "opts": [
+       "Say the perfect thing",
+       "Stay",
+       "Know every tradition"
+      ],
+      "right": 1,
+      "why": "You don't have to say the perfect thing. You only have to stay.",
+      "say": "Quick question. What does Bedside say you have to do?"
+     }
+    ]
+   },
+   {
+    "id": "wl-u-changes",
+    "n": 5,
+    "title": "When Life Changes",
+    "mins": 5,
+    "blurb": "Words for the hardest conversations, and how to find the right guide fast.",
+    "sources": [
+     [
+      "VitalTalk: I wish, I worry, I wonder",
+      "https://www.vitaltalk.org"
+     ]
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 5",
+      "h": "When Life Changes",
+      "sub": "Words for the hardest conversations.",
+      "say": "Near the end of life, the hardest moments often arrive as one sentence. We're hoping for a miracle. I'm a burden. Can they hear me? When Life Changes is where Willow keeps words for those moments."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 4,
+      "note": {
+       "h": "How to show up",
+       "p": "What's happening, what to say, what to skip, and what helps."
+      },
+      "say": "Open the When Life Changes tab. Its first words are, how to show up. Each guide covers what's happening, what to say, what to skip, and what helps. It is written for families, and for the chaplains and doulas who sit with them."
+     },
+     {
+      "k": "points",
+      "h": "Twenty-two guides, in two groups",
+      "items": [
+       [
+        "The spirit and the people",
+        "Miracles, forgiveness, fear, family"
+       ],
+       [
+        "The last days and after",
+        "Signs of dying, the rally, the first hour"
+       ],
+       [
+        "Titles in real words",
+        "\"I'm not ready.\" \"Can they hear me?\""
+       ]
+      ],
+      "say": "There are twenty two guides, in two groups. The spirit and the people, for hoping for a miracle, forgiveness, fear, and family conflict. And the last days and after, for what dying looks like, the rally, and the first hour after a death. Many titles are the very words people say, like I'm not ready, or are they starving?"
+     },
+     {
+      "k": "card",
+      "title": "Search the guides",
+      "body": "Type a word, or what is happening.",
+      "fields": [
+       [
+        "Search",
+        "not eating"
+       ]
+      ],
+      "btns": [
+       "Search"
+      ],
+      "tap": 0,
+      "result": "\"Are they starving?\"",
+      "say": "To find one fast, type in the search box. Try a word like not eating, burden, or kids. Willow shows its own guides first, then anything else from Grow With Grounded that fits. You can also tap All, or one of the two groups, to narrow the list."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "\"Can they hear me?\"",
+      "rows": [
+       [
+        "Watch: For You",
+        ""
+       ],
+       [
+        "Watch: For the Helper",
+        ""
+       ],
+       [
+        "What we know",
+        ""
+       ],
+       [
+        "Say",
+        ""
+       ],
+       [
+        "What helps",
+        ""
+       ],
+       [
+        "For the Helper",
+        ""
+       ]
+      ],
+      "tap": 0,
+      "say": "Tap Open the guide, and it opens on one page. Two buttons sit at the top, Watch: For You, and Watch: For the Helper. Below them, the guide itself, in short sections you can read in a minute or two."
+     },
+     {
+      "k": "flow",
+      "h": "Two sides to every guide",
+      "steps": [
+       [
+        "For You",
+        "If this is what you are facing"
+       ],
+       [
+        "For the Helper",
+        "If you are walking beside someone"
+       ]
+      ],
+      "say": "Every guide speaks to two people. For You, if this is what you are facing. And For the Helper, if you are walking beside someone who is. Each side has its own short video, narrated aloud, a few minutes long."
+     },
+     {
+      "k": "points",
+      "h": "More inside every guide",
+      "items": [
+       [
+        "Read this guide aloud",
+        "Willow reads it to the room"
+       ],
+       [
+        "Save or print this guide",
+        "To keep, or hand to family"
+       ],
+       [
+        "For chaplains and doulas",
+        "A short note at the end"
+       ],
+       [
+        "A Grounded story",
+        "On many guides, to read in full"
+       ]
+      ],
+      "say": "There is more inside. Read this guide aloud lets Willow read it to the whole room. Save or print this guide gives you a page to keep, or to hand to family. A short note for chaplains and doulas sits at the end. And many guides link to a Grounded story you can read in full."
+     },
+     {
+      "k": "big",
+      "h": "Name the feeling first, then talk.",
+      "sub": "I wish... I worry... I wonder...",
+      "say": "One tool sits at the top of the tab, and it works almost everywhere. Name the feeling first, then talk. I wish. I worry. I wonder."
+     },
+     {
+      "k": "words",
+      "h": "Try it in your own words",
+      "items": [
+       "I wish...",
+       "I worry...",
+       "I wonder..."
+      ],
+      "beats": [
+       "Try it now, out loud or quietly.",
+       "Think of someone you love who is facing something hard.",
+       {
+        "t": "Finish one of these for them: I wish, I worry, or I wonder.",
+        "w": 10
+       }
+      ],
+      "say": "Try it now, out loud or quietly. Think of someone you love who is facing something hard. Finish one of these for them: I wish, I worry, or I wonder."
+     },
+     {
+      "k": "points",
+      "h": "Willow brings guides to you",
+      "items": [
+       [
+        "After a check-in",
+        "A guide for this, when an answer needs it"
+       ],
+       [
+        "When a tree is remembered",
+        "The first hour after, and what comes next"
+       ],
+       [
+        "After a guide video",
+        "Open the Full Guide"
+       ]
+      ],
+      "say": "Willow also brings guides to you. After a check-in, if an answer touches something hard, a gentle note offers a guide for this. When a tree is marked as remembered, Today offers the first hour after, making it official, and relief. And at the end of each guide video, Open the Full Guide brings you right back here."
+     },
+     {
+      "k": "big",
+      "h": "When you're worried, call your hospice nurse.",
+      "sub": "They're there day and night.",
+      "say": "Every guide ends the same way. When you're worried, call your hospice nurse. They're there day and night. These guides offer spiritual and emotional support, and the hospice team is your first call for anything medical. In danger now, call nine one one. Thinking about ending your life, call or text nine eight eight."
+     },
+     {
+      "k": "quiz",
+      "q": "Every guide has two short videos. Who are they for?",
+      "opts": [
+       "Morning and night",
+       "For You, and For the Helper",
+       "Doctors and nurses"
+      ],
+      "right": 1,
+      "why": "Each guide speaks to the person facing it and to the person walking beside them.",
+      "say": "Quick question. Every guide has two short videos. Who are they for?"
+     }
+    ]
+   },
+   {
+    "id": "wl-u-readings",
+    "n": 6,
+    "title": "Readings",
+    "mins": 4,
+    "blurb": "Psalms, prayers, poems, and blessings to read aloud, and how to find the right one.",
+    "sources": [
+     "blundon"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 6",
+      "h": "Readings",
+      "sub": "Words to read aloud.",
+      "say": "Sometimes the best words at a bedside were written long ago, or written just for this moment. The Readings tab is where Willow keeps them, ready to read aloud."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 5,
+      "note": {
+       "h": "Words to read aloud",
+       "p": "Psalms, prayers, poems, and blessings for all faith traditions and everything in-between."
+      },
+      "say": "Open the Readings tab. Here are psalms, prayers, poems, and blessings, for all faith traditions and everything in-between. You don't need a profile to read them."
+     },
+     {
+      "k": "points",
+      "h": "More than eighty readings",
+      "items": [
+       [
+        "Blessings written for Willow",
+        "For the last days, for after"
+       ],
+       [
+        "Scripture and prayers",
+        "From many faith traditions"
+       ],
+       [
+        "Hymns and poems",
+        "Old words, read slowly"
+       ],
+       [
+        "Nature and humanist words",
+        "For every kind of belief"
+       ]
+      ],
+      "say": "There are more than eighty readings. Blessings written for Willow, like For the last days, and For after. Scripture and prayers from many traditions, Christian, Jewish, Muslim, Hindu, Buddhist, and Sikh. Hymns and poems. And words from nature, and from humanist and philosophical writers, for every kind of belief."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Readings",
+      "rows": [
+       [
+        "For the last days",
+        "Written for Willow"
+       ],
+       [
+        "For the one keeping watch",
+        "Written for Willow"
+       ],
+       [
+        "For when you can't find words",
+        "Written for Willow"
+       ],
+       [
+        "For after",
+        "Written for Willow"
+       ],
+       [
+        "Psalm 23",
+        "Public domain"
+       ]
+      ],
+      "tap": 0,
+      "say": "Each reading shows where it comes from. Written for Willow. Public domain, old words anyone may share. Or In plain English, a gentle rendering of an ancient text. Tap any reading to open it."
+     },
+     {
+      "k": "card",
+      "title": "Find the right words",
+      "body": "Choose a tradition, or search a word.",
+      "fields": [
+       [
+        "Tradition",
+        "For every tradition and in-between"
+       ],
+       [
+        "Search",
+        "peace"
+       ]
+      ],
+      "btns": [
+       "For me"
+      ],
+      "tap": 0,
+      "say": "To narrow the list, choose a tradition, or search a word like shepherd, peace, river, or home. When the person has shared their faith answers, a For me button appears, or For, and their name, with readings that fit their tradition, and readings meant for everyone."
+     },
+     {
+      "k": "points",
+      "h": "Inside a reading",
+      "items": [
+       [
+        "Read this aloud",
+        "Willow reads it in a gentle voice"
+       ],
+       [
+        "Save or Print",
+        "A page to keep, or tuck in a card"
+       ],
+       [
+        "Back to readings",
+        "To find another"
+       ]
+      ],
+      "say": "Inside a reading, Read this aloud lets Willow read it in a gentle voice, for the times your own voice won't come. Save or Print gives you a page to keep, or tuck in a card. And Back to readings takes you to the list again."
+     },
+     {
+      "k": "big",
+      "h": "Read slowly. Read it twice.",
+      "sub": "Hearing may be one of the last senses to go.",
+      "say": "At the top of the tab, Willow gives one piece of advice. Read slowly. Read it twice. Hearing may be one of the last senses to go, so your voice may still reach them."
+     },
+     {
+      "k": "words",
+      "h": "For when you can't find words",
+      "items": [
+       "We're here.",
+       "You are loved.",
+       "You can rest now."
+      ],
+      "beats": [
+       "Let's read one together.",
+       "This blessing was written for Willow, for the moments when nothing else comes.",
+       {
+        "t": "Read it out loud now, slowly, the way you would at the bedside.",
+        "w": 12
+       }
+      ],
+      "say": "Let's read one together. This blessing was written for Willow, for the moments when nothing else comes. Read it out loud now, slowly, the way you would at the bedside."
+     },
+     {
+      "k": "points",
+      "h": "Songs families often ask for",
+      "items": [
+       [
+        "Precious Lord, Take My Hand",
+        "And How Great Thou Art"
+       ],
+       [
+        "I'll Fly Away",
+        "And On Eagle's Wings"
+       ],
+       [
+        "Play it, or sing it",
+        "Off key counts"
+       ]
+      ],
+      "say": "Below the readings are songs families often ask for, like Precious Lord, Take My Hand, How Great Thou Art, and I'll Fly Away. Play a recording the family loves, or sing it. Off key counts."
+     },
+     {
+      "k": "points",
+      "h": "Two more lists to know",
+      "items": [
+       [
+        "Beloved writing to find in print",
+        "Named, so you can find the book"
+       ],
+       [
+        "Words that stay with their people",
+        "Some prayers belong to clergy and elders"
+       ],
+       [
+        "Willow helps you reach them",
+        "The one who carries those words"
+       ]
+      ],
+      "say": "Two short lists end the tab. Beloved writing to find in print names favorite poems and books, so you can find them in the book or online. And words that stay with their people. Some prayers and rites belong to clergy, elders, and a family's own ritual specialists. Willow names them, and helps the family reach the one who carries them."
+     },
+     {
+      "k": "big",
+      "h": "Offer a reading. Let them choose.",
+      "sub": "All faith traditions and everything in-between.",
+      "say": "One gentle way to begin. Offer, and let the person choose. Would you like me to read something? Then read what fits their faith, or what fits a life lived without one. Their words are the right words."
+     },
+     {
+      "k": "quiz",
+      "q": "What does the For me button show?",
+      "opts": [
+       "Every reading in Willow",
+       "Readings that fit the person's tradition, and ones for everyone",
+       "Only the hymns"
+      ],
+      "right": 1,
+      "why": "For me shows readings for the tradition the person shared, plus readings meant for everyone.",
+      "say": "Quick question. What does the For me button show?"
+     }
+    ]
+   },
+   {
+    "id": "wl-u-private",
+    "n": 7,
+    "title": "Private, Saved, and Shared",
+    "mins": 6,
+    "blurb": "Profiles, helpers, who answered, backup, printing, and sharing with the people who visit.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Using Willow, Lesson 7",
+      "h": "Private, Saved, and Shared",
+      "sub": "Your words stay with you.",
+      "say": "Willow holds tender things. Faith, fears, letters, and the last wishes of someone you love. This lesson shows how Willow keeps them private, how to save them, and how to share only what you choose."
+     },
+     {
+      "k": "big",
+      "h": "Everything stays on this device.",
+      "sub": "Locked with a passcode, in each person's own profile.",
+      "say": "Everything saved in Willow stays on this device, locked with a passcode, in each person's own profile. Nothing is sent to Grounded, or anyone else."
+     },
+     {
+      "k": "card",
+      "title": "Who is Willow for today?",
+      "body": "Everything stays on this device, locked with a passcode.",
+      "btns": [
+       "For me",
+       "For someone I love"
+      ],
+      "tap": 0,
+      "say": "When you begin, Willow asks who it is for today. For me, if you are in hospice or facing the end of your life. For someone I love, if you are caring for them. Either way, each person gets their own profile, with a passcode only they know."
+     },
+     {
+      "k": "points",
+      "h": "Keep your passcode close",
+      "items": [
+       [
+        "It stays on this device",
+        "Only you know it"
+       ],
+       [
+        "A backup is your safety net",
+        "More on that in a moment"
+       ],
+       [
+        "Tap Lock when you step away",
+        "At the top of the page"
+       ]
+      ],
+      "say": "Please remember your passcode. It never leaves this device, so only you can open your profile. A backup file is your safety net. And when you step away, tap Lock at the top of the page."
+     },
+     {
+      "k": "flow",
+      "h": "Built for two",
+      "steps": [
+       [
+        "The person",
+        "Their own tree, their own profile"
+       ],
+       [
+        "A helper",
+        "Their own passcode, their own tree"
+       ]
+      ],
+      "say": "Willow is built for two. The person's tree lives in their own profile. A helper makes their own profile on this device, and opens the person's tree with their own passcode. Helpers have a tree of their own here too, because they are carrying this as well."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What helpers see",
+      "rows": [
+       [
+        "How my tree is doing",
+        "On"
+       ],
+       [
+        "What Matters to Me",
+        "On"
+       ],
+       [
+        "Cuttings",
+        "On"
+       ],
+       [
+        "What helped today",
+        "On"
+       ],
+       [
+        "My faith answers",
+        "Off"
+       ],
+       [
+        "Notes from my check-ins",
+        "Off"
+       ]
+      ],
+      "tap": 4,
+      "say": "The person chooses what helpers see. In Willow Settings, under What helpers see, four things start switched on. How my tree is doing, in gentle words, never the answers. What Matters to Me. Cuttings. And What helped today. My faith answers, and Notes from my check-ins, start private. Any of them can change, anytime. The answer about feeling safe at home always stays with the person."
+     },
+     {
+      "k": "flow",
+      "h": "Adding a helper",
+      "steps": [
+       [
+        "Their own profile",
+        "The helper makes one first"
+       ],
+       [
+        "Settings, then Helpers",
+        "Choose them under Add a helper"
+       ],
+       [
+        "They type their passcode",
+        "Then tap Add as a helper"
+       ]
+      ],
+      "say": "To add a helper, the helper first makes their own Grounded profile on this device. Then the person opens Willow Settings, goes to Helpers, and chooses them under Add a helper. The helper types their own passcode, and taps Add as a helper. A helper can be removed, right there, anytime."
+     },
+     {
+      "k": "points",
+      "h": "Every answer says who answered",
+      "items": [
+       [
+        "They answered",
+        "In their own words"
+       ],
+       [
+        "They answered, I tapped",
+        "Their words, a helper's hands"
+       ],
+       [
+        "I'm answering from what I see",
+        "Kept apart, never adds a ring"
+       ]
+      ],
+      "say": "Every check-in keeps track of who answered, so the person's own voice is never mixed up with anyone else's. They answered. They answered, I tapped, when the person speaks and a helper taps. Or, I'm answering from what I see, when the person can no longer say. That last kind is kept apart. It never adds a ring, and never speaks for the person."
+     },
+     {
+      "k": "points",
+      "h": "Save or Print",
+      "items": [
+       [
+        "What Matters",
+        "For new nurses, aides, and visitors"
+       ],
+       [
+        "Any cutting",
+        "A letter to hold in a hand"
+       ],
+       [
+        "Every guide and reading",
+        "To keep, or hand to family"
+       ]
+      ],
+      "say": "Many pages in Willow have a Save or Print button. What Matters, to share with new nurses, aides, and visitors. Any cutting, so a letter can be held in a hand. And every guide and reading. Your device's print window lets you print it, or save it as a file."
+     },
+     {
+      "k": "card",
+      "title": "Your Records",
+      "body": "One file with every profile on this device, each still locked.",
+      "btns": [
+       "Back up everything",
+       "Load a backup"
+      ],
+      "tap": 0,
+      "say": "The safety net. In Willow Settings, find Your Records. Back up everything saves one file with every profile on this device, each one still locked. Keep that file somewhere private. On a new phone, or after a reset, tap Load a backup. Willow shows what is inside, and adds it back, keeping everything already here."
+     },
+     {
+      "k": "points",
+      "h": "Share with my chaplain or doula",
+      "items": [
+       [
+        "You choose what goes",
+        "Check-ins, faith, What Matters, notes"
+       ],
+       [
+        "They scan a code",
+        "You read two words and a number aloud"
+       ],
+       [
+        "It travels in person",
+        "Straight from your device to theirs"
+       ]
+      ],
+      "say": "On Today, Share with my chaplain or doula sends check-ins to the chaplain or doula who visits. You choose what goes. They scan a code on your screen with their Field Guide, and you read them two words and a number, out loud. It travels in person, straight from your device to theirs. After a visit, they can send a card back, opened the same way."
+     },
+     {
+      "k": "big",
+      "h": "Look at what you share.",
+      "sub": "Settings, then What helpers see.",
+      "beats": [
+       "Take a moment now.",
+       "If Willow is open, tap Settings at the top of the page, and look at What helpers see.",
+       {
+        "t": "Or simply name one thing you want kept private, and one thing you want shared.",
+        "w": 10
+       }
+      ],
+      "say": "Take a moment now. If Willow is open, tap Settings at the top of the page, and look at What helpers see. Or simply name one thing you want kept private, and one thing you want shared."
+     },
+     {
+      "k": "quiz",
+      "q": "A helper answers from what they see. What happens to that check-in?",
+      "opts": [
+       "It adds a ring to the tree",
+       "It is kept apart, and never speaks for the person",
+       "It replaces the person's own answers"
+      ],
+      "right": 1,
+      "why": "The person's own voice is never mixed up with anyone else's.",
+      "say": "Quick question. A helper answers from what they see. What happens to that check-in?"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "willow-six",
+  "title": "The Six Parts",
+  "who": "One lesson for each part of the tree at the end of life, with a story and a practice",
+  "certTitle": "Willow: The Six Parts",
+  "certLine": "For finishing every lesson on the six parts of the tree at the end of life.",
+  "lessons": [
+   {
+    "id": "wl-6-roots",
+    "n": 1,
+    "title": "Roots: What Grounds You",
+    "mins": 8,
+    "blurb": "Faith, spirit, or whatever holds you up, and how Willow listens for it.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "The Six Parts, Lesson 1",
+      "h": "Roots",
+      "sub": "What grounds you.",
+      "say": "This lesson is about Roots, the first part of the willow. Roots are what grounds you."
+     },
+     {
+      "k": "big",
+      "h": "Roots matter most when the wind picks up.",
+      "sub": "Faith, spirit, or whatever holds you up.",
+      "say": "Here is how Willow describes them. Faith, spirit, or whatever holds you up. Roots are mostly unseen, and they matter most when the wind picks up. Near the end of life, the wind is real."
+     },
+     {
+      "k": "points",
+      "h": "Roots can look like",
+      "items": [
+       [
+        "Faith and prayer",
+        "In a tradition, or in your own way"
+       ],
+       [
+        "A ritual or a song",
+        "A rosary, a hymn, a blessing, silence"
+       ],
+       [
+        "Love, nature, your values",
+        "What grounds you, in your words"
+       ],
+       [
+        "What comes after",
+        "Peace about it, or worry"
+       ]
+      ],
+      "say": "For many people, roots are faith and prayer, in a tradition or in their own way. For some, roots live in a ritual or a song. A rosary, a hymn, a blessing, or silence. For others, roots are love, nature, or their values. And roots hold the question of what comes after, whether it brings peace or worry. Willow is made for all faith traditions and everything in-between."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Faith, spirit, or something else",
+      "rows": [
+       [
+        "What has mattered to you?",
+        ""
+       ],
+       [
+        "How much does it matter now?",
+        ""
+       ],
+       [
+        "Has it changed?",
+        ""
+       ],
+       [
+        "Someone we should call?",
+        ""
+       ],
+       [
+        "Anything we should never do?",
+        ""
+       ]
+      ],
+      "tap": 0,
+      "say": "Willow asks about faith on its own screen in every check-in, because a chaplain always asks. Faith, spirit, or something else. What has mattered to you? Every answer is welcome here, including none. Then it asks how much it matters now, whether it has changed, who from your faith or community to call, and anything we should never do. After the first time, it shows what you said and asks if that is still true."
+     },
+     {
+      "k": "big",
+      "h": "Willow listens for whether your roots are holding you.",
+      "sub": "Steadying you, or weighing on you.",
+      "say": "Each person answers for themselves, in their own words. And Willow listens for one thing. Is what grounds you steadying you right now, or weighing on you? Both answers are honest. Both can be tended."
+     },
+     {
+      "k": "flow",
+      "h": "The three Roots questions",
+      "steps": [
+       [
+        "Strength and comfort",
+        "From what grounds you"
+       ],
+       [
+        "A practice that matters",
+        "A prayer, ritual, song, or practice"
+       ],
+       [
+        "Far, or afraid",
+        "From the sacred, or of what comes after"
+       ]
+      ],
+      "say": "A full check-in asks three Roots questions. Lately, how often has your faith, your spirit, or what grounds you given you the strength and comfort you need? That one is also the quick check-in question. How often have you found comfort in a prayer, ritual, song, or practice that matters to you? And how often have you felt far from God or what you hold sacred, or afraid of what comes after? When faith does not matter to someone, Willow asks in other words, about love, nature, and values."
+     },
+     {
+      "k": "points",
+      "h": "What each question listens for",
+      "items": [
+       [
+        "Strength and comfort",
+        "Whether the spirit is being fed"
+       ],
+       [
+        "Small practices count",
+        "Practices are how roots drink"
+       ],
+       [
+        "Far or afraid is common",
+        "And it can be eased"
+       ]
+      ],
+      "say": "Here is what each one listens for. The first notices whether the spirit is being fed. The second is about practice, because practices are how roots drink, and small ones count. The third is turned around on purpose. Feeling far, or afraid, is common near the end, and it can be eased."
+     },
+     {
+      "k": "points",
+      "h": "Words, not scores",
+      "items": [
+       [
+        "Strong",
+        "Feels well tended right now",
+        "#5F7D48"
+       ],
+       [
+        "Steady",
+        "Holding. A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others near",
+        "#B8612F"
+       ]
+      ],
+      "say": "After a check-in, the person sees gentle words, never a score. Strong roots feel well tended right now. Maybe what grounds you feels close. Steady roots are holding, and a little tending could help. Maybe prayer has gone quiet lately. And a growing edge is where new growth begins, tended with others beside you. Maybe God feels far, or what comes after feels frightening."
+     },
+     {
+      "k": "story",
+      "title": "He Deserves That",
+      "lines": [
+       "Judy cut me off on the phone. Bill is transitioning, she said. You need to go see him right away.",
+       "We grew up Catholic, she said, but Bill never really followed along with it. I know he still believes. He deserves that.",
+       "I read the Twenty-third Psalm and prayed. It was peaceful, I told her. I don't think he was alone for a second of it."
+      ],
+      "lesson": "Roots can run deep, even after years of quiet.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/he-deserves-that",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Bill. At the end of my day, I called his sister Judy to introduce myself. She cut me off. Bill is transitioning, she said, and you need to go see him right away. I asked about his faith. We grew up Catholic, she said, but Bill never really followed along with it. I know he still believes. He was not much for priests or church. If you could do it, she said, that would be better. He is a good man. He deserves that. I sat beside Bill, read the Twenty-third Psalm, and prayed. His breathing had been sporadic, and it settled into a rhythm. When he died, I called Judy. It was peaceful, I told her. I don't think he was alone for a second of it."
+     },
+     {
+      "k": "big",
+      "h": "Someone remembered what would hold him.",
+      "sub": "Willow keeps what grounds a person, in their own words.",
+      "say": "Bill's faith had been quiet for years, and his sister still knew what would hold him. Willow keeps what grounds a person in their own words. When they choose to share it, the people beside them can bring it to the bedside."
+     },
+     {
+      "k": "points",
+      "h": "Practice: Breath Prayer",
+      "items": [
+       [
+        "Choose two short phrases",
+        "One for in, one for out"
+       ],
+       [
+        "Breathe in on the first",
+        "Be still. I am held."
+       ],
+       [
+        "Breathe out on the second",
+        "And know. I am loved."
+       ],
+       [
+        "Stay a few breaths",
+        "Lying down is fine"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "5": 8,
+        "8": 25
+       },
+       "at": [
+        2,
+        6,
+        7,
+        8
+       ]
+      },
+      "say": "Let us try one of Willow's practices together. It is called Breath Prayer. Choose two short phrases, one for breathing in, and one for breathing out. Some people use, be still, and know. Some use, I am held, I am loved. Any words that are true for you will do. Breathe in gently on the first phrase. Breathe out on the second, slowly. Stay with it for a few breaths, lying down if you like. Never force the breath, and stop if breathing feels hard."
+     },
+     {
+      "k": "big",
+      "h": "Feeling far from the sacred? You can have company.",
+      "sub": "A chaplain can sit with this. Ask your hospice team.",
+      "say": "Breath Prayer is one of the practices Willow offers in Today, one gentle thing at a time, leaning toward the part that needs it most. And if you have felt far from what you hold sacred, you can sort it out with company. A chaplain can sit with this. Ask your hospice team."
+     },
+     {
+      "k": "quiz",
+      "q": "What does Willow listen for in Roots?",
+      "opts": [
+       "Which religion you belong to",
+       "Whether what grounds you steadies you or weighs on you",
+       "How often you go to services"
+      ],
+      "right": 1,
+      "why": "Roots are about what holds you up, in your own words.",
+      "say": "Quick question. What does Willow listen for in Roots?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-trunk",
+    "n": 2,
+    "title": "Trunk: A Life That Mattered",
+    "mins": 7,
+    "blurb": "Your story, knowing your life mattered, and passing on what you know.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "The Six Parts, Lesson 2",
+      "h": "Trunk",
+      "sub": "A life that mattered.",
+      "say": "This lesson is about the Trunk, the second part of the willow. In Willow, the trunk is a life that mattered."
+     },
+     {
+      "k": "big",
+      "h": "A trunk carries the story of the whole tree.",
+      "sub": "Your story, and what you pass on.",
+      "say": "Cut a trunk open, and you can count its years in the rings. Willow describes the trunk this way. Your story. Knowing your life mattered, and passing on what you know."
+     },
+     {
+      "k": "points",
+      "h": "Trunk can look like",
+      "items": [
+       [
+        "Looking back",
+        "What you are proudest of"
+       ],
+       [
+        "Telling your stories",
+        "The ones you want remembered"
+       ],
+       [
+        "Passing it on",
+        "A lesson, a blessing, a recipe"
+       ],
+       [
+        "Setting things down",
+        "Repairing what can still be repaired"
+       ]
+      ],
+      "say": "The trunk can look like looking back, and naming what you are proudest of. Telling the stories you want remembered. Passing on what you know, a lesson, a blessing, even a recipe. And setting things down, repairing what can still be repaired, and grieving what cannot."
+     },
+     {
+      "k": "flow",
+      "h": "The three Trunk questions",
+      "steps": [
+       [
+        "A life that mattered",
+        "Has your life mattered?"
+       ],
+       [
+        "Stories passed on",
+        "A chance to tell them"
+       ],
+       [
+        "Regrets",
+        "And things left undone"
+       ]
+      ],
+      "say": "A full check-in asks three Trunk questions. Lately, how often have you felt that your life has mattered? That one is also the quick check-in question. How often have you had the chance to tell your stories, or pass on what you know? And how often have you felt weighed down by regrets, or things left undone?"
+     },
+     {
+      "k": "points",
+      "h": "What each question listens for",
+      "items": [
+       [
+        "A life that mattered",
+        "A steadying thing near the end"
+       ],
+       [
+        "Something left behind",
+        "For the one leaving, and the ones staying"
+       ],
+       [
+        "Regret is human",
+        "Some can be repaired, some set down"
+       ]
+      ],
+      "say": "Here is what each one listens for. Knowing your life mattered can steady a person against despair near the end. Leaving something behind helps the one leaving, and the ones staying. And the third is turned around on purpose. Regret is human. Some of it can still be repaired, and some can be set down."
+     },
+     {
+      "k": "big",
+      "h": "Meaning hides in specifics.",
+      "sub": "Ask for one story.",
+      "say": "If you are helping someone answer, here is a tip from Willow. Ask for one story. Tell me about the work you loved. Tell me about the day your first child was born. Meaning hides in specifics."
+     },
+     {
+      "k": "points",
+      "h": "Words, not scores",
+      "items": [
+       [
+        "Strong",
+        "Feels well tended right now",
+        "#5F7D48"
+       ],
+       [
+        "Steady",
+        "Holding. A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others near",
+        "#B8612F"
+       ]
+      ],
+      "say": "After a check-in, the person sees gentle words, never a score. A well tended trunk might mean you can look back and see that your life counted. A steady trunk is holding, though some days the meaning feels far away. And a growing edge might mean regret is heavy, or one question keeps coming back. Why am I still here?"
+     },
+     {
+      "k": "story",
+      "title": "Birth Plan",
+      "lines": [
+       "Why am I still here? Jan cried out from her wheelchair. Why am I still alive?",
+       "She spent thirty years walking babies into the world. What did you used to ask them, I said. Before it started.",
+       "Who they wanted with them. Quiet, or music on. Then something clicked. Like a birth plan, she said."
+      ],
+      "lesson": "You get a say in how it goes.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/birth-plan",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Jan. She spent thirty years walking babies into the world. One day in the dining room, she cried out, why am I still here? Why am I still alive? Later, in her room, she told me she had said her goodbyes. I'm ready to go, she said. We're just waiting on the Lord. But what am I supposed to do, she asked. Just sit here and wait? So I asked what she used to ask the mothers, before it started. I'd ask what they wanted the room to feel like, she said. Who they wanted with them. Quiet, or music on. So ask yourself the same thing, I said. You get a say in how it goes. Something clicked behind her eyes. Like a birth plan, she said. Yes. Like a birth plan."
+     },
+     {
+      "k": "big",
+      "h": "Her answer was waiting in her own life.",
+      "sub": "A life that mattered can keep mattering.",
+      "say": "Jan's question sounded like the end of meaning. The answer was waiting in her own life. Thirty years of helping people through the one moment nobody gets to control had taught her exactly what to ask. A life that mattered can keep mattering, right to the end."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What Matters: When the time comes",
+      "rows": [
+       [
+        "The room",
+        "See, hear, smell"
+       ],
+       [
+        "The people",
+        "Who should be there"
+       ],
+       [
+        "The words",
+        "Said, read, prayed, sung"
+       ],
+       [
+        "Touch",
+        "A hand held, or space"
+       ],
+       [
+        "After",
+        "The first hour"
+       ]
+      ],
+      "tap": 0,
+      "say": "Willow has a place for that kind of plan. Open What Matters, and look for When the time comes. The room. What do you want to see, hear, and smell? The people. Who should be there? The words. What do you want said, read, prayed, or sung? Touch. A hand held, or space? And after. Skip anything that does not fit."
+     },
+     {
+      "k": "points",
+      "h": "Practice: Three Things I Learned",
+      "items": [
+       [
+        "Settle in",
+        "Sitting up or lying down"
+       ],
+       [
+        "Name one thing life taught you",
+        "Say it out loud"
+       ],
+       [
+        "Then a second, and a third",
+        "For the people you love"
+       ],
+       [
+        "Keep them in Cuttings",
+        "A helper can type while you talk"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "4": 15,
+        "5": 20
+       },
+       "at": [
+        2,
+        3,
+        5,
+        6
+       ]
+      },
+      "say": "Let us try one of Willow's practices. It is called Three Things I Learned. Settle in, sitting up or lying down. Now name one thing life taught you, and say it out loud. Take your time. Then a second, and a third, for the people you love. When you are ready, keep them in Cuttings, under Things I learned. A helper can type while you talk."
+     },
+     {
+      "k": "big",
+      "h": "Some regrets can be repaired. Some can be set down.",
+      "sub": "When Life Changes has a guide for forgiveness.",
+      "say": "Three Things I Learned is one of the practices Willow offers in Today. And if regrets weigh heavy, Willow says so gently after the check-in. Some regrets can still be repaired, and some can be set down. Both are possible here. When Life Changes has a guide for forgiveness, and your hospice chaplain or social worker can help."
+     },
+     {
+      "k": "quiz",
+      "q": "In Willow, what is the Trunk about?",
+      "opts": [
+       "Your medical history",
+       "Your story, and knowing your life mattered",
+       "How busy you are"
+      ],
+      "right": 1,
+      "why": "The trunk holds your story, and what you pass on.",
+      "say": "Quick question. In Willow, what is the Trunk about?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-bark",
+    "n": 3,
+    "title": "Bark: Peace Inside",
+    "mins": 6,
+    "blurb": "Fear and worry, and the moments of calm between.",
+    "sources": [
+     "singh"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "The Six Parts, Lesson 3",
+      "h": "Bark",
+      "sub": "Peace inside.",
+      "say": "This lesson is about Bark, the third part of the willow. In Willow, bark is peace inside."
+     },
+     {
+      "k": "big",
+      "h": "Bark is where the tree meets the weather.",
+      "sub": "Fear and worry, and the calm between.",
+      "say": "Bark is where a tree meets the weather. Willow describes it this way. Peace inside. Fear and worry, and the moments of calm between."
+     },
+     {
+      "k": "points",
+      "h": "Bark can look like",
+      "items": [
+       [
+        "Moments of peace",
+        "Even brief ones count"
+       ],
+       [
+        "Feeling like yourself",
+        "More than your illness"
+       ],
+       [
+        "Naming a fear",
+        "Out loud, to someone"
+       ],
+       [
+        "Calm between the waves",
+        "Worry comes, and it also goes"
+       ]
+      ],
+      "say": "Bark can look like moments of peace, and even brief ones count. Feeling like yourself, more than your illness. Naming a fear out loud, to someone who will listen. And calm between the waves, where worry comes, and it also goes."
+     },
+     {
+      "k": "flow",
+      "h": "The three Bark questions",
+      "steps": [
+       [
+        "At peace",
+        "Even for a moment"
+       ],
+       [
+        "Like yourself",
+        "More than your illness"
+       ],
+       [
+        "Afraid or restless",
+        "Worried inside"
+       ]
+      ],
+      "say": "A full check-in asks three Bark questions. Lately, how often have you felt at peace, even for a moment? That one is also the quick check-in question. How often have you felt like yourself, more than your illness? And how often have you felt afraid, worried, or restless inside?"
+     },
+     {
+      "k": "points",
+      "h": "What each question listens for",
+      "items": [
+       [
+        "At peace, even briefly",
+        "How the spirit is doing"
+       ],
+       [
+        "Still you",
+        "Dignity starts there"
+       ],
+       [
+        "Fear is normal",
+        "So is getting help with it"
+       ]
+      ],
+      "say": "Here is what each one listens for. Feeling at peace, even for a moment, says a lot about how the spirit is doing. The second says, you are still you, and dignity starts there. The third is turned around on purpose. Fear is normal, and so is getting help with it."
+     },
+     {
+      "k": "points",
+      "h": "Each kind of fear has its own help",
+      "items": [
+       [
+        "Pain or restlessness",
+        "Tell the hospice nurse"
+       ],
+       [
+        "What dying is like",
+        "A guide in When Life Changes"
+       ],
+       [
+        "What comes after",
+        "A chaplain, or your own clergy"
+       ],
+       [
+        "Leaving people",
+        "Words to say, and Cuttings to keep"
+       ]
+      ],
+      "say": "If you are helping, ask gently what the fear is about. Pain. The process of dying. What comes after. Or leaving people. Each has its own help. For pain or restlessness, tell the hospice nurse. When Life Changes has a guide called What Dying Looks Like. A chaplain, or the person's own clergy, can sit with fears about what comes after. And for leaving people, there are words to say, and Cuttings to keep."
+     },
+     {
+      "k": "points",
+      "h": "Words, not scores",
+      "items": [
+       [
+        "Strong",
+        "Feels well tended right now",
+        "#5F7D48"
+       ],
+       [
+        "Steady",
+        "Holding. A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others near",
+        "#B8612F"
+       ]
+      ],
+      "say": "After a check-in, the person sees gentle words, never a score. Well tended bark might mean peace comes often, even on hard days. Steady bark is holding, with some restless stretches. And a growing edge might mean fear or worry is close most of the time. That is where new growth begins, and it is tended with others beside you."
+     },
+     {
+      "k": "story",
+      "title": "Enlightenment",
+      "lines": [
+       "Matthew is a monk in his eighties. Sixty years of prayer, and now he wanted company for the rest of the walk.",
+       "Picture standing on a dock your whole life, I said, gripping the post while the tide pulls at your ankles.",
+       "I have spent my whole life learning how to hold on well, he said. Perhaps I only have one more thing left to learn."
+      ],
+      "lesson": "Peace can come with open hands.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/enlightenment",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Matthew. He is a Catholic monk in his eighties. He has spent sixty years in prayer and silence, and he wanted to experience enlightenment when he died. He asked me to walk with him through a book about dying. One day I offered him a picture. Picture standing on a dock your whole life, gripping the post while the tide pulls at your ankles. We spend a lifetime believing holiness means holding on tighter. But maybe the ones who arrive fully present are the ones who finally let their hands open. Matthew went quiet. Then he looked down at his hands, folded loose in his lap. I have spent my whole life learning how to hold on well, he said. Perhaps I only have one more thing left to learn."
+     },
+     {
+      "k": "big",
+      "h": "Peace inside can be something you let in.",
+      "sub": "A moment at a time.",
+      "say": "Matthew had spent his life learning to hold on well. Near the end, peace looked like opening his hands. Peace inside often comes that way, as something you let in, a moment at a time."
+     },
+     {
+      "k": "points",
+      "h": "Practice: Long Out-Breath",
+      "items": [
+       [
+        "Let your hands rest open",
+        "In your lap, or on the blanket"
+       ],
+       [
+        "Breathe in gently",
+        "No need to fill up"
+       ],
+       [
+        "Let the breath out slower",
+        "Longer than the breath in"
+       ],
+       [
+        "A few more breaths",
+        "Never force it"
+       ]
+      ],
+      "cue": {
+       "p": {
+        "2": 3
+       },
+       "w": {
+        "7": 25
+       },
+       "at": [
+        2,
+        3,
+        4,
+        7
+       ]
+      },
+      "say": "Let us try one of Willow's practices together. It is called Long Out-Breath. Let your hands rest open, in your lap or on the blanket. Breathe in gently. Now let the breath out slower, and longer. Again. In gently, and out slow. Stay with it for a few more breaths. Never force it, and stop if breathing feels hard."
+     },
+     {
+      "k": "big",
+      "h": "Fear or restlessness that stays? Call your hospice.",
+      "sub": "Their 24/7 line first, day or night. In danger now? Call 911.",
+      "say": "Long Out-Breath is one of the practices Willow offers in Today, one gentle thing at a time. If fear or restlessness stays, call your hospice's 24/7 line, day or night. That is what it is there for. And if anyone is in danger right now, call nine one one."
+     },
+     {
+      "k": "quiz",
+      "q": "Someone you love is afraid. What helps first?",
+      "opts": [
+       "Telling them not to worry",
+       "Asking gently what the fear is about",
+       "Changing the subject"
+      ],
+      "right": 1,
+      "why": "Each kind of fear has its own help, so ask which one it is.",
+      "say": "Quick question. Someone you love is afraid. What helps first?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-branches",
+    "n": 4,
+    "title": "Branches: The People You Love",
+    "mins": 7,
+    "blurb": "Feeling loved, and saying what matters to the people who matter.",
+    "sources": [
+     "byock4"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "The Six Parts, Lesson 4",
+      "h": "Branches",
+      "sub": "The people you love.",
+      "say": "This lesson is about Branches, the people you love. In Willow, Branches has another name. Love said out loud."
+     },
+     {
+      "k": "big",
+      "h": "Love is the main thing, at the end more than ever.",
+      "sub": "Branches reach toward the people we love.",
+      "say": "A tree's branches reach out toward the light. Near the end of life, we reach toward the people we love. Willow puts it simply. Love is the main thing, at the end more than ever."
+     },
+     {
+      "k": "points",
+      "h": "Three questions for Branches",
+      "items": [
+       [
+        "Felt loved and cared for?",
+        "The quick check-in question"
+       ],
+       [
+        "Said what you want to say?",
+        "To the people who matter"
+       ],
+       [
+        "Felt like a burden?",
+        "Turned around, and asked gently"
+       ]
+      ],
+      "cue": {
+       "at": [
+        2,
+        3,
+        5
+       ]
+      },
+      "say": "Willow asks three questions for Branches, and each one starts with, lately, how often have you. The first is the quick check-in question. Felt loved and cared for? The second asks whether you have said what you want to say to the people who matter. The third is turned around on purpose. Felt like a burden to the people caring for you? Any answer is welcome, and Not sure is always an honest one."
+     },
+     {
+      "k": "words",
+      "h": "Words that are never too late",
+      "items": [
+       "Please forgive me.",
+       "I forgive you.",
+       "Thank you.",
+       "I love you.",
+       "Goodbye."
+      ],
+      "say": "The second question names the words that matter most near the end. Please forgive me. I forgive you. Thank you. I love you. And goodbye. These words are never too late. They can be said out loud, written down, or kept as a letter. Forgiveness is always a choice, and it is never owed to someone unsafe."
+     },
+     {
+      "k": "big",
+      "h": "Receiving care is part of love too.",
+      "sub": "Feeling like a burden is common near the end.",
+      "say": "The third question asks about feeling like a burden. Many people near the end feel this sometimes, and the people caring for them usually see it differently. If it comes up, you can let it be said. Ask what being cared for is like. Receiving care is part of love too."
+     },
+     {
+      "k": "points",
+      "h": "How Branches can look",
+      "items": [
+       [
+        "Feels well tended",
+        "Loved, with the words said or on their way",
+        "#5F7D48"
+       ],
+       [
+        "Holding",
+        "A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others beside you",
+        "#B8612F"
+       ]
+      ],
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      },
+      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Branches feels well tended, you may feel loved, with the important words said or on their way. When it is holding, the love is there, and a little tending could help, like a call, a visit, or a thank you. When Branches is a growing edge, someone may feel far away, words may be waiting, or being cared for may feel heavy. That is where new growth begins, and you can tend it with others beside you."
+     },
+     {
+      "k": "story",
+      "title": "Love.",
+      "lines": [
+       "Kathy's dementia has taken most of her words. I've been visiting her for over a year, long enough to learn how to hear her anyway.",
+       "I read her a chapter from my small Bible. She closed her eyes and took the words in slowly, like water.",
+       "She tapped the page. This is true. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
+      ],
+      "lesson": "Love reaches past words.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/love",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Kathy. Her dementia has taken most of her words. I have been visiting her for over a year, long enough to learn how to hear her anyway. One day she was glowing, more animated than I had seen her in months. I asked if I could read a chapter from the Bible, and she said, yes, that would be nice. If I speak in the tongues of men or of angels, but do not have love, I am only a resounding gong or a clanging cymbal. She closed her eyes and took the words in slowly, like water. When I told her it all comes down to love, she tapped the page. This is true, she said. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
+     },
+     {
+      "k": "big",
+      "h": "Love reaches past words.",
+      "sub": "A hand held. A face close. Time together.",
+      "say": "Kathy's words came out scrambled, and her meaning came through whole. Love reaches past words. When words run short, love can still be said with a hand held, a face close, and time together."
+     },
+     {
+      "k": "points",
+      "h": "Practice: One of the Four Things",
+      "items": [
+       [
+        "Settle",
+        "One easy breath"
+       ],
+       [
+        "Picture one person",
+        "Whoever comes to mind first"
+       ],
+       [
+        "Choose one of the words",
+        "Forgive me, I forgive you, thank you, I love you"
+       ],
+       [
+        "Say it",
+        "Out loud, in your heart, or to them"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "2": 5,
+        "3": 10,
+        "8": 8,
+        "9": 12
+       },
+       "at": [
+        2,
+        3,
+        4,
+        9
+       ]
+      },
+      "say": "Let us practice. This one is called One of the Four Things. Settle in, and take one easy breath. Now picture one person, whoever comes to mind first. Choose one of the words for them. Please forgive me. I forgive you. Thank you. Or, I love you. Now say it, out loud, or quietly in your heart, or to them if they are near."
+     },
+     {
+      "k": "card",
+      "title": "One of the Four Things",
+      "body": "Please forgive me. I forgive you. Thank you. I love you.",
+      "fields": [
+       [
+        "A title",
+        "Thank you"
+       ],
+       [
+        "For (optional)",
+        "For my son"
+       ]
+      ],
+      "btns": [
+       "Save this cutting",
+       "Cancel"
+      ],
+      "tap": 0,
+      "say": "When you are ready, Willow can keep the words. In Cuttings, choose One of the Four Things, or A letter to keep, for now or for later. Type it, or have a helper type while you talk. And on Today, the one gentle practice for the day is sometimes a Branches practice, like a thank-you list, or the call or visit you want."
+     },
+     {
+      "k": "big",
+      "h": "Helping someone say it",
+      "sub": "Ask who they feel loved by. Offer to write while they talk.",
+      "say": "If you are helping someone you love, ask who they feel loved by, and help them say thank you. Offer to write the words down while they talk. Your own Branches matter too. In your own check-in, Willow asks whether you have someone to lean on."
+     },
+     {
+      "k": "quiz",
+      "q": "In Willow, what does Branches listen for?",
+      "opts": [
+       "How many visitors come by",
+       "Feeling loved, and the words you want to say",
+       "Who is to blame for old hurts"
+      ],
+      "right": 1,
+      "why": "Branches is love said out loud: feeling loved, and saying what matters.",
+      "say": "Quick question. In Willow, what does Branches listen for?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-leaves",
+    "n": 5,
+    "title": "Leaves: Comfort, Rest, and the Senses",
+    "mins": 8,
+    "blurb": "Comfort in the body, rest without guilt, and small joys for the senses.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "The Six Parts, Lesson 5",
+      "h": "Leaves",
+      "sub": "Comfort, rest, and the senses.",
+      "say": "This lesson is about Leaves, the body. In Willow, Leaves is about comfort, rest, and small joys for the senses."
+     },
+     {
+      "k": "big",
+      "h": "Leaves are where the tree meets the light.",
+      "sub": "Near the end, the body asks for comfort.",
+      "say": "Leaves are where a tree meets the light and the air. Near the end of life, growth looks different. It is about peace, and comfort, and being yourself to the last. So Leaves is a gentle part. It asks how the body is resting, and what small joys still reach you."
+     },
+     {
+      "k": "flow",
+      "h": "Three strands of Leaves",
+      "steps": [
+       [
+        "Comfort",
+        "Comfortable enough to rest"
+       ],
+       [
+        "Rest",
+        "Sleep that truly helps"
+       ],
+       [
+        "The senses",
+        "A taste, a sound, a touch, the light"
+       ]
+      ],
+      "say": "Willow asks three questions for Leaves, one for each strand. Comfort. Have you felt comfortable enough in your body to rest? Rest. Have you rested or slept in a way that helped? And the senses. Have you enjoyed something small, like a taste, a sound, a touch, or the light?"
+     },
+     {
+      "k": "big",
+      "h": "Comfort matters, and your hospice team can do a lot.",
+      "sub": "Pain or hard breathing? Tell the hospice nurse today.",
+      "say": "The first question is about comfort, and comfort matters. Your hospice team can do a lot. If pain or breathing is hard, tell the hospice nurse today. And for anything urgent at home, call your hospice's twenty four hour line first, day or night. It sits at the top of Today."
+     },
+     {
+      "k": "big",
+      "h": "Rest is part of comfort.",
+      "sub": "Sleep is allowed. Rest is part of comfort.",
+      "say": "The second question is about rest. Many people near the end sleep more, and some feel guilty about it. Sleep is allowed. Rest is part of comfort. A helper can ask what helps you settle. A voice, a light, a song."
+     },
+     {
+      "k": "points",
+      "h": "Small joys are still joys",
+      "items": [
+       [
+        "Music I love",
+        "Favorite songs or hymns"
+       ],
+       [
+        "Gentle touch",
+        "Lotion on the hands, hair brushed"
+       ],
+       [
+        "One small taste",
+        "A spoon of ice cream, the smell of coffee"
+       ],
+       [
+        "Air and light",
+        "Window open, sun on your hands"
+       ]
+      ],
+      "cue": {
+       "at": [
+        3,
+        4,
+        5,
+        6
+       ]
+      },
+      "say": "The third question is about the senses. Small joys are still joys. Here are a few from Willow's practices. Music you love, favorite songs or hymns. Gentle touch, like lotion on the hands, or hair brushed, if touch is welcome. One small taste, like a spoon of ice cream, or the smell of coffee. And air and light. A window open, and sun on your hands."
+     },
+     {
+      "k": "points",
+      "h": "How Leaves can look",
+      "items": [
+       [
+        "Feels well tended",
+        "Comfortable, rested, a small joy or two",
+        "#5F7D48"
+       ],
+       [
+        "Holding",
+        "A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others beside you",
+        "#B8612F"
+       ]
+      ],
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      },
+      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Leaves feels well tended, you may feel comfortable, rested, and able to enjoy a small thing or two. When it is holding, comfort is mostly there, and a little tending could help, like a better place to rest, or one small joy planned for today. When Leaves is a growing edge, comfort or sleep may be hard to find. That is where new growth begins, and the hospice team and the people who love you can tend it with you."
+     },
+     {
+      "k": "story",
+      "title": "Prayer",
+      "lines": [
+       "Dee sat alone in her wheelchair, folding a napkin back and forth in her lap.",
+       "I reached for the worn Bible on her shelf. The moment I opened it, her hands went still.",
+       "Then she prayed for me, her voice steady and her sentences whole."
+      ],
+      "lesson": "What is familiar can still reach us.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/thank-god-for-sending-you",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Dee. I found her alone in a small activity room, folding a napkin back and forth in her lap. Dementia had taken her sense of time, and her sense of names. In her room, I held her hand, and we went through her photographs one by one. Then I reached for the worn Bible on her shelf. I don't read it as well as I used to, she said. The moment I opened it, her hands, which had been moving the whole visit, went still. She closed her eyes, and her breathing slowed. When I prayed, her hand tightened around mine. Then she said, I want to pray for you. Her voice steadied, and the sentences that had been scattering all visit came out whole."
+     },
+     {
+      "k": "big",
+      "h": "What is familiar can still reach us.",
+      "sub": "A song, a voice, a touch, words known by heart.",
+      "say": "Dee's hands went still, and her breathing slowed. What is familiar can still reach us, even when so much else has slipped. For Dee it was prayer. For someone else, it may be a song, a voice they love, a hand on theirs, or words they have known by heart for years."
+     },
+     {
+      "k": "points",
+      "h": "Practice: One Small Joy",
+      "items": [
+       [
+        "Settle",
+        "Let your body rest right where it is"
+       ],
+       [
+        "Listen",
+        "One sound, near or far"
+       ],
+       [
+        "Feel",
+        "One touch: a hand, a blanket, the air"
+       ],
+       [
+        "Choose one small joy",
+        "A taste, a song, the light"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "3": 5,
+        "5": 8,
+        "7": 8,
+        "9": 10
+       },
+       "at": [
+        3,
+        4,
+        6,
+        8
+       ]
+      },
+      "say": "Let us practice. This one is called One Small Joy. You can do it lying down, or with a helper. Let your body rest right where it is. Now listen. Notice one sound, near or far. Now feel. Notice one touch, a hand, a blanket, or the air on your skin. Last, choose one small joy for today. A taste, a song, or the light."
+     },
+     {
+      "k": "card",
+      "title": "One small taste",
+      "body": "A favorite flavor: a spoon of ice cream, the smell of coffee.",
+      "fields": [
+       [
+        "Leaves",
+        "2 min"
+       ]
+      ],
+      "btns": [
+       "Did it today",
+       "Something else"
+      ],
+      "tap": 0,
+      "say": "On Today, Willow offers one gentle thing a day, and some days it comes from Leaves. Every practice works lying down, and every one can be done with a helper. Tap Did it today when it is done, or Something else for a different one. One a day is plenty, and none is okay."
+     },
+     {
+      "k": "big",
+      "h": "Write down what helped.",
+      "sub": "One line is enough for the next helper.",
+      "say": "If you are helping someone you love, plan one small joy a day with the family. When something brings comfort, add a line to What Helped Today. She settled when we played Amazing Grace. The next person on shift will know. And your own leaves matter too. Food, sleep, and breaks. Your body is carrying this too."
+     },
+     {
+      "k": "quiz",
+      "q": "What are the three strands of Leaves in Willow?",
+      "opts": [
+       "Comfort, rest, and the senses",
+       "Exercise, diet, and sleep",
+       "Medicine, meals, and visits"
+      ],
+      "right": 0,
+      "why": "Leaves holds comfort, rest, and small joys for the senses.",
+      "say": "Quick question. What are the three strands of Leaves in Willow?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-fruit",
+    "n": 6,
+    "title": "Fruit: Hope and Readiness",
+    "mins": 8,
+    "blurb": "Hope that changes shape, and getting ready for what is ahead.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "The Six Parts, Lesson 6",
+      "h": "Fruit",
+      "sub": "Hope and readiness.",
+      "say": "This last lesson of the six is about Fruit. Hope that changes shape, and getting ready for what is ahead."
+     },
+     {
+      "k": "big",
+      "h": "Hope changes shape near the end.",
+      "sub": "It can stay, in a new shape.",
+      "say": "Near the end of life, hope changes shape, and it can stay. A person may stop hoping for a cure, and start hoping for a good day, a visit, or peace. That is still hope."
+     },
+     {
+      "k": "points",
+      "h": "Three questions for Fruit",
+      "items": [
+       [
+        "Hopeful about something small?",
+        "The quick check-in question"
+       ],
+       [
+        "Ready, or getting ready?",
+        "Readiness grows a little at a time"
+       ],
+       [
+        "Hopeless, or wishing it would end?",
+        "Turned around, and asked with care"
+       ]
+      ],
+      "cue": {
+       "at": [
+        2,
+        3,
+        6
+       ]
+      },
+      "say": "Willow asks three questions for Fruit. The first is the quick check-in question. Have you felt hopeful about something, even something small? The second asks whether you have felt ready, or getting ready, for what is ahead. Readiness grows a little at a time. The third is turned around on purpose. Have you felt hopeless, or wished it would all end soon?"
+     },
+     {
+      "k": "points",
+      "h": "What hope can look like now",
+      "items": [
+       [
+        "Peace",
+        "Inside, and in the room"
+       ],
+       [
+        "A visit",
+        "Someone you want to see"
+       ],
+       [
+        "A good day",
+        "Today, or tomorrow"
+       ],
+       [
+        "What comes after",
+        "In your own faith, or your own way"
+       ]
+      ],
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      "say": "Ask what someone is hoping for now, and listen. It may be peace. A visit from someone they love. A good day. Or what comes after, in their own faith, or in their own way."
+     },
+     {
+      "k": "flow",
+      "h": "Readiness, one piece at a time",
+      "steps": [
+       [
+        "Affairs",
+        "Papers, plans, and wishes"
+       ],
+       [
+        "People",
+        "Words said, and goodbyes"
+       ],
+       [
+        "Spirit",
+        "Peace with what is ahead"
+       ]
+      ],
+      "say": "Readiness has a few pieces. When something feels unready, it helps to ask which piece. Affairs, like papers, plans, and wishes. The What Matters tab can hold those. People, like words said, and goodbyes. Or spirit, and peace with what is ahead. One piece at a time is plenty."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "One More Gentle Question",
+      "rows": [
+       [
+        "Which is closest for you right now?",
+        ""
+       ],
+       [
+        "I'm not ready yet.",
+        ""
+       ],
+       [
+        "I'm ready when it comes.",
+        ""
+       ],
+       [
+        "I wish it would come sooner.",
+        ""
+       ],
+       [
+        "I've thought about ending my life myself.",
+        ""
+       ],
+       [
+        "I'd rather not say.",
+        ""
+       ]
+      ],
+      "tap": 2,
+      "say": "The third question names something many people near the end feel. You can say it out loud here. When the answer is sometimes or more, Willow asks one more gentle question. When you think about dying, which is closest for you right now? Being ready for death is different from wanting to end your life, and this question helps tell them apart. Every answer is met with kindness, and I'd rather not say is always there."
+     },
+     {
+      "k": "big",
+      "h": "Help is always right there.",
+      "sub": "Hospice 24/7 line first. 988, call or text. 911 in danger.",
+      "say": "If someone wishes it would come sooner, their hospice team should know, so they can help with whatever is making it hard. If someone has thought about ending their own life, tell someone right now. Call your hospice's twenty four hour line, or call or text nine eight eight. If anyone is in danger now, call nine one one."
+     },
+     {
+      "k": "points",
+      "h": "How Fruit can look",
+      "items": [
+       [
+        "Feels well tended",
+        "Some hope, and some peace with what is ahead",
+        "#5F7D48"
+       ],
+       [
+        "Holding",
+        "A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others beside you",
+        "#B8612F"
+       ]
+      ],
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      },
+      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Fruit feels well tended, there may be something to hope for, and some peace with what is ahead. When it is holding, hope is there, and a little tending could help, like one good thing planned for tomorrow. When Fruit is a growing edge, hope may feel far away right now. That is where new growth begins, and you can tend it with others beside you."
+     },
+     {
+      "k": "story",
+      "title": "Letting Go. Eleanor's Story",
+      "lines": [
+       "Eleanor's body was failing fast. Her heart was fixed three months down the road, on the due date of her first grandchild.",
+       "She recorded messages, and we wrote letters to be opened at the birth, the first birthday, even high school graduation.",
+       "I guess my arms won't hold this baby, she said, but maybe my words will."
+      ],
+      "lesson": "Hope can travel ahead of you.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "Let me tell you about Eleanor. She was seventy one, in a hospital bed in her front room, so she could see the fields she had worked her whole life. Her body was failing fast, but her heart was fixed three months down the road, on the due date of her first grandchild. I keep praying God will let me hold that baby, she told me. Just once. I didn't try to answer. I just stayed. One afternoon I brought a little recorder, and asked, what if you could still meet this baby? She recorded stories, advice for sleepless nights, and blessings. We wrote letters to be opened at the birth, the first birthday, even high school graduation. Then she began to speak differently about time. I guess my arms won't hold this baby, she said, but maybe my words will."
+     },
+     {
+      "k": "big",
+      "h": "Hope can travel ahead of you.",
+      "sub": "In a letter, a story, or a blessing.",
+      "say": "Eleanor still hoped for a miracle. And her hope found a new shape too. Her love could travel ahead of her, in her own words. Hope can do that. It can travel ahead of you, in a letter, a story, or a blessing."
+     },
+     {
+      "k": "points",
+      "h": "Practice: What I'm Hoping For",
+      "items": [
+       [
+        "Settle",
+        "One easy breath"
+       ],
+       [
+        "Name one hope for today",
+        "However small"
+       ],
+       [
+        "Say it",
+        "Out loud, or to someone near"
+       ],
+       [
+        "Plan one good thing",
+        "For tomorrow"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "2": 5,
+        "3": 10,
+        "4": 8,
+        "5": 10
+       },
+       "at": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      "say": "Let us practice. This one is called What I'm Hoping For. Settle in, and take one easy breath. Now name one hope for today, however small. Say it out loud, or to someone near you. Last, plan one good thing for tomorrow."
+     },
+     {
+      "k": "points",
+      "h": "Fruit in Willow",
+      "items": [
+       [
+        "What I'm hoping for today",
+        "One hope, however small"
+       ],
+       [
+        "Plan one good thing",
+        "Something to look forward to"
+       ],
+       [
+        "Give something away",
+        "And watch them receive it"
+       ],
+       [
+        "A blessing to leave",
+        "Kept in Cuttings"
+       ]
+      ],
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      "say": "On Today, the one gentle practice is sometimes from Fruit. What I'm hoping for today. Plan one good thing. Give something away, while you can watch them receive it. And in Cuttings, you can leave a blessing, for a birthday, a wedding, or a hard day. If you are helping someone you love, your own Fruit matters too. In your own check-in, Willow asks whether you can picture yourself getting through what comes after."
+     },
+     {
+      "k": "big",
+      "h": "Every part still matters, to the very end.",
+      "sub": "Held gently, all the way home.",
+      "say": "That is all six parts. Roots, trunk, bark, branches, leaves, and fruit. Every part still matters, to the very end. Held gently, all the way home."
+     },
+     {
+      "k": "quiz",
+      "q": "What happens to hope near the end of life?",
+      "opts": [
+       "It always disappears",
+       "It can change shape, and stay",
+       "It only means hoping for a cure"
+      ],
+      "right": 1,
+      "why": "Hope changes shape near the end: a good day, a visit, peace, words that travel ahead.",
+      "say": "Last question. What happens to hope near the end of life?"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "willow-you",
+  "title": "For You",
+  "who": "For the person in hospice. Watch at your own pace, alone or with someone you love.",
+  "cert": false,
+  "lessons": [
+   {
+    "id": "wl-y-yours",
+    "n": 1,
+    "title": "Your Tree, Your Way",
+    "mins": 6,
+    "blurb": "Willow is yours: how it works, what it asks, and how you stay in charge of it.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For You, Lesson 1",
+      "h": "Your Tree, Your Way",
+      "sub": "Willow is yours.",
+      "say": "This lesson is for you, the person this tree belongs to. Willow is yours. You decide how you use it, how much, and when. Get comfortable. There is no hurry here."
+     },
+     {
+      "k": "big",
+      "h": "You are still growing.",
+      "sub": "Every part of you still matters.",
+      "say": "Here is what Willow believes. You are still growing, right up to the end. A willow bends in a storm, so far you would think it should break, and it doesn't. Willow is here so no one bends alone."
+     },
+     {
+      "k": "six",
+      "h": "Six parts of you",
+      "words": [
+       "What grounds you",
+       "A life that mattered",
+       "Peace inside",
+       "Love said out loud",
+       "Comfort",
+       "Hope and readiness"
+      ],
+      "say": "Your tree has six parts. Roots, for what grounds you. Trunk, for a life that mattered. Bark, for peace inside. Branches, for love said out loud. Leaves, for comfort. And Fruit, for hope and readiness. Every one of them still matters."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 0,
+      "note": {
+       "h": "Today",
+       "p": "Your hospice line, your tree, and one gentle thing for today."
+      },
+      "say": "Willow opens on Today. At the top is your hospice's 24/7 line. Below it is your tree. And below that, one gentle thing for today. Done is enough. There are no streaks here, and your tree never dries out."
+     },
+     {
+      "k": "flow",
+      "h": "Two ways to check in",
+      "steps": [
+       [
+        "Quick Check-in",
+        "One question for each part"
+       ],
+       [
+        "Full Check-in",
+        "Three questions for each part"
+       ]
+      ],
+      "say": "When you want to, you can check in. The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three. Check in whenever it helps."
+     },
+     {
+      "k": "points",
+      "h": "You decide",
+      "items": [
+       [
+        "Answer what fits",
+        "Not sure is always okay"
+       ],
+       [
+        "Someone can tap for you",
+        "You talk, and a helper taps"
+       ],
+       [
+        "Lying down is fine",
+        "Every practice works lying down"
+       ],
+       [
+        "Stop anytime",
+        "Willow is here when you come back"
+       ]
+      ],
+      "say": "Answer what fits. Not sure is always an honest answer. If reading is tiring, someone can read each question to you and tap your answer while you talk. Every practice works lying down. And you can stop anytime. Willow will be here when you come back."
+     },
+     {
+      "k": "points",
+      "h": "Words, never scores",
+      "items": [
+       [
+        "Well tended",
+        "This part feels well tended right now",
+        "#5F7D48"
+       ],
+       [
+        "Holding",
+        "A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "A growing edge",
+        "Where new growth begins",
+        "#B8612F"
+       ]
+      ],
+      "say": "After a check-in, your tree shows gentle words, never scores. A part might feel well tended right now. It might be holding, where a little tending could help. Or it might be a growing edge, where new growth begins, and you can tend it with others beside you. Each check-in you answer adds a ring to your tree."
+     },
+     {
+      "k": "points",
+      "h": "Faith comes first, every time",
+      "items": [
+       [
+        "Faith, spirit, or something else",
+        "Every answer is welcome, including none"
+       ],
+       [
+        "Asked each time",
+        "Still true, or something has changed"
+       ],
+       [
+        "Readings for you",
+        "Words from your tradition"
+       ]
+      ],
+      "say": "On the second screen of every check-in, Willow asks about faith, spirit, or something else, because a chaplain always asks. Every answer is welcome, including none. Once you have answered, Willow shows what you said and asks if it is still true. Then the Readings tab can show words for you, from your own tradition."
+     },
+     {
+      "k": "story",
+      "title": "No Scared. New Body.",
+      "lines": [
+       "Somchai laughed through most of my visit, his hands trembling in his lap.",
+       "I asked if he knew he was dying. He patted his chest and said, in English: No scared. New body.",
+       "His family wanted someone to sit with him who wasn't scared of what he believes, and wasn't trying to change it."
+      ],
+      "lesson": "Your faith is yours. Willow is here to honor it.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "Let me tell you about Somchai. Buddhist families don't usually request a chaplain. His did. He sat near the window, his hands trembling in his lap, and he laughed through most of my visit. Eventually I asked the question I always ask. Do you know you are dying? He nodded slowly, still smiling. Then he patted his chest and said, in English, No scared. New body. Malee, who translated for us, told me why they had asked for me. They wanted someone to sit with him who wasn't scared of what he believes, and wasn't trying to change it either. I told her that was exactly what I hoped to be. No scared. New body. I have not stopped thinking about those four words."
+     },
+     {
+      "k": "points",
+      "h": "You choose what helpers see",
+      "items": [
+       [
+        "Helpers have their own passcode",
+        "They see only what you switch on"
+       ],
+       [
+        "Faith answers start private",
+        "So do notes from your check-ins"
+       ],
+       [
+        "Change it anytime",
+        "In Willow Settings"
+       ]
+      ],
+      "say": "If someone helps you with Willow, they open it with their own passcode, and they see only what you switch on. Your faith answers and the notes from your check-ins start private. Your safety answers about home are never shared. You can change the rest anytime, in Willow Settings."
+     },
+     {
+      "k": "words",
+      "h": "One thing about you",
+      "items": [
+       "What I want you to know about me is...",
+       "I am still..."
+      ],
+      "say": "Let's take a quiet moment together. Take one easy breath, at your own pace. Now think of one thing about you that you want the people around you to know. Say it out loud, or just in your heart.",
+      "beats": [
+       "Let's take a quiet moment together.",
+       "Take one easy breath, at your own pace.",
+       "Now think of one thing about you that you want the people around you to know.",
+       {
+        "t": "Say it out loud, or just in your heart.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Go at your own pace.",
+      "sub": "Willow will be here whenever you are ready.",
+      "say": "You can write that on the What Matters page, or ask someone to write it for you. Go at your own pace. Willow will be here whenever you are ready."
+     },
+     {
+      "k": "quiz",
+      "q": "Who decides what your helpers can see in Willow?",
+      "opts": [
+       "The hospice team",
+       "You do",
+       "Your helpers decide"
+      ],
+      "right": 1,
+      "why": "Willow is your tree. You choose what is shared, and you can change it anytime.",
+      "say": "One question. Who decides what your helpers can see?"
+     }
+    ]
+   },
+   {
+    "id": "wl-y-matters",
+    "n": 2,
+    "title": "What Matters to You",
+    "mins": 6,
+    "blurb": "Keeping who you are and what you want to leave, in your own words.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For You, Lesson 2",
+      "h": "What Matters to You",
+      "sub": "Your words, kept safe.",
+      "say": "This lesson is about what matters to you, and how to keep it, in your own words, for the people you love. Take it slowly. You can pause anytime."
+     },
+     {
+      "k": "big",
+      "h": "Writing it down is a gift.",
+      "sub": "The people you love will not have to guess.",
+      "say": "Writing down what matters is a gift to the people you love. When the time comes, they will not have to guess what you would want. And it helps everyone caring for you know who you are, not just what you have."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 1,
+      "note": {
+       "h": "What Matters to Me",
+       "p": "Who you are, in your own words. Write a little or a lot."
+      },
+      "say": "The What Matters tab opens a page called What Matters to Me. It is yours, in your own words. Write a little or a lot."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What Matters to Me",
+      "rows": [
+       [
+        "What should we know about you?",
+        ""
+       ],
+       [
+        "What makes a good day now?",
+        ""
+       ],
+       [
+        "Small things that bring joy",
+        ""
+       ],
+       [
+        "What I'm hoping for",
+        ""
+       ],
+       [
+        "What worries me",
+        ""
+       ],
+       [
+        "Who I want close",
+        ""
+       ]
+      ],
+      "tap": 1,
+      "panel": {
+       "h": "A good day now",
+       "sub": "For example",
+       "items": [
+        "Coffee by the window",
+        "The grandkids after school",
+        "Quiet"
+       ]
+      },
+      "say": "The page asks a few gentle questions. What should we know about you as a person? What makes a good day now? Maybe coffee by the window, or quiet. Small things that bring joy. What you are hoping for, and what worries you. Who you want close. What comforts you. And anything we should never do."
+     },
+     {
+      "k": "points",
+      "h": "When the time comes",
+      "items": [
+       [
+        "The room",
+        "Light or dark? Window open?"
+       ],
+       [
+        "The people",
+        "Who should be there?"
+       ],
+       [
+        "The words",
+        "Said, read, prayed, or sung"
+       ],
+       [
+        "Touch",
+        "A hand held, or space"
+       ]
+      ],
+      "say": "Lower on the page is a part called When the time comes. Some people like to say how they want the last days to feel. The room: light or dark, the window open. The people you want there. The words you want said, read, prayed, or sung. Touch, or space. And what should happen after. Skip anything that doesn't fit."
+     },
+     {
+      "k": "points",
+      "h": "Write it your way",
+      "items": [
+       [
+        "Talk, and a helper types",
+        "Your words, not theirs"
+       ],
+       [
+        "Read it aloud",
+        "Willow reads your page back"
+       ],
+       [
+        "Save or Print",
+        "For new nurses, aides, and visitors"
+       ]
+      ],
+      "say": "You do not have to type a word. You can talk while a helper types, in your words, not theirs. Read it aloud plays your page back to you. And Save or Print makes a copy your family can read to new nurses, aides, and visitors."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 2,
+      "note": {
+       "h": "Cuttings",
+       "p": "Stories, letters, lessons, and blessings, kept for the people who stay."
+      },
+      "say": "Next door is Cuttings. A cutting is a small piece of a tree that can root and grow somewhere new. These are pieces of you, kept for the people who stay."
+     },
+     {
+      "k": "points",
+      "h": "Pieces of you to leave",
+      "items": [
+       [
+        "A story",
+        "One story you want remembered"
+       ],
+       [
+        "A letter to keep",
+        "For now, or for later"
+       ],
+       [
+        "A blessing to leave",
+        "For a wedding you won't see"
+       ],
+       [
+        "A recipe or a how-to",
+        "The pie. The fishing spot."
+       ]
+      ],
+      "say": "There are six kinds. A story you want remembered. Things I learned, three things life taught you. A letter to keep, for now or for later. One of the Four Things, like thank you or I love you. A blessing to leave, for a wedding you won't see, or a hard day. And a recipe or a how-to. The pie. The fishing spot. How to fix the furnace."
+     },
+     {
+      "k": "story",
+      "title": "Passing It On",
+      "lines": [
+       "A man who built his fishing guide business from one old boat told me, I can't die right now. The business will fall apart without me.",
+       "Over the next days, we turned from loss to legacy. He recorded what he knew and made a video message for each of his guides.",
+       "Then he told his family: I release you. Run it, sell it, or close the doors. Don't let it own you."
+      ],
+      "lesson": "What you pass on keeps growing after you.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "Let me tell you about Jack. He had built a fishing guide business from a single old jon boat into twenty boats and a waiting list. Now cancer was taking him, and he told me, I can't die right now. The business will fall apart without me. So I didn't push. I sat with him on the deck and let him talk. Over the next several days, we focused on legacy instead of loss. We recorded his fishing wisdom: favorite spots, how to read the water, stories from years on the lake. He made a video message for each of his guides. Then he told his family, I release you. Run it if you want, sell it if you need to, or close the doors. In his final days, his grip softened into pride and peace."
+     },
+     {
+      "k": "words",
+      "h": "Start with one line.",
+      "items": [
+       "What I want you to know is...",
+       "Remember the time...",
+       "Thank you for..."
+      ],
+      "say": "Let's start one now. Think of one person you love. Now think of one thing you want them to know, or one story you want them to keep. Say the first line out loud, or tell someone nearby so they can write it down.",
+      "beats": [
+       "Let's start one now.",
+       "Think of one person you love.",
+       "Now think of one thing you want them to know, or one story you want them to keep.",
+       {
+        "t": "Say the first line out loud, or tell someone nearby so they can write it down.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "One story is enough to start.",
+      "sub": "You can always add more.",
+      "say": "That first line counts. You do not have to write it all at once. One story is enough to start, and you can always add more, on a good day, with someone beside you."
+     },
+     {
+      "k": "quiz",
+      "q": "What is a Cutting in Willow?",
+      "opts": [
+       "A medical record",
+       "A story, letter, or piece of you to leave behind",
+       "A list of medicines"
+      ],
+      "right": 1,
+      "why": "Like a willow cutting that grows a new tree, a Cutting is something of you that keeps growing in the people you love.",
+      "say": "One question. What is a Cutting?"
+     }
+    ]
+   },
+   {
+    "id": "wl-y-help",
+    "n": 3,
+    "title": "Letting Others Help",
+    "mins": 6,
+    "blurb": "Receiving help as part of love, and asking for what you need.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For You, Lesson 3",
+      "h": "Letting Others Help",
+      "sub": "Receiving is a gift too.",
+      "say": "This lesson is about something many people find hard near the end of life: letting others help. Settle in. We'll go gently."
+     },
+     {
+      "k": "big",
+      "h": "Many people worry about being a burden.",
+      "sub": "If you feel that way, you are not alone.",
+      "say": "Many people near the end of life worry about being a burden. If you feel that way, you are not alone. Most people feel it sometimes, and it is one of the most common worries there is."
+     },
+     {
+      "k": "big",
+      "h": "It's hard to be on this side of the caring.",
+      "sub": "That loss is real.",
+      "say": "It's hard to be on this side of the caring. Maybe you were the one who drove, cooked, fixed things, and looked after everyone else. Letting go of that is a real loss, and it is okay to feel it."
+     },
+     {
+      "k": "big",
+      "h": "Letting them help is a gift you give them.",
+      "sub": "It gives them a way to love you back.",
+      "say": "Here is another way to see it. When you let the people you love care for you, you give them a way to love you back. Receiving care is part of love too, in the time you have left together."
+     },
+     {
+      "k": "points",
+      "h": "You still have much to give",
+      "items": [
+       [
+        "Words for each person",
+        "One line each is enough"
+       ],
+       [
+        "A story from your life",
+        "Kept as a Cutting"
+       ],
+       [
+        "Your advice",
+        "What life taught you"
+       ],
+       [
+        "One specific thank-you",
+        "Name one real thing"
+       ]
+      ],
+      "say": "And you still have much to give. Words for each person you love. One line each is enough. A story from your life, kept as a Cutting. Your advice, the things life taught you. And one specific thank-you, naming one real thing they did."
+     },
+     {
+      "k": "words",
+      "h": "You can tell them what you need",
+      "items": [
+       "I need some quiet today.",
+       "Will you sit with me?",
+       "Please read to me.",
+       "I want to talk about what is happening."
+      ],
+      "say": "You can tell them what you need. I need some quiet today. Will you sit with me? Please read to me. Or, I want to talk about what is happening. Many families are waiting for you to open that door."
+     },
+     {
+      "k": "points",
+      "h": "Willow helps them help you",
+      "items": [
+       [
+        "They can tap for you",
+        "You talk, they tap your answers"
+       ],
+       [
+        "What helped today",
+        "One line for the next helper"
+       ],
+       [
+        "What Matters to Me",
+        "Read aloud to new nurses and aides"
+       ],
+       [
+        "You choose what they see",
+        "In Willow Settings"
+       ]
+      ],
+      "say": "Willow is built to help them help you. In a check-in, you can talk while a helper taps your answers, and Willow notes that the answers were yours. On Today, helpers keep a short log called What helped today, so the next person on shift knows. Your What Matters page tells new nurses and aides who you are. And you choose what helpers see."
+     },
+     {
+      "k": "points",
+      "h": "Your hospice team is there for you",
+      "items": [
+       [
+        "The 24/7 line",
+        "At the top of Today, day or night"
+       ],
+       [
+        "Your nurse",
+        "For comfort in your body"
+       ],
+       [
+        "Your chaplain",
+        "For faith, fears, and meaning"
+       ],
+       [
+        "Your social worker",
+        "For family, plans, and worries"
+       ]
+      ],
+      "say": "Your hospice team is there for you too. Their 24/7 line is at the top of Today. Call it first, day or night. Your nurse helps with comfort in your body. Your chaplain is there for faith, fears, and meaning. Your social worker helps with family, plans, and worries."
+     },
+     {
+      "k": "big",
+      "h": "If the weight gets heavy, tell someone today.",
+      "sub": "Your hospice team first. 988, call or text, any time.",
+      "say": "If feeling like a burden gets heavy, tell your hospice team. When Life Changes has a guide for this, called I'm a burden. And if you ever think about ending your life, please tell someone right now. You can call or text nine eight eight, any time. If you are in danger, call nine one one."
+     },
+     {
+      "k": "story",
+      "title": "Total Bliss",
+      "lines": [
+       "Jane had been a young widow, and never stopped loving her husband.",
+       "She told me her kids had said it was okay to go when she was ready.",
+       "She said she felt nothing but peace and joy. Almost bliss."
+      ],
+      "lesson": "Peace can be part of the path, too.",
+      "note": "From a Grounded story by Chris Joy",
+      "hold": 2,
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/total-bliss",
+       "label": "Read the Full Story"
+      },
+      "say": "I met Jane in an assisted living facility, a few days before she died. She had been a young widow, left to raise two children alone, and she never stopped loving her husband, Gary. I asked if she felt like she was getting close. She said, I do feel like I am getting close to my death. But I feel nothing but peace and joy and almost, bliss. She told me she had talked with her kids, and they had told her it was okay to go when she was ready. I am so proud of those kids, she said, and I know they will be okay. We prayed together before I said goodbye. She died peacefully a few days later, her children at her side."
+     },
+     {
+      "k": "words",
+      "h": "Ask for one thing, or say one thank-you.",
+      "items": [
+       "Will you sit with me?",
+       "Thank you for..."
+      ],
+      "say": "Let's try it. Think of one person who helps you. Picture their face. Now choose one thing you could ask them for, or one thank-you you could give them. Say it now, out loud or in your heart.",
+      "beats": [
+       "Let's try it.",
+       "Think of one person who helps you.",
+       "Picture their face.",
+       "Now choose one thing you could ask them for, or one thank-you you could give them.",
+       {
+        "t": "Say it now, out loud or in your heart.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Receiving is part of love too.",
+      "sub": "Let them in.",
+      "say": "When they come in next, you might say it to them. Receiving is part of love too. Let them in."
+     },
+     {
+      "k": "quiz",
+      "q": "What is one way to see letting others help you?",
+      "opts": [
+       "As a burden on them",
+       "As a gift that lets them show their love",
+       "As something to avoid"
+      ],
+      "right": 1,
+      "why": "Letting people help gives them a way to love you back, in the time you have together.",
+      "say": "One question. What is one way to see letting others help you?"
+     }
+    ]
+   },
+   {
+    "id": "wl-y-story",
+    "n": 4,
+    "title": "Your Story, in Your Words",
+    "mins": 6,
+    "blurb": "Telling your story, keeping your voice, and leaving letters for later.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For You, Lesson 4",
+      "h": "Your Story, in Your Words",
+      "sub": "Kept for the people who stay.",
+      "say": "This lesson is about your story, told in your own words. The stories only you can tell, kept for the people you love. Take it slowly. There is plenty of room here."
+     },
+     {
+      "k": "big",
+      "h": "Your story is worth keeping.",
+      "sub": "Small stories count most of all.",
+      "say": "Your story is worth keeping. Not only the big moments. The small ones count most of all. How you met. The job that taught you patience. The kitchen on a Saturday morning. The people you love will treasure these."
+     },
+     {
+      "k": "points",
+      "h": "Ways to tell it",
+      "items": [
+       [
+        "Talk, and someone types",
+        "Your words, written as you say them"
+       ],
+       [
+        "Write it yourself",
+        "A few lines at a time"
+       ],
+       [
+        "Keep your voice, too",
+        "Someone can record you on a phone"
+       ]
+      ],
+      "say": "There are a few ways to tell it. You can talk, while someone you trust types your words just as you say them. You can write it yourself, a few lines at a time. And if you want your voice kept too, someone can record you on a phone."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Cuttings",
+      "rows": [
+       [
+        "A story",
+        ""
+       ],
+       [
+        "Things I learned",
+        ""
+       ],
+       [
+        "A letter to keep",
+        ""
+       ],
+       [
+        "A blessing to leave",
+        ""
+       ],
+       [
+        "A recipe or a how-to",
+        ""
+       ]
+      ],
+      "tap": 0,
+      "say": "In Willow, your story lives in Cuttings. A cutting is a small piece of a tree that can root and grow somewhere new. Choose what kind you are keeping. A story. Things I learned. A letter to keep. A blessing to leave. Or a recipe or a how-to, like the pie, or the fishing spot."
+     },
+     {
+      "k": "card",
+      "title": "A New Cutting",
+      "body": "Type it, or have a helper type while you talk.",
+      "fields": [
+       [
+        "A title",
+        "The summer at the lake"
+       ],
+       [
+        "For (optional)",
+        "For Emma, on her wedding day"
+       ]
+      ],
+      "btns": [
+       "Save this cutting",
+       "Cancel"
+      ],
+      "tap": 0,
+      "say": "Give it a title, like the summer at the lake. If it is for someone, say so, like for Emma, on her wedding day. Then the words. Tap Save this cutting, and it is kept, with the date. If a helper typed it, Willow notes who wrote it down."
+     },
+     {
+      "k": "points",
+      "h": "Letters for later",
+      "items": [
+       [
+        "A birthday you will miss",
+        "Words they can open that day"
+       ],
+       [
+        "A wedding or a graduation",
+        "Your blessing, waiting for them"
+       ],
+       [
+        "A hard day",
+        "Something to hold when life is heavy"
+       ]
+      ],
+      "say": "Some of the dearest cuttings are letters for later. A letter for a birthday you will miss. A blessing for a wedding or a graduation, waiting for them when the day comes. Or words for a hard day, something to hold when life gets heavy. A letter can be one paragraph."
+     },
+     {
+      "k": "story",
+      "title": "Letting Go. Mike's Story",
+      "lines": [
+       "Mike was forty-six, a crane operator for twenty years, with a son of fifteen and a daughter of thirteen.",
+       "One afternoon I asked, What if you could still be the dad who shows up for them? His eyes sharpened.",
+       "We recorded messages together, and he dictated letters for driver's license day, prom, graduation, even their weddings."
+      ],
+      "lesson": "Your voice and your words keep showing up for them.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "Let me tell you about Mike. He was forty-six, and he had run the big cranes for twenty years. His boy was fifteen and his girl was thirteen. I can't go yet, he told me. They still need their dad. I didn't argue. I pulled up a chair and stayed. One afternoon I asked him, what if you could still be the dad who shows up for them? His eyes sharpened. His ex-wife, Sarah, brought in his phone, and we recorded messages together. Stories from the crane cabs. Advice on bullies and heartbreak. How to change the oil in the old truck he was restoring with his son. He dictated letters for driver's license day, prom, graduation, even their weddings. Those recordings and letters are tucked away now, voice notes his kids can play when life gets heavy."
+     },
+     {
+      "k": "big",
+      "h": "Say the first line.",
+      "sub": "One story is enough to start.",
+      "beats": [
+       "Let's try it together.",
+       "Think of one story you want remembered.",
+       "Maybe the day you met someone, or something life taught you the hard way.",
+       {
+        "t": "Now say its first line, out loud or quietly to yourself.",
+        "w": 10
+       }
+      ],
+      "say": "Let's try it together. Think of one story you want remembered. Maybe the day you met someone, or something life taught you the hard way. Now say its first line, out loud or quietly to yourself."
+     },
+     {
+      "k": "points",
+      "h": "Your words, your choice",
+      "items": [
+       [
+        "Kept on this device",
+        "Locked in your own profile"
+       ],
+       [
+        "You choose who sees them",
+        "Cuttings sharing is in Settings"
+       ],
+       [
+        "Save or Print",
+        "Any cutting, on paper too"
+       ]
+      ],
+      "say": "Your cuttings are yours. They stay on this device, locked in your own profile. You choose whether your helpers can see them, in Settings. And every cutting has a Save or Print button, so you can hand it to someone on paper."
+     },
+     {
+      "k": "points",
+      "h": "More places your story lives",
+      "items": [
+       [
+        "What Matters",
+        "Who you are, in your own words"
+       ],
+       [
+        "One gentle thing for today",
+        "Sometimes it is One story"
+       ],
+       [
+        "Photo time",
+        "Old photos bring the stories back"
+       ]
+      ],
+      "say": "Your story lives in other places, too. What Matters asks who you are as a person, so the people caring for you know who you are, not just what you have. Some days, the one gentle thing on Today will be One story. And old photos are a wonderful way to let the stories come back."
+     },
+     {
+      "k": "big",
+      "h": "One story is enough to start.",
+      "sub": "You can always add more.",
+      "say": "One story is enough to start. You can always add more, a little at a time. Your words will keep growing in them, like a cutting from a willow."
+     },
+     {
+      "k": "quiz",
+      "q": "How can you keep a story in Cuttings?",
+      "opts": [
+       "Only by typing it all yourself",
+       "Talk while a helper types your words",
+       "Wait until you can write it perfectly"
+      ],
+      "right": 1,
+      "why": "A helper can type while you talk, in your own words. A few lines is enough.",
+      "say": "One question. How can you keep a story in Cuttings?"
+     }
+    ]
+   },
+   {
+    "id": "wl-y-rest",
+    "n": 5,
+    "title": "Rest Without Guilt",
+    "mins": 5,
+    "blurb": "Sleep is allowed, and rest is part of comfort.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For You, Lesson 5",
+      "h": "Rest Without Guilt",
+      "sub": "Rest is part of comfort.",
+      "say": "This lesson is about rest. If you are tired as you watch this, that is perfectly fine. You can watch it lying down, with your eyes closed, and just listen."
+     },
+     {
+      "k": "big",
+      "h": "Your body is doing hard work.",
+      "sub": "Rest is how it carries you.",
+      "say": "Near the end of life, many people find they want more rest, and more sleep. Your body is doing hard work. Rest is how it carries you through the day."
+     },
+     {
+      "k": "big",
+      "h": "Sleep is allowed. Rest is part of comfort.",
+      "sub": "You are welcome to rest, today and every day.",
+      "say": "Here is what Willow believes. Sleep is allowed. Rest is part of comfort. You are welcome to rest, today and every day, as often as your body asks."
+     },
+     {
+      "k": "points",
+      "h": "If guilt shows up",
+      "items": [
+       [
+        "I should be doing more",
+        "Resting is doing something"
+       ],
+       [
+        "I am wasting the time I have",
+        "Rest makes room for good hours"
+       ],
+       [
+        "They need me awake",
+        "Your being near is a gift to them"
+       ]
+      ],
+      "say": "Sometimes guilt shows up anyway. It might say, I should be doing more. Resting is doing something. It is tending your body. It might say, I am wasting the time I have. Rest makes room for the good hours, the visits and the talks. Or it might say, they need me awake. The people who love you are often glad simply to sit near you while you sleep."
+     },
+     {
+      "k": "big",
+      "h": "Your presence is a gift, awake or asleep.",
+      "sub": "Sitting with you is one way they love you.",
+      "say": "Your presence is a gift, awake or asleep. For many families, sitting quietly beside you is one of the ways they love you. If you ever feel like a burden, there is a guide for that in When Life Changes, called I'm a burden. It speaks right to you."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 0,
+      "note": {
+       "h": "Today",
+       "p": "One gentle thing for today. One a day is plenty, and none is okay."
+      },
+      "say": "On Today, Willow offers one gentle thing for today. Some days, it will be Rest without guilt. Tap Did it today, and that's enough. Tap Something else for a different idea. There are no streaks here. One a day is plenty, and none is okay."
+     },
+     {
+      "k": "big",
+      "h": "Let yourself be held.",
+      "sub": "Right where you are.",
+      "beats": [
+       "Let's rest for a moment, right now.",
+       "Let your shoulders soften.",
+       "Let your hands grow heavy.",
+       "Breathe gently, just as you are.",
+       {
+        "t": "Let the bed, or the chair, hold you.",
+        "w": 12
+       }
+      ],
+      "say": "Let's rest for a moment, right now. Let your shoulders soften. Let your hands grow heavy. Breathe gently, just as you are. Let the bed, or the chair, hold you."
+     },
+     {
+      "k": "points",
+      "h": "Make rest easier",
+      "items": [
+       [
+        "What comforts me",
+        "Write it in What Matters"
+       ],
+       [
+        "Say what you need",
+        "I need some quiet today"
+       ],
+       [
+        "What helped",
+        "One line on Today, for the next person"
+       ]
+      ],
+      "say": "A few things can make rest easier. In What Matters, there is a place called What comforts me. Write what helps you settle, like music, touch, light or dark, or a window open. Tell the people near you what you need. I need some quiet today, is a kind thing to say. And when something helps you rest, add one line under What helped, on Today, so the next person knows."
+     },
+     {
+      "k": "points",
+      "h": "If rest is hard to find",
+      "items": [
+       [
+        "Pain or hard breathing",
+        "Call your hospice 24/7 line"
+       ],
+       [
+        "A busy mind",
+        "Hand off a worry to someone"
+       ],
+       [
+        "Long, restless nights",
+        "Tell your hospice nurse today"
+       ]
+      ],
+      "say": "If rest is hard to find, your hospice team can help a great deal. For pain or hard breathing, call your hospice twenty four hour line, day or night. The number is at the top of Today. If your mind is busy, try the practice called Hand off a worry. Give one practical worry to someone else to carry. And if the nights are long and restless, tell your hospice nurse today."
+     },
+     {
+      "k": "big",
+      "h": "Rest is part of your growing.",
+      "sub": "Every part of your tree can rest.",
+      "say": "Rest is part of your growing, too. A willow rests in winter, and it is still a willow. Rest whenever you need to. Willow will be right here when you wake."
+     },
+     {
+      "k": "quiz",
+      "q": "What does Willow say about rest?",
+      "opts": [
+       "Rest has to be earned",
+       "Rest is part of comfort",
+       "Rest is time wasted"
+      ],
+      "right": 1,
+      "why": "Sleep is allowed, and rest is part of comfort. You are welcome to rest whenever your body asks.",
+      "say": "One question. What does Willow say about rest?"
+     }
+    ]
+   },
+   {
+    "id": "wl-y-say",
+    "n": 6,
+    "title": "Saying What Needs Saying",
+    "mins": 5,
+    "blurb": "Thank you, I love you, I am sorry, I forgive you, and goodbye.",
+    "sources": [
+     "byock4"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For You, Lesson 6",
+      "h": "Saying What Needs Saying",
+      "sub": "A few words can hold a lifetime.",
+      "say": "This last lesson is about the words you may want to say to the people who matter. A few words can hold a lifetime. Go at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "These words are never too late.",
+      "sub": "Today is a good day to say one.",
+      "say": "Near the end of life, many people find there are a few things they want to say, while there is time. These words are never too late. Today is a good day to say one."
+     },
+     {
+      "k": "words",
+      "h": "Words many people want to say",
+      "items": [
+       "Thank you.",
+       "I love you.",
+       "I'm sorry. Please forgive me.",
+       "I forgive you."
+      ],
+      "sub": "Then, when it feels right: goodbye.",
+      "say": "Many hospice teams teach a few simple words. Thank you. I love you. I'm sorry, please forgive me. I forgive you. And then, when it feels right, goodbye. Say the ones that are true for you, and leave the rest."
+     },
+     {
+      "k": "points",
+      "h": "One at a time",
+      "items": [
+       [
+        "Pick one person",
+        "Whoever comes to mind first"
+       ],
+       [
+        "Pick one true word",
+        "Thank you is a fine place to start"
+       ],
+       [
+        "Say it your way",
+        "Out loud, in a letter, or a message"
+       ]
+      ],
+      "say": "You can take these one at a time. Pick one person, whoever comes to mind first. Pick one word that is true for them. Thank you is a fine place to start. Then say it your way. Out loud, in a letter, in a message, or on a visit, if you both want one."
+     },
+     {
+      "k": "points",
+      "h": "About forgiveness",
+      "items": [
+       [
+        "Forgiving sets a weight down",
+        "It is different from saying it was okay"
+       ],
+       [
+        "A letter counts",
+        "Even one you never send"
+       ],
+       [
+        "Always your choice",
+        "And never owed to someone unsafe"
+       ]
+      ],
+      "say": "A word about forgiveness. Forgiving is setting a weight down. It is different from saying it was okay, and it can happen without making up. A letter counts, even one you never send. One step counts too. And forgiveness is always your choice. It is never owed to someone who is unsafe."
+     },
+     {
+      "k": "big",
+      "h": "Sometimes it is just two words.",
+      "sub": "Thank you, said simply, can mean everything.",
+      "say": "Picture a family gathered at a bedside. No one quite knows what to say. Then a grown daughter takes her father's hand and says, simply, thank you. Thank you for every ride to school. Thank you for staying. He squeezes her hand. Nothing more is needed. The words are small. What they carry is enormous. A moment like that can stay with a family for years."
+     },
+     {
+      "k": "points",
+      "h": "When words are hard to find",
+      "items": [
+       [
+        "Start with their name",
+        "Then one true sentence"
+       ],
+       [
+        "Hold a hand instead",
+        "Touch can say it too"
+       ],
+       [
+        "Ask for help",
+        "A helper or your chaplain can sit with you"
+       ]
+      ],
+      "say": "If the words are hard to find, start with their name, and then one true sentence. If speaking is hard, a hand held can say it too. And you can ask for help. A helper, or your hospice chaplain, can sit with you while you find the words."
+     },
+     {
+      "k": "words",
+      "h": "Say one now.",
+      "items": [
+       "Thank you.",
+       "I love you.",
+       "I'm sorry.",
+       "I forgive you."
+      ],
+      "beats": [
+       "Let's try one together.",
+       "Think of one person.",
+       "Choose one of these words that is true for them.",
+       {
+        "t": "Now say it, out loud, in a whisper, or quietly inside.",
+        "w": 12
+       }
+      ],
+      "say": "Let's try one together. Think of one person. Choose one of these words that is true for them. Now say it, out loud, in a whisper, or quietly inside."
+     },
+     {
+      "k": "card",
+      "title": "A New Cutting",
+      "body": "One of the Four Things: please forgive me, I forgive you, thank you, I love you.",
+      "fields": [
+       [
+        "For (optional)",
+        "For my brother"
+       ],
+       [
+        "The words",
+        "Thank you for every Sunday call."
+       ]
+      ],
+      "btns": [
+       "Save this cutting",
+       "Cancel"
+      ],
+      "tap": 0,
+      "say": "If you want to keep those words, open Cuttings. Choose One of the Four Things, or A letter to keep. Write who it is for, then the words. You can talk while a helper types. Tap Save this cutting, and it is kept for them, ready to read, or to print and hand over."
+     },
+     {
+      "k": "points",
+      "h": "More help in Willow",
+      "items": [
+       [
+        "Who I want close",
+        "In What Matters, so people know"
+       ],
+       [
+        "The call or visit I want",
+        "A helper can make it happen"
+       ],
+       [
+        "When Life Changes",
+        "The guide: I can't forgive them"
+       ]
+      ],
+      "say": "Willow can help in other ways, too. In What Matters, write who you want close, and who you wish were here. If there is a call or a visit you want, name it, and a helper can make it happen. And if forgiveness feels heavy, open When Life Changes and find the guide called I can't forgive them. It speaks right to you."
+     },
+     {
+      "k": "big",
+      "h": "Love said out loud keeps going.",
+      "sub": "One word, to one person, is a beautiful start.",
+      "say": "Love said out loud keeps going, long after the words are spoken. One word, to one person, is a beautiful start. Say it today, if you can, in whatever way is yours."
+     },
+     {
+      "k": "quiz",
+      "q": "What if you cannot say it in person?",
+      "opts": [
+       "It is too late to say it",
+       "A letter counts, even one you never send",
+       "Wait for the perfect moment"
+      ],
+      "right": 1,
+      "why": "Words in a letter, a message, or a cutting still count. One step is enough.",
+      "say": "One question. What if you cannot say it in person?"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "willow-helpers",
+  "title": "For the People Who Love Them",
+  "who": "For family, friends, and caregivers walking with someone in hospice",
+  "certTitle": "Willow: For the People Who Love Them",
+  "certLine": "For finishing every lesson in the Willow series for families and caregivers.",
+  "lessons": [
+   {
+    "id": "wl-h-present",
+    "n": 1,
+    "title": "You Don't Have to Know What to Say",
+    "mins": 7,
+    "blurb": "Presence comes first: how to sit with someone you love near the end of life.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 1",
+      "h": "You Don't Have to Know What to Say",
+      "sub": "Presence comes first.",
+      "say": "Welcome. This series is for the people who love someone in hospice. A spouse, a daughter or son, a friend, a neighbor who keeps showing up. Let's start with the worry almost everyone carries into the room. I don't know what to say."
+     },
+     {
+      "k": "big",
+      "h": "Your being there is the gift.",
+      "sub": "Words are optional.",
+      "say": "Here is what years at the bedside teach. Your being there is the gift. Words are optional. Most people near the end of life do not need a speech. They need someone close, someone who stays."
+     },
+     {
+      "k": "points",
+      "h": "The worries people carry in",
+      "items": [
+       [
+        "Saying the wrong thing",
+        "Kindness carries most words"
+       ],
+       [
+        "Crying in front of them",
+        "Your tears show your love"
+       ],
+       [
+        "Not having the answers",
+        "You can stay with the question"
+       ],
+       [
+        "Not visiting long enough",
+        "A short visit still counts"
+       ]
+      ],
+      "say": "Almost everyone walks in with the same worries. What if I say the wrong thing? Kindness carries most words. What if I cry in front of them? Your tears show your love. What if they ask something I can't answer? You can stay with the question. And what if I can only stay a little while? A ten minute visit still counts."
+     },
+     {
+      "k": "story",
+      "title": "The Blanket That Didn't Need Smoothing",
+      "lines": [
+       "Her husband sat in a chair pulled so close his knee nearly touched the bed rail.",
+       "For the next hour, he told me about their life together. Then he reached over and adjusted her blanket, though it hadn't slipped.",
+       "He kept holding her hand like it was the only job left for him to do."
+      ],
+      "lesson": "Sometimes love just needs somewhere to put its hands.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "I once walked into a quiet room to see a woman in her final hours. Her husband sat in a chair pulled so close his knee nearly touched the bed rail. At first he was guarded, arms crossed. Then he said, I could probably use the company. Pull up a chair. For the next hour, he told me about their life together. They never let a day pass without saying I love you. As he talked, he reached over and adjusted her blanket, though it hadn't slipped. What matters, he told me, is that we loved each other well, and we said it every single day. And it's enough. He kept holding her hand like it was the only job left for him to do. Sometimes love just needs somewhere to put its hands."
+     },
+     {
+      "k": "points",
+      "h": "Ways to be present",
+      "items": [
+       [
+        "Sit close",
+        "Pull your chair near, at eye level"
+       ],
+       [
+        "Offer touch, if it is welcome",
+        "A hand to hold, a hand on the shoulder"
+       ],
+       [
+        "Let silence be",
+        "Quiet together is still company"
+       ],
+       [
+        "Do small things",
+        "A cool cloth, lip balm, a blanket set right"
+       ]
+      ],
+      "say": "Here are some ways to be present. Sit close, at eye level. Offer touch, if it is welcome. A hand to hold, or a hand on the shoulder. If they pull away, that's okay too. Let silence be. Quiet together is still company. And do small things, like a cool cloth, lip balm, or a blanket set just right."
+     },
+     {
+      "k": "points",
+      "h": "Let them lead",
+      "items": [
+       [
+        "Follow their topic",
+        "The weather, the game, the old days"
+       ],
+       [
+        "Let feelings be",
+        "Tears and laughter both belong"
+       ],
+       [
+        "Listen more than you fix",
+        "You do not need every answer"
+       ],
+       [
+        "Let them rest",
+        "Sleep is part of the visit too"
+       ]
+      ],
+      "say": "Let them lead. Follow their topic, even if it is the weather or the game or the old days. Let feelings be. Tears and laughter both belong in the room. Listen more than you fix. You do not need every answer. And if they drift off to sleep, let them rest. Sleep is part of the visit too."
+     },
+     {
+      "k": "words",
+      "h": "A few words are often enough",
+      "items": [
+       "I'm here.",
+       "Tell me more.",
+       "I love you.",
+       "I don't know what to say, and I'm right here."
+      ],
+      "say": "When you do want words, a few are often enough. I'm here. Tell me more. I love you. And it is okay to be honest. I don't know what to say, and I'm right here. That one opens more doors than any speech."
+     },
+     {
+      "k": "big",
+      "h": "When they say something hard, you can stay with it.",
+      "sub": "Tell me more. I am here.",
+      "say": "Sometimes they will say something hard. I'm scared. I'm ready. Why is this happening? You do not have to fix it. You can say, tell me more. Or simply, I'm here. If they ever talk about ending their own life, call your hospice right away, day or night. If anyone is in danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Try it now: I'm here.",
+      "sub": "Close, quiet, and steady.",
+      "beats": [
+       "Let's try it now.",
+       "If you are beside them, pull your chair a little closer, and rest your hand near theirs.",
+       "If you are not, picture their face.",
+       "Let one slow breath out.",
+       {
+        "t": "Then say it, out loud or in your heart: I'm here.",
+        "w": 10
+       }
+      ],
+      "say": "Let's try it now. If you are beside them, pull your chair a little closer, and rest your hand near theirs. If you are not, picture their face. Let one slow breath out. Then say it, out loud or in your heart: I'm here."
+     },
+     {
+      "k": "points",
+      "h": "Coming and going well",
+      "items": [
+       [
+        "Say your name as you come in",
+        "It's me. I'm here."
+       ],
+       [
+        "Tell them when you leave",
+        "Even if they seem asleep"
+       ],
+       [
+        "Say when you will be back",
+        "Or simply, see you soon"
+       ],
+       [
+        "Pass it on",
+        "One line for the next person"
+       ]
+      ],
+      "say": "Coming and going matter too. As you come in, say your name, even if they know you well. When you leave, tell them, even if they seem asleep. Say when you will be back, or simply, see you soon. And before you go, pass on what helped."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Today with Mom",
+      "rows": [
+       [
+        "Hospice 24/7 line",
+        "Call"
+       ],
+       [
+        "Mom's tree",
+        "Quick Check-in"
+       ],
+       [
+        "One gentle thing for today",
+        ""
+       ],
+       [
+        "What Helped Today",
+        "Add a line"
+       ],
+       [
+        "At the bedside today",
+        "Two ideas"
+       ]
+      ],
+      "tap": 3,
+      "panel": {
+       "h": "Pass it on to the next helper",
+       "sub": "One line is enough.",
+       "items": [
+        "She settled when we played Amazing Grace.",
+        "He asked for his brother."
+       ]
+      },
+      "say": "Willow can help with that. When you open their tree, Today has a card called What Helped Today. One line is enough. She settled when we played Amazing Grace. He asked for his brother. The next person to sit with them will know what brought comfort."
+     },
+     {
+      "k": "big",
+      "h": "Bedside has more ideas for right now.",
+      "sub": "Small, real things families can do.",
+      "say": "When you want more ideas, open the Bedside tab. It holds small, real things families can do, like playing their music softly, or holding a hand. And Support for Right Now, on Today, has short videos for the hard hours."
+     },
+     {
+      "k": "quiz",
+      "q": "What matters most when you sit with someone near the end of life?",
+      "opts": [
+       "Finding the perfect words",
+       "Being there with them",
+       "Keeping the conversation going"
+      ],
+      "right": 1,
+      "why": "Your being there is the gift. Words are optional.",
+      "say": "One question. What matters most when you sit with someone near the end of life?"
+     }
+    ]
+   },
+   {
+    "id": "wl-h-together",
+    "n": 2,
+    "title": "Using Willow Together",
+    "mins": 6,
+    "blurb": "Setting up Willow for someone you love, answering together, and keeping their voice their own.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 2",
+      "h": "Using Willow Together",
+      "sub": "One tree. Built for two.",
+      "say": "This lesson walks through using Willow together, with the person you love. How to set it up, how to answer a check-in with them, and how their voice stays their own."
+     },
+     {
+      "k": "big",
+      "h": "Willow is their tree.",
+      "sub": "You help them tend it.",
+      "say": "Willow is their tree. You are there to help them tend it. They decide what to answer, and what to share with you. That choice is part of their dignity, right to the end."
+     },
+     {
+      "k": "flow",
+      "h": "Setting it up",
+      "steps": [
+       [
+        "Your own profile",
+        "Locked with your own passcode"
+       ],
+       [
+        "A profile for them",
+        "Made together, if you can"
+       ],
+       [
+        "You open it as their helper",
+        "With your own passcode"
+       ]
+      ],
+      "say": "Here is how it starts. On Willow, choose For someone I love. First you make your own profile, locked with your own passcode. Then choose Make a profile for them, together if you can. Their tree lives in their own locked profile, and you open it as their helper, with your own passcode. If they already have a profile, open it with their passcode, and add yourself as a helper in Willow Settings."
+     },
+     {
+      "k": "card",
+      "title": "Who is answering?",
+      "body": "Every answer keeps track of who gave it, so their own voice is never mixed up with anyone else's.",
+      "fields": [
+       [
+        "",
+        "Quick Check-in for Mom"
+       ]
+      ],
+      "btns": [
+       "They answered",
+       "They answered, I tapped",
+       "I'm answering from what I see"
+      ],
+      "tap": 1,
+      "say": "When you start a check-in for them, Willow first asks, who is answering? Every answer keeps track of who gave it, so their own voice is never mixed up with anyone else's."
+     },
+     {
+      "k": "points",
+      "h": "Three ways to answer",
+      "items": [
+       [
+        "They answered",
+        "They read and answer on their own"
+       ],
+       [
+        "They answered, I tapped",
+        "They answer out loud, you tap"
+       ],
+       [
+        "I'm answering from what I see",
+        "When they can no longer say"
+       ]
+      ],
+      "say": "There are three ways. They answered, reading on their own. They answered, I tapped, when they talk and you tap for them. Both of those grow a ring on their tree. And, I'm answering from what I see, when they can no longer say. Those answers are kept apart. They never add to their rings, and never speak for their own tree."
+     },
+     {
+      "k": "words",
+      "h": "Read one question aloud",
+      "items": [
+       "Lately, how often have you felt at peace, even for a moment?"
+      ],
+      "sub": "Then wait. Not sure is always okay.",
+      "beats": [
+       "When you tap for them, slow is kind.",
+       "Read each question, then wait.",
+       "Not sure is always an honest answer.",
+       {
+        "t": "Try one now, out loud and slowly: Lately, how often have you felt at peace, even for a moment?",
+        "w": 10
+       }
+      ],
+      "say": "When you tap for them, slow is kind. Read each question, then wait. Not sure is always an honest answer. Try one now, out loud and slowly: Lately, how often have you felt at peace, even for a moment?"
+     },
+     {
+      "k": "points",
+      "h": "Faith comes second, every time",
+      "items": [
+       [
+        "Asked every time",
+        "Right after who is answering"
+       ],
+       [
+        "Every answer welcome",
+        "Including none"
+       ],
+       [
+        "Each person answers for themselves",
+        "Never from what you see"
+       ]
+      ],
+      "say": "Right after who is answering, Willow asks about faith, every time, because a chaplain always asks. Every answer is welcome, including none. And each person answers faith for themselves. When you answer from what you see, Willow leaves faith for them."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Mom's tree",
+      "rows": [
+       [
+        "Roots",
+        "Well tended",
+        "#5F7D48"
+       ],
+       [
+        "Trunk",
+        "Holding",
+        "#8B5E1A"
+       ],
+       [
+        "Bark",
+        "A growing edge",
+        "#B8612F"
+       ],
+       [
+        "Branches",
+        "Well tended",
+        "#5F7D48"
+       ],
+       [
+        "Leaves",
+        "Holding",
+        "#8B5E1A"
+       ],
+       [
+        "Fruit",
+        "Holding",
+        "#8B5E1A"
+       ]
+      ],
+      "tap": 2,
+      "panel": {
+       "h": "A growing edge",
+       "sub": "Where new growth begins.",
+       "items": [
+        "You can tend it with others beside you"
+       ]
+      },
+      "say": "After a check-in, their tree shows gentle words for each part, never scores. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins, tended with others beside them. Today then offers one gentle thing to do, often for the part that needs it most."
+     },
+     {
+      "k": "points",
+      "h": "What you can see is their choice",
+      "items": [
+       [
+        "Usually shared",
+        "Tree words, What Matters, Cuttings, the log"
+       ],
+       [
+        "Private until they share",
+        "Faith answers and check-in notes"
+       ],
+       [
+        "Always private",
+        "Their answer about safety at home"
+       ],
+       [
+        "Theirs to change",
+        "Anytime, in Willow Settings"
+       ]
+      ],
+      "say": "What you can see is their choice. Their tree words, What Matters, Cuttings, and What Helped Today start out shared. Faith answers and notes from check-ins start private, until they share them. Their answer about feeling safe at home always stays private. And they can change any of it, anytime, in Willow Settings."
+     },
+     {
+      "k": "points",
+      "h": "Your own tree",
+      "items": [
+       [
+        "My Own Tree",
+        "Your check-ins, about you"
+       ],
+       [
+        "One gentle thing for you",
+        "Five minutes for you counts"
+       ],
+       [
+        "Switch anytime",
+        "Their tree, and yours"
+       ]
+      ],
+      "say": "You have your own tree in Willow too, because you are carrying this as well. Tap My Own Tree. Your check-ins there ask about you, as you care for them. Today offers one gentle thing for you, because five minutes for you counts. It helps them too. And you can switch between their tree and yours anytime."
+     },
+     {
+      "k": "points",
+      "h": "Bring the team in",
+      "items": [
+       [
+        "Share with My Chaplain or Doula",
+        "Only what they chose to share"
+       ],
+       [
+        "In person, sealed",
+        "With a code you read aloud"
+       ],
+       [
+        "Their faith on Bedside",
+        "When they share it"
+       ]
+      ],
+      "say": "Willow also helps you bring the hospice team in. Share with My Chaplain or Doula sends check-ins and What Matters to the chaplain or doula who visits, so they know where to start. You can share only what your person chose to share with helpers. It travels in person, sealed with a code you read aloud. And if they share their faith answers, the Bedside tab shows what matters in their tradition."
+     },
+     {
+      "k": "big",
+      "h": "The hospice line is at the top of Today.",
+      "sub": "Call it first, day or night.",
+      "say": "One last thing. Add your hospice twenty four hour number in Willow Settings, and it sits at the top of Today, one tap away. For anything urgent, call it first, day or night."
+     },
+     {
+      "k": "quiz",
+      "q": "When you answer a check-in from what you see, what happens to those answers?",
+      "opts": [
+       "They replace their own answers",
+       "They are kept apart from their own tree",
+       "They are sent to the hospice"
+      ],
+      "right": 1,
+      "why": "Answers from what you see are kept apart, and never speak for their own tree.",
+      "say": "One question. When you answer a check-in from what you see, what happens to those answers?"
+     }
+    ]
+   },
+   {
+    "id": "wl-h-weeks",
+    "n": 3,
+    "title": "What the Last Weeks Can Look Like",
+    "mins": 7,
+    "blurb": "Changes many people go through near the end of life, and how love can meet each one.",
+    "sources": [
+     "hui",
+     "mccann",
+     "kerr",
+     "nahm"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 3",
+      "h": "What the Last Weeks Can Look Like",
+      "sub": "Knowing helps.",
+      "say": "Many families say the hardest part was not knowing what was normal. This lesson walks through changes many people go through near the end of life. Every person is different, and your hospice nurse knows your person best."
+     },
+     {
+      "k": "flow",
+      "h": "A world that slowly gets smaller",
+      "steps": [
+       [
+        "Weeks before",
+        "More sleep, less eating, less talking"
+       ],
+       [
+        "Days before",
+        "Very little food or drink, restless or confused at times"
+       ],
+       [
+        "Hours before",
+        "Breathing changes, less response"
+       ]
+      ],
+      "say": "Here is the general shape. Weeks before, many people sleep more, eat less, and talk less. Their world gets smaller. Days before, they may take very little food or drink, and may be restless or confused at times. In the last hours, breathing changes, and they respond less. No one can name the minute, so take it one day at a time."
+     },
+     {
+      "k": "big",
+      "h": "Turning inward is normal.",
+      "sub": "Your presence still matters in the quiet.",
+      "say": "Turning inward is normal. If they talk less, or seem far away, they are often doing quiet inner work. Your presence still matters, even in the quiet. You can sit close, and let the silence be company."
+     },
+     {
+      "k": "points",
+      "h": "When they stop eating",
+      "items": [
+       [
+        "The body slows down",
+        "It can no longer use food the same way"
+       ],
+       [
+        "Hunger usually fades",
+        "Most do not feel hunger or thirst"
+       ],
+       [
+        "Part of dying, not the cause",
+        "Not eating is not starving"
+       ]
+      ],
+      "say": "When they stop eating, it is hard to watch. Food is love in almost every family. But near the end, the body slows down and can no longer use food the same way. A dying person usually does not feel hunger or thirst. Not eating is part of dying, not the cause of it."
+     },
+     {
+      "k": "words",
+      "h": "Love looks different now",
+      "items": [
+       "Ice chips and sips, only if they want them",
+       "A swab and lip balm for a dry mouth",
+       "A little taste of something they love",
+       "Sitting together at the table"
+      ],
+      "say": "So love looks different now. Ice chips and sips, only if they want them. A swab and lip balm for a dry mouth. A little taste of something they love. Or simply sitting together at the table, even if they do not eat. Pushing food can make them uncomfortable, so follow their lead."
+     },
+     {
+      "k": "story",
+      "title": "Welcome Home",
+      "lines": [
+       "A daughter texted me before my first sip of coffee: Dad is seeing ghosts. What does this mean?",
+       "Her father turned toward something we could not see and raised both arms. Very quietly, he said, I love you. I love you. I love you.",
+       "That evening, he passed peacefully, just as we had seen him: arms open."
+      ],
+      "lesson": "Visions near the end usually bring comfort. Ask who is there.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/welcome-home",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Before my first sip of coffee, a text came in. Dad is seeing ghosts. What does this mean? I wrote back, we might be getting close. Can I come by? Jim was in a hospital bed in the small living room. His daughter July asked me, is he going to be okay? I told her this happens more than you'd think. Patients see relatives who died years ago, across just about every faith, and plenty of people with no faith at all. Then Jim turned toward something on his left and raised both arms. Very quietly, he said, I love you. I love you. I love you. His arms stayed open, reaching for someone neither of us could see. That evening, July texted me. He had passed peacefully, arms open."
+     },
+     {
+      "k": "points",
+      "h": "When they see someone you cannot",
+      "items": [
+       [
+        "Ask, do not correct",
+        "Who's here? What are they saying?"
+       ],
+       [
+        "Usually a comfort",
+        "Often loved ones who have died"
+       ],
+       [
+        "Different from confusion",
+        "And often a sign death is closer"
+       ],
+       [
+        "Tell the nurse",
+        "Right away if it brings fear"
+       ]
+      ],
+      "say": "Many people near the end see loved ones who have died. It usually brings comfort, and it is different from confusion. So ask, don't correct. Who's here? What are they saying? It often means death is getting closer. Let the hospice nurse know, and call right away if a vision brings fear or distress."
+     },
+     {
+      "k": "points",
+      "h": "In the last hours or days",
+      "items": [
+       [
+        "Breathing changes",
+        "Pauses, then a few quick breaths"
+       ],
+       [
+        "A rattling sound",
+        "Usually bothers us more than them"
+       ],
+       [
+        "Cool hands and feet",
+        "Blotchy skin on knees and feet"
+       ],
+       [
+        "Less response",
+        "Keep talking to them"
+       ]
+      ],
+      "say": "In the last hours or days, breathing often changes, with long pauses and then a few quick breaths. There may be a rattling sound in the throat. It usually bothers us more than it bothers them. Hands and feet may feel cool, and the skin on the knees and feet may look blotchy. They respond less. Keep talking to them, and moisten their lips."
+     },
+     {
+      "k": "big",
+      "h": "Steady your own breath.",
+      "sub": "A calm body in the room helps everyone.",
+      "beats": [
+       "Changing breath can be hard to listen to.",
+       "Let your own breath be the steady one in the room.",
+       "Breathe in slowly.",
+       {
+        "t": "Now let it out, longer than it came in, and do one more at your own pace.",
+        "w": 10
+       }
+      ],
+      "say": "Changing breath can be hard to listen to. Let your own breath be the steady one in the room. Breathe in slowly. Now let it out, longer than it came in, and do one more at your own pace."
+     },
+     {
+      "k": "big",
+      "h": "Sometimes there is a rally.",
+      "sub": "A surprising burst of energy. Treat it as a gift.",
+      "say": "Sometimes a person who has been very sleepy wakes up, talks, eats, and knows everyone. It is real, and it is often brief. Treat it as a gift. Use it to say what you want to say, and call family who want to come. Talk with the nurse before reading it as recovery."
+     },
+     {
+      "k": "points",
+      "h": "Call your hospice first",
+      "items": [
+       [
+        "Restless or grimacing",
+        "Or anything that looks like distress"
+       ],
+       [
+        "Day or night",
+        "The 24/7 line is at the top of Today"
+       ],
+       [
+        "Before 911",
+        "For anything hospice can help with"
+       ]
+      ],
+      "say": "Most of all, call your hospice anytime something worries you. Restlessness, grimacing, or anything that looks like distress. Their twenty four hour line sits at the top of Today in Willow. Call it first, before nine one one, for anything hospice can help with. You never have to guess alone."
+     },
+     {
+      "k": "big",
+      "h": "When Life Changes has a guide for each.",
+      "sub": "What dying looks like, not eating, visions, and the rally.",
+      "say": "When you want to read more, open When Life Changes in Willow. There are guides for what dying looks like, for when they stop eating, for visions of people who have died, and for the rally. Each one has words to say, and what helps."
+     },
+     {
+      "k": "quiz",
+      "q": "When someone near the end stops eating, what usually helps most?",
+      "opts": [
+       "Encouraging them to eat more",
+       "Ice chips, lip balm, and only what they want",
+       "Waiting to visit until they eat again"
+      ],
+      "right": 1,
+      "why": "Near the end, love looks like comfort: ice chips, lip balm, and only what they want.",
+      "say": "One question. When someone near the end stops eating, what usually helps most?"
+     }
+    ]
+   },
+   {
+    "id": "wl-h-words",
+    "n": 4,
+    "title": "When Words Run Out",
+    "mins": 7,
+    "blurb": "How love still reaches them when they can no longer answer.",
+    "sources": [
+     "blundon"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 4",
+      "h": "When Words Run Out",
+      "sub": "Love still reaches them.",
+      "say": "There may come a time when the person you love can no longer talk, or open their eyes, or squeeze your hand back. This lesson is about how love still reaches them."
+     },
+     {
+      "k": "big",
+      "h": "Hearing may be one of the last senses to go.",
+      "sub": "Speak to them, not about them.",
+      "say": "Hearing may be one of the last senses to go. In a hospice study, the brains of people who could no longer respond still answered to sound in their last hours. No one can know how much they understand. So speak to them, not about them."
+     },
+     {
+      "k": "points",
+      "h": "In the room",
+      "items": [
+       [
+        "Greet them by name",
+        "It's me. I'm here."
+       ],
+       [
+        "Tell them who is here",
+        "And who is thinking of them"
+       ],
+       [
+        "Say what you are doing",
+        "I'm going to wet your lips now."
+       ],
+       [
+        "Take hard talks outside",
+        "Plans and worries, in the hallway"
+       ]
+      ],
+      "say": "In the room, greet them by name. It's me. I'm here. Tell them who is here, and who is thinking of them from far away. Say what you are doing, like, I'm going to wet your lips now. And take the hard talks out to the hallway."
+     },
+     {
+      "k": "points",
+      "h": "Ways to reach them",
+      "items": [
+       [
+        "Your voice",
+        "Stories, memories, the small news of the day"
+       ],
+       [
+        "Their music",
+        "The songs they love, played softly"
+       ],
+       [
+        "Touch, if it is welcome",
+        "A hand held, an arm stroked, hair brushed"
+       ],
+       [
+        "A phone to their ear",
+        "For family far away"
+       ]
+      ],
+      "say": "Here are ways to reach them. Your voice, with stories, memories, or the small news of the day. Their music, played softly. Touch, if it is welcome, like a hand held, an arm stroked, or hair brushed. And for family far away, a phone held gently to their ear."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "What Matters: When the Time Comes",
+      "rows": [
+       [
+        "The room",
+        ""
+       ],
+       [
+        "The people",
+        ""
+       ],
+       [
+        "The words",
+        ""
+       ],
+       [
+        "Touch",
+        ""
+       ],
+       [
+        "After",
+        ""
+       ]
+      ],
+      "tap": 2,
+      "panel": {
+       "h": "The words",
+       "sub": "What do you want said, read, prayed, or sung?",
+       "items": [
+        "The song from our wedding",
+        "A reading from my tradition",
+        "The grandkids telling stories"
+       ]
+      },
+      "say": "Willow can help you know what they would want. On What Matters, under When the time comes, there is a place called The words. What do they want said, read, prayed, or sung? If they wrote it down while they could, this is the time to use it."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 5,
+      "note": {
+       "h": "Readings",
+       "p": "Psalms, prayers, poems, and blessings to read aloud, for all faith traditions and everything in-between."
+      },
+      "say": "If you are not sure what to say, the Readings tab has words ready. Psalms, prayers, poems, and blessings, for all faith traditions and everything in-between. Choose one that fits them. Read slowly. Read it twice."
+     },
+     {
+      "k": "story",
+      "title": "If She Is Still Here",
+      "lines": [
+       "On my day off, a daughter texted that her mom had taken a turn. I wrote back that I could come tomorrow.",
+       "She answered: Okay. If she is still here. I went right away.",
+       "Her mom died peacefully in her sleep a few hours after I left. I am so glad I did not wait."
+      ],
+      "lesson": "If something tells you to go now, go now.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/if-she-is-still-here",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about a text I got on my day off. It was from Jenny, a daughter I had been visiting for about a year. Her mom, Carol, had taken a turn. Can you come? I wrote back that I was off, and could come by tomorrow. She answered, okay. If she is still here. My heart dropped. Only a few days before, Carol and I had been laughing together. I went right away. I prayed for Carol and her family, and everyone in the room cried. It was not grief breaking them down. It was something in them finally letting go. Carol died peacefully in her sleep a few hours after I left. I almost said tomorrow. I am so glad I did not."
+     },
+     {
+      "k": "words",
+      "h": "Things you can say now",
+      "items": [
+       "Thank you for loving me.",
+       "I'll take care of Mom.",
+       "We're going to be okay.",
+       "You can rest when you are ready."
+      ],
+      "say": "If something is telling you to go now, go now, and say what you want to say today. Here are things families often say. Thank you for loving me. I will take care of Mom. We are going to be okay. And, when it feels right, you can rest when you are ready."
+     },
+     {
+      "k": "big",
+      "h": "Say one true thing to them.",
+      "beats": [
+       "Let us practice.",
+       "Think of the person you love.",
+       "Picture their face, and say their name.",
+       {
+        "t": "Now say one true thing to them, out loud or in your heart.",
+        "w": 12
+       }
+      ],
+      "say": "Let us practice. Think of the person you love. Picture their face, and say their name. Now say one true thing to them, out loud or in your heart."
+     },
+     {
+      "k": "story",
+      "title": "Please Help My Dad Die",
+      "lines": [
+       "A man was struggling to let go. His son, the one closest to him, could not bring himself to come.",
+       "I told him his children would be alright, that his son loved him deeply even if he could not be there, and that he was free to go.",
+       "His arm lifted, as if reaching for something. His daughter cried, Dad, I am here. You can go. He died peacefully the next day, with her at his side."
+      ],
+      "lesson": "Telling someone, once, that they can go when they are ready can be a gift.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/please-help-my-dad-die",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "I was once called to the bedside of a man named Bob, who was struggling to let go. His daughter hoped I could help. Her brother, the one closest to their dad, could not bring himself to come. Bob was in a deep sleep. I put a hand on his shoulder and told him who I was. Then I told him it was okay to go. That his son and daughter would be alright. That his son loved him deeply, even if he could not be there. That he was free to go. His arm lifted slowly, as if he were reaching for something. His daughter burst into tears. Dad, I'm here. You can go. The next day, Bob died peacefully, with his daughter at his side."
+     },
+     {
+      "k": "big",
+      "h": "Some people seem to wait.",
+      "sub": "For a visitor, a date, or permission.",
+      "say": "Some people seem to wait, for a visitor, a date, or permission. Bedside workers see it often, though no one can say for sure why. Is anyone missing? Is anything left unsaid? If it feels right, tell them once that they can go when they are ready. Once is enough."
+     },
+     {
+      "k": "big",
+      "h": "Something worries you? Call your hospice first.",
+      "sub": "Day or night. The line is at the top of Today.",
+      "say": "If anything worries you, like restlessness or a grimace, call your hospice first, day or night. Their twenty four hour line sits at the top of Today."
+     },
+     {
+      "k": "quiz",
+      "q": "If the person you love can no longer respond, what can you still do?",
+      "opts": [
+       "Stop talking, since they cannot hear",
+       "Keep talking to them, play their music, and hold their hand",
+       "Talk about them in the room as if they are not there"
+      ],
+      "right": 1,
+      "why": "Hearing may be one of the last senses to go. Speak to them, play their music, and stay close.",
+      "say": "One question. If the person you love can no longer respond, what can you still do?"
+     }
+    ]
+   },
+   {
+    "id": "wl-h-ready",
+    "n": 5,
+    "title": "When They're Ready and You're Not",
+    "mins": 7,
+    "blurb": "Holding on, letting go, and the hard space in between.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 5",
+      "h": "When They're Ready and You're Not",
+      "sub": "Holding on, and letting go.",
+      "say": "Sometimes the person you love finds peace with dying before you do. They are ready, and you are not. Sometimes it is the other way around. This lesson is about that hard space in between."
+     },
+     {
+      "k": "big",
+      "h": "Readiness comes to each person in its own time.",
+      "sub": "It comes a little at a time, or not at all.",
+      "say": "Readiness rarely arrives for everyone at once. The person who is dying may get there first, after quiet work of their own. Or a spouse may be ready long before the person is. Readiness comes a little at a time, or not at all, and both are allowed."
+     },
+     {
+      "k": "story",
+      "title": "Peace That Passes Understanding",
+      "lines": [
+       "Her husband sat in a lawn chair in the driveway. I'm not ready for any of this, he said.",
+       "Inside, she smiled. I'm going to die, and I'm okay with it. But a lot of people think I should fight it.",
+       "She was not depressed or hopeless. She was ready to go be with God. Not giving up. A deep spiritual readiness."
+      ],
+      "lesson": "Love sometimes holds on with everything it has. Sometimes it opens its hands.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "I once pulled up to a house where the husband was already sitting outside, in a lawn chair in the driveway. It's not going well, he told me. She's given up. She's the one who wanted you to come. I'm not ready for any of this. Inside, his wife sat at the dining room table with a bright, peaceful smile. I'm going to die, she told me, and I'm okay with it. But a lot of people think I should fight it. Some are even saying I'm suicidal. She was not depressed or hopeless. I'm ready to go be with Him, she said. Sitting with her, I did not see someone giving up. I saw a deep spiritual readiness. Love sometimes holds on with everything it has. And sometimes it learns to let go with open hands."
+     },
+     {
+      "k": "big",
+      "h": "Being ready is different from wanting to end your life.",
+      "sub": "Unsure? Call your hospice. 988 and 911 too.",
+      "say": "Here is something important. Being at peace with dying is different from wanting to end your life. Many people near the end feel ready, and that can be a deep peace. If they ever talk about ending their own life, or you are unsure which you are hearing, call your hospice right away, day or night. You can also call or text nine eight eight. In danger now, call nine one one."
+     },
+     {
+      "k": "points",
+      "h": "If you are not ready",
+      "items": [
+       [
+        "Say so, gently",
+        "I am not ready to lose you, and I love you"
+       ],
+       [
+        "Let both be true",
+        "Your grief and their peace can share a room"
+       ],
+       [
+        "Get support",
+        "The hospice chaplain or social worker"
+       ],
+       [
+        "Take breaks",
+        "Step outside when it is too much"
+       ]
+      ],
+      "say": "If you are not ready, you can say so, gently. I am not ready to lose you, and I love you. Let both be true. Your grief and their peace can share a room. Talk with the hospice chaplain or social worker. And step outside when it is too much."
+     },
+     {
+      "k": "words",
+      "h": "Words for when you are not ready",
+      "items": [
+       "I am not ready to lose you.",
+       "And I love you.",
+       "Tell me what peace feels like for you.",
+       "I will be with you, all the way."
+      ],
+      "say": "Here are words for this space. I am not ready to lose you. And I love you. Tell me what peace feels like for you. I will be with you, all the way."
+     },
+     {
+      "k": "big",
+      "h": "Hold on, then open your hands.",
+      "beats": [
+       "Let us try this with your body.",
+       "Make two fists, and hold them tight, the way love holds on.",
+       "Now slowly open your hands, palms up, and let them rest.",
+       {
+        "t": "Breathe out, and notice what open hands feel like.",
+        "w": 10
+       }
+      ],
+      "say": "Let us try this with your body. Make two fists, and hold them tight, the way love holds on. Now slowly open your hands, palms up, and let them rest. Breathe out, and notice what open hands feel like."
+     },
+     {
+      "k": "big",
+      "h": "If they ask, Why is God doing this to me?",
+      "sub": "You can stay with the question.",
+      "say": "Sometimes it is the other way around. You are ready to let them rest, and they are angry, afraid, or asking, why is God doing this to me? That question is as old as faith itself. You can stay with it."
+     },
+     {
+      "k": "story",
+      "title": "Why Is God Doing This to Me?",
+      "lines": [
+       "Her arms shook with tremors. Why is God doing this to me? she asked. I was careful not to rush an answer.",
+       "I held her hands and said, anyone in your shoes would be asking the same thing. Scripture is full of people asking it too.",
+       "Something shifted. He has never left me, she said. Later she said, I'm ready for that, and closed her eyes."
+      ],
+      "lesson": "You can honor the question without rushing to answer it.",
+      "note": "Names and details changed",
+      "hold": 2,
+      "say": "I once sat with a woman named Mary, whose arms shook with tremors she could not control. She asked me, why is God doing this to me? The nurse in the room looked at me as if to say, how do you even answer that? I was careful not to rush. I held both her hands, leaned in, and said, Mary, anyone in your shoes would be asking the same thing. Scripture is full of people shaking their fists at God and asking why. Something shifted in her. You're right, she said. He has never left me. Then, quietly, but when will this end? I told her I did not know when. But I knew her rest was coming. She said, I'm ready for that, and closed her eyes."
+     },
+     {
+      "k": "points",
+      "h": "When faith feels complicated",
+      "items": [
+       [
+        "Listen first",
+        "Let them say the hard thing"
+       ],
+       [
+        "Stay curious",
+        "Doubt and anger are part of faith for many"
+       ],
+       [
+        "Offer their own words",
+        "A prayer or reading from their tradition"
+       ],
+       [
+        "Invite the chaplain",
+        "Or their own faith leader"
+       ]
+      ],
+      "say": "When faith feels complicated, listen first. Let them say the hard thing. Stay curious with them. For many people, doubt and anger are part of faith. Offer words from their own tradition. And invite the hospice chaplain, or their own faith leader. Bedside has a section called When faith is complicated, for this."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "When Life Changes",
+      "rows": [
+       [
+        "\"I wish it would end.\" \"I'm ready.\"",
+        "Guide"
+       ],
+       [
+        "\"I'm not ready.\"",
+        "Guide"
+       ],
+       [
+        "\"Is God punishing me?\"",
+        "Guide"
+       ],
+       [
+        "\"Why are they hanging on?\"",
+        "Guide"
+       ]
+      ],
+      "tap": 1,
+      "panel": {
+       "h": "\"I'm not ready.\"",
+       "sub": "Sort what feels least ready.",
+       "items": [
+        "Affairs",
+        "People",
+        "Spirit"
+       ]
+      },
+      "say": "When Life Changes has guides for this exact space. I'm ready. I'm not ready. Is God punishing me? Each guide has words to say, and two short videos, one For You and one For the Helper."
+     },
+     {
+      "k": "quiz",
+      "q": "Your person feels ready to die and you are not. What can help?",
+      "opts": [
+       "Hiding your feelings completely",
+       "Letting both be true, and getting support for yourself",
+       "Convincing them to keep fighting"
+      ],
+      "right": 1,
+      "why": "Your grief and their peace can share a room. Let both be true, and lean on your hospice team.",
+      "say": "One question. Your person feels ready, and you are not. What can help?"
+     }
+    ]
+   },
+   {
+    "id": "wl-h-you",
+    "n": 6,
+    "title": "Caring for Yourself on the Way",
+    "mins": 7,
+    "blurb": "Your own tree, your own grief, and the help that is there for you.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 6",
+      "h": "Caring for Yourself on the Way",
+      "sub": "You matter here too.",
+      "say": "This last lesson is about you. Caring for someone at the end of life is love, and it is also hard, tiring work. You matter here too."
+     },
+     {
+      "k": "points",
+      "h": "What caregivers carry",
+      "items": [
+       [
+        "Long days and nights",
+        "Watching, waiting, listening"
+       ],
+       [
+        "Hard choices",
+        "Often made tired, and often made fast"
+       ],
+       [
+        "Grief that starts early",
+        "Losing them a little at a time"
+       ],
+       [
+        "Your own life on hold",
+        "Work, sleep, friends, meals"
+       ]
+      ],
+      "say": "Look at what you are carrying. Long days and nights of watching and waiting. Hard choices, often made tired. Grief that starts early, as you lose them a little at a time. And your own life, set on hold. That is a lot for one heart."
+     },
+     {
+      "k": "story",
+      "title": "Grief Debt",
+      "lines": [
+       "One week I caught myself walking around numb. Not sad, not angry. Just numb.",
+       "A few patients I had grown attached to had died, and a close friend had just lost his wife. Three smaller losses hit me like one big one.",
+       "Grief we put off piles up quietly, like laundry we swear we will fold."
+      ],
+      "lesson": "Pay grief down a little at a time.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/grief-debt",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Some weeks just feel heavier than others. One week I caught myself walking around numb. Not sad, not angry, just numb. That is usually my first clue that I have racked up too much grief debt. Grief debt is what happens when life keeps handing you losses, and you keep telling yourself you will feel them later. That week, a few patients I had grown attached to had died, and a close friend had just lost his wife. Three smaller losses had quietly joined forces and hit me like one big one. My heart was keeping better count than my head. The pile grows quietly, like laundry you swear you are going to fold. The kindness is learning to pay it down before the interest gets too high."
+     },
+     {
+      "k": "flow",
+      "h": "Notice. Name. Express. Unpack.",
+      "steps": [
+       [
+        "Notice it",
+        "Something is there"
+       ],
+       [
+        "Name it",
+        "As clearly as you can"
+       ],
+       [
+        "Express it",
+        "Talk, write, cry"
+       ],
+       [
+        "Unpack it",
+        "Walk, stretch, breathe"
+       ]
+      ],
+      "say": "Here is a simple way to pay it down. First, notice it. Just admit something is there, with no fixing and no judgment. Second, name it, as clearly as you can. Third, express it. Talk, write, cry, or sit and let yourself feel it. Fourth, unpack it with your body. A slow walk, a stretch, a few long breaths."
+     },
+     {
+      "k": "points",
+      "h": "Practice: A Grief Debt Check",
+      "items": [
+       [
+        "Notice",
+        "What have I been carrying lately?"
+       ],
+       [
+        "Name",
+        "One loss I have not let myself feel"
+       ],
+       [
+        "Express",
+        "A few words, out loud or inside"
+       ],
+       [
+        "Unpack",
+        "Roll your shoulders, one long breath out"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "2": 8,
+        "4": 10,
+        "6": 12,
+        "8": 8
+       },
+       "at": [
+        1,
+        3,
+        5,
+        7
+       ]
+      },
+      "say": "Let us try it now, for just a minute. Notice. Ask yourself, what have I been carrying lately? Name. Choose one loss you have not let yourself feel yet. Express. Say a few words about it, out loud or in your heart. Unpack. Roll your shoulders, and let one long breath out."
+     },
+     {
+      "k": "points",
+      "h": "Signs you need a break",
+      "items": [
+       [
+        "Short temper",
+        "Snapping at people you love"
+       ],
+       [
+        "Not sleeping or eating",
+        "Running on empty"
+       ],
+       [
+        "Feeling numb",
+        "Or far away"
+       ],
+       [
+        "Thinking, no one else can do this",
+        "Others can help"
+       ]
+      ],
+      "say": "Watch for signs you need a break. A short temper. Not sleeping or eating. Feeling numb, or far away. Or thinking, no one else can do this. Others can help, and letting them is part of loving well."
+     },
+     {
+      "k": "big",
+      "h": "Guilt usually means you love them.",
+      "sub": "I'm doing what love can do today.",
+      "say": "Many caregivers carry guilt. Am I doing enough? Am I doing it wrong? Guilt usually means you love them. Try writing the guilt down. Then, under it, write, I'm doing what love can do today."
+     },
+     {
+      "k": "screen",
+      "app": "willow",
+      "app_name": "Willow",
+      "title": "Today, for you",
+      "rows": [
+       [
+        "Hospice 24/7 line",
+        "Call"
+       ],
+       [
+        "Your tree",
+        "Gentle words"
+       ],
+       [
+        "Today's practice",
+        "For you"
+       ],
+       [
+        "The people you care for",
+        "Mom's tree"
+       ]
+      ],
+      "tap": 1,
+      "panel": {
+       "h": "Lately, as you care for Mom",
+       "sub": "Your own check-in.",
+       "items": [
+        "Had someone to lean on?",
+        "Taken a break without guilt?",
+        "Let yourself feel what you feel?"
+       ]
+      },
+      "say": "Willow gives you a tree of your own, because caregivers carry this as well. When you open your own tree, Today says, Today, for you. Your check-in asks about you. Have you had someone to lean on? Taken a break without guilt? Let yourself feel what you feel? You see gentle words, never a score."
+     },
+     {
+      "k": "tabs",
+      "app": "willow",
+      "app_name": "Willow",
+      "tabs": [
+       "Today",
+       "What Matters",
+       "Cuttings",
+       "Bedside",
+       "When Life Changes",
+       "Readings",
+       "Learn"
+      ],
+      "tap": 3,
+      "note": {
+       "h": "Care for the one keeping watch",
+       "p": "Small things for you: a long out-breath, a grief debt check, one real meal."
+      },
+      "say": "On Bedside, scroll to Care for the one keeping watch. It has small things for you. One minute of long out-breaths before you walk in. A grief debt check. Gates, not walls, so someone else can take a shift. And one real meal today."
+     },
+     {
+      "k": "points",
+      "h": "Help is there",
+      "items": [
+       [
+        "Respite care",
+        "Ask your hospice about short breaks"
+       ],
+       [
+        "Hospice volunteers",
+        "Someone to sit while you rest"
+       ],
+       [
+        "Grief support",
+        "Now, and for about a year after"
+       ],
+       [
+        "988",
+        "Call or text if you are struggling"
+       ]
+      ],
+      "say": "Help is there. Ask your hospice about respite care, a short break for you. Hospice volunteers can sit while you rest. Grief support is there now, and for about a year after a death. Ask for it by name. And if you are struggling, call or text nine eight eight, any time. In danger now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Feeling relief after a long road is normal.",
+      "sub": "It does not mean you loved them less.",
+      "say": "One more thing. After a long road, many people feel relief when it ends, and then guilt for feeling relief. Relief and grief can live in the same heart. Relief is normal. It means you carried a lot, for a long time."
+     },
+     {
+      "k": "big",
+      "h": "You are bending, and you are not alone.",
+      "sub": "Held gently, all the way home.",
+      "say": "A willow bends in the storm, so far you think it should break, and it does not. You are bending too. You are not alone. Thank you for walking with the person you love, all the way home."
+     },
+     {
+      "k": "quiz",
+      "q": "What is grief debt?",
+      "opts": [
+       "Money owed for a funeral",
+       "Grief that piles up when we keep putting it off",
+       "A kind of hospice bill"
+      ],
+      "right": 1,
+      "why": "Grief we keep putting off piles up. Notice, name, express, and unpack to pay it down.",
+      "say": "Last question. What is grief debt?"
+     }
+    ]
+   }
+  ]
+ }
     ]
   },
   grove: {
