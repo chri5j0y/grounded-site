@@ -26,7 +26,7 @@
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=fd1', '/grove/library.js?v=vb1'];
+  var FILES = ['/grove/data.js?v=fd1', '/grove/library.js?v=vb2'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -68,7 +68,7 @@
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
       bedside: it.bedside || null,
-      app: age === 'maple' || age === 'aspen' ? age : 'lib'
+      app: age === 'maple' || age === 'aspen' || age === 'sequoia' ? age : 'lib'
     };
   }
   function guideHtml(v) {

@@ -45,6 +45,16 @@
      GGP.createDialog({ forOther: true, keepMe: true })
                                       set up a profile for someone you
                                       love; you stay unlocked as their helper
+
+   Sequoia, the tree for older adults (GWG BLD 733)
+   - A grown-up's profile keeps the age "adult". Anyone who says they are
+     55 or older may choose their tree: Oak, or Sequoia (built for 60 and
+     up). The choice sits beside the name and picture (p.tree), changeable
+     any time in Manage my profile, and sets where "My tree" goes.
+   - Helpers work in Sequoia the Willow way, only when the person turns on
+     Add a Helper in their own Sequoia settings.
+     GGP.tree(id)                    'sequoia' or 'oak' for a grown-up
+     GGP.setTree(id, tree)           'sequoia' or 'oak'
    ===================================================================== */
 (function () {
   if (window.GGP) return;
@@ -59,6 +69,10 @@
     { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/maple/' }
   ];
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
+  // A grown-up's own tree (Sequoia, GWG BLD 733). The age stays "adult" either way.
+  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/oak/', who: 'For adults' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/sequoia/', who: 'Built for older adults, 60 and up' } };
+  function treeOf(p) { return p && p.age === 'adult' && p.tree === 'sequoia' ? 'sequoia' : 'oak'; }
+  function toolOf(p) { var a = AGE[(p && p.age)] || AGE.adult; if (p && p.age === 'adult' && treeOf(p) === 'sequoia') return { id: a.id, name: a.name, who: a.who, tool: 'Sequoia', href: '/sequoia/' }; return a; }
   var PICS = ['fox', 'owl', 'bunny', 'turtle', 'bee', 'frog', 'ladybug', 'sunflower', 'butterfly'];
   var isMinor = function (age) { return age && age !== 'adult'; };
   var grownOpens = function (age) { return age === 'maple' || age === 'aspen'; };
@@ -198,6 +212,7 @@
           agreed: { date: todayStr(), terms: TERMS_V, privacy: PRIVACY_V, by: grown ? 'grownup' : 'self', grownup: grown ? grown.name : '' },
           grown: grown ? [grown.id] : [], shared: {}, helpers: helperOf ? [helperOf] : []
         };
+        if (o.age === 'adult' && o.tree === 'sequoia') p.tree = 'sequoia';
         putP(p);
         var vault = blankVault();
         if (o.carry) Object.keys(o.carry).forEach(function (k) { vault[k] = o.carry[k]; });
@@ -396,10 +411,21 @@
   /* =====================================================================
      CREATE
      ===================================================================== */
+  /* Sequoia (GWG BLD 733): anyone who says they are 55 or older may choose their tree. */
+  function treeBlock(st, other) {
+    return '<div id="ggp-treebox"' + (st.age === 'adult' ? '' : ' hidden') + '><label class="ggp-check"><input type="checkbox" id="ggp-older"' + (st.older ? ' checked' : '') + '> <span>' + (other ? 'They are' : 'I am') + ' 55 or older</span></label>' +
+      '<div id="ggp-treepick"' + (st.older ? '' : ' hidden') + '><label class="ggp-l">' + (other ? 'Their tree' : 'My tree') + '</label><div class="ggp-ages">' + ['oak', 'sequoia'].map(function (t) { return '<button type="button" class="ggp-age" data-tree="' + t + '" aria-pressed="' + (st.tree === t) + '"><b>' + TREE[t].tool + '</b><span>' + TREE[t].who + '</span></button>'; }).join('') + '</div>' +
+      '<span class="ggp-small">Change it any time in Manage my profile.</span></div></div>';
+  }
+  function treeWire(d, st) {
+    var ck = $(d, '#ggp-older'); if (!ck) return;
+    ck.onchange = function () { st.older = ck.checked; $(d, '#ggp-treepick').hidden = !ck.checked; };
+    d.el.querySelectorAll('[data-tree]').forEach(function (b) { b.onclick = function () { st.tree = b.dataset.tree; d.el.querySelectorAll('[data-tree]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); }; });
+  }
   function createDialog(opt) {
     opt = opt || {};
     return new Promise(function (resolve) {
-      var st = { name: opt.name || '', avatar: opt.avatar || '', age: opt.forOther ? 'adult' : (opt.age || (cur ? '' : 'adult')), pass: null };
+      var st = { name: opt.name || '', avatar: opt.avatar || '', age: opt.forOther ? 'adult' : (opt.age || (cur ? '' : 'adult')), pass: null, older: opt.tree === 'sequoia', tree: opt.tree === 'sequoia' ? 'sequoia' : 'oak' };
       var other = !!opt.forOther, keep = other && opt.keepMe && cur && getP(cur.id) && getP(cur.id).age === 'adult' ? cur.id : null;
       if (!st.age) { var a = cur && getP(cur.id); st.age = a && a.age === 'adult' ? '' : 'adult'; }
       dialog(function (d) { step1(d); }, function (r) { resolve(!!r); });
@@ -408,10 +434,12 @@
           (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode, on this device only.</p>') +
           '<label class="ggp-l" for="ggp-name">' + (other ? 'Their first name, or what you call them' : 'First name or a nickname') + '</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
           (other ? '' : '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
+          treeBlock(st, other) +
           '<div class="ggp-picrow"><span id="ggp-av">' + av(st.avatar, st.name || '?', 56) + '</span><button type="button" class="ggp-link" id="ggp-pick">Choose a picture</button></div>' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-next>Next</button></div>');
         $(d, '[data-x]').onclick = function () { d.close(false); };
-        d.el.querySelectorAll('[data-age]').forEach(function (b) { b.onclick = function () { st.age = b.dataset.age; d.el.querySelectorAll('[data-age]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); }; });
+        d.el.querySelectorAll('[data-age]').forEach(function (b) { b.onclick = function () { st.age = b.dataset.age; d.el.querySelectorAll('[data-age]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); var tb = $(d, '#ggp-treebox'); if (tb) tb.hidden = st.age !== 'adult'; }; });
+        treeWire(d, st);
         $(d, '#ggp-pick').onclick = function () {
           st.name = $(d, '#ggp-name').value.trim();
           loadAvatars(function () { GGAv.pick({ value: st.avatar, name: st.name || '?', photo: true, prefer: st.age === 'adult' ? 'bold' : 'friendly', onPick: function (v) { st.avatar = v; $(d, '#ggp-av').innerHTML = av(v, st.name, 56); } }); });
@@ -471,7 +499,7 @@
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Create profile</button></div>');
         $(d, '[data-back]').onclick = function () { st.pass = null; step2(d); };
         $(d, '[data-go]').onclick = function () {
-          var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null, helperOf: keep };
+          var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null, helperOf: keep, tree: st.age === 'adult' && st.older ? st.tree : 'oak' };
           try { if (minor) Object.assign(o, readGrown(d)); else if (!$(d, '#ggp-agree').checked) throw new Error('Please check the box to agree.'); }
           catch (e) { return d.msg(e.message); }
           run(d, function () { return createProfile(o); }).then(function (id) {
@@ -661,11 +689,12 @@
       d.show('<div style="display:flex;gap:14px;align-items:center"><button type="button" class="ggp-pic" style="width:76px;height:76px" id="ggp-pick" aria-label="Change picture">' + av(p.avatar, p.name, 68) + '</button><div><h2 id="ggp-title" style="margin:0">' + esc(p.name) + '</h2><span class="ggp-small">' + ageName(p.age) + ' profile' + (cur.id === id ? ', unlocked until ' + untilText(cur.until) : ', opened by ' + esc(act.name)) + '</span></div></div>' +
         '<label class="ggp-l" for="ggp-name">Name</label><input type="text" id="ggp-name" maxlength="30" value="' + esc(p.name) + '">' +
         '<label class="ggp-l">Age</label><select id="ggp-age">' + AGES.map(function (a) { return '<option value="' + a.id + '"' + (a.id === p.age ? ' selected' : '') + '>' + a.name + ' (' + a.who + ')</option>'; }).join('') + '</select>' +
+        (isAdult ? '<label class="ggp-check"><input type="checkbox" id="ggp-older"' + (treeOf(p) === 'sequoia' ? ' checked' : '') + '> <span>' + (cur.id === id ? 'I am' : 'They are') + ' 55 or older</span></label><div id="ggp-treepick"' + (treeOf(p) === 'sequoia' ? '' : ' hidden') + '><label class="ggp-l" for="ggp-tree">Tree</label><select id="ggp-tree">' + ['oak', 'sequoia'].map(function (t) { return '<option value="' + t + '"' + (treeOf(p) === t ? ' selected' : '') + '>' + TREE[t].tool + ' (' + TREE[t].who + ')</option>'; }).join('') + '</select><span class="ggp-small">Sets where My tree opens. Check-ins already saved stay where they are.</span></div>' : '') +
         (isAdult ? '<label class="ggp-l" for="ggp-email">Email, optional</label><input type="email" id="ggp-email" value="' + esc(v.email || '') + '" placeholder="Fills in contact forms on this site"><span class="ggp-small">It stays in your locked profile and is only sent if you send a form.</span>' : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b ggp-go" data-save>Save changes</button></div>' +
         (kids.filter(function (k) { return k.age !== 'adult'; }).length ? '<hr class="ggp-sep"><p><b>Kids you can open</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age !== 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
-        (kids.filter(function (k) { return k.age === 'adult'; }).length ? '<hr class="ggp-sep"><p><b>People you help in Willow</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age === 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
-        (isAdult && (p.helpers || []).length ? '<hr class="ggp-sep"><p><b>Helpers in Willow</b></p><p class="ggp-small">They open this profile in Willow with their own passcode, and see only what you choose to share there.</p>' + (p.helpers || []).map(getP).filter(Boolean).map(function (h) { return '<p class="ggp-small" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>' + esc(h.name) + '</span>' + (cur.id === id ? '<button type="button" class="ggp-link" data-rmhelper="' + h.id + '">Remove</button>' : '') + '</p>'; }).join('') : '') +
+        (kids.filter(function (k) { return k.age === 'adult'; }).length ? '<hr class="ggp-sep"><p><b>People you help</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age === 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
+        (isAdult && (p.helpers || []).length ? '<hr class="ggp-sep"><p><b>Helpers</b></p><p class="ggp-small">They open this profile in Willow or Sequoia with their own passcode, and see only what you choose to share there.</p>' + (p.helpers || []).map(getP).filter(Boolean).map(function (h) { return '<p class="ggp-small" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>' + esc(h.name) + '</span>' + (cur.id === id ? '<button type="button" class="ggp-link" data-rmhelper="' + h.id + '">Remove</button>' : '') + '</p>'; }).join('') : '') +
         (grownOpens(p.age) ? '<hr class="ggp-sep"><p><b>Grown-ups who can open this profile</b></p><p class="ggp-small">' + (grown.length ? grown.map(function (g) { return esc(g.name); }).join(', ') : 'None yet') + '</p><button type="button" class="ggp-link" data-addgrown>Add another grown-up</button>' : '') +
         '<hr class="ggp-sep"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">' +
         '<button type="button" class="ggp-link" data-code>Change ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '</button>' +
@@ -673,6 +702,7 @@
         '<button type="button" class="ggp-link" data-rm style="color:var(--ggp-warn)">Remove this profile from this device</button></div>' +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Done</button></div>');
       $(d, '[data-x]').onclick = function () { d.close(true); };
+      var olderBox = $(d, '#ggp-older'); if (olderBox) olderBox.onchange = function () { $(d, '#ggp-treepick').hidden = !olderBox.checked; };
       $(d, '#ggp-pick').onclick = function () { loadAvatars(function () { GGAv.pick({ value: p.avatar, name: p.name, photo: true, prefer: isAdult ? 'bold' : 'friendly', onPick: function (val) { var q = getP(id); q.avatar = val; putP(q); emit('change'); view(d); } }); }); };
       $(d, '[data-save]').onclick = function () {
         var name = $(d, '#ggp-name').value.trim(), age = $(d, '#ggp-age').value;
@@ -684,7 +714,9 @@
           Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
           
         }
-        var q = getP(id); q.name = name; q.age = age; putP(q);
+        var q = getP(id); q.name = name; q.age = age;
+        if (isAdult) { var ob = $(d, '#ggp-older'), ts = $(d, '#ggp-tree'); if (ob && ob.checked && ts && ts.value === 'sequoia') q.tree = 'sequoia'; else delete q.tree; }
+        putP(q);
         if (isAdult) { v.email = ($(d, '#ggp-email').value || '').trim(); }
         save(id).then(function () { emit('change'); toast('Saved.'); view(d); });
       };
@@ -764,7 +796,7 @@
   function backupGo(act, opts) {
     var run = function () { if (window.GGBackup) GGBackup[act](opts); };
     if (window.GGBackup) return run();
-    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=bk1'; s.onload = run;
+    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=bk2'; s.onload = run;
     s.onerror = function () { toast('The backup tool could not load. Check the connection and try again.'); };
     document.head.appendChild(s);
   }
@@ -805,9 +837,10 @@
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
       html += link('/grove/', 'The Grove');
-      html += link(a.href, 'My tree in ' + a.tool);
+      var ta = toolOf(p);
+      html += link(ta.href, 'My tree in ' + ta.tool);
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
-      helping().map(getP).filter(Boolean).forEach(function (q) { html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
+      helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id); if (sq) html += link('/sequoia/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Sequoia'); if (!sq || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage my profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
@@ -915,14 +948,14 @@
     if (!isHome) return;
     if (!p) { if (box) box.remove(); return; }
     // Your tree is yours. The grove is ours. (Rebrand Session 5)
-    var v = vaultNow(), chips = [], ta = AGE[p.age] || AGE.adult;
+    var v = vaultNow(), chips = [], ta = toolOf(p), sq = ta.tool === 'Sequoia';
     chips.push([ta.href, 'Tend my tree in ' + ta.tool]);
     chips.push(['/grove/', 'Visit The Grove']);
-    var h = (v.oak && v.oak.history) || [];
-    if (h.length) { var last = h[h.length - 1]; chips.push(['/oak/', 'Last Oak check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
-    else { var a = AGE[p.age] || AGE.adult; chips.push([a.href, 'Take ' + (/^[AEIOU]/.test(a.tool) ? 'an ' : 'a ') + a.tool + ' check-in']); }
+    var h = ((sq ? v.sequoia : v.oak) || {}).history || [];
+    if (h.length) { var last = h[h.length - 1]; chips.push([ta.href, 'Last ' + ta.tool + ' check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
+    else { chips.push([ta.href, 'Take ' + (/^[AEIOU]/.test(ta.tool) ? 'an ' : 'a ') + ta.tool + ' check-in']); }
     if (v.willow && v.willow.started) chips.push(['/willow/', 'My tree in Willow']);
-    helping().map(getP).filter(Boolean).forEach(function (q) { chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
+    helping().map(getP).filter(Boolean).forEach(function (q) { if (seqHelp(q.id)) chips.push(['/sequoia/#for=' + q.id, 'Helping ' + q.name]); else chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';
     if (!box) { box = document.createElement('section'); box.id = 'ggp-welcome'; box.className = 'ggp-welcome'; box.setAttribute('aria-label', 'Welcome back'); document.querySelector('.hero').insertAdjacentElement('afterend', box); }
@@ -951,6 +984,8 @@
     if (open[helperId] && open[helperId].data.keys && open[helperId].data.keys[id]) { delete open[helperId].data.keys[id]; writeVault(helperId, open[helperId].raw, open[helperId].data); }
     emit('change'); return true;
   }
+  // Sequoia (GWG BLD 733): a person you help who turned on Add a Helper in Sequoia.
+  function seqHelp(id) { var o = open[id], s = o && o.data && o.data.sequoia; return !!(s && s.helpersOn); }
   function helping() {
     var a = cur && getP(cur.id); if (!a || a.age !== 'adult') return [];
     return Object.keys(open).filter(function (k) { var q = getP(k); return k !== a.id && q && q.age === 'adult' && (q.helpers || []).indexOf(a.id) > -1; });
@@ -962,8 +997,10 @@
   var readyP = null;
   window.GGP = {
     TERMS_V: TERMS_V, PRIVACY_V: PRIVACY_V, AGES: AGES, ageName: ageName,
-    list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
-    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} } : null; },
+    list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
+    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} } : null; },
+    tree: function (id) { return treeOf(getP(id)); },
+    setTree: function (id, t) { var p = getP(id); if (!p || p.age !== 'adult' || !open[id]) return false; if (t === 'sequoia') p.tree = 'sequoia'; else delete p.tree; putP(p); emit('change'); return true; },
     helpers: function (id) { var p = getP(id); return p ? (p.helpers || []).slice() : []; },
     helping: helping, addHelper: addHelper, removeHelper: removeHelper,
     active: function () { var p = cur && getP(cur.id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, until: cur.until } : null; },

@@ -68,8 +68,8 @@
   var CFG = window.GG_APP_CONFIG || {};          // written by the app build: {app, tools:[...], pages:[...]}
   var P = function (name) { return NATIVE && CAP.Plugins ? CAP.Plugins[name] : null; };
   var SITE = 'https://growwithgrounded.com';
-  var TOOLS = ['maple', 'aspen', 'oak', 'grove', 'field-guide'];
-  var SCHEMES = { 'maple': 'grounded-maple', 'aspen': 'grounded-aspen', 'oak': 'grounded-oak', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
+  var TOOLS = ['maple', 'aspen', 'oak', 'sequoia', 'grove', 'field-guide'];
+  var SCHEMES = { 'maple': 'grounded-maple', 'aspen': 'grounded-aspen', 'oak': 'grounded-oak', 'sequoia': 'grounded-sequoia', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
 
   document.documentElement.classList.add(NATIVE ? 'gg-native' : 'gg-web');
   if (NATIVE) document.documentElement.classList.add('gg-' + PLATFORM);
@@ -296,7 +296,7 @@
   }
 
   /* ---------------- HANDOFF TO THE GROVE ---------------- */
-  var FROM = { 'maple': 'Maple', 'aspen': 'Aspen', 'oak': 'Oak' };
+  var FROM = { 'maple': 'Maple', 'aspen': 'Aspen', 'oak': 'Oak', 'sequoia': 'Sequoia' };
   var AGES = ['maple', 'aspen', 'pine', 'adult'];
   function enc64(s) { return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
   function dec64(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return decodeURIComponent(escape(atob(s))); }
@@ -370,7 +370,7 @@
        v  1 (the format)
        i  a random share id that stays the same for that person (12 letters and digits)
        n  first name
-       t  which tree: maple, aspen, or oak
+       t  which tree: maple, aspen, oak, or sequoia
        g  days tended (how grown the tree is drawn)
        p  parts tended in the 7 days before it was made, as digits 0 to 5 in PART order
        d  1 if they tended on the day it was made, otherwise 0
@@ -378,7 +378,7 @@
        m  when it was made, in seconds (a newer code replaces an older one)
      Never answers, scores, levels, notes, journals, safety or faith answers, or the growth plan.
      Anything else in a code, or anything out of shape, and the whole code is ignored. */
-  var FPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'], FTREES = ['maple', 'aspen', 'oak'];
+  var FPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'], FTREES = ['maple', 'aspen', 'oak', 'sequoia'];
   var FKEYS = ['v', 'i', 'n', 't', 'g', 'p', 'd', 'w', 'm'], FPEND = 'gg-fam-in', FBAD = 'gg-fam-bad';
   var F_EARLIEST = 1767225600;   // January 1, 2026
   function fname(s) {
@@ -465,7 +465,7 @@
   }
 
   /* ---------------- DAILY REMINDERS ---------------- */
-  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, maple: 1002, aspen: 1003, 'oak': 1004 };
+  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, maple: 1002, aspen: 1003, 'oak': 1004, sequoia: 1005 };
   var remind = {
     can: function () { return !!P('LocalNotifications'); },
     get: function (id) { var all = GGStore.json(RKEY, {}); return all[id] || { on: false, time: '07:00' }; },

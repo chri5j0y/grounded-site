@@ -84,8 +84,12 @@ const PARTS6 = [
   { key:'leaves', name:'Leaves', sub:'Body', color:'#3A9B58' },
   { key:'fruit', name:'Fruit', sub:'Hope', color:'#D9483F' }];
 const PNAME = Object.fromEntries(PARTS6.map(p => [p.key, p.name]));
-const TOOL = { adult:{ name:'Oak', href:'/oak/' }, pine:{ name:'Oak', href:'/oak/' }, aspen:{ name:'Aspen', href:'/aspen/' }, maple:{ name:'Maple', href:'/maple/' } };
-const toolOf = age => TOOL[age] || TOOL.adult;
+const TOOL = { adult:{ name:'Oak', href:'/oak/' }, pine:{ name:'Oak', href:'/oak/' }, aspen:{ name:'Aspen', href:'/aspen/' }, maple:{ name:'Maple', href:'/maple/' }, sequoia:{ name:'Sequoia', href:'/sequoia/' } };
+// A grown-up whose tree is Sequoia (GWG BLD 733) tends there. toolOf takes an age, or a profile.
+const toolOf = x => { const p = x && typeof x === 'object' ? x : null, age = p ? p.age : x;
+  if (p && age === 'adult' && (p.tree === 'sequoia' || ((p.shared || {}).tree || {}).tool === 'sequoia')) return TOOL.sequoia;
+  return TOOL[age] || TOOL.adult; };
+const stageFor = p => stageOf(p.age, p.age === 'adult' && (p.tree === 'sequoia' || ((p.shared || {}).tree || {}).tool === 'sequoia') ? 'sequoia' : '');
 const REACTS = [['love','\u2764\uFE0F','Love'], ['proud','\uD83C\uDF1F','Proud of you'], ['hug','\uD83E\uDD17','Hug'], ['thanks','\uD83D\uDE4F','Thank you'], ['ha','\uD83D\uDE04','Ha']];
 const KINDS = typeof TREE_KINDS !== 'undefined' ? TREE_KINDS : [{ id:'grove', name:'Grove tree', days:0 }];
 const SCENES = typeof SCENERY !== 'undefined' ? SCENERY : [{ id:'forest', name:'Forest', days:0 }];
@@ -147,8 +151,8 @@ const myDays = p => p ? treeOf(p).days : 0;
    Removed trees are remembered in G.famGone {id: u} so a backup merge doesn't bring them back.
    The backup merge (gg-backup.js mergeGrove) keeps the entry with the larger u for each id. */
 const FAM_MAX = 20;
-const FAM_STAGE = { maple:'maple', aspen:'aspen', oak:'adult' };
-const FAM_TOOL = { maple:'Maple', aspen:'Aspen', oak:'Oak' };
+const FAM_STAGE = { maple:'maple', aspen:'aspen', oak:'adult', sequoia:'sequoia' };
+const FAM_TOOL = { maple:'Maple', aspen:'Aspen', oak:'Oak', sequoia:'Sequoia' };
 const famDate = u => dstr(new Date(u * 1000));
 function famList() {
   const F = window.GGApp && GGApp.family, best = {};
@@ -171,9 +175,9 @@ function famWeek(f) { const made = famDate(f.u); return weekStart(made) === week
 function famHtml() {
   const list = famList();
   let h = `<div class="card gv-fam"><h3>Family Trees</h3>`;
-  if (!list.length) return h + `<p class="muted">Family on other phones can send you their tree. In their own tree app (Oak, Aspen, or Maple), they tap Share to Family and send you the link or QR code.</p></div>`;
+  if (!list.length) return h + `<p class="muted">Family on other phones can send you their tree. In their own tree app (Oak, Sequoia, Aspen, or Maple), they tap Share to Family and send you the link or QR code.</p></div>`;
   h += `<p class="muted">Trees shared from family's own phones. Each one shows how it looked when it was shared.</p><ul class="gv-fam-list">`;
-  h += list.map(f => { const wk = famWeek(f); return `<li><span class="gv-fam-ic" aria-hidden="true">${icon(f.t === 'oak' ? 'tree' : f.t === 'aspen' ? 'leaves' : 'maple')}</span><div><b>${esc(f.n)}</b> <small>${FAM_TOOL[f.t]}</small><span>${esc(famLine(f))}${wk ? ' · ' + esc(wk) : ''}</span></div><button type="button" class="btn btn-line btn-sm" data-act="famdrop" data-id="${esc(f.id)}" aria-label="Remove ${esc(f.n)}'s tree">Remove</button></li>`; }).join('');
+  h += list.map(f => { const wk = famWeek(f); return `<li><span class="gv-fam-ic" aria-hidden="true">${icon(f.t === 'oak' || f.t === 'sequoia' ? 'tree' : f.t === 'aspen' ? 'leaves' : 'maple')}</span><div><b>${esc(f.n)}</b> <small>${FAM_TOOL[f.t]}</small><span>${esc(famLine(f))}${wk ? ' · ' + esc(wk) : ''}</span></div><button type="button" class="btn btn-line btn-sm" data-act="famdrop" data-id="${esc(f.id)}" aria-label="Remove ${esc(f.n)}'s tree">Remove</button></li>`; }).join('');
   return h + `</ul><p class="muted">A shared tree is a snapshot. To see it grow, ask them to share again from their tree app.</p></div>`;
 }
 function famDrop(id) {
@@ -244,20 +248,20 @@ function alertsHtml() {
 function viewGrove() {
   const ps = people(), days = groveDays(), vis = VISITORS.filter(c => days >= c.days).map(c => c.id), next = VISITORS.find(c => days < c.days);
   const scen = SCENES.find(x => x.id === G.scenery && days >= x.days) ? G.scenery : 'forest';
-  const trees = ps.slice(0, 8).map(p => { const t = treeOf(p); return { stage: t.willow ? 'willow' : stageOf(p.age), remembered: t.remembered, g: t.remembered ? 1 : t.show ? Math.min(1, .12 + t.days / 60) : .1, parts: t.remembered ? [] : t.parts, kind: t.willow ? 'grove' : (G.kinds[p.id] || 'grove'), label: p.name }; });
+  const trees = ps.slice(0, 8).map(p => { const t = treeOf(p); return { stage: t.willow ? 'willow' : stageFor(p), remembered: t.remembered, g: t.remembered ? 1 : t.show ? Math.min(1, .12 + t.days / 60) : .1, parts: t.remembered ? [] : t.parts, kind: t.willow ? 'grove' : (G.kinds[p.id] || 'grove'), label: p.name }; });
   const fam = famList(), famRoom = Math.max(0, 14 - trees.length), famShown = fam.slice(0, famRoom);
   famShown.forEach(f => trees.push({ stage: FAM_STAGE[f.t] || 'adult', g: Math.min(1, .12 + f.g / 60), parts: famParts(f), kind: 'grove', label: f.n }));
   let h = '';
-  if (!G.intro) h += `<div class="banner gv-intro"><h3>Where our trees grow together</h3><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups and high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
+  if (!G.intro) h += `<div class="banner gv-intro"><h3>Where our trees grow together</h3><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups and high schoolers, Sequoia for older adults, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += `<div class="section-head"><h2>Our Grove</h2><p>${ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.'}</p></div>`;
   h += `<div class="gv-scene">${sceneSVG({ w: 1000, h: 470, gy: 330, trees: trees.length ? trees : [{ stage: 'adult', g: .05, parts: [], kind: 'grove' }], sky: skyNow(), scenery: scen, visitors: vis, uid: 'gv', seed: 11, label: 'Your family grove' })}</div>`;
   h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : 'The grove grows when anyone tends their tree or the family does a practice together.'}${next ? ` Next visitor: ${esc(next.name)}, at ${next.days} days.` : ''}</p>`;
   if (fam.length > famShown.length) h += `<p class="muted">${fam.length - famShown.length} more family ${fam.length - famShown.length === 1 ? 'tree is' : 'trees are'} in the Family Trees list.</p>`;
-  if (!ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>`;
+  if (!ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/sequoia/">Sequoia</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>`;
   h += `<div class="gv-people" role="list">${ps.map(p => { const t = treeOf(p); return `<button type="button" role="listitem" class="gv-person${S.sel === p.id ? ' on' : ''}" aria-pressed="${S.sel === p.id}" data-act="sel" data-id="${esc(p.id)}">${window.GGAv ? GGAv.html(p.avatar, p.name, 44) : ''}<b>${esc(p.name)}</b><span>${t.show ? `${t.days} ${t.days === 1 ? 'day' : 'days'} tended` : 'Growing quietly'}</span></button>`; }).join('')}</div>`;
   const sp = S.sel && who(S.sel);
   if (sp) {
-    const t = treeOf(sp), tool = t.willow ? { name: 'Willow', href: '/willow/' } : toolOf(sp.age);
+    const t = treeOf(sp), tool = t.willow ? { name: 'Willow', href: '/willow/' } : toolOf(sp);
     if (t.remembered) h += `<div class="card gv-detail"><h3>Remembering ${esc(sp.name)}</h3><p>${t.rememberedOn ? 'Died ' + esc(nice(t.rememberedOn)) + '. ' : ''}Their willow stays in the grove, just as it was. Nothing is taken away.</p>${t.rings ? `<dl class="gv-stats"><div><dt>Rings</dt><dd>${t.rings}</dd></div></dl>` : ''}<a class="btn btn-gold btn-sm" href="/willow/#for=${esc(sp.id)}">Open their Willow</a></div>`;
     else h += `<div class="card gv-detail"><h3>${esc(sp.name)}'s tree</h3>`
       + (t.show ? `<dl class="gv-stats"><div><dt>Days Tended</dt><dd>${t.days}</dd></div><div><dt>Rings</dt><dd>${t.rings}</dd></div></dl>`
@@ -270,7 +274,7 @@ function viewGrove() {
   if (a) {
     const mine = who(a.id), md = myDays(mine), gd = days;
     const row = (list, cur, act, n) => `<div class="unlock-row">${list.map(k => { const ok = n >= k.days; return `<button type="button" class="chip${cur === k.id ? ' on' : ''}${ok ? '' : ' is-off'}" ${ok ? `data-act="${act}" data-id="${k.id}"` : 'disabled'} aria-pressed="${cur === k.id}">${esc(k.name)}${ok ? '' : ` (${k.days} days)`}</button>`; }).join('')}</div>`;
-    h += `<div class="card"><h3>Your tree in the grove</h3><p class="muted">Days you tend in ${esc(toolOf(a.age).name)} unlock new kinds of trees. Days the family grows together unlock scenery for everyone.</p>
+    h += `<div class="card"><h3>Your tree in the grove</h3><p class="muted">Days you tend in ${esc(toolOf(who(a.id) || a).name)} unlock new kinds of trees. Days the family grows together unlock scenery for everyone.</p>
       <label class="lbl">Kind of tree</label>${row(KINDS, G.kinds[a.id] || 'grove', 'kind', md)}
       <label class="lbl">Scenery</label>${row(SCENES, scen, 'scenery', gd)}</div>`;
   }
@@ -295,7 +299,7 @@ function itemHtml(x) {
   const p = who(x.by), a = me(), av = p && window.GGAv ? GGAv.html(p.avatar, p.name, 36) : `<span class="gv-dot">${icon('grove')}</span>`;
   let body = '';
   if (x.kind === 'post') body = `<p class="gv-text">${esc(x.text)}</p>`;
-  if (x.kind === 'growth') { const tool = toolOf(p ? p.age : 'adult'), names = PARTS6.filter(k => (x.parts || []).includes(k.key)).map(k => k.name);
+  if (x.kind === 'growth') { const tool = toolOf(p || 'adult'), names = PARTS6.filter(k => (x.parts || []).includes(k.key)).map(k => k.name);
     body = `<p class="gv-text">${esc(nameOf(x.by))} tended their tree${names.length ? ': ' + esc(list3(names)) : ''}.</p><p><a class="text-link" href="${tool.href}">Go tend your tree</a></p>`; }
   if (x.kind === 'practice') { const pr = TP[x.practice]; body = `<p class="gv-text">The family did <b>${esc(pr ? pr.name : 'a practice')}</b> together${p ? ', checked off by ' + esc(p.name) : ''}.</p>`; }
   const canDrop = x.kind === 'post' && a && (a.id === x.by || a.age === 'adult');
@@ -340,7 +344,7 @@ function hasEarlier() { return !!(oldDevice() || myOldGrove()); }
 function viewEarlier() {
   let h = `<div class="section-head"><h2>Earlier</h2><p>Personal tending used to happen in The Grove. Now your tree is yours, in your own app.</p></div>`;
   const a = me(), mine = myOldGrove();
-  if (mine) { const tool = toolOf(a.age), n = Object.keys(mine.watered || {}).length;
+  if (mine) { const tool = toolOf(who(a.id) || a), n = Object.keys(mine.watered || {}).length;
     h += `<div class="card"><h3>${esc(a.name)}, your earlier tending is ready to move</h3><p>${n} ${n === 1 ? 'day' : 'days'} tended in The Grove, plus any reflections you wrote. Open your tree in ${tool.name} and it moves there on its own, private to you, under "Earlier, from The Grove."</p><a class="btn btn-gold btn-sm" href="${tool.href}">Open my tree in ${tool.name}</a></div>`; }
   const od = oldDevice();
   if (od) { const days = Object.keys(od.watered || {}).sort(), notes = Object.keys(od.journal || {}).filter(k => String(od.journal[k] || '').trim());
@@ -355,7 +359,7 @@ function viewHow() {
   return `<div class="section-head"><h2>How The Grove works</h2><p>Where our trees grow together.</p></div>
   <div class="card gv-how">
     <h3>Your tree is yours. The grove is ours.</h3>
-    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups and high schoolers (until Pine is ready), <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, and <a class="text-link" href="/maple/">Maple</a> for kids. Check-ins, daily practices, and journals all live there, private to each person.</p>
+    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups and high schoolers (until Pine is ready), <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, and <a class="text-link" href="/maple/">Maple</a> for kids. Check-ins, daily practices, and journals all live there, private to each person.</p>
     <p>The Grove is the family's shared ground. Every tree in your household stands here side by side, shaped by its life stage.</p>
     <h3>What grows the grove</h3>
     <p>Two things: each person tending their own tree, and the practices you do together. Critters visit and scenery unlocks as the days add up. Growth only adds. A quiet week never takes anything away.</p>

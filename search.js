@@ -28,7 +28,7 @@
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
     { title: 'Pine', sub: 'Check-in for high school, grades 9 to 12. Coming soon.', href: '', keys: 'high school teen teenager 9th 10th 11th 12th grade' },
-    { title: 'Sequoia', sub: 'Check-in for seniors. Coming soon.', href: '', keys: 'seniors elders older adults retirement aging grandparents' },
+    { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan and a Legacy Book', href: '/sequoia/', keys: 'sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
 
@@ -88,6 +88,10 @@
     chatbot: 'ai chatbot', chatgpt: 'ai chatbot', ai: 'ai chatbot',
     dementia: 'dementia alzheimer memory', alzheimers: 'dementia alzheimer memory', cancer: 'cancer diagnosis illness sick', diagnosis: 'diagnosis illness sick', sick: 'sick illness',
     military: 'deployed military', deployment: 'deployed military', ice: 'immigration', deported: 'immigration deported', deportation: 'immigration',
+    widow: 'spouse partner died grief', widowed: 'spouse partner died grief', widower: 'spouse partner died grief',
+    nursinghome: 'aging dementia caregiving moving', assistedliving: 'aging moving caregiving', memorycare: 'dementia memory caregiving', medicare: 'money diagnosis chronic',
+    retirement: 'retirement', retired: 'retirement', retiring: 'retirement', grandkids: 'family grandchildren', grandchildren: 'family grandchildren', grandchild: 'family grandchildren',
+    scam: 'money scam fraud', scammed: 'money scam fraud', fraud: 'money scam fraud', elderabuse: 'home safe abuse', aging: 'aging retirement', elderly: 'aging older',
     dog: 'pet', cat: 'pet', insomnia: 'sleep', cantsleep: 'sleep', pray: 'prayer pray', breathing: 'breath breathe', breathe: 'breath breathe',
     jail: 'incarcerated prison jail', prison: 'incarcerated prison jail', fired: 'job', laidoff: 'job',
     moving: 'moving move', newschool: 'starting changing', puberty: 'changing', esteem: 'comparing confidence different',
@@ -104,7 +108,7 @@
   };
   var PHRASES = [
     [/blow(ing|s)? up|blew up/g, 'blowup'], [/freak(ing|ed|s)? out/g, 'freakout'], [/losing it|lost it/g, 'losingit'], [/out of control/g, 'outofcontrol'],
-    [/calm(ing)? (them |him |her |me )?down/g, 'calmdown'], [/de[\s-]?escalat\w*/g, 'deescalate'], [/picked on|picking on/g, 'pickedon'], [/end of life/g, 'endoflife'],
+    [/calm(ing)? (them |him |her |me )?down/g, 'calmdown'], [/de[\s-]?escalat\w*/g, 'deescalate'], [/picked on|picking on/g, 'pickedon'], [/end of life/g, 'endoflife'], [/nursing homes?/g, 'nursinghome'], [/assisted living/g, 'assistedliving'], [/memory care/g, 'memorycare'], [/elder abuse/g, 'elderabuse'],
     [/two homes/g, 'twohomes'], [/screen time/g, 'screentime'], [/can'?t sleep|trouble sleeping/g, 'cantsleep'], [/laid off|lay ?off/g, 'laidoff'],
     [/new school/g, 'newschool'], [/e[\s-]?cig\w*/g, 'ecig'], [/alzheimer'?s/g, 'alzheimers'], [/school shooting/g, 'shooting'], [/self[\s-]?harm\w*|cutting|cut (my|him|her|them)sel\w*/g, 'selfharm'], [/panic attacks?/g, 'panicattack'], [/self[\s-]?esteem/g, 'esteem'],
     [/self[\s-]?injur\w*/g, 'selfinjury'], [/burn(ing|ed|s)? (my|him|her|them)sel\w*/g, 'selfharm'],
@@ -311,7 +315,7 @@
   /* ---------- showing results ---------- */
   var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
-  var APPNAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak', willow: 'Willow', grove: 'The Grove' };
+  var APPNAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
   var SHOW = 5, uid = 0;
 
   function crisisHTML(raw) {

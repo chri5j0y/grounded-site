@@ -1,13 +1,14 @@
 {
-  "_note": "One shared code base, six apps. Each app bundles only the files it needs, so it works fully offline. Rebuilt in Rebrand Session 1 with the new tree names.",
+  "_note": "One shared code base, seven apps. Each app bundles only the files it needs, so it works fully offline. Rebuilt in Rebrand Session 1 with the new tree names.",
   "common": ["shared/", "fonts/", "nav.js", "search.js", "read.js", "maple/guides.js", "aspen/guides.js", "oak/guides.js", "willow/guides.js", "grove/data.js", "grove/library.js", "library/books.js", "stories.html", "privacy.html", "terms.html", "style.css", "site.js", "favicon.svg", "apple-touch-icon.png"],
   "apps": {
     "grove":       { "name": "The Grove",   "appId": "com.growwithgrounded.grove",      "scheme": "grounded-grove",      "start": "/grove/",       "tools": ["grove"],       "icon": "icons/grove-1024.png", "files": ["grove/"] },
     "maple":       { "name": "Maple",       "appId": "com.growwithgrounded.maple",      "scheme": "grounded-maple",      "start": "/maple/",       "tools": ["maple"],       "icon": "icons/maple-1024.png", "files": ["maple/", "grove/data.js", "grove/library.js"] },
     "aspen":       { "name": "Aspen",       "appId": "com.growwithgrounded.aspen",      "scheme": "grounded-aspen",      "start": "/aspen/",       "tools": ["aspen"],       "icon": "icons/aspen-1024.png", "files": ["aspen/", "grove/data.js", "grove/library.js"] },
     "oak":         { "name": "Oak",         "appId": "com.growwithgrounded.oak",        "scheme": "grounded-oak",        "start": "/oak/",         "tools": ["oak"],         "icon": "icons/oak-1024.png",   "files": ["oak/", "grove/data.js", "grove/library.js"] },
+    "sequoia":     { "name": "Sequoia",     "appId": "com.growwithgrounded.sequoia",    "scheme": "grounded-sequoia",    "start": "/sequoia/",     "tools": ["sequoia"],     "icon": "icons/sequoia-1024.png", "files": ["sequoia/", "grove/data.js", "grove/library.js"] },
     "willow":      { "name": "Willow",      "appId": "com.growwithgrounded.willow",     "scheme": "grounded-willow",     "start": "/willow/",      "tools": ["willow"],      "icon": "icons/willow-1024.png", "files": ["willow/"] },
-    "field-guide": { "name": "Field Guide", "appId": "com.growwithgrounded.fieldguide", "scheme": "grounded-fieldguide", "start": "/field-guide/", "tools": ["field-guide"], "files": ["field-guide/", "grove/data.js", "grove/library.js", "maple/checkin.js", "maple/guides.js", "aspen/checkin.js", "aspen/guides.js", "oak/checkin.js", "oak/guides.js", "pine/guides.js"] }
+    "field-guide": { "name": "Field Guide", "appId": "com.growwithgrounded.fieldguide", "scheme": "grounded-fieldguide", "start": "/field-guide/", "tools": ["field-guide"], "files": ["field-guide/", "grove/data.js", "grove/library.js", "maple/checkin.js", "maple/guides.js", "aspen/checkin.js", "aspen/guides.js", "oak/checkin.js", "oak/guides.js", "sequoia/checkin.js", "pine/guides.js"] }
   },
   "plugins": ["@capacitor/preferences", "@capacitor/filesystem", "@capacitor/share", "@capacitor/browser", "@capacitor/app", "@capacitor/app-launcher", "@capacitor/local-notifications"]
 }
