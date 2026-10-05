@@ -1947,7 +1947,7 @@ function renderGuide(opts){
    Two narrated videos per guide, For You (the student) and For the Grown-up, played by shared/gg-learn.js
    from aspen/guide-videos.js. AV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:aspen). */
-/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting"];/* AV_VIDS end */
+/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "body", "bedwetting", "compare", "phone", "pictures", "porn", "vaping", "gambling", "ai", "sleep", "looks", "eating", "wholike", "faith", "identity", "illness", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting"];/* AV_VIDS end */
 function avVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:aspen') || '{}').done || {})[id]); } catch (e) { return false; } }
 function avVids(gid) {
   if (!AV_VIDS.includes(gid)) return '';
@@ -2007,7 +2007,7 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln17" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln17';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln18" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln18';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>

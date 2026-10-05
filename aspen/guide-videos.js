@@ -1,10 +1,10 @@
 /* =====================================================================
-   ASPEN . When Life Changes videos (GWG BLD 724 and 725, October 2026)
+   ASPEN . When Life Changes videos (GWG BLD 724 to 726, October 2026)
    Two narrated videos for each Aspen guide: For You (the student, grades 6 to 8) and For the Grown-up
    (the parent or helper beside them). Played by shared/gg-learn.js, which loads this file the first time
-   Aspen's Learn opens. So far: Home and Family and Safety (BLD 724), Friends and School and Big World, Hard News (BLD 725): 33 guides, 66 videos.
+   Aspen's Learn opens. So far: Home and Family and Safety (BLD 724), Friends and School and Big World, Hard News (BLD 725), Growing Up and Online (BLD 726): all 49 guides, 98 videos.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
-   the same as shared/learn-lessons.js. Generated from patches/bld725/source (bld724 source for the first groups) in grounded-workshop:
+   the same as shared/learn-lessons.js. Generated from patches/bld726/source (bld724 and bld725 source for the earlier groups) in grounded-workshop:
    edit the data there and rebuild. Proofreading lines are in the Founder library.
    ===================================================================== */
 (function(){
@@ -20,6 +20,10 @@ window.GG_LEARN_GUIDES.aspen = {
 [
 "as-school",
 "Friends and School"
+],
+[
+"as-growing",
+"Growing Up and Online"
 ],
 [
 "as-world",
@@ -5630,6 +5634,3925 @@ window.GG_LEARN_GUIDES.aspen = {
 "h": "Make room for the goodbye.",
 "sub": "The full guide has more, whenever you want it.",
 "say": "Make room for the goodbye, and stay close through the change. The grown-ups who matter stay with kids for a long time. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "body",
+"ring": "as-growing",
+"title": "A Changing Body",
+"you": {
+"id": "as-g-body-you",
+"guide": "body",
+"side": "you",
+"title": "A Changing Body",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"American Academy of Pediatrics: Puberty",
+"https://www.healthychildren.org/English/ages-stages/gradeschool/puberty/Pages/default.aspx"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Changing Body",
+"sub": "For You",
+"say": "If your body is changing, or you're wondering when it will, this is for you. Growing up happens to everyone, and it can still feel strange."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Curious",
+"Embarrassed",
+"Proud",
+"Impatient",
+"All of it"
+],
+"say": "You might feel curious, embarrassed, proud, or impatient. Some days you might feel all of those before lunch. That's normal. Your body and your feelings are both growing up."
+},
+{
+"k": "big",
+"h": "Every body has its own schedule.",
+"sub": "Early, late, or in the middle.",
+"say": "Here's something worth remembering. Every body changes on its own schedule. Some kids start early, some start later, and lots are somewhere in the middle. Being different from your friends doesn't mean something is wrong. You're right on your own schedule."
+},
+{
+"k": "points",
+"h": "Things that might change",
+"items": [
+[
+"Growing",
+"Sometimes fast, feet first"
+],
+[
+"Voice and skin",
+"Cracks, pimples, more sweat"
+],
+[
+"Feelings",
+"Bigger, and quicker"
+]
+],
+"say": "Lots of things can change. You might grow fast, sometimes feet first. Your voice might crack, your skin might break out, and you might sweat more. Feelings can get bigger and change quicker too. All of that is your body doing its job.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "No question is too weird.",
+"body": "Ask a parent, a relative, your doctor, or the school nurse.",
+"say": "You'll probably have questions. No question is too weird. Ask a parent or a relative you trust, your doctor, or the school nurse or counselor. They've heard it all before, and they're glad when you ask."
+},
+{
+"k": "big",
+"h": "Who could you ask?",
+"sub": "Picture them now.",
+"say": "Let's try something. Take one slow breath. Picture a grown-up you could ask about your body. Now think of one question you might ask them.",
+"beats": [
+"Let's try something.",
+"Take one slow breath.",
+"Picture a grown-up you could ask about your body.",
+{
+"t": "Now think of one question you might ask them.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Your body belongs to you.",
+"body": "If anyone makes you feel unsafe, tell a grown-up you trust.",
+"say": "Your body belongs to you. If anyone ever touches you in a way that feels wrong, tell a grown-up you trust right away. You will not be in trouble for telling. And if someone teases you about your body, you can tell a grown-up about that too."
+},
+{
+"k": "big",
+"h": "You're growing right on time.",
+"sub": "Your time, not anyone else's.",
+"say": "Growing up is a lot. Be kind to your body while it does its work. You're growing right on your own time. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-body-helper",
+"guide": "body",
+"side": "helper",
+"title": "A Changing Body",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"American Academy of Pediatrics: Puberty",
+"https://www.healthychildren.org/English/ages-stages/gradeschool/puberty/Pages/default.aspx"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Changing Body",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love is going through puberty, or is about to, this is for you. You don't need one perfect talk. You need lots of small, kind ones."
+},
+{
+"k": "big",
+"h": "Many small talks beat one big one.",
+"say": "Many small talks beat one big one. Kids need to understand the changes before they happen. Knowing what's coming makes it less scary and less embarrassing. So start early, keep it short, and come back to it often."
+},
+{
+"k": "points",
+"h": "Good times to talk",
+"items": [
+[
+"Car rides",
+"No eye contact needed"
+],
+[
+"Side by side",
+"Cooking, walking, folding laundry"
+],
+[
+"When they ask",
+"Answer what they asked"
+]
+],
+"say": "Some of the best talks happen side by side. Car rides are great, because no one has to make eye contact. So is cooking, walking the dog, or folding laundry. And when they ask something, answer what they asked, simply and kindly, and let them come back for more.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"You're right on your own schedule.\"",
+"\"You can ask me anything, and I won't laugh.\"",
+"\"Want me to leave some supplies in your bathroom?\""
+],
+"say": "Words that help. Everyone's body changes at a different time. You're right on your own schedule. You can ask me anything, and I won't laugh. And, want me to leave some supplies in your bathroom?"
+},
+{
+"k": "card",
+"title": "Keep supplies ready before they're needed.",
+"body": "Deodorant, pads, face wash, whatever fits your child.",
+"say": "Keep supplies ready before they're needed. Deodorant, pads, face wash, whatever fits your child. Put them where they can find them without asking. It quietly says, this is normal, and I've got you."
+},
+{
+"k": "big",
+"h": "Try the first line out loud.",
+"sub": "The way you would in the car.",
+"say": "Let's practice. Take a breath. Picture your middle schooler beside you in the car. Now say this out loud. You can ask me anything, and I won't laugh.",
+"beats": [
+"Let's practice.",
+"Take a breath.",
+"Picture your middle schooler beside you in the car.",
+"Now say this out loud.",
+{
+"t": "You can ask me anything, and I won't laugh.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Comments on size or shape",
+"They stick"
+],
+[
+"Teasing",
+"About voice, skin, or growth"
+],
+[
+"One big talk",
+"And then silence"
+]
+],
+"say": "Some things are better left out. Comments about their size or shape, because they stick at this age. Teasing about their voice, skin, or growth, from anyone in the family. And one big talk, followed by silence.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Facts, and your family's values.",
+"body": "Matter-of-fact and kind. Their doctor is a good partner.",
+"say": "Keep it matter-of-fact and kind. Share the facts, and share your family's values too. If you don't know an answer, say so, and look it up together or ask their doctor. Their doctor is a good partner for questions about growth, skin, periods, or anything that worries either of you."
+},
+{
+"k": "card",
+"title": "Their body belongs to them.",
+"body": "They can tell you anything, and they will not be in trouble.",
+"say": "Teach them that their body belongs to them. If anyone ever touches them in a way that feels wrong, they can tell you, and they won't be in trouble. If they do tell you, stay calm, believe them, and get help the same day. Call 911 if they're in danger right now."
+},
+{
+"k": "big",
+"h": "Every body has its own schedule.",
+"sub": "Say it often.",
+"say": "If nobody talked with you when you were growing up, you get to do it differently now. Be patient with yourself, and laugh with them, never at them. Say it often: every body changes on its own schedule. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "bedwetting",
+"ring": "as-growing",
+"title": "Bedwetting",
+"you": {
+"id": "as-g-bedwetting-you",
+"guide": "bedwetting",
+"side": "you",
+"title": "Bedwetting",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Bedwetting",
+"sub": "For You",
+"say": "If you sometimes wet the bed, this is for you. It might feel like the most private thing in the world. Let's talk about it, calmly."
+},
+{
+"k": "big",
+"h": "Lots of kids your age deal with this.",
+"sub": "It's not your fault.",
+"say": "First, the most important thing. Lots of kids your age deal with this. Nobody talks about it, so it can feel like you're the only one. You're not. It's not your fault, and it's not a choice. It often runs in families."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Embarrassed",
+"Frustrated",
+"Worried",
+"Tired of it"
+],
+"say": "You might feel embarrassed, frustrated, or worried that someone will find out. You might just be tired of it. Those feelings make sense. They don't mean anything is wrong with you."
+},
+{
+"k": "card",
+"title": "There are things that really help.",
+"body": "Doctors talk with kids about this all the time.",
+"say": "Here's some good news. There are things that really help, and a doctor knows them. Doctors talk with kids about this all the time. Ask a parent or a grown-up you trust to set up a visit. You can even ask them to do the talking."
+},
+{
+"k": "points",
+"h": "A quiet plan",
+"items": [
+[
+"Easy supplies",
+"Ready near your bed"
+],
+[
+"Private cleanup",
+"Your way, no fuss"
+],
+[
+"Sleepovers and camp",
+"A plan, so you can still go"
+]
+],
+"say": "You and a grown-up can make a quiet plan. Keep easy supplies ready near your bed. Handle cleanup your own way, without a fuss. And make a plan for sleepovers and camp, so you can still go and have fun.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Who could you tell?",
+"sub": "Picture them now.",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Picture the grown-up you'd feel okay telling. Now think of the first words you could say, like, can we talk about something private?",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Picture the grown-up you'd feel okay telling.",
+{
+"t": "Now think of the first words you could say, like, can we talk about something private?",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If someone teases you",
+"body": "Tell a grown-up. You deserve privacy.",
+"say": "If a brother, a sister, or anyone else teases you about it, tell a grown-up. Teasing about this is never okay, and a grown-up can help make it stop. You deserve privacy."
+},
+{
+"k": "big",
+"h": "This is not who you are.",
+"sub": "It's one thing your body is working on.",
+"say": "This is not who you are. It's one thing your body is still working on, and you don't have to handle it alone. Be gentle with yourself. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-bedwetting-helper",
+"guide": "bedwetting",
+"side": "helper",
+"title": "Bedwetting",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Bedwetting",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love still wets the bed, this is for you. Your calm can make this much lighter for them."
+},
+{
+"k": "big",
+"h": "A medical issue, not a choice.",
+"say": "Bedwetting is a medical issue, not a choice. It's less common by middle school, but plenty of kids still deal with it, and it often runs in families. Nobody is doing anything wrong here, not your child, and not you."
+},
+{
+"k": "card",
+"title": "At this age, the embarrassment is heavy.",
+"body": "Kids may start avoiding sleepovers, camp, or team trips.",
+"say": "At this age, the embarrassment can be heavy. Kids may start avoiding sleepovers, camp, or team trips, and they may not tell you why. So keep it private, with no shame. How you respond tells them whether this is something they can bring to you."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Lots of kids your age deal with this.\"",
+"\"There are things that really help.\"",
+"\"We'll make a plan so you can still go.\""
+],
+"say": "Words that help. Lots of kids your age deal with this. It's not your fault. Let's talk with the doctor. There are things that really help. And, we'll make a plan so you can still go to the sleepover."
+},
+{
+"k": "card",
+"title": "See their doctor.",
+"body": "Treatments work well at this age.",
+"say": "See their doctor. The doctor can check for causes, like constipation or an infection, and talk through treatments. Alarms and medicine can both help, and the doctor will help you decide what fits. If a child who was dry starts wetting again, call the doctor, since stress and health changes can play a part."
+},
+{
+"k": "points",
+"h": "At home, protect their dignity",
+"items": [
+[
+"Easy supplies",
+"Ready, and private"
+],
+[
+"Their own cleanup",
+"For dignity, never as a consequence"
+],
+[
+"No teasing",
+"From anyone, every time"
+]
+],
+"say": "At home, protect their dignity. Keep easy supplies ready, like a mattress cover and extra sheets. Let them manage cleanup privately, as a way to keep their dignity, never as a consequence. And protect them from siblings' teasing, firmly and every time.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Try the line out loud.",
+"sub": "The way you would at bedtime.",
+"say": "Let's practice. Take a breath. Picture your middle schooler, quietly worried about a sleepover this weekend. Say this out loud. We'll make a plan so you can still go to the sleepover.",
+"beats": [
+"Let's practice.",
+"Take a breath.",
+"Picture your middle schooler, quietly worried about a sleepover this weekend.",
+"Say this out loud.",
+{
+"t": "We'll make a plan so you can still go to the sleepover.",
+"w": 10
+}
+]
+},
+{
+"k": "flow",
+"h": "A quiet plan for overnights",
+"steps": [
+[
+"Ask the doctor",
+"Ahead of time"
+],
+[
+"Pack it privately",
+"A bag like any other"
+],
+[
+"One trusted adult",
+"Only with their okay"
+],
+[
+"A way to reach you",
+"Just in case"
+]
+],
+"say": "Make a quiet plan together for sleepovers and camp. Ask the doctor about it ahead of time. Pack supplies privately, in a bag that looks like any other. With your child's okay, let one trusted adult know, like the camp nurse. And make sure they can reach you.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Teasing",
+"Even gently"
+],
+[
+"Punishment",
+"Or washing sheets as a consequence"
+],
+[
+"Mentioning it",
+"In front of anyone"
+]
+],
+"say": "Some things are better left out. Teasing, even gently, or letting siblings tease. Punishment, or making them wash sheets as a consequence. And mentioning it in front of anyone, even family.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Calm and private.",
+"sub": "Your steadiness helps most.",
+"say": "Changing sheets in the middle of the night can wear anyone down. It's okay to feel tired. Let it out with another grown-up, away from your child, and keep your voice gentle with them. Calm and private is the whole plan. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "compare",
+"ring": "as-growing",
+"title": "Comparing Yourself to Others",
+"you": {
+"id": "as-g-compare-you",
+"guide": "compare",
+"side": "you",
+"title": "Comparing Yourself to Others",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"APA: Health advisory on social media use in adolescence",
+"https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Comparing Yourself to Others",
+"sub": "For You",
+"say": "If scrolling sometimes leaves you feeling like everyone else is better looking, more fun, or just more, this is for you. Lots of people your age feel that way."
+},
+{
+"k": "words",
+"h": "Comparing can leave you feeling",
+"items": [
+"Not enough",
+"Left out",
+"Behind",
+"Jealous"
+],
+"say": "Almost everyone compares, especially in middle school. It can leave you feeling not enough, left out, behind, or jealous. Those feelings are normal. They don't mean anything is wrong with you."
+},
+{
+"k": "big",
+"h": "You're seeing their highlight reel.",
+"sub": "Not their whole life.",
+"say": "Here's something worth remembering. Most of what people post is their highlight reel. The best photo out of thirty. The good day, not the hard one. Filters, angles, and edits. So you end up comparing your whole life to their best moments."
+},
+{
+"k": "points",
+"h": "Things to try",
+"items": [
+[
+"Notice",
+"How do I feel after scrolling?"
+],
+[
+"Clean up your feed",
+"Unfollow or mute what drags you down"
+],
+[
+"Follow what lifts you",
+"Hobbies, funny stuff, real people"
+]
+],
+"say": "Here are a few things to try. Notice how you feel after scrolling. Better, or worse? If an account usually makes you feel worse, unfollow it or mute it. You get to choose your feed. And follow things that lift you up: your hobbies, funny stuff, and real people being real.",
+"cue": {
+"at": [
+1,
+3,
+5
+]
+}
+},
+{
+"k": "big",
+"h": "Name one thing no picture shows.",
+"say": "Let's take a moment. Take a slow breath. Think of one thing you like about yourself that has nothing to do with looks. Say it quietly to yourself, or out loud.",
+"beats": [
+"Let's take a moment.",
+"Take a slow breath.",
+"Think of one thing you like about yourself that has nothing to do with looks.",
+{
+"t": "Say it quietly to yourself, or out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Talk to someone you trust.",
+"body": "A parent, a relative, a coach, a teacher, your school counselor.",
+"say": "If comparing is making you feel bad most days, talk to a grown-up you trust: a parent, a relative, a coach, a teacher, or your school counselor. You don't have to sort it out alone."
+},
+{
+"k": "card",
+"title": "If it gets really heavy",
+"body": "Tell a grown-up today. Not wanting to be alive: call or text 988.",
+"say": "If you find yourself worrying about your body or food all the time, or feeling so low you don't want to be alive, tell a grown-up you trust today. You can call or text 988 any time. If you're in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Nobody else gets to be you.",
+"sub": "And that isn't a contest.",
+"say": "There's only one you, with your own laugh, your own interests, and your own way of seeing things. Nobody else gets to be you. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-compare-helper",
+"guide": "compare",
+"side": "helper",
+"title": "Comparing Yourself to Others",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"APA: Health advisory on social media use in adolescence",
+"https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Comparing Yourself to Others",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love keeps comparing themselves to others, and coming up short, this is for you. You can't take comparison away, but you can help them notice it."
+},
+{
+"k": "big",
+"h": "Built into middle school. Supercharged by phones.",
+"say": "Comparing is built into middle school, and phones supercharge it. Kids this age are working out who they are, and a feed hands them endless people to measure themselves against. Experts advise that kids limit social media used for comparison, especially around looks."
+},
+{
+"k": "card",
+"title": "Help them notice it.",
+"body": "\"How do you feel after scrolling that?\"",
+"say": "So help them notice it. Ask, how do you feel after scrolling that? Asking how content makes them feel teaches them to curate their own feed. That's a skill they'll use for life, on any app."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Most of what people post is their highlight reel.\"",
+"\"Which accounts make you feel good?\"",
+"\"Here's something I love about you that no picture shows.\""
+],
+"say": "Words that help. Most of what people post is their highlight reel. Which accounts make you feel good? Which ones don't? And, here's something I love about you that no picture shows."
+},
+{
+"k": "flow",
+"h": "Clean up feeds together",
+"steps": [
+[
+"Scroll side by side",
+"No judging"
+],
+[
+"Notice",
+"Better, or worse?"
+],
+[
+"Unfollow or mute",
+"What makes them feel worse"
+],
+[
+"Add what lifts",
+"Hobbies, humor, real people"
+]
+],
+"say": "Try cleaning up feeds together. Scroll side by side, without judging. Notice which accounts leave them feeling better or worse. Unfollow or mute the ones that make them feel worse. And add accounts tied to their hobbies, humor, and real people. Make it part of your family's media agreement, and clean up your own feed too.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Say what no picture shows.",
+"sub": "Out loud, the way you would tell them.",
+"say": "Let's practice. Think of one thing you love about your middle schooler that has nothing to do with looks. Now say it out loud, the way you would tell them. Here's something I love about you that no picture shows.",
+"beats": [
+"Let's practice.",
+"Think of one thing you love about your middle schooler that has nothing to do with looks.",
+"Now say it out loud, the way you would tell them.",
+{
+"t": "Here's something I love about you that no picture shows.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Name strengths beyond looks",
+"items": [
+[
+"Kindness",
+"How they treat people"
+],
+[
+"Effort",
+"How they keep going"
+],
+[
+"Curiosity",
+"What lights them up"
+]
+],
+"say": "Name strengths that have nothing to do with looks, often and out loud. How kind they are with people. How they keep going when something is hard. What they're curious about, and what lights them up.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Comparing them",
+"To siblings or friends"
+],
+[
+"Comments on bodies",
+"Anyone's, on screen or in person"
+],
+[
+"Your own comparing",
+"Out loud, in front of them"
+]
+],
+"say": "Some things are better left out. Comparing them to siblings or friends, even to motivate them. Commenting on other people's bodies, on screen or in person. And watch your own comparing out loud, like sighing over someone else's house, vacation, or looks. Kids learn a lot from how you talk about yourself.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "If you are worried",
+"body": "Talk with their doctor. Not wanting to be alive: 988. Emergency: 911.",
+"say": "Watch for changes: pulling away from friends, skipping meals, hiding their body, or seeming down most days. Talk with their doctor or school counselor. If anything points to thoughts of not wanting to be alive, stay with them and call or text 988. Call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Help them see what no picture shows.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Plenty of us grown-ups still compare, too. Be gentle with yourself, and let your kid see you choose what you scroll. Help them see what no picture shows. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "phone",
+"ring": "as-growing",
+"title": "First Phone and Group Chats",
+"you": {
+"id": "as-g-phone-you",
+"guide": "phone",
+"side": "you",
+"title": "First Phone and Group Chats",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"HealthyChildren.org: How to make a family media plan",
+"https://www.healthychildren.org/English/family-life/Media/Pages/How-to-Make-a-Family-Media-Use-Plan.aspx"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "First Phone and Group Chats",
+"sub": "For You",
+"say": "If you just got your first phone, or you're new to group chats, this is for you. A phone can be a lot of fun, and a lot to handle."
+},
+{
+"k": "words",
+"h": "A phone can bring",
+"items": [
+"Fun",
+"Friends",
+"Pressure",
+"Drama"
+],
+"say": "A phone can bring fun, friends, and inside jokes. It can also bring pressure and drama. A group chat can be great one minute and mean the next. Feeling both ways about it is normal."
+},
+{
+"k": "points",
+"h": "Group chat skills",
+"items": [
+[
+"Mute it",
+"When it gets to be a lot"
+],
+[
+"Leave it",
+"When it makes you feel bad"
+],
+[
+"Don't forward it",
+"Mean stuff stops with you"
+],
+[
+"Screenshot and report",
+"Then tell a grown-up"
+]
+],
+"say": "Here are some group chat skills. Mute a chat when it gets to be a lot. You can always leave a chat that makes you feel bad. Don't forward mean stuff. It can stop with you. And if something feels wrong, screenshot it, report it, and tell a grown-up.",
+"cue": {
+"at": [
+1,
+2,
+3,
+5
+]
+}
+},
+{
+"k": "big",
+"h": "Telling a grown-up is smart.",
+"sub": "Seeing something scary is not your fault.",
+"say": "Sometimes you'll see something scary or upsetting online. That's not your fault. Lots of kids keep quiet because they're afraid of losing their phone. Telling a grown-up you trust is a smart, brave move. Sorting it out is their job, so you don't have to handle it alone."
+},
+{
+"k": "card",
+"title": "Make a phone agreement together.",
+"body": "Phone-free times. Charging outside your room. Rules for the grown-ups too.",
+"say": "Ask your family to make a phone agreement together. You can pick phone-free times, like dinner and homework. Phones can charge outside your bedroom at night, so you sleep better. Rules for the grown-ups belong in it too. And ask for one promise: telling them about something scary won't cost you your phone."
+},
+{
+"k": "big",
+"h": "Who would you show?",
+"sub": "Picture them now.",
+"say": "Let's take a moment. Take a slow breath in, and let it out even slower. Picture one grown-up you could show if something online felt wrong: a parent, a relative, a coach, or your school counselor. Think of the first words you might say.",
+"beats": [
+"Let's take a moment.",
+"Take a slow breath in, and let it out even slower.",
+"Picture one grown-up you could show if something online felt wrong: a parent, a relative, a coach, or your school counselor.",
+{
+"t": "Think of the first words you might say.",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "Your phone works best when it works for you.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Your phone works best when it works for you. You're still learning how to handle it, and so is everyone else. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-phone-helper",
+"guide": "phone",
+"side": "helper",
+"title": "First Phone and Group Chats",
+"sideName": "For the Grown-up",
+"mins": 5,
+"sources": [
+[
+"HealthyChildren.org: How to make a family media plan",
+"https://www.healthychildren.org/English/family-life/Media/Pages/How-to-Make-a-Family-Media-Use-Plan.aspx"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "First Phone and Group Chats",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love is getting a first phone, or living in group chats, this is for you. You don't need to be a tech expert. You need to stay in the conversation."
+},
+{
+"k": "big",
+"h": "Fun, and sometimes brutal.",
+"sub": "Being in the chat can feel like being in the group.",
+"say": "A first phone opens up friends, jokes, and belonging. For a middle schooler, being in the group chat can feel like being in the group. Group chats can be fun, and they can be brutal. They learn to handle both best with you beside them."
+},
+{
+"k": "flow",
+"h": "Make a phone agreement together",
+"steps": [
+[
+"Phone-free times",
+"Dinner, homework, bedtime"
+],
+[
+"Charge outside the bedroom",
+"Every night"
+],
+[
+"Turn off the pull",
+"Autoplay and notifications"
+],
+[
+"Rules for you too",
+"Everyone keeps them"
+]
+],
+"say": "Make a phone agreement together. Plans made together work better than rules handed down. Choose phone-free times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night. Turn off autoplay and the notifications that keep pulling them back. And write in rules for yourself too.",
+"cue": {
+"at": [
+2,
+3,
+4,
+5
+]
+}
+},
+{
+"k": "story",
+"title": "Boundaries and Presence",
+"lines": [
+"At my son's band concert, I silenced my personal phone and my work phone.",
+"My son spotted us and flashed a big smile.",
+"I unclipped my badge and arrived fully in that moment."
+],
+"lesson": "Kids learn the phone habit they see.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "After work one day, I rushed straight to my son's middle school band concert. I slipped into the gym just as it began, found my wife in the bleachers, and silenced my personal phone and my work phone. My son spotted us and flashed a big smile. As the band launched into the Star Wars theme, I realized I was still half at work. So I unclipped my badge, tucked it into my pocket, and took a few deep breaths. For the rest of the concert, I was truly present, laughing, clapping, and soaking in my son's excitement."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Let's make the rules together, including rules for me.\"",
+"\"You can always leave a chat that makes you feel bad.\"",
+"\"If you see something scary, tell me. You won't lose your phone.\""
+],
+"say": "Kids learn the phone habit they see. So let them see you put yours away. Let's make the rules together, including rules for me. You can always leave a chat that makes you feel bad. If you see something scary, tell me. You won't lose your phone."
+},
+{
+"k": "points",
+"h": "Teach the skills",
+"items": [
+[
+"Mute and leave",
+"When a chat turns"
+],
+[
+"Don't forward mean stuff",
+"It can stop with them"
+],
+[
+"Screenshot and report",
+"Then come to you"
+]
+],
+"say": "Teach the practical skills. How to mute a chat, and how to leave one. Not forwarding mean stuff, so it stops with them. How to screenshot and report, and then come to you when something feels wrong. Monitoring apps can't replace those talks.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Keep the door open.",
+"body": "Telling you never costs them their phone.",
+"say": "Two habits quietly close the door. Using monitoring apps instead of conversations. And taking the phone as punishment when they report a problem. If telling costs them their phone, they'll stop telling. So keep the promise. Telling you never costs them their phone."
+},
+{
+"k": "big",
+"h": "Say the promise out loud.",
+"sub": "The way you would to them.",
+"say": "Let's practice. Take a breath. Say it out loud, the way you would to them. If you see something scary, tell me. You won't lose your phone.",
+"beats": [
+"Let's practice.",
+"Take a breath.",
+"Say it out loud, the way you would to them.",
+"If you see something scary, tell me.",
+{
+"t": "You won't lose your phone.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If a chat turns serious",
+"body": "Threats or pressure for pictures: act together, today. Not wanting to be alive: 988. Emergency: 911.",
+"say": "If a chat ever turns to threats, pressure for pictures, or someone hurting them, stay calm and act together, the same day. Aspen's guides on bullying and on online pressure and pictures have the next steps. If anything points to thoughts of not wanting to be alive, stay with them and call or text 988, or call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Stay in the conversation.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Be patient with yourself, because this is new for every family. Your own phone habits will teach more than any rule. Stay in the conversation. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "pictures",
+"ring": "as-growing",
+"title": "Online Pressure and Pictures",
+"you": {
+"id": "as-g-pictures-you",
+"guide": "pictures",
+"side": "you",
+"title": "Online Pressure and Pictures",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"NCMEC: Sextortion",
+"https://www.missingkids.org/theissues/sextortion"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Online Pressure and Pictures",
+"sub": "For You",
+"say": "If someone online is pressuring you for pictures, or threatening to share a picture of you, this is for you. You won't be in trouble. You can get help today."
+},
+{
+"k": "big",
+"h": "This is not your fault.",
+"sub": "The person threatening you is to blame.",
+"say": "First, the most important thing. This is not your fault. The person threatening you is to blame, every time. It doesn't matter whether you sent a picture or not. Sometimes they make fake pictures with AI. Either way, you can get help."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Scared",
+"Embarrassed",
+"Trapped",
+"Panicked"
+],
+"say": "You might feel scared, embarrassed, or trapped. Your heart might be racing. The person threatening you wants you to feel that way, so you'll keep quiet. This happens to a lot of kids, and it can be fixed."
+},
+{
+"k": "flow",
+"h": "What to do",
+"steps": [
+[
+"Stop replying",
+"Don't pay. Don't send more."
+],
+[
+"Save it",
+"Screenshots and their username"
+],
+[
+"Block and report",
+"On the app or game"
+],
+[
+"Tell a grown-up",
+"Today"
+]
+],
+"say": "Here's what to do. Stop replying. Don't pay, and don't send anything more, even if they promise to stop. Save it: take screenshots of the messages and write down their username. Then block and report them on the app or game. And tell a trusted grown-up today.",
+"cue": {
+"at": [
+1,
+3,
+4,
+5
+]
+}
+},
+{
+"k": "big",
+"h": "You won't be in trouble.",
+"sub": "Picture who you will tell today.",
+"say": "Let's take a breath together. Breathe in slowly, and let it out even slower. Picture one grown-up you trust: a parent, a relative, a coach, or your school counselor. Now say this out loud: someone online is scaring me, and I need help.",
+"beats": [
+"Let's take a breath together.",
+"Breathe in slowly, and let it out even slower.",
+"Picture one grown-up you trust: a parent, a relative, a coach, or your school counselor.",
+{
+"t": "Now say this out loud: someone online is scaring me, and I need help.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help is here",
+"body": "Take It Down can help remove pictures. Not wanting to be alive: call or text 988. Danger right now: 911.",
+"say": "A grown-up can help you report it. A tool called Take It Down can help get pictures taken off the internet. If it ever feels so heavy you don't want to be alive, call or text 988, any time. If you're in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "You are not alone in this.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You are not alone, and you are not in trouble. Telling a grown-up is the bravest, smartest move. The full guide has more, whenever you want it."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"911: danger right now"
+]
+},
+"helper": {
+"id": "as-g-pictures-helper",
+"guide": "pictures",
+"side": "helper",
+"title": "Online Pressure and Pictures",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"NCMEC: New sextortion data, 2025",
+"https://www.missingkids.org/blog/2026/ncmec-releases-new-sextortion-data-2025"
+],
+[
+"FBI: National alert on financial sextortion",
+"https://www.fbi.gov/news/press-releases/fbi-and-partners-issue-national-public-safety-alert-on-financial-sextortion-schemes"
+],
+[
+"NCMEC: Sextortion",
+"https://www.missingkids.org/theissues/sextortion"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Online Pressure and Pictures",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love is being pressured or threatened over pictures online, this is for you. It's for you, too, if you want to get ahead of it. Your first words matter most."
+},
+{
+"k": "card",
+"title": "Say it before anything happens.",
+"body": "\"If anyone threatens you with a picture, real or fake, come to me. You won't be in trouble.\"",
+"say": "Say it before anything happens. If anyone threatens you with a picture, real or fake, come to me. You won't be in trouble. Say it more than once, in a calm voice, so they believe it."
+},
+{
+"k": "big",
+"h": "It has a name: sextortion.",
+"sub": "And it is growing fast.",
+"say": "This is called sextortion, and it's growing fast. In 2025 there were more than 50,000 reports of money-driven sextortion, about 137 a day. Offenders often pose as a girl the child's age. Boys are targeted most, and victims can be as young as 10. Fake AI images mean a child may never have sent a real photo."
+},
+{
+"k": "card",
+"title": "Shame is what they count on.",
+"body": "Your calm first words help keep your child safe.",
+"say": "Shame is what these criminals count on, and it can be dangerous. Kids have died by suicide after being threatened. That's why your first words matter most. Stay calm. Say they're not in trouble. Then act together."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"You are not in trouble. You did the right thing telling me.\"",
+"\"We don't pay, and we don't reply. We report.\"",
+"\"This happens to a lot of kids, and it can be fixed.\""
+],
+"say": "Words that help. You are not in trouble. You did the right thing telling me. We don't pay, and we don't reply. We report. And, this happens to a lot of kids, and it can be fixed."
+},
+{
+"k": "big",
+"h": "Say it out loud.",
+"sub": "Calm and slow.",
+"say": "Let's practice. Take a breath, and let your shoulders drop. Say it out loud, the way you would to them. You are not in trouble. You did the right thing telling me.",
+"beats": [
+"Let's practice.",
+"Take a breath, and let your shoulders drop.",
+"Say it out loud, the way you would to them.",
+"You are not in trouble.",
+{
+"t": "You did the right thing telling me.",
+"w": 10
+}
+]
+},
+{
+"k": "flow",
+"h": "Then act together",
+"steps": [
+[
+"Stop replying",
+"And never pay"
+],
+[
+"Save the evidence",
+"Messages, usernames, links"
+],
+[
+"Report",
+"CyberTipline and the FBI"
+],
+[
+"Take It Down",
+"To help remove images"
+]
+],
+"say": "Then act together. Stop replying, and never pay. Save the evidence: messages, usernames, and account links, before anything is deleted. Report it to the CyberTipline at 1-800-843-5678, and to the FBI at 1-800-CALL-FBI. Then use Take It Down to help remove images.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Yelling or shaming",
+"It teaches them to hide"
+],
+[
+"Taking devices right then",
+"It feels like punishment"
+],
+[
+"Deleting first",
+"Report before anything is gone"
+],
+[
+"Paying",
+"We report instead"
+]
+],
+"say": "Some things are better left out. Yelling or shaming, which teaches them to hide. Taking devices in the moment, which feels like punishment for telling. Deleting messages before reporting. And paying the person threatening them. We report instead.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "If you are worried about safety",
+"body": "Stay with them. Not wanting to be alive: call or text 988. Emergency: 911.",
+"say": "Stay close in the days after. If anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text 988, or call 911 in an emergency. The person threatening them is to blame, never your child."
+},
+{
+"k": "big",
+"h": "Stay calm. Act together.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You may feel furious or frightened. Let that out with another grown-up, away from your child, so they see you steady. Stay calm, and act together. The full guide has more, whenever you want it."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"911: danger right now"
+]
+}
+},
+{
+"id": "porn",
+"ring": "as-growing",
+"title": "Pornography",
+"you": {
+"id": "as-g-porn-you",
+"guide": "porn",
+"side": "you",
+"title": "Pornography",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Common Sense Media: Teens and Pornography",
+"https://www.commonsensemedia.org/research/teens-and-pornography"
+],
+[
+"NetSmartz",
+"https://www.missingkids.org/netsmartz"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Pornography",
+"sub": "For You",
+"say": "If you've seen porn online, by accident or because you were curious, this is for you. You're not in trouble, and you're not a bad kid."
+},
+{
+"k": "big",
+"h": "Lots of kids see it.",
+"sub": "Often by accident.",
+"say": "Porn means videos or pictures of people naked or having sex. It's easy to find on phones, games, and social media. Many kids see it by age 12, often by accident. Being curious about bodies and sex is a normal part of growing up."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Curious",
+"Confused",
+"Grossed out",
+"Embarrassed"
+],
+"say": "Seeing it might leave you curious, confused, grossed out, or embarrassed. Maybe a mix of all of those. Those feelings make sense. Seeing it doesn't make you a bad person."
+},
+{
+"k": "card",
+"title": "Porn is a performance.",
+"body": "Real love is kind, and nobody gets pressured.",
+"say": "Here's something true. Porn is made to sell. It's a performance, not how real love, respect, or bodies work. Real love is kind, and nobody gets pressured."
+},
+{
+"k": "points",
+"h": "What you can do",
+"items": [
+[
+"Close it",
+"Look away, put the screen down"
+],
+[
+"Talk to a grown-up",
+"A parent, a relative, a counselor"
+],
+[
+"Tell today",
+"If someone sends it or asks for pictures"
+]
+],
+"say": "Here's what you can do. If something pops up, close it and look away. Talk to a grown-up you trust, like a parent, a relative, or your school counselor. If anyone sends you porn, or asks you for pictures, that's not okay, and it's not your fault. Tell a grown-up today, so they can help. And if you keep going back to it and it's hard to stop, a grown-up can help with that too.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Who could you tell?",
+"sub": "Picture them now.",
+"say": "Let's take a breath together. Breathe in slowly, and let it out even slower. Picture one grown-up you trust. Now say this out loud: I saw something online that bothered me.",
+"beats": [
+"Let's take a breath together.",
+"Breathe in slowly, and let it out even slower.",
+"Picture one grown-up you trust.",
+{
+"t": "Now say this out loud: I saw something online that bothered me.",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "Your questions are normal.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Questions about bodies, love, and sex are normal. A grown-up you trust is a much better place to ask them than the internet. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-porn-helper",
+"guide": "porn",
+"side": "helper",
+"title": "Pornography",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Common Sense Media: Teens and Pornography",
+"https://www.commonsensemedia.org/research/teens-and-pornography"
+],
+[
+"NetSmartz",
+"https://www.missingkids.org/netsmartz"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Pornography",
+"sub": "For the Grown-up",
+"say": "If you're wondering how to talk with a middle schooler about pornography, or you just found out they've seen it, this is for you. Take a breath. Kids come back to a grown-up who stays calm."
+},
+{
+"k": "big",
+"h": "Many kids see it by age 12.",
+"sub": "Often by accident.",
+"say": "Pornography is easy to find on phones, games, and social media, and middle schoolers are curious about sex. Many kids see it by age 12, often by accident. Seeing it doesn't make your child bad, and curiosity is normal. So talk before it happens, or right after."
+},
+{
+"k": "points",
+"h": "What porn teaches",
+"items": [
+[
+"Sex is about using people"
+],
+[
+"Pressure is normal"
+],
+[
+"Bodies should look a certain way"
+]
+],
+"say": "But porn teaches things you probably don't want them learning. That sex is about using people. That pressure is normal. And that bodies should look a certain way. Your voice can teach something truer.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Have you ever seen videos or pictures of people having sex online? You're not in trouble.\"",
+"\"Porn is made to sell. Real love is kind, and nobody gets pressured.\"",
+"\"If you ever see something that bothers you, come to me. I won't freak out.\""
+],
+"say": "Words that help. Have you ever seen videos or pictures of people having sex online? You're not in trouble. Porn is made to sell. Real love is kind, and nobody gets pressured. If you ever see something that bothers you, come to me. I won't freak out."
+},
+{
+"k": "card",
+"title": "Short, calm, and true to your values.",
+"body": "Talk early, and more than once.",
+"say": "Talk early, and more than once. Keep it short, calm, and true to your values. Many families and faith traditions hold clear beliefs about sex, love, and faithfulness. Share yours warmly. Many short talks do more than one big one."
+},
+{
+"k": "big",
+"h": "Say it out loud.",
+"sub": "Calm and warm.",
+"say": "Let's practice. Take a breath, and let your face soften. Say it out loud, the way you would to them. If you ever see something that bothers you, come to me. I won't freak out.",
+"beats": [
+"Let's practice.",
+"Take a breath, and let your face soften.",
+"Say it out loud, the way you would to them.",
+"If you ever see something that bothers you, come to me.",
+{
+"t": "I won't freak out.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Taking every device forever",
+"Kids learn to hide, not to tell"
+],
+[
+"Shaming",
+"Bodies and curiosity are normal"
+],
+[
+"Counting on filters alone",
+"Filters still need your talks"
+]
+],
+"say": "Some things are better left out. Taking every device forever, because kids learn to hide, not to tell. Shaming them, or calling their body or curiosity dirty. And assuming filters are enough. Filters help, and they still need your talks.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "When to get more help",
+"body": "Can't seem to stop: their doctor or a counselor. Someone sending it or showing it: report it.",
+"say": "Get help if your child keeps going back to it and can't seem to stop. Their doctor or a counselor is a good place to start. If someone is showing it to them, that's serious. An adult or older kid showing porn to a child can be a form of abuse. If your child tells you, stay calm, believe them, and get help the same day. Report anyone who sends sexual images to a child, or asks a child for them, to the CyberTipline at 1-800-843-5678."
+},
+{
+"k": "big",
+"h": "Stay calm. Keep talking.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "This talk can stir up your own discomfort, or your own history. That's okay. Talk it through with another grown-up first if that helps. Stay calm, and keep talking. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "vaping",
+"ring": "as-growing",
+"title": "Vaping, Nicotine Pouches, and Being Offered Things",
+"you": {
+"id": "as-g-vaping-you",
+"guide": "vaping",
+"side": "you",
+"title": "Vaping, Nicotine Pouches, and Being Offered Things",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"CDC: Protecting youth",
+"https://www.cdc.gov/tobacco/e-cigarettes/protecting-youth.html"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Vaping, Nicotine Pouches, and Being Offered Things",
+"sub": "For You",
+"say": "If someone has offered you a vape, a nicotine pouch, or something else, this is for you. Or maybe you've just wondered about it. Lots of kids your age have been there."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Curious",
+"Pressured",
+"Worried about fitting in",
+"Not sure what to say"
+],
+"say": "Maybe a friend or an older kid offered you something. Maybe you saw it at school, or in a video. You might feel curious, or pressured. You might worry about fitting in, or not know what to say. All of that is normal."
+},
+{
+"k": "card",
+"title": "Your brain is still growing.",
+"body": "Nicotine hooks a growing brain fast.",
+"say": "Here's something true. Your brain keeps growing until you're about twenty-five. Nicotine hooks a growing brain fast. Sweet flavors can make it seem harmless, and pouches have nicotine too. Knowing that helps you choose."
+},
+{
+"k": "points",
+"h": "Easy ways to say no",
+"items": [
+[
+"\"No thanks, I'm good.\"",
+"Short and calm"
+],
+[
+"\"My mom would kill me.\"",
+"Blame a grown-up"
+],
+[
+"Change the subject",
+"Or walk away"
+]
+],
+"say": "You don't need a big speech to say no. Try, no thanks, I'm good. You can always blame a grown-up: my mom would kill me. Or change the subject, or walk away. You can say no and still belong.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Pick your line.",
+"sub": "Say it out loud.",
+"say": "Let's practice. Take a slow breath. Pick the line that sounds most like you. Now say it out loud, like you mean it.",
+"beats": [
+"Let's practice.",
+"Take a slow breath.",
+"Pick the line that sounds most like you.",
+{
+"t": "Now say it out loud, like you mean it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If you already tried it",
+"body": "Tell a grown-up you trust. Teens can text DITCHVAPE to 88709.",
+"say": "If you've already tried something, or you're finding it hard to stop, you're still a good kid. Tell a grown-up you trust: a parent, a coach, a teacher, or your school counselor. Asking for help to quit is brave. Teens can also text DITCHVAPE to 88709 for help quitting."
+},
+{
+"k": "big",
+"h": "You get to choose.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "It's your body and your brain, and you get to choose. Keep a few good grown-ups close. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-vaping-helper",
+"guide": "vaping",
+"side": "helper",
+"title": "Vaping, Nicotine Pouches, and Being Offered Things",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"FDA: 2025 National Youth Tobacco Survey findings",
+"https://www.fda.gov/tobacco-products/ctp-newsroom/national-youth-tobacco-survey-fda-publishes-peer-reviewed-journal-article-releases-2025-findings"
+],
+[
+"CDC: Protecting youth",
+"https://www.cdc.gov/tobacco/e-cigarettes/protecting-youth.html"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Vaping, Nicotine Pouches, and Being Offered Things",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is being offered vapes, nicotine pouches, or other things, this is for you. You don't need a speech. You need a good question, and a calm voice."
+},
+{
+"k": "big",
+"h": "Offered by friends.",
+"sub": "Often older kids. Often sweet flavors.",
+"say": "Middle schoolers are often offered these things by older kids or by friends. Youth tobacco use keeps falling overall, which is good news. But nicotine pouches have doubled in just a few years. Flavors are a big draw."
+},
+{
+"k": "card",
+"title": "Start with a question.",
+"body": "\"What have you seen at school?\"",
+"say": "Skip the we need to talk opener. Start with something you see together, like an ad or a news story, and ask what they think. What have you seen at school? What do kids at your school use? Then stay curious, and listen more than you talk."
+},
+{
+"k": "card",
+"title": "Short and true",
+"body": "The brain keeps developing until about 25.",
+"say": "When you explain, keep it short and true. The brain keeps developing until about age twenty-five, and nicotine hooks a growing brain fast. Name the pouches too, not just vapes. Scare tactics and long lectures tend to shut kids down. Plain facts and a calm voice keep them talking."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"What do kids at your school use?\"",
+"\"You can always blame me.\"",
+"\"If you ever want to quit, I'll help, not punish.\""
+],
+"say": "Words that help. What do kids at your school use? You can always blame me: just say, my mom would kill me. And, if you ever want to quit something, I'll help, not punish."
+},
+{
+"k": "flow",
+"h": "Practice saying no",
+"steps": [
+[
+"Pick a line",
+"Short and easy"
+],
+[
+"Say it out loud",
+"Together, a few times"
+],
+[
+"Plan a way out",
+"A text, a code word, a ride"
+]
+],
+"say": "Practice a few easy no lines they can use without losing face. Let them pick the line. Say it out loud together a few times, even if it feels silly. And plan a way out: a text to you, or a code word that means come get me.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Try it now.",
+"sub": "Your calm is the message.",
+"say": "Take a slow breath. Picture your middle schooler beside you. Now say this out loud: if you ever want to quit something, I'll help, not punish.",
+"beats": [
+"Take a slow breath.",
+"Picture your middle schooler beside you.",
+{
+"t": "Now say this out loud: if you ever want to quit something, I'll help, not punish.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If they already use",
+"body": "Stay calm. Talk with their doctor. Teens can text DITCHVAPE to 88709.",
+"say": "If you learn they're already using, stay calm and keep the door open. Nicotine is hard to quit, and needing help is no failure. Talk with their doctor about quitting. Teens can text DITCHVAPE to 88709 for support. If anything points to thoughts of not wanting to be alive, call or text 988, or call 911 in an emergency."
+},
+{
+"k": "card",
+"title": "They watch you too.",
+"body": "Be honest about your own habits.",
+"say": "Kids watch what we do more than what we say. If you vape or smoke, be honest about how hard quitting is, and let them see you try. And look after yourself too. Talk with another grown-up you trust."
+},
+{
+"k": "big",
+"h": "Ask. Listen. Stay close.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Ask good questions, listen more than you lecture, and stay close. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "gambling",
+"ring": "as-growing",
+"title": "Gambling, Betting, and Loot Boxes",
+"you": {
+"id": "as-g-gambling-you",
+"guide": "gambling",
+"side": "you",
+"title": "Gambling, Betting, and Loot Boxes",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Minnesota Alliance on Problem Gambling",
+"https://mnapg.org"
+],
+[
+"National Council on Problem Gambling",
+"https://www.ncpgambling.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Gambling, Betting, and Loot Boxes",
+"sub": "For You",
+"say": "If you've bought a loot box, bet game skins, played a casino-style game, or watched friends bet on sports, this is for you. Lots of kids your age have."
+},
+{
+"k": "words",
+"h": "It might not feel like gambling",
+"items": [
+"Loot boxes",
+"Skin betting",
+"Casino-style games",
+"Sports bets"
+],
+"say": "It might not feel like gambling. It feels like part of the game. But when you pay real money for a chance to win something, that's gambling. Lots of kids do it without calling it that."
+},
+{
+"k": "card",
+"title": "The game is built to win.",
+"body": "Near-misses are designed to keep you playing.",
+"say": "Here's how it works. These games and apps are built so the house wins over time. That's how they make money. And that almost-won feeling? Near-misses are designed on purpose, to keep you playing."
+},
+{
+"k": "points",
+"h": "Notice the signs",
+"items": [
+[
+"Spending more than you planned",
+"Money or gift cards"
+],
+[
+"Trying to win it back",
+"One more try"
+],
+[
+"Big moods",
+"Tied to a game or a score"
+]
+],
+"say": "Notice the signs in yourself. Spending more than you planned, or using gift cards that weren't meant for this. Trying to win back what you lost. Big moods that ride on a game or a score.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Who could you tell?",
+"sub": "Picture them now.",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Think about how games and money feel for you right now. Now picture one grown-up you could talk to about it.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Think about how games and money feel for you right now.",
+{
+"t": "Now picture one grown-up you could talk to about it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If it's hard to stop",
+"body": "Tell a grown-up you trust. Gambling problems are treatable.",
+"say": "If it's hard to stop, or money is gone that you can't pay back, you're not a bad kid. Tell a grown-up you trust: a parent, a coach, a teacher, or your school counselor. Gambling problems are treatable, and helping with the money part is a grown-up job."
+},
+{
+"k": "big",
+"h": "Play for fun. Keep your money.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Games are for fun, and you can enjoy them without betting. Talk with a grown-up whenever it stops feeling fun. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-gambling-helper",
+"guide": "gambling",
+"side": "helper",
+"title": "Gambling, Betting, and Loot Boxes",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Minnesota Alliance on Problem Gambling",
+"https://mnapg.org"
+],
+[
+"National Council on Problem Gambling",
+"https://www.ncpgambling.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Gambling, Betting, and Loot Boxes",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is buying loot boxes, betting game skins, or watching sports betting ads, this is for you. You don't need to know every game. You need curiosity, and a calm voice."
+},
+{
+"k": "big",
+"h": "Gambling lives in games now.",
+"sub": "Often without anyone calling it that.",
+"say": "Many middle schoolers have already tried something like gambling, often without calling it that. Paying for loot boxes. Trading or betting game skins. Playing casino-style games. And sports betting ads are everywhere during the games they watch."
+},
+{
+"k": "card",
+"title": "Start with a question.",
+"body": "\"Have you ever bought a loot box or bet on anything in a game?\"",
+"say": "Start with a question, not a warning. Have you ever bought a loot box or bet on anything in a game? Ask what they see their friends doing. Then listen. Kids talk more when they don't expect a lecture."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Those games are designed so you lose more than you win.\"",
+"\"What do the ads leave out?\"",
+"\"If you can't stop, tell me. We'll figure it out.\""
+],
+"say": "Words that help. Those games are designed so you lose more than you win. That's how they make money. When an ad comes on, ask what it leaves out. And, if you ever feel like you can't stop, tell me. We'll figure it out."
+},
+{
+"k": "points",
+"h": "Set it up at home",
+"items": [
+[
+"Spending limits",
+"On every device"
+],
+[
+"Check purchases",
+"And gift cards"
+],
+[
+"Gifts without bets",
+"Lottery tickets stay grown-up"
+]
+],
+"say": "Set things up at home. Turn on spending limits on every device. Check purchases and gift cards together. And keep bets and lottery tickets out of gifts and treats for kids. It teaches that gambling is a normal treat.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Warning signs",
+"body": "Missing money. Secret spending. Moods tied to scores. Chasing losses.",
+"say": "Know the warning signs. Missing money or gift cards. Secrecy about spending. Big mood swings tied to games or scores. Trying to win back losses. Kids who gamble young are more likely to have gambling problems later, so take it seriously, and calmly."
+},
+{
+"k": "big",
+"h": "Try it now.",
+"sub": "Calm makes it safe to tell you.",
+"say": "Take a slow breath. Picture your middle schooler, maybe with a game in their hands. Now say this out loud: if you ever feel like you can't stop, tell me.",
+"beats": [
+"Take a slow breath.",
+"Picture your middle schooler, maybe with a game in their hands.",
+{
+"t": "Now say this out loud: if you ever feel like you can't stop, tell me.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If money is missing",
+"body": "Minnesota: 1-800-333-4673 or text HOPE to 53342. Elsewhere: 1-800-GAMBLER.",
+"say": "If money is missing, or they can't stop, get help. Gambling problems are treatable. In Minnesota, call the Problem Gambling Helpline at 1-800-333-4673, or text HOPE to 53342. Outside Minnesota, call 1-800-GAMBLER. Help is there for families too. If anything points to thoughts of not wanting to be alive, call or text 988, or call 911 in an emergency."
+},
+{
+"k": "card",
+"title": "They watch you too.",
+"body": "How you talk about bets and luck teaches them.",
+"say": "Kids watch how we talk about bets, games, and luck. If you bet, be honest about the house winning over time. And if a child's gambling has cost your family money, it's okay to be upset. Get support for yourself, and keep the money worries between the grown-ups."
+},
+{
+"k": "big",
+"h": "Curious, calm, and clear.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Stay curious, stay calm, and be clear about how these games work. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "ai",
+"ring": "as-growing",
+"title": "AI Chatbots and Companions",
+"you": {
+"id": "as-g-ai-you",
+"guide": "ai",
+"side": "you",
+"title": "AI Chatbots and Companions",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Common Sense Media: How and why teens use AI companions",
+"https://www.commonsensemedia.org/research/talk-trust-and-trade-offs-how-and-why-teens-use-ai-companions"
+],
+[
+"Common Sense Media: 2026 census on AI use by tweens and teens",
+"https://www.commonsensemedia.org/press-releases/common-sense-media-releases-inaugural-annual-study-on-ai-use-by-tweens-and-teens"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "AI Chatbots and Companions",
+"sub": "For You",
+"say": "If you use AI for homework, for fun, or just to talk, this is for you. Most kids your age use it. Let's talk about how to use it well."
+},
+{
+"k": "points",
+"h": "What AI is",
+"items": [
+[
+"It can be helpful",
+"For ideas and questions"
+],
+[
+"It can be wrong",
+"Even when it sounds sure"
+],
+[
+"It is not a person",
+"Even when it sounds caring"
+]
+],
+"say": "AI can be really helpful, for ideas and questions. It can also be wrong, even when it sounds sure. And it can sound caring, but it isn't a person. It doesn't know you or love you the way people do.",
+"cue": {
+"at": [
+0,
+1,
+2
+]
+}
+},
+{
+"k": "card",
+"title": "It's built to keep you chatting.",
+"body": "That is how the app wins. You get to choose.",
+"say": "Here's something to know. Many chatbots are built to keep you chatting as long as possible. Companion apps, the ones that act like a friend or a boyfriend or girlfriend, are best kept for grown-ups, not kids. You get to choose when to close the app."
+},
+{
+"k": "big",
+"h": "Real feelings go to a real person first.",
+"sub": "Feelings, health, and body questions.",
+"say": "Here's a good rule. Questions about your feelings, your health, or your body go to a real person first. A parent, a relative, a coach, a teacher, your school counselor, or your doctor. People can know you, and help in ways a chatbot can't."
+},
+{
+"k": "big",
+"h": "Who is your person?",
+"sub": "Picture them now.",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Think of one thing you might ask a chatbot. Now picture the grown-up you could ask instead.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Think of one thing you might ask a chatbot.",
+{
+"t": "Now picture the grown-up you could ask instead.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "A chatbot is not a crisis line.",
+"body": "Call or text 988. Danger right now: 911.",
+"say": "If you ever feel like you don't want to be alive, or someone is hurting you, a chatbot is the wrong place to go. Tell a grown-up you trust today. You can call or text 988 any time. If you're in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Use the tool. Keep your people.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "AI is a tool, and you can use it well. Keep your people close for the things that matter most. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-ai-helper",
+"guide": "ai",
+"side": "helper",
+"title": "AI Chatbots and Companions",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Common Sense Media: How and why teens use AI companions",
+"https://www.commonsensemedia.org/research/talk-trust-and-trade-offs-how-and-why-teens-use-ai-companions"
+],
+[
+"Common Sense Media: 2026 census on AI use by tweens and teens",
+"https://www.commonsensemedia.org/press-releases/common-sense-media-releases-inaugural-annual-study-on-ai-use-by-tweens-and-teens"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "AI Chatbots and Companions",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love uses AI chatbots, for school, for fun, or to talk about their life, this is for you. You don't need to be a tech expert. You need to ask, and keep talking."
+},
+{
+"k": "big",
+"h": "AI is everywhere for kids now.",
+"sub": "For homework, health questions, and feelings.",
+"say": "AI is everywhere for kids now. Most kids ages nine to seventeen use it. Many ask it about their health or their body, and many talk to it about feelings. Younger teens tend to trust its advice more than older teens do. And nearly half say no parent has talked with them about using it safely."
+},
+{
+"k": "card",
+"title": "Start with curiosity.",
+"body": "\"Which AI do you use? What do you ask it?\"",
+"say": "Start with curiosity, not a ban. Which AI do you use? What do you ask it? Show me what you like using it for. Let them teach you. You'll learn a lot, and they'll keep talking."
+},
+{
+"k": "points",
+"h": "What to explain",
+"items": [
+[
+"It is not a person",
+"Even when it sounds caring"
+],
+[
+"It can be wrong",
+"Even when it sounds sure"
+],
+[
+"It wants your time",
+"Built to keep you chatting"
+]
+],
+"say": "Then explain three things. AI can sound caring, but it isn't a person. It can be wrong, even when it sounds sure. And it's built to keep you chatting.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Companion apps",
+"body": "Apps built to act like a friend or partner are best kept for grown-ups.",
+"say": "Companion apps are different. They're built to act like a friend or a partner, and experts recommend no one under eighteen use them. You don't need to ban all AI, since it's built into school tools and search. Talk about it the way you'd talk about any new friend. Who is this? What do they want? Do they have your best interest at heart?"
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"AI can be helpful, but it doesn't love you, and it can be wrong.\"",
+"\"I want to hear it before a chatbot does.\""
+],
+"say": "Words that help. AI can be helpful, but it doesn't love you, and it can be wrong. And, if something is bothering you, I want to hear it before a chatbot does. Skip the mocking. Kids who feel judged for using AI just stop telling you."
+},
+{
+"k": "flow",
+"h": "A family agreement",
+"steps": [
+[
+"People first",
+"For feelings, health, and body"
+],
+[
+"Where it lives",
+"Shared spaces, not late at night"
+],
+[
+"Check in",
+"Look at it together sometimes"
+]
+],
+"say": "Make a family agreement together. Feelings, health, and body questions go to a person first. Decide where AI gets used, like shared spaces, and not late at night. And check in by looking at it together sometimes. Follow the agreement yourself too, because they're watching.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Try it now.",
+"sub": "Warm, and out loud.",
+"say": "Take a slow breath. Picture your middle schooler, phone in hand. Now say this out loud: if something is bothering you, I want to hear it before a chatbot does.",
+"beats": [
+"Take a slow breath.",
+"Picture your middle schooler, phone in hand.",
+{
+"t": "Now say this out loud: if something is bothering you, I want to hear it before a chatbot does.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "A chatbot is not a crisis line.",
+"body": "Not wanting to be alive: call or text 988. Emergency: 911.",
+"say": "Make sure they know a chatbot is not a crisis line. If anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text 988, or call 911 in an emergency. Look after yourself too. This is new for every parent, and it's okay to learn as you go."
+},
+{
+"k": "big",
+"h": "Ask, explain, and stay close.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Ask what they use, explain how it works, and stay close enough to hear it first. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "sleep",
+"ring": "as-growing",
+"title": "Sleep, Screens, and Gaming",
+"you": {
+"id": "as-g-sleep-you",
+"guide": "sleep",
+"side": "you",
+"title": "Sleep, Screens, and Gaming",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"HealthyChildren.org: Healthy sleep habits",
+"https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx"
+],
+[
+"Minnesota Department of Health: 2025 Minnesota Student Survey",
+"https://www.health.state.mn.us/news/pressrel/2025/survey120925.html"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Sleep, Screens, and Gaming",
+"sub": "For You",
+"say": "If you're tired a lot, or it's hard to put the screen down at night, this is for you. Lots of kids your age feel the same way."
+},
+{
+"k": "words",
+"h": "Tired is real",
+"items": [
+"Grumpy",
+"Foggy in class",
+"Wired at night",
+"Wiped out all day"
+],
+"say": "Being tired is real. You might feel grumpy, or foggy in class. You might feel wired at night and wiped out all day. Your body and brain are growing fast right now, and growing takes a lot of sleep."
+},
+{
+"k": "points",
+"h": "How much sleep?",
+"items": [
+[
+"Up to age 12",
+"9 to 12 hours a night"
+],
+[
+"Age 13 and up",
+"8 to 10 hours a night"
+],
+[
+"Teens",
+"Need more sleep, not less"
+]
+],
+"say": "So how much sleep do you need? Up to age 12, about 9 to 12 hours a night. From 13 on, about 8 to 10. Teens need more sleep, not less.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Screens are built to keep you going.",
+"body": "One more video. One more round. That part is on purpose.",
+"say": "Screens can be great. Games are fun, and group chats keep you close to friends. But apps and games are built to keep you going: one more video, one more round. That part is on purpose. So it helps to have a plan."
+},
+{
+"k": "points",
+"h": "Things that help",
+"items": [
+[
+"Charge it outside your room",
+"Kitchen, hallway, anywhere"
+],
+[
+"Pick a screens-off time",
+"Together with your family"
+],
+[
+"Use the built-in timer",
+"Let the timer say when"
+],
+[
+"Wind down",
+"Music, a book, a shower"
+]
+],
+"say": "Here are things that help. Charge your phone outside your bedroom, like in the kitchen or the hallway. Pick a screens-off time for school nights, with your family. Use the timer built into your game or phone, and let the timer say when. And wind down with something calm, like music, a book, or a warm shower.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "What time could work?",
+"sub": "Pick it. Then picture who you could tell.",
+"say": "Let's try something. Breathe in slowly, and let it out even slower. Think of a screens-off time that could really work for you on school nights. Now picture the grown-up you could talk it over with.",
+"beats": [
+"Let's try something.",
+"Breathe in slowly, and let it out even slower.",
+"Think of a screens-off time that could really work for you on school nights.",
+{
+"t": "Now picture the grown-up you could talk it over with.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Who to talk to",
+"body": "A parent, a relative, a coach, your school counselor, your doctor.",
+"say": "Talk it over with a grown-up you trust: a parent, a relative, a coach, or your school counselor. If you're tired most days, even after a full night in bed, or you lie awake worrying night after night, tell a parent and see your doctor."
+},
+{
+"k": "big",
+"h": "Rest helps you grow.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Sleep is when your body and brain grow and get ready for tomorrow. Rest helps you grow. Be gentle with yourself tonight. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-sleep-helper",
+"guide": "sleep",
+"side": "helper",
+"title": "Sleep, Screens, and Gaming",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org: Healthy sleep habits",
+"https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx"
+],
+[
+"Minnesota Department of Health: 2025 Minnesota Student Survey",
+"https://www.health.state.mn.us/news/pressrel/2025/survey120925.html"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Sleep, Screens, and Gaming",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is up too late, glued to a screen, or tired all the time, this is for you. You don't need to win every argument. A plan you make together goes further."
+},
+{
+"k": "big",
+"h": "Teens need more sleep, not less.",
+"sub": "9 to 12 hours up to age 12. 8 to 10 from 13 on.",
+"say": "Kids need 9 to 12 hours of sleep a night up to age 12, and 8 to 10 hours from 13 on. Teens need more sleep, not less, even as their body clocks start to run later. A tired middle schooler can look moody, foggy, or anxious, when what they really need is rest."
+},
+{
+"k": "card",
+"title": "Late-night screens are sleep thieves.",
+"body": "Plenty of teens are online after midnight on school nights.",
+"say": "Late-night screens are one of the biggest sleep thieves. Plenty of teens are on their phones between midnight and five in the morning on school nights. A phone in the bedroom makes that easy: one more video, one more message, one more round."
+},
+{
+"k": "big",
+"h": "Gaming isn't the enemy.",
+"sub": "Look at what it pushes out.",
+"say": "Gaming isn't the enemy. Games can be creative, social, and fun. Look at what gaming replaces instead: sleep, homework, meals, movement, and time with family. That turns a fight about gaming into a plan for what matters."
+},
+{
+"k": "flow",
+"h": "Make a plan together",
+"steps": [
+[
+"A charging station",
+"Outside bedrooms, for everyone"
+],
+[
+"A screens-off time",
+"They help choose it"
+],
+[
+"Built-in timers",
+"Let the timer say when"
+],
+[
+"Steady weekends",
+"Close to weekdays"
+]
+],
+"say": "Make a plan together. Set up a family charging station outside the bedrooms, for everyone. Agree on a screens-off time for school nights, and let them help choose it. Use the timers built into games and phones, so the timer says when, not you. And keep weekends fairly close to weekdays. Wildly different schedules make Monday mornings harder.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Let's all charge our phones in the kitchen, me too.\"",
+"\"What time do you want screens off on school nights?\"",
+"\"How do you feel on days you sleep more?\""
+],
+"say": "Words that help. Let's all charge our phones in the kitchen, me too. What time do you want screens off on school nights? How do you feel on days you sleep more? Questions like these help them notice for themselves."
+},
+{
+"k": "card",
+"title": "You go first.",
+"body": "If your phone sleeps in the kitchen, theirs can too.",
+"say": "Kids watch what we do more than what we say. If your phone sleeps in the kitchen, theirs can too. Put yours down at dinner, and let them see you wind down at night. That does more than any lecture."
+},
+{
+"k": "big",
+"h": "Say it out loud.",
+"sub": "Try the first line now.",
+"say": "Take a breath. Picture your middle schooler at the end of a long day. Now say this out loud, the way you would to them: what time do you want screens off on school nights?",
+"beats": [
+"Take a breath.",
+"Picture your middle schooler at the end of a long day.",
+{
+"t": "Now say this out loud, the way you would to them: what time do you want screens off on school nights?",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to call the doctor",
+"body": "Tired most days, or awake with worry night after night.",
+"say": "If they're tired most days even after a full night in bed, or they lie awake worrying night after night, talk with their doctor. If worry or low mood is keeping them up, the school counselor can help too. If anything points to thoughts of not wanting to be alive, call or text 988, or call 911 in an emergency. And get some rest yourself. You matter too."
+},
+{
+"k": "big",
+"h": "Rest is a family thing.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Rest is something a family does together. Make the plan, keep it kind, and go first. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "looks",
+"ring": "as-growing",
+"title": "Not Liking How You Look",
+"you": {
+"id": "as-g-looks-you",
+"guide": "looks",
+"side": "you",
+"title": "Not Liking How You Look",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"AAP: Concerning eating disorder content",
+"https://www.aap.org/en/patient-care/media-and-children/center-of-excellence-on-social-media-and-youth-mental-health/qa-portal/qa-portal-library/qa-portal-library-questions/concerning-eating-disorder-content/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Not Liking How You Look",
+"sub": "For You",
+"say": "If you don't like how you look, or you've been picking yourself apart in the mirror, this is for you. Lots of kids your age feel this way."
+},
+{
+"k": "words",
+"h": "Lots of kids feel this",
+"items": [
+"Embarrassed",
+"Self-conscious",
+"Not good enough",
+"Worried what others think"
+],
+"say": "You might feel embarrassed, or self-conscious. You might feel like you're not good enough, or worry about what everyone else thinks. Middle school puts a spotlight on looks, and bodies change on their own schedule. Those feelings are common, and they make sense."
+},
+{
+"k": "card",
+"title": "Your feed is not a mirror.",
+"body": "Filters, angles, and best shots. Not real life.",
+"say": "A lot of what you see online is filtered, posed, or edited. People share their best angle on their best day. When you compare your real life to that, anyone would come up short. Your feed is not a mirror."
+},
+{
+"k": "points",
+"h": "Notice how it feels",
+"items": [
+[
+"After scrolling",
+"Better, or worse?"
+],
+[
+"Unfollow or mute",
+"What makes you feel worse"
+],
+[
+"Follow more",
+"Things you love to do"
+]
+],
+"say": "Try noticing how you feel after scrolling. Better, or worse? If an account makes you feel worse about yourself, unfollow it or mute it. And fill your feed with things you love: music, art, sports, animals, funny stuff.",
+"cue": {
+"at": [
+0,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Your body is your home.",
+"sub": "Not a project.",
+"say": "Here's something worth remembering. Your body is not a project. It's your home. It carries you through your day, and lets you laugh, run, hug, make things, and be with the people you love."
+},
+{
+"k": "big",
+"h": "What can your body do?",
+"sub": "Name one thing. Then one thing about you.",
+"say": "Let's try something. Take a slow breath in, and let it out. Name one thing your body helped you do this week. Now name one thing you like about who you are, something no picture shows.",
+"beats": [
+"Let's try something.",
+"Take a slow breath in, and let it out.",
+"Name one thing your body helped you do this week.",
+{
+"t": "Now name one thing you like about who you are, something no picture shows.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Who to talk to",
+"body": "A parent, a relative, a coach, your school counselor, your doctor.",
+"say": "Talk to a grown-up you trust: a parent, a relative, a coach, or your school counselor. If thoughts about your looks or food are taking up a lot of your day, tell a grown-up and see your doctor. If you ever have thoughts of not wanting to be alive, call or text 988, any time."
+},
+{
+"k": "big",
+"h": "You are more than how you look.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You are so much more than how you look. Your kindness, your effort, your humor, the way you show up for people. Be gentle with yourself today. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-looks-helper",
+"guide": "looks",
+"side": "helper",
+"title": "Not Liking How You Look",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"AAP: Concerning eating disorder content",
+"https://www.aap.org/en/patient-care/media-and-children/center-of-excellence-on-social-media-and-youth-mental-health/qa-portal/qa-portal-library/qa-portal-library-questions/concerning-eating-disorder-content/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Not Liking How You Look",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love doesn't like how they look, this is for you. You can't take away every hard feeling. You can make home a place where bodies are spoken about kindly."
+},
+{
+"k": "big",
+"h": "Looks matter a lot right now.",
+"sub": "Changing bodies under a big spotlight.",
+"say": "In middle school, bodies change fast and on different schedules, and looks suddenly matter a lot. Kids compare themselves to friends, to classmates, and to everyone on their screens. Not liking how they look is common at this age. How the grown-ups talk about bodies makes a real difference."
+},
+{
+"k": "card",
+"title": "Kids learn body talk from us.",
+"body": "Including how we talk about our own bodies.",
+"say": "Kids pick up how adults talk about bodies, including our own. Comments about size or shape, food rules, and calling foods good or bad teach them to judge. So does teasing, even playful teasing. Speak kindly about your own body out loud. They're listening."
+},
+{
+"k": "points",
+"h": "Praise what lasts",
+"items": [
+[
+"Character",
+"Kind, honest, brave, funny"
+],
+[
+"Effort",
+"How hard they tried"
+],
+[
+"What bodies can do",
+"Run, build, dance, hug"
+]
+],
+"say": "Praise what lasts. Their character: kind, honest, brave, funny. Their effort: how hard they tried, and how they kept going. And what their body can do: run, build, dance, play music, hug a little brother. Praise like that says far more than any comment on looks.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Your body is not a project. It's your home.\"",
+"\"I love how strong you are when you play.\"",
+"\"Where did that idea about your body come from?\""
+],
+"say": "Words that help. Your body is not a project. It's your home. I love how strong you are when you play. And when they say something harsh about themselves, get curious. Where did that idea about your body come from? What did you see that made you feel that way?"
+},
+{
+"k": "words",
+"h": "Try not to",
+"items": [
+"Comments on size or shape",
+"Praising weight loss",
+"Calling foods good or bad"
+],
+"say": "And try not to comment on size or shape, even kindly. Never praise weight loss, theirs or anyone's. Skip calling foods good or bad. Those habits teach kids that their worth depends on their body."
+},
+{
+"k": "card",
+"title": "Help them shape their feed.",
+"body": "\"Which accounts make you feel good? Which ones don't?\"",
+"say": "Content that pushes an ideal body is linked with worse body image. You don't have to take their phone. Sit with them, ask how certain accounts make them feel, and help them unfollow what drags them down. Then fill their world with other reasons they're valued: their friends, their talents, their kindness."
+},
+{
+"k": "big",
+"h": "Say it out loud.",
+"sub": "Something no picture shows.",
+"say": "Take a breath. Think of one thing you love about your middle schooler that has nothing to do with looks. Now say it out loud, the way you would to them.",
+"beats": [
+"Take a breath.",
+"Think of one thing you love about your middle schooler that has nothing to do with looks.",
+{
+"t": "Now say it out loud, the way you would to them.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to call the doctor",
+"body": "Skipped meals, hidden food, or worry that takes over.",
+"say": "If you notice skipped meals, hidden food, exercise that seems driven, or worry about looks that takes over their day, talk with their doctor this week. Aspen's guide Eating, Food, and Weight Worries has more. If anything points to thoughts of not wanting to be alive, call or text 988, or call 911 in an emergency. And be gentle with your own body too."
+},
+{
+"k": "big",
+"h": "Loved as they are.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Your child is loved as they are, and they need to hear it. Praise who they are, speak kindly about bodies, and keep the door open. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "eating",
+"ring": "as-growing",
+"title": "Eating, Food, and Weight Worries",
+"you": {
+"id": "as-g-eating-you",
+"guide": "eating",
+"side": "you",
+"title": "Eating, Food, and Weight Worries",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"ANAD",
+"https://anad.org"
+],
+[
+"National Alliance for Eating Disorders",
+"https://www.allianceforeatingdisorders.com"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Eating, Food, and Weight Worries",
+"sub": "For You",
+"say": "If food, eating, or how your body looks has been on your mind a lot lately, this is for you. You are not in trouble, and you are not alone."
+},
+{
+"k": "big",
+"h": "Your body is supposed to change right now.",
+"sub": "Every body grows on its own schedule.",
+"say": "Middle school brings a lot of body changes, and a lot of messages about bodies, online and at school. Your body is supposed to grow and change right now. Every body grows on its own schedule."
+},
+{
+"k": "points",
+"h": "Signs to tell someone",
+"items": [
+[
+"Food rules",
+"That feel hard to break"
+],
+[
+"Skipping meals",
+"Or hiding food"
+],
+[
+"Worry or guilt",
+"Before or after eating"
+],
+[
+"Thoughts that won't quit",
+"About food or your body"
+]
+],
+"say": "Sometimes worries about food grow bigger than they should. You might have food rules that feel hard to break. You might skip meals, or hide food. You might feel worried or guilty before or after eating. Or thoughts about food and your body might not quit. If any of that sounds familiar, it's a sign to tell someone.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "This is not your fault.",
+"body": "It can happen to anyone, in any kind of body. Help works.",
+"say": "If that's you, it is not your fault, and it is not a choice you made. Problems with eating can happen to anyone, in any kind of body. They are real health problems, and help works. The sooner you get help, the easier it is."
+},
+{
+"k": "points",
+"h": "Tell a grown-up you trust",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"The school counselor",
+"Any day"
+],
+[
+"A teacher or coach",
+"Someone you trust"
+],
+[
+"Your doctor",
+"Who helps your body be okay"
+]
+],
+"say": "Tell a grown-up you trust. A parent or relative. The school counselor. A teacher or coach. Or your doctor, whose job is to make sure your body is okay. You can be honest with them.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Practice the words",
+"items": [
+"I've been having a hard time with food, and I need help."
+],
+"sub": "Quietly or out loud.",
+"say": "Let's practice. Picture that grown-up's face. Take a slow breath. Now say this, quietly or out loud. I've been having a hard time with food, and I need help.",
+"beats": [
+"Let's practice.",
+"Picture that grown-up's face.",
+"Take a slow breath.",
+"Now say this, quietly or out loud.",
+{
+"t": "I've been having a hard time with food, and I need help.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help right now",
+"body": "Fainting, chest pain, or confusion: get a grown-up and call 911. Thoughts of not wanting to be alive: call or text 988.",
+"say": "If you ever faint, have chest pain, or feel confused, get a grown-up and call 911. And if you have thoughts of hurting yourself, or of not wanting to be alive, call or text 988 any time, and tell a grown-up right away."
+},
+{
+"k": "big",
+"h": "You are so much more than a body.",
+"sub": "Telling someone is a strong first step.",
+"say": "You are so much more than a body. You are a whole person, with things you love and people who love you. Telling someone is a strong first step."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"911: fainting, chest pain, or confusion"
+]
+},
+"helper": {
+"id": "as-g-eating-helper",
+"guide": "eating",
+"side": "helper",
+"title": "Eating, Food, and Weight Worries",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"ANAD",
+"https://anad.org"
+],
+[
+"National Alliance for Eating Disorders",
+"https://www.allianceforeatingdisorders.com"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Eating, Food, and Weight Worries",
+"sub": "For the Grown-up",
+"say": "If you're worried about a middle schooler and food, eating, or weight, this is for you. You don't need to be sure before you act, and you are part of the solution."
+},
+{
+"k": "big",
+"h": "A medical illness, not a choice.",
+"sub": "It can happen at any body size.",
+"say": "Middle school brings a changing body, new comparisons, and a flood of food and body messages online. Most kids come through it okay. Some slide into restricting food, bingeing, purging, or rigid food rules. Eating disorders are medical illnesses, not choices. They can happen at any body size, and a child can be very sick and still look healthy."
+},
+{
+"k": "points",
+"h": "Watch for",
+"items": [
+[
+"Skipped meals",
+"Or \"I already ate\""
+],
+[
+"Hidden food",
+"Or food that goes missing"
+],
+[
+"Bathroom trips",
+"Right after eating"
+],
+[
+"Exercise that looks driven",
+"Hard to skip"
+]
+],
+"say": "Watch for patterns. Skipped meals, or always having eaten already. Hidden food, or food that goes missing. Trips to the bathroom right after eating. And exercise that looks driven, hard to skip even when they're tired or sick.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Start with their doctor this week.",
+"sub": "Tell the doctor what you have seen.",
+"say": "If you're worried, you don't need to be sure. Book a doctor visit this week, and tell the doctor what you have seen. For kids and teens, the strongest treatment puts parents at the center, with a team guiding. You did not cause this, and you can be a big part of the way through."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I'm not mad. I'm worried, and I love you.\"",
+"\"Let's see the doctor and make sure your body is okay.\"",
+"\"All kinds of food can fit.\""
+],
+"say": "Describe what you see, not their weight. Here are words that help. I've noticed dinner seems stressful. I'm not mad. I'm worried, and I love you. Then, let's see the doctor and make sure your body is okay. And at the table, all kinds of food can fit."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Weight comments",
+"Even praise for losing it"
+],
+[
+"Family diets",
+"Or good and bad foods"
+],
+[
+"Food fights at the table",
+"On your own"
+]
+],
+"say": "Some things are best left out. Comments about weight, even praise for losing it. Family diets, or calling foods good and bad. And fighting about food at the table on your own. Let the team guide that part.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Practice the opening line.",
+"sub": "Calm, private, and kind.",
+"say": "Take a moment. Picture a calm, private time with your child. Breathe in slowly, and let it out. Now say it softly. I'm not mad. I'm worried, and I love you.",
+"beats": [
+"Take a moment.",
+"Picture a calm, private time with your child.",
+"Breathe in slowly, and let it out.",
+"Now say it softly.",
+"I'm not mad.",
+{
+"t": "I'm worried, and I love you.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "At home",
+"items": [
+[
+"Regular meals together",
+"Neutral food talk"
+],
+[
+"Drop diet talk",
+"About anyone, yourself included"
+],
+[
+"Praise who they are",
+"Not how they look"
+]
+],
+"say": "At home, keep meals regular and together, and keep food talk neutral. Drop diet talk and weight comments, including about yourself and other people. Kids hear all of it. Praise who they are, not how they look: their kindness, their humor, their effort.",
+"cue": {
+"at": [
+0,
+1,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Fainting, chest pain, or confusion? Call 911.",
+"body": "Thoughts of not wanting to be alive: stay with them and call or text 988.",
+"say": "Some signs need help right away. Call 911 for fainting, chest pain, or confusion. If anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text 988. For support and treatment options, the ANAD Helpline is there on weekdays, and the full guide has the number."
+},
+{
+"k": "big",
+"h": "Who they are matters most.",
+"sub": "Get support for yourself too.",
+"say": "This can be frightening and exhausting. Get support for yourself too, from a friend, a counselor, or a parent support group. Stay calm, stay close, and let the team guide the medical part. The full guide has more, whenever you want it."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"911: fainting, chest pain, or confusion"
+]
+}
+},
+{
+"id": "wholike",
+"ring": "as-growing",
+"title": "Crushes, Feelings, and Who You Like",
+"you": {
+"id": "as-g-wholike-you",
+"guide": "wholike",
+"side": "you",
+"title": "Crushes, Feelings, and Who You Like",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"American Academy of Pediatrics: Your Child's First Crush",
+"https://www.healthychildren.org/English/healthy-living/emotional-wellness/Pages/Your-Childs-First-Crush.aspx"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Crushes, Feelings, and Who You Like",
+"sub": "For You",
+"say": "If you have a crush, or big feelings about someone, this is for you. Or maybe everyone around you seems to have one, and you're wondering what the fuss is about. Either way, you're normal."
+},
+{
+"k": "words",
+"h": "Crushes can feel like a lot",
+"items": [
+"Exciting",
+"Awkward",
+"Confusing",
+"Not sure yet"
+],
+"say": "Crushes often start in middle school. They can feel exciting, awkward, or confusing, sometimes all in one day. Some kids have lots of crushes. Some have none yet. Your feelings are real, even if they pass quickly. And nothing needs to be decided or labeled now."
+},
+{
+"k": "points",
+"h": "What healthy love looks like",
+"items": [
+[
+"Kindness",
+"In words and actions"
+],
+[
+"Honesty",
+"No games"
+],
+[
+"Trust",
+"You feel safe"
+],
+[
+"No pressure",
+"Ever"
+]
+],
+"say": "Here's what healthy love looks like, at any age. Kindness. Honesty. Trust. And never pressure. Someone who really likes you will respect your no.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "Your family has a why.",
+"body": "Ask about your family's beliefs and rules about love and dating.",
+"say": "Every family has its own beliefs and rules about love and dating. If you're not sure why yours has the rules it does, ask. Most grown-ups are glad to explain the why."
+},
+{
+"k": "card",
+"title": "Some things are never okay.",
+"body": "An adult who flirts with you. Anyone asking for photos or secrets. Tell a grown-up.",
+"say": "Some things are never okay. An adult who shows romantic interest in you. Anyone who asks you for photos, or asks you to keep a secret. If that happens, tell a grown-up you trust. You won't be in trouble for telling."
+},
+{
+"k": "big",
+"h": "Who could you talk to?",
+"sub": "Picture one grown-up.",
+"say": "Take a slow breath. Picture one grown-up you could talk to about this stuff. Maybe a parent, a relative, your school counselor, or a mentor. Think of how you might start: can I ask you something?",
+"beats": [
+"Take a slow breath.",
+"Picture one grown-up you could talk to about this stuff.",
+"Maybe a parent, a relative, your school counselor, or a mentor.",
+{
+"t": "Think of how you might start: can I ask you something?",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Talk to someone you trust",
+"body": "A parent, a relative, your school counselor, a mentor. Not wanting to be alive: 988.",
+"say": "Talk with a grown-up you trust, any time you have questions. If you ever feel unsafe, or have thoughts of not wanting to be alive, call or text 988, any time."
+},
+{
+"k": "big",
+"h": "You are loved as you are.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Whatever you're feeling, or not feeling yet, you're not behind and you're not weird. You are loved as you are. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-wholike-helper",
+"guide": "wholike",
+"side": "helper",
+"title": "Crushes, Feelings, and Who You Like",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"American Academy of Pediatrics: Your Child's First Crush",
+"https://www.healthychildren.org/English/healthy-living/emotional-wellness/Pages/Your-Childs-First-Crush.aspx"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Crushes, Feelings, and Who You Like",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love starts having crushes, this is for you. You don't need a perfect speech. Staying calm and curious does more than any lecture."
+},
+{
+"k": "big",
+"h": "Real feelings, even when they pass.",
+"sub": "Crushes often begin in these years.",
+"say": "Crushes often begin in these years. To a middle schooler, those feelings are real, even when they pass in a week. Teasing, or brushing it off as nothing, teaches them to stop telling you things."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Having a crush is normal. Thanks for telling me.\"",
+"\"What do you like about them?\""
+],
+"say": "Words that help. Having a crush is normal. Thanks for telling me. What do you like about them? Then listen more than you talk. Calm and curious keeps the door open, so your child brings questions to you, and not to the internet."
+},
+{
+"k": "points",
+"h": "What closes the door",
+"items": [
+[
+"Teasing",
+"Even the gentle kind"
+],
+[
+"Shaming or threats",
+"Kids stop telling"
+],
+[
+"Sharing their crush",
+"Without their okay"
+]
+],
+"say": "Three things close the door fast. Teasing, even the gentle kind. Shaming or threatening, which only teaches kids to stop telling you things. And sharing their crush with others without their okay. Their trust matters more than the story.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Share your family's values.",
+"body": "About love, commitment, and marriage, in your own words. With warmth, not fear.",
+"say": "This is a good time to share what your family believes about love, commitment, and marriage, in your own words. Many traditions see love as something sacred, worth patience, respect, and waiting until you're ready. Say it with warmth, not fear. Rules about dating are yours to set as a family, and it helps to explain the why behind them."
+},
+{
+"k": "points",
+"h": "What healthy love looks like",
+"items": [
+[
+"Kindness"
+],
+[
+"Honesty"
+],
+[
+"Trust"
+],
+[
+"Never pressure"
+]
+],
+"say": "Talk about what healthy love looks like. Kindness. Honesty. Trust. And never pressure. Middle schoolers are still figuring out their feelings, and nothing needs to be decided or labeled now.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "Keep them safe.",
+"body": "An adult showing romantic interest in a child is never okay. Photos or secrets: tell me.",
+"say": "Keep them safe. Any adult who shows romantic interest in a child is never okay. Anyone asking for photos or secrets is not safe. Say it plainly: if anyone ever asks you for photos or to keep a secret, you can always tell me. You won't be in trouble."
+},
+{
+"k": "big",
+"h": "Say it out loud.",
+"sub": "\"Thanks for telling me.\"",
+"say": "Take a breath. Picture your middle schooler telling you about a crush. Notice what your face wants to do, and soften it. Now say it out loud: having a crush is normal, thanks for telling me.",
+"beats": [
+"Take a breath.",
+"Picture your middle schooler telling you about a crush.",
+"Notice what your face wants to do, and soften it.",
+{
+"t": "Now say it out loud: having a crush is normal, thanks for telling me.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If someone crosses lines",
+"body": "Childhelp: 1-800-422-4453. A photo shared: Take It Down. Not wanting to be alive: 988. Emergency: 911.",
+"say": "If an adult is crossing lines, the Childhelp National Child Abuse Hotline is there any time, at 1-800-422-4453. If a photo has been shared, Take It Down can help. If anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text 988, or call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Calm and curious keeps them talking.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Look after yourself too. These talks can stir up your own middle school memories, so laugh about them with someone you trust. Stay calm, stay curious, and keep the door open. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "faith",
+"ring": "as-growing",
+"title": "Big Questions About Faith",
+"you": {
+"id": "as-g-faith-you",
+"guide": "faith",
+"side": "you",
+"title": "Big Questions About Faith",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Lisa Miller, Teachers College, Columbia University",
+"https://www.tc.columbia.edu/faculty/lfm14/"
+],
+[
+"Miller: Spiritual awakening in adolescents (PubMed)",
+"https://pubmed.ncbi.nlm.nih.gov/24354605/"
+],
+[
+"Fuller Youth Institute: Why doubt",
+"https://fulleryouthinstitute.org/blog/why-doubt"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Big Questions About Faith",
+"sub": "For You",
+"say": "If you've got big questions about faith, God, or what matters most, this is for you. Asking big questions is a normal part of growing up."
+},
+{
+"k": "words",
+"h": "Real questions",
+"items": [
+"Why do bad things happen?",
+"What happens when we die?",
+"Where do I fit?"
+],
+"say": "Maybe you've wondered why bad things happen. Or what happens when we die. Or where you fit in all of it. These are real questions. People have asked them for thousands of years."
+},
+{
+"k": "card",
+"title": "Questions are welcome.",
+"body": "Doubt said out loud is healthier than doubt kept silent.",
+"say": "Having questions doesn't mean you're doing something wrong. Doubt spoken out loud is healthier than doubt kept silent. Lots of kids your age wonder about these things, and most keep it to themselves. You don't have to."
+},
+{
+"k": "story",
+"title": "The Beautiful Hodgepodge",
+"lines": [
+"Three generations talking over each other, and a grandchild underfoot.",
+"A crucifix, sage, and a church directory on the shelves. A medicine wheel in the window.",
+"\"We are all related anyway, right? As long as you believe in something.\""
+],
+"lesson": "One family can hold many doors, and still love each other well.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "I once visited a family in their small apartment. Three generations talking over each other, something good on the stove, and a grandchild underfoot. On the shelves sat a small crucifix, a bundle of dried sage, and a church directory. A beaded medicine wheel hung in the window. Linda laughed and said, We are a hodgepodge. We are all related anyway, right? As long as you believe in something."
+},
+{
+"k": "points",
+"h": "Ways people feel steady",
+"items": [
+[
+"Prayer or worship",
+"In a family tradition"
+],
+[
+"Quiet",
+"Or time in nature"
+],
+[
+"Family traditions",
+"Meals, songs, stories"
+]
+],
+"say": "People find what steadies them in lots of ways. Some pray, or go to worship. Some find it in quiet, or outside in nature. Some find it in family traditions: meals, songs, and stories. You can notice what helps you.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Who could you ask?",
+"sub": "Picture one grown-up.",
+"say": "Take a slow breath. Think of one big question you've wondered about. Now picture one grown-up you could ask. Picture how you might start: I've been wondering about something.",
+"beats": [
+"Take a slow breath.",
+"Think of one big question you've wondered about.",
+"Now picture one grown-up you could ask.",
+{
+"t": "Picture how you might start: I've been wondering about something.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Who to talk to",
+"body": "A parent, a grandparent, your school counselor, or a pastor, imam, rabbi, elder, or mentor.",
+"say": "Talk with a grown-up you trust: a parent, a grandparent, your school counselor, or a pastor, imam, rabbi, elder, or mentor. It's okay if they don't have every answer. Wondering together still helps."
+},
+{
+"k": "big",
+"h": "Your questions are welcome.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Your questions are welcome. Keep asking, and keep wondering. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-faith-helper",
+"guide": "faith",
+"side": "helper",
+"title": "Big Questions About Faith",
+"sideName": "For the Grown-up",
+"mins": 5,
+"sources": [
+[
+"Lisa Miller, Teachers College, Columbia University",
+"https://www.tc.columbia.edu/faculty/lfm14/"
+],
+[
+"Miller: Spiritual awakening in adolescents (PubMed)",
+"https://pubmed.ncbi.nlm.nih.gov/24354605/"
+],
+[
+"Fuller Youth Institute: Why doubt",
+"https://fulleryouthinstitute.org/blog/why-doubt"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Big Questions About Faith",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love starts asking big questions about faith, this is for you. You don't need every answer. Your welcome matters more than your answers."
+},
+{
+"k": "big",
+"h": "Spiritual life often wakes up now.",
+"sub": "A normal part of growing up.",
+"say": "Early adolescence is when spiritual life often wakes up. Big questions come with it: why bad things happen, what happens when we die, what's true. This awakening is a normal part of growing up. Research finds that a lived spiritual life is one of the strongest protections young people have."
+},
+{
+"k": "card",
+"title": "Silence harms faith more than doubt.",
+"body": "Questions spoken out loud have room to grow.",
+"say": "Most young people in youth groups have serious doubts, but only about a quarter ever talk with anyone about them. It's silence, not doubt, that harms faith. When kids can bring their questions to you, faith has room to grow up with them."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I'm so glad you asked me that.\"",
+"\"That's a real question.\"",
+"\"I've wondered about that too.\"",
+"\"Who else could we ask?\""
+],
+"say": "Words that help. I'm so glad you asked me that. That's a real question. People of faith have asked it for thousands of years. I've wondered about that too. Here's what helps me. And, who else could we ask?"
+},
+{
+"k": "points",
+"h": "What closes the door",
+"items": [
+[
+"Treating questions as rebellion",
+"They are part of growing"
+],
+[
+"Shutting it down",
+"Silence sends questions elsewhere"
+],
+[
+"Rushing to answers",
+"Wonder with them first"
+]
+],
+"say": "A few things close the door. Treating questions as rebellion, when they're part of growing. Shutting the conversation down, which sends questions somewhere else. And rushing to answers. Wonder with them first.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "story",
+"title": "The Beautiful Hodgepodge",
+"lines": [
+"Three generations talking over each other, and a grandchild underfoot.",
+"A crucifix, sage, and a church directory on the shelves. A medicine wheel in the window.",
+"\"We are all related anyway, right? As long as you believe in something.\""
+],
+"lesson": "Love is what holds the many doors together.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "I once visited Rose, who was on hospice, in a small apartment full of her family. Three generations talking over each other, something good on the stove, a grandchild underfoot. On the shelves sat a small crucifix, a bundle of dried sage, and a Lutheran church directory from 1987. A beaded medicine wheel hung in the window. Her daughter Linda laughed. We are a hodgepodge, she said. We are all related anyway, right? As long as you believe in something. Nobody was defending anything. Then Linda said, We just want to love her well."
+},
+{
+"k": "card",
+"title": "Share what helps you.",
+"body": "Your own story, your tradition, and trusted mentors.",
+"say": "Kids in every kind of family meet big questions. Share your own story, and what helps you, in your family's own words. Point them to trusted mentors in your tradition: a pastor, imam, rabbi, elder, or mentor. Many families also find steadiness in quiet, nature, and family traditions."
+},
+{
+"k": "big",
+"h": "Say it out loud.",
+"sub": "\"I'm so glad you asked me that.\"",
+"say": "Take a breath. Picture your middle schooler asking you a question you can't fully answer. Notice the urge to rush. Now say it out loud: I'm so glad you asked me that.",
+"beats": [
+"Take a breath.",
+"Picture your middle schooler asking you a question you can't fully answer.",
+"Notice the urge to rush.",
+{
+"t": "Now say it out loud: I'm so glad you asked me that.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Look after yourself too.",
+"body": "Their questions may stir your own. That is okay.",
+"say": "Their questions may stir your own, and that's okay. Bring them to someone you trust. If your child's questions come with heavy sadness or worry that lasts, talk with the school counselor. If anything points to thoughts of not wanting to be alive, stay with them and call or text 988, or call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Wonder with them.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Wonder with them, and keep the door open. Questions spoken out loud have room to grow. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "identity",
+"ring": "as-growing",
+"title": "Figuring Out Who You Are",
+"you": {
+"id": "as-g-identity-you",
+"guide": "identity",
+"side": "you",
+"title": "Figuring Out Who You Are",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Search Institute: Developmental relationships framework",
+"https://www.ctclearinghouse.org/Customer-Content/www/topics/The_Developmental_Relationships_Framework_.pdf"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Figuring Out Who You Are",
+"sub": "For You",
+"say": "If you've been wondering who you really are, this is for you. Lots of kids your age start asking that question for real, maybe for the first time."
+},
+{
+"k": "words",
+"h": "Trying things on is healthy",
+"items": [
+"New styles",
+"New interests",
+"New friend groups",
+"Changing your mind"
+],
+"say": "Middle school is a time for trying things on. New styles. New interests. New friend groups. Changing your mind. That's not being fake. It's how people find out what fits."
+},
+{
+"k": "card",
+"title": "You don't have to have it all figured out.",
+"body": "Nobody your age does. Most grown-ups are still learning too.",
+"say": "You don't have to have it all figured out. Nobody your age does. Honestly, most grown-ups are still figuring out some of it too."
+},
+{
+"k": "words",
+"h": "More than one word",
+"items": [
+"The smart one",
+"The athlete",
+"The funny one",
+"The quiet one"
+],
+"sub": "You are more than any label.",
+"say": "Sometimes people give you a label. The smart one. The athlete. The funny one. The quiet one. A label can start to feel like a box. You are more than any one word, and you're allowed to grow."
+},
+{
+"k": "big",
+"h": "When do you feel most like yourself?",
+"sub": "Name it.",
+"say": "Let's try something. Take a slow breath. Think of a time you felt most like yourself. Where were you, and who was there? Now name it, quietly or out loud.",
+"beats": [
+"Let's try something.",
+"Take a slow breath.",
+"Think of a time you felt most like yourself.",
+"Where were you, and who was there?",
+{
+"t": "Now name it, quietly or out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "People who help you grow",
+"items": [
+[
+"A parent or relative",
+"Who knows your story"
+],
+[
+"A teacher or coach",
+"Who sees your strengths"
+],
+[
+"A counselor or mentor",
+"Who listens"
+]
+],
+"say": "Good relationships help you discover who you are. Look for grown-ups who see the good in you. A parent or relative who knows your story. A teacher or coach who notices your strengths. A school counselor or mentor who really listens.",
+"cue": {
+"at": [
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "If it feels heavy",
+"body": "Talk with a grown-up you trust. Not wanting to be alive: 988.",
+"say": "If you ever feel really down about who you are, talk with a grown-up you trust. And if you have thoughts of not wanting to be alive, call or text 988, any time."
+},
+{
+"k": "big",
+"h": "You are still becoming, and that is good.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You are loved as you are, and you're still becoming. That's a good thing. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-identity-helper",
+"guide": "identity",
+"side": "helper",
+"title": "Figuring Out Who You Are",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Search Institute: Developmental relationships framework",
+"https://www.ctclearinghouse.org/Customer-Content/www/topics/The_Developmental_Relationships_Framework_.pdf"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Figuring Out Who You Are",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love starts asking who they are, this is for you. Your job isn't to decide who they become. It's to be steady while they figure it out."
+},
+{
+"k": "big",
+"h": "\"Who am I?\" for real.",
+"sub": "Styles, interests, friend groups.",
+"say": "Middle school is when kids start asking, who am I, for real. They try on styles, interests, and friend groups. One month it's basketball, the next it's drawing, or a new table at lunch. That's healthy. It's how they find what fits."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"You don't have to have it all figured out.\"",
+"\"I love watching you discover what you're into.\"",
+"\"Here's something I've always admired about you.\""
+],
+"say": "Words that help. You don't have to have it all figured out. I love watching you discover what you're into. Here's something I've always admired about you. Then name something real, like their kindness to a little brother, or how they keep at hard things."
+},
+{
+"k": "card",
+"title": "Ask one good question.",
+"body": "\"When do you feel most like yourself?\"",
+"say": "One question opens a lot of doors. When do you feel most like yourself? Ask it in the car, or over a snack, and let the answer be whatever it is. Then share your own middle school story. The awkward haircut. The phase you're glad you tried. It tells them growing is normal."
+},
+{
+"k": "points",
+"h": "What closes the door",
+"items": [
+[
+"Labels",
+"The smart one. The athlete."
+],
+[
+"Mocking new interests",
+"Even as a joke"
+],
+[
+"Deciding for them",
+"Who they should become"
+]
+],
+"say": "A few things close the door. Labels like the smart one or the athlete, which can start to feel like a box. Mocking new interests, even as a joke. And deciding for them who they should become. Let them try things, and change their minds.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Relationships are where they find themselves.",
+"sub": "You, and the other good grown-ups.",
+"say": "Strong relationships are where young people discover who they are. That's you, and the other good grown-ups around them: a coach, a teacher, a relative, a mentor, a faith community if your family has one. You don't have to be the only voice. Welcome the others."
+},
+{
+"k": "big",
+"h": "Name the good you see.",
+"sub": "Say it out loud.",
+"say": "Take a breath. Picture your middle schooler. Think of one thing you've always admired about them. Say it out loud now, the way you'd tell them.",
+"beats": [
+"Take a breath.",
+"Picture your middle schooler.",
+"Think of one thing you've always admired about them.",
+{
+"t": "Say it out loud now, the way you'd tell them.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Notice big changes that last.",
+"body": "Talk with the school counselor or their doctor. Not wanting to be alive: 988. Emergency: 911.",
+"say": "Trying things on is normal. If you notice big changes that last, in mood, sleep, eating, or friends, talk with the school counselor or their doctor. If anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text 988, or call 911 in an emergency."
+},
+{
+"k": "card",
+"title": "Look after yourself too.",
+"body": "Pride, and a little grief for the younger kid. Both are normal.",
+"say": "Watching your child change can stir up a lot in you: pride, worry, and a little grief for the younger kid who used to want to do everything with you. That's normal. Talk it over with someone you trust."
+},
+{
+"k": "big",
+"h": "Be steady. Keep naming the good.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Be steady while they figure it out, and keep reminding them of the good you see. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "illness",
+"ring": "as-growing",
+"title": "Living with an Illness or Disability",
+"you": {
+"id": "as-g-illness-you",
+"guide": "illness",
+"side": "you",
+"title": "Living with an Illness or Disability",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Living with an Illness or Disability",
+"sub": "For You",
+"say": "If you live with an illness or a disability, this is for you. Maybe you've had it your whole life, or maybe it's new. Either way, you are so much more than it."
+},
+{
+"k": "big",
+"h": "Part of your story, not the whole story.",
+"say": "Here's something to keep. Your illness or disability is part of your story, not the whole story. You are also what you love, what makes you laugh, and the people you care about."
+},
+{
+"k": "words",
+"h": "Feelings that make sense",
+"items": [
+"Tired of it",
+"Different",
+"Frustrated",
+"Proud, some days"
+],
+"say": "You might feel tired of it, or different from other kids. You might feel frustrated when your body or your brain won't cooperate. Some days you might feel proud of how much you handle. All of that makes sense."
+},
+{
+"k": "points",
+"h": "You get a say",
+"items": [
+[
+"What to share",
+"And who you tell"
+],
+[
+"Meetings about you",
+"Ask to be there"
+],
+[
+"What teachers should know",
+"In your own words"
+]
+],
+"say": "You get a say. You can choose what to share about your condition, and who to tell. You can ask to be part of meetings about your health and your help at school. And you can tell your teachers what you'd want them to know.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "What would you want them to know?",
+"sub": "One thing, in your own words.",
+"say": "Let's take a moment. Breathe in slowly, and let it out. Think of one thing you'd want a teacher to know about you. It can be about your condition, or about anything else. Now say it, quietly or out loud.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out.",
+"Think of one thing you'd want a teacher to know about you.",
+"It can be about your condition, or about anything else.",
+{
+"t": "Now say it, quietly or out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Find people who get it.",
+"body": "Ask a grown-up to help you find a group, a camp, or a club.",
+"say": "It helps to know other kids who get it. Ask a grown-up to help you find a group, a camp, or a club for kids living with something like yours. You don't have to explain everything to people who already understand."
+},
+{
+"k": "points",
+"h": "If someone is mean about it",
+"items": [
+[
+"A parent or relative"
+],
+[
+"The school counselor"
+],
+[
+"A teacher or coach"
+]
+],
+"say": "If anyone teases you, leaves you out, or is mean about your condition, it is not your fault. Tell a grown-up you trust, the same day. A parent or relative. The school counselor. A teacher or coach. You will not be in trouble for telling.",
+"cue": {
+"at": [
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "You are a whole person.",
+"sub": "Your voice matters.",
+"say": "You are a whole person, with a voice that matters. Your condition is part of your story, not the whole story. The rest is still being written."
+}
+]
+},
+"helper": {
+"id": "as-g-illness-helper",
+"guide": "illness",
+"side": "helper",
+"title": "Living with an Illness or Disability",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Living with an Illness or Disability",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler who lives with an illness or a disability, this is for you. You already know how much they carry. You can help them carry it with more say."
+},
+{
+"k": "big",
+"h": "They want to be known as whole people.",
+"say": "Kids living with an illness or disability want to be known as whole people. Middle school is the age of growing independence, and that's true for your child too. Giving them a real voice in their health and their school supports builds confidence. That's exactly the growth middle school is for."
+},
+{
+"k": "points",
+"h": "Give them a real voice",
+"items": [
+[
+"What to share",
+"And with whom"
+],
+[
+"A seat at the meeting",
+"Doctor visits and school plans"
+],
+[
+"Their own words",
+"For teachers and friends"
+]
+],
+"say": "Give them a real voice. Let them choose what to share about their condition, and with whom. Include them in doctor visits and in meetings about school supports, like a 504 plan or an IEP. And help them find their own words for teachers and friends.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"You get a say in this.\"",
+"\"What would you want your teachers to know?\"",
+"\"This is part of your story, not the whole story.\""
+],
+"say": "Here are words that help. You get a say in this. What would you want your teachers to know? And this one, for the hard days. This is part of your story, not the whole story."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Talking over them",
+"As if they aren't in the room"
+],
+[
+"Letting it define them",
+"They are more than a diagnosis"
+],
+[
+"Deciding for them",
+"When they could choose"
+]
+],
+"say": "Some things are best left out. Talking about them as if they aren't in the room, with doctors, teachers, or relatives. Letting the condition define them. And deciding for them what they could decide themselves. Each one quietly tells them their voice doesn't count.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Picture the whole kid.",
+"say": "Take a moment. Picture your child doing something they love, something that has nothing to do with their condition. Breathe in slowly, and let it out. Now say out loud one thing you love about who they are.",
+"beats": [
+"Take a moment.",
+"Picture your child doing something they love, something that has nothing to do with their condition.",
+"Breathe in slowly, and let it out.",
+{
+"t": "Now say out loud one thing you love about who they are.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help them find peers who get it.",
+"body": "A group, a camp, a club, or one friend living with something similar.",
+"say": "Help them find peers who get it. A group, a camp, a club, or one friend living with something similar can help them feel less alone. Your child's doctor, the school, or a parent center can point you to options near you."
+},
+{
+"k": "card",
+"title": "Watch for bullying, and act fast.",
+"body": "Kids with disabilities are bullied more often.",
+"say": "Kids with disabilities are bullied more often, so watch for it. Teasing, being left out, or a sudden wish to skip school can be signs. If it happens, act fast. Write down what happened, tell the school, and stay with it until it stops. If your child ever talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "points",
+"h": "Support for you",
+"items": [
+[
+"A parent center",
+"Like PACER, in Minneapolis"
+],
+[
+"Other parents",
+"Who have been there"
+],
+[
+"Your own rest",
+"You count too"
+]
+],
+"say": "You need support too. Parent centers, like PACER in Minneapolis, help families understand school supports and speak up for their kids. Other parents who have been there can be a lifeline. And your own rest counts. Loving a child through this is a long road, and you deserve company on it.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "See the whole kid.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "See the whole kid, and help everyone else see them too. Their condition is part of their story, not the whole story. The full guide has more, whenever you want it."
 }
 ]
 }
