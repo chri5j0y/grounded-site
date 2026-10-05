@@ -97,6 +97,8 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .bar-btn{background:rgba(255,255,255,.06);border:1px solid rgba(217,168,71,.4);color:#F4EBDA;border-radius:10px;min-width:44px;height:42px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:14px;}
 .bar-btn svg{width:20px;height:20px;}
 @media(max-width:640px){ .brand .b-gwg{font-size:18px;} .brand .b-sep{display:none;} .bar-btn .lbl{display:none;} .brand .b-tree{height:34px;} }
+/* Phones: the two names stack beside the tree, so they never slide under the buttons (BLD 725). */
+@media(max-width:640px){ .brand{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;align-items:center;} .brand .b-tree{grid-row:1 / span 2;} .brand .b-gwg{font-size:17px;} .brand .b-name{font-size:16px;line-height:1.1;overflow:hidden;text-overflow:ellipsis;} }
 .tabs{background:var(--umber-2);}
 .tabs-in{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;}
 .tabs-in::-webkit-scrollbar{display:none;}
@@ -593,9 +595,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-backup.js?v=bk1"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
-<script src="../read.js?v=vc1"></script>
+<script src="../read.js?v=vc2"></script>
 <script src="../shared/gg-sources.js?v=src6"></script>
-<script src="../shared/gg-learn.js?v=ln16"></script>
+<script src="../shared/gg-learn.js?v=ln17"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -1733,16 +1735,31 @@ function vLearn(){
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
   const counted = tracks.filter(t => t.kind !== 'setup'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
-  return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>
-  ${sgLearnCard()}
-  ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
-  ${wfgLearnCard()}${wfgLearnCard('oak')}${wfgLearnCard('aspen')}
-  ${tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
+  // Learn opens to category cards (BLD 725): Lessons, Support for Guides, and each For Guides series. Each opens to its videos.
+  const lessonCards = () => tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
     return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
-    ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ln-cert" data-v="${esc(t.id)}">${icon('print')} Get Your Certificate</button></div>` : lnCertable(t) ? `<p class="muted" style="margin-top:10px;font-size:14px">Finish every lesson in this series for a Certificate of Completion.</p>` : ''}</div>`; }).join('')}
+    ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ln-cert" data-v="${esc(t.id)}">${icon('print')} Get Your Certificate</button></div>` : lnCertable(t) ? `<p class="muted" style="margin-top:10px;font-size:14px">Finish every lesson in this series for a Certificate of Completion.</p>` : ''}</div>`; }).join('');
+  const back = (act, v, label) => `<button class="linkbtn" data-act="${act}"${v ? ` data-v="${esc(v)}"` : ''}>&larr; ${esc(label)}</button>`;
+  const cats = [{k: 'les', eb: 'Lessons', title: 'Learn Step by Step', intro: 'How Grow With Grounded and the Field Guide work, in order. Start with Get Set Up.', n: `${fin} of ${all} lessons finished`, accent: 'var(--gold)'}];
+  if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
+  ['willow', 'oak', 'aspen'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
+  const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
+  if (C === 'les') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow">Lessons</div><h1>Learn Step by Step</h1><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>${lessonCards()}</div>`;
+  if (C === 'sg') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${sgLearnCard()}</div></div>`;
+  if (C && C.startsWith('ser:')){
+    const x = C.slice(4), F = WFG(x), R = LCAT.ring ? wfgRings(x).find(r => r.key === LCAT.ring) : null;
+    if (R) return `<div class="ggl">${back('lc-cat', C, 'Back to ' + F.title)}<div style="margin-top:10px">${wfgLearnCard(x, R.key)}</div></div>`;
+    return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow" style="color:${FGSER[x].accent}">${esc(FGSER[x].label)}</div><h1>${esc(F.title)}</h1><p class="muted">${esc(F.intro || '')}</p></div>
+     <div class="lc-cats">${wfgRings(x).map(R => { const n = R.guides.filter(g => wfgDone(g.id)).length; return `<button class="card lc-cat" style="border-left-color:${FGSER[x].accent}" data-act="lc-ring" data-v="${esc(R.key)}"><h3>${esc(R.name)}</h3><p class="lc-n">${n} of ${R.guides.length} finished</p></button>`; }).join('')}</div></div>`;
+  }
+  return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p></div>
+  ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
+  <div class="lc-cats">${cats.map(c => `<button class="card lc-cat" style="border-left-color:${c.accent}" data-act="lc-cat" data-v="${esc(c.k)}"><div class="eyebrow" style="color:${c.accent}">${esc(c.eb)}</div><h3>${esc(c.title)}</h3>${c.intro ? `<p class="muted">${esc(c.intro)}</p>` : ''}<p class="lc-n">${esc(c.n)}</p></button>`).join('')}</div>
   <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'field' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p></div>`;
 }
+// Where Learn was left (category and group), so coming back from a video lands in the same place.
+const LCAT = {cat: null, ring: null};
 function vLesson(t, l){
   setTimeout(() => lnMount(t, l), 0);
   return `<div class="ggl"><div class="page-head"><button class="linkbtn" data-act="ln-home">&larr; All lessons</button><div class="eyebrow" style="margin-top:8px">${esc(t.title)}, Lesson ${esc(String(l.n || ''))}</div><h1>${esc(l.title)}</h1></div><div id="ln-host"></div></div>`;
@@ -1767,6 +1784,9 @@ function lnCert(t){
 function lnAct(a, v){
   switch (a){
     case 'ln-open': lnStop(); go('learn', {ln: v}); return true;
+    case 'lc-home': LCAT.cat = null; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true;
+    case 'lc-cat': LCAT.cat = v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true;
+    case 'lc-ring': LCAT.ring = v; go('learn'); window.scrollTo(0, 0); return true;
     case 'ln-home': lnStop(); go('learn'); return true;
     case 'ln-cert': lnCert(lnTracks().find(t => t.id === v)); return true;
     case 'ln-vcheck': if (window.GGRead && GGRead.check) GGRead.check(() => { if (!V.ln) go('learn'); }); return true;
@@ -4648,11 +4668,11 @@ function wfgInGuide(gid, s = 'willow'){
    ${open ? wfgBody(g, false) + `<div class="row" style="margin-top:12px">${wfgDone(g.id) ? '' : `<button class="btn btn-gold btn-sm" data-act="wfg-read" data-v="${esc(g.id)}">Mark as Read</button>`}</div>` : ''}</div>`;
 }
 // The Learn tab: the series, grouped by ring.
-function wfgLearnCard(s = 'willow'){
+function wfgLearnCard(s = 'willow', only = null){
   if (!wfgOn(s)) return '';
   const F = WFG(s);
   return `<div class="card ln-track wfg-series"><div class="eyebrow" style="color:${FGSER[s].accent}">${esc(FGSER[s].label)}</div><h3>${esc(F.title)}</h3><p class="muted">${esc(F.intro || '')}</p>
-   ${wfgRings(s).map(R => { const n = R.guides.filter(g => wfgDone(g.id)).length, all = n === R.guides.length;
+   ${wfgRings(s).filter(R => !only || R.key === only).map(R => { const n = R.guides.filter(g => wfgDone(g.id)).length, all = n === R.guides.length;
     return `<div class="wfg-ring"><div class="spread"><h4>${esc(R.name)}</h4><span class="muted">${n} of ${R.guides.length}</span></div>
      <div class="ln-list">${R.guides.map(g => `<button class="ln-item${wfgDone(g.id) ? ' done' : ''}" data-act="wfg-open" data-v="${esc(g.id)}"><span class="ln-n">${wfgDone(g.id) ? icon('check') : esc(String(g.n || ''))}</span><span class="ln-t"><b>${esc(g.title)}</b><small>About ${esc(String(g.mins || 9))} minutes${wfgDone(g.id) ? ', ' + (wfgHow(g.id) === 'read' ? 'read' : 'watched') : ''}</small></span>${icon('play')}</button>`).join('')}</div>
      ${all ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wfg-cert" data-v="${esc(R.key)}">${icon('print')} Get Your Certificate</button></div>` : `<p class="muted" style="margin-top:10px;font-size:14px">Watch or read every guide in ${esc(R.name)} for a Certificate of Completion.</p>`}</div>`; }).join('')}</div>`;
@@ -6569,7 +6589,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
-  if (a && a.startsWith('ln-') && lnAct(a, v, t)) return;
+  if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
   switch(a){
@@ -7327,6 +7347,7 @@ body.dk-noscroll{overflow:hidden;}
 .dk-todo[aria-pressed="true"] .dk-box{background:var(--sage);border-color:var(--sage);color:#fff;}
 .dk-todo[aria-pressed="true"] span:last-child{color:var(--ink-soft);text-decoration:line-through;}
 .spk-item{border-top:1px solid var(--line);padding:6px 0;}
+.lc-cats{display:grid;gap:12px;margin-top:14px;}@media(min-width:720px){.lc-cats{grid-template-columns:1fr 1fr;}}.lc-cat{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border-left:6px solid var(--gold);margin:0;}.lc-cat h3{margin:2px 0 4px;}.lc-cat .lc-n{margin:8px 0 0;font-weight:600;font-size:calc(15px * var(--scale));}
 .sl-c{border-top:1px solid var(--line);padding:6px 0 10px;}.sl-c summary{cursor:pointer;padding:8px 0;}.sl-c summary small{display:block;font-size:calc(14px * var(--scale));margin-top:2px;}.sl-c h4{margin-top:8px;}.sl-c textarea{width:100%;}.sl-c .pill{margin-left:4px;}
 .spk-item summary{cursor:pointer;padding:8px 0;}
 .spk-item summary span{display:block;color:var(--ink-soft);font-size:calc(15px * var(--scale));}

@@ -1,10 +1,10 @@
 /* =====================================================================
-   ASPEN . When Life Changes videos (GWG BLD 724, October 2026)
+   ASPEN . When Life Changes videos (GWG BLD 724 and 725, October 2026)
    Two narrated videos for each Aspen guide: For You (the student, grades 6 to 8) and For the Grown-up
    (the parent or helper beside them). Played by shared/gg-learn.js, which loads this file the first time
-   Aspen's Learn opens. So far: Home and Family and Safety (BLD 724): 17 guides, 34 videos.
+   Aspen's Learn opens. So far: Home and Family and Safety (BLD 724), Friends and School and Big World, Hard News (BLD 725): 33 guides, 66 videos.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
-   the same as shared/learn-lessons.js. Generated from patches/bld724/source in grounded-workshop:
+   the same as shared/learn-lessons.js. Generated from patches/bld725/source (bld724 source for the first groups) in grounded-workshop:
    edit the data there and rebuild. Proofreading lines are in the Founder library.
    ===================================================================== */
 (function(){
@@ -16,6 +16,14 @@ window.GG_LEARN_GUIDES.aspen = {
 [
 "as-home",
 "Home and Family"
+],
+[
+"as-school",
+"Friends and School"
+],
+[
+"as-world",
+"Big World, Hard News"
 ],
 [
 "as-safety",
@@ -3526,6 +3534,3806 @@ window.GG_LEARN_GUIDES.aspen = {
 "h": "Take this loss seriously.",
 "sub": "The full guide has more, whenever you want it.",
 "say": "Honest words, a small goodbye, and time. Take this loss as seriously as they do. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "startms",
+"ring": "as-school",
+"title": "Starting Middle School",
+"you": {
+"id": "as-g-startms-you",
+"guide": "startms",
+"side": "you",
+"title": "Starting Middle School",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Starting Middle School",
+"sub": "For You",
+"say": "If you're about to start middle school, or you just started, this is for you. It's a big jump, and you're allowed to feel all kinds of ways about it."
+},
+{
+"k": "big",
+"h": "Nervous is normal.",
+"sub": "Almost everyone feels it.",
+"say": "More teachers. More hallways. A locker, a new schedule, and friend groups that might shift. It makes sense to feel nervous, excited, or both. Almost everyone in that building felt the same way on their first day, even the kids who look calm."
+},
+{
+"k": "points",
+"h": "Practice what you can",
+"items": [
+[
+"Your locker",
+"Try the lock a few times"
+],
+[
+"Your schedule",
+"Walk the route if you can"
+],
+[
+"Where lunch is",
+"And where to go after"
+],
+[
+"Who to ask",
+"One grown-up at school"
+]
+],
+"say": "You can practice some of it ahead of time. Open your lock a few times until it feels easy. Walk your schedule if the school lets you. Find out where lunch is. The rest you'll figure out as you go, and that's okay."
+},
+{
+"k": "big",
+"h": "Picture one grown-up at school.",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Now think of one grown-up at school you could go to: a teacher, a counselor, a coach, or someone at the front office. Picture their face.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Now think of one grown-up at school you could go to: a teacher, a counselor, a coach, or someone at the front office.",
+{
+"t": "Picture their face.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Look for one place to belong.",
+"body": "A club, a team, a lunch table, or one teacher.",
+"say": "You don't need a big group right away. Look for one place to belong. A club, a team, a band or a choir, a lunch table, or one teacher whose room feels good to walk into. One place is enough to start."
+},
+{
+"k": "card",
+"title": "The first weeks can be bumpy.",
+"body": "Getting lost or feeling awkward happens to everyone.",
+"say": "The first few weeks can be bumpy. You might get lost, or forget your locker combination, or feel awkward at lunch. That happens to everyone. It doesn't mean you're bad at middle school. It means you're new, and new gets easier."
+},
+{
+"k": "points",
+"h": "Tell someone how it's going",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"The school counselor",
+"That is their job"
+],
+[
+"A teacher or coach",
+"Someone you trust"
+]
+],
+"say": "Tell a grown-up how it's really going, the good parts and the hard parts. A parent, a relative, a teacher, a coach, or the school counselor. Helping new students is part of their job, and they're glad when you come."
+},
+{
+"k": "big",
+"h": "New gets easier.",
+"sub": "You are growing into this.",
+"say": "New gets easier, a little at a time. You're growing into this, one hallway at a time."
+}
+]
+},
+"helper": {
+"id": "as-g-startms-helper",
+"guide": "startms",
+"side": "helper",
+"title": "Starting Middle School",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Minnesota Department of Health: 2025 Minnesota Student Survey",
+"https://www.health.state.mn.us/news/pressrel/2025/survey120925.html"
+],
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Starting Middle School",
+"sub": "For the Grown-up",
+"say": "If a kid you love is starting middle school, this is for you. It's a big jump for them, and often for you too."
+},
+{
+"k": "big",
+"h": "A big jump, all at once.",
+"sub": "Nerves are normal.",
+"say": "Middle school brings more teachers, more hallways, shifting friend groups, and more freedom than they've had before, all at once. Nerves are normal. So is excitement. Many kids feel both in the same morning."
+},
+{
+"k": "points",
+"h": "Before the first day",
+"items": [
+[
+"Practice the logistics",
+"Lock, schedule, lunch"
+],
+[
+"Name one adult",
+"Someone they can go to"
+],
+[
+"Keep the calendar light",
+"Room to settle in"
+],
+[
+"Expect a bumpy start",
+"It usually smooths out"
+]
+],
+"say": "Before the first day, practice what you can. Let them work a combination lock at the kitchen table. Walk the schedule if the school offers a tour. Find where lunch is. Help them name one adult at school they could go to. Keep the first weeks light, without piling on new activities. And expect a bumpy start. It usually smooths out."
+},
+{
+"k": "big",
+"h": "Belonging comes first.",
+"sub": "One place is enough to start.",
+"say": "Belonging matters most. Kids learn better when they feel known and cared for at school. Help them find one place to belong: a club, a team, a lunch table, or one teacher they connect with. One place is enough to start."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Lots of kids feel nervous. It gets easier.\"",
+"\"Who's one adult at school you could go to?\"",
+"\"What surprised you today?\""
+],
+"say": "Here are words that help. Lots of kids feel nervous. It gets easier. Who's one adult at school you could go to? And instead of, how was school, try, what surprised you today? Or, what was the best part of today, even if it was small?"
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Brushing off worries",
+"\"You'll be fine.\""
+],
+[
+"A packed calendar",
+"In the first weeks"
+],
+[
+"Your own old dread",
+"Their story is new"
+]
+],
+"say": "Some things are better left out. Brushing off worries with, you'll be fine, tells them to stop telling you. A packed calendar in the first weeks leaves no room to settle. And if middle school was hard for you, hold that story gently. Their story is new, and it may go differently."
+},
+{
+"k": "big",
+"h": "Picture the after-school moment.",
+"say": "Take a moment. Picture your kid coming home after the first day. What is one question you want to ask, and one thing you want to leave unsaid? Hold that, and bring it with you.",
+"beats": [
+"Take a moment.",
+"Picture your kid coming home after the first day.",
+"What is one question you want to ask, and one thing you want to leave unsaid?",
+{
+"t": "Hold that, and bring it with you.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Watch the first months.",
+"body": "If worry keeps them from school, call the counselor.",
+"say": "Watch the first couple of months. Tired and cranky after school is common while they adjust. If worry starts keeping them home, stomachaches show up every morning, or they seem alone week after week, talk with the school counselor or their doctor."
+},
+{
+"k": "big",
+"h": "This is a change for you too.",
+"sub": "Less in view, still close.",
+"say": "This is a change for you too. You'll see less of their day, and hear about it in smaller pieces. That's part of them growing. Talk with a friend about your side of it, and stay close in the car, at dinner, and at bedtime."
+},
+{
+"k": "big",
+"h": "One place to belong. One adult to go to.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "One place to belong, and one adult to go to. Help them find those, and the rest usually follows. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "friends",
+"ring": "as-school",
+"title": "Friendship Breakups and Drama",
+"you": {
+"id": "as-g-friends-you",
+"guide": "friends",
+"side": "you",
+"title": "Friendship Breakups and Drama",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Friendship Breakups and Drama",
+"sub": "For You",
+"say": "If a friendship just ended, or your friend group is full of drama right now, this is for you. This kind of hurt is real."
+},
+{
+"k": "big",
+"h": "Losing a friend is a real loss.",
+"sub": "It makes sense that it hurts.",
+"say": "Losing a friend can hurt as much as any loss. Maybe you had a fight. Maybe they just drifted to a new group. Maybe you're stuck in the middle of someone else's drama. You might feel sad, angry, embarrassed, or confused. All of that makes sense."
+},
+{
+"k": "card",
+"title": "Friend groups shift a lot.",
+"body": "It happens to almost everyone in middle school.",
+"say": "Friend groups shift a lot in middle school. People change, interests change, and groups break apart and come back together. It happens to almost everyone. It doesn't mean something is wrong with you."
+},
+{
+"k": "big",
+"h": "What do you want to happen?",
+"say": "Let's slow down for a moment. Breathe in slowly, and let it out even slower. Now ask yourself one question. What do you want to happen next?",
+"beats": [
+"Let's slow down for a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Now ask yourself one question.",
+{
+"t": "What do you want to happen next?",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Things you can do",
+"items": [
+[
+"Wait before you post",
+"Let the hot feelings cool"
+],
+[
+"Practice a calm message",
+"Say it out loud first"
+],
+[
+"Keep friends in other places",
+"Team, club, neighborhood"
+]
+],
+"say": "Here are a few things you can do. Wait before you post or text anything when you're upset. Let the hot feelings cool first. If you want to talk to your friend, practice a calm message with a grown-up, out loud. And keep friends in more than one place: a team, a club, a youth group, or the neighborhood. Then one breakup doesn't take everything."
+},
+{
+"k": "points",
+"h": "Talk it through with someone",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"The school counselor",
+"They know friend drama"
+],
+[
+"A teacher or coach",
+"Someone you trust"
+]
+],
+"say": "Talk it through with a grown-up you trust: a parent, a relative, a teacher, a coach, or the school counselor. Counselors help with friend stuff all the time. And if it turns into someone being mean to you again and again, that's not just drama. Tell a grown-up right away."
+},
+{
+"k": "big",
+"h": "You are still worth being friends with.",
+"sub": "Your people are out there.",
+"say": "One friendship ending doesn't decide who you are. You're still worth being friends with, and your people are out there."
+}
+]
+},
+"helper": {
+"id": "as-g-friends-helper",
+"guide": "friends",
+"side": "helper",
+"title": "Friendship Breakups and Drama",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Search Institute: Developmental relationships framework",
+"https://searchinstitute.org/resources-hub/developmental-relationships-framework"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Friendship Breakups and Drama",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love is going through a friendship breakup or a stretch of friend drama, this is for you. What looks small from the outside can feel huge from the inside."
+},
+{
+"k": "big",
+"h": "It can feel as big as any loss.",
+"sub": "Take it seriously.",
+"say": "Friend groups shift a lot between sixth and eighth grade. At this age, friends are a big part of who a kid thinks they are. So losing a friend can feel as big as any loss. Take it seriously, even when it changes again by Friday."
+},
+{
+"k": "flow",
+"h": "Coach, don't rescue",
+"steps": [
+[
+"Listen first",
+"What happened, in their words"
+],
+[
+"Ask what they want",
+"Before any advice"
+],
+[
+"Practice a calm message",
+"Out loud, together"
+],
+[
+"Let them try",
+"Then talk about how it went"
+]
+],
+"say": "Coaching works better than rescuing. Listen first, and ask what happened before you give advice. Ask, what do you want to happen? Help them practice a calm message, out loud. Then let them try, and talk about how it went. They build skills they'll use for the rest of their lives.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"That sounds like it really hurt.\"",
+"\"What do you want to happen next?\"",
+"\"Want to practice what you might say?\""
+],
+"say": "Here are words that help. That sounds like it really hurt. What do you want to happen next? And, want to practice what you might say?"
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"\"It's just drama.\"",
+"It shrinks a real hurt"
+],
+[
+"Calling the other parent",
+"At the first sign of trouble"
+],
+[
+"Picking a side loudly",
+"Friendships often mend"
+]
+],
+"say": "Some things are better left out. Calling it just drama shrinks a real hurt, and teaches them not to bring it to you. Calling the other kid's parent at the first sign of trouble takes the problem out of their hands. And saying harsh things about the other kid can backfire. Friendships at this age often mend."
+},
+{
+"k": "card",
+"title": "Friends in more than one place",
+"body": "A team, a club, church, the neighborhood.",
+"say": "Help them keep friends in more than one place: school, a team, a club, a youth group or church if your family has one, cousins, or the neighborhood. When friends come from different places, one breakup can't take everything."
+},
+{
+"k": "card",
+"title": "When drama becomes meanness",
+"body": "Repeated meanness is bullying. Act on it.",
+"say": "Know the line. Drama goes both ways and shifts. When one kid is targeted again and again, in person or online, that's bullying. Then you step in: save what was said, and work with the school. Aspen's bullying guide can help with the next steps."
+},
+{
+"k": "big",
+"h": "Remember your own.",
+"say": "Take a moment. Think back to a friendship you lost when you were about their age. Remember how big it felt. Let that memory help you listen.",
+"beats": [
+"Take a moment.",
+"Think back to a friendship you lost when you were about their age.",
+"Remember how big it felt.",
+{
+"t": "Let that memory help you listen.",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "It is hard to watch.",
+"sub": "Your steadiness helps.",
+"say": "It's hard to watch your kid get hurt and not fix it. It may stir your own memories. Talk with a friend about your side of it. Your steady presence matters more than the perfect answer."
+},
+{
+"k": "big",
+"h": "Listen first. Coach, then let them try.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Listen first. Coach, then let them try. They're learning how to be a friend, and how to get through losing one. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "leftout",
+"ring": "as-school",
+"title": "Being Left Out",
+"you": {
+"id": "as-g-leftout-you",
+"guide": "leftout",
+"side": "you",
+"title": "Being Left Out",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Being Left Out",
+"sub": "For You",
+"say": "If you've been left out, of a party, a group chat, a lunch table, or a group of friends, this is for you. That sting is real."
+},
+{
+"k": "big",
+"h": "Being left out hurts.",
+"sub": "Your feelings make sense.",
+"say": "Being left out can hurt more than almost anything at this age. Maybe you saw the photos online. Maybe the seat got saved for someone else. You might feel sad, embarrassed, angry, or lonely. Those feelings make sense."
+},
+{
+"k": "card",
+"title": "It does not define you.",
+"body": "Being left out does not mean you are not worth including.",
+"say": "Here's something important. Being left out happens to everyone at some point, even the kids who seem popular. It can feel like proof that something's wrong with you. It isn't. Being left out doesn't mean you're not worth including."
+},
+{
+"k": "big",
+"h": "Where do you feel like yourself?",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Now think of one place where you feel most like yourself. Maybe it's on a team, in the art room, with a cousin, or outside. Picture yourself there.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Now think of one place where you feel most like yourself.",
+"Maybe it's on a team, in the art room, with a cousin, or outside.",
+{
+"t": "Picture yourself there.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Find a side door",
+"items": [
+[
+"Try a club or team",
+"Shared interests help"
+],
+[
+"Help out somewhere",
+"Volunteering counts"
+],
+[
+"One good friend",
+"Is enough to start"
+]
+],
+"say": "You don't have to get into the group that left you out. Look for a side door instead. Try a club or team where people like what you like. Help out somewhere, like volunteering. One good friend is enough to start, even if it takes a few tries to find them."
+},
+{
+"k": "points",
+"h": "Tell someone you trust",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"The school counselor",
+"They can help"
+],
+[
+"A teacher or coach",
+"Someone you trust"
+]
+],
+"say": "Tell a grown-up you trust how you're feeling: a parent, a relative, a teacher, a coach, or the school counselor. And if kids are being mean to you on purpose, again and again, that's bullying. Tell a grown-up right away."
+},
+{
+"k": "big",
+"h": "Your people are out there.",
+"sub": "You are worth including.",
+"say": "You are worth including, just as you are. Your people are out there, and you can find them."
+}
+]
+},
+"helper": {
+"id": "as-g-leftout-helper",
+"guide": "leftout",
+"side": "helper",
+"title": "Being Left Out",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Search Institute: Developmental relationships framework",
+"https://searchinstitute.org/resources-hub/developmental-relationships-framework"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Being Left Out",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love has been left out, of a party, a group, or a lunch table, this is for you. Your steadiness matters more than you know."
+},
+{
+"k": "big",
+"h": "They may read it as proof.",
+"sub": "Your calm tells them otherwise.",
+"say": "Being left out stings more at this age than almost any other. Kids often read it as proof something is wrong with them. Your calm, steady presence tells them otherwise."
+},
+{
+"k": "flow",
+"h": "What helps",
+"steps": [
+[
+"Name the feeling",
+"Before fixing anything"
+],
+[
+"Put it in perspective",
+"It happens to everyone"
+],
+[
+"Find a side door",
+"A club, a team, volunteering"
+],
+[
+"Keep watching",
+"Notice if it becomes a pattern"
+]
+],
+"say": "Here's what helps. Name the feeling without rushing to fix it. Remind them it happens to everyone, and it doesn't define them. Help them find a side door into belonging, like a club, a team, or volunteering. And keep an eye out in case it becomes a pattern.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"That hurts. I'm really glad you told me.\"",
+"\"Being left out doesn't mean you're not worth including.\"",
+"\"Where do you feel most like yourself?\""
+],
+"say": "Here are words that help. That hurts. I'm really glad you told me. Being left out doesn't mean you're not worth including. And, where do you feel most like yourself?"
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Listing what to change",
+"About themselves"
+],
+[
+"Popularity as the goal",
+"Look for their people"
+],
+[
+"Rushing to fix it",
+"Let the feeling land"
+]
+],
+"say": "Some things are better left out. Listing things they should change about themselves confirms their worst fear. Pushing popularity as the goal sends them chasing the wrong thing. Help them find their people instead. And rushing to fix it skips the part where they feel heard."
+},
+{
+"k": "card",
+"title": "One good friend can change a year.",
+"body": "Or one caring adult. Help them find their people.",
+"say": "Strong relationships make young people more resilient. One good friend, or one caring adult, can change a whole year. Help them find their people, even if it takes a few tries. Shared interests are often the way in."
+},
+{
+"k": "big",
+"h": "Picture where they shine.",
+"say": "Take a moment. Picture your kid somewhere they light up, doing something they love. Who else might love that too? Hold that picture as a place to start.",
+"beats": [
+"Take a moment.",
+"Picture your kid somewhere they light up, doing something they love.",
+"Who else might love that too?",
+{
+"t": "Hold that picture as a place to start.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When it becomes a pattern",
+"body": "Meanness on purpose is bullying. Lasting sadness needs help.",
+"say": "Watch for patterns. If they're left out on purpose again and again, or targeted online, that's bullying, and it's time to work with the school. If sadness lasts for weeks, they stop wanting to go to school, or they pull away from everything, talk with the school counselor or their doctor."
+},
+{
+"k": "big",
+"h": "It hurts to watch.",
+"sub": "Your own feelings count.",
+"say": "It hurts to watch your kid be left out. It may wake up your own memories, or make you angry at the other kids. Let a friend hear your side of it, so you can bring your calm to your kid."
+},
+{
+"k": "big",
+"h": "Name it. Stay steady. Help them find their people.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Name the feeling, stay steady, and help them find their people. You're one of those people already. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "bullying",
+"ring": "as-school",
+"title": "Bullying, in Person and Online",
+"you": {
+"id": "as-g-bullying-you",
+"guide": "bullying",
+"side": "you",
+"title": "Bullying, in Person and Online",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"StopBullying.gov: Facts about bullying",
+"https://www.stopbullying.gov/resources/facts"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Bullying, in Person and Online",
+"sub": "For You",
+"say": "If someone keeps being mean to you, at school, on the bus, or online, this is for you. What's happening to you matters."
+},
+{
+"k": "big",
+"h": "This is not your fault.",
+"sub": "Nothing about you earned this.",
+"say": "First, the most important thing. Being bullied is not your fault. Nothing about you earned it. The person doing the bullying is making a choice, and that choice is theirs."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Embarrassed",
+"Scared",
+"Angry",
+"Alone",
+"Tired of school"
+],
+"say": "You might feel embarrassed, scared, or angry. You might feel alone, or dread going to school in the morning. Those feelings make sense. They're telling you something is wrong, and it's worth telling someone."
+},
+{
+"k": "big",
+"h": "Telling a grown-up is smart.",
+"sub": "You won't be in trouble for telling.",
+"say": "Lots of kids keep bullying to themselves. They worry it'll get worse, or that they'll lose their phone. Here's the truth. Telling a trusted grown-up is a smart, brave move. You won't be in trouble for telling. And getting help with this is a grown-up job, so you don't have to fix it alone."
+},
+{
+"k": "points",
+"h": "Things you can do",
+"items": [
+[
+"Save it",
+"Take screenshots"
+],
+[
+"Block and report",
+"On the app or game"
+],
+[
+"Stay near friends",
+"On the bus, at lunch"
+]
+],
+"say": "Here are a few things you can do. Save it. Take screenshots of mean messages before they disappear. Block and report the person on the app or game. And stay near friends or a grown-up in the places it tends to happen, like the bus or the lunchroom.",
+"cue": {
+"at": [
+1,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Who will you tell?",
+"sub": "Picture them now.",
+"say": "Let's take a moment. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. Now picture one grown-up you could tell: a parent, a teacher, a coach, or your school counselor. Think of the first words you might say.",
+"beats": [
+"Let's take a moment.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+"Now picture one grown-up you could tell: a parent, a teacher, a coach, or your school counselor.",
+{
+"t": "Think of the first words you might say.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If it feels like too much",
+"body": "Tell a grown-up today. Not wanting to be alive: call or text 988. Danger now: 911.",
+"say": "If someone hurts you or threatens you, or if it gets so heavy you don't want to be alive, tell a grown-up you trust today. You can call or text 988 any time. If you're in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "You deserve to feel safe.",
+"sub": "At school, and online.",
+"say": "You deserve to feel safe at school and online. You don't have to carry this by yourself. And when you see it happen to someone else, standing next to them, or telling a grown-up, helps more than you know."
+}
+]
+},
+"helper": {
+"id": "as-g-bullying-helper",
+"guide": "bullying",
+"side": "helper",
+"title": "Bullying, in Person and Online",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"StopBullying.gov: Facts about bullying",
+"https://www.stopbullying.gov/resources/facts"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Bullying, in Person and Online",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love is being bullied, at school or online, this is for you. Whether you're a parent, a grandparent, or another grown-up in their life, you can help them feel safe again."
+},
+{
+"k": "big",
+"h": "Bullying is common, and it still matters.",
+"say": "Bullying is common. About one in five high school students says they were bullied at school in the past year, and girls are almost twice as likely as boys to be bullied online. Common doesn't mean harmless. Repeated meanness wears a kid down."
+},
+{
+"k": "card",
+"title": "Why they often keep it quiet",
+"body": "Fear it'll get worse. Fear of losing their phone.",
+"say": "Middle schoolers often don't tell. They're afraid it will get worse if a grown-up steps in. And many are afraid they'll lose their phone. So when your child does tell you, that took courage. How you respond in the first minute decides whether they'll tell you next time."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"This is not your fault.\"",
+"\"You won't lose your phone for telling me.\"",
+"\"We'll figure out the next step together.\""
+],
+"say": "Here are words that help. Thank you for telling me. This is not your fault. You won't lose your phone for telling me. And, we'll figure out the next step together. Then listen to the whole story before you plan anything."
+},
+{
+"k": "big",
+"h": "Say it the way you would to them.",
+"say": "Let's practice. Take a breath, and say it out loud, the way you would to them. Thank you for telling me. You won't lose your phone for telling me.",
+"beats": [
+"Let's practice.",
+"Take a breath, and say it out loud, the way you would to them.",
+"Thank you for telling me.",
+{
+"t": "You won't lose your phone for telling me.",
+"w": 10
+}
+]
+},
+{
+"k": "flow",
+"h": "Then act",
+"steps": [
+[
+"Document",
+"Screenshots, dates, what happened"
+],
+[
+"Block and report",
+"On the app or game"
+],
+[
+"Tell the school in writing",
+"And ask for a plan"
+],
+[
+"Follow up",
+"Until it stops"
+]
+],
+"say": "Then act. Save screenshots and write down what happened, with dates. Block and report online. Tell the school in writing, and ask what their plan is. Then follow up, and keep following up, until it stops. Let your child know each step before you take it.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"\"Just ignore it.\"",
+"It leaves them alone with it"
+],
+[
+"\"Fight back.\"",
+"It can get them hurt or in trouble"
+],
+[
+"Taking the phone",
+"It punishes them for telling"
+]
+],
+"say": "Some things are better left out. Just ignore it, because it leaves them alone with the problem. Telling them to fight back, which can get them hurt, or in trouble themselves. And taking away their phone, which feels like punishment for being bullied.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Help them be an upstander too.",
+"sub": "Stand near. Speak up. Tell a grown-up.",
+"say": "Over time, talk about being an upstander for others too. Standing next to a kid who's being picked on, inviting them to sit at lunch, or telling a grown-up. Kids who've been bullied often become the kindest upstanders."
+},
+{
+"k": "card",
+"title": "If you are worried about safety",
+"body": "Not wanting to be alive: stay with them, call or text 988. Danger right now: 911.",
+"say": "Watch for changes: not wanting to go to school, stomachaches, slipping grades, or pulling away. If anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text 988. Call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Look after yourself too.",
+"sub": "A steady grown-up helps them most.",
+"say": "It's hard to watch someone hurt your kid. You may feel furious, or helpless. Let yourself feel it with a friend or a partner, away from your child, so they see you steady. A calm, steady grown-up is what they need most. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "grades",
+"ring": "as-school",
+"title": "Grades and Pressure",
+"you": {
+"id": "as-g-grades-you",
+"guide": "grades",
+"side": "you",
+"title": "Grades and Pressure",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Grades and Pressure",
+"sub": "For You",
+"say": "If grades have started to feel like a big deal, or a bad one is sitting heavy on you, this is for you."
+},
+{
+"k": "big",
+"h": "A grade is information.",
+"sub": "Not a verdict on you.",
+"say": "Here's something worth remembering. A grade is information, not a verdict. It tells you what to work on next. It doesn't tell you who you are, or how much you're worth."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Stressed",
+"Behind",
+"Embarrassed",
+"Worried about disappointing someone"
+],
+"say": "Middle school brings more teachers, more homework, and grades that start to feel permanent. You might feel stressed, behind, or embarrassed. You might worry about letting someone down. Lots of kids your age feel this. It means you care."
+},
+{
+"k": "flow",
+"h": "Big jobs, small steps",
+"steps": [
+[
+"Pick one assignment",
+"The one due first"
+],
+[
+"Break it down",
+"Into small steps"
+],
+[
+"Do one step tonight",
+"Just one"
+]
+],
+"say": "When everything feels like too much, try this. Pick one assignment, the one due first. Break it into small steps. Then do just one step tonight. Small steps add up faster than you think.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Sleep is part of studying.",
+"say": "And protect your sleep. A tired brain learns less and remembers less. Going to bed on time before a test is part of studying, not a break from it."
+},
+{
+"k": "big",
+"h": "One good thing today",
+"sub": "Name it to yourself.",
+"say": "Let's take a moment. Breathe in slowly, and let it out. Now think of one good thing from today, even a small one. A friend who made you laugh. A question you got right. Hold it in your mind.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out.",
+"Now think of one good thing from today, even a small one.",
+"A friend who made you laugh.",
+"A question you got right.",
+{
+"t": "Hold it in your mind.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Ask for help early.",
+"body": "A teacher, your school counselor, or a parent.",
+"say": "If you're stuck, ask for help early. Teachers would rather help before the test than after. Your school counselor can help you make a plan. And tell a parent or another grown-up you trust how it's really going. If the stress ever gets so heavy you don't want to be alive, tell a grown-up today, and call or text 988."
+},
+{
+"k": "big",
+"h": "You are more than a report card.",
+"sub": "The people who love you know it.",
+"say": "You are more than a report card. Your kindness, your humor, and the way you keep trying all count. The people who love you know that. Take it one small step at a time."
+}
+]
+},
+"helper": {
+"id": "as-g-grades-helper",
+"guide": "grades",
+"side": "helper",
+"title": "Grades and Pressure",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+],
+[
+"Greater Good in Education",
+"https://ggie.berkeley.edu/student-well-being/gratitude-for-students/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Grades and Pressure",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love is feeling the weight of grades, or you're feeling it for them, this is for you. You can help them grow without adding to the pressure."
+},
+{
+"k": "big",
+"h": "Grades start to feel permanent.",
+"say": "Pressure climbs in middle school. There are more teachers, more homework, and grades start to feel permanent. Some kids push harder and harder. Others quietly give up on a class. Both are often signs of a kid who cares and feels stuck."
+},
+{
+"k": "points",
+"h": "What helps most",
+"items": [
+[
+"High expectations",
+"With real support"
+],
+[
+"Praise effort and strategy",
+"Not just results"
+],
+[
+"Plan, not just perform",
+"Small steps, written down"
+],
+[
+"Protect sleep",
+"Tired brains learn less"
+]
+],
+"say": "High expectations help kids grow when they come with real support. Praise effort and strategy, not just the result. Help them plan, not just perform, by breaking big assignments into small steps. And protect sleep, because tired brains learn less.",
+"cue": {
+"at": [
+0,
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I care more about how hard you tried than the grade.\"",
+"\"What's one small step we could do tonight?\"",
+"\"A bad grade is information, not a verdict.\""
+],
+"say": "Here are words that help. I care more about how hard you tried than the grade. What's one small step we could do tonight? And, a bad grade is information, not a verdict. Then ask what happened, and listen before you plan."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Comparing",
+"To siblings or other kids"
+],
+[
+"Tying approval to grades",
+"Love stays the same"
+],
+[
+"Taking over",
+"Build their skills instead"
+]
+],
+"say": "Some things are better left out. Comparing them to siblings or other kids. Tying your approval to grades, because kids need to know your love doesn't rise and fall with a report card. And taking over the work, when they need to build the skill a step at a time.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Keep love separate from report cards.",
+"say": "Let's practice. Picture the moment a hard grade comes home. Take a breath, and say it out loud, the way you would to them. A bad grade is information, not a verdict. What's one small step we could do tonight?",
+"beats": [
+"Let's practice.",
+"Picture the moment a hard grade comes home.",
+"Take a breath, and say it out loud, the way you would to them.",
+"A bad grade is information, not a verdict.",
+{
+"t": "What's one small step we could do tonight?",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Gratitude helps too.",
+"body": "One good thing at dinner, or on the drive home.",
+"say": "Gratitude helps too. Gratitude practices for students are linked with better well-being, and even better grades. Keep it simple. At dinner or on the drive home, each person names one good thing from the day. It shifts the conversation away from scores."
+},
+{
+"k": "card",
+"title": "If the pressure is too much",
+"body": "Their teachers and school counselor. Not wanting to be alive: 988. Danger now: 911.",
+"say": "Watch for signs the pressure is too much: trouble sleeping, stomachaches, hiding grades, tears over small mistakes, or giving up. Talk with their teachers and the school counselor. If your child ever says they don't want to be alive, stay with them and call or text 988. Call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Look after yourself too.",
+"sub": "Your calm sets the tone.",
+"say": "Your own worries about their future are real. Notice them, and talk them through with a partner or a friend, so your kid feels your calm and not your fear. Your steady love sets the tone. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "adhd",
+"ring": "as-school",
+"title": "ADHD and Learning Differences",
+"you": {
+"id": "as-g-adhd-you",
+"guide": "adhd",
+"side": "you",
+"title": "ADHD and Learning Differences",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"CHADD",
+"https://chadd.org"
+],
+[
+"Understood",
+"https://www.understood.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "ADHD and Learning Differences",
+"sub": "For You",
+"say": "If you have ADHD or a learning difference, or school has started to feel a lot harder than it used to, this is for you."
+},
+{
+"k": "big",
+"h": "Your brain works its own way.",
+"sub": "That is not about trying hard enough.",
+"say": "Here's something true. ADHD and learning differences are about how a brain works, not how hard a kid tries. Lots of kids with them are trying harder than anyone can see."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Frustrated",
+"Behind",
+"Different",
+"Tired of being corrected"
+],
+"say": "Middle school means more teachers, more homework, and more to keep track of. You might feel frustrated, or behind. You might feel different from your friends, or tired of hearing what you did wrong. Those feelings make sense. You're not lazy, and you're not alone."
+},
+{
+"k": "points",
+"h": "Your brain is great at some things",
+"items": [
+[
+"Name one strength",
+"Out loud"
+],
+[
+"Name one hard part",
+"Just one"
+],
+[
+"Find a tool for it",
+"With a grown-up"
+]
+],
+"say": "Every brain is great at some things and works harder at others. Name one thing you're good at. Maybe it's drawing, building, a sport, or making people laugh. Then name one part of school that feels hardest. That hard part is where a tool can help, like a checklist, a timer, or extra time on tests.",
+"cue": {
+"at": [
+1,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Name one strength.",
+"sub": "Say it to yourself.",
+"say": "Let's try it now. Breathe in slowly, and let it out. Think of one thing your brain is great at. Say it to yourself, or quietly out loud.",
+"beats": [
+"Let's try it now.",
+"Breathe in slowly, and let it out.",
+"Think of one thing your brain is great at.",
+{
+"t": "Say it to yourself, or quietly out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Tell a grown-up what feels hard.",
+"body": "A parent, a teacher, or your school counselor.",
+"say": "You don't have to figure this out alone. Tell a parent, a teacher, or your school counselor which part of school feels hardest. Grown-ups can set up help at school, and you get to be part of the plan. You're old enough to learn what helps your brain."
+},
+{
+"k": "card",
+"title": "If it feels really heavy",
+"body": "Tell a grown-up today. Not wanting to be alive: call or text 988.",
+"say": "If you feel down most days, or so heavy that you don't want to be alive, tell a grown-up you trust today. You can call or text 988 any time."
+},
+{
+"k": "big",
+"h": "Your brain is not a problem.",
+"sub": "It's yours. Let's find the right tools.",
+"say": "Your brain is not a problem to fix. It's yours, with real strengths. The right tools can make the hard parts easier. Keep going, one step at a time."
+}
+]
+},
+"helper": {
+"id": "as-g-adhd-helper",
+"guide": "adhd",
+"side": "helper",
+"title": "ADHD and Learning Differences",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"CHADD",
+"https://chadd.org"
+],
+[
+"Understood",
+"https://www.understood.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "ADHD and Learning Differences",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love has ADHD or a learning difference, or you're starting to wonder, this is for you. You can help them understand their brain and get the right support."
+},
+{
+"k": "big",
+"h": "Middle school is often when it shows.",
+"say": "Middle school means more teachers, more homework, and more to keep track of. For kids with ADHD or learning differences, this is often when things get hard, even if they did fine before. What looks like laziness is usually a brain working overtime to keep up."
+},
+{
+"k": "flow",
+"h": "Getting support",
+"steps": [
+[
+"Ask in writing",
+"For a school evaluation"
+],
+[
+"Talk with their doctor",
+"About what they notice"
+],
+[
+"Use school supports",
+"Like an IEP or 504 plan"
+]
+],
+"say": "Here's where to start. You can ask the school for a special education evaluation, in writing. Talk with their doctor about what you're seeing, and let the doctor guide any questions about diagnosis and treatment. And use school supports, like an IEP or a 504 plan, if your child qualifies.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Include them in the plan.",
+"say": "Include your child in the plan. A middle schooler is old enough to learn what helps their brain: a checklist, a timer, a quiet place to work, or extra time on tests. Kids who understand their own brain can start to ask for what they need."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Let's find tools for the hard parts.\"",
+"\"What part of school feels hardest right now?\"",
+"\"I'm proud of how hard you worked on that.\""
+],
+"say": "Here are words that help. Your brain is great at some things and works harder at others. Let's find tools for the hard parts. What part of school feels hardest right now? And, I'm proud of how hard you worked on that."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"\"Just try harder.\"",
+"They already are"
+],
+[
+"Taking away activities",
+"The ones where they feel capable"
+],
+[
+"Doing it all for them",
+"Build skills a step at a time"
+]
+],
+"say": "Some things are better left out. You just need to try harder, because they usually already are. Taking away sports or activities that help them feel capable. And doing everything for them. Build skills a step at a time instead.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Catch them doing well.",
+"sub": "Say it out loud.",
+"say": "Watch their heart as well as their grades. Kids with ADHD hear a lot of correction, and they're more likely to feel anxious or down. So catch them doing well, and say it. Let's practice. Think of one thing your child did well this week. Say it out loud, the way you would to them.",
+"beats": [
+"Watch their heart as well as their grades.",
+"Kids with ADHD hear a lot of correction, and they're more likely to feel anxious or down.",
+"So catch them doing well, and say it.",
+"Let's practice.",
+"Think of one thing your child did well this week.",
+{
+"t": "Say it out loud, the way you would to them.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "If sadness or worry stays",
+"body": "Talk with their doctor. Not wanting to be alive: 988. Danger now: 911.",
+"say": "If sadness or worry stays for weeks, talk with their doctor and the school counselor. If your child ever says they don't want to be alive, stay with them and call or text 988. Call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Look after yourself too.",
+"sub": "You are learning alongside them.",
+"say": "This takes patience, paperwork, and a lot of meetings. You're learning alongside your child. Find other parents who understand, and take breaks when you need them. Your steady belief in your child is what they need most. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "cut",
+"ring": "as-school",
+"title": "Cut From a Team or Tryout",
+"you": {
+"id": "as-g-cut-you",
+"guide": "cut",
+"side": "you",
+"title": "Cut From a Team or Tryout",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"Aspen Institute Project Play",
+"https://projectplay.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Cut From a Team or Tryout",
+"sub": "For You",
+"say": "If you just got cut from a team, a play, a band, or anything you tried out for, this is for you. I'm sorry. I know how much you wanted it."
+},
+{
+"k": "words",
+"h": "All of this makes sense",
+"items": [
+"Sad",
+"Embarrassed",
+"Angry",
+"Jealous"
+],
+"say": "Getting cut can feel like being told you're not good enough. You might feel sad, embarrassed, or angry. You might feel jealous of a friend who made it, and still be happy for them. All of that makes sense."
+},
+{
+"k": "card",
+"title": "You can be sad first.",
+"body": "Plans can wait. Today you can just feel it.",
+"say": "You don't have to make a plan tonight. You don't have to act like it doesn't matter, either. It mattered, because you cared. Let yourself be sad first. Plans can wait."
+},
+{
+"k": "big",
+"h": "Name it, then breathe.",
+"say": "Let's take a moment. Put your feet on the floor. Breathe in slowly, and let it out even slower. Now name the feeling that's biggest right now, quietly or out loud.",
+"beats": [
+"Let's take a moment.",
+"Put your feet on the floor.",
+"Breathe in slowly, and let it out even slower.",
+{
+"t": "Now name the feeling that's biggest right now, quietly or out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "When you are ready",
+"items": [
+[
+"Another team",
+"Or a rec league"
+],
+[
+"Practice for next year",
+"Ask what to work on"
+],
+[
+"Try something new",
+"A club, a sport, a stage"
+]
+],
+"say": "Later, when you're ready, there are other ways to keep going. Another team or a rec league. Practicing for next year, maybe asking the coach what to work on. Or trying something new. Staying active and with people you like matters more than any one team."
+},
+{
+"k": "points",
+"h": "Tell a grown-up you trust",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"A coach or teacher",
+"Someone who knows you"
+],
+[
+"The school counselor",
+"Any day"
+]
+],
+"say": "Tell a grown-up how it really feels: a parent, a relative, a coach, a teacher, or the school counselor. You don't have to pretend you're fine."
+},
+{
+"k": "big",
+"h": "You tried out. That took guts.",
+"sub": "One list is not the whole story of you.",
+"say": "You tried out, and that took guts. One list is not the whole story of you. You get to decide what comes next."
+}
+]
+},
+"helper": {
+"id": "as-g-cut-helper",
+"guide": "cut",
+"side": "helper",
+"title": "Cut From a Team or Tryout",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Aspen Institute Project Play",
+"https://projectplay.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Cut From a Team or Tryout",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love just got cut from a team or a tryout, this is for you. It can sting more than it looks from the outside."
+},
+{
+"k": "big",
+"h": "It can feel like \"not good enough.\"",
+"sub": "Start with the feelings, not the fix.",
+"say": "Getting cut can feel like being told you're not good enough. At this age, a team can be where their friends are, where they sit at lunch, and part of how they see themselves. So the loss can be bigger than one season. Start with the feelings, not the fix."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I'm sorry. I know how much you wanted this.\"",
+"\"I'm proud you tried out.\"",
+"\"Want to think about what's next, or just be sad for now?\""
+],
+"say": "Here are words that help. I'm sorry. I know how much you wanted this. I'm proud you tried out. And, do you want to think about what's next, or just be sad for now? Then let them choose."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Rushing to solutions",
+"Plans can wait"
+],
+[
+"Trashing the coach",
+"Or the players who made it"
+],
+[
+"\"It's just a game.\"",
+"It shrinks what they lost"
+]
+],
+"say": "Some things are better left out. Rushing to solutions, even good ones. Trashing the coach or the kids who made it, at least in front of them. It can feel like loyalty, but it teaches them to blame instead of grow. And, it's just a game, which shrinks something that mattered to them."
+},
+{
+"k": "card",
+"title": "Friends who made it",
+"body": "They can be happy for a friend and hurt at the same time.",
+"say": "Watch for the friend piece. Their friends may have made the team. Practices, rides, and inside jokes can suddenly leave them out. They can be happy for a friend and hurt at the same time. Help them keep those friendships going off the field."
+},
+{
+"k": "big",
+"h": "Picture their face at the list.",
+"say": "Take a moment. Picture your kid's face when they heard the news. Breathe in slowly. Now say the first words you want them to hear from you.",
+"beats": [
+"Take a moment.",
+"Picture your kid's face when they heard the news.",
+"Breathe in slowly.",
+{
+"t": "Now say the first words you want them to hear from you.",
+"w": 10
+}
+]
+},
+{
+"k": "flow",
+"h": "Later, look at options",
+"steps": [
+[
+"Another team",
+"A rec league or club"
+],
+[
+"Next year",
+"Ask the coach what to work on"
+],
+[
+"Something new",
+"A different sport or activity"
+]
+],
+"say": "Later, when they're ready, talk about options. Another team, a rec league, or a club. Practicing for next year, maybe with a simple question to the coach: what should I work on? Or trying something new. Staying active and connected matters more than the specific team.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Notice your own sting.",
+"body": "Your hopes count too. Keep them out of their way.",
+"say": "Notice your own feelings too. Maybe you hoped for this as much as they did, or it brings back a cut of your own. That's normal. Share it with another grown-up, so your child can have their own feelings. If sadness hangs on for weeks, or they pull back from everything, talk with the school counselor or their doctor."
+},
+{
+"k": "big",
+"h": "Proud of the try. Close for the sad.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Be proud of the try, and stay close for the sad part. Getting back up is a lesson they learn with you beside them. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "crush",
+"ring": "as-school",
+"title": "A First Crush",
+"you": {
+"id": "as-g-crush-you",
+"guide": "crush",
+"side": "you",
+"title": "A First Crush",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A First Crush",
+"sub": "For You",
+"say": "If you have a crush on someone, or your friends are all talking about crushes, this is for you. Crushes are a normal part of growing up."
+},
+{
+"k": "words",
+"h": "A crush can feel like a lot",
+"items": [
+"Excited",
+"Nervous",
+"Awkward",
+"Confused"
+],
+"say": "A crush can make you feel excited, nervous, awkward, or confused, sometimes all in one class period. You might think about them a lot. You might not have a crush at all yet, and that's normal too. Everyone grows on their own timeline."
+},
+{
+"k": "card",
+"title": "Your feelings are yours.",
+"body": "You get to choose who you tell, and when.",
+"say": "Your feelings are yours. You don't have to act on a crush, and you don't have to tell the whole group chat. You get to choose who you tell, and when. And if your crush doesn't like you back, that hurts, and it doesn't change what you're worth."
+},
+{
+"k": "points",
+"h": "Good relationships feel",
+"items": [
+[
+"Kind",
+"They treat you well"
+],
+[
+"Safe",
+"You can be yourself"
+],
+[
+"Never pushy",
+"No pressure, ever"
+]
+],
+"say": "Here's something to keep. Good relationships, of any kind, feel kind and safe. You can be yourself. They are never pushy. If someone makes you feel pressured, scared, or bad about yourself, that's not okay."
+},
+{
+"k": "card",
+"title": "Pictures or secrets? Tell.",
+"body": "You will not be in trouble for telling.",
+"say": "If anyone ever asks you for pictures, or asks you to keep a secret from your grown-ups, tell a trusted grown-up right away. That goes for someone you met online, too. And if any adult ever acts like they have a crush on you, that is never okay. Tell. You will not be in trouble for telling."
+},
+{
+"k": "big",
+"h": "Picture one grown-up you could tell.",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Now picture one grown-up you could tell almost anything. See their face.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Now picture one grown-up you could tell almost anything.",
+{
+"t": "See their face.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Grown-ups you can talk to",
+"items": [
+[
+"A parent or relative",
+"They were your age once"
+],
+[
+"The school counselor",
+"Any day"
+],
+[
+"A teacher or coach",
+"Someone you trust"
+]
+],
+"say": "You can talk to a parent, a relative, the school counselor, or a teacher or coach you trust. Your family may have its own ideas about dating, so ask them. They were your age once, and they might surprise you."
+},
+{
+"k": "big",
+"h": "You deserve kind and safe.",
+"sub": "Always.",
+"say": "Whatever your heart is doing right now, you deserve people who are kind and safe. Always."
+}
+]
+},
+"helper": {
+"id": "as-g-crush-helper",
+"guide": "crush",
+"side": "helper",
+"title": "A First Crush",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A First Crush",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love has a first crush, this is for you. It's a normal part of growing up, and how you react matters more than you might think."
+},
+{
+"k": "big",
+"h": "Your reaction keeps the door open.",
+"sub": "Calm curiosity works best.",
+"say": "How you react to a first crush decides whether they keep talking to you, about this and about the bigger things later. Calm curiosity keeps the door open. Teasing or panic tends to close it."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"What do you like about them?\"",
+"\"Good relationships feel kind and safe, never pushy.\"",
+"\"If anyone ever asks you for pictures or secrets, tell me.\""
+],
+"say": "Here are words that help. What do you like about them? Good relationships feel kind and safe, never pushy. And, if anyone ever asks you for pictures or secrets, tell me. You can say that last one more than once."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Mocking or teasing",
+"Even gently"
+],
+[
+"Telling the whole family",
+"It was told to you"
+],
+[
+"Panicking or forbidding",
+"All talk about it"
+]
+],
+"say": "Some things are better left out. Mocking or teasing, even the gentle, loving kind. Sharing it with the whole family at dinner. And panicking, or forbidding all talk about it. Each one teaches them to stop telling you things."
+},
+{
+"k": "card",
+"title": "Share your values without a lecture.",
+"body": "Short, clear, and more than once.",
+"say": "Your family's values about dating matter, and this is a good age to share them. Keep it short and clear, and come back to it over time. A car ride or a walk often works better than a sit-down talk. Ask what they think, too."
+},
+{
+"k": "big",
+"h": "Practice the first question.",
+"say": "Take a moment. Picture your kid telling you about a crush. Notice your first reaction, and let it pass. Now say this out loud: What do you like about them?",
+"beats": [
+"Take a moment.",
+"Picture your kid telling you about a crush.",
+"Notice your first reaction, and let it pass.",
+{
+"t": "Now say this out loud: What do you like about them?",
+"w": 10
+}
+]
+},
+{
+"k": "flow",
+"h": "Keep them safe",
+"steps": [
+[
+"Kind and safe",
+"Never pushy or pressured"
+],
+[
+"Pictures or secrets",
+"Tell me right away"
+],
+[
+"An adult with a crush",
+"Never okay. Tell me."
+]
+],
+"say": "This is a good age to talk about healthy relationships. Good ones are kind and safe, and never pushy. Anyone asking for pictures, or for secrets from you, is not safe, whether they are at school or online. And any adult who shows romantic interest in a child is never okay. Make it clear they should tell you right away, and that they will never be in trouble for telling.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "If something is wrong",
+"body": "Stay calm. Believe them. Childhelp: 1-800-422-4453. Danger: 911.",
+"say": "If your child tells you an adult has shown romantic interest, or someone is asking for pictures, stay calm and believe them. Get help the same day. You can call Childhelp at 1-800-422-4453, or report online exploitation to the NCMEC CyberTipline. Call 911 if anyone is in danger right now."
+},
+{
+"k": "card",
+"title": "Your own feelings count too.",
+"body": "Watching them grow up can stir a lot.",
+"say": "Watching your kid have a first crush can stir a lot: sweet memories, old embarrassment, or worry about how fast they're growing. That's normal. Talk it through with another grown-up, so you can stay calm and curious with them."
+},
+{
+"k": "big",
+"h": "Calm and curious. Kind and safe.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Stay calm and curious, and keep teaching kind and safe. That's how you stay the person they tell. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "teacher",
+"ring": "as-school",
+"title": "A Teacher or Coach Leaves",
+"you": {
+"id": "as-g-teacher-you",
+"guide": "teacher",
+"side": "you",
+"title": "A Teacher or Coach Leaves",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+],
+[
+"Dougy Center",
+"https://www.dougy.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Teacher or Coach Leaves",
+"sub": "For You",
+"say": "If a teacher or coach you care about is leaving, or already left, this is for you. Some grown-ups really matter to us, and it's hard when they go."
+},
+{
+"k": "words",
+"h": "It makes sense to miss them",
+"items": [
+"Sad",
+"Mad",
+"Worried",
+"Mixed up"
+],
+"say": "It makes sense to miss them. You might feel sad, or mad that they're going. You might worry about who comes next. You might not even know why they left. All of that is okay. Missing someone means they mattered."
+},
+{
+"k": "story",
+"title": "The Wisdom They Share",
+"lines": [
+"Sarah taught third grade, and kept teaching through cancer.",
+"Her students' drawings covered her wall: crooked suns, stick figure families.",
+"One said MRS. K WE MISS YOU, in careful crayon letters."
+],
+"lesson": "Missing a teacher means they mattered.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "Let me tell you about a teacher named Sarah. Her third grade class knew her as Mrs. K. She was very sick for four years, and every day she could, she kept teaching. She never told her students. She wanted to be their teacher. When I met her, she was sitting up in bed, and her wall was covered in her students' drawings. Crooked suns. Stick figure families. One said, MRS. K WE MISS YOU."
+},
+{
+"k": "points",
+"h": "Ways to say goodbye",
+"items": [
+[
+"Make a card",
+"Or a drawing"
+],
+[
+"Say thank you",
+"Out loud or in a note"
+],
+[
+"Ask a grown-up",
+"To help send it"
+]
+],
+"say": "Those kids found a way to say they missed her. You can too. Make a card or a drawing. Say thank you, out loud or in a note. If they're already gone, ask a grown-up to help you send it.",
+"cue": {
+"at": [
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "What did they teach you?",
+"say": "Let's take a moment. Picture that teacher or coach. Think of one thing they taught you, or one thing they did that you liked. Now say thank you, quietly or out loud.",
+"beats": [
+"Let's take a moment.",
+"Picture that teacher or coach.",
+"Think of one thing they taught you, or one thing they did that you liked.",
+{
+"t": "Now say thank you, quietly or out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "The new grown-up wants to know you too.",
+"body": "You can miss the old one and still give them a chance.",
+"say": "The new teacher or coach wants to get to know you too. You can miss the old one and still give the new one a chance. Both can be true."
+},
+{
+"k": "points",
+"h": "Tell someone how it feels",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"The school counselor",
+"Any day"
+],
+[
+"Another teacher or coach",
+"Someone you trust"
+]
+],
+"say": "Tell a grown-up how you feel: a parent, a relative, the school counselor, or another teacher or coach you trust. And if any grown-up ever made you feel unsafe, tell someone you trust. You will not be in trouble for telling."
+},
+{
+"k": "big",
+"h": "What they gave you stays with you.",
+"sub": "Some grown-ups we remember for a long time.",
+"say": "What a good teacher or coach gave you stays with you. Somewhere out there tonight, a classroom of grown-ups still remembers Mrs. K."
+}
+]
+},
+"helper": {
+"id": "as-g-teacher-helper",
+"guide": "teacher",
+"side": "helper",
+"title": "A Teacher or Coach Leaves",
+"sideName": "For the Grown-up",
+"mins": 5,
+"sources": [
+[
+"Search Institute: Developmental relationships",
+"https://searchinstitute.org/developmental-relationships"
+],
+[
+"Dougy Center",
+"https://www.dougy.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Teacher or Coach Leaves",
+"sub": "For the Grown-up",
+"say": "If a middle schooler you love just lost a teacher or coach who mattered to them, this is for you. It's a real loss, even when it's for a good reason."
+},
+{
+"k": "big",
+"h": "Some of the most important adults they have.",
+"say": "Teachers and coaches can be some of the most important adults in a middle schooler's life. They may be the person who noticed them, pushed them, or made a hard class feel possible. When one leaves, expect some real sadness."
+},
+{
+"k": "story",
+"title": "The Wisdom They Share",
+"lines": [
+"Sarah taught third grade, and kept teaching through cancer.",
+"Her students' drawings covered her wall: crooked suns, stick figure families.",
+"One said MRS. K WE MISS YOU, in careful crayon letters."
+],
+"lesson": "Kids need a way to say what a teacher meant.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "I once met a teacher named Sarah. She had taught for twelve years, and every day she could, she kept teaching her third grade class through cancer. She never told her students. I wanted to be their teacher, she told me. When I met her, she was sitting up in bed, surrounded by drawings taped to the wall. Crooked suns. Stick figure families. One said MRS. K WE MISS YOU, in careful, uneven crayon letters. Sarah died a few days later. I don't know what happened to that wall of drawings. I hope somebody kept them."
+},
+{
+"k": "points",
+"h": "Make room for a goodbye",
+"items": [
+[
+"Give notice when you can",
+"Time to get ready"
+],
+[
+"A card or a last talk",
+"Something they make or say"
+],
+[
+"Keep what they made",
+"It matters later"
+]
+],
+"say": "Those drawings were how her students said they missed her. Make room for a goodbye. Give notice when you can, so they have time. Help them make a card or have a last conversation. And keep the things they make. They matter later.",
+"cue": {
+"at": [
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"It makes sense you'll miss them.\"",
+"\"What did you like most about them?\"",
+"\"The new teacher wants to get to know you too.\""
+],
+"say": "Here are words that help. It makes sense you'll miss them. What did you like most about them? And later, the new teacher wants to get to know you too."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"\"You'll get over it.\"",
+"It shrinks the loss"
+],
+[
+"Adult details",
+"About why they left"
+],
+[
+"Comparing out loud",
+"Old teacher versus new"
+]
+],
+"say": "Some things are better left out. You'll get over it, which shrinks a real loss. Adult details about why someone left. And comparing the old teacher and the new one out loud, which makes it harder to give the new one a chance."
+},
+{
+"k": "card",
+"title": "If they left for a hard reason",
+"body": "Keep it simple. Watch for any kid who needs to talk.",
+"say": "Sometimes a teacher or coach leaves for a hard reason. If it was misconduct, follow the school's steps and keep it simple: they are no longer working here. Watch for any kid who might need to talk. If your child shares that they were harmed, stay calm, believe them, and get help that day. Childhelp is at 1-800-422-4453, and 911 is there for danger right now."
+},
+{
+"k": "big",
+"h": "Picture the grown-up who mattered.",
+"say": "Take a moment. Think of a teacher or coach who mattered to you when you were young. Picture their face. Now say one thing they gave you, out loud.",
+"beats": [
+"Take a moment.",
+"Think of a teacher or coach who mattered to you when you were young.",
+"Picture their face.",
+{
+"t": "Now say one thing they gave you, out loud.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help them meet the new one.",
+"body": "Introduce the new adult warmly. Your feelings count too.",
+"say": "When you can, introduce the new adult warmly, and give it time. You may miss that teacher or coach too, or worry about the change. That's okay. Share it with another grown-up. If sadness hangs on for weeks, talk with the school counselor."
+},
+{
+"k": "big",
+"h": "Make room for the goodbye.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Make room for the goodbye, and stay close through the change. The grown-ups who matter stay with kids for a long time. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "lockdown",
+"ring": "as-world",
+"title": "Lockdowns and School Violence",
+"you": {
+"id": "as-g-lockdown-you",
+"guide": "lockdown",
+"side": "you",
+"title": "Lockdowns and School Violence",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"NCTSN: Talking to children about the shooting",
+"https://www.nctsn.org/sites/default/files/resources/tip-sheet/talking_to_children_about_the_shooting.pdf"
+],
+[
+"NCTSN: Parent guidelines after a shooting",
+"https://www.nctsn.org/resources/parent-guidelines-helping-youth-after-recent-shooting"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Lockdowns and School Violence",
+"sub": "For You",
+"say": "If lockdown drills, or news about a school, have left you feeling scared or on edge, this is for you. Lots of kids your age feel this way."
+},
+{
+"k": "words",
+"h": "Every feeling here makes sense",
+"items": [
+"Scared",
+"Jumpy",
+"Angry",
+"Fine, then not fine"
+],
+"say": "You might feel scared, jumpy, or angry. You might feel fine, and then not fine when a door slams or an alarm goes off. Trouble sleeping or focusing for a while is normal. Every one of those feelings makes sense."
+},
+{
+"k": "card",
+"title": "Drills are practice.",
+"body": "Your teachers practice so everyone knows what to do.",
+"say": "Drills can feel strange, or even scary. Here's what they are: practice. Your teachers and school staff practice so everyone knows exactly what to do. Lots of grown-ups are working to keep you safe, every single day."
+},
+{
+"k": "flow",
+"h": "Your simple plan",
+"steps": [
+[
+"Listen to your teacher",
+"They know the plan"
+],
+[
+"Stay with your class",
+"Quiet and close"
+],
+[
+"Breathe slowly",
+"In, then out even slower"
+],
+[
+"Talk about it after",
+"With a grown-up you trust"
+]
+],
+"say": "Here's a simple plan to hold onto. Listen to your teacher, because they know the plan. Stay with your class, quiet and close. Breathe slowly while you wait. And afterward, talk about it with a grown-up you trust.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Feet down. One slow breath.",
+"sub": "Then picture a grown-up you trust.",
+"say": "Let's try it now. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. Notice three things you can see around you. Now picture one grown-up you could talk to about this.",
+"beats": [
+"Let's try it now.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+"Notice three things you can see around you.",
+{
+"t": "Now picture one grown-up you could talk to about this.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "When you hear something scary",
+"items": [
+[
+"Ask what is true",
+"Rumors spread fast"
+],
+[
+"Take a break from videos",
+"Your mind needs rest"
+],
+[
+"Tell a grown-up",
+"Any time, about anything"
+]
+],
+"say": "Sometimes scary stories spread fast at school or online, and lots of them aren't true. Ask a grown-up what's really true. Take breaks from videos and posts about it, because your mind needs rest. And you can always bring your questions to a parent, a teacher, a coach, or your school counselor. If the scared feeling stays for weeks, tell them, so they can help."
+},
+{
+"k": "big",
+"h": "You are not alone in this.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You don't have to carry this feeling alone. Lots of people are looking out for you. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-lockdown-helper",
+"guide": "lockdown",
+"side": "helper",
+"title": "Lockdowns and School Violence",
+"sideName": "For the Grown-up",
+"mins": 5,
+"sources": [
+[
+"NCTSN: Talking to children about the shooting",
+"https://www.nctsn.org/sites/default/files/resources/tip-sheet/talking_to_children_about_the_shooting.pdf"
+],
+[
+"NCTSN: Parent guidelines after a shooting",
+"https://www.nctsn.org/resources/parent-guidelines-helping-youth-after-recent-shooting"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Lockdowns and School Violence",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is shaken by a lockdown, a drill, or news of violence at a school, this is for you. You don't need perfect words. Your calm and your honesty go a long way."
+},
+{
+"k": "big",
+"h": "Silence can make it scarier.",
+"sub": "Start the conversation.",
+"say": "Start the conversation, even if they seem fine. When grown-ups stay quiet, kids fill the silence with their own worst guesses. Ask what they've heard, and help them sort out what's true from what's rumor."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"What have you heard? Let's sort out what's true.\"",
+"\"Your teachers practice drills so everyone knows what to do.\"",
+"\"You can always talk to me about this.\""
+],
+"say": "Words that help. What have you heard? Let's sort out what's true. Your teachers practice drills so everyone knows what to do. And, you can always talk to me about this."
+},
+{
+"k": "card",
+"title": "Could it happen here?",
+"body": "Often they are asking: is it likely? It is rare.",
+"say": "When kids ask, could it happen here, they're often really asking whether it's likely. You can be honest. It's rare, and many grown-ups are working every day to keep them safe. Tell them what those grown-ups do."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Graphic videos",
+"Including your own news"
+],
+[
+"\"It will never happen here.\"",
+"A promise no one can keep"
+],
+[
+"The person who did it",
+"Keep the focus on helpers"
+]
+],
+"say": "Some things are better left out. Graphic videos, including the news you have running. Promising it will never happen here, because that's a promise no one can keep. And focusing on the person who did it. Keep the focus on the helpers and the plan."
+},
+{
+"k": "story",
+"title": "A Day at the Fair",
+"lines": [
+"A sudden pop, and a crowd shouting to run.",
+"My family was scattered, and we found each other one by one.",
+"My oldest and I stayed on the phone and walked toward each other."
+],
+"lesson": "A steady voice helps a scared kid find their way back.",
+"note": "Names and details changed",
+"hold": 2,
+"say": "I want to tell you about a day with my own family. It includes a scary moment, and everyone in it was safe. We were at a fair when we heard a sudden pop. People shouted, Run, and my family was scattered. I grabbed the son beside me and ran. Another of my boys found us near the gates. My wife had taken shelter with our youngest. Then my oldest called, his voice shaking. He had run four blocks away, alone. I stayed on the phone, and we walked toward each other, block by block, until I saw him. I held him for a long time."
+},
+{
+"k": "points",
+"h": "After a scare",
+"items": [
+[
+"Stay close",
+"Reconnect first"
+],
+[
+"Keep routines",
+"Meals, sleep, school"
+],
+[
+"Limit the news",
+"Especially video"
+]
+],
+"say": "A steady voice and a way back to their people is what kids need after any scare. Stay close. Keep meals, sleep, and school routines steady. Limit the news, especially video. Expect worse sleep and focus for a while. If problems last more than about six weeks, talk with a counselor or their doctor.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"sub": "Your calm is contagious.",
+"say": "Your calm helps them feel safe. Feet on the floor. Breathe in slowly, and let it out even slower. Now say this out loud: you can always talk to me about this.",
+"beats": [
+"Your calm helps them feel safe.",
+"Feet on the floor.",
+"Breathe in slowly, and let it out even slower.",
+{
+"t": "Now say this out loud: you can always talk to me about this.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Look after yourself too.",
+"body": "Disaster Distress Helpline: call or text 1-800-985-5990. Not wanting to be alive: 988. Emergency: 911.",
+"say": "News like this can shake grown-ups too. Talk with someone you trust, and take breaks from the news yourself. To talk with someone about the stress, call or text the Disaster Distress Helpline at 1-800-985-5990. If anything points to thoughts of not wanting to be alive, call or text 988. In an emergency, call 911."
+},
+{
+"k": "big",
+"h": "Start the talk. Stay close.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Start the talk, tell the truth gently, and stay close. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "news",
+"ring": "as-world",
+"title": "Scary News and Politics",
+"you": {
+"id": "as-g-news-you",
+"guide": "news",
+"side": "you",
+"title": "Scary News and Politics",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"National Child Traumatic Stress Network",
+"https://www.nctsn.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Scary News and Politics",
+"sub": "For You",
+"say": "If the news has you worried, or arguments about politics feel big and loud, this is for you. Lots of kids your age feel the same way."
+},
+{
+"k": "words",
+"h": "It makes sense to feel a lot",
+"items": [
+"Worried",
+"Confused",
+"Angry",
+"Tired of it all"
+],
+"say": "You might feel worried, confused, or angry. You might feel tired of hearing about it at all. News can follow you everywhere: on phones, at school, at the dinner table. It makes sense to feel a lot."
+},
+{
+"k": "points",
+"h": "Sort it out",
+"items": [
+[
+"What did I hear?",
+"Say it plainly"
+],
+[
+"Is it true?",
+"Check with a grown-up"
+],
+[
+"Is it close to me?",
+"Or far from home?"
+]
+],
+"say": "When you hear something scary, it helps to sort it out. What did I actually hear? Is it true, or is it a rumor? Check with a grown-up you trust. And is it close to me, or far from home? Scary news can feel close even when it isn't.",
+"cue": {
+"at": [
+1,
+2,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "People can disagree and still be good neighbors.",
+"body": "You can care about what you believe and still be kind.",
+"say": "Grown-ups disagree about big things, sometimes loudly. People can disagree and still be good neighbors. You can care about what you believe, listen to someone who sees it differently, and still be kind. That's a real skill, and you can practice it."
+},
+{
+"k": "big",
+"h": "What part worries you most?",
+"sub": "Name it. Then picture who you could tell.",
+"say": "Let's take a moment. Breathe in slowly, and let it out even slower. Think of the part of the news that worries you most, and give it a name. Now picture one grown-up you could tell about it.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out even slower.",
+"Think of the part of the news that worries you most, and give it a name.",
+{
+"t": "Now picture one grown-up you could tell about it.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Things you can do",
+"items": [
+[
+"Take news breaks",
+"Phone down, go outside"
+],
+[
+"Do one small thing",
+"A letter, a kind act"
+],
+[
+"Talk it through",
+"With a grown-up you trust"
+]
+],
+"say": "Here are things you can do. Take breaks from the news. Put the phone down, and go outside or do something you love. Find one small way to help, like writing a letter or doing something kind nearby. And talk it through with a parent, a teacher, a coach, or your school counselor. Fixing the big problems is a grown-up job."
+},
+{
+"k": "big",
+"h": "You can care without carrying it all.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You can care about the world without carrying all of it. The grown-ups are working on the big things. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-news-helper",
+"guide": "news",
+"side": "helper",
+"title": "Scary News and Politics",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"National Child Traumatic Stress Network",
+"https://www.nctsn.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Scary News and Politics",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is worried by the news, or caught in the heat of politics, this is for you. You don't need every answer. Calm, honest, and kind goes a long way."
+},
+{
+"k": "big",
+"h": "They soak it up.",
+"sub": "Even when they seem busy with something else.",
+"say": "Kids soak up news even when they seem busy with something else. A headline on a phone, a video at lunch, a tense talk at the dinner table. Middle schoolers notice more than they say, and they're starting to form views of their own."
+},
+{
+"k": "flow",
+"h": "Three steps",
+"steps": [
+[
+"Ask",
+"What have you heard?"
+],
+[
+"Sort",
+"Facts from rumors"
+],
+[
+"Help",
+"One small action"
+]
+],
+"say": "Three steps help. Ask what they've heard. Then sort out facts from rumors together, at their level. And find one small way to help, because action turns worry into something they can do.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"It's okay to feel worried. What part worries you most?\"",
+"\"People can disagree and still be good neighbors.\"",
+"\"What's one thing we could do to help?\""
+],
+"say": "Words that help. It's okay to feel worried. What part worries you most? People can disagree and still be good neighbors. And, what's one thing we could do to help?"
+},
+{
+"k": "card",
+"title": "Share your values. Model respect.",
+"body": "Kids learn most from how you talk about people.",
+"say": "Politics can feel personal and scary. You can share your family's values, and still show respect for neighbors who see things differently. Kids learn more from how you talk about people than from what you say about issues. Calling people who disagree evil teaches fear. Kind words about people, even in disagreement, teach steadiness."
+},
+{
+"k": "points",
+"h": "Lower the volume",
+"items": [
+[
+"Turn off the all-day news",
+"Check in at set times"
+],
+[
+"Watch your own reactions",
+"They are watching you"
+],
+[
+"Talk about phones",
+"What they see, and when"
+]
+],
+"say": "Lower the volume at home. Leaving the news running all day keeps everyone on edge, so check in at set times instead. Watch your own reactions, because they're watching you. And talk about what they see on their phones, and when. Late night scrolling makes worry bigger.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Keep them out of grown-up problems.",
+"body": "They can care. The grown-ups carry the weight.",
+"say": "Some news touches a family directly: a job, a neighbor, a worry about what comes next. Kids can care, and still be kept out of grown-up problems. Tell them the grown-ups are handling the big things, and save your own heaviest worries for other grown-ups."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"sub": "Your calm is contagious.",
+"say": "Before you talk, steady yourself. Breathe in slowly, and let it out even slower. Now say this out loud: it's okay to feel worried. What part worries you most?",
+"beats": [
+"Before you talk, steady yourself.",
+"Breathe in slowly, and let it out even slower.",
+"Now say this out loud: it's okay to feel worried.",
+{
+"t": "What part worries you most?",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Look after yourself too.",
+"body": "Take news breaks. Heavy worry for weeks: the school counselor or their doctor.",
+"say": "Grown-ups get worn down by the news too. Take your own breaks, and talk with people you trust. If your child's worry stays heavy for weeks, or gets in the way of sleep, school, or friends, talk with the school counselor or their doctor. If anything points to thoughts of not wanting to be alive, call or text 988, or call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Calm, honest, and kind.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Stay calm, be honest, and stay kind. That's what they'll remember. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "immigration",
+"ring": "as-world",
+"title": "Immigration Raids",
+"you": {
+"id": "as-g-immigration-you",
+"guide": "immigration",
+"side": "you",
+"title": "Immigration Raids",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"AAP: Talking with children about immigration enforcement",
+"https://www.healthychildren.org/English/healthy-living/emotional-wellness/Building-Resilience/Pages/talking-with-children-about-immigration-enforcement.aspx"
+],
+[
+"Education Minnesota: Immigration resources for educators",
+"https://educationminnesota.org/immigration/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Immigration Raids",
+"sub": "For You",
+"say": "If immigration raids in your community have you scared, for your family, your friends, or your neighbors, this is for you. What you're feeling makes sense."
+},
+{
+"k": "words",
+"h": "Every feeling here makes sense",
+"items": [
+"Scared",
+"Sad",
+"Angry",
+"Hard to focus"
+],
+"say": "You might feel scared, sad, or angry. You might have trouble sleeping, or find it hard to focus at school. You might worry every time you're apart from your family. Those feelings make sense, and lots of kids are feeling them too."
+},
+{
+"k": "card",
+"title": "This is not yours to fix.",
+"body": "The grown-ups are handling the grown-up parts.",
+"say": "Here's something important. This is not your job to fix. The grown-ups in your family, and people whose job is helping families, are working on it. You don't have to carry their worries or solve grown-up problems. Your job is to be a kid."
+},
+{
+"k": "points",
+"h": "Ask about the plan",
+"items": [
+[
+"Who will pick me up?",
+"If plans change"
+],
+[
+"How do I reach you?",
+"Numbers to know"
+],
+[
+"Who can I go to?",
+"At school and nearby"
+]
+],
+"say": "It can help to know your family's plan. Ask a grown-up at home. Who will pick me up if plans change? How do I reach you? Who can I go to at school, or nearby? Knowing the plan can make the worry a little smaller.",
+"cue": {
+"at": [
+2,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Feet down. One slow breath.",
+"sub": "Then picture a grown-up you trust.",
+"say": "Let's take a breath together. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. Now picture one grown-up you trust, and say their name.",
+"beats": [
+"Let's take a breath together.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+{
+"t": "Now picture one grown-up you trust, and say their name.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "You can talk about it",
+"items": [
+[
+"A parent or relative",
+"At home"
+],
+[
+"A teacher or coach",
+"Someone you trust"
+],
+[
+"Your school counselor",
+"A calm place to talk"
+]
+],
+"say": "You don't have to keep this inside. Talk to a grown-up you trust: a parent, a relative, a teacher, a coach, or your school counselor. You can ask your grown-ups anything. And if a friend seems scared or stops coming to school, be kind, and tell a grown-up you're worried about them."
+},
+{
+"k": "big",
+"h": "You are loved, and you belong.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "You are loved, and you belong. Be gentle with yourself today. The full guide has more, whenever you want it."
+}
+]
+},
+"helper": {
+"id": "as-g-immigration-helper",
+"guide": "immigration",
+"side": "helper",
+"title": "Immigration Raids",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"AAP: Talking with children about immigration enforcement",
+"https://www.healthychildren.org/English/healthy-living/emotional-wellness/Building-Resilience/Pages/talking-with-children-about-immigration-enforcement.aspx"
+],
+[
+"Education Minnesota: Immigration resources for educators",
+"https://educationminnesota.org/immigration/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Immigration Raids",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is scared by immigration raids, this is for you. Maybe your own family is affected, or a friend's, or your neighbors'. You don't need perfect words. Listening first goes a long way."
+},
+{
+"k": "big",
+"h": "Listen first.",
+"sub": "What do they already know and fear?",
+"say": "Start by listening. Find out what they already know, and what they're afraid of. Kids this age hear a lot from friends and phones, and some of it is rumor. Let them tell you, then answer what they're really asking."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"You are safe right now, and we have a plan.\"",
+"\"If anything ever happens, here's who will pick you up.\"",
+"\"You can ask me anything.\""
+],
+"say": "Words that help. You are safe right now, and we have a plan. If anything ever happens, here's who will pick you up. And, you can ask me anything."
+},
+{
+"k": "flow",
+"h": "Make a family plan",
+"steps": [
+[
+"Name a trusted adult",
+"Who would pick them up"
+],
+[
+"Update school contacts",
+"Emergency contacts on file"
+],
+[
+"Share key numbers",
+"Kept somewhere safe"
+],
+[
+"Talk it through calmly",
+"So the plan feels steady"
+]
+],
+"say": "If your family could be affected, make a preparedness plan together. Name a trusted adult who would pick them up. Update the emergency contacts at school. Make sure they know the numbers to call, kept somewhere safe. And talk it through calmly, so the plan feels steady, not scary.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "Keep them out of the grown-up parts.",
+"body": "Grown-ups handle papers, legal talks, and the big worries.",
+"say": "Kids need to hear that they are not responsible for fixing this. Keep them out of grown-up problems. Even if they speak English best in the family, they shouldn't translate legal conversations or official papers. Ask for an interpreter, or ask a legal aid organization to help you find one."
+},
+{
+"k": "points",
+"h": "Get trusted help",
+"items": [
+[
+"A legal aid organization",
+"For trusted, up-to-date guidance"
+],
+[
+"The school counselor",
+"Support during the day"
+],
+[
+"Their doctor",
+"If sleep or worry stays hard"
+]
+],
+"say": "Rules change quickly, and every family's situation is different, so talk with a trusted immigration legal aid organization. The full guide lists some. Let the school counselor know your child is carrying a lot, so they have support during the day. If sleep, appetite, or worry stay hard, talk with their doctor.",
+"cue": {
+"at": [
+0,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Reassure them, honestly.",
+"body": "Say what the grown-ups are doing. Leave out promises about outcomes.",
+"say": "Reassure them that the grown-ups are handling this, and tell them what you're doing. Be careful with promises about how things will turn out, because no one can know that. Honest, steady words are easier to trust."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"sub": "Your calm is contagious.",
+"say": "Your calm helps them feel safe. Feet on the floor. Breathe in slowly, and let it out even slower. Now say this out loud: you can ask me anything.",
+"beats": [
+"Your calm helps them feel safe.",
+"Feet on the floor.",
+"Breathe in slowly, and let it out even slower.",
+{
+"t": "Now say this out loud: you can ask me anything.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Look after yourself too.",
+"body": "Lean on your people. Not wanting to be alive: 988. Emergency: 911.",
+"say": "This may be weighing heavily on you too. Lean on people you trust and on your community. Take breaks from the news and the rumors. If anything points to thoughts of not wanting to be alive, call or text 988, or call 911 in an emergency."
+},
+{
+"k": "big",
+"h": "Listen. Plan. Stay close.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Listen first, make a plan, and stay close. You are not alone in this. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "unfair",
+"ring": "as-world",
+"title": "Being Treated Unfairly",
+"you": {
+"id": "as-g-unfair-you",
+"guide": "unfair",
+"side": "you",
+"title": "Being Treated Unfairly",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"City of Minneapolis: Mental health",
+"https://www.minneapolismn.gov/government/departments/health/current-concerns/mental-health/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Being Treated Unfairly",
+"sub": "For You",
+"say": "If someone treated you badly because of who you are, this is for you. Maybe it was about your skin, your family, your faith, your culture, or how you talk. Maybe it was a kid, or maybe it was a grown-up."
+},
+{
+"k": "big",
+"h": "That was wrong.",
+"sub": "And it was not your fault.",
+"say": "Here is the first thing to know. What happened to you was wrong. It was not your fault. Nothing about who you are made it okay."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Angry",
+"Hurt",
+"Embarrassed",
+"Confused",
+"Really tired"
+],
+"say": "You might feel angry, hurt, or embarrassed. You might feel confused, or just really tired. You might keep replaying it in your head. All of that makes sense. Your sense of fair is strong right now, and this broke it."
+},
+{
+"k": "points",
+"h": "What you can do",
+"items": [
+[
+"Write it down",
+"What, when, and who saw"
+],
+[
+"Tell a grown-up",
+"Today, if you can"
+],
+[
+"Stay near your people",
+"Friends who have your back"
+]
+],
+"say": "Here are a few things you can do. Write down what happened: what was said or done, when, and who saw it. Tell a grown-up you trust, today if you can. And stay close to friends who have your back. Fixing it is a grown-up job. Your job is to tell.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Who will you tell?",
+"sub": "Picture them now.",
+"say": "Let's take a moment. Breathe in slowly, and let it out. Picture one grown-up you can tell: a parent, a relative, a teacher, a coach, or your school counselor. Now say this quietly, like you're talking to them. Something happened at school, and it wasn't okay.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out.",
+"Picture one grown-up you can tell: a parent, a relative, a teacher, a coach, or your school counselor.",
+"Now say this quietly, like you're talking to them.",
+{
+"t": "Something happened at school, and it wasn't okay.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Who you are is something to be proud of.",
+"body": "Your family, your culture, your community, and your faith, if that is part of your family.",
+"say": "Who you are is something to be proud of. Lots of kids find strength in their family, their culture, and their community. For some, it's their faith, too. Ask a grown-up in your family to tell you about someone who stood up to unfairness."
+},
+{
+"k": "card",
+"title": "If you feel unsafe",
+"body": "Tell a grown-up right away. Danger right now: 911.",
+"say": "If someone threatens to hurt you, or you feel unsafe, tell a grown-up right away. You won't be in trouble for telling. If someone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "You deserve to be treated fairly.",
+"sub": "Every day, everywhere.",
+"say": "You deserve to be treated fairly, every day, everywhere. Telling a grown-up is a strong thing to do. You don't have to carry this alone."
+}
+]
+},
+"helper": {
+"id": "as-g-unfair-helper",
+"guide": "unfair",
+"side": "helper",
+"title": "Being Treated Unfairly",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"City of Minneapolis: Mental health",
+"https://www.minneapolismn.gov/government/departments/health/current-concerns/mental-health/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Being Treated Unfairly",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love has been treated badly because of race, faith, culture, or who they are, this is for you. Whether you're a parent, a grandparent, or another grown-up in their life, you can help them feel steady and seen."
+},
+{
+"k": "big",
+"h": "Believe them first.",
+"sub": "Being believed is protective.",
+"say": "Start by believing them. Being believed by a trusted adult is one of the most protective things a kid can have. Listen to the whole story before you ask questions. Their experience is real, even if you weren't there to see it."
+},
+{
+"k": "big",
+"h": "Middle schoolers feel fairness sharply.",
+"say": "Kids this age have a sharp sense of fairness. Being treated badly for who they are cuts deep, because it touches the question they're already asking: who am I, and where do I belong? Some get angry. Some go quiet. Some stop wanting to go to school."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"That was wrong, and it was not your fault.\"",
+"\"Thank you for telling me.\"",
+"\"We're going to do something about it.\""
+],
+"say": "Here are words that help. That was wrong, and it was not your fault. Thank you for telling me. We're going to do something about it. Name it plainly as unfair. Kids need to hear a grown-up say it out loud."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"\"They didn't mean it.\"",
+"It asks them to doubt what happened"
+],
+[
+"\"Just ignore it.\"",
+"It leaves them alone with it"
+],
+[
+"Both sides",
+"Their hurt is the starting point"
+]
+],
+"say": "Some words close the door. They didn't mean it. That asks your kid to doubt what happened. Just ignore it. That leaves them alone with it. And skip the both sides talk. Start with their hurt.",
+"cue": {
+"at": [
+1,
+3,
+5
+]
+}
+},
+{
+"k": "flow",
+"h": "Then act on it",
+"steps": [
+[
+"Write it down",
+"Date, words, who saw, screenshots"
+],
+[
+"Report it",
+"To the school, in writing"
+],
+[
+"Follow up",
+"Ask what happened next"
+]
+],
+"say": "Then act on it. Write down what happened: the date, the words used, who saw it, and screenshots if it happened online. Report it to the school, in writing. Then follow up, and ask what was done. Your kid watching you act tells them they matter. Keep them out of the grown-up meetings unless they want to be there.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Say it the way you would to them.",
+"say": "Let's practice. Say it out loud, the way you would to them. That was wrong, and it was not your fault. We're going to do something about it.",
+"beats": [
+"Let's practice.",
+"Say it out loud, the way you would to them.",
+"That was wrong, and it was not your fault.",
+{
+"t": "We're going to do something about it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help them find strength",
+"body": "Family, faith, culture, community, and people who stood up.",
+"say": "Then help them find strength. Share stories of people who stood up to unfairness, from your family, your community, or history. Lean on what your family already has: culture, traditions, faith if that is part of your home, and people who love them. Check in again in a few days. If sleep, school, or mood stays rough for weeks, talk with their doctor or the school counselor."
+},
+{
+"k": "big",
+"h": "Look after yourself too.",
+"sub": "A steady grown-up helps them most.",
+"say": "This may stir up your own anger, or old hurts of your own. That makes sense. Find a friend or someone you trust where you can say the hard things, so you can stay steady for your kid. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "suicide",
+"ring": "as-world",
+"title": "A Death by Suicide in the Community",
+"you": {
+"id": "as-g-suicide-you",
+"guide": "suicide",
+"side": "you",
+"title": "A Death by Suicide in the Community",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"AFSP and SPRC: After a Suicide, A Toolkit for Schools",
+"https://sprc.org/resources/after-suicide-toolkit-schools"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Death by Suicide in the Community",
+"sub": "For You",
+"say": "If someone in your school or community has died by suicide, this is for you. Whatever you are feeling right now, you are not alone."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Call or text 988, or text HOME to 741741. Danger right now: get a grown-up and call 911.",
+"say": "First, where to get help right now. Any time, you can call or text 988, or text HOME to 741741. If anyone is in danger right now, get a grown-up and call 911. These lines stay on the screen the whole time."
+},
+{
+"k": "words",
+"h": "All of it is okay to feel",
+"items": [
+"Shocked",
+"Sad",
+"Angry",
+"Numb"
+],
+"sub": "And it is not your fault.",
+"say": "A death like this can hit hard, even if you didn't know the person well. You might feel shocked, sad, angry, or numb. All of it is okay to feel. And it is not your fault."
+},
+{
+"k": "big",
+"h": "Let's slow down together.",
+"say": "Let's slow down together. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. Now name one feeling you have right now.",
+"beats": [
+"Let's slow down together.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+{
+"t": "Now name one feeling you have right now.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Things that can help",
+"items": [
+[
+"Talk about them",
+"Share a memory"
+],
+[
+"Tell a grown-up how you feel",
+"A parent, counselor, or coach"
+],
+[
+"Do what steadies you",
+"Sleep, music, outside, family"
+],
+[
+"Ask your questions",
+"There are no wrong ones"
+]
+],
+"say": "Here are things that can help. You can talk about the person, and share a memory. Tell a trusted grown-up how you're feeling: a parent, a school counselor, a teacher, a coach, or a relative. Do what steadies you, like sleep, music, time outside, a family tradition, or prayer. And ask your questions. There are no wrong ones.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "If you ever have thoughts of suicide",
+"items": [
+"I've been having thoughts of suicide, and I need help."
+],
+"sub": "Tell a trusted grown-up today.",
+"say": "Sometimes, after a death like this, a kid starts having thoughts of suicide too. If that ever happens to you, tell a trusted grown-up today. You can borrow these words. I've been having thoughts of suicide, and I need help."
+},
+{
+"k": "big",
+"h": "Never keep it a secret.",
+"sub": "Telling gets someone help.",
+"say": "And if a friend ever tells you they are thinking about suicide, never keep that secret. Tell a grown-up right away. Telling gets someone help."
+},
+{
+"k": "big",
+"h": "There is always help.",
+"sub": "988: call or text. Danger right now: 911.",
+"say": "Suicide is complicated, and no one person causes it. Pain can be treated, and help works. Call or text 988 any time, or text HOME to 741741. If anyone is in danger, call 911. You matter, and there is always help."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"Text HOME to 741741",
+"911: danger right now"
+],
+"music": "safety"
+},
+"helper": {
+"id": "as-g-suicide-helper",
+"guide": "suicide",
+"side": "helper",
+"title": "A Death by Suicide in the Community",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"dazzi",
+[
+"AFSP and SPRC: After a Suicide, A Toolkit for Schools",
+"https://sprc.org/resources/after-suicide-toolkit-schools"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Death by Suicide in the Community",
+"sub": "For the Grown-up",
+"say": "If someone in your child's school or community has died by suicide, this is for you. How grown-ups talk about it matters, and you can help."
+},
+{
+"k": "card",
+"title": "Help is here right now.",
+"body": "Danger right now: call 911. Thoughts of suicide: call or text 988 together.",
+"say": "First, help right now. If anyone is in danger right now, call 911. If your child is having thoughts of suicide, call or text 988 together, or text HOME to 741741. These lines stay on the screen the whole time."
+},
+{
+"k": "big",
+"h": "Steady yourself first.",
+"say": "News like this can shake you too. Steady yourself first. Feet on the floor. Breathe in slowly, and let it out even slower.",
+"beats": [
+"News like this can shake you too.",
+"Steady yourself first.",
+"Feet on the floor.",
+{
+"t": "Breathe in slowly, and let it out even slower.",
+"w": 9
+}
+]
+},
+{
+"k": "big",
+"h": "How grown-ups talk about it matters.",
+"say": "Young people are especially affected by a suicide in their community. Schools follow a careful approach after a death like this, and families can use the same one. Tell the truth simply. Talk about the person in a balanced way. And never describe how they died."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"She died by suicide.",
+"We may never fully understand why.",
+"It's not anyone's fault, including yours."
+],
+"say": "If the family allows it to be shared, say it simply. She died by suicide. We may never fully understand why. Then say, it's not anyone's fault, including yours. Use the words died by suicide, and leave out the word committed."
+},
+{
+"k": "big",
+"h": "Let them feel all of it.",
+"sub": "Confusion, anger, guilt, sadness.",
+"say": "Grief after a suicide is often mixed with confusion, anger, or guilt. Let your child feel all of it. Let them talk about the person, and share memories. Remind them that no one person caused it. Answer questions honestly, and it's okay to say, I don't know."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"How or where it happened"
+],
+[
+"A choice, a solution, an escape"
+],
+[
+"Memorials that glorify the death"
+],
+[
+"Blame, of anyone"
+]
+],
+"say": "Some things to leave out. How or where it happened. Calling it a choice, a solution, or an escape. Suicide is complicated, and pain can be treated. Memorials that glorify the death. And blame, of anyone.",
+"cue": {
+"at": [
+1,
+2,
+4,
+5
+]
+}
+},
+{
+"k": "big",
+"h": "Ask directly.",
+"sub": "Are you thinking about suicide?",
+"say": "Watch closely over the person's friends and teammates, and over your own child. Notice pulling away, changes in sleep, or talk of feeling hopeless. Then ask plainly, in a calm voice. Are you thinking about suicide? Asking is safe. It does not put the idea in their head. If they say yes, call or text 988 together, right then."
+},
+{
+"k": "words",
+"h": "Keep the door open",
+"items": [
+"If you ever feel like things are hopeless, please tell me.",
+"There is always help."
+],
+"say": "Keep the door open. If you ever feel like things are hopeless, please tell me. There is always help. Let the school counselor know how your child is doing. A grief group for kids can help too."
+},
+{
+"k": "big",
+"h": "Your steady love helps.",
+"sub": "Get support for yourself too.",
+"say": "This may stir your own grief or fear. Get support for yourself too, from a counselor or a trusted friend. Call or text 988 any time, for your child or for you. Your steady love helps."
+}
+],
+"crisis": [
+"988: call or text, any time",
+"Text HOME to 741741",
+"911: danger right now"
+],
+"music": "safety"
+}
+},
+{
+"id": "disaster",
+"ring": "as-world",
+"title": "Disasters and Storms",
+"you": {
+"id": "as-g-disaster-you",
+"guide": "disaster",
+"side": "you",
+"title": "Disasters and Storms",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"NCTSN: Parent guidelines after a hurricane",
+"https://www.nctsn.org/resources/parent-guidelines-helping-children-after-hurricane"
+],
+[
+"SAMHSA: Disaster Distress Helpline",
+"https://www.samhsa.gov/find-help/helplines/disaster-distress-helpline"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Disasters and Storms",
+"sub": "For You",
+"say": "If a storm, a tornado, a flood, or a fire has you worried, or one has already touched your town, this is for you."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Scared",
+"Jumpy",
+"Sad",
+"Fine, then not fine"
+],
+"say": "You might feel scared when the sky turns dark, or jumpy when the wind picks up. You might feel sad about what was lost, or fine one day and not the next. All of that is normal. For a while, sleeping and focusing can be harder too."
+},
+{
+"k": "big",
+"h": "We have a plan.",
+"sub": "Grown-ups make the plan. You help.",
+"say": "Here is something that helps. Your family can have a plan. Making the plan is a grown-up job, and you can help. Knowing the plan helps your body feel safer."
+},
+{
+"k": "points",
+"h": "Your part of the plan",
+"items": [
+[
+"Know the safe spot",
+"At home and at school"
+],
+[
+"Pack a go bag",
+"Your own things, your way"
+],
+[
+"Know where to meet",
+"And who will pick you up"
+]
+],
+"say": "Here's your part. Know the safe spot, at home and at school. Your teachers practice drills so everyone knows what to do. Pack your own go bag: a flashlight, a snack, a charger, something that comforts you. And know where your family will meet, and who will pick you up.",
+"cue": {
+"at": [
+1,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Feet on the floor.",
+"sub": "Breathe in. Breathe out slower.",
+"say": "Let's practice staying steady. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. Look around and name three things you can see. Now think of one thing you'd put in your go bag.",
+"beats": [
+"Let's practice staying steady.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+"Look around and name three things you can see.",
+{
+"t": "Now think of one thing you'd put in your go bag.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Take a break from the videos.",
+"body": "Watching it again and again keeps the worry going.",
+"say": "If there are videos of storm damage everywhere, it's okay to look away. Watching it again and again keeps your worry going. Talk to a grown-up instead: a parent, a relative, a teacher, a coach, or your school counselor."
+},
+{
+"k": "points",
+"h": "Ways to help",
+"items": [
+[
+"Make a card",
+"For a family who lost a lot"
+],
+[
+"Help collect",
+"Food, clothes, or supplies"
+],
+[
+"Help at home",
+"With your family's plan"
+]
+],
+"say": "Helping can turn worry into something good. You could make a card for a family who lost a lot. You could help your school or community collect food or supplies. Or you could help at home, checking the go bag with your family.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Storms pass.",
+"sub": "And people help each other rebuild.",
+"say": "Storms pass. When they do, people help each other clean up and rebuild. You're part of a family and a town that looks out for each other."
+}
+]
+},
+"helper": {
+"id": "as-g-disaster-helper",
+"guide": "disaster",
+"side": "helper",
+"title": "Disasters and Storms",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"NCTSN: Parent guidelines after a hurricane",
+"https://www.nctsn.org/resources/parent-guidelines-helping-children-after-hurricane"
+],
+[
+"SAMHSA: Disaster Distress Helpline",
+"https://www.samhsa.gov/find-help/helplines/disaster-distress-helpline"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Disasters and Storms",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is worried about storms, or has lived through a tornado, a flood, a fire, or a blizzard, this is for you. You can help them feel safer and more in control."
+},
+{
+"k": "big",
+"h": "Helping turns fear into action.",
+"say": "Kids cope better when they feel they're helping. Preparing together turns fear into action. A middle schooler wants a real part to play, and the plan gives them one."
+},
+{
+"k": "flow",
+"h": "Make a family plan together",
+"steps": [
+[
+"A safe spot",
+"Where we go in a storm"
+],
+[
+"A go bag",
+"They pack their own"
+],
+[
+"A meeting spot",
+"If we get separated"
+],
+[
+"Who picks them up",
+"If you can't"
+]
+],
+"say": "Make a family plan together. Pick the safe spot in your home for a storm. Let them pack their own go bag. Choose a meeting spot in case you get separated. And tell them who will pick them up if you can't. Then talk calmly about tornado and blizzard drills, at home and at school.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"We have a plan, and here it is.\"",
+"\"What would you want in your go bag?\"",
+"\"How could we help people who got hurt?\""
+],
+"say": "Here are words that help. We have a plan, and here it is. What would you want in your go bag? And, how could we help people who got hurt? Then listen. Their worry may be bigger, or smaller, than you'd guess."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Replaying the footage",
+"Including on your own phone"
+],
+[
+"Dismissing their fear",
+"\"It's nothing\" leaves them alone"
+],
+[
+"Grown-up worry out loud",
+"Insurance, money, or blame"
+]
+],
+"say": "Some things are better left out. Replaying disaster video, including on your own phone, when they're nearby. Dismissing their fear, because brushing it off leaves them alone with it. And talking through grown-up worries in front of them, like insurance or money. Those conversations can happen later, between adults.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Say it the way you would to them.",
+"say": "Let's practice. Take a slow breath first. Then say it out loud, the way you would to them. We have a plan, and here it is.",
+"beats": [
+"Let's practice.",
+"Take a slow breath first.",
+"Then say it out loud, the way you would to them.",
+{
+"t": "We have a plan, and here it is.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "After a disaster",
+"body": "Sleep and focus may be off. Longer than six weeks: check in with a counselor or doctor.",
+"say": "After a disaster, expect some trouble with sleep and focus for a while. Keep routines as steady as you can, and give them a way to help, like a card or a supply drive. If problems last longer than about six weeks, check in with the school counselor or their doctor."
+},
+{
+"k": "card",
+"title": "Disaster Distress Helpline",
+"body": "Call or text 1-800-985-5990, any time.",
+"say": "You don't have to carry this alone. The Disaster Distress Helpline is there for kids and grown-ups, any time. Call or text 1-800-985-5990. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Look after yourself too.",
+"sub": "Your calm is their safe spot.",
+"say": "A storm can shake you too, especially if you lost something. Lean on your own people. Kids take their cues from the grown-ups around them, so your calm becomes their safe spot. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "war",
+"ring": "as-world",
+"title": "War in the News",
+"you": {
+"id": "as-g-war-you",
+"guide": "war",
+"side": "you",
+"title": "War in the News",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+[
+"NCTSN: Talking to children about war",
+"https://www.nctsn.org/sites/default/files/resources/fact-sheet/talking-to-children-about-war.pdf"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "War in the News",
+"sub": "For You",
+"say": "If you've seen news about a war, on TV, online, or in a video someone shared, and it's stuck in your head, this is for you."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Scared",
+"Sad",
+"Angry",
+"Confused",
+"Not much at all"
+],
+"say": "You might feel scared, or sad for the people there. You might feel angry, or confused about why it's happening. Some days you might not feel much at all. Every one of those is okay. Caring about people far away is a good thing."
+},
+{
+"k": "big",
+"h": "Look at a map.",
+"sub": "How far away is it, really?",
+"say": "Here's something that helps. Look at a map with a grown-up. Find where you live, and find where the war is. Most of the time, it's very far from here. Right where you are, you are safe."
+},
+{
+"k": "card",
+"title": "If your family has people there",
+"body": "Your worry makes sense. Tell a grown-up how you feel.",
+"say": "Some kids have family or friends in a place at war. If that's you, your worry makes sense. The grown-ups in your family will handle the hard parts. Tell a grown-up how you're feeling, so you don't hold it alone."
+},
+{
+"k": "points",
+"h": "What you can do",
+"items": [
+[
+"Take a break",
+"From videos and scary posts"
+],
+[
+"Talk it over",
+"With a grown-up you trust"
+],
+[
+"Find a way to help",
+"A card, a drive, a kind word"
+]
+],
+"say": "Here are a few things you can do. Take a break from videos and scary posts. Your mind needs rest from them. Talk it over with a grown-up you trust. And find a small way to help, like making a card or joining a school drive.",
+"cue": {
+"at": [
+1,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Feet on the floor.",
+"sub": "You are here. You are safe.",
+"say": "Let's take a moment. Put your feet flat on the floor. Breathe in slowly, and let it out even slower. Look around and name three things you can see. Now picture one grown-up you can talk to about the news.",
+"beats": [
+"Let's take a moment.",
+"Put your feet flat on the floor.",
+"Breathe in slowly, and let it out even slower.",
+"Look around and name three things you can see.",
+{
+"t": "Now picture one grown-up you can talk to about the news.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "People are people.",
+"body": "War is never the fault of a kid in your class.",
+"say": "Sometimes people talk about a whole group as enemies. But people are people, everywhere. A war is never the fault of a kid in your class, or their family. You can be the one who is kind."
+},
+{
+"k": "big",
+"h": "There are helpers everywhere.",
+"sub": "You can be one of them.",
+"say": "All over the world, people are helping: doctors, neighbors, and volunteers. You can be a helper too, right where you are. Talk to a parent, a teacher, a coach, or your school counselor whenever the news feels heavy."
+}
+]
+},
+"helper": {
+"id": "as-g-war-helper",
+"guide": "war",
+"side": "helper",
+"title": "War in the News",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"NCTSN: Talking to children about war",
+"https://www.nctsn.org/sites/default/files/resources/fact-sheet/talking-to-children-about-war.pdf"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "War in the News",
+"sub": "For the Grown-up",
+"say": "When a middle schooler you love is seeing war in the news, this is for you. They may have seen more than you know. You can help them feel safe and steady."
+},
+{
+"k": "big",
+"h": "Ask, validate, stay calm.",
+"say": "Start by asking how they feel about what they've seen. Then let those feelings be okay. And stay as calm as you can. Your calm tells them more than any fact."
+},
+{
+"k": "big",
+"h": "Middle schoolers see a lot.",
+"sub": "Ask what they have seen.",
+"say": "Kids this age often see war on their phones before a grown-up brings it up: videos, posts, and rumors from friends. Some act like it doesn't bother them. Ask what they've seen and heard, and gently sort out what's true."
+},
+{
+"k": "card",
+"title": "Use a map.",
+"body": "Kids often don't know how far away a war is.",
+"say": "A map helps a lot. Kids often don't know how far away a war is. Find your home, and find the place in the news. Seeing the distance helps them feel safer where they are."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"This is far from here, and you are safe.\"",
+"\"It's okay to feel sad or scared for people there.\"",
+"\"What would you like to do to help?\""
+],
+"say": "Here are words that help. This is far from here, and you are safe. It's okay to feel sad or scared about people there. And, what would you like to do to help? Helping turns worry into something they can do."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Graphic images",
+"Including on your own phone"
+],
+[
+"Whole groups as enemies",
+"People are people"
+],
+[
+"Grown-up jobs",
+"Even a helpful kid needs to be a kid"
+]
+],
+"say": "Some things are better left out. Graphic images, including on your own phone when they're nearby. Talking about whole groups of people as enemies. Kids learn how to see people from how we talk. And grown-up jobs. Even a helpful kid needs to stay a kid.",
+"cue": {
+"at": [
+1,
+2,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "If your family has people there",
+"body": "Be gentle. Watch for anyone who needs extra support.",
+"say": "Many Minnesota families came here from places at war, and some still have loved ones there. If that's your family, your kid may carry your worry too. Be gentle, and keep grown-up news and decisions among the adults. If you know a family like this, watch for anyone who needs extra support."
+},
+{
+"k": "big",
+"h": "Say it the way you would to them.",
+"say": "Let's practice. Take a slow breath. Then say it out loud, the way you would to them. It's okay to feel sad or scared about people there. What would you like to do to help?",
+"beats": [
+"Let's practice.",
+"Take a slow breath.",
+"Then say it out loud, the way you would to them.",
+"It's okay to feel sad or scared about people there.",
+{
+"t": "What would you like to do to help?",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help is there",
+"body": "Disaster Distress Helpline: 1-800-985-5990. And the school counselor.",
+"say": "If worry, sleep, or school stays rough for weeks, talk with the school counselor or their doctor. The Disaster Distress Helpline is there too, at 1-800-985-5990. If anyone is in danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Look after yourself too.",
+"sub": "Your calm is their shelter.",
+"say": "War news is heavy for grown-ups too. Take your own breaks from it, and talk with people you trust. A calm grown-up is one of the best shelters a kid can have. The full guide has more, whenever you want it."
 }
 ]
 }

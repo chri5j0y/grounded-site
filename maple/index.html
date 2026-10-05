@@ -727,6 +727,7 @@ a.big-btn{text-decoration:none;}
 .mp-sub{font-family:var(--sans);font-size:15px;color:var(--ink-soft);font-weight:500;margin-left:6px;}
 .mp-own{list-style:none;padding:0;margin:10px 0 0;}
 .mp-own li{display:flex;gap:10px;align-items:center;padding:6px 0;font-family:var(--kid);font-size:18px;}
+.mp-more{margin-top:12px;}
 .mp-own-add{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;}
 .mp-own-add .name-input{max-width:340px;font-size:18px;padding:10px 14px;}
 .mp-see p{margin:0 0 8px;}
@@ -2265,9 +2266,10 @@ function mpRenderPlan() {
     const p = partBy(k), lv = mpLevelOf(k), n = window.GGTend && GGTend.suggest ? GGTend.suggest(lv ? lv[0] : null) : 3;
     const x = MP_PLAN[k], picked = x.selected.length + x.own.length;
     return `<div class="act-group"><h3>${dot(p)}${p.name}<small class="mp-sub">${esc(p.value)}</small>${sug.includes(k) ? '<span class="suggest">Suggested for you</span>' : ''}<span class="part-count">${picked} picked. About ${n} is a good start.</span></h3>
-      <div class="act-grid">${ACTIVITIES.filter(a => a.part === k).map(a => `<button class="act" aria-pressed="${x.selected.includes(a.title)}" onclick="mpToggle('${k}','${a.id}')">
+      <div class="act-grid">${mpRot(k).show.map(a => `<button class="act" aria-pressed="${x.selected.includes(a.title)}" onclick="mpToggle('${k}','${a.id}')">
         <strong>${esc(a.title)}<span class="box">${ICONS.check}</span></strong>
         ${young ? `<p>${esc(a.k2)}</p>` : `<ol>${a.g35.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`}</button>`).join('')}</div>
+      ${(r => r.pages > 1 ? `<div class="mp-more"><button class="soft-btn" onclick="mpRotNext('${k}')">Show Me Others (${r.page + 1} of ${r.pages})</button></div>` : '')(mpRot(k))}
       ${x.own.length ? `<ul class="mp-own">${x.own.map((o, i) => `<li><span>${esc(o)}</span> <button class="link-btn" onclick="mpOwnRemove('${k}',${i})">Take off</button></li>`).join('')}</ul>` : ''}
       <div class="mp-own-add"><label class="sr-only" for="mp-own-${k}">Your own idea for ${p.name}</label><input id="mp-own-${k}" class="name-input" maxlength="80" placeholder="Your own idea" onkeydown="if(event.key==='Enter')mpOwnAdd('${k}')"><button class="soft-btn" onclick="mpOwnAdd('${k}')">Add mine</button></div></div>`;
   }).join('');
@@ -2276,10 +2278,28 @@ function mpRenderPlan() {
     ${groups}
     <div class="plan-bar"><span class="count">${PARTS.reduce((s, p) => s + MP_PLAN[p.key].selected.length + MP_PLAN[p.key].own.length, 0)} picked</span><button class="big-btn" onclick="mpPlanSave()">Save my plan</button><p class="plan-error" id="mp-plan-error" role="alert"></p></div>`;
 }
+/* Six at a time (BLD 725): every picked practice first, then up to 6 more in the usual order.
+   Show Me Others brings the next 6, around to the first set after the last. The place in the
+   rotation lives in memory only. */
+const MP_ROT = {}, MP_ROT_N = 6;
+function mpRotOpen(k) { const x = MP_PLAN[k]; return ACTIVITIES.filter(a => a.part === k && !x.selected.includes(a.title)); }
+function mpRot(k) {
+  const x = MP_PLAN[k], chosen = ACTIVITIES.filter(a => a.part === k && x.selected.includes(a.title)), open = mpRotOpen(k);
+  const pages = Math.max(1, Math.ceil(open.length / MP_ROT_N)), id = S.kid + '-' + k;
+  const page = MP_ROT[id] = Math.min(MP_ROT[id] || 0, pages - 1);
+  return { show: chosen.concat(open.slice(page * MP_ROT_N, page * MP_ROT_N + MP_ROT_N)), page, pages };
+}
+function mpRotNext(k) {
+  if (!MP_PLAN) return;
+  const id = S.kid + '-' + k; MP_ROT[id] = (MP_ROT[id] || 0) + 1;
+  if (MP_ROT[id] >= Math.ceil(mpRotOpen(k).length / MP_ROT_N)) MP_ROT[id] = 0;
+  const y = window.scrollY; mpRenderPlan(); window.scrollTo(0, y);
+}
 function mpToggle(k, id) {
   const a = ACTIVITIES.find(x => x.id === id); if (!a || !MP_PLAN) return;
   const x = MP_PLAN[k], i = x.selected.indexOf(a.title);
-  if (i >= 0) x.selected.splice(i, 1); else { x.selected.push(a.title); if (S.readAloud) say(a.title); }
+  // Taking one out keeps it in view: the list turns to the set it now belongs to.
+  if (i >= 0) { x.selected.splice(i, 1); const at = mpRotOpen(k).indexOf(a); if (at >= 0) MP_ROT[S.kid + '-' + k] = Math.floor(at / MP_ROT_N); } else { x.selected.push(a.title); if (S.readAloud) say(a.title); }
   const y = window.scrollY; mpRenderPlan(); window.scrollTo(0, y);
 }
 function mpOwnAdd(k) {
@@ -2930,8 +2950,8 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln16" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln16';document.head.appendChild(s)"></script>
-<script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln17" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln17';document.head.appendChild(s)"></script>
+<script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
 </html>

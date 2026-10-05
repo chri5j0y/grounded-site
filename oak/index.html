@@ -534,6 +534,9 @@ body{background-color:var(--bg);background-image:var(--page-grain);}
 /* Practice guides */
 .practice-item{border-bottom:1px solid var(--line);padding:6px 0 8px;}
 .practice-item:last-of-type{border-bottom:none;}
+.practice-item[hidden]{display:none;}
+.practice-more{margin:8px 0 2px;}
+.practice-more[hidden]{display:none;}
 .guide-toggle{background:none;border:none;color:var(--domain-color);font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;cursor:pointer;margin-left:28px;padding:2px 0;}
 .guide{display:none;margin:10px 0 6px 28px;padding:16px 18px;background:var(--bg-deep);border-radius:12px;border-left:3px solid var(--domain-color);}
 .guide.open{display:block;}
@@ -2362,20 +2365,22 @@ function renderGrowthPlanBuilder(mode) {
       </div>
       <div class="practice-picker">
         <div class="practice-picker-label">${(n => `Suggested: about ${n} practices`)(oakSuggest(scores[d.key]))}</div>
-        ${d.restore.map(r => `
-          <div class="practice-item">
+        <div class="practice-list" id="cp-list-${mode}-${d.key}">${d.restore.map((r, i) => `
+          <div class="practice-item" data-i="${i}">
             <label class="practice-option">
               <input type="checkbox" name="cp-${mode}-${d.key}" value="${r[0]}" onchange="enforcePracticeLimit(this,'${mode}','${d.key}')">
               <span class="practice-option-text"><strong>${r[0]}.</strong> ${r[1]}${practiceMeta(d.key, r[0])}</span>
             </label>
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0], mode === 'client')}</div>
-          </div>`).join('')}
+          </div>`).join('')}</div>
+        <button type="button" class="btn btn-secondary btn-sm practice-more" id="cp-more-${mode}-${d.key}" onclick="oakRotNext('${mode}','${d.key}')" hidden></button>
         <div class="practice-limit-note">${oakSuggestNote(scores[d.key])} Choose as many as you like, or write your own below. Tap "How to do this" on any practice to learn more.</div>
         <input type="text" class="practice-custom" id="cp-${mode}-${d.key}-custom" aria-label="${d.part} custom practice" placeholder="Your own practice or next step...">
         ${shelfHtml(d.key)}
       </div>
     </div>`).join('');
+  ALL_DOMAINS.forEach(d => oakRotApply(mode, d.key));
   document.getElementById(generateRowId).style.display = 'flex';
   document.getElementById(mode === 'client' ? 'client-growthplan-doc' : 'prac-growthplan-doc').innerHTML = '';
 }
@@ -2596,8 +2601,36 @@ function toggleRestore(id, btn) {
 }
 
 // No limits on practices (Rebrand Session 4), only suggestions: about 3 for a Strong part,
-// 4 for Steady, 5 for a Growing Edge. Kept as a no-op so older markup still works.
-function enforcePracticeLimit(el, mode, key) {}
+// 4 for Steady, 5 for a Growing Edge. Choosing one now only refreshes that part's list.
+function enforcePracticeLimit(el, mode, key) { oakRotApply(mode, key, el && !el.checked ? el : null); }
+
+// Six at a time (BLD 725): each part shows every chosen practice first, then up to 6
+// unchosen ones in the usual order. Show Me Others brings the next 6, around to the
+// first set after the last. The place in the rotation lives in memory only.
+const OAK_ROT = {}, OAK_ROT_N = 6;
+function oakRotApply(mode, key, unchose) {
+  const list = document.getElementById(`cp-list-${mode}-${key}`), more = document.getElementById(`cp-more-${mode}-${key}`);
+  if (!list) return;
+  const id = mode + '-' + key, focus = document.activeElement;
+  const items = Array.from(list.querySelectorAll('.practice-item')).sort((a, b) => a.dataset.i - b.dataset.i);
+  const isOn = it => { const c = it.querySelector('input[type=checkbox]'); return !!(c && c.checked); };
+  const chosen = items.filter(isOn), open = items.filter(it => !isOn(it));
+  const pages = Math.max(1, Math.ceil(open.length / OAK_ROT_N));
+  let page = OAK_ROT[id] || 0;
+  // Taking one out keeps it in view: the list turns to the set it now belongs to.
+  if (unchose) { const at = open.findIndex(it => it.contains(unchose)); if (at >= 0) page = Math.floor(at / OAK_ROT_N); }
+  page = Math.min(page, pages - 1); OAK_ROT[id] = page;
+  const shown = open.slice(page * OAK_ROT_N, page * OAK_ROT_N + OAK_ROT_N);
+  chosen.concat(open).forEach(it => { list.appendChild(it); it.hidden = !(isOn(it) || shown.includes(it)); });
+  if (focus && list.contains(focus) && document.activeElement !== focus) focus.focus({ preventScroll: true });
+  if (more) { more.hidden = pages < 2; more.textContent = `Show Me Others (${page + 1} of ${pages})`; }
+}
+function oakRotNext(mode, key) {
+  const id = mode + '-' + key; OAK_ROT[id] = (OAK_ROT[id] || 0) + 1;
+  const list = document.getElementById(`cp-list-${mode}-${key}`), open = list ? list.querySelectorAll('.practice-item input[type=checkbox]:not(:checked)').length : 0;
+  if (OAK_ROT[id] >= Math.ceil(open / OAK_ROT_N)) OAK_ROT[id] = 0;
+  oakRotApply(mode, key);
+}
 const oakLevelKey = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge';
 function oakSuggest(sc) { return window.GGTend && GGTend.suggest ? GGTend.suggest(oakLevelKey(sc)) : ({ edge: 5, steady: 4 }[oakLevelKey(sc)] || 3); }
 function oakSuggestNote(sc) {
@@ -2743,6 +2776,7 @@ function oakPrefillPlan() {
   ALL_DOMAINS.forEach(d => {
     const p = plan[d.key] || {}, chosen = new Set(p.selected || []);
     document.querySelectorAll(`input[name="cp-client-${d.key}"]`).forEach(c => { c.checked = chosen.has(c.value); });
+    oakRotApply('client', d.key);
     const custom = document.getElementById(`cp-client-${d.key}-custom`); if (custom) custom.value = p.custom || '';
   });
 }
@@ -3338,8 +3372,8 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=ln16" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln16';document.head.appendChild(s)"></script>
-<script src="/read.js?v=vc1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc1';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln17" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln17';document.head.appendChild(s)"></script>
+<script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
 </html>
