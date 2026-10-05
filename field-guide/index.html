@@ -1489,7 +1489,6 @@ function vFounder(){
   ${FLD ? wlFounderCard() : ''}`;
   // Founder opens to cards (GWG BLD 732). A new update to seal opens Update a Library, so its card is in view.
   if (V.upd && !V.upd.seen){ V.upd.seen = 1; SEC.founder = 'upd'; }
-  const P = prData(); let pAll = 0, pFin = 0; if (P) P.sections.forEach(sec => sec.lines.forEach(l => { pAll++; if (prDone(l[0])) pFin++; }));
   const B = bizLib(), bizN = B ? (B.order || Object.keys(B.docs || {})).filter(id => (B.docs || {})[id]).length : 0;
   const SPK = FDR && FDR.speaking, slN = SL() ? slCount() : null, mapleDue = FLD && SPG() && SPG().report && addDays(today(), 30) >= addYear(SPG().report.checked);
   const nFiles = d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0, notUp = list.filter(e => !live.has(e.id)).length;
@@ -1498,7 +1497,6 @@ function vFounder(){
     {k: 'codes', title: 'Access Codes', desc: 'Make, find, copy, and end access codes.', n: list.length + (list.length === 1 ? ' code' : ' codes') + (notUp ? ', ' + notUp + ' not uploaded yet' : '')},
     {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Field for the yearly change.'},
     {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: V.upd ? 'An update is ready to seal' : '', hot: !!V.upd},
-    P ? {k: 'proof', title: 'Proofreading', desc: 'Every new line of writing, to approve, read along, or suggest an edit.', n: pFin + ' of ' + pAll + ' lines approved'} : null,
     slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
     SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
@@ -1511,7 +1509,6 @@ function vFounder(){
   if (C2 === 'codes') return back(shownH + setupH + codesH + makeH);
   if (C2 === 'rotate') return back(shownH + rotH);
   if (C2 === 'upd') return back(vUpdateCard());
-  if (C2 === 'proof') return back(vProof());
   if (C2 === 'speak') return back(vSpeak());
   if (C2 === 'biz') return back(vBiz());
   if (C2 === 'pricing') return back(priceH);
@@ -1592,193 +1589,7 @@ function slAct(a, v){
 }
 function storiesMerge(a, b){ const o = Object.assign({}, a || {}); Object.entries(b || {}).forEach(([k, x]) => { if (x && (!o[k] || (x.at || 0) > (o[k].at || 0))) o[k] = x; }); return o; }
 
-// ---------------- FOUNDER: Proofreading ----------------
-// Every line of writing added to the site and tools, by session. The lines live in the Founder
-// library (FDR.proofreading, plus FDR.proofreadingAdd from Rebrand Session 4 on), so new sessions
-// add to them through Update a Library.
-// Checks are kept in this device's encrypted records (DATA.founder.proof), one box per person.
-function vProof(){
-  // Sections live in FDR.proofreading.sections, and later sessions add theirs under
-  // FDR.proofreadingAdd.<session> (Rebrand Session 4), so an update never has to know the list's length.
-  // Labels, Learn, and Backup build: a line is approved when either person approves it (both is fine),
-  // Read-Along reads every line aloud, and suggested edits collect in Edits to Send.
-  const P = prData(); if (!P) return '';
-  const ck = prChecks(), who = P.people, only = !!V.proofOpen, E = prEdits();
-  let all = 0, fin = 0;
-  const secs = P.sections.map(sec => {
-    const n = sec.lines.length, d = sec.lines.filter(l => prDone(l[0])).length; all += n; fin += d;
-    const rows = sec.lines.filter(l => !only || !prDone(l[0])).map(l => {
-      const by = prBy(l[0]), ed = E[l[0]] && !E[l[0]].sent ? E[l[0]] : null, editing = V.prEdit === l[0];
-      return `<div class="proof-row${by.length ? ' pr-ok' : ''}"><div class="pt">${esc(l[1])}
-        ${ed ? `<div class="pr-sug">Suggested: ${esc(ed.t)}${ed.who ? ` <span>(${esc(ed.who)})</span>` : ''}</div>` : ''}
-        ${by.length ? `<div class="pr-by">${icon('check')} Approved by ${esc(by.map(b => who[b.i] + ', ' + nice(b.d)).join(' and '))}</div>` : ''}
-        ${editing ? `<div class="pr-ed"><label class="f" for="pr-ta">Suggest a change</label><textarea id="pr-ta" rows="3">${esc(ed ? ed.t : l[1])}</textarea><div class="row" style="margin-top:8px"><button class="btn btn-gold btn-sm" data-act="pr-ed-save" data-v="${esc(l[0])}">Save Edit</button><button class="btn btn-line btn-sm" data-act="pr-ed-x">Cancel</button>${ed ? `<button class="btn btn-line btn-sm" data-act="pr-ed-del" data-v="${esc(l[0])}">Remove Edit</button>` : ''}</div></div>` : ''}</div>
-        <div class="pc">${who.map((w, i) => { const on = !!ck[l[0] + '|' + i]; return `<button type="button" class="pf" data-act="proof" data-v="${esc(l[0] + '|' + i)}" aria-pressed="${on}" aria-label="${esc(w)} approved: ${esc(l[1]).slice(0, 60)}">${on ? icon('check') : ''}${esc(w)}</button>`; }).join('')}<button type="button" class="pf pf-ed" data-act="pr-ed" data-v="${esc(l[0])}" aria-label="Suggest a change: ${esc(l[1]).slice(0, 60)}">Edit</button></div></div>`;
-    }).join('');
-    return `<details class="proof-sec"${(V.proofSecs || []).includes(sec.id) ? ' open' : ''} data-sec="${esc(sec.id)}"><summary>${esc(sec.title)}<span>${d} of ${n} approved</span></summary>
-      <div class="row" style="margin:4px 0 6px"><button class="btn btn-line btn-sm" data-act="pr-ra" data-v="${esc(sec.id)}">Read-Along for this section</button></div>${rows || '<p class="muted" style="padding:8px 0">Every line here is approved.</p>'}</details>`;
-  }).join('');
-  const nE = Object.values(E).filter(x => !x.sent).length, me = prWho();
-  return `<div class="card" id="proof-card"><h3>Proofreading</h3><p class="muted">${esc(P.intro || '')}</p>
-   <p style="margin-top:8px"><b>${fin} of ${all}</b> lines approved. A line is approved when either of you approves it.</p>
-   <label class="f" for="pr-who">Who's proofing on this device?</label><select id="pr-who" data-prwho>${who.map((w, i) => `<option value="${i}" ${me === i ? 'selected' : ''}>${esc(w)}</option>`).join('')}</select>
-   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="pr-ra" data-v="">Read-Along</button><button class="btn btn-line btn-sm" data-act="proof-only">${only ? 'Show every line' : 'Show only lines still to check'}</button><button class="btn btn-line btn-sm" data-act="pr-edits">Edits to Send (${nE})</button></div>
-   ${V.prEdits ? prEditsHTML() : ''}
-   <p class="muted" style="margin-top:10px;font-size:14px">Approvals and edits save on this device and travel in the one backup file. To share progress, back up on one device and load the file on the other.</p>
-   <div style="margin-top:8px">${secs}</div></div>`;
-}
-function prData(){
-  const base = (FDR && FDR.proofreading) || null, more = (FDR && FDR.proofreadingAdd && typeof FDR.proofreadingAdd === 'object') ? Object.keys(FDR.proofreadingAdd).sort().map(k => FDR.proofreadingAdd[k]).filter(x => x && Array.isArray(x.lines)) : [];
-  if (!(base && base.sections) && !more.length) return null;
-  const P = Object.assign({}, base || {}, { sections: ((base && base.sections) || []).concat(more) });
-  P.people = P.people || ['Chris', 'Kayti'];
-  return P;
-}
-const prChecks = () => (DATA.founder.proof = DATA.founder.proof || {});
-const prEdits = () => (DATA.founder.edits = DATA.founder.edits || {});
-function prBy(id){ const ck = prChecks(), P = prData(), out = []; ((P && P.people) || ['Chris','Kayti']).forEach((w, i) => { if (ck[id + '|' + i]) out.push({i, d: ck[id + '|' + i]}); }); return out; }
-const prDone = id => prBy(id).length > 0;
-function prWho(){ const P = prData(), ppl = (P && P.people) || ['Chris','Kayti']; let w = DATA.settings.proofWho; if (w == null){ const n = (DATA.settings.name || '').toLowerCase(); w = Math.max(0, ppl.findIndex(p => n && p.toLowerCase().startsWith(n.slice(0, 4)))); } return +w || 0; }
-function prEditsHTML(){
-  const P = prData(), E = prEdits(), list = Object.entries(E).filter(([, x]) => !x.sent);
-  return `<div class="pr-edits"><h4>Edits to Send</h4>${list.length ? list.map(([id, x]) => `<div class="pr-erow"><div class="muted" style="font-size:13px">${esc(x.s || '')}</div><div><s>${esc(x.o || '')}</s></div><div><b>${esc(x.t)}</b></div></div>`).join('') : '<p class="muted">No edits waiting. Tap Edit on any line, or Stop and Edit during Read-Along.</p>'}
-   ${list.length ? `<div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="pr-copy">Copy All</button><button class="btn btn-line btn-sm" data-act="pr-dl">Download</button><button class="btn btn-line btn-sm" data-act="pr-sent">Mark All Sent</button></div><p class="muted" style="font-size:14px;margin-top:6px">Paste or upload these in a chat, and every edit gets applied to the site and the libraries in one pass.</p>` : ''}</div>`;
-}
-function prEditsText(){
-  const list = Object.entries(prEdits()).filter(([, x]) => !x.sent);
-  return 'Grow With Grounded proofreading edits, ' + today() + ' (' + list.length + ')\n\n' + list.map(([id, x], n) => `${n + 1}. [${id}] ${x.s || ''}\n   Now: ${x.o || ''}\n   Change to: ${x.t}${x.who ? '\n   From: ' + x.who : ''}`).join('\n\n');
-}
-function prSaveEdit(id, text){
-  const P = prData(); let line = null, sec = '';
-  P.sections.forEach(s => s.lines.forEach(l => { if (l[0] === id){ line = l; sec = s.title; } }));
-  if (!line) return;
-  text = String(text || '').trim();
-  if (!text || text === line[1]) { delete prEdits()[id]; }
-  else prEdits()[id] = {t: text, o: line[1], s: sec, who: P.people[prWho()], at: Date.now()};
-  save();
-}
-function proofMerge(a, b){ return Object.assign({}, b || {}, a || {}); }
-function editsMerge(a, b){ const o = Object.assign({}, a || {}); Object.entries(b || {}).forEach(([k, x]) => { if (!o[k] || (x.at || 0) > (o[k].at || 0)) o[k] = x; }); return o; }
-function prAct(a, v, t){
-  const keep = () => { V.proofSecs = Array.from(document.querySelectorAll('.proof-sec[open]')).map(x => x.getAttribute('data-sec')); const y = window.scrollY; render(); window.scrollTo(0, y); };
-  switch (a){
-    case 'pr-ed': V.prEdit = V.prEdit === v ? null : v; keep(); setTimeout(() => { const x = $('#pr-ta'); if (x) x.focus(); }, 30); return true;
-    case 'pr-ed-x': V.prEdit = null; keep(); return true;
-    case 'pr-ed-save': { const x = $('#pr-ta'); prSaveEdit(v, x ? x.value : ''); V.prEdit = null; keep(); toast('Edit saved. It waits in Edits to Send.'); return true; }
-    case 'pr-ed-del': delete prEdits()[v]; save(); V.prEdit = null; keep(); return true;
-    case 'pr-edits': V.prEdits = !V.prEdits; keep(); return true;
-    case 'pr-copy': { const txt = prEditsText(); (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied. Paste it in a chat.'), () => { prompt('Copy these edits:', txt); }); return true; }
-    case 'pr-dl': { const b = new Blob([prEditsText()], {type:'text/plain'}), n = 'proofreading-edits-' + today() + '.txt'; if (window.GGApp && GGApp.share) GGApp.share(b, n, 'Proofreading edits'); else { const l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = n; document.body.appendChild(l); l.click(); setTimeout(() => { URL.revokeObjectURL(l.href); l.remove(); }, 500); } return true; }
-    case 'pr-sent': if (!confirm('Mark every edit as sent? They leave this list (still kept in your records).')) return true; Object.values(prEdits()).forEach(x => { if (!x.sent) x.sent = today(); }); save(); keep(); return true;
-    case 'pr-ra': raOpen(v || ''); return true;
-  }
-  return false;
-}
-document.addEventListener('change', e => { const s = e.target.closest && e.target.closest('[data-prwho]'); if (s && DATA){ DATA.settings.proofWho = +s.value; save(); } });
-
-// ----- Read-Along: every line read aloud, with fast Approve, Skip, Back, and Stop and Edit -----
-let RA = null;
-const RA_CSS = `#ra{position:fixed;inset:0;z-index:250;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(14px + env(safe-area-inset-bottom,0px));}
-#ra .ra-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}#ra .ra-top .eyebrow{flex:1;min-width:0;}
-#ra .ra-main{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;justify-content:center;max-width:900px;width:100%;margin:0 auto;}
-#ra .ra-sec{font-family:'Barlow Condensed',Barlow,sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-size:calc(13px * var(--scale));}
-#ra .ra-line{font-family:'Cormorant Garamond',Georgia,serif;font-size:calc(clamp(26px,4.6vw,44px) * var(--scale));line-height:1.25;margin:10px 0;}
-#ra .ra-line .w{transition:color .15s;}#ra .ra-line .w.on{color:var(--gold);}
-#ra .ra-sug{font-size:calc(17px * var(--scale));color:var(--gold);font-style:italic;}
-#ra .ra-st{font-size:calc(15px * var(--scale));color:var(--ink-soft);margin-top:6px;}
-#ra .ra-bar{height:5px;border-radius:3px;background:var(--line);margin:8px 0;overflow:hidden;}#ra .ra-bar i{display:block;height:100%;background:var(--gold);}
-#ra .ra-ctl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;max-width:900px;width:100%;margin:0 auto;}
-#ra .ra-ctl .btn{min-height:56px;justify-content:center;}
-#ra .ra-ok{background:#5F7D48 !important;border-color:#5F7D48 !important;color:#fff !important;}
-#ra .ra-sub{max-width:900px;width:100%;margin:8px auto 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:calc(14px * var(--scale));}
-#ra textarea{width:100%;font:inherit;font-size:calc(18px * var(--scale));}
-#ra .ra-who{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}#ra .ra-who .btn{min-height:56px;min-width:140px;justify-content:center;}
-@media(max-width:560px){#ra .ra-ctl{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.pr-sug{color:var(--gold);font-style:italic;margin-top:4px;font-size:calc(15px * var(--scale));}.pr-sug span{color:var(--ink-soft);font-style:normal;}
-.pr-by{color:#5F7D48;font-size:calc(13px * var(--scale));margin-top:4px;display:flex;gap:4px;align-items:center;}.pr-by svg{width:14px;height:14px;}
-.pr-ok .pt{opacity:.8;}.pr-ed{margin-top:8px;}.pr-ed textarea{width:100%;}
-.pr-edits{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);}.pr-edits h4{margin:0 0 6px;}
-.pr-erow{padding:8px 0;border-top:1px solid var(--line);}.pr-erow s{color:var(--ink-soft);}`;
-function raCSS(){ if (!document.getElementById('ra-css')){ const s = document.createElement('style'); s.id = 'ra-css'; s.textContent = RA_CSS; document.head.appendChild(s); } }
-(function(){ raCSS(); })();
-function raQueue(secId){
-  const P = prData(); if (!P) return [];
-  const q = []; P.sections.forEach(s => { if (secId && s.id !== secId) return; s.lines.forEach(l => { if (!prDone(l[0])) q.push({id: l[0], t: l[1], s: s.title}); }); });
-  return q;
-}
-function raOpen(secId){
-  const q = raQueue(secId); if (!q.length) return toast(secId ? 'Every line in this section is approved.' : 'Every line is approved.');
-  RA = {q, i: 0, playing: false, tok: 0, who: prWho(), auto: !!DATA.settings.raAuto, started: false, edit: false};
-  let el = $('#ra'); if (!el){ el = document.createElement('div'); el.id = 'ra'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Read-Along'); document.body.appendChild(el); }
-  document.body.classList.add('dk-noscroll'); raStartScreen();
-}
-function raClose(){ raHush(); RA = null; const el = $('#ra'); if (el) el.remove(); document.body.classList.remove('dk-noscroll'); if (V.tab === 'founder'){ const y = window.scrollY; render(); window.scrollTo(0, y); } }
-function raHush(){ if (RA){ RA.tok++; clearInterval(RA.hl); clearInterval(RA.tick); } try { if (window.GGRead) GGRead.stop(); else speechSynthesis.cancel(); } catch(e){} }
-function raStartScreen(){
-  const P = prData(), el = $('#ra');
-  el.innerHTML = `<div class="ra-top"><div class="eyebrow">Proofreading · Read-Along</div><button class="btn btn-line btn-sm" data-ra="close">Close</button></div>
-   <div class="ra-main"><h2 style="font-family:'Cormorant Garamond',serif;font-size:34px;margin:0">${RA.q.length} lines to check</h2>
-   <p class="muted" style="margin-top:6px">Each line is read aloud and shown big, with the words lighting up as they're read. Approve (space bar) moves straight on. Skip leaves a line for later. Stop and Edit pauses so you can type a fix.</p>
-   <h3 style="margin-top:18px">Who's proofing?</h3><div class="ra-who">${P.people.map((w, i) => `<button class="btn ${RA.who === i ? 'btn-gold' : 'btn-line'}" data-ra="who" data-v="${i}">${esc(w)}</button>`).join('')}</div>
-   <label class="pr-auto" style="display:flex;gap:10px;align-items:center;margin-top:16px"><input type="checkbox" id="ra-auto" ${RA.auto ? 'checked' : ''}> <span>Keep going on its own: each line counts as approved unless I tap Skip or Stop and Edit</span></label>
-   <div class="ra-sub" id="ra-vs" style="margin:14px 0 0"></div>
-   <div class="row" style="margin-top:18px"><button class="btn btn-gold" data-ra="go" style="min-height:56px;min-width:180px;justify-content:center">Start</button></div></div>`;
-  try { if (window.GGRead) $('#ra-vs').appendChild(GGRead.settings()); } catch(e){}
-}
-function raLeft(){ const sp = window.GGRead ? GGRead.speed() : 1; let w = 0; for (let k = RA.i; k < RA.q.length; k++) w += RA.q[k].t.split(/\s+/).length; return Math.max(1, Math.round((w / (160 * sp)) + (RA.q.length - RA.i) * 2 / 60)); }
-function raShow(){
-  const el = $('#ra'), L = RA.q[RA.i], E = prEdits()[L.id], by = prBy(L.id), P = prData();
-  el.innerHTML = `<div class="ra-top"><div class="eyebrow">Read-Along · ${esc(P.people[RA.who])} proofing</div><button class="btn btn-line btn-sm" data-ra="close">Close</button></div>
-   <div class="ra-bar"><i style="width:${Math.round(RA.i / RA.q.length * 100)}%"></i></div>
-   <div class="ra-main"><div class="ra-sec">${esc(L.s)}</div>
-    ${RA.edit ? `<label class="f" for="ra-ta">Suggest a change</label><textarea id="ra-ta" rows="4">${esc(E && !E.sent ? E.t : L.t)}</textarea><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-ra="save">Save Edit and Go On</button><button class="btn btn-line" data-ra="cancel">Cancel</button></div>`
-      : `<div class="ra-line" id="ra-line">${L.t.split(/\s+/).map(w => `<span class="w">${esc(w)}</span>`).join(' ')}</div>${E && !E.sent ? `<div class="ra-sug">Suggested: ${esc(E.t)}</div>` : ''}`}
-    <div class="ra-st">Line ${RA.i + 1} of ${RA.q.length} · about ${raLeft()} minutes left${by.length ? ' · Approved by ' + esc(by.map(b => P.people[b.i]).join(' and ')) : ''}</div></div>
-   ${RA.edit ? '' : `<div class="ra-ctl"><button class="btn btn-line" data-ra="back" aria-label="Back one line">Back</button><button class="btn btn-line" data-ra="play">${RA.playing ? 'Pause' : 'Play'}</button><button class="btn ra-ok" data-ra="ok">Approve</button><button class="btn btn-line" data-ra="skip">Skip</button><button class="btn btn-line" data-ra="edit">Stop and Edit</button></div>
-   <div class="ra-sub"><span class="muted">Keys: space Approve, right arrow Skip, left arrow Back, E Edit, P Pause</span><span id="ra-vs2"></span></div>`}`;
-  try { if (!RA.edit && window.GGRead) $('#ra-vs2').appendChild(GGRead.settings()); } catch(e){}
-  if (RA.edit){ setTimeout(() => { const x = $('#ra-ta'); if (x){ x.focus(); x.setSelectionRange(x.value.length, x.value.length); } }, 30); return; }
-  if (RA.playing) raSpeak();
-}
-function raSpeak(){
-  raHush(); const t = RA.tok, L = RA.q[RA.i], W = Array.from(document.querySelectorAll('#ra-line .w'));
-  const sp = window.GGRead ? GGRead.speed() : 1, ms = Math.max(1400, W.length * 60000 / (165 * sp)); let k = 0;
-  RA.hl = setInterval(() => { if (t !== RA.tok) return clearInterval(RA.hl); W.forEach((w, j) => w.classList.toggle('on', j === k)); k++; if (k > W.length) clearInterval(RA.hl); }, ms / Math.max(1, W.length));
-  let spoke = false; try { if (window.GGRead && GGRead.available){ GGRead.say(L.t); spoke = true; } } catch(e){}
-  const start = Date.now();
-  RA.tick = setInterval(() => {
-    if (!RA || t !== RA.tok) return clearInterval(RA && RA.tick);
-    const busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
-    if (!busy && Date.now() - start > (spoke ? 600 : ms)){
-      clearInterval(RA.tick); W.forEach(w => w.classList.remove('on'));
-      if (RA.auto){ setTimeout(() => { if (RA && t === RA.tok && RA.playing) raDo('ok'); }, 700); }
-      else { const s = $('#ra .ra-st'); if (s && !/Your call/.test(s.textContent)) s.insertAdjacentHTML('beforeend', ' · <b>Your call: Approve, Skip, or Edit</b>'); }
-    }
-  }, 200);
-}
-function raNext(){ if (RA.i >= RA.q.length - 1){ raHush(); const n = RA.q.length; $('#ra').innerHTML = `<div class="ra-top"><div class="eyebrow">Read-Along</div><button class="btn btn-line btn-sm" data-ra="close">Close</button></div><div class="ra-main"><h2 style="font-family:'Cormorant Garamond',serif;font-size:36px;margin:0">That's all ${n} lines.</h2><p class="muted" style="margin-top:8px">Anything you skipped is still waiting. Edits are in Edits to Send.</p><div class="row" style="margin-top:16px"><button class="btn btn-gold" data-ra="close">Done</button></div></div>`; return; } RA.i++; raShow(); }
-function raDo(k, v){
-  if (!RA) return;
-  const L = RA.q[RA.i];
-  switch (k){
-    case 'close': raClose(); break;
-    case 'who': RA.who = +v; DATA.settings.proofWho = RA.who; save(); raStartScreen(); break;
-    case 'go': RA.auto = !!($('#ra-auto') || {}).checked; DATA.settings.raAuto = RA.auto; save(); RA.playing = true; RA.started = true; raShow(); break;
-    case 'play': RA.playing = !RA.playing; if (!RA.playing) raHush(); raShow(); break;
-    case 'ok': raHush(); prChecks()[L.id + '|' + RA.who] = today(); save(); raNext(); break;
-    case 'skip': raHush(); raNext(); break;
-    case 'back': raHush(); if (RA.i > 0) RA.i--; raShow(); break;
-    case 'edit': raHush(); RA.edit = true; raShow(); break;
-    case 'cancel': RA.edit = false; raShow(); break;
-    case 'save': { const x = $('#ra-ta'); prSaveEdit(L.id, x ? x.value : ''); RA.edit = false; toast('Edit saved.'); raNext(); break; }
-  }
-}
-document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-ra]'); if (b && RA){ e.preventDefault(); raDo(b.dataset.ra, b.dataset.v); } });
-document.addEventListener('keydown', e => {
-  if (!RA || !RA.started || RA.edit || /input|textarea|select/i.test((e.target.tagName || ''))) return;
-  const m = {' ': 'ok', 'Spacebar': 'ok', 'ArrowRight': 'skip', 's': 'skip', 'ArrowLeft': 'back', 'b': 'back', 'e': 'edit', 'p': 'play', 'Escape': 'close'}[e.key];
-  if (m){ e.preventDefault(); raDo(m); }
-});
+// Proofreading was retired in GWG BLD 737 (Chris): content is reviewed live, and every line written before then counts as reviewed and approved.
 
 // ---------------- LEARN ----------------
 /* LEARN (Labels, Learn, and Backup build, October 2026)
@@ -7436,8 +7247,6 @@ function mergeData(cur, inc){
   (fo.saved || []).forEach(x => { if (!out.founder.saved.some(y => y.id === x.id)) { out.founder.saved.push(x); stats.added++; } });
   if (!out.founder.draft && fo.draft) out.founder.draft = fo.draft;
   out.founder.speak = Object.assign({}, fo.speak || {}, out.founder.speak || {});
-  out.founder.proof = proofMerge(out.founder.proof, fo.proof);
-  out.founder.edits = editsMerge(out.founder.edits, fo.edits);
   out.founder.stories = storiesMerge(out.founder.stories, fo.stories); // Story Lab (BLD 724)
   out.learn = learnMerge(out.learn, inc.learn);
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
@@ -7467,7 +7276,6 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
   if (a && a.startsWith('sq-') && sqAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
-  if (a && a.startsWith('pr-') && prAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
