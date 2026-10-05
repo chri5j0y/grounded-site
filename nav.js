@@ -27,7 +27,7 @@
       { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
       { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', icon: ic.pine, bg: '#E2EEDB', soon: true },
       { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
-      { id: 'sequoia', title: 'Sequoia', desc: 'For seniors', icon: ic.sequoia, bg: '#F3DED6', soon: true },
+      { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
     { name: 'Together', items: [
@@ -47,6 +47,7 @@
     if (p.indexOf('/oak') === 0 || h.indexOf('oak.') === 0) return 'oak';
     if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return 'maple';
     if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return 'aspen';
+    if (p.indexOf('/sequoia') === 0) return 'sequoia';
     if (p.indexOf('/willow') === 0) return 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';

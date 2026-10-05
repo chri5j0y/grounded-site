@@ -212,7 +212,25 @@ function scrollTop(force) {
   const top = main.getBoundingClientRect().top + window.scrollY - (window.innerWidth > 700 && nav ? nav.offsetHeight : 0) - 6;
   if (force || window.scrollY > top) window.scrollTo({ top, behavior: 'smooth' });
 }
+/* Sequoia (GWG BLD 733): a person who kept a Legacy Book in Sequoia finds it in Cuttings here.
+   Copied, never moved: the Legacy Book stays whole in Sequoia, and each written answer comes over once. */
+const SQ_KIND = { blessings: 'blessing', learned: 'learned' };
+const SQ_ONE = { 'things-1': 'recipe', 'blessings-9': 'letter', 'blessings-5': 'four', 'blessings-6': 'four', 'blessings-7': 'four' };
+function carrySequoia(id) {
+  if (!GP() || !id || !GGP.isOpen(id)) return;
+  const v = GGP.data(id), lg = v && v.sequoia && v.sequoia.legacy, r = rec(id);
+  if (!lg || !lg.answers || !r || !r.started || r.role !== 'person') return;
+  r.fromSequoia = r.fromSequoia || {};
+  let n = 0;
+  Object.keys(lg.answers).forEach(pid => {
+    const x = lg.answers[pid]; if (!x || !String(x.text || '').trim() || r.fromSequoia[pid]) return;
+    r.cuttings.push({ id: uid(), kind: SQ_ONE[pid] || SQ_KIND[pid.split('-')[0]] || 'story', date: x.date || today(), by: x.told || '', title: x.q || '', to: '', text: String(x.text), from: 'sequoia' });
+    r.fromSequoia[pid] = today(); n++;
+  });
+  if (n) persist(id).then(() => toast('Your Legacy Book from Sequoia is in Cuttings now.'));
+}
 function render() {
+  const a0 = me(); if (a0 && target() === a0.id) carrySequoia(a0.id);
   paintNav(); renderBar();
   const v = $('#w-view'); if (!v) return;
   v.innerHTML = (VIEWS[S.tab] || VIEWS.today)();
@@ -802,7 +820,7 @@ VIEWS.cuttings = () => {
       <p class="w-eyebrow">${esc((CUT[c.kind] || CUT.story)[1])}${c.to ? ' &middot; ' + esc(c.to) : ''}</p>
       <h3>${esc(c.title || 'Untitled')}</h3>
       <div class="w-cuttext">${esc(c.text).replace(/\n/g, '<br>')}</div>
-      <p class="w-small">${nice(c.date)}${c.by ? ', written down by ' + esc(c.by) : ''}</p>
+      <p class="w-small">${nice(c.date)}${c.by ? ', written down by ' + esc(c.by) : ''}${c.from === 'sequoia' ? '. From your Legacy Book in Sequoia' : ''}</p>
       <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.printCut('${c.id}')">Save or Print</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.S.cut='${c.id}';W.render()">Edit</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.delCut('${c.id}')">Remove</button></div>
     </article>`).join('') : `<p class="w-small" style="margin-top:18px">Nothing kept yet. One story is enough to start.</p>`;
   return h;

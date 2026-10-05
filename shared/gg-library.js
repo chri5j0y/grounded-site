@@ -68,7 +68,7 @@
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
       bedside: it.bedside || null,
-      app: age === 'maple' || age === 'aspen' ? age : 'lib'
+      app: age === 'maple' || age === 'aspen' || age === 'sequoia' ? age : 'lib'
     };
   }
   function guideHtml(v) {

@@ -43,6 +43,14 @@
      tree         { pal: [3 colors] x3, trunk, trunkBare, fruit: 'acorn' or 'leaf', fruitColor }
      profileHtml  () => html for the profile section of the settings sheet
      extraSettings () => html added to the settings sheet
+     Sequoia's game layer (GWG BLD 733), all optional, for any tool:
+     todayExtra   (state) => html shown under the tree on Today
+     seasonExtra  (state) => html shown under the season card
+     onCheck      (done, partKey, state) called after a practice is checked or unchecked
+     pause        () => true while a recent check-in flagged losing hope or feeling
+                  alone. The tree holds as it is: no drying or drooping while it is on.
+     pauseLine    the words under the tree while the pause is on
+     tree.shape   'tall' draws a narrow, high crown on a massive flared trunk
      GGTend.plan()           the saved plan, or null
      GGTend.state()          the saved record, or null
      GGTend.openSettings()   the settings sheet behind the profile picture
@@ -134,6 +142,7 @@
   }
   function health(s) {
     var d = today();
+    if (C && C.pause && C.pause()) return 0;   // a gentle pause: the tree holds while hope or company is low
     if (!tended(s, d)) return stateFrom(s, d);
     // Tended today: start from how it looked before today, then perk up.
     var y = addDays(d, -1), any = Object.keys(s.days).some(function (k) { return k < d && tended(s, k); });
@@ -156,7 +165,7 @@
       ['#7C6A3C', '#AE9A64', '#CDBB86'],   // dry
       ['#6B5634', '#8F7445', '#A88D5C']    // drooping
     ]).concat([null])[h];                  // bare
-    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3));
+    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3)), tall = T.shape === 'tall';
     var drop = [0, 2, 9, 0][h];
     var o = '<svg class="gt-tree-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(LINES[h]) + '" xmlns="http://www.w3.org/2000/svg">';
     if (parts >= 6 && h === 0) o += '<circle cx="' + cx + '" cy="' + cy + '" r="112" fill="#F2B33D" opacity=".16"/>';
@@ -165,14 +174,22 @@
     o += '<path d="M0 ' + gy + 'H' + W + '" stroke="#5E7D3F" stroke-width="3"/>';
     // trunk with its flare into the ground, and the main limbs
     var tk = h === 3 ? (T.trunkBare || '#5A4636') : (T.trunk || '#4E2E12');
+    if (tall) {
+      // Sequoia: a massive trunk that flares wide at the ground, short limbs, and a narrow, high crown
+      o += '<path d="M' + (cx - 44) + ' ' + gy + 'Q' + (cx - 20) + ' ' + (gy - 4) + ' ' + (cx - 17) + ' ' + (gy - 40) + 'L' + (cx - 10) + ' ' + (cy - 70) + 'H' + (cx + 10) + 'L' + (cx + 17) + ' ' + (gy - 40) + 'Q' + (cx + 20) + ' ' + (gy - 4) + ' ' + (cx + 44) + ' ' + gy + 'Z" fill="' + tk + '"/>';
+      o += '<path d="M' + (cx - 7) + ' ' + (gy - 4) + 'Q' + (cx - 8) + ' ' + (gy - 60) + ' ' + (cx - 5) + ' ' + (cy - 50) + 'M' + (cx + 6) + ' ' + (gy - 6) + 'Q' + (cx + 7) + ' ' + (gy - 60) + ' ' + (cx + 4) + ' ' + (cy - 50) + 'M' + cx + ' ' + (gy - 2) + 'V' + (cy - 40) + '" stroke="#000" stroke-opacity=".18" stroke-width="2" fill="none"/>';
+      o += '<path d="M' + (cx - 9) + ' ' + (cy + 4) + 'l-16 -6M' + (cx + 9) + ' ' + (cy - 10) + 'l17 -6M' + (cx - 9) + ' ' + (cy - 30) + 'l-14 -5M' + (cx + 9) + ' ' + (cy - 48) + 'l13 -5" stroke="' + tk + '" stroke-width="4" stroke-linecap="round"/>';
+    } else {
     o += '<path d="M' + (cx - 30) + ' ' + gy + 'Q' + (cx - 14) + ' ' + (gy - 6) + ' ' + (cx - 12) + ' ' + (gy - 36) + 'L' + (cx - 9) + ' ' + (cy + 30) + 'H' + (cx + 9) + 'L' + (cx + 12) + ' ' + (gy - 36) + 'Q' + (cx + 14) + ' ' + (gy - 6) + ' ' + (cx + 30) + ' ' + gy + 'Z" fill="' + tk + '"/>';
     o += '<path d="M' + (cx - 5) + ' ' + (cy + 34) + 'Q' + (cx - 30) + ' ' + (cy + 14) + ' ' + (cx - 66) + ' ' + (cy - 4) + 'M' + (cx + 5) + ' ' + (cy + 32) + 'Q' + (cx + 34) + ' ' + (cy + 12) + ' ' + (cx + 70) + ' ' + (cy - 8) + 'M' + cx + ' ' + (cy + 30) + 'Q' + (cx - 3) + ' ' + (cy - 4) + ' ' + (cx + 4) + ' ' + (cy - 40) + 'M' + (cx - 34) + ' ' + (cy + 12) + 'Q' + (cx - 46) + ' ' + (cy - 14) + ' ' + (cx - 40) + ' ' + (cy - 38) + 'M' + (cx + 38) + ' ' + (cy + 10) + 'Q' + (cx + 50) + ' ' + (cy - 16) + ' ' + (cx + 44) + ' ' + (cy - 36) + '" stroke="' + tk + '" stroke-width="' + (h === 3 ? 5 : 6) + '" fill="none" stroke-linecap="round"/>';
-    if (h === 3) o += '<path d="M' + (cx - 66) + ' ' + (cy - 4) + 'l-14 -10M' + (cx + 70) + ' ' + (cy - 8) + 'l16 -8M' + (cx + 4) + ' ' + (cy - 40) + 'l-8 -14M' + (cx - 40) + ' ' + (cy - 38) + 'l-10 -10M' + (cx + 44) + ' ' + (cy - 36) + 'l10 -12" stroke="' + tk + '" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    }
+    if (h === 3 && !tall) o += '<path d="M' + (cx - 66) + ' ' + (cy - 4) + 'l-14 -10M' + (cx + 70) + ' ' + (cy - 8) + 'l16 -8M' + (cx + 4) + ' ' + (cy - 40) + 'l-8 -14M' + (cx - 40) + ' ' + (cy - 38) + 'l-10 -10M' + (cx + 44) + ' ' + (cy - 36) + 'l10 -12" stroke="' + tk + '" stroke-width="3" fill="none" stroke-linecap="round"/>';
     if (pal) {
       var clumps = [];
       for (var i = 0; i < 95; i++) {
         var a = R() * Math.PI * 2, rr = Math.sqrt(R()), x = cx + Math.cos(a) * rr * 116, y = cy - 18 + Math.sin(a) * rr * 58;
-        clumps.push([x, y, 13 + R() * 9, R()]);
+        if (tall) { var yy = R(); y = cy + 20 - yy * 120; x = cx + (R() * 2 - 1) * (16 + 30 * Math.sin(Math.PI * Math.min(1, yy * 1.15))); }
+        clumps.push([x, y, (tall ? 10 : 13) + R() * 9, R()]);
       }
       [0, 1, 2].forEach(function (layer) {
         o += '<g fill="' + pal[layer] + '">';
@@ -186,8 +203,9 @@
       });
       // acorns (or bright leaves), one for each part tended today, when the tree is well
       if (h <= 1) for (var k = 0; k < Math.min(6, parts); k++) {
-        var ax = cx - 80 + k * 32 + (k % 2) * 6, ay = cy + 36 - (k % 3) * 22;
-        if (T.fruit === 'leaf') o += '<g transform="translate(' + ax + ' ' + ay + ') rotate(' + (k * 47 % 90 - 45) + ')"><path d="M0 -6C5 -6 7 -1 0 7C-7 -1 -5 -6 0 -6Z" fill="' + (T.fruitColor || '#E8B923') + '" stroke="#8A6A12" stroke-width=".8"/></g>';
+        var ax = tall ? cx - 26 + (k % 3) * 26 : cx - 80 + k * 32 + (k % 2) * 6, ay = tall ? cy + 6 - Math.floor(k / 3) * 44 - (k % 2) * 10 : cy + 36 - (k % 3) * 22;
+        if (T.fruit === 'cone') o += '<g transform="translate(' + ax + ' ' + ay + ')"><ellipse rx="4" ry="5.6" fill="' + (T.fruitColor || '#8A5A2B') + '" stroke="#4E2E12" stroke-width=".8"/><path d="M-3.4 -1.6H3.4M-3.6 1.6H3.6" stroke="#4E2E12" stroke-width=".7"/></g>';
+        else if (T.fruit === 'leaf') o += '<g transform="translate(' + ax + ' ' + ay + ') rotate(' + (k * 47 % 90 - 45) + ')"><path d="M0 -6C5 -6 7 -1 0 7C-7 -1 -5 -6 0 -6Z" fill="' + (T.fruitColor || '#E8B923') + '" stroke="#8A6A12" stroke-width=".8"/></g>';
         else o += '<g transform="translate(' + ax + ' ' + ay + ')"><ellipse cy="3" rx="4.2" ry="5.4" fill="#8A5A2B"/><path d="M-5 0Q0 -6 5 0Z" fill="#4E3418"/></g>';
       }
     }
@@ -228,10 +246,11 @@
     var h = health(s), d = today(), x = day(s, d), list = items(s), parts = partsOn(s, d);
     var seasonLine = s.start ? 'Season ' + (s.season || 1) + ', week ' + weekShown(s) + ' of 12' : 'Your season begins with your first full check-in';
     var count = Object.keys(s.days).filter(function (k) { return tended(s, k) && (!s.start || k >= s.start); }).length;
-    var html = '<div class="gt-card gt-treecard"><div class="gt-tree" id="gt-tree">' + treeSVG(h, parts) + '</div><div class="gt-tree-side"><p class="gt-status">' + LINES[h] + '</p>'
+    var html = '<div class="gt-card gt-treecard"><div class="gt-tree" id="gt-tree">' + treeSVG(h, parts) + '</div><div class="gt-tree-side"><p class="gt-status">' + (C.pause && C.pauseLine && C.pause() ? esc(C.pauseLine) : LINES[h]) + '</p>'
       + (parts >= 6 ? '<p class="gt-small">All six parts tended today. That is a full day.</p>' : parts ? '<p class="gt-small">' + parts + ' of 6 parts tended today.</p>' : '')
       + '<dl class="gt-stats"><div><dt>Days Tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + ringN(s) + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p>'
       + (famOk() ? '<div class="gt-fam-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.shareFamily()">Share to Family</button></div>' : '') + '</div></div>';
+    if (C.todayExtra) html += C.todayExtra(s) || '';
     if (!list.length) {
       var hasCheck = (C.history() || []).length > 0;
       html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for each growing edge. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
@@ -345,6 +364,7 @@
     html += '<div class="btn-row gt-season-acts"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin a full check-in</button>' + (C.noQuick ? '' : '<button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick Check-in, 2 minutes</button>')
       + (C.hasResults() ? '<button class="btn btn-secondary" onclick="GGTend.act(\'results\')">My latest results</button>' : '')
       + '<button class="btn btn-secondary" onclick="GGTend.act(\'progress\')">My progress over time</button></div>';
+    if (s && C.seasonExtra) html += C.seasonExtra(s) || '';
     html += earlierHtml(s);
     if (hist.length) html += '<div class="gt-card"><h3>Your Check-ins</h3><ul class="gt-hist">' + hist.slice().reverse().slice(0, 8).map(function (e) { return '<li><b>' + nice(e.date) + '</b><span>' + (e.type === 'quick' ? 'Quick Check-in' : 'Full Check-in') + '</span></li>'; }).join('') + '</ul></div>';
     box.innerHTML = html;
@@ -431,8 +451,8 @@
      travels (see SHARE TO FAMILY in gg-app.js): first name, which tree, days tended,
      parts tended this week, tended today, days tended this week, and when it was made.
      The share id is random, made once, and kept in the person's own record (s.famId). */
-  var FAM_TREE = { maple: 'maple', aspen: 'aspen', oak: 'oak' };
-  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak' };
+  var FAM_TREE = { maple: 'maple', aspen: 'aspen', oak: 'oak', sequoia: 'sequoia' };
+  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak', sequoia: 'Sequoia' };
   function famOk() { return !!(window.GGApp && GGApp.family && C && FAM_TREE[C.tool]); }
   function famFirst() {
     var F = GGApp.family, s = ensure(), n = s && s.famName ? F.firstName(s.famName) : '';
@@ -535,7 +555,7 @@
       G.ready().then(function () {
         if (LIBQ.q !== q || !el('gt-lib-list')) return;
         G.draw(box, q, {
-          here: C.tool === 'maple' || C.tool === 'aspen' ? C.tool : 'oak', localType: 'practice',
+          here: C.tool === 'maple' || C.tool === 'aspen' || C.tool === 'sequoia' ? C.tool : 'oak', localType: 'practice',
           kid: age === 'maple' || age === 'aspen' ? age : false,
           localLabel: 'Practices you can add', localNone: 'No practices to add',
           localKeep: function (x) { var it = GGLibrary.get(x.key); return !!it && GGLibrary.fits(it, age) && (!LIBQ.part || it.part === LIBQ.part); },
@@ -602,10 +622,10 @@
     check: function (safe) {
       var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.d.indexOf(id), before = health(s);
       if (i >= 0) x.d.splice(i, 1); else x.d.push(id);
-      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('Your tree is perking up.'); }
-      renderWeek();
+      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (C.onCheck) C.onCheck(true, id.split('|')[0], s, p, before); else if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('Your tree is perking up.'); } else if (C.onCheck) C.onCheck(false, id.split('|')[0], s);
+      renderWeek(); if (C.seasonExtra) renderSeason();
     },
-    anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); publish(s); renderToday(); if (i < 0) perk(); renderWeek(); },
+    anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); publish(s); renderToday(); if (i < 0) { perk(); if (C.onCheck) C.onCheck(true, '', s, partsOn(s, today()), 0); } renderWeek(); },
     easy: function (safe) { var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.e.indexOf(id); if (i >= 0) x.e.splice(i, 1); else x.e.push(id); persist(); renderToday(); },
     note: function (safe, v) { var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true); v = String(v || '').trim(); if (v) x.n[id] = v.slice(0, 600); else delete x.n[id]; persist(); },
     drawer: function (safe, which) { var id = decodeURIComponent(safe); OPEN[id] = OPEN[id] === which ? '' : which; renderToday(); if (which === 'note' && OPEN[id]) { var t = el('gt-n-' + safe); if (t) t.focus(); } },
@@ -628,6 +648,7 @@
     theme: function () { var b = document.querySelector('.gg-theme'); if (b) b.click(); },
     openSettings: openSettings, closeSettings: closeSettings,
     health: function () { var s = ensure(); return s ? health(s) : 0; },
+    tended: function (d) { var s = ensure(); return !!(s && tended(s, d)); }, partsOn: function (d) { var s = ensure(); return s ? partsOn(s, d) : 0; },
     treeSVG: treeSVG, _week: function () { var s = ensure(); return s ? weekNo(s) : 0; }
   };
   window.GGTend = api;

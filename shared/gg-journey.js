@@ -528,3 +528,51 @@ window.GGJourney.AGES.maple_35 = {
   }
  }
 };
+
+/* ---------- Sequoia (older adults, 60 and up), GWG BLD 733 ----------
+   The same twelve themes, so a family can be on the same week together,
+   with intros and reflection questions written for later life. Movement
+   is fall-aware: every level has seated and supported options, and
+   Gentle includes in-bed moves. The Grounded stories stay as they are. */
+window.GGJourney.AGES.sequoia = {
+ "WEEKS": [
+  { "intro": "Nothing has to be ready. This week you plant, and planting is small. Tend your tree once a day, in whatever way your day allows, and let that be enough.", "q": "What made you want to start, and what are you hoping grows?" },
+  { "intro": "A long life teaches you where your energy goes. This week, notice what tires you and what restores you. Rest is part of the work, not a break from it.", "q": "What tired you this week, and what gave you back some energy?" },
+  { "intro": "Your body has carried you a long way, and it keeps its own record. This week, listen to it the way you would listen to an old friend: kindly, and without arguing.", "q": "What did your body tell you this week, and how did you answer it?" },
+  { "intro": "Everyone misses a day. Appointments, aches, and visitors fill a week. Coming back is the whole practice, and your tree waits for you without losing anything.", "q": "What helped you come back when a day slipped by?" },
+  { "intro": "By now you have carried a great deal: losses, worries, and memories that still ache. This week, notice one thing you carry quietly. You do not have to fix it. Naming it is enough.", "q": "What are you carrying that you haven't said out loud?" },
+  { "intro": "Friendships fade when no one reaches first. This week, be the one who calls, writes, or knocks. One short call can change two people's day.", "q": "Who did you reach toward this week, and how did it feel?" },
+  { "intro": "Prayer, quiet, music, a window full of sky, or the faith you have kept for decades. However you come, this week notice the moments that feel bigger than you.", "q": "Where did you feel something bigger than yourself this week?" },
+  { "intro": "Eight weeks in, some practices are becoming yours. The ones you keep on tired or sore days are roots. They hold you when the weather turns.", "q": "Which practice has started to hold you?" },
+  { "intro": "Later life brings changes you did not choose. You still get a say in a great deal: how you spend your mornings, who you see, and what you pass on. Use your say this week.", "q": "What do you want more of in the years ahead?" },
+  { "intro": "Love does not shrink with age. It often deepens. This week, notice where love moves between you and the people around you, and say it out loud once.", "q": "Where did you give or receive love this week?" },
+  { "intro": "Hope in later life is often quieter and steadier. It can be a grandchild's visit, a garden in spring, or a good morning. This week, look for what you are still looking forward to.", "q": "What are you still looking forward to?" },
+  { "intro": "Look at what grew this season. Some of it you will keep for good. Some of it was only for now. Both belong to a long life, still growing.", "q": "What grew in these twelve weeks, and what are you ready to let go?" }
+ ],
+ "ANCHORS": {
+  "morning": { "t": "Arrive", "b": "Before the news and before the phone, sit on the edge of the bed or in your chair for one minute. Feel your feet, take a slow breath, and greet the day.", "s": "One slow breath, feet on the floor, before anything else." },
+  "evening": { "t": "Close the day", "b": "Name three good things from today, even small ones. Set down one worry before you sleep. Choose one word for tomorrow.", "s": "One thing you're grateful for. One thing you're setting down." }
+ },
+ "LEVELS": [
+  { "id": "gentle", "name": "Gentle", "desc": "Seated, supported, or in-bed movement. For starting slow, recovering, or moving with a cane, walker, wheelchair, or pain." },
+  { "id": "moderate", "name": "Moderate", "desc": "You walk some already and want steady strength and balance. Standing work with a counter or sturdy chair close by." },
+  { "id": "athletic", "name": "Active", "desc": "You walk, swim, garden, or work out most days and want a real 12-week build, with balance and strength each week." }
+ ],
+ "LEVEL_MOVE": {
+  "gentle": {
+   "planting": { "t": "Ten minutes, seated or in bed", "b": "From a sturdy chair: roll your shoulders, lift your arms as high as feels good, circle your ankles, and march your feet in place. In bed: point and flex your feet, and squeeze and release each muscle from your toes to your shoulders. <strong>Moving at all is the win.</strong>" },
+   "rooting": { "t": "Fifteen minutes, with support", "b": "Add sit to stand from a sturdy chair with arms, as many as feel safe, up to ten. Hold the counter for heel raises. Keep a phone within reach, and stop if you feel dizzy." },
+   "blooming": { "t": "Twenty minutes", "b": "A short walk with your cane or walker, or a longer chair routine with music you love. End with slow breaths and a gentle stretch. Ask your doctor or a physical therapist what to add next." }
+  },
+  "moderate": {
+   "planting": { "t": "Twenty minutes, most days", "b": "A walk at an easy pace, plus balance practice at the kitchen counter: stand with your feet together, then one foot slightly ahead of the other, ten seconds each, one hand on the counter. <strong>Clear the floor first.</strong>" },
+   "rooting": { "t": "Twenty to thirty minutes", "b": "Walk a little farther, and add strength two or three days a week: sit to stand, wall push-ups, side leg raises holding a chair. Two rounds of eight to ten." },
+   "blooming": { "t": "Thirty minutes, most days", "b": "Keep walking and strength work, and try a class: tai chi, chair yoga, or water exercise. Tai chi is a slow, gentle way to steady your balance." }
+  },
+  "athletic": {
+   "planting": { "t": "Your usual, plus balance", "b": "Keep your walks, swims, or workouts, and add five minutes of balance work after each: heel-to-toe steps along the counter and standing on one foot with a hand ready. <strong>Warm up every time.</strong>" },
+   "rooting": { "t": "Strength two or three days", "b": "Add light weights or bands for legs, back, and arms, two or three sets of ten. Strength protects your bones and your independence." },
+   "blooming": { "t": "A steady, safe build", "b": "One longer walk or swim each week, strength and balance on other days, and one full rest day. Notice what your body can do now that it could not in Week 1." }
+  }
+ }
+};

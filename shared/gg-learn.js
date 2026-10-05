@@ -51,6 +51,7 @@
     maple: { name: 'Maple', color: '#C4501E', btn: '#A14219', back: 'Back to Maple' },
     aspen: { name: 'Aspen', color: '#1F6F74', btn: '#1F6F74', back: 'Back to Aspen' },
     oak: { name: 'Oak', color: '#3D5A73', btn: '#3D5A73', back: 'Back to Oak' },
+    sequoia: { name: 'Sequoia', color: '#7A2E1C', btn: '#7A2E1C', back: 'Back to Sequoia' },
     willow: { name: 'Willow', color: '#5D5A6E', btn: '#5D5A6E', back: 'Back to Willow' },
     grove: { name: 'The Grove', color: '#223829', btn: '#2F5A3C', back: 'Back to The Grove' }
   };
@@ -79,7 +80,7 @@
       case 'big': return '<div class="ln-big"><p' + A(.3) + '>' + h(sc.h) + '</p>' + (sc.sub ? '<small' + A(1.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'points': return '<div class="ln-pts' + ((sc.items || []).length >= 5 ? ' ln-pts5' : '') + '"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (it, j) { var a = Array.isArray(it) ? it : [it]; return '<div' + A(.9 + j * (sc.gap || 1.1), 'ln-pt') + '><span class="ln-dot" style="background:' + (a[2] || acc) + '"></span><span><b>' + h(a[0]) + '</b>' + (a[1] ? '<small>' + h(a[1]) + '</small>' : '') + '</span></div>'; }).join('') + '</div>';
       case 'trees': {
-        var T = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['oak', 'Oak', 'Adults'], ['sequoia', 'Sequoia', 'Seniors'], ['willow', 'Willow', 'Hospice']].concat(sc.grove ? [['grove', 'The Grove', 'Every age, together']] : []);
+        var T = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['oak', 'Oak', 'Adults'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice']].concat(sc.grove ? [['grove', 'The Grove', 'Every age, together']] : []);
         return '<div class="ln-trees"><h3' + A(.2) + '>' + h(sc.h || 'Six trees. The same six parts.') + '</h3><div class="ln-trow">' + T.map(function (x, j) { return '<div' + A(.6 + j * .4, 'ln-tr') + '><img src="' + MARK(x[0] + '-tab') + '" alt=""><b style="color:' + COL[x[0]] + '">' + x[1] + '</b><small>' + x[2] + '</small></div>'; }).join('') + '</div></div>';
       }
       case 'levels': return '<div class="ln-lv">' + (sc.levels || [['Strong', '8 to 10', '#5F7D48'], ['Steady', '5 to 7', '#8B5E1A'], ['Growing Edge', '1 to 4', '#B8612F']]).map(function (c, j) { return '<div' + A(.8 + j, 'ln-lc', '--k:' + c[2]) + '><b>' + h(c[0]) + '</b><small>' + h(c[1]) + '</small></div>'; }).join('') + '</div>';
@@ -685,7 +686,7 @@
       var root = document.createElement('div');
       root.className = 'ggl ggl-app'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Learn ' + meta.name);
       root.style.setProperty('--ggl-acc', meta.btn); root.style.setProperty('--ggl-bar', meta.color);
-      root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', oak: '#9DB8D0', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
+      root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', oak: '#9DB8D0', sequoia: '#E8A48E', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
       root.innerHTML = '<div class="ggl-top"><img src="' + MARK(app + '-tab') + '" alt=""><b>Learn ' + esc(meta.name) + '</b><button class="ggl-x" data-l="close">' + esc(meta.back) + '</button></div><div class="ggl-in" id="ggl-in"></div>';
       document.body.appendChild(root);
       APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide') };
