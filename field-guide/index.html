@@ -597,7 +597,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc2"></script>
 <script src="../shared/gg-sources.js?v=src6"></script>
-<script src="../shared/gg-learn.js?v=ln22"></script>
+<script src="../shared/gg-learn.js?v=ln23"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
 <script src="../shared/grove-scene.js"></script>
 <script src="qr.js"></script>
@@ -2844,7 +2844,15 @@ function spConsentLine(c){
 
 // ----- training (separate from Orientation, gates real visits for everyone) -----
 const SPM = () => SPG() && SPG().module;
-function spmData(){ DATA.spmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, DATA.spmod || {}); return DATA.spmod; }
+function spmData(){ DATA.spmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.spmod || {}); return DATA.spmod; }
+/* Maple Guide Training, version 2 (GWG BLD 731): played like Aspen Guide Training. Each lesson is a narrated
+   video in the shared player with Read It Instead; watched (closing scene, its one question answered) or read
+   (Mark as Read) both count; lessons open in order; renewing opens all. A library without lesson videos shows
+   text with Mark as Read, as before. */
+const spmFree = () => { const D = spmData(); return spmState().complete || !!(D.pass || D.signed); };
+const spmOpen = i => { const M = SPM(), D = spmData(); return i <= 0 || spmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+const spmVid = L => !!(L && L.video && L.video.scenes && L.video.scenes.length && window.GGLearn);
+function spmTrack(){ const M = SPM(); return {id:'spg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
 function spmState(){
   const M = SPM(), D = spmData(), t = today();
   if (!M) return {complete:false, total:0, done:0};
@@ -2866,7 +2874,7 @@ function vSPM(){
   <div class="hello sp-hello" style="margin-top:14px"><div class="eyebrow" style="color:#9BD27A">Maple Guide</div><h1>${esc(M.title)}</h1><p>${s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0])}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
   <h3 style="margin:22px 0 10px">Lessons</h3>
-  ${M.lessons.map((l, i) => step('sp-ml', i, i + 1, !!D.lessons[l.id], l.title, `About ${l.minutes} minutes${D.lessons[l.id] ? ', read' : ''}`, false)).join('')}
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = spmOpen(i); return step('sp-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
   <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
   ${step('sp-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with kids`, qSub, !s.lessons && !s.pass)}
   <h3 style="margin:22px 0 10px">Agreement</h3>
@@ -2874,14 +2882,38 @@ function vSPM(){
   ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="sp-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('sp') : ''}`;
 }
 function vSPMLesson(i){
-  const M = SPM(), L = M.lessons[i], n = M.lessons.length, read = !!spmData().lessons[L.id];
+  const M = SPM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vSPM();
+  if (!spmOpen(i)) return `<button class="linkbtn" data-act="sp-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = spmVid(L), watch = vid && !V.spmread;
+  if (watch){ GGLearn.css(); setTimeout(() => spmMount(i), 0); }
   return `<button class="linkbtn" data-act="sp-mhome">Back to training</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
-  ${lessonBody(L)}
-  <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="sp-mread" data-v="${i}">Mark as Read</button>`}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="spm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="sp-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="sp-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="spm-foot">${spmFoot(i)}</div>`;
+}
+// The buttons under a lesson. Redrawn in place when a video finishes, so the player is never torn down.
+function spmFoot(i){
+  const M = SPM(), L = M.lessons[i], n = M.lessons.length, D = spmData(), done = !!D.lessons[L.id];
+  const reading = V.spmread || !spmVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="sp-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
    ${i > 0 ? `<button class="btn btn-line" data-act="sp-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
-   ${read && i < n - 1 ? `<button class="btn btn-line" data-act="sp-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
-   ${read && i === n - 1 ? `<button class="btn btn-line" data-act="sp-mhome">Back to training</button>` : ''}</div>`;
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="sp-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="sp-mhome">Back to training</button>` : ''}</div>
+  ${all && !spmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sp-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function spmMount(i){
+  const host = $('#spm-host'); if (!host || !window.GGLearn) return;
+  const M = SPM(), L = M.lessons[i], D = spmData(), tr = spmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mark: {tree: 'maple', name: 'Maple Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#C4501E',
+    onAt: k => { lastAct = Date.now(); spmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = spmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#spm-foot'); if (f) f.innerHTML = spmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'maple', spm:1, spml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'maple', spm:1}; render(); }});
 }
 function spmNewQuiz(){ const items = SPM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
 function vSPMQ(){
@@ -3428,8 +3460,9 @@ function spAct(a, v, t){
     case 'sp-retry': SC_FAIL = false; spLoad(); render(); return true;
     case 'sp-home': go('maple'); return true;
     case 'sp-mhome': go('maple', {spm:1}); return true;
-    case 'sp-ml': go('maple', {spm:1, spml:+v}); return true;
-    case 'sp-mread': { const L = SPM().lessons, i = +v; spmData().lessons[L[i].id] = today(); save(); const nx = L.findIndex((x, j) => j > i && !spmData().lessons[x.id]); if (nx >= 0) go('maple', {spm:1, spml:nx}); else { go('maple', {spm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'sp-ml': if (!spmOpen(+v)) return true; go('maple', {spm:1, spml:+v}); return true;
+    case 'sp-mreadit': lnStop(); V.spmread = v === '1'; render(); return true;
+    case 'sp-mread': { const L = SPM().lessons, i = +v; { const d = spmData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } } save(); const nx = L.findIndex((x, j) => j > i && !spmData().lessons[x.id]); if (nx >= 0) go('maple', {spm:1, spml:nx}); else { go('maple', {spm:1}); toast('Lesson marked as read.'); } return true; }
     case 'sp-mq': go('maple', {spm:1, spq:spmNewQuiz()}); return true;
     case 'sp-mpick': V.spq.ans[V.spq.order[V.spq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=sp-mnext],[data-act=sp-mfinish]'); if (nb) nb.disabled = false; } return true;
     case 'sp-mnext': if (V.spq.ans[V.spq.order[V.spq.i]] === undefined) return true; V.spq.i++; render(); return true;
@@ -6574,6 +6607,7 @@ function mergeData(cur, inc){
   ['last','pass','signed','staff'].forEach(k => { out.orient[k] = newer(out.orient[k], io[k]) || null; });
   const im = inc.spmod || {}; out.spmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.spmod || {});
   Object.entries(im.lessons || {}).forEach(([k,v]) => { if (v && !out.spmod.lessons[k]) out.spmod.lessons[k] = v; });
+  out.spmod.how = Object.assign({}, im.how || {}, out.spmod.how || {}); // how each Maple lesson was finished (BLD 731)
   ['last','pass','signed'].forEach(k => { out.spmod[k] = newer(out.spmod[k], im[k]) || null; });
   const it2 = inc.stmod || {}; out.stmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.stmod || {});
   Object.entries(it2.lessons || {}).forEach(([k,v]) => { if (v && !out.stmod.lessons[k]) out.stmod.lessons[k] = v; });
