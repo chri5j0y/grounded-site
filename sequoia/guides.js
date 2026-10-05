@@ -3880,98 +3880,102 @@ const LC_TOPICS = [
   ]
  },
  {
-  "id": "lgbtq-aging",
+  "id": "friendship",
   "ring": "belong",
-  "title": "LGBTQ+ aging",
-  "keys": "lgbtq lgbt gay lesbian bisexual transgender trans queer nonbinary two-spirit partner same-sex spouse chosen family coming out back in the closet hide who I am nursing home assisted living home care affirming doctor pride older lgbtq elders sage",
+  "title": "Friendship in later life",
+  "keys": "friends friendship old friends new friends make friends making friends best friend keep in touch stay in touch friend moved far away friend is sick friend in hospital friend with dementia drifting apart close friend circle of friends company companionship visit a friend call a friend",
   "parts": [
    "branches",
-   "roots",
    "bark",
    "fruit"
   ],
   "quick": [
-   "LGBTQ+ older adults have lived through a great deal, and many bring real strength and deep friendships into later life.",
-   "Chosen family matters. The people who stood by you belong in your plans, your paperwork, and your care.",
-   "Many worry about having to hide again when they need help at home, in a hospital, or in a care community. That worry makes sense, and there are ways to find affirming support.",
-   "You get to decide who knows what, and when. Being yourself is worth protecting."
+   "Friendship matters as much in later life as at any age, and research links it closely with health and happiness.",
+   "Many people grow choosier with age, putting their time into fewer, closer friends. That is a strength of a long life.",
+   "New friends still come late in life. They grow from seeing the same faces again and again, often while doing something together.",
+   "When health, distance, or a move changes things, a friendship can change shape and still stay close."
   ],
-  "feel": "Pride in a life lived with courage, and grief for friends lost along the way, sometimes many at once. Worry about who will be there as you age, especially if you have no children or are distant from family. Fear of being treated differently by a new doctor, a home aide, or a care community, and the old pull to hide a partner, a past, or who you are. Some people feel more alone after a partner dies, if others never fully saw the relationship. Many also feel a hard-won peace with who they are.",
+  "feel": "You may treasure a few old friends more than ever, and notice the ones you have drifted from. A friend moves to be near family, or into assisted living across town. Another is ill, and visits feel different, or harder to start. You may want new friends and wonder how people even make them at this age, or feel shy about being the one to call first. Some friendships feel easy and warm; one or two may feel heavy. All of this is part of friendship in a long life, and much of it can be tended.",
   "self": {
    "first": [
-    "Name your circle: the people who know you fully and show up. Write their names down.",
-    "Make sure the right people can speak for you. A health care directive names who decides if you can't, and it can name chosen family. Your doctor or a legal helper can walk you through it.",
-    "Find one place where you are fully welcome: an LGBTQ+ older adult group, a center, a faith community, or an online gathering."
+    "Call or write to one friend today, just to say, \"You were on my mind.\" People usually appreciate it more than we expect.",
+    "Ask one friend a question you have never asked, like, \"What was the best year of your life?\"",
+    "Say yes to one invitation this month, or be the one who invites."
    ],
    "helps": [
-    "Asking a new doctor, clinic, or home care agency plainly: \"How do you support LGBTQ+ patients?\" Their answer tells you a lot.",
-    "Looking for senior living communities that take part in the Long-Term Care Equality Index, a national measure of LGBTQ+ inclusion.",
-    "Bringing a trusted friend to appointments and tours.",
-    "Telling your story, in your own words, for the people who come after you.",
-    "Staying close to younger LGBTQ+ people. Many are hungry for the wisdom of those who came before."
+    "Keeping old friends when things change: a weekly call, letters or cards, a video visit, or meeting halfway for lunch.",
+    "Shorter visits when energy is low. Twenty good minutes is a real visit.",
+    "Making new friends by returning to the same place, a class, a walking group, a choir, a volunteer shift, until faces become friends.",
+    "Doing things side by side: cards, gardening, a puzzle, a project. Many friendships grow while hands are busy.",
+    "Deepening a friendship: tell a story you have never told, ask for advice, and offer help as well as receive it.",
+    "Being a good friend to someone who is ill: keep showing up, ask what they would enjoy, and talk about ordinary life, not only the illness.",
+    "Letting a draining friendship rest a while. Spending your time where there is warmth is wise, not unkind."
    ],
    "tell": [
-    "“I have the right to be all of who I am, here too.”",
-    "“My chosen family is my family.”",
-    "“I have come through hard things before, and I am not alone now.”"
+    "“A friendship can change shape and still be close.”",
+    "“It is never too late for a new friend.”",
+    "“Reaching out first is a gift.”"
    ],
-   "people": "Try: “This is my partner, and I'd like her included in everything.” Or, to a friend: “If I'm ever in the hospital, I want you there, and I've put that in writing.”"
+   "people": "Try: “I miss our lunches. Since you moved, could we talk every Sunday afternoon?” Or, to someone new: “I enjoy talking with you after class. Would you like to get coffee next week?”"
   },
   "helper": {
-   "feel": "They may have spent decades deciding who was safe to tell. Starting over with new helpers, new doctors, or a new home can bring that old watchfulness back.",
+   "feel": "They may miss friends who have moved, become ill, or drifted, and feel shy about starting again. Some feel embarrassed to need help getting to a friend's house. Their friendships belong to them, and they want them to stay that way.",
    "say": [
-    "“How is your partner doing?” Using names and the words they use.",
-    "“Who are the people you'd want with you?”",
-    "“Is there anything you'd like the staff to know about you?”"
+    "“Tell me about your friend Marge. How did you two meet?”",
+    "“Who would you love to see more often? How can I help?”",
+    "“Would a ride to Helen's on Thursday make it easier?”"
    ],
    "avoid": [
-    "Calling a partner a \"friend\" or a \"roommate.\"",
-    "Telling others about their identity without asking first.",
-    "Assuming family by blood decides, or knows them best."
+    "Setting up friendships or activities for them without asking.",
+    "Treating friends as less important than family.",
+    "Sitting in on every visit, or talking for them when a friend calls."
    ],
    "help": [
-    "Use the names, pronouns, and words they use, every time.",
-    "Treat their chosen family as family: invite them, inform them, include them.",
-    "Help them check that a doctor, home care agency, or care community is affirming before they commit.",
-    "If they meet disrespect, back them up, and help them speak up or report it if they choose."
+    "Clear the path: rides, a phone with big buttons, a video call set up and left in their hands.",
+    "Make room for friends: invite their friends to the birthday, the holiday, the hospital room.",
+    "Help them stay close after a move: addresses, phone numbers, stamped cards, a visit together.",
+    "Ask about their friends by name, and remember the news.",
+    "When their friend is ill, offer to drive them for a visit, and let them decide how long to stay."
    ],
-   "you": "Following their lead on what to share and with whom is a gift. If any of this is new to you, learning quietly on your own is a kindness too. Your steady respect helps them feel safe being fully themselves."
+   "you": "You can't be their friend circle, and you don't need to be. Supporting their friendships takes some weight off you. Keep your own friends close too: they steady you for the long road."
   },
-  "faith": "Faith can be tender ground. Some LGBTQ+ older adults were hurt by a religious community, and some found a faith home that welcomed them fully. If faith is part of your life, many traditions have affirming congregations and chaplains who will meet you as you are. If faith brings up old pain, that is real too, and a counselor or affirming spiritual guide can help you sort it out at your own pace.",
+  "faith": "For many people, a faith community is where friendships grow: a small group, a choir, a coffee hour, a visiting team. Many traditions honor visiting the sick and the homebound as a sacred act, and a friend's visit can be one of the most faithful things in a week. If faith isn't part of your life, any group that meets often and shares a purpose can hold the same kind of friendship.",
   "practices": [
-   "branches|Support Group",
    "branches|Friends",
-   "bark|Self-Compassion Break",
-   "trunk|Write Your Story",
-   "trunk|Mentor Someone",
-   "fruit|Make Your Wishes Known"
+   "branches|Standing Call",
+   "branches|Clubs",
+   "branches|Active Listening",
+   "branches|Shared Meal",
+   "branches|Gratitude Letter",
+   "roots|Hold Someone in Light",
+   "fruit|Something to Look Forward To"
   ],
   "reach": [
-   "Senior centers, LGBTQ+ friendly programs, rides, and services near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
-   "In Minnesota, if you or someone you love is being hurt, neglected, or taken advantage of, including at home or in a care community: MAARC, 1-844-880-1574, any time.",
+   "Groups, classes, senior centers, volunteer programs, and rides near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
+   "Pulling back from friends and things you used to enjoy, with low mood that lasts two weeks or more: talk with your doctor. Depression is common in later life, and help works.",
    "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1.",
    "Danger right now: call 911."
   ],
   "more": [
    [
-    "SAGE: Advocacy and Services for LGBTQ+ Elders",
-    "https://www.sageusa.org/"
+    "NIH: Social Wellness Toolkit",
+    "https://www.nih.gov/health-information/your-healthiest-self-wellness-toolkits/social-wellness-toolkit"
    ],
    [
-    "National Resource Center on LGBTQ+ Aging",
-    "https://lgbtagingcenter.org/"
+    "NIA: Loneliness and Social Isolation, Tips for Staying Connected",
+    "https://www.nia.nih.gov/health/loneliness-and-social-isolation/loneliness-and-social-isolation-tips-staying-connected"
    ],
    [
-    "Long-Term Care Equality Index (SAGE and the Human Rights Campaign Foundation)",
-    "https://thelei.org/the-lei"
+    "US Surgeon General: Our Epidemic of Loneliness and Isolation",
+    "https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf"
    ],
    [
-    "Aging with Pride: National Health, Aging, and Sexuality/Gender Study",
-    "https://goldseninstitute.org/health/nhas/"
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
    ],
    [
-    "Minnesota Office of Ombudsman for Long-Term Care",
-    "https://mn.gov/ooltc/contactus/"
+    "Minnesota Aging Pathways",
+    "https://mn.gov/aging-pathways"
    ]
   ]
  },

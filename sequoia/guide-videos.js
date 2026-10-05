@@ -9377,222 +9377,225 @@ window.GG_LEARN_GUIDES.sequoia = {
    }
   },
   {
-   "id": "lgbtq-aging",
+   "id": "friendship",
    "ring": "belong",
-   "title": "LGBTQ+ Aging",
+   "title": "Friendship in Later Life",
    "you": {
-    "id": "sq-g-lgbtq-aging-you",
-    "guide": "lgbtq-aging",
+    "id": "sq-g-friendship-you",
+    "guide": "friendship",
     "side": "you",
-    "title": "LGBTQ+ Aging",
+    "title": "Friendship in Later Life",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the LGBTQ+ older adult thinking about growing older as fully themselves.",
+    "blurb": "For the older adult who wants to keep old friends close, make new ones, or be a good friend through change.",
     "sources": [
-     "agingpride",
-     "jialtc"
+     "chopik",
+     "carstensen",
+     "liu22",
+     "menkin"
     ],
     "scenes": [
      {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "LGBTQ+ Aging",
+      "h": "Friendship in Later Life",
       "sub": "For You",
-      "say": "If you are lesbian, gay, bisexual, transgender, or queer, and you are thinking about growing older, this is for you. You have come a long way, and you deserve to age as fully yourself."
+      "say": "If you want to keep your old friends close, make a new friend, or stay a good friend while life changes around you, this is for you. Friendship is worth tending at every age."
      },
      {
       "k": "big",
-      "h": "You bring real strength.",
-      "sub": "Courage, friendship, and a long view.",
-      "say": "Many LGBTQ+ older adults came of age when being yourself carried real risk. You may have lost friends, jobs, or family along the way, and you kept going. That took courage. Research on LGBTQ+ aging finds that many people carry that strength, and deep friendships, into later life."
+      "h": "Friends matter more than ever.",
+      "sub": "For health, and for happiness.",
+      "say": "Research finds that in later life, friendships are closely linked with health and happiness, sometimes even more than family ties. Friends are the people we choose, and who choose us back. That choosing is part of the gift."
      },
      {
       "k": "big",
-      "h": "Some worries are real.",
-      "sub": "Naming them is the first step.",
-      "say": "Some worries are real too. LGBTQ+ older adults are more likely to live alone and to feel isolated. And many worry that needing help, from a home aide, a hospital, or a care community, could mean having to hide again. If you feel that worry, it makes sense. Naming it is the first step toward planning for it."
+      "h": "Fewer, closer friends.",
+      "sub": "A strength of a long life.",
+      "say": "Many people grow choosier with age. They put their time into fewer, closer friends, and let the rest go gently. That is a wise way to live, spending time where the warmth is."
      },
      {
       "k": "points",
-      "h": "Your chosen family counts",
+      "h": "When things change",
       "items": [
        [
-        "Name your circle",
-        "The people who show up"
+        "A friend moves away",
+        "A weekly call, cards, a video visit"
        ],
        [
-        "Put it in writing",
-        "Who speaks for you"
+        "A friend is ill",
+        "Shorter visits, ordinary talk"
        ],
        [
-        "Bring them along",
-        "To visits and tours"
+        "Getting around is harder",
+        "Meet halfway, or invite them in"
        ]
       ],
-      "say": "Your chosen family counts. Name your circle, the people who know you fully and show up. Put it in writing, so the right people can speak for you if you can't. A health care directive can name chosen family, and your doctor or a legal helper can walk you through it. And bring someone along to appointments and tours."
+      "cue": {
+       "at": [
+        2,
+        3,
+        5
+       ]
+      },
+      "say": "Health, distance, and moves can change a friendship. It can change shape and still stay close. When a friend moves away, try a weekly call, cards in the mail, or a video visit. When a friend is ill, keep showing up. Shorter visits are real visits, and ordinary talk about the garden or the game is a gift. When getting around is harder, meet halfway, or invite them to you."
      },
      {
       "k": "flow",
-      "h": "Finding affirming support",
+      "h": "How new friends grow",
       "steps": [
        [
-        "Ask plainly",
-        "How do you support LGBTQ+ people?"
+        "Return to one place",
+        "The same faces, week after week"
        ],
        [
-        "Look for inclusion",
-        "Care communities that take part"
+        "Do something side by side",
+        "Cards, a garden, a choir"
        ],
        [
-        "Find your people",
-        "An LGBTQ+ older adult group"
+        "Take the next small step",
+        "Would you like to get coffee?"
        ]
       ],
-      "say": "Here is how to find affirming support. Ask plainly. A new doctor, agency, or care community should be glad to tell you how they support LGBTQ+ people. Look for senior living communities that take part in the Long-Term Care Equality Index, a national measure of inclusion. And find your people: an LGBTQ+ older adult group, a center, or an online gathering. SAGE and the Eldercare Locator, 1 800 677 1116, can help."
+      "say": "New friends still come late in life, and people who expect good things from getting older tend to make more of them. Here is how new friends often grow. Return to one place, so the same faces become familiar. Do something side by side, like cards, a garden, or a choir. Then take the next small step, and ask: would you like to get coffee?"
      },
      {
       "k": "big",
-      "h": "All of you belongs here.",
-      "sub": "A hand on your heart.",
-      "say": "Let's take a moment for you. Rest one hand over your heart. Breathe in slowly, and let it out. Say softly: all of me belongs here, and I deserve good support.",
+      "h": "Reach out first.",
+      "sub": "It means more than you think.",
+      "say": "Many of us wait for the other person to call. Research finds that people appreciate being reached out to far more than the person reaching out expects. So a short call or a card that says you were on my mind is likely to land warmly."
+     },
+     {
+      "k": "big",
+      "h": "Go one step deeper.",
+      "sub": "Ask a question you have never asked.",
+      "say": "Let's try something. Think of a friend you enjoy, old or new. Picture sitting with them over coffee. Now say out loud a question you have never asked them, like: what was the best year of your life?",
       "beats": [
-       "Let's take a moment for you.",
-       "Rest one hand over your heart.",
-       "Breathe in slowly, and let it out.",
+       "Let's try something.",
+       "Think of a friend you enjoy, old or new.",
+       "Picture sitting with them over coffee.",
        {
-        "t": "Say softly: all of me belongs here, and I deserve good support.",
-        "w": 10
+        "t": "Now say out loud a question you have never asked them, like: what was the best year of your life?",
+        "w": 12
        }
       ]
      },
      {
-      "k": "big",
-      "h": "You decide who knows.",
-      "sub": "And when, and how much.",
-      "say": "You get to decide who knows what about you, and when. There is no rule that says you must tell everyone, and no rule that says you must hide. Many people find it easier with each new helper to say it simply: this is my partner, and I want her included."
-     },
-     {
       "k": "card",
-      "title": "If you are treated badly",
-      "body": "Minnesota: MAARC 1-844-880-1574. Hopeless: call or text 988. Danger: 911.",
-      "say": "If you are disrespected, neglected, or hurt by someone who is supposed to help you, you can speak up. In Minnesota, MAARC takes reports any time at 1 844 880 1574. If you feel hopeless, call or text 988, any time. If you are in danger right now, call 911."
+      "title": "Find your people",
+      "body": "Eldercare Locator: 1-800-677-1116. Minnesota Aging Pathways: 1-800-333-2433.",
+      "say": "To find classes, groups, and volunteer teams near you, call the Eldercare Locator, 1 800 677 1116. In Minnesota, call Minnesota Aging Pathways, 1 800 333 2433. If you find yourself pulling away from friends and the things you used to enjoy, talk with your doctor. Help works."
      },
      {
       "k": "big",
-      "h": "You deserve to age as yourself.",
+      "h": "It is never too late for a friend.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You have lived with courage, and you deserve to grow older as fully yourself, surrounded by people who know you. The full guide has more, whenever you want it."
+      "say": "It is never too late for a new friend, or for an old friendship to grow deeper. The full guide has more, whenever you want it."
      }
     ]
    },
    "helper": {
-    "id": "sq-g-lgbtq-aging-helper",
-    "guide": "lgbtq-aging",
+    "id": "sq-g-friendship-helper",
+    "guide": "friendship",
     "side": "helper",
-    "title": "LGBTQ+ Aging",
+    "title": "Friendship in Later Life",
     "sideName": "For the Helper",
     "mins": 4,
-    "blurb": "For anyone walking beside an LGBTQ+ older adult: family, chosen family, friend, or caregiver.",
+    "blurb": "For anyone who wants to help an older parent, spouse, or friend keep and build friendships.",
     "sources": [
-     "agingpride",
-     "jialtc"
+     "chopik",
+     "huxhold"
     ],
     "scenes": [
      {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "LGBTQ+ Aging",
+      "h": "Friendship in Later Life",
       "sub": "For the Helper",
-      "say": "If you walk beside an LGBTQ+ older adult, as family, chosen family, a friend, or a caregiver, this is for you. Your respect can help them feel safe being fully themselves."
+      "say": "If you want to help your parent, your spouse, or an older friend keep their friendships and make new ones, this is for you. Your part is to clear the path, and let them walk it."
      },
      {
       "k": "big",
-      "h": "They have lived through a lot.",
-      "sub": "Watchfulness was often how they stayed safe.",
-      "say": "Many LGBTQ+ older adults spent decades deciding who was safe to tell. That watchfulness kept them safe. Starting over with new doctors, home aides, or a care community can bring it back. Many have told surveys they fear having to hide again to get good help."
+      "h": "Friends offer something special.",
+      "sub": "Family and friends both matter.",
+      "say": "Research finds that in later life, time with friends tends to lift mood and ease low feelings, and friendships are closely linked with health and happiness. Family matters deeply too. Friends offer something different: shared history, chosen company, and plain fun."
+     },
+     {
+      "k": "big",
+      "h": "Their friendships belong to them.",
+      "sub": "Support, without managing.",
+      "say": "It can be tempting to manage someone's social life: sign them up, set up visits, decide who is good for them. Even with love behind it, that can feel like being handled. Their friendships belong to them. Your part is support, not management."
      },
      {
       "k": "points",
-      "h": "Respect, every time",
+      "h": "Clear the path",
       "items": [
        [
-        "Use their words",
-        "Names, pronouns, partner"
+        "Rides and timing",
+        "A lift to a friend's house"
        ],
        [
-        "Ask before you share",
-        "Their story is theirs to tell"
+        "Calls in their hands",
+        "Set it up, then step back"
        ],
        [
-        "Include chosen family",
-        "Invite, inform, include"
+        "Room at the table",
+        "Invite their friends in"
        ]
       ],
-      "say": "Respect shows up in small things, every time. Use their words: the names, pronouns, and terms they use, and call a partner a partner. Ask before you share anything about their identity with others. Their story is theirs to tell. And include chosen family. Invite them, inform them, and include them, just as you would family by blood."
+      "cue": {
+       "at": [
+        1,
+        2,
+        4
+       ]
+      },
+      "say": "Here is how to clear the path. Offer rides, and let them set the timing, whether that is a lift to a friend's house or to the weekly card game. Help with calls. Set up the video call or the big button phone, then put it in their hands and step back. And make room at the table. Invite their friends to birthdays, holidays, and even the hospital room."
      },
      {
       "k": "words",
       "h": "Words that help",
       "items": [
-       "How is your partner doing?",
-       "Who would you want with you?",
-       "Anything you want the staff to know?"
+       "Tell me about your friend Marge.",
+       "Who would you love to see more often?",
+       "Would a ride to Helen's make it easier?"
       ],
-      "say": "Here are words that help. How is your partner doing? Who would you want with you, if you were in the hospital? And, is there anything you'd like the staff to know about you? Then follow their lead."
+      "say": "Here are words that help. Tell me about your friend Marge. How did you two meet? Asking by name says their friends matter. Who would you love to see more often? And, would a ride to Helen's on Thursday make it easier? A real offer is easy to accept."
      },
      {
       "k": "big",
-      "h": "Say their person's name.",
+      "h": "When their friend is ill",
+      "sub": "Help them keep showing up.",
+      "say": "When a friend of theirs is ill, or has moved to assisted living, visits can feel harder to start. Offer to drive, wait nearby, and let them decide how long to stay. A short visit, a card, or a phone call keeps the friendship alive."
+     },
+     {
+      "k": "big",
+      "h": "Ask, then hand it back.",
       "sub": "Practice it out loud.",
-      "say": "Let's practice. Think of the person they love most, a partner, or a dear friend. Picture asking about them, warmly and easily. Now, out loud, say their name, and ask how they are doing today.",
+      "say": "Let's practice. Picture them mentioning a friend they miss. Notice the pull to fix it for them, to call or plan something right away. Now say out loud instead: what would you like to do about that, and how can I help?",
       "beats": [
        "Let's practice.",
-       "Think of the person they love most, a partner, or a dear friend.",
-       "Picture asking about them, warmly and easily.",
+       "Picture them mentioning a friend they miss.",
+       "Notice the pull to fix it for them, to call or plan something right away.",
        {
-        "t": "Now, out loud, say their name, and ask how they are doing today.",
+        "t": "Now say out loud instead: what would you like to do about that, and how can I help?",
         "w": 10
        }
       ]
      },
      {
-      "k": "flow",
-      "h": "Help them find affirming support",
-      "steps": [
-       [
-        "Ask the provider",
-        "How do you support LGBTQ+ people?"
-       ],
-       [
-        "Check for inclusion",
-        "Long-Term Care Equality Index"
-       ],
-       [
-        "Go along",
-        "To visits and tours"
-       ]
-      ],
-      "say": "Help them find affirming support, if they want it. Ask the provider how they support LGBTQ+ patients and residents. Check whether a senior living community takes part in the Long-Term Care Equality Index. And go along to visits and tours, so they are not walking in alone."
+      "k": "big",
+      "h": "Keep your own friends close.",
+      "sub": "They steady you too.",
+      "say": "You can't be their whole circle, and you don't need to be. Every friendship they keep shares the load. Keep your own friends close too. They steady you for the long road. If you notice them pulling away from everyone, with low mood that lasts, encourage a talk with their doctor."
      },
      {
       "k": "big",
-      "h": "Back them up.",
-      "sub": "Their choice, your support.",
-      "say": "If they meet disrespect, back them up. Help them speak up, or report it if they choose. In Minnesota, MAARC takes reports any time at 1 844 880 1574. If they seem hopeless, call or text 988 together. If anyone is in danger right now, call 911."
-     },
-     {
-      "k": "big",
-      "h": "Learning is a kindness too.",
-      "sub": "You don't need every word right.",
-      "say": "If some of this is new to you, learning quietly on your own is a kindness. You don't need every word right. A sincere sorry and a correction go a long way. Look after yourself too, and lean on others who understand."
-     },
-     {
-      "k": "big",
-      "h": "Your respect makes room.",
+      "h": "Clear the path, and let them walk it.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Your steady respect makes room for them to be fully themselves. The full guide has more, whenever you want it."
+      "say": "Clear the path, and let them walk it, toward the friends they love. The full guide has more, whenever you want it."
      }
     ]
    }
