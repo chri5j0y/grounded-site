@@ -1195,41 +1195,171 @@ function renderQuotes() {
 
 
 // =====================================================================
-// WHEN LIFE CHANGES: Sequoia's own guides come next (BLD 734 to 735).
-// Until then, the guides area offers Oak's guides that fit later life.
+// WHEN LIFE CHANGES (GWG BLD 734): Sequoia's own guides, built like Oak's.
+// The words live in sequoia/guides.js (window.SEQUOIA_GUIDES = {rings, links,
+// topics}); the site-wide search reads the same file. A ring with no guides yet
+// stays hidden, and a small note names the rings still to come.
 // =====================================================================
-const OAK_FIT = ['retirement', 'spouse-death', 'loneliness', 'diagnosis', 'chronic', 'disability', 'caregiving', 'dementia-care', 'dying-loved', 'own-death', 'eol-plan', 'grief-days', 'moving', 'money-crisis', 'aging-parents', 'empty-nest', 'faith-crisis', 'spiritual-dryness', 'forgiveness', 'estrangement'];
-const LC_SUGGEST = { roots: ['faith-crisis', 'spiritual-dryness', 'church-hurt'], trunk: ['retirement', 'lost', 'empty-nest'], bark: ['anxiety', 'sadness', 'grief-days'], branches: ['loneliness', 'spouse-death', 'estrangement'], leaves: ['chronic', 'diagnosis', 'disability'], fruit: ['sadness', 'lost', 'diagnosis'] };
-const oakTopic = id => ((window.OAK_GUIDES || {}).topics || []).find(t => t.id === id);
-const LCS = { client: { open: null } };
-function renderLC() {
-  const el = document.getElementById('client-life'); if (!el) return;
-  const fit = OAK_FIT.map(oakTopic).filter(Boolean);
+const LC_RINGS = (window.SEQUOIA_GUIDES || {}).rings || [];
+const LC_TOPICS = (window.SEQUOIA_GUIDES || {}).topics || [];
+const SAP = 'https://growwithgrounded.com/maple/#talk=';
+const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcPart = k => DOMAIN_BY_KEY[k];
+const lcEsc = s => escapeHtml(s == null ? '' : String(s));
+const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
+function lcMatches(t, q) {
+  if (!q) return true;
+  const words = (t.title + ' ' + t.keys + ' ' + t.quick.join(' ')).toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/);
+  return q.toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/).filter(Boolean).every(w => words.some(x => x.startsWith(w)));
+}
+function lcList(a) { return '<ul>' + (a || []).map(x => '<li>' + lcEsc(x) + '</li>').join('') + '</ul>'; }
+function lcPartsText(t) { return (t.parts || []).map(k => lcPart(k) ? lcPart(k).part : k).join(', '); }
+function renderLC(mode) {
+  mode = 'client';
+  const st = LCS[mode], el = document.getElementById(mode + '-life');
+  if (!el) return;
+  if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
+  const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
+  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for this season of life</h2>
+      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes a long life brings, written for later life. Each guide has two views: one for when you are going through it, and one for when you are helping someone else.</p>
     </div>
-    <div class="invite sq-coming"><div class="invite-title">Guides for this season of life are coming next</div>
-      <p>Guides written for later life, each with a view for when you are going through it and one for when you are helping someone else. Until they are ready, these guides in Oak fit many of the changes a long life brings.</p></div>
-    <div class="lc-grid">${fit.map(t => `<article class="lc-card" style="--rc:var(--gold)">
-        <span class="lc-label">Guide in Oak</span>
-        <h4>${escapeHtml(t.title)}</h4>
-        <ul>${(t.quick || []).slice(0, 2).map(x => '<li>' + escapeHtml(x) + '</li>').join('')}</ul>
-        <a class="btn btn-secondary" href="/oak/#life=${encodeURIComponent(t.id)}">Open in Oak</a>
-      </article>`).join('')}</div>
+    ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: retirement, grief, a fall, memory..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
+    <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
+      <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All topics</button>
+      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+    </div>` : ''}
+    <div id="${mode}-lc-list"></div>
+    ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
     <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1.</p>`;
+  lcRenderList(mode);
+  if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
+function lcJoin(a) { return a.length < 2 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join('; ') + '; and ' + a[a.length - 1]; }
+function lcRenderList(mode) {
+  const st = LCS[mode];
+  const box = document.getElementById(mode + '-lc-list');
+  if (!box) return;
+  document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
+  let html = '', n = 0;
+  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+    if (!ts.length) return;
+    n += ts.length;
+    html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
+      <article class="lc-card" style="--rc:${r.color}">
+        <span class="lc-label">Hard season</span>
+        <h4>${lcEsc(t.title)}</h4>
+        ${lcList(t.quick)}
+        <p class="lc-meta">Parts of the tree often affected: ${lcEsc(lcPartsText(t))}.</p>
+        <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
+      </article>`).join('')}</div></div>`;
+  });
+  box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
+}
+/* Search: the same engine as the header search. Sequoia's guides first, then the rest of Grow With Grounded. */
+function lcFind(el, mode) {
+  LCS[mode].q = ''; LCS[mode].find = el.value;
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'sequoia', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking It Through',
+    hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips', '#' + mode + '-life .lc-soon'], accent: 'var(--gold)' });
+}
+function lcOpen(mode, id) {
+  mode = 'client';
+  LCS[mode].open = id || null;
+  const btn = document.querySelector('#client-nav .nav-btn[data-lc]');
+  showView(mode + '-life', btn);
+}
+function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcPersp(mode, p) { mode = 'client'; LCS[mode].persp = p; renderLC(mode); }
+/* Practice links open Sequoia's own practice guide right under the name. */
+function lcPrac(btn) {
+  const g = btn.nextElementSibling; if (!g) return;
+  const open = g.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function lcPracHtml(t) {
+  return '<div class="lc-pracs">' + (t.practices || []).map(k => {
+    const [part, name] = String(k).split('|'), d = lcPart(part), g = guideHtml(part, name, true), col = d ? d.color : 'var(--line)';
+    if (!g) return `<div class="lc-prac"><span class="lc-practice" style="border-color:${col}">${lcEsc(name)}</span></div>`;
+    return `<div class="lc-prac" style="--domain-color:${col}"><button type="button" class="lc-practice lc-prac-btn" style="border-color:${col}" aria-expanded="false" onclick="lcPrac(this)">${lcEsc(name)}<span class="lc-prac-part">${lcEsc(d ? d.part : '')}</span></button><div class="guide">${g}</div></div>`;
+  }).join('') + '</div>';
+}
+function lcSourcesHtml(t) {
+  if (!window.GGSources) return '';
+  if (Array.isArray(t.sources) && t.sources.length) return GGSources.line(t.sources);
+  return GGSources.html('sequoia:' + t.id);
+}
+function lcDetail(mode, t) {
+  if (!t) { LCS[mode].open = null; return ''; }
+  const r = lcRing(t.ring), st = LCS[mode], self = st.persp !== 'helper';
+  const view = self ? `
+      <h3>What this can feel like</h3><p>${lcEsc(t.feel)}</p>
+      <h3>First steps</h3>${lcList(t.self.first)}
+      <h3>What helps</h3>${lcList(t.self.helps)}
+      <h3>What to tell yourself</h3><div class="lc-say">${(t.self.tell || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
+      <h3>Telling your people</h3><p>${lcEsc(t.self.people)}</p>`
+    : `
+      <h3>What they may be carrying</h3><p>${lcEsc(t.feel)} ${lcEsc(t.helper.feel)}</p>
+      <h3>What to say</h3><div class="lc-say">${(t.helper.say || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
+      <div class="lc-two"><div><b>What not to say or do</b>${lcList(t.helper.avoid)}</div><div><b>Practical ways to help</b>${lcList(t.helper.help)}</div></div>
+      <h3>Caring for yourself as the helper</h3><p>${lcEsc(t.helper.you)}</p>`;
+  return `<article class="lc-article" id="${mode}-lc-article" style="--rc:${r.color}">
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px">
+      <button class="lc-back" onclick="lcClose('${mode}')">Back to all guides</button>
+      <button class="btn btn-secondary" onclick="printGrowthPlan('${mode}-lc-article')">Save or Print This Guide</button>
+    </div>
+    <span class="lc-tag">${lcEsc(r.name)}</span>
+    <h2>${lcEsc(t.title)}</h2>
+    <div class="lc-quick"><b>Quick Reference</b>${lcList(t.quick)}</div>
+    ${lcVids(t.id, self)}
+    <div class="lc-toggle no-print" role="group" aria-label="Choose a view">
+      <button aria-pressed="${self}" onclick="lcPersp('${mode}','self')">I'm going through this</button>
+      <button aria-pressed="${!self}" onclick="lcPersp('${mode}','helper')">I'm helping someone</button>
+    </div>
+    ${view}
+    ${t.faith ? `<h3>Faith and the holy</h3><p>${lcEsc(t.faith)}</p>` : ''}
+    <h3>Using Sequoia</h3><p>Parts of the tree this often touches: <b>${lcEsc(lcPartsText(t))}</b>. Practices that can help (tap one to see how):</p>${lcPracHtml(t)}<p>A check-in in a few weeks can show how ${self ? 'you are' : 'they are'} doing.</p>
+    ${t.kids ? `<h3>If children are involved</h3><p>Maple has a guide for talking with kids about this. <a class="text-link" href="${SAP + t.kids}" target="_blank" rel="noopener">Open the Maple guide</a></p>` : ''}
+    <h3>When to reach out for more help</h3><div class="lc-reach">${lcList(t.reach)}</div>
+    ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}" target="_blank" rel="noopener">${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
+    ${window.GGShelf ? GGShelf.html('sequoia', t.id) : ''}
+    ${lcSourcesHtml(t)}
+    <p class="lc-note">From When Life Changes in Sequoia&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. Veterans, call 988 and press 1. &copy; ${new Date().getFullYear()} Chris Joy. You are welcome to print this guide for personal use and visits.</p>
+  </article>`;
+}
+/* When Life Changes videos (GWG BLD 734): two per guide, For You and For the Helper, played by shared/gg-learn.js
+   from sequoia/guide-videos.js. SQ_VIDS lists the guides that have them so far (written by the build's generator).
+   A quiet check shows once a video has been watched on this device (gg-learn:sequoia). */
+/* SQ_VIDS start */const SQ_VIDS = [];/* SQ_VIDS end */
+function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:sequoia') || '{}').done || {})[id]); } catch (e) { return false; } }
+function lcVids(gid, self) {
+  if (!SQ_VIDS.includes(gid)) return '';
+  const b = (side, name, pri) => { const id = 'sq-g-' + gid + '-' + side, w = lcVidWatched(id);
+    return `<button type="button" class="btn ${pri ? 'btn-primary' : 'btn-secondary'}" onclick="lcWatch('${gid}','${side}')">${w ? '&#10003;' : '&#9654;'} Watch: ${name}${w ? ' <span class="lc-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="lc-gv no-print"><div class="btn-row">${b('you', 'For You', self)}${b('helper', 'For the Helper', !self)}</div>
+    <p class="lc-gv-note">For You, if this is what you're facing. For the Helper, if you're walking beside someone who is. A few minutes each, narrated aloud.</p></div>`;
+}
+function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('sequoia', 'sq-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.sequoia = id => { if (LC_TOPICS.some(t => t.id === id)) lcOpen('client', id); };
+window.addEventListener('gg-learn-close', () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
+/* After a check-in: guides that touch the parts carrying the most, two per part, lowest part first. */
 function lcSuggestHtml(scores) {
   const low = PART_ORDER.filter(k => scores[k] <= 4).sort((a, b) => scores[a] - scores[b]);
-  if (!low.length) return '';
-  const ids = [];
-  low.forEach(k => (LC_SUGGEST[k] || []).forEach(id => { if (!ids.includes(id)) ids.push(id); }));
-  const picks = ids.slice(0, 5).map(oakTopic).filter(Boolean);
-  if (!picks.length) return '';
+  if (!low.length || !LC_TOPICS.length) return '';
+  const picks = [];
+  low.forEach(k => LC_TOPICS.filter(t => (t.parts || []).includes(k)).slice(0, 2).forEach(t => { if (!picks.includes(t)) picks.push(t); }));
+  const shown = picks.slice(0, 5);
+  if (!shown.length) return '';
   const crisis = scores.fruit <= 2 ? `<p><b>If you are having thoughts of ending your life, call or text 988 now. Veterans, call 988 and press 1.</b></p>` : '';
   return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
-    <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps. They open in Oak for now.</p>
-    ${crisis}<div class="lc-links">${picks.map(t => `<a class="sq-chip" href="/oak/#life=${encodeURIComponent(t.id)}">${escapeHtml(t.title)}</a>`).join('')}<button type="button" class="sq-chip" onclick="showView('client-life')">More guides</button></div></div>`;
+    <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps.</p>
+    ${crisis}<div class="lc-links">${shown.map(t => `<button type="button" class="sq-chip" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" class="sq-chip" onclick="lcOpen('client',null)">Browse all guides</button></div></div>`;
 }
 
 
@@ -1881,10 +2011,10 @@ mountTree('hero-tree-slot', { variant: 'color', seam: 'var(--hero-seam)', assemb
 renderAboutParts();
 renderProgress();
 
-/* Deep links: #life (guides), #legacy, #plan, #quick, #checkin, #for=<id> (a helper) */
+/* Deep links: #life (guides), #life=<id> (one guide), #legacy, #plan, #quick, #checkin, #for=<id> (a helper) */
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
-  if (h.startsWith('#life')) showView('client-life');
+  if (h.startsWith('#life')) { const id = h.startsWith('#life=') ? h.slice(6) : null; LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null; showView('client-life', document.querySelector('#client-nav .nav-btn[data-lc]')); }
   else if (h === '#legacy') showView('client-legacy');
   else if (h === '#plan') showView('client-growthplan');
   else if (h === '#quick') startQuick();

@@ -794,6 +794,16 @@ html.ts-2 main{zoom:1.25;}
 .lc-suggest .lc-links button{font-family:'Barlow',sans-serif;font-size:15px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer;}
 .lc-suggest .lc-links button:hover{border-color:var(--gold);}
 .lc-back{background:none;border:none;color:var(--gold);font-weight:600;border-bottom:1px solid currentColor;padding:0;cursor:pointer;font-size:15px;}
+.lc-soon{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:14px 18px;margin:26px 0 0;font-size:16px;color:var(--ink-soft);}
+.lc-soon b{color:var(--ink);}
+.lc-pracs{margin:4px 0 10px;}
+.lc-prac{margin:0 0 6px;}
+.lc-prac-btn{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:48px;font-family:'Barlow',sans-serif;font-size:16.5px;color:var(--ink);background:var(--card);border-width:1.5px;border-style:solid;cursor:pointer;text-align:left;padding:6px 16px;margin:0;}
+.lc-prac-btn::after{content:'\2193';color:var(--ink-soft);}
+.lc-prac-btn[aria-expanded="true"]::after{content:'\2191';}
+.lc-prac-btn:hover{background:var(--bg-deep,#F2ECE0);}
+.lc-prac-part{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.lc-prac .guide{margin:6px 0 12px;font-size:16px;line-height:1.6;}
 .quiet-sub{font-size:16px;color:var(--ink-soft);margin:28px 0 0;text-align:center;}
 
 /* =====================================================================
@@ -1182,7 +1192,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 <script src="/shared/gg-journey.js?v=r4n"></script>
 <script src="/shared/gg-library.js?v=src2"></script>
 <script src="/shared/gg-tend.js?v=vb3"></script>
-<script src="/oak/guides.js?v=fd1"></script>
+<script src="/sequoia/guides.js?v=sg1"></script>
 <script src="/sequoia/app.js?v=sq1"></script>
 <script>
 /* Read aloud, built in like Oak, a little slower by default */
@@ -1214,7 +1224,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
       document.querySelectorAll('#client-legacy .sq-prompt.has').forEach(function (a) { if (!a.querySelector('.gg-rbar')) a.insertBefore(R.control({ root: a, label: 'Read this aloud' }), a.querySelector('.btn-row')); });
       return r;
     };
-    var lc = window.renderLC; if (lc) window.renderLC = function () { var r = lc.apply(this, arguments); var h = document.querySelector('#client-life .lc-head'); if (h && !h.querySelector('.gg-rbar')) h.appendChild(R.control({ root: document.getElementById('client-life'), label: 'Read this page aloud' })); return r; };
+    var lc = window.renderLC; if (lc) window.renderLC = function () { var r = lc.apply(this, arguments); var h = document.querySelector('#client-life .lc-head'); if (h && !h.querySelector('.gg-rbar')) h.appendChild(R.control({ root: document.getElementById('client-life'), label: 'Read this page aloud' })); var art = document.querySelector('#client-life .lc-article'), q = art && art.querySelector('.lc-quick'); if (q && !art.querySelector('.gg-rbar')) art.insertBefore(R.control({ root: art, label: 'Read this guide aloud' }), q); return r; };
     var cr = window.calculateResults; if (cr) window.calculateResults = function () { var r = cr.apply(this, arguments); var box = document.querySelector('#client-results-content .results-summary'); if (box && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: document.getElementById('client-results-content'), label: 'Read my results aloud' }), box.firstChild); return r; };
     var sv = window.showView; if (sv) window.showView = function () { R.stop(); return sv.apply(this, arguments); };
   });
