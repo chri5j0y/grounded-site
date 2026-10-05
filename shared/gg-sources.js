@@ -126,7 +126,6 @@
     grandfam: ["Generations United, grandfamilies fact sheet (2022)", "https://www.gu.org/app/uploads/2022/05/General-Grandfamilies-Fact-Sheet-2022.pdf"],
     pillemer: ["Karl Pillemer, Fault Lines: family estrangement (Cornell, 2020)", "https://news.cornell.edu/stories/2020/09/pillemer-family-estrangement-problem-hiding-plain-sight"],
     brownlin: ["Brown and Lin, the gray divorce revolution (2012)", "https://www.bgsu.edu/arts-and-sciences/sociology/Research/Gray-Divorce.html"],
-    agingpride: ["Fredriksen-Goldsen and colleagues, Aging with Pride national study", "https://goldseninstitute.org/health/nhas/"],
     carstensen: ["Carstensen, Isaacowitz, and Charles, socioemotional selectivity theory (1999)", ""],
     steadi: ["CDC STEADI, Stay Independent fall risk check", "https://www.cdc.gov/steadi/patient-resources/"],
     cdcfalls: ["CDC, facts about older adult falls", "https://www.cdc.gov/falls/data-research/facts-stats/index.html"],
