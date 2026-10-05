@@ -230,7 +230,8 @@
     var count = Object.keys(s.days).filter(function (k) { return tended(s, k) && (!s.start || k >= s.start); }).length;
     var html = '<div class="gt-card gt-treecard"><div class="gt-tree" id="gt-tree">' + treeSVG(h, parts) + '</div><div class="gt-tree-side"><p class="gt-status">' + LINES[h] + '</p>'
       + (parts >= 6 ? '<p class="gt-small">All six parts tended today. That is a full day.</p>' : parts ? '<p class="gt-small">' + parts + ' of 6 parts tended today.</p>' : '')
-      + '<dl class="gt-stats"><div><dt>Days Tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + ringN(s) + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p></div></div>';
+      + '<dl class="gt-stats"><div><dt>Days Tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + ringN(s) + '</dd></div></dl><p class="gt-small">' + seasonLine + '</p>'
+      + (famOk() ? '<div class="gt-fam-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.shareFamily()">Share to Family</button></div>' : '') + '</div></div>';
     if (!list.length) {
       var hasCheck = (C.history() || []).length > 0;
       html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for each growing edge. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
@@ -424,6 +425,85 @@
     return html + '</div>';
   }
 
+  /* ---------- Share to Family (BLD 732) ----------
+     A person sends their tree by hand to family on other phones: a link to The Grove
+     with the tree after the #, shown as a QR code too. Only the shape of the tree
+     travels (see SHARE TO FAMILY in gg-app.js): first name, which tree, days tended,
+     parts tended this week, tended today, days tended this week, and when it was made.
+     The share id is random, made once, and kept in the person's own record (s.famId). */
+  var FAM_TREE = { maple: 'maple', aspen: 'aspen', oak: 'oak' };
+  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak' };
+  function famOk() { return !!(window.GGApp && GGApp.family && C && FAM_TREE[C.tool]); }
+  function famFirst() {
+    var F = GGApp.family, s = ensure(), n = s && s.famName ? F.firstName(s.famName) : '';
+    if (n) return n;
+    try { var id = pid(), p = id && window.GGP && GGP.get ? GGP.get(id) : null; if (p && p.name) n = F.firstName(String(p.name).replace(/[<>&"`\\]/g, '')); } catch (e) {}
+    return n;
+  }
+  function famData(s, name) {
+    var d = today(), wk = parse(d), back = (wk.getDay() + 6) % 7, mon = addDays(d, -back), w = 0, set = {};
+    for (var i = 0; i <= back; i++) if (tended(s, addDays(mon, i))) w++;
+    for (var j = 0; j < 7; j++) { var x = s.days[addDays(d, -j)]; if (x && tended(s, addDays(d, -j))) (x.d || []).forEach(function (id) { set[id.split('|')[0]] = 1; }); }
+    var order = GGApp.family.parts, p = '';
+    order.forEach(function (k, i) { if (set[k]) p += i; });
+    var g = Object.keys(s.days).filter(function (k) { return tended(s, k); }).length;
+    return { v: 1, i: s.famId, n: name, t: FAM_TREE[C.tool], g: g, p: p, d: tended(s, d) ? 1 : 0, w: Math.min(w, g), m: Math.floor(Date.now() / 1000) };
+  }
+  function famCss() {
+    if (el('gt-fam-css')) return;
+    var st = document.createElement('style'); st.id = 'gt-fam-css';
+    st.textContent = '.gt-fam-row{margin-top:12px}'
+      + '.gt-fam-qr{background:#fff;border-radius:14px;padding:12px;margin:8px auto 10px;max-width:240px}.gt-fam-qr svg{display:block;width:100%;height:auto}'
+      + '.gt-fam-link{width:100%;box-sizing:border-box;font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);word-break:break-all;resize:none}'
+      + '.gt-fam-name{font:inherit;width:100%;max-width:260px;box-sizing:border-box;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}'
+      + '.gt-sheet ul.gt-fam-list{margin:0 0 8px;padding-left:20px;font-size:15px}.gt-sheet ul.gt-fam-list li{margin:2px 0}';
+    document.head.appendChild(st);
+  }
+  var FAM_LINK = '';
+  function famDraw() {
+    var s = ensure(), box = el('gt-fam-out'); if (!s || !box) return;
+    var inp = el('gt-fam-name'), name = GGApp.family.firstName(String(inp ? inp.value : '').replace(/[<>&"`\\]/g, ''));
+    if (!name) { FAM_LINK = ''; box.innerHTML = '<p class="gt-small">Type a first name to make your link.</p>'; return; }
+    if (s.famName !== name) { s.famName = name; persist(); }
+    FAM_LINK = GGApp.family.url(famData(s, name));
+    if (!FAM_LINK) { box.innerHTML = '<p class="gt-small">That link could not be made. Try a shorter first name.</p>'; return; }
+    var svg = ''; try { if (window.GGQR) svg = GGQR.svg(FAM_LINK, { label: 'QR code for ' + name + '\'s tree' }); } catch (e) { svg = ''; }
+    box.innerHTML = (svg ? '<div class="gt-fam-qr">' + svg + '</div><p class="gt-small">Family can scan this with their phone\'s camera, or you can send the link.</p>' : '')
+      + '<label class="gt-small" for="gt-fam-link">Your link</label><textarea id="gt-fam-link" class="gt-fam-link" rows="3" readonly>' + esc(FAM_LINK) + '</textarea>'
+      + '<div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="GGTend.famCopy()">Copy Link</button>'
+      + (navigator.share ? '<button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.famShare()">Share</button>' : '') + '</div>';
+  }
+  function openFamily() {
+    var s = ensure(); if (!s || !famOk()) return;
+    if (!s.famId) { s.famId = GGApp.family.newId(); persist(); }
+    famCss(); closeFamily();
+    var tn = FAM_NAME[C.tool];
+    var html = '<div class="gt-sheet-back" id="gt-fam" role="dialog" aria-modal="true" aria-labelledby="gt-fam-title" onclick="if(event.target===this)GGTend.closeFamily()"><div class="gt-sheet">'
+      + '<div class="gt-sheet-head"><h2 id="gt-fam-title">Share to Family</h2><button type="button" class="gt-x" onclick="GGTend.closeFamily()" aria-label="Close">&times;</button></div>'
+      + '<section><p>Send your tree to family on their own phones. When they open your link, your tree stands in their grove, right beside theirs.</p>'
+      + '<label class="gt-small" for="gt-fam-name">First name to show</label><br><input id="gt-fam-name" class="gt-fam-name" type="text" maxlength="24" autocomplete="given-name" value="' + esc(famFirst()) + '" oninput="GGTend.famDraw()"></section>'
+      + '<section id="gt-fam-out"></section>'
+      + '<section><h3>What Your Link Shares</h3><ul class="gt-fam-list"><li>Your first name</li><li>Your tree: ' + tn + '</li><li>How your tree looks: days tended and which parts you tended this week</li><li>Whether you tended today, and how many days this week</li><li>The day you made the link</li></ul>'
+      + '<h3>What Stays with You</h3><p>Your answers, scores, notes, journal, and growth plan stay on this device.</p>'
+      + '<p class="gt-small">Anyone with this link can see what it shares, so send it to family only. Your link is a snapshot: share again any time to send a fresh one.</p></section>'
+      + '</div></div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+    famDraw();
+    var sheet = el('gt-fam'), x = sheet.querySelector('.gt-x'); if (x) x.focus();
+    sheet.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeFamily(); });
+  }
+  function closeFamily() { var x = el('gt-fam'); if (x) x.remove(); }
+  function famCopy() {
+    if (!FAM_LINK) return;
+    var done = function () { toast('Link copied.'); }, fail = function () { var t = el('gt-fam-link'); if (t) { t.focus(); t.select(); } toast('Copy did not work here. The link is selected, ready to copy.'); };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(FAM_LINK).then(done, fail); return; } } catch (e) {}
+    fail();
+  }
+  function famShare() {
+    if (!FAM_LINK || !navigator.share) return;
+    navigator.share({ title: 'My tree in The Grove', text: 'Here is my tree for your grove. Open the link to add it.', url: FAM_LINK }).catch(function () {});
+  }
+
   /* ---------- find more practices (the shared library, Rebrand Session 5) ---------- */
   var LIBQ = { part: '', q: '', open: '' };
   function libAge() { return (typeof C.libAge === 'function' ? C.libAge() : C.libAge) || 'oak'; }
@@ -509,6 +589,7 @@
       Object.keys(old).forEach(function (k) { var L = (old[k] || {}).lib; if (L && L.length) { if (!s.plan[k]) s.plan[k] = { selected: [] }; if (!s.plan[k].lib) s.plan[k].lib = L; } });
       persist(); renderToday(); return true; },
     openLib: function (part) { openLib(part); }, closeLib: function () { closeLib(); },
+    shareFamily: function () { openFamily(); }, closeFamily: function () { closeFamily(); }, famDraw: function () { famDraw(); }, famCopy: function () { famCopy(); }, famShare: function () { famShare(); },
     libFind: function (q) { LIBQ.q = q; drawLib(); }, libPart: function (p) { LIBQ.part = p; LIBQ.q = ''; var f = el('gt-lib-q'); if (f) f.value = ''; drawLib(); },
     libHow: function (safe) { var k = decodeURIComponent(safe); LIBQ.open = LIBQ.open === k ? '' : k; drawLib(); },
     libToggle: function (safe) { libToggle(decodeURIComponent(safe)); },

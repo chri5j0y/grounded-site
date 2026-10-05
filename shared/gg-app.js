@@ -43,6 +43,13 @@
      GGApp.visit.pending()           Aspen: a card waiting, or null
      GGApp.visit.clear()
 
+   Share to Family: a person's tree, sent by hand to family on other phones
+     GGApp.family.url(o)             o {v, i, n, t, g, p, d, w, m}, see SHARE TO FAMILY
+                                     a link to The Grove with the tree after the #
+     GGApp.family.pending()          The Grove: a tree waiting, or null
+     GGApp.family.bad()              true once if a link arrived that could not be read
+     GGApp.family.clear()
+
    Inside an app, the website's menus are hidden: no site menu, Tools
    panel, or footer links except Privacy and Terms (they open in the
    phone's browser). Lock now stays in the Field Guide.
@@ -356,14 +363,66 @@
     return true;
   }
 
+  /* ---------------- SHARE TO FAMILY (BLD 732) ----------------
+     A person's tree, sent by hand from their own tree app to family on other phones.
+     No server: the tree rides after the # in a link to The Grove, and The Grove asks
+     before adding it. Only these fields travel, and only in this exact shape:
+       v  1 (the format)
+       i  a random share id that stays the same for that person (12 letters and digits)
+       n  first name
+       t  which tree: maple, aspen, or oak
+       g  days tended (how grown the tree is drawn)
+       p  parts tended in the 7 days before it was made, as digits 0 to 5 in PART order
+       d  1 if they tended on the day it was made, otherwise 0
+       w  days tended that week (Monday to Sunday), 0 to 7
+       m  when it was made, in seconds (a newer code replaces an older one)
+     Never answers, scores, levels, notes, journals, safety or faith answers, or the growth plan.
+     Anything else in a code, or anything out of shape, and the whole code is ignored. */
+  var FPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'], FTREES = ['maple', 'aspen', 'oak'];
+  var FKEYS = ['v', 'i', 'n', 't', 'g', 'p', 'd', 'w', 'm'], FPEND = 'gg-fam-in', FBAD = 'gg-fam-bad';
+  var F_EARLIEST = 1767225600;   // January 1, 2026
+  function fname(s) {
+    s = String(s == null ? '' : s).trim().split(/\s+/)[0] || '';
+    return s.length >= 1 && s.length <= 24 && !/[<>&"`\\\u0000-\u001F\u007F]/.test(s) ? s : '';
+  }
+  function fint(x, lo, hi) { return typeof x === 'number' && Math.floor(x) === x && x >= lo && x <= hi; }
+  function fclean(o) {
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return null;
+    var ks = Object.keys(o);
+    if (ks.length !== FKEYS.length || ks.some(function (k) { return FKEYS.indexOf(k) < 0; })) return null;
+    if (o.v !== 1) return null;
+    if (typeof o.i !== 'string' || !/^[A-Za-z0-9_-]{12}$/.test(o.i)) return null;
+    if (typeof o.n !== 'string' || fname(o.n) !== o.n) return null;
+    if (FTREES.indexOf(o.t) < 0) return null;
+    if (!fint(o.g, 0, 36500) || !fint(o.d, 0, 1) || !fint(o.w, 0, 7)) return null;
+    if ((o.d && !o.w) || o.w > o.g) return null;
+    if (typeof o.p !== 'string' || !/^0?1?2?3?4?5?$/.test(o.p)) return null;
+    if (!fint(o.m, F_EARLIEST, Math.floor(Date.now() / 1000) + 2 * 86400)) return null;
+    return { v: 1, i: o.i, n: o.n, t: o.t, g: o.g, p: o.p, d: o.d, w: o.w, m: o.m };
+  }
+  function fcode(o) { var c = fclean(o); return c ? 'f1.' + enc64(JSON.stringify(c)) : ''; }
+  function funpack(s) { try { if (typeof s !== 'string' || s.length > 400 || !/^f1\.[A-Za-z0-9_-]+$/.test(s)) return null; return fclean(JSON.parse(dec64(s.slice(3)))); } catch (e) { return null; } }
+  function furl(o) { var c = fcode(o); return c ? SITE + '/grove/#gg-fam=' + c : ''; }
+  function fid() {
+    var b = new Uint8Array(9);
+    try { crypto.getRandomValues(b); } catch (e) { for (var i = 0; i < 9; i++) b[i] = Math.floor(Math.random() * 256); }
+    return btoa(String.fromCharCode.apply(null, b)).replace(/\+/g, '-').replace(/\//g, '_');
+  }
+  function takeFam(h) {
+    var m = /[#&]gg-fam=([^&]*)/.exec(h || ''); if (!m) return false;
+    var c = funpack(m[1]);
+    try { if (c) { sessionStorage.setItem(FPEND, JSON.stringify(c)); sessionStorage.removeItem(FBAD); } else sessionStorage.setItem(FBAD, '1'); } catch (e) {}
+    return true;
+  }
+
   // The Grove (or Aspen) reads what arrived in its own link, then wipes it from the address bar right away.
-  if (takeHash(location.hash) | takeVisit(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  if (takeHash(location.hash) | takeVisit(location.hash) | takeFam(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   // A link opened while the page is already open (same tab) only changes the part after the #.
   window.addEventListener('hashchange', function () {
-    var h = location.hash, a = takeHash(h), v = takeVisit(h);
-    if (!a && !v) return;
+    var h = location.hash, a = takeHash(h), v = takeVisit(h), f = takeFam(h);
+    if (!a && !v && !f) return;
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-    try { if (a) window.dispatchEvent(new CustomEvent('gg-handoff')); if (v) window.dispatchEvent(new CustomEvent('gg-visit')); } catch (e) {}
+    try { if (a) window.dispatchEvent(new CustomEvent('gg-handoff')); if (v) window.dispatchEvent(new CustomEvent('gg-visit')); if (f) window.dispatchEvent(new CustomEvent('gg-fam')); } catch (e) {}
   });
   var APP = P('App');
   if (APP && APP.addListener) {
@@ -371,6 +430,7 @@
       var u = (d && d.url) || '', h = u.slice(u.indexOf('#'));
       if (takeHash(h)) { try { window.dispatchEvent(new CustomEvent('gg-handoff')); } catch (e) {} }
       if (takeVisit(h)) { try { window.dispatchEvent(new CustomEvent('gg-visit')); } catch (e) {} }
+      if (takeFam(h)) { try { window.dispatchEvent(new CustomEvent('gg-fam')); } catch (e) {} }
     });
   }
   function url(entry) { var c = code(entry); return c ? SITE + '/grove/#gg-in=' + c : ''; }
@@ -434,6 +494,12 @@
       pending: function () { try { return clean(JSON.parse(sessionStorage.getItem(PEND))); } catch (e) { return null; } },
       clear: function () { try { sessionStorage.removeItem(PEND); } catch (e) {} },
       fromName: function (f) { return FROM[f] || 'another Grounded tool'; }
+    },
+    family: {
+      code: fcode, url: furl, unpack: funpack, clean: fclean, newId: fid, firstName: fname, parts: FPARTS.slice(),
+      pending: function () { try { return fclean(JSON.parse(sessionStorage.getItem(FPEND))); } catch (e) { return null; } },
+      bad: function () { try { var b = sessionStorage.getItem(FBAD) === '1'; sessionStorage.removeItem(FBAD); return b; } catch (e) { return false; } },
+      clear: function () { try { sessionStorage.removeItem(FPEND); } catch (e) {} }
     },
     visit: {
       code: vcode, url: vurl, unpack: vunpack,

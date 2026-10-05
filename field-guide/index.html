@@ -591,15 +591,15 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=tc1"></script>
+<script src="../shared/gg-app.js?v=tc2"></script>
 <script src="../shared/gg-backup.js?v=bk1"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc2"></script>
 <script src="../shared/gg-sources.js?v=src7"></script>
-<script src="../shared/gg-learn.js?v=ln23"></script>
+<script src="../shared/gg-learn.js?v=ln24"></script>
 <script src="../shared/gg-print.js?v=pr1"></script>
-<script src="../shared/grove-scene.js"></script>
+<script src="../shared/grove-scene.js?v=w2b"></script>
 <script src="qr.js"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -896,6 +896,26 @@ function render(){
 }
 function go(tab, extra){ if (typeof lnStop === 'function' && LN) lnStop(); V = Object.assign({tab}, extra||{}); render(); }
 
+// ---------------- TAB CARDS (GWG BLD 732) ----------------
+// Long tabs open to a grid of cards, like Learn. Tapping a card opens that section alone, with a Back link to the cards.
+// SEC[tab] is the open section. It stays put through render() and go(tab), so a button inside a section lands back
+// in the same section. Tapping the tab itself in the tab bar returns to the cards. A data-tab button can carry
+// data-sec to open a tab straight to one section. Cards with their own act (Story Lab, a training) open that view directly.
+const SEC = {};
+const secPick = (tab, list) => { const k = SEC[tab]; return k && list.some(c => c && c.k === k) ? k : null; };
+function secCards(tab, list){
+  return `<div class="lc-cats">${list.filter(Boolean).map(c => `<button class="card lc-cat${c.hot ? ' sec-hot' : ''}" style="border-left-color:${c.hot ? 'var(--danger)' : (c.accent || 'var(--gold)')}" data-act="${c.act || 'sec-open'}" data-v="${esc(c.act ? (c.v || '') : tab + '|' + c.k)}">${c.eb ? `<div class="eyebrow" style="color:${c.accent || 'var(--gold)'}">${esc(c.eb)}</div>` : ''}<h3>${esc(c.title)}</h3>${c.desc ? `<p class="muted">${esc(c.desc)}</p>` : ''}${c.n ? `<p class="lc-n">${esc(c.n)}</p>` : ''}</button>`).join('')}</div>`;
+}
+const secBack = (tab, label) => `<button class="linkbtn" data-act="sec-home" data-v="${esc(tab)}">&larr; ${esc(label)}</button>`;
+// One section on its own: the Back link, then the section's own cards.
+const secPage = (tab, label, html) => `<div class="sec-page">${secBack(tab, label)}<div style="margin-top:12px">${html}</div></div>`;
+function secAct(a, v){
+  if (a === 'sec-open'){ const i = String(v).indexOf('|'), tab = String(v).slice(0, i); SEC[tab] = String(v).slice(i + 1); render(); window.scrollTo(0, 0); return true; }
+  if (a === 'sec-home'){ SEC[v] = null; if (V.tab === v) render(); else go(v); window.scrollTo(0, 0); return true; }
+  return false;
+}
+const trainNote = m => m.complete ? (m.dueSoon ? 'Time to renew, by ' + nice(m.renewBy) : 'Complete. Renew by ' + nice(m.renewBy)) : m.done + ' of ' + m.total + ' steps done';
+
 // ---------------- icons ----------------
 const IC = {
  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
@@ -953,7 +973,7 @@ function vHome(){
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 style="margin-top:18px">Start a Session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -967,8 +987,15 @@ function addDays(s, n){ const [y,m,d] = s.split('-').map(Number); const t = new 
 // ---------------- GUIDES ----------------
 function vGuides(){
   if (V.guide) return vGuide(G(V.guide));
+  // Guides open to one card per kind of session (GWG BLD 732). Each card opens its guides.
+  const item = g => `<button class="gitem" data-act="guide" data-v="${g.id}"><span class="qi">${icon(catIcon(g.cat))}</span><span><b>${esc(g.title)}</b><small>${esc(g.length)}</small></span><span class="arr" aria-hidden="true">&rsaquo;</span></button>`;
+  const cards = CATS.map(([c,l]) => { const gs = LIB.guides.filter(g => g.cat === c); if (!gs.length) return null;
+    const names = gs.slice(0, 3).map(g => g.title).join(', ') + (gs.length > 3 ? ', and ' + (gs.length - 3) + ' more' : '');
+    return {k: c, title: l, desc: names, n: gs.length + (gs.length === 1 ? ' guide' : ' guides'), accent: c === 'safety' ? 'var(--danger)' : 'var(--gold)', gs}; }).filter(Boolean);
+  const C = secPick('guides', cards);
+  if (C){ const x = cards.find(y => y.k === C); return secPage('guides', 'Back to Guides', `<div class="page-head"><div class="eyebrow">Session guides</div><h1>${x.title}</h1></div>${x.gs.map(item).join('')}`); }
   return `<div class="page-head"><div class="eyebrow">Session guides</div><h1>The Grounded way</h1><p>Step-by-step guides for every session. Read one ahead of time, or tap Start to be walked through it live.</p></div>
-  ${CATS.map(([c,l]) => { const gs = LIB.guides.filter(g => g.cat === c); return gs.length ? `<h3 class="gcat">${l}</h3>${gs.map(g => `<button class="gitem" data-act="guide" data-v="${g.id}"><span class="qi">${icon(catIcon(g.cat))}</span><span><b>${esc(g.title)}</b><small>${esc(g.length)}</small></span><span class="arr" aria-hidden="true">&rsaquo;</span></button>`).join('')}` : ''; }).join('')}`;
+  ${secCards('guides', cards)}`;
 }
 function stepHTML(s, i, forPrint){
   const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${mark(x)}</li>`).join('')}</ul></div>` : '';
@@ -1106,8 +1133,18 @@ function vSession(s){
 
 // ---------------- LIBRARY ----------------
 function vLibrary(){
-  const sub = V.sub || 'services';
-  const tabs = [['services','Services & rates'],['policies','Policies'],['docs','Documents'],['emails','Emails'],['readings','Readings'],['stories','Story shelf'],['referrals','Referrals']];
+  // Library opens to cards (GWG BLD 732). Each card opens one shelf; go('library', {sub}) still opens a shelf directly.
+  const cnt = (n, one, many) => n + ' ' + (n === 1 ? one : many);
+  const cards = [
+    {k: 'services', title: 'Services and Rates', desc: 'What each service includes, and its rates.', n: cnt(LIB.services.length, 'service', 'services')},
+    {k: 'policies', title: 'Policies', desc: 'How Grounded works, in plain words.', n: cnt(LIB.policies.length, 'policy', 'policies')},
+    {k: 'docs', title: 'Documents', desc: 'Forms to fill in here and print, or print blank.', n: cnt(LIB.docs.length, 'document', 'documents')},
+    {k: 'emails', title: 'Emails', desc: 'Emails to copy and send.', n: cnt(LIB.emails.length, 'email', 'emails')},
+    {k: 'readings', title: 'Readings', desc: 'Readings and blessings to copy.', n: cnt(LIB.readings.length, 'reading', 'readings')},
+    {k: 'stories', title: 'Story Shelf', desc: 'Stories to share, sorted by topic.', n: cnt(LIB.stories.length, 'story', 'stories')},
+    {k: 'referrals', title: 'Referrals', desc: 'Where to send someone next, and your own referral notes.', n: cnt(LIB.referrals.length, 'referral', 'referrals')}];
+  const sub = cards.some(c => c.k === V.sub) ? V.sub : null;
+  if (!sub) return `<div class="page-head"><div class="eyebrow">Library</div><h1>Everything in one place</h1></div>${secCards('library', cards).replace(/data-act="sec-open" data-v="library\|/g, 'data-act="lib" data-v="')}`;
   let body = '';
   if (sub === 'services') body = LIB.services.map(s => `<div class="card"><div class="eyebrow">${esc(s.short)}</div><h3>${esc(s.title)}</h3><p class="purpose" style="font-size:19px;margin:4px 0 10px">${esc(s.promise)}</p>
       <div class="grid g2"><div><h4>What's included</h4><ul class="checklist">${s.included.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
@@ -1120,8 +1157,8 @@ function vLibrary(){
   if (sub === 'stories') { const t = V.stag || 'eol'; body = `<div class="sub-tabs">${LIB.storyTags.map(([k,l]) => `<button class="chip" aria-pressed="${t===k}" data-act="stag" data-v="${k}">${l}</button>`).join('')}</div>
       <div class="card">${LIB.stories.filter(s => s[2] === t).map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s[0])}</b>${s[3] ? `<br><small class="muted">${esc(s[3])}</small>` : ''}</div><div class="row"><a class="btn btn-line btn-sm" href="${esc(s[1])}" target="_blank" rel="noopener">Open</a><button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(s[1])}">${icon('copy')} Link</button></div></div>`).join('')}</div>`; }
   if (sub === 'referrals') body = LIB.referrals.map(r => `<div class="card"><h3>${esc(r[0])}</h3><p style="margin-top:6px">${mark(r[1])}</p></div>`).join('') + `<div class="card"><h3>Your Referral Notes</h3><p class="muted">Names and numbers you trust, saved encrypted on this device.</p><textarea data-set="referrals" style="margin-top:8px;min-height:160px">${esc(DATA.settings.referrals||'')}</textarea></div>`;
-  return `<div class="page-head"><div class="eyebrow">Library</div><h1>Everything in one place</h1></div>
-  <div class="sub-tabs">${tabs.map(([k,l]) => `<button class="chip" aria-pressed="${sub===k}" data-act="lib" data-v="${k}">${l}</button>`).join('')}</div>${body}`;
+  if (sub === 'docs' && V.doc) return body;
+  return `<button class="linkbtn" data-act="lib" data-v="">&larr; Back to Library</button><div class="page-head" style="margin-top:12px"><div class="eyebrow">Library</div><h1>${esc(cards.find(c => c.k === sub).title)}</h1></div>${body}`;
 }
 function docForm(d){
   return `<button class="btn btn-line btn-sm" data-act="lib" data-v="docs">${icon('back')} All documents</button>
@@ -1133,18 +1170,24 @@ function docForm(d){
 // ---------------- TRAINING ----------------
 function vTraining(){
   const T = LIB.training, P = DATA.training.progress, svcs = [['first','First Conversation'],['eol','End-of-Life Support'],['vigil','Vigil Sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual Guidance'],['grief','Grief & Caregiver'],['speaking','Speaking']];
-  return `<div class="page-head"><div class="eyebrow">Training &middot; Proprietary and confidential</div><h1>Learning the Grounded way</h1></div>
-  ${OR() ? orStatusCard() : ''}
-  <div class="card"><p class="purpose">${esc(T.welcome)}</p></div>
-  <div class="card"><h3>Our Values</h3>${T.values.map(v => `<p style="margin-top:10px"><b style="font-family:'Cormorant Garamond',serif;font-size:21px">${esc(v[0])}</b><br><span class="muted">${esc(v[1])}</span></p>`).join('')}</div>
-  <div class="card"><h3>Core Skills</h3><ul class="checklist" style="margin-top:8px">${T.competencies.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
-  <div class="card"><h3>Three levels for every service</h3><div class="lv" style="margin-top:10px">${T.levels.map(l => `<div><b>${esc(l[0])}</b><p class="muted" style="font-size:15px;margin-top:4px">${esc(l[1])}</p></div>`).join('')}</div>
+  // Training opens to cards (GWG BLD 732). Each card opens one part.
+  const head = `<div class="page-head"><div class="eyebrow">Training &middot; Proprietary and confidential</div><h1>Learning the Grounded way</h1></div>`, orH = `  ${OR() ? orStatusCard() : ''}`;
+  const wel = `  <div class="card"><p class="purpose">${esc(T.welcome)}</p></div>
+  <div class="card"><h3>Our Values</h3>${T.values.map(v => `<p style="margin-top:10px"><b style="font-family:'Cormorant Garamond',serif;font-size:21px">${esc(v[0])}</b><br><span class="muted">${esc(v[1])}</span></p>`).join('')}</div>`, core = `  <div class="card"><h3>Core Skills</h3><ul class="checklist" style="margin-top:8px">${T.competencies.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>`, lev = `  <div class="card"><h3>Three levels for every service</h3><div class="lv" style="margin-top:10px">${T.levels.map(l => `<div><b>${esc(l[0])}</b><p class="muted" style="font-size:15px;margin-top:4px">${esc(l[1])}</p></div>`).join('')}</div>
    <h4 style="margin-top:18px">My progress</h4><div style="overflow-x:auto"><table class="prog-table"><tr><th>Service</th>${T.levels.map(l => `<th>${esc(l[0])}</th>`).join('')}<th>Signed off by</th></tr>
-   ${svcs.map(([k,l]) => `<tr><td>${l}</td>${T.levels.map((lv,i) => `<td><input type="checkbox" aria-label="${l} ${lv[0]}" data-tp="${k}_${i}" ${P[k+'_'+i]?'checked':''}></td>`).join('')}<td><input type="text" data-tp="${k}_by" value="${esc(P[k+'_by']||'')}" style="min-width:120px;padding:8px"></td></tr>`).join('')}</table></div></div>
-  <div class="card"><h3>Practice Scenarios</h3><p class="muted">Role-play these with Chris or another practitioner. Swap roles, then talk about what you noticed.</p>${T.scenarios.map((s,i) => `<p style="margin-top:12px"><b>${i+1}. ${esc(s[0])}.</b> ${esc(s[1])}</p>`).join('')}</div>
-  <div class="card"><h3>Practitioner Agreement</h3><ul class="checklist" style="margin-top:8px">${T.agreement.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+   ${svcs.map(([k,l]) => `<tr><td>${l}</td>${T.levels.map((lv,i) => `<td><input type="checkbox" aria-label="${l} ${lv[0]}" data-tp="${k}_${i}" ${P[k+'_'+i]?'checked':''}></td>`).join('')}<td><input type="text" data-tp="${k}_by" value="${esc(P[k+'_by']||'')}" style="min-width:120px;padding:8px"></td></tr>`).join('')}</table></div></div>`, scen = `  <div class="card"><h3>Practice Scenarios</h3><p class="muted">Role-play these with Chris or another practitioner. Swap roles, then talk about what you noticed.</p>${T.scenarios.map((s,i) => `<p style="margin-top:12px"><b>${i+1}. ${esc(s[0])}.</b> ${esc(s[1])}</p>`).join('')}</div>`, agr = `  <div class="card"><h3>Practitioner Agreement</h3><ul class="checklist" style="margin-top:8px">${T.agreement.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
    ${DATA.training.agreed ? `<p class="pill sage" style="margin-top:10px">Agreed ${nice(DATA.training.agreed)}</p>` : `<label class="cb"><input type="checkbox" data-act-cb="agree"> I have read and agree to the practitioner agreement.</label>`}
    <div class="row" style="margin-top:12px"><button class="btn btn-line" data-act="print-agreement">${icon('print')} Save or Print Agreement to Sign</button><button class="btn btn-line" data-act="print-cert">${icon('print')} Save or Print Certificate</button></div></div>`;
+  const ticks = svcs.reduce((n, [k]) => n + T.levels.filter((lv, i) => P[k + '_' + i]).length, 0), tAll = svcs.length * T.levels.length;
+  const cards = [
+    {k: 'welcome', title: 'Welcome and Our Values', desc: 'A welcome, and the values Grounded holds.', n: T.values.length + (T.values.length === 1 ? ' value' : ' values')},
+    {k: 'core', title: 'Core Skills', desc: 'The skills every Grounded practitioner grows.', n: T.competencies.length + (T.competencies.length === 1 ? ' skill' : ' skills')},
+    {k: 'levels', title: 'Three Levels and My Progress', desc: 'Three levels for every service, and a place to check off each one.', n: ticks + ' of ' + tAll + ' checked'},
+    {k: 'scen', title: 'Practice Scenarios', desc: 'Role-plays to practice with Chris or another practitioner.', n: T.scenarios.length + (T.scenarios.length === 1 ? ' scenario' : ' scenarios')},
+    {k: 'agree', title: 'Practitioner Agreement', desc: 'Read it, agree, and save or print it to sign. Your certificate is here too.', n: DATA.training.agreed ? 'Agreed ' + nice(DATA.training.agreed) : 'Ready to read and agree'}];
+  const C = secPick('training', cards), part = {welcome: wel, core, levels: lev, scen, agree: agr}[C];
+  if (part) return secPage('training', 'Back to Training', part);
+  return head + orH + secCards('training', cards);
 }
 
 // ---------------- SAFETY ----------------
@@ -1403,39 +1446,65 @@ function vFounder(){
   const shown = V.show ? saved(V.show) : null;
   const pr = FDR.pricing; // tiers are [label, price] rows; a row with no price is a group heading (W1)
   const fileRows = d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
-  return `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>
-  ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
+  const head = `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>`;
+  const shownH = `  ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
     <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here.${live.has(shown.id) ? '' : ' It starts working once you upload codes.js.'}</p>
-    <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="fdr-hide">Done</button></div></div>` : ''}
-  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Founder device opens everything from now on.</p>
+    <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="fdr-hide">Done</button></div></div>` : ''}`;
+  const setupH = `  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Founder device opens everything from now on.</p>
     <label class="f" for="fdr-sc">Staff code</label><input type="password" id="fdr-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
     <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="fdr-addstaff">Add Staff Access</button></div>`
-    : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish Setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Field libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}
-  ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
-    <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-discard">Discard These Changes</button></div></div>` : ''}
-  <div class="card"><h3>Access Codes</h3><p class="muted">A code is only used once, to set up a device. After that, each person unlocks with their own passcode.</p>
+    : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish Setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Field libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}`;
+  const readyH = `  ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
+    <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-discard">Discard These Changes</button></div></div>` : ''}`;
+  const codesH = `  <div class="card"><h3>Access Codes</h3><p class="muted">A code is only used once, to set up a device. After that, each person unlocks with their own passcode.</p>
    <div style="margin-top:8px">${list.map(e => { const ended = e.ends && e.ends < today(), sv = saved(e.id); return `<div class="list-row"><div class="lr-main"><b>${esc(e.label)}</b> <span class="pill">${esc(LEVEL_NAME[e.kind || e.tier])}</span>${live.has(e.id) ? '' : ' <span class="pill warn">Not uploaded yet</span>'}${ended ? ' <span class="pill warn">Ended</span>' : ''}<br><small class="muted">Made ${nice(e.made)} &middot; ${e.ends ? 'ends ' + nice(e.ends) : 'no end date'}</small></div><div class="row">${sv ? `<button class="btn btn-line btn-sm" data-act="fdr-show" data-v="${e.id}">Show</button>` : ''}<button class="btn btn-line btn-sm" data-act="fdr-remove" data-v="${e.id}">Remove</button></div></div>`; }).join('')}
-   ${legacyLive ? `<div class="list-row"><div class="lr-main"><b>Staff code</b> <span class="pill">Staff</span><br><small class="muted">The code from before levels. It works until you rotate Staff.</small></div></div>` : ''}</div></div>
-  <div class="card"><h3>Make a Code</h3>
+   ${legacyLive ? `<div class="list-row"><div class="lr-main"><b>Staff code</b> <span class="pill">Staff</span><br><small class="muted">The code from before levels. It works until you rotate Staff.</small></div></div>` : ''}</div></div>`;
+  const makeH = `  <div class="card"><h3>Make a Code</h3>
    <label class="f" for="fdr-kind">Kind</label><select id="fdr-kind"><option value="org">Organization (Field)</option><option value="field">Individual (Field)</option><option value="staff">Staff</option><option value="founder">Founder</option></select>
    <label class="f" for="fdr-label">Name</label><input type="text" id="fdr-label" placeholder="Organization or person">
    <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. New Field users go through Orientation before anything else opens.</p>
-   <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make">Make Code</button></div>
-  <div class="card"><h3>Rotate a Level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Field for the yearly change.</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make">Make Code</button></div>`;
+  const rotH = `  <div class="card"><h3>Rotate a Level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Field for the yearly change.</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="field">Rotate Field</button><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="staff">Rotate Staff</button><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="founder">Rotate Founder</button></div>
-   <p class="muted" style="font-size:14px;margin-top:10px">Removing a code stops it from setting up new devices and ends it on devices that already use it. For a clean break, rotate the level too.</p></div>
-  ${vUpdateCard()}
-  <div class="card"><h3>Private Pricing</h3><p class="muted">${esc(pr.intro)}</p>
+   <p class="muted" style="font-size:14px;margin-top:10px">Removing a code stops it from setting up new devices and ends it on devices that already use it. For a clean break, rotate the level too.</p></div>`;
+  const priceH = `  <div class="card"><h3>Private Pricing</h3><p class="muted">${esc(pr.intro)}</p>
    <div style="margin-top:8px">${pr.tiers.map(t => t.length < 2 || !t[1] ? `<h4 style="margin-top:14px">${esc(t[0])}</h4>` : `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
-   ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>
-  ${vBiz()}
-  ${slCard()}
-  ${vProof()}
-  ${vSpeak()}
-  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>
-  ${FLD ? spFounderCard() : ''}
+   ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>`;
+  const fieldH = () => `  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+  const guidesH = () => `  ${FLD ? spFounderCard() : ''}
   ${FLD ? saFounderCard() : ''}
   ${FLD ? wlFounderCard() : ''}`;
+  // Founder opens to cards (GWG BLD 732). A new update to seal opens Update a Library, so its card is in view.
+  if (V.upd && !V.upd.seen){ V.upd.seen = 1; SEC.founder = 'upd'; }
+  const P = prData(); let pAll = 0, pFin = 0; if (P) P.sections.forEach(sec => sec.lines.forEach(l => { pAll++; if (prDone(l[0])) pFin++; }));
+  const B = bizLib(), bizN = B ? (B.order || Object.keys(B.docs || {})).filter(id => (B.docs || {})[id]).length : 0;
+  const SPK = FDR && FDR.speaking, slN = SL() ? slCount() : null, mapleDue = FLD && SPG() && SPG().report && addDays(today(), 30) >= addYear(SPG().report.checked);
+  const nFiles = d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0, notUp = list.filter(e => !live.has(e.id)).length;
+  const cards = [
+    d ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
+    {k: 'codes', title: 'Access Codes', desc: 'Make, find, copy, and end access codes.', n: list.length + (list.length === 1 ? ' code' : ' codes') + (notUp ? ', ' + notUp + ' not uploaded yet' : '')},
+    {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Field for the yearly change.'},
+    {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: V.upd ? 'An update is ready to seal' : '', hot: !!V.upd},
+    P ? {k: 'proof', title: 'Proofreading', desc: 'Every new line of writing, to approve, read along, or suggest an edit.', n: pFin + ' of ' + pAll + ' lines approved'} : null,
+    slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
+    SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
+    B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
+    {k: 'pricing', title: 'Private Pricing', desc: 'Rates and pricing notes for Chris and Kayti.'},
+    {k: 'field', title: 'What Field Users See', desc: 'Which guides are open to Field users, Orientation, and the welcome.'},
+    FLD ? {k: 'guides', title: 'Maple, Aspen, and Willow', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
+  ];
+  const C2 = secPick('founder', cards), back = h => secPage('founder', 'Back to Founder', h);
+  if (C2 === 'ready') return back(readyH);
+  if (C2 === 'codes') return back(shownH + setupH + codesH + makeH);
+  if (C2 === 'rotate') return back(shownH + rotH);
+  if (C2 === 'upd') return back(vUpdateCard());
+  if (C2 === 'proof') return back(vProof());
+  if (C2 === 'speak') return back(vSpeak());
+  if (C2 === 'biz') return back(vBiz());
+  if (C2 === 'pricing') return back(priceH);
+  if (C2 === 'field') return back(fieldH());
+  if (C2 === 'guides') return back(guidesH());
+  return head + shownH + setupH + secCards('founder', cards);
 }
 
 
@@ -2117,20 +2186,25 @@ function vST(){
   if (V.stp) { const c = CL(V.stp); if (c) return vSTPerson(c); }
   const S = STG(), list = stPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), me = stMe();
   const local = stLocalCount();
-  return `<div class="hello st-hello"><div class="eyebrow" style="color:#E0A85C">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  ${stmCard()}
-  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}<div class="row" style="margin-top:12px">${S.report ? stShield('') : ''}${STM() && stReady() ? `<button class="btn btn-line btn-sm" data-act="st-mhome">${icon('cap')} Training</button>` : ''}</div></div>
-  <div class="card"><h3>Someone new</h3>
+  // Oak opens to cards (GWG BLD 732). Each card opens one part; Report a Concern stays on the cards page.
+  const hello = `<div class="hello st-hello"><div class="eyebrow" style="color:#E0A85C">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, top = `  ${stmCard()}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}<div class="row" style="margin-top:12px">${S.report ? stShield('') : ''}${STM() && stReady() ? `<button class="btn btn-line btn-sm" data-act="st-mhome">${icon('cap')} Training</button>` : ''}</div></div>`, add = `  <div class="card"><h3>Someone new</h3>
    <div class="grid g2"><div><label class="f" for="st-nn">Code or initials</label><input type="text" id="st-nn" autocomplete="off" placeholder="R.M. or Room 12"></div>
    <div><label class="f" for="st-nt">Who they are</label><select id="st-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
-   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="st-new">${icon('plus')} Add Person</button><button class="btn btn-line" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>
-  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
-   ${list.length ? list.map(c => { const last = stVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(stTypeName(c.st.type))}</span>${stHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${stVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>
-  <div class="card st-me"><div class="spread"><div><h3>My Own Tree</h3><p class="muted">${esc(S.meNote)}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="st-me">Start My Tree</button>`}</div></div>
-  <div class="card"><h3>Move Sessions from Public Oak</h3><p class="muted">${esc(S.importNote)}</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="st-new">${icon('plus')} Add Person</button><button class="btn btn-line" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>`, people = `  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = stVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(stTypeName(c.st.type))}</span>${stHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${stVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>`, mine = `  <div class="card st-me"><div class="spread"><div><h3>My Own Tree</h3><p class="muted">${esc(S.meNote)}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="st-me">Start My Tree</button>`}</div></div>`, move = `  <div class="card"><h3>Move Sessions from Public Oak</h3><p class="muted">${esc(S.importNote)}</p>
    <div class="row" style="margin-top:10px">${local ? `<button class="btn btn-line btn-sm" data-act="st-imp-local">Move ${local} ${local === 1 ? 'Person' : 'People'} From This Browser</button>` : '<span class="muted" style="font-size:15px">None found in this browser.</span>'}
    <label class="btn btn-line btn-sm" style="cursor:pointer">From a Practitioner Backup File<input type="file" id="st-imp-file" accept=".json,application/json" hidden></label></div></div>`;
+  const need = list.filter(c => !stHasConsent(c)).length;
+  const cards = [
+    {k: 'people', title: 'People', desc: 'Add someone new, try a demo visit, or open someone you visit.', n: list.length + (list.length === 1 ? ' person' : ' people') + (need ? ', ' + need + ' needing consent' : '')},
+    {k: 'me', title: 'My Own Tree', desc: S.meNote || '', n: me ? 'Started' : ''},
+    STM() ? {title: 'Oak Guide Training', desc: 'Lessons, scenarios, and the agreement for Oak visits.', n: trainNote(stmState()), act: 'st-mhome'} : null,
+    {k: 'about', title: 'About Oak Guide', desc: 'How Oak Guide works.'},
+    {k: 'move', title: 'Move Sessions from Public Oak', desc: 'Bring people from the public Oak tool into the Field Guide.', n: local ? local + ' found in this browser' : ''}];
+  const C = secPick('oak', cards), part = {people: add + people, me: mine, about, move}[C];
+  if (part) return secPage('oak', 'Back to Oak Guide', part);
+  return hello + top + secCards('oak', cards) + (S.report ? `<div class="row" style="margin-top:14px">${stShield('')}</div>` : '');
 }
 function vSTConsent(c){
   const C = STG().consent, cur = c.st.consent || {};
@@ -2521,24 +2595,28 @@ function vGV(){
   const list = DATA.clients.filter(c => c.gv && c.status !== 'closed').sort((a,b) => (b.gv.start || '').localeCompare(a.gv.start || ''));
   const others = DATA.clients.filter(c => !c.gv && c.status !== 'closed' && !(c.st && c.st.type === 'me'));
   const local = gvLocalPeople().length, I = S.introduce;
-  return `<div class="hello gv-hello"><div class="eyebrow" style="color:#B9D3A6">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
-  <div class="card"><h3>Someone new</h3>
+  // The Grove opens to cards (GWG BLD 732).
+  const hello = `<div class="hello gv-hello"><div class="eyebrow" style="color:#B9D3A6">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>Someone new</h3>
    <div class="grid g2"><div><label class="f" for="gv-nn">Code or initials</label><input type="text" id="gv-nn" autocomplete="off" placeholder="R.M. or Room 12"></div>
    <div><label class="f" for="gv-nt">Who they are</label><select id="gv-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.privacy)}</p>
    <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="gv-new">${icon('plus')} Add and Plant</button></div>
-   ${others.length ? `<label class="f" for="gv-from">Or someone already in People</label><div class="row"><select id="gv-from" style="max-width:320px">${others.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select><button class="btn btn-line btn-sm" data-act="gv-from">Plant Their Tree</button></div>` : ''}</div>
-  <div class="card"><h3>Trees You're Tending</h3>
+   ${others.length ? `<label class="f" for="gv-from">Or someone already in People</label><div class="row"><select id="gv-from" style="max-width:320px">${others.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select><button class="btn btn-line btn-sm" data-act="gv-from">Plant Their Tree</button></div>` : ''}</div>`, trees = `  <div class="card"><h3>Trees You're Tending</h3>
    ${list.length ? list.map(c => { const T = c.gv, wi = gvWeek(T), wk = wi && !wi.before ? gvWeekDates(wi).filter(d => T.watered && T.watered[d]).length : 0;
      return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> ${gvPlanted(c) ? gvDots(T.parts || []) : ''}${gvHasConsent(c) ? '' : ` <span class="pill warn">${T.consent && T.consent.how === 'declined' ? 'Said no for now' : 'Consent needed'}</span>`}<br><small class="muted">${esc(gvStatus(T))}${wi && !wi.before && !wi.done ? ' &middot; ' + wk + ' of 7 days this week' : ''}</small></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">Open</button></div>`; }).join('')
-     : '<p class="muted" style="margin-top:8px">No trees yet. Add the first person you\'re walking with.</p>'}</div>
-  <div class="card"><h3>${esc(I.title)}</h3><div class="blk say"><div class="lab">Say</div><ul>${I.say.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
-   <ul class="checklist" style="margin-top:10px">${I.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
-  <div class="card"><h3>By setting</h3>${S.settings.map(x => `<p style="margin-top:10px"><b>${esc(x[0])}.</b> ${esc(x[1])}</p>`).join('')}</div>
-  <div class="card"><h3>Move Trees from Public Grove</h3><p class="muted">${esc(S.moveNote)}</p>
+     : '<p class="muted" style="margin-top:8px">No trees yet. Add the first person you\'re walking with.</p>'}</div>`, intro = `  <div class="card"><h3>${esc(I.title)}</h3><div class="blk say"><div class="lab">Say</div><ul>${I.say.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+   <ul class="checklist" style="margin-top:10px">${I.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>`, sets = `  <div class="card"><h3>By setting</h3>${S.settings.map(x => `<p style="margin-top:10px"><b>${esc(x[0])}.</b> ${esc(x[1])}</p>`).join('')}</div>`, move = `  <div class="card"><h3>Move Trees from Public Grove</h3><p class="muted">${esc(S.moveNote)}</p>
    <div class="row" style="margin-top:10px">${local ? `<button class="btn btn-line btn-sm" data-act="gv-imp-local">Move ${local} ${local === 1 ? 'Tree' : 'Trees'} From This Browser</button>` : '<span class="muted" style="font-size:15px">None found in this browser.</span>'}
    <label class="btn btn-line btn-sm" style="cursor:pointer">From a Grove File<input type="file" id="gv-imp-file" accept=".json,application/json" hidden></label></div></div>`;
+  const cards = [
+    {k: 'trees', title: 'Trees You\'re Tending', desc: 'Add and plant a tree for someone new, or open a tree you tend.', n: list.length + (list.length === 1 ? ' tree' : ' trees')},
+    {k: 'intro', title: I.title || 'Introducing the Grove', desc: 'What to say when you introduce it.'},
+    {k: 'sets', title: 'By Setting', desc: 'How the Grove fits each setting.', n: (S.settings || []).length + ((S.settings || []).length === 1 ? ' setting' : ' settings')},
+    {k: 'about', title: 'About the Grove Guide', desc: 'How the Grove Guide works.'},
+    {k: 'move', title: 'Move Trees from Public Grove', desc: 'Bring trees from the public Grove into the Field Guide.', n: local ? local + ' found in this browser' : ''}];
+  const C = secPick('grove', cards), part = {trees: add + trees, intro, sets, about, move}[C];
+  if (part) return secPage('grove', 'Back to the Grove Guide', part);
+  return hello + secCards('grove', cards);
 }
 // Consent, then planting, on one screen.
 function vGVPlant(c){
@@ -3079,26 +3157,30 @@ function vSP(){
   if (V.spv) return vSPVisit();
   if (V.spp){ const c = CL(V.spp); if (c) return vSPPerson(c); }
   const S = SPG(), list = spPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = spmState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
-  return `<div class="hello sp-hello"><div class="eyebrow" style="color:#9BD27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Maple training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sp-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Maple training' : 'Start with the Maple training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
-  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
-  <div class="card"><h3>A child</h3>
+  // Maple opens to cards (GWG BLD 732). The training reminder stays above the cards.
+  const hello = `<div class="hello sp-hello"><div class="eyebrow" style="color:#9BD27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, top = `  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Maple training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sp-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Maple training' : 'Start with the Maple training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>A child</h3>
    <div class="grid g2"><div><label class="f" for="sp-nn">First name or nickname</label><input type="text" id="sp-nn" autocomplete="off" placeholder="Mia"></div>
    <div><label class="f" for="sp-ng">Grade</label><select id="sp-ng">${SP_GRADES.map(g => `<option value="${g}">${spGradeName(g)}</option>`).join('')}</select></div>
    <div><label class="f" for="sp-nr">Their grown-up (relationship)</label><input type="text" id="sp-nr" placeholder="Mom, Grandpa, foster dad"></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
-   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sp-new">${icon('plus')} Add Child</button>${m.complete ? `<button class="btn btn-line" data-act="sp-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>
-  <div class="card"><div class="spread"><h3>Children</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
-   ${list.length ? list.map(c => { const last = spVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(spGradeName(c.sp.grade))}</span> ${spConsentOk(c) ? '' : spConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${spVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a child above.</p>'}</div>
-  <div class="card"><h3>Reporting</h3><p class="muted">Before your first visit, know who you would call. The Report a concern button is on every visit screen.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sp-new">${icon('plus')} Add Child</button>${m.complete ? `<button class="btn btn-line" data-act="sp-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>`, kids = `  <div class="card"><div class="spread"><h3>Children</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = spVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(spGradeName(c.sp.grade))}</span> ${spConsentOk(c) ? '' : spConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${spVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a child above.</p>'}</div>`, rep = `  <div class="card"><h3>Reporting</h3><p class="muted">Before your first visit, know who you would call. The Report a concern button is on every visit screen.</p>
    <label class="f" for="sp-st">Where you serve</label><select id="sp-st" data-spset="spState" style="max-width:320px"><option value="MN" ${(DATA.settings.spState || 'MN') === 'MN' ? 'selected' : ''}>Minnesota</option><option value="other" ${DATA.settings.spState === 'other' ? 'selected' : ''}>Another state</option></select>
    ${(DATA.settings.spState || 'MN') === 'MN' ? `<label class="f" for="sp-cty">Your usual county</label><select id="sp-cty" data-spset="spCounty" style="max-width:420px">${S.report.counties.map(x => `<option value="${x.id}" ${x.id === cty ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}<option value="other" ${cty === 'other' ? 'selected' : ''}>${own.name ? esc(own.name) + ' (my county)' : 'Somewhere else in Minnesota'}</option></select>` : ''}
    <h4 style="margin-top:14px">Your Reporting Contact</h4><p class="muted" style="font-size:14px">${k.mine ? 'Your own.' : 'Set by Grounded for everyone. You can change it for yourself.'}</p>
    <div class="grid g2"><div><label class="f" for="sp-k-who">Who to call</label><input type="text" id="sp-k-who" value="${esc(k.who)}" placeholder="My supervisor"></div><div><label class="f" for="sp-k-ph">Phone</label><input type="tel" id="sp-k-ph" value="${esc(k.phone)}"></div></div>
    <label class="f" for="sp-k-step">Your organization's step</label><input type="text" id="sp-k-step" value="${esc(k.step)}" placeholder="Tell my supervisor the same day">
-   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sp-k-save">Save My Contact</button>${k.mine ? '<button class="btn btn-line btn-sm" data-act="sp-k-reset">Use Grounded\'s</button>' : ''}<button class="btn btn-line btn-sm" data-act="sp-rep-new">Open the Reporting Card</button></div></div>
-  ${TIER !== 'field' && spReports().length ? `<p class="muted" style="font-size:14px;margin-top:10px">${spReports().length} report record${spReports().length === 1 ? '' : 's'} on this device, kept with each child.</p>` : ''}`;
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sp-k-save">Save My Contact</button>${k.mine ? '<button class="btn btn-line btn-sm" data-act="sp-k-reset">Use Grounded\'s</button>' : ''}<button class="btn btn-line btn-sm" data-act="sp-rep-new">Open the Reporting Card</button></div></div>`, repN = `  ${TIER !== 'field' && spReports().length ? `<p class="muted" style="font-size:14px;margin-top:10px">${spReports().length} report record${spReports().length === 1 ? '' : 's'} on this device, kept with each child.</p>` : ''}`;
+  const need = list.filter(c => !spConsentOk(c)).length;
+  const cards = [
+    {k: 'people', title: 'Children', desc: 'Add a child, try a demo visit, or open a child you visit.', n: list.length + (list.length === 1 ? ' child' : ' children') + (need ? ', ' + need + ' needing consent' : '')},
+    {k: 'report', title: 'Reporting', desc: 'Where you serve, your county, and who you would call.', n: (DATA.settings.spState || 'MN') === 'MN' ? 'Minnesota' : 'Another state'},
+    SPM() ? {title: 'Maple Guide Training', desc: 'Lessons, scenarios, and the agreement for Maple visits.', n: trainNote(m), act: 'sp-mhome'} : null,
+    {k: 'about', title: 'About Maple Guide', desc: 'How Maple Guide works.'}];
+  const C = secPick('maple', cards), part = {people: add + kids, report: rep + repN, about}[C];
+  if (part) return secPage('maple', 'Back to Maple Guide', part);
+  return hello + top + secCards('maple', cards);
 }
 function vSPConsent(c){
   const C = SPG().consent, cur = c.sp.consent || {}, how = V.spch || (cur.status === 'ok' ? cur.how : 'form'), boxes = cur.how === 'form' && cur.v === C.version ? (cur.boxes || []) : [];
@@ -3819,21 +3901,26 @@ function vSA(){
   if (V.sav) return vSAVisit();
   if (V.sap){ const c = CL(V.sap); if (c) return vSAPerson(c); }
   const S = SAG(), list = saPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = samState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
-  return `<div class="hello sa-hello"><div class="eyebrow" style="color:#A9D88A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>
-  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Aspen training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sa-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Aspen training' : 'Start with the Aspen training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
-  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
-  <div class="card"><h3>A student</h3>
+  // Aspen opens to cards (GWG BLD 732). The training reminder stays above the cards.
+  const hello = `<div class="hello sa-hello"><div class="eyebrow" style="color:#A9D88A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, top = `  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Aspen training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sa-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Aspen training' : 'Start with the Aspen training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>A student</h3>
    <div class="grid g2"><div><label class="f" for="sa-nn">First name or nickname</label><input type="text" id="sa-nn" autocomplete="off" placeholder="Jordan"></div>
    <div><label class="f" for="sa-ng">Grade</label><select id="sa-ng">${SA_GRADES.map(g => `<option value="${g}">${saGradeName(g)}</option>`).join('')}</select></div>
    <div><label class="f" for="sa-nr">Their grown-up (relationship)</label><input type="text" id="sa-nr" placeholder="Mom, Grandpa, foster dad"></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
-   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sa-new">${icon('plus')} Add Student</button>${m.complete ? `<button class="btn btn-line" data-act="sa-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>
-  <div class="card"><div class="spread"><h3>Students</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
-   ${list.length ? list.map(c => { const last = saVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(saGradeName(c.sa.grade))}</span> ${saConsentOk(c) ? '' : saConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${saVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a student above.</p>'}</div>
-  <div class="card"><h3>Reporting</h3><p class="muted">Aspen Guide and Maple Guide share one reporting setup. The Report a concern button is on every visit screen.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="sa-new">${icon('plus')} Add Student</button>${m.complete ? `<button class="btn btn-line" data-act="sa-demo">${icon('play')} Try a Demo Visit</button>` : ''}</div></div>`, kids = `  <div class="card"><div class="spread"><h3>Students</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = saVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(saGradeName(c.sa.grade))}</span> ${saConsentOk(c) ? '' : saConsentLine(c)}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${saVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add a student above.</p>'}</div>`, rep = `  <div class="card"><h3>Reporting</h3><p class="muted">Aspen Guide and Maple Guide share one reporting setup. The Report a concern button is on every visit screen.</p>
    <p style="margin-top:8px">${(DATA.settings.spState || 'MN') === 'MN' ? 'Minnesota' : 'Another state'}${(DATA.settings.spState || 'MN') === 'MN' ? ' &middot; ' + esc(cty === 'other' ? (own.name || 'Somewhere else in Minnesota') : ((spCounty(cty) || {}).name || '')) : ''}${k.who || k.phone ? ' &middot; contact: ' + esc(k.who) + (k.phone ? ' ' + esc(k.phone) : '') : ''}</p>
-   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sa-rep-new">Open the Reporting Card</button>${spOpen() ? '<button class="btn btn-line btn-sm" data-tab="maple">Change Your County or Contact</button>' : ''}</div></div>`;
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="sa-rep-new">Open the Reporting Card</button>${spOpen() ? '<button class="btn btn-line btn-sm" data-tab="maple" data-sec="report">Change Your County or Contact</button>' : ''}</div></div>`;
+  const need = list.filter(c => !saConsentOk(c)).length;
+  const cards = [
+    {k: 'people', title: 'Students', desc: 'Add a student, try a demo visit, or open a student you visit.', n: list.length + (list.length === 1 ? ' student' : ' students') + (need ? ', ' + need + ' needing consent' : '')},
+    {k: 'report', title: 'Reporting', desc: 'The reporting card Aspen Guide shares with Maple Guide.'},
+    SAM() ? {title: 'Aspen Guide Training', desc: 'Lessons, scenarios, and the agreement for Aspen visits.', n: trainNote(m), act: 'sa-mhome'} : null,
+    {k: 'about', title: 'About Aspen Guide', desc: 'How Aspen Guide works.'}];
+  const C = secPick('aspen', cards), part = {people: add + kids, report: rep, about}[C];
+  if (part) return secPage('aspen', 'Back to Aspen Guide', part);
+  return hello + top + secCards('aspen', cards);
 }
 function vSAConsent(c){
   const C = SAG().consent, cur = c.sa.consent || {}, how = V.sach || (cur.status === 'ok' ? cur.how : 'form'), boxes = cur.how === 'form' && cur.v === C.version ? (cur.boxes || []) : [];
@@ -4806,21 +4893,25 @@ function vWL(){
   if (V.wlv) return vWLVisit();
   if (V.wlp){ const c = CL(V.wlp); if (c) return vWLPerson(c); }
   const S = WLG(), m = wlmState(), list = wlPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||''));
-  return `${wlHello()}
-  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Willow training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="wl-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Willow training' : 'Start with the Willow training'}</h3><p class="muted">${esc(WLM() ? WLM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wl-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="wl-demo">${icon('play')} Try a Demo Visit</button></div></div>`}
-  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
+  // Willow opens to cards (GWG BLD 732). The training reminder and the crisis line stay above the cards.
+  const hello = `${wlHello()}`, top = `  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Willow training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="wl-mhome">Renew</button></div></div>` : '')
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Willow training' : 'Start with the Willow training'}</h3><p class="muted">${esc(WLM() ? WLM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wl-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="wl-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="grid g2" style="margin-top:12px"><div><label class="f" for="wl-role" style="margin-top:0">I visit as</label><select id="wl-role" data-wlset="wlRole">${S.roles.map(r => `<option value="${r[0]}" ${wlRole() === r[0] ? 'selected' : ''}>${esc(r[1])}</option>`).join('')}</select></div></div>
-   <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.roleNote)}</p></div>
-  ${htCrisisLine()}
-  <div class="card"><h3>Someone new</h3>
+   <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.roleNote)}</p></div>`, crisis = `  ${htCrisisLine()}`, add = `  <div class="card"><h3>Someone new</h3>
    <div class="grid g2"><div><label class="f" for="wl-nn">First name or initials</label><input type="text" id="wl-nn" autocomplete="off" placeholder="Ruth, or R.M."></div>
    <div><label class="f" for="wl-nt">Who they are</label><select id="wl-nt">${S.people.map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div>
    <div><label class="f" for="wl-nr">For family: whose family?</label><input type="text" id="wl-nr" autocomplete="off" placeholder="Ruth's daughter"></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.privacy)}</p>
-   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="wl-new">${icon('plus')} Add Person</button>${m.complete ? `<button class="btn btn-line" data-act="wl-demo">${icon('play')} Try a Demo Visit</button>` : ''}<button class="btn btn-line" data-act="wl-import">${icon('willow')} Bring In From Their Willow</button></div></div>
-  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="wl-new">${icon('plus')} Add Person</button>${m.complete ? `<button class="btn btn-line" data-act="wl-demo">${icon('play')} Try a Demo Visit</button>` : ''}<button class="btn btn-line" data-act="wl-import">${icon('willow')} Bring In From Their Willow</button></div></div>`, people = `  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
    ${list.length ? list.map(c => { const last = wlVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(c.wl.type === 'family' ? 'Family' : 'Person')}</span> ${wlConsentOk(c) ? '' : wlConsentLine(c)}${c.wl.forName ? ` <span class="muted">${esc(c.wl.forName)}</span>` : ''}<br><small class="muted">${last ? 'Last ' + nice(last.date) : 'No visits yet'} &middot; ${wlVisits(c.id).filter(s => s.visit !== 'shared').length} visits${wlVisits(c.id).some(s => s.visit === 'shared') ? ' &middot; shares from Willow' : ''}</small></div><button class="btn btn-line btn-sm" data-act="wl-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>`;
+  const need = list.filter(c => !wlConsentOk(c)).length;
+  const cards = [
+    {k: 'people', title: 'People', desc: 'Add someone new, bring someone in from their Willow, or open someone you visit.', n: list.length + (list.length === 1 ? ' person' : ' people') + (need ? ', ' + need + ' needing consent' : '')},
+    WLM() ? {title: 'Willow Guide Training', desc: 'Lessons, scenarios, and the agreement for Willow visits.', n: trainNote(m), act: 'wl-mhome'} : null,
+    {k: 'about', title: 'About Willow Guide', desc: 'How Willow Guide works, and the role you visit in.', n: ((S.roles || []).find(r => r[0] === wlRole()) || [])[1] || ''}];
+  const C = secPick('willow', cards), part = {people: crisis + add + people, about}[C];
+  if (part) return secPage('willow', 'Back to Willow Guide', part);
+  return hello + top + crisis + secCards('willow', cards);
 }
 const htCrisisLine = () => `<div class="card" style="border-left:4px solid var(--danger)"><div class="spread"><div><b>In danger now?</b> <span class="muted">Call the hospice nurse line, or 911. For thoughts of suicide, 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a></div></div></div>`;
 function vWLConsent(c){
@@ -5658,8 +5749,11 @@ function htListHTML(){
   const list = (H.topics || []).filter(T => (!grp || T.group === grp) && htMatch(T, q));
   const raw = q.toLowerCase(), crisis = q && (HT_CRISIS.test(raw) || HT_ABUSE.test(raw));
   const row = T => `<button class="gitem ht-item" data-act="ht-topic" data-v="${esc(T.id)}"><span class="ht-dots" aria-hidden="true">${htStagesAll().map(st => { const on = htStage(T, st).length; return `<i class="${on ? (st.soon ? 'soon' : 'on') : ''}" style="--sc:${esc(st.color)}"></i>`; }).join('')}</span><span><b>${esc(T.title)}</b><small>${esc(htStagesAll().filter(st => !st.soon && htStage(T, st).length).map(st => st.name).join(', '))}</small></span><span class="arr">&rsaquo;</span></button>`;
+  // With no search and no group picked, the topics show as one card per group (GWG BLD 732). A card opens its group.
+  const cards = !q && !grp ? (H.groups || []).map(g => { const k = (H.topics || []).filter(T => T.group === g.key).length; return k ? {title: g.name, desc: g.blurb || '', n: k + (k === 1 ? ' topic' : ' topics'), act: 'ht-group', v: g.key} : null; }).filter(Boolean) : [];
+  if (cards.length) return secCards('talks', cards);
   const body = q ? (list.length ? list.map(row).join('') : `<p class="muted" style="margin:6px 0 14px">Nothing matched "${esc(q)}." Try a simpler word, like grief, divorce, or bullying.</p>`)
-    : (H.groups || []).filter(g => !grp || g.key === grp).map(g => { const ts = list.filter(T => T.group === g.key); return ts.length ? `<div class="gcat"><h3>${esc(g.name)}</h3><p class="muted" style="font-size:15px">${esc(g.blurb || '')}</p></div>${ts.map(row).join('')}` : ''; }).join('');
+    : (grp ? `<button class="linkbtn" data-act="ht-group" data-v="" style="margin-top:6px">&larr; All topics</button>` : '') + (H.groups || []).filter(g => !grp || g.key === grp).map(g => { const ts = list.filter(T => T.group === g.key); return ts.length ? `<div class="gcat"><h3>${esc(g.name)}</h3><p class="muted" style="font-size:15px">${esc(g.blurb || '')}</p></div>${ts.map(row).join('')}` : ''; }).join('');
   return (crisis ? htCrisisCard(HT_ABUSE.test(raw)) : '') + body;
 }
 
@@ -5866,7 +5960,7 @@ function htAct(a, v, t){
     case 'ht-home': go('talks', {htq: V.htq, htg: V.htg}); return true;
     case 'ht-topic': go('talks', {htt:v, htq: V.htq, htg: V.htg}); return true;
     case 'ht-rec': go('talks', {htrec:v}); return true;
-    case 'ht-group': V.htg = v || ''; { const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); document.querySelectorAll('[data-act="ht-group"]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.v || '') === V.htg))); } return true;
+    case 'ht-group': V.htg = v || ''; { const l = $('#ht-list'); if (l){ l.innerHTML = htListHTML(); if (l.getBoundingClientRect().top < 0) l.scrollIntoView({block: 'start'}); } document.querySelectorAll('.chip[data-act="ht-group"]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.v || '') === V.htg))); } return true;
     case 'ht-pick': V.hts = Object.assign({}, V.hts, {[v]: +t.dataset.i}); htKeep(); return true;
     case 'ht-aud': V.hta = Object.assign({}, V.hta, {[v]: t.dataset.i}); htKeep(); return true;
     case 'ht-full': V.htx = Object.assign({}, V.htx, {[v]: !(V.htx || {})[v]}); htKeep(); return true;
@@ -6648,8 +6742,9 @@ async function importBackup(file){
 document.addEventListener('click', async e => {
   const t = e.target.closest('[data-tab],[data-act],[data-menu]'); if (!t || !DATA) return;
   if (t.dataset.menu){ const open = $('#menu'); if (open) closeMenu(); else openMenu(t.dataset.menu); return; }
-  if (t.dataset.tab && !t.dataset.act){ closeMenu(); go(t.dataset.tab); return; }
+  if (t.dataset.tab && !t.dataset.act){ closeMenu(); if (t.closest('#tabs')) SEC[t.dataset.tab] = null; if (t.dataset.sec) SEC[t.dataset.tab] = t.dataset.sec; go(t.dataset.tab); return; }
   const a = t.dataset.act, v = t.dataset.v;
+  if (a && a.startsWith('sec-') && secAct(a, v)) return;
   if (a && a.startsWith('gv-') && gvAct(a, v, t)) return;
   if (a && a.startsWith('ht-') && htAct(a, v, t)) return;
   if (a && a.startsWith('sp-') && spAct(a, v, t)) return;
@@ -6956,16 +7051,20 @@ function vDK(){
   const chip = (k, id, label, sm) => `<button type="button" class="chip" data-act="dk-sel" data-v="${esc(k + '|' + id)}" aria-pressed="${sel[k] === id}">${label}${sm ? ` <small class="muted">${esc(sm)}</small>` : ''}</button>`;
   const pre = dkBuild(sel.deck, sel.aud, sel.fmt, sel.mode), F = dkFmt(sel.fmt);
   const saved = dkList().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
-  return head + `<div class="card"><div class="dk-intro">${L.intro.map(t => `<p class="muted">${esc(t)}</p>`).join('')}</div></div>
-  ${DATA.dkWork ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><h3>${esc(DATA.dkWork.name)}</h3><p class="muted">A deck you started and haven't saved.</p></div><div class="row"><button class="btn btn-gold btn-sm" data-act="dk-open" data-v="work">Open</button><button class="btn btn-line btn-sm" data-act="dk-drop">Let It Go</button></div></div></div>` : ''}
-  <div class="card" style="margin-top:14px"><h3>Build a Talk</h3>
+  // Present opens to cards (GWG BLD 732): Build a Talk and Saved Decks. A deck in progress stays above the cards.
+  const intro = `<div class="card"><div class="dk-intro">${L.intro.map(t => `<p class="muted">${esc(t)}</p>`).join('')}</div></div>`, work = `  ${DATA.dkWork ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><h3>${esc(DATA.dkWork.name)}</h3><p class="muted">A deck you started and haven't saved.</p></div><div class="row"><button class="btn btn-gold btn-sm" data-act="dk-open" data-v="work">Open</button><button class="btn btn-line btn-sm" data-act="dk-drop">Let It Go</button></div></div></div>` : ''}`, build = `  <div class="card" style="margin-top:14px"><h3>Build a Talk</h3>
    <label class="f">Subject</label><div class="dk-pick">${dkDecks().map(D => `<button type="button" class="dk-pk" data-act="dk-sel" data-v="${esc('deck|' + D.id)}" aria-pressed="${sel.deck === D.id}" style="--dk:${esc(D.color)}">${dkMarkTile(D, 'dk-pkm')}<span><b>${esc(D.name)}</b>${D.preview ? ' <span class="pill">Preview</span>' : ''}<small>${esc(D.who)}</small></span></button>`).join('')}</div>
    <label class="f">Who you're speaking to</label><div class="row">${L.audiences.map(a => chip('aud', a[0], esc(a[1]))).join('')}</div>
    <label class="f">How long you have</label><div class="row">${L.formats.map(f => chip('fmt', f[0], esc(f[1]), f[2])).join('')}</div>
    <label class="f">Where</label><div class="row">${L.modes.map(m => chip('mode', m[0], esc(m[1]))).join('')}</div>
    <p style="margin-top:14px"><b>${pre ? pre.slides.length : 0} slides</b>, ${esc(F[2].toLowerCase())}, with speaker notes on every slide.</p>
-   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="dk-make">Make the Deck</button></div></div>
-  <div class="card" style="margin-top:14px"><h3>Saved Decks</h3>${saved.length ? saved.map(x => { const D = dkDeckDef(x.deck) || {name: x.deck}; return `<div class="list-row"><div class="lr-main"><b>${esc(x.name)}</b><br><small class="muted">${esc(D.name)}, ${esc(dkAud(x.aud).toLowerCase())}, ${esc(dkFmt(x.fmt)[1].toLowerCase())}, ${esc(dkMode(x.mode).toLowerCase())}. ${dkShown(x).length} slides. Changed ${esc(nice(new Date(x.u || Date.now()).toISOString().slice(0, 10)))}.</small></div><div class="row"><button class="btn btn-line btn-sm" data-act="dk-open" data-v="${x.id}">Open</button><button class="btn btn-gold btn-sm" data-act="dk-go" data-v="${x.id}">${icon('play')} Present</button></div></div>`; }).join('') : '<p class="muted">Decks you save show here. They stay on this device, encrypted with your records, and travel in your backups.</p>'}</div>`;
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="dk-make">Make the Deck</button></div></div>`, savedH = `  <div class="card" style="margin-top:14px"><h3>Saved Decks</h3>${saved.length ? saved.map(x => { const D = dkDeckDef(x.deck) || {name: x.deck}; return `<div class="list-row"><div class="lr-main"><b>${esc(x.name)}</b><br><small class="muted">${esc(D.name)}, ${esc(dkAud(x.aud).toLowerCase())}, ${esc(dkFmt(x.fmt)[1].toLowerCase())}, ${esc(dkMode(x.mode).toLowerCase())}. ${dkShown(x).length} slides. Changed ${esc(nice(new Date(x.u || Date.now()).toISOString().slice(0, 10)))}.</small></div><div class="row"><button class="btn btn-line btn-sm" data-act="dk-open" data-v="${x.id}">Open</button><button class="btn btn-gold btn-sm" data-act="dk-go" data-v="${x.id}">${icon('play')} Present</button></div></div>`; }).join('') : '<p class="muted">Decks you save show here. They stay on this device, encrypted with your records, and travel in your backups.</p>'}</div>`;
+  const cards = [
+    {k: 'build', title: 'Build a Talk', desc: 'Choose a subject, who you are speaking to, how long you have, and where. Then make the deck.', n: dkDecks().length + (dkDecks().length === 1 ? ' subject' : ' subjects')},
+    {k: 'saved', title: 'Saved Decks', desc: 'Decks you saved, to open, change, or present.', n: saved.length + (saved.length === 1 ? ' deck' : ' decks')}];
+  const C = secPick('present', cards);
+  if (C) return secPage('present', 'Back to Present', work + (C === 'build' ? build : savedH));
+  return head + intro + work + secCards('present', cards);
 }
 function dkEditHTML(d){
   const D = dkDeckDef(d.deck) || {name: d.deck}, F = dkFmt(d.fmt), shown = dkShown(d), L = DKL() || {};
@@ -7023,7 +7122,7 @@ function dkAct(a, v, t){
     case 'dk-open': go('present', {dke: v}); return true;
     case 'dk-biz-open': { V.bizOpen = V.bizOpen === v ? null : v; const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
     case 'dk-biz-save': bizSheet(v); return true;
-    case 'dk-biz-deck': { DATA.settings.dkLast = Object.assign({}, DATA.settings.dkLast || {}, {deck: v}); save(); go('present'); return true; }
+    case 'dk-biz-deck': { DATA.settings.dkLast = Object.assign({}, DATA.settings.dkLast || {}, {deck: v}); save(); SEC.present = 'build'; go('present'); return true; }
     case 'dk-back': go('present'); return true;
     case 'dk-drop': if (confirm('Let this unsaved deck go?')){ DATA.dkWork = null; save(); render(); } return true;
     case 'dk-save': { if (!d) return true; const n = prompt('Name this deck:', d.name); if (n === null) return true;
@@ -7416,7 +7515,7 @@ body.dk-noscroll{overflow:hidden;}
 .dk-todo[aria-pressed="true"] .dk-box{background:var(--sage);border-color:var(--sage);color:#fff;}
 .dk-todo[aria-pressed="true"] span:last-child{color:var(--ink-soft);text-decoration:line-through;}
 .spk-item{border-top:1px solid var(--line);padding:6px 0;}
-.lc-cats{display:grid;gap:12px;margin-top:14px;}@media(min-width:720px){.lc-cats{grid-template-columns:1fr 1fr;}}.lc-cat{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border-left:6px solid var(--gold);margin:0;}.lc-cat h3{margin:2px 0 4px;}.lc-cat .lc-n{margin:8px 0 0;font-weight:600;font-size:calc(15px * var(--scale));}
+.sec-hot .lc-n{color:var(--danger);}.lc-cats > .card + .card{margin-top:0;}.lc-cats > .lc-cat{display:flex;flex-direction:column;justify-content:flex-start;}.lc-cats{display:grid;gap:12px;margin-top:14px;}@media(min-width:720px){.lc-cats{grid-template-columns:1fr 1fr;}}.lc-cat{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border-left:6px solid var(--gold);margin:0;}.lc-cat h3{margin:2px 0 4px;}.lc-cat .lc-n{margin:8px 0 0;font-weight:600;font-size:calc(15px * var(--scale));}
 .sl-c{border-top:1px solid var(--line);padding:6px 0 10px;}.sl-c summary{cursor:pointer;padding:8px 0;}.sl-c summary small{display:block;font-size:calc(14px * var(--scale));margin-top:2px;}.sl-c h4{margin-top:8px;}.sl-c textarea{width:100%;}.sl-c .pill{margin-left:4px;}
 .spk-item summary{cursor:pointer;padding:8px 0;}
 .spk-item summary span{display:block;color:var(--ink-soft);font-size:calc(15px * var(--scale));}

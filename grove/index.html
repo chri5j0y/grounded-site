@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js?v=tc1"></script>
+<script src="/shared/gg-app.js?v=tc2"></script>
 <script src="/shared/gg-shelf.js?v=fd1"></script>
 <script src="/shared/gg-sources.js?v=src7"></script>
 <meta charset="UTF-8">
@@ -477,6 +477,15 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .gv-person span{font-size:calc(13px * var(--scale));color:var(--ink-soft);}
 .gv-person.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset;}
 .gv-detail,.gv-compose{margin-bottom:18px;}
+.gv-fam{margin-bottom:18px;}
+.gv-fam-list{list-style:none;margin:10px 0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.gv-fam-list li{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);}
+.gv-fam-list li > div{flex:1;min-width:0;}
+.gv-fam-list b{overflow-wrap:anywhere;}
+.gv-fam-list small{font-size:calc(13px * var(--scale));color:var(--ink-soft);margin-left:4px;}
+.gv-fam-list span:not(.gv-fam-ic){display:block;font-size:calc(14px * var(--scale));color:var(--ink-soft);}
+.gv-fam-ic{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);color:var(--accent);}
+.gv-fam-ic svg{width:22px;height:22px;}
 .gv-stats{display:flex;gap:24px;margin:6px 0 10px;}
 .gv-stats div{display:flex;flex-direction:column;}
 .gv-stats dt{font-size:calc(13px * var(--scale));color:var(--ink-soft);}
@@ -569,12 +578,12 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 
 <script src="/grove/data.js?v=fd1"></script>
 <script src="/grove/library.js?v=vb1"></script>
-<script src="/shared/grove-scene.js?v=w2a"></script>
+<script src="/shared/grove-scene.js?v=w2b"></script>
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-profiles.js?v=lb1"></script>
 <script src="/grove/together.js?v=r5a"></script>
 <script src="/shared/gg-library.js?v=src1"></script>
-<script src="/grove/app.js?v=ln1"></script>
+<script src="/grove/app.js?v=ln2"></script>
 <script>
 /* Read aloud, built in like Maple */
 (function () {
@@ -598,7 +607,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=ln23" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln23';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln24" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln24';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>

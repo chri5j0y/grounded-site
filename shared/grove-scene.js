@@ -158,7 +158,7 @@ function groveSceneSVG(o){
   o.trees.forEach((t, i) => { const x = n === 1 ? 500 : left + gap*i, tp = treeParts(Object.assign({ rooting:o.rooting, snow: sc==='winter', solo: n === 1 }, t), maxH, (o.seed||7) + i*31);
     roots += `<g transform="translate(${f1(x)} ${gy})">${tp.roots}</g>`;
     tops += `<g transform="translate(${f1(x)} ${gy})" data-x="${f1(x)}"><g class="sway" style="animation-delay:${f1(-R()*6)}s">${tp.top}</g></g>`;
-    if (t.label) labels += `<text x="${f1(x)}" y="${f1(Hh - 18)}" text-anchor="middle" font-family="Barlow, Arial, sans-serif" font-weight="600" font-size="22" fill="#F4EBDA" stroke="#2C1810" stroke-width="5" paint-order="stroke" stroke-linejoin="round">${esc(t.label)}</text>`;
+    if (t.label) labels += `<text x="${f1(x)}" y="${f1(Hh - 18)}" text-anchor="middle" font-family="Barlow, Arial, sans-serif" font-weight="600" font-size="${n > 10 ? 15 : n > 7 ? 18 : 22}" fill="#F4EBDA" stroke="#2C1810" stroke-width="${n > 10 ? 4 : 5}" paint-order="stroke" stroke-linejoin="round">${esc(t.label)}</text>`;
     if (i === 0 && o.visitors){ const V = o.visitors;
       if (V.includes('ladybug')) vis += critterSVG('ladybug', x + Math.max(16, tp.H*.12), gy - 5);
       if (V.includes('bird')) vis += critterSVG('bird', x + tp.perch.x, gy + tp.perch.y);

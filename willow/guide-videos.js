@@ -232,7 +232,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "You can honor the question without rushing to answer it.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about a woman with Parkinsons who asked, between tremors, why is God doing this to me. He told her anyone in her shoes would ask the same thing, and that people all through scripture asked it too. Something shifted, and she said, he has never left me."
+"say": "I sat with a woman with Parkinson’s whose arms shook with tremors as she asked me, why is God doing this to me? I told her anyone in her shoes would be asking the same thing, and that the Bible is full of people asking it too. Something shifted in her, and she said, he has never left me."
 },
 {
 "k": "big",
@@ -422,7 +422,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Being hurt by a church is different from being far from God.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about a man in a group home who took one look at his chaplain badge and told him he did not want a chaplain, and did not believe in any of it. Chris smiled and asked, so tell me, what do you believe in? Later the man dropped the act. He said, I tell people I am an atheist to keep the religious people away. I believe in God, or something. I just cannot stand the church part. Chris told him he takes the Bible seriously when it says we are the church. Not the building, not the brand. The people.",
+"say": "I once walked into a group home, and a man took one look at my chaplain badge and told me he did not want a chaplain, and did not believe in any of it. I smiled and asked, so tell me, what do you believe in? Later he dropped the act. He said, I tell people I am an atheist to keep the religious people away. I believe in God, or something. I just cannot stand the church part. I told him I take the Bible seriously when it says we are the church. Not the building, not the brand. The people.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/the-atypical-atheist",
 "label": "Read the Full Story: The Atypical Atheist"
@@ -535,7 +535,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Faith doesn’t have to fit a box to hold someone up.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about a visit where the nurse warned him, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours."
+"say": "On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours."
 },
 {
 "k": "big",
@@ -1156,7 +1156,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Readiness can be peace.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about Jane, who a few days before she died said she could feel her death getting close. And she smiled, and said she felt nothing but peace and joy. Almost bliss. Readiness can be peace.",
+"say": "I met Jane a few days before she died, and she told me she could feel her death getting close. And she smiled, and said she felt nothing but peace and joy. Almost bliss. Readiness can be peace.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/total-bliss",
 "label": "Read the Full Story: Total Bliss"
@@ -1494,7 +1494,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Love can reach across a distance, even one that never closed.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about a man near the end whose son could not bring himself to come. Chris told the man that his children would be okay, and that his son loved him, even from afar. He died peacefully the next day. Love can reach across a distance, even one that never closed.",
+"say": "I was called to the bedside of a man near the end whose son could not bring himself to come. I told the man that his children would be okay, and that his son loved him, even from afar. He died peacefully the next day. Love can reach across a distance, even one that never closed.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/please-help-my-dad-die",
 "label": "Read the Full Story: Please Help My Dad Die"
@@ -1667,7 +1667,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Slow down and listen beneath the words.",
 "note": "From a Grounded reflection by Chris Joy",
-"say": "Chris tells about a family meeting where a daughter’s words said one thing, and her folded arms said another. Instead of rushing to fill the space, he slowed down and asked softly, what is this moment asking of you right now? The room shifted. Tears came. Real connection followed."
+"say": "I once walked into a family meeting where a daughter’s words said one thing, and her folded arms said another. Instead of rushing to fill the space, I slowed down and asked softly, what is this moment asking of you right now? The room shifted. Tears came. Real connection followed."
 },
 {
 "k": "big",
@@ -1812,7 +1812,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "What happens after a break matters most.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about Gail, who keeps her whole life in a china cabinet. One day she proudly showed him a new cup and saucer, and the saucer slipped and shattered. He dropped to his knees and told her how sorry he was. And instead of anger, she gave him grace. Someone broke a special one on me once, she said. Did not even say sorry. At least you did. That night he glued what he could, and found a nearly identical saucer to bring back. What stays, he says, is not the mistake. It is the recovery.",
+"say": "Let me tell you about Gail, who keeps her whole life in a china cabinet. One day she showed me a new cup and saucer, and as I lifted it, the saucer let go and shattered. I dropped to my knees and told her how sorry I was. And instead of anger, she gave me grace. Someone broke a special one on me once, she said. Did not even say sorry. At least you did. That night I glued what I could, and found a nearly identical saucer to bring back. What stays, I have come to believe, is not the mistake. It is the recovery.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/the-recovery",
 "label": "Read the Full Story: The Recovery"
@@ -2088,13 +2088,13 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "story",
 "title": "The Blanket That Didn't Need Smoothing",
 "lines": [
-"A husband sat beside his wife in her final hours, his chair so close his knee touched the bed rail.",
-"He told me about their life together. As he talked, he reached over and smoothed her blanket. It had not slipped.",
+"A husband sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail.",
+"He told me about their life together. Then he reached over and adjusted her blanket. It had not slipped.",
 "He kept holding her hand, like it was the only job left for him to do."
 ],
 "lesson": "Sometimes love just needs somewhere to put its hands.",
 "note": "Names and details changed",
-"say": "A husband once sat beside his wife in her final hours, his chair so close his knee touched the bed rail. As he talked about their life, he reached over and smoothed her blanket. It had not slipped. Sometimes love just needs somewhere to put its hands."
+"say": "A husband once sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail. He told me about their life, and then he reached over and adjusted her blanket. It had not slipped. Sometimes love just needs somewhere to put its hands."
 },
 {
 "k": "big",
@@ -2308,12 +2308,12 @@ window.GG_LEARN_GUIDES.willow = {
 "title": "Drift Away",
 "lines": [
 "Suzan had not spoken or opened her eyes in three days.",
-"Then her family played a song she loved. Under the sheet, her toes began to move to the beat. She lifted her chin and smiled wider than I had ever seen a dying person smile.",
+"Then an old song came on, Drift Away. She knew every word. Under the sheet, her toes moved to the beat, and she smiled wider than I had ever seen a dying person smile.",
 "She never woke again. She drifted away peacefully a short time later."
 ],
 "lesson": "Music can reach a person when words cannot.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about Suzan, who had not spoken in three days. Then a song she loved came on, and under the sheet, her toes began to move to the beat. She lifted her chin and smiled. She drifted away peacefully a short time later. Music can reach a person when words cannot.",
+"say": "Let me tell you about Suzan, who had not spoken in three days. Then an old song came on, Drift Away, and under the sheet, her toes began to move to the beat. She lifted her chin and smiled. She drifted away peacefully a short time later. Music can reach a person when words cannot.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/drift-away",
 "label": "Read the Full Story: Drift Away"
@@ -2482,7 +2482,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Visions near the end usually bring comfort. Ask who is there.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about a daughter who texted early one morning: Dad is seeing ghosts. When Chris arrived, her father turned toward something they could not see, raised both arms, and quietly said, I love you, I love you, I love you. That evening he died peacefully, arms open.",
+"say": "A daughter texted me early one morning: Dad is seeing ghosts. When I arrived, her father turned toward something we could not see, raised both arms, and quietly said, I love you, I love you, I love you. That evening he died peacefully, arms open.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/welcome-home",
 "label": "Read the Full Story: Welcome Home"
@@ -2643,7 +2643,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Telling someone, once, that they can go when they are ready can be a gift.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris tells about a man who seemed to be holding on, while one of his sons could not bring himself to come. Chris told him his children would be okay, that his son loved him even from afar, and that he was free to go. His arm lifted, as if reaching for something, and his daughter said, Dad, I am here, you can go. He died peacefully the next day, with her at his side.",
+"say": "Let me tell you about a man who seemed to be holding on, while one of his sons could not bring himself to come. I told him his children would be okay, that his son loved him even from afar, and that he was free to go. His arm lifted, as if reaching for something, and his daughter said, Dad, I am here, you can go. He died peacefully the next day, with her at his side.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/please-help-my-dad-die",
 "label": "Read the Full Story: Please Help My Dad Die"
@@ -3512,7 +3512,7 @@ window.GG_LEARN_GUIDES.willow = {
 ],
 "lesson": "Pay grief down a little at a time.",
 "note": "From a Grounded story by Chris Joy",
-"say": "Chris, who sits with dying people every week, tells about a week he caught himself walking around numb. Losses had stacked up quietly while he told himself he would feel them later. He calls it grief debt. It piles up, like laundry we swear we will fold. The kindness is paying it down a little at a time, and every feeling counts, relief included.",
+"say": "One week I caught myself walking around numb. Not sad, not angry, just numb. A few losses had stacked up quietly while I kept telling myself I would feel them later. I call it grief debt. It piles up, like laundry we swear we will fold. The kindness is paying it down a little at a time, and every feeling counts, relief included.",
 "link": {
 "href": "https://chri5j0y.substack.com/p/grief-debt",
 "label": "Read the Full Story: Grief Debt"

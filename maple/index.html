@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js?v=tc1"></script>
+<script src="/shared/gg-app.js?v=tc2"></script>
 <script src="/shared/gg-shelf.js?v=fd1"></script>
 <script src="/shared/gg-sources.js?v=src7"></script>
 <meta charset="UTF-8">
@@ -862,11 +862,12 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=lb1"></script>
+<script src="/shared/gg-filelock.js?v=fl1"></script>
 <script src="/maple/guides.js"></script>
 <script src="/maple/checkin.js?v=fd1"></script>
 <script src="/shared/gg-journey.js?v=r4m"></script>
 <script src="/shared/gg-library.js?v=src1"></script>
-<script src="/shared/gg-tend.js?v=vb1"></script>
+<script src="/shared/gg-tend.js?v=vb2"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -2666,23 +2667,22 @@ function exportKid(id) {
   const kids = loadKids();
   if (!kids[id]) return;
   const data = { app: 'maple', version: 2, saved: new Date().toISOString(), kids: { [id]: kids[id] } };
-  download(`maple-${kids[id].name}-${data.saved.slice(0, 10)}.json`, new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-  toast('Saved to a file.');
+  // Locked with a passcode the grown-up chooses (shared/gg-filelock.js, BLD 732).
+  GGFileLock.save({ app: 'maple', filename: `maple-${kids[id].name}-${data.saved.slice(0, 10)}.json`, data }).then(ok => { if (ok) toast('Saved to a locked file.'); });
 }
 function exportAll() {
   const kids = loadKids();
   if (!Object.keys(kids).length) { toast('There is nothing to save yet.'); return; }
   const data = { app: 'maple', version: 2, saved: new Date().toISOString(), kids };
-  download(`maple-backup-${data.saved.slice(0, 10)}.json`, new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-  toast('Everyone is saved to a file.');
+  GGFileLock.save({ app: 'maple', filename: `maple-backup-${data.saved.slice(0, 10)}.json`, data }).then(ok => { if (ok) toast('Everyone is saved to a locked file.'); });
 }
 function restoreFile(input) {
   const f = input.files && input.files[0];
   if (!f) return;
   const r = new FileReader();
-  r.onload = () => {
+  r.onload = () => { GGFileLock.read(r.result, { app: 'maple' }).then(data => {
     try {
-      const data = JSON.parse(r.result); if (window.GGParts) GGParts.fix(data);
+      if (window.GGParts) GGParts.fix(data);
       if (!data || data.app !== 'maple' || !data.kids) throw new Error('bad');
       const kids = loadKids();
       let added = 0;
@@ -2706,6 +2706,7 @@ function restoreFile(input) {
       toast(added ? `Restored ${added} check-in${added > 1 ? 's' : ''}.` : 'Everything in that file was already here.');
       renderKids(); renderWelcomeBack();
     } catch (e) { toast('That file is not a Maple file. Try another.'); }
+  }, e => { if (e.message !== 'cancel') toast('That file is not a Maple file. Try another.'); });
     input.value = '';
   };
   r.readAsText(f);
@@ -2776,7 +2777,7 @@ function renderGuide() {
     <ul>
       <li><b>One child at a time.</b> Maple is made for one child on a shared device. Choose With a grown-up to see a short tip on each page.</li>
       <li><b>My Kids.</b> Each child's tree saves on the device by first name, with every check-in, so you can see growth over time. When a child finishes a check-in, tap Start with the next child to clear the screen.</li>
-      <li><b>Save a file now and then.</b> Clearing the browser or switching devices erases saved check-ins. Use Save everyone to a file under My Kids and keep it somewhere safe.</li>
+      <li><b>Save a file now and then.</b> Clearing the browser or switching devices erases saved check-ins. Use Save everyone to a file under My Kids and keep it somewhere safe. Each file is locked with a passcode you choose.</li>
       <li><b>It fits the SEL skills you already teach.</b> Each part connects to CASEL's five competencies, noted under The six parts.</li>
       <li><b>If a child's answers worry you,</b> follow your school's usual process, like talking with your school counselor, and let the family know.</li>
       <li><b>About faith.</b> Roots, what grounds you, leaves room for children of all faith traditions and everything in-between to answer from their own family's tradition. Check with your school about how it fits your classroom.</li>
@@ -2972,7 +2973,7 @@ window.addEventListener('hashchange', lifeFromHash);
 setTimeout(lifeFromHash, 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln23" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln23';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln24" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln24';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc2" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc2';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w1" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w1';document.head.appendChild(s)"></script>
 </body>
