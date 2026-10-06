@@ -1502,7 +1502,8 @@ function saveKids(kids) {
       const k = kids[id];
       if (k._pid && window.GGP && GGP.isOpen(k._pid)) {
         const c = kidToSave(k); delete c.avatar;
-        GGP.setData(k._pid, 'maple', { kid: c });
+        // Keep anything else in the profile's maple record (like a Plain lock from Maple Guide).
+        GGP.setData(k._pid, 'maple', Object.assign({}, GGP.data(k._pid, 'maple') || {}, { kid: c }));
         if ((k.avatar || '') !== (GGP.get(k._pid).avatar || '')) GGP.setAvatar(k._pid, k.avatar);
         pids.push(k._pid); delete GUEST[id];
       } else if (k._legacy) legacy[id] = kidToSave(k);
@@ -2326,6 +2327,7 @@ function mpInit(kid) {
   libAge: 'maple',
   profileId: () => (MP_KID && MP_KID._pid) || null,
     tool: 'maple', toolName: 'Maple',
+    maxDry: 1,   // only a thirsty look, never drooping (Parity Sweep 1)
     els: { today: 'mp-today', week: 'mp-week', season: 'mp-season' },
     parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.value, color: p.hex })),
     moveKey: 'leaves',
