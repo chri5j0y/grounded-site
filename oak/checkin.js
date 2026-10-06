@@ -418,7 +418,7 @@ const SAFETY = {
   // Oak's help lines, in the order shown. tel and sms are dialable; smsBody is the
   // word to text. first: 'home' moves a line to the top when the home flag shows.
   lines: [
-    { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call 988', tel: '988', sms: '988', note: 'Or text 988, any time. Veterans, call 988 and press 1.' },
+    { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call 988', tel: '988', sms: '988', note: 'Any time, day or night. Veterans, call 988 and press 1.' },
     { id: 'ctl', name: 'Crisis Text Line in Minnesota', show: 'Text MN to 741741', sms: '741741', smsBody: 'MN' },
     { id: 'mncrisis', name: 'Minnesota mobile crisis', show: 'Call **CRISIS (274747)', tel: '274747', note: 'From a cell phone.' },
     { id: 'central', name: 'Central Minnesota, 24 hours', show: '320-253-5555', tel: '13202535555' },

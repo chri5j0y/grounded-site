@@ -603,6 +603,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="print-root" aria-hidden="true"></div>
 <script src="../shared/gg-app.js?v=tc5"></script>
 <script src="../shared/gg-backup.js?v=bk4"></script>
+<script src="../shared/gg-filelock.js?v=fl2"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc3"></script>
@@ -2331,7 +2332,7 @@ async function stImportLocal(){
   }
 }
 async function stImportFile(file){
-  try { const d = JSON.parse(await file.text()); if (d.app !== 'oak' || !d.clients) throw 0; await stImport(d.clients); }
+  try { const t = await file.text(); const d = window.GGFileLock ? await GGFileLock.read(t, {app: 'oak'}) : JSON.parse(t); if (!d || d.app !== 'oak' || !d.clients) throw 0; await stImport(d.clients); }
   catch(e){ alert("That isn't an Oak practitioner backup. In public Oak, the About page has Download Backup when old practitioner sessions are saved in that browser."); }
 }
 

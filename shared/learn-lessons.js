@@ -335,9 +335,16 @@ window.GG_LEARN = {
         [
          "Sit close",
          "And talk about it together"
+        ],
+        [
+         "Faith or Plain",
+         "The grown-up picks the wording"
         ]
        ],
-       "say": "When a grown-up is helping, they see a Grown-up tip under every question. They can tap Why this question? to learn why it matters. The best thing a grown-up can do is sit close, and talk about it together."
+       "cue": {
+        "at": [0, 1, 2, 3]
+       },
+       "say": "When a grown-up is helping, they see a Grown-up tip under every question. They can tap Why this question? to learn why it matters. The best thing a grown-up can do is sit close, and talk about it together. A grown-up also picks the wording, right on the start screen. Faith wording names God, prayer, and faith as one door among several, next to quiet, nature, and family traditions. Plain wording asks the same things without religious words, and scores are the same either way."
       },
       {
        "k": "points",
@@ -734,10 +741,41 @@ window.GG_LEARN = {
        "say": "Today has a morning stretch at the top, and a good thing to share at bedtime at the bottom. Your tree grows a bright leaf for each part you tend today. And you can count your Days Tended and your Rings."
       },
       {
+       "k": "points",
+       "h": "Watch your tree grow",
+       "items": [
+        [
+         "Tree friends",
+         "Surprise visitors as you tend"
+        ],
+        [
+         "Your tree grows up",
+         "From Seed to Grand Old Maple"
+        ],
+        [
+         "A Rainbow Week",
+         "All six parts in one week"
+        ],
+        [
+         "Milestones",
+         "On the Season tab"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         3,
+         4
+        ]
+       },
+       "say": "As you tend your tree, tree friends may come to visit, as a surprise. Every day you tend helps your tree grow up, from a Seed, to a Sprout, all the way to a Grand Old Maple. Six little dots show the parts you tended this week. Tend all six, and you make a Rainbow Week! Your milestones live on the Season tab."
+      },
+      {
        "k": "big",
        "h": "Your tree is always happy when you come back.",
        "sub": "Missed a few days? One practice wakes it up.",
-       "say": "If you miss a few days, your tree gets a little dry, and it rests. It never goes away. Do one practice, and it starts to wake up. Your tree is always happy when you come back."
+       "say": "If you miss a few days, your tree looks a little thirsty. One practice gives it a drink. It never droops, and it never goes away. Your tree is always happy when you come back."
       },
       {
        "k": "tabs",
@@ -1270,7 +1308,7 @@ window.GG_LEARN = {
          "Weather for each part"
         ]
        },
-       "say": "Each child's card shows their grade, their last check-in, and the weather for each part. Brothers and sisters each get their own tree, saved by first name."
+       "say": "Each child's card shows their grade, their last check-in, and the weather for each part. Brothers and sisters each get their own tree, saved by first name. In grade 5, a card called Ready for Middle School? offers two choices. Start My Aspen makes a new tree in Aspen, with a grown-up agreeing, and Maple's rings go along, labeled From Maple. Or tap Stay in Maple, for as long as it fits."
       },
       {
        "k": "card",
@@ -1281,7 +1319,7 @@ window.GG_LEARN = {
         "Not Now"
        ],
        "tap": 0,
-       "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree."
+       "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree. The first time a child's tree opens, a card called Set Up Maple Together lets the grown-up choose Faith or Plain wording, then tap All Set. You can change it any time in Settings, under Faith or Plain Wording. If a Maple Guide set Plain for a school or group, it stays locked, with a short line that says why."
       },
       {
        "k": "big",
@@ -5190,9 +5228,13 @@ window.GG_LEARN = {
         [
          "Darker lines",
          "Mark a new school year"
+        ],
+        [
+         "From Maple",
+         "Rings from Maple, shown apart"
         ]
        ],
-       "say": "Every full check-in adds a growth ring. To see them, open Season and tap My progress over time. Tap any ring to see that check-in. Aspen shows whether each part grew, dipped, or stayed the same since your last ring. And darker lines mark a new school year, so by eighth grade your tree holds years of you."
+       "say": "Every full check-in adds a growth ring. To see them, open Season and tap My progress over time. Tap any ring to see that check-in. Aspen shows whether each part grew, dipped, or stayed the same since your last ring. And darker lines mark a new school year, so by eighth grade your tree holds years of you. If you used Maple before, those rings come along too, marked From Maple and shown apart."
       },
       {
        "k": "tabs",
@@ -5214,22 +5256,56 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Your tree is gentle",
+       "h": "Steady or Hardy",
        "items": [
         [
-         "Thriving",
-         "When you tend it"
+         "Steady",
+         "Gentle, and nothing is ever lost"
         ],
         [
-         "A little dry, then drooping",
-         "After some days away"
+         "Hardy",
+         "A little more challenge, in Settings"
         ],
         [
-         "Resting bare",
-         "Nothing is lost"
+         "After a hard check-in",
+         "Your tree holds still for two weeks"
         ]
        ],
-       "say": "When you tend it, your tree thrives. Miss a few days, and it looks a little dry, then it droops. After a couple of weeks away, it rests bare. It never dies, and nothing is ever taken away. One practice perks it up, and a few days of tending bring it all the way back."
+       "cue": {
+        "at": [0, 4, 6]
+       },
+       "say": "Your tree starts Steady. It is gentle, and nothing is ever lost. Miss a few days, and it may look a little dry, but one practice perks it up. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble, until one practice in that part heals it. And after a hard check-in, your tree holds still for two weeks either way, while you get support."
+      },
+      {
+       "k": "points",
+       "h": "Watch your tree grow up",
+       "items": [
+        [
+         "Tree levels",
+         "From Seed to Golden Aspen"
+        ],
+        [
+         "Tried, Building, Mine",
+         "Practices you keep doing"
+        ],
+        [
+         "Milestones",
+         "Firsts, like a balanced week"
+        ],
+        [
+         "Your Scenery",
+         "New trees and lakes, in Season"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Every day you tend your tree moves it toward its next level, from Seed all the way to Golden Aspen. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, like tending all six parts in one week, a balanced week. And in Season, Your Scenery opens new trees at ten, thirty five, and seventy five days tended, and new lakes at twenty, fifty, and one hundred. No streaks to lose, and nothing is ever taken away."
       },
       {
        "k": "big",
@@ -5875,7 +5951,7 @@ window.GG_LEARN = {
          "Grades 7 and 8, off unless you turn it on"
         ]
        ],
-       "say": "Each student's page shows more. Tending shows their tree, how many of the last seven days they tended it, and the parts they are tending, with guides for those parts. This week in Aspen shows the week's theme and their reflection question, so you can ask it too. Reflections they chose to share show up here. And in grades seven and eight, an optional question about being offered a vape or other substances stays off unless you turn it on. It never asks whether a student has used anything."
+       "say": "Each student's page shows more. Tending shows their tree, how many of the last seven days they tended it, and the parts they are tending, with guides for those parts. This week in Aspen shows the week's theme and their reflection question, so you can ask it too. Reflections they chose to share show up here. And in grades seven and eight, an optional question about being offered a vape or other substances stays off unless you turn it on. It never asks whether a student has used anything. A student's page also holds their Faith or Plain wording, which you can change there."
       },
       {
        "k": "points",
@@ -5942,6 +6018,10 @@ window.GG_LEARN = {
         [
          "Grade",
          "7th"
+        ],
+        [
+         "Wording",
+         "Faith or Plain"
         ]
        ],
        "btns": [
@@ -5949,7 +6029,7 @@ window.GG_LEARN = {
         "Just try it without saving"
        ],
        "tap": 0,
-       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know. There is no account, and your answers stay right here. A grown-up agrees when your profile is made."
+       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know. There is no account, and your answers stay right here. A grown-up agrees when your profile is made. The grown-up also picks the wording. Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores compare the same either way. A grown-up can change it later on your page in the Grown-ups tab, or in Settings, and a school's Aspen Guide can set Plain for everyone there."
       },
       {
        "k": "points",
@@ -6051,15 +6131,11 @@ window.GG_LEARN = {
        "title": "Profile and Settings",
        "rows": [
         [
-         "Your Profile",
+         "Faith or Plain Wording",
          ""
         ],
         [
-         "Movement Level",
-         ""
-        ],
-        [
-         "The Grove",
+         "Your Tree: Steady or Hardy",
          ""
         ],
         [
@@ -6067,7 +6143,11 @@ window.GG_LEARN = {
          ""
         ],
         [
-         "Daily Reminder",
+         "Heading to High School?",
+         ""
+        ],
+        [
+         "The Grove",
          ""
         ],
         [
@@ -6075,8 +6155,8 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "tap": 3,
-       "say": "To check any of this, tap your picture in your tree, where it says Settings. Under What your grown-up can see, Aspen spells it all out in plain words."
+       "tap": 2,
+       "say": "To check any of this, tap your picture in your tree, where it says Settings. Under What your grown-up can see, Aspen spells it all out in plain words. Settings also holds your Faith or Plain wording, and Steady or Hardy for your tree. In grade 8, a card called Heading to High School? lets you choose. Start My Pine makes your own Pine tree for grades 9 to 12, with a grown-up agreeing, and your check-ins come along, marked From Aspen. Or tap Stay in Aspen, for as long as it fits."
       },
       {
        "k": "points",
@@ -9319,7 +9399,7 @@ window.GG_LEARN = {
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 3', h: 'Building Your Growth Plan', sub: 'Small practices for each part.', say: 'Your growth plan is a short list of practices for each part of your tree. This lesson shows you how to build one that fits your life.' },
           { k: 'points', h: 'Suggestions, never limits', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Choose as many or as few as you like.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Growth Plan: Bark', rows: [['Slow Exhale', 'Chosen', '#5F7D48'], ['Name It', 'Chosen', '#5F7D48'], ['Worry Window', ''], ['Leaves on a Stream', ''], ['How to do this', '']], tap: 2, say: 'Tap any practice to choose it. Tap How to do this to see why it helps, the steps, and what to try if it is hard.' },
-          { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Then add what fits.' },
+          { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Practices written for young adults are tagged For Young Adults. Then add what fits.' },
           { k: 'points', h: 'Practices born from stories', items: [['From the Bedside', 'Practices that grew out of real visits'], ['Linked to their story', 'Watch the lesson or read the story'], ['In the library', 'Ready to add to your plan']], say: 'Some practices are marked From the Bedside. They grew out of real stories from Chris’s work as a chaplain, like Lion’s Breath and One Woodpecker. Each one links to its story.' },
           { k: 'points', h: 'Make it yours', items: [['Write your own', 'Anything that tends a part counts'], ['Start small', 'Two minutes beats zero'], ['Change it anytime', 'Your plan grows with you']], say: 'Make it yours. Write your own practices. Anything that tends a part counts, like calling your sister or taking the long way home. Start small. Two minutes beats zero. And change your plan anytime.' },
           { k: 'quiz', q: 'How many practices should you choose for a part?', opts: ['Exactly the number Oak suggests', 'As many or as few as fit your life', 'Only one'], right: 1, why: 'Oak’s numbers are suggestions, never limits.', say: 'Quick question. How many practices should you choose for a part?' }
@@ -15800,9 +15880,16 @@ window.GG_LEARN = {
         [
          "Full History",
          "Every check-in, in one table"
+        ],
+        [
+         "From Oak",
+         "Kept apart, never compared"
         ]
        ],
-       "say": "On the Season tab, My progress over time shows more. After your second check-in, each part says Grew, Dipped, or Same. Sequoia only compares a full check-in with a full one, and a quick one with a quick one. And Full History keeps every check-in in one table."
+       "cue": {
+        "at": [1, 2, 3, 4]
+       },
+       "say": "On the Season tab, My progress over time shows more. After your second check-in, each part says Grew, Dipped, or Same. Sequoia only compares a full check-in with a full one, and a quick one with a quick one. And Full History keeps every check-in in one table. Check-ins you bring from Oak are labeled From Oak. They stay part of your story, and they are never compared with your Sequoia check-ins. If you used Oak on this device, Bring My Oak Check-ins copies them here, and Oak keeps its own copy."
       },
       {
        "k": "big",
@@ -15971,6 +16058,32 @@ window.GG_LEARN = {
        "h": "Your tree rests. It never dies.",
        "sub": "Tend it once, and watch it wake up.",
        "say": "Your tree on Today is gentle. If a few days go by, it gets a little dry, then it droops, then it rests bare. It never dies, and it never loses a ring. Nothing is lost. Tend it once, and watch it wake up. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
+      },
+      {
+       "k": "points",
+       "h": "Your tree grows up",
+       "items": [
+        [
+         "Tree levels",
+         "From Seed to Giant Sequoia"
+        ],
+        [
+         "This Week",
+         "Six dots, one for each part"
+        ],
+        [
+         "Milestones",
+         "Kept under Season"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         3
+        ]
+       },
+       "say": "Every day you tend moves your tree toward its next level, from Seed and Sprout, through Sapling and Young Sequoia, to Tall Sequoia and Giant Sequoia. The This Week card shows six dots, one for each part you tended this week. Tend all six, and it is a balanced week. Milestones, like your first day tended and your first balanced week, are kept under Season. Every level you reach is yours to keep, and nothing is ever lost."
       },
       {
        "k": "points",
@@ -24757,7 +24870,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Find more practices",
-         "The Grounded practice library"
+         "Some tagged For Young Adults"
         ],
         [
          "Movement Level",
@@ -24768,7 +24881,7 @@ window.GG_LEARN = {
          "A theme, a short check-in, a question"
         ]
        ],
-       "say": "Good. At the bottom of Today, Find more practices opens the Grounded practice library. In Settings, set your Movement Level, so your Leaves practices fit your body and your days. And the Week tab brings a theme, a short weekly check-in, and a question to think about."
+       "say": "Good. At the bottom of Today, Find more practices opens the Grounded practice library. Practices written for your years are tagged For Young Adults. In Settings, set your Movement Level, so your Leaves practices fit your body and your days. And the Week tab brings a theme, a short weekly check-in, and a question to think about."
       },
       {
        "k": "quiz",
@@ -28502,7 +28615,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Anyone tends their tree",
-         "In Maple, Aspen, or Oak"
+         "In their own tree app"
         ],
         [
          "The family does a practice",
@@ -28513,7 +28626,38 @@ window.GG_LEARN = {
          "The count under the grove"
         ]
        ],
-       "say": "Two things grow the grove. Any day anyone tends their own tree, in Maple, Aspen, or Oak. And any day the family does a practice together, and taps We did this today. Under the grove, a line counts your days of growing together."
+       "say": "Two things grow the grove. Any day anyone tends their own tree, in their own tree app. And any day the family does a practice together, and taps We did this today. Under the grove, a line counts your days of growing together."
+      },
+      {
+       "k": "points",
+       "h": "Growing Together",
+       "items": [
+        [
+         "This week",
+         "Days tended, practices together, parts tended"
+        ],
+        [
+         "In all",
+         "Days, practices together, and rings"
+        ],
+        [
+         "Family Milestones",
+         "Ten firsts, kept for good"
+        ],
+        [
+         "Never a contest",
+         "No one is ranked"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         4,
+         5
+        ]
+       },
+       "say": "Below the grove, the Growing Together card adds up the whole family's growth. This week shows days tended, practices done together, and how many of the six parts were tended. In all shows the totals since you began, plus the rings in the grove. It counts only trees whose Show my growth switch is on, and it never shows anyone person by person. Ten Family Milestones, like your first practice together, or a week when every tree was tended, are reached once and kept for good. It is never a contest, and no one is ranked."
       },
       {
        "k": "points",
@@ -29428,7 +29572,7 @@ window.GG_LEARN = {
        "steps": [
         [
          "Open your tree app",
-         "Maple, Aspen, or Oak"
+         "Where your own tree grows"
         ],
         [
          "Tap Find more practices",
@@ -29439,7 +29583,7 @@ window.GG_LEARN = {
          "It joins your practices"
         ]
        ],
-       "say": "Found one you like? Open your own tree app, Maple, Aspen, or Oak. Tap Find more practices. Browse by part, or search. Then add what fits, and it joins your practices. In Maple, the steps come in words just for kids."
+       "say": "Found one you like? Open your own tree app. Tap Find more practices. Browse by part, or search. Then add what fits, and it joins your practices. In Maple, the steps come in words just for kids."
       },
       {
        "k": "points",
@@ -29627,7 +29771,7 @@ window.GG_LEARN = {
          "If anyone is in danger"
         ]
        ],
-       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. And if anyone is in danger, call or text nine eight eight, or call nine one one."
+       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. And if anyone is in danger, call or text nine eight eight, or call nine one one. That help is always on the grove page too, in a card called If Someone Needs Help Now."
       },
       {
        "k": "big",

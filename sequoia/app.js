@@ -1141,7 +1141,7 @@ function bringOakHtml() {
   if (!PROF || !window.GGP || HELP) return '';
   const oak = GGP.data(PROF.id, 'oak'), sq = GGP.data(PROF.id, 'sequoia');
   const have = new Set(personalHistory.map(e => e.id));
-  const n = ((oak && oak.history) || []).filter(e => e && e.scores && e.from !== 'sequoia' && !have.has(e.id) && !have.has('oak-' + e.id)).length;
+  const n = ((oak && oak.history) || []).filter(e => e && e.scores && !e.from && e.by !== 'tapped' && !have.has(e.id) && !have.has('oak-' + e.id)).length;
   if (!n || sq.oakBrought) return '';
   return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here, labeled From Oak, so your Sequoia tree shows your whole story. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
 }
@@ -1151,7 +1151,7 @@ function bringOak(skip) {
   if (!skip) {
     // Move My Tree to Sequoia (from Oak) saves its copies as 'oak-' + id; either way, one copy only.
     const ids = new Set(personalHistory.map(e => e.id));
-    ((oak && oak.history) || []).forEach(e => { if (e && e.scores && e.from !== 'sequoia' && !ids.has(e.id) && !ids.has('oak-' + e.id)) { const c = JSON.parse(JSON.stringify(e)); c.from = 'oak'; personalHistory.push(c); } });
+    ((oak && oak.history) || []).forEach(e => { if (e && e.scores && !e.from && e.by !== 'tapped' && !ids.has(e.id) && !ids.has('oak-' + e.id)) { const c = JSON.parse(JSON.stringify(e)); c.from = 'oak'; personalHistory.push(c); } });
     sortEntries(personalHistory);
   }
   sq.oakBrought = new Date().toISOString().slice(0, 10);
