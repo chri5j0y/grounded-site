@@ -788,7 +788,7 @@ function generateGrowthPlanDoc(mode) {
       </div>
       <div class="growth-plan-footer">
         <p class="growth-plan-footer-link">More stories from the edge of life at ${groundedShort}</p>
-        <p>&copy; ${new Date().getFullYear()} Chris Joy. All rights reserved. This growth plan was created with Sequoia by Grow With Grounded. Sequoia&trade; is a trademark of Chris Joy. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
+        <p>&copy; ${new Date().getFullYear()} Grow With Grounded LLC. All rights reserved. This growth plan was created with Grow With Grounded Sequoia. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
       </div>
     </div>
     <div class="btn-row no-print">
@@ -1328,7 +1328,7 @@ function lcDetail(mode, t) {
     ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}" target="_blank" rel="noopener">${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
     ${window.GGShelf ? GGShelf.html('sequoia', t.id) : ''}
     ${lcSourcesHtml(t)}
-    <p class="lc-note">From When Life Changes in Sequoia&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. Veterans, call 988 and press 1. &copy; ${new Date().getFullYear()} Chris Joy. You are welcome to print this guide for personal use and visits.</p>
+    <p class="lc-note">From When Life Changes in Sequoia&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. Veterans, call 988 and press 1. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use and visits.</p>
   </article>`;
 }
 /* When Life Changes videos (GWG BLD 734): two per guide, For You and For the Helper, played by shared/gg-learn.js

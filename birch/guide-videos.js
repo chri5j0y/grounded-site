@@ -125,7 +125,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Especially if you commute"
        ]
       ],
-      "say": "Belonging gets built on purpose. Pick one group, a club, a team, a faith community, or a study group, and go three times before you decide. Talk to one person in each class. Go to office hours early. And if you commute or work, find one spot on campus that's yours between classes."
+      "say": "Belonging gets built on purpose. Pick one group, a club, a team, a volunteer crew, or a study group, and go three times before you decide. Talk to one person in each class. Go to office hours early. And if you commute or work, find one spot on campus that's yours between classes."
      },
      {
       "k": "big",
@@ -965,6 +965,465 @@ window.GG_LEARN_GUIDES.birch = {
    }
   },
   {
+   "id": "adhd",
+   "ring": "br-school",
+   "title": "ADHD and Learning Differences on Your Own",
+   "you": {
+    "id": "br-g-adhd-you",
+    "guide": "adhd",
+    "side": "you",
+    "title": "ADHD and Learning Differences on Your Own",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For young adults with ADHD or a learning difference: build systems, and ask for what helps.",
+    "sources": [
+     "ocrpse",
+     "curry17"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "ADHD and Learning Differences on Your Own",
+      "sub": "For You",
+      "say": "If you have ADHD or a learning difference, or you think you might, and you're handling life on your own now, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "Different, not worse.",
+      "sub": "How a brain works, not how hard you try.",
+      "say": "ADHD and learning differences are about how a brain works. They're not about how hard you try, or how smart you are. Plenty of people with brains like yours are creative, quick, and great at going deep on what they care about. And many people aren't diagnosed until they're adults."
+     },
+     {
+      "k": "big",
+      "h": "Freedom, and a cliff.",
+      "sub": "The reminders and the school plan go away.",
+      "say": "For years, someone may have filled in the gaps: reminders, extra time, a school plan. Now it's on you. Bills, appointments, deadlines, shifts, and refills all land at once. If things slip, that's a signal to change the system, not to blame yourself."
+     },
+     {
+      "k": "points",
+      "h": "Systems outside your head",
+      "items": [
+       [
+        "One calendar",
+        "Every deadline, one place"
+       ],
+       [
+        "Reminders",
+        "For bills, refills, shifts"
+       ],
+       [
+        "Short blocks",
+        "A timer and real breaks"
+       ],
+       [
+        "Weekly reset",
+        "Thirty minutes, once a week"
+       ]
+      ],
+      "say": "Build systems outside your head. One calendar for every deadline, appointment, and bill, checked at the same time each day. Reminders for refills, shifts, and payments. Short work blocks with a timer and real breaks. And a weekly reset, thirty minutes to look ahead and clear what's piled up."
+     },
+     {
+      "k": "big",
+      "h": "Move one thing out of your head.",
+      "sub": "A reminder, set right now.",
+      "say": "Let's do one right now. Think of something you've been trying to remember. A bill, a refill, a call, a form. Set a phone reminder for it now, with a day and a time.",
+      "beats": [
+       "Let's do one right now.",
+       "Think of something you've been trying to remember.",
+       "A bill, a refill, a call, a form.",
+       {
+        "t": "Set a phone reminder for it now, with a day and a time.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "After high school, you ask",
+      "items": [
+       [
+        "School plans end",
+        "At graduation"
+       ],
+       [
+        "College",
+        "Contact disability services"
+       ],
+       [
+        "Work",
+        "Ask for what helps"
+       ],
+       [
+        "You choose",
+        "How much to share, and why"
+       ]
+      ],
+      "say": "Here's something important. School plans end at graduation. In college or training, you contact disability services yourself, usually with documentation. At work, you can ask for reasonable accommodations, like written instructions or a quieter spot. You choose how much to share about why. Asking for what helps is a skill, and you can build it."
+     },
+     {
+      "k": "card",
+      "title": "Medicine and driving",
+      "body": "Medicine questions: your doctor or pharmacist. It is yours alone. Driving: phone out of reach.",
+      "say": "Two more things. If you take medicine for ADHD, questions go to your doctor or pharmacist, and the medicine is yours alone, never shared or sold. And if you drive, keep your phone out of reach. Distraction is the risk worth planning around."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "My brain works differently, not worse.",
+       "Asking for what I need is a skill.",
+       "I can build systems that work for me."
+      ],
+      "say": "Here are words to keep. My brain works differently, not worse. Asking for what I need is a skill. And I can build systems that work for me. If you've felt low or hopeless for a while, talk with a doctor or counselor, or call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "Your brain, your strengths.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your brain is yours, strengths and all. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-adhd-helper",
+    "guide": "adhd",
+    "side": "helper",
+    "title": "ADHD and Learning Differences on Your Own",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the parent, partner, or roommate of a young adult with ADHD or a learning difference: coach, then hand it over.",
+    "sources": [
+     "ocrpse",
+     "curry17"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "ADHD and Learning Differences on Your Own",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, roommate, or mentor of a young adult with ADHD or a learning difference who is handling life on their own."
+     },
+     {
+      "k": "big",
+      "h": "The supports are gone. The stakes went up.",
+      "sub": "A late bill. A missed shift. A lost refill.",
+      "say": "Many young adults with ADHD or learning differences spent years hearing they could do better if they tried harder. Now the supports that held things together are gone, and mistakes cost more: a late bill, a missed shift, a lost refill. Many want two things at once: to do it on their own, and to have someone in their corner."
+     },
+     {
+      "k": "flow",
+      "h": "From managing to coaching",
+      "steps": [
+       [
+        "Ask",
+        "What would actually help?"
+       ],
+       [
+        "Build together",
+        "One system, their way"
+       ],
+       [
+        "Hand it over",
+        "One piece at a time"
+       ]
+      ],
+      "say": "Your role shifts from managing to coaching. Ask what would actually help; they know their brain best. Build one system together, their way. Then hand it over, one piece at a time, and let them own it."
+     },
+     {
+      "k": "big",
+      "h": "One thing to hand over.",
+      "sub": "Write it down, with a date.",
+      "say": "Let's make that real. Think of one thing you still handle for them. Write it down, with the date you'll offer to hand it over.",
+      "beats": [
+       "Let's make that real.",
+       "Think of one thing you still handle for them.",
+       {
+        "t": "Write it down, with the date you'll offer to hand it over.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What to know",
+      "items": [
+       [
+        "They ask now",
+        "College and work supports"
+       ],
+       [
+        "Paperwork",
+        "Offer to help find it"
+       ],
+       [
+        "Medicine",
+        "Doctor or pharmacist"
+       ],
+       [
+        "Driving",
+        "Phone out of reach"
+       ]
+      ],
+      "say": "A few things to know. After high school, college and workplace supports have to be requested by them. You can offer to help find old paperwork. Questions about medicine go to their doctor or pharmacist, and medicine is for them alone. And young drivers with ADHD have a somewhat higher crash risk, so phones out of reach helps."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What would actually help?",
+       "That makes so much sense.",
+       "I saw how hard you worked on that."
+      ],
+      "say": "Here are words that help. What would actually help? You know your brain best. That makes so much sense. And, I noticed how you kept going on that; it took real effort."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You're just not trying.",
+       "Everybody's a little ADHD.",
+       "Here, I'll just do it."
+      ],
+      "say": "Some words land hard. You're just not trying. Everybody's a little ADHD. And taking over the task, which takes away the chance to build the skill."
+     },
+     {
+      "k": "big",
+      "h": "Name their strengths, often.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Name their strengths out loud, often. And if they seem low or hopeless for a while, encourage a doctor or counselor, or call or text nine eight eight together. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "what-now",
+   "ring": "br-school",
+   "title": "After Graduation: The \"What Now?\" Season",
+   "you": {
+    "id": "br-g-what-now-you",
+    "guide": "what-now",
+    "side": "you",
+    "title": "After Graduation: The \"What Now?\" Season",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For anyone who just finished school or training: searching is part of finding.",
+    "sources": [
+     "damon08",
+     "mlq"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "After Graduation: The \"What Now?\" Season",
+      "sub": "For You",
+      "say": "If you just finished school or training, and you're in the in-between of what comes next, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "The shape of your days disappeared.",
+      "sub": "Proud and lost, in the same afternoon.",
+      "say": "For years, school gave your life a shape. Semesters, deadlines, people down the hall. Then the ceremony ends, and the shape disappears. Friends scatter. Feeds fill up with people who seem to have it figured out. You can feel proud and lost in the same afternoon. That's common, and it doesn't last forever."
+     },
+     {
+      "k": "big",
+      "h": "Searching is part of finding.",
+      "sub": "Most people your age are still looking.",
+      "say": "Here's something worth knowing. A large study of people from twelve to twenty six found that only about one in five had a clear, engaged sense of purpose. Many more were still searching. Searching for meaning is a normal part of these years. It isn't a sign that something is wrong with you."
+     },
+     {
+      "k": "big",
+      "h": "Look at how far you've come.",
+      "sub": "Three things since you turned 18.",
+      "say": "When it feels like everyone else is ahead, look back instead. Think about the years since you turned eighteen. Write down three things you've done, learned, or gotten through.",
+      "beats": [
+       "When it feels like everyone else is ahead, look back instead.",
+       "Think about the years since you turned eighteen.",
+       {
+        "t": "Write down three things you've done, learned, or gotten through.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Build a simple week",
+      "items": [
+       [
+        "A wake time",
+        "The same most days"
+       ],
+       [
+        "Move",
+        "Some every day"
+       ],
+       [
+        "One plan with a person",
+        "Each week"
+       ],
+       [
+        "Next steps",
+        "Set hours, then stop"
+       ]
+      ],
+      "say": "Now build a simple week. A steady wake time. Some movement every day. One plan with a person each week. And set hours for next steps, like applications and calls. Then stop, and let the rest of your time be yours."
+     },
+     {
+      "k": "points",
+      "h": "Check the practical dates",
+      "items": [
+       [
+        "Health insurance",
+        "When it changes"
+       ],
+       [
+        "Student loans",
+        "When payments start"
+       ],
+       [
+        "Housing",
+        "Leases and moves"
+       ],
+       [
+        "Deadlines",
+        "Jobs and benefits"
+       ]
+      ],
+      "say": "Check the practical dates too. When does your health insurance change? When do student loan payments start? When does a lease end, or a move happen? Put them on one list, so they don't surprise you."
+     },
+     {
+      "k": "big",
+      "h": "A first step isn't the last one.",
+      "sub": "Good enough to start is good enough.",
+      "say": "Say yes to a good enough first step. A first job or program is a start, not a life sentence. Talk with people whose work interests you. Stay in touch with friends from school on purpose, and join one new group where you live now."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "Searching is part of finding.",
+       "My timeline is my own.",
+       "I finished something hard."
+      ],
+      "say": "Here are words to keep. Searching is part of finding. My timeline is my own. And I finished something hard, and that counts. If you feel low for weeks, talk with a doctor or counselor. If you ever feel hopeless, call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "This season is part of the story.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "This in-between season is part of your story, not a gap in it. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-what-now-helper",
+    "guide": "what-now",
+    "side": "helper",
+    "title": "After Graduation: The \"What Now?\" Season",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the parent, partner, or friend of a recent graduate: celebrate first, then walk alongside.",
+    "sources": [
+     "damon08",
+     "mlq"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "After Graduation: The \"What Now?\" Season",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, friend, or mentor of someone who just finished school or training, and is figuring out what comes next."
+     },
+     {
+      "k": "big",
+      "h": "Proud, lost, and behind, all at once.",
+      "sub": "The structure that held their days is gone.",
+      "say": "A recent graduate may feel proud, lost, and behind all at once. The structure that held their days together is gone. Friends have scattered. Every relative asks about the plan. Some are living at home again and feel it as a step backward, even when it's a smart choice."
+     },
+     {
+      "k": "big",
+      "h": "Searching is normal at this age.",
+      "sub": "Most are still finding their direction.",
+      "say": "It helps to know that searching is normal. A large study of people from twelve to twenty six found only about one in five had a clear, engaged sense of purpose. Many more were still looking. Underneath the job question, many are asking a bigger one: who am I now, and where do I fit?"
+     },
+     {
+      "k": "big",
+      "h": "Name your own worry.",
+      "sub": "One word, then set it down.",
+      "say": "Let's start with you. Notice what you're afraid of for them. Name that worry in one word, quietly, and set it down before your next talk.",
+      "beats": [
+       "Let's start with you.",
+       "Notice what you're afraid of for them.",
+       {
+        "t": "Name that worry in one word, quietly, and set it down before your next talk.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Walk alongside",
+      "steps": [
+       [
+        "Celebrate",
+        "The finish comes first"
+       ],
+       [
+        "Ask",
+        "How are you doing?"
+       ],
+       [
+        "Offer",
+        "A connection, if they want"
+       ]
+      ],
+      "say": "Then walk alongside. Celebrate the finish before you ask about what's next. Ask how they're doing with all the in-between, not what the plan is. And offer connections: people you know in work that interests them, if they'd like that."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "So what's the plan?",
+       "Your roommate already has a job.",
+       "That job isn't in your field."
+      ],
+      "say": "Some words land hard. So what's the plan, at every meal. Comparing them with classmates or siblings. And treating a first job outside their field as failure."
+     },
+     {
+      "k": "points",
+      "h": "If they live with you",
+      "items": [
+       [
+        "Talk as adults",
+        "Rent, chores, timelines"
+       ],
+       [
+        "Practical dates",
+        "Insurance, loans, leases"
+       ],
+       [
+        "Watch their mood",
+        "Two weeks low: a doctor"
+       ]
+      ],
+      "say": "If they're living with you, talk together about expectations, like rent, chores, and timelines, adult to adult. Offer to help keep an eye on practical dates, like insurance and loans, if they want that. And if they seem low or withdrawn for two weeks or more, encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Believe they'll find their way.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your patience, and your belief that they'll find their way, matters more than any advice. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
    "id": "first-job",
    "ring": "br-work",
    "title": "A First Full-Time Job",
@@ -1766,6 +2225,429 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Your honesty teaches most.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Honest talk about your own learning, mistakes included, teaches more than advice. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "debt",
+   "ring": "br-work",
+   "title": "Student Loans and Other Debt",
+   "you": {
+    "id": "br-g-debt-you",
+    "guide": "debt",
+    "side": "you",
+    "title": "Student Loans and Other Debt",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For a young adult carrying student loans or other debt: face the numbers, call early, and take one step at a time.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Student Loans and Other Debt",
+      "sub": "For You",
+      "say": "If student loans, a credit card, or another debt is weighing on you, this is for you. Debt is a problem to solve, not a measure of who you are."
+     },
+     {
+      "k": "big",
+      "h": "Notice the feeling first.",
+      "sub": "Dread and shame make debt feel bigger.",
+      "say": "Debt can bring dread and shame. Some people stop opening the mail, or never log in to see the balance. That makes sense, and it also makes the debt feel bigger than it is. Before we get to the numbers, let's notice the feeling."
+     },
+     {
+      "k": "big",
+      "h": "Name it, softly.",
+      "sub": "One word for the money worry.",
+      "say": "Before the numbers, notice the feeling. Put a hand on your chest or your stomach, wherever the money worry sits. Find one word for it: worried, ashamed, angry, tired, or something else. Say that word out loud, softly, and let your breath out slowly.",
+      "beats": [
+       "Before the numbers, notice the feeling.",
+       "Put a hand on your chest or your stomach, wherever the money worry sits.",
+       "Find one word for it: worried, ashamed, angry, tired, or something else.",
+       {
+        "t": "Say that word out loud, softly, and let your breath out slowly.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Make one list",
+      "items": [
+       [
+        "Who you owe",
+        "And how much"
+       ],
+       [
+        "The interest rate",
+        "Highest costs the most"
+       ],
+       [
+        "The minimum",
+        "And the due date"
+       ]
+      ],
+      "say": "Now the numbers. Make one list: who you owe, how much, the interest rate, the minimum payment, and the due date. For federal student loans, you can see them all in one place online. Knowing the numbers is braver than avoiding them, and it usually brings the fear down."
+     },
+     {
+      "k": "card",
+      "title": "Call before you miss a payment",
+      "body": "Your servicer or lender can explain your options. Federal loan help never costs money.",
+      "say": "If you can't make a payment, call your loan servicer or lender before the due date. With federal student loans, there are often options, like a different repayment plan, or a pause. And you never have to pay a company for help with federal student loans. Your servicer and the official site help at no cost."
+     },
+     {
+      "k": "flow",
+      "h": "One step at a time",
+      "steps": [
+       [
+        "Autopay the minimums",
+        "So nothing slips"
+       ],
+       [
+        "Pick one debt",
+        "Put any extra there"
+       ],
+       [
+        "Get a plan",
+        "A nonprofit counselor helps"
+       ]
+      ],
+      "say": "Then take it one step at a time. Autopay at least the minimum on everything, so nothing slips into late fees. Pick one debt to put any extra toward. The highest rate saves the most money. The smallest balance gives a quick win. Either works. And for credit cards, a nonprofit credit counselor can help you build a plan."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I can't make my full payment. What are my options?",
+       "Would you sit with me while I make the list?"
+      ],
+      "say": "Here are words that help. With your servicer: I can't make my full payment this month. What are my options? And with someone you trust: would you sit with me while I make the list? If the worry ever turns into hopelessness, call, text, or chat nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "One payment, one call, one step.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "One payment, one call, one step. That's how debt gets smaller, and how the fear does too. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-debt-helper",
+    "guide": "debt",
+    "side": "helper",
+    "title": "Student Loans and Other Debt",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the parent, partner, or friend beside someone in debt: calm company, clear terms, and no lectures.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Student Loans and Other Debt",
+      "sub": "For the Helper",
+      "say": "If someone you love is carrying student loans or other debt, this is for you. The debt is theirs to manage, and a calm person beside them makes it much easier to face."
+     },
+     {
+      "k": "big",
+      "h": "Shame keeps debt quiet.",
+      "sub": "Silence makes it heavier.",
+      "say": "Many young adults avoid the mail, the app, and the conversation. They may feel ashamed, angry at choices they made at eighteen, or frozen. If you cosigned a loan or helped pay for school, they may dread telling you anything at all. The silence makes the debt feel heavier than it is."
+     },
+     {
+      "k": "big",
+      "h": "Settle yourself first.",
+      "sub": "Three slow breaths.",
+      "say": "Before a money talk, settle yourself first. Breathe in through your nose, and let it out slowly, longer than it came in. Do that three times, and picture yourself staying calm while they talk.",
+      "beats": [
+       "Before a money talk, settle yourself first.",
+       "Breathe in through your nose, and let it out slowly, longer than it came in.",
+       {
+        "t": "Do that three times, and picture yourself staying calm while they talk.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Thanks for telling me.",
+       "Want to make the list together? You lead.",
+       "This is a problem to solve, not a measure of you."
+      ],
+      "say": "Here are words that help. Thanks for telling me. Lots of people are carrying this. Want to make the list together? You lead, I'll keep you company. And, this is a problem to solve, not a measure of you."
+     },
+     {
+      "k": "points",
+      "h": "What to leave out",
+      "items": [
+       [
+        "Lectures",
+        "About past choices"
+       ],
+       [
+        "Paying it off alone",
+        "Without a shared plan"
+       ],
+       [
+        "Paid debt relief",
+        "Federal loan help costs nothing"
+       ]
+      ],
+      "say": "Some things make it harder. Lectures about past choices. Paying it off for them without a shared plan. And pointing them to debt relief companies that charge fees. Help with federal student loans never costs money, through the servicer or the official site."
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Keep them company",
+        "While they make the list or call"
+       ],
+       [
+        "Talk about cosigning",
+        "Openly, if you did"
+       ],
+       [
+        "Clear terms",
+        "If you give or lend"
+       ]
+      ],
+      "say": "Here are ways to help. Keep them company while they make the list or call the servicer, if they want that. If you cosigned a loan, talk about it openly. And if you give or lend money, agree on the terms out loud, so no one is guessing later."
+     },
+     {
+      "k": "card",
+      "title": "Watch for hopelessness",
+      "body": "If money stress turns hopeless, ask directly. 988, any time. Danger right now: 911.",
+      "say": "Money stress can turn into hopelessness. If you notice it, ask directly how they're doing. If they talk about not wanting to be alive, call or text nine eight eight together. If there's danger right now, call nine one one. If you're their helper in Birch, you see only what they choose to share."
+     },
+     {
+      "k": "big",
+      "h": "Your calm helps most.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your calm helps more than any answer. A heavy load gets lighter with a plan and a steady person beside it. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "gambling",
+   "ring": "br-work",
+   "title": "Gambling and Sports Betting",
+   "you": {
+    "id": "br-g-gambling-you",
+    "guide": "gambling",
+    "side": "you",
+    "title": "Gambling and Sports Betting",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For a young adult who bets, or wonders if it is getting out of hand: how it works, the signs, and how to step back.",
+    "sources": [
+     "fdupoll"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Gambling and Sports Betting",
+      "sub": "For You",
+      "say": "This one is about betting: sports bets, parlays, fantasy, online casino games, all of it. Nobody's asking what you do. It's here so you know how it works, and what to do if it's getting bigger than you meant."
+     },
+     {
+      "k": "big",
+      "h": "The house is built to win.",
+      "sub": "Over time, most people lose.",
+      "say": "Here's the main thing. Betting is built so the house wins over time. The odds are set so the company earns money, no matter how much you know about the sport. Some people win sometimes. Over time, most people who keep betting lose."
+     },
+     {
+      "k": "big",
+      "h": "It is more common than it looks.",
+      "sub": "About 1 in 10 young men.",
+      "say": "Betting trouble is more common than it looks. In a recent national poll, about one in ten men between eighteen and thirty scored for problem gambling. With apps in every pocket, and live bets during every game, it can move fast, and it happens to smart people."
+     },
+     {
+      "k": "points",
+      "h": "Signs it is taking over",
+      "items": [
+       [
+        "Chasing losses",
+        "Betting to win it back"
+       ],
+       [
+        "Borrowing to bet",
+        "Cards, friends, or rent money"
+       ],
+       [
+        "Hiding it",
+        "From a partner or family"
+       ],
+       [
+        "Mood rides on results",
+        "Up and down with games"
+       ]
+      ],
+      "say": "Watch for signs it's taking over. Chasing losses, betting more to win it back. Borrowing to bet, from a card, a friend, or the rent money. Hiding it from a partner or family. And moods that ride up and down with the results. Any one of those is a good reason to step back."
+     },
+     {
+      "k": "big",
+      "h": "Plan your answer.",
+      "sub": "For the next time someone asks.",
+      "say": "Let's plan your answer before you need it. Picture a friend saying, come on, put twenty on the game. Choose your words: a short no, and something else you can offer. Say your answer out loud, the way you would really say it.",
+      "beats": [
+       "Let's plan your answer before you need it.",
+       "Picture a friend saying, come on, put twenty on the game.",
+       "Choose your words: a short no, and something else you can offer.",
+       {
+        "t": "Say your answer out loud, the way you would really say it.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Stepping back",
+      "items": [
+       [
+        "Delete the apps",
+        "And set limits or self-exclude"
+       ],
+       [
+        "Stop chasing",
+        "Let the loss be the loss"
+       ],
+       [
+        "Distance from money",
+        "No saved cards for a while"
+       ],
+       [
+        "Tell one person",
+        "The real number"
+       ]
+      ],
+      "say": "Stepping back can look like this. Delete the apps, and use their tools to set limits, take a timeout, or shut your account. Stop chasing. Let the loss be the loss. Put some distance between you and the money for a while. And tell one person the real number."
+     },
+     {
+      "k": "card",
+      "title": "Help is private, and it works.",
+      "body": "Minnesota: 1-800-333-4673, or text HOPE to 53342. National: 1-800-MY-RESET. Any time.",
+      "say": "Help is private, and it works. The Minnesota problem gambling helpline is there any time, by call or text, and there's a national line too. The numbers are on the screen and in the full guide. You don't have to be in deep to call. If losses ever leave you feeling hopeless, call, text, or chat nine eight eight."
+     },
+     {
+      "k": "big",
+      "h": "Telling someone is the fastest way out.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If betting has gotten bigger than you meant, telling someone is the fastest way out. It can turn around. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-gambling-helper",
+    "guide": "gambling",
+    "side": "helper",
+    "title": "Gambling and Sports Betting",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the partner, parent, roommate, or friend of someone who bets: calm words, protected money, and help together.",
+    "sources": [
+     "fdupoll"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Gambling and Sports Betting",
+      "sub": "For the Helper",
+      "say": "This is for a partner, parent, roommate, or friend of someone whose betting worries you. Betting is part of watching sports for a lot of people now, and trouble can grow quietly."
+     },
+     {
+      "k": "big",
+      "h": "Closer than you think.",
+      "sub": "About 1 in 10 young men.",
+      "say": "Betting trouble is more common than many people think. In a recent national poll, about one in ten men between eighteen and thirty scored for problem gambling. The apps are always open, and live betting turns every minute of a game into another chance to bet."
+     },
+     {
+      "k": "points",
+      "h": "Signs of trouble",
+      "items": [
+       [
+        "Missing money",
+        "Or borrowing and cash advances"
+       ],
+       [
+        "Secrecy",
+        "About accounts or spending"
+       ],
+       [
+        "Mood swings",
+        "Tied to game results"
+       ],
+       [
+        "Chasing losses",
+        "Trying to win it back"
+       ]
+      ],
+      "say": "Watch for signs of trouble. Missing money, borrowing, or cash advances on cards. Secrecy about accounts or spending. Mood swings tied to game results. And chasing losses, betting more to win back what's gone."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I care about you, and I'm worried about the betting.",
+       "Help is private. I'll sit with you while you call.",
+       "You can tell me the real number."
+      ],
+      "say": "Here are words that help. I care about you, and I'm worried about the betting. Help is private, and it works. I'll sit with you while you call, if you want. And, you can tell me the real number. We'll deal with it together."
+     },
+     {
+      "k": "big",
+      "h": "Save the helpline now.",
+      "sub": "Before you need it.",
+      "say": "Let's get ready now, before you need it. Pick up your phone, and start a new contact called Betting Help. Save this number in it: 1-800-MY-RESET, that is 1-800-697-3738.",
+      "beats": [
+       "Let's get ready now, before you need it.",
+       "Pick up your phone, and start a new contact called Betting Help.",
+       {
+        "t": "Save this number in it: 1-800-MY-RESET, that is 1-800-697-3738.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Protect what is shared",
+      "items": [
+       [
+        "Separate accounts",
+        "Limits on shared cards"
+       ],
+       [
+        "No paying it off alone",
+        "Get a plan and help first"
+       ],
+       [
+        "No lending",
+        "Not even just this once"
+       ]
+      ],
+      "say": "Protect what's shared. Separate accounts, and limits on shared cards. Leave out paying their gambling debt without a plan and outside help, because it can teach that losses disappear. And skip lending money, even just this once. Shame and lectures drive the losses underground, so keep your words calm."
+     },
+     {
+      "k": "card",
+      "title": "Ask about mood, too.",
+      "body": "Gambling trouble can come with depression. Not wanting to be alive: 988 together. Danger: 911.",
+      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask how they're doing, not only about the money. If they talk about not wanting to be alive, call or text nine eight eight together. If there's danger right now, call nine one one. And get support for yourself. The helplines are there for partners and families too."
+     },
+     {
+      "k": "big",
+      "h": "Calm matters more than answers.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Finding out can bring anger, fear, and grief. Your calm matters more than having every answer. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -2619,6 +3501,412 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "A launch pad, not a waiting room.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Your space and your energy matter too, so say what you need kindly and clearly. Home can be a launch pad, not a waiting room. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "new-city",
+   "ring": "br-home",
+   "title": "Moving to a New City",
+   "you": {
+    "id": "br-g-new-city-you",
+    "guide": "new-city",
+    "side": "you",
+    "title": "Moving to a New City",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the young adult who moved to a new city: homesickness makes sense, and belonging grows with time and repeated hellos.",
+    "sources": [
+     "mcc21",
+     "hallfriends18"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Moving to a New City",
+      "sub": "For You",
+      "say": "If you've moved to a new city, for a job, school, service, or a fresh start, this is for you. A new place can be exciting and lonely in the same week."
+     },
+     {
+      "k": "big",
+      "h": "Homesick is a kind of grief.",
+      "sub": "For places and for people.",
+      "say": "Homesickness is a kind of grief, for places and for people. You might miss your family, your friends, even the parts of home you were glad to leave. And when a Friday night comes and there's no one nearby to call, it can hit hard. That makes sense."
+     },
+     {
+      "k": "big",
+      "h": "You're not the only one.",
+      "sub": "Loneliness is common at this age.",
+      "say": "If you feel lonely, you're far from the only one. Research finds young adults are among the loneliest people in the country. It's not a sign something is wrong with you. It's a sign to build connection on purpose."
+     },
+     {
+      "k": "big",
+      "h": "Friendship takes hours.",
+      "sub": "Repeated, ordinary time together.",
+      "say": "Here's something useful. Research on people who had just moved found that turning an acquaintance into a friend takes many hours of time together. So friendships don't happen fast. They grow from repeated, ordinary time, like the same class, the same team, the same coffee shop, again and again."
+     },
+     {
+      "k": "points",
+      "h": "Your first months",
+      "items": [
+       [
+        "Find your basics",
+        "Groceries, clinic, pharmacy"
+       ],
+       [
+        "One place to return to",
+        "A park, gym, or library"
+       ],
+       [
+        "Join and go three times",
+        "Before you decide"
+       ],
+       [
+        "Suggest the second hangout",
+        "Be the one who asks"
+       ]
+      ],
+      "say": "Here's a plan for your first months. Find your basics, like groceries, a clinic, and a pharmacy. Choose one place you return to often. Join one group and go three times before you decide. And when you meet someone you like, be the one who suggests a second hangout."
+     },
+     {
+      "k": "big",
+      "h": "Find one place nearby.",
+      "sub": "Then go this week.",
+      "say": "Open a map on your phone, or just picture your new neighborhood. Look for one place within about ten minutes of where you live: a park, a library, a gym, a coffee shop, a community center. Say its name out loud, and pick the day this week you'll go.",
+      "beats": [
+       "Open a map on your phone, or just picture your new neighborhood.",
+       "Look for one place within about ten minutes of where you live: a park, a library, a gym, a coffee shop, a community center.",
+       {
+        "t": "Say its name out loud, and pick the day this week you'll go.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Keep your old people too.",
+      "sub": "Old roots, new ground.",
+      "say": "You don't have to choose between old friends and new ones. Keep one or two old friendships strong with a standing call or a planned visit. And notice when scrolling through photos from back home leaves you feeling worse. Put the phone down, and go somewhere that's yours."
+     },
+     {
+      "k": "card",
+      "title": "If the lonely does not lift",
+      "body": "A low that lasts months: a doctor or counselor. Not wanting to live: call or text 988. Danger: 911.",
+      "say": "If loneliness or a low mood hasn't lifted after a few months, or it's keeping you from sleep or work, talk with a doctor or a counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If you're in danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Roots grow in new ground.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Roots grow in new ground, slowly and then all at once. Give this place a season. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-new-city-helper",
+    "guide": "new-city",
+    "side": "helper",
+    "title": "Moving to a New City",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For family, a friend back home, or a new neighbor: stay close from afar, or be the welcome they need.",
+    "sources": [
+     "mcc21",
+     "murthy"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Moving to a New City",
+      "sub": "For the Helper",
+      "say": "This is for family or friends of someone who moved to a new city, and for anyone there who could help them feel at home. You can help from far away, or from right down the street."
+     },
+     {
+      "k": "big",
+      "h": "Upbeat calls, quiet evenings",
+      "sub": "The lonely parts often stay hidden.",
+      "say": "Many young adults sound upbeat on the phone and feel very alone in the evenings. They don't want to worry you, or seem like they can't handle it. So the lonely parts often stay quiet. Young adults are among the loneliest people in the country, so it's worth asking gently."
+     },
+     {
+      "k": "big",
+      "h": "Connection is health.",
+      "sub": "Not just a nice extra.",
+      "say": "Being connected to people matters for health, not only for happiness. Loneliness is linked with a higher risk of depression, heart disease, and earlier death. So helping someone build connection in a new city is real help."
+     },
+     {
+      "k": "points",
+      "h": "If you are far away",
+      "items": [
+       [
+        "A standing call",
+        "On their terms"
+       ],
+       [
+        "Something by mail",
+        "A note, a snack, a photo"
+       ],
+       [
+        "A planned visit",
+        "Something to look forward to"
+       ],
+       [
+        "Ask about the good",
+        "Not only the hard"
+       ]
+      ],
+      "say": "If you're far away, keep a standing call, on their terms. Send something by mail, a note, a favorite snack, a photo. Plan a visit if you can, so there's something to look forward to. And ask about the good parts, not only the hard ones."
+     },
+     {
+      "k": "points",
+      "h": "If you are nearby",
+      "items": [
+       [
+        "Invite them",
+        "Something specific"
+       ],
+       [
+        "Introduce one person",
+        "A coworker, a neighbor"
+       ],
+       [
+        "Share local tips",
+        "A clinic, a park, a group"
+       ]
+      ],
+      "say": "If you live in their new city, you can make a big difference. Invite them to something specific, like food on Thursday. Introduce them to one person. And share local tips, like a good clinic, a park, or a group worth trying."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You chose this.",
+       "Just come home.",
+       "Have you tried making friends?"
+      ],
+      "say": "Some words land wrong. You chose this, so you must be fine. Just come home if it's that hard. Have you tried making friends? Each one makes it harder to admit it's lonely."
+     },
+     {
+      "k": "big",
+      "h": "Set a standing call.",
+      "sub": "Offer it as a question.",
+      "say": "Pick up your phone, or your calendar. Choose a day and a time that could work for a regular call, a video chat, or a visit. Put it in your calendar now, and plan to offer it as a question, not a rule.",
+      "beats": [
+       "Pick up your phone, or your calendar.",
+       "Choose a day and a time that could work for a regular call, a video chat, or a visit.",
+       {
+        "t": "Put it in your calendar now, and plan to offer it as a question, not a rule.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "When lonely becomes low",
+      "body": "A low that lasts months: encourage a doctor or counselor. Not wanting to live: 988, together. Danger: 911.",
+      "say": "Notice if loneliness seems to be turning into a low that lasts for months. Encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together. If there's danger, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Be the welcome.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Whether you're far away or right down the street, you can be part of their welcome. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "housing",
+   "ring": "br-home",
+   "title": "When Housing Falls Through",
+   "you": {
+    "id": "br-g-housing-you",
+    "guide": "housing",
+    "side": "you",
+    "title": "When Housing Falls Through",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the young adult whose housing fell through: this is a situation, not who you are, and help can start today.",
+    "sources": [
+     "voyc17"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "When Housing Falls Through",
+      "sub": "For You",
+      "say": "If you've lost your place, you're couch surfing, or you're not sure where you'll sleep next week, this is for you. You deserve a safe place to sleep, and you deserve help getting there."
+     },
+     {
+      "k": "big",
+      "h": "More common than people think.",
+      "sub": "About 1 in 10 young adults in a year.",
+      "say": "Losing your housing is more common than people think. About one in ten young adults has some kind of homelessness in a year, and for many it looks like couch surfing. Many people in this spot don't call it homelessness, and don't tell anyone. You're not the only one."
+     },
+     {
+      "k": "big",
+      "h": "A situation, not who you are.",
+      "sub": "Asking early opens more options.",
+      "say": "A lease ends. Rent goes up. Hours get cut. A roommate leaves, or a relationship ends, or home stops being safe. This is something happening to you. It isn't who you are. And the earlier you ask for help, the more options there usually are."
+     },
+     {
+      "k": "big",
+      "h": "Steady your body first.",
+      "sub": "A few slow breaths.",
+      "say": "Before the next step, steady your body. Put both feet on the floor, and let your shoulders drop. Breathe in through your nose for a count of four. Now breathe out slowly for a count of six, and do that three more times at your own pace.",
+      "beats": [
+       "Before the next step, steady your body.",
+       "Put both feet on the floor, and let your shoulders drop.",
+       "Breathe in through your nose for a count of four.",
+       {
+        "t": "Now breathe out slowly for a count of six, and do that three more times at your own pace.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Where to start",
+      "items": [
+       [
+        "Tonight first",
+        "Somewhere safe to sleep"
+       ],
+       [
+        "Call or text 211",
+        "Shelter, rent help, food"
+       ],
+       [
+        "Tell one person",
+        "You trust them, no plan needed"
+       ],
+       [
+        "Keep your papers",
+        "ID, cards, phone, medicine"
+       ]
+      ],
+      "say": "Here's where to start. Tonight first, meaning somewhere safe to sleep. Call or text two one one to ask about shelter, rent help, and food near you. Tell one person you trust, even if you don't have a plan yet. And keep your important things with you, like your ID, cards, phone, charger, and medicine."
+     },
+     {
+      "k": "words",
+      "h": "Other doors to knock on",
+      "items": [
+       "Your school's student services",
+       "Legal aid, for an eviction notice",
+       "A short stay with a clear plan"
+      ],
+      "say": "There are other doors to knock on. If you're a student, your school's student services or financial aid office may have emergency funds or housing help. If you got an eviction notice, contact legal aid or a tenant hotline today. And a short stay with a friend or relative goes best with a clear end date and a plan."
+     },
+     {
+      "k": "card",
+      "title": "Help any time",
+      "body": "Up to age 24: 1-800-786-2929. Shelter and services: 211. Not wanting to live: 988. Danger: 911.",
+      "say": "If you're twenty four or younger, the National Runaway Safeline helps with a housing crisis any time, at one eight hundred, seven eight six, two nine two nine. Two one one connects you with local help. If you feel hopeless or think about not wanting to be alive, call or text nine eight eight. If you're in danger, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "One step at a time is enough.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Getting through this takes real strength, and one step at a time is enough. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-housing-helper",
+    "guide": "housing",
+    "side": "helper",
+    "title": "When Housing Falls Through",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the friend, family member, or mentor of a young adult who lost their housing: start with tonight, and offer what you can truly give.",
+    "sources": [
+     "voyc17"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "When Housing Falls Through",
+      "sub": "For the Helper",
+      "say": "This is for a friend, a family member, a coworker, or a mentor of someone whose housing fell through. Practical help, given with dignity, can change everything this week."
+     },
+     {
+      "k": "big",
+      "h": "Often hidden in plain sight.",
+      "sub": "Couch surfing, a car, a quiet ask.",
+      "say": "About one in ten young adults has some kind of homelessness in a year, and many are couch surfing or sleeping in a car while still going to work or class. They may not use the word homeless. They may not tell you the whole story at first. Shame keeps a lot of it hidden."
+     },
+     {
+      "k": "big",
+      "h": "Start with tonight.",
+      "sub": "A safe place, food, a charged phone.",
+      "say": "Start with tonight. Ask gently, are you safe tonight? Do you have somewhere to sleep? A safe place, a meal, and a charged phone come before any long-term plan."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Thank you for telling me.",
+       "Are you safe tonight?",
+       "This does not change how I see you."
+      ],
+      "say": "Here are words that help. Thank you for telling me. Let's figure out the next step together. Are you safe tonight? And, this doesn't change how I see you."
+     },
+     {
+      "k": "big",
+      "h": "Offer what you can truly give.",
+      "sub": "Then give it well.",
+      "say": "Think about what you could really offer this week. A couch for a few nights, a ride, a meal, a call to 211 together, help with a form, or a place to store their things. Pick one you can truly give, and say it out loud as an offer: I can do this, if it helps.",
+      "beats": [
+       "Think about what you could really offer this week.",
+       "A couch for a few nights, a ride, a meal, a call to 211 together, help with a form, or a place to store their things.",
+       {
+        "t": "Pick one you can truly give, and say it out loud as an offer: I can do this, if it helps.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Sit with them",
+        "While they call 211"
+       ],
+       [
+        "Eviction notice?",
+        "Legal aid, right away"
+       ],
+       [
+        "Ask before acting",
+        "Their call, their choices"
+       ],
+       [
+        "Keep checking in",
+        "The weeks after matter"
+       ]
+      ],
+      "say": "Here are more ways to help. Sit with them while they call two one one, a school's student services, or legal aid, if they want company. If there's an eviction notice, help them reach legal aid right away. Ask before you call anyone for them. And keep checking in after the first crisis passes, because the weeks after can be the hardest."
+     },
+     {
+      "k": "card",
+      "title": "If they are not safe",
+      "body": "In Minnesota, Day One: 1-866-223-1111. Up to age 24: 1-800-786-2929. Danger: 911.",
+      "say": "If they left a home where someone hurt or controlled them, take their safety seriously. In Minnesota, Day One answers any time, at one eight six six, two two three, one one one one. If they're twenty four or younger, the National Runaway Safeline can help, at one eight hundred, seven eight six, two nine two nine. If there's danger, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Steady help, honest limits.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can't fix everything, and you don't have to. Steady, honest help matters more than big promises. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -3517,6 +4805,466 @@ window.GG_LEARN_GUIDES.birch = {
    }
   },
   {
+   "id": "controlling",
+   "ring": "br-people",
+   "title": "Controlling or Abusive Relationships",
+   "you": {
+    "id": "br-g-controlling-you",
+    "guide": "controlling",
+    "side": "you",
+    "title": "Controlling or Abusive Relationships",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the young adult whose partner controls, scares, or hurts them, or who is worried about a friend: it is not your fault, and help is there any time.",
+    "sources": [
+     "nisvs"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Controlling or Abusive Relationships",
+      "sub": "For You",
+      "say": "This is for you if someone you're dating, living with, or married to controls you, scares you, or hurts you. It's also for you if you're worried about a friend. You don't have to be sure it's abuse to keep watching."
+     },
+     {
+      "k": "big",
+      "h": "Love does not come with fear.",
+      "sub": "It is never your fault.",
+      "say": "Let's start here. Abuse is never your fault. It's a pattern where someone uses fear, guilt, threats, money, or force to have power over you. You never have to earn kindness. And love doesn't come with fear."
+     },
+     {
+      "k": "big",
+      "h": "It often starts young.",
+      "sub": "Most are first hurt before 25.",
+      "say": "It's more common at your age than many people think. Of the people who are ever hurt by a partner, more than seven in ten women and more than six in ten men were first hurt before age twenty five. So if this is happening to you, you are not the only one."
+     },
+     {
+      "k": "points",
+      "h": "Signs of control",
+      "items": [
+       [
+        "Your phone",
+        "Checking it, tracking you"
+       ],
+       [
+        "Your people",
+        "Cutting you off"
+       ],
+       [
+        "Your money",
+        "Taking or controlling it"
+       ],
+       [
+        "Your body",
+        "Pressure, pushing, or force"
+       ]
+      ],
+      "say": "Here are signs of control. Checking your phone, demanding passwords, or tracking where you are. Getting angry when you see friends or family. Taking your paycheck or controlling the money. Put-downs called jokes. Threats, including threats to hurt themselves if you leave. And pressure about sex or pictures, or pushing, grabbing, or hitting. Any of these counts, with or without marks."
+     },
+     {
+      "k": "big",
+      "h": "Name one safe person and one safe place.",
+      "sub": "Quietly, just for you.",
+      "say": "Let's take one step right now. Think of one person you trust, who you could call. Say their name quietly. Now think of one place you could go if you needed to. Say that quietly too.",
+      "beats": [
+       "Let's take one step right now.",
+       "Think of one person you trust, who you could call.",
+       "Say their name quietly.",
+       "Now think of one place you could go if you needed to.",
+       {
+        "t": "Say that quietly too.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Getting safer",
+      "steps": [
+       [
+        "Reach out",
+        "Love Is Respect, any time"
+       ],
+       [
+        "Use a safe device",
+        "One they cannot see"
+       ],
+       [
+        "Make a safety plan",
+        "Before a big step"
+       ],
+       [
+        "Danger right now",
+        "Call 911"
+       ]
+      ],
+      "say": "Here's how to get safer. Reach out to Love Is Respect, by call, text, or chat, any time. If someone might be watching your phone, use a device they can't see, like a friend's phone. Make a safety plan with an advocate before a big step, because leaving can be a risky time. And if you're in danger right now, call nine one one."
+     },
+     {
+      "k": "card",
+      "title": "Your check-in keeps you in charge",
+      "body": "Say someone is hurting you, and Birch shows outside help. No alert to anyone. Helpers never see it.",
+      "say": "If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away, like Love Is Respect, Day One, and nine one one. Birch sends no alert to anyone, and a helper never sees your safety answers. You stay in charge of who you tell. And if it ever gets so heavy you think about not wanting to be alive, call or text nine eight eight."
+     },
+     {
+      "k": "big",
+      "h": "You deserve to feel safe. Always.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Caring about someone who hurts you doesn't make you foolish. It makes you human. You deserve to feel safe and respected, all the time. Asking for help is strong. The full guide has more, whenever you want it."
+     }
+    ],
+    "crisis": [
+     "Love Is Respect: call 1-866-331-9474 or text LOVEIS to 22522, any time",
+     "988: call, text, or chat, any time",
+     "911: danger right now"
+    ]
+   },
+   "helper": {
+    "id": "br-g-controlling-helper",
+    "guide": "controlling",
+    "side": "helper",
+    "title": "Controlling or Abusive Relationships",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the person beside a young adult in a controlling or abusive relationship: believe them, stay close, and plan for safety together.",
+    "sources": [
+     "nisvs"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Controlling or Abusive Relationships",
+      "sub": "For the Helper",
+      "say": "This is for the parent, friend, roommate, sibling, or mentor of a young adult whose partner may be controlling or hurting them. You may be one of the most important people in their way out."
+     },
+     {
+      "k": "big",
+      "h": "It often starts young.",
+      "sub": "Most are first hurt before 25.",
+      "say": "Of the people who are ever hurt by a partner, more than seven in ten women and more than six in ten men were first hurt before age twenty five. Many face control, threats, tracking, and money control that leave no marks. And many never tell anyone."
+     },
+     {
+      "k": "points",
+      "h": "Signs you might notice",
+      "items": [
+       [
+        "Always on their phone",
+        "Anxious to answer"
+       ],
+       [
+        "Fewer people",
+        "Dropping friends and family"
+       ],
+       [
+        "Changes in them",
+        "Withdrawn, jumpy, low"
+       ],
+       [
+        "Money trouble",
+        "Or marks that do not fit"
+       ]
+      ],
+      "say": "Here are signs you might notice. They're always on their phone, anxious to answer right away. They see fewer friends and less family. They seem withdrawn, jumpy, or low. Their money seems controlled, or there are marks with stories that don't quite fit. Pulling away from you may be part of the pattern, not a rejection of you."
+     },
+     {
+      "k": "words",
+      "h": "First words",
+      "items": [
+       "I believe you.",
+       "This is not your fault.",
+       "You don't have to decide anything right now."
+      ],
+      "say": "If they tell you, the first words matter most. I believe you. This is not your fault. And, you don't have to decide anything right now. I'm with you."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Why don't you just leave?",
+       "It's them or me.",
+       "Why did you go back?"
+      ],
+      "say": "Some responses push people away. Why don't you just leave? Leaving is complicated, and without a plan it can be the riskiest time. Ultimatums, like it's them or me, can push them closer to the partner. And blaming questions, like why did you go back? Leaving often takes more than one try."
+     },
+     {
+      "k": "big",
+      "h": "Save the number now.",
+      "sub": "For you, and for them.",
+      "say": "Let's do one thing right now. Open the contacts on your own phone. Add Love Is Respect, one eight six six, three three one, nine four seven four. They talk with friends and family too.",
+      "beats": [
+       "Let's do one thing right now.",
+       "Open the contacts on your own phone.",
+       "Add Love Is Respect, one eight six six, three three one, nine four seven four.",
+       {
+        "t": "They talk with friends and family too.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Plan for safety together",
+      "steps": [
+       [
+        "Stay connected",
+        "Your bond is protection"
+       ],
+       [
+        "Call for guidance",
+        "Love Is Respect or Day One"
+       ],
+       [
+        "Offer practical help",
+        "A room, a ride, a phone"
+       ],
+       [
+        "Danger right now",
+        "Call 911"
+       ]
+      ],
+      "say": "Plan for safety together. Stay connected, because your bond is protection. Call Love Is Respect, the Hotline, or Day One for guidance. Offer practical help, like a safe place to stay, a ride, or a phone they can use. And if there's danger right now, call nine one one."
+     },
+     {
+      "k": "card",
+      "title": "Privacy, and urgent help",
+      "body": "Birch shows outside help, never an alert. Helpers never see safety answers. Hopeless: 988, together.",
+      "say": "One thing to know. If they tell their Birch check-in that someone is hurting them, Birch shows them outside help, and sends no alert to anyone. Helpers never see safety answers. That keeps them safe to answer honestly, so your warmth matters even more. If they seem hopeless, call or text nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Steady love helps them find the way out.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Get support for yourself too. Your steady, non-judging presence is often what helps someone find their way out, on their own timeline. The full guide has more, whenever you want it."
+     }
+    ],
+    "crisis": [
+     "Love Is Respect: call 1-866-331-9474 or text LOVEIS to 22522, any time",
+     "988: call, text, or chat, any time",
+     "911: danger right now"
+    ]
+   }
+  },
+  {
+   "id": "engaged",
+   "ring": "br-people",
+   "title": "Engaged or Newly Married",
+   "you": {
+    "id": "br-g-engaged-you",
+    "guide": "engaged",
+    "side": "you",
+    "title": "Engaged or Newly Married",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult who is engaged or newly married: joy and stress can come together, and repair matters more than never fighting.",
+    "sources": [
+     "stanley06"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Engaged or Newly Married",
+      "sub": "For You",
+      "say": "This is for you if you're engaged, or in your first years of marriage. Congratulations. Joining two lives is a joy, and it's also a big change."
+     },
+     {
+      "k": "big",
+      "h": "Joy and stress can come together.",
+      "sub": "Even when you are sure.",
+      "say": "You might be thrilled and overwhelmed at the same time. Planning, even a small wedding or a courthouse visit, can bring money stress and family opinions. Moving in together can surface differences you didn't know you had. Stress, second thoughts, and adjustment are common, even when you're sure."
+     },
+     {
+      "k": "points",
+      "h": "The talks that matter most",
+      "items": [
+       [
+        "Money",
+        "Shared, separate, big buys"
+       ],
+       [
+        "Home",
+        "Chores and routines"
+       ],
+       [
+        "Families",
+        "Holidays and boundaries"
+       ],
+       [
+        "The future",
+        "Work, meaning, children or not"
+       ]
+      ],
+      "say": "The talks that matter most are about everyday life. Money, what's shared, what's separate, and how you decide on big purchases. Home, the chores and routines. Families, holidays, and boundaries. And the future, work, faith or meaning, and children or not. Pick a calm time for these, never the middle of a fight."
+     },
+     {
+      "k": "big",
+      "h": "Preparation helps.",
+      "sub": "More satisfaction, less conflict.",
+      "say": "Preparation helps. In one large survey, couples who took part in premarital education reported more satisfaction and commitment, less conflict, and lower odds of divorce. It's a strength to learn together, not a sign of trouble."
+     },
+     {
+      "k": "big",
+      "h": "Say one thank-you out loud.",
+      "sub": "Something they did this week.",
+      "say": "Let's try something small that makes a big difference. Think of one thing your partner did this week that you appreciated. Say a thank-you for it out loud, as if they were here. Then plan to say it to them today.",
+      "beats": [
+       "Let's try something small that makes a big difference.",
+       "Think of one thing your partner did this week that you appreciated.",
+       "Say a thank-you for it out loud, as if they were here.",
+       {
+        "t": "Then plan to say it to them today.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Repair matters most",
+      "items": [
+       [
+        "Own your part",
+        "Even a small one"
+       ],
+       [
+        "Say sorry",
+        "Plainly"
+       ],
+       [
+        "Come back calm",
+        "Not in the heat"
+       ],
+       [
+        "Ask early",
+        "Counseling is a strength"
+       ]
+      ],
+      "say": "Every couple disagrees. What matters most is repair. Own your part, even a small one. Say sorry plainly. Come back to it when you're both calm. And ask for help early. Couples counseling works best before things are broken."
+     },
+     {
+      "k": "card",
+      "title": "If it turns into fear",
+      "body": "Fear, threats, or control are not normal adjustment. Love Is Respect: 1-866-331-9474. Danger: 911.",
+      "say": "One more thing. If disagreements ever turn into fear, threats, or control, that isn't a normal adjustment. Love Is Respect helps people your age, by call, text, or chat, any time. And if you're ever in danger, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "You're a team, even when you disagree.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You get to build your own way of doing things, together. You're a team, even when you disagree. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-engaged-helper",
+    "guide": "engaged",
+    "side": "helper",
+    "title": "Engaged or Newly Married",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family, friend, or mentor beside a young couple: bless the new household, help when asked, and stay out of the middle.",
+    "sources": [
+     "stanley06"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Engaged or Newly Married",
+      "sub": "For the Helper",
+      "say": "This is for the parent, family member, friend, or mentor of a young adult who is engaged or newly married. Your welcome can make their first years steadier."
+     },
+     {
+      "k": "big",
+      "h": "A new household is forming.",
+      "sub": "With its own way of doing things.",
+      "say": "When two people marry, a new household forms. They'll build their own traditions, and some will differ from yours. They're adults making their own commitment. Your part is to bless it, and to respect their choices."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I'm so happy for you both.",
+       "What would help most right now?",
+       "Your wedding, your way."
+      ],
+      "say": "Here are words that help. I'm so happy for you both. What would help most right now? And, your wedding, your way. I'll be there."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Aren't you too young?",
+       "That is not how we do it.",
+       "So when are the grandkids coming?"
+      ],
+      "say": "Some words, meant kindly, add pressure. Aren't you too young, once the decision is made. That is not how we do it, when they're building their own way. And, so when are the grandkids coming? That's their choice and their timing."
+     },
+     {
+      "k": "points",
+      "h": "Help that strengthens them",
+      "items": [
+       [
+        "Practical help",
+        "When they ask"
+       ],
+       [
+        "Flexible holidays",
+        "Share the time"
+       ],
+       [
+        "Welcome their partner",
+        "Fully"
+       ],
+       [
+        "Encourage preparation",
+        "As a gift"
+       ]
+      ],
+      "say": "Here's help that strengthens a young couple. Practical help, when they ask for it. Flexible holidays, so both families share the time. Welcome their partner fully. And encourage premarital education as a gift, not a warning. In one large survey, couples who had it reported more satisfaction and less conflict."
+     },
+     {
+      "k": "big",
+      "h": "Wish them well, silently.",
+      "sub": "Picture the two of them together.",
+      "say": "Let's take a quiet moment. Picture the two of them together. Silently wish them well, in your own words. Maybe patience with each other, laughter, and a home where both feel safe.",
+      "beats": [
+       "Let's take a quiet moment.",
+       "Picture the two of them together.",
+       "Silently wish them well, in your own words.",
+       {
+        "t": "Maybe patience with each other, laughter, and a home where both feel safe.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Stay out of the middle",
+      "body": "Listen without taking sides. Never criticize their partner to them. Keep their struggles private.",
+      "say": "When they vent, listen without taking sides. Never criticize their partner to them. It puts them in the middle. And keep their private struggles private."
+     },
+     {
+      "k": "card",
+      "title": "When it is more than adjustment",
+      "body": "Fear, threats, control, or being cut off from people: stay close, share Love Is Respect. Danger: 911.",
+      "say": "If you see signs of fear, threats, control, or someone being cut off from friends and family, that's more than adjustment. Stay close, and share Love Is Respect, which helps people your loved one's age, any time. If there's danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "A warm welcome is a gift.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A steady, warm welcome is one of the best gifts you can give a new couple. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
    "id": "parents-adult",
    "ring": "br-family",
    "title": "You and Your Parents, as Adults",
@@ -3960,6 +5708,919 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Be one steady person.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Being one steady person in their life can matter more than you'll ever know. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "unplanned-pregnancy",
+   "ring": "br-family",
+   "title": "An Unplanned Pregnancy",
+   "you": {
+    "id": "br-g-unplanned-pregnancy-you",
+    "guide": "unplanned-pregnancy",
+    "side": "you",
+    "title": "An Unplanned Pregnancy",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For young adults facing a pregnancy they did not plan: steady steps, safe people, and honest answers.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "An Unplanned Pregnancy",
+      "sub": "For You",
+      "say": "This is for you if you've just learned about a pregnancy you didn't plan, whether you're the one who's pregnant, or someone you're with is. It's here to help you take the next steady step."
+     },
+     {
+      "k": "big",
+      "h": "Every feeling is allowed.",
+      "sub": "And feelings can change.",
+      "say": "Finding out can bring a rush of feelings all at once. Shock, fear, numbness, hope, guilt, or all of them in the same hour. Whatever you feel first is allowed. It may change from one day to the next, and that's normal too."
+     },
+     {
+      "k": "big",
+      "h": "Breathe out longer than in.",
+      "sub": "Right where you are.",
+      "say": "Let's slow down for a moment. Put both feet on the floor. Breathe in through your nose, and out slowly, longer than you breathed in. Take three breaths like that now.",
+      "beats": [
+       "Let's slow down for a moment.",
+       "Put both feet on the floor.",
+       "Breathe in through your nose, and out slowly, longer than you breathed in.",
+       {
+        "t": "Take three breaths like that now.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "A few first steps",
+      "items": [
+       [
+        "One safe person",
+        "Someone who listens"
+       ],
+       [
+        "A doctor or clinic",
+        "Medical questions, every option"
+       ],
+       [
+        "Questions on paper",
+        "Bring someone if you like"
+       ],
+       [
+        "Three short lists",
+        "Know, find out, my people"
+       ]
+      ],
+      "say": "Here are a few first steps. Tell one safe person, someone who listens more than they talk. See a doctor, nurse, or health clinic you trust. They can confirm the pregnancy, look after your health, answer your questions, and talk through every option with you. Write your questions down before you go, and bring someone if you'd like. And make three short lists. What I know. What I need to find out. And who's in my corner."
+     },
+     {
+      "k": "flow",
+      "h": "Telling someone",
+      "steps": [
+       [
+        "Choose the person",
+        "Start with one who feels safe"
+       ],
+       [
+        "Choose the moment",
+        "Private and unhurried"
+       ],
+       [
+        "Say what you need",
+        "Listening, help, or time"
+       ]
+      ],
+      "say": "Telling someone can feel huge. Choose the person first. Start with one who feels safe. Choose a private, unhurried moment. Then say what you need from them. Try this. I have something important to tell you, and right now I mostly need you to listen. You decide who knows, and when."
+     },
+     {
+      "k": "card",
+      "title": "No one gets to pressure you.",
+      "body": "In any direction. Love Is Respect: 1-866-331-9474. Day One: 1-866-223-1111. Danger: 911.",
+      "say": "One thing is true for everyone. No one gets to pressure, threaten, or force you about a pregnancy, in any direction. Not a partner, not family, not anyone. If that's happening, Love Is Respect and Day One are there by phone or text, any time. If you're in danger, call nine one one."
+     },
+     {
+      "k": "card",
+      "title": "Support for your mind, too",
+      "body": "Maternal Mental Health Hotline: call or text 1-833-852-6262. Hopeless: 988.",
+      "say": "If you're pregnant and feel overwhelmed, anxious, or low, the National Maternal Mental Health Hotline is there any time, by call or text, in English and Spanish. If it ever gets so heavy you think about not wanting to be alive, call, text, or chat nine eight eight. Your Birch answers stay on this device, and a helper sees only what you choose to share."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "I don't have to know everything today.",
+       "All my feelings are allowed.",
+       "I deserve support and honest answers."
+      ],
+      "say": "Here are words to keep. I don't have to know everything today. All my feelings are allowed. And I deserve support and honest answers."
+     },
+     {
+      "k": "big",
+      "h": "One steady step at a time.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You deserve people who listen, and room to think. Take it one steady step at a time. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-unplanned-pregnancy-helper",
+    "guide": "unplanned-pregnancy",
+    "side": "helper",
+    "title": "An Unplanned Pregnancy",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the partner, parent, or friend of a young adult facing an unplanned pregnancy: listen first, and be someone safe to talk to.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "An Unplanned Pregnancy",
+      "sub": "For the Helper",
+      "say": "This is for the partner, parent, friend, or mentor of a young adult facing a pregnancy they didn't plan. Your part right now is simple, and it matters. Be someone safe to talk to."
+     },
+     {
+      "k": "big",
+      "h": "Listen first.",
+      "sub": "Your calm gives them room to think.",
+      "say": "When someone tells you about an unplanned pregnancy, they're often scared of how you'll react. They may be in shock, or numb, or carrying many feelings at once. The most helpful thing you can do is listen first. Your calm gives them room to think."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Thank you for telling me.",
+       "What do you need from me right now?",
+       "You don't have to figure it all out tonight."
+      ],
+      "say": "Here are words that help. Thank you for telling me. I'm here, so what do you need from me right now? And, you don't have to figure it all out tonight."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "How could you let this happen?",
+       "Here is what you should do.",
+       "Sharing their news for them"
+      ],
+      "say": "Some words make it harder. Blame, like how could you let this happen. Telling them what to do, or what you would do in their place. And sharing their news before they're ready, even with family. Even when it's meant well, each of these can shut the conversation down."
+     },
+     {
+      "k": "big",
+      "h": "Say it out loud, slowly.",
+      "sub": "So it comes out calm when it counts.",
+      "say": "Let's practice, so the words come out calm when it counts. Picture them sitting across from you. Now say these words out loud, slowly, in your own voice. I'm here, I'm listening, and I care about you.",
+      "beats": [
+       "Let's practice, so the words come out calm when it counts.",
+       "Picture them sitting across from you.",
+       "Now say these words out loud, slowly, in your own voice.",
+       {
+        "t": "I'm here, I'm listening, and I care about you.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Practical support",
+      "steps": [
+       [
+        "Rides and waiting rooms",
+        "Go along if they want"
+       ],
+       [
+        "Questions on paper",
+        "For the doctor or clinic"
+       ],
+       [
+        "Privacy",
+        "Their news, their timing"
+       ],
+       [
+        "The basics",
+        "Food, sleep, a quiet place"
+       ]
+      ],
+      "say": "Practical help matters too. Offer a ride to an appointment, and company in the waiting room if they want it. Help them write their questions for the doctor or clinic. Keep their news private. It's theirs to share, in their own timing. And look after the basics, like food, sleep, and a quiet place to think."
+     },
+     {
+      "k": "card",
+      "title": "If you see pressure or harm",
+      "body": "Love Is Respect: 1-866-331-9474. Day One: 1-866-223-1111. Danger: 911.",
+      "say": "No one should be pressured, threatened, or forced about a pregnancy, in any direction. If you see that happening, help them reach Love Is Respect or Day One, any time. In danger, call nine one one. If they seem overwhelmed or low, the National Maternal Mental Health Hotline takes calls and texts, any time. And if they talk about not wanting to be alive, call, text, or chat nine eight eight together."
+     },
+     {
+      "k": "card",
+      "title": "Your own feelings count too",
+      "body": "Talk them through with a friend or counselor of your own.",
+      "say": "You may have strong feelings, hopes, or beliefs of your own. They're real. Talk them through with your own friend, counselor, or someone you trust, so your time with them stays about listening. If you're the partner, your feelings matter too. Say them honestly and kindly, and listen just as carefully."
+     },
+     {
+      "k": "big",
+      "h": "Be someone safe to talk to.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Being someone safe to talk to is one of the best gifts you can give right now. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "young-parent",
+   "ring": "br-family",
+   "title": "Becoming a Parent Young",
+   "you": {
+    "id": "br-g-young-parent-you",
+    "guide": "young-parent",
+    "side": "you",
+    "title": "Becoming a Parent Young",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For young adults who have become parents: love and strain together, and help that is part of good parenting.",
+    "sources": [
+     "prams18",
+     "paulson10"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Becoming a Parent Young",
+      "sub": "For You",
+      "say": "This is for you if you've become a parent young, or you're about to. Mom, dad, raising a baby together or on your own. You're building something big, and you deserve support."
+     },
+     {
+      "k": "big",
+      "h": "Love and exhaustion, together",
+      "sub": "Both are normal. Neither cancels the other.",
+      "say": "You might feel a love bigger than you expected, and a tired you didn't know was possible. Some days you'll feel proud. Some days you'll feel lost. Both are normal, at any age. Neither one cancels the other."
+     },
+     {
+      "k": "points",
+      "h": "What young parents juggle",
+      "items": [
+       [
+        "Sleep",
+        "Short nights, long days"
+       ],
+       [
+        "Money",
+        "Diapers, rent, child care"
+       ],
+       [
+        "Work or school",
+        "Plans that had to shift"
+       ],
+       [
+        "People",
+        "Friends, family, the other parent"
+       ]
+      ],
+      "say": "Young parents juggle a lot. Sleep, in short pieces. Money, for diapers, rent, and child care. Work or school, and plans that had to shift. And people. Friends whose lives look different now. Family with help and opinions. And a relationship with the baby's other parent that may be close, complicated, or over. You don't have to carry all of it alone."
+     },
+     {
+      "k": "flow",
+      "h": "Help is part of parenting",
+      "steps": [
+       [
+        "Sleep",
+        "When someone else can watch"
+       ],
+       [
+        "Ask for one thing",
+        "A meal, laundry, two hours"
+       ],
+       [
+        "Find your people",
+        "Other young parents"
+       ],
+       [
+        "Basics",
+        "In Minnesota, dial 211"
+       ]
+      ],
+      "say": "Asking for help is part of good parenting. Sleep when someone else can watch the baby. Ask for one specific thing, like a meal, a load of laundry, or two hours of babysitting. Find other young parents who get it. And for food, diapers, housing, or child care help in Minnesota, dial two one one."
+     },
+     {
+      "k": "big",
+      "h": "Write one ask.",
+      "sub": "One person, one thing, one day.",
+      "say": "Let's make one ask, right now. Think of one thing that would make this week easier. Think of one person who could help with it. Write the ask in one sentence, with a day.",
+      "beats": [
+       "Let's make one ask, right now.",
+       "Think of one thing that would make this week easier.",
+       "Think of one person who could help with it.",
+       {
+        "t": "Write the ask in one sentence, with a day.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "A crying plan",
+      "body": "Put the baby down safely in the crib. Step away a few minutes. Call someone.",
+      "say": "Make a crying plan before you need it. When it's too much, put the baby down somewhere safe, like the crib. Step out of the room for a few minutes, breathe, and call someone. Crying won't hurt a baby. Shaking can. Stepping away is a strong, loving choice."
+     },
+     {
+      "k": "card",
+      "title": "Watch your own mood",
+      "body": "Maternal Mental Health Hotline: call or text 1-833-852-6262. Moms and dads.",
+      "say": "Depression and anxiety after a baby are common, and they're treatable. About one in eight moms have symptoms, more among the youngest, and about one in ten dads struggle too. If sadness, worry, or scary thoughts last more than two weeks, call your doctor or the National Maternal Mental Health Hotline, any time. Thoughts of harming yourself or your baby, call or text nine eight eight, or call nine one one now."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "I'm learning, and that's enough today.",
+       "Needing help doesn't make me a bad parent.",
+       "Young does not mean less."
+      ],
+      "say": "Here are words to keep. I'm learning, and that's enough for today. Needing help doesn't make me a bad parent. And young doesn't mean less. My baby has me."
+     },
+     {
+      "k": "big",
+      "h": "Your baby has you.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your baby has you, and you deserve people who have your back. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-young-parent-helper",
+    "guide": "young-parent",
+    "side": "helper",
+    "title": "Becoming a Parent Young",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the parent, partner, or friend of a young parent: specific help, without strings, and respect for the parent they are becoming.",
+    "sources": [
+     "prams18",
+     "paulson10"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Becoming a Parent Young",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, friend, or mentor of a young adult who has just become a parent. What you do in these months can make a lasting difference, for them and for the baby."
+     },
+     {
+      "k": "big",
+      "h": "See the parent they are becoming.",
+      "sub": "Capable, learning, and tired.",
+      "say": "Young parents often feel watched and judged. Many hear criticism even in friendly advice. Under that, most want two things. To be seen as the capable parent they're becoming. And to have real, practical help, without strings."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "You're a good parent.",
+       "How are you really doing?",
+       "What would help most this week?"
+      ],
+      "say": "Here are words that help. You're a good parent, and I can see how much you love them. How are you really doing? And, what would help most this week?"
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You should have waited.",
+       "Here, let me do it.",
+       "Advice in front of others"
+      ],
+      "say": "Some words land hard. Anything about their age, like you should have waited. Taking over, as if they can't do it. And advice they didn't ask for, especially in front of others. Share ideas privately, when asked, and back up their choices as the parent."
+     },
+     {
+      "k": "flow",
+      "h": "Specific help, on a set day",
+      "steps": [
+       [
+        "A meal",
+        "Tuesday"
+       ],
+       [
+        "Laundry",
+        "Thursday"
+       ],
+       [
+        "Two hours",
+        "Saturday, so they sleep"
+       ],
+       [
+        "Their own life",
+        "A class, a shift, a friend"
+       ]
+      ],
+      "say": "Specific help, on a set day, works better than, call me if you need anything. A meal on Tuesday. Laundry on Thursday. Two hours on Saturday, so they can sleep. And help them keep one piece of their own life going, like a class, a shift, or a friendship."
+     },
+     {
+      "k": "big",
+      "h": "Pick one task, and one day.",
+      "sub": "Put it in your calendar now.",
+      "say": "Let's make it real. Think of one task you could take off their plate this week. Pick the day you'll do it. Put it in your calendar now.",
+      "beats": [
+       "Let's make it real.",
+       "Think of one task you could take off their plate this week.",
+       "Pick the day you'll do it.",
+       {
+        "t": "Put it in your calendar now.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Watch for depression, in moms and dads",
+      "body": "Two weeks or more: their doctor, or 1-833-852-6262. Harm: 988 or 911.",
+      "say": "Depression and anxiety after a baby are common. About one in eight moms report symptoms, more among the youngest, and about one in ten dads struggle too. If sadness or worry lasts more than two weeks, encourage a call to their doctor or the National Maternal Mental Health Hotline. If you see thoughts of harming themselves or the baby, call or text nine eight eight, or call nine one one now."
+     },
+     {
+      "k": "card",
+      "title": "What a helper sees in Birch",
+      "body": "Only what they choose to share. Never safety answers. Ask kindly.",
+      "say": "In Birch, a helper sees only what the young parent chooses to share, and never their safety answers. No alert goes to anyone. So ask, directly and kindly, how they're doing. And if the crying is wearing them down, offer to take a shift."
+     },
+     {
+      "k": "big",
+      "h": "Show up, on a set day.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Steady, specific help is a gift to two people at once. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "after-baby",
+   "ring": "br-family",
+   "title": "After the Baby: Depression and Anxiety for Moms and Dads",
+   "you": {
+    "id": "br-g-after-baby-you",
+    "guide": "after-baby",
+    "side": "you",
+    "title": "After the Baby: Depression and Anxiety for Moms and Dads",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For new moms and dads who do not feel like themselves: common, treatable, and nothing to hide.",
+    "sources": [
+     "prams18",
+     "paulson10"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "After the Baby: Depression and Anxiety for Moms and Dads",
+      "sub": "For You",
+      "say": "This is for you if you've had a baby, or your partner has, and you don't feel like yourself. Moms, dads, partners. This is common, and it gets better with help."
+     },
+     {
+      "k": "big",
+      "h": "About 1 in 8 moms. About 1 in 10 dads.",
+      "sub": "Common, and treatable.",
+      "say": "Depression and anxiety after a baby are common. About one in eight moms report symptoms, more among the youngest moms. About one in ten dads struggle too. And it's treatable. People get better."
+     },
+     {
+      "k": "points",
+      "h": "What it can look like",
+      "items": [
+       [
+        "Low or numb",
+        "Not like yourself"
+       ],
+       [
+        "Constant worry",
+        "Something will go wrong"
+       ],
+       [
+        "Scary thoughts",
+        "Unwanted, and not you"
+       ],
+       [
+        "Short fuse",
+        "Anger, pulling away"
+       ]
+      ],
+      "say": "It can look different in different people. Feeling low, flat, or numb. Constant worry that something will happen to the baby. Scary, unwanted thoughts that you'd never act on, and feel ashamed of. Or a short fuse, working all the time, drinking more, or pulling away. That last one is common in dads. A few teary days in the first two weeks are common. When it lasts longer, or feels heavy, reach out."
+     },
+     {
+      "k": "big",
+      "h": "A symptom, not who you are.",
+      "sub": "Saying it out loud is how help starts.",
+      "say": "Many parents keep quiet because they're afraid of being judged. But scary thoughts are a symptom, not who you are. Doctors ask about this because it's common, and because treatment works. Feeling this way doesn't mean you love your baby less."
+     },
+     {
+      "k": "big",
+      "h": "Write two honest sentences.",
+      "sub": "Lately I have been... What would help is...",
+      "say": "Let's find the words now, so they're ready. Grab your phone or a piece of paper. Write one sentence that starts, lately I've been feeling. Then write one that starts, what would help is.",
+      "beats": [
+       "Let's find the words now, so they're ready.",
+       "Grab your phone or a piece of paper.",
+       "Write one sentence that starts, lately I've been feeling.",
+       {
+        "t": "Then write one that starts, what would help is.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Where to take them",
+      "steps": [
+       [
+        "One person",
+        "Partner, friend, or parent"
+       ],
+       [
+        "Your doctor",
+        "Or your baby's doctor"
+       ],
+       [
+        "The hotline",
+        "Call or text, any time"
+       ]
+      ],
+      "say": "Now take those sentences somewhere. Tell one person, like your partner, a friend, or a parent. Read them to your own doctor, or your baby's doctor. Or call or text the National Maternal Mental Health Hotline, any time, for moms, dads, and partners. The number is one, eight three three, eight five two, six two six two."
+     },
+     {
+      "k": "card",
+      "title": "If it becomes an emergency",
+      "body": "Thoughts of harm: 988 or 911. Seeing or hearing things, or days without sleep: 911.",
+      "say": "If you have thoughts of harming yourself or your baby, call or text nine eight eight, or call nine one one now. And if you see or hear things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency. Call nine one one. Your Birch answers stay on this device, so reaching out is up to you, and it's worth it."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "This is a symptom, not who I am.",
+       "Needing help is not failing.",
+       "I will feel like myself again."
+      ],
+      "say": "Here are words to keep. This is a symptom, not who I am. Needing help doesn't make me a bad parent. And I will feel like myself again."
+     },
+     {
+      "k": "big",
+      "h": "You will feel like yourself again.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Getting help is something you're doing for your baby, too. You will feel like yourself again. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-after-baby-helper",
+    "guide": "after-baby",
+    "side": "helper",
+    "title": "After the Baby: Depression and Anxiety for Moms and Dads",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the partner, parent, or friend of a new mom or dad who is struggling: notice, name it gently, and help make the call.",
+    "sources": [
+     "prams18",
+     "paulson10"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "After the Baby: Depression and Anxiety for Moms and Dads",
+      "sub": "For the Helper",
+      "say": "This is for the partner, parent, friend, or mentor of a new mom or dad who doesn't seem like themselves. You may be the first to notice, and that matters."
+     },
+     {
+      "k": "big",
+      "h": "Common, hidden, and treatable",
+      "sub": "About 1 in 8 moms, about 1 in 10 dads.",
+      "say": "Depression and anxiety after a baby are common. About one in eight moms report symptoms, more among the youngest, and about one in ten dads struggle too. Many hide it, afraid of being judged as a bad parent. And it's treatable."
+     },
+     {
+      "k": "points",
+      "h": "Signs you might notice",
+      "items": [
+       [
+        "Not themselves",
+        "Flat, teary, or on edge"
+       ],
+       [
+        "Constant worry",
+        "Cannot rest, even when able"
+       ],
+       [
+        "Pulling away",
+        "From the baby, or from you"
+       ],
+       [
+        "In dads",
+        "Anger, overwork, drinking"
+       ]
+      ],
+      "say": "Here are signs you might notice. They don't seem like themselves. Flat, teary, or on edge. They worry constantly, or can't rest even when they could. They pull away from the baby, or from you. In dads and partners, it can look like anger, working all the time, or drinking more. If it lasts more than two weeks, it's time to reach out."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "How are you, really?",
+       "This happens to a lot of new parents.",
+       "Can I sit with you while you call?"
+      ],
+      "say": "Here are words that help. You're a good parent, and you seem like you're really struggling. How are you, really? This happens to a lot of new parents, moms and dads, and it's treatable. Can I sit with you while you call the doctor?"
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Enjoy every moment.",
+       "But you have a healthy baby.",
+       "Just think positive."
+      ],
+      "say": "Some words make it harder to speak up. Enjoy every moment. But you have a healthy baby. Just think positive. And assuming a dad is fine because he's not the one who gave birth."
+     },
+     {
+      "k": "big",
+      "h": "Save this number now.",
+      "sub": "1-833-852-6262, call or text, any time",
+      "say": "Let's do one thing right now. Open the contacts on your phone. Make a new contact called Maternal Mental Health Hotline. Type in the number on the screen, one, eight three three, eight five two, six two six two, and save it.",
+      "beats": [
+       "Let's do one thing right now.",
+       "Open the contacts on your phone.",
+       "Make a new contact called Maternal Mental Health Hotline.",
+       {
+        "t": "Type in the number on the screen, one, eight three three, eight five two, six two six two, and save it.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "What helps",
+      "steps": [
+       [
+        "Name it gently",
+        "Not like yourself lately"
+       ],
+       [
+        "Help make the call",
+        "Doctor or hotline"
+       ],
+       [
+        "Protect their sleep",
+        "Take a feeding or a morning"
+       ],
+       [
+        "Carry the basics",
+        "Meals, dishes, errands"
+       ]
+      ],
+      "say": "Here's what helps. Name what you see, gently. You haven't seemed like yourself for a few weeks. Help make the call, to their doctor or the hotline, and offer to drive and hold the baby in the waiting room. Protect their sleep by taking a feeding or a morning. And carry the basics, like meals, dishes, and errands."
+     },
+     {
+      "k": "card",
+      "title": "Emergency signs",
+      "body": "Seeing or hearing things, confusion, days without sleep, thoughts of harm: 911 or 988.",
+      "say": "Know the emergency signs. Seeing or hearing things others don't. Confusion. Days without sleep. Or thoughts of harming themselves or the baby. Call nine one one, or call or text nine eight eight. In Birch, a helper sees only what they choose to share, and never safety answers, so asking kindly and directly matters."
+     },
+     {
+      "k": "big",
+      "h": "Notice. Name it. Help make the call.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "And watch your own mood too. The hotline is there for partners and family as well. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pregnancy-loss",
+   "ring": "br-family",
+   "title": "Pregnancy or Infant Loss",
+   "you": {
+    "id": "br-g-pregnancy-loss-you",
+    "guide": "pregnancy-loss",
+    "side": "you",
+    "title": "Pregnancy or Infant Loss",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For young adults after a miscarriage, stillbirth, or the death of a baby: a real loss, and grief that deserves room.",
+    "sources": [
+     "nichdloss"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Pregnancy or Infant Loss",
+      "sub": "For You",
+      "say": "This is for you if you've lost a pregnancy, or a baby, whether you carried the baby or your partner did. This is a heavy thing to carry. Let's go gently."
+     },
+     {
+      "k": "big",
+      "h": "A real loss of a real baby.",
+      "sub": "However early. However others respond.",
+      "say": "This is a real loss of a real baby, and of a future you were already picturing. That's true however early it happened, and however other people respond. Your grief makes sense."
+     },
+     {
+      "k": "big",
+      "h": "This was not your fault.",
+      "sub": "About 1 in 10 known pregnancies end early.",
+      "say": "Many people replay every day, looking for what they did wrong. Here's what's true. About one in ten confirmed pregnancies end in an early loss. Most often, it happens because of things no one caused, and no one could have stopped. This was not your fault."
+     },
+     {
+      "k": "points",
+      "h": "What grief can look like",
+      "items": [
+       [
+        "Empty and numb",
+        "Or waves out of nowhere"
+       ],
+       [
+        "A body still healing",
+        "While your heart breaks"
+       ],
+       [
+        "Hard reminders",
+        "Announcements, due dates"
+       ],
+       [
+        "Mixed feelings",
+        "Those are allowed too"
+       ]
+      ],
+      "say": "Grief after this kind of loss can look like a lot of things. Feeling empty or numb, or hit by waves out of nowhere. A body still healing while your heart is breaking. Hard reminders, like baby announcements, or a due date on the calendar. And if the pregnancy was a surprise, your feelings may be mixed. That's allowed too. Partners grieve as well, sometimes differently, and often without being asked."
+     },
+     {
+      "k": "big",
+      "h": "A hand on your heart.",
+      "sub": "Be as kind to you as you would be to a friend.",
+      "say": "Let's take a quiet moment. If it feels okay, place one hand over your heart. Breathe in slowly, and out slowly. Then say quietly to yourself, this is a real loss, and I can be gentle with myself.",
+      "beats": [
+       "Let's take a quiet moment.",
+       "If it feels okay, place one hand over your heart.",
+       "Breathe in slowly, and out slowly.",
+       {
+        "t": "Then say quietly to yourself, this is a real loss, and I can be gentle with myself.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "What can help",
+      "steps": [
+       [
+        "Your doctor",
+        "For your body and your heart"
+       ],
+       [
+        "Say what you need",
+        "Company, or privacy"
+       ],
+       [
+        "Mark the day",
+        "A candle, a walk, a name"
+       ],
+       [
+        "Find others",
+        "Loss support groups"
+       ]
+      ],
+      "say": "Here's what can help. Follow up with your doctor or clinic, for your body and your heart, and call right away for heavy bleeding, fever, or severe pain. Tell people what you need, whether that's company or privacy. Mark the due date or anniversary in a way that fits you, like a candle, a walk, or saying your baby's name. And find others who understand. Support groups for pregnancy and infant loss meet in person and online."
+     },
+     {
+      "k": "card",
+      "title": "If grief gets too heavy",
+      "body": "Maternal Mental Health Hotline: call or text 1-833-852-6262. Thoughts of not living: 988.",
+      "say": "If sadness, anxiety, or numbness stays heavy for weeks, the National Maternal Mental Health Hotline is there any time, by call or text, for moms, dads, and partners. And if you ever think about not wanting to be alive, call, text, or chat nine eight eight."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "This was not my fault.",
+       "My grief is as big as my love.",
+       "I can grieve in my own way and time."
+      ],
+      "say": "Here are words to keep. This was not my fault. My grief is as big as my love. And I get to grieve in my own way, and in my own time."
+     },
+     {
+      "k": "big",
+      "h": "Your love for your baby is real.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your love for your baby is real, and so is your grief. Be gentle with yourself. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-pregnancy-loss-helper",
+    "guide": "pregnancy-loss",
+    "side": "helper",
+    "title": "Pregnancy or Infant Loss",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the partner, parent, or friend of a young adult after a pregnancy or infant loss: say something, and remember the days.",
+    "sources": [
+     "nichdloss"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Pregnancy or Infant Loss",
+      "sub": "For the Helper",
+      "say": "This is for the partner, parent, friend, or mentor of a young adult who has lost a pregnancy or a baby. You don't need perfect words. You need to show up."
+     },
+     {
+      "k": "big",
+      "h": "Silence can hurt most.",
+      "sub": "A simple sorry is better than nothing.",
+      "say": "Many people after this kind of loss say the silence hurt the most. Friends didn't know what to say, so they said nothing. A simple, I'm so sorry about your baby, is better than silence, every time."
+     },
+     {
+      "k": "big",
+      "h": "More common than people know",
+      "sub": "About 1 in 10 confirmed pregnancies.",
+      "say": "Early pregnancy loss happens in about one in ten confirmed pregnancies, most often because of things no one caused. Even so, many people blame themselves. Your words, this wasn't your fault, can matter more than you'd guess."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I'm so sorry about your baby.",
+       "Would you like to tell me about them?",
+       "I'm thinking of you today."
+      ],
+      "say": "Here are words that help. I'm so sorry about your baby. Would you like to tell me about them? And on the hard days, I'm thinking of you today. If they've shared the baby's name, use it."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "At least it was early.",
+       "At least you're young.",
+       "Everything happens for a reason."
+      ],
+      "say": "Some words wound, even when they're meant to comfort. At least it was early. At least you're young. You can try again. Everything happens for a reason. And questions about what happened medically, or whether they did something."
+     },
+     {
+      "k": "flow",
+      "h": "What helps",
+      "steps": [
+       [
+        "Ask both partners",
+        "Dads and partners grieve too"
+       ],
+       [
+        "Carry the practical",
+        "Meals, errands, a shift"
+       ],
+       [
+        "Remember the dates",
+        "Due date and anniversary"
+       ],
+       [
+        "Watch the long run",
+        "Grief that turns heavy"
+       ]
+      ],
+      "say": "Here's what helps. Ask both partners how they're doing. Dads and partners grieve too, and often get overlooked. Carry the practical things, like meals, errands, a covered shift, or school paperwork. Remember the dates that will hurt. And watch the long run. If grief turns into lasting depression or anxiety, share the National Maternal Mental Health Hotline. If they talk about not wanting to be alive, call, text, or chat nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Put the day in your calendar.",
+      "sub": "The due date, or the anniversary.",
+      "say": "Let's make sure you remember. Open the calendar on your phone. Find the due date, or the day of the loss, if you know it. Add a reminder to reach out to them that day.",
+      "beats": [
+       "Let's make sure you remember.",
+       "Open the calendar on your phone.",
+       "Find the due date, or the day of the loss, if you know it.",
+       {
+        "t": "Add a reminder to reach out to them that day.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "What a helper sees in Birch",
+      "body": "Only what they choose to share. Never safety answers. Ask kindly.",
+      "say": "In Birch, a helper sees only what the person chooses to share, and never their safety answers. No alert goes to anyone. So ask, kindly and directly, how they're doing, and keep asking in the months ahead."
+     },
+     {
+      "k": "big",
+      "h": "Say something. Remember the days.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Showing up, and remembering, are two of the kindest things you can do. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4744,6 +7405,773 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Calm. Specific. Early.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Stay calm. Describe what you see. Help them get help early. Recovery is common. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "substances",
+   "ring": "br-mind",
+   "title": "Drinking, Cannabis, and Other Drugs",
+   "you": {
+    "id": "br-g-substances-you",
+    "guide": "substances",
+    "side": "you",
+    "title": "Drinking, Cannabis, and Other Drugs",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the young adult deciding what fits their life: notice the why, plan your answer, and know help is there.",
+    "sources": [
+     "mtfpanel24",
+     "diforti",
+     "deaonepill",
+     "narcanotc"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Drinking, Cannabis, and Other Drugs",
+      "sub": "For You",
+      "say": "Drinks, weed, pills, and everything in between. This is for you. Nobody here is asking what you have or haven't done, or how much. This is about what fits the life you want."
+     },
+     {
+      "k": "big",
+      "h": "Less drinking. More weed.",
+      "sub": "You decide what fits your life.",
+      "say": "Here's a surprise. Binge drinking among young adults is at an all-time low. Cannabis use is at a record high. So whatever you choose, you're not alone, and you're the one who decides."
+     },
+     {
+      "k": "big",
+      "h": "Notice the why.",
+      "sub": "Fun, or getting away from something?",
+      "say": "One question matters more than the rest. Why am I using this? To have fun, or to get away from something? Using to sleep, to calm down, or to stop a hard feeling can feel like relief. Then it often makes sleep, mood, and anxiety worse."
+     },
+     {
+      "k": "points",
+      "h": "Signs it is getting ahead of you",
+      "items": [
+       [
+        "Most nights",
+        "More than you meant"
+       ],
+       [
+        "Needing it",
+        "To sleep or calm down"
+       ],
+       [
+        "The day after",
+        "Anxious, low, foggy"
+       ],
+       [
+        "Hiding it",
+        "Or spending too much"
+       ]
+      ],
+      "say": "Here are signs it might be getting ahead of you. Using most nights, or more than you meant to. Needing it to sleep or calm down. Feeling anxious, low, or foggy the day after. And hiding it, or spending more than you can afford.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write your answer now.",
+      "sub": "A line you would really say.",
+      "say": "Let's plan your answer. Picture the next time something gets offered and you'd rather pass. Think of a line that sounds like you, like I'm good, or I've got an early shift. Type it into your phone notes, so it's ready.",
+      "beats": [
+       "Let's plan your answer.",
+       "Picture the next time something gets offered and you'd rather pass.",
+       "Think of a line that sounds like you, like I'm good, or I've got an early shift.",
+       {
+        "t": "Type it into your phone notes, so it's ready.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Know these",
+      "items": [
+       [
+        "Fake pills",
+        "Can hold fentanyl"
+       ],
+       [
+        "Naloxone",
+        "Sold over the counter"
+       ],
+       [
+        "Strong, daily weed",
+        "Linked to psychosis"
+       ],
+       [
+        "Never drive",
+        "After drinking or using"
+       ]
+      ],
+      "say": "A few things to know. A pill that didn't come from a pharmacy can be fake and hold fentanyl, even when it looks real. Naloxone, also called Narcan, reverses an opioid overdose, and it's sold over the counter. Heavy use of strong cannabis is linked with a higher risk of psychosis. And never drive after drinking or using. Call a ride.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "If someone will not wake up",
+      "body": "Call 911. Give naloxone if you have it. Stay with them.",
+      "say": "If someone can't wake up, or is breathing slowly or strangely, call 911 right away. Give naloxone if you have it, and stay with them. Minnesota, like many states, protects people who call for help in many situations."
+     },
+     {
+      "k": "card",
+      "title": "Help is private, any time",
+      "body": "SAMHSA National Helpline: 1-800-662-4357. Thoughts of not wanting to live: call or text 988.",
+      "say": "If you want to cut back or stop, help works, and it's private. Call the SAMHSA National Helpline any time, or talk honestly with a doctor. If using is how you're getting through thoughts of not wanting to be alive, call or text 988."
+     },
+     {
+      "k": "big",
+      "h": "Your life, your call.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your life, your call. Notice the why, plan your answer, and reach out when you want help. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-substances-helper",
+    "guide": "substances",
+    "side": "helper",
+    "title": "Drinking, Cannabis, and Other Drugs",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the person worried about a young adult's drinking or drug use: stay calm, keep the door open, and take care of yourself.",
+    "sources": [
+     "mtfpanel24",
+     "deaonepill",
+     "narcanotc"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Drinking, Cannabis, and Other Drugs",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, friend, or roommate who's worried about a young adult's drinking, cannabis, or other drug use. It's their life and their choice, and you still get to say you care."
+     },
+     {
+      "k": "big",
+      "h": "Calm keeps the door open.",
+      "sub": "Lectures close it.",
+      "say": "People are far more likely to talk honestly with someone who stays calm. Lectures, scare stories, and shame tend to close the door. Pick a sober, quiet moment. Lead with what you've seen, and that you care."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I've noticed you've been drinking more. How's it going for you?",
+       "What does it do for you? What does it cost you?",
+       "If you ever want to cut back, I'm in."
+      ],
+      "say": "Here are words that help. I've noticed you've been drinking more lately. How's it going for you? Then, what does it do for you, and what does it cost you? And, if you ever want to cut back, I'm in. No lecture."
+     },
+     {
+      "k": "points",
+      "h": "Set these aside",
+      "items": [
+       [
+        "A confession",
+        "Lists of what and how much"
+       ],
+       [
+        "Covering for them",
+        "Calls, cleanup, cash"
+       ],
+       [
+        "Every mood is drugs",
+        "Ask, do not assume"
+       ]
+      ],
+      "say": "Set a few things aside. Asking for a confession, a list of what and how much. Covering for them, like calling in sick for them, cleaning up every consequence, or giving money that pays for using. And assuming every bad mood means drugs. Ask, don't assume.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Know what to do in an overdose.",
+      "sub": "Call 911. Naloxone. Stay.",
+      "say": "Know what to do in an emergency. If someone can't wake up, or is breathing slowly or strangely, call 911. Give naloxone if you have it, and stay with them. Naloxone is sold over the counter. If anyone around you uses opioids, or pills from anywhere but a pharmacy, keep some where you live."
+     },
+     {
+      "k": "big",
+      "h": "Save the helpline in your phone.",
+      "sub": "1-800-662-4357, any time.",
+      "say": "Let's make help one tap away. Open your contacts and start a new one. Name it SAMHSA Helpline, and enter one eight hundred, six six two, four three five seven. Save it now, so it's there when either of you is ready.",
+      "beats": [
+       "Let's make help one tap away.",
+       "Open your contacts and start a new one.",
+       "Name it SAMHSA Helpline, and enter one eight hundred, six six two, four three five seven.",
+       {
+        "t": "Save it now, so it's there when either of you is ready.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "When they are ready",
+      "steps": [
+       [
+        "Look together",
+        "A doctor, counseling, a group"
+       ],
+       [
+        "Let them choose",
+        "Their path, their pace"
+       ],
+       [
+        "Notice good days",
+        "Say what goes well"
+       ]
+      ],
+      "say": "When they're ready, look at options together: a doctor, counseling, or a support group. Let them choose the path and the pace. And notice the good days out loud. Say what goes well when they don't use."
+     },
+     {
+      "k": "big",
+      "h": "Your own boundaries and support.",
+      "sub": "Families and friends need it too.",
+      "say": "You can't control someone else's choices. You can set clear, kind boundaries for your own life and home, and keep them. Find support for yourself, like a group for families and friends. If they use Birch, they choose what you see, and no alert goes to anyone."
+     },
+     {
+      "k": "big",
+      "h": "Calm. Clear. Door open.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Stay calm. Keep your boundaries clear. Keep the door open. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "eating",
+   "ring": "br-mind",
+   "title": "Eating Disorders",
+   "you": {
+    "id": "br-g-eating-you",
+    "guide": "eating",
+    "side": "you",
+    "title": "Eating Disorders",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult whose thoughts about food, exercise, or their body are taking over: it is an illness, and recovery is real.",
+    "sources": [
+     "hudson07"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Eating Disorders",
+      "sub": "For You",
+      "say": "If food, exercise, or your body has started to take over your thoughts, this is for you. Nobody here is judging. Looking at it is a sign of strength."
+     },
+     {
+      "k": "big",
+      "h": "An illness, not a choice.",
+      "sub": "Men and women, any size, any background.",
+      "say": "Eating disorders are serious illnesses. They're not a choice, and they're not vanity. They happen to men and women of every size and every background. Binge eating is the most common kind, and it affects men too."
+     },
+     {
+      "k": "big",
+      "h": "These years are a common start.",
+      "sub": "New routines, new pressures, more privacy.",
+      "say": "Eating disorders often begin, or come back, in the late teens and early twenties. Life changes fast. Routines fall apart. Living on your own can make it easier to hide, and harder to notice."
+     },
+     {
+      "k": "points",
+      "h": "It can look healthy at first",
+      "items": [
+       [
+        "Eating clean",
+        "Then more rules"
+       ],
+       [
+        "Training hard",
+        "Even hurt or exhausted"
+       ],
+       [
+        "Cutting weight",
+        "For a sport or event"
+       ],
+       [
+        "Out of control",
+        "Then ashamed"
+       ]
+      ],
+      "say": "It can start with goals that sound healthy. Eating clean, with the rules getting stricter. Training hard, even when you're hurt or exhausted. Cutting weight for a sport or an event. Or eating a lot at once, feeling out of control, and then ashamed.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Speak to yourself like a friend.",
+      "sub": "A hand on your chest, one kind line.",
+      "say": "Let's try something. Rest one hand on your chest, or wherever feels steady. Take one slow breath. Now say quietly to yourself: this is an illness, it's not my fault, and I don't have to fight it alone.",
+      "beats": [
+       "Let's try something.",
+       "Rest one hand on your chest, or wherever feels steady.",
+       "Take one slow breath.",
+       {
+        "t": "Now say quietly to yourself: this is an illness, it's not my fault, and I don't have to fight it alone.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "First steps",
+      "steps": [
+       [
+        "See a doctor",
+        "Some dangers do not show"
+       ],
+       [
+        "Call ANAD",
+        "1-888-375-7767, weekdays"
+       ],
+       [
+        "Tell one person",
+        "You choose who"
+       ]
+      ],
+      "say": "Here are first steps. See a doctor and tell them plainly what's been happening. Some dangers don't show on the outside. Call the ANAD helpline on a weekday to talk it through and learn about treatment. And tell one person you trust. You choose who."
+     },
+     {
+      "k": "big",
+      "h": "Recovery is real.",
+      "sub": "It usually takes a team.",
+      "say": "Recovery is real. It usually takes a team: a doctor, a therapist, and a dietitian who know eating disorders. Regular meals, as your team guides, give your body and brain steady fuel. As an adult, you decide who else is on your team, and many people find a support person helps."
+     },
+     {
+      "k": "card",
+      "title": "Get help right away",
+      "body": "Fainting, chest pain, confusion, or a racing heart: call 911. Feeling you cannot go on: call or text 988.",
+      "say": "Get help right away for fainting, chest pain, confusion, or a racing or very slow heartbeat. Call 911. And if you feel like you can't go on, call or text 988, any time."
+     },
+     {
+      "k": "big",
+      "h": "Your body deserves to be fed.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your body deserves to be fed, even when your thoughts say otherwise. You don't have to fight this alone. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-eating-helper",
+    "guide": "eating",
+    "side": "helper",
+    "title": "Eating Disorders",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the person worried about a young adult and food: speak about what you see, never weight, and help them reach a team.",
+    "sources": [
+     "hudson07"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Eating Disorders",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, friend, or roommate who's worried about a young adult and food, exercise, or their body. Your calm, caring honesty can help them take a first step."
+     },
+     {
+      "k": "points",
+      "h": "What you might notice",
+      "items": [
+       [
+        "Skipped meals",
+        "Or food disappearing"
+       ],
+       [
+        "After meals",
+        "Long trips to the bathroom"
+       ],
+       [
+        "Nonstop exercise",
+        "Even sick or hurt"
+       ],
+       [
+        "Rules and body talk",
+        "Tense around food"
+       ]
+      ],
+      "say": "Here's what you might notice. Skipped meals, or food disappearing. Long trips to the bathroom after eating. Exercise that never stops, even when they're sick or hurt. And a lot of rules and body talk, with tension around every meal.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "They can look fine and be very sick.",
+      "sub": "Pushback is often the illness talking.",
+      "say": "Someone can look fine and still be very sick. Many feel deep shame, or truly don't see a problem. If they push back when you bring it up, that's often the illness talking, not a verdict on you."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I care about you, and I've been worried.",
+       "I've noticed you've been skipping meals.",
+       "Would you see a doctor? I'll go with you."
+      ],
+      "say": "Pick a private, calm moment, not a meal. Here are words that help. I care about you, and I've been worried. I've noticed you've been skipping meals and seem tense around food. And, would you see a doctor? I'll go with you if you want."
+     },
+     {
+      "k": "points",
+      "h": "Set these aside",
+      "items": [
+       [
+        "Weight talk",
+        "Even praise for weight loss"
+       ],
+       [
+        "Plate watching",
+        "Or arguing about food"
+       ],
+       [
+        "Waiting for bottom",
+        "Earlier help goes better"
+       ]
+      ],
+      "say": "Set a few things aside. Any talk about weight, size, or shape, even praise for weight loss. Watching their plate, or arguing about food. And waiting for them to hit bottom. Wanting help often comes later in recovery, not first.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Name one thing you love about them.",
+      "sub": "Not food. Not looks.",
+      "say": "Let's shift the focus. Think of this person. Find one thing you love about them that has nothing to do with food or looks, like their humor or their loyalty. Say it quietly to yourself now, and find a moment to tell them this week.",
+      "beats": [
+       "Let's shift the focus.",
+       "Think of this person.",
+       "Find one thing you love about them that has nothing to do with food or looks, like their humor or their loyalty.",
+       {
+        "t": "Say it quietly to yourself now, and find a moment to tell them this week.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Help them reach a team",
+      "steps": [
+       [
+        "A doctor visit",
+        "Offer to go along"
+       ],
+       [
+        "A specialist team",
+        "Doctor, therapist, dietitian"
+       ],
+       [
+        "Your role",
+        "Ask how you can help"
+       ]
+      ],
+      "say": "Help them reach a team. Encourage a doctor visit, and offer to go along. Help look for specialists in eating disorders, if they'd like. And if they agree, ask how you can help in their plan. Many teams welcome a support person. Fainting, chest pain, confusion, or a racing heart means 911."
+     },
+     {
+      "k": "big",
+      "h": "Support for you, too.",
+      "sub": "Loved ones need it.",
+      "say": "Loving someone with an eating disorder is exhausting and scary. ANAD has support groups for loved ones, too. Keep your own meals, rest, and people. If they use Birch, they choose what you see, and no alert goes to anyone."
+     },
+     {
+      "k": "big",
+      "h": "What you see. Never weight. A team.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Speak about what you see, never weight. Stay on their side. Help them reach a team. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "health-26",
+   "ring": "br-mind",
+   "title": "Your Own Health: Insurance, Doctors, and Turning 26",
+   "you": {
+    "id": "br-g-health-26-you",
+    "guide": "health-26",
+    "side": "you",
+    "title": "Your Own Health: Insurance, Doctors, and Turning 26",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult taking over their own health: the basics, the words, and a plan for turning 26.",
+    "sources": [
+     "aca26"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Your Own Health: Insurance, Doctors, and Turning 26",
+      "sub": "For You",
+      "say": "Insurance, doctors, and turning twenty six. If you're taking over your own health for the first time, this is for you. Nobody is born knowing this. You can learn it one piece at a time."
+     },
+     {
+      "k": "big",
+      "h": "On a parent's plan until 26.",
+      "sub": "Married, working, or living on your own.",
+      "say": "If a parent's plan covers dependents, you can usually stay on it until you turn twenty six. That's true even if you're married, a parent, living on your own, or offered a plan at work. Coverage usually ends when you turn twenty six, so it's worth planning ahead."
+     },
+     {
+      "k": "points",
+      "h": "Four words to know",
+      "items": [
+       [
+        "Premium",
+        "What the plan costs each month"
+       ],
+       [
+        "Deductible",
+        "What you pay before it pays more"
+       ],
+       [
+        "Copay",
+        "A set amount per visit"
+       ],
+       [
+        "In-network",
+        "Clinics your plan works with"
+       ]
+      ],
+      "say": "Here are four words that unlock most of it. Premium: what the plan costs each month. Deductible: what you pay before the plan pays more. Copay: a set amount for a visit or a prescription. And in-network: the clinics your plan works with.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "flow",
+      "h": "Where to go",
+      "steps": [
+       [
+        "Your clinic",
+        "Most things"
+       ],
+       [
+        "Urgent care",
+        "Cannot wait, not an emergency"
+       ],
+       [
+        "ER or 911",
+        "Emergencies"
+       ]
+      ],
+      "say": "Know where to go before you need it. Your clinic, for most things. Urgent care, for things that can't wait but aren't emergencies. And the emergency room, or 911, for emergencies. Many plans also have a nurse line you can call any time."
+     },
+     {
+      "k": "big",
+      "h": "Find your card right now.",
+      "sub": "Front and back, saved in your phone.",
+      "say": "Let's do one piece right now. Find your insurance card, or text whoever holds the plan to ask for a photo. Take a picture of the front and the back, and save it where you'll find it.",
+      "beats": [
+       "Let's do one piece right now.",
+       "Find your insurance card, or text whoever holds the plan to ask for a photo.",
+       {
+        "t": "Take a picture of the front and the back, and save it where you'll find it.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Your health, your information.",
+      "sub": "And mental health is health.",
+      "say": "At eighteen, you decide who sees your health information. If you're on a parent's plan, mail about your visits may go to the policyholder, so you can ask the plan how to keep it private. And mental health is health. Your clinic can help with mood, anxiety, sleep, or substance use."
+     },
+     {
+      "k": "points",
+      "h": "Before you turn 26",
+      "items": [
+       [
+        "Set a reminder",
+        "A few months ahead"
+       ],
+       [
+        "Look at options",
+        "Work, marketplace, public"
+       ],
+       [
+        "Do not wait",
+        "The window is limited"
+       ]
+      ],
+      "say": "Before you turn twenty six, set a reminder a few months ahead. Look at your options: a plan through work, the marketplace, or public programs. In Minnesota, MNsure can help you compare. Don't wait, because the window to sign up after coverage ends is limited.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Learn it one piece at a time.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Taking care of your health is part of building your life. Learn it one piece at a time, and ask all the questions you want. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-health-26-helper",
+    "guide": "health-26",
+    "side": "helper",
+    "title": "Your Own Health: Insurance, Doctors, and Turning 26",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the person helping a young adult take over their own health: teach, hand over, and plan for 26 together.",
+    "sources": [
+     "aca26",
+     "gottransition"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Your Own Health: Insurance, Doctors, and Turning 26",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, mentor, or friend helping a young adult take over their own health. Your role is shifting from doing it for them to teaching and handing over."
+     },
+     {
+      "k": "big",
+      "h": "At 18, it is their information.",
+      "sub": "They decide who sees it.",
+      "say": "At eighteen, a young adult decides who sees their health information. Doctors talk with them, not with you, unless they say so. That can feel strange. It's also how they become confident running their own health. If money is tight, point them to Minnesota 211 for local help, and remind them that many clinics offer payment plans."
+     },
+     {
+      "k": "big",
+      "h": "List what to hand over.",
+      "sub": "Card, records, history.",
+      "say": "Let's make your hand-off list. Grab your phone or a piece of paper. Write down three things you hold that they'll need, like the insurance card, vaccine records, or family health history.",
+      "beats": [
+       "Let's make your hand-off list.",
+       "Grab your phone or a piece of paper.",
+       {
+        "t": "Write down three things you hold that they'll need, like the insurance card, vaccine records, or family health history.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Do it together once",
+      "steps": [
+       [
+        "Together",
+        "Book a visit, refill a prescription"
+       ],
+       [
+        "Side by side",
+        "They call, you sit near"
+       ],
+       [
+        "Hand it over",
+        "They lead from here"
+       ]
+      ],
+      "say": "Then teach by doing. Do it together once: book a visit, refill a prescription, read a statement from the plan. Next time, they make the call and you sit nearby. Then hand it over, and let them lead."
+     },
+     {
+      "k": "points",
+      "h": "If they are on your plan",
+      "items": [
+       [
+        "Statements",
+        "May come to you"
+       ],
+       [
+        "Ask about privacy",
+        "And respect their answer"
+       ],
+       [
+        "Plan for 26",
+        "A few months ahead"
+       ]
+      ],
+      "say": "If they're on your plan, statements about their visits may come to you. Ask how they'd like to handle privacy, and respect their answer. And plan for twenty six together, a few months ahead. Coverage usually ends then, and the window to sign up for a new plan is limited.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        3
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Want me to walk through the card with you?",
+       "You make the call. I'll sit with you.",
+       "Mental health counts, too."
+      ],
+      "say": "Here are words that help. Want me to walk through the insurance card with you? You make the call, and I'll sit with you if you want. And, mental health counts, too. Your clinic can help with that."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "I'll just call the doctor for you.",
+       "How do you not know this?",
+       "We'll figure out 26 later."
+      ],
+      "say": "Some habits are worth setting aside. I'll just call the doctor for you, without asking. How do you not know this, when most adults learned it the hard way. And, we'll figure out twenty six later."
+     },
+     {
+      "k": "big",
+      "h": "Teach. Hand over. Plan ahead.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Letting go of the forms can feel strange, and it's a real gift. You're teaching a skill they'll use for life. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -5618,7 +9046,15 @@ window.GG_LEARN_GUIDES.birch = {
         "If and when you choose"
        ]
       ],
-      "say": "You get to choose your next step. You can talk it through, confidentially, with trained people at RAINN, or Day One in Minnesota, any time. You can tell one person you trust, and if they don't respond well, tell another. If it happened in the last few days, or you think you were drugged, a hospital can check on you, and an advocate can explain the choice of a medical exam and go with you. Reporting can come later, if and when you choose."
+      "say": "You get to choose your next step. You can talk it through, confidentially, with trained people at RAINN, or Day One in Minnesota, any time. You can tell one person you trust, and if they don't respond well, tell another. If it happened in the last few days, or you think you were drugged, a hospital can check on you, and an advocate can explain the choice of a medical exam and go with you. Reporting can come later, if and when you choose.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
      },
      {
       "k": "card",
@@ -5785,6 +9221,544 @@ window.GG_LEARN_GUIDES.birch = {
      "RAINN: 1-800-656-4673, or text HOPE to 64673",
      "Day One (Minnesota): 1-866-223-1111",
      "988: call, text, or chat, any time"
+    ]
+   }
+  },
+  {
+   "id": "images",
+   "ring": "br-safety",
+   "title": "Images Shared Without Consent, and Online Threats",
+   "you": {
+    "id": "br-g-images-you",
+    "guide": "images",
+    "side": "you",
+    "title": "Images Shared Without Consent, and Online Threats",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the young adult whose image was shared, or who is being threatened online: you are the one being harmed, and there are real steps.",
+    "sources": [
+     "stopncii",
+     "ncmectid25"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Images Shared Without Consent, and Online Threats",
+      "sub": "For You",
+      "say": "If someone shared a private picture of you, is threatening to, or is threatening you online, this is for you. You are the one being harmed. And there are real steps you can take today."
+     },
+     {
+      "k": "big",
+      "h": "The wrong is theirs.",
+      "sub": "Real picture or fake, you are being targeted.",
+      "say": "Start here. The wrong is theirs. It doesn't matter whether you sent a picture to someone you trusted, or whether they made a fake one with AI. Sharing it, or threatening to, is something done to you. You deserve help, not blame."
+     },
+     {
+      "k": "words",
+      "h": "It often looks like",
+      "items": [
+       "An ex who posts or sends a picture",
+       "A new match who flips to threats",
+       "An AI fake",
+       "Someone posting where you live"
+      ],
+      "say": "It often looks like one of these. An ex who posts or sends a private picture. A new match who moves fast, then flips: pay, or everyone sees this. A fake image made with AI. Or someone online posting where you live or work. All of them run on the same thing: shame that keeps you quiet."
+     },
+     {
+      "k": "flow",
+      "h": "What to do",
+      "steps": [
+       [
+        "Stop replying",
+        "Don't pay, don't send more"
+       ],
+       [
+        "Save it",
+        "Screenshots, usernames, links"
+       ],
+       [
+        "Block and report",
+        "On the app or site"
+       ],
+       [
+        "Tell someone",
+        "Today"
+       ]
+      ],
+      "say": "Here's what to do. Stop replying. Don't pay, and don't send anything more, because paying usually brings more demands. Save it: screenshots, usernames, and links. Block and report the account on the app or site. And tell someone you trust, today.",
+      "cue": {
+       "at": [
+        1,
+        3,
+        4,
+        5
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write it down now.",
+      "sub": "A note you could show someone.",
+      "say": "Let's make telling someone easier. Open a new note on your phone. Breathe out slowly. Type this sentence, and under it, the name of one person you'd show it to: something happened online, and I need help sorting it out.",
+      "beats": [
+       "Let's make telling someone easier.",
+       "Open a new note on your phone.",
+       "Breathe out slowly.",
+       {
+        "t": "Type this sentence, and under it, the name of one person you'd show it to: something happened online, and I need help sorting it out.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Real tools exist",
+      "items": [
+       [
+        "StopNCII",
+        "For images of adults"
+       ],
+       [
+        "Take It Down",
+        "For images from before 18"
+       ],
+       [
+        "Reporting",
+        "If and when you choose"
+       ]
+      ],
+      "say": "Real tools exist. StopNCII is for adults. It makes a digital fingerprint of the image on your own device, so partner sites can find and block it, and the image stays with you. Take It Down does the same for pictures taken before you were eighteen. And in many places, including Minnesota, sharing someone's intimate images without consent is a crime, so reporting is an option if and when you choose.",
+      "cue": {
+       "at": [
+        1,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "If it's someone you know",
+      "body": "An ex, a partner, or someone who knows where you live: Love Is Respect, 1-866-331-9474. Danger: 911.",
+      "say": "If it's an ex, a partner, or someone who knows where you live, this is about your safety too. Love Is Respect can help you make a plan, any time. In Minnesota, Day One can help as well. If you're threatened with harm, or someone is following you, call nine one one."
+     },
+     {
+      "k": "card",
+      "title": "If it feels like too much",
+      "body": "Call, text, or chat 988, any time. Text HOME to 741741.",
+      "say": "Some people have felt so trapped by these threats that they didn't want to be alive. If that's where your mind is going, please reach out right now. Call or text nine eight eight, any time, or text HOME to seven four one, seven four one. This feeling can pass, and this problem has real answers."
+     },
+     {
+      "k": "big",
+      "h": "One bad night does not decide your life.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "One bad night online does not get to decide your life. You are the one being harmed, and you are not alone. The full guide has more, whenever you want it."
+     }
+    ],
+    "crisis": [
+     "988: call, text, or chat, any time",
+     "StopNCII: stopncii.org (images, 18 and up)",
+     "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+     "911: danger right now"
+    ]
+   },
+   "helper": {
+    "id": "br-g-images-helper",
+    "guide": "images",
+    "side": "helper",
+    "title": "Images Shared Without Consent, and Online Threats",
+    "sideName": "For the Helper",
+    "mins": 4,
+    "blurb": "For the person beside a young adult whose image was shared or who is threatened online: stay calm, side with them, and act together.",
+    "sources": [
+     "stopncii",
+     "ncmectid25"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Images Shared Without Consent, and Online Threats",
+      "sub": "For the Helper",
+      "say": "This is for a parent, partner, friend, roommate, or mentor of a young adult whose private image was shared, or who is being threatened online. Your first words matter most."
+     },
+     {
+      "k": "big",
+      "h": "Shame is what they count on.",
+      "sub": "Calm first words change everything.",
+      "say": "Whether it's an ex, a scammer, or a stranger, the person doing this counts on shame. Shame keeps people quiet, and it can make someone feel there's no way out. That's why your first words matter so much. Stay calm. Say they're not the one who did wrong. Then act together."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "You're not the one who did something wrong.",
+       "We don't pay, and we don't reply.",
+       "What would help most right now?"
+      ],
+      "say": "Here are words that help. Thank you for telling me. You're not the one who did something wrong. We don't pay, and we don't reply. We save it, and we report it. And, what would help most right now?"
+     },
+     {
+      "k": "flow",
+      "h": "Act together",
+      "steps": [
+       [
+        "Stay calm",
+        "Thank them for telling you"
+       ],
+       [
+        "Stop and save",
+        "No replies, no payment, screenshots"
+       ],
+       [
+        "Report",
+        "On the platform"
+       ],
+       [
+        "Remove",
+        "StopNCII, together"
+       ]
+      ],
+      "say": "Then act together, with them leading. Stay calm, and thank them for telling you. Stop replying, never pay, and save the messages, usernames, and links before anything is deleted. Report the account on the platform. Then use StopNCII together, or Take It Down for a picture from before they were eighteen.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Find the tool now.",
+      "sub": "So it is ready if it is ever needed.",
+      "say": "Let's get the tool ready. Open the browser on your phone. Type stopncii.org, and save the page, so you can find it fast if it's ever needed.",
+      "beats": [
+       "Let's get the tool ready.",
+       "Open the browser on your phone.",
+       {
+        "t": "Type stopncii.org, and save the page, so you can find it fast if it's ever needed.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What to leave out",
+      "items": [
+       [
+        "Shaming",
+        "Why would you send that?"
+       ],
+       [
+        "Taking over",
+        "They are an adult"
+       ],
+       [
+        "Deleting messages",
+        "Save first, then report"
+       ],
+       [
+        "Paying or confronting",
+        "It brings more trouble"
+       ]
+      ],
+      "say": "Some things are better left out. Shaming, like why would you send that? Taking over, because they're an adult, and having choices back helps. Deleting messages before they've been saved and reported. And paying, or contacting the person yourself, which usually brings more trouble.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "If it is an ex or a partner",
+      "body": "Love Is Respect: 1-866-331-9474. National Domestic Violence Hotline: 1-800-799-7233.",
+      "say": "If it's an ex, a partner, or someone who knows where they live, help them think about safety, too. Love Is Respect, the National Domestic Violence Hotline, or Day One in Minnesota can help plan. If there are threats of harm, call nine one one."
+     },
+     {
+      "k": "card",
+      "title": "Stay close in the days after.",
+      "body": "Check in at night. Not wanting to be alive: call or text 988 together.",
+      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them and call or text nine eight eight together. If there's danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Steady, and on their side.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You may feel furious or frightened. Let that out with someone else, away from them. What they'll remember is that you stayed steady and on their side. The full guide has more, whenever you want it."
+     }
+    ],
+    "crisis": [
+     "988: call, text, or chat, any time",
+     "StopNCII: stopncii.org (images, 18 and up)",
+     "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+     "911: danger right now"
+    ]
+   }
+  },
+  {
+   "id": "porn",
+   "ring": "br-safety",
+   "title": "Pornography That's Hard to Stop",
+   "you": {
+    "id": "br-g-porn-you",
+    "guide": "porn",
+    "side": "you",
+    "title": "Pornography That's Hard to Stop",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For the young adult whose porn use feels hard to stop: less shame, more support, and steps that work.",
+    "sources": [
+     "icd11csbd"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Pornography That's Hard to Stop",
+      "sub": "For You",
+      "say": "If watching porn has become harder to stop than you want, this is for you. You're not alone, and nothing here is about shaming you."
+     },
+     {
+      "k": "big",
+      "h": "More common than people say.",
+      "sub": "And something you can work on.",
+      "say": "A lot of people find their porn use harder to control than they'd like. Doctors now recognize a pattern where sexual behavior keeps going despite real harm and many tries to stop. You might not be there, or you might. Either way, it's something you can work on."
+     },
+     {
+      "k": "flow",
+      "h": "The cycle",
+      "steps": [
+       [
+        "A trigger",
+        "Stress, loneliness, a late night"
+       ],
+       [
+        "The urge",
+        "Strong, and it passes"
+       ],
+       [
+        "Use",
+        "Relief for a moment"
+       ],
+       [
+        "Regret",
+        "And a promise to quit"
+       ]
+      ],
+      "say": "It often runs in a cycle. A trigger, like stress, loneliness, boredom, or a late night alone. The urge, strong, and it does pass. Use, with relief for a moment. Then regret, and a promise to quit. Shame tends to restart the cycle, which is why being hard on yourself rarely works.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Name what you want.",
+      "sub": "Out loud, or in a note.",
+      "say": "Change sticks better when it's about what you're moving toward. Think about the kind of person you want to be in your relationships. In one sentence, out loud or in a note, name one way you want to treat the people you're close to.",
+      "beats": [
+       "Change sticks better when it's about what you're moving toward.",
+       "Think about the kind of person you want to be in your relationships.",
+       {
+        "t": "In one sentence, out loud or in a note, name one way you want to treat the people you're close to.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Add some friction",
+      "items": [
+       [
+        "Phone across the room",
+        "At night, every night"
+       ],
+       [
+        "Filters you choose",
+        "Your own settings"
+       ],
+       [
+        "A plan for triggers",
+        "What you will do instead"
+       ],
+       [
+        "Fewer alone-and-tired hours",
+        "A call, a walk, sleep"
+       ]
+      ],
+      "say": "Then add some friction. Charge your phone across the room at night. Set filters or blocks that you choose for yourself. Make a plan for your biggest triggers: what you'll do instead when stress or loneliness hits. And fill the alone-and-tired hours with something else, like a call, a walk, or simply sleep.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Words you can borrow",
+      "items": [
+       "I've been struggling with porn, and I want to be honest with you about it."
+      ],
+      "sub": "A friend, a counselor, or a partner.",
+      "say": "Secrecy gives the habit more power, so tell one trusted person. You can borrow these words. I've been struggling with porn, and I want to be honest with you about it. A counselor who works with compulsive sexual behavior can help, and so can a support group or one friend who checks in."
+     },
+     {
+      "k": "card",
+      "title": "A clear line",
+      "body": "Anything involving minors, or anyone who did not agree: stop, and get help now.",
+      "say": "One clear line. Anything involving minors, or anyone who didn't agree, is deeply harmful. If you come across it, stop and report it. If you're drawn to it, get confidential help now, before anyone is harmed. The full guide has where to go."
+     },
+     {
+      "k": "big",
+      "h": "A slip is not a verdict.",
+      "sub": "Notice what led to it. Start again today.",
+      "say": "If you slip, treat it as information, not a verdict on who you are. Notice what led to it, and start again the same day. If the shame ever gets so heavy you don't want to be alive, call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "You can build the life you want.",
+      "sub": "One evening at a time.",
+      "say": "You get to build the life and the relationships you want, one evening at a time. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-porn-helper",
+    "guide": "porn",
+    "side": "helper",
+    "title": "Pornography That's Hard to Stop",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the partner, friend, or family member of a young adult struggling with porn: honest, kind, and not their monitor.",
+    "sources": [
+     "icd11csbd"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Pornography That's Hard to Stop",
+      "sub": "For the Helper",
+      "say": "This is for the partner, friend, parent, or mentor of a young adult whose porn use has become hard to stop. Maybe they told you. Maybe you found out. Either way, you matter in this too."
+     },
+     {
+      "k": "big",
+      "h": "Both of you matter here.",
+      "sub": "Their struggle, and your feelings.",
+      "say": "If they told you, they're probably ashamed, and afraid you'll see them differently. If you're a partner who found out, your hurt is real, and it deserves care of its own. Both things can be true at once."
+     },
+     {
+      "k": "big",
+      "h": "Notice what you need.",
+      "sub": "One short sentence is enough.",
+      "say": "Before you say anything to them, check in with you. Breathe out slowly. Put one hand on your chest. In one short sentence, out loud or in your head, name what you need right now.",
+      "beats": [
+       "Before you say anything to them, check in with you.",
+       "Breathe out slowly.",
+       "Put one hand on your chest.",
+       {
+        "t": "In one short sentence, out loud or in your head, name what you need right now.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Thank you for telling me the truth.",
+       "What kind of help are you looking for?",
+       "This hurts, and I need some time."
+      ],
+      "say": "Some words help. Thank you for telling me the truth. What kind of help are you looking for? And if you're a partner, it's okay to say, this hurts, and I need some time. Honesty on both sides is how trust gets rebuilt."
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "A counselor",
+        "Experienced with this"
+       ],
+       [
+        "A check-in person",
+        "If they ask, not a search"
+       ],
+       [
+        "The need underneath",
+        "Sleep, connection, purpose"
+       ],
+       [
+        "Support for you",
+        "Especially as a partner"
+       ]
+      ],
+      "say": "Here's what helps. Encourage a counselor who works with compulsive sexual behavior. If they ask, be a check-in person: a short, regular conversation, not a search of their phone. Help them meet the need underneath, with sleep, plans together, and connection. And get support for yourself, especially if you're the partner.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "What to leave out",
+      "items": [
+       [
+        "Shame or disgust",
+        "It feeds the cycle"
+       ],
+       [
+        "Being the monitor",
+        "Support beats surveillance"
+       ],
+       [
+        "Big decisions, fast",
+        "Give it some time"
+       ]
+      ],
+      "say": "Some things work against change. Shame or disgust, which tends to feed the cycle. Becoming their full-time monitor, checking devices and asking for reports. Support works better than surveillance. And making every big decision in the first days after finding out.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Couples counseling, when you are ready",
+      "body": "Talk it through with someone trained to help you both.",
+      "say": "If you're a couple, a couples counselor can help you both talk it through, when you're ready. There's no deadline. Take the time you need, and lean on someone safe for yourself along the way."
+     },
+     {
+      "k": "big",
+      "h": "Honest, kind, and steady.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You don't have to fix this, and you're not their monitor. Being honest, kind, and steady is what helps most. The full guide has more, whenever you want it."
+     }
     ]
    }
   },
@@ -6807,6 +10781,223 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "On their side, first.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "This may hurt you too, especially if it's your community. Find someone of your own to talk with. And let them know you're on their side, first. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "purpose",
+   "ring": "br-meaning",
+   "title": "Finding Purpose and Calling",
+   "you": {
+    "id": "br-g-purpose-you",
+    "guide": "purpose",
+    "side": "you",
+    "title": "Finding Purpose and Calling",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For a young adult looking for purpose: you don't need the whole map to take the next step.",
+    "sources": [
+     "bronk18",
+     "damon03",
+     "mlq"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Finding Purpose and Calling",
+      "sub": "For You",
+      "say": "If you're wondering what your life is for, or where you fit, this is for you. That question is a good sign. It means you're paying attention."
+     },
+     {
+      "k": "big",
+      "h": "You're not behind.",
+      "sub": "Purpose takes shape over years.",
+      "say": "It can look like everyone else has it figured out. Most people's paths are much less straight than they look from the outside. Researchers who study meaning find that searching for it and having it are two different things, and many people are doing both at once. Purpose usually takes shape over years, through trying things."
+     },
+     {
+      "k": "flow",
+      "h": "Where purpose grows",
+      "steps": [
+       [
+        "Something you care about",
+        "What lights you up"
+       ],
+       [
+        "Something you're working toward",
+        "A goal you can act on"
+       ],
+       [
+        "A way it reaches beyond you",
+        "Who it helps"
+       ]
+      ],
+      "say": "Researchers describe purpose in three parts. Something you care about. Something you're working toward. And a way it reaches beyond you, to help someone else. It doesn't depend on a degree, a title, or money. It can live in a job, a family, a craft, a community, or service."
+     },
+     {
+      "k": "big",
+      "h": "Find one alive moment.",
+      "sub": "Three words.",
+      "say": "Think back over the past year. Find one moment when you lost track of time, or felt really useful to someone. What were you doing? Name it in three words.",
+      "beats": [
+       "Think back over the past year.",
+       "Find one moment when you lost track of time, or felt really useful to someone.",
+       "What were you doing?",
+       {
+        "t": "Name it in three words.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Small ways to start",
+      "items": [
+       [
+        "Name your gifts",
+        "Beyond grades and titles"
+       ],
+       [
+        "Try one new thing",
+        "This month"
+       ],
+       [
+        "Help someone",
+        "An hour, and notice"
+       ],
+       [
+        "Ask about a path",
+        "Someone you admire"
+       ]
+      ],
+      "say": "Here are small ways to start. Name your gifts, beyond grades and job titles, like noticing who's left out, fixing things, or staying calm in a rush. Try one new thing this month. Give an hour to helping someone, and notice how it feels. And ask someone whose path you admire how they found their way."
+     },
+     {
+      "k": "big",
+      "h": "Meaning shows up in the doing.",
+      "sub": "Not only in the thinking.",
+      "say": "It's easy to wait until you feel sure. Often it works the other way. You try, you notice, you adjust, and the direction gets clearer as you go. Purpose often makes the most sense looking back."
+     },
+     {
+      "k": "big",
+      "h": "If lost turns into hopeless",
+      "sub": "Talk with someone.",
+      "say": "Feeling lost is common. If it turns into hopelessness, or low mood most days for two weeks or more, talk with a counselor or a doctor. And if you ever think about not wanting to be here, call, text, or chat nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "A season, not a sentence.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "This is a season, not a sentence. You don't need the whole map to take the next step. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-purpose-helper",
+    "guide": "purpose",
+    "side": "helper",
+    "title": "Finding Purpose and Calling",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For a parent, mentor, partner, or friend of a young adult searching for purpose: name their strengths, and let them find the way.",
+    "sources": [
+     "bronk18",
+     "damon03"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Finding Purpose and Calling",
+      "sub": "For the Helper",
+      "say": "If a young adult you love seems lost, or is searching for what to do with their life, this is for you. You can't hand them a purpose. You can help them find their own."
+     },
+     {
+      "k": "big",
+      "h": "Under the question",
+      "sub": "Does my life matter, and where do I fit?",
+      "say": "They may feel embarrassed not to have it figured out, especially next to friends or siblings. They may feel pressure from you, even if you haven't said a word. Some go quiet, some jump between plans, and some freeze. Under it, many are asking, does my life matter, and where do I fit?"
+     },
+     {
+      "k": "flow",
+      "h": "Where purpose grows",
+      "steps": [
+       [
+        "Something they care about",
+        "What lights them up"
+       ],
+       [
+        "Something to work toward",
+        "A goal they choose"
+       ],
+       [
+        "A way it reaches beyond them",
+        "Who it helps"
+       ]
+      ],
+      "say": "Researchers describe purpose in three parts: something you care about, something you're working toward, and a way it reaches beyond you. Young people grow purpose by trying things, with adults nearby who notice and encourage, not adults who decide for them."
+     },
+     {
+      "k": "big",
+      "h": "Name a strength you see.",
+      "sub": "One real moment.",
+      "say": "Think of one strength you have seen in them, not a grade or a job title. Find one real moment when you saw it. Put it in a sentence that starts with: I noticed when you, and say it quietly to yourself.",
+      "beats": [
+       "Think of one strength you have seen in them, not a grade or a job title.",
+       "Find one real moment when you saw it.",
+       {
+        "t": "Put it in a sentence that starts with: I noticed when you, and say it quietly to yourself.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What used to make you come alive?",
+       "It's okay not to know yet.",
+       "What's one thing you'd like to try?"
+      ],
+      "say": "Here are words that help. What used to make you come alive? It's okay not to know yet. Most people figure it out by trying things. And, what's one thing you'd like to try?"
+     },
+     {
+      "k": "points",
+      "h": "How to help",
+      "items": [
+       [
+        "Name strengths",
+        "With specific examples"
+       ],
+       [
+        "Invite them in",
+        "Real work, side by side"
+       ],
+       [
+        "Open doors",
+        "People with paths they admire"
+       ],
+       [
+        "Skip comparing",
+        "Siblings, cousins, friends"
+       ]
+      ],
+      "say": "Name the strengths you see, with specific examples. Invite them into meaningful work alongside you. Connect them with people whose paths they're curious about. And skip the comparing. Keep your love and support steady, whatever path they choose."
+     },
+     {
+      "k": "big",
+      "h": "Watch for hopeless.",
+      "sub": "Lost is common. Hopeless needs help.",
+      "say": "Feeling lost is common at this age. If it turns into hopelessness, or they stop doing much at all, encourage them to talk with a counselor or doctor. If they ever talk about not wanting to be here, stay with them and call, text, or chat nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Accompany the question.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Accompany the question without rushing the answer. Your belief in them, said out loud, may be what they carry farthest. The full guide has more, whenever you want it."
      }
     ]
    }

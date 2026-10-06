@@ -4,7 +4,7 @@
    Read by Birch (/birch/), the site-wide search, and the Field Guide. Each topic has Oak and Sequoia's
    shape: id, ring, title, keys, parts, quick, feel, self {first, helps, tell, people}, helper {feel, say, avoid, help,
    you}, faith, practices ("part|Name", matching birch/practices.js), reach, more. Generated from patches/bld743/source
-   in grounded-workshop: edit the data there and rebuild. Kids' faith rules apply.
+   in grounded-workshop: edit the data there and rebuild. Adult faith rules apply.
    ===================================================================== */
 (function(){
 const LC_RINGS = [
@@ -442,6 +442,201 @@ const LC_TOPICS = [
   ]
  },
  {
+  "id": "adhd",
+  "ring": "br-school",
+  "title": "ADHD and learning differences on your own",
+  "keys": "adhd add attention focus can't focus distracted forgetful lose things late to everything time blindness procrastination executive function learning disability learning difference dyslexia dyscalculia slow reader iep ended 504 plan ended accommodations in college disability services disability resource center extra time testing accommodations at work job accommodations tell my boss diagnosed as an adult late diagnosis do i have adhd evaluation medication meds refill prescription driving with adhd my brain works differently",
+  "parts": [
+   "trunk",
+   "bark",
+   "leaves"
+  ],
+  "quick": [
+   "ADHD and learning differences are about how a brain works, not how hard you try or how smart you are. Many people aren't diagnosed until they're adults.",
+   "After high school, the reminders and the school plan go away. IEPs and 504 plans end at graduation; in college and at work, you ask for supports yourself.",
+   "In college, that usually means contacting disability services with documentation. At work, you can ask for reasonable accommodations; the Job Accommodation Network explains how.",
+   "Build systems outside your head: one calendar, reminders, short work blocks, and a weekly reset. That's using tools, not cheating."
+  ],
+  "feel": "For years, parents, teachers, or a school plan may have filled in the gaps: reminders, extra time, someone checking in. Now it's on you, and that can feel like freedom and a cliff at the same time. Bills, appointments, deadlines, a first job, and refills all land at once. You might miss things you truly cared about, lose track of time, or freeze in front of a big task, and then hear the old voice saying you're lazy. If you were diagnosed only recently, you might feel relief at finally having a name for it, and grief for the years you blamed yourself. You might also know your strengths well by now: energy, creativity, noticing what others miss, going deep on what you love. All of it can be true at once.",
+  "self": {
+   "first": [
+    "Pick one place for every deadline, appointment, and bill, and look at it at the same time each day. Let your phone remind you.",
+    "If you're in college or training, contact disability services this term, even if you're not sure you'll use them. Bring recent documentation if you have it, and ask what they need.",
+    "If you think you might have ADHD or a learning difference and were never evaluated, talk with a doctor, and bring examples from school, work, and home."
+   ],
+   "helps": [
+    "Short work blocks with a timer and real breaks. Make the first step tiny, because starting is often the hardest part.",
+    "A weekly reset: thirty minutes to look at the week ahead, clear what's piled up, and set reminders.",
+    "Systems outside your head: one place for keys and cards, autopay for steady bills, alarms for refills and appointments.",
+    "Moving your body before focused work, and protecting sleep. Both help attention.",
+    "Asking for what helps at work in plain terms, like written instructions, a quieter spot, or a check-in on priorities. You choose how much to share about why.",
+    "Finding people who get it: a coach, a support group, a friend with a similar brain."
+   ],
+   "tell": [
+    "“My brain works differently, not worse.”",
+    "“Asking for what I need is a skill.”",
+    "“I can build systems that work for me.”",
+    "“Missing something doesn't mean I didn't care.”"
+   ],
+   "people": "Try, with disability services: “I had a 504 plan in high school. What do I need to set up accommodations here?” With an instructor: “I have accommodations for extra test time. Can we set that up for the exam on the 12th?” At work: “I do my best work with written instructions. Could you send the steps in a message?” With family: “I want to handle this myself. Could you ask me how it's going on Sundays instead of reminding me?”"
+  },
+  "helper": {
+   "feel": "Many young adults with ADHD or learning differences spent years hearing they could do better if they tried harder. Now the supports that held things together are gone, and the mistakes cost more: a late bill, a missed shift, a lost refill. They may feel ashamed, defensive, or worn out, and want two things at once: to do it on their own, and to have someone in their corner.",
+   "say": [
+    "“What would actually help? You know your brain best.”",
+    "“That makes so much sense.”",
+    "“Asking for accommodations is using the tools you have a right to.”",
+    "“I noticed how you kept going on that. That took real effort.”"
+   ],
+   "avoid": [
+    "“You're just not trying.” or “Everybody's a little ADHD.”",
+    "Taking over: making their calls, managing their accounts, or doing the task for them.",
+    "Nagging instead of building a shared system they agreed to.",
+    "Talking about them instead of with them."
+   ],
+   "help": [
+    "Shift from managing to coaching: ask what helps, build a system together, then hand it over a piece at a time.",
+    "Remind them early that college and workplace supports must be requested by them. Offer to help find old paperwork if they'd like it.",
+    "If you share a home, make shared plans visible: a shared calendar, a list on the fridge.",
+    "If they take medicine for ADHD, questions go to their doctor or pharmacist. Medicine is for them alone; never shared or sold.",
+    "Talk honestly about driving if it comes up. Young drivers with ADHD have a somewhat higher crash risk; phones out of reach and extra focus help.",
+    "Notice and name their strengths often. Many have heard far more about what went wrong than what went right."
+   ],
+   "you": "Living with ADHD affects partners, roommates, and families too, and your patience has limits. Rest matters for you as well. If you have ADHD yourself, your story can help: tell them what worked for you. If they use Birch, their answers stay on their own device, and you see only what they choose to share."
+  },
+  "faith": "Many traditions teach that each person is made with purpose and their own gifts, and is loved before accomplishing anything. If faith is part of your life, that can be a steady place on a day when your brain won't cooperate. If it isn't, the same truth holds: your worth isn't measured in tasks finished, and you can stop fighting who you are.",
+  "practices": [
+   "trunk|Study Sprints",
+   "trunk|Weekly Reset",
+   "fruit|Tiny Next Step",
+   "trunk|Name Your Gifts",
+   "branches|Ask for Help",
+   "leaves|Movement"
+  ],
+  "reach": [
+   "Questions about ADHD, learning differences, an evaluation, or medicine: talk with a doctor or pharmacist. For accommodations in college or training, contact the school's disability services office.",
+   "Questions about accommodations at work: the Job Accommodation Network (askjan.org).",
+   "Anxiety and low mood often come with ADHD. If they last two weeks or more, talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays, for information and support.",
+   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "CHADD (ADHD)",
+    "https://chadd.org"
+   ],
+   [
+    "Understood (for young adults and adults, too)",
+    "https://www.understood.org"
+   ],
+   [
+    "Job Accommodation Network",
+    "https://askjan.org"
+   ],
+   [
+    "U.S. Department of Education: students with disabilities preparing for college",
+    "https://www.ed.gov/higher-education/students-disabilities-preparing-postsecondary-education"
+   ]
+  ]
+ },
+ {
+  "id": "what-now",
+  "ring": "br-school",
+  "title": "After graduation: the “what now?” season",
+  "keys": "after graduation just graduated college graduate finished my degree finished training what now what's next no job yet can't find a job job search post grad depression post graduation blues lost after college moved back home living with my parents again friends moved away miss college no structure no routine feel behind everyone else has a job wrong degree grad school or work student loan grace period losing student health insurance quarter life crisis don't know what i want",
+  "parts": [
+   "trunk",
+   "fruit",
+   "branches"
+  ],
+  "quick": [
+   "Finishing school or training is a real accomplishment, and the season after it is often harder than people expect: no schedule, friends scattered, and a big open question.",
+   "Not knowing your direction yet is common. In a large study of people 12 to 26, about one in five had a clear, engaged purpose, and many more were still searching.",
+   "Searching for meaning is a normal part of these years, not a sign that something is wrong with you.",
+   "Build a simple week: a wake time, movement, one plan with a person, and steady steps on what's next. Check the practical changes too: health insurance, loan grace periods, and housing."
+  ],
+  "feel": "For years, school gave your life a shape: semesters, deadlines, people down the hall. Then the ceremony ends, and the shape disappears. Some people land a job right away and still feel unsure it fits. Others are applying and waiting, working a job they didn't plan on, or moving back home. Friends scatter to new cities. Social media fills up with people who seem to have it figured out. You might feel proud and lost in the same afternoon, or feel guilty for not feeling happier. You might grieve the people and place you just left. This in-between season is common, and it doesn't last forever.",
+  "self": {
+   "first": [
+    "Set a simple week: a steady wake time, some movement, one plan with a person, and a set time for next steps like applications or calls.",
+    "Make a short list of practical changes and their dates: health insurance, student loan grace periods, a lease or move, and any job or benefits deadlines.",
+    "Write three lists: what I'm good at, what I care about, and what kind of days I want. Let those guide where you look."
+   ],
+   "helps": [
+    "Treating the search like part-time work with set hours, and protecting the rest of your time.",
+    "Talking with people whose work interests you. Most people like being asked how they got where they are.",
+    "Saying yes to a good-enough first step. A first job or program is a start, not a life sentence.",
+    "Staying in touch with friends from school on purpose, and joining one new group where you live now.",
+    "Limiting time on feeds that leave you feeling behind.",
+    "Keeping a list of what you've already done since you were 18. It's usually longer than you think."
+   ],
+   "tell": [
+    "“Searching is part of finding.”",
+    "“A first step doesn't have to be the last one.”",
+    "“My timeline is my own.”",
+    "“I finished something hard. That counts.”"
+   ],
+   "people": "Try, with someone in a field you're curious about: “I just finished school and I'm exploring. Could I ask you a few questions about your work?” With family: “I'm working on what's next. It helps most when you ask how I'm doing, not what the plan is.” With a friend from school: “I miss seeing you every day. Want to set a call every couple of weeks?”"
+  },
+  "helper": {
+   "feel": "A recent graduate may feel proud, lost, and behind all at once. The structure that held their days together is gone, friends have scattered, and every relative asks about the plan. Some are living at home again and feel it as a step backward, even when it's a smart choice. Underneath, many are asking a bigger question than what job: who am I now, and where do I fit?",
+   "say": [
+    "“You finished something hard. I'm proud of you.”",
+    "“How are you doing with all the in-between?”",
+    "“You don't need it all figured out. What's one next step?”",
+    "“I know someone in that work. Want me to introduce you?”"
+   ],
+   "avoid": [
+    "“So what's the plan?” at every meal or gathering.",
+    "Comparing them with classmates, siblings, or your own path.",
+    "Treating a first job outside their field as failure.",
+    "Pushing a decision before they've had time to look."
+   ],
+   "help": [
+    "Celebrate the finish before asking about what's next.",
+    "Offer connections: people you know in work that interests them.",
+    "If they're living with you, talk together about expectations, like rent, chores, and timelines, as adult to adult.",
+    "Help them keep an eye on practical dates if they'd like: health insurance, loan grace periods, leases.",
+    "If they seem low, stuck, or withdrawn for two weeks or more, ask how they're really doing, and encourage a doctor or counselor. If they talk about not wanting to live, call or text 988 together."
+   ],
+   "you": "You may feel your own worry about their future, or pressure from people asking you about them. Bring that to your own people. If they use Birch, their answers stay on their own device, and you see only what they choose to share. Your patience, and your belief that they'll find their way, matters more than any advice."
+  },
+  "faith": "For some, this season raises calling questions: what am I made for, where am I being led, what's mine to do? Prayer, a mentor in a faith community, or quiet time can help someone listen. For others, the same question points to their values and the people they want to help. Either way, the search itself is part of how purpose grows.",
+  "practices": [
+   "fruit|Your Own Timeline",
+   "trunk|Purpose Reflection",
+   "trunk|Ask Someone About Their Path",
+   "trunk|Weekly Reset",
+   "branches|Make One Plan",
+   "leaves|Steady Wake Time"
+  ],
+  "reach": [
+   "Low, stuck, or withdrawn for two weeks or more: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays, for information and support.",
+   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Questions about federal student loans and when payments start: Federal Student Aid Information Center, 1-800-433-3243, weekdays.",
+   "Help with housing, food, or bills in Minnesota while you get settled: dial 211, or call 1-800-543-7709.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Federal Student Aid: repaying your loans",
+    "https://studentaid.gov"
+   ],
+   [
+    "HealthCare.gov: health coverage options",
+    "https://www.healthcare.gov"
+   ],
+   [
+    "CareerOneStop (U.S. Department of Labor)",
+    "https://www.careeronestop.org"
+   ],
+   [
+    "Apprenticeship.gov: find an apprenticeship",
+    "https://www.apprenticeship.gov"
+   ]
+  ]
+ },
+ {
   "id": "first-job",
   "ring": "br-work",
   "title": "A first full-time job",
@@ -831,6 +1026,203 @@ const LC_TOPICS = [
   ]
  },
  {
+  "id": "debt",
+  "ring": "br-work",
+  "title": "Student loans and other debt",
+  "keys": "debt student loans student loan payments can't pay my loans loan servicer repayment plan income driven repayment deferment forbearance default grace period private loans credit card debt maxed out minimum payment interest collections debt collector calling me payday loan car loan medical bills buy now pay later behind on bills owe money drowning in debt ashamed of debt loan forgiveness scam debt relief company my kid has debt cosigner",
+  "parts": [
+   "bark",
+   "trunk",
+   "fruit"
+  ],
+  "quick": [
+   "Debt is common at this age, and it's a problem to solve, not a measure of you. Facing the numbers usually brings the fear down.",
+   "With federal student loans, call your loan servicer before you miss a payment. There are often options, like a different repayment plan, deferment, or forbearance.",
+   "You never have to pay a company for help with your federal student loans. Studentaid.gov and your servicer help at no cost.",
+   "For credit cards and other debt, a nonprofit credit counselor can help you build a plan. Pay at least the minimum on everything, and put any extra toward one debt at a time."
+  ],
+  "feel": "Maybe the first student loan bill just showed up, and the number is bigger than it felt when you signed. Maybe a credit card started as a safety net and now the minimum payment is all you can manage. Maybe there's a medical bill, a car loan, a buy now pay later plan, or a debt collector calling. Debt can bring dread, shame, and a quiet feeling of being trapped, especially when friends seem fine or family doesn't talk about money. Some people stop opening the mail. Some feel angry about choices they made at 18, or choices made for them. None of this makes you irresponsible. Most people your age are learning debt the hard way, and there's a way through.",
+  "self": {
+   "first": [
+    "Make one list: who you owe, how much, the interest rate, the minimum payment, and the due date.",
+    "For federal student loans, log in at studentaid.gov to see your loans and your servicer.",
+    "If you can't make a payment, call your servicer or lender before the due date and ask what options you have.",
+    "Open the mail. Unopened letters only grow."
+   ],
+   "helps": [
+    "Autopay for at least the minimum on everything, so nothing slips into late fees.",
+    "Choosing one debt to put extra toward: the highest interest rate saves the most money; the smallest balance gives a quick win. Either works if you stick with it.",
+    "A nonprofit credit counselor through the NFCC, for a plan with credit cards and other debt.",
+    "Saying no to high-cost fixes like payday loans and title loans. They often cost far more than they look.",
+    "Knowing your rights with debt collectors. The CFPB explains them.",
+    "A weekly money check-in, so the numbers stay known and smaller."
+   ],
+   "tell": [
+    "“This is a problem to solve, not a verdict on me.”",
+    "“Knowing the numbers is braver than avoiding them.”",
+    "“One payment, one call, one step.”"
+   ],
+   "people": "Try, with your servicer: “I can't make my full payment this month. What are my options?” Or with someone you trust: “I've been avoiding my debt, and I want to face it. Would you sit with me while I make the list?”"
+  },
+  "helper": {
+   "feel": "They may feel ashamed, angry at past choices, or frozen. Many young adults avoid the mail, the app, and the conversation, and the silence makes it heavier. If you cosigned a loan or helped pay for school, they may dread telling you anything. They're an adult, and the debt is theirs to manage, but a calm person beside them makes facing it much easier.",
+   "say": [
+    "“Thanks for telling me. Lots of people are carrying this.”",
+    "“Want to make the list together? You lead, I'll keep you company.”",
+    "“This is a problem to solve, not a measure of you.”"
+   ],
+   "avoid": [
+    "Lectures about past choices.",
+    "Paying it off for them without a shared plan.",
+    "Pointing them to debt relief companies that charge fees. Federal student loan help never costs money.",
+    "Bringing it up at every family gathering."
+   ],
+   "help": [
+    "Sit with them while they make the list or call the servicer, if they want company.",
+    "If you cosigned a loan, talk openly about it, and ask the lender what your role is.",
+    "If you give or lend money, agree on the terms out loud.",
+    "Watch for signs that money stress is becoming hopelessness, and ask directly how they're doing.",
+    "If you're a Birch helper, you see only what they choose to share."
+   ],
+   "you": "Money talk can stir up your own worries and history with debt. Settle yourself before you talk, and remember that your calm helps more than any answer."
+  },
+  "faith": "Many faith communities offer practical help, and some traditions speak of debt, release, and starting again. If faith is part of your life, you may find both help and people to walk with you there. In Plain terms: a plan and a few steady people make a heavy load lighter.",
+  "practices": [
+   "bark|Name It",
+   "bark|Money Check-in",
+   "fruit|Tiny Next Step",
+   "fruit|Starter Cushion",
+   "bark|Worry Window",
+   "branches|Ask for Help"
+  ],
+  "reach": [
+   "Federal student loans: studentaid.gov, or the Federal Student Aid Information Center, 1-800-433-3243 (weekdays). Your loan servicer can explain repayment plans and other options.",
+   "Credit cards and other debt: a nonprofit credit counselor through the National Foundation for Credit Counseling (nfcc.org).",
+   "Debt collectors, payday loans, or a problem with a lender: Consumer Financial Protection Bureau (consumerfinance.gov).",
+   "Help with rent, food, utilities, and other local help in Minnesota: dial 211, or call 1-800-543-7709; you can also text your ZIP code to 898-211.",
+   "Debt from betting: Minnesota Problem Gambling Helpline, 1-800-333-4673, or text HOPE to 53342; National Problem Gambling Helpline, 1-800-MY-RESET (1-800-697-3738). Both any time.",
+   "Money stress that turns hopeless: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Federal Student Aid",
+    "https://studentaid.gov"
+   ],
+   [
+    "National Foundation for Credit Counseling",
+    "https://www.nfcc.org"
+   ],
+   [
+    "Consumer Financial Protection Bureau: student loans",
+    "https://www.consumerfinance.gov/consumer-tools/student-loans/"
+   ],
+   [
+    "Consumer Financial Protection Bureau: debt collection",
+    "https://www.consumerfinance.gov/consumer-tools/debt-collection/"
+   ]
+  ]
+ },
+ {
+  "id": "gambling",
+  "ring": "br-work",
+  "title": "Gambling and sports betting",
+  "keys": "gambling sports betting betting apps sportsbook parlay same game parlay odds prop bets live betting fantasy sports daily fantasy online casino slots poker crypto trading lottery scratch tickets chasing losses lost my paycheck lost rent money owe money borrowed to bet credit card cash advance can't stop betting hiding betting self exclusion delete the app deposit limit my boyfriend bets my girlfriend bets my partner gambles my son is betting my friend is betting gambling debt gamblers anonymous",
+  "parts": [
+   "leaves",
+   "bark",
+   "branches"
+  ],
+  "quick": [
+   "Betting is built so the house wins over time. Over time, most people who keep betting lose money.",
+   "Betting trouble is common among young men: in a 2024 poll, about 10 percent of men 18 to 30 scored for problem gambling.",
+   "Watch for chasing losses, borrowing to bet, hiding it, and moods that ride on results.",
+   "Help works, and it's private. Minnesota Problem Gambling Helpline: 1-800-333-4673, or text HOPE to 53342. National: 1-800-MY-RESET (1-800-697-3738). Both any time."
+  ],
+  "feel": "It might have started as a way to make a game more fun: a parlay with friends, a sign-up bonus, a few dollars on a fantasy team. A win feels amazing, and it's easy to think you've figured something out. Then a loss stings, and the urge is to win it back. The apps are always in your pocket, and live bets make every minute of a game a chance to bet again. Some people end up betting rent money, using a credit card, borrowing from friends, or hiding how much they've lost from a partner or family. If that's you, you might feel anxious, ashamed, or stuck. It happens to smart people, and it can move fast. Getting help early makes it much easier to turn around.",
+  "self": {
+   "first": [
+    "Take a real look: how much have you put in, and how much have you taken out, over the last three months? Most apps show this in your account history. Write the numbers down.",
+    "Stop chasing. Let a loss be a loss.",
+    "Delete the apps, and use their tools to set deposit limits, take a timeout, or self-exclude. Ask your bank about blocking gambling transactions.",
+    "Tell one person the full truth about the money, and call or text a helpline."
+   ],
+   "helps": [
+    "Knowing how betting works: the odds are set so the company earns money over time, no matter how much you know about the sport.",
+    "Putting distance between you and the money: a trusted person, a separate account, or no cards saved in apps for a while.",
+    "Watching games for the game, with no money on them.",
+    "Another way to get the rush: a sport, a competition, a hard workout, a new skill.",
+    "Counseling with a gambling treatment provider. In Minnesota, the helpline can connect you, and treatment is often available at no cost.",
+    "Gamblers Anonymous, or another support group, with people who know exactly what it's like."
+   ],
+   "tell": [
+    "“The apps make money because most people lose.”",
+    "“I don't need to win it back. I need to stop the losing.”",
+    "“Telling someone is the fastest way out.”"
+   ],
+   "people": "Try: “I've been betting more than I meant to, and I'm in a hole. I need help figuring out what to do.” Or with friends: “I'm sitting this one out. I'll just watch.”"
+  },
+  "helper": {
+   "feel": "They may feel ashamed, defensive, or sure they can win it back. Betting is everywhere in sports now, so they may not see a problem until the money is gone. Some hide losses from a partner or family, borrow, or use credit cards. Gambling problems can come with depression and thoughts of suicide, so pay attention to how they're doing, not only the money. They're an adult, and the choice to get help is theirs, but your calm can make it easier.",
+   "say": [
+    "“I care about you, and I'm worried about the betting.”",
+    "“Help is private, and it works. I'll sit with you while you call, if you want.”",
+    "“You can tell me the real number. We'll deal with it together.”"
+   ],
+   "avoid": [
+    "Paying off their gambling debt without a plan and outside help.",
+    "Lending money “just this once.”",
+    "Betting with them, or sharing your accounts.",
+    "Shame and lectures. They drive the losses underground."
+   ],
+   "help": [
+    "Protect shared money: separate accounts, limits on shared cards, and no saved cards on shared devices.",
+    "Offer to sit with them while they call or text a helpline.",
+    "Ask directly about mood. If they talk about not wanting to be alive, call or text 988 together.",
+    "Get support for yourself: Gam-Anon, or the Minnesota helpline, which is there for family members and partners too.",
+    "If you're a Birch helper, you see only what they choose to share. The betting question in Birch is never shown to a helper."
+   ],
+   "you": "Finding out someone you love has lost money betting can bring anger, fear, and grief, especially if it's your money too. You can get support for yourself, even if they're not ready. Your calm matters more than having every answer."
+  },
+  "faith": "If faith is part of your life, your tradition may have something to say about money, luck, and what we chase. Many recovery paths draw on honesty, humility, and community, and shame is never the goal. In Plain terms: what you value, and where you want your time and money to go, can guide you more than the next bet.",
+  "practices": [
+   "branches|Plan Your Answer",
+   "branches|Ask for Help",
+   "bark|Money Check-in",
+   "bark|Phone Check",
+   "bark|Slow Exhale",
+   "trunk|Values Sort"
+  ],
+  "reach": [
+   "Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342, any time. For people who bet, and for partners and families.",
+   "National Problem Gambling Helpline: 1-800-MY-RESET (1-800-697-3738), or text 800GAM, any time.",
+   "Gambling losses leaving you hopeless or thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Owing money to someone who is threatening you: danger right now, call 911.",
+   "If drinking or drugs are part of it too: SAMHSA National Helpline, 1-800-662-4357, any time."
+  ],
+  "more": [
+   [
+    "Minnesota Alliance on Problem Gambling",
+    "https://mnapg.org"
+   ],
+   [
+    "National Council on Problem Gambling",
+    "https://www.ncpgambling.org"
+   ],
+   [
+    "Gamblers Anonymous",
+    "https://www.gamblersanonymous.org"
+   ],
+   [
+    "Gam-Anon (for family and friends)",
+    "https://www.gam-anon.org"
+   ],
+   [
+    "Fairleigh Dickinson University Poll, online betting and young men (2024)",
+    "https://www.fdu.edu/news/fdu-poll-finds-online-betting-leads-to-problems-for-young-men/"
+   ]
+  ]
+ },
+ {
   "id": "moving-out",
   "ring": "br-home",
   "title": "Moving out for the first time",
@@ -1208,6 +1600,199 @@ const LC_TOPICS = [
    [
     "NAMI (National Alliance on Mental Illness)",
     "https://www.nami.org"
+   ]
+  ]
+ },
+ {
+  "id": "new-city",
+  "ring": "br-home",
+  "title": "Moving to a new city",
+  "keys": "moving to a new city new town new state relocating for a job moved for school moved for a partner don't know anyone no friends here homesick lonely in a new city starting over how to make friends as an adult new job new city long distance friends miss home miss my family exploring city meetups clubs finding a doctor finding a church finding community military move first move away from home",
+  "parts": [
+   "branches",
+   "roots",
+   "leaves"
+  ],
+  "quick": [
+   "Moving to a new city is a big change, even when it's exciting. Homesickness is a kind of grief for places and people.",
+   "Feeling at home usually takes months, not weeks. Friendships need time together, often many hours, to grow.",
+   "Young adults are among the loneliest people in the country. Building connection on purpose matters.",
+   "Small, regular routines and one or two places you return to help a new city become yours."
+  ],
+  "feel": "Maybe you moved for a job, school, the military, a partner, or a fresh start. The first weeks can feel like an adventure: new streets, new food, no one who knows your old story. Then a Friday night comes and there's no one to call nearby. Everything takes more energy: finding groceries, a doctor, a place to sit that feels like yours. You might miss your family, your friends, even the parts of home you were glad to leave. Social media can make it look like everyone back home is still together without you. Some people feel brave and lonely in the same hour. All of it makes sense. You're putting down roots in new ground.",
+  "self": {
+   "first": [
+    "Set up one calm space fully, even if it's just your bed and one corner.",
+    "Find your basics: a grocery store, a pharmacy, a clinic or urgent care, and how you'll get around.",
+    "Pick one place within a short walk or ride to visit more than once: a park, a library, a gym, a coffee shop.",
+    "Keep one routine from home going: a morning walk, a Sunday call, a weekly meal you like to cook."
+   ],
+   "helps": [
+    "Joining one group and going at least three times before you decide: a class, a team, a run club, a volunteer shift, a faith community, a hobby group.",
+    "Saying yes to small invitations, even awkward ones, including from coworkers or classmates.",
+    "Being the one who suggests a second hangout. Friendships grow from repeated, ordinary time together.",
+    "Keeping one or two old friendships strong with a standing call, a shared game, or a planned visit.",
+    "Exploring on purpose: one new neighborhood, trail, or event each week or two.",
+    "Steady sleep, meals, and movement while everything else is new.",
+    "Being patient with yourself. Lonely in month one doesn't mean lonely in month six."
+   ],
+   "tell": [
+    "“Feeling at home takes time.”",
+    "“I can miss home and still grow here.”",
+    "“Every friend I have was once a stranger.”"
+   ],
+   "people": "Try, to a coworker or classmate: “I just moved here. What's worth doing around here?” Or: “A few of us are getting food after this. Want to come?” To someone you met once: “That was fun. Want to do it again next week?” To an old friend: “Can we keep a standing call? I miss you.”"
+  },
+  "helper": {
+   "feel": "They may sound upbeat on the phone and feel very alone in the evenings. Many young adults don't want to worry family or seem like they can't handle the move, so they keep the lonely parts quiet. If you're nearby, you may be one of the first people who could make the new city feel like home.",
+   "say": [
+    "“How are you really settling in?”",
+    "“What's one thing you've found that you like there?”",
+    "“Want a standing call? You pick the day.”",
+    "If you live there: “Want to grab food this week? I'll show you my favorite spot.”"
+   ],
+   "avoid": [
+    "“You chose this, so you must be fine.”",
+    "“Just come home if it's that hard.”",
+    "Making them feel guilty for leaving.",
+    "Filling every call with advice about how to make friends."
+   ],
+   "help": [
+    "If you're far away: keep a regular call on their terms, send something by mail, and plan a visit if you can.",
+    "If you're nearby: invite them to something specific, introduce them to one person, and share local tips like a good clinic, a park, or a group worth trying.",
+    "Ask about the good parts as well as the hard ones.",
+    "Notice if loneliness seems to be turning into a low that lasts, and encourage a doctor or counselor.",
+    "If they use Birch and turn you on as a helper, you'll see only what they choose to share."
+   ],
+   "you": "Missing someone who moved away is real, and so is the pride of watching them try something brave. If you're the welcomer in their new city, that quiet gift can change a whole year for someone."
+  },
+  "faith": "Many traditions honor the stranger and the traveler. For some young adults, a faith community is one of the first places in a new city where people learn their name and notice when they're missing. For others, the move is a chance to choose a community, or a practice, as an adult. If faith is part of your life, try visiting a few places until one fits. If it isn't, any group built around what you care about can be your landing place.",
+  "practices": [
+   "branches|Join and Go Three Times",
+   "roots|Sit Spot",
+   "branches|Call Home",
+   "branches|Make One Plan",
+   "branches|Work Friend",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "Loneliness or a low mood that hasn't lifted after a few months, or that keeps you from sleep, work, or school: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays.",
+   "Thoughts of not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Need help finding housing, food, or local services: dial 211 in most of the US. In Minnesota, you can also text your ZIP code to 898-211.",
+   "Moved with the military, or a service member's family: Military OneSource, 800-342-9647, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "US Surgeon General: Our Epidemic of Loneliness and Isolation",
+    "https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ],
+   [
+    "NAMI (National Alliance on Mental Illness)",
+    "https://www.nami.org"
+   ]
+  ]
+ },
+ {
+  "id": "housing",
+  "ring": "br-home",
+  "title": "When housing falls through",
+  "keys": "nowhere to live nowhere to go homeless couch surfing sleeping in my car staying with friends lost my apartment evicted eviction notice can't pay rent lease ended roommate left kicked out parents kicked me out aged out of foster care shelter youth shelter emergency housing housing help rental assistance 211 runaway safeline transitional housing dorm closed over break housing insecurity unsafe home need a place tonight",
+  "parts": [
+   "roots",
+   "fruit",
+   "bark"
+  ],
+  "quick": [
+   "Losing your housing is more common than people think. About 1 in 10 young adults 18 to 25 has some kind of homelessness in a year, often couch surfing.",
+   "It's a situation, not a statement about who you are. Help exists, and asking early opens more options.",
+   "211 can connect you with shelter, rent help, food, and local services. The National Runaway Safeline helps people up to 24 who are in a housing crisis.",
+   "If you get an eviction notice, contact legal aid or a tenant hotline right away. Acting early keeps more options open."
+  ],
+  "feel": "Maybe a lease ended and nothing came through. Maybe rent went up, hours got cut, a roommate left, or a relationship ended and the place was theirs. Maybe a family member told you to leave, or home stopped being safe. You might be sleeping on a friend's couch, in your car, or not sure where you'll be next week. It can bring fear, shame, anger, and exhaustion all at once, and it can make everything else, work, school, sleep, feel impossible. Many people in this spot don't call it homelessness, and don't tell anyone. You deserve a safe place to sleep, and you deserve help getting there.",
+  "self": {
+   "first": [
+    "If you're not safe where you are, or you have nowhere to sleep tonight, call 911 in an emergency, or reach out to 211 or the National Runaway Safeline (1-800-786-2929, up to age 24) for a place to go.",
+    "Tell one person you trust what's happening. You don't have to have a plan first.",
+    "Keep your important things together and with you if you can: ID, Social Security card, birth certificate, phone, charger, medicine, bank card.",
+    "If you got an eviction notice, contact legal aid or a tenant hotline today, and keep every paper you've received."
+   ],
+   "helps": [
+    "Calling or texting 211 to ask about shelter, rent help, food, and transportation where you live.",
+    "If you're a student, asking your school's student services, basic needs office, or financial aid office. Many schools have emergency funds, food pantries, or housing help.",
+    "Asking friends or family for a short, specific stay, with a clear end date and a plan for what comes next.",
+    "Keeping your routines where you can: work or school, meals, a place to shower, a charged phone.",
+    "Writing down every place you've contacted, with dates and names, so you don't have to remember it all.",
+    "Being kind to yourself. Getting through a crisis like this takes real strength."
+   ],
+   "tell": [
+    "“This is happening to me. It isn't who I am.”",
+    "“Asking for help is a smart move.”",
+    "“One step at a time is enough.”"
+   ],
+   "people": "Try, to a friend or relative: “I lost my place. Could I stay with you for a week while I sort out what's next?” To 211: “I'm 21 and I'll have nowhere to stay after Friday. What's available near me?” To a school: “I'm having a housing emergency. Who should I talk to?”"
+  },
+  "helper": {
+   "feel": "They may feel ashamed, scared, and worn out, and they may not tell you the whole story at first. Many young adults in a housing crisis don't use the word homeless, and they may be couch surfing or sleeping in a car while still going to work or class. They are an adult in a hard spot, and they need practical help and dignity more than advice.",
+   "say": [
+    "“Thank you for telling me. Let's figure out the next step together.”",
+    "“Are you safe tonight? Do you have somewhere to sleep?”",
+    "“Here's what I can offer. Take what helps.”",
+    "“This doesn't change how I see you.”"
+   ],
+   "avoid": [
+    "“How did you let this happen?”",
+    "Offering help with strings you haven't said out loud.",
+    "Making decisions for them, or calling a landlord or agency without asking.",
+    "Promising more than you can give, then pulling back suddenly."
+   ],
+   "help": [
+    "Start with tonight: a safe place to sleep, food, and a phone charger.",
+    "Offer something specific and real: a few nights on a couch with a clear plan, a ride, storage for their things, help with a form.",
+    "Sit with them while they call 211, a school's student services, or legal aid, if they'd like company.",
+    "If there's an eviction notice, help them reach legal aid or a tenant hotline right away.",
+    "If they left an unsafe home or relationship, take their safety seriously and share the help lines below.",
+    "Keep checking in after the first crisis passes. The weeks after can be the hardest."
+   ],
+   "you": "It can hurt to see someone you care about without a home, and you can't fix everything. Be clear with yourself about what you can truly offer, and give that well. Steady, honest help matters more than big promises."
+  },
+  "faith": "For some people, a faith community is a place to turn in a crisis like this, and many congregations run meals, shelters, or emergency funds open to anyone. If faith is part of your life, it's okay to ask your community for practical help. If it isn't, community groups, schools, and 211 can connect you with the same kind of support.",
+  "practices": [
+   "bark|Slow Exhale",
+   "branches|Ask for Help",
+   "roots|What Holds Me Up",
+   "fruit|Tiny Next Step",
+   "bark|My Safety Plan",
+   "leaves|Health Basics"
+  ],
+  "reach": [
+   "Nowhere to sleep tonight, or danger right now: call 911.",
+   "Shelter, rent help, food, and local services: dial 211 in most of the US. In Minnesota, dial 211 or 1-800-543-7709, or text your ZIP code to 898-211, any time.",
+   "Ages 24 and under in a housing crisis: National Runaway Safeline, 1-800-786-2929 (1-800-RUNAWAY), any time.",
+   "Left or leaving a home where someone hurts or controls you: in Minnesota, Day One, 1-866-223-1111, or text 612-399-9995. National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788. Someone you're dating: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
+   "An eviction notice in Minnesota: HOME Line answers renters' legal questions (homelinemn.org), and LawHelpMN lists legal aid (lawhelpmn.org).",
+   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "National Runaway Safeline",
+    "https://www.1800runaway.org/"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ],
+   [
+    "LawHelpMN: legal help for renters",
+    "https://www.lawhelpmn.org/"
+   ],
+   [
+    "HOME Line: Minnesota tenant hotline",
+    "https://homelinemn.org/hotline-services/"
    ]
   ]
  },
@@ -1612,6 +2197,206 @@ const LC_TOPICS = [
   ]
  },
  {
+  "id": "controlling",
+  "ring": "br-people",
+  "title": "Controlling or abusive relationships",
+  "keys": "abusive relationship controlling partner domestic violence dating violence partner checks my phone tracks my location wants my passwords jealous won't let me see friends controls my money takes my paycheck tells me what to wear yells calls me names threatens me hits me pushed me grabbed me choked me pressured me forced me says they'll hurt themselves if i leave scared of my partner walking on eggshells is this abuse how do i leave safely we live together safety plan protective order stalking my ex won't leave me alone friend in an abusive relationship",
+  "parts": [
+   "branches",
+   "bark",
+   "roots"
+  ],
+  "quick": [
+   "Abuse is a pattern of control: someone using fear, guilt, threats, money, or force to have power over you. It is never your fault.",
+   "It often starts young. More than 70 percent of women and more than 60 percent of men who have been hurt by a partner were first hurt before age 25.",
+   "Abuse can be emotional, digital, financial, sexual, or physical. Any of these counts, with or without marks.",
+   "You don't have to figure it out alone. Love Is Respect helps people 13 to 26 by call, text, or chat, any time. Danger right now: 911."
+  ],
+  "feel": "It might not have started this way. At first the attention felt amazing: constant texts, wanting to be together all the time. Then it shifted. Now they check your phone, want your passwords, or track your location. They get angry when you see certain friends or family, control the money, tell you what to wear, or put you down and call it a joke. Maybe they've pushed or grabbed you, pressured you into things you didn't want, or threatened to hurt themselves if you leave. If you live together, share a lease, or depend on them for a ride or money, leaving can feel impossible. You might feel confused, because they can also be sweet and say they're sorry. You might feel embarrassed, protective of them, or scared of what happens if you tell. If you feel afraid, or like you're walking on eggshells, that feeling is worth listening to.",
+  "self": {
+   "first": [
+    "If you're in danger right now, get to a safe place and call 911.",
+    "Reach out to Love Is Respect by call, text, or chat, any time. In Minnesota, Day One is there too. You don't have to be sure it's abuse, and you don't have to give your name.",
+    "Tell one person you trust: a friend, a family member, a coworker, a mentor, a counselor.",
+    "If someone may be watching your phone or computer, reach out from a device they can't see, like a friend's phone or a library computer."
+   ],
+   "helps": [
+    "Knowing the signs: checking your phone, controlling who you see, what you wear, or your money, constant put-downs, extreme jealousy, threats, stalking, pressure about sex or pictures, pushing, grabbing, or hitting.",
+    "Making a safety plan with an advocate before a big step. Leaving can be a risky time, so plan who knows, where you'll go, and how you'll get there.",
+    "Keeping important things where you can reach them: your ID, a phone charger, some money, keys, and any medicine you need.",
+    "Saving what you safely can: screenshots of threats, dates and times, somewhere they can't see.",
+    "Staying close to friends and family, even if your partner tries to pull you away. They're part of your safety.",
+    "Being gentle with yourself. Caring about someone who hurts you doesn't make you foolish. It makes you human."
+   ],
+   "tell": [
+    "“This is not my fault.”",
+    "“Love doesn't come with fear.”",
+    "“I deserve to feel safe, all the time.”",
+    "“Asking for help is strong.”"
+   ],
+   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away, like Love Is Respect, the National Domestic Violence Hotline, Day One, and 911. Your answers stay on your device behind your own passcode. Birch sends no alert to anyone, and a helper never sees your safety answers, so you stay in charge of who you tell."
+  },
+  "helper": {
+   "feel": "They may feel confused, ashamed, scared, or loyal to the person hurting them. Many don't call it abuse. They may defend the partner, play down what happened, or go back after leaving. Leaving often takes more than one try. Control often works by cutting a person off from the people who love them, so pulling away from you may be part of the pattern, not a rejection of you. They're an adult, and the decisions are theirs, which can be hard to watch.",
+   "say": [
+    "“I believe you. Thank you for telling me.”",
+    "“This is not your fault. No one deserves to be treated that way.”",
+    "“You don't have to decide anything right now. I'm with you.”",
+    "“What would help you feel safer?”"
+   ],
+   "avoid": [
+    "“Why don't you just leave?” Leaving is complicated and can be the riskiest time without a plan.",
+    "Ultimatums, like “It's them or me.” It can push them closer to the partner and away from you.",
+    "Blaming questions: “Why did you go back?” “What did you do?”",
+    "Confronting the partner yourself, or posting about it."
+   ],
+   "help": [
+    "Stay calm and stay connected. Your relationship with them is protection.",
+    "Learn the warning signs and talk about them in general terms, so they can recognize their own situation.",
+    "Encourage them to make a safety plan with Love Is Respect, the National Domestic Violence Hotline, or Day One. You can call these lines yourself for guidance too.",
+    "Offer practical help: a safe place to stay, a ride, a phone they can use, a place to keep copies of documents.",
+    "Know that Day One and the Hotline can explain options like protective orders. If there's violence, threats, or stalking, involve the police with them as much as you safely can.",
+    "If they were forced or pressured into anything sexual, share RAINN. If an intimate image is shared or threatened, share StopNCII.",
+    "Watch their mood. Abuse can lead to hopelessness. If they talk about not wanting to be alive, call or text 988 together."
+   ],
+   "you": "It's natural to feel furious, scared, or helpless. Get support for yourself too: Love Is Respect and the Hotline talk with friends and family as well. Your steady, non-judging presence is often what helps someone find their way out, on their own timeline."
+  },
+  "faith": "If faith is part of your life, it can be a source of strength, hope, and people who help. Being hurt is never something you have to accept to be a good partner or a faithful person, and no tradition asks anyone to stay in danger. If someone uses God, forgiveness, or vows to keep you in place, that is part of the control. A trusted faith leader or chaplain can be one of the people who helps you. If faith isn't part of your life, the same is true: you deserve safety and respect, and asking for help is right.",
+  "practices": [
+   "branches|Respect Check",
+   "bark|My Safety Plan",
+   "branches|Ask for Help",
+   "roots|What Holds Me Up",
+   "bark|Self-Compassion Break",
+   "bark|Five Senses Pause"
+  ],
+  "reach": [
+   "Danger right now: call 911.",
+   "Love Is Respect, for people 13 to 26 and the people who care about them: call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time.",
+   "National Domestic Violence Hotline: 1-800-799-7233, text START to 88788, or chat at thehotline.org, any time.",
+   "In Minnesota, Day One, for anyone being hurt by someone close to them: 1-866-223-1111, or text 612-399-9995, any time.",
+   "Forced or pressured into anything sexual: RAINN, 1-800-656-4673, or text HOPE to 64673, any time.",
+   "An intimate image of you shared or threatened: stopncii.org. If it was taken before you were 18, use takeitdown.ncmec.org.",
+   "Feeling hopeless, or thoughts of not wanting to be alive: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone."
+  ],
+  "more": [
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org/get-relationship-help-24-7-365/"
+   ],
+   [
+    "National Domestic Violence Hotline",
+    "https://www.thehotline.org/"
+   ],
+   [
+    "Day One",
+    "https://dayoneservices.org/domestic-violence/help-now/"
+   ],
+   [
+    "RAINN",
+    "https://rainn.org/help-and-healing/hotline/"
+   ],
+   [
+    "StopNCII",
+    "https://stopncii.org"
+   ]
+  ]
+ },
+ {
+  "id": "engaged",
+  "ring": "br-people",
+  "title": "Engaged or newly married",
+  "keys": "engaged engagement getting married newly married newlywed first year of marriage wedding planning stress wedding budget wedding costs family pressure about the wedding in-laws mother-in-law father-in-law premarital counseling premarital education marriage prep fighting with my fiance fighting with my spouse arguing about money moving in together merging finances joint account who does the chores getting married young are we too young cold feet second thoughts different faiths interfaith couple marriage license minnesota",
+  "parts": [
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "quick": [
+   "Getting engaged or married is a joy, and it's also a big change. Stress, second thoughts, and adjustment are common, even when you're sure.",
+   "Couples who took part in premarital education reported more satisfaction and commitment, less conflict, and lower odds of divorce, in one large survey.",
+   "The talks that matter most are about everyday life: money, chores, families, faith or meaning, work, children or not, and how you handle conflict.",
+   "Every couple disagrees. What matters most is how you repair: owning your part, coming back to it calmly, and trying again."
+  ],
+  "feel": "You might be thrilled and overwhelmed at the same time. Planning a wedding, even a small one or a courthouse visit, can bring money stress, family opinions, and a long list of decisions. Moving in together or merging money can surface differences you didn't know you had: how clean is clean, how much to spend, how often to see family. You might hear “aren't you too young?” from people who mean well, or feel pressure to have it all figured out. In the first year, some people feel a dip after the big day, or surprise that they still argue. Some have cold feet and wonder whether that means something is wrong. Many of these feelings are a normal part of joining two lives.",
+  "self": {
+   "first": [
+    "Set aside calm time, not during a fight, to talk through the big everyday topics: money, chores, families, work, faith or meaning, children or not, and how you each handle stress.",
+    "Agree on a few wedding or first-year priorities together, and let the rest be simpler.",
+    "Look into premarital education or counseling. In Minnesota, completing 12 hours of premarital education lowers the marriage license fee.",
+    "Decide together how you'll answer family pressure, so you're on the same team."
+   ],
+   "helps": [
+    "Talking about needs, not just complaints: “I need some quiet after work” instead of “You never leave me alone.”",
+    "Repairing after a disagreement: owning your part, saying sorry, and coming back to it when you're both calm.",
+    "Small daily kindness: a thank-you, a check-in at the end of the day, time together without screens or logistics.",
+    "Making a simple money plan together: what's shared, what's separate, and how you'll decide on big purchases.",
+    "Keeping your own friends and interests. A strong marriage is two whole people choosing each other.",
+    "Asking for help early. Couples counseling works best before things are broken, and it's a strength, not a failure."
+   ],
+   "tell": [
+    "“We're a team, even when we disagree.”",
+    "“Repair matters more than never fighting.”",
+    "“We get to build our own way of doing things.”",
+    "“Asking for help early is wise.”"
+   ],
+   "people": "To your partner: “Can we set aside an hour this weekend to talk about money, just to understand each other?” To family: “We love you, and we've decided to keep it small. We'd love you there.” To a friend: “Wedding planning is wearing me out. Can we do something that has nothing to do with it?” If disagreements ever turn into fear, threats, or control, that isn't a normal adjustment. Love Is Respect is there for people 13 to 26, by call, text, or chat, any time."
+  },
+  "helper": {
+   "feel": "They may be happy and stressed at once, pulled between two families, worried about money, or tired of being asked about plans. If you have doubts about their choice or their age, they may sense it and pull back. They're adults making their own commitment, and they're building their own traditions, which may differ from yours.",
+   "say": [
+    "“I'm so happy for you both.”",
+    "“What would help most right now?”",
+    "“Your wedding, your way. I'll be there.”",
+    "“Every couple has an adjustment year. You two are doing the work.”"
+   ],
+   "avoid": [
+    "“Aren't you too young?” once the decision is made.",
+    "Taking sides in their disagreements, or sharing their private struggles with others.",
+    "Pushing your own plans for the wedding, the holidays, or grandchildren.",
+    "Criticizing their partner to them. It puts them in the middle."
+   ],
+   "help": [
+    "Offer practical help they ask for: a task for the wedding, a meal during a move, help with a budget if invited.",
+    "Make room for the new family: share holidays, be flexible with traditions, and welcome their partner fully.",
+    "Encourage premarital education or counseling as a gift, not a warning.",
+    "Listen when they vent, without taking sides. Support the person, and don't get pulled into the argument.",
+    "If you see signs of fear, control, threats, or someone being cut off from friends and family, that's more than adjustment. Stay close, and share Love Is Respect."
+   ],
+   "you": "Your part is to bless the new household and respect its choices, even when they differ from yours. A welcome that's steady and warm is one of the best gifts a family or friend can give a new couple."
+  },
+  "faith": "If faith is part of your lives, marriage may be a sacred covenant, and many traditions offer marriage preparation, blessings, and mentoring couples. Couples from different traditions, or different places in their faith, do well when they talk openly about practices, holidays, and how they'd raise children, if they plan to. A chaplain or faith leader who honors both of you can help. If faith isn't part of your lives, your shared values can guide the same conversations. Safety always comes first: no tradition asks anyone to stay in danger.",
+  "practices": [
+   "branches|Gratitude Letter",
+   "branches|Active Listening",
+   "branches|Friendship Repair",
+   "trunk|Values Sort",
+   "bark|Money Check-in",
+   "branches|Shared Meal"
+  ],
+  "reach": [
+   "Fear, threats, control, or being hurt by a partner: Love Is Respect, for people 13 to 26: call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time. National Domestic Violence Hotline: 1-800-799-7233, or text START to 88788. In Minnesota, Day One: 1-866-223-1111.",
+   "Stress or low mood that lasts two weeks or more: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
+   "Thoughts of not wanting to be alive: call or text 988, or chat at 988lifeline.org, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "The Grounded Marriage",
+    "https://growwithgrounded.com/the-grounded-marriage.html"
+   ],
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org/"
+   ],
+   [
+    "National Domestic Violence Hotline",
+    "https://www.thehotline.org/"
+   ]
+  ]
+ },
+ {
   "id": "parents-adult",
   "ring": "br-family",
   "title": "You and your parents, as adults",
@@ -1808,6 +2593,418 @@ const LC_TOPICS = [
    [
     "Federal Student Aid Information Center",
     "https://fsapartners.ed.gov/help-center/fsa-customer-service-center/service-centers-for-students/federal-student-aid-information-center-fsaic"
+   ]
+  ]
+ },
+ {
+  "id": "unplanned-pregnancy",
+  "ring": "br-family",
+  "title": "An unplanned pregnancy",
+  "keys": "unplanned pregnancy pregnant surprise pregnancy positive pregnancy test i think i'm pregnant my girlfriend is pregnant my partner is pregnant not ready scared pregnant how do i tell my parents how do i tell my partner who to tell what do i do now shock panic overwhelmed pregnant and alone pregnant in college pregnant and broke pressured about pregnancy partner pressuring me family pressuring me doctor clinic appointment questions about pregnancy insurance on parents plan privacy my daughter is pregnant my friend is pregnant",
+  "parts": [
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "quick": [
+   "Finding out about a pregnancy you didn't plan can bring a rush of feelings at once. Whatever you feel first is allowed, and it can change.",
+   "You don't have to sort everything out in one hour. Start with one safe person and accurate information.",
+   "A doctor, nurse, or health clinic you trust can confirm the pregnancy, answer your medical questions, and talk through every option with you.",
+   "No one gets to pressure, threaten, or force you about a pregnancy, in any direction. If that's happening, help is there any time: Love Is Respect, Day One in Minnesota, and 911 in danger."
+  ],
+  "feel": "Maybe you're staring at a test, or you just heard it from a doctor, or someone you're with just told you. Your mind might race, or go completely blank. Shock, fear, numbness, hope, guilt, excitement, and panic can all show up in the same hour, and they may shift from one day to the next. You might be thinking about money, school, work, a lease, a partner, or how your family or community will react. You might feel very alone, even with people nearby. If you're the partner, you may feel just as shaken, and unsure what your place is. All of this is a normal human response to big, unexpected news. Your feelings are allowed, and you deserve people who listen.",
+  "self": {
+   "first": [
+    "Breathe. You don't have to tell everyone, or settle everything, today. Three slow breaths, each one out longer than in, can steady you enough for the next step.",
+    "See a doctor, nurse, or health clinic you trust. They can confirm the pregnancy, look after your health, answer medical questions, and talk through every option. Write your questions down first, and bring someone with you if you'd like.",
+    "Tell one safe person: someone who listens more than they talk, and who will keep it private.",
+    "If anyone is pressuring, threatening, or hurting you, reach out to Love Is Respect (1-866-331-9474, or text LOVEIS to 22522) or, in Minnesota, Day One (1-866-223-1111). In danger right now, call 911."
+   ],
+   "helps": [
+    "Writing three short lists: what I know, what I need to find out, and who is in my corner.",
+    "Getting medical information from a licensed doctor, nurse, or clinic you trust, rather than from forums or social media.",
+    "Taking care of the basics: sleep, food, water, and a few minutes outside. Stress lands in the body too.",
+    "Giving yourself quiet time to think, away from voices that rush you.",
+    "Talking with a counselor, a trusted mentor, or someone who will listen without pushing.",
+    "If you're pregnant and feeling overwhelmed, anxious, or low, the National Maternal Mental Health Hotline is there by call or text, any time, in English and Spanish."
+   ],
+   "tell": [
+    "“I don't have to know everything today.”",
+    "“All my feelings are allowed.”",
+    "“I deserve support and honest answers.”",
+    "“No one gets to pressure me.”"
+   ],
+   "people": "To a partner, parent, or friend: “I have something important to tell you. Right now I mostly need you to listen.” If you'd like help with something specific: “Could you come with me to an appointment?” If someone is pushing: “I hear you. I need time and space to think, and I'm asking you to give me that.” If you're on a parent's health plan, statements may be mailed to the policyholder; you can call the plan and ask how to keep your information private. In Birch, your answers stay on this device, and a helper sees only what you choose to share. No alert goes to anyone."
+  },
+  "helper": {
+   "feel": "When a young adult tells you about an unplanned pregnancy, they're often frightened of how you'll react. They may be in shock, numb, or carrying many feelings at once, and those feelings may change from day to day. What they usually need most from you is calm, privacy, and room to think, along with practical help when they ask for it.",
+   "say": [
+    "“Thank you for telling me.”",
+    "“I'm here. What do you need from me right now?”",
+    "“You don't have to figure it all out tonight.”",
+    "“I care about you, and that doesn't change.”"
+   ],
+   "avoid": [
+    "Blame: “How could you let this happen?”",
+    "Telling them what to do, or what you would do in their place.",
+    "Sharing the news before they're ready, even with family.",
+    "Pressure of any kind, including conditions on money, a ride, or a place to live."
+   ],
+   "help": [
+    "Listen first, and let silences be. Your calm helps them think.",
+    "Offer practical help: a ride to an appointment, company in the waiting room, help writing questions for the doctor or clinic.",
+    "Keep their news private. It's theirs to share, in their own timing.",
+    "If you're the partner, say how you feel honestly and kindly, and listen just as carefully. Pressure, threats, or force in any direction are never okay.",
+    "If you see someone pressuring, threatening, or hurting them, help them reach Love Is Respect or Day One. In danger, call 911.",
+    "Watch their mood. If they seem overwhelmed or low, share the National Maternal Mental Health Hotline (call or text 1-833-852-6262). If they talk about not wanting to be alive, call, text, or chat 988 together.",
+    "In Birch, a helper sees only what the young adult chooses to share, and never safety answers. Asking directly and kindly is how you'll know how they are."
+   ],
+   "you": "You may have strong feelings, hopes, or beliefs of your own about this. They're real, and they deserve a place too. Talk them through with your own friend, counselor, or someone you trust, so your time with the young adult can stay about listening."
+  },
+  "faith": "If faith is part of your life, it may be a deep comfort right now, a source of worry about how your family or community will respond, or both at once. Some people find strength in prayer, sacred words, or a faith leader who listens well. You deserve to be heard without being pushed, by anyone. If faith isn't part of your life, the same is true: you deserve people who listen, and room to think.",
+  "practices": [
+   "bark|Slow Exhale",
+   "bark|Name It",
+   "branches|Ask for Help",
+   "roots|What Holds Me Up",
+   "bark|Kind Voice Letter",
+   "branches|Active Listening"
+  ],
+  "reach": [
+   "Medical questions: a doctor, nurse, or health clinic you trust. In Minnesota, dial 211 (1-800-543-7709), or text your ZIP code to 898-211, to find local clinics and help with insurance, food, and housing.",
+   "Feeling overwhelmed, anxious, or low during a pregnancy: the National Maternal Mental Health Hotline, call or text 1-833-852-6262 (1-833-TLC-MAMA), any time, in English and Spanish.",
+   "Someone you're dating or with pressuring, threatening, or hurting you: Love Is Respect, call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time.",
+   "In Minnesota, anyone being hurt by someone close to them: Day One, 1-866-223-1111, or text 612-399-9995, any time.",
+   "Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "National Maternal Mental Health Hotline (HRSA)",
+    "https://mchb.hrsa.gov/national-maternal-mental-health-hotline"
+   ],
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org/get-relationship-help-24-7-365/"
+   ],
+   [
+    "Day One",
+    "https://dayoneservices.org/domestic-violence/help-now/"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ]
+ },
+ {
+  "id": "young-parent",
+  "ring": "br-family",
+  "title": "Becoming a parent young",
+  "keys": "young parent young mom young dad new parent new baby newborn expecting a baby having a baby at 19 having a baby at 20 having a baby in my twenties single parent co-parenting the other parent baby's mom baby's dad tired no sleep baby won't stop crying overwhelmed parenting and school parenting and work child care daycare money for diapers formula wic help judged for being a young parent friends don't get it my parents helping with the baby custody child support my son had a baby my daughter had a baby",
+  "parts": [
+   "leaves",
+   "branches",
+   "trunk"
+  ],
+  "quick": [
+   "Becoming a parent young can bring deep love and real strain at the same time. Both are normal, and neither one cancels the other.",
+   "Sleep, food, and help from others aren't luxuries right now. They're how you keep going. Asking for help is part of good parenting.",
+   "Depression and anxiety after a baby are common and treatable. About 1 in 8 mothers report symptoms, more among the youngest moms, and about 1 in 10 dads struggle too. See After the Baby: Depression and Anxiety for Moms and Dads.",
+   "If the crying gets to be too much, put the baby down somewhere safe, like the crib, step away for a few minutes, and call someone. Crying won't hurt a baby. Shaking can."
+  ],
+  "feel": "Your life just changed shape fast. You might feel a love bigger than you expected, and also tired in a way you didn't know was possible. Friends may be out at night while you're up at 3 a.m. with a bottle. People may look at you, or say things, as if being young means you can't do this well. You might be juggling a job, classes, or a search for either, plus money worries, child care, and a relationship with the baby's other parent that may be close, complicated, or over. Your own parents may be a big help, or full of opinions, or both. Some days you'll feel proud. Some days you'll feel lost or alone. All of it is part of becoming a parent, at any age.",
+  "self": {
+   "first": [
+    "Sleep when someone else can watch the baby, even for an hour or two.",
+    "Accept one offer of help today, and ask for one specific thing: a meal, a load of laundry, two hours of babysitting, a ride.",
+    "Make a crying plan before you need it: when it's too much, put the baby down safely in the crib, step out of the room for a few minutes, breathe, and call someone.",
+    "Find your baby's doctor or clinic and keep their number handy. Questions about feeding, sleep, or your baby's health go there. Your own health questions go to your own doctor."
+   ],
+   "helps": [
+    "Other young parents who get it: a parent group, a class at a clinic or library, an online community you trust.",
+    "Sharing night duties when you can, so each adult gets one longer stretch of sleep.",
+    "A few minutes outside every day, with the baby or without.",
+    "Help with the basics: in Minnesota, 211 can connect you with food, diapers, housing, and child care help, and WIC helps with food for parents and young children.",
+    "Keeping one piece of your own life going: a class, a friend, a walk, music, a goal you're still working toward.",
+    "If you and the other parent aren't together, getting clear, written plans for time and support. LawHelpMN can point you to legal help in Minnesota.",
+    "Watching your own mood. Sadness, worry, or scary thoughts that last more than two weeks are a reason to call your doctor or the National Maternal Mental Health Hotline."
+   ],
+   "tell": [
+    "“I'm learning, and that's enough for today.”",
+    "“Needing help doesn't make me a bad parent.”",
+    "“Young doesn't mean less. My baby has me.”"
+   ],
+   "people": "Try: “I'm doing okay, and I'm more tired than I expected. Could you watch the baby Saturday morning so I can sleep?” To your own parents: “I really value your help. I'd like to make the final call on how we do bedtime.” To the other parent: “Can we sit down this week and write out a schedule we can both keep?” In Birch, your answers stay on this device, and a helper sees only what you choose to share."
+  },
+  "helper": {
+   "feel": "Young parents often feel watched and judged, and they may be quick to hear criticism even in friendly advice. Many are exhausted, short on money, and lonely as friends' lives move in different directions. Under it, most want two things: to be seen as the capable parent they're becoming, and to have real, practical help without strings.",
+   "say": [
+    "“You're a good parent. I can see how much you love them.”",
+    "“How are you really doing?”",
+    "“What would help most this week?”",
+    "“You don't have to do this alone.”"
+   ],
+   "avoid": [
+    "Comments about their age, or “you should have waited.”",
+    "Taking over, or parenting the baby over their head.",
+    "Unasked-for advice, especially in front of others.",
+    "Visiting to hold the baby without helping with anything else."
+   ],
+   "help": [
+    "Offer specific help on a set day: a meal Tuesday, laundry Thursday, two hours of babysitting Saturday so they can sleep.",
+    "Back up their choices as the parent, and share your ideas privately, when asked.",
+    "Help them keep a piece of their own life going: a class, a shift, a friendship.",
+    "Know the signs of postpartum depression and anxiety in moms and in dads, and encourage a call to the doctor or the National Maternal Mental Health Hotline if sadness or worry lasts more than two weeks.",
+    "If the baby's crying is wearing them down, offer to take a shift, and remind them it's always okay to put the baby down safely and step away.",
+    "If you see thoughts of harming themselves or the baby, call or text 988, or call 911 now.",
+    "In Birch, a helper sees only what the young parent chooses to share, and never safety answers. Ask directly and kindly how they're doing."
+   ],
+   "you": "If you're the grandparent, this may have changed your life too, and your feelings about it are real. Take care of your own rest, and find your own people to talk with, so you can be the steady help they need."
+  },
+  "faith": "Many faith traditions welcome a new child with blessing and community, whatever the parents' age or situation. If faith is part of your life, a faith community can be a source of meals, babysitters, and people who cheer you on. If you've felt judged there, you deserve a community that welcomes you and your child. If faith isn't part of your life, the same truth holds: you and your baby deserve to be surrounded by people who show up.",
+  "practices": [
+   "branches|Ask for Help",
+   "leaves|Smart Nap",
+   "leaves|Sleep",
+   "leaves|Cook on a Budget",
+   "bark|Self-Compassion Break",
+   "fruit|Starter Cushion"
+  ],
+  "reach": [
+   "Sadness, anxiety, or scary thoughts that last more than two weeks, for moms and dads: the National Maternal Mental Health Hotline, call or text 1-833-852-6262, any time, in English and Spanish. Or talk with your doctor.",
+   "Postpartum Support International HelpLine, for parents and partners: 1-800-944-4773, weekdays. It's not a crisis line.",
+   "Thoughts of harming yourself or your baby: call or text 988, or call 911 now.",
+   "Help with food, diapers, housing, bills, and child care: in Minnesota, dial 211 (1-800-543-7709), or text your ZIP code to 898-211, any time.",
+   "Questions about your baby's health, feeding, or sleep: your baby's doctor or clinic.",
+   "Someone you're with controlling or hurting you: Love Is Respect, 1-866-331-9474 or text LOVEIS to 22522; in Minnesota, Day One, 1-866-223-1111, any time. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "Postpartum Support International",
+    "https://www.postpartum.net"
+   ],
+   [
+    "National Maternal Mental Health Hotline (HRSA)",
+    "https://mchb.hrsa.gov/national-maternal-mental-health-hotline"
+   ],
+   [
+    "WIC (USDA)",
+    "https://www.fns.usda.gov/wic"
+   ],
+   [
+    "Safe to Sleep (NIH)",
+    "https://safetosleep.nichd.nih.gov"
+   ],
+   [
+    "LawHelpMN",
+    "https://www.lawhelpmn.org"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ]
+  ]
+ },
+ {
+  "id": "after-baby",
+  "ring": "br-family",
+  "title": "After the baby: depression and anxiety for moms and dads",
+  "keys": "postpartum depression postpartum anxiety ppd baby blues perinatal depression depressed after baby anxious after baby can't stop worrying about the baby scary thoughts intrusive thoughts not bonding with my baby don't feel like myself crying all the time can't sleep even when baby sleeps numb irritable rage new mom new dad paternal postpartum depression dad depression after baby my wife is depressed after the baby my partner after the baby postpartum psychosis seeing things hearing things maternal mental health hotline",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches"
+  ],
+  "quick": [
+   "Depression and anxiety after a baby are common, and they're treatable. About 1 in 8 mothers report symptoms of depression after giving birth, more among the youngest moms, and about 1 in 10 dads struggle too.",
+   "A few teary, up-and-down days in the first couple of weeks are common. When sadness, worry, numbness, or scary thoughts last longer than two weeks, or feel heavy, it's time to reach out.",
+   "Scary, unwanted thoughts are a symptom, not who you are. Telling a doctor about them is how you get help.",
+   "The National Maternal Mental Health Hotline is there for moms, dads, and partners, by call or text, any time: 1-833-852-6262. Thoughts of harming yourself or your baby: 988 or 911 now."
+  ],
+  "feel": "Everyone told you about the joy. Fewer people mentioned that you might feel flat, teary, on edge, or not like yourself at all. Maybe you can't sleep even when the baby sleeps. Maybe you worry constantly that something will happen to the baby, or picture terrible things you'd never want, and then feel ashamed for thinking them. Maybe you feel angry, numb, or far away from the baby, and guilty about that. Dads and partners can feel this too, sometimes as irritability, working all the time, drinking more, or pulling away. Many parents keep quiet because they're afraid of being judged, or of being seen as a bad parent. Feeling this way doesn't mean you love your baby less. It means you need support, and support works.",
+  "self": {
+   "first": [
+    "Tell one person how you're really doing: your partner, a friend, a parent, your doctor, or the hotline.",
+    "Call your own doctor, or your baby's doctor, and say it plainly: “I've been feeling low and anxious for more than two weeks, and I need help.” Doctors ask about this because it's common and it gets better with treatment.",
+    "Call or text the National Maternal Mental Health Hotline, 1-833-852-6262, any time, in English and Spanish.",
+    "If you're having thoughts of harming yourself or your baby, call or text 988, or call 911 now. If you hear or see things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency: call 911 or go to an emergency room."
+   ],
+   "helps": [
+    "Protecting sleep: one longer stretch a night while someone else takes a feeding, when that's possible.",
+    "Food, water, and a few minutes of daylight or fresh air every day.",
+    "Counseling with someone who understands new parents. Postpartum Support International can help you find support and groups, including groups for dads.",
+    "Talking with your doctor about every treatment that could help. Questions about medicine go to your doctor or pharmacist.",
+    "Other parents who've been there. Hearing “me too” takes a lot of the shame away.",
+    "Letting the house, the texts, and the to-do list slide for now."
+   ],
+   "tell": [
+    "“This is a symptom, not who I am.”",
+    "“Needing help doesn't make me a bad parent.”",
+    "“I will feel like myself again.”",
+    "“Getting help is something I'm doing for my baby, too.”"
+   ],
+   "people": "Try: “I'm not okay, and I don't think it's just being tired. Can you help me call the doctor?” To a partner: “I need you to take the night feeding twice this week so I can sleep.” Dads and partners: “I've been short-tempered and checked out since the baby came. I want to talk to someone about it.” In Birch, your answers stay on this device, and a helper sees only what you choose to share. No alert goes to anyone."
+  },
+  "helper": {
+   "feel": "New parents often hide how bad they feel. They may fear being judged, or that saying it out loud means they're failing their baby. Some don't recognize it as depression or anxiety at all, especially dads, whose signs can look like anger, overwork, drinking, or withdrawal. They may need you to notice, to name it gently, and to help them take the first step.",
+   "say": [
+    "“You're a good parent. And you seem like you're really struggling. How are you, really?”",
+    "“This happens to a lot of new parents, moms and dads. It's treatable.”",
+    "“Can I sit with you while you call the doctor?”",
+    "“I'll take the baby tonight. Go sleep.”"
+   ],
+   "avoid": [
+    "“Enjoy every moment.” or “But you have a healthy baby.”",
+    "“Just think positive,” or telling them to snap out of it.",
+    "Taking over the baby in a way that makes them feel replaced.",
+    "Assuming a dad or partner is fine because they're not the one who gave birth."
+   ],
+   "help": [
+    "Name what you see, gently: “You haven't seemed like yourself for a few weeks.”",
+    "Help make the call: to their doctor, the baby's doctor, or the National Maternal Mental Health Hotline. Offer to drive to the appointment and hold the baby in the waiting room.",
+    "Protect their sleep: take a night feeding, or a morning, so they get one longer stretch.",
+    "Bring food, do dishes, and handle errands without being asked.",
+    "Know the emergency signs: seeing or hearing things others don't, confusion, days without sleep, or thoughts of harming themselves or the baby. Call 911, or 988.",
+    "In Birch, a helper sees only what the person chooses to share, and never safety answers. Asking kindly and directly matters."
+   ],
+   "you": "Supporting a struggling new parent is hard work, especially if you're the other parent and short on sleep yourself. Watch your own mood too. The hotline is there for partners and family as well."
+  },
+  "faith": "If faith is part of your life, it may be a comfort in the long nights, or a source of guilt if you feel you should be more joyful or grateful than you are. Struggling after a baby is not a failure of faith, or of love. Many communities bring meals, pray with new parents, or simply sit with them; letting people carry you can be part of that welcome. If faith isn't part of your life, the same is true: needing help says nothing bad about you as a parent.",
+  "practices": [
+   "bark|Speak Up About Your Mood",
+   "leaves|Smart Nap",
+   "leaves|Morning Daylight",
+   "branches|Ask for Help",
+   "bark|Self-Compassion Break",
+   "branches|Look Out for a Friend"
+  ],
+  "reach": [
+   "National Maternal Mental Health Hotline, for moms, dads, and partners: call or text 1-833-852-6262 (1-833-TLC-MAMA), any time, in English and Spanish.",
+   "Postpartum Support International HelpLine: 1-800-944-4773, weekdays, for support and finding local help. It's not a crisis line.",
+   "Thoughts of harming yourself or your baby: call or text 988, or call 911 now. Seeing or hearing things others don't, confusion, or days without sleep: call 911 or go to an emergency room.",
+   "Your own doctor, your baby's doctor, or your clinic can screen for postpartum depression and anxiety and talk through treatment.",
+   "Text HOME to 741741 any time (in Minnesota, text MN to 741741). In Minnesota, a county crisis team: call **CRISIS (274747) from a cell phone."
+  ],
+  "more": [
+   [
+    "National Maternal Mental Health Hotline (HRSA)",
+    "https://mchb.hrsa.gov/national-maternal-mental-health-hotline"
+   ],
+   [
+    "Postpartum Support International",
+    "https://www.postpartum.net"
+   ],
+   [
+    "CDC: postpartum depressive symptoms, United States, 2018 (MMWR)",
+    "https://www.cdc.gov/mmwr/volumes/69/wr/mm6919a2.htm"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ]
+ },
+ {
+  "id": "pregnancy-loss",
+  "ring": "br-family",
+  "title": "Pregnancy or infant loss",
+  "keys": "miscarriage pregnancy loss lost the baby lost our baby stillbirth stillborn infant loss baby died sids early loss ectopic chemical pregnancy grief after miscarriage partner miscarried my girlfriend miscarried was it my fault guilt nobody knew i was pregnant due date anniversary empty arms jealous of pregnant friends afraid to try again going back to work after miscarriage my daughter had a miscarriage my friend lost her baby",
+  "parts": [
+   "roots",
+   "bark",
+   "branches"
+  ],
+  "quick": [
+   "This is a real loss of a real baby and a hoped-for future, however early it happened, and however others respond.",
+   "It's more common than most people know. About 1 in 10 confirmed pregnancies end in early loss, most often because of things no one caused and no one could have stopped.",
+   "Your body may still be healing while your heart is breaking. Partners grieve too, sometimes differently.",
+   "It's okay to name your baby, hold a ritual, and grieve openly. If sadness stays heavy for weeks, or you think about not wanting to be alive, reach out: the National Maternal Mental Health Hotline, 1-833-852-6262, or 988."
+  ],
+  "feel": "Maybe it happened early, before many people knew. Maybe it happened later, or after your baby was born. You might feel empty, shocked, or numb. You might replay every day, looking for what you did wrong, even when nothing you did caused it. Your body may still feel pregnant, or show signs that hurt to see. Pregnant friends, baby announcements, or a store aisle can knock the wind out of you. If the pregnancy was a surprise, your feelings may be mixed, and that's allowed too. If you're the partner, people may ask how the other parent is and forget to ask about you. Some young adults grieve almost alone, because few people knew. All of it is grief, and it deserves room.",
+  "self": {
+   "first": [
+    "Rest, and follow up with your doctor or clinic, for your body and your heart. Call right away for heavy bleeding, fever, or severe pain.",
+    "Tell people what you need, including privacy. One trusted person can share the news for you, so you don't have to repeat it.",
+    "If your loss happened at a hospital, ask about keepsakes, a chaplain, or a bereavement nurse. Many hospitals have them.",
+    "If you work or go to school, ask about leave or a lighter load for a while. You don't have to give every detail."
+   ],
+   "helps": [
+    "A pregnancy and infant loss support group, in person or online. Share and Missing GRACE in Minnesota offer groups and resources.",
+    "Marking the due date, birthday, or anniversary in a way that fits you: a candle, a walk, a letter, a planted tree.",
+    "Naming your baby, if you'd like, and saying the name out loud.",
+    "Muting baby announcements on social media for a while.",
+    "Talking with your partner about how each of you grieves. Different ways aren't wrong ways.",
+    "Counseling with someone who understands pregnancy and infant loss, especially if guilt, panic, or sadness don't ease."
+   ],
+   "tell": [
+    "“This was not my fault.”",
+    "“My grief is as big as my love.”",
+    "“I get to grieve in my own way, and in my own time.”"
+   ],
+   "people": "Try: “We lost the baby. We'd love your support, and it helps when people say something.” Or: “I'm not ready to talk about it, but I'd love company.” To a partner: “I'm grieving differently from you, and I still need you. Can we talk tonight?” In Birch, your answers stay on this device, and a helper sees only what you choose to share."
+  },
+  "helper": {
+   "feel": "They may feel their grief is invisible, especially after an early loss or one few people knew about. Silence from others can hurt as much as the wrong words. Many blame themselves without reason. Partners, including dads, often get overlooked. Young adults may also face a world of friends who don't know what to say, and a school or job that expects them back fast.",
+   "say": [
+    "“I'm so sorry about your baby.”",
+    "“Would you like to tell me about them?”",
+    "“This wasn't your fault.”",
+    "“I'm thinking of you today.” (on the due date or anniversary)"
+   ],
+   "avoid": [
+    "“At least it was early.” or “At least you're young.”",
+    "“You can try again,” or “Everything happens for a reason.”",
+    "Avoiding the subject, or acting as if nothing happened.",
+    "Asking what happened medically, or whether they did something."
+   ],
+   "help": [
+    "Say something. A simple “I'm so sorry” is better than silence.",
+    "Bring meals, handle errands, cover a shift, or help with school or work paperwork.",
+    "Ask both partners how they're doing.",
+    "Use the baby's name if they've shared one.",
+    "Put the due date and the anniversary in your calendar, and reach out on those days.",
+    "Watch for grief that turns into depression or anxiety that lasts. Share the National Maternal Mental Health Hotline, and if they talk about not wanting to be alive, call, text, or chat 988 together.",
+    "In Birch, a helper sees only what the person chooses to share, and never safety answers. Asking kindly and directly matters."
+   ],
+   "you": "Be gentle with yourself if you are also expecting or have small children; it's okay to love them and to step back a little for their sake. If you're the baby's grandparent, you're grieving too, and you deserve support of your own."
+  },
+  "faith": "Many faith traditions have blessings, prayers, or naming rituals for babies who died, at any point in a pregnancy or after birth. If faith is part of your life, it may hold you up, or raise hard questions, or both, and both are welcome. A hospital chaplain or faith leader can help create a ceremony that fits your family, whatever your tradition, or none. If faith isn't part of your life, a ritual of your own, a name, a candle, a planted tree, can still honor your baby.",
+  "practices": [
+   "bark|Self-Compassion Break",
+   "bark|Expressive Writing",
+   "leaves|Sleep",
+   "branches|One Reach-Out a Day",
+   "roots|What Holds Me Up",
+   "roots|Lament"
+  ],
+  "reach": [
+   "Heavy bleeding, fever, or severe pain after a loss: call your doctor or clinic right away, or 911.",
+   "Sadness, anxiety, or numbness that lasts, for moms, dads, and partners: the National Maternal Mental Health Hotline, call or text 1-833-852-6262, any time, in English and Spanish.",
+   "Postpartum Support International HelpLine, including support after a loss: 1-800-944-4773, weekdays. It's not a crisis line.",
+   "Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, Share and Missing GRACE offer pregnancy and infant loss support groups and resources."
+  ],
+  "more": [
+   [
+    "Share Pregnancy and Infant Loss Support",
+    "https://nationalshare.org"
+   ],
+   [
+    "Share in Minnesota",
+    "https://nationalshare.org/minnesota"
+   ],
+   [
+    "Missing GRACE Foundation (Minnesota)",
+    "https://www.missinggrace.org"
+   ],
+   [
+    "Postpartum Support International",
+    "https://www.postpartum.net"
+   ],
+   [
+    "NICHD: about pregnancy loss",
+    "https://www.nichd.nih.gov/health/topics/pregnancyloss/conditioninfo/default"
    ]
   ]
  },
@@ -2096,6 +3293,300 @@ const LC_TOPICS = [
    [
     "988 Suicide and Crisis Lifeline",
     "https://988lifeline.org"
+   ]
+  ]
+ },
+ {
+  "id": "substances",
+  "ring": "br-mind",
+  "title": "Drinking, cannabis, and other drugs",
+  "keys": "drinking alcohol beer binge drinking blackout hungover party bar weed cannabis marijuana thc edibles dab pen vape vaping nicotine pills percs xanax adderall fentanyl cocaine mushrooms drugs high drunk sober curious cutting back quit drinking cant stop using to cope using to sleep recovery relapse aa meetings overdose narcan naloxone friend passed out my roommate drinks too much my partner smokes every day my son is using",
+  "parts": [
+   "leaves",
+   "bark",
+   "branches",
+   "trunk"
+  ],
+  "quick": [
+   "You get to decide what fits your life. Many young adults drink less than people assume: binge drinking among adults 19 to 30 is at an all-time low, while cannabis use is at a record high.",
+   "Using something to get through hard feelings is worth noticing. It can feel like relief and then make sleep, mood, and anxiety worse.",
+   "A pill that didn't come from a pharmacy can be fake and hold fentanyl, even when it looks real. Naloxone (Narcan) is sold without a prescription.",
+   "If someone can't wake up or is breathing slowly or strangely, call 911 right away and stay with them."
+  ],
+  "feel": "Maybe drinking or smoking is just part of the scene: after shifts, at parties, with roommates. Maybe you're curious, or you've decided it's not for you and get questions about it. Maybe it started as a way to relax or sleep, and now it's most nights. You might wake up not remembering parts of the night, spend more than you meant to, or notice you're anxious or low the day after. Or you might be worried about a friend, a partner, or a roommate. Wherever you are, you're an adult deciding what fits the life you want, and it's okay to look at it honestly.",
+  "self": {
+   "first": [
+    "Notice the why. Ask yourself: am I using this to have fun, or to get away from something? Both answers are worth knowing.",
+    "Plan your answer before you go: “I'm good,” “I'm driving,” “I've got an early shift,” or just “No thanks.” Decide on your own limit ahead of time, too, if you're drinking.",
+    "Know your way home before you go. Never drive after drinking or using, and never get in a car with someone who has."
+   ],
+   "helps": [
+    "Taking a break for a few weeks to see how your sleep, mood, money, and anxiety change.",
+    "Trying another tool first when a hard feeling hits: a walk, a shower, music, a call to a friend, slow breathing.",
+    "Keeping a drink of your own in your hand, and going with a friend who has your back.",
+    "Stepping back from strong or daily cannabis, especially if it's started to make you anxious, paranoid, or low. Heavy use of high-potency cannabis is linked with a higher risk of psychosis.",
+    "Carrying naloxone if you or people around you use opioids or pills from anywhere but a pharmacy. It's sold over the counter.",
+    "Talking with a doctor honestly. Treatment works, and there are options, including support groups, counseling, and medicine for some substances."
+   ],
+   "tell": [
+    "“I don't owe anyone an explanation.”",
+    "“Leaving is always an option.”",
+    "“If I'm using something to cope, I can find a better tool, and ask for help finding it.”"
+   ],
+   "people": "Try: “I've been drinking (or smoking) more than I want to lately, and I'd like to cut back. Would you help me with that?” Or to a doctor: “I'd like to talk honestly about my drinking and cannabis use, and what my options are.” About a friend: “I'm worried about someone. Can I talk it through with you?”"
+  },
+  "helper": {
+   "feel": "Whether you're a parent, a partner, a friend, or a roommate, you may feel scared, frustrated, or unsure whether it's your business. It is their life and their choice, and you still get to say you care. They may feel ashamed, defensive, or sure they have it handled. Many young adults use alcohol or cannabis to cope with stress, anxiety, or sleep. They're more likely to talk with someone who stays calm and doesn't lecture.",
+   "say": [
+    "“I care about you, and I've noticed you've been drinking more lately. How's it going for you?”",
+    "“What does it do for you? What does it cost you?”",
+    "“If you ever want to cut back, I'm in. No lecture.”",
+    "“If anyone ever can't wake up, call 911 first. We'll sort out the rest later.”"
+   ],
+   "avoid": [
+    "Asking them to list what they've used and how much. Talk about how it's going, not a confession.",
+    "Shaming, lecturing, or scare stories.",
+    "Covering for them: calling in sick for them, cleaning up every consequence, or giving money that pays for using.",
+    "Assuming every bad mood means drugs."
+   ],
+   "help": [
+    "Pick a calm, sober moment to talk, and lead with what you've seen and that you care.",
+    "Notice and say out loud what goes well on days they don't use.",
+    "Set clear, kind boundaries for your own life and home, and keep them.",
+    "Keep naloxone where you live if anyone around you uses opioids or pills from anywhere but a pharmacy. Learn to use it.",
+    "If they're ready for help, offer to look at options together: a doctor, counseling, a support group, or the SAMHSA National Helpline.",
+    "Find support for yourself, such as Al-Anon or SMART Recovery Family and Friends."
+   ],
+   "you": "Loving someone who uses a lot is exhausting, and you can't control their choices. You can take care of yourself, keep the door open, and stay safe. If they use Birch, they choose what you see; their answers stay on their own device, and no alert goes to anyone."
+  },
+  "faith": "If faith is part of your life, it may offer community, a sense of a higher power, and grace that walks beside accountability. Many recovery paths draw on these. If faith isn't part of your life, your values, your people, and a recovery community can do the same steadying work.",
+  "practices": [
+   "branches|Plan Your Answer",
+   "branches|Look Out for a Friend",
+   "bark|Name It",
+   "bark|Slow Exhale",
+   "branches|Ask for Help",
+   "leaves|Sleep"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, has blue or gray lips, or seems very confused: call 911 right away, give naloxone if you have it, and stay with them. Minnesota, like many states, has a law that protects people who call for help for an overdose in many situations.",
+   "Feeling like you can't stop, or wanting to cut back: the SAMHSA National Helpline, 1-800-662-4357, any time, in English and Spanish. Or talk with a doctor.",
+   "If using something is how you're getting through thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Questions about a possible poisoning, a bad reaction, or mixing substances with medicine: Poison Help, 1-800-222-1222, any time.",
+   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
+   "Pressure from someone you're dating to drink or use: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "DEA: One Pill Can Kill",
+    "https://www.dea.gov/onepill"
+   ],
+   [
+    "Al-Anon",
+    "https://al-anon.org"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org"
+   ],
+   [
+    "Poison Help",
+    "https://poisonhelp.hrsa.gov/poison-centers/index.html"
+   ]
+  ]
+ },
+ {
+  "id": "eating",
+  "ring": "br-mind",
+  "title": "Eating disorders",
+  "keys": "eating disorder eating disorders anorexia bulimia binge eating arfid restricting not eating skipping meals food rules counting calories macros clean eating cutting bulking making weight over exercising cant skip the gym purging throwing up laxatives guilt after eating out of control around food scared to eat body image hate my body food noise relapse my roommate is not eating my partner throws up after meals my friend is obsessed with food",
+  "parts": [
+   "leaves",
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "quick": [
+   "Eating disorders are serious illnesses, not choices or vanity. They happen to men and women of every size and background.",
+   "They often begin or come back in the late teens and early twenties, when life is changing fast. Binge eating disorder is the most common, and it affects men too.",
+   "They often grow inside goals that sound healthy: eating clean, training hard, cutting weight.",
+   "Recovery is real. It usually takes a team: a doctor, a therapist, and a dietitian. Start with a doctor visit."
+  ],
+  "feel": "Maybe it started with a goal: eating cleaner, getting stronger, making weight, looking a certain way for an event. Then the rules got stricter. Food might be on your mind most of the day now. You might feel calm when you follow the rules and panicked or guilty when you don't. Maybe you eat a lot at once and feel out of control, then ashamed. You might exercise even when you're hurt or exhausted, or hide what you eat from roommates or a partner. Living on your own can make it easier to hide, and harder to notice. Whatever brought you here, looking at it is a sign of strength.",
+  "self": {
+   "first": [
+    "Make a doctor's appointment and tell them plainly what's been happening with food, exercise, or your body. Some dangers don't show on the outside.",
+    "Call the ANAD Eating Disorders Helpline at 1-888-375-7767, on a weekday, to talk it through and learn about treatment.",
+    "Tell one person you trust. You don't have to explain everything."
+   ],
+   "helps": [
+    "Knowing it's an illness, not a failure of willpower, and that it isn't your fault.",
+    "Treatment with people who specialize in eating disorders. Ask your doctor or ANAD where to start, and what your insurance covers.",
+    "Regular meals and snacks, as your treatment team guides. Your body and brain need steady fuel.",
+    "Muting accounts and apps about dieting, “what I eat in a day,” body checking, or extreme training.",
+    "Moving for joy and strength, not to earn or burn food. Rest days count.",
+    "Choosing who's on your team. As an adult, you decide whether family, a partner, or a friend is part of treatment, and many people find it helps."
+   ],
+   "tell": [
+    "“This is an illness. It's not my fault, and I don't have to fight it alone.”",
+    "“The rules feel safe, but they aren't keeping me safe.”",
+    "“My body deserves to be fed, even when my thoughts say otherwise.”"
+   ],
+   "people": "Try: “I've been having a really hard time with food and my body, and I think I need help.” Or to a doctor: “I'm worried about how I've been eating and exercising, and I'd like to be checked.”"
+  },
+  "helper": {
+   "feel": "You may notice skipped meals, food disappearing, long trips to the bathroom after eating, nonstop exercise, or a lot of talk about bodies and rules. They may look fine and still be very sick. Many feel deep shame, or truly don't see a problem, and pushback when you bring it up is often the illness talking. They're an adult, and your calm, caring honesty can help them take a first step.",
+   "say": [
+    "“I care about you, and I've been worried about how stressful eating seems lately.”",
+    "“I've noticed you've been skipping meals and seem tense around food.” Describe what you see, without mentioning weight.",
+    "“Would you see a doctor? I'll go with you if you want.”",
+    "“I'm on your side, even when it doesn't feel like it.”"
+   ],
+   "avoid": [
+    "Any comments about weight, size, or shape, including praise for weight loss or a “good” body.",
+    "Arguing about food, or watching their plate.",
+    "Waiting for them to hit bottom. Wanting help often comes later in recovery, not first.",
+    "Blaming them or yourself. Eating disorders have many causes."
+   ],
+   "help": [
+    "Pick a private, calm moment, not a meal, to share what you've noticed and that you care.",
+    "Encourage a doctor visit, and offer to go along or help find a specialist.",
+    "Keep shared meals relaxed, and talk about anything but food and bodies.",
+    "If they agree, ask how you can help in their treatment plan. Many teams welcome a support person.",
+    "Get emergency help for fainting, chest pain, confusion, or a racing or very slow heartbeat."
+   ],
+   "you": "Loving someone with an eating disorder is exhausting and scary. ANAD has support groups for loved ones, too. Keep your own meals, rest, and people. If they use Birch, they choose what you see; their answers stay on their own device, and no alert goes to anyone."
+  },
+  "faith": "If faith is part of your life, you may find comfort in being loved apart from how you eat or look, or in a tradition that treats the body as a gift and the shared table as sacred. If a faith practice like fasting gets tangled up with food rules, talk with a trusted faith leader and your treatment team; many traditions excuse people who are unwell from fasting. If faith isn't part of your life, the same truth holds: your worth isn't measured by your body.",
+  "practices": [
+   "leaves|Food",
+   "bark|Self-Compassion Break",
+   "bark|Speak Up About Your Mood",
+   "branches|Shared Meal",
+   "branches|Ask for Help",
+   "bark|Phone Check"
+  ],
+  "reach": [
+   "ANAD Eating Disorders Helpline: 1-888-375-7767, weekdays. For people who are struggling and the people who love them.",
+   "A doctor or clinic can check how your body is doing and help you find specialized treatment. In Minnesota, The Emily Program offers eating disorder treatment for adults.",
+   "Fainting, chest pain, confusion, or a racing or very slow heartbeat: call 911.",
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "NAMI HelpLine, for information and next steps (not a crisis line): 1-800-950-6264, weekdays."
+  ],
+  "more": [
+   [
+    "ANAD Eating Disorders Helpline",
+    "https://anad.org/get-support/eating-disorders-helpline/"
+   ],
+   [
+    "National Alliance for Eating Disorders",
+    "https://www.allianceforeatingdisorders.com"
+   ],
+   [
+    "The Emily Program (Minnesota)",
+    "https://emilyprogram.com/"
+   ]
+  ]
+ },
+ {
+  "id": "health-26",
+  "ring": "br-mind",
+  "title": "Your own health: insurance, doctors, and turning 26",
+  "keys": "health insurance insurance card turning 26 aging off parents plan parents insurance losing coverage mnsure marketplace medical assistance minnesotacare medicaid find a doctor primary care clinic urgent care emergency room er nurse line pharmacy prescription refill deductible copay premium in network out of network explanation of benefits eob bills medical bill privacy parents see my visits therapist counselor dentist eye doctor making my own appointments health records first time on my own",
+  "parts": [
+   "leaves",
+   "trunk",
+   "bark"
+  ],
+  "quick": [
+   "If a parent's plan covers dependents, you can usually stay on it until you turn 26, even if you're married, a parent, living on your own, in or out of school, not claimed as a dependent, or offered a plan at work.",
+   "Coverage usually ends when you turn 26. Losing coverage opens a limited window to sign up for a new plan, so plan ahead and don't wait.",
+   "Know your basics before you need them: a clinic, a pharmacy, your insurance card, and where to go after hours.",
+   "At 18, you're the one who decides who sees your health information. Mental health is health, too."
+  ],
+  "feel": "For years, someone else may have made the appointments, kept the insurance card, and filled out the forms. Now it's you, and nobody hands you a manual. Words like deductible and in-network can feel like a foreign language. Maybe you haven't seen a doctor in years, aren't sure where you'd go if you got sick at 2 a.m., or are dreading the day you turn 26. Maybe money makes you put things off. All of that is common, and every part of it can be learned one piece at a time.",
+  "self": {
+   "first": [
+    "Find your insurance card, or ask whoever holds the plan for the details. Save a photo of the front and back in your phone.",
+    "Choose a clinic and a pharmacy near where you live or work, and save their numbers. If you have a plan, check that they're in its network.",
+    "Find the after-hours nurse line, often printed on the back of your card, and save it too."
+   ],
+   "helps": [
+    "Learning four words: premium (what the plan costs each month), deductible (what you pay before the plan pays more), copay (a set amount per visit or prescription), and in-network (the clinics your plan works with).",
+    "Knowing where to go: your clinic for most things, urgent care for things that can't wait but aren't emergencies, and the emergency room or 911 for emergencies.",
+    "Booking a yearly preventive visit, a dentist visit, and an eye exam if you need one. Many plans cover preventive visits in full.",
+    "Treating mental health as health. Your clinic can help with mood, anxiety, sleep, or substance use, or point you to a counselor.",
+    "Putting a reminder in your calendar a few months before you turn 26. Look at a plan through work, the marketplace, or public programs before your coverage ends.",
+    "Asking for help with the forms. In Minnesota, MNsure helps people compare plans and check for Medical Assistance and MinnesotaCare. If you were in foster care at 18, ask about Medical Assistance until 26.",
+    "Keeping a simple health list in your phone: medicines, allergies, past surgeries or conditions, and family health history."
+   ],
+   "tell": [
+    "“Nobody is born knowing this. I can learn it.”",
+    "“Asking questions at the doctor is part of the visit.”",
+    "“Taking care of my health is part of building my life.”"
+   ],
+   "people": "Try, to a parent: “Can you help me understand our insurance, and send me photos of the card? I'd like to start making my own appointments.” To a clinic: “I'm new to managing my own health insurance. Can you help me check whether you're in my network?” To your plan, if you're on a parent's plan and want privacy: “Can mail about my visits come to me instead of the policyholder?”"
+  },
+  "helper": {
+   "feel": "For a parent, a partner, a mentor, or a friend, it can be hard to know how much to help. A young adult may feel embarrassed not to know how insurance works, or may avoid the doctor because it feels confusing or costly. At 18, they're the one who decides who sees their health information, so the shift is from doing it for them to teaching and handing over.",
+   "say": [
+    "“Want me to walk through the insurance card with you?”",
+    "“You make the call, and I'll sit with you if you want.”",
+    "“Let's put your 26th birthday on the calendar now, and plan a few months ahead.”",
+    "“Mental health counts. Your clinic can help with that, too.”"
+   ],
+   "avoid": [
+    "Calling the doctor for them, or asking for their health details, without their say-so.",
+    "Making them feel foolish for not knowing the words. Most adults learned this the hard way.",
+    "Holding onto the card, the records, or the passwords they need.",
+    "Waiting until the month they turn 26 to talk about coverage."
+   ],
+   "help": [
+    "Hand over the basics: the insurance card (or photos of it), a list of their vaccines, medicines, allergies, and past conditions, and the family health history you know.",
+    "Teach by doing it together once: book an appointment, refill a prescription, read an explanation of benefits. Then let them lead next time.",
+    "If they're on your plan, know that statements may come to you. Ask them how they'd like to handle privacy, and respect it.",
+    "Plan for 26 together, a few months ahead: a job plan, the marketplace, or public programs. In Minnesota, MNsure can help.",
+    "If money is tight, point them to Minnesota 211 for local help, and remind them that clinics often have payment plans or sliding fees."
+   ],
+   "you": "Letting go of the forms can feel strange, and it's a real gift. You're teaching a skill they'll use for life. If they use Birch, they choose what to share with you; their answers stay on their own device."
+  },
+  "faith": "If faith is part of your life, caring for your body may feel like caring for a gift, and a faith community can sometimes connect you with people who know how to navigate insurance or find a clinic. If faith isn't part of your life, the same idea holds: your health is worth your time.",
+  "practices": [
+   "leaves|Health Basics",
+   "trunk|Life Skill of the Month",
+   "trunk|Groundwork Page",
+   "bark|Money Check-in",
+   "bark|Speak Up About Your Mood",
+   "trunk|Weekly Reset"
+  ],
+  "reach": [
+   "Questions about your plan, your network, or a bill: call the member services number on your insurance card.",
+   "In Minnesota, for help comparing plans or checking for Medical Assistance or MinnesotaCare: MNsure, at mnsure.org.",
+   "Help with bills, food, housing, and local clinics: Minnesota 211, dial 211 or call 1-800-543-7709, or text your ZIP code to 898-211, any time.",
+   "A possible poisoning, or a question about a medicine taken by mistake: Poison Help, 1-800-222-1222, any time.",
+   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now, or a medical emergency: call 911."
+  ],
+  "more": [
+   [
+    "HealthCare.gov: coverage for young adults under 26",
+    "https://www.healthcare.gov/young-adults/children-under-26/"
+   ],
+   [
+    "MNsure (Minnesota)",
+    "https://www.mnsure.org"
+   ],
+   [
+    "Got Transition: moving to adult health care",
+    "https://gottransition.org/six-core-elements"
+   ],
+   [
+    "Poison Help",
+    "https://poisonhelp.hrsa.gov/poison-centers/index.html"
    ]
   ]
  },
@@ -2510,6 +4001,200 @@ const LC_TOPICS = [
    [
     "National Domestic Violence Hotline",
     "https://www.thehotline.org"
+   ]
+  ]
+ },
+ {
+  "id": "images",
+  "ring": "br-safety",
+  "title": "Images shared without consent, and online threats",
+  "keys": "nudes leaked my ex posted my pictures someone shared my nudes intimate images without consent revenge porn sextortion someone threatening me picture pay or they post it blackmail catfished fake account deepfake ai fake nude photoshopped harassment online stalking doxxed doxxing threats online someone threatening me stopncii take it down report",
+  "parts": [
+   "bark",
+   "branches",
+   "fruit"
+  ],
+  "quick": [
+   "If someone shared, or is threatening to share, an intimate image of you, real or fake, the wrong is theirs. You are the one being harmed.",
+   "Stop replying, and don't pay. Paying usually brings more demands. Save the messages, usernames, and links, then block and report.",
+   "StopNCII (stopncii.org) helps keep intimate images of adults off partner sites, and the image stays on your device. For an image from before you were 18, use Take It Down (takeitdown.ncmec.org).",
+   "Tell one person you trust today. If you're threatened with harm, or someone is following you, call 911."
+  ],
+  "feel": "It might be an ex who posted or sent a private picture. A new match who moved fast, then flipped: pay, or everyone you know sees this. A fake image made with AI, or a stranger who found your address and started posting it. Your heart may be pounding. You may feel exposed, stupid, ashamed, furious, or sure your job, your school, or your family will never look at you the same. Those feelings are exactly what the person doing this is counting on, so you'll keep quiet. This is something done to you, and there is a way through it.",
+  "self": {
+   "first": [
+    "Stop replying. Don't argue, plead, or pay. Paying usually brings more demands, not fewer.",
+    "Before you block, save everything: screenshots of the messages, the username and profile, links where the image appears, dates, and any payment details they sent.",
+    "Block and report the account on the app, site, or game. Most major platforms have a way to report intimate images shared without consent.",
+    "Tell one person you trust, today. Say: “Something happened online, and I need help sorting it out.”"
+   ],
+   "helps": [
+    "StopNCII (stopncii.org), for adults 18 and up: it makes a digital fingerprint of the image on your own device, so partner sites can find and block it. The image itself stays with you.",
+    "Take It Down (takeitdown.ncmec.org), for an image taken when you were under 18. You are not in trouble.",
+    "Reporting to the police, if you choose. In many places, including Minnesota, sharing someone's intimate images without consent is a crime. An advocate can help you decide.",
+    "If it's an ex or someone you're dating: Love Is Respect can help you plan for safety, online and off.",
+    "Tightening your accounts: new passwords, two-step login, and checking who can see your posts and your location.",
+    "Getting your body out of alarm: a few slow breaths out, water, a walk, a friend sitting beside you.",
+    "Talking it through with a counselor, if the shame or fear stays loud."
+   ],
+   "tell": [
+    "“I am not the one who did something wrong. I am being targeted.”",
+    "“The shame belongs to the person doing this, not to me.”",
+    "“One bad night online does not get to decide my life.”"
+   ],
+   "people": "Try: “Something happened online and I'm scared. I need you to stay calm and help me.” If the first person doesn't respond well, tell another. If you see someone else's private image being passed around, don't share it. Report it, and check on them if you know them."
+  },
+  "helper": {
+   "feel": "They may be terrified, humiliated, and afraid you'll judge them for ever sharing a picture. Young men are often targeted by scammers; anyone can be targeted by an ex. Some people hide this for days and quietly pay, hoping it ends. The hours after a threat can be dangerous, because shame and panic can make it feel like there's no way out.",
+   "say": [
+    "“Thank you for telling me. You're not the one who did something wrong.”",
+    "“We don't pay, and we don't reply. We save it and report it.”",
+    "“This happens to a lot of people, and there are real tools to help.”",
+    "“What would help most right now?”"
+   ],
+   "avoid": [
+    "Shaming, or asking “Why would you send that?”",
+    "Taking over. They're an adult, so help them act and let them lead.",
+    "Deleting messages before they've been saved and reported.",
+    "Paying, or contacting the person yourself."
+   ],
+   "help": [
+    "Stay calm on the outside, even if you're furious inside. They're watching your face.",
+    "Help them save the evidence, then report it on the platform and use StopNCII together (or Take It Down for an image from before 18).",
+    "If it's an ex, a partner, or someone who knows where they live, help them call Love Is Respect, the National Domestic Violence Hotline, or Day One to plan for safety. Threats of harm: call 911.",
+    "Stay close for the next few days. Check in at night, when it often feels worst.",
+    "If anything points to thoughts of not wanting to be alive, stay with them and call or text 988 together."
+   ],
+   "you": "You may feel rage at the person who did this, fear, or even a flash of frustration with them. Let those feelings out with someone else, away from them. What they'll remember is that you stayed steady and on their side."
+  },
+  "faith": "If faith is part of your life, you may worry that God or your faith community will see you differently now. Notice what your faith is like for you in this: a place of mercy, a place of fear, or both. Many people find mercy there, especially when someone has been tricked, betrayed, or threatened. A faith leader you trust can be one more person in your corner. If faith isn't part of your life, the same truth holds: what someone did to you does not define you.",
+  "practices": [
+   "branches|Ask for Help",
+   "bark|Slow Exhale",
+   "bark|Name It",
+   "bark|Self-Compassion Break",
+   "bark|Phone Check",
+   "branches|Respect Check"
+  ],
+  "reach": [
+   "An intimate image shared or threatened, 18 and up: StopNCII, stopncii.org. For an image from before you were 18: Take It Down, takeitdown.ncmec.org. You are not in trouble.",
+   "It's someone you're dating, with, or used to be with: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522. Or the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
+   "In Minnesota: Day One, 1-866-223-1111, or text 612-399-9995, any time.",
+   "Threatened with harm, being followed, or in danger right now: call 911.",
+   "If it feels so heavy you don't want to be alive: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone."
+  ],
+  "more": [
+   [
+    "StopNCII",
+    "https://stopncii.org"
+   ],
+   [
+    "Take It Down",
+    "https://takeitdown.ncmec.org"
+   ],
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ]
+ },
+ {
+  "id": "porn",
+  "ring": "br-safety",
+  "title": "Pornography that's hard to stop",
+  "keys": "porn pornography can't stop watching porn porn addiction compulsive sexual behavior watching too much every night late at night guilty ashamed relapse quit porn nofap filters accountability partner found my porn my partner watches porn betrayal hurt values counselor",
+  "parts": [
+   "bark",
+   "roots",
+   "branches",
+   "leaves"
+  ],
+  "quick": [
+   "Many people find their pornography use harder to control than they want. You are not alone, and it is something you can work on.",
+   "Shame tends to feed the cycle. Honesty, support, and meeting the need underneath help break it.",
+   "Look for help that fits your values: a counselor, a support group, a faith leader if faith is part of your life, or a friend who can keep you honest.",
+   "Anything involving minors, or anyone who didn't agree, is deeply harmful and illegal to share. Stop, report it, and get help now."
+  ],
+  "feel": "Maybe it started years ago and became a habit before you thought about it. Now it might be the way you fall asleep, handle stress, or fill lonely nights in a new place. There's a cycle: an urge, use, then regret, and promises to quit. You might feel secretive, ashamed, or worried about what it's doing to your focus, your sleep, or how you see a partner or yourself. If you're the partner who found out, you might feel shock, hurt, and questions about your own worth. All of this is common, and none of it is the end of the story.",
+  "self": {
+   "first": [
+    "Tell one trusted person the truth. Secrecy gives the habit more power.",
+    "Add friction: filters or blocks you choose, your phone charging across the room at night, and fewer screens when you're alone and worn out.",
+    "Notice what comes right before the urge: stress, loneliness, boredom, late nights, or a hard day."
+   ],
+   "helps": [
+    "Getting clear on what you want: the kind of person, partner, and friend you want to be. Change sticks better when it's about what you're moving toward.",
+    "A counselor experienced with compulsive sexual behavior. A counselor can help with the stress, loneliness, or anxiety underneath, too.",
+    "A support or accountability group, or one friend who checks in. Faith-based or not, whatever fits you.",
+    "Meeting the need underneath in other ways: sleep, movement, real connection, and purpose.",
+    "Treating a slip as information, not a verdict. Notice what led to it, and start again the same day."
+   ],
+   "tell": [
+    "“A slip is not a verdict on who I am.”",
+    "“I can choose the next right thing.”",
+    "“I'm building the life I want, one evening at a time.”"
+   ],
+   "people": "Try: “I've been struggling with porn, and I want to be honest with you about it.” If you have a partner, being honest is hard and often a real turning point; a counselor can help you both talk it through."
+  },
+  "helper": {
+   "feel": "A young adult who tells you may be ashamed, afraid you'll see them differently, or relieved to stop hiding. If you're the partner who found out, your hurt is real and deserves care of its own. Both things can be true at once.",
+   "say": [
+    "“Thank you for telling me the truth.”",
+    "“What kind of help are you looking for?”",
+    "For a partner: “This hurts, and I need some time. I'm glad you were honest.”",
+    "“I'm not here to monitor you. I'm here to back you up.”"
+   ],
+   "avoid": [
+    "Shame, disgust, or lectures.",
+    "Becoming their full-time monitor or checking their devices. Support works better than surveillance.",
+    "Making every big decision in the first days after finding out.",
+    "Treating it as the whole of who they are."
+   ],
+   "help": [
+    "Encourage a counselor experienced with compulsive sexual behavior, and, for a couple, a couples counselor when you're both ready.",
+    "If they ask, be a check-in person: a short, regular conversation, not a search.",
+    "Help them meet the need underneath: plans together, time outside, sleep, and connection.",
+    "Get support for yourself, too, especially if you're the partner."
+   ],
+   "you": "If you're the partner, your feelings deserve their own space. Find someone safe to talk to, a counselor or a trusted friend, and take the time you need before big decisions."
+  },
+  "faith": "If faith is part of your life, it may hold clear values about sex and faithfulness, and it may also teach mercy, confession, and new beginnings. Notice which of those you're hearing most right now. For some people, faith is a strong support in changing a habit. For others, it adds a weight of shame that makes the cycle worse. A faith leader or group that pairs honesty with mercy can help. If faith isn't part of your life, your own values are the compass, and they're worth living by.",
+  "practices": [
+   "trunk|Values Sort",
+   "bark|Phone Check",
+   "leaves|Charge It Across the Room",
+   "bark|Self-Compassion Break",
+   "branches|Ask for Help",
+   "branches|One Reach-Out a Day"
+  ],
+  "reach": [
+   "If use is harming your relationships, work, school, or sense of self: a counselor experienced with compulsive sexual behavior, campus counseling, or your doctor.",
+   "Help finding mental health or substance use support: SAMHSA National Helpline, 1-800-662-4357, any time; or the NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays.",
+   "If you're drawn to sexual images of minors: get confidential help from Stop It Now (stopitnow.org) before anyone is harmed. If you come across sexual images of anyone under 18, report them at report.cybertip.org.",
+   "Images of an adult shared without consent: StopNCII, stopncii.org.",
+   "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741, any time. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "Stop It Now",
+    "https://www.stopitnow.org"
+   ],
+   [
+    "NCMEC CyberTipline",
+    "https://report.cybertip.org"
+   ],
+   [
+    "American Psychological Association",
+    "https://www.apa.org/topics"
+   ],
+   [
+    "The Gottman Institute",
+    "https://www.gottman.com"
    ]
   ]
  },
@@ -2990,6 +4675,97 @@ const LC_TOPICS = [
    [
     "Exline and colleagues, religious and spiritual struggles (research)",
     "https://doi.org/10.1037/a0036465"
+   ]
+  ]
+ },
+ {
+  "id": "purpose",
+  "ring": "br-meaning",
+  "title": "Finding purpose and calling",
+  "keys": "purpose calling vocation meaning lost no direction stuck don't know what to do with my life what's the point going through the motions everyone else has it figured out behind compared to friends what am i good at passion find my passion career direction gap year quarter life crisis restless empty bored why am i here what matters to me my kid seems lost my friend has no direction",
+  "parts": [
+   "trunk",
+   "fruit",
+   "roots"
+  ],
+  "quick": [
+   "Not knowing your purpose yet is common in your twenties. Purpose usually takes shape over years, through trying things, not in one big moment.",
+   "Purpose often grows where three things meet: something you care about, something you're working toward, and a way it reaches beyond you.",
+   "It doesn't depend on a degree, a title, or money. It can live in a job, a family, a craft, a community, or service.",
+   "Start small: notice what lights you up, try one new thing, and help someone. Meaning often shows up in the doing."
+  ],
+  "feel": "Maybe everyone around you seems to know where they're going, and you're scrolling past their news feeling behind. Maybe you finished school, or didn't, and the next step is a blank page. Maybe you have a job that pays the bills but doesn't feel like it means much. Maybe you once felt sure and now you're not. You might feel restless, flat, anxious, or quietly grieving a life you thought you'd have by now. Some people feel pressure to find one perfect passion. Most people's paths are much less straight than they look from the outside, and the searching itself is part of how purpose forms.",
+  "self": {
+   "first": [
+    "List three moments when you felt most alive or most useful. Look for what they share.",
+    "Try one new thing this month: a class, a project, a volunteer shift, a conversation.",
+    "Give an hour to helping someone. Notice how it feels.",
+    "Ask one person whose path you're curious about how they found their way."
+   ],
+   "helps": [
+    "Naming your gifts, beyond grades and job titles: noticing who's left out, fixing things, making people laugh, staying calm in a rush.",
+    "Knowing your values, so choices about work, school, money, and people get easier.",
+    "Small commitments you can keep, which build trust in yourself.",
+    "Less comparing. Other people's highlight reels aren't their whole story.",
+    "Writing about what you care about, what you're working toward, and who it helps.",
+    "Patience. Purpose often becomes clear looking back."
+   ],
+   "tell": [
+    "“This is a season, not a sentence.”",
+    "“I don't need the whole map to take the next step.”",
+    "“I'm not behind. I'm on my own timeline.”"
+   ],
+   "people": "Try: “I'm feeling kind of lost about what I want to do. Can I think out loud with you?” Or, to someone whose work you admire: “Could I ask you a few questions about how you got where you are?”"
+  },
+  "helper": {
+   "feel": "They may feel embarrassed not to have it figured out, especially next to friends or siblings. They may feel pressure from you, even if you haven't said a word. Some go quiet, some jump between plans, and some freeze. Under it, many are asking a deep question: does my life matter, and where do I fit?",
+   "say": [
+    "“What used to make you come alive?”",
+    "“It's okay not to know yet. Most people figure it out by trying things.”",
+    "“I noticed how good you were at that. Tell me about it.”",
+    "“What's one thing you'd like to try?”"
+   ],
+   "avoid": [
+    "Handing them your answer for their life.",
+    "Comparing them with siblings, cousins, or friends.",
+    "“You just need to pick something,” or treating the question as laziness.",
+    "Tying your support or love to a particular path."
+   ],
+   "help": [
+    "Name the strengths you see, with specific examples.",
+    "Invite them into meaningful work alongside you: a service project, a skill you can teach, a problem to solve.",
+    "Connect them with people whose paths they're curious about.",
+    "Ask good questions and let them do the thinking.",
+    "If the lost feeling turns into hopelessness, or they stop doing much at all, encourage them to talk with a counselor or doctor."
+   ],
+   "you": "Accompany the question without rushing the answer. Your belief in them, said out loud, may be one of the most useful things they carry."
+  },
+  "faith": "For some people, purpose has a faith side: a sense of calling, vocation, or being drawn toward something, often revealed step by step. Many traditions treat discernment as a practice, with prayer, community, and patience. For others, purpose rests in values, people, and work that matters. Both are welcome. Grounded welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "trunk|Purpose Reflection",
+   "trunk|Name Your Gifts",
+   "trunk|Values Sort",
+   "trunk|Serve Someone",
+   "trunk|Ask Someone About Their Path",
+   "fruit|Your Own Timeline"
+  ],
+  "reach": [
+   "Feeling lost that turns into hopelessness, or low mood most days for two weeks or more: talk with a counselor or doctor. NAMI HelpLine: 1-800-950-6264, or text NAMI to 62640 (weekdays; not a crisis line).",
+   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Claremont Purpose Scale (Bronk and colleagues, research)",
+    "https://www.semanticscholar.org/paper/Claremont-Purpose-Scale:-A-Measure-that-Assesses-of-Bronk-Riches/9287143c5c62b59944347762f757b4147f2dfa09"
+   ],
+   [
+    "The development of purpose during adolescence (Damon, Menon, and Bronk, research)",
+    "https://www.semanticscholar.org/paper/The-Development-of-Purpose-During-Adolescence-Damon-Menon/691e52b9ae789d27c4ae40fdcd9476d971037737"
+   ],
+   [
+    "Greater Good Science Center (UC Berkeley)",
+    "https://greatergood.berkeley.edu"
    ]
   ]
  }

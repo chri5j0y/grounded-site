@@ -18,6 +18,7 @@
 .gt-stats dd{margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;line-height:1;}
 .gt-anchor{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:0 0 16px;border-radius:14px;background:var(--bg-deep,rgba(128,112,90,.08));}
 .gt-anchor p{margin:2px 0 0;font-size:15px;color:var(--ink-soft);}
+.gt-anchor{cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .gt-part{margin:0 0 18px;border:1px solid var(--line);border-left:5px solid var(--pc);border-radius:14px;background:var(--card);padding:14px 18px 6px;}
 .gt-part h3{display:flex;align-items:baseline;gap:10px;margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:22px;}
 .gt-part h3 .icon{align-self:center;color:var(--pc);}

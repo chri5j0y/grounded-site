@@ -3251,7 +3251,7 @@ function gvPrintWeek(c){
     <h2>This week's question</h2><p>${esc(gvQ(T, k))}</p><div class="pr-field area"><div class="v"></div></div>
     ${kid ? '' : `<h2>This week's story</h2><p><b>${esc(wk.story.title)}.</b> &ldquo;${esc(wk.story.line)}&rdquo; Read it free at ${esc(wk.story.url.replace('https://', ''))}</p>`}
     <h2>Help any time</h2>${S.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}
-    <div class="pr-foot">${esc(S.sheetClose)}<br>${esc(tmFoot('Grove'))}</div>`, 'The Grove, Week ' + k, {file:'grove-week-' + k, date:days[0]});
+    <div class="pr-foot">${esc(S.sheetClose)}<br>${esc(tmFoot('The Grove'))}</div>`, 'The Grove, Week ' + k, {file:'grove-week-' + k, date:days[0]});
 }
 function gvPrintGrew(c){
   const S = GVG(), T = c.gv, wi = gvWeek(T);
@@ -3260,7 +3260,7 @@ function gvPrintGrew(c){
     <div class="gv-print-tree">${gvScene(c, {uid:'gvp' + c.id})}</div>
     <h2>The parts they tended</h2><p>${(T.parts || []).map(p => esc(GD.PART[p].name)).join(', ')}</p>
     <h2>In their words</h2>${ent || '<p>Nothing written yet.</p>'}
-    <div class="pr-foot">${esc(S.sheetClose)}<br>${esc(tmFoot('Grove'))}</div>`, 'What Grew', {file:'grove-what-grew'});
+    <div class="pr-foot">${esc(S.sheetClose)}<br>${esc(tmFoot('The Grove'))}</div>`, 'What Grew', {file:'grove-what-grew'});
 }
 
 // ----- Oak and Sequoia person pages: their Grove tree, or plant one from their visit -----
