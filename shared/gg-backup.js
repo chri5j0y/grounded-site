@@ -21,7 +21,7 @@
   var APP = 'grow-with-grounded-backup', PENDING = 'gg-fg-import', FG = 'gfg-vault-v1';
   var PLIST = 'gg-profiles-v1', PBOX = 'gg-p:';
   var SKIP = /^(gg-lock-ping|gg-open-ping)$/;
-  var SETTINGS = /^(gg_theme|gg_voice.*|gg_read_.*|oak:text-size|pine:text-size|sequoia:text-size|willow:text-size|gg-text-size.*)$/;
+  var SETTINGS = /^(gg_theme|gg_voice.*|gg_read_.*|oak:text-size|pine:text-size|birch:text-size|sequoia:text-size|willow:text-size|gg-text-size.*)$/;
   var LOOSE = /^(maple:kids|aspen_v1|oak:client.*|oak:profiles|oak:p:.*)$/;
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -128,7 +128,7 @@
     opts = opts || {};
     return file.text().then(function (txt) {
       var got = normalize(parse(txt));
-      if (!got) { alert('That file is not a Grow With Grounded backup. Older Maple, Aspen, Pine, Oak, and Sequoia files load from those tools\' own Load buttons.'); return; }
+      if (!got) { alert('That file is not a Grow With Grounded backup. Older Maple, Aspen, Pine, Birch, Oak, and Sequoia files load from those tools\' own Load buttons.'); return; }
       var plan = survey(got.keys), when = got.saved ? new Date(got.saved).toLocaleDateString() : 'an earlier day';
       var rows = '', any = false;
       function box(id, on, title, sub, dis) { any = any || !dis; return '<label class="' + (dis ? 'same' : '') + '"><input type="checkbox" data-k="' + esc(id) + '"' + (on ? ' checked' : '') + (dis ? ' disabled' : '') + '><span>' + title + (sub ? '<small>' + sub + '</small>' : '') + '</span></label>'; }

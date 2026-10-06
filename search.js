@@ -24,10 +24,11 @@
   var TOOLS = [
     { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with 60 When Life Changes guides for grown-ups', href: '/maple/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
     { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 When Life Changes guides for grown-ups', href: '/aspen/', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
-    { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with 67 When Life Changes guides for hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
+    { title: 'Oak', sub: 'Check-in for adults, 25 to 60, from root to fruit, with 67 When Life Changes guides for hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
     { title: 'Pine', sub: 'Check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and When Life Changes guides', href: '/pine/', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
+    { title: 'Birch', sub: 'Check-in for young adults, 18 to 26, with a growth plan, daily practices, and Groundwork, a private notebook for building your own life', href: '/birch/', keys: 'birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
     { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and When Life Changes guides', href: '/sequoia/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
@@ -116,8 +117,9 @@
   ];
   var STOP = ' a an and are about as at be but by can do does for from get how i if in into is it its me my of on or our should so some that the their them they this to up we what when where who why will with you your talk talking tell telling help helping deal dealing handle handling kid kids child children son daughter student students teen teens teenager adult adults someone somebody person people keeps keep always cant wont just really ';
   // 'hs' (grades 9 to 12) leads Pine's guides (GWG BLD 740); teen, high school, and 9th to 12th go there.
-  // Middle school words still lead Aspen's.
-  var AGE_HINT = [[/\b(kid|kids|child|children|little|elementary|kindergarten|preschool)\b/, 'k5'], [/\b(high ?schools?|high ?schoolers?|teen|teens|teenagers?|9th|10th|11th|12th|freshman|freshmen|sophomores?)\b/, 'hs'], [/\b(middle|middle ?schoolers?|preteen|tween|6th|7th|8th)\b/, 'ms'], [/\b(adult|adults|husband|wife|spouse|partner|mom|dad|parent|coworker|patient|myself)\b/, 'ad']];
+  // Middle school words still lead Aspen's. Young adult words (Birch, GWG BLD 742) give 'ya', which
+  // leads Birch's guides once they are built, and still lifts the adult guides a little.
+  var AGE_HINT = [[/\b(kid|kids|child|children|little|elementary|kindergarten|preschool)\b/, 'k5'], [/\b(high ?schools?|high ?schoolers?|teen|teens|teenagers?|9th|10th|11th|12th|freshman|freshmen|sophomores?)\b/, 'hs'], [/\b(middle|middle ?schoolers?|preteen|tween|6th|7th|8th)\b/, 'ms'], [/\b(young ?adults?|college|university|twenties|20s|18 to 26|emerging ?adults?)\b/, 'ya'], [/\b(adult|adults|husband|wife|spouse|partner|mom|dad|parent|coworker|patient|myself)\b/, 'ad']];
 
   /* ---------- crisis words ---------- */
   var CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
@@ -290,6 +292,7 @@
         p.words.forEach(function (alts) { var s = scoreWord(it, alts); if (s) { matched++; total += s; } });
         if (all ? matched === p.words.length : matched > 0) {
           if (p.ageHint && it.age === p.ageHint) total += 2;
+          else if (p.ageHint === 'ya' && it.age === 'ad') total += 1;
           if ((it.type === 'tool' || it.type === 'page') && it.nTitle.trim() === p.words.map(function (a) { return a[0]; }).join(' ')) total += 10;
           hits.push([it, total + matched * 2]);
         }
@@ -338,7 +341,7 @@
   /* ---------- showing results ---------- */
   var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
-  var APPNAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
+  var APPNAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
   var SHOW = 5, uid = 0;
 
   function crisisHTML(raw) {
@@ -381,7 +384,7 @@
   }
 
   /* One function draws results for every box.
-     opts.here       the app this box lives in (maple, aspen, pine, oak, sequoia, willow, grove)
+     opts.here       the app this box lives in (maple, aspen, pine, birch, oak, sequoia, willow, grove)
      opts.localType  'talk' (a When Life Changes tab) or 'practice' (a practice library)
      opts.localHTML  for practice libraries: draws the app's own list (with its Add buttons)
      opts.localKeep  filter for the app's own items (age, part)

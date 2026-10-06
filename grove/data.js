@@ -181,7 +181,7 @@ const QS = {
 
 // ---------- TEEN WEEKLY CHECK-IN: 8 questions, one per strand ----------
 // Kept for the Grove Guide. High schoolers now check in with Pine, and
-// everyone else with Maple, Aspen, Oak, or Sequoia.
+// everyone else with Maple, Aspen, Birch, Oak, or Sequoia.
 const WEEKLY_STEM = ["This past week, how often was this true?","This past week, how often was this true?","This week, how often?"];
 const WEEKLY = {
  body:["I moved my body on purpose.","I moved my body on purpose.","I played and moved a lot."],
@@ -544,10 +544,12 @@ const SCENERY = [
 
 // ---------- CHECK-IN TOOLS ----------
 // Where each age checks on their tree. The Grove nudges at the end of each
-// season and after twelve weeks. High schoolers check in with Pine.
+// season and after twelve weeks. High schoolers check in with Pine. A grown-up
+// whose tree is Birch (GWG BLD 742) checks in with Birch.
 const CHECKIN = {
  maple:   { tool:"Maple",    href:"/maple/",    season:"/maple/",            full:"/maple/" },
  aspen:  { tool:"Aspen",   href:"/aspen/",   season:"/aspen/",           full:"/aspen/" },
  pine:    { tool:"Pine", href:"/pine/", season:"/pine/#quick",  full:"/pine/#checkin" },
+ birch:   { tool:"Birch", href:"/birch/", season:"/birch/#quick", full:"/birch/#checkin" },
  adult:    { tool:"Oak", href:"/oak/", season:"/oak/#quick",   full:"/oak/#checkin" }
 };

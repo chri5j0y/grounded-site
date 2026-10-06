@@ -1,61 +1,69 @@
 /* =====================================================================
-   PINE . the app (GWG BLD 739)
-   The Grow With Grounded tree for high schoolers, grades 9 to 12, between
-   Aspen (grades 6 to 8) and Oak (adults). Built from Sequoia's newest
-   structures and Aspen's teen pieces. Where they differ, Aspen wins on
-   safety and privacy, and Sequoia wins on depth and structure.
+   BIRCH . the app (GWG BLD 742)
+   The Grow With Grounded tree for young adults, 18 to 26, between Pine
+   (grades 9 to 12) and Oak (adults, 25 to 60). Built from Pine's newest
+   structures (the app, the game layer, Faith or Plain) with Oak's and
+   Sequoia's adult pieces (adult privacy, adult faith rules, helpers in
+   Sequoia's model, adult help lines). Where they differ, Oak and Sequoia
+   win on privacy and safety, and Pine wins on structure and voice.
 
    Where the words live (edit them there, not here)
-     pine/checkin.js     the question bank, grade bands, Faith or Plain wording,
-                         flags, safety step, help lines, optional questions (PINE_CHECKIN)
-     pine/practices.js   the practice library: parts, practices, how-to guides (PINE_PRACTICES)
-     pine/nextsteps.js   the Next Steps notebook chapters and prompts (PINE_NEXTSTEPS)
-     shared/gg-journey.js  the twelve weeks, anchors, and movement levels (AGES.pine)
+     birch/checkin.js     the question bank, My Season, Faith or Plain wording,
+                          flags, safety step, help lines, the optional
+                          betting question (BIRCH_CHECKIN)
+     birch/practices.js   the practice library: parts, practices, how-to guides (BIRCH_PRACTICES)
+     birch/groundwork.js  the Groundwork chapters, prompts, and Skills I've Got (BIRCH_GROUNDWORK)
+     shared/gg-journey.js the twelve weeks, anchors, and movement levels (AGES.birch)
 
    What is saved, and where
-   - Everything stays on this device, locked in the teen's own Grounded profile
-     (age "pine", High school) under "pine": history (check-ins), tend (daily
-     tending and the game layer), nextsteps (the notebook), grade, wording
-     ('faith' or 'plain'), askSens (the optional questions), setup, and oakBrought.
-   - Only the teen's own passcode opens it. A grown-up agreed when the profile
-     was made, and can only clear a forgotten passcode, never read.
+   - Everything stays on this device, locked in the person's own Grounded
+     profile under "birch": history (check-ins), tend (daily tending and the
+     game layer, game state in tend.bc), groundwork (the notebook and skills),
+     wording ('faith' or 'plain'), seasons (My Season ids), askOpt (the
+     optional question), age (optional, for the Oak card from 25), setup,
+     oakBrought, pineBrought, helpersOn and share (helpers), movedToOak.
+   - A Birch profile is an adult profile: age "adult" with the tree set to
+     'birch' (GGP.tree). Any adult profile opened here tends a Birch tree;
+     one whose tree is Oak or Sequoia sees a gentle note, never a block.
+   - Only the person's own passcode opens it. There is no grown-up alert and
+     nothing is ever sent to anyone (ALERT_KINDS is empty).
    - Save to a file writes a passcode-locked file (shared/gg-filelock.js).
 
-   What a grown-up sees (decision 4)
-   - Only a quiet "Please check in" alert in The Grove, written by pineTeenAlert
-     with oakTeenAlert's exact shape: GGP.setShared(pid, {safety: {flag: date, kinds}}).
-     kinds come only from PINE_CHECKIN.ALERT_KINDS (the safety step, feeling alone,
-     losing hope). Never answers, levels, notes, faith answers, or Next Steps.
-   - When a teen says someone is hurting them, it never goes to the alert. The teen
-     sees outside help instead (PINE_CHECKIN.safety.lines.hurt).
-   - The big picture of tending (days tended, rings, parts tended) shows in The Grove
-     only while the teen's own switch is on, the same as every tree.
+   Helpers (Sequoia's model, only when the person turns it on)
+   - Add a Helper is off by default. Only the person can turn it on, in Settings.
+   - A helper opens the person's Birch with their own passcode (GGP.addHelper)
+     and sees only what the person shares: the levels of the tree, the
+     growth plan, notes, and Roots, each by choice. Faith and notes start
+     private. Never the safety step, flags, help notes, the optional
+     question (BIRCH_CHECKIN.NEVER_SHARE), or Groundwork.
+   - A helper can sit with the person for a check-in (they answer, the
+     helper taps). That check-in skips the safety step, which the person
+     answers on their own, and is marked answeredBy 'tapped'.
 
-   The game layer (decision 14), through the gg-tend.js hooks
+   The game layer, Pine's (decision 13), through the gg-tend.js hooks
    - Mastery: a practice moves Tried, Building, Mine as it is checked off.
    - Tree levels: named stages as days tended grow. Days tended never go down.
-   - Milestones: first day, first ring, first full week, all six in a day, each season.
+   - Milestones: first day, first ring, first full week, all six in a day,
+     each season, and Skills I've Got in Groundwork.
    - Balance bonus: all six parts tended in one week (Monday to Sunday).
-   - Steady by default (the gentle tree). Hardy, which the teen can choose, shows
-     trouble on a part left untended a long while, and one practice heals it.
+   - Steady by default. Hardy, which the person can choose, shows trouble on a
+     part left untended a long while, and one practice heals it.
    - No leaderboards, no random rewards, no streak shame. Everything pauses its
      penalties for 14 days after a check-in flags losing hope or feeling alone.
 
-   When Life Changes (GWG BLD 740): Pine's own guides, built like Sequoia's.
-   The words live in pine/guides.js (PINE_GUIDES = {rings, links, topics}); the
-   videos in pine/guide-videos.js, played by shared/gg-learn.js. Two views: For
-   You (the teen) and For the Grown-up. Faith lines show the same in Faith and
-   Plain wording, since the guides are written to the kids' faith rules.
+   When Life Changes: Birch's own guides arrive in the next build. Until then
+   Birch points to Oak's 67 guides (/oak/#life), one tap away.
    ===================================================================== */
-let PROF = null;      // the open Pine profile: { id, name, avatar, age }
+let PROF = null;      // the open Birch profile: { id, name, avatar, age }
+let HELP = null;      // the id of the person a helper is helping, while in helper view
 
-/* ---------- the practice library (pine/practices.js) ----------
+/* ---------- the practice library (birch/practices.js) ----------
    Sequoia's shapes: DOMAIN_DEFS (key, name, color, group, prompt, restore,
    strength_msg, growth_steps), GUIDES ("part|Name": {why, today, build, hard, vary,
    adapt}), META, NEW, EV, DISC, SHELF, FLAGS, plus Plain variants for spiritual
    practices (PLAIN "part|Name": {name, line, why, today, build, hard}, or a
    guide's own plain: {...}). */
-const SP = window.PINE_PRACTICES || {};
+const SP = window.BIRCH_PRACTICES || {};
 function spGet() { for (let i = 0; i < arguments.length; i++) if (SP[arguments[i]] != null) return SP[arguments[i]]; return null; }
 const PART_COLORS = { roots: 'var(--p-roots)', trunk: 'var(--p-trunk)', bark: 'var(--p-bark)', branches: 'var(--p-branches)', leaves: 'var(--p-leaves)', fruit: 'var(--p-fruit)' };
 const PART_GROUP = { roots: 'root', trunk: 'root', bark: 'root', branches: 'branch', leaves: 'branch', fruit: 'branch' };
@@ -123,9 +131,9 @@ function formatDate(isoDate) {
 const todayKey = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 
 // =====================================================================
-// PINE: THE SIX PARTS, in words for high school
+// BIRCH: THE SIX PARTS, in words for young adults
 // =====================================================================
-const CKB = window.PINE_CHECKIN || {};
+const CKB = window.BIRCH_CHECKIN || {};
 const DOMAIN_BY_KEY = {};
 DOMAIN_DEFS.forEach(d => { DOMAIN_BY_KEY[d.key] = d; });
 const CK_PART = {}; (CKB.parts || []).forEach(p => { CK_PART[p.key] = p; });
@@ -133,50 +141,50 @@ const CK_PART = {}; (CKB.parts || []).forEach(p => { CK_PART[p.key] = p; });
 const PARTS = {
   roots: {
     part: 'Roots', icon: 'roots',
-    treeLabel: 'What roots do for a pine', youLabel: 'What your roots do for you',
-    tree: 'A pine sends one root deep and many roots wide. They hold it up through wind and storms that no one sees coming.',
-    you: 'Your roots are what holds you steady: peace inside, the people and traditions you come from, and faith, if faith is part of your life. Strong roots let you bend without breaking.',
-    plainYou: 'Your roots are what holds you steady: peace inside, the people and traditions you come from, and the values you live by. Strong roots let you bend without breaking.',
-    health: ['You have something steady to come back to when life gets loud.', 'You can take quiet time and know yourself a little better.', 'You can bring your honest questions without fear.'],
-    stress: ['Nothing feels solid when life shakes.', 'Something about faith, rules, or a community makes you feel scared or not good enough.', 'You feel empty, like something is missing.'],
-    plainStress: ['Nothing feels solid when life shakes.', 'Rules or beliefs around you make you feel scared or not good enough.', 'You feel empty, like something is missing.']
+    treeLabel: 'What roots do for a birch', youLabel: 'What your roots do for you',
+    tree: 'A birch spreads its roots wide and close to the surface, holding on in thin soil where few trees can. Roots are why a young tree stays standing in the wind.',
+    you: 'Your roots are what holds you steady: peace inside, the people and traditions you come from, and faith, if faith is part of your life. These are years for making your roots your own, keeping what holds and choosing what you will grow.',
+    plainYou: 'Your roots are what holds you steady: peace inside, the people and traditions you come from, and the values you live by. These are years for making your roots your own, keeping what holds and choosing what you will grow.',
+    health: ['You have something steady to come back to when life gets loud.', 'You make time to be quiet and know yourself.', 'You can bring your honest questions without fear.'],
+    stress: ['Nothing feels solid when life shakes.', 'Something about faith, a community, or what you were raised with leaves you feeling not good enough.', 'You feel empty, like something is missing.'],
+    plainStress: ['Nothing feels solid when life shakes.', 'Rules or beliefs you were raised with leave you feeling not good enough.', 'You feel empty, like something is missing.']
   },
   trunk: {
     part: 'Trunk', icon: 'trunk',
-    treeLabel: 'What the trunk does for a pine', youLabel: 'What your trunk does for you',
-    tree: 'A pine grows straight toward the light, adding a ring every year. The trunk carries everything the tree is becoming.',
-    you: 'Your trunk is purpose: what you care about, what you are good at, and where you might be headed. You do not need it all figured out. A direction is enough.',
-    health: ['You know what you care about enough to stand up for.', 'You can name something you are good at, or getting better at.', 'You have a next step, even a small one.'],
-    stress: ['Days feel like going through the motions.', 'Other people\'s plans for you feel louder than your own.', 'The future feels like pressure instead of possibility.']
+    treeLabel: 'What the trunk does for a birch', youLabel: 'What your trunk does for you',
+    tree: 'Birches often grow two or three trunks from one root, each reaching for its own light. The trunk carries everything the tree is becoming.',
+    you: 'Your trunk is purpose: what you care about, what you are good at, and where you are headed in work, school, service, or the life you are building. You do not need it all figured out. A direction is enough.',
+    health: ['You know what you care about enough to act on.', 'You can name something you are good at, or getting better at.', 'You have a next step, even a small one.'],
+    stress: ['Days feel like going through the motions.', 'Other people\'s plans for you feel louder than your own.', 'Comparing your path with everyone else\'s leaves you feeling behind.']
   },
   bark: {
     part: 'Bark', icon: 'bark',
-    treeLabel: 'What bark does for a pine', youLabel: 'What your bark does for you',
-    tree: 'Pine bark is thick and plated. It takes the hits, seals its wounds with sap, and keeps growing around old scars.',
-    you: 'Your bark is your mind and feelings: how you handle stress, mistakes, and big feelings. Strong bark is not about never getting hurt. It is about healing well.',
-    health: ['You have real ways to calm down when stress climbs.', 'You can make a mistake and keep going.', 'You can name what you are feeling.'],
-    stress: ['Worry or sadness has settled in and stayed.', 'You are hard on yourself most of the time.', 'Stress shows up as headaches, snapping at people, or shutting down.']
+    treeLabel: 'What bark does for a birch', youLabel: 'What your bark does for you',
+    tree: 'Birch bark is thin and white, and it peels and renews as the tree grows. It carries its marks and keeps the tree whole.',
+    you: 'Your bark is your mind and feelings: how you handle stress, setbacks, money worries, and everything adult life asks of you. Strong bark is not about never getting hurt. It is about healing well.',
+    health: ['You have real ways to calm down when stress climbs.', 'You can make a mistake and keep going.', 'You can name what you are feeling, and ask for help when you need it.'],
+    stress: ['Worry or sadness has settled in and stayed.', 'You are hard on yourself most of the time.', 'Stress shows up as poor sleep, snapping at people, or shutting down.']
   },
   branches: {
     part: 'Branches', icon: 'branches',
-    treeLabel: 'What branches do for a pine', youLabel: 'What your branches do for you',
-    tree: 'Branches reach out and hold the needles up to the light. Pines grow in stands, sheltering each other from the wind.',
-    you: 'Your branches are your people: friends, family by blood or by choice, teammates, and the adults in your corner. Who shows up for you, and who you show up for.',
-    health: ['You have at least one person you can be real with.', 'You can say no to pressure and still belong.', 'There is an adult you could go to if something went wrong.'],
-    stress: ['You feel left out, or alone in a crowd.', 'A friendship or relationship leaves you feeling worse about yourself.', 'Someone is bullying, threatening, or controlling you.']
+    treeLabel: 'What branches do for a birch', youLabel: 'What your branches do for you',
+    tree: 'Birch branches are light and flexible, and they bend in the wind instead of breaking. Birches grow in stands, the first trees to make a home in new ground.',
+    you: 'Your branches are your people: friends, family by blood or by choice, roommates, coworkers, a partner if you have one, and the people in your corner. Who shows up for you, and who you show up for.',
+    health: ['You have at least one person you can be real with.', 'You can say no and still belong.', 'You know who you could call if something went wrong.'],
+    stress: ['You feel alone, even around people.', 'A friendship or relationship leaves you feeling worse about yourself.', 'Someone is controlling, threatening, or hurting you.']
   },
   leaves: {
     part: 'Leaves', icon: 'leaf',
-    treeLabel: 'What needles do for a pine', youLabel: 'What your leaves do for you',
-    tree: 'A pine\'s needles stay green all winter. They turn light into energy for the whole tree, and they are the first place stress shows.',
-    you: 'Your leaves are your body: Move, Rest, and Nourish. Sleep, movement, food, and your phone all live here. This part asks about what your body allows, never about looking a certain way.',
-    health: ['You get enough sleep most nights.', 'You move in ways you enjoy.', 'You eat real meals that give you energy.'],
-    stress: ['You run on too little sleep.', 'Your phone keeps you up or keeps you scrolling.', 'You skip meals or feel bad about your body.']
+    treeLabel: 'What leaves do for a birch', youLabel: 'What your leaves do for you',
+    tree: 'Birch leaves flutter in the lightest breeze and turn gold in the fall. They turn light into energy for the whole tree, and they are the first place stress shows.',
+    you: 'Your leaves are your body: Move, Rest, and Nourish. Sleep, movement, food, your phone, and how you cope all live here, on any schedule, shift work included. This part asks about what your body allows, never about looking a certain way.',
+    health: ['You get enough sleep most nights, whatever your schedule.', 'You move in ways you enjoy.', 'You eat real meals that give you energy.'],
+    stress: ['You run on too little sleep.', 'Your phone keeps you up or keeps you scrolling.', 'You lean on drinking, cannabis, or other things to get through.']
   },
   fruit: {
     part: 'Fruit', icon: 'fruit',
-    treeLabel: 'What cones do for a pine', youLabel: 'What your fruit does for you',
-    tree: 'Pine cones hold the seeds of the next forest. Some wait for the right season, then open all at once.',
+    treeLabel: 'What catkins do for a birch', youLabel: 'What your fruit does for you',
+    tree: 'Birch catkins hold tiny seeds that ride the wind to new ground. A birch is often the first tree to grow where nothing grew before.',
     you: 'Your fruit is hope: something worth looking forward to, a way to get there, and the belief that things can get better. Hope is a skill you can grow.',
     health: ['You can name something you are looking forward to.', 'You can picture a way through hard things.', 'You notice good moments and keep them.'],
     stress: ['The future feels closed or pointless.', 'It feels like trying does not matter.', 'You have stopped expecting anything good.']
@@ -211,7 +219,7 @@ function guideHtml(key, name) {
   const m = (META[key] || {})[name];
   if (m && m[3]) s += `<p class="guide-src"><a class="text-link" href="${m[3]}" target="_blank" rel="noopener">Learn more at the source</a></p>`;
   if (g.adapt) s += '<p><strong>Seated or low energy.</strong> ' + g.adapt + '</p>';
-  if (window.GGSources) s += GGSources.line(GGSources.practiceList(name, 'pine'), { practice: true });
+  if (window.GGSources) s += GGSources.line(GGSources.practiceList(name, 'birch'), { practice: true });
   return s;
 }
 function toggleGuide(btn) {
@@ -245,49 +253,47 @@ function icon(name, size) {
 function partIcon(d, size) { return icon(d.icon, size); }
 
 // =====================================================================
-// THE SIX-PIECE PUZZLE TREE, drawn as a pine
+// THE SIX-PIECE PUZZLE TREE, drawn as the birch in the Birch mark
 // variant: 'color' (part colors), 'score' (shaded by score), 'hero'
-// Roots: one deep root and wide laterals (pattern r3). Trunk: tall and straight.
-// Branches: the shaded underside of each tier (kind 'under'). Leaves: the tiers
-// of the Pine logo (kind 'tiers'). Fruit: cones (kind 'cones').
+// The mark's own tree (shared/marks/birch.svg, Two Trunks) scaled into this
+// view (trunk bases near x 200, ground at y 292). Roots: wide and shallow, as
+// birch roots grow. Trunk: the two white trunks. Bark: the dark marks on them.
+// Branches: the limbs. Leaves: the airy crown (kind 'blobs'). Fruit: catkins.
 // =====================================================================
 const TREE_SHAPES = {
   roots: {
     kind: 'taper', dx: 0, dy: 16, delay: 0,
     paths: [
-      ['M200 299 C199 322 202 342 199 368', 10, 2],
-      ['M194 298 C176 310 150 318 108 324', 9, 1.8],
-      ['M206 298 C224 310 250 318 292 324', 9, 1.8],
-      ['M191 298 C178 316 164 332 146 350', 7, 1.4],
-      ['M209 298 C222 316 236 332 254 350', 7, 1.4],
-      ['M110 323 C96 328 84 334 70 342', 3.2, 1],
-      ['M290 323 C304 328 316 334 330 342', 3.2, 1],
-      ['M148 348 C142 356 138 362 134 370', 2.6, .8],
-      ['M252 348 C258 356 262 362 266 370', 2.6, .8],
-      ['M199 352 C192 358 186 362 178 366', 2.6, .8],
-      ['M200 356 C207 362 214 366 222 370', 2.6, .8],
-      ['M150 316 C140 322 130 324 118 330', 2, .6],
-      ['M250 316 C260 322 270 324 282 330', 2, .6]
+      ['M186 296 C166 304 136 310 96 314', 8, 1.6],
+      ['M214 296 C234 304 264 310 304 314', 8, 1.6],
+      ['M192 298 C182 312 170 324 152 334', 6.5, 1.2],
+      ['M210 298 C220 312 232 324 250 334', 6.5, 1.2],
+      ['M200 299 C200 312 199 322 196 332', 5, 1],
+      ['M100 313 C88 317 76 322 62 328', 3, 1],
+      ['M300 313 C312 317 324 322 338 328', 3, 1],
+      ['M154 333 C148 340 142 345 134 350', 2.4, .8],
+      ['M248 333 C254 340 260 345 268 350', 2.4, .8],
+      ['M140 309 C130 316 120 320 108 326', 2, .6],
+      ['M262 309 C272 316 282 320 294 326', 2, .6]
     ]
   },
-  // a tall, straight trunk with a little flare at the ground
-  trunk: { kind: 'fill', dx: 0, dy: 12, delay: 0.25, paths: ['M180 292 C190 288 192 276 193 258 L196 70 L204 70 L207 258 C208 276 210 288 220 292 Z'] },
-  bark: {
-    kind: 'fill', dx: 0, dy: 0, delay: 0.45,
-    paths: ['M168 292 C178 287 184 276 186 258 L189 120 L192 120 L191 258 C190 276 186 288 178 292 Z', 'M232 292 C222 287 216 276 214 258 L211 120 L208 120 L209 258 C210 276 214 288 222 292 Z'],
-    grain: ['M176 288 C182 280 186 266 187 246', 'M224 288 C218 280 214 266 213 246', 'M189 220 C189 200 190 180 190 150', 'M211 220 C211 200 210 180 210 150']
-  },
-  // the shaded underside of each tier, as in the Pine logo
-  branches: { kind: 'under', dx: 0, dy: -8, delay: 0.65 },
-  // the tiers of the Pine mark: [y of the lower edge, height, reach left, reach right]
-  leaves: { kind: 'tiers', dx: 0, dy: -12, delay: 0.85, tiers: [[240, 73, 86, 86], [204, 73, 73, 73], [161, 67, 58, 58], [118, 61, 43, 43], [75, 49, 28, 28]] },
-  fruit: { kind: 'cones', dx: 0, dy: -18, delay: 1.1, cones: [[146, 252], [256, 252], [156, 216], [246, 216], [168, 173], [234, 173], [182, 130]] }
+  // the two slender white trunks of the mark
+  trunk: { kind: 'fill', dx: 0, dy: 12, delay: 0.25, paths: ['M172.8 292 Q182.4 279.2 183.4 253.6 L184 100 H193.6 L194.2 253.6 Q195.2 279.2 204.8 292Z', 'M199.4 292 Q207.4 279.2 208 253.6 L208.6 144.8 H217 L217.6 253.6 Q218.2 279.2 226.2 292Z'] },
+  // the dark bark marks: [x, y, length]
+  bark: { kind: 'marks', dx: 0, dy: 0, delay: 0.45, marks: [[185.6, 276, 5.1], [184.6, 247.2, 5.8], [184, 222.9, 7.7], [185.6, 201.1, 4.8], [186.9, 177.1, 5.1], [184.6, 150.6, 6.7], [184.6, 125.3, 5.4], [210.2, 276, 6.1], [210.6, 253.3, 5.1], [209, 227.7, 5.4], [209.3, 199.2, 6.7], [209.6, 171, 6.4]] },
+  // the limbs, reaching out from both trunks
+  branches: { kind: 'taper', dx: 0, dy: -8, delay: 0.65, paths: [['M188.8 151.2 C172.8 138.4 156.3 127.7 139.2 119.2', 6, 2.2], ['M195.2 132 C209.1 119.2 224.5 109.6 241.6 103.2', 6, 2.2], ['M185.6 189.6 C173.9 181.1 162.7 174.7 152 170.4', 6, 2.2], ['M200 170.4 C212.8 161.9 225.6 155.5 238.4 151.2', 6, 2.2]] },
+  // the airy crown: [x, y, r, layer] (layer 0 shade, 1 body, 2 light), and the fine hanging tips
+  leaves: { kind: 'blobs', dx: 0, dy: -12, delay: 0.85,
+    blobs: [[134.7, 73.4, 13.8, 0], [146.6, 139.4, 19.2, 0], [263.7, 101.6, 22.1, 0], [213.1, 133, 21.4, 0], [134.7, 68, 21.8, 0], [212.5, 157.9, 14.1, 0], [137.3, 66.4, 15, 0], [162.6, 164.6, 20.5, 0], [142.4, 129.8, 17.6, 0], [138.6, 60, 16, 0], [223, 161.4, 19.2, 0], [144, 122.1, 13.8, 0], [225, 134.6, 21.8, 0], [190.4, 152.5, 16.6, 0], [187.5, 180, 20.5, 0], [144, 153.8, 19.8, 0], [144.6, 154.1, 16.3, 0], [195.8, 120.8, 15, 0], [124.5, 102.6, 13.4, 0], [203.8, 160.2, 21.1, 0], [201, 58.7, 21.4, 0], [138.6, 144.2, 13.4, 0], [241.9, 93.9, 11.5, 1], [112, 123, 15.7, 1], [206.4, 143.5, 18.2, 1], [271.7, 93.9, 16.3, 1], [185.6, 109, 11.8, 1], [220.2, 127.5, 10.9, 1], [153, 164.3, 16.6, 1], [239.7, 122.7, 12.8, 1], [249, 76.3, 13.4, 1], [270.4, 85.9, 14.1, 1], [201.3, 119.8, 15.7, 1], [177.9, 145.8, 11.5, 1], [246.1, 111.8, 17, 1], [172.5, 161.8, 16.3, 1], [196.2, 77.9, 11.5, 1], [187.2, 131, 17, 1], [218.6, 96.2, 16, 1], [267.2, 95.5, 16, 1], [217.3, 81.8, 16, 1], [228.2, 59.4, 12.5, 1], [164.5, 121.1, 12.5, 1], [225.9, 137.4, 8.6, 2], [161.3, 162.4, 12.5, 2], [278.4, 114.7, 13.8, 2], [199, 68.6, 8.3, 2], [156.8, 116, 8.3, 2], [213.1, 44.6, 9.3, 2], [140.5, 64.5, 11.8, 2], [231.4, 82.1, 12.5, 2], [225.9, 137.8, 11.2, 2], [203.5, 137.8, 13.8, 2], [256.6, 122.1, 14.1, 2], [176.3, 55.8, 12.5, 2], [201.6, 137.1, 12.2, 2], [202.2, 39.5, 8.6, 2], [183.4, 168.5, 12.8, 2], [176, 47.5, 12.8, 2], [149.1, 158.6, 13.1, 2], [206.1, 135.8, 10.9, 2], [177, 139, 13.4, 2], [154.9, 72.5, 9.9, 2], [191.7, 49.4, 12.2, 2]],
+    tips: [[129.6, 132, 157.6], [142.4, 151.2, 176.8], [244.8, 132, 160.8], [257.6, 144.8, 180], [155.2, 164, 189.6], [232, 164, 189.6]] },
+  fruit: { kind: 'catkins', dx: 0, dy: -18, delay: 1.1, cats: [[148.8, 144.8], [225.6, 125.6], [180.8, 164], [244.8, 157.6], [168, 106.4], [206.4, 100], [129.6, 132]] }
 };
 const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
-const DRAW_ORDER = ['bark', 'trunk', 'branches', 'leaves', 'fruit', 'roots'];
-// Results: the Pine logo's own colors, each part shaded by its score
-const LOGO_COLORS = { roots: '#9A7A55', trunk: '#6E4524', bark: '#4A2C14', branches: '#2C5527', leaves: '#4A8040', fruit: '#8A5A2B' };
-const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
+const DRAW_ORDER = ['branches', 'trunk', 'bark', 'leaves', 'fruit', 'roots'];
+// Results: the Birch mark's own colors, each part shaded by its score
+const LOGO_COLORS = { roots: '#9A7A55', trunk: '#F4F1EA', bark: '#2C2C2A', branches: '#5A4A3C', leaves: '#79A84E', fruit: '#7F6610' };
+const HERO_COLORS = { roots: '#E8D6B6', trunk: '#FFFFFF', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#F3E7D1' };
 
 // Turns a single curve into a filled shape that tapers from w0 to w1
 function taperPath(d, w0, w1) {
@@ -305,12 +311,6 @@ function taperPath(d, w0, w1) {
   }
   const f = p => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
   return 'M' + left.map(f).join(' L') + ' L' + f(pt(1)) + ' L' + right.reverse().map(f).join(' L') + ' Z';
-}
-// One tier of the Pine mark: apex on the trunk, straight sides, a toothed lower edge.
-function boughPoints(t, cx) {
-  const [yb, hh, L, R] = t, top = yb - hh, tooth = hh * 0.2, pts = [[cx, top]];
-  for (let j = 0; j <= 6; j++) pts.push([cx + R - j * (L + R) / 6, j % 2 ? yb - tooth : yb]);
-  return pts;
 }
 let TREE_UID = 0;
 function puzzleTreeSvg(opts) {
@@ -335,29 +335,22 @@ function puzzleTreeSvg(opts) {
     } else if (shape.kind === 'fill') {
       inner += shape.paths.map(p => `<path d="${p}" style="fill:${color};stroke:${o.seam};paint-order:stroke;" stroke-width="2.5" stroke-linejoin="round"/>`).join('');
       if (shape.grain) inner += shape.grain.map(p => `<path d="${p}" style="stroke:${o.seam};" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>`).join('');
-      if (!hero && key === 'trunk') inner += `<g stroke="#000" stroke-opacity="0.25" stroke-width="1.2" stroke-linecap="round" fill="none"><path d="M197 286 C198 250 199 200 199 90M203 286 C202 250 201 200 201 90"/></g>`;
-    } else if (shape.kind === 'under') {
-      // the shaded underside of each tier, as in the Pine logo, peeking just below its toothed edge
-      TREE_SHAPES.leaves.tiers.slice().reverse().forEach(t => {
-        const pts = boughPoints(t, 200).map(p => p[0].toFixed(1) + ',' + (p[1] + 5).toFixed(1)).join(' ');
-        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="1.5" stroke-linejoin="round"/>`;
-      });
-    } else if (shape.kind === 'tiers') {
-      // the tiers of the Pine logo, top tier first, each with a lit left face and a shaded right face
-      TREE_SHAPES.leaves.tiers.slice().reverse().forEach(t => {
-        const [yb, hh, L, R] = t, top = yb - hh;
-        const pts = boughPoints(t, 200).map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="1.5" stroke-linejoin="round"/>`;
-        if (!hero) {
-          inner += `<polygon points="200,${top + 3} ${(200 - L * 0.76).toFixed(1)},${yb - 3} ${(200 - L * 0.34).toFixed(1)},${(yb - hh * 0.15).toFixed(1)}" fill="#FFFFFF" opacity="0.22"/>`;
-          inner += `<polygon points="200,${top + 8} ${(200 + R * 0.84).toFixed(1)},${yb - 1.5} ${(200 + R * 0.44).toFixed(1)},${(yb - hh * 0.12).toFixed(1)}" fill="#000000" opacity="0.16"/>`;
-        }
-      });
-    } else if (shape.kind === 'cones') {
-      inner += shape.cones.map(([x, y]) => `<g transform="translate(${x} ${y})">
-        <ellipse rx="4.4" ry="7" style="fill:${color};stroke:${o.seam};" stroke-width="2"/>
-        ${hero ? '' : '<path d="M-3.6 -2.6H3.6M-4.2 0.6H4.2M-3.4 3.6H3.4" stroke="#000" stroke-opacity="0.3" stroke-width="1"/>'}
-        <path d="M0 -7 V-10" style="stroke:${o.seam};" stroke-width="2" stroke-linecap="round"/></g>`).join('');
+      if (!hero && key === 'trunk') inner += `<g stroke="#000" stroke-opacity="0.12" stroke-width="1.2" stroke-linecap="round" fill="none"><path d="M191 286 C191 250 191.5 200 191.5 104M215 286 C215 250 215 200 215 150"/></g>`;
+    } else if (shape.kind === 'marks') {
+      // the dark marks on the white bark, short and rounded, as in the mark
+      inner += shape.marks.map(m => `<path d="M${(m[0] - m[2] / 2).toFixed(1)} ${m[1]}h${m[2]}" style="stroke:${color};" stroke-width="3" stroke-linecap="round"/>`).join('');
+    } else if (shape.kind === 'blobs') {
+      // the airy crown: shade, body, and light layers of round clusters in one color
+      const op = [1, 0.86, 0.72];
+      if (!hero) inner += shape.blobs.filter(c => c[3] === 0).map(c => `<circle cx="${c[0]}" cy="${c[1] + 3}" r="${c[2]}" style="fill:${o.seam};" opacity="0.35"/>`).join('');
+      inner += shape.blobs.map(c => `<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" style="fill:${color};" opacity="${op[c[3]]}"/>`).join('');
+      if (!hero) inner += shape.blobs.filter(c => c[3] === 2).map(c => `<circle cx="${(c[0] - c[2] * 0.25).toFixed(1)}" cy="${(c[1] - c[2] * 0.25).toFixed(1)}" r="${(c[2] * 0.55).toFixed(1)}" fill="#FFFFFF" opacity="0.18"/>`).join('');
+      inner += shape.tips.map((t, i) => `<path d="M${t[0]} ${t[1]}Q${t[0] + (i % 2 ? 5 : -5)} ${((t[1] + t[2]) / 2).toFixed(1)} ${t[0] + (i % 2 ? 1.6 : -1.6)} ${t[2]}" style="stroke:${color};" stroke-width="5" fill="none" stroke-linecap="round"/>`).join('');
+    } else if (shape.kind === 'catkins') {
+      inner += shape.cats.map(([x, y]) => `<g transform="translate(${x} ${y})">
+        <path d="M0 0 V16" style="stroke:${o.seam};" stroke-width="8" stroke-linecap="round"/>
+        <path d="M0 0 V16" style="stroke:${color};" stroke-width="5.4" stroke-linecap="round"/>
+        ${hero ? '' : '<path d="M-1.6 4H1.6M-1.6 8H1.6M-1.6 12H1.6" stroke="#000" stroke-opacity="0.3" stroke-width="1"/>'}</g>`).join('');
     }
     const label = `${d.part}, ${d.name}${o.scores ? ', ' + o.scores[key] + ' of 10' : ''}`;
     const attrs = o.interactive ? `tabindex="0" role="button" aria-label="${label}"` : '';
@@ -365,7 +358,7 @@ function puzzleTreeSvg(opts) {
     const sway = (o.assemble && (key === 'leaves' || key === 'fruit')) ? ' sway' : '';
     pieces += `<g class="piece-wrap${sway}" ${anim}><g class="piece${o.interactive ? ' interactive' : ''}" data-key="${key}" ${attrs} opacity="${pieceOpacity.toFixed(2)}"><title>${label}</title>${inner}</g></g>`;
   });
-  return `<svg class="${o.cls}${o.assemble ? ' assemble' : ''}" viewBox="40 2 320 424" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pine with six parts">${ground}${pieces}</svg>`;
+  return `<svg class="${o.cls}${o.assemble ? ' assemble' : ''}" viewBox="40 2 320 424" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Birch with six parts">${ground}${pieces}</svg>`;
 }
 function mountTree(slotId, opts, onPiece) {
   const slot = document.getElementById(slotId);
@@ -402,24 +395,27 @@ function renderAboutParts() {
 }
 
 // =====================================================================
-// THE TEEN'S SETTINGS: grade, Faith or Plain, the optional questions,
-// Steady or Hardy. Saved in the profile under "pine"; before a profile
-// exists they live in memory for this visit only.
+// THE PERSON'S SETTINGS: My Season, Faith or Plain, the optional question,
+// Steady or Hardy, and an optional age. Saved in the profile under "birch";
+// before a profile exists they live in memory for this visit only.
 // =====================================================================
-const LOCAL = { grade: null, wording: null, askSens: false };
-function rec() { if (PROF && window.GGP && GGP.isOpen(PROF.id)) { const d = GGP.data(PROF.id, 'pine'); if (!Array.isArray(d.history)) d.history = []; return d; } return LOCAL; }
+const LOCAL = { wording: null, seasons: [], askOpt: false };
+function rec() { if (PROF && window.GGP && GGP.isOpen(PROF.id)) { const d = GGP.data(PROF.id, 'birch'); if (!Array.isArray(d.history)) d.history = []; return d; } return LOCAL; }
 function isPlain() { try { return rec().wording === 'plain'; } catch (e) { return false; } }
-function gradeNow() { const g = rec().grade; return g ? String(g) : null; }
-function bandNow() { const g = gradeNow(); return CKB.bandOf ? CKB.bandOf(g || '9') : (g === '11' || g === '12' ? '11-12' : '9-10'); }
-function bandName(b) { const x = (CKB.bands || []).find(y => y[0] === b); return x ? x[1] : b === '11-12' ? 'Grades 11 and 12' : 'Grades 9 and 10'; }
-function sensOn() { return !!rec().askSens; }
+const SEASONS = CKB.mySeason || CKB.MY_SEASON || [];
+function seasonsNow() { const v = rec().seasons; return Array.isArray(v) ? v.filter(id => SEASONS.some(x => x.id === id)) : []; }
+function seasonName(id) { const x = SEASONS.find(y => y.id === id); return x ? x.name : ''; }
+function seasonText() { const n = seasonsNow().map(seasonName).filter(Boolean); return n.length ? n.join(', ') : 'none chosen'; }
+function sensOn() { return !!rec().askOpt; }
+function ageNow() { const a = parseInt(rec().age, 10); return isNaN(a) ? null : a; }
 function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
 
 // =====================================================================
 // CHECKIN: one question on the screen at a time
-// The bank is /pine/checkin.js, read by Pine and, later, Pine Guide: 7 per
-// part in two grade bands, a tip and a "why" line on each, two reverse
-// questions per part, flags, the optional questions, and the safety step.
+// The bank is /birch/checkin.js, read by Birch and, later, Birch Guide: 8 per
+// part in one bank, a tip and a "why" line on each, two or three reverse
+// questions per part, My Season examples, flags, help notes, the optional
+// betting question, and the safety step.
 // Question 1 of each part is the quick check-in question. Each answer moves
 // on by itself after a moment; Back and Skip always work. In "With someone I
 // trust" the tip shows after each answer as a conversation prompt, and the
@@ -432,21 +428,28 @@ const ST_FLAGS = CKB.flags || {};
 const ALERT_KINDS = CKB.ALERT_KINDS || CKB.alertKinds || ['safety', 'alone', 'hope'];
 const SAFE_ON = SAFETY.on || { safe: ['yes', 'unsure'], self: ['yes', 'unsure'], now: ['yes', 'unsure'] };
 const SAFE_ANS = SAFETY.answers || [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', "I'd rather not say"]];
-const LINES = (function () { const L = SAFETY.lines || {}; return Array.isArray(L) ? { calm: L, hurt: L.filter(x => x.first === 'hurt') } : { calm: L.calm || [], hurt: L.hurt || [] }; })();
-function bankFor(band, wording) {
-  if (typeof CKB.getBank === 'function') return CKB.getBank(band, wording);
-  const out = {}; Object.keys(CKB.questions || {}).forEach(k => { out[k] = (CKB.questions[k] || []).map(q => Object.assign({}, q, (q.v || {})[band] || {}, wording === 'plain' ? (q.plain || {}) : {})); });
+const LINES = (function () { const L = SAFETY.lines || {}; return Array.isArray(L) ? { calm: L, hurt: L.filter(x => x.first === 'hurt'), topic: [] } : { calm: L.calm || [], hurt: L.hurt || [], topic: L.topic || [] }; })();
+// One bank (decision 6): My Season adds only examples and tips, never questions or scores.
+function bankFor(seasons, wording) {
+  if (typeof CKB.getBank === 'function') return CKB.getBank(seasons, wording);
+  const out = {}; Object.keys(CKB.questions || {}).forEach(k => { out[k] = (CKB.questions[k] || []).map(q => Object.assign({}, q, wording === 'plain' ? (q.plain || {}) : {})); });
   return out;
 }
-function sensList() { return typeof CKB.sensitiveList === 'function' ? CKB.sensitiveList() : (CKB.SENSITIVE || CKB.sensitive || []); }
+function sensList() { return typeof CKB.optionalList === 'function' ? CKB.optionalList() : (CKB.OPTIONAL || CKB.optional || []); }
+// Who is answering (Sequoia's model): 'self', or 'tapped' (the person answers, a helper taps).
+let CK = { by: 'self', forId: null, name: '' };
 let QUESTIONS = {};
-function loadBank() { QUESTIONS = bankFor(bandNow(), isPlain() ? 'plain' : 'faith'); }
+// A helper tapping for someone asks in that person's own wording and seasons.
+function loadBank() {
+  const r = CK && CK.forId && window.GGP && GGP.isOpen(CK.forId) ? GGP.data(CK.forId, 'birch') : rec();
+  QUESTIONS = bankFor(Array.isArray(r.seasons) ? r.seasons : [], r.wording === 'plain' ? 'plain' : 'faith');
+}
 loadBank();
 const Q_STEM = (CKB.stems || {}).standard || 'In the past two weeks, how often have you...';
 const quickQ = key => ((QUESTIONS[key] || [])[0] || {}).t || '';
 const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLevelLine = sc => sc == null ? 'Not sure yet' : `${stLevel(sc)}, ${sc} of 10`;
-let ST_ANS = {}, ST_SAFE = {}, ST_SENS = {}, ST_QUICK = false, CK_MODE = 'self', CK_BAND = '9-10', CK_SENS = false;
+let ST_ANS = {}, ST_SAFE = {}, ST_SENS = {}, ST_QUICK = false, CK_MODE = 'self', CK_SENS = false;
 
 function partScore(key, answers) {
   const qs = QUESTIONS[key] || []; let sum = 0, n = 0;
@@ -471,6 +474,7 @@ function questionHtml(key, i, text) {
   return `<div class="q-card sq-one${cur ? ' answered' : ''}" data-q="${key}-${i}" role="radiogroup" aria-label="${escapeHtml(text)}">
     <p class="q-text sq-qtext">${escapeHtml(text)}</p>
     <div class="q-opts sq-opts">${Q_OPTS.map(o => `<button type="button" data-v="${o[0]}" aria-pressed="${cur === o[0]}" onclick="answerQ('${key}', ${i}, '${o[0]}')"><span class="sq-dot" aria-hidden="true"></span>${o[1]}</button>`).join('')}</div>
+    ${q && q.ex && q.ex.length ? `<ul class="bc-ex" aria-label="For your season">${q.ex.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
     <div class="pn-tipbox">${cur ? tipHtml(q) : ''}</div>
     ${q && q.why ? `<details class="q-why"><summary>Why this question?</summary><p>${escapeHtml(q.why)}</p>${srcSmall(q.src)}</details>` : ''}
   </div>`;
@@ -493,7 +497,7 @@ function answerQ(key, i, val) {
   moveOn();
 }
 
-// ---------- safety (Aspen's two questions, fitted to grades 9 to 12) ----------
+// ---------- safety (Pine's two questions in adult words, with "I'd rather not say") ----------
 const SAFE_Q = { safe: ((SAFETY.questions || []).find(x => x[1] === 'safe') || [])[0] || 'Is anyone hurting you, threatening you, or making you feel unsafe?',
   self: ((SAFETY.questions || []).find(x => x[1] === 'self') || [])[0] || 'Over the past few weeks, have you had thoughts of ending your life, or of not wanting to be alive?',
   now: SAFETY.now || 'Right now, today, are those thoughts with you?' };
@@ -516,8 +520,8 @@ function answerSafe(which, val) {
   ADV = setTimeout(() => { if (currentStep === here && SCREENS[here + 1]) goToStep(here + 1); }, 650);
 }
 
-// ---------- help lines (pine/checkin.js safety.lines: calm and hurt) ----------
-function lineById(id) { return LINES.calm.find(x => x.id === id) || LINES.hurt.find(x => x.id === id) || null; }
+// ---------- help lines (birch/checkin.js safety.lines: calm, hurt, and topic) ----------
+function lineById(id) { return LINES.calm.find(x => x.id === id) || LINES.hurt.find(x => x.id === id) || LINES.topic.find(x => x.id === id) || null; }
 function lineHtml(x, first) {
   const sms = x.sms ? 'sms:' + x.sms + (x.smsBody ? '?&body=' + encodeURIComponent(x.smsBody) : '') : '';
   const href = x.tel ? 'tel:' + x.tel : sms || x.url || '';
@@ -537,16 +541,16 @@ function showCalm(why, flagKey) {
   const old = document.getElementById('calm-card'); if (old) old.remove();
   let title = SAFETY.title || 'You matter, and you don\'t have to carry this alone.', lead, list = LINES.calm, first = [];
   if (why === 'hurt') { title = SAFETY.hurtTitle || 'No one has the right to hurt you.'; lead = `<p>${escapeHtml(SAFETY.hurtIntro || '')}</p>`; list = LINES.hurt; }
-  else if (why === 'self' || why === 'now') { lead = `<p><b>${escapeHtml(SAFETY.yes || '')}</b></p>${SAFETY.means ? `<p>${escapeHtml(SAFETY.means)}</p>` : ''}`; if (why === 'now') first = ['988', '911']; }
-  else if (why === 'flag' && ST_FLAGS[flagKey]) { const f = ST_FLAGS[flagKey]; lead = `<p>${escapeHtml(f.note || '')}</p>`; list = linesFor(f.lines).length ? linesFor(f.lines) : LINES.calm; }
-  else lead = `<p>${escapeHtml(SAFETY.calmIntro || 'These people want to help, any time. You can also tell a grown-up you trust.')}</p>`;
+  else if (why === 'self' || why === 'now') { lead = `<p><b>${escapeHtml(SAFETY.yes || '')}</b></p>${SAFETY.burden ? `<p>${escapeHtml(SAFETY.burden)}</p>` : ''}${SAFETY.means ? `<p>${escapeHtml(SAFETY.means)}</p>` : ''}`; if (why === 'now') first = ['988', '911']; }
+  else if (why === 'flag' && ST_FLAGS[flagKey]) { const f = ST_FLAGS[flagKey]; if (flagKey === 'hurt') title = SAFETY.hurtTitle || title; lead = `<p>${escapeHtml(f.note || '')}</p>`; list = linesFor(f.lines).length ? linesFor(f.lines) : LINES.calm; }
+  else lead = `<p>${escapeHtml(SAFETY.calmIntro || 'These people want to help, any time. You can also tell someone you trust.')}</p>`;
   const wrap = document.createElement('div');
   wrap.id = 'calm-card'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
     <h2 id="calm-title">${escapeHtml(title)}</h2>
     ${lead}
     ${linesHtml(list, false, first)}
-    ${why !== 'hurt' && LINES.hurt.length ? '<p class="gt-small"><button type="button" class="text-btn" onclick="showCalm(\'hurt\')">Someone hurting you? Help from outside your home</button></p>' : ''}
+    ${why !== 'hurt' && LINES.hurt.length ? '<p class="gt-small"><button type="button" class="text-btn" onclick="showCalm(\'hurt\')">Someone hurting or threatening you? Help any time</button></p>' : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
   document.body.appendChild(wrap);
@@ -569,7 +573,8 @@ function buildScreens(quick) {
     sens.filter(x => x.part === d.key).forEach(x => out.push({ kind: 'q', key: 'sens_' + x.id, part: d.key, pi, i: 0, n: 1, sens: true }));
     out.push({ kind: 'sit', part: d.key, pi });
   });
-  out.push({ kind: 'safe', which: 'safe' }); out.push({ kind: 'safe', which: 'self' }); out.push({ kind: 'safe', which: 'now' });
+  // A helper tapping never sees the safety step: the person answers it on their own.
+  if (CK.by === 'self') { out.push({ kind: 'safe', which: 'safe' }); out.push({ kind: 'safe', which: 'self' }); out.push({ kind: 'safe', which: 'now' }); }
   out.push({ kind: 'finish' });
   return out;
 }
@@ -600,7 +605,7 @@ function screenHtml(sc, idx) {
     const count = ST_QUICK ? `Question ${sc.pi + 1} of 6` : sc.sens ? 'Optional question' : `Question ${sc.i + 1} of ${sc.n}`;
     return `<section class="step-panel" id="step-${idx}" style="--domain-color:${d.color};">${ST_QUICK ? `<div class="step-head"><div class="step-icon">${partIcon(d, 40)}</div><div><div class="step-count">Quick Check-in</div><h2 class="step-title">${d.part}</h2><div class="step-domain">${d.name}</div></div></div>` : head}
       <p class="sq-count">${count}</p>
-      ${sc.sens ? '<p class="sq-who">You turned this question on. It never counts toward a score, and it is never shared.</p>' : ''}
+      ${sc.sens ? '<p class="sq-who">You turned this question on. It never counts toward a score, and it is never shared.</p>' : ''}${CK.by === 'tapped' && sc.i === 0 ? `<p class="sq-who">${escapeHtml(CK.name)} answers, and you tap.</p>` : ''}
       <p class="q-stem">${escapeHtml(Q_STEM)}</p>
       ${questionHtml(sc.key, sc.i, text)}
       <div class="btn-row step-nav">${back}<button class="btn btn-secondary pn-next" onclick="goToStep(${idx + 1})">${answered ? nextLabel : 'Skip this one'}</button></div></section>`;
@@ -614,8 +619,9 @@ function screenHtml(sc, idx) {
       <p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now?</button></p>
       <div class="btn-row step-nav">${back}<button class="btn btn-secondary pn-next" onclick="goToStep(${idx + 1})">${ST_SAFE[sc.which] ? 'Next' : 'Skip this one'}</button></div></section>`;
   if (sc.kind === 'finish') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">All done</div><h2 class="step-title">Nice work</h2></div></div>
-      <p class="lead">Your answers stay on this device, locked in your profile. Tap below to see your tree.</p>
-      <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">See My Tree</button></div></section>`;
+      <p class="lead">${CK.by === 'tapped' ? 'This check-in saves to ' + escapeHtml(CK.name) + '\'s tree, marked as taken together. The safety questions stay with ' + escapeHtml(CK.name) + ', for their own check-ins.' : 'Your answers stay on this device, locked in your profile. Tap below to see your tree.'}</p>
+      ${CK.by === 'tapped' ? '<p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now? Help lines</button></p>' : ''}
+      <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'tapped' ? 'See the Tree' : 'See My Tree'}</button></div></section>`;
   return '';
 }
 function nextLabelFor(idx) {
@@ -638,7 +644,7 @@ function renderCheckin() {
 function modeHtml() {
   const M = CKB.modes || [['self', 'On my own'], ['trust', 'With someone I trust']];
   return `<div class="pn-seg" role="group" aria-label="How you are checking in">${M.map(x => `<button type="button" aria-pressed="${CK_MODE === x[0]}" onclick="setCkMode('${x[0]}')">${escapeHtml(x[1])}</button>`).join('')}</div>
-    <p class="gt-small">${CK_MODE === 'trust' ? 'After each answer, a short note gives you something to talk about together, like with a parent, mentor, coach, or counselor you chose. You decide what to share.' : 'Read each question and pick what fits best. Each answer moves you on by itself.'} ${escapeHtml(bandName(CK_BAND))}. <button type="button" class="text-btn" onclick="askGrade(true)">Change grade</button></p>`;
+    <p class="gt-small">${CK_MODE === 'trust' ? 'After each answer, a short note gives you something to talk about together, with a friend, mentor, partner, or counselor you chose. You decide what to share.' : 'Read each question and pick what fits best. Each answer moves you on by itself.'} ${CK.by === 'tapped' ? '' : `My Season: ${escapeHtml(seasonText())}. <button type="button" class="text-btn" onclick="GGTend.openSettings('bc-set-season')">Change</button>`}</p>`;
 }
 function setCkMode(m) { CK_MODE = m; const el = document.getElementById('pn-mode'); if (el) el.innerHTML = modeHtml(); document.querySelectorAll('#step-container .q-card').forEach(c => { const tb = c.querySelector('.pn-tipbox'), k = c.getAttribute('data-q'); if (!tb || !k) return; const at = k.lastIndexOf('-'), key = k.slice(0, at), i = +k.slice(at + 1); const cur = key.indexOf('sens_') === 0 ? ST_SENS[key.slice(5)] : (ST_ANS[key] || {})[i]; tb.innerHTML = cur ? tipHtml(stQ(key, i)) : ''; }); }
 function renderStepProgress() {
@@ -671,39 +677,20 @@ function scrollToViewTop(id, smooth, always) {
   const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH - 10);
   if (always || window.scrollY > y) window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
 }
-// The grade is asked once, then kept in the profile. It sets the band.
-function askGrade(change, then) {
-  const old = document.getElementById('pn-grade'); if (old) old.remove();
-  const G = CKB.grades || [['9', 'Grade 9'], ['10', 'Grade 10'], ['11', 'Grade 11'], ['12', 'Grade 12']], cur = gradeNow();
-  const wrap = document.createElement('div');
-  wrap.id = 'pn-grade'; wrap.className = 'calm-back';
-  wrap.innerHTML = `<div class="calm-box pn-box" role="dialog" aria-modal="true" aria-labelledby="pn-grade-title"><h2 id="pn-grade-title">${change ? 'Change your grade' : 'Which grade are you in?'}</h2>
-    <p>Pine asks a few questions differently for grades 9 and 10 and for grades 11 and 12. ${change ? 'Your earlier check-ins stay, and compare only with check-ins from the same grades.' : 'You only need to answer this once. You can change it in Settings.'}</p>
-    <div class="pn-grades">${G.map(g => `<button type="button" class="btn ${cur === g[0] ? 'btn-primary' : 'btn-secondary'}" onclick="setGrade('${g[0]}')">${escapeHtml(g[1])}</button>`).join('')}</div>
-    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="document.getElementById('pn-grade').remove()">Not now</button></div></div>`;
-  document.body.appendChild(wrap);
-  askGrade.then = then || null;
-  const b = wrap.querySelector('.pn-grades button'); if (b) b.focus();
-}
-function setGrade(g) {
-  rec().grade = g; const box = document.getElementById('pn-grade'); if (box) box.remove();
-  persistRec().then(() => {
-    loadBank(); CK_BAND = bandNow();
-    showToast('Grade ' + g + ' saved.');
-    const t = askGrade.then; askGrade.then = null;
-    if (t) t(); else if (document.getElementById('client-assess').classList.contains('active')) { ST_ANS = {}; renderCheckin(); }
-    if (window.GGTend) GGTend.render();
-  });
+function setMode(by, forId) {
+  const p = forId && window.GGP ? GGP.get(forId) : null;
+  CK = { by: by === 'tapped' && p ? 'tapped' : 'self', forId: p ? forId : null, name: p ? p.name : '' };
+  if (CK.by === 'tapped') CK_MODE = 'self';
 }
 function beginCheck(quick) {
-  loadBank(); CK_BAND = bandNow(); CK_SENS = !quick && sensOn();
+  loadBank(); CK_SENS = !quick && CK.by === 'self' && sensOn();
   ST_QUICK = !!quick; ST_ANS = {}; ST_SAFE = {}; ST_SENS = {};
   renderCheckin();
   showView('client-assess');
   goToStep(0);
 }
-function startCheckin() { if (!gradeNow()) { askGrade(false, () => beginCheck(false)); return; } beginCheck(false); }
-function startQuick() { if (!gradeNow()) { askGrade(false, () => beginCheck(true)); return; } beginCheck(true); }
+function startCheckin(by, forId) { setMode(typeof by === 'string' ? by : 'self', forId); beginCheck(false); }
+function startQuick(by, forId) { setMode(typeof by === 'string' ? by : 'self', forId); beginCheck(true); }
 
 // =====================================================================
 // GROWTH PLAN
@@ -804,19 +791,19 @@ function generateGrowthPlanDoc(mode) {
   document.getElementById('client-growthplan-doc').innerHTML = `
     <div class="growth-plan-doc" id="${sheetId}" style="margin-top:24px;">
       <div class="growth-plan-header">
-        <div class="growth-plan-header-logo"><img src="/shared/marks/pine.svg" alt="" width="64" height="64" style="display:block;margin:0 auto 10px;border-radius:14px"></div>
-        <div class="growth-plan-title">Pine Growth Plan</div>
+        <div class="growth-plan-header-logo"><img src="/shared/marks/birch.svg" alt="" width="64" height="64" style="display:block;margin:0 auto 10px;border-radius:14px"></div>
+        <div class="growth-plan-title">Birch Growth Plan</div>
         <div class="growth-plan-meta">${nameField ? nameField + ' &middot; ' : ''}${formatDate(null)}</div>
       </div>
       ${domainsHtml}
       ${planHelpHtml()}
       <div class="growth-plan-next">
         <div class="growth-plan-next-label">Keep growing</div>
-        <p><strong>Tend it every day.</strong> Your practices wait in the Today tab in Pine, ready to check off. A short check-in each week and a full check-in every twelve weeks show how your tree is growing. Open Pine at growwithgrounded.com/pine</p>
+        <p><strong>Tend it every day.</strong> Your practices wait in the Today tab in Birch, ready to check off. A short check-in each week and a full check-in every twelve weeks show how your tree is growing. Open Birch at growwithgrounded.com/birch</p>
       </div>
       <div class="growth-plan-footer">
-        <p class="growth-plan-footer-link">growwithgrounded.com/pine</p>
-        <p>&copy; ${new Date().getFullYear()} Chris Joy. All rights reserved. This growth plan was made with Pine by Grow With Grounded. Pine&trade; is a trademark of Chris Joy. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
+        <p class="growth-plan-footer-link">growwithgrounded.com/birch</p>
+        <p>&copy; ${new Date().getFullYear()} Chris Joy. All rights reserved. This growth plan was made with Birch by Grow With Grounded. Birch&trade; is a trademark of Chris Joy. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
       </div>
     </div>
     <div class="btn-row no-print">
@@ -827,13 +814,16 @@ function generateGrowthPlanDoc(mode) {
   document.getElementById(sheetId).scrollIntoView({ behavior: 'smooth', block: 'start' });
   showToast('Growth plan made below.');
 }
-// Help lines on every plan: the short teen list, and the full lines for anything the
-// latest check-in flagged (never lost).
+// Help lines on every plan: the short adult list, the lines for the person's seasons,
+// and the full lines for anything the latest check-in flagged (never lost).
+const PLAN_LINES = ['988', 'veterans', 'ctl', '911'];
 function planHelpHtml() {
   const e = oakLatestEntry(), f = (e && e.flags) || [];
-  const ids = ['988', 'ctl', 'mncrisis', '911'];
-  f.forEach(k => ((ST_FLAGS[k] || {}).lines || []).forEach(id => { if (!ids.includes(id)) ids.push(id); }));
-  if (e && safeOn('safe', (e.safety || {}).safe)) LINES.hurt.forEach(x => { if (!ids.includes(x.id)) ids.push(x.id); });
+  const ids = PLAN_LINES.slice();
+  const add = id => { if (!ids.includes(id)) ids.push(id); };
+  f.forEach(k => ((ST_FLAGS[k] || {}).lines || []).forEach(add));
+  if (e && safeOn('safe', (e.safety || {}).safe)) LINES.hurt.forEach(x => add(x.id));
+  seasonsNow().forEach(id => ((SEASONS.find(x => x.id === id) || {}).lines || []).forEach(add));
   return `<div class="growth-plan-next sq-planhelp"><div class="growth-plan-next-label">Help Any Time</div>${linesHtml(linesFor(ids), true)}</div>`;
 }
 
@@ -850,7 +840,7 @@ function interpretResults(scores, unsure) {
   let overall;
   if (!care && strong >= 4) overall = 'Your tree is strong across most parts. The work now is keeping it growing, not fixing it.';
   else if (care < 3) overall = 'Some parts of your tree are carrying more weight than others right now. That is normal, and you can work with it. Tending your growing edges takes pressure off the parts holding the most.';
-  else overall = 'Several parts of your tree are running low right now, so the healthy parts have less to draw on. This is a good moment to be honest about where you need support, and to talk with a trusted adult, a school counselor, or a counselor alongside Pine.';
+  else overall = 'Several parts of your tree are running low right now, so the healthy parts have less to draw on. This is a good moment to be honest about where you need support, and to talk with someone you trust, a doctor, or a counselor alongside Birch.';
   return `Your <strong>${strongest.part.toLowerCase()}</strong> (${strongest.name}) ${verb(strongest)} the healthiest part of your tree right now, a real strength to lean on. Your biggest growing edge is your <strong>${weakest.part.toLowerCase()}</strong> (${weakest.name}), where your next growth begins. ${overall}`;
 }
 function buildPersonalSections(scores, unsure) {
@@ -878,29 +868,18 @@ function stFlagsNow() {
   if (safeOn('safe', ST_SAFE.safe)) out.push('hurt');
   return out;
 }
-function alertKinds(e) {
-  const kinds = [];
-  if (ALERT_KINDS.includes('safety') && (safeOn('self', (e.safety || {}).self) || safeOn('now', (e.safety || {}).now))) kinds.push('safety');
-  (e.flags || []).forEach(f => { if (ALERT_KINDS.includes(f) && f !== 'safety' && !kinds.includes(f)) kinds.push(f); });
-  return kinds;
-}
-// The quiet "Please check in" alert for the grown-ups who agreed (decision 4 and 5).
-// The same shape as oakTeenAlert, so The Grove reads it with no change. Only
-// ALERT_KINDS raise it. Someone hurting the teen never does (decision 6).
-function pineTeenAlert(e) {
-  if (!PROF || !window.GGP || !e || !GGP.isOpen(PROF.id)) return [];
-  const kinds = alertKinds(e);
-  if (kinds.length) GGP.setShared(PROF.id, { safety: { flag: e.date, kinds } });
-  return kinds;
-}
+// Birch has no alert to anyone (decision 11): flagged answers show help lines to
+// the person, right here, and are never sent or shown to a helper.
 function flagBoxHtml(flags, entry) {
   let html = '';
   const shown = flags.filter(f => f !== 'hurt' && ST_FLAGS[f]);
   if (shown.length) html += `<div class="flag-box" role="note"><h3>Worth tending</h3>${shown.map(f => `<p><strong>${escapeHtml(ST_FLAGS[f].title)}.</strong> ${escapeHtml(ST_FLAGS[f].note)}</p>${linesHtml(linesFor(ST_FLAGS[f].lines), true)}`).join('')}
     <p><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
-  if (flags.includes('hurt')) html += `<div class="flag-box pn-hurt" role="note"><h3>${escapeHtml(SAFETY.hurtTitle || 'No one has the right to hurt you.')}</h3><p>${escapeHtml((ST_FLAGS.hurt || {}).note || SAFETY.hurtIntro || '')}</p>${linesHtml(LINES.hurt, true)}<p class="gt-small">This answer stays with you. It is never part of the note to your grown-up.</p></div>`;
-  if (entry && (safeOn('self', (entry.safety || {}).self))) html += `<div class="flag-box" role="note"><h3>${escapeHtml(SAFETY.title || 'You matter.')}</h3><p>${escapeHtml(SAFETY.yes || '')}</p>${linesHtml(linesFor(['988', 'ctl', 'mncrisis', '911']), true, safeOn('now', (entry.safety || {}).now) ? ['988', '911'] : [])}</div>`;
-  // the optional questions: a private note, never shared, never a score
+  if (flags.includes('hurt')) html += `<div class="flag-box pn-hurt" role="note"><h3>${escapeHtml(SAFETY.hurtTitle || 'No one has the right to hurt you.')}</h3><p>${escapeHtml((ST_FLAGS.hurt || {}).note || SAFETY.hurtIntro || '')}</p>${linesHtml(linesFor((ST_FLAGS.hurt || {}).lines).length ? linesFor((ST_FLAGS.hurt || {}).lines) : LINES.hurt, true)}<p class="gt-small">This answer stays with you. It is never sent to anyone, and never shown to a helper.</p></div>`;
+  if (entry && (safeOn('self', (entry.safety || {}).self))) html += `<div class="flag-box" role="note"><h3>${escapeHtml(SAFETY.title || 'You matter.')}</h3><p>${escapeHtml(SAFETY.yes || '')}</p>${SAFETY.burden ? `<p>${escapeHtml(SAFETY.burden)}</p>` : ''}${linesHtml(linesFor(['988', 'veterans', 'ctl', 'mncrisis', '911']), true, safeOn('now', (entry.safety || {}).now) ? ['988', '911'] : [])}</div>`;
+  // help notes on single questions (Bark and Leaves): a quiet note with topic lines, never a flag
+  if (!ST_QUICK) Object.keys(QUESTIONS).forEach(k => (QUESTIONS[k] || []).forEach((q, i) => { const a = (ST_ANS[k] || {})[i]; if (q.help && a && (q.help.on || []).includes(a)) html += `<div class="flag-box pn-private" role="note"><h3>Just for you</h3><p>${escapeHtml(q.help.note || '')}</p>${linesHtml(linesFor(q.help.lines), true)}</div>`; }));
+  // the optional question: a private note, never shared, never a score
   sensList().forEach(x => { const a = ST_SENS[x.id]; if (a && (x.on || []).includes(a)) html += `<div class="flag-box pn-private" role="note"><h3>Just for you</h3><p>${escapeHtml(x.note || '')}</p>${linesHtml(linesFor(x.lines), true)}</div>`; });
   return html;
 }
@@ -916,32 +895,37 @@ function calculateResults() {
     reflections[d.key] = notes ? notes.value : '';
   });
   const shown = k => unsure.includes(k) ? null : scores[k];
-  const flags = stFlagsNow();
-  const safety = { safe: ST_SAFE.safe || 'skipped', self: ST_SAFE.self || 'skipped' };
-  if (safeOn('self', ST_SAFE.self)) safety.now = ST_SAFE.now || 'skipped';
+  const flags = stFlagsNow(), tapped = CK.by === 'tapped';
+  const safety = tapped ? { asked: 'not with a helper' } : { safe: ST_SAFE.safe || 'skipped', self: ST_SAFE.self || 'skipped' };
+  if (!tapped && safeOn('self', ST_SAFE.self)) safety.now = ST_SAFE.now || 'skipped';
   const sens = {}; if (CK_SENS) sensList().forEach(x => { if (ST_SENS[x.id]) sens[x.id] = ST_SENS[x.id]; });
-  const entry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, bank: CKB.bank || 1, band: CK_BAND, grade: gradeNow(), wording: isPlain() ? 'plain' : 'faith',
-    scores, unsure, reflections, flags, safety, sens, mode: CK_MODE, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
-  const kinds = alertKinds(entry), grown = PROF && window.GGP ? ((GGP.get(PROF.id) || {}).grown || []) : [];
-  const told = kinds.length && grown.length ? `<p class="sq-flagnote">${escapeHtml(CKB.alertTold || 'A grown-up you chose will get a quiet note to check in with you. They won\'t see your answers.')}</p>` : '';
+  const helperName = tapped ? (((window.GGP && GGP.active()) || {}).name || '') : '';
+  const forRec = tapped && window.GGP && GGP.isOpen(CK.forId) ? GGP.data(CK.forId, 'birch') : rec();
+  const entry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, bank: CKB.bank || 1, band: 'birch', seasons: Array.isArray(forRec.seasons) ? forRec.seasons.slice() : [], wording: forRec.wording === 'plain' ? 'plain' : 'faith',
+    scores, unsure, reflections, flags, safety, sens, mode: CK_MODE, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: CK.by, helper: helperName };
   const html = `
     <div class="results-summary">
+      ${tapped ? `<p class="sq-who">${escapeHtml(CK.name)} answered, and ${escapeHtml(helperName)} tapped.</p>` : ''}
       <div class="tree-result-wrap"><div id="client-results-tree" style="width:100%;max-width:320px;"></div></div>
-      <p class="tree-caption">Each part of the tree is shaded by its score. The fuller the color, the healthier that part. Tap a part to work on it in your growth plan.</p>
+      <p class="tree-caption">Each part of the tree is shaded by its score. The fuller the color, the healthier that part.${tapped ? '' : ' Tap a part to work on it in your growth plan.'}</p>
       <div class="lvl-list">
-        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">This growing edge is where your next growth begins.</p>' : ''}</div>`).join('')}
+        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">This growing edge is where the next growth begins.</p>' : ''}</div>`).join('')}
       </div>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       <div class="interpretation">${interpretResults(scores, unsure)}</div>
-      ${flagBoxHtml(flags, entry)}
-      ${told}
+      ${tapped ? `<p class="gt-small">Help any time: call or text 988, or text HOME to 741741. In danger right now, call 911. <button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p>` : flagBoxHtml(flags, entry)}
     </div>
-    ${buildPersonalSections(scores, unsure)}
-    ${lcSuggestHtml(scores, unsure)}
-    <div class="reminder-banner"><p>Check in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.</p></div>
-    <div class="btn-row"><button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button></div>
-    <div id="client-save-box"></div>`;
+    ${tapped ? '' : buildPersonalSections(scores, unsure) + oakGuidesHtml(scores, unsure)}
+    <div class="reminder-banner"><p>${tapped ? 'Saved to ' + escapeHtml(CK.name) + '\'s tree, marked as taken together.' : 'Check in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.'}</p></div>
+    <div class="btn-row">${tapped ? `<button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button>` : `<button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button>`}</div>
+    ${tapped ? '' : '<div id="client-save-box"></div>'}`;
   document.getElementById('client-results-content').innerHTML = html;
+  if (tapped) {
+    showView('client-results');
+    if (window.GGP && GGP.isOpen(CK.forId)) { const d = GGP.data(CK.forId, 'birch'); if (!Array.isArray(d.history)) d.history = []; d.history.push(entry); sortEntries(d.history); GGP.save(CK.forId).then(() => showToast('Saved to ' + CK.name + '\'s tree.')); }
+    mountTree('client-results-tree', { variant: 'score', scores, interactive: false, seam: '#2C1810', assemble: true });
+    return;
+  }
   window.lastClientScores = scores;
   window.lastClientUnsure = unsure;
   window.currentClientEntry = entry;
@@ -949,7 +933,6 @@ function calculateResults() {
   renderGrowthPlanBuilder('client');
   if (PROF) {
     personalHistory.push(JSON.parse(JSON.stringify(entry))); sortEntries(personalHistory); profPersist();
-    pineTeenAlert(entry);
     if (!ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(entry); if (msg) setTimeout(() => showToast(msg), 900); }
   }
   oakPrefillPlan();
@@ -957,6 +940,17 @@ function calculateResults() {
   renderProgress();
   const goToGrowthPlanPart = key => { showView('client-growthplan'); const card = document.getElementById(`cp-card-client-${key}`); if (card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); };
   mountTree('client-results-tree', { variant: 'score', scores, interactive: true, seam: '#2C1810', assemble: true }, goToGrowthPlanPart);
+}
+// When Life Changes: Birch's own guides arrive in the next build. Until then, after a
+// check-in with a Growing Edge, a quiet line points to Oak's 67 guides, one tap away.
+function oakGuidesHtml(scores, unsure) {
+  const skip = unsure || [];
+  const low = PART_ORDER.filter(k => !skip.includes(k) && scores[k] != null && scores[k] < 5);
+  if (!low.length) return '';
+  const crisis = scores.fruit <= 2 && !skip.includes('fruit') ? `<p><b>If you are having thoughts of ending your life, call or text 988 now, or text HOME to 741741. In danger right now, call 911.</b></p>` : '';
+  return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
+    <p>Some parts of your tree are carrying a lot right now. Oak's When Life Changes guides offer words and next steps for jobs, money, moving, loneliness, breakups, grief, faith, and more.</p>
+    ${crisis}<div class="lc-links"><a class="btn btn-secondary" href="/oak/#life">Browse Oak's 67 Guides</a></div></div>`;
 }
 
 // =====================================================================
@@ -1499,7 +1493,7 @@ async function profPersist() {
   await GGP.save(PROF.id);
 }
 function profLock() { if (window.GGP) GGP.lock().then(() => showToast('Locked. Your profile is safe on this device.')); }
-const OTHER_TREE = { maple: '<a href="/maple/">Maple</a> is made for kids.', aspen: '<a href="/aspen/">Aspen</a> is made for middle schoolers.', adult: '<a href="/birch/">Birch</a> is made for young adults, 18 to 26, <a href="/oak/">Oak</a> for adults, 25 to 60, and <a href="/sequoia/">Sequoia</a> for older adults, 60 and up.' };
+const OTHER_TREE = { maple: '<a href="/maple/">Maple</a> is made for kids.', aspen: '<a href="/aspen/">Aspen</a> is made for middle schoolers.', adult: '<a href="/oak/">Oak</a> is made for adults, and <a href="/sequoia/">Sequoia</a> for older adults.' };
 function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();

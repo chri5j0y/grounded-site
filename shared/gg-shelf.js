@@ -2320,8 +2320,8 @@
 "practice:I Made It Through": "I Made It Through",
 "practice:Clear One Small Space": "Clear One Small Space"
 };
-  var HREF = { maple: '/maple/#talk=', aspen: '/aspen/#talk=', pine: '/pine/#life=', oak: '/oak/#life=', willow: '/willow/#guide=', practice: '/grove/#library=' };
-  var FROM = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', oak: 'Oak', willow: 'Willow', practice: 'Practice' };
+  var HREF = { maple: '/maple/#talk=', aspen: '/aspen/#talk=', pine: '/pine/#life=', birch: '/birch/#life=', oak: '/oak/#life=', willow: '/willow/#guide=', practice: '/grove/#library=' };
+  var FROM = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', willow: 'Willow', practice: 'Practice' };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function books(tool, id) { return (LINKS[tool + ':' + id] || []).filter(function (b) { return BOOKS[b]; }); }
   function html(tool, id) {

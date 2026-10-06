@@ -628,3 +628,56 @@ window.GGJourney.AGES.pine = {
   }
  }
 };
+
+/* ---------- Birch (young adults, 18 to 26), GWG BLD 742 ----------
+   The same twelve themes, so a family can be on the same week together,
+   with intros and reflection questions written for young adults: direct,
+   warm, practical, never assuming school, a job, a partner, money, or
+   faith. Week 7 also carries a Plain wording (plain) for profiles set to
+   Plain; Faith is the default. Anchors fit odd hours: the morning anchor
+   is for whenever your day starts, after a night shift too. Movement fits
+   shift work, long days on your feet, and a gentle option for an injury,
+   a health limit, a new baby, or a packed week. */
+window.GGJourney.AGES.birch = {
+ "WEEKS": [
+  { "intro": "Nothing has to be ready. Not your schedule, not your place, not your plans. This week you plant, and planting is small. Tend your tree once a day, even for a minute, and let that count.", "q": "What made you want to start, and what are you hoping grows?" },
+  { "intro": "Work, school, a shift that runs long, people who need you, a phone that never goes quiet. This week, notice where your energy leaks, and protect one limit like it matters.", "q": "Where did you say yes this week when you needed to say no?" },
+  { "intro": "Your body keeps its own record: a tight jaw, a skipped meal, sleep that came at the wrong hours. This week, listen to it the way you would listen to a good friend.", "q": "What did your body tell you this week, and what did you do about it?" },
+  { "intro": "Somewhere around now, most people miss a day. Then two. A move, a new schedule, or a hard week will do that. Coming back is the practice, and your tree keeps everything you have grown.", "q": "What helped you come back when you drifted?" },
+  { "intro": "Some weight doesn't show: money, the future, family, a relationship, the feeling of being behind. This week, notice one thing you have been carrying and name it, to yourself or to someone you trust. You don't have to fix it yet.", "q": "What are you carrying that you haven't said out loud?" },
+  { "intro": "Friendships after school take effort, and someone has to go first. This week, be the one who texts, calls, or makes the plan. Most people are glad someone did.", "q": "Who did you reach toward this week, and how did it feel?" },
+  { "intro": "Prayer, worship, quiet, music, a night sky, a long run, a tradition you are making your own. However you come, this week notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?",
+    "plain": { "intro": "Quiet, music, a night sky, a long run, a tradition you are making your own. This week, notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?" } },
+  { "intro": "Eight weeks in, some of this is becoming yours. The practices you keep on long shifts and rough days are your roots. They hold when the season gets hard.", "q": "Which practice has started to hold you?" },
+  { "intro": "You don't control everything: the rent, the job market, other people's choices. You still get a say in a lot: how you spend your days, how you treat people, and who you are becoming. Use your say this week.", "q": "What do you want more of in the life you are building?" },
+  { "intro": "Family by birth or by choice, friends, coworkers, the people who show up. This week, notice where kindness moves between you and others, and say thanks out loud once.", "q": "Where did you give or receive love this week?" },
+  { "intro": "Hope isn't only a feeling you wait for. It is a goal, a way to get there, and the next step you take. Take one small step this week and let the feeling catch up.", "q": "What are you looking forward to, and what is one step toward it?" },
+  { "intro": "Look at what grew this season. Some of it you will keep for good. Some of it was only for now. Both count, and both are part of who you are becoming.", "q": "What grew in these twelve weeks, and what are you ready to let go of?" }
+ ],
+ "ANCHORS": {
+  "morning": { "t": "Start on purpose", "b": "Whenever your day starts, before you open your phone, take one slow breath and pick one thing that matters today.", "s": "One breath and one thing that matters, before your phone." },
+  "evening": { "t": "Close the day", "b": "Whenever your day ends, name one thing that went right and one thing you are setting down. If you can, charge your phone out of reach of your bed.", "s": "One thing that went right. One thing to set down." }
+ },
+ "LEVELS": [
+  { "id": "gentle", "name": "Gentle", "desc": "Easy movement, like walking or stretching. For starting slow, an injury, a health limit, a new baby, long shifts on your feet, or a packed week. Seated options count." },
+  { "id": "moderate", "name": "Moderate", "desc": "You move some already, like walks, rides, pickup games, or workouts, and want to build a little more around work, school, or family." },
+  { "id": "athletic", "name": "Athletic", "desc": "You train hard, play a sport, or keep a demanding fitness standard for work or service. Rest days are part of training." }
+ ],
+ "LEVEL_MOVE": {
+  "gentle": {
+   "planting": { "t": "Ten minutes, any way you can", "b": "A walk, stretching, or a few songs to move to. After a shift on your feet, stretch your calves, back, and shoulders, seated if you need to. <strong>Moving at all is the win.</strong>" },
+   "rooting": { "t": "Fifteen to twenty minutes", "b": "A longer walk, a bike ride, or a short body-weight round: squats, wall push-ups, a plank. On a long-shift day, two short walks count. Stop if anything hurts." },
+   "blooming": { "t": "Twenty to thirty minutes", "b": "Something you enjoy, with someone if you can: a walk, a swim, a pickup game, a stroller walk. Finish with a few slow stretches." }
+  },
+  "moderate": {
+   "planting": { "t": "Twenty to thirty minutes, most days", "b": "A fast walk, a ride, a run, or a workout, at whatever hour your schedule allows. Add squats, push-ups, and a plank three days a week. <strong>Warm up first.</strong>" },
+   "rooting": { "t": "Thirty to forty minutes", "b": "Mix it up: cardio one day, strength the next, something new another. On work-heavy days, a ten-minute walk on a break still counts. Keep one easy day each week." },
+   "blooming": { "t": "Forty minutes, four to five days", "b": "Build one longer session each week, add weight if you have it, and keep one full rest day. Notice what your body can do now that it couldn't in Week 1." }
+  },
+  "athletic": {
+   "planting": { "t": "Training days and rest days", "b": "Keep up your training. Warm up before every session, stretch after, and drink water. After a night shift, sleep first and train later. <strong>Sleep is part of training.</strong>" },
+   "rooting": { "t": "Train smart", "b": "Plan training around your shifts and classes, take at least one full rest day each week, and back off when sleep runs short. Tell a coach, trainer, or doctor if something hurts." },
+   "blooming": { "t": "Your best, safely", "b": "Notice how much stronger or faster you have gotten. Keep your rest day, eat well around training, and never train through pain." }
+  }
+ }
+};

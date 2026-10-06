@@ -1,7 +1,7 @@
 /* =====================================================================
    GROUNDED . SHARED PRACTICE LIBRARY (Rebrand Session 5)
-   One practice library that every app reads: Oak, Maple, Aspen, Pine, and
-   The Grove. The words still live in grove/data.js (the practices) and
+   One practice library that every app reads: Oak, Maple, Aspen, Pine, Birch,
+   Sequoia, and The Grove. The words still live in grove/data.js (the practices) and
    grove/library.js (the "Show me how" steps). Edit them there.
 
    Each tree app keeps its own practices and its own "How to do this".
@@ -14,7 +14,7 @@
    For tools
      GGLibrary.ready()            a promise; resolves true when loaded
      GGLibrary.forPart(part, age) practices for one part that fit an age
-                                  age: 'maple', 'aspen', 'pine', or 'oak'
+                                  age: 'maple', 'aspen', 'pine', 'birch', or 'oak'
      GGLibrary.search(q, age)     search the whole library
      GGLibrary.get(key)           one practice, or null
      GGLibrary.view(it, age)      {name, text, busy, why, steps, hard}
@@ -68,7 +68,7 @@
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
       bedside: it.bedside || null,
-      app: age === 'maple' || age === 'aspen' || age === 'pine' || age === 'sequoia' ? age : 'lib'
+      app: age === 'maple' || age === 'aspen' || age === 'pine' || age === 'birch' || age === 'sequoia' ? age : 'lib'
     };
   }
   function guideHtml(v) {
