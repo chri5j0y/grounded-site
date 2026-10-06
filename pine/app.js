@@ -247,8 +247,8 @@ function partIcon(d, size) { return icon(d.icon, size); }
 // THE SIX-PIECE PUZZLE TREE, drawn as a pine
 // variant: 'color' (part colors), 'score' (shaded by score), 'hero'
 // Roots: one deep root and wide laterals (pattern r3). Trunk: tall and straight.
-// Branches: the darker underside of each tier (kind 'under'). Leaves: the tiers
-// of the Pine mark (kind 'tiers'). Fruit: cones (kind 'cones').
+// Branches: the shaded underside of each tier (kind 'under'). Leaves: the tiers
+// of the Pine logo (kind 'tiers'). Fruit: cones (kind 'cones').
 // =====================================================================
 const TREE_SHAPES = {
   roots: {
@@ -276,14 +276,14 @@ const TREE_SHAPES = {
     paths: ['M168 292 C178 287 184 276 186 258 L189 120 L192 120 L191 258 C190 276 186 288 178 292 Z', 'M232 292 C222 287 216 276 214 258 L211 120 L208 120 L209 258 C210 276 214 288 222 292 Z'],
     grain: ['M176 288 C182 280 186 266 187 246', 'M224 288 C218 280 214 266 213 246', 'M189 220 C189 200 190 180 190 150', 'M211 220 C211 200 210 180 210 150']
   },
-  // a band along the lower edge of each tier, as the Pine mark shades it: always inside the canopy
+  // the shaded underside of each tier, as in the Pine logo
   branches: { kind: 'under', dx: 0, dy: -8, delay: 0.65 },
   // the tiers of the Pine mark: [y of the lower edge, height, reach left, reach right]
   leaves: { kind: 'tiers', dx: 0, dy: -12, delay: 0.85, tiers: [[240, 73, 86, 86], [204, 73, 73, 73], [161, 67, 58, 58], [118, 61, 43, 43], [75, 49, 28, 28]] },
-  fruit: { kind: 'cones', dx: 0, dy: -18, delay: 1.1, cones: [[140, 247], [262, 247], [150, 211], [252, 211], [162, 168], [238, 168], [178, 125]] }
+  fruit: { kind: 'cones', dx: 0, dy: -18, delay: 1.1, cones: [[146, 252], [256, 252], [156, 216], [246, 216], [168, 173], [234, 173], [182, 130]] }
 };
 const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
-const DRAW_ORDER = ['bark', 'trunk', 'leaves', 'branches', 'fruit', 'roots'];
+const DRAW_ORDER = ['bark', 'trunk', 'branches', 'leaves', 'fruit', 'roots'];
 const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
 
 // Turns a single curve into a filled shape that tapers from w0 to w1
@@ -334,24 +334,27 @@ function puzzleTreeSvg(opts) {
       if (shape.grain) inner += shape.grain.map(p => `<path d="${p}" style="stroke:${o.seam};" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>`).join('');
       if (!hero && key === 'trunk') inner += `<g stroke="#000" stroke-opacity="0.25" stroke-width="1.2" stroke-linecap="round" fill="none"><path d="M197 286 C198 250 199 200 199 90M203 286 C202 250 201 200 201 90"/></g>`;
     } else if (shape.kind === 'under') {
-      // a band along the toothed lower edge of each tier, inside the tier itself
-      TREE_SHAPES.leaves.tiers.forEach(t => {
-        const [yb, hh, L, R] = t, tooth = hh * 0.2, edge = [];
-        for (let j = 0; j <= 6; j++) edge.push([200 + R * 0.86 - j * (L + R) * 0.86 / 6, j % 2 ? yb - tooth : yb]);
-        const pts = edge.concat(edge.slice().reverse().map(p => [p[0], p[1] - 7])).map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="2" stroke-linejoin="round"/>`;
+      // the shaded underside of each tier, as in the Pine logo, peeking just below its toothed edge
+      TREE_SHAPES.leaves.tiers.slice().reverse().forEach(t => {
+        const pts = boughPoints(t, 200).map(p => p[0].toFixed(1) + ',' + (p[1] + 5).toFixed(1)).join(' ');
+        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="1.5" stroke-linejoin="round"/>`;
       });
     } else if (shape.kind === 'tiers') {
-      shape.tiers.forEach(t => {
+      // the tiers of the Pine logo, top tier first, each with a lit left face and a shaded right face
+      TREE_SHAPES.leaves.tiers.slice().reverse().forEach(t => {
+        const [yb, hh, L, R] = t, top = yb - hh;
         const pts = boughPoints(t, 200).map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="3" stroke-linejoin="round"/>`;
-        if (!hero) inner += `<polygon points="200,${t[0] - t[1] + 3} ${(200 - t[2] * 0.76).toFixed(1)},${t[0] - 3} ${(200 - t[2] * 0.34).toFixed(1)},${(t[0] - t[1] * 0.15).toFixed(1)}" fill="#FFFFFF" opacity="0.16"/>`;
+        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="1.5" stroke-linejoin="round"/>`;
+        if (!hero) {
+          inner += `<polygon points="200,${top + 3} ${(200 - L * 0.76).toFixed(1)},${yb - 3} ${(200 - L * 0.34).toFixed(1)},${(yb - hh * 0.15).toFixed(1)}" fill="#FFFFFF" opacity="0.22"/>`;
+          inner += `<polygon points="200,${top + 8} ${(200 + R * 0.84).toFixed(1)},${yb - 1.5} ${(200 + R * 0.44).toFixed(1)},${(yb - hh * 0.12).toFixed(1)}" fill="#000000" opacity="0.16"/>`;
+        }
       });
     } else if (shape.kind === 'cones') {
       inner += shape.cones.map(([x, y]) => `<g transform="translate(${x} ${y})">
-        <ellipse rx="6.5" ry="10" style="fill:${color};stroke:${o.seam};" stroke-width="3"/>
-        ${hero ? '' : '<path d="M-5.5 -4H5.5M-6.4 0.5H6.4M-5.2 5H5.2" stroke="#000" stroke-opacity="0.3" stroke-width="1.2"/>'}
-        <path d="M0 -10 V-14" style="stroke:${o.seam};" stroke-width="2.5" stroke-linecap="round"/></g>`).join('');
+        <ellipse rx="4.4" ry="7" style="fill:${color};stroke:${o.seam};" stroke-width="2"/>
+        ${hero ? '' : '<path d="M-3.6 -2.6H3.6M-4.2 0.6H4.2M-3.4 3.6H3.4" stroke="#000" stroke-opacity="0.3" stroke-width="1"/>'}
+        <path d="M0 -7 V-10" style="stroke:${o.seam};" stroke-width="2" stroke-linecap="round"/></g>`).join('');
     }
     const label = `${d.part}, ${d.name}${o.scores ? ', ' + o.scores[key] + ' of 10' : ''}`;
     const attrs = o.interactive ? `tabindex="0" role="button" aria-label="${label}"` : '';
