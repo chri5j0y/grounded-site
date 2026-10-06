@@ -247,8 +247,8 @@ function partIcon(d, size) { return icon(d.icon, size); }
 // THE SIX-PIECE PUZZLE TREE, drawn as a pine
 // variant: 'color' (part colors), 'score' (shaded by score), 'hero'
 // Roots: one deep root and wide laterals (pattern r3). Trunk: tall and straight.
-// Branches: limbs reaching out level from the trunk. Leaves: ragged layered
-// boughs (kind 'tiers'). Fruit: cones (kind 'cones').
+// Branches: the shaded underside of each tier (kind 'under'). Leaves: the tiers
+// of the Pine logo (kind 'tiers'). Fruit: cones (kind 'cones').
 // =====================================================================
 const TREE_SHAPES = {
   roots: {
@@ -276,26 +276,16 @@ const TREE_SHAPES = {
     paths: ['M168 292 C178 287 184 276 186 258 L189 120 L192 120 L191 258 C190 276 186 288 178 292 Z', 'M232 292 C222 287 216 276 214 258 L211 120 L208 120 L209 258 C210 276 214 288 222 292 Z'],
     grain: ['M176 288 C182 280 186 266 187 246', 'M224 288 C218 280 214 266 213 246', 'M189 220 C189 200 190 180 190 150', 'M211 220 C211 200 210 180 210 150']
   },
-  branches: {
-    kind: 'taper', dx: 0, dy: -8, delay: 0.65, seam: true, joints: true,
-    paths: [
-      ['M200 74 C200 60 200 46 200 26', 6, 2],
-      ['M197 222 C176 220 150 222 116 216', 6, 2],
-      ['M203 210 C226 208 252 210 286 204', 6, 2],
-      ['M197 176 C178 174 158 176 130 170', 5, 1.8],
-      ['M203 164 C222 162 242 164 270 158', 5, 1.8],
-      ['M197 132 C182 130 168 132 148 127', 4, 1.4],
-      ['M203 120 C218 118 232 120 252 115', 4, 1.4],
-      ['M198 90 C188 88 178 89 166 86', 3, 1.2],
-      ['M202 82 C212 80 222 81 234 78', 3, 1.2]
-    ]
-  },
-  // ragged layered boughs: [y of the lower edge, height, reach left, reach right]
-  leaves: { kind: 'tiers', dx: 0, dy: -12, delay: 0.85, tiers: [[236, 40, 104, 96], [200, 38, 92, 102], [164, 36, 84, 76], [130, 32, 66, 72], [100, 30, 54, 46], [72, 26, 38, 40], [46, 26, 22, 22]] },
-  fruit: { kind: 'cones', dx: 0, dy: -18, delay: 1.1, cones: [[128, 238], [272, 230], [146, 200], [250, 166], [160, 132], [228, 102], [176, 72]] }
+  // the shaded underside of each tier, as in the Pine logo
+  branches: { kind: 'under', dx: 0, dy: -8, delay: 0.65 },
+  // the tiers of the Pine mark: [y of the lower edge, height, reach left, reach right]
+  leaves: { kind: 'tiers', dx: 0, dy: -12, delay: 0.85, tiers: [[240, 73, 86, 86], [204, 73, 73, 73], [161, 67, 58, 58], [118, 61, 43, 43], [75, 49, 28, 28]] },
+  fruit: { kind: 'cones', dx: 0, dy: -18, delay: 1.1, cones: [[146, 252], [256, 252], [156, 216], [246, 216], [168, 173], [234, 173], [182, 130]] }
 };
 const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
-const DRAW_ORDER = ['branches', 'leaves', 'fruit', 'bark', 'trunk', 'roots'];
+const DRAW_ORDER = ['bark', 'trunk', 'branches', 'leaves', 'fruit', 'roots'];
+// Results: the Pine logo's own colors, each part shaded by its score
+const LOGO_COLORS = { roots: '#9A7A55', trunk: '#6E4524', bark: '#4A2C14', branches: '#2C5527', leaves: '#4A8040', fruit: '#8A5A2B' };
 const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
 
 // Turns a single curve into a filled shape that tapers from w0 to w1
@@ -315,14 +305,10 @@ function taperPath(d, w0, w1) {
   const f = p => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
   return 'M' + left.map(f).join(' L') + ' L' + f(pt(1)) + ' L' + right.reverse().map(f).join(' L') + ' Z';
 }
-// One ragged bough: apex on the trunk, sagging top edges, a torn and toothed lower edge.
-// The teeth come from a fixed pattern, so the tree looks the same every time.
-const TEETH = [0.22, 0.31, 0.18, 0.27, 0.34, 0.2, 0.29, 0.24, 0.33, 0.19, 0.26, 0.3];
+// One tier of the Pine mark: apex on the trunk, straight sides, a toothed lower edge.
 function boughPoints(t, cx) {
-  const [yb, hh, L, R] = t, ay = yb - hh, pts = [[cx, ay], [cx + R * 0.35, ay + hh * 0.32 - 1], [cx + R * 0.7, ay + hh * 0.64 - 1], [cx + R, yb - 4]];
-  const n = Math.max(5, Math.round((L + R) / 14));
-  for (let k = 1; k < n; k++) { const x = cx + R - (R + L) * k / n; pts.push([x, k % 2 ? yb + 1 : yb - hh * TEETH[k % TEETH.length]]); }
-  pts.push([cx - L, yb - 4], [cx - L * 0.7, ay + hh * 0.64 - 1], [cx - L * 0.35, ay + hh * 0.32 - 1]);
+  const [yb, hh, L, R] = t, top = yb - hh, tooth = hh * 0.2, pts = [[cx, top]];
+  for (let j = 0; j <= 6; j++) pts.push([cx + R - j * (L + R) / 6, j % 2 ? yb - tooth : yb]);
   return pts;
 }
 let TREE_UID = 0;
@@ -336,7 +322,7 @@ function puzzleTreeSvg(opts) {
     const d = DOMAIN_BY_KEY[key];
     const shape = TREE_SHAPES[PIECE_FOR[key]];
     const hero = o.variant === 'hero';
-    const color = hero ? HERO_COLORS[key] : d.color;
+    const color = hero ? HERO_COLORS[key] : o.variant === 'score' ? LOGO_COLORS[key] : d.color;
     let pieceOpacity = 1;
     if (o.variant === 'score' && o.scores) pieceOpacity = 0.2 + 0.8 * ((o.scores[key] || 5) / 10);
     let inner = '';
@@ -349,17 +335,28 @@ function puzzleTreeSvg(opts) {
       inner += shape.paths.map(p => `<path d="${p}" style="fill:${color};stroke:${o.seam};paint-order:stroke;" stroke-width="2.5" stroke-linejoin="round"/>`).join('');
       if (shape.grain) inner += shape.grain.map(p => `<path d="${p}" style="stroke:${o.seam};" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>`).join('');
       if (!hero && key === 'trunk') inner += `<g stroke="#000" stroke-opacity="0.25" stroke-width="1.2" stroke-linecap="round" fill="none"><path d="M197 286 C198 250 199 200 199 90M203 286 C202 250 201 200 201 90"/></g>`;
+    } else if (shape.kind === 'under') {
+      // the shaded underside of each tier, as in the Pine logo, peeking just below its toothed edge
+      TREE_SHAPES.leaves.tiers.slice().reverse().forEach(t => {
+        const pts = boughPoints(t, 200).map(p => p[0].toFixed(1) + ',' + (p[1] + 5).toFixed(1)).join(' ');
+        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="1.5" stroke-linejoin="round"/>`;
+      });
     } else if (shape.kind === 'tiers') {
-      shape.tiers.forEach(t => {
+      // the tiers of the Pine logo, top tier first, each with a lit left face and a shaded right face
+      TREE_SHAPES.leaves.tiers.slice().reverse().forEach(t => {
+        const [yb, hh, L, R] = t, top = yb - hh;
         const pts = boughPoints(t, 200).map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
-        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="3" stroke-linejoin="round"/>`;
-        if (!hero) inner += `<polygon points="200,${t[0] - t[1] + 3} ${(200 - t[2] * 0.84).toFixed(1)},${t[0] - 5} ${(200 - t[2] * 0.3).toFixed(1)},${(t[0] - t[1] * 0.32).toFixed(1)}" fill="#FFFFFF" opacity="0.16"/>`;
+        inner += `<polygon points="${pts}" style="fill:${color};stroke:${o.seam};" stroke-width="1.5" stroke-linejoin="round"/>`;
+        if (!hero) {
+          inner += `<polygon points="200,${top + 3} ${(200 - L * 0.76).toFixed(1)},${yb - 3} ${(200 - L * 0.34).toFixed(1)},${(yb - hh * 0.15).toFixed(1)}" fill="#FFFFFF" opacity="0.22"/>`;
+          inner += `<polygon points="200,${top + 8} ${(200 + R * 0.84).toFixed(1)},${yb - 1.5} ${(200 + R * 0.44).toFixed(1)},${(yb - hh * 0.12).toFixed(1)}" fill="#000000" opacity="0.16"/>`;
+        }
       });
     } else if (shape.kind === 'cones') {
       inner += shape.cones.map(([x, y]) => `<g transform="translate(${x} ${y})">
-        <ellipse rx="6.5" ry="10" style="fill:${color};stroke:${o.seam};" stroke-width="3"/>
-        ${hero ? '' : '<path d="M-5.5 -4H5.5M-6.4 0.5H6.4M-5.2 5H5.2" stroke="#000" stroke-opacity="0.3" stroke-width="1.2"/>'}
-        <path d="M0 -10 V-14" style="stroke:${o.seam};" stroke-width="2.5" stroke-linecap="round"/></g>`).join('');
+        <ellipse rx="4.4" ry="7" style="fill:${color};stroke:${o.seam};" stroke-width="2"/>
+        ${hero ? '' : '<path d="M-3.6 -2.6H3.6M-4.2 0.6H4.2M-3.4 3.6H3.4" stroke="#000" stroke-opacity="0.3" stroke-width="1"/>'}
+        <path d="M0 -7 V-10" style="stroke:${o.seam};" stroke-width="2" stroke-linecap="round"/></g>`).join('');
     }
     const label = `${d.part}, ${d.name}${o.scores ? ', ' + o.scores[key] + ' of 10' : ''}`;
     const attrs = o.interactive ? `tabindex="0" role="button" aria-label="${label}"` : '';
@@ -1210,7 +1207,7 @@ const TEND_CFG = {
   shareRefl: false,
   plain: () => isPlain(),
   tree: { shape: 'layered', fruit: 'cone', fruitColor: '#8A5A2B', trunk: '#6E4524', trunkBare: '#5A4636',
-    pal: [['#1F3F1B', '#2F5C2A', '#86B86C'], ['#4E5A33', '#6E7A48', '#A3AC78'], ['#4F4A30', '#6E6644', '#958B62']] },
+    pal: [['#2C5527', '#4A8040', '#78AB64'], ['#4E5A33', '#6E7A48', '#A3AC78'], ['#4F4A30', '#6E6644', '#958B62']] },
   partIcon: key => partIcon(DOMAIN_BY_KEY[key], 22),
   questions: () => QUESTIONS,
   answers: Q_OPTS,

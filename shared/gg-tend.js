@@ -51,7 +51,7 @@
                   alone. The tree holds as it is: no drying or drooping while it is on.
      pauseLine    the words under the tree while the pause is on
      tree.shape   'tall' draws a narrow, high crown on a massive flared trunk;
-                  'layered' (Pine, GWG BLD 739) draws ragged layered boughs on a tall,
+                  'layered' (Pine, GWG BLD 739) draws the tree from the Pine mark on a tall,
                   straight trunk
      Pine's game layer (GWG BLD 739), all optional, for any tool:
      itemTag      (partKey, name, state) => html after a practice name on Today
@@ -166,42 +166,52 @@
     'Your tree is drooping. It is still here, and one practice is a start.',
     'Your tree is resting bare. Nothing is lost. Tend it once today and watch it wake up.'
   ];
-  // Pine (GWG BLD 739): a tall, straight trunk and ragged layered boughs. Thriving,
-  // dry, and drooping use the palette's shade, body, and light; drooping tiers sag
-  // at the tips; resting bare shows the trunk and its bare limbs. Never anything gone.
+  // Pine (GWG BLD 739): the tree from the Pine mark (shared/marks/pine.svg), drawn in the
+  // mark's own units (trunk base at 50,90; tip at 50,6) and scaled into the scene.
+  // Thriving, dry, and drooping use the palette's shade, body, and light; drooping
+  // tiers sag at the tips; resting bare shows the trunk and its bare limbs. Never anything gone.
   function layeredTree(T, h, parts, R, cx, cy, gy, tk, pal, drop) {
-    var o = '', top = 18;
-    o += '<path d="M' + (cx - 24) + ' ' + gy + 'Q' + (cx - 10) + ' ' + (gy - 3) + ' ' + (cx - 10) + ' ' + (gy - 22) + 'L' + (cx - 2.5) + ' ' + (top + 10) + 'H' + (cx + 2.5) + 'L' + (cx + 10) + ' ' + (gy - 22) + 'Q' + (cx + 10) + ' ' + (gy - 3) + ' ' + (cx + 24) + ' ' + gy + 'Z" fill="' + tk + '"/>';
-    o += '<path d="M' + (cx - 4) + ' ' + (gy - 4) + 'Q' + (cx - 4) + ' ' + (gy - 80) + ' ' + (cx - 1) + ' ' + (top + 40) + 'M' + (cx + 4) + ' ' + (gy - 5) + 'Q' + (cx + 4) + ' ' + (gy - 80) + ' ' + (cx + 1) + ' ' + (top + 40) + '" stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none"/>';
-    var tiers = [[176, 30, 96, 84], [150, 28, 82, 94], [124, 26, 78, 66], [99, 24, 60, 68], [76, 22, 50, 42], [55, 20, 34, 38], [36, 18, 20, 18]];
-    var sag = [0, 2, 8, 0][h];
+    var k = (gy - 22) / 84, f = function (n) { return n.toFixed(2); };
+    var o = '<g transform="translate(' + f(cx - 50 * k) + ' ' + f(gy - 90 * k) + ') scale(' + k.toFixed(4) + ')">';
+    // [top, bottom, half width] of each tier, top tier first, as in the mark
+    var tiers = [[6, 22, 9], [16, 36, 14], [28, 50, 19], [40, 64, 24], [52, 76, 28]];
+    var bark = '<g fill="none" stroke-linecap="round"><path d="M48.3 89.4Q48.6 84 48.5 79M50.1 89.6Q50.3 85 50.0 78.5M51.7 89.4Q51.5 84.5 51.6 79" stroke="#000" stroke-opacity=".28" stroke-width="0.45"/><path d="M47.8 89Q47.9 84 47.8 79" stroke="#FFF" stroke-opacity=".18" stroke-width="0.35"/></g>';
     if (!pal) {
-      // resting bare: the limbs still reach out, ready to leaf again
+      // resting bare: the trunk and its limbs still reach out, ready to green again
+      o += '<path d="M44 90Q47.2 87 47.4 80L49.2 8H50.8L52.6 80Q52.8 87 56 90Z" fill="' + tk + '"/>' + bark;
       tiers.forEach(function (t, i) {
-        o += '<path d="M' + cx + ' ' + (t[0] - 4) + 'Q' + (cx - t[2] * 0.4) + ' ' + (t[0] - 6) + ' ' + (cx - t[2] * 0.72) + ' ' + (t[0] - 2) + 'M' + cx + ' ' + (t[0] - 8) + 'Q' + (cx + t[3] * 0.4) + ' ' + (t[0] - 10) + ' ' + (cx + t[3] * 0.72) + ' ' + (t[0] - 5) + '" stroke="' + tk + '" stroke-width="' + (i < 3 ? 3 : 2) + '" fill="none" stroke-linecap="round"/>';
+        var y = t[1] - 2, r = t[2] * 0.72;
+        o += '<path d="M50 ' + y + 'Q' + f(50 - r * 0.5) + ' ' + (y - 1) + ' ' + f(50 - r) + ' ' + (y + 1.5) + 'M50 ' + (y - 1.5) + 'Q' + f(50 + r * 0.5) + ' ' + (y - 2.5) + ' ' + f(50 + r) + ' ' + y + '" stroke="' + tk + '" stroke-width="' + (i > 2 ? 1.2 : 0.9) + '" fill="none" stroke-linecap="round"/>';
       });
-      return o;
+      return o + '</g>';
     }
-    var f = function (n) { return n.toFixed(1); };
-    tiers.forEach(function (t, i) {
-      var yb = t[0] + sag * (0.3 + i * 0.05), ay = t[0] - t[1], L = t[2] * (0.96 + 0.04 * Math.min(1, parts / 3)), Rr = t[3] * (0.96 + 0.04 * Math.min(1, parts / 3));
-      o += '<path d="M' + cx + ' ' + (t[0] - 3) + 'Q' + f(cx - L * 0.4) + ' ' + (t[0] - 5) + ' ' + f(cx - L * 0.7) + ' ' + f(yb - 7) + 'M' + cx + ' ' + (t[0] - 6) + 'Q' + f(cx + Rr * 0.4) + ' ' + (t[0] - 8) + ' ' + f(cx + Rr * 0.7) + ' ' + f(yb - 9) + '" stroke="' + tk + '" stroke-width="2" fill="none" stroke-linecap="round"/>';
-      var pts = [[cx, ay], [cx + Rr * 0.35, ay + (yb - ay) * 0.32 - 1], [cx + Rr * 0.7, ay + (yb - ay) * 0.64 - 1], [cx + Rr, yb - 4 + sag * 0.6]];
-      var n = Math.max(5, Math.round((L + Rr) / 13));
-      for (var k = 1; k < n; k++) { var tt = k / n, x = cx + Rr - (Rr + L) * tt, deep = (yb - ay) * (0.18 + 0.16 * R()); pts.push([x + (R() * 3 - 1.5), k % 2 ? yb + R() * 2 : yb - deep]); }
-      pts.push([cx - L, yb - 4 + sag * 0.6], [cx - L * 0.7, ay + (yb - ay) * 0.64 - 1], [cx - L * 0.35, ay + (yb - ay) * 0.32 - 1]);
-      var poly = function (dy) { return pts.map(function (p) { return f(p[0]) + ',' + f(p[1] + dy); }).join(' '); };
-      o += '<polygon points="' + poly(2.2) + '" fill="' + pal[0] + '"/>';
-      o += '<polygon points="' + poly(0) + '" fill="' + pal[1] + '"/>';
-      o += '<polygon points="' + cx + ',' + f(ay + 2) + ' ' + f(cx - L * 0.86) + ',' + f(yb - 5) + ' ' + f(cx - L * 0.3) + ',' + f(yb - (yb - ay) * 0.32) + '" fill="' + pal[2] + '" fill-opacity="0.75"/>';
-      if (h === 0) [[-1, L], [1, Rr]].forEach(function (sd) { o += '<ellipse cx="' + f(cx + sd[0] * sd[1]) + '" cy="' + f(yb - 4) + '" rx="5" ry="2" fill="' + pal[2] + '" transform="rotate(' + (-sd[0] * 12) + ' ' + f(cx + sd[0] * sd[1]) + ' ' + f(yb - 4) + ')"/>'; });
+    o += '<path d="M44 90Q47.2 87 47.4 80V64H52.6V80Q52.8 87 56 90Z" fill="' + tk + '"/>' + bark;
+    var sag = [0, 0.6, 2.6, 0][h];
+    var tier = function (t, dy) {
+      var top = t[0], yb = t[1], w = t[2], hh = yb - top, tooth = hh * 0.2, pts = [[50, top]];
+      for (var j = 0; j <= 6; j++) {
+        var x = 50 + w - j * w / 3, y = (j % 2 ? yb - tooth : yb);
+        if (j === 0 || j === 6) y += sag;
+        pts.push([x, y]);
+      }
+      return pts.map(function (p) { return f(p[0]) + ',' + f(p[1] + dy); }).join(' ');
+    };
+    tiers.forEach(function (t) {
+      var top = t[0], yb = t[1], w = t[2], hh = yb - top;
+      o += '<polygon points="' + tier(t, 2.2) + '" fill="' + pal[0] + '"/>';
+      o += '<polygon points="' + tier(t, 0) + '" fill="' + pal[1] + '"/>';
+      o += '<polygon points="50,' + f(top + 1) + ' ' + f(50 - w * 0.76) + ',' + f(yb - 1 + sag * 0.6) + ' ' + f(50 - w * 0.34) + ',' + f(yb - hh * 0.15) + '" fill="' + pal[2] + '" fill-opacity="0.8"/>';
+      o += '<polygon points="50,' + f(top + 3) + ' ' + f(50 + w * 0.84) + ',' + f(yb - 0.5 + sag * 0.6) + ' ' + f(50 + w * 0.44) + ',' + f(yb - hh * 0.12) + '" fill="' + pal[0] + '" fill-opacity="0.6"/>';
     });
     // cones, one for each part tended today, when the tree is well
-    if (h <= 1) for (var k = 0; k < Math.min(6, parts); k++) {
-      var t = tiers[k % 3 + (k > 2 ? 1 : 0)], side = k % 2 ? 1 : -1, ax = cx + side * (t[side > 0 ? 3 : 2] * 0.55), ay2 = t[0] + 2;
-      o += '<g transform="translate(' + f(ax) + ' ' + f(ay2) + ')"><ellipse rx="3.4" ry="5.4" fill="' + (T.fruitColor || '#8A5A2B') + '" stroke="#4E2E12" stroke-width=".8"/><path d="M-3 -1.6H3M-3.2 1.6H3.2" stroke="#4E2E12" stroke-width=".7"/></g>';
+    if (h <= 1) {
+      var spots = [[30, 77], [70, 77], [34, 65], [66, 65], [38, 51], [62, 51]];
+      for (var c = 0; c < Math.min(6, parts); c++) {
+        var sp = spots[c];
+        o += '<g transform="translate(' + sp[0] + ' ' + sp[1] + ')"><ellipse rx="1.5" ry="2.4" fill="' + (T.fruitColor || '#8A5A2B') + '" stroke="#4E2E12" stroke-width=".35"/><path d="M-1.3 -.7H1.3M-1.4 .7H1.4" stroke="#4E2E12" stroke-width=".3"/></g>';
+      }
     }
-    return o;
+    return o + '</g>';
   }
   function treeSVG(h, parts, big) {
     var R = rng(41), W = 320, H = 250, gy = 210, cx = 160, cy = 104;
