@@ -455,6 +455,7 @@ a.tool-mini:hover{border-color:var(--gold);}
 .contact-email,.contact-sub{margin:14px 0 0;font-size:17px;color:var(--ink-soft);}
 .call-text{margin:14px 0 0;font-size:17px;}
 .foot-local,.foot-crisis{font-size:15px;color:var(--ink-soft);margin:8px 0 0;}
+.foot-contact{display:inline-block;margin-top:4px;}.foot-contact a{white-space:nowrap;}
 .page-head{padding-bottom:10px;}
 .page-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(38px,6vw,58px);line-height:1.1;margin:0 0 12px;}
 .rates-wrap{display:flex;flex-direction:column;gap:18px;max-width:860px;}

@@ -51,8 +51,11 @@
    - No leaderboards, no random rewards, no streak shame. Everything pauses its
      penalties for 14 days after a check-in flags losing hope or feeling alone.
 
-   When Life Changes: Birch's own guides arrive in the next build. Until then
-   Birch points to Oak's 67 guides (/oak/#life), one tap away.
+   When Life Changes (GWG BLD 743): Birch's own guides, built like Pine's.
+   The words live in birch/guides.js (BIRCH_GUIDES = {rings, links, topics}); the
+   videos in birch/guide-videos.js, played by shared/gg-learn.js. Two views: For
+   You (the young adult) and For the Helper. Faith lines show as written, under
+   the adult faith rules. Oak's guides stay one quiet tap away (/oak/#life).
    ===================================================================== */
 let PROF = null;      // the open Birch profile: { id, name, avatar, age }
 let HELP = null;      // the id of the person a helper is helping, while in helper view
@@ -921,7 +924,7 @@ function calculateResults() {
       <div class="interpretation">${interpretResults(scores, unsure)}</div>
       ${tapped ? `<p class="gt-small">Help any time: call or text 988, or text HOME to 741741. In danger right now, call 911. <button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p>` : flagBoxHtml(flags, entry)}
     </div>
-    ${tapped ? '' : buildPersonalSections(scores, unsure) + oakGuidesHtml(scores, unsure)}
+    ${tapped ? '' : buildPersonalSections(scores, unsure) + lcSuggestHtml(scores, unsure)}
     <div class="reminder-banner"><p>${tapped ? 'Saved to ' + escapeHtml(CK.name) + '\'s tree, marked as taken together.' : 'Check in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.'}</p></div>
     <div class="btn-row">${tapped ? `<button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button>` : `<button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button>`}</div>
     ${tapped ? '' : '<div id="client-save-box"></div>'}`;
@@ -947,22 +950,210 @@ function calculateResults() {
   const goToGrowthPlanPart = key => { showView('client-growthplan'); const card = document.getElementById(`cp-card-client-${key}`); if (card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); };
   mountTree('client-results-tree', { variant: 'score', scores, interactive: true, seam: '#2C1810', assemble: true }, goToGrowthPlanPart);
 }
-// When Life Changes: Birch's own guides arrive in the next build. Until then, after a
-// check-in with a Growing Edge, a quiet line points to Oak's 67 guides, one tap away.
-function oakGuidesHtml(scores, unsure) {
+// =====================================================================
+// WHEN LIFE CHANGES (GWG BLD 743): Birch's own guides, ported from Pine's (BLD 740).
+// The words live in birch/guides.js (window.BIRCH_GUIDES = {rings, links, topics});
+// the site-wide search reads the same file. A ring with no guides yet stays
+// hidden, and a small note names the rings still to come. Two views: For You
+// (the young adult) and For the Helper (a parent, partner, friend, or mentor).
+// Help lines are Birch's adult lines from birch/checkin.js (safety.lines): the
+// calm list, plus topic lines where a guide's topic matches. Faith lines show as
+// written, since the guides are written to the adult faith rules. Oak's guides
+// stay one quiet tap away.
+// =====================================================================
+const LC_RINGS = (window.BIRCH_GUIDES || {}).rings || [];
+const LC_TOPICS = (window.BIRCH_GUIDES || {}).topics || [];
+const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcPart = k => DOMAIN_BY_KEY[k];
+const lcEsc = s => escapeHtml(s == null ? '' : String(s));
+const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
+const lcHas = id => LC_TOPICS.some(t => t.id === id);
+function lcMatches(t, q) {
+  if (!q) return true;
+  const words = (t.title + ' ' + (t.keys || '') + ' ' + (t.quick || []).join(' ')).toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/);
+  return q.toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/).filter(Boolean).every(w => words.some(x => x.startsWith(w)));
+}
+function lcList(a) { return '<ul>' + (a || []).map(x => '<li>' + lcEsc(x) + '</li>').join('') + '</ul>'; }
+function lcPartsText(t) { return (t.parts || []).map(k => lcPart(k) ? lcPart(k).part : k).join(', '); }
+// Topic lines (birch/checkin.js safety.lines topic and hurt) shown with a guide whose topic matches.
+// A guide may also carry its own lines: [ids].
+const LC_TOPIC_LINES = {
+  'pressure-burnout': ['nami'], 'adhd': ['nami'], 'what-now': ['mn211'],
+  'job-loss': ['mn211'], 'money-basics': ['mn211'], 'debt': ['mn211'], 'gambling': ['mngambling', 'ncpg'],
+  'moving-back': ['mn211'], 'housing': ['mn211'],
+  'controlling': ['thehotline'],
+  'unplanned-pregnancy': ['tlcmama'], 'young-parent': ['tlcmama'], 'after-baby': ['tlcmama'], 'pregnancy-loss': ['tlcmama'],
+  'anxiety': ['nami'], 'depression': ['nami'], 'first-signs': ['nami'], 'substances': ['samhsa', 'poison'], 'eating': ['anad'], 'health-26': ['mn211'],
+  'selfharm': ['nami'], 'sexual-assault': ['rainn'], 'images': ['takeitdown'],
+  'military': ['milonesource'], 'coming-home': ['milonesource']
+};
+function lcHelpHtml(t) {
+  const calm = LINES.calm.filter(x => x.id !== '911'), end = LINES.calm.filter(x => x.id === '911');
+  const ids = t ? (Array.isArray(t.lines) ? t.lines : LC_TOPIC_LINES[t.id] || []) : [];
+  const topic = linesFor(ids).filter(x => !calm.some(y => y.id === x.id));
+  const L = calm.concat(topic, end);
+  return `<div class="lc-help"><h3>Help any time</h3>${L.length ? linesHtml(L, true) : ''}<p class="no-print"><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
+}
+const LC_OAK = '<p class="lc-oak no-print"><a class="text-link" href="/oak/#life">More guides in Oak</a></p>';
+function renderLC(mode) {
+  mode = 'client';
+  const st = LCS[mode], el = document.getElementById(mode + '-life');
+  if (!el) return;
+  if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
+  const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
+  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  el.innerHTML = `<div class="lc-head">
+      <p class="eyebrow">When Life Changes</p>
+      <h2 class="section-title" style="margin-top:4px">Guides for the years of new ground</h2>
+      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes these years can bring. Each guide has two views: For You, when you are the one going through it, and For the Helper, for a parent, partner, friend, mentor, or anyone walking beside you. Most guides have two short videos too.</p>
+    </div>
+    ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: roommates, a first job, debt, a breakup..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
+    <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
+      <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
+      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+    </div>` : ''}
+    <div id="${mode}-lc-list"></div>
+    ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
+    ${LC_OAK}
+    ${lcHelpHtml()}
+    <p class="lc-note">These guides offer general spiritual and emotional guidance and support, drawn from chaplaincy and trusted mental health, health, and family organizations. For therapy, medical care, or legal advice, they point you to the right people. In danger right now, call 911. For a crisis, call or text 988.</p>`;
+  lcRenderList(mode);
+  if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
+}
+function lcJoin(a) { return a.length < 2 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join('; ') + '; and ' + a[a.length - 1]; }
+function lcRenderList(mode) {
+  const st = LCS[mode];
+  const box = document.getElementById(mode + '-lc-list');
+  if (!box) return;
+  document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
+  let html = '', n = 0;
+  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+    if (!ts.length) return;
+    n += ts.length;
+    html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
+      <article class="lc-card" style="--rc:${r.color}">
+        <span class="lc-label">Hard season</span>
+        <h4>${lcEsc(t.title)}</h4>
+        ${lcList(t.quick)}
+        <p class="lc-meta">Parts of the tree often affected: ${lcEsc(lcPartsText(t))}.</p>
+        <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
+      </article>`).join('')}</div></div>`;
+  });
+  box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
+}
+/* Search: the same engine as the header search. Birch's guides first, then the rest of Grow With Grounded.
+   Birch is an adult app, so nothing is held back. */
+function lcFind(el, mode) {
+  LCS[mode].q = ''; LCS[mode].find = el.value;
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'birch', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking It Through',
+    hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips', '#' + mode + '-life .lc-soon'], accent: 'var(--gold)' });
+}
+function lcOpen(mode, id) {
+  mode = 'client';
+  LCS[mode].open = id || null;
+  showView(mode + '-life');
+}
+function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcPersp(mode, p) { mode = 'client'; LCS[mode].persp = p; renderLC(mode); }
+/* Practice links open Birch's own practice guide right under the name. */
+function lcPrac(btn) {
+  const g = btn.nextElementSibling; if (!g) return;
+  const open = g.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function lcPracHtml(t) {
+  return '<div class="lc-pracs">' + (t.practices || []).map(k => {
+    const [part, name] = String(k).split('|'), d = lcPart(part), g = guideHtml(part, name), col = d ? d.color : 'var(--line)', shown = shownName(part, name);
+    if (!g) return `<div class="lc-prac"><span class="lc-practice" style="border-color:${col}">${lcEsc(shown)}</span></div>`;
+    return `<div class="lc-prac" style="--domain-color:${col}"><button type="button" class="lc-practice lc-prac-btn" style="border-color:${col}" aria-expanded="false" onclick="lcPrac(this)">${lcEsc(shown)}<span class="lc-prac-part">${lcEsc(d ? d.part : '')}</span></button><div class="guide">${g}</div></div>`;
+  }).join('') + '</div>';
+}
+function lcSourcesHtml(t) {
+  if (!window.GGSources) return '';
+  if (Array.isArray(t.sources) && t.sources.length) return GGSources.line(t.sources);
+  return GGSources.html('birch:' + t.id);
+}
+function lcDetail(mode, t) {
+  if (!t) { LCS[mode].open = null; return ''; }
+  const r = lcRing(t.ring), st = LCS[mode], self = st.persp !== 'helper', sf = t.self || {}, hp = t.helper || {};
+  const view = self ? `
+      <h3>What this can feel like</h3><p>${lcEsc(t.feel)}</p>
+      <h3>First steps</h3>${lcList(sf.first)}
+      <h3>What helps</h3>${lcList(sf.helps)}
+      <h3>What to tell yourself</h3><div class="lc-say">${(sf.tell || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
+      <h3>Telling your people</h3><p>${lcEsc(sf.people)}</p>`
+    : `
+      <h3>What they may be carrying</h3><p>${lcEsc(t.feel)} ${lcEsc(hp.feel)}</p>
+      <h3>What to say</h3><div class="lc-say">${(hp.say || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
+      <div class="lc-two"><div><b>What not to say or do</b>${lcList(hp.avoid)}</div><div><b>Practical ways to help</b>${lcList(hp.help)}</div></div>
+      <h3>Looking after yourself as the helper</h3><p>${lcEsc(hp.you)}</p>`;
+  return `<article class="lc-article" id="${mode}-lc-article" style="--rc:${r.color}">
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px">
+      <button class="lc-back" onclick="lcClose('${mode}')">Back to all guides</button>
+      <button class="btn btn-secondary" onclick="printGrowthPlan('${mode}-lc-article')">Save or Print This Guide</button>
+    </div>
+    <span class="lc-tag">${lcEsc(r.name)}</span>
+    <h2>${lcEsc(t.title)}</h2>
+    <div class="lc-quick"><b>Quick Reference</b>${lcList(t.quick)}</div>
+    ${lcVids(t.id, self)}
+    <div class="lc-toggle no-print" role="group" aria-label="Choose a view">
+      <button aria-pressed="${self}" onclick="lcPersp('${mode}','self')">For You</button>
+      <button aria-pressed="${!self}" onclick="lcPersp('${mode}','helper')">For the Helper</button>
+    </div>
+    ${view}
+    ${t.faith ? `<h3>Faith and meaning</h3><p>${lcEsc(t.faith)}</p>` : ''}
+    <h3>Using Birch</h3><p>Parts of the tree this often touches: <b>${lcEsc(lcPartsText(t))}</b>. Practices that can help (tap one to see how):</p>${lcPracHtml(t)}<p>A check-in in a few weeks can show how ${self ? 'you are' : 'they are'} doing.</p>
+    <h3>When to reach out for more help</h3><div class="lc-reach">${lcList(t.reach)}</div>
+    ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}" target="_blank" rel="noopener">${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
+    ${window.GGShelf ? GGShelf.html('birch', t.id) : ''}
+    ${lcSourcesHtml(t)}
+    ${lcHelpHtml(t)}
+    <p class="lc-note">From When Life Changes in Birch&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. In danger right now: 911. Crisis: call or text 988, or text HOME to 741741. &copy; ${new Date().getFullYear()} Chris Joy. You are welcome to print this guide for personal use.</p>
+  </article>`;
+}
+/* When Life Changes videos (GWG BLD 743): two per guide, For You and For the Helper, played by shared/gg-learn.js
+   from birch/guide-videos.js. BR_VIDS lists the guides that have them so far (written by the build's generator).
+   A quiet check shows once a video has been watched on this device (gg-learn:birch). */
+/* BR_VIDS start */const BR_VIDS = ["first-year", "not-college", "changing-plans", "pressure-burnout", "first-job", "job-loss", "career-change", "money-basics", "moving-out", "roommates", "first-apartment", "moving-back", "friends", "loneliness", "dating", "breakup", "parents-adult", "estrangement", "anxiety", "depression", "first-signs", "suicide-thoughts", "friend-suicide", "selfharm", "sexual-assault", "military", "coming-home", "grief-young", "faith-own", "faith-hurt"];/* BR_VIDS end */
+function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:birch') || '{}').done || {})[id]); } catch (e) { return false; } }
+function lcVids(gid, self) {
+  if (!BR_VIDS.includes(gid)) return '';
+  const b = (side, name, pri) => { const id = 'br-g-' + gid + '-' + side, w = lcVidWatched(id);
+    return `<button type="button" class="btn ${pri ? 'btn-primary' : 'btn-secondary'}" onclick="lcWatch('${gid}','${side}')">${w ? '&#10003;' : '&#9654;'} Watch: ${name}${w ? ' <span class="lc-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="lc-gv no-print"><div class="btn-row">${b('you', 'For You', self)}${b('helper', 'For the Helper', !self)}</div>
+    <p class="lc-gv-note">For You, if this is what you're facing. For the Helper, if you're walking beside someone who is. A few minutes each, narrated aloud.</p></div>`;
+}
+function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('birch', 'br-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.birch = id => { if (lcHas(id)) lcOpen('client', id); };
+window.addEventListener('gg-learn-close', () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
+/* After a check-in: guides that touch the parts carrying the most (each Growing Edge part), two per part,
+   lowest part first. A part marked Not sure yet is left out. My Season may move its own guides
+   (birch/checkin.js mySeason guides) to the front of each part's list; it never hides any. */
+function lcSeasonGuides() { const out = []; seasonsNow().forEach(id => ((SEASONS.find(x => x.id === id) || {}).guides || []).forEach(g => { if (!out.includes(g)) out.push(g); })); return out; }
+function lcSuggestHtml(scores, unsure) {
   const skip = unsure || [];
-  const low = PART_ORDER.filter(k => !skip.includes(k) && scores[k] != null && scores[k] < 5);
-  if (!low.length) return '';
+  const low = PART_ORDER.filter(k => !skip.includes(k) && scores[k] != null && scores[k] < 5).sort((a, b) => scores[a] - scores[b]);
+  if (!low.length || !LC_TOPICS.length) return '';
+  const fav = lcSeasonGuides(), rank = t => { const i = fav.indexOf(t.id); return i < 0 ? fav.length : i; };
+  const picks = [];
+  low.forEach(k => LC_TOPICS.filter(t => (t.parts || []).includes(k) && !picks.includes(t)).map((t, i) => [t, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).slice(0, 2).forEach(x => picks.push(x[0])));
+  if (!picks.length) return '';
   const crisis = scores.fruit <= 2 && !skip.includes('fruit') ? `<p><b>If you are having thoughts of ending your life, call or text 988 now, or text HOME to 741741. In danger right now, call 911.</b></p>` : '';
   return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
-    <p>Some parts of your tree are carrying a lot right now. Oak's When Life Changes guides offer words and next steps for jobs, money, moving, loneliness, breakups, grief, faith, and more.</p>
-    ${crisis}<div class="lc-links"><a class="btn btn-secondary" href="/oak/#life">Browse Oak's 67 Guides</a></div></div>`;
+    <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps.</p>
+    ${crisis}<div class="lc-links">${picks.map(t => `<button type="button" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" onclick="lcOpen('client',null)">Browse all guides</button></div>
+    <p class="lc-oak"><a class="text-link" href="/oak/#life">More guides in Oak</a></p></div>`;
 }
 
 // =====================================================================
-// NAVIGATION: six tabs. Each view belongs to one tab.
+// NAVIGATION: seven tabs. Each view belongs to one tab.
 // =====================================================================
-const VIEW_TAB = { 'client-today': 'today', 'client-intro': 'today', 'client-week': 'week', 'client-season': 'season', 'client-assess': 'season', 'client-results': 'season', 'client-progress': 'season', 'client-growthplan': 'plan', 'client-ground': 'ground' };
+const VIEW_TAB = { 'client-today': 'today', 'client-intro': 'today', 'client-week': 'week', 'client-season': 'season', 'client-assess': 'season', 'client-results': 'season', 'client-progress': 'season', 'client-growthplan': 'plan', 'client-ground': 'ground', 'client-life': 'guides' };
 function showView(id) {
   if (!document.getElementById(id)) return;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -970,6 +1161,7 @@ function showView(id) {
   const tab = VIEW_TAB[id];
   document.querySelectorAll('#client-nav .nav-btn').forEach(b => { const on = b.getAttribute('data-tab') === tab; b.classList.toggle('active', on); if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
   if (id === 'client-ground') renderGround();
+  if (id === 'client-life') renderLC('client');
   if (id === 'client-growthplan') { if (HELP) renderHelpPlan(); else oakPlanOpen(); }
   if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render(); }
   scrollToViewTop(id, false, false);
@@ -981,7 +1173,8 @@ function printGrowthPlan(sheetId) {
   const sheet = document.getElementById(sheetId);
   if (!sheet) return;
   if (!window.GGApp || !window.ggPdfFromEl) { printGrowthPlanNow(sheetId); return; }
-  GGApp.sheet({ title: 'Birch growth plan', file: 'birch-growth-plan.pdf', print: () => printGrowthPlanNow(sheetId),
+  const guide = /lc-article/.test(sheetId), h = sheet.querySelector('h2,h1,.growth-plan-title');
+  GGApp.sheet({ title: guide ? (h ? h.textContent : 'This guide') : 'Birch growth plan', file: guide ? 'birch-guide.pdf' : 'birch-growth-plan.pdf', print: () => printGrowthPlanNow(sheetId),
     blocks: () => ggPdfFromEl(sheet, { rows: '.growth-plan-domain-header', eyebrow: 'Birch by Grow With Grounded', foot: 'Birch(TM) by Grow With Grounded. growwithgrounded.com/birch' }) });
 }
 function printGrowthPlanNow(sheetId) {
@@ -1683,12 +1876,17 @@ function renderGround() {
     <p class="gt-small sq-legfoot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. It is never part of Share to Family, and helpers never see it.</p>
     ${window.GGSources ? GGSources.html('birch:groundwork') : ''}`;
 }
+// Skills whose Oak guide (birch/groundwork.js link.guide) has a Birch guide that fits better.
+// A skill links to the Birch guide once it exists; otherwise its Oak link stays.
+const GW_BIRCH_GUIDE = { 'sk-jobends': 'job-loss', 'sk-debts': 'debt', 'sk-lease': 'first-apartment', 'sk-safetyplan': 'suicide-thoughts', 'sk-signs': 'controlling', 'sk-friendhelp': 'friend-suicide', 'sk-newpeople': 'friends' };
 function gwSkillHtml(x, L) {
   const s = L.skills[x.id], on = !!(s && s.done), ln = x.link || {};
   let more = '';
   const prac = ln.practice || ((SP.BY_SKILL || {})[x.id] || [])[0];
   if (prac) { const [part, name] = String(prac).split('|'), g = guideHtml(part, name); if (g) more += `<button type="button" class="text-btn" aria-expanded="${GX.how === x.id}" onclick="GX.how=GX.how==='${x.id}'?null:'${x.id}';renderGround()">A practice for this: ${escapeHtml(shownName(part, name))}</button>${GX.how === x.id ? `<div class="guide open bc-skill-guide">${g}</div>` : ''}`; }
-  if (ln.guide && /^oak:/.test(ln.guide)) more += `<a class="text-link" href="/oak/#life=${encodeURIComponent(ln.guide.slice(4))}">A guide for this, in Oak</a> `;
+  const bg = GW_BIRCH_GUIDE[x.id];
+  if (bg && lcHas(bg)) more += `<button type="button" class="text-btn" onclick="lcOpen('client','${bg}')">A guide for this: ${escapeHtml(LC_TOPICS.find(t => t.id === bg).title)}</button> `;
+  else if (ln.guide && /^oak:/.test(ln.guide)) more += `<a class="text-link" href="/oak/#life=${encodeURIComponent(ln.guide.slice(4))}">A guide for this, in Oak</a> `;
   if (Array.isArray(x.site) && x.site[1]) more += ` <a class="text-link" href="${escapeHtml(x.site[1])}" target="_blank" rel="noopener">${escapeHtml(x.site[0] || 'Start here')}</a>`;
   return `<li class="bc-skill${on ? ' done' : ''}"><label class="bc-skill-row"><input type="checkbox"${on ? ' checked' : ''} onchange="gwSkill('${x.id}',this.checked)"> <span><b>${escapeHtml(x.t)}</b>${x.help ? `<small>${escapeHtml(x.help)}</small>` : ''}${on && s.done ? `<small class="bc-skill-when">Marked ${escapeHtml(formatDate(s.done))}</small>` : ''}</span></label>${more ? `<div class="bc-skill-more">${more}</div>` : ''}</li>`;
 }
@@ -1949,10 +2147,10 @@ renderAboutParts();
 renderProgress();
 renderProfileBar();
 
-/* Deep links: #quick, #checkin, #groundwork, #skills, #plan, #about, #life (Oak's guides for now), #for=<id> (a helper) */
+/* Deep links: #quick, #checkin, #groundwork, #skills, #plan, #about, #life (guides), #life=<id> or #talk=<id> (one guide), #for=<id> (a helper) */
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
-  if (h.startsWith('#life') || h.startsWith('#talk=')) { location.href = '/oak/' + h.replace(/^#talk=/, '#life='); }
+  if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && lcHas(id) ? id : null; showView('client-life'); }
   else if (h === '#groundwork' || h === '#ground') { GX.ch = null; showView('client-ground'); }
   else if (h === '#skills') { GX.ch = 'skills'; showView('client-ground'); }
   else if (h === '#plan') showView('client-growthplan');

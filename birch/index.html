@@ -1089,8 +1089,10 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 .sq-helper b{flex:1;}
 .sq-planlist{margin:10px 0 0 22px;font-size:18px;line-height:1.7;}
 .lc-suggest .lc-links a.btn{text-decoration:none;}
-.bc-oakguides{margin-top:24px;}
-/* Six tabs along the bottom on phones */
+/* When Life Changes (GWG BLD 743): a quiet link to Oak's guides */
+.lc-oak{font-size:15px;color:var(--ink-soft);margin:18px 0 0;}
+.lc-suggest .lc-oak{margin:12px 0 0;}
+/* Seven tabs along the bottom on phones */
 @media (max-width:700px){
   #client-nav .nav-btn{font-size:11.5px;letter-spacing:0;padding:8px 1px 9px;min-height:60px;}
   body{padding-bottom:80px;}
@@ -1136,7 +1138,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   <button class="nav-btn" data-icon="rings" data-tab="season" onclick="showView('client-season')"><span>Season</span></button>
   <button class="nav-btn" data-icon="can" data-tab="plan" onclick="showView('client-growthplan')"><span>Growth Plan</span></button>
   <button class="nav-btn" data-icon="path" data-tab="ground" onclick="GX.ch=null;showView('client-ground')"><span>Groundwork</span></button>
-  <!-- When Life Changes arrives with Birch's own guides in the next build: a button here with data-tab="guides" opening #client-life. -->
+  <button class="nav-btn" data-icon="door" data-tab="guides" data-lc="1" onclick="LCS.client.open=null;showView('client-life')"><span>When Life Changes</span></button>
   <button class="nav-btn" data-icon="play" data-tab="learn" onclick="window.GGLearn&&GGLearn.open('birch')"><span>Learn</span></button>
 </nav>
 
@@ -1168,7 +1170,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   <p class="lead">Name each resource in only one part of your tree. If your friends give you hope, they still belong in the Branches, not the Fruit. This shows your true resources in each part, and where you might be leaning on one part of the tree to carry weight it was never meant to hold alone.</p>
 
   <div class="section-title">When Life Changes</div>
-  <p class="lead">Birch's own guides for the changes of these years are on the way. Until then, Oak's 67 When Life Changes guides, on jobs, money, moving, loneliness, breakups, grief, faith, and more, are one tap away. <a class="text-link" href="/oak/#life">Open Oak's guides</a></p>
+  <p class="lead">Guides for the changes of these years: school and first paths, work and money, a first place of your own, friends and dating, family and early parenthood, mind and body, safety, and faith and meaning. Each guide has a For You view and a For the Helper view, for anyone walking beside you, and two short videos. <a class="text-link" href="#life" onclick="LCS.client.open=null;showView('client-life');return false">Open When Life Changes</a> <span class="lc-oak"><a class="text-link" href="/oak/#life">More guides in Oak</a></span></p>
 
   <div class="section-title">Who made this</div>
   <div class="maker-card">
@@ -1227,6 +1229,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 </div>
 
 <div class="view" id="client-ground"></div>
+<div class="view" id="client-life"></div>
 </main>
 
 <footer class="site-footer">
@@ -1235,10 +1238,10 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   <nav class="foot-links" aria-label="Footer">
     <a class="text-link" href="https://growwithgrounded.com/">Home</a><a class="text-link" href="https://growwithgrounded.com/services.html">Services</a><a class="text-link" href="https://growwithgrounded.com/stories.html">Stories</a><a class="text-link" href="https://growwithgrounded.com/library/">Library</a><a class="text-link" href="https://growwithgrounded.com/rates.html">Rates</a><a class="text-link" href="https://growwithgrounded.com/about.html">About</a><a class="text-link" href="https://growwithgrounded.com/contact.html">Contact</a><a class="text-link" href="https://growwithgrounded.com/tools.html">Tools</a><a class="text-link" href="https://growwithgrounded.com/maple/">Maple</a><a class="text-link" href="https://growwithgrounded.com/aspen/">Aspen</a><a class="text-link" href="https://growwithgrounded.com/pine/">Pine</a><a class="text-link" href="https://growwithgrounded.com/birch/">Birch</a><a class="text-link" href="https://growwithgrounded.com/oak/">Oak</a><a class="text-link" href="https://growwithgrounded.com/sequoia/">Sequoia</a><a class="text-link" href="https://growwithgrounded.com/willow/">Willow</a><a class="text-link" href="https://growwithgrounded.com/grove/">The Grove</a><a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a><a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a>
   </nav>
-  <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><a class="text-link" href="https://growwithgrounded.com/contact.html">hello [at] growwithgrounded [dot] com</a></p>
+  <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
   <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, or text HOME to 741741, any time. In danger right now, call 911.</p>
   <p class="footer-privacy">Your answers stay in your browser. Nothing you enter here is sent to Grounded or anyone else.</p>
-  <p class="footer-copyright">&copy; <span id="copyright-year"></span> Chris Joy. All rights reserved. Grow With Grounded&trade;, Maple&trade;, Aspen&trade;, Pine&trade;, Birch&trade;, Oak&trade;, Sequoia&trade;, Willow&trade;, The Grove&trade;, and Grounded&trade; are trademarks of Chris Joy. Birch and its content, framework, and practices may not be copied, reproduced, or redistributed without permission.</p>
+  <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Grow With Grounded Birch and its content, framework, and practices may not be copied, reproduced, or redistributed without permission.</p>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js"></script>
@@ -1253,6 +1256,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 <script src="/shared/gg-journey.js?v=r6n"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
 <script src="/shared/gg-tend.js?v=vb6"></script>
+<script src="/birch/guides.js?v=bg1"></script>
 <script src="/birch/app.js?v=bc1"></script>
 <script>
 /* Read aloud, built in like Oak and Sequoia */
@@ -1285,6 +1289,8 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
       return r;
     };
     var cr = window.calculateResults; if (cr) window.calculateResults = function () { var r = cr.apply(this, arguments); var box = document.querySelector('#client-results-content .results-summary'); if (box && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: document.getElementById('client-results-content'), label: 'Read my results aloud' }), box.firstChild); return r; };
+    /* When Life Changes: a Read aloud button for the guide list and for each guide */
+    var lc = window.renderLC; if (lc) window.renderLC = function () { var r = lc.apply(this, arguments); var h = document.querySelector('#client-life .lc-head'); if (h && !h.querySelector('.gg-rbar')) h.appendChild(R.control({ root: document.getElementById('client-life'), label: 'Read this page aloud' })); var art = document.querySelector('#client-life .lc-article'), q = art && art.querySelector('.lc-quick'); if (q && !art.querySelector('.gg-rbar')) art.insertBefore(R.control({ root: art, label: 'Read this guide aloud' }), q); return r; };
     var sv = window.showView; if (sv) window.showView = function () { R.stop(); return sv.apply(this, arguments); };
   });
 })();

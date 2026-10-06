@@ -19886,7 +19886,7 @@ window.GG_LEARN = {
       },
       {
        "k": "trees",
-       "h": "Pine grows between Aspen and Oak.",
+       "h": "Pine grows between Aspen and Birch.",
        "say": "Grow With Grounded has a tree for every age. Maple and Aspen are for younger students. Birch is for young adults, and Oak is for adults. Pine is the tree built for grades nine to twelve, for people who are building their own lives."
       },
       {
