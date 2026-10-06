@@ -11,14 +11,14 @@
    ===================================================================== */
 (function(){
 const RINGS = [
-  { key: 'inside', name: 'Inside me', color: '#9B5DE5', blurb: 'Feelings that live inside a child.' },
-  { key: 'loss', name: 'Close to home: loss', color: '#FF6B6B', blurb: 'When someone or something they love is gone.' },
-  { key: 'health', name: 'Close to home: health', color: '#FF9F1C', blurb: 'Illness and struggles in the family.' },
-  { key: 'family', name: 'Close to home: family changes', color: '#E07A00', blurb: 'When home looks different.' },
-  { key: 'school', name: 'At school', color: '#6CCB3A', blurb: 'Friends, classrooms, and growing up.' },
-  { key: 'community', name: 'In our community', color: '#00B4D8', blurb: 'Neighborhood and town.' },
-  { key: 'country', name: 'In our country', color: '#0096C7', blurb: 'News and big public events.' },
-  { key: 'world', name: 'In the world', color: '#1B4F8C', blurb: 'Faraway events that still feel close.' },
+  { key: 'inside', name: 'Inside Me', color: '#9B5DE5', blurb: 'Feelings that live inside a child.' },
+  { key: 'loss', name: 'Close to Home: Loss', color: '#FF6B6B', blurb: 'When someone or something they love is gone.' },
+  { key: 'health', name: 'Close to Home: Health', color: '#FF9F1C', blurb: 'Illness and struggles in the family.' },
+  { key: 'family', name: 'Close to Home: Family Changes', color: '#E07A00', blurb: 'When home looks different.' },
+  { key: 'school', name: 'At School', color: '#6CCB3A', blurb: 'Friends, classrooms, and growing up.' },
+  { key: 'community', name: 'In Our Community', color: '#00B4D8', blurb: 'Neighborhood and town.' },
+  { key: 'country', name: 'In Our Country', color: '#0096C7', blurb: 'News and big public events.' },
+  { key: 'world', name: 'In the World', color: '#1B4F8C', blurb: 'Faraway events that still feel close.' },
   { key: 'safety', name: 'Safety', color: '#D62839', blurb: 'The first minutes matter most.' }
 ];
 

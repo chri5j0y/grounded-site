@@ -740,6 +740,33 @@ a.big-btn{text-decoration:none;}
 .mp-person span{font-size:13px;color:var(--ink-soft);}
 .mp-person:hover,.mp-person:focus-visible{border-color:var(--sky-bright);}
 .gt-share{display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600;}
+/* The game layer, Faith or Plain, and moving on (GWG BLD 745) */
+.mp-kind{border-left:5px solid var(--sky-bright);}
+.mp-kind-line{font-family:var(--kid);font-size:21px;line-height:1.35;margin:0;color:var(--ink);}
+.mp-game{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;}
+.mp-friends{grid-column:1/-1;}
+.mp-level,.mp-bal,.mp-friends{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.mp-k{font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.mp-level b{font-family:var(--kid);font-weight:500;font-size:28px;line-height:1.1;color:var(--sky);}
+.mp-dots{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0;}
+.mp-dot{width:22px;height:22px;border-radius:50%;border:3px solid var(--pc);background:transparent;}
+.mp-dot.on{background:var(--pc);}
+.mp-friends .critter-shelf{margin-top:2px;}
+.mp-q{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--sun-soft);color:var(--sun-ink);font-family:var(--kid);font-size:17px;}
+.mp-miles .mp-mile-list{list-style:none;margin:6px 0;padding:0;display:grid;gap:6px;}
+.mp-mile-list li{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:6px;font-family:var(--kid);}
+.mp-mile-list span{color:var(--ink-soft);font-size:14px;font-family:var(--sans);}
+.mp-setup,.mp-moving{border:3px solid var(--sky-bright);}
+.mp-see-d{margin:10px 0 0;}
+.mp-see-d summary{cursor:pointer;font-weight:600;}
+.mp-see-d .mp-see{margin-top:8px;}
+.mp-lock{background:var(--sun-soft);color:var(--sun-ink);border-radius:12px;padding:8px 12px;font-size:15px;margin:6px 0;}
+.mp-cheer{position:fixed;left:50%;top:22%;transform:translate(-50%,10px) scale(.96);z-index:500;background:var(--card);color:var(--ink);border:3px solid var(--sky-bright);border-radius:24px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:18px 24px;text-align:center;max-width:min(380px,calc(100vw - 32px));width:max-content;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
+.mp-cheer.show{opacity:1;transform:translate(-50%,0) scale(1);}
+.mp-cheer p{font-family:var(--kid);font-size:21px;line-height:1.3;margin:8px 0 0;}
+.mp-cheer p.mp-cheer-sub{font-family:var(--sans);font-size:15px;color:var(--ink-soft);margin-top:4px;}
+@media (prefers-reduced-motion: reduce){.mp-cheer{transition:none;}}
+@media (max-width:700px){.mp-game{grid-template-columns:1fr;}}
 </style>
 
 </head>
@@ -794,6 +821,15 @@ a.big-btn{text-decoration:none;}
 
       <span class="field-label" id="grade-label">What grade are you in?</span>
       <div class="grade-row" role="group" aria-labelledby="grade-label" id="grade-row"></div>
+
+      <div id="wording-box" hidden>
+        <span class="field-label" id="wording-label">Grown-up, choose the wording</span>
+        <div class="choice-row" role="group" aria-labelledby="wording-label">
+          <button class="choice" data-word="faith" aria-pressed="true" onclick="pickWording('faith')"><strong>Faith</strong><span>Prayer and faith as one door among several.</span></button>
+          <button class="choice" data-word="plain" aria-pressed="false" onclick="pickWording('plain')"><strong>Plain</strong><span>The same questions without religious words.</span></button>
+        </div>
+        <p class="tip-line">Scores are the same either way. You can change it later in the child's Settings.</p>
+      </div>
 
       <p class="form-error" id="start-error" role="alert"></p>
       <div class="start-row"><button class="big-btn" onclick="startCheckin()">Start my check-in</button></div>
@@ -1303,11 +1339,13 @@ const ACTIVITIES = [
     easy: "Check on your seed and say hi to it." }
 ];
 
+/* Tree friends (the game layer, GWG BLD 745): critters come to visit as a surprise as days of
+   tending add up. Kids never see a count to earn them, only a friend who shows up. */
 const CRITTERS = [
-  { key: 'lady', name: 'Ladybug', need: 'Finish 1 whole day', days: 1 },
-  { key: 'butterfly', name: 'Butterfly', need: 'Finish 3 days', days: 3 },
-  { key: 'bird', name: 'Bird and nest', need: 'Finish 7 days', days: 7 },
-  { key: 'bunny', name: 'Bunny', need: 'Finish your growth plan', days: null }
+  { key: 'lady', name: 'Ladybug', need: 'A surprise visitor', days: 1 },
+  { key: 'butterfly', name: 'Butterfly', need: 'A surprise visitor', days: 3 },
+  { key: 'bird', name: 'Bird and Nest', need: 'A surprise visitor', days: 7 },
+  { key: 'bunny', name: 'Bunny', need: 'A surprise visitor', days: 14 }
 ];
 const CRITTER_ART = {
   lady: '<ellipse cx="0" cy="1" rx="8" ry="7" fill="#E63946"/><path d="M0 -6V8" stroke="#243746" stroke-width="1.6"/><circle cx="0" cy="-7" r="4" fill="#243746"/><circle cx="-4" cy="0" r="1.6" fill="#243746"/><circle cx="4" cy="2" r="1.6" fill="#243746"/><circle cx="-3" cy="4.5" r="1.4" fill="#243746"/><circle cx="3.5" cy="-2.5" r="1.4" fill="#243746"/>',
@@ -1511,7 +1549,8 @@ const kidId = name => name.trim().toLowerCase();
 const S = {
   mode: 'self', grade: null, name: '', step: 0, answers: {}, done: [],
   readAloud: false, recordId: null, picks: [], weeks: 2, prior: null,
-  editing: false, kid: null, treeTab: 'today', dayView: 'today', cuSel: null
+  editing: false, kid: null, treeTab: 'today', dayView: 'today', cuSel: null,
+  wording: null, pickW: null
 };
 
 /* ---------- speech ---------- */
@@ -1589,6 +1628,7 @@ function setMode(m) {
   S.mode = m;
   document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === m ? 'true' : 'false'));
   $('tab-kids').hidden = m !== 'grown';
+  const wb = $('wording-box'); if (wb) wb.hidden = m !== 'grown';
 }
 function renderGrades() {
   $('grade-row').innerHTML = CK.grades.map(([k, l]) => `<button class="grade-btn" data-grade="${k}" aria-pressed="${S.grade === k}" onclick="setGrade('${k}')" aria-label="${l}">${k === 'K' ? 'K' : k}<small>${k === 'K' ? 'Kinder' : 'Grade'}</small></button>`).join('');
@@ -1613,6 +1653,8 @@ function startCheckin() {
   const kid = loadKids()[kidId(S.name)];
   const last = kid && kid.checkins.length ? kid.checkins[kid.checkins.length - 1] : null;
   S.prior = last && last.std === CK.version ? last : null;
+  // The wording: a grown-up's choice here, else the child's saved one, else Faith. A Plain lock wins.
+  S.wording = plainLocked(kid) ? 'plain' : (S.mode === 'grown' && S.pickW) || (kid ? kidWording(kid) : 'faith');
   go('checkin');
   renderStep(true);
 }
@@ -1856,9 +1898,10 @@ function finishCheckin(lastKey) {
   if (!kids[id]) kids[id] = migrateKid({ name: S.name, checkins: [] });
   kids[id].name = S.name;
   kids[id].grade = S.grade;
+  if (!plainLocked(kids[id]) && (!kids[id].wording || (S.mode === 'grown' && S.pickW))) kids[id].wording = curWording();
   hush(); S.inSafety = false;
   const safety = safetyFor(S.grade).map((q, i) => S.safety[i] || null);
-  const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, std: CK.version, mode: S.mode, answers: JSON.parse(JSON.stringify(S.answers)), safety, safetyFlag: safety.some(a => a === 'yes' || a === 'unsure'), plan: null };
+  const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, std: CK.version, mode: S.mode, wording: curWording(), answers: JSON.parse(JSON.stringify(S.answers)), safety, safetyFlag: safety.some(a => a === 'yes' || a === 'unsure'), plan: null };
   kids[id].checkins.push(rec);
   saveKids(kids);
   S.recordId = rec.id;
@@ -2121,12 +2164,14 @@ function planFinished(plan) {
   if (!plan) return false;
   return daysBetween(plan.end, dkey()) > 0 || doneDays(plan) >= plan.weeks * 7;
 }
+// Friends come with days tended: today's tending (kid.tend) or a growth plan from before (kid.plan).
 function critterState(kid) {
-  const plan = kid.plan;
-  if (!plan) return {};
-  const d = doneDays(plan);
-  const fin = planFinished(plan) && d > 0;
-  return { lady: d >= 1, butterfly: d >= 3, bird: d >= 7, bunny: fin, rings: Math.floor(d / 7) };
+  const plan = kid.plan, t = kid.tend || {};
+  const tended = Object.keys(t.days || {}).filter(k => { const x = t.days[k]; return x && (((x.d || []).length) || ((x.a || []).length)); }).length;
+  const d = Math.max(plan ? doneDays(plan) : 0, tended);
+  const fin = !!plan && planFinished(plan) && doneDays(plan) > 0;
+  if (!d && !fin) return {};
+  return { lady: d >= 1, butterfly: d >= 3, bird: d >= 7, bunny: fin || d >= 14, rings: Math.floor(d / 7) };
 }
 function critterIcon(k) { return `<svg viewBox="-20 -30 40 44" aria-hidden="true">${CRITTER_ART[k]}</svg>`; }
 
@@ -2161,6 +2206,7 @@ function openTree(id, tab) {
   S.readAloud = isK2(S.grade);
   S.recordId = kid.checkins.length ? kid.checkins[kid.checkins.length - 1].id : null;
   S.answers = kid.checkins.length ? kid.checkins[kid.checkins.length - 1].answers : {};
+  S.wording = kidWording(kid);
   MP_KID = kid; mpInit(kid); mpSeasonSync();
   renderTree();
   go('tree');
@@ -2178,7 +2224,7 @@ function renderTree() {
   const kids = loadKids();
   const kid = kids[S.kid];
   if (!kid) { go('home'); return; }
-  MP_KID = kid;
+  MP_KID = kid; S.wording = kidWording(kid);
   const tab = S.treeTab || 'today';
   const last = kid.checkins[kid.checkins.length - 1];
   const info = last ? concernInfo(last.answers, last.grade, last.safety, last.wording) : null;
@@ -2297,6 +2343,13 @@ function mpInit(kid) {
     toast: m => toast(m),
     store: { get: mpTendGet, save: mpTendSave },
     profileHtml: mpProfileHtml, extraSettings: mpExtraSettings,
+    // Faith or Plain, and the game layer (GWG BLD 745). No itemTag or partNote: Maple has no Hardy.
+    plain: () => isPlain(),
+    todayExtra: s => mpTodayExtra(s),
+    seasonExtra: s => mpSeasonExtra(s),
+    onCheck: (done, key, s, parts) => mpOnCheck(done, key, s, parts),
+    pause: () => mpPause(),
+    pauseLine: 'Your tree is cozy and safe. It stays green and happy while your grown-ups help.',
     actions: {
       fullCheckin: () => newCheckinFor(S.kid), quickCheckin: () => newCheckinFor(S.kid),
       results: () => { S.seasonSub = 'checkins'; mpTab('season'); }, progress: () => { S.seasonSub = 'grown'; mpTab('season'); },
@@ -2314,7 +2367,211 @@ function mpProfileHtml() {
     <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();changeKidPic('${esc(S.kid)}')">Change picture</button>${mpMulti() ? `<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();go('home')">Whose tree?</button>` : ''}${!k._pid && window.GGP ? `<button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();saveKidProfile('${esc(S.kid)}')">Save ${esc(k.name)}'s tree</button>` : ''}${k._pid && window.GGP ? `<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage('${k._pid}')">Picture code and more</button>` : ''}</div>
     <p class="gt-small">${k._pid ? `${esc(k.name)} can open this tree with their own secret picture code, and the grown-ups who agreed can always open it too.` : k._legacy ? 'This tree was saved before Grounded profiles and is not locked yet.' : 'Right now this tree is only kept until this page closes.'}</p></section>`;
 }
-function mpExtraSettings() { return `<section class="mp-see" id="mp-see"><h3>What your grown-up can see</h3>${MP_SEE}</section>`; }
+function mpExtraSettings() {
+  return mpWordingHtml() + `<section class="mp-see" id="mp-see"><h3>What your grown-up can see</h3>${MP_SEE}</section>` + mpMovingHtml(false);
+}
+
+/* ---------- Faith or Plain: setup and settings (GWG BLD 745) ---------- */
+const WORD_LINE = 'Faith wording names God, prayer, and faith as one door among several, next to quiet, nature, and family traditions. Plain wording asks the same things without religious words. Scores are the same either way.';
+const LOCK_LINE = 'Plain is locked on. A Maple Guide set Plain wording for a school or group, so the questions stay the same for every child there.';
+function mpWordingHtml() {
+  const k = MP_KID; if (!k) return '';
+  const lock = plainLocked(k), plain = kidWording(k) === 'plain';
+  return `<section id="mp-set-wording"><h3>Faith or Plain Wording</h3><p class="gt-small">For the grown-up. ${WORD_LINE}</p>
+    ${lock ? `<p class="mp-lock">${LOCK_LINE}</p>` : ''}
+    <label class="gt-radio"><input type="radio" name="mp-word" value="faith"${!plain ? ' checked' : ''}${lock ? ' disabled' : ''} onchange="setMpWording('faith')"><span><b>Faith</b>Prayer, quiet, wonder, nature, and family traditions.</span></label>
+    <label class="gt-radio"><input type="radio" name="mp-word" value="plain"${plain ? ' checked' : ''}${lock ? ' disabled' : ''} onchange="setMpWording('plain')"><span><b>Plain</b>Quiet, wonder, nature, and family traditions.</span></label></section>`;
+}
+// Saves the wording in the child's own record, then shows everything in it.
+function mpSetKid(fn) {
+  const kids = loadKids(), k = kids[S.kid]; if (!k) return null;
+  fn(k); saveKids(kids); MP_KID = k; return k;
+}
+function setMpWording(w) {
+  if (!MP_KID || plainLocked(MP_KID)) return;
+  const k = mpSetKid(x => { x.wording = w === 'plain' ? 'plain' : 'faith'; }); if (!k) return;
+  S.wording = kidWording(k);
+  const t = mpTendGet(); if (t) mpTendSave();
+  MP_PLAN = null; renderTree();
+  if (window.GGTend) { GGTend.openSettings(); const f = $('mp-set-wording'); if (f) f.scrollIntoView({ block: 'start' }); }
+  toast(S.wording === 'plain' ? 'Plain wording is on. Scores stay the same.' : 'Faith wording is on. Scores stay the same.');
+}
+// First open of a child's tree: set Maple up together (Pine's way). The grown-up chooses the wording.
+function mpSetupHtml() {
+  const k = MP_KID; if (!k || k.setup) return '';
+  const lock = plainLocked(k), plain = kidWording(k) === 'plain';
+  return `<div class="gt-card mp-setup" id="mp-setup"><h3>Set Up Maple Together</h3><p>Welcome to ${esc(k.name)}'s tree! Grown-up, choose the wording for the questions and practices. You can change it any time in Settings.</p>
+    <div class="btn-row" role="group" aria-label="Wording"><button type="button" class="btn btn-sm ${!plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${!plain}"${lock ? ' disabled' : ''} onclick="mpSetupPick('faith')">Faith</button><button type="button" class="btn btn-sm ${plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${plain}"${lock ? ' disabled' : ''} onclick="mpSetupPick('plain')">Plain</button></div>
+    <p class="gt-small">${lock ? LOCK_LINE : WORD_LINE}</p>
+    <details class="mp-see-d"><summary>What a grown-up can see</summary><div class="mp-see">${MP_SEE}</div></details>
+    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="mpSetupDone()">All Set</button></div></div>`;
+}
+function mpSetupPick(w) {
+  if (!MP_KID || plainLocked(MP_KID)) return;
+  const k = mpSetKid(x => { x.wording = w === 'plain' ? 'plain' : 'faith'; }); if (!k) return;
+  S.wording = kidWording(k); MP_PLAN = null; mpTendGet(); mpTendSave();
+  if (window.GGTend) GGTend.render();
+  const c = $('mp-setup'); if (c) c.scrollIntoView({ block: 'nearest' });
+}
+function mpSetupDone() {
+  const k = mpSetKid(x => { if (!x.wording) x.wording = kidWording(x); x.setup = dkey(); }); if (!k) return;
+  if (window.GGTend) GGTend.render();
+  toast('Maple is ready. Tend your tree together!');
+}
+
+/* ---------- The game layer (Decision 3, GWG BLD 745) ----------
+   Maple's own: tree friends who come as a surprise, nurture, and kind words. The shared core:
+   tree levels, milestones, the balance bonus (a rainbow week), and the 14-day pause after a
+   check-in that says a child feels alone or without hope. Only a thirsty look, never drooping,
+   and no Hardy setting. No streaks, no currency, nothing ever taken away. Saved in tend.mp. */
+const MP_KIND = [
+  'You did it! Your tree says thank you.',
+  'Little by little, your tree grows.',
+  'Nice! That was a kind thing to do for you.',
+  'Your tree felt that. Great job!',
+  'One more drink for your tree.',
+  'High five! That counts.',
+  'Roots grow even when no one can see them.',
+  'You are taking good care of you.'
+];
+function mpKindWord(n) { const day = Math.floor(Date.now() / 86400000); return MP_KIND[(day * 5 + (n || 0)) % MP_KIND.length]; }
+const MP_LEVELS = [[0, 'Seed'], [1, 'Sprout'], [7, 'Seedling'], [21, 'Little Maple'], [45, 'Young Maple'], [90, 'Tall Maple'], [180, 'Grand Old Maple']];
+const MP_MILES = [
+  ['day1', 'First Day Tended', 'You tended your tree for the first time.'],
+  ['six', 'All Six in One Day', 'You tended every part of your tree in one day.'],
+  ['week', 'A Whole Week', 'You tended your tree all seven days of a week.'],
+  ['balance', 'First Rainbow Week', 'You tended all six parts in one week.'],
+  ['ring', 'First Ring', 'You finished a whole season and grew a ring.']
+];
+const MP_THIRSTY = 'Your tree looks a little thirsty. One practice gives it a drink.';
+const mpMonday = k => addDays(k, -((keyDate(k).getDay() + 6) % 7));
+function mpTended(s, k) { const x = (s.days || {})[k]; return !!(x && (((x.d || []).length) || ((x.a || []).length))); }
+function mpRec(s) { if (!s.mp || typeof s.mp !== 'object') s.mp = {}; s.mp.miles = s.mp.miles || {}; s.mp.bal = s.mp.bal || {}; s.mp.friends = s.mp.friends || {}; return s.mp; }
+function mpDays(s) { return Object.keys(s.days || {}).filter(k => mpTended(s, k)).length; }
+function mpLevel(n) { let i = 0; MP_LEVELS.forEach((L, j) => { if (n >= L[0]) i = j; }); return { name: MP_LEVELS[i][1], next: MP_LEVELS[i + 1] || null }; }
+function mpWeekParts(s, mon) { const set = {}; for (let i = 0; i < 7; i++) { const x = (s.days || {})[addDays(mon, i)]; if (x) (x.d || []).forEach(id => { set[id.split('|')[0]] = 1; }); } return set; }
+function mpWeeks(s) { const w = {}; Object.keys(s.days || {}).forEach(k => { if (mpTended(s, k)) { const m = mpMonday(k); (w[m] = w[m] || []).push(k); } }); return w; }
+function mpRainbowWeeks(s) { return Object.keys(mpWeeks(s)).filter(m => Object.keys(mpWeekParts(s, m)).length >= 6); }
+function mpMilesNow(s) {
+  const out = {}, w = mpWeeks(s);
+  if (mpDays(s) >= 1) out.day1 = 1;
+  if (Object.keys(s.days || {}).some(k => { const set = {}; ((s.days[k] || {}).d || []).forEach(id => { set[id.split('|')[0]] = 1; }); return Object.keys(set).length >= 6; })) out.six = 1;
+  if (Object.keys(w).some(m => w[m].length >= 7)) out.week = 1;
+  if (mpRainbowWeeks(s).length) out.balance = 1;
+  (s.rings || []).forEach((r, i) => { out[i ? 'season' + (i + 1) : 'ring'] = 1; });
+  return out;
+}
+function mpMileName(id) { const m = MP_MILES.find(x => x[0] === id); return m ? m[1] : id.indexOf('season') === 0 ? 'Season ' + id.slice(6) + ' Finished' : id; }
+// Records anything new: milestones, a rainbow week, and friends who came. Returns what is new.
+function mpCheckNew(s, quiet) {
+  const R = mpRec(s), now = mpMilesNow(s), fresh = { miles: [], friend: null, bonus: false };
+  Object.keys(now).forEach(id => { if (!R.miles[id]) { R.miles[id] = dkey(); fresh.miles.push(id); } });
+  mpRainbowWeeks(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = dkey(); if (!quiet && m === mpMonday(dkey())) fresh.bonus = true; } });
+  const cr = MP_KID ? critterState(MP_KID) : {};
+  CRITTERS.forEach(c => { if (cr[c.key] && !R.friends[c.key]) { R.friends[c.key] = dkey(); if (!fresh.friend) fresh.friend = c; } });
+  return fresh;
+}
+// The pause: for 14 days after a check-in says a child feels alone or without hope, or the safety
+// step asks for help, the tree holds as it is and only kind words show.
+function mpPause() {
+  const k = MP_KID; if (!k) return false;
+  const cut = addDays(dkey(), -14);
+  return (k.checkins || []).some(c => {
+    if (!c || !c.date || dkey(new Date(c.date)) < cut) return false;
+    const info = concernInfo(c.answers || {}, c.grade, c.safety, c.wording);
+    return info.flags.some(f => f.type === 'alone' || f.type === 'hope') || info.safe.some(x => x.kind === 'self');
+  });
+}
+// Only a thirsty look: when the shared tree would droop or rest bare, Maple shows it a little dry instead.
+function mpThirsty() {
+  if (!window.GGTend || mpPause()) return;
+  const h = GGTend.health(); if (h < 1) return;
+  const box = $('gt-tree'), st = document.querySelector('#mp-today .gt-status');
+  if (box && h > 1 && GGTend.treeSVG) box.innerHTML = GGTend.treeSVG(1, GGTend.partsOn(dkey()));
+  if (st) st.textContent = MP_THIRSTY;
+}
+function mpCheer(text, sub, critter) {
+  let el = $('mp-cheer');
+  if (!el) { el = document.createElement('div'); el.id = 'mp-cheer'; el.className = 'mp-cheer'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); }
+  el.innerHTML = (critter ? `<svg viewBox="-20 -30 40 44" width="64" height="64" aria-hidden="true">${CRITTER_ART[critter]}</svg>` : `<svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="var(--sky-bright)"/><path d="M18 33l9 9 19-20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>`) + `<p>${esc(text)}</p>${sub ? `<p class="mp-cheer-sub">${esc(sub)}</p>` : ''}`;
+  el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+  clearTimeout(mpCheer.t); mpCheer.t = setTimeout(() => el.classList.remove('show'), 3800);
+  if (S.readAloud) say(text);
+}
+function mpTodayExtra(s) {
+  Promise.resolve().then(mpThirsty);
+  const n = window.GGTend ? GGTend.partsOn(dkey()) : 0, paused = mpPause();
+  const line = paused ? 'Tend it whenever you like. Your tree is always glad to see you.' : n ? mpKindWord(n) : 'One practice is enough to start. Your tree is waiting for you.';
+  const days = mpDays(s), L = mpLevel(days), wk = mpWeekParts(s, mpMonday(dkey())), wn = Object.keys(wk).length;
+  const cr = MP_KID ? critterState(MP_KID) : {}, met = CRITTERS.some(c => cr[c.key]);
+  return `<div class="gt-card mp-kind"><p class="mp-kind-line">${esc(line)}</p></div>
+    <div class="gt-card mp-game"><div class="mp-level"><span class="mp-k">Your tree</span><b>${esc(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${esc(L.next[1])}.` : '. The biggest maple of all!'}</span></div>
+    <div class="mp-bal"><span class="mp-k">This week</span><div class="mp-dots" role="img" aria-label="${wn} of 6 parts tended this week">${PARTS.map(p => `<span class="mp-dot${wk[p.key] ? ' on' : ''}" style="--pc:${p.hex}" title="${esc(p.name)}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'A rainbow week! All six parts tended.' : wn + ' of 6 parts. All six makes a rainbow week.'}</span></div>
+    <div class="mp-friends"><span class="mp-k">Tree friends</span><div class="critter-shelf">${shelfHTML(cr)}</div><span class="gt-small">${met ? 'Keep tending. Who knows who will visit next?' : 'Keep tending. Someone may come to visit!'}</span></div></div>`
+    + mpSetupHtml() + mpMovingHtml(true);
+}
+function mpSeasonExtra(s) {
+  if (!s) return '';
+  const R = mpRec(s), got = Object.keys(R.miles).sort((a, b) => String(R.miles[a]).localeCompare(String(R.miles[b]))), nb = mpRainbowWeeks(s).length;
+  return `<div class="gt-card mp-miles"><h3>Milestones</h3>${got.length ? `<ul class="mp-mile-list">${got.map(id => `<li><b>${esc(mpMileName(id))}</b><span>${esc(fmtKey(R.miles[id], { month: 'long', day: 'numeric', year: 'numeric' }))}</span></li>`).join('')}</ul>` : '<p class="gt-small">The first milestone comes with the first day of tending.</p>'}
+    ${nb ? `<p class="gt-small">${nb} rainbow week${nb === 1 ? '' : 's'} so far.</p>` : ''}
+    <p class="gt-small">Still ahead: ${MP_MILES.filter(m => !R.miles[m[0]]).map(m => esc(m[1])).join(', ') || 'a new ring every season'}.</p></div>`;
+}
+function mpOnCheck(done, key, s, parts) {
+  if (!done) return;
+  const f = mpCheckNew(s);
+  if (f.friend || f.miles.length || f.bonus) mpTendSave();
+  if (f.friend) { mpCheer(`Surprise! A ${f.friend.name.toLowerCase()} came to visit your tree.`, mpKindWord(parts), f.friend.key); if (window.GGTend) GGTend.render(); return; }
+  if (f.bonus) { mpCheer('A rainbow week! You tended all six parts this week.', mpKindWord(parts)); return; }
+  if (f.miles.length) { mpCheer('New milestone: ' + mpMileName(f.miles[0]), mpKindWord(parts)); return; }
+  mpCheer(parts >= 6 ? 'All six parts tended today. What a day!' : mpKindWord(parts));
+}
+
+/* ---------- Moving on (Decision 6, GWG BLD 745) ----------
+   In grade 5, a gentle card offers Start My Aspen, never forced, next to Stay in Maple. Start
+   My Aspen makes a new Middle school profile with Aspen as its tree (a grown-up agrees), and
+   copies Maple's rings, labeled From Maple, and the Faith or Plain choice. The copies keep
+   only the date, grade, and each part's score, never the answers or the safety step. Maple
+   keeps its own record whole. Aspen reads them from student.fromMaple. */
+function mpMovingHtml(onToday) {
+  const k = MP_KID; if (!k || String(k.grade) !== '5' || !window.GGP) return '';
+  if (onToday && k.stayMaple) return '';
+  const nm = esc(k.name);
+  return `<${onToday ? 'div class="gt-card mp-moving"' : 'section id="mp-set-moving"'}><h3>Ready for Middle School?</h3>
+    <p class="gt-small">${onToday ? `${nm} is in grade 5. ` : ''}There is no rush. ${nm} can stay in Maple as long as it fits, or start a new tree in Aspen, built for grades 6 to 8. Start My Aspen makes a new Middle school profile with a grown-up, and brings ${nm}'s Maple rings (labeled From Maple) and the Faith or Plain choice along. Maple keeps its own copy.</p>
+    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyAspen()">Start My Aspen</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInMaple()">Stay in Maple</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+}
+function stayInMaple() {
+  if (!mpSetKid(x => { x.stayMaple = dkey(); })) return;
+  if (window.GGTend) GGTend.render();
+  toast('Maple stays your tree. Start My Aspen is in Settings whenever you want it.');
+}
+function mapleCarry(k) {
+  const rings = (k.checkins || []).filter(c => c && c.answers && c.std).map(c => {
+    const scores = {};
+    PARTS.forEach(p => { const v = ((c.answers || {})[p.key] || {}).score; scores[p.key] = typeof v === 'number' ? v : null; });
+    return { id: 'maple-' + c.id, date: c.date, from: 'maple', grade: c.grade, std: c.std, scores, wording: c.wording === 'plain' ? 'plain' : 'faith' };
+  });
+  return { rings, wording: kidWording(k) };
+}
+function startMyAspen() {
+  const k = MP_KID; if (!k || !window.GGP) return;
+  if (!confirm(`Start My Aspen makes a new Middle school profile for ${k.name}, with Aspen as their tree. A grown-up agrees when it is made. ${k.name}'s Maple tree stays as it is. Continue?`)) return;
+  const c = mapleCarry(k);
+  const student = { rings: [], draft: null, plan: null, log: {}, leaves: 0, style: 'aspen', theme: 'lake', grade: 6, wording: c.wording, fromMaple: c.rings, mapleCopied: dkey() };
+  GGP.createDialog({ age: 'aspen', name: '', avatar: k.avatar || '', carry: { aspen: { student } },
+    reason: `${k.name}'s new Middle school profile. Pick a name that is different from the Maple profile, like the first name with a last initial. ${k.name}'s Maple rings and wording come along into Aspen.`,
+    onCreated: () => { setTimeout(() => { location.href = '/aspen/'; }, 600); } });
+}
+
+/* ---------- The wording on the check-in start screen (for a grown-up helping) ---------- */
+function pickWording(w) {
+  S.pickW = w === 'plain' ? 'plain' : 'faith';
+  syncWordingBtns(S.pickW);
+}
+function syncWordingBtns(w) {
+  document.querySelectorAll('[data-word]').forEach(b => b.setAttribute('aria-pressed', b.dataset.word === w ? 'true' : 'false'));
+}
 
 /* Growth plan: no limits, only suggestions. About 3 for a Strong part, 4 for Steady, 5 for a Growing Edge, plus their own. */
 function mpLevelOf(key) {
@@ -2476,7 +2733,7 @@ function weekHTML(plan) {
   return out + '</div>';
 }
 function shelfHTML(cr) {
-  return CRITTERS.map(c => `<span class="${cr[c.key] ? '' : 'locked'}" title="${esc(c.need)}">${critterIcon(c.key)}${cr[c.key] ? c.name : c.need}</span>`).join('');
+  return CRITTERS.map(c => `<span class="${cr[c.key] ? '' : 'locked'}" title="${esc(cr[c.key] ? c.name : c.need)}">${cr[c.key] ? critterIcon(c.key) + c.name : '<b class="mp-q" aria-hidden="true">?</b>' + c.need}</span>`).join('');
 }
 function sayAct(id) {
   const a0 = ACTIVITIES.find(x => x.id === id), a = a0 && actW(a0);
@@ -2616,6 +2873,7 @@ function newCheckinFor(id) {
   if (!k) return;
   $('kid-name').value = k.name;
   setGrade(k.grade || (k.checkins.length ? k.checkins[k.checkins.length - 1].grade : null));
+  S.pickW = null; syncWordingBtns(kidWording(k));
   go('home');
   setTimeout(() => $('welcome-title').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   toast('Check the grade, then start the check-in.');
@@ -2832,7 +3090,8 @@ function renderGuide() {
       <li><b>Pick an unhurried moment,</b> like a quiet afternoon, before bed, or a slow weekend morning.</li>
       <li><b>Stay close,</b> even if your child picks On my own. Sit nearby and be ready to talk.</li>
       <li><b>Weave in your family's faith.</b> Roots, what grounds you, leaves room for every family to fill it in with their own tradition: prayer, scripture, worship, blessings, or quiet. Share what holds you.</li>
-      <li><b>Make the growth plan a family project.</b> Check in on their tree together each day, cheer when a new critter arrives, and celebrate when they finish.</li>
+      <li><b>Choose Faith or Plain wording.</b> Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words, and scores are the same either way. You choose it when you set up your child's tree, and you can change it any time in Settings.</li>
+      <li><b>Make the growth plan a family project.</b> Check in on their tree together each day, cheer when a tree friend comes to visit, and celebrate each new level and milestone. A tree that misses a few days only looks a little thirsty, and one practice gives it a drink.</li>
       <li><b>Each child gets their own check-in.</b> Brothers and sisters save separately by first name.</li>
       <li><b>Grandparents, foster parents, and other caregivers</b> can use Maple just the same.</li>
     </ul>
@@ -2844,7 +3103,7 @@ function renderGuide() {
       <li><b>Save a file now and then.</b> Clearing the browser or switching devices erases saved check-ins. Use Save everyone to a file under My Kids and keep it somewhere safe. Each file is locked with a passcode you choose.</li>
       <li><b>It fits the SEL skills you already teach.</b> Each part connects to CASEL's five competencies, noted under The six parts.</li>
       <li><b>If a child's answers worry you,</b> follow your school's usual process, like talking with your school counselor, and let the family know.</li>
-      <li><b>About faith.</b> Roots, what grounds you, leaves room for children of all faith traditions and everything in-between to answer from their own family's tradition. Check with your school about how it fits your classroom.</li>
+      <li><b>About faith.</b> Roots, what grounds you, leaves room for children of all faith traditions and everything in-between to answer from their own family's tradition. Plain wording asks the same things without religious words, and a Maple Guide can set Plain for a whole school or group. Check with your school about how it fits your classroom.</li>
     </ul>
 
     <h3 class="grown" id="g-changes">When life changes</h3>

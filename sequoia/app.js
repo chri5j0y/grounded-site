@@ -1512,7 +1512,7 @@ const TEND_CFG = {
   pauseLine: 'Your tree is holding still with you. It will not dry out while you get support.',
   onCheck: (done, key, s, parts, before) => sgOnCheck(done, s, parts),
   store: {
-    get: () => { if (!PROF || !window.GGP) return null; const d = GGP.data(PROF.id, 'sequoia'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
+    get: () => { if (!PROF || !window.GGP) return null; const d = sqNamesForward(GGP.data(PROF.id, 'sequoia')); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
     save: () => (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve()
   },
   actions: {
@@ -1573,7 +1573,24 @@ function openPersonalFilePicker() {
 // =====================================================================
 let PROF = null; // { id, name, avatar, age }
 let HELP = null; // the id of the person a helper is helping, while in helper view
-function sqRec(id) { const d = GGP.data(id, 'sequoia'); if (!Array.isArray(d.history)) d.history = []; return d; }
+// Practice names that moved to Title Case (GWG BLD 745). Saved plans, tending days, and
+// growth plans in history are read forward once, on this device only.
+const SQ_RENAMED = { 'Peace With the Past': 'Peace with the Past', 'Read With a Child': 'Read with a Child' };
+function sqNamesForward(d) {
+  if (!d || d.nm745) return d;
+  const fix = (x, depth) => {
+    if (!x || typeof x !== 'object' || depth > 30) return;
+    Object.keys(x).forEach(k => {
+      const v = x[k];
+      if (typeof v === 'string') { const i = v.indexOf('|'), n = i >= 0 ? v.slice(i + 1) : v; if (SQ_RENAMED[n]) x[k] = (i >= 0 ? v.slice(0, i + 1) : '') + SQ_RENAMED[n]; }
+      else fix(v, depth + 1);
+      const j = k.indexOf('|'), kn = j >= 0 ? k.slice(j + 1) : k;
+      if (SQ_RENAMED[kn]) { const nk = (j >= 0 ? k.slice(0, j + 1) : '') + SQ_RENAMED[kn]; if (x[nk] == null) x[nk] = x[k]; delete x[k]; }
+    });
+  };
+  fix(d, 0); d.nm745 = 1; return d;
+}
+function sqRec(id) { const d = sqNamesForward(GGP.data(id, 'sequoia')); if (!Array.isArray(d.history)) d.history = []; return d; }
 function profSync() {
   const a = window.GGP && GGP.active();
   if (a && a.age === 'adult') {

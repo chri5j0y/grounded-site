@@ -2876,12 +2876,12 @@ window.GG_LEARN_GUIDES.willow = {
 {
 "id": "kids",
 "ring": "last",
-"title": "Talking With Children",
+"title": "Talking with Children",
 "you": {
 "id": "wl-g-kids-you",
 "guide": "kids",
 "side": "you",
-"title": "Talking With Children",
+"title": "Talking with Children",
 "sideName": "For You",
 "mins": 3,
 "scenes": [
@@ -2889,7 +2889,7 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "title",
 "hero": "willow",
 "eyebrow": "When Life Changes",
-"h": "Talking With Children",
+"h": "Talking with Children",
 "sub": "For You",
 "say": "If you need to tell children that someone they love is dying, this is for you."
 },
@@ -2955,7 +2955,7 @@ window.GG_LEARN_GUIDES.willow = {
 "id": "wl-g-kids-helper",
 "guide": "kids",
 "side": "helper",
-"title": "Talking With Children",
+"title": "Talking with Children",
 "sideName": "For the Helper",
 "mins": 3,
 "scenes": [
@@ -2963,7 +2963,7 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "title",
 "hero": "willow",
 "eyebrow": "When Life Changes",
-"h": "Talking With Children",
+"h": "Talking with Children",
 "sub": "For the Helper",
 "say": "When a parent or grandparent has to tell children that someone is dying, this is for anyone helping them."
 },

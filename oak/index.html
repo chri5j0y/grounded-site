@@ -924,6 +924,70 @@ html.ts-2 main{zoom:1.25;}
 </style>
 <link rel="stylesheet" href="/shared/gg-tend.css?v=r5b">
 <link rel="stylesheet" href="/shared/gg-footer.css?v=sp2">
+<style>/* GWG BLD 745: the game layer, grace days, helpers, the newest safety step, Groundwork from Birch, and Moving to Sequoia (Birch's styles, in Oak's colors) */
+.sq-select{width:100%;min-height:44px;box-sizing:border-box;font:inherit;font-size:17px;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);margin:4px 0 10px;}
+.sq-kind{border-left:5px solid var(--gold);}
+.sq-kind-line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;line-height:1.35;margin:0;color:var(--ink);}
+.sq-cheer{position:fixed;left:50%;top:22%;transform:translate(-50%,10px) scale(.96);z-index:500;background:var(--card);color:var(--ink);border:2px solid var(--gold);border-radius:20px;box-shadow:0 18px 44px rgba(0,0,0,.22);padding:20px 24px;text-align:center;max-width:min(400px,88vw);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
+.sq-cheer.show{opacity:1;transform:translate(-50%,0) scale(1);}
+.sq-cheer p{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.3;margin:8px 0 0;}
+.sq-cheer p.pn-cheer-sub{font-family:'Barlow',sans-serif;font-size:15px;color:var(--ink-soft);margin-top:4px;}
+@media (prefers-reduced-motion: reduce){.sq-cheer{transition:none;}}
+.pn-game{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;}
+.pn-game .pn-mode-line,.pn-game .pn-trouble,.pn-game .ok-grace{grid-column:1/-1;}
+.ok-grace{margin:0;}
+.pn-level,.pn-bal{display:flex;flex-direction:column;gap:2px;}
+.pn-level-k{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.pn-level b{font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1.1;color:var(--gold);}
+.pn-dots{display:flex;gap:8px;margin:6px 0 2px;flex-wrap:wrap;}
+.pn-dot{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--pc);background:transparent;}
+.pn-dot.on{background:var(--pc);}
+.pn-mastery{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;border:1px solid var(--gold);color:var(--gold);}
+.pn-m-building{background:var(--reminder-bg);}
+.pn-m-mine{background:var(--gold);color:#fff;}
+:root[data-theme="dark"] .pn-m-mine{color:#1F1A14;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pn-m-mine{color:#1F1A14;}}
+.pn-trouble{margin:4px 0 8px;padding:8px 12px;border-radius:10px;background:rgba(168,84,46,.1);border-left:4px solid #A8542E;font-size:15px;}
+.pn-miles .pn-mile-list{list-style:none;margin:6px 0;padding:0;display:grid;gap:6px;}
+.pn-mile-list li{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:6px;}
+.pn-mile-list span{color:var(--ink-soft);font-size:14px;}
+.asp-see p{margin:0 0 8px;font-size:15px;}
+.asp-see b{display:block;color:var(--ink);}
+.pn-moving,.ok-gw{border-left:5px solid var(--gold);}
+.sq-graphs h3{margin-top:0;}
+.sq-graph-box{margin:14px 0 6px;}
+.sq-graph-box h4,.sq-h4{font-family:'Barlow Condensed',sans-serif;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 6px;}
+.sq-graph{width:100%;max-width:560px;height:auto;display:block;}
+.sq-ax{font:600 13px Barlow,sans-serif;fill:var(--ink-soft);}
+.sq-val{font:700 15px Barlow,sans-serif;fill:var(--ink);}
+.sq-row{display:grid;grid-template-columns:90px minmax(0,1fr) 106px;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);}
+.sq-row b{color:var(--domain-color);font-size:16px;}
+.sq-row span{font-size:14px;font-weight:600;}
+.sq-spark{width:100%;height:56px;display:block;}
+.sq-who{background:var(--bg-deep);border-radius:12px;padding:10px 14px;font-size:16px;margin:0 0 14px;}
+.pn-or{font-size:15px;}
+.sq-linenote{display:block;font-size:14px;color:var(--ink-soft);}
+.sq-helprow{flex-basis:100%;display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px;}
+.sq-helper{display:flex;gap:10px;align-items:center;margin:6px 0;}
+.sq-helper b{flex:1;}
+.sq-planlist{margin:10px 0 0 22px;font-size:18px;line-height:1.7;}
+#sq-help-banner{max-width:920px;margin:12px auto 0;padding:12px 16px;border:2px solid var(--gold);border-radius:14px;background:var(--card);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+#sq-help-banner[hidden]{display:none;}
+#sq-help-banner p{margin:0;font-size:17px;}
+.ok-gw-h{font-family:'Cormorant Garamond',serif;font-size:23px;margin:20px 0 4px;}
+.sq-prompt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;overflow-wrap:anywhere;}
+.sq-prompt.has{border-left:5px solid var(--gold);}
+.sq-prompt h3{font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.25;margin:0 0 4px;}
+.sq-legans{font-size:18px;line-height:1.6;white-space:normal;margin:6px 0;}
+.sq-legsheet:empty{display:none;}
+.sq-legsheet{position:absolute;left:-9999px;top:0;width:800px;}
+@media print{.sq-legsheet{position:static;width:auto;}}
+.sq-legq{font-family:'Cormorant Garamond',serif;font-size:21px;margin:14px 0 4px;}
+.sq-lega{font-size:16px;line-height:1.6;margin:0;}
+.sq-legby{font-size:13px;color:var(--ink-soft);font-style:italic;margin:4px 0 0;}
+@media (max-width:480px){.sq-row{grid-template-columns:74px minmax(0,1fr) 88px;gap:6px;}}
+@media (max-width:700px){.pn-game{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
 
@@ -962,6 +1026,7 @@ html.ts-2 main{zoom:1.25;}
 
 <main>
 <div id="st-profile-bar"></div>
+<div id="sq-help-banner" hidden></div>
 <div class="view active" id="client-today"></div>
 <div class="view" id="client-week"></div>
 <div class="view" id="client-season"></div>
@@ -1038,6 +1103,7 @@ html.ts-2 main{zoom:1.25;}
 </div>
 
 <div class="view" id="client-life"></div>
+<div class="view" id="client-ground"></div>
 </main>
 
 <footer class="site-footer">
@@ -1057,6 +1123,7 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
+<script src="/shared/gg-filelock.js?v=fl2"></script>
 <script src="/shared/gg-profiles.js?v=lb5"></script>
 <script src="/shared/gg-journey.js?v=r6n"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
@@ -2121,6 +2188,13 @@ const ST_FLAGS = CKB.flags;
 const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLevelLine = sc => sc == null ? 'Not sure yet' : `${stLevel(sc)}, ${sc} of 10`;
 let ST_ANS = {}, ST_SAFE = {}, ST_QUICK = false;
+// Who is answering (Sequoia's and Birch's model): 'self', or 'tapped' (the person answers, a helper taps).
+let CK = { by: 'self', forId: null, name: '' };
+function setMode(by, forId) {
+  const p = forId && window.GGP ? GGP.get(forId) : null;
+  CK = { by: by === 'tapped' && p ? 'tapped' : 'self', forId: p ? forId : null, name: p ? p.name : '' };
+}
+function whoLine() { return CK.by === 'tapped' ? `<p class="sq-who">${escapeHtml(CK.name)} answers, and you tap. The safety questions stay with ${escapeHtml(CK.name)}, for their own check-ins.</p>` : ''; }
 
 function partScore(key, answers) {
   const qs = QUESTIONS[key]; let sum = 0, n = 0;
@@ -2251,15 +2325,16 @@ function calmKey(e) { if (e.key === 'Escape') closeCalm(); }
 function closeCalm() { const c = document.getElementById('calm-card'); if (c) c.remove(); document.removeEventListener('keydown', calmKey); }
 
 // ---------- quick check-in ----------
-function startQuick() {
+function startQuick(by, forId) {
+  setMode(typeof by === 'string' ? by : 'self', forId);
   ST_QUICK = true; ST_ANS = {}; ST_SAFE = {};
   const container = document.getElementById('step-container');
-  container.innerHTML = `<section class="step-panel active" id="step-quick">
+  container.innerHTML = `${whoLine()}<section class="step-panel active" id="step-quick">
     <div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title">Quick Check-in</h2><div class="step-domain">One question for each part of your tree</div></div></div>
     <p class="q-stem">${Q_STEM}</p>
     ${ALL_DOMAINS.map(d => `<div class="quick-part" style="--domain-color:${d.color};"><div class="quick-label" style="color:${d.color};">${partIcon(d, 20)} ${d.part}</div>${questionHtml('quick_' + d.key, 0, QUICK_Q[d.key])}</div>`).join('')}
     ${safetyHtml()}
-    <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="startCheckin()">Take the full check-in instead</button><button class="btn btn-primary" onclick="finishQuick()">See My Tree</button></div>
+    <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="startCheckin(CK.by, CK.forId)">Take the full check-in instead</button><button class="btn btn-primary" onclick="finishQuick()">See My Tree</button></div>
   </section>`;
   document.getElementById('step-progress').innerHTML = '';
   showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
@@ -2310,7 +2385,7 @@ const visitedSteps = new Set([0]);
 
 function renderCheckin() {
   const container = document.getElementById('step-container');
-  container.innerHTML = ALL_DOMAINS.map((d, i) => {
+  container.innerHTML = whoLine() + ALL_DOMAINS.map((d, i) => {
     const p = PARTS[d.key];
     const next = ALL_DOMAINS[i + 1];
     return `
@@ -2339,7 +2414,7 @@ function renderCheckin() {
     <section class="step-panel" id="step-${ALL_DOMAINS.length}">
       <div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title">Before you see your tree</h2></div></div>
       ${safetyHtml()}
-      <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="goToStep(${ALL_DOMAINS.length - 1})">Back</button><button class="btn btn-primary" onclick="calculateResults('client')">See My Tree</button></div>
+      <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="goToStep(${ALL_DOMAINS.length - 1})">Back</button><button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'tapped' ? 'See the Tree' : 'See My Tree'}</button></div>
     </section>`;
   renderStepProgress();
   goToStep(0, true);
@@ -2371,8 +2446,10 @@ function scrollToViewTop(id, smooth, always) {
   if (always || window.scrollY > y) window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
 }
 
-function startCheckin() {
-  if (ST_QUICK || !document.getElementById('step-0')) { ST_QUICK = false; ST_ANS = {}; ST_SAFE = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckin(); }
+function startCheckin(by, forId) {
+  const was = CK.by + '|' + CK.forId;
+  setMode(typeof by === 'string' ? by : 'self', forId);
+  if (ST_QUICK || !document.getElementById('step-0') || was !== CK.by + '|' + CK.forId) { ST_QUICK = false; ST_ANS = {}; ST_SAFE = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckin(); }
   showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
   goToStep(0);
 }
@@ -2553,6 +2630,7 @@ function calculateResults(mode) {
   });
   const shown = k => unsure.includes(k) ? null : scores[k];
   const flags = isClient ? stFlagsNow() : [];
+  if (isClient && CK.by === 'tapped') { tappedResults(scores, unsure, reflections, flags); return; }
   const reminder = isClient
     ? 'Come back and take this check-in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.'
     : 'Save this session from the Growth Plan tab to add it to this client\'s history.';
@@ -2588,7 +2666,8 @@ function calculateResults(mode) {
     window.lastClientUnsure = unsure;
     window.lastClientReflections = reflections;
     const safety = { opener: ST_SAFE.opener || 'skipped', direct: ST_SAFE.direct || 'skipped' };
-    window.currentClientEntry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], std: ST_STD, scores, unsure, reflections, flags, safety, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
+    if (safeOn('direct', ST_SAFE.direct)) safety.now = ST_SAFE.now || 'skipped';
+    window.currentClientEntry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, scores, unsure, reflections, flags, safety, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: 'self' };
     showView('client-results', document.querySelectorAll('#client-nav .nav-btn')[2]);
     renderGrowthPlanBuilder('client');
     if (PROF) { const c = JSON.parse(JSON.stringify(currentClientEntry)); personalHistory.push(c); sortEntries(personalHistory); profPersist(); }
@@ -2601,12 +2680,36 @@ function calculateResults(mode) {
   mountTree(`${prefix}-results-tree`, { variant: 'score', scores, interactive: true, seam: '#2C1810', assemble: true }, goToGrowthPlanPart);
 }
 
+// A check-in taken together: the person answers, a helper taps. It saves to the person's
+// own Oak, marked as taken together. The safety step stays with the person (GWG BLD 745).
+function tappedResults(scores, unsure, reflections, flags) {
+  const shown = k => unsure.includes(k) ? null : scores[k];
+  const helperName = ((window.GGP && GGP.active()) || {}).name || '';
+  const entry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, scores, unsure, reflections, flags, safety: { asked: 'not with a helper' }, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: 'tapped', helper: helperName };
+  document.getElementById('client-results-content').innerHTML = `
+    <div class="results-summary">
+      <p class="sq-who">${escapeHtml(CK.name)} answered, and ${escapeHtml(helperName)} tapped.</p>
+      <div class="tree-result-wrap"><div id="client-results-tree" style="width:100%;max-width:320px;"></div></div>
+      <p class="tree-caption">Each part of the tree is shaded by its score. The fuller the color, the healthier that part.</p>
+      <div class="lvl-list">
+        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">This growing edge is where the next growth begins.</p>' : ''}</div>`).join('')}
+      </div>
+      ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
+      <p class="gt-small">Help any time: call or text 988. In immediate danger, call 911. <button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p>
+    </div>
+    <div class="reminder-banner"><p>Saved to ${escapeHtml(CK.name)}'s tree, marked as taken together.</p></div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button></div>`;
+  showView('client-results');
+  if (window.GGP && GGP.isOpen(CK.forId)) { const d = GGP.data(CK.forId, 'oak'); if (!Array.isArray(d.history)) d.history = []; d.history.push(entry); sortEntries(d.history); const nm = CK.name; GGP.save(CK.forId).then(() => showToast('Saved to ' + nm + '\'s tree.')); }
+  mountTree('client-results-tree', { variant: 'score', scores, interactive: false, seam: '#2C1810', assemble: true });
+}
+
 // =====================================================================
 // NAVIGATION
 // =====================================================================
 // Five tabs. Each view belongs to one tab, so the right tab lights up
 // however a view was opened.
-const VIEW_TAB = { 'client-today': 'today', 'client-intro': 'today', 'client-week': 'week', 'client-season': 'season', 'client-assess': 'season', 'client-results': 'season', 'client-progress': 'season', 'client-growthplan': 'plan', 'client-life': 'guides' };
+const VIEW_TAB = { 'client-today': 'today', 'client-intro': 'today', 'client-week': 'week', 'client-season': 'season', 'client-assess': 'season', 'client-results': 'season', 'client-progress': 'season', 'client-growthplan': 'plan', 'client-ground': 'today', 'client-life': 'guides' };
 function showView(id, btn) {
   const navId = id.startsWith('client') ? 'client-nav' : null;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -2617,7 +2720,7 @@ function showView(id, btn) {
   }
   if (id === 'client-life') renderLC('client');
   if (id === 'client-growthplan') oakPlanOpen();
-  if ((id === 'client-today' || id === 'client-week' || id === 'client-season') && window.GGTend) GGTend.render();
+  if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render(); }
   if (navId) scrollToViewTop(id, false, false);
 }
 
@@ -2694,7 +2797,7 @@ function renderPracMoved() {
   if (!codes.length) { box.innerHTML = ''; return; }
   const n = codes.length;
   box.innerHTML = `<div class="privacy-note prac-moved"><strong>Practitioner mode has moved.</strong> Walking someone else through Oak now lives in Oak Guide, part of the Grounded Field Guide, where visits stay encrypted on your device. You still have sessions for ${n} ${n === 1 ? 'person' : 'people'} saved in this browser. Oak Guide can move them in from this browser or from a backup file. Once they're moved, remove them here.
-   <div class="btn-row" style="margin:14px 0 0;"><button class="btn btn-primary" onclick="exportBackup()">Download Backup</button><button class="btn btn-secondary" onclick="removePracSessions()">Remove From This Browser</button><a class="btn btn-secondary" href="${FG_ABOUT}">About the Field Guide</a></div></div>`;
+   <div class="btn-row" style="margin:14px 0 0;"><button class="btn btn-primary" onclick="exportBackup()">Download a Locked Backup</button><button class="btn btn-secondary" onclick="removePracSessions()">Remove From This Browser</button><a class="btn btn-secondary" href="${FG_ABOUT}">About the Field Guide</a></div></div>`;
 }
 function removePracSessions() {
   const codes = getClientIndex(), n = codes.length; if (!n) return;
@@ -2713,16 +2816,11 @@ function exportBackup() {
   if (clients.length === 0) { showToast('There are no saved practitioner sessions to back up.'); return; }
   const data = { app: 'oak', version: 1, exportedAt: new Date().toISOString(), clients: {} };
   clients.forEach(code => { data.clients[code] = getClientHistory(code); });
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `oak-backup-${new Date().toISOString().split('T')[0]}.json`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  showToast('Backup downloaded. Keep it somewhere private.');
+  // Locked with a passcode the person chooses, like every Grounded file (shared/gg-filelock.js).
+  if (!window.GGFileLock) { showToast('Saving to a file needs a newer browser.'); return; }
+  GGFileLock.save({ app: 'oak', filename: `oak-backup-${todayKey()}.json`, data, what: 'these practitioner sessions' }).then(ok => {
+    if (ok) showToast('Saved to a locked file. Keep it, and its passcode, somewhere private.');
+  });
 }
 
 
@@ -2813,7 +2911,7 @@ function oakPlanOpen() {
   if (!window.lastClientScores) {
     const e = oakLatestEntry();
     if (e) { window.lastClientScores = e.scores; window.lastClientUnsure = e.unsure || []; renderGrowthPlanBuilder('client'); }
-  }
+  } else if (!document.querySelector('#client-growthplan-builder [id^="cp-card-client-"]')) renderGrowthPlanBuilder('client');   // after a helper's view of someone else's plan
   oakPrefillPlan();
 }
 function oakSavePlan() {
@@ -3072,18 +3170,6 @@ function sortEntries(list) {
   return list;
 }
 
-function downloadJSON(data, filename) {
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
 function openPersonalFilePicker() {
   document.getElementById('personal-file-input').click();
 }
@@ -3151,7 +3237,7 @@ function renderProfileBar() {
 function oakTeenAlert(e) {
   if (!PROF || PROF.age !== 'pine' || !window.GGP || !e) return;
   const sf = e.safety || {}, kinds = [];
-  if (['sometimes', 'often'].includes(sf.direct) || ['often', 'always'].includes(sf.opener)) kinds.push('safety');
+  if (safeAsked(sf)) kinds.push('safety');
   (e.flags || []).forEach(f => { if ((f === 'alone' || f === 'hope') && !kinds.includes(f)) kinds.push(f); });
   if (kinds.length) GGP.setShared(PROF.id, { safety: { flag: e.date, kinds } });
 }
@@ -3198,7 +3284,9 @@ function oakSwitch() {
 function oakProfileHtml() {
   const a = window.GGP && GGP.active();
   if (!a) return `<section><h3>Your Profile</h3><p>Open your profile, or create one, to keep your tree, practices, and check-ins on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();oakOpenAny()">Open a profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profCreateDialog()">Add a person</button></div></section>`;
+  const tree = treeNow(a.id);
   return `<section><h3>Your Profile</h3><p class="gt-who">${GGAv.html(a.avatar, a.name, 44)}<b>${escapeHtml(a.name)}</b></p>
+    ${a.age === 'adult' ? `<p class="gt-small">Your tree: <b>${TREE_NAME[tree] || 'Oak'}</b>. Change it in Picture, passcode, and more.</p>` : ''}
     <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="oakSwitch()">Switch person</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profLock()">Lock</button></div>
     <p class="gt-small">Everyone on this device can have their own tree. Switching locks yours first, so no one sees anyone else's.</p></section>`;
 }
@@ -3218,6 +3306,267 @@ async function profResume() {
   await GGP.ready; profSync();
 }
 
+// =====================================================================
+// SETTINGS, behind the profile picture (GWG BLD 745): Steady or Hardy and grace
+// days, optional helpers, an optional age (only for the step into Sequoia at 60),
+// what stays private, Groundwork from Birch, and Move My Tree to Sequoia.
+// Saved in the profile under "oak".
+// =====================================================================
+const TREE_NAME = { birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia' };
+function treeNow(id) { return window.GGP && GGP.tree ? GGP.tree(id) : 'oak'; }
+function okRec() { if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'oak'); if (!Array.isArray(d.history)) d.history = []; return d; }
+function ageNow() { const r = okRec(), a = r ? parseInt(r.age, 10) : NaN; return isNaN(a) ? null : a; }
+function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
+const OK_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your reflections, and your safety answers stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone.</p>
+  <p><b>Helpers, only if you choose</b>You can let someone you trust open your Oak with their own passcode. They see only what you share, and never your safety answers or flags. This stays off unless you turn it on.</p>
+  <p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>`;
+const AGES_PICK = [['54', 'Under 55'], ['55', '55'], ['56', '56'], ['57', '57'], ['58', '58'], ['59', '59'], ['60', '60 or older']];
+function oakSettingsHtml() {
+  if (HELP) return helperSettingsHtml();
+  const s = window.GGTend && GGTend.state(), open = !!okRec(), mode = pnMode(s), age = ageNow();
+  if (PROF && PROF.age !== 'adult') return '';
+  return `<section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may look dry when you miss days, and nothing is ever lost.</span></label>
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b>A little more challenge. A part of your plan left untended for ${HARDY_DAYS} days, grace days not counted, shows trouble, and one practice in that part heals it.</span></label>
+      <p class="gt-small"><b>Grace days.</b> Two days a week are yours to rest. Five days tended makes a full week, and Hardy never counts grace days.</p>
+      <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
+    ${helperSettingsHtml()}
+    <section id="ok-set-age"><h3>Your Age (Optional)</h3><p class="gt-small">Only used to offer the step into Sequoia, built for 60 and up, when you reach 60. It stays in your profile.</p>
+      <select class="sq-select" aria-label="Your age"${open ? '' : ' disabled'} onchange="setAge(this.value)"><option value="">Rather not say</option>${AGES_PICK.map(v => `<option value="${v[0]}"${String(age) === v[0] ? ' selected' : ''}>${v[1]}</option>`).join('')}</select></section>
+    <section class="asp-see" id="ok-see"><h3>What Stays Private</h3>${OK_SEE}</section>
+    ${gwSettingsHtml()}
+    ${moveSeqHtml(false)}`;
+}
+function setAge(v) {
+  const r = okRec(); if (!r) return;
+  if (v) r.age = v; else delete r.age;
+  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(v ? 'Saved.' : 'Age cleared.'); });
+}
+
+// =====================================================================
+// MOVING ON (Decision 6, GWG BLD 745). At 60, a gentle card on Today, and any time
+// in Settings: Move My Tree to Sequoia. The same profile switches its tree;
+// Sequoia gets a one-time copy of Oak's rings, labeled From Oak (id 'oak-' + id).
+// Oak's record stays whole. Never forced. Modeled on Birch's Move My Tree to Oak.
+// =====================================================================
+function ringCopy(e) {
+  const c = JSON.parse(JSON.stringify(e));
+  c.id = 'oak-' + String(e.id || e.date); c.from = 'oak';
+  delete c.answers; delete c.safety; delete c.sens; delete c.flags; delete c.reflections;
+  return c;
+}
+function moveSeqHtml(onToday) {
+  if (!PROF || HELP || PROF.age !== 'adult') return '';
+  const r = okRec(), age = ageNow(); if (!r) return '';
+  if (onToday && (age == null || age < 60 || r.staySeq || r.movedToSequoia || treeNow(PROF.id) !== 'oak')) return '';
+  return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="ok-set-moving"'}><h3>Ready for Sequoia?</h3>
+    <p class="gt-small">${onToday ? 'Oak is built for adults 25 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToSequoia()">Move My Tree to Sequoia</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInOak()">Stay in Oak</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+}
+function stayInOak() { const r = okRec(); if (!r) return; r.staySeq = todayKey(); persistRec().then(() => { showToast('Oak stays your tree. Move My Tree to Sequoia is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+function moveToSequoia() {
+  if (!PROF || !window.GGP) return;
+  if (!confirm('Move your tree to Sequoia? This same profile opens in Sequoia from now on. Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything. You can switch back any time in Picture, passcode, and more.')) return;
+  const r = okRec(), sq = GGP.data(PROF.id, 'sequoia'); if (!r || !sq) return;
+  if (!Array.isArray(sq.history)) sq.history = [];
+  if (!r.movedToSequoia) {
+    const have = new Set(sq.history.map(e => e.id));
+    (r.history || []).filter(e => e && e.scores && !e.from && e.by !== 'tapped').forEach(e => { const c = ringCopy(e); if (!have.has(c.id) && !have.has(e.id)) sq.history.push(c); });
+    sq.history.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  }
+  r.movedToSequoia = todayKey();
+  GGP.save(PROF.id).then(() => { if (GGP.setTree) GGP.setTree(PROF.id, 'sequoia'); showToast('Your tree is Sequoia now. Oak keeps everything.'); setTimeout(() => { location.href = '/sequoia/'; }, 900); });
+}
+
+// =====================================================================
+// GROUNDWORK FROM BIRCH (GWG BLD 745): read only. A person who moved from Birch
+// keeps their Groundwork notebook in Birch (GGP.data(id, 'birch').groundwork).
+// Oak opens it to read and print, and never changes it. Chapter titles and prompts
+// come from /birch/groundwork.js, loaded only when the notebook opens; each saved
+// answer also keeps the words of its prompt, so it reads well either way.
+// =====================================================================
+const GW_SRC = '/birch/groundwork.js?v=bc1';
+function birchRec() { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const all = GGP.data(PROF.id); return all && all.birch && typeof all.birch === 'object' ? all.birch : null; }
+function gwData() {
+  const b = birchRec(), g = b && b.groundwork; if (!g || typeof g !== 'object') return null;
+  const A = g.answers || {}, F = (g.fromPine || {}).answers || {}, K = g.skills || {};
+  const n = Object.keys(A).filter(k => String((A[k] || {}).text || '').trim()).length + Object.keys(F).length + Object.keys(K).filter(k => K[k] && K[k].done).length;
+  return n ? g : null;
+}
+function gwPlain() { const b = birchRec(); return !!(b && b.wording === 'plain'); }
+function gwCardHtml() {
+  if (!gwData()) return '';
+  return `<div class="gt-card ok-gw"><h3>Your Groundwork Notebook</h3><p class="gt-small">You wrote it in Birch, and it stays there, safe in your profile. Open it here to read it or print it. To keep writing, open <a class="text-link" href="/birch/#groundwork">Groundwork in Birch</a>.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="gwShow()">Open My Groundwork</button><button class="btn btn-secondary btn-sm" onclick="gwPrintAll()">Print My Groundwork</button></div></div>`;
+}
+function gwSettingsHtml() {
+  if (!gwData()) return '';
+  return `<section id="ok-set-gw"><h3>Groundwork From Birch</h3><p class="gt-small">Your Groundwork notebook stays in Birch. Read it or print it here any time.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();gwShow()">Open My Groundwork</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();gwPrintAll()">Print My Groundwork</button></div></section>`;
+}
+function gwLoad() {
+  if (window.BIRCH_GROUNDWORK) return Promise.resolve(window.BIRCH_GROUNDWORK);
+  return new Promise(res => { const sc = document.createElement('script'); sc.src = GW_SRC; sc.onload = () => res(window.BIRCH_GROUNDWORK || null); sc.onerror = () => res(null); document.head.appendChild(sc); });
+}
+function gwT(c, k) { return (gwPlain() && c['plain' + k[0].toUpperCase() + k.slice(1)]) || c[k] || ''; }
+// The notebook as sections: [{ title, items: [{ q, text, by }] }], plus the skills marked.
+function gwSections(GW, g) {
+  const A = g.answers || {}, out = [], used = {}, has = id => A[id] && String(A[id].text || '').trim();
+  const F = (g.fromPine || {}).answers || {};
+  if (Object.keys(F).length) out.push({ title: 'From Pine', items: Object.keys(F).map(pid => ({ q: F[pid].q || '', text: F[pid].text || '', by: 'Written in Pine' + (F[pid].date ? ', ' + formatDate(F[pid].date) : '') })) });
+  ((GW && GW.chapters) || []).filter(c => !c.fromPine).forEach(c => {
+    const items = (c.prompts || []).filter(p => has(p.id)).map(p => { used[p.id] = 1; const a = A[p.id]; return { q: (gwPlain() && p.plain) || p.t || a.q || '', text: a.text, by: (a.date ? formatDate(a.date) : '') + (a.when ? '. ' + (c.whenLabel || 'By when').replace(/ \(optional\)$/, '') + ' ' + formatDate(a.when) : '') }; });
+    if (items.length) out.push({ title: gwT(c, 'title'), items });
+  });
+  const rest = Object.keys(A).filter(k => has(k) && !used[k]);
+  if (rest.length) out.push({ title: GW ? 'More From My Notebook' : 'My Notebook', items: rest.map(k => ({ q: A[k].q || '', text: A[k].text, by: A[k].date ? formatDate(A[k].date) : '' })) });
+  const K = g.skills || {}, all = [];
+  if (GW && GW.skills) Object.keys(GW.skills).forEach(ch => (GW.skills[ch] || []).forEach(x => { if (K[x.id] && K[x.id].done) all.push({ t: x.t, d: K[x.id].done }); }));
+  else Object.keys(K).forEach(id => { if (K[id] && K[id].done) all.push({ t: K[id].t || id, d: K[id].done }); });
+  return { out, skills: all, skillsTitle: (GW && GW.skillsTitle) || 'Skills I\'ve Got' };
+}
+function gwShow() {
+  const g = gwData(); if (!g) { showToast('Open your profile first.'); return; }
+  gwLoad().then(GW => { showView('client-ground'); renderGround(GW); });
+}
+function renderGround(GW) {
+  const el = document.getElementById('client-ground'); if (!el) return;
+  const g = gwData();
+  if (!g) { el.innerHTML = `<div class="section-title">Groundwork</div><div class="gt-card"><p>Open your profile to read your Groundwork notebook from Birch.</p><div class="btn-row"><button class="btn btn-secondary" onclick="showView('client-today')">Back to Today</button></div></div>`; return; }
+  GW = GW || window.BIRCH_GROUNDWORK || null;
+  const S = gwSections(GW, g);
+  el.innerHTML = `<div class="section-title">Your Groundwork Notebook</div>
+    <p class="lead">Written in Birch, and kept there in your profile. Here you can read it and print it. To add or change anything, open <a class="text-link" href="/birch/#groundwork">Groundwork in Birch</a>.</p>
+    ${S.out.map(x => `<h3 class="ok-gw-h">${escapeHtml(x.title)}</h3>${x.items.map(a => `<article class="sq-prompt has"><h3>${escapeHtml(a.q)}</h3><div class="sq-legans">${escapeHtml(a.text).replace(/\n/g, '<br>')}</div>${a.by ? `<p class="gt-small">${escapeHtml(a.by)}</p>` : ''}</article>`).join('')}`).join('')}
+    ${S.skills.length ? `<h3 class="ok-gw-h">${escapeHtml(S.skillsTitle)}</h3><ul class="sq-planlist">${S.skills.map(x => `<li>${escapeHtml(x.t)} <span class="sq-legby">${escapeHtml(formatDate(x.d))}</span></li>`).join('')}</ul>` : ''}
+    <div class="btn-row"><button class="btn btn-primary" onclick="gwPrintAll()">Save or Print My Groundwork</button><button class="btn btn-secondary" onclick="showView('client-today')">Back to Today</button></div>
+    <div id="ok-gwsheet" class="sq-legsheet" aria-hidden="true"></div>`;
+}
+function gwPrintAll() {
+  const g = gwData(); if (!g) { showToast('Open your profile first.'); return; }
+  gwLoad().then(GW => {
+    if (!document.getElementById('client-ground').classList.contains('active')) showView('client-ground');
+    renderGround(GW);
+    const S = gwSections(GW, g), box = document.getElementById('ok-gwsheet'); if (!box) return;
+    box.innerHTML = `<div class="growth-plan-doc sq-legdoc" id="ok-gwdoc"><div class="growth-plan-header"><div class="growth-plan-title">${escapeHtml(PROF ? PROF.name + '\'s Groundwork' : 'My Groundwork')}</div><div class="growth-plan-meta">${formatDate(null)}</div></div>
+      ${S.out.map(x => `<div class="growth-plan-domain"><div class="growth-plan-domain-header"><div class="growth-plan-domain-name">${escapeHtml(x.title)}</div></div>${x.items.map(a => `<h3 class="sq-legq">${escapeHtml(a.q)}</h3><p class="sq-lega">${escapeHtml(a.text).replace(/\n/g, '<br>')}</p>${a.by ? `<p class="sq-legby">${escapeHtml(a.by)}</p>` : ''}`).join('')}</div>`).join('')}
+      ${S.skills.length ? `<div class="growth-plan-domain"><div class="growth-plan-domain-header"><div class="growth-plan-domain-name">${escapeHtml(S.skillsTitle)}</div></div><ul class="sq-planlist">${S.skills.map(x => `<li>${escapeHtml(x.t)} <span class="sq-legby">${escapeHtml(formatDate(x.d))}</span></li>`).join('')}</ul></div>` : ''}
+      <div class="growth-plan-footer"><p>Kept with Birch by Grow With Grounded, and printed from Oak. These words belong to the person who wrote them.</p></div></div>`;
+    box.removeAttribute('aria-hidden');
+    const sheet = document.getElementById('ok-gwdoc');
+    if (window.GGApp && window.ggPdfFromEl) GGApp.sheet({ title: 'Groundwork', file: 'groundwork.pdf', print: () => printGrowthPlanNow('ok-gwdoc'),
+      blocks: () => ggPdfFromEl(sheet, { rows: '.growth-plan-domain-header', eyebrow: 'Groundwork', foot: 'Birch(TM) by Grow With Grounded. growwithgrounded.com/birch' }) });
+    else printGrowthPlanNow('ok-gwdoc');
+  });
+}
+
+// =====================================================================
+// HELPERS (Decision 5, GWG BLD 745: Sequoia's and Birch's model). Off unless the
+// person turns on Add a Helper; only the person can turn it on. A helper opens the
+// person's Oak with their own passcode and sees only what the person shares. Roots
+// and notes start private. Never the safety step, flags, or their notes.
+// =====================================================================
+const SHARE_DEF = { tree: true, plan: true, faith: false, notes: false };
+const SHARE_ROWS = [
+  ['tree', 'How my tree is doing', 'The level of each part and the dates of check-ins. Never your answers.'],
+  ['plan', 'My growth plan', 'The practices you chose, so a helper can do them with you.'],
+  ['faith', 'My Roots part', 'Your Roots level, and Roots practices in your plan. Off unless you turn it on.'],
+  ['notes', 'My notes', 'Anything you wrote in "Sit with this" during a check-in.']
+];
+const BY_LABEL = { self: 'They answered', tapped: 'They answered, a helper tapped' };
+function shareOf(id) { const d = GGP.data(id, 'oak'); return Object.assign({}, SHARE_DEF, d.share || {}); }
+function helpedWithOak() {
+  if (!PROF || !window.GGP || !GGP.helping) return [];
+  return GGP.helping().filter(id => { if (!GGP.isOpen(id)) return false; const all = GGP.data(id); return !!(all && all.oak && all.oak.helpersOn); }).map(id => GGP.get(id)).filter(Boolean);
+}
+function helperSettingsHtml() {
+  if (!PROF || !window.GGP || PROF.age !== 'adult') return '';
+  if (HELP) {
+    const n = escapeHtml((GGP.get(HELP) || {}).name || 'They');
+    return `<section id="gt-set-helpers"><h3>Helping ${n}</h3><p class="gt-small">${n} chooses what helpers see, in their own Oak settings. Their safety answers are never shared.</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();helpBack()">Back to My Own Oak</button></div></section>`;
+  }
+  const d = okRec(); if (!d) return '';
+  const on = !!d.helpersOn, sh = shareOf(PROF.id);
+  const hs = (GGP.helpers(PROF.id) || []).map(id => GGP.get(id)).filter(Boolean);
+  const can = GGP.list().filter(p => p.age === 'adult' && p.id !== PROF.id && !hs.some(x => x.id === p.id));
+  return `<section id="gt-set-helpers"><h3>Add a Helper</h3>
+    <p class="gt-small">A helper is someone you trust, like a spouse, a grown child, a friend, or a mentor. They open your Oak with their own passcode, and they can sit with you for a check-in. This stays off unless you turn it on, and only you can turn it on.</p>
+    <label class="gt-switch"><input type="checkbox" id="ok-helpers-on"${on ? ' checked' : ''} onchange="okHelpersOn(this.checked)"> Let helpers open my Oak</label>
+    ${on ? `<h4 class="sq-h4">What Helpers See</h4>${SHARE_ROWS.map(x => `<label class="gt-switch"><input type="checkbox"${sh[x[0]] ? ' checked' : ''} onchange="okShare('${x[0]}',this.checked)"> <span><b>${escapeHtml(x[1])}</b><br><small>${escapeHtml(x[2])}</small></span></label>`).join('')}
+      <p class="gt-small"><b>Never shared:</b> your safety answers, and flags and their notes.</p>
+      <h4 class="sq-h4">Your Helpers</h4>
+      ${hs.length ? hs.map(x => `<p class="sq-helper">${GGAv.html(x.avatar, x.name, 32)}<b>${escapeHtml(x.name)}</b><button type="button" class="text-btn" onclick="dropHelper('${x.id}')">Remove</button></p>`).join('') : '<p class="gt-small">No helpers yet.</p>'}
+      ${can.length ? `<label class="gt-small" for="ok-hid">Add a helper</label><select id="ok-hid" class="sq-select">${can.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('')}</select>
+        <label class="gt-small" for="ok-hpass">Their own passcode (they type it)</label><input type="password" id="ok-hpass" class="sq-select" autocomplete="off">
+        <div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="addHelperNow()">Add as a Helper</button></div>`
+        : '<p class="gt-small">A helper first creates their own Grounded profile on this device (the profile button at the top of the page), then comes back here with you to be added.</p>'}` : ''}
+  </section>`;
+}
+function okHelpersOn(on) {
+  const d = okRec(); if (!d) return;
+  d.helpersOn = !!on; if (on && !d.share) d.share = Object.assign({}, SHARE_DEF);
+  GGP.save(PROF.id).then(() => { showToast(on ? 'Helpers can be added now. Choose what they see.' : 'Your Oak is closed to helpers.'); reopenSettings(); });
+}
+function okShare(k, v) { const d = okRec(); if (!d) return; d.share = Object.assign({}, SHARE_DEF, d.share || {}); d.share[k] = !!v; GGP.save(PROF.id); }
+function addHelperNow() {
+  const hid = (document.getElementById('ok-hid') || {}).value, pass = (document.getElementById('ok-hpass') || {}).value;
+  if (!pass) { showToast('Your helper types their own passcode.'); return; }
+  GGP.addHelper(PROF.id, hid, pass).then(() => { showToast(((GGP.get(hid) || {}).name || 'They') + ' is now a helper.'); reopenSettings(); }).catch(e => showToast(e && e.message ? e.message : 'That did not work. Try again.'));
+}
+function dropHelper(id) {
+  const n = (GGP.get(id) || {}).name || 'this helper';
+  if (!confirm('Remove ' + n + ' as a helper? They will no longer open your profile.')) return;
+  GGP.removeHelper(PROF.id, id); showToast(n + ' is no longer a helper.'); reopenSettings();
+}
+// Helper view
+function helpOpen(id) {
+  if (!helpedWithOak().some(p => p.id === id)) return;
+  HELP = id; window.currentClientEntry = null; renderProfileBar(); renderHelpBanner(); showView('client-today');
+}
+function helpBack() { HELP = null; setMode('self'); renderProfileBar(); renderHelpBanner(); showView('client-today'); }
+function helpFromHash() {
+  const m = /^#for=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m || !PROF) return;
+  if (helpedWithOak().some(p => p.id === m[1])) { try { history.replaceState(null, '', location.pathname); } catch (e) {} helpOpen(m[1]); }
+}
+function renderHelpBanner() {
+  const b = document.getElementById('sq-help-banner'); if (!b) return;
+  if (!HELP) { b.innerHTML = ''; b.hidden = true; return; }
+  const n = escapeHtml((GGP.get(HELP) || {}).name || 'them');
+  b.hidden = false;
+  b.innerHTML = `<p><b>You are helping ${n}.</b> You see only what ${n} chooses to share.</p><button type="button" class="btn btn-secondary btn-sm" onclick="helpBack()">Back to My Own Oak</button>`;
+}
+function helpLevels(e, sh) {
+  return `<div class="lvl-list">${ALL_DOMAINS.filter(d => d.key !== 'roots' || sh.faith).map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part}</b><span class="lvl-pill">${stLevel(stShown(e, d.key))}</span></div>`).join('')}</div>`;
+}
+function renderHelpTabs() {
+  if (!HELP || !window.GGP) return;
+  const p = GGP.get(HELP) || {}, n = escapeHtml(p.name || 'them'), d = GGP.data(HELP, 'oak'), sh = shareOf(HELP);
+  const own = (d.history || []).filter(e => e && e.scores && !e.from), last = own[own.length - 1];
+  const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give. The check-in saves to ${n}'s tree, marked as taken together. The safety questions stay with ${n}, for their own check-ins.</p>
+    <div class="btn-row"><button class="btn btn-primary" onclick="startCheckin('tapped','${HELP}')">${n} Answers, I Tap</button><button class="btn btn-secondary" onclick="startQuick('tapped','${HELP}')">Quick Check-in Together</button></div></div>`;
+  const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(formatDate(last.date))}${last.by === 'tapped' ? ', taken together' : ''}.</p>${helpLevels(last, sh)}` : '<p>No check-ins yet.</p>'}
+    ${own.length ? `<h4 class="sq-h4">Check-ins</h4><ul class="gt-hist">${own.slice().reverse().slice(0, 8).map(e => `<li><b>${escapeHtml(formatDate(e.date))}</b><span>${e.type === 'quick' ? 'Quick' : 'Full'}${e.by === 'tapped' ? ', ' + escapeHtml(BY_LABEL.tapped) + (e.helper ? ' (' + escapeHtml(e.helper) + ')' : '') : ''}</span></li>`).join('')}</ul>` : ''}
+    ${sh.notes && last && last.reflections ? ALL_DOMAINS.filter(dd => (dd.key !== 'roots' || sh.faith) && String(last.reflections[dd.key] || '').trim()).map(dd => `<p class="gt-small"><b>${dd.part}:</b> ${escapeHtml(last.reflections[dd.key])}</p>`).join('') : ''}</div>` : `<div class="gt-card"><p>${n} keeps their tree private. You can still check in together.</p></div>`;
+  const todayEl = document.getElementById('client-today'), weekEl = document.getElementById('client-week'), seasonEl = document.getElementById('client-season');
+  if (todayEl) todayEl.innerHTML = tree + acts;
+  const rest = `<div class="gt-card"><p>${n}'s weeks and seasons stay on ${n}'s own screen. Here you can check in together and see what ${n} shares.</p><div class="btn-row"><button class="btn btn-secondary" onclick="showView('client-today')">Back to Today</button></div></div>`;
+  if (weekEl) weekEl.innerHTML = rest;
+  if (seasonEl) seasonEl.innerHTML = rest;
+}
+function renderHelpPlan() {
+  const box = document.getElementById('client-growthplan-builder'); if (!box || !HELP) return;
+  const n = escapeHtml((GGP.get(HELP) || {}).name || 'them'), d = GGP.data(HELP, 'oak'), sh = shareOf(HELP), plan = (d.tend && d.tend.plan) || null;
+  document.getElementById('client-growthplan-generate-row').style.display = 'none';
+  document.getElementById('client-growthplan-doc').innerHTML = '';
+  if (!sh.plan) { box.innerHTML = `<p class="lead">${n} keeps their growth plan private.</p>`; return; }
+  if (!plan) { box.innerHTML = `<p class="lead">${n} has not chosen practices yet.</p>`; return; }
+  box.innerHTML = `<p class="lead">${n}'s practices. You can do them together.</p>` + ALL_DOMAINS.filter(dd => dd.key !== 'roots' || sh.faith).map(dd => {
+    const x = plan[dd.key] || {}, names = (x.selected || []).concat(x.custom ? [x.custom] : [], (x.lib || []).map(l => l.n));
+    if (!names.length) return '';
+    return `<div class="domain-card" style="--domain-color:${dd.color};border-left-color:${dd.color};"><div class="card-head">${partIcon(dd, 26)}<div><div class="domain-name" style="color:${dd.color};">${dd.part}</div><div class="card-sub">${dd.name}</div></div></div><ul class="sq-planlist">${names.map(nm => `<li>${escapeHtml(nm)}</li>`).join('')}</ul></div>`;
+  }).join('');
+}
+
 function savePersonalFile() {
   if (!window.currentClientEntry && personalHistory.length === 0) {
     showToast('Take the check-in first, then save your results.');
@@ -3231,14 +3580,12 @@ function savePersonalFile() {
     sortEntries(personalHistory);
   }
   if (PROF) { profPersist().then(() => { showToast('Saved to your profile.'); renderSaveBox(); renderProgress(); }); return; }
-  const today = new Date().toISOString().split('T')[0];
-  downloadJSON({
-    app: 'oak', type: 'personal', version: 1,
-    savedAt: new Date().toISOString(), entries: personalHistory
-  }, `oak-my-results-${today}.json`);
-  showToast('Results saved to your device. Keep the file somewhere private.');
-  renderSaveBox();
-  renderProgress();
+  // Save to a File: locked with a passcode the person chooses (shared/gg-filelock.js, GWG BLD 745).
+  const data = { app: 'oak', type: 'personal', version: 1, savedAt: new Date().toISOString(), entries: personalHistory };
+  if (!window.GGFileLock) { showToast('Saving to a file needs a newer browser.'); return; }
+  GGFileLock.save({ app: 'oak', filename: `oak-my-results-${todayKey()}.json`, data, what: 'your Oak results' }).then(ok => {
+    if (ok) { showToast('Saved to a locked file. Keep it, and its passcode, somewhere safe.'); renderSaveBox(); renderProgress(); }
+  });
 }
 
 function loadPersonalFile(input) {
@@ -3247,30 +3594,29 @@ function loadPersonalFile(input) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = () => {
-    try {
-      const data = JSON.parse(reader.result); if (window.GGParts) GGParts.fix(data);
-      if (data && data.clients) {
-        showToast('That is a practitioner backup. Move it into Oak Guide in the Grounded Field Guide.');
-        return;
-      }
-      if (!data || !['oak', 'the-root-system'].includes(data.app) || data.type !== 'personal' || !Array.isArray(data.entries)) {
-        throw new Error('Not an Oak results file');
-      }
+    // Locked files open with their passcode; older plain files still load as they are.
+    // Birch and Pine results files load too, set apart as From Birch and From Pine.
+    const take = data => {
+      if (window.GGParts && data) GGParts.fix(data);
+      if (data && data.clients) { showToast('That is a practitioner backup. Move it into Oak Guide in the Grounded Field Guide.'); return; }
+      if (!data || !['oak', 'the-root-system', 'birch', 'pine'].includes(data.app) || data.type !== 'personal' || !Array.isArray(data.entries)) throw new Error('Not an Oak results file');
       const valid = data.entries.filter(e => e && e.scores && typeof e.scores === 'object');
       const ids = new Set(personalHistory.map(e => e.id));
       valid.forEach((e, i) => {
         if (!e.id) e.id = 'saved-' + i + '-' + String(e.date);
+        if ((data.app === 'birch' || data.app === 'pine') && !e.from) { e.from = data.app; e.id = data.app + '-' + e.id; }
         if (!ids.has(e.id)) { personalHistory.push(e); ids.add(e.id); }
       });
       sortEntries(personalHistory);
       window.personalFileLoaded = true;
+      if (PROF) profPersist();
       renderSaveBox();
       renderProgress();
       showToast(`Loaded ${valid.length} saved result${valid.length !== 1 ? 's' : ''}.`);
-    } catch (e) {
-      console.error(e);
-      showToast('That file is not an Oak results file.');
-    }
+    };
+    const fail = () => showToast('That file is not an Oak, Birch, or Pine results file.');
+    if (window.GGFileLock) GGFileLock.read(reader.result, { what: 'your results' }).then(d => { if (d) { try { take(d); } catch (e) { fail(); } } }).catch(fail);
+    else { try { take(JSON.parse(reader.result)); } catch (e) { fail(); } }
   };
   reader.readAsText(file);
 }
@@ -3281,7 +3627,7 @@ function renderSaveBox() {
   const n = personalHistory.filter(e => !currentClientEntry || e.id !== currentClientEntry.id).length;
   const saved = currentClientEntry && personalHistory.some(e => e.id === currentClientEntry.id);
   if (PROF) {
-    box.innerHTML = `<div class="save-box"><div class="save-box-title">Saved to your profile</div><p>This result is saved to ${escapeHtml(PROF.name)}'s profile on this device. After you choose your growth plan, tap Save to keep your choices too.</p><div class="btn-row"><button class="btn btn-primary" onclick="savePersonalFile()">Save</button><button class="btn btn-secondary" onclick="profBackup()">Download backup</button></div></div>`;
+    box.innerHTML = `<div class="save-box"><div class="save-box-title">Saved to your profile</div><p>This result is saved to ${escapeHtml(PROF.name)}'s profile on this device. After you choose your growth plan, tap Save to keep your choices too.</p><div class="btn-row"><button class="btn btn-primary" onclick="savePersonalFile()">Save</button><button class="btn btn-secondary" onclick="profBackup()">Download a Locked Backup</button></div></div>`;
     return;
   }
   let status;
@@ -3291,11 +3637,11 @@ function renderSaveBox() {
   box.innerHTML = `
     <div class="save-box">
       <div class="save-box-title">Save your results</div>
-      <p>Nothing is stored until you choose to save. A Grounded profile keeps your check-ins on this device, locked with your own passcode, so you can see your tree grow over time. Or download them to a file you keep yourself.</p>
+      <p>Nothing is stored until you choose to save. A Grounded profile keeps your check-ins on this device, locked with your own passcode, so you can see your tree grow over time. Or save them to a file locked with a passcode you choose.</p>
       <p style="margin-top:8px;"><strong>${status}</strong></p>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="profCreateDialog()">Save to a private profile</button>
-        <button class="btn btn-secondary" onclick="savePersonalFile()">Download to a file instead</button>
+        <button class="btn btn-secondary" onclick="savePersonalFile()">Save to a locked file instead</button>
         ${personalFileLoaded ? '' : '<button class="btn btn-secondary" onclick="openPersonalFilePicker()">Load My File</button>'}
       </div>
     </div>`;
@@ -3314,6 +3660,7 @@ function renderProgress() {
     return;
   }
   renderHistoryChartAndTable(container, list, true);
+  if (PROF && !HELP) container.insertAdjacentHTML('afterbegin', graphCardHtml());
   if (pending) {
     container.insertAdjacentHTML('afterbegin', '<div class="privacy-note"><strong>Your latest result is not saved yet.</strong> Use Save My Results to add it to your file.</div>');
   }
@@ -3322,19 +3669,25 @@ function renderProgress() {
 // ---------- CHART + TABLE RENDERING ----------
 // Rings compare only within the same standard and the same kind (full with full,
 // quick with quick). Check-ins from before the standard are labeled earlier and never compared.
+// Rings From Pine and From Birch (GWG BLD 745) are kept in the history, labeled, and set
+// apart: never compared with Oak rings and never drawn in the graphs. A check-in taken
+// together with a helper is marked, and compares like any Oak ring.
+const FROM_NAME = { pine: 'From Pine', birch: 'From Birch', aspen: 'From Aspen', sequoia: 'From Sequoia', oak: 'From Oak' };
 function stShown(entry, k) { return (entry.unsure || []).includes(k) ? null : (entry.scores || {})[k]; }
+function earlierLabel(e) { return e.from ? (FROM_NAME[e.from] || 'Earlier') : !e.std ? 'Earlier' : ''; }
 function renderHistoryChartAndTable(container, history, personal) {
   if (history.length === 0) {
     container.innerHTML = '<p style="font-size:13px;color:var(--ink-soft);">No results saved yet.</p>';
     return;
   }
-  const last = history[history.length - 1];
-  const treeSvg = `<div style="max-width:260px;margin:0 auto;">${puzzleTreeSvg({ variant: 'score', scores: last.scores, seam: '#2C1810' })}</div>`;
+  const own = history.filter(e => !e.from);
+  const last = own[own.length - 1] || null;
   const kind = e => e.type === 'quick' ? 'quick' : 'full';
-  const prev = last.std ? history.slice(0, -1).reverse().find(e => e.std === last.std && kind(e) === kind(last)) : null;
+  const prev = last && last.std ? own.slice(0, -1).reverse().find(e => e.std === last.std && kind(e) === kind(last)) : null;
 
   let cmp = '';
-  if (!last.std) cmp = '<p class="muted" style="font-size:14px;">This is an earlier check-in, from before the questions were updated. Your next check-in starts a new set of rings.</p>';
+  if (!last) cmp = '<p class="muted" style="font-size:14px;">Your rings from before Oak are kept below, labeled. Your first Oak check-in starts your Oak rings.</p>';
+  else if (!last.std) cmp = '<p class="muted" style="font-size:14px;">This is an earlier check-in, from before the questions were updated. Your next check-in starts a new set of rings.</p>';
   else if (!prev) cmp = `<p class="muted" style="font-size:14px;">Your next ${kind(last) === 'quick' ? 'quick ' : ''}check-in will show how each part has grown.</p>`;
   else {
     cmp = `<p style="font-size:14px;margin:0 0 6px;">Compared with your ${kind(last) === 'quick' ? 'quick ' : ''}check-in on ${escapeHtml(String(prev.date || ''))}:</p><div class="ring-cmp">` + ALL_DOMAINS.map(d => {
@@ -3349,7 +3702,8 @@ function renderHistoryChartAndTable(container, history, personal) {
   ALL_DOMAINS.forEach(d => tableHtml += `<th>${d.part}</th>`);
   tableHtml += `</tr></thead><tbody>`;
   history.slice().reverse().forEach(s => {
-    tableHtml += `<tr><td>${escapeHtml(String(s.date || ''))}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}${!s.std ? ' <span class="earlier-tag">Earlier</span>' : ''}</td>`;
+    const lab = earlierLabel(s);
+    tableHtml += `<tr${s.from ? ' class="ok-from"' : ''}><td>${escapeHtml(String(s.date || ''))}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}${lab ? ` <span class="earlier-tag">${escapeHtml(lab)}</span>` : s.by === 'tapped' ? ' <span class="quick-tag">Taken Together</span>' : ''}</td>`;
     ALL_DOMAINS.forEach(d => { const v = stShown(s, d.key); tableHtml += `<td>${v == null ? 'Not sure yet' : `${stLevel(v)}<br><small>${v} of 10</small>`}</td>`; });
     tableHtml += `</tr>`;
   });
@@ -3357,18 +3711,17 @@ function renderHistoryChartAndTable(container, history, personal) {
 
   container.innerHTML = `
     <div class="chart-container">
-      <div class="section-title" style="margin-top:0;">Most Recent Tree</div>
-      ${treeSvg}
+      ${last ? `<div class="section-title" style="margin-top:0;">Most Recent Tree</div><div style="max-width:260px;margin:0 auto;">${puzzleTreeSvg({ variant: 'score', scores: last.scores, seam: '#2C1810' })}</div>` : ''}
       ${cmp}
     </div>
     <div class="chart-container">
       <div class="section-title" style="margin-top:0;">Full History</div>
       ${tableHtml}
-      ${history.some(e => !e.std) ? '<p class="muted" style="font-size:13px;margin-top:8px;">Check-ins marked Earlier used the questions from before the update. They stay here, but they are not compared with newer ones.</p>' : ''}
+      ${history.some(e => e.from) ? '<p class="muted" style="font-size:13px;margin-top:8px;">Rings marked From Pine or From Birch came with you from another tree. They used other questions, so they stay here as part of your story, set apart and never compared with Oak rings.</p>' : ''}
+      ${history.some(e => !e.from && !e.std) ? '<p class="muted" style="font-size:13px;margin-top:8px;">Check-ins marked Earlier used the questions from before the update. They stay here, but they are not compared with newer ones.</p>' : ''}
     </div>
   `;
 }
-
 
 // =====================================================================
 // START

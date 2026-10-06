@@ -10525,12 +10525,12 @@ window.GG_LEARN_GUIDES.sequoia = {
   {
    "id": "regrets",
    "ring": "meaning",
-   "title": "Making Peace With Regrets",
+   "title": "Making Peace with Regrets",
    "you": {
     "id": "sq-g-regrets-you",
     "guide": "regrets",
     "side": "you",
-    "title": "Making Peace With Regrets",
+    "title": "Making Peace with Regrets",
     "sideName": "For You",
     "mins": 5,
     "blurb": "For anyone looking back on a long life and carrying something they wish had gone differently.",
@@ -10546,7 +10546,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Making Peace With Regrets",
+      "h": "Making Peace with Regrets",
       "sub": "For You",
       "say": "If old regrets have been coming back to you, in the quiet hours or as you look back on your life, this is for you. Go gently, and stop whenever you need to."
      },
@@ -10644,7 +10644,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "id": "sq-g-regrets-helper",
     "guide": "regrets",
     "side": "helper",
-    "title": "Making Peace With Regrets",
+    "title": "Making Peace with Regrets",
     "sideName": "For the Helper",
     "mins": 4,
     "blurb": "For anyone beside an older adult who is looking back and carrying regret.",
@@ -10657,7 +10657,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Making Peace With Regrets",
+      "h": "Making Peace with Regrets",
       "sub": "For the Helper",
       "say": "If someone you love keeps coming back to an old regret, or tells you about one for the first time, this is for you. You don't have to make it go away. You can help them carry it."
      },

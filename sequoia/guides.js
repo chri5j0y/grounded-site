@@ -306,7 +306,7 @@ const LC_TOPICS = [
   "faith": "Many traditions teach service as a way to love your neighbor and live what you believe, and faith communities often have roles for every energy level: visiting, cooking, greeting, praying for others, mentoring. If faith isn't part of your life, serving is still a way to live your values and stay connected.",
   "practices": [
    "trunk|Volunteer",
-   "trunk|Read With a Child",
+   "trunk|Read with a Child",
    "trunk|Mentor Someone",
    "fruit|Pay It Forward",
    "branches|One Reach-Out a Day"
@@ -854,7 +854,7 @@ const LC_TOPICS = [
    "trunk|Life Review",
    "trunk|Record a Story",
    "bark|Grief Time",
-   "trunk|Peace With the Past",
+   "trunk|Peace with the Past",
    "branches|Family"
   ],
   "reach": [
@@ -2308,7 +2308,7 @@ const LC_TOPICS = [
    "bark|Slow Exhale",
    "bark|Five Senses Pause",
    "branches|Active Listening",
-   "trunk|Peace With the Past",
+   "trunk|Peace with the Past",
    "trunk|Moral Repair Letter",
    "branches|Support Group"
   ],
@@ -3086,7 +3086,7 @@ const LC_TOPICS = [
    "branches|Grandparent From a Distance",
    "trunk|Record a Story",
    "trunk|Pass On a Skill",
-   "trunk|Read With a Child",
+   "trunk|Read with a Child",
    "fruit|Blessing for Those You Love",
    "roots|Teach"
   ],
@@ -4044,7 +4044,7 @@ const LC_TOPICS = [
    "trunk|Record a Story",
    "branches|Support Group",
    "trunk|Mentor Someone",
-   "trunk|Peace With the Past",
+   "trunk|Peace with the Past",
    "roots|Ritual"
   ],
   "reach": [
@@ -4430,7 +4430,7 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions offer a path through regret: confession, repentance, making amends, a day of atonement, rituals of release, and the promise of mercy. If faith is part of your life, a faith leader or chaplain can walk with you through it. If it isn't, the same steps of honesty, repair, and kindness toward yourself are open to you, and a counselor can help.",
   "practices": [
-   "trunk|Peace With the Past",
+   "trunk|Peace with the Past",
    "trunk|Life Review",
    "trunk|Moral Repair Letter",
    "bark|Self-Compassion Break",
