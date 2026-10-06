@@ -19845,6 +19845,4213 @@ window.GG_LEARN = {
   }
  ]
 },
+  /* Pine Learn (GWG BLD 739): Start Here, Using Pine, The Six Parts, For the Grown-up, and Support for Right Now.
+     Generated from patches/bld739/source in grounded-workshop. */
+  pine: {
+ "title": "Learn Pine",
+ "intro": "Short lessons, narrated aloud, at your own pace. Watch on your own or with someone you trust, in any order.",
+ "supportFirst": true,
+ "support": {
+  "eyebrow": "Support",
+  "title": "Support for Right Now",
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+ },
+ "lessonsTitle": "Learn Step by Step",
+ "tracks": [
+  {
+   "id": "pine-start",
+   "title": "Start Here",
+   "who": "For high schoolers, grades 9 to 12, and the people who back them",
+   "lessons": [
+    {
+     "id": "pn-welcome",
+     "n": 1,
+     "title": "Welcome to Pine",
+     "mins": 4,
+     "blurb": "What Pine is, who it is for, what stays private, and where to begin.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Pine",
+       "sub": "Stand tall through every season.",
+       "say": "Welcome to Pine. Stand tall through every season. This short lesson shows you what Pine is, who it is for, and where to begin."
+      },
+      {
+       "k": "big",
+       "h": "Pines stay green through every season.",
+       "sub": "Wind, snow, heat, and drought. They keep growing.",
+       "say": "Pine trees stay green all year. Wind, snow, summer heat, a dry stretch. They bend, they hold, and they keep growing. The high school years have seasons like that too. Pine is built to help you stand tall through all of them."
+      },
+      {
+       "k": "trees",
+       "h": "Pine grows between Aspen and Oak.",
+       "say": "Grow With Grounded has a tree for every age. Maple and Aspen are for younger students. Oak is for adults. Pine is the tree built for grades nine to twelve, for people who are building their own lives."
+      },
+      {
+       "k": "six",
+       "h": "Six parts make you whole",
+       "words": [
+        "What holds you steady",
+        "What you care about",
+        "Stress and big feelings",
+        "Friends, family, trusted adults",
+        "Move, rest, and nourish",
+        "What you look forward to"
+       ],
+       "say": "Pine sees your life as a tree with six parts. Roots, what holds you steady. Trunk, what you care about and where you are headed. Bark, how you handle stress, mistakes, and big feelings. Branches, your friends, your family, and the adults in your corner. Leaves, your body, how you move, rest, and eat. And Fruit, what you look forward to and believe is possible. Six parts make you whole. Pine helps you learn to tend them all."
+      },
+      {
+       "k": "points",
+       "h": "What Pine gives you",
+       "items": [
+        [
+         "A check-in",
+         "An honest look at all six parts"
+        ],
+        [
+         "A growth plan",
+         "Small practices that fit your life"
+        ],
+        [
+         "Next Steps",
+         "A private notebook for life after high school"
+        ],
+        [
+         "A tree that grows",
+         "Levels, milestones, and rings"
+        ]
+       ],
+       "say": "Here is what Pine gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Next Steps, a private notebook for your goals and your plans after high school. And a tree that grows as you tend it, with levels, milestones, and a new ring every season."
+      },
+      {
+       "k": "big",
+       "h": "Your answers are yours.",
+       "sub": "Locked on this device with your own passcode.",
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. If an answer shows you might not be safe, Pine shows you help right away, and a grown-up you chose gets a quiet note to check in with you. That is all they see."
+      },
+      {
+       "k": "tabs",
+       "app": "pine",
+       "app_name": "Pine",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Next Steps",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Where to begin",
+        "p": "Start a check-in. Your tree and your practices grow from there."
+       },
+       "say": "Pine has six tabs. Today, Week, Season, Growth Plan, Next Steps, and Learn. The best place to begin is a check-in. Your tree, and your daily practices, grow from there."
+      },
+      {
+       "k": "big",
+       "h": "Start on purpose",
+       "sub": "One breath and one thing that matters, before your phone.",
+       "beats": [
+        "Today has a short practice for the morning, called Start on purpose.",
+        "Let's try it now.",
+        "Sit up, wherever you are.",
+        "Take one slow breath, in and out.",
+        "Now pick one thing that matters to you today.",
+        {
+         "t": "Say it out loud: Today, what matters is this.",
+         "w": 10
+        }
+       ],
+       "say": "Today has a short practice for the morning, called Start on purpose. Let's try it now. Sit up, wherever you are. Take one slow breath, in and out. Now pick one thing that matters to you today. Say it out loud: Today, what matters is this."
+      },
+      {
+       "k": "big",
+       "h": "Small and steady is how a pine grows.",
+       "sub": "One practice a day is enough to start.",
+       "say": "Nice. That is the whole idea of Pine. Small and steady is how a pine grows. You do not have to fix everything at once. One practice a day is enough to start."
+      },
+      {
+       "k": "quiz",
+       "q": "What does your grown-up see from your Pine check-in?",
+       "opts": [
+        "Every answer you give",
+        "Only a quiet note to check in, if you might not be safe",
+        "Your levels and your notes"
+       ],
+       "right": 1,
+       "why": "Your answers, levels, notes, and Next Steps stay yours. A grown-up you chose only gets a quiet note to check in.",
+       "say": "Quick question. What does your grown-up see from your Pine check-in?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pine-using",
+   "title": "Using Pine",
+   "who": "Every part of Pine, step by step",
+   "certTitle": "Pine: Using Pine",
+   "certLine": "For finishing every lesson on using Pine, step by step.",
+   "lessons": [
+    {
+     "id": "pn-u-checkin",
+     "n": 1,
+     "title": "Your First Check-in",
+     "mins": 5,
+     "blurb": "Seven questions for each part, the past two weeks, Not sure, the safety step, and help that shows up right away.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Using Pine, Lesson 1",
+       "h": "Your First Check-in",
+       "sub": "An honest look at all six parts.",
+       "say": "Everything in Pine starts with a check-in. It is an honest look at all six parts of your tree. This lesson walks you through it, so you know exactly what to expect."
+      },
+      {
+       "k": "flow",
+       "h": "Two ways to check in",
+       "steps": [
+        [
+         "Full check-in",
+         "Seven questions for each part, 42 in all"
+        ],
+        [
+         "Quick Check-in",
+         "One question for each part, about 2 minutes"
+        ]
+       ],
+       "say": "There are two ways to check in. The full check-in asks seven questions for each part, forty two in all, and takes about ten minutes. The Quick Check-in asks one question for each part, and takes about two. The first time, Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve."
+      },
+      {
+       "k": "points",
+       "h": "On your own, or with someone",
+       "items": [
+        [
+         "On my own",
+         "Each answer moves you on by itself"
+        ],
+        [
+         "With someone I trust",
+         "A short note to talk about together"
+        ],
+        [
+         "You decide",
+         "What to share, and with whom"
+        ]
+       ],
+       "say": "Before you start, choose how you are checking in. On my own is just you. With someone I trust is for a parent, a mentor, a coach, or a counselor you chose. After each answer, a short note gives you both something to talk about. You still decide what to share."
+      },
+      {
+       "k": "screen",
+       "app": "pine",
+       "app_name": "Pine",
+       "title": "Fruit, Question 1 of 7",
+       "rows": [
+        [
+         "Looked forward to something, soon or someday?",
+         ""
+        ],
+        [
+         "Rarely",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Often",
+         ""
+        ],
+        [
+         "Almost always",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 3,
+       "say": "Each question begins, in the past two weeks, how often have you. One question shows at a time. Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always an honest answer. Tap one, and Pine moves you on by itself."
+      },
+      {
+       "k": "points",
+       "h": "You set the pace",
+       "items": [
+        [
+         "Back",
+         "Change any answer"
+        ],
+        [
+         "Skip this one",
+         "Leave any question blank"
+        ],
+        [
+         "Why this question?",
+         "See why it is asked"
+        ],
+        [
+         "Read Aloud",
+         "Hear each question"
+        ]
+       ],
+       "say": "You set the pace. Tap Back to change an answer. Tap Skip this one to leave a question blank. Tap Why this question to see why Pine asks it. And turn on Read Aloud to hear each question. Nothing here is timed."
+      },
+      {
+       "k": "big",
+       "h": "Try one real question",
+       "sub": "Looked forward to something, soon or someday?",
+       "beats": [
+        "Let's try one real question now.",
+        "This is the first question for Fruit, your hope.",
+        "In the past two weeks, how often have you looked forward to something, soon or someday?",
+        "A game, a trip, a friend, or a plan all count.",
+        {
+         "t": "Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure.",
+         "w": 10
+        }
+       ],
+       "say": "Let's try one real question now. This is the first question for Fruit, your hope. In the past two weeks, how often have you looked forward to something, soon or someday? A game, a trip, a friend, or a plan all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
+      },
+      {
+       "k": "points",
+       "h": "Help shows up right away",
+       "items": [
+        [
+         "Feeling alone",
+         "Ways to reach one person this week"
+        ],
+        [
+         "Losing hope",
+         "Someone to talk with, any time"
+        ],
+        [
+         "Bullied or threatened",
+         "Never your fault, and help is close"
+        ]
+       ],
+       "say": "Good. Some answers matter enough that Pine responds right away. If you say you have felt lonely often, or like there is no point in trying, or that someone is bullying or threatening you, a short note opens with people who can help. Your answer is never lost."
+      },
+      {
+       "k": "points",
+       "h": "Before you see your tree",
+       "items": [
+        [
+         "Two last questions",
+         "Asked because you matter"
+        ],
+        [
+         "Yes, No, Not sure",
+         "Or I’d rather not say"
+        ],
+        [
+         "Need to talk to someone now?",
+         "Help lines, one tap away"
+        ]
+       ],
+       "say": "At the end come two last questions. One asks if anyone is hurting you or making you feel unsafe. The other asks about thoughts of not wanting to be alive. Lots of people your age have had that thought, and it is safe to say so. You can always choose, I would rather not say."
+      },
+      {
+       "k": "screen",
+       "app": "pine",
+       "app_name": "Pine",
+       "title": "Help lines",
+       "rows": [
+        [
+         "988 Suicide and Crisis Lifeline",
+         "Call or text 988"
+        ],
+        [
+         "Crisis Text Line",
+         "Text HOME to 741741"
+        ],
+        [
+         "Someone hurting you? Childhelp",
+         "1-800-422-4453"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "If you need support, a calm card opens. Call or text nine eight eight, any time. Text HOME to seven four one seven four one. In danger right now, call nine one one. And if someone is hurting you, that answer never goes to your family. Pine shows you help from outside your home, like Childhelp, and a trusted adult at school."
+      },
+      {
+       "k": "big",
+       "h": "There are no wrong answers.",
+       "sub": "Tap See My Tree when you finish.",
+       "say": "There are no wrong answers in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
+      },
+      {
+       "k": "quiz",
+       "q": "What can you do with a question you’d rather not answer?",
+       "opts": [
+        "You have to answer it",
+        "Tap Skip this one",
+        "Start the check-in over"
+       ],
+       "right": 1,
+       "why": "You can skip any question, and Back always takes you to the one before.",
+       "say": "Quick question. What can you do with a question you would rather not answer?"
+      }
+     ]
+    },
+    {
+     "id": "pn-u-tree",
+     "n": 2,
+     "title": "Your Tree and Your Levels",
+     "mins": 4,
+     "blurb": "Strong, Steady, and Growing Edge, your rings, and how to watch your tree grow.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Using Pine, Lesson 2",
+       "h": "Your Tree and Your Levels",
+       "sub": "A picture of right now, never a grade.",
+       "say": "When you tap See My Tree, Pine shows you a picture of your life right now. This lesson shows you how to read it, and how to watch it grow."
+      },
+      {
+       "k": "big",
+       "h": "The fuller the color, the healthier that part.",
+       "sub": "Tap a part to tend it in your growth plan.",
+       "say": "First you see your tree. Each part is shaded by its score. The fuller the color, the healthier that part is right now. Tap any part to go straight to it in your growth plan."
+      },
+      {
+       "k": "levels",
+       "say": "Each part gets a score from one to ten, and a level. Strong, from eight to ten. Steady, from five to seven. And Growing Edge, from one to four."
+      },
+      {
+       "k": "screen",
+       "app": "pine",
+       "app_name": "Pine",
+       "title": "Your Tree",
+       "rows": [
+        [
+         "Roots",
+         "Steady, 6 of 10",
+         "#8B5E1A"
+        ],
+        [
+         "Trunk",
+         "Strong, 8 of 10",
+         "#5F7D48"
+        ],
+        [
+         "Bark",
+         "Growing Edge, 4 of 10",
+         "#B8612F"
+        ],
+        [
+         "Branches",
+         "Strong, 9 of 10",
+         "#5F7D48"
+        ],
+        [
+         "Leaves",
+         "Steady, 5 of 10",
+         "#8B5E1A"
+        ],
+        [
+         "Fruit",
+         "Steady, 7 of 10",
+         "#8B5E1A"
+        ]
+       ],
+       "tap": 2,
+       "say": "Under the tree, each part shows its level and its score, like Steady, six of ten. If you answered Not sure, or skipped every question in a part, it says Not sure yet. That is fine. You can come back to it next time."
+      },
+      {
+       "k": "big",
+       "h": "A Growing Edge is where your next growth begins.",
+       "sub": "A part to tend, never a failing grade.",
+       "say": "A Growing Edge is never a failing grade. It is the part that could use the most tending right now. Everyone has one, adults too. A low score is information, and it points to where you can grow next."
+      },
+      {
+       "k": "points",
+       "h": "Then, a few words for you",
+       "items": [
+        [
+         "Your strongest parts",
+         "And how to lean on them"
+        ],
+        [
+         "Where to start tending",
+         "Small first steps"
+        ],
+        [
+         "Worth tending",
+         "Help, when an answer needs it"
+        ]
+       ],
+       "say": "Below your levels, Pine writes a few words just for you. It names your strongest parts, and how to lean on them. It names where to start tending, with small first steps. And if an answer said you felt alone, or that you were losing hope, the help lines are right there too."
+      },
+      {
+       "k": "big",
+       "h": "Read it like a friend would",
+       "sub": "Your strongest part, and one Growing Edge.",
+       "beats": [
+        "Read your results the way a good friend would read them, honestly and kindly.",
+        "Let's practice that now.",
+        "Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit.",
+        "Which one feels strongest right now?",
+        "And which one would you most like to tend?",
+        {
+         "t": "Say both out loud: My strongest part is this one, and the part I will tend is this one.",
+         "w": 10
+        }
+       ],
+       "say": "Read your results the way a good friend would read them, honestly and kindly. Let's practice that now. Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
+      },
+      {
+       "k": "flow",
+       "h": "A ring for every season",
+       "steps": [
+        [
+         "Planting",
+         "Your first full check-in"
+        ],
+        [
+         "Rooting",
+         "Twelve weeks of tending"
+        ],
+        [
+         "Blooming",
+         "A full check-in adds a ring"
+        ]
+       ],
+       "say": "Good. A season is twelve weeks. It begins with your first full check-in. At the end of the season, another full check-in adds a ring to your tree, just like a real pine. Over four years of high school, your tree can hold a lot of rings."
+      },
+      {
+       "k": "points",
+       "h": "Watch it grow on Season",
+       "items": [
+        [
+         "Your Parts Over Time",
+         "One point for each full check-in"
+        ],
+        [
+         "Grew, Dipped, or Same",
+         "Since your last check-in"
+        ],
+        [
+         "Like with like",
+         "Same grades, same kind of check-in"
+        ]
+       ],
+       "say": "The Season tab shows how your tree is growing. Your Parts Over Time gives each part a small chart, with dashed lines at Steady and Strong. After your second check-in, each part says Grew, Dipped, or Same. Pine only compares check-ins from the same grades, so the questions match. And check-ins from Aspen or Oak stay with you, labeled From Aspen or From Oak, and never mixed in."
+      },
+      {
+       "k": "big",
+       "h": "Every level is a starting point.",
+       "sub": "Next, tap Build My Growth Plan.",
+       "say": "Every level is a starting point. It tells you where you are, so you can choose where to grow. When you are ready, tap Build My Growth Plan."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a Growing Edge?",
+       "opts": [
+        "A failing grade",
+        "The part that could use the most tending right now",
+        "A part you can never change"
+       ],
+       "right": 1,
+       "why": "A Growing Edge is where your next growth begins. Everyone has one.",
+       "say": "Quick question. What is a Growing Edge?"
+      }
+     ]
+    },
+    {
+     "id": "pn-u-today",
+     "n": 3,
+     "title": "Tending Your Tree",
+     "mins": 5,
+     "blurb": "Your growth plan, daily tending, and how your tree levels up, with Steady or Hardy.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Using Pine, Lesson 3",
+       "h": "Tending Your Tree",
+       "sub": "Small and steady is how a pine grows.",
+       "say": "Pine has a rhythm. A little each day, a short look each week, and a full check-in each season. This lesson shows how it fits together, and how your tree levels up as you tend it."
+      },
+      {
+       "k": "points",
+       "h": "Your growth plan",
+       "items": [
+        [
+         "Strong: about 3",
+         "To keep it growing",
+         "#5F7D48"
+        ],
+        [
+         "Steady: about 4",
+         "To help it grow",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge: about 5",
+         "More ways to tend it",
+         "#B8612F"
+        ]
+       ],
+       "say": "Your growth plan is a short list of practices for each part. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, never limits. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+      },
+      {
+       "k": "tabs",
+       "app": "pine",
+       "app_name": "Pine",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Next Steps",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Today",
+        "p": "Your tree, and your practices for today, ready to check off."
+       },
+       "say": "Your practices then wait for you on Today. Tap the circle when you do one, and it fills with a checkmark. One practice is enough to tend your tree for the day. On a hard day, tap Easier today for a smaller way to do it. It still counts."
+      },
+      {
+       "k": "points",
+       "h": "Practices become yours",
+       "items": [
+        [
+         "Tried",
+         "You checked it off"
+        ],
+        [
+         "Building",
+         "It is becoming a habit"
+        ],
+        [
+         "Mine",
+         "It is part of who you are"
+        ]
+       ],
+       "say": "Each practice grows with you. The first time you check it off, it is Tried. Keep at it, and it becomes Building. Keep going, and it becomes Mine. That is real mastery, a skill you will keep long after high school."
+      },
+      {
+       "k": "flow",
+       "h": "Your tree levels up",
+       "steps": [
+        [
+         "Seed",
+         "Where everyone starts"
+        ],
+        [
+         "Sapling",
+         "Days tended add up"
+        ],
+        [
+         "Old Growth",
+         "The oldest stage of all"
+        ]
+       ],
+       "say": "Your tree levels up too. It starts as a Seed, and grows through named stages as your days tended add up, all the way to Old Growth. Days tended only go up. They are never taken away."
+      },
+      {
+       "k": "points",
+       "h": "Milestones and a balanced week",
+       "items": [
+        [
+         "Milestones",
+         "Your first day, first full week, first ring"
+        ],
+        [
+         "Balanced week",
+         "All six parts tended in one week"
+        ],
+        [
+         "No leaderboards",
+         "Your tree is only about you"
+        ]
+       ],
+       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Tend all six parts in one week, and you get a balanced week. And there are no leaderboards. Your tree is only about you."
+      },
+      {
+       "k": "points",
+       "h": "Steady or Hardy",
+       "items": [
+        [
+         "Steady",
+         "The gentle tree, the starting setting"
+        ],
+        [
+         "Hardy",
+         "A part left untended shows trouble"
+        ],
+        [
+         "One practice heals it",
+         "Nothing is ever lost"
+        ]
+       ],
+       "say": "You choose how your tree plays. Steady is the gentle tree, and it is where everyone starts. Nothing is ever lost. If you want more of a challenge, choose Hardy in Settings. On Hardy, a part you have left untended for a long while shows trouble, and one practice in that part heals it."
+      },
+      {
+       "k": "big",
+       "h": "Rough stretch? Your tree holds still.",
+       "sub": "For two weeks, nothing shows trouble.",
+       "say": "And if a check-in says you are losing hope or feeling alone, your tree holds still with you for two weeks. Hardy rests, and nothing shows trouble, while you get support. Missed days never shame you here. Just pick up today."
+      },
+      {
+       "k": "big",
+       "h": "Close the day",
+       "sub": "One thing that went right. One thing to set down.",
+       "beats": [
+        "Today also has a short practice for the evening, called Close the day.",
+        "Let's try it now.",
+        "Think back over today.",
+        "Name one thing that went right, even a small one.",
+        {
+         "t": "Now name one thing you are setting down for tonight, out loud or in your head.",
+         "w": 10
+        }
+       ],
+       "say": "Today also has a short practice for the evening, called Close the day. Let's try it now. Think back over today. Name one thing that went right, even a small one. Now name one thing you are setting down for tonight, out loud or in your head."
+      },
+      {
+       "k": "points",
+       "h": "More on Today and Week",
+       "items": [
+        [
+         "Find more practices",
+         "The Grounded practice library"
+        ],
+        [
+         "Movement Level",
+         "Gentle, Moderate, or Athletic"
+        ],
+        [
+         "The Week tab",
+         "A theme, a short check-in, a question"
+        ]
+       ],
+       "say": "Good. At the bottom of Today, Find more practices opens the Grounded practice library. In Settings, set your Movement Level, Gentle, Moderate, or Athletic, so your Leaves practices fit your body and your sport. And the Week tab brings a theme, a short weekly check-in, and a question to think about."
+      },
+      {
+       "k": "quiz",
+       "q": "What happens on Steady if you miss a few days?",
+       "opts": [
+        "Your tree loses its rings",
+        "Nothing is lost, and you pick up today",
+        "Your days tended reset to zero"
+       ],
+       "right": 1,
+       "why": "On Steady, nothing is ever lost. Days tended only go up.",
+       "say": "Quick question. What happens on Steady if you miss a few days?"
+      }
+     ]
+    },
+    {
+     "id": "pn-u-next",
+     "n": 4,
+     "title": "Next Steps, Your Private Notebook",
+     "mins": 4,
+     "blurb": "A notebook for your values, your strengths, your people, and your plans after high school.",
+     "sources": [
+      "damon03",
+      "gollwitzer"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Using Pine, Lesson 4",
+       "h": "Next Steps",
+       "sub": "Your notebook for what comes next.",
+       "say": "Pine has a feature all its own, called Next Steps. It is a private notebook for what matters to you, and where you might go after high school. This lesson shows you how it works."
+      },
+      {
+       "k": "big",
+       "h": "Every path is a real path.",
+       "sub": "Work, college, a trade, service, the military, a gap year, home.",
+       "say": "Here is the heart of Next Steps. Every path is a real path. Work, college, trade school, an apprenticeship, the military, service, a gap year, or staying close to home. Plenty of people try more than one. You can change your mind as often as you need to."
+      },
+      {
+       "k": "points",
+       "h": "Chapters to explore",
+       "items": [
+        [
+         "What Matters to Me",
+         "Your values"
+        ],
+        [
+         "What I’m Good At and What I Love",
+         "Strengths and sparks"
+        ],
+        [
+         "People in My Corner",
+         "Who helps you stand tall"
+        ],
+        [
+         "Paths I’m Curious About",
+         "Curious is enough"
+        ]
+       ],
+       "say": "Next Steps has chapters. What Matters to Me is about your values. What I'm Good At and What I Love is about your strengths, and the things that light you up. People in My Corner is about who helps you stand tall. And Paths I'm Curious About is for any path that interests you. Curious is enough. You don't have to choose yet."
+      },
+      {
+       "k": "points",
+       "h": "More chapters",
+       "items": [
+        [
+         "My Next Small Steps",
+         "A goal, a first step, a plan"
+        ],
+        [
+         "Money Basics I Want to Learn",
+         "Any question counts"
+        ],
+        [
+         "A Letter to Myself in a Year",
+         "Read it again next year"
+        ],
+        [
+         "Faith and Meaning",
+         "Only if you open it"
+        ]
+       ],
+       "say": "There is more. My Next Small Steps, for a goal and the first step toward it. Money Basics I Want to Learn, where any question counts. A Letter to Myself in a Year. And one chapter about faith, meaning, and the big questions, which stays closed until you choose to open it."
+      },
+      {
+       "k": "big",
+       "h": "Big plans are built from small steps.",
+       "sub": "A goal, a first step, and an if-then plan.",
+       "say": "My Next Small Steps uses something research supports. Name a goal, the very first step, and what might get in the way. Then make an if-then plan. If I forget, then I will set a reminder right after practice. Plans like that make it much easier to follow through. You can add a date if you like, and Pine never nags you about it."
+      },
+      {
+       "k": "big",
+       "h": "Try one prompt",
+       "sub": "One path you are curious about, and one way to try it.",
+       "beats": [
+        "Let's try one prompt from Paths I'm Curious About.",
+        "Think of one path after high school that you are curious about, even a little.",
+        "Now think of one way you could try it out this year, like a job shadow, a class, a summer job, or a talk with someone who does it.",
+        {
+         "t": "Say both out loud: I'm curious about this, and I could try it by doing this.",
+         "w": 12
+        }
+       ],
+       "say": "Let's try one prompt from Paths I'm Curious About. Think of one path after high school that you are curious about, even a little. Now think of one way you could try it out this year, like a job shadow, a class, a summer job, or a talk with someone who does it. Say both out loud: I'm curious about this, and I could try it by doing this."
+      },
+      {
+       "k": "points",
+       "h": "Yours, and only yours",
+       "items": [
+        [
+         "Locked with your passcode",
+         "On this device"
+        ],
+        [
+         "Your grown-up never sees it",
+         "Not even with Share to Family"
+        ],
+        [
+         "Print or share by choice",
+         "Only the chapters you pick"
+        ]
+       ],
+       "say": "Nice. Next Steps is yours. It stays on this device, locked with your passcode. Your grown-up never sees it, and Share to Family never includes it. If you want to show someone, like a counselor or a parent, you can print or save just the chapters you pick."
+      },
+      {
+       "k": "big",
+       "h": "Skip anything. Nothing is due.",
+       "sub": "And when you move on from Pine, it comes with you.",
+       "say": "Every prompt can be skipped, and nothing here is graded or due. When you move on from Pine after high school, your notebook comes with you, so what you write now keeps helping you later."
+      },
+      {
+       "k": "quiz",
+       "q": "Who can open your Next Steps notebook?",
+       "opts": [
+        "Only you, with your passcode",
+        "Your grown-up, any time",
+        "Anyone in your family grove"
+       ],
+       "right": 0,
+       "why": "Next Steps is locked with your passcode. You decide what to print or share.",
+       "say": "Quick question. Who can open your Next Steps notebook?"
+      }
+     ]
+    },
+    {
+     "id": "pn-u-private",
+     "n": 5,
+     "title": "Private, Saved, and Shared",
+     "mins": 5,
+     "blurb": "Your passcode, exactly what your grown-up can and can’t see, and how to save and share by choice.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Using Pine, Lesson 5",
+       "h": "Private, Saved, and Shared",
+       "sub": "Your tree stays yours.",
+       "say": "Your tree holds real answers about your life. This lesson shows where it is saved, exactly what your grown-up can and can't see, and how to share only what you choose."
+      },
+      {
+       "k": "card",
+       "title": "Your High school profile",
+       "body": "A private Grounded profile, locked with your own passcode.",
+       "fields": [
+        [
+         "Your name",
+         "Jordan"
+        ],
+        [
+         "Passcode",
+         "••••••"
+        ]
+       ],
+       "btns": [
+        "Create profile",
+        "Back"
+       ],
+       "tap": 0,
+       "say": "Pine lives in your own High school profile, on this device. You choose a passcode of at least six characters. A grown-up agrees when the profile is made, and after that, only your passcode opens your answers and your notebook."
+      },
+      {
+       "k": "big",
+       "h": "Please remember your passcode.",
+       "sub": "No one, including Grounded, can open your answers without it.",
+       "say": "Please remember your passcode. It never leaves this device, so no one, including Grounded, can recover it. If you forget it, a grown-up can clear your answers so you can start fresh with a new passcode. They are erased, never read."
+      },
+      {
+       "k": "points",
+       "h": "What your grown-up never sees",
+       "items": [
+        [
+         "Your answers and levels",
+         "From every check-in"
+        ],
+        [
+         "Your notes and reflections",
+         "Everything you write"
+        ],
+        [
+         "Your faith answers",
+         "In either wording"
+        ],
+        [
+         "Next Steps",
+         "Your whole notebook"
+        ]
+       ],
+       "say": "Here is exactly what your grown-up never sees. Your answers, and your levels. Your notes and your reflections. Your faith answers, in either wording. And your Next Steps notebook. All of that is yours."
+      },
+      {
+       "k": "screen",
+       "app": "grove",
+       "app_name": "The Grove",
+       "title": "A quiet note",
+       "rows": [
+        [
+         "Please check in with Jordan.",
+         ""
+        ],
+        [
+         "You won’t see their answers.",
+         ""
+        ]
+       ],
+       "say": "There is one thing a grown-up you chose can see. If your check-in says you have had thoughts of not wanting to be alive, or you are losing hope, or feeling alone, they get a quiet note in The Grove. It says, please check in. It never says what you answered. Pine tells you when a note is sent."
+      },
+      {
+       "k": "big",
+       "h": "Someone hurting you? That stays with you.",
+       "sub": "Pine shows you help from outside your home.",
+       "say": "If you say someone is hurting you, that answer never goes to your family, because the person could be someone close to you. Pine shows you help from outside your home instead. Childhelp, call or text one eight hundred, four two two, four four five three. Love Is Respect, if it is someone you are close to or going out with. Nine one one in danger. And a trusted adult at school."
+      },
+      {
+       "k": "big",
+       "h": "Who could you tell?",
+       "sub": "One person at home, one outside your home.",
+       "beats": [
+        "Pine's note is quiet, and you can always speak up yourself too.",
+        "Think of one person at home you could tell if something were wrong.",
+        "Now think of one person outside your home, like a coach, a teacher, or a school counselor.",
+        {
+         "t": "Say both names, out loud or in your head.",
+         "w": 10
+        }
+       ],
+       "say": "Pine's note is quiet, and you can always speak up yourself too. Think of one person at home you could tell if something were wrong. Now think of one person outside your home, like a coach, a teacher, or a school counselor. Say both names, out loud or in your head."
+      },
+      {
+       "k": "points",
+       "h": "Sharing is your choice",
+       "items": [
+        [
+         "Show my growth on The Grove",
+         "Days tended, rings, parts tended"
+        ],
+        [
+         "Share to Family",
+         "A link with your tree, by choice"
+        ],
+        [
+         "Never shared",
+         "Answers, scores, notes, journal"
+        ]
+       ],
+       "say": "Good. Some sharing is your choice. In Settings, Show my growth on The Grove lets your tree stand beside your family's trees. Only the big picture shows: days tended, rings, and which parts you tended. Turn it off any time. Share to Family sends a link with that same big picture, only when you send it."
+      },
+      {
+       "k": "points",
+       "h": "Saving and backing up",
+       "items": [
+        [
+         "Save to a locked file instead",
+         "Before you have a profile"
+        ],
+        [
+         "Back up everything",
+         "One file, every profile still locked"
+        ],
+        [
+         "Load a backup",
+         "On a new phone or computer"
+        ]
+       ],
+       "say": "Your tree lives in this browser, so back it up now and then. If you check in before you have a profile, Save to a locked file instead keeps your results in a file locked with a passcode you choose, and Load My File brings it back. In Settings, under Your Records, Back up everything saves one file with every profile on this device, each still locked. On a new device, Load a backup brings it all back."
+      },
+      {
+       "k": "quiz",
+       "q": "If Pine sends your grown-up a note, what does it say?",
+       "opts": [
+        "Every answer you gave",
+        "Please check in, without your answers",
+        "Your levels for each part"
+       ],
+       "right": 1,
+       "why": "The note only asks them to check in with you. Your answers stay yours.",
+       "say": "Quick question. If Pine sends your grown-up a note, what does it say?"
+      }
+     ]
+    },
+    {
+     "id": "pn-u-settings",
+     "n": 6,
+     "title": "Make Pine Yours",
+     "mins": 4,
+     "blurb": "Faith or Plain wording, the optional questions, your grade, reading and display, and moving on after high school.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Using Pine, Lesson 6",
+       "h": "Make Pine Yours",
+       "sub": "Settings that fit your life.",
+       "say": "This last lesson is about making Pine fit you. Your wording, the optional questions, your grade, how Pine looks and sounds, and what happens after high school."
+      },
+      {
+       "k": "points",
+       "h": "Faith or Plain wording",
+       "items": [
+        [
+         "Faith",
+         "Names faith as one way among many"
+        ],
+        [
+         "Plain",
+         "The same questions, without religious words"
+        ],
+        [
+         "Your scores never change",
+         "Either way"
+        ]
+       ],
+       "say": "Pine comes in two wordings. Faith wording names prayer and worship as some of the ways people find peace, next to quiet, nature, music, and family traditions. Plain wording asks the same things without religious words. Your scores mean the same either way. A grown-up sets it with you when Pine is first set up, and you can change it any time in Settings."
+      },
+      {
+       "k": "points",
+       "h": "Two optional questions",
+       "items": [
+        [
+         "Pressure to vape, drink, or use",
+         "Asked with Leaves"
+        ],
+        [
+         "Pressure from someone close",
+         "Asked with Branches"
+        ],
+        [
+         "Off unless you turn them on",
+         "Only you can"
+        ]
+       ],
+       "say": "Pine has two optional questions. One asks about pressure to vape, drink, or use drugs to cope. The other asks about pressure or control from someone you are close to or going out with. They ask about pressure, never about what you have done. Both stay off unless you turn them on in Settings, and only you can."
+      },
+      {
+       "k": "big",
+       "h": "Optional answers stay with you.",
+       "sub": "Never a score, never shared, never sent to your grown-up.",
+       "say": "If you turn them on, those answers never count toward a score, and they are never shared or sent to your grown-up. If an answer shows pressure, Pine shows you a note and people who can help, like Love Is Respect for a relationship that feels controlling."
+      },
+      {
+       "k": "points",
+       "h": "Your grade",
+       "items": [
+        [
+         "Grades 9 and 10",
+         "A few questions fit starting high school"
+        ],
+        [
+         "Grades 11 and 12",
+         "A few fit what comes after"
+        ],
+        [
+         "Change it in Settings",
+         "When you move up a grade"
+        ]
+       ],
+       "say": "Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve. When you move up, change your grade in Settings. Your earlier check-ins stay, and they compare only with check-ins from the same grades."
+      },
+      {
+       "k": "points",
+       "h": "How Pine looks, sounds, and plays",
+       "items": [
+        [
+         "Text Size",
+         "Larger, if you like"
+        ],
+        [
+         "Read Aloud Voice",
+         "Hear questions and results"
+        ],
+        [
+         "Light or dark",
+         "Whatever rests your eyes"
+        ],
+        [
+         "Steady or Hardy",
+         "How your tree plays"
+        ]
+       ],
+       "say": "Under Reading and Display, you can make the text larger, choose a read aloud voice, and pick light or dark. Read Aloud works in every check-in. Settings is also where you choose Steady or Hardy for your tree."
+      },
+      {
+       "k": "big",
+       "h": "Pick one setting",
+       "sub": "One thing to change after this video.",
+       "beats": [
+        "Let's make it real.",
+        "Think about the settings you just heard: your wording, the optional questions, your grade, text size, read aloud, Steady or Hardy.",
+        "Pick the one you most want to check.",
+        {
+         "t": "Say it out loud: After this video, I will check this setting.",
+         "w": 10
+        }
+       ],
+       "say": "Let's make it real. Think about the settings you just heard: your wording, the optional questions, your grade, text size, read aloud, Steady or Hardy. Pick the one you most want to check. Say it out loud: After this video, I will check this setting."
+      },
+      {
+       "k": "flow",
+       "h": "After high school, you choose",
+       "steps": [
+        [
+         "Stay in Pine",
+         "As long as it fits"
+        ],
+        [
+         "Start My Oak",
+         "At 18, your check-ins come along"
+        ],
+        [
+         "Birch, on its way",
+         "The tree for 18 to 26"
+        ]
+       ],
+       "say": "Good. In grade twelve, Pine asks what you want next. You can stay in Pine as long as it fits. Or, once you are eighteen, tap Start My Oak. It makes your own adult profile, and brings your Pine check-ins, labeled From Pine, and your Next Steps notebook along. Pine keeps its own copy. Birch, a tree made for ages eighteen to twenty six, is on its way, and it will take this step's place. It is always your choice, and nothing is ever lost."
+      },
+      {
+       "k": "big",
+       "h": "You know Pine now. Go tend your tree.",
+       "sub": "Small and steady, through every season.",
+       "say": "That is the whole tour. You know Pine now. Go tend your tree, a little at a time. Stand tall through every season."
+      },
+      {
+       "k": "quiz",
+       "q": "Who can turn on Pine’s optional questions?",
+       "opts": [
+        "Only you",
+        "Your grown-up",
+        "Your school"
+       ],
+       "right": 0,
+       "why": "Both optional questions stay off unless you turn them on, and only you can.",
+       "say": "Last question. Who can turn on Pine's optional questions?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pine-six",
+   "title": "The Six Parts",
+   "who": "One lesson for each part of your tree, with a practice",
+   "certTitle": "Pine: The Six Parts",
+   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "lessons": [
+    {
+     "id": "pn-6-roots",
+     "n": 1,
+     "title": "Roots: What Holds You Steady",
+     "mins": 5,
+     "blurb": "Peace, faith, values, and the things that hold you steady when life gets loud.",
+     "sources": [
+      "desrosiers",
+      "smithdenton",
+      "bmmrsteen"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "The Six Parts, Lesson 1",
+       "h": "Roots",
+       "sub": "What holds you steady.",
+       "say": "Welcome to The Six Parts. Pine sees your life as a tree with six parts, and this first lesson is about Roots, what holds you steady."
+      },
+      {
+       "k": "six",
+       "h": "Six parts, one tree",
+       "words": [
+        "What holds you steady",
+        "What you care about",
+        "Stress and big feelings",
+        "Friends, family, trusted adults",
+        "Move, rest, and nourish",
+        "What you look forward to"
+       ],
+       "say": "Here are all six. Roots, what holds you steady. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope. Each lesson takes one part, and shows what it looks like in the high school years."
+      },
+      {
+       "k": "big",
+       "h": "A pine’s roots never work alone.",
+       "sub": "Underground partners reach farther than the roots can.",
+       "say": "A pine's roots never work alone. Underground, they partner with tiny fungi that reach much farther than the roots could on their own, bringing back water and food. Your roots can be like that. What holds you steady often comes from more places than you would guess."
+      },
+      {
+       "k": "points",
+       "h": "Roots can look like",
+       "items": [
+        [
+         "Faith, prayer, or worship",
+         "For many people, a door to peace"
+        ],
+        [
+         "Quiet and reflection",
+         "A few minutes with nothing coming in"
+        ],
+        [
+         "Nature, music, and wonder",
+         "A night sky, a song, a long run"
+        ],
+        [
+         "Family traditions and values",
+         "What you want to keep, or start"
+        ]
+       ],
+       "say": "Roots look different for different people. For some, roots are faith, prayer, or worship, and God, by whatever name they use. For others, roots are quiet time, nature, music, or a long run. For many, roots are family traditions and the values they live by. Often it is a mix. Pine is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "big",
+       "h": "Feeling connected matters more than showing up.",
+       "sub": "Peace deep down is the root of it.",
+       "say": "Research with teens found something interesting. Feeling a real, personal connection to something larger went with lighter moods, more than just showing up did. So Roots is less about where you go, and more about what actually steadies you deep down."
+      },
+      {
+       "k": "points",
+       "h": "Questions belong here",
+       "items": [
+        [
+         "Doubts are normal",
+         "A part of growing, not a problem"
+        ],
+        [
+         "Faith can hurt too",
+         "And that is worth talking about"
+        ],
+        [
+         "Pine never asks what you believe",
+         "It asks what holds you steady"
+        ]
+       ],
+       "say": "A large national study found that many teens find faith hard to put into words. That is normal. Honest questions and doubts are part of growing up. And sometimes faith, or rules from a family or a community, can leave someone feeling scared or not good enough. In teens, experiences like that go with heavier moods, so they are worth talking through with someone you trust. That is why Pine never asks what you believe. It asks whether your roots are holding you up."
+      },
+      {
+       "k": "points",
+       "h": "How Roots can look",
+       "items": [
+        [
+         "Strong",
+         "You know what steadies you, and you reach for it",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "It is there, though harder to reach lately",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "You feel empty, unmoored, or weighed down",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong roots might mean you know what steadies you, and you reach for it. Steady might mean it is there, but harder to reach lately. And a Growing Edge might mean you feel empty, unmoored, or weighed down right now. That is an honest place to be, and roots can grow again."
+      },
+      {
+       "k": "big",
+       "h": "A list made on a good day is a map for a hard one.",
+       "sub": "Today’s practice: What Holds Me Up.",
+       "say": "When things get hard, it is easy to forget what helps. Picture a night when everything feels loud at once. That is when a list made on a good day becomes a map. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: What Holds Me Up",
+       "items": [
+        [
+         "People who steady me",
+         "One name is a real start"
+        ],
+        [
+         "Places that calm me",
+         "A room, a field, a car, a court"
+        ],
+        [
+         "Things I do that help",
+         "Faith, music, nature, traditions"
+        ],
+        [
+         "Keep it where you will see it",
+         "Your phone notes, or your wall"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 8,
+         "5": 8,
+         "6": 8
+        },
+        "at": [
+         3,
+         4,
+         6,
+         8
+        ]
+       },
+       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a field, a car, a court. Last, things you do that help, like prayer, music, time outside, or a family tradition. Short lists are fine. Later, write them down and keep them in your phone notes or on your wall."
+      },
+      {
+       "k": "big",
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "What Holds Me Up is ready for your growth plan.",
+       "say": "Nice work. Tend your roots, and they will hold you when the season gets hard. What Holds Me Up is ready to add to your growth plan, and you can add to your lists any time."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Pine look at in Roots?",
+       "opts": [
+        "Which religion you belong to",
+        "Whether what grounds you holds you steady",
+        "How often you go to services"
+       ],
+       "right": 1,
+       "why": "Roots are about what holds you steady, never about what you believe.",
+       "say": "Quick question. What does Pine look at in Roots?"
+      }
+     ]
+    },
+    {
+     "id": "pn-6-trunk",
+     "n": 2,
+     "title": "Trunk: What You Care About and Where You’re Headed",
+     "mins": 5,
+     "blurb": "Purpose in the high school years: what matters to you, what you are working toward, and who it helps.",
+     "sources": [
+      "damon03",
+      "bronk18",
+      "schreier13",
+      "yeager18"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "The Six Parts, Lesson 2",
+       "h": "Trunk",
+       "sub": "What you care about, and where you’re headed.",
+       "say": "This lesson is about Trunk, your purpose. What you care about, and where you are headed."
+      },
+      {
+       "k": "big",
+       "h": "A pine grows one layer of branches a year.",
+       "sub": "Straight up, toward the light, a little at a time.",
+       "say": "A young pine grows straight up toward the light, adding one new layer of branches each year. You can almost count its age by the layers. Purpose grows the same way. Not all at once, but a little each year, toward what matters to you."
+      },
+      {
+       "k": "points",
+       "h": "Purpose has three parts",
+       "items": [
+        [
+         "Something you care about",
+         "It matters to you, personally"
+        ],
+        [
+         "Something you work toward",
+         "A goal, and a next step"
+        ],
+        [
+         "Something beyond you",
+         "It helps someone else too"
+        ]
+       ],
+       "say": "Researchers who study purpose in young people describe it in three parts. Something you care about. Something you are working toward, with a next step. And a way it reaches beyond you, to help someone else. They also found that purpose often starts taking shape right in the high school years. You do not need it all figured out. You are building it."
+      },
+      {
+       "k": "points",
+       "h": "Purpose can live in",
+       "items": [
+        [
+         "School and learning",
+         "A subject that grabs you"
+        ],
+        [
+         "A sport, a craft, or a job",
+         "Getting better at something real"
+        ],
+        [
+         "Family and faith",
+         "Showing up for people you love"
+        ],
+        [
+         "Helping others",
+         "A team, a younger kid, your town"
+        ]
+       ],
+       "say": "Purpose can live in a lot of places. A class that grabs you. A sport, an instrument, a craft, or a job. Your family, or your faith. Or helping others, like coaching younger kids, or showing up for your team. Caring for a little brother counts. So does fixing bikes."
+      },
+      {
+       "k": "big",
+       "h": "Helping is good for the helper too.",
+       "sub": "Teens who volunteered with younger kids had healthier hearts.",
+       "say": "Here is something surprising. In one study, teens who volunteered with younger kids for a few months ended up with healthier hearts than teens who waited their turn. Giving is good for the giver, in body as well as spirit."
+      },
+      {
+       "k": "points",
+       "h": "Your values, your choice",
+       "items": [
+        [
+         "Plans you choose yourself",
+         "Are the ones you keep going on"
+        ],
+        [
+         "Every path counts",
+         "Work, college, a trade, service, the military"
+        ],
+        [
+         "Be the real you",
+         "The right people want that"
+        ]
+       ],
+       "say": "Research also finds that teens do best when their own values are respected. Plans you choose yourself are the ones you keep going on. Work, college, a trade, an apprenticeship, service, the military, a gap year, or staying close to home are all real paths. And acting like someone you are not, all day, is exhausting. The right people want the real you."
+      },
+      {
+       "k": "points",
+       "h": "How Trunk can look",
+       "items": [
+        [
+         "Strong",
+         "You know what you care about, and your next step",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some direction, with days that feel empty",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Going through the motions for other people",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong trunk might mean you know what you care about, and your next step. Steady might mean some direction, with days that feel empty. And a Growing Edge might mean you are mostly going through the motions for other people. That is common, and a little room to choose for yourself can change a lot."
+      },
+      {
+       "k": "big",
+       "h": "Your gifts point toward your purpose.",
+       "sub": "Not grades or titles. What you really bring.",
+       "say": "One of the easiest ways into purpose is to notice your gifts. Not grades, and not titles. Things like noticing who is left out, making people laugh, fixing things, or staying calm when everyone else panics. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name Your Gifts",
+       "items": [
+        [
+         "Gift one",
+         "Something people count on you for"
+        ],
+        [
+         "Gift two",
+         "Something you do well that isn’t a grade"
+        ],
+        [
+         "Gift three",
+         "Ask: what do friends come to me for?"
+        ],
+        [
+         "Who has it helped?",
+         "One person for each gift"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 6,
+         "4": 6,
+         "5": 8,
+         "7": 10
+        },
+        "at": [
+         2,
+         3,
+         5,
+         6
+        ]
+       },
+       "say": "Let's practice. This one is called Name Your Gifts. Think of one thing people count on you for. Now a second thing you do well that is not a grade or a title. Take a moment. For a third, ask yourself, what do my friends come to me for? Now, for each gift, picture one person it has helped. Say them out loud if you can. Those are real gifts, and they point toward where you fit."
+      },
+      {
+       "k": "big",
+       "h": "You have something real to give.",
+       "sub": "Name Your Gifts is ready for your growth plan.",
+       "say": "You have something real to give, right now, not someday. Name Your Gifts is ready for your growth plan. And when you are ready, add a goal or a path to Next Steps, so your trunk keeps growing toward the light."
+      },
+      {
+       "k": "quiz",
+       "q": "What are the three parts of purpose?",
+       "opts": [
+        "Grades, test scores, and awards",
+        "Something you care about, work toward, and that helps others",
+        "A plan your family chose for you"
+       ],
+       "right": 1,
+       "why": "Purpose is something you care about, something you work toward, and a way it reaches beyond you.",
+       "say": "Quick question. What are the three parts of purpose?"
+      }
+     ]
+    },
+    {
+     "id": "pn-6-bark",
+     "n": 3,
+     "title": "Bark: Stress, Mistakes, and Big Feelings",
+     "mins": 6,
+     "blurb": "Handling stress, mistakes, and big feelings, and knowing when to bring in help.",
+     "sources": [
+      "yrbs23",
+      "selfcompteen",
+      "bluth16",
+      "schleider22",
+      "mnconsent"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "The Six Parts, Lesson 3",
+       "h": "Bark",
+       "sub": "Stress, mistakes, and big feelings.",
+       "say": "This lesson is about Bark, your mind and your feelings. How you handle stress, mistakes, and big feelings."
+      },
+      {
+       "k": "big",
+       "h": "When a pine is cut, it seals the wound itself.",
+       "sub": "Sticky resin protects it while it heals.",
+       "say": "When a pine gets cut or scraped, it does something smart. It sends out resin, the sticky pitch you have maybe gotten on your hands, and seals the wound while it heals. Your bark works like that. It is how you protect yourself, settle down, and heal after something hard."
+      },
+      {
+       "k": "points",
+       "h": "Healthy bark can look like",
+       "items": [
+        [
+         "Noticing stress early",
+         "And doing something that helps"
+        ],
+        [
+         "Learning from mistakes",
+         "Without being harsh with yourself"
+        ],
+        [
+         "Holding your ground",
+         "When people push you"
+        ],
+        [
+         "Asking for help",
+         "Which is a strength"
+        ]
+       ],
+       "say": "Healthy bark can look like noticing stress building, and doing something that helps before it piles up. Learning from a mistake or a failure without tearing yourself apart. Holding your ground when people push you toward something that is not right for you. And reaching out for help when things are hard. That is a strength, not a weakness."
+      },
+      {
+       "k": "big",
+       "h": "If you have felt low, you are far from alone.",
+       "sub": "Many high schoolers go through it, and help works.",
+       "say": "Here is something worth knowing. In a national survey, about four in ten high school students said they had gone through a long stretch of feeling sad or hopeless in the past year. That number has started to come down. Low moods and worry are common in these years, and they respond to help. In one study, even a single short online session lifted low mood and hopelessness for teens."
+      },
+      {
+       "k": "big",
+       "h": "Talk to yourself the way you would talk to a friend.",
+       "sub": "Self-compassion is a skill, and it can be learned.",
+       "say": "One of the strongest tools for bark is how you talk to yourself. Teens who are kinder to themselves after a mistake have less stress and lower moods, and a program that taught teens self-compassion helped them feel better. Being kind to yourself is not letting yourself off the hook. It is how you get back up."
+      },
+      {
+       "k": "points",
+       "h": "How Bark can look",
+       "items": [
+        [
+         "Strong",
+         "You feel your feelings and find your way back",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly okay, with some heavy stretches",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Down, numb, or caught in worry",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly okay, with some heavy stretches. And a Growing Edge might mean you have felt down, numb, or caught in worry that will not switch off. That deserves tending, and sometimes more support."
+      },
+      {
+       "k": "big",
+       "h": "A longer breath out tells your body it is safe.",
+       "sub": "Works in class, on the bench, or before a hard text.",
+       "say": "Picture the moment before a test, or right after a text that makes your face go hot. One of the fastest ways to settle is your breath. A longer breath out tells your body it is safe to calm down. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Slow Exhale",
+       "items": [
+        [
+         "Sit or stand easy",
+         "Shoulders down"
+        ],
+        [
+         "In through your nose",
+         "For a count of four"
+        ],
+        [
+         "Out slowly",
+         "For a count of six"
+        ],
+        [
+         "Five times",
+         "Shorter counts are fine"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "7": 45
+        },
+        "at": [
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Let's practice. This one is called Slow Exhale. Sit or stand however is comfortable, and let your shoulders drop. Breathe in through your nose for a count of four. Then breathe out slowly, for a count of six. Do that five times, at your own pace. If you feel lightheaded, breathe normally for a moment. Go ahead now. Good."
+      },
+      {
+       "k": "big",
+       "h": "Low for two weeks or more? Tell someone.",
+       "sub": "A parent, a school counselor, or a doctor.",
+       "say": "Slow Exhale is ready for your growth plan, and it works best when you practice on calm days too. If low mood or worry has lasted two weeks or more, tell a parent, a school counselor, or a doctor. In Minnesota, once you are sixteen, you can ask for counseling yourself."
+      },
+      {
+       "k": "screen",
+       "app": "pine",
+       "app_name": "Pine",
+       "title": "Need to talk now?",
+       "rows": [
+        [
+         "988 Suicide and Crisis Lifeline",
+         "Call or text 988"
+        ],
+        [
+         "Crisis Text Line",
+         "Text HOME to 741741"
+        ],
+        [
+         "Minnesota county crisis team",
+         "**CRISIS (274747)"
+        ],
+        [
+         "In danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "And if you need to talk right now, call or text nine eight eight, any time. Or text HOME to seven four one seven four one. In Minnesota, you can call star star CRISIS from a cell phone to reach your county crisis team. If you are in danger, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "What makes Slow Exhale calming?",
+       "opts": [
+        "Holding your breath as long as you can",
+        "Breathing out longer than you breathe in",
+        "Breathing as fast as you can"
+       ],
+       "right": 1,
+       "why": "A longer breath out tells your body it is safe to calm down.",
+       "say": "Quick question. What makes Slow Exhale calming?"
+      }
+     ]
+    },
+    {
+     "id": "pn-6-branches",
+     "n": 4,
+     "title": "Branches: Friends, Family, and Adults in Your Corner",
+     "mins": 6,
+     "blurb": "Friends who have your back, family, belonging, trusted adults, and relationships built on respect.",
+     "sources": [
+      "cdcconnect23",
+      "wyman10",
+      "murthy",
+      "steinberg89"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "The Six Parts, Lesson 4",
+       "h": "Branches",
+       "sub": "Friends, family, and the adults in your corner.",
+       "say": "This lesson is about Branches, your relationships. Your friends, your family, and the adults in your corner."
+      },
+      {
+       "k": "big",
+       "h": "Pines that grow together break the wind for each other.",
+       "sub": "No tree stands tall alone for long.",
+       "say": "A pine standing alone in an open field takes the full force of every storm. Pines that grow together in a stand break the wind for each other. People are like that too. The ones around you help you stand tall, and you do the same for them."
+      },
+      {
+       "k": "points",
+       "h": "Strong branches can look like",
+       "items": [
+        [
+         "Friends who have your back",
+         "In person when you can"
+        ],
+        [
+         "Someone at home",
+         "Close, even when you disagree"
+        ],
+        [
+         "A place you belong",
+         "A team, a club, a job, a group"
+        ],
+        [
+         "A trusted adult",
+         "Besides a parent"
+        ]
+       ],
+       "say": "Strong branches can look like friends who have your back. Someone in your family you feel close to, even when you disagree. A place you belong, like a team, a club, a job, a band, or a faith community. And at least one adult besides a parent you could go to."
+      },
+      {
+       "k": "big",
+       "h": "Belonging is one of the strongest protections there is.",
+       "sub": "Students who felt close to people at school felt far less hopeless.",
+       "say": "Here is what the research shows. High school students who feel close to people at school are much less likely to feel sad or hopeless. In one national survey, about one in three of them had a long stretch of sadness, compared with more than half of students who did not feel close to people at school. Belonging somewhere is protective, and it is worth building on purpose."
+      },
+      {
+       "k": "big",
+       "h": "A trusted adult makes it easier to get help.",
+       "sub": "For you, or for a friend.",
+       "say": "Trusted adults matter too. A coach, a teacher, a counselor, a relative, a boss, or a youth leader. In a peer leader program in high schools, more students came to see adults as people they could go to, and more were willing to bring a struggling friend to one. That is a big deal."
+      },
+      {
+       "k": "points",
+       "h": "Relationships built on respect",
+       "items": [
+        [
+         "Respect looks like trust",
+         "Room to have your own friends and time"
+        ],
+        [
+         "Checking your phone is a sign",
+         "So is deciding who you can see"
+        ],
+        [
+         "Love Is Respect",
+         "Call 1-866-331-9474, or text LOVEIS to 22522"
+        ]
+       ],
+       "say": "Good relationships, with friends or someone you are going out with, are built on respect. That looks like trust, and room to have your own friends and your own time. Someone checking your phone, or telling you who you can see, is a sign worth noticing. Love Is Respect can help you think it through, any time. Call one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two."
+      },
+      {
+       "k": "points",
+       "h": "How Branches can look",
+       "items": [
+        [
+         "Strong",
+         "People have your back, and you have theirs",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some good people, with gaps",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Lonely, left out, or bullied",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong branches might mean people have your back, and you have theirs. Steady might mean some good people, with a few gaps. And a Growing Edge might mean you feel lonely, even with people around, or someone is bullying you. Young people are among the loneliest groups today, so you are far from the only one. Bullying is never your fault. Save the messages, and tell an adult you trust."
+      },
+      {
+       "k": "big",
+       "h": "Name the adult before you need them.",
+       "sub": "Today’s practice: Name Your Trusted Adult.",
+       "say": "It is much easier to go to someone when something is big if you have already talked about something small. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name Your Trusted Adult",
+       "items": [
+        [
+         "Think wide",
+         "A coach, teacher, counselor, relative, or boss"
+        ],
+        [
+         "Name one or two",
+         "Besides your parents"
+        ],
+        [
+         "Pick one small reach-out",
+         "A question, a thank you, a quick hello"
+        ],
+        [
+         "No one comes to mind?",
+         "Start with your school counselor"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 10,
+         "5": 10
+        },
+        "at": [
+         2,
+         3,
+         4,
+         7
+        ]
+       },
+       "say": "Let's practice. This one is called Name Your Trusted Adult. Think about the adults in your life besides your parents: coaches, teachers, counselors, relatives, a boss, a neighbor, a youth leader. Name one or two, out loud or in your head. Now pick one of them. What is one small way you could reach out this week, like a question, a thank you, or a quick hello? If no one comes to mind, that is okay. Start with your school counselor. Talking with students is part of their job."
+      },
+      {
+       "k": "big",
+       "h": "If someone is hurting you, help is outside your home too.",
+       "sub": "Childhelp, call or text 1-800-422-4453. In danger, call 911.",
+       "say": "Name Your Trusted Adult is ready for your growth plan. And if anyone is hurting you, at home, at school, online, or in a relationship, you can call or text Childhelp, any time, at one eight hundred, four two two, four four five three. In Minnesota, Day One answers at one eight six six, two two three, one one one one. If you are in danger, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a sign worth noticing in a relationship?",
+       "opts": [
+        "They give you room to see your friends",
+        "They check your phone or decide who you can see",
+        "They listen when you disagree"
+       ],
+       "right": 1,
+       "why": "Checking your phone or deciding who you see are signs of control. Love Is Respect can help you think it through.",
+       "say": "Quick question. What is a sign worth noticing in a relationship?"
+      }
+     ]
+    },
+    {
+     "id": "pn-6-leaves",
+     "n": 5,
+     "title": "Leaves: Move, Rest, and Nourish",
+     "mins": 5,
+     "blurb": "Sleep and the teen body clock, moving in ways you enjoy, food as fuel, and your body on its own terms.",
+     "sources": [
+      "aasm16",
+      "aapsleep14",
+      "cdcpa",
+      "recchia23",
+      "sgsocial23",
+      "mtf24"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "The Six Parts, Lesson 5",
+       "h": "Leaves",
+       "sub": "Move, rest, and nourish.",
+       "say": "This lesson is about Leaves, your body. How you move, how you rest, and how you fuel up."
+      },
+      {
+       "k": "big",
+       "h": "Pine needles keep working all winter.",
+       "sub": "A waxy coat holds in water through cold and dry spells.",
+       "say": "A pine's leaves are its needles. Each one has a waxy coat that holds in water, so the tree stays green through cold and dry stretches, and keeps working on warmer winter days. Your body is like that. Give it what it needs, and it carries you through every season."
+      },
+      {
+       "k": "flow",
+       "h": "Three strands of Leaves",
+       "steps": [
+        [
+         "Move",
+         "In ways you enjoy"
+        ],
+        [
+         "Rest",
+         "8 to 10 hours of sleep"
+        ],
+        [
+         "Nourish",
+         "Regular meals, as fuel"
+        ]
+       ],
+       "say": "Pine looks at Leaves in three strands. Move, Rest, and Nourish. Each one helps the other two, and each one helps your mood, your focus, and every other part of your tree."
+      },
+      {
+       "k": "big",
+       "h": "Your body clock runs later now. That is biology.",
+       "sub": "Teens need 8 to 10 hours of sleep.",
+       "say": "Start with rest. Teens need eight to ten hours of sleep a night. And in these years, your body clock shifts later, sometimes by a couple of hours. That is why staying up feels natural and early mornings feel brutal. It is biology, not laziness. Charging your phone outside your room is one of the simplest ways to win some sleep back."
+      },
+      {
+       "k": "points",
+       "h": "Move in a way you enjoy",
+       "items": [
+        [
+         "About 60 minutes a day",
+         "In pieces is fine"
+        ],
+        [
+         "Every kind counts",
+         "Sports, walks, lifting, dance, biking"
+        ],
+        [
+         "It lifts your mood",
+         "Not just your body"
+        ],
+        [
+         "Rest is part of training",
+         "And after a hit to the head, get checked"
+        ]
+       ],
+       "say": "Next, move. Teens do best with about sixty minutes of movement a day, and it can add up in pieces. Every kind counts, including seated and adapted movement. Moving does more than build your body. In a large review, being active eased low moods in young people, especially at thirteen and older. Rest when you are hurt, and after a hit to the head, stop and get checked."
+      },
+      {
+       "k": "points",
+       "h": "Food is fuel",
+       "items": [
+        [
+         "Regular meals",
+         "Starting with breakfast"
+        ],
+        [
+         "Without guilt or strict rules",
+         "Eat enough for your day"
+        ],
+        [
+         "If food starts to feel like rules",
+         "Tell someone you trust"
+        ]
+       ],
+       "say": "Then nourish. Regular meals, starting with breakfast, keep your energy, mood, and focus steady. Food is fuel, never a test. If food, weight, or exercise ever starts to feel like rules you can't break, tell someone you trust, like a parent, a coach, or a doctor."
+      },
+      {
+       "k": "big",
+       "h": "How your body feels matters more than how it looks online.",
+       "sub": "Strength, energy, and what your body can do.",
+       "say": "A lot of teens say social media makes them feel worse about their bodies. Here is a better question to ask. What can my body do, and how does it feel? Strength, energy, and health matter more than any filtered picture. And here is some good news. Most high schoolers do not vape, drink, or use drugs. Planning an easy way out ahead of time makes it simple to stay that way."
+      },
+      {
+       "k": "points",
+       "h": "How Leaves can look",
+       "items": [
+        [
+         "Strong",
+         "Rested, moving, and fueled most days",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some strands strong, some running thin",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Tired, stuck, or uneasy in your body",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong leaves might mean you are rested, moving, and fueled most days. Steady might mean some strands are strong and some are running thin. And a Growing Edge might mean you are tired all the time, stuck sitting, or not at peace with your body. Pick one strand to start. Small changes add up fast here."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Stretch Break",
+       "items": [
+        [
+         "Reach up",
+         "Standing, or seated"
+        ],
+        [
+         "Roll your shoulders",
+         "Slow circles back"
+        ],
+        [
+         "Twist gently",
+         "Side to side"
+        ],
+        [
+         "Shake it out",
+         "Then one slow breath"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "7": 30
+        },
+        "at": [
+         4,
+         5,
+         6,
+         9
+        ]
+       },
+       "say": "Let's practice. This one is called Stretch Break. Stand up if you can, or stay in your seat. Both work. Reach your arms up high, as far as feels good. Roll your shoulders back in slow circles. Twist gently from side to side, and shake out your hands. Take your time with it. Good. Now one slow breath."
+      },
+      {
+       "k": "big",
+       "h": "Your body carries you through every season.",
+       "sub": "Stretch Break is ready for your growth plan.",
+       "say": "Stretch Break works between classes, homework, or gaming, and it is ready for your growth plan. In Settings, choose your Movement Level, Gentle, Moderate, or Athletic, so your Leaves practices fit your body and your sport."
+      },
+      {
+       "k": "quiz",
+       "q": "Why do so many teens find early mornings hard?",
+       "opts": [
+        "They are lazy",
+        "Their body clock shifts later in these years",
+        "They need less sleep than adults"
+       ],
+       "right": 1,
+       "why": "Teen body clocks run later, and teens need 8 to 10 hours of sleep. It is biology, not laziness.",
+       "say": "Quick question. Why do so many teens find early mornings hard?"
+      }
+     ]
+    },
+    {
+     "id": "pn-6-fruit",
+     "n": 6,
+     "title": "Fruit: What You Look Forward To",
+     "mins": 6,
+     "blurb": "Hope as a goal, a way there, and a next step, and what to do when hope runs low.",
+     "sources": [
+      "snyder",
+      "chs97",
+      "schleider22",
+      "froh09"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "The Six Parts, Lesson 6",
+       "h": "Fruit",
+       "sub": "What you look forward to.",
+       "say": "This last lesson is about Fruit, your hope. What you look forward to, and what you believe is possible."
+      },
+      {
+       "k": "big",
+       "h": "Some pine cones open only after a fire.",
+       "sub": "New trees start after the hardest season.",
+       "say": "Minnesota's jack pines have cones that stay sealed shut for years. Then, after a forest fire, the heat opens them, and seeds fall onto the cleared ground. New pines start after the hardest season. Hope can work like that. Sometimes it shows up right after the hard part."
+      },
+      {
+       "k": "flow",
+       "h": "Hope has three parts",
+       "steps": [
+        [
+         "A goal",
+         "Something you want"
+        ],
+        [
+         "A way there",
+         "A path, or a few"
+        ],
+        [
+         "A next step",
+         "And the belief you can take it"
+        ]
+       ],
+       "say": "Researchers describe hope as more than a feeling. It has three parts. A goal, something you want. A way there, or a few ways, in case one gets blocked. And the belief that you can take the next step. That means hope is something you can build, one step at a time."
+      },
+      {
+       "k": "points",
+       "h": "Strong fruit can look like",
+       "items": [
+        [
+         "Something to look forward to",
+         "Soon or someday"
+        ],
+        [
+         "A way around obstacles",
+         "When plan A closes"
+        ],
+        [
+         "People who believe in you",
+         "And you believe it too"
+        ],
+        [
+         "Kindness no one sees",
+         "It still grows hope"
+        ]
+       ],
+       "say": "Strong fruit can look like having something to look forward to, soon or someday. A game, a trip, a friend, a plan. Finding another way when something gets in your way. Having people who believe in your future. And doing kind things for others, even when no one is watching. That grows hope too, in you and in them."
+      },
+      {
+       "k": "big",
+       "h": "Hopelessness is common, and it can lift.",
+       "sub": "Even one short session of help made a difference for teens.",
+       "say": "Many high schoolers go through stretches of feeling hopeless. If you have felt that, you are far from alone. And it can lift. In one study, teens who did a single thirty minute online session felt less hopeless right away, and less depressed months later. Small steps can turn things around."
+      },
+      {
+       "k": "big",
+       "h": "Noticing the good feeds hope.",
+       "sub": "Gratitude helped most for young people who were running low.",
+       "say": "Gratitude feeds hope too. In a study with young people, writing a thank you letter and reading it to someone lifted their mood, and it helped most for the ones who had been running low on good feelings. The lift lasted for two months. Noticing what is good is not pretending the hard stuff away. It gives hope something to stand on."
+      },
+      {
+       "k": "points",
+       "h": "How Fruit can look",
+       "items": [
+        [
+         "Strong",
+         "You can see a way forward, even on hard days",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some light ahead, though dimmer lately",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "It feels like there is no point in trying",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong fruit might mean you can see a way forward, even on hard days. Steady might mean there is some light ahead, though it has been dimmer lately. And a Growing Edge might mean it feels like there is no point in trying. Please take that seriously, and tell someone. You don't have to carry it alone."
+      },
+      {
+       "k": "big",
+       "h": "Make the step so small it is easy.",
+       "sub": "One email, one minute, one question.",
+       "say": "Big goals can feel impossible. One small step makes them feel real, and gives you a reason to take another. The trick is making the step so small it is easy. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Tiny Next Step",
+       "items": [
+        [
+         "Name one hope",
+         "Big or small"
+        ],
+        [
+         "Find the smallest step",
+         "Something you could do today"
+        ],
+        [
+         "Make it smaller",
+         "One minute is enough"
+        ],
+        [
+         "Say it out loud",
+         "Then do it today"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 8,
+         "4": 8,
+         "7": 10
+        },
+        "at": [
+         2,
+         3,
+         5,
+         7
+        ]
+       },
+       "say": "Let's practice. This one is called Tiny Next Step. Name one thing you hope for, big or small. Now ask, what is the smallest step I could take toward it today? Take a moment. If it still feels big, make it smaller. One email, one minute, one question. Now say it out loud: Today, my tiny next step is this. Then go do it."
+      },
+      {
+       "k": "big",
+       "h": "Stand tall through every season.",
+       "sub": "Tiny Next Step is ready for your growth plan.",
+       "say": "Tiny Next Step is ready for your growth plan. Do one tiny step every day for a week, and watch what grows. And if hope ever runs out, call or text nine eight eight, or text HOME to seven four one seven four one, any time. If you are in danger, call nine one one. You can stand tall through every season, and you never have to do it alone."
+      },
+      {
+       "k": "quiz",
+       "q": "What are the three parts of hope?",
+       "opts": [
+        "Luck, wishing, and waiting",
+        "A goal, a way there, and a next step",
+        "Good grades, money, and popularity"
+       ],
+       "right": 1,
+       "why": "Hope is a goal, a way to get there, and the belief that you can take the next step.",
+       "say": "Quick question. What are the three parts of hope?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pine-grownup",
+   "title": "For the Grown-up",
+   "who": "For parents, guardians, and the adults who love a teen",
+   "certTitle": "Pine: For the Grown-up",
+   "certLine": "For finishing every lesson for the adults who walk with a high schooler.",
+   "lessons": [
+    {
+     "id": "pn-p-talk",
+     "n": 1,
+     "title": "Talking with Your Teen About How They Are Really Doing",
+     "mins": 7,
+     "blurb": "How to ask a high schooler how they really are, and how to listen so they keep talking.",
+     "sources": [
+      "steinberg89",
+      "yeager18",
+      "kerrstattin",
+      "gould05",
+      "dazzi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "For the Grown-up, Lesson 1",
+       "h": "Talking About How They Are Really Doing",
+       "sub": "Honest talk, at their pace.",
+       "say": "Welcome. This series is for parents, guardians, and every adult who loves a teenager. A grandparent, a coach, a youth leader, an aunt or uncle. This first lesson is about a simple question that can be hard to ask well. How are you really doing?"
+      },
+      {
+       "k": "big",
+       "h": "They are building a life. You are still an anchor.",
+       "sub": "Warmth, and room to grow.",
+       "say": "Start here. The high school years are a time of real strength. Teens are working out who they are, what they value, and where they are headed. They want to be treated as capable, and they care a lot about respect. Research on families finds that warmth, together with room to grow, goes with teens doing well. You are still one of their anchors, even when they seem to need you less."
+      },
+      {
+       "k": "points",
+       "h": "Why fine is only the start",
+       "items": [
+        [
+         "Privacy matters more now",
+         "A healthy part of growing up"
+        ],
+        [
+         "They may want to spare you",
+         "Protecting you is love too"
+        ],
+        [
+         "Hard stretches can look different",
+         "Irritable, tired, pulling away"
+        ]
+       ],
+       "say": "When you ask how they are, you will often hear, fine. There are good reasons. Privacy matters more at this age, and that is a healthy part of growing up. Many teens want to spare their parents worry. And a hard stretch often looks like irritability, being tired all the time, or pulling away, more than like sadness. So fine is a starting place."
+      },
+      {
+       "k": "big",
+       "h": "They tell you most of what you know.",
+       "sub": "Trust opens more doors than tracking.",
+       "say": "Here is something worth knowing. Research on families finds that most of what parents know about a teen's life comes from the teen choosing to tell them, more than from checking or tracking. Teens tell more when telling feels safe. So the goal is a relationship where telling is easy."
+      },
+      {
+       "k": "points",
+       "h": "Set the talk up well",
+       "items": [
+        [
+         "Side by side",
+         "A drive, a walk, a late snack"
+        ],
+        [
+         "Pick a calm time",
+         "Away from a fight or a deadline"
+        ],
+        [
+         "Ask open questions",
+         "Ones that need more than yes or no"
+        ],
+        [
+         "Let silence sit",
+         "It is often thinking"
+        ]
+       ],
+       "say": "A few things help the talk go well. Side by side often works better than face to face. A drive, a walk, a late night snack. Pick a calm time, away from a fight or a deadline. Ask open questions, ones that need more than yes or no. And let silence sit. It is often your teen thinking."
+      },
+      {
+       "k": "words",
+       "h": "Questions that open doors",
+       "items": [
+        "What was the best part of your week? The hardest?",
+        "Who have you been hanging out with lately?",
+        "What's taking up most of your head right now?",
+        "Is there anything I could take off your plate?"
+       ],
+       "say": "Here are some questions that open doors. What was the best part of your week? And the hardest? Who have you been hanging out with lately? What's taking up most of your head right now? Is there anything I could take off your plate? Each one leaves room for good news and hard news."
+      },
+      {
+       "k": "points",
+       "h": "When they open up",
+       "items": [
+        [
+         "Listen to understand",
+         "Hold off on fixing"
+        ],
+        [
+         "Say back what you heard",
+         "So it sounds like..."
+        ],
+        [
+         "Stay calm on the outside",
+         "Even when you feel alarmed"
+        ],
+        [
+         "Ask before advising",
+         "Ideas, or just listening?"
+        ]
+       ],
+       "say": "When they do open up, listen to understand, and hold off on fixing. Say back what you heard, in your own words. Stay calm on the outside, even if you feel alarmed inside. A big reaction can close the door. And before you give advice, ask. Do you want ideas, or do you want me to just listen? Pine teaches teens this same skill, in a practice called Active Listening."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: say it back",
+       "sub": "Sounds like a rough day. Want to tell me about it?",
+       "beats": [
+        "Let's try it now.",
+        "Picture your teen dropping their bag and saying, I'm so done with everything.",
+        "Notice the pull to lecture, to fix it, or to cheer them up.",
+        "Let one slow breath out instead.",
+        {
+         "t": "Now say out loud, in your own words: Sounds like a rough day. Want to tell me about it?",
+         "w": 10
+        }
+       ],
+       "say": "Let's try it now. Picture your teen dropping their bag and saying, I'm so done with everything. Notice the pull to lecture, to fix it, or to cheer them up. Let one slow breath out instead. Now say out loud, in your own words: Sounds like a rough day. Want to tell me about it?"
+      },
+      {
+       "k": "big",
+       "h": "If you hear hopelessness, ask plainly.",
+       "sub": "Asking opens the door. Call or text 988 together.",
+       "say": "Sometimes you will hear something that worries you. What's the point. Nobody would even notice if I was gone. Take it seriously, and ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. If the answer is yes, call or text 988 together, and if they are in danger right now, call 911. Lesson four walks through this, step by step."
+      },
+      {
+       "k": "points",
+       "h": "Pine belongs to your teen",
+       "items": [
+        [
+         "They answer on their own",
+         "Behind their own passcode"
+        ],
+        [
+         "You get a quiet alert only",
+         "Never their answers"
+        ],
+        [
+         "They can invite you in",
+         "With someone I trust"
+        ]
+       ],
+       "say": "If your teen uses Pine, here is how it fits. Pine belongs to your teen. They answer the check-in on their own, behind their own passcode, and you never see their answers. If something they say means they may need support, you get a quiet note to check in. Lesson two explains it all. And your teen can invite you in. Pine has a way to do a check-in together, called With someone I trust, that gives the adult a conversation prompt after each answer."
+      },
+      {
+       "k": "big",
+       "h": "Keep asking. Keep the door open.",
+       "sub": "One talk is a beginning.",
+       "say": "One talk is rarely the whole conversation. If today they say fine and put their earbuds back in, that is okay. Keep showing up, keep asking, and let them know the door is open. Teens often come back to the adult who stayed calm and kept listening."
+      },
+      {
+       "k": "quiz",
+       "q": "Your teen says they're fine, but they've stopped doing things they used to love. What helps most?",
+       "opts": [
+        "Take their word for it and move on",
+        "Ask an open question, and listen to understand",
+        "Check their phone to find out what is wrong"
+       ],
+       "right": 1,
+       "why": "Fine is a starting place. Open questions and calm listening help them say more, and trust keeps them talking.",
+       "say": "Quick question. Your teen says they're fine, but they've stopped doing things they used to love. What helps most?"
+      }
+     ]
+    },
+    {
+     "id": "pn-p-privacy",
+     "n": 2,
+     "title": "Privacy That Builds Trust",
+     "mins": 6,
+     "blurb": "What a grown-up sees in Pine and why, the quiet alert, and what to do when it comes.",
+     "sources": [
+      "delosreyes15",
+      "sam04",
+      "mnconsent",
+      "gould05",
+      "grossman05"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "For the Grown-up, Lesson 2",
+       "h": "Privacy That Builds Trust",
+       "sub": "What you see, and why.",
+       "say": "This lesson is about privacy. What you see in Pine, what you don't, and why it is built this way, to help keep your teen safer and your relationship stronger. It also walks through what to do if a quiet alert ever comes."
+      },
+      {
+       "k": "big",
+       "h": "Teens answer more honestly when it is private.",
+       "sub": "Honest answers make help possible.",
+       "say": "Here is the heart of it. Teens are the best reporters of their own inner life. Studies find that parents and teens agree only modestly about things like worry and sadness, because those live on the inside. And teens who know their answers are private share more, and come back for help more often. Honest answers are what make help possible."
+      },
+      {
+       "k": "points",
+       "h": "What stays theirs",
+       "items": [
+        [
+         "Every answer and level",
+         "Locked with their passcode"
+        ],
+        [
+         "Journal and Next Steps",
+         "Theirs alone"
+        ],
+        [
+         "Faith answers",
+         "Never shared"
+        ],
+        [
+         "Optional questions",
+         "Only they can turn them on"
+        ]
+       ],
+       "say": "Here is what stays theirs. Every answer and every level, locked with their own passcode. Their journal, and Next Steps, their notebook for life after high school. Their faith answers. And two optional questions, about pressure to vape, drink, or use drugs, and pressure in a relationship. Those are off unless your teen turns them on, and they are never shared."
+      },
+      {
+       "k": "flow",
+       "h": "What sends you a quiet alert",
+       "steps": [
+        [
+         "The safety question",
+         "Thoughts of not wanting to live"
+        ],
+        [
+         "Losing hope",
+         "No point in trying"
+        ],
+        [
+         "Feeling alone",
+         "Lonely, often"
+        ]
+       ],
+       "say": "Three kinds of answers send a quiet alert. An answer to the safety question about thoughts of not wanting to be alive. Feeling there is no point in trying. And feeling lonely often. The alert shows up for you in The Grove, Grounded's family app, as a note that says, Please check in. It never shows what they answered. Your teen is told on the screen that a grown-up they chose will get a note, and Pine shows them help lines right away, day or night."
+      },
+      {
+       "k": "big",
+       "h": "Some answers go straight to outside help.",
+       "sub": "So every teen can reach help, whatever is happening.",
+       "say": "One kind of answer works differently. When a teen says someone is hurting them, at home, at school, online, or in a relationship, Pine shows them help outside the family right away. Childhelp, Love Is Respect, Day One in Minnesota, 911, and a trusted adult at school. It does not send the family alert. That way every teen can reach help, whatever is happening in their life."
+      },
+      {
+       "k": "points",
+       "h": "Your part",
+       "items": [
+        [
+         "You agree at setup",
+         "Together, when the profile is made"
+        ],
+        [
+         "Only their passcode opens it",
+         "Nobody else, you included"
+        ],
+        [
+         "A forgotten passcode",
+         "You can clear it, never read it"
+        ],
+        [
+         "At 16, in Minnesota",
+         "They can ask for counseling"
+        ]
+       ],
+       "say": "Here is your part. You agree when the profile is made, together with your teen, and you choose Faith or Plain wording together. Your teen can change the wording later. Only your teen's passcode opens their answers. If they forget it, you can clear it so they can start fresh, but clearing erases what was locked. Nobody reads it. And in Minnesota, once a teen is sixteen, they can ask for counseling on their own. Many still want a parent beside them, so offer."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: what you'll say",
+       "sub": "I'm not asking what you answered. How are you, really?",
+       "beats": [
+        "Let's practice what you would say if an alert came.",
+        "Picture it showing up on an ordinary evening.",
+        "Take one slow breath, and let your shoulders drop.",
+        {
+         "t": "Now say out loud, warmly: I got a note to check in with you. I'm not asking what you answered. How are you, really?",
+         "w": 10
+        }
+       ],
+       "say": "Let's practice what you would say if an alert came. Picture it showing up on an ordinary evening. Take one slow breath, and let your shoulders drop. Now say out loud, warmly: I got a note to check in with you. I'm not asking what you answered. How are you, really?"
+      },
+      {
+       "k": "points",
+       "h": "When the alert comes",
+       "items": [
+        [
+         "Check in soon, in person",
+         "Today, if you can"
+        ],
+        [
+         "Don't ask what they answered",
+         "Ask how they are doing"
+        ],
+        [
+         "Listen, and stay calm",
+         "Thank them for anything they share"
+        ],
+        [
+         "If you are worried, ask plainly",
+         "Then call or text 988 together"
+        ]
+       ],
+       "say": "When the alert comes, check in soon, in person if you can, today. Don't ask what they answered, and don't ask to see the app. Ask how they are doing. Listen, stay calm, and thank them for anything they share. If you are worried, ask plainly whether they are thinking about ending their life. If the answer is yes, or they are unsure, call or text 988 together. If they are in danger right now, call 911."
+      },
+      {
+       "k": "big",
+       "h": "Make home safer for now.",
+       "sub": "Guns locked and unloaded. Medicines locked up.",
+       "say": "One more step matters a great deal. If there are guns in your home, keep them locked and unloaded, with ammunition locked separately, or store them somewhere else for now. Research finds safe storage goes with lower risk for teens. Lock up medicines too. Then let their doctor or school counselor know, and keep checking in over the next few days."
+      },
+      {
+       "k": "big",
+       "h": "Privacy and safety work together.",
+       "sub": "Trust keeps them talking. The alert keeps you close.",
+       "say": "Privacy and safety work together here. Privacy keeps your teen honest with Pine, and the quiet alert keeps you close when it counts. Your calm response is what teaches them it is safe to tell you more."
+      },
+      {
+       "k": "quiz",
+       "q": "A quiet alert comes. What is the best first step?",
+       "opts": [
+        "Ask to see their answers in Pine",
+        "Check in soon, ask how they are really doing, and listen",
+        "Wait for them to bring it up"
+       ],
+       "right": 1,
+       "why": "The alert never shows answers. Check in soon and listen calmly. If you are worried, ask plainly, and call or text 988 together.",
+       "say": "Quick question. A quiet alert comes. What is the best first step?"
+      }
+     ]
+    },
+    {
+     "id": "pn-p-faith",
+     "n": 3,
+     "title": "Faith, Doubt, and the Big Questions",
+     "mins": 6,
+     "blurb": "How to walk with a teen through faith, doubt, and the big questions, following their lead.",
+     "sources": [
+      "smithdenton",
+      "desrosiers",
+      "bmmrsteen",
+      "exline",
+      "yeager18"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "For the Grown-up, Lesson 3",
+       "h": "Faith, Doubt, and the Big Questions",
+       "sub": "Room to ask, and your steady presence.",
+       "say": "This lesson is about faith, doubt, and the big questions that often show up in the high school years. Whatever your family holds, and whatever your teen is working out, you can walk with them here."
+      },
+      {
+       "k": "big",
+       "h": "The teen years bring big questions.",
+       "sub": "Who am I? What matters? What do I hold?",
+       "say": "The high school years bring big questions. Who am I? What matters most? Is what I grew up with mine? Some teens grow deeper in their family's faith. Some step back for a while, or ask hard questions. Some find meaning in other places. All faith traditions and everything in-between belong here."
+      },
+      {
+       "k": "points",
+       "h": "Faith can be",
+       "items": [
+        [
+         "A resource",
+         "Peace, strength, belonging"
+        ],
+        [
+         "A struggle",
+         "Feeling far away, judged, or let down"
+        ],
+        [
+         "A set of questions",
+         "Doubts that deserve room"
+        ],
+        [
+         "Found in other places",
+         "Music, nature, people, service"
+        ]
+       ],
+       "say": "For your teen, faith might be a resource, bringing peace, strength, and a place to belong. It might be a struggle, like feeling far from God, judged, or let down by people in a faith community. It might be a set of honest questions. Or meaning might come from other places, like music, nature, the people they love, or serving others."
+      },
+      {
+       "k": "big",
+       "h": "A felt connection matters more than attendance.",
+       "sub": "Hurtful experiences weigh on teens too.",
+       "say": "Research with teens finds that a felt, personal sense of connection to the sacred goes with fewer signs of depression, more than attendance alone. Support and forgiveness in a faith community help too. And hurtful experiences, like feeling shamed or pushed out, weigh on teens. So what matters most is whether faith is a resource or a stressor for your teen right now."
+      },
+      {
+       "k": "big",
+       "h": "Questions are a normal part of growing up.",
+       "sub": "Room to ask is a gift.",
+       "say": "Doubt is common at this age. A large national study of teens found that many have trouble putting their faith into words at all. That is not failure. It is often the start of a faith, or a set of values, that becomes their own. Room to ask is one of the best gifts you can give."
+      },
+      {
+       "k": "points",
+       "h": "Follow their lead",
+       "items": [
+        [
+         "Ask about experience",
+         "Never whether they believe"
+        ],
+        [
+         "Share your own story",
+         "Questions included, if they want"
+        ],
+        [
+         "Hold your hopes gently",
+         "Pressure often pushes away"
+        ],
+        [
+         "Take hurt seriously",
+         "Listen before defending"
+        ]
+       ],
+       "say": "Here is how to walk with them. Ask about their experience, never whether they believe. Share your own story if they want to hear it, including your own questions. Hold your hopes for them gently. Pressure and lectures often push teens away. And if a person or a group has hurt them, take it seriously. Listen first, before you defend or explain, and step in if someone is causing harm."
+      },
+      {
+       "k": "words",
+       "h": "Questions that invite",
+       "items": [
+        "Where do you feel most at peace?",
+        "What helps you when things get heavy?",
+        "Is there anything you've been wondering about?",
+        "What would you keep, and what would you change?"
+       ],
+       "say": "These questions invite without pushing. Where do you feel most at peace? What helps you when things get heavy? Is there anything you've been wondering about lately? And, about your family's traditions, what would you keep, and what would you change? Any answer is welcome, including I don't know."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: one open question",
+       "sub": "Where do you feel most at peace these days?",
+       "beats": [
+        "Let's practice.",
+        "Picture sitting with your teen in the car, on an ordinary afternoon.",
+        "Take one slow breath, and set down any answer you want to give.",
+        {
+         "t": "Now say out loud, gently: Where do you feel most at peace these days?",
+         "w": 10
+        }
+       ],
+       "say": "Let's practice. Picture sitting with your teen in the car, on an ordinary afternoon. Take one slow breath, and set down any answer you want to give. Now say out loud, gently: Where do you feel most at peace these days?"
+      },
+      {
+       "k": "points",
+       "h": "Faith in Pine",
+       "items": [
+        [
+         "Faith or Plain wording",
+         "Chosen together at setup"
+        ],
+        [
+         "Your teen can change it later",
+         "Scores never change"
+        ],
+        [
+         "Roots asks about experience",
+         "Never belief"
+        ],
+        [
+         "Faith answers stay private",
+         "Never shared with you"
+        ]
+       ],
+       "say": "In Pine, you and your teen choose Faith or Plain wording together at setup, and your teen can change it later in settings. Plain asks the same things without religious words, so scores never change. In Faith wording, God is named as one door among several, like prayer, worship, quiet, nature, and family traditions, and never as a judge. The Roots part asks about experience, never belief, and a teen of any tradition, or none, can score Strong. Their faith answers are never shared."
+      },
+      {
+       "k": "points",
+       "h": "Support what grounds them",
+       "items": [
+        [
+         "Make room for what steadies them",
+         "Quiet, prayer, music, time outside"
+        ],
+        [
+         "Help them stay connected",
+         "A ride, if they want one"
+        ],
+        [
+         "Let questions stay open",
+         "No need to settle them tonight"
+        ]
+       ],
+       "say": "You can support what grounds them in practical ways. Make room for whatever steadies them, whether that is quiet, prayer, music, or time outside. Help them stay connected to a community or group they choose, with a ride, or a meal together after. And let questions stay open. Pine has a practice called Carry Your Questions, called Carry Your Big Questions in Plain wording, where a teen writes down one big question and lets it stay open. A question can stay open and still be a living thing."
+      },
+      {
+       "k": "big",
+       "h": "You don't need every answer. Your presence speaks.",
+       "sub": "Listen for what holds them up.",
+       "say": "You do not need answers to every big question. Listen for what holds your teen up, and help them reach for it. Your steady presence often speaks louder than any answer."
+      },
+      {
+       "k": "quiz",
+       "q": "Your teen says they're not sure what they believe anymore. What helps most?",
+       "opts": [
+        "Tell them doubt is wrong and they need to stop",
+        "Ask about their experience, and give their questions room",
+        "Avoid the topic so it does not become a fight"
+       ],
+       "right": 1,
+       "why": "Questions are a normal part of growing up. Ask about experience, listen, and leave room.",
+       "say": "Quick question. Your teen says they're not sure what they believe anymore. What helps most?"
+      }
+     ]
+    },
+    {
+     "id": "pn-p-worry",
+     "n": 4,
+     "title": "When to Worry, and Who to Call",
+     "mins": 7,
+     "blurb": "Signs worth noticing in low mood, self-harm, substances, and someone hurting your teen, and who can help.",
+     "sources": [
+      "yrbs23",
+      "phqa",
+      "uspstfanx",
+      "mtf24",
+      "gould05",
+      "dazzi",
+      "asq"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "For the Grown-up, Lesson 4",
+       "h": "When to Worry, and Who to Call",
+       "sub": "Signs to notice, and who can help.",
+       "say": "This lesson is about the signs worth noticing in a high schooler, and who to call. You only need to notice, ask, and know where help is."
+      },
+      {
+       "k": "big",
+       "h": "Hard stretches are common. Help works.",
+       "sub": "Noticing early makes help easier.",
+       "say": "Hard stretches are common in high school. In a recent national survey, about four in ten high schoolers said they had felt sad or hopeless for weeks at a time in the past year. The good news is real too. Low mood and worry respond well to help, and doctors now check teens for both. Noticing early makes help easier."
+      },
+      {
+       "k": "points",
+       "h": "Low mood and worry can look like",
+       "items": [
+        [
+         "Irritable or withdrawn",
+         "More than sad"
+        ],
+        [
+         "Sleep or eating changes",
+         "More, or less"
+        ],
+        [
+         "Dropping what they loved",
+         "Friends, a sport, a hobby"
+        ],
+        [
+         "Worry that won't switch off",
+         "Getting in the way of life"
+        ]
+       ],
+       "say": "Low mood in teens often looks irritable or withdrawn, more than sad. Watch for changes in sleep or eating. Dropping friends, a sport, or something they used to love. And worry that will not switch off, getting in the way of school, sleep, or fun. If you see these for two weeks or more, help them talk with their doctor or a school counselor. Pine's practice Speak Up About Your Mood helps teens take that step."
+      },
+      {
+       "k": "points",
+       "h": "Self-harm",
+       "items": [
+        [
+         "Hiding their arms or legs",
+         "Even in warm weather"
+        ],
+        [
+         "Stay calm, and ask gently",
+         "Without anger or shock"
+        ],
+        [
+         "Get help together",
+         "Their doctor or a counselor"
+        ]
+       ],
+       "say": "Some teens hurt themselves to cope with feelings that seem too big. You might notice them hiding their arms or legs, even in warm weather, or marks they can't explain. If you do, stay calm, and ask gently, without anger or shock. Self-harm is a sign of real pain, and it deserves support every time. Get help together, from their doctor or a counselor."
+      },
+      {
+       "k": "points",
+       "h": "Vaping, drinking, and drugs",
+       "items": [
+        [
+         "Most teens choose not to",
+         "A record high in recent years"
+        ],
+        [
+         "Talk about pressure",
+         "Not just rules"
+        ],
+        [
+         "Offer a no-questions ride",
+         "Any time, from anywhere"
+        ]
+       ],
+       "say": "Here is good news. Most high schoolers do not vape, drink, or use drugs, and in recent years that share reached a record high. Talk about pressure, not just rules. Pine's practice Easy Ways Out helps teens plan what to say. And promise a no-questions ride home, any time. If you are worried about use, talk with their doctor. The SAMHSA National Helpline, 1 800 662 4357, can point you to help any time, in English and Spanish."
+      },
+      {
+       "k": "points",
+       "h": "When someone is hurting them",
+       "items": [
+        [
+         "Control in a relationship",
+         "Checking their phone, who they see"
+        ],
+        [
+         "Fear of one person",
+         "Or sudden changes around them"
+        ],
+        [
+         "Threats with a picture",
+         "They are not in trouble"
+        ]
+       ],
+       "say": "Watch, too, for signs that someone is hurting your teen. In dating, control often comes first. Checking their phone, deciding who they can see, nonstop texts. Notice fear of one person, or sudden changes around someone. And if anyone threatens your teen with a picture, tell them right away that they are not in trouble, and go to take it down dot n c m e c dot org together, to help get it removed."
+      },
+      {
+       "k": "points",
+       "h": "Who to call",
+       "items": [
+        [
+         "Danger right now",
+         "Call 911"
+        ],
+        [
+         "Someone hurting them",
+         "Childhelp 1-800-422-4453"
+        ],
+        [
+         "Dating abuse",
+         "Love Is Respect 1-866-331-9474"
+        ],
+        [
+         "In Minnesota",
+         "Day One 1-866-223-1111"
+        ]
+       ],
+       "say": "Here is who to call. If anyone is in danger right now, call 911. If someone is hurting your teen, Childhelp is there any time, by call or text, at 1 800 422 4453. For a controlling or hurtful relationship, Love Is Respect, at 1 866 331 9474. In Minnesota, Day One helps anyone hurt by someone close to them, at 1 866 223 1111. Pine shows your teen these same lines."
+      },
+      {
+       "k": "big",
+       "h": "If they speak of not wanting to live, ask plainly.",
+       "sub": "Asking opens the door.",
+       "say": "Most important of all. Listen for words like I just want it all to stop, or everyone would be better off without me. Pay close attention after a breakup, a loss, bullying, or a threat online. If you are worried, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It opens the door."
+      },
+      {
+       "k": "points",
+       "h": "If the answer is yes",
+       "items": [
+        [
+         "Stay with them",
+         "Thank them for telling you"
+        ],
+        [
+         "Call or text 988 together",
+         "Or text HOME to 741741"
+        ],
+        [
+         "In Minnesota",
+         "**CRISIS (274747) from a cell"
+        ],
+        [
+         "Danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "If the answer is yes, stay with them, and thank them for telling you. Call or text 988 together, any time, or text HOME to 7 4 1 7 4 1. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. If they are in danger right now, call 911. Lock up guns and medicines, or keep them somewhere else for now. Then let their doctor know, and keep checking in."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: save the numbers",
+       "sub": "988. Childhelp 1-800-422-4453.",
+       "beats": [
+        "Let's do one thing right now, so the numbers are ready when you need them.",
+        "Take out your phone.",
+        "Save 988 for a crisis, and Childhelp, 1 800 422 4453, for when someone is hurting a young person.",
+        "If you live in Minnesota, add Day One, 1 866 223 1111.",
+        {
+         "t": "Take a moment now, and save them.",
+         "w": 12
+        }
+       ],
+       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone. Save 988 for a crisis, and Childhelp, 1 800 422 4453, for when someone is hurting a young person. If you live in Minnesota, add Day One, 1 866 223 1111. Take a moment now, and save them."
+      },
+      {
+       "k": "big",
+       "h": "You are part of the safety net.",
+       "sub": "Their answers stay private. Your noticing matters.",
+       "say": "Pine shows your teen these lines right away, and their answers stay private. So your noticing and your asking matter. You are part of the safety net."
+      },
+      {
+       "k": "quiz",
+       "q": "Your teen has been withdrawn for weeks and says, what's the point. What do you do?",
+       "opts": [
+        "Give them space and wait for it to pass",
+        "Ask plainly whether they are thinking of ending their life",
+        "Tell them how much they have to live for"
+       ],
+       "right": 1,
+       "why": "Asking plainly opens the door. If the answer is yes, or they are unsure, call or text 988 together.",
+       "say": "Quick question. Your teen has been withdrawn for weeks and says, what's the point. What do you do?"
+      }
+     ]
+    },
+    {
+     "id": "pn-p-future",
+     "n": 5,
+     "title": "Pressure, Plans, and the Future",
+     "mins": 6,
+     "blurb": "Every path after high school honored, purpose that grows, and Next Steps, which belongs to your teen.",
+     "sources": [
+      "damon03",
+      "bronk18",
+      "yeager18",
+      "monahan",
+      "schreier13"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "For the Grown-up, Lesson 5",
+       "h": "Pressure, Plans, and the Future",
+       "sub": "Every path is a real path.",
+       "say": "This lesson is about the future. College, work, the military, a gap year, and all the pressure that comes with deciding. It is also about helping your teen build a life that is really theirs."
+      },
+      {
+       "k": "big",
+       "h": "There is more than one good path.",
+       "sub": "Work, college, a trade, service, a gap year.",
+       "say": "Start here. There is more than one good path after high school. College, a trade or an apprenticeship, work, service, the military, a gap year, or staying close to home. Each one is a real path. Your teen does not need the whole map. They need a direction, and a next step."
+      },
+      {
+       "k": "points",
+       "h": "What purpose looks like at this age",
+       "items": [
+        [
+         "Something that matters to them",
+         "Meaning"
+        ],
+        [
+         "A goal they are working toward",
+         "Direction"
+        ],
+        [
+         "A way to help beyond themselves",
+         "Making a difference"
+        ]
+       ],
+       "say": "Research on young people finds that purpose grows across the high school years, and it has three parts. Something that matters to them personally. A goal they are actively working toward. And a way to make a difference beyond themselves. Purpose like this is a steady source of strength."
+      },
+      {
+       "k": "points",
+       "h": "When pressure crowds things out",
+       "items": [
+        [
+         "Perfect or nothing",
+         "Fear that one mistake ruins it"
+        ],
+        [
+         "Living out a script",
+         "Doing it for someone else"
+        ],
+        [
+         "No room left",
+         "Every hour spoken for"
+        ]
+       ],
+       "say": "Pressure can crowd purpose out. Watch for the sense that it is perfect grades or nothing, and fear that one mistake ruins everything. A teen living out a script, doing things mostly because others expect it. Or a schedule with no room left at all. A part time job helps many teens. Research finds that up to about twenty hours a week has little downside, while more than that tends to pull teens away from school."
+      },
+      {
+       "k": "points",
+       "h": "How to help",
+       "items": [
+        [
+         "Ask what draws them",
+         "Before you suggest"
+        ],
+        [
+         "Treat them as capable",
+         "Give them real roles"
+        ],
+        [
+         "Share your own path",
+         "Including the turns"
+        ],
+        [
+         "Help name one next step",
+         "Small and doable"
+        ]
+       ],
+       "say": "Here is how to help. Ask what draws them, before you suggest anything. Treat them as capable. Teens respond to respect, and to real roles, more than to warnings. Share your own path, including the turns you did not plan. And help them name one next step that is small and doable, like a job shadow, a campus visit, a talk with a recruiter, or a conversation with someone in a trade."
+      },
+      {
+       "k": "points",
+       "h": "Next Steps belongs to them",
+       "items": [
+        [
+         "A private notebook",
+         "Values, goals, and plans"
+        ],
+        [
+         "You see it only if they share",
+         "A chapter they choose"
+        ],
+        [
+         "Every path honored",
+         "No path assumed"
+        ],
+        [
+         "It goes with them",
+         "When they move on from Pine"
+        ]
+       ],
+       "say": "Pine has a feature of its own, called Next Steps. It is a private notebook where your teen writes about their values, their strengths, the people in their corner, and their plans for after high school. You see it only if they choose to print or share a chapter with you. It honors every path equally and assumes none. And it goes with them when they move on from Pine. If they share it with you, treat it as an honor, and listen more than you edit."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: one turn in your own path",
+       "sub": "Something you did not plan that turned out to matter.",
+       "beats": [
+        "Let's try something.",
+        "Think back to when you were seventeen or eighteen.",
+        "Bring to mind one turn in your path that you did not plan, and that turned out to matter.",
+        {
+         "t": "Now say out loud one sentence you could share with your teen about it.",
+         "w": 12
+        }
+       ],
+       "say": "Let's try something. Think back to when you were seventeen or eighteen. Bring to mind one turn in your path that you did not plan, and that turned out to matter. Now say out loud one sentence you could share with your teen about it."
+      },
+      {
+       "k": "big",
+       "h": "Helping others helps them grow.",
+       "sub": "Service and mentoring build purpose.",
+       "say": "One more thing helps. Giving to others. In one study, teens who volunteered with younger children improved on heart health measures compared with teens who waited. Mentoring, tutoring, and serving their community build purpose and confidence. Pine has practices for this, like Volunteer and Mentor Someone."
+      },
+      {
+       "k": "big",
+       "h": "Turning eighteen: the choice is theirs.",
+       "sub": "Stay in Pine, or move on when they are ready.",
+       "say": "When your teen turns eighteen, Pine lets them choose what comes next. They can stay in Pine for now, or start a tree for adults when they are ready, and their rings and Next Steps go with them. Nothing is ever forced."
+      },
+      {
+       "k": "big",
+       "h": "Your belief in them is a gift.",
+       "sub": "Believe in the person, not one path.",
+       "say": "Above all, believe in the person, not one particular path. When an adult believes in their future, it is easier for a teen to believe in it too. Your steady belief is one of the biggest gifts you can give."
+      },
+      {
+       "k": "quiz",
+       "q": "Your senior is unsure what to do after graduation. What helps most?",
+       "opts": [
+        "Pick the safest path for them",
+        "Ask what draws them, and help them name one next step",
+        "Tell them to decide by the end of the week"
+       ],
+       "right": 1,
+       "why": "Every path is a real path. Asking, respect, and one small step help purpose grow.",
+       "say": "Quick question. Your senior is unsure what to do after graduation. What helps most?"
+      }
+     ]
+    },
+    {
+     "id": "pn-p-you",
+     "n": 6,
+     "title": "Taking Care of Yourself Too",
+     "mins": 6,
+     "blurb": "Noticing your own strain, sharing the load, and tending your own tree.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "For the Grown-up, Lesson 6",
+       "h": "Taking Care of Yourself Too",
+       "sub": "Your tree needs water too.",
+       "say": "This last lesson is about you. The one who lies awake waiting for headlights in the driveway, who reads every text twice, and who worries about the future as much as your teen does. Loving a teenager matters. So do you."
+      },
+      {
+       "k": "big",
+       "h": "These years stretch parents too.",
+       "sub": "Letting go and holding on, at the same time.",
+       "say": "The high school years stretch parents too. You are learning to let go and hold on at the same time. Your teen needs you less often, and sometimes needs you more than ever, usually at eleven at night. It is some of the most loving work there is, and some of the hardest."
+      },
+      {
+       "k": "points",
+       "h": "Signs the load is heavy",
+       "items": [
+        [
+         "Tired in a way rest won't fix",
+         "Running on empty"
+        ],
+        [
+         "A short fuse",
+         "Then guilt about it"
+        ],
+        [
+         "Worry that takes over",
+         "Hard to think about much else"
+        ],
+        [
+         "Your own life on hold",
+         "Friends, health, sleep"
+        ]
+       ],
+       "say": "Strain sneaks up. Notice if you feel tired in a way rest will not fix. A short fuse, and then guilt about it. Worry that takes over, so it is hard to think about much else. Or your own life on hold, your friends, your health, your sleep. These are signs the load is heavy. They say nothing about how much you love."
+      },
+      {
+       "k": "big",
+       "h": "Your steadiness helps them too.",
+       "sub": "You do not need to be perfect.",
+       "say": "Here is why tending yourself matters for your teen too. Teens notice how the adults around them handle stress. When you are steady, it is easier for them to bring you hard things. You do not need to be perfect. Repair after a hard moment, like saying, I'm sorry I snapped, teaches them a lot too."
+      },
+      {
+       "k": "points",
+       "h": "Share the load",
+       "items": [
+        [
+         "Lean on another adult",
+         "A partner, relative, or friend"
+        ],
+        [
+         "Talk with other parents",
+         "You are rarely the only one"
+        ],
+        [
+         "Ask for help early",
+         "A counselor or your doctor"
+        ]
+       ],
+       "say": "Share the load. Lean on another adult who loves your teen, like a partner, a relative, or a trusted friend. Talk with other parents. You are rarely the only one facing this. And ask for help early. A school counselor, your own doctor, or a counselor of your own can help you think things through. The NAMI HelpLine, 1 800 950 6264, offers information and support on weekdays."
+      },
+      {
+       "k": "points",
+       "h": "Keep something of your own",
+       "items": [
+        [
+         "Sleep and your own health",
+         "Your own doctor visits too"
+        ],
+        [
+         "One thing just for you",
+         "A walk, music, a hobby"
+        ],
+        [
+         "Your own people",
+         "One friend, one call"
+        ],
+        [
+         "Your own tree",
+         "Oak, Grounded's tree for adults"
+        ]
+       ],
+       "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same six parts as Pine."
+      },
+      {
+       "k": "big",
+       "h": "Try it now: Slow Exhale",
+       "sub": "In for four. Out for six.",
+       "beats": [
+        "Let's take a minute for you, with a practice Pine teaches teens, called Slow Exhale.",
+        "Sit back, and let your shoulders drop.",
+        "Breathe in gently through your nose for a count of four.",
+        "Breathe out slowly for a count of six.",
+        {
+         "t": "Keep going on your own for a few breaths, in for four, and out for six.",
+         "w": 12
+        }
+       ],
+       "say": "Let's take a minute for you, with a practice Pine teaches teens, called Slow Exhale. Sit back, and let your shoulders drop. Breathe in gently through your nose for a count of four. Breathe out slowly for a count of six. Keep going on your own for a few breaths, in for four, and out for six."
+      },
+      {
+       "k": "big",
+       "h": "Worry at night? Set it down.",
+       "sub": "Write it down, with one step for tomorrow.",
+       "say": "If worry keeps you up, write down what is spinning, and one small step for tomorrow next to each thing. Then close the notebook. It will keep until morning. And if you notice that you are low or anxious most days for two weeks or more, tell your doctor. Help works for parents too."
+      },
+      {
+       "k": "big",
+       "h": "Hard to go on? Reach out now.",
+       "sub": "Call or text 988, any time. In danger? Call 911.",
+       "say": "Sometimes parents reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. Call or text 988, any time. If you are in danger, call 911. And if your temper ever frightens you, thank yourself for noticing, and bring in more help today."
+      },
+      {
+       "k": "big",
+       "h": "Tending yourself is part of loving them well.",
+       "sub": "Rest is how you keep going.",
+       "say": "Tending yourself is part of loving your teen well. They need you rested, steady, and still yourself. That is the whole series. Thank you for walking beside a young person as they grow into their own life."
+      },
+      {
+       "k": "quiz",
+       "q": "What do strain and guilt usually mean for a parent?",
+       "opts": [
+        "That you love your teen less",
+        "That the load is heavy, and you need more support",
+        "That you should try harder"
+       ],
+       "right": 1,
+       "why": "Strain is a sign to share the load. It says the load is heavy, not that you are failing.",
+       "say": "Last question. What do strain and guilt usually mean for a parent?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pine-support",
+   "kind": "support",
+   "title": "Support for Right Now",
+   "who": "Short videos to use right in the middle of it",
+   "lessons": [
+    {
+     "id": "pn-r-ground",
+     "n": 1,
+     "title": "Ground Yourself Right Now",
+     "mins": 3,
+     "blurb": "Five senses, one at a time, to bring you back when everything is too much.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "Ground Yourself Right Now",
+       "sub": "Five senses, one at a time.",
+       "say": "When everything feels like too much, your senses can bring you back to right now. You can do this sitting in class, on the bus, or in bed, and nobody has to know. It takes about three minutes."
+      },
+      {
+       "k": "big",
+       "h": "Big feelings rise, and they also settle.",
+       "sub": "Your senses live in right now.",
+       "say": "Big feelings rise, and they also settle. Your mind might be racing ahead to what could go wrong, or replaying what already did. Your senses only live in this moment. That makes them a steady anchor."
+      },
+      {
+       "k": "words",
+       "h": "Five Senses Pause",
+       "items": [
+        "Five things you see.",
+        "Four things you feel.",
+        "Three things you hear.",
+        "Two things you smell.",
+        "One thing you taste."
+       ],
+       "cue": {
+        "w": {
+         "2": 10,
+         "4": 8,
+         "5": 7,
+         "6": 6,
+         "7": 6
+        },
+        "at": [
+         2,
+         3,
+         5,
+         6,
+         7
+        ]
+       },
+       "say": "This practice is called the Five Senses Pause. Let's do it together, slowly. Name five things you can see. Now four things you can feel. Your feet in your shoes, your hands, the seat under you. Three things you can hear, near and far. Two things you can smell. And one thing you can taste, even just a sip of water."
+      },
+      {
+       "k": "big",
+       "h": "Too many steps? Name five things you see.",
+       "sub": "Every way of doing this counts.",
+       "say": "If that felt like too many steps, just name five things you can see. That is enough. Every way of doing this counts."
+      },
+      {
+       "k": "breathe",
+       "h": "One slow breath to finish",
+       "hold": 12,
+       "cue": {
+        "p": {
+         "1": 3,
+         "2": 4
+        }
+       },
+       "say": "Now one slow breath. In for four. And out for six. Easy and natural."
+      },
+      {
+       "k": "big",
+       "h": "You are here. That is enough for right now.",
+       "sub": "Need to talk? Call or text 988, any time.",
+       "cue": {
+        "p": {
+         "0": 1.5
+        }
+       },
+       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it. And if you want to talk with someone, call or text nine eight eight, or text HOME to seven four one, seven four one, any time."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-test",
+     "n": 2,
+     "title": "Before a Test, a Game, or a Big Moment",
+     "mins": 3,
+     "blurb": "A short routine to steady your nerves before something that matters.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "Before a Test, a Game, or a Big Moment",
+       "sub": "Nerves mean it matters.",
+       "say": "Maybe it's a test, a game, a tryout, a performance, a job interview, or your driving test. If something big is coming up, this is for you. It takes about three minutes, and you can do it sitting down."
+      },
+      {
+       "k": "big",
+       "h": "Nerves mean it matters to you.",
+       "sub": "Your body is getting ready.",
+       "say": "Nerves before something big are normal. They mean it matters to you. A faster heartbeat and sweaty hands are your body getting ready. You don't have to get rid of the nerves. You just need something steady to do with them."
+      },
+      {
+       "k": "points",
+       "h": "Before the Big Moment",
+       "items": [
+        [
+         "Two slow exhales",
+         "Out longer than in"
+        ],
+        [
+         "One cue word",
+         "Steady, ready, or go"
+        ],
+        [
+         "Picture your first step",
+         "Going well"
+        ]
+       ],
+       "cue": {
+        "at": [
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "This practice is called Before the Big Moment. It has three steps. Two slow exhales, breathing out longer than you breathe in. One cue word, like steady, ready, or go. And picturing your first step going well."
+      },
+      {
+       "k": "big",
+       "h": "Try it now",
+       "sub": "Breathe. Your word. Your first step.",
+       "beats": [
+        "Let's run it once, right now.",
+        "Breathe in for four, and out slowly for six.",
+        "Once more, in for four, and out for six.",
+        "Now pick your cue word, and say it to yourself.",
+        {
+         "t": "Now picture the very first moment going well: the first question, the first play, or the first line.",
+         "w": 10
+        }
+       ],
+       "say": "Let's run it once, right now. Breathe in for four, and out slowly for six. Once more, in for four, and out for six. Now pick your cue word, and say it to yourself. Now picture the very first moment going well: the first question, the first play, or the first line."
+      },
+      {
+       "k": "big",
+       "h": "Your first step is all you need to see.",
+       "sub": "You don't have to picture the whole thing.",
+       "say": "You don't have to picture the whole thing going perfectly. Just the first step. Once you start, your practice and preparation can take over."
+      },
+      {
+       "k": "big",
+       "h": "Practice it on small days.",
+       "sub": "So it is automatic on the big ones.",
+       "say": "Use the same routine before small things, like a quiz or a regular practice, so it's automatic when the big moment comes. And if nerves keep you from doing things you care about, or you feel sick with worry for weeks, talk with a school counselor or your doctor. That's common, and help works."
+      },
+      {
+       "k": "big",
+       "h": "Breathe out. You are ready to begin.",
+       "sub": "Whatever happens, you showed up.",
+       "say": "Breathe out one more time. You are ready to begin. Whatever happens, you showed up, and that counts."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-panic",
+     "n": 3,
+     "title": "When Panic Hits",
+     "mins": 3,
+     "blurb": "What is happening in your body, and how to ride it out.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When Panic Hits",
+       "sub": "It feels huge. It passes.",
+       "say": "If your heart is pounding, your chest feels tight, and it feels like something terrible is happening, this is for you. Stay with me. You can do this sitting or lying down."
+      },
+      {
+       "k": "big",
+       "h": "Panic is your body's alarm, ringing loud.",
+       "sub": "It usually peaks within minutes, then eases.",
+       "say": "Panic is your body's alarm system, going off when there is no fire. It feels huge, and it can be scary. It usually peaks within a few minutes, and then it eases. You can ride it out."
+      },
+      {
+       "k": "words",
+       "h": "Say it to yourself",
+       "items": [
+        "This is panic.",
+        "It will pass.",
+        "I am safe right now."
+       ],
+       "cue": {
+        "p": {
+         "1": 1,
+         "2": 1,
+         "3": 1.5
+        }
+       },
+       "say": "Say this to yourself, slowly. This is panic. It will pass. I am safe right now."
+      },
+      {
+       "k": "points",
+       "h": "Feel the ground",
+       "items": [
+        [
+         "Feet flat on the floor",
+         "Press down a little"
+        ],
+        [
+         "Hands on something solid",
+         "A desk, your knees, the floor"
+        ],
+        [
+         "Eyes on one spot",
+         "Let them rest there"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 10
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Now feel the ground. Press your feet flat on the floor. Put your hands on something solid. Let your eyes rest on one spot. Stay here for a few breaths."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow Exhale",
+       "hold": 30,
+       "say": "Now follow the circle. This is a practice called Slow Exhale. In for four. And out for six. A long breath out tells your body it is safe to calm down."
+      },
+      {
+       "k": "big",
+       "h": "Panic keeps coming back? Tell someone.",
+       "sub": "A school counselor or your doctor can help.",
+       "say": "If panic keeps coming back, tell a parent, a school counselor, or your doctor. Panic responds well to help. And if this is the first time, or you have chest pain or trouble breathing, tell an adult and get checked. In an emergency, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "The wave is passing. You rode it out.",
+       "sub": "Need to talk? Call or text 988, any time.",
+       "say": "The wave is passing. You rode it out. And if you need to talk with someone, call or text nine eight eight, any time."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-night",
+     "n": 4,
+     "title": "When You Can't Sleep",
+     "mins": 4,
+     "blurb": "Set the day down, soften from your feet up, and let rest come.",
+     "sources": [
+      "aasm16",
+      "aapsleep14"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Can't Sleep",
+       "sub": "Set the day down for tonight.",
+       "say": "If it's late, and sleep won't come, this is for you. Turn your screen brightness down and the volume low. You can listen lying down."
+      },
+      {
+       "k": "big",
+       "h": "Your body clock runs later now.",
+       "sub": "That's biology, not laziness.",
+       "say": "During the teen years, your body clock shifts later, so feeling wide awake at night is real biology, not laziness. Teens still need about eight to ten hours of sleep. Tonight, the goal is rest."
+      },
+      {
+       "k": "points",
+       "h": "Set the day down",
+       "items": [
+        [
+         "Jot down what is spinning",
+         "A few words each"
+        ],
+        [
+         "Add one step for tomorrow",
+         "Not for tonight"
+        ],
+        [
+         "Put the phone away",
+         "Across the room, face down"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "If your mind is busy, set the day down first. Jot down what is spinning, a few words each. Next to anything that needs doing, add one small step for tomorrow. When this video ends, put the phone across the room, face down. It will all keep until morning."
+      },
+      {
+       "k": "points",
+       "h": "Body Scan",
+       "items": [
+        [
+         "Your feet and legs",
+         "Let them grow heavy"
+        ],
+        [
+         "Your belly and chest",
+         "Rising and falling"
+        ],
+        [
+         "Your shoulders and hands",
+         "Let them soften"
+        ],
+        [
+         "Your jaw and forehead",
+         "Let them go smooth"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 8,
+         "4": 8,
+         "5": 8,
+         "6": 10
+        },
+        "at": [
+         3,
+         4,
+         5,
+         6
+        ]
+       },
+       "say": "Now a practice called Body Scan. Lie back and get comfortable. If focusing on your body ever feels uncomfortable, keep your eyes open and just notice your hands and feet. Bring your attention to your feet and legs, and let them grow heavy. Now your belly and chest, rising and falling on their own. Now your shoulders and hands, and let them soften. And your jaw and forehead, and let them go smooth."
+      },
+      {
+       "k": "breathe",
+       "h": "Slow breaths",
+       "hold": 20,
+       "say": "Now just breathe. In for four, and out for six. If your mind wanders, that's okay. Come back to the next breath."
+      },
+      {
+       "k": "big",
+       "h": "Still awake after about twenty minutes?",
+       "sub": "Get up for a bit. Dim light, no screens.",
+       "say": "If you're still wide awake after about twenty minutes, get up for a little while. Keep the light dim, skip the screens, and do something calm. Go back to bed when you feel sleepy."
+      },
+      {
+       "k": "big",
+       "h": "Tomorrow, help your body clock.",
+       "sub": "Morning light, a steady wake time, phone outside.",
+       "say": "Tomorrow, a few things help. Get some daylight in the morning, wake up at about the same time each day, weekends too, and charge your phone outside your room. Pine calls these Morning Daylight, Steady Wake Time, and Phone Outside the Bedroom. If poor sleep goes on for weeks, or you snore loudly or feel sleepy all day, tell your doctor."
+      },
+      {
+       "k": "big",
+       "h": "Rest counts, even before sleep comes.",
+       "say": "Rest counts, even before sleep comes. Let the night be quiet around you. Good night."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-lonely",
+     "n": 5,
+     "title": "When You Feel Left Out or Alone",
+     "mins": 3,
+     "blurb": "When it feels like everyone else has their people, one small step toward connection.",
+     "sources": [
+      "murthy",
+      "cdcconnect23"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Feel Left Out or Alone",
+       "sub": "You're not the only one.",
+       "say": "Maybe you saw pictures from a night you weren't invited to. Maybe your friend group shifted, or you moved, or you're surrounded by people and still feel alone. If that's how it feels right now, this is for you."
+      },
+      {
+       "k": "big",
+       "h": "Lots of people your age feel this.",
+       "sub": "It's a signal, not a verdict.",
+       "say": "Feeling lonely is really common at your age. Young people are among the loneliest groups in the country right now. Loneliness is a signal, like hunger. It tells you that you need connection. It says nothing about whether you are worth knowing."
+      },
+      {
+       "k": "big",
+       "h": "Feeds show highlights, not the whole story.",
+       "sub": "Everyone leaves out the lonely parts.",
+       "say": "If you're scrolling through what everyone else is doing, remember you're seeing highlights. Other people have nights alone on the couch too. They just don't post them."
+      },
+      {
+       "k": "points",
+       "h": "Small steps toward connection",
+       "items": [
+        [
+         "One message",
+         "To someone you miss"
+        ],
+        [
+         "One place to belong",
+         "A team, club, job, or band"
+        ],
+        [
+         "One adult in your corner",
+         "A coach, teacher, or counselor"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         4
+        ]
+       },
+       "say": "Connection usually grows from small steps. Send one message to someone you miss. Show up at one place where you could belong, like a team, a club, a job, or a band. Students who feel close to people at school tend to feel less sad, so even one person there helps. And name one adult in your corner, like a coach, a teacher, or a school counselor."
+      },
+      {
+       "k": "big",
+       "h": "One Reach-Out a Day",
+       "sub": "Thought of you today.",
+       "beats": [
+        "This is a practice called One Reach-Out a Day.",
+        "Think of one person you'd like to hear from, even someone you haven't talked to in a while.",
+        "Open your messages.",
+        {
+         "t": "Now write one short line just for them, like thought of you today, or a song you think they'd like, and send it if you're ready.",
+         "w": 12
+        }
+       ],
+       "say": "This is a practice called One Reach-Out a Day. Think of one person you'd like to hear from, even someone you haven't talked to in a while. Open your messages. Now write one short line just for them, like thought of you today, or a song you think they'd like, and send it if you're ready."
+      },
+      {
+       "k": "big",
+       "h": "You can't control replies. You reached out.",
+       "sub": "That took courage.",
+       "say": "If they don't answer right away, that's okay. You can't control replies, only that you reached out. That took courage, and it counts."
+      },
+      {
+       "k": "big",
+       "h": "Feeling alone and hopeless? Reach out now.",
+       "sub": "Call or text 988. Text HOME to 741741.",
+       "say": "If the loneliness feels really heavy, or it's mixed with feeling hopeless, please reach out now. Call or text nine eight eight, or text HOME to seven four one, seven four one, any time. In the evenings, Teen Line lets you talk with another teen. Call eight hundred, eight five two, eight three three six, or text TEEN to eight three nine, eight six three."
+      },
+      {
+       "k": "big",
+       "h": "You matter, and you won't always feel this way.",
+       "sub": "One small step at a time.",
+       "say": "You matter, and you won't always feel this way. Connection comes back one small step at a time."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-angry",
+     "n": 6,
+     "title": "When Anger Takes Over",
+     "mins": 3,
+     "blurb": "Make room before you react, so you get to choose what happens next.",
+     "sources": [
+      "lieberman",
+      "siegel"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When Anger Takes Over",
+       "sub": "Make room before you react.",
+       "say": "Anger is a real feeling, and often an important one. It tells you something matters, or something isn't fair. This is about making room, so you get to choose what you do next."
+      },
+      {
+       "k": "big",
+       "h": "Feeling angry is okay. You choose what comes next.",
+       "sub": "A minute of space can save a lot.",
+       "say": "Feeling angry is okay. What matters is what you do with it. Hot anger makes it easy to say or send something you can't take back. A minute of space can save you a lot."
+      },
+      {
+       "k": "flow",
+       "h": "Make room",
+       "steps": [
+        [
+         "Step back",
+         "Leave the room, if you can"
+        ],
+        [
+         "Breathe out slowly",
+         "Longer out than in"
+        ],
+        [
+         "Notice it",
+         "Where is it in your body?"
+        ],
+        [
+         "Choose one thing",
+         "You'll be glad you did"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Here's how to make room. Step back. Leave the room if you can. Breathe out slowly, longer out than in. Notice where the anger sits in your body, like a hot face or tight fists. Then choose one thing to do that you'll be glad you did."
+      },
+      {
+       "k": "big",
+       "h": "Name It",
+       "sub": "Hurt. Embarrassed. Disrespected. Left out.",
+       "beats": [
+        "This is a practice called Name It.",
+        "Putting a feeling into words helps it settle.",
+        "Think of what set you off.",
+        "Under anger, there's often something else, like hurt, embarrassed, disrespected, or scared.",
+        {
+         "t": "Now name what you feel, in one or two words, out loud or in your head.",
+         "w": 10
+        }
+       ],
+       "say": "This is a practice called Name It. Putting a feeling into words helps it settle. Think of what set you off. Under anger, there's often something else, like hurt, embarrassed, disrespected, or scared. Now name what you feel, in one or two words, out loud or in your head."
+      },
+      {
+       "k": "words",
+       "h": "Words that buy time",
+       "items": [
+        "I need a minute. I'll come back.",
+        "I want to talk about this when I'm calmer.",
+        "Let me think about that."
+       ],
+       "say": "Some words can buy you time. I need a minute. I'll come back. I want to talk about this when I'm calmer. Or, let me think about that. And before you send that text, put the phone down for ten minutes."
+      },
+      {
+       "k": "points",
+       "h": "Let the energy out",
+       "items": [
+        [
+         "Move",
+         "A fast walk, stairs, wall push-ups"
+        ],
+        [
+         "Write it",
+         "Everything, just for you"
+        ],
+        [
+         "Squeeze and let go",
+         "Fists tight for five, then release"
+        ]
+       ],
+       "say": "Anger is energy, so let it out safely. Move your body, with a fast walk, some stairs, or push-ups against a wall. Write everything you want to say, just for you, and don't send it. Or, sitting right where you are, squeeze your fists tight for five seconds, then let go."
+      },
+      {
+       "k": "big",
+       "h": "Anger often? Afraid of what you might do?",
+       "sub": "Talk with a counselor. In danger? Call 911.",
+       "say": "If anger keeps taking over, or you're afraid of what you might do, talk with a school counselor or another adult you trust. That's a strong move. If anyone is in danger, call nine one one. And if someone at home is hurting you, Childhelp is there any time, by call or text, at one eight hundred, four two two, four four five three."
+      },
+      {
+       "k": "big",
+       "h": "You made room. Now you get to choose.",
+       "say": "You made room. Now you get to choose what comes next."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-scroll",
+     "n": 7,
+     "title": "When Scrolling Makes You Feel Worse",
+     "mins": 3,
+     "blurb": "Notice how your feed leaves you feeling, and take back a little control.",
+     "sources": [
+      "sgsocial23",
+      "odgers"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When Scrolling Makes You Feel Worse",
+       "sub": "Notice, then take back control.",
+       "say": "If you've been scrolling and you feel worse than when you started, more anxious, more left out, or worse about how you look, this is for you. You don't have to quit your phone. You just get to take back a little control."
+      },
+      {
+       "k": "big",
+       "h": "Feeds are built to keep you scrolling.",
+       "sub": "Feeling worse isn't a personal failure.",
+       "say": "Apps are designed to keep you scrolling, so it's not a personal failure when it's hard to stop. And it's easy to compare your whole life to everyone else's best moments."
+      },
+      {
+       "k": "points",
+       "h": "What research shows",
+       "items": [
+        [
+         "Lots of hours can weigh on you",
+         "Especially three or more a day"
+        ],
+        [
+         "It hits everyone differently",
+         "Notice how it hits you"
+        ],
+        [
+         "Bodies get compared a lot",
+         "Almost half of teens feel worse"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Here's what research shows. Teens who spend more than three hours a day on social media face double the risk of poor mental health. It affects each person differently, so what matters most is noticing how it hits you. And almost half of teens say social media makes them feel worse about their bodies."
+      },
+      {
+       "k": "big",
+       "h": "Phone Check",
+       "sub": "One notification off. One app moved.",
+       "beats": [
+        "This is a practice called Phone Check.",
+        "Pick up your phone.",
+        "Turn off one notification you don't need.",
+        "Then move one app that leaves you feeling worse off your home screen.",
+        {
+         "t": "Go ahead and do it now.",
+         "w": 12
+        }
+       ],
+       "say": "This is a practice called Phone Check. Pick up your phone. Turn off one notification you don't need. Then move one app that leaves you feeling worse off your home screen. Go ahead and do it now."
+      },
+      {
+       "k": "points",
+       "h": "Then try this",
+       "items": [
+        [
+         "Notice how you feel after",
+         "Better, the same, or worse?"
+        ],
+        [
+         "Set an off time",
+         "About an hour before bed"
+        ],
+        [
+         "Swap one scroll",
+         "For a walk, music, or a friend"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4
+        ]
+       },
+       "say": "Then try this. After you use an app, notice how you feel. Better, the same, or worse? Pick an off time tonight, about an hour before bed. And swap one scroll a day for something that fills you up, like a walk, music, or a real conversation."
+      },
+      {
+       "k": "big",
+       "h": "Threatened or scared by something online?",
+       "sub": "You're not in trouble. Tell a trusted adult.",
+       "say": "If something online is threatening or scaring you, you're not in trouble. Tell a trusted adult. If someone is threatening to share a picture of you, go to take it down dot n c m e c dot org, and tell an adult you trust right away. And if you feel unsafe or hopeless, call or text nine eight eight."
+      },
+      {
+       "k": "big",
+       "h": "You get to decide what fills your mind.",
+       "sub": "Look up. Breathe. You are here.",
+       "say": "You get to decide what fills your mind. Look up for a moment, and take one slow breath. You are here, and that's enough."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-heart",
+     "n": 8,
+     "title": "When Your Heart Is Broken",
+     "mins": 3,
+     "blurb": "After a breakup or a friendship ending, a little kindness for yourself.",
+     "sources": [
+      "bluth16",
+      "selfcompteen"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When Your Heart Is Broken",
+       "sub": "It hurts because it mattered.",
+       "say": "Maybe it was a breakup. Maybe a best friend pulled away, or a group you were part of moved on without you. If your heart hurts right now, this is for you."
+      },
+      {
+       "k": "big",
+       "h": "Heartbreak is real pain.",
+       "sub": "It hurts because it mattered.",
+       "say": "Heartbreak is real pain. It can hurt in your chest and your stomach, and make it hard to sleep, eat, or focus. It hurts because it mattered. That's not weakness. That's what caring about someone feels like."
+      },
+      {
+       "k": "breathe",
+       "h": "Breathe with it",
+       "hold": 14,
+       "say": "Let's slow down for a moment. Breathe with the circle. In for four. And out for six. If tears come, let them come."
+      },
+      {
+       "k": "big",
+       "h": "Self-Compassion Break",
+       "sub": "This is hard. Others feel this too.",
+       "beats": [
+        "This is a practice called the Self-Compassion Break.",
+        "Put a hand on your chest, or anywhere that feels comforting.",
+        "Say to yourself: This is really hard.",
+        "Then: Other people have felt this too.",
+        {
+         "t": "Now ask: What would I say to a friend going through this? Say that to yourself.",
+         "w": 12
+        }
+       ],
+       "say": "This is a practice called the Self-Compassion Break. Put a hand on your chest, or anywhere that feels comforting. Say to yourself: This is really hard. Then: Other people have felt this too. Now ask: What would I say to a friend going through this? Say that to yourself."
+      },
+      {
+       "k": "big",
+       "h": "Being kind to yourself helps you heal.",
+       "sub": "It is not letting yourself off the hook.",
+       "say": "Being kind to yourself isn't letting yourself off the hook. Teens who treat themselves with that kind of kindness tend to have less stress and low mood. It is a skill, and it gets easier with practice."
+      },
+      {
+       "k": "points",
+       "h": "In the next few days",
+       "items": [
+        [
+         "Lean on your people",
+         "Friends, family, a trusted adult"
+        ],
+        [
+         "Take a break from their page",
+         "Mute or archive, for now"
+        ],
+        [
+         "Keep the basics going",
+         "Sleep, food, moving your body"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "In the next few days, lean on your people. Friends, family, or an adult you trust. Take a break from their page, like muting or archiving it for now. And keep the basics going. Sleep, food, and moving your body help your heart heal too."
+      },
+      {
+       "k": "big",
+       "h": "Was it controlling or scary?",
+       "sub": "Love Is Respect: 1-866-331-9474.",
+       "say": "If the relationship was controlling, scary, or hurtful, it wasn't your fault. Love Is Respect is there any time, at one eight six six, three three one, nine four seven four. And if the sadness stays heavy for two weeks or more, or you feel hopeless, talk with someone you trust, or call or text nine eight eight."
+      },
+      {
+       "k": "big",
+       "h": "Hearts heal, a little at a time.",
+       "sub": "Be gentle with yourself while it happens.",
+       "say": "Hearts heal, a little at a time. Be gentle with yourself while it happens."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-grief",
+     "n": 9,
+     "title": "When Someone You Love Has Died",
+     "mins": 3,
+     "blurb": "When grief hits, give it a place to go.",
+     "sources": [
+      "shear"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When Someone You Love Has Died",
+       "sub": "Let it come, and let it pass.",
+       "say": "Maybe someone you love died recently, or a long time ago, and today it hit you again. A song, a smell, a date, an empty seat. If that's happening now, stay with me."
+      },
+      {
+       "k": "big",
+       "h": "Grief is love, looking for where to go.",
+       "sub": "Every way of grieving is okay.",
+       "say": "Grief is love, still looking for where to go. It can feel like sadness, anger, numbness, or even laughing at the wrong moment. You might feel fine one day and wrecked the next. Every way of grieving is okay."
+      },
+      {
+       "k": "breathe",
+       "h": "Let the wave move through",
+       "hold": 16,
+       "say": "If tears come, let them come. Breathe with the circle. In for four. And out for six."
+      },
+      {
+       "k": "big",
+       "h": "Say their name",
+       "sub": "And one thing you miss.",
+       "beats": [
+        "Grief needs somewhere to go.",
+        "Bring to mind the person you miss.",
+        "Picture their face, or hear their voice.",
+        {
+         "t": "Now say their name, out loud or in a whisper, and one thing you miss about them.",
+         "w": 12
+        }
+       ],
+       "say": "Grief needs somewhere to go. Bring to mind the person you miss. Picture their face, or hear their voice. Now say their name, out loud or in a whisper, and one thing you miss about them."
+      },
+      {
+       "k": "points",
+       "h": "Give grief a place",
+       "items": [
+        [
+         "Keep something of theirs",
+         "A photo, a song, a hoodie"
+        ],
+        [
+         "Write to them",
+         "A note, or a text you never send"
+        ],
+        [
+         "Talk about them",
+         "With people who knew them too"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Grief is easier to carry when it has a place. Keep something of theirs close, like a photo, a song, or a hoodie. Write to them, a note, or a text you never send. And talk about them with people who knew them too. Saying their name keeps the love moving."
+      },
+      {
+       "k": "big",
+       "h": "Grief can show up at school.",
+       "sub": "Tell a teacher or counselor what is going on.",
+       "say": "Grief can make school hard. It's hard to focus, and some days you need to step out. Tell a teacher or school counselor what's going on, so they can help. And if the person died suddenly, or by suicide, that is a heavy kind of grief. It is never your fault, and talking with a counselor can really help."
+      },
+      {
+       "k": "big",
+       "h": "Still really heavy after many months?",
+       "sub": "Talk with a counselor. Need someone now? 988.",
+       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and everyday life feels very hard, talk with a counselor or your doctor. And if you need to talk with someone right now, call or text nine eight eight."
+      },
+      {
+       "k": "big",
+       "h": "The wave will pass. The love stays.",
+       "sub": "You don't have to carry it alone.",
+       "say": "The wave will pass. The love stays. You don't have to carry it alone."
+      }
+     ]
+    },
+    {
+     "id": "pn-r-tell",
+     "n": 10,
+     "title": "When You Need to Tell Someone",
+     "mins": 4,
+     "blurb": "If someone is hurting you, or you don't want to go on: who to tell, and how.",
+     "sources": [
+      "yrbs23"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Support for Right Now",
+       "h": "When You Need to Tell Someone",
+       "sub": "Hard things get lighter when shared.",
+       "say": "Some things are hard to say out loud. Someone is hurting you or scaring you. Or you've been thinking you don't want to go on. If you're carrying something like that, I'm glad you're here."
+      },
+      {
+       "k": "big",
+       "h": "Telling is brave. You deserve to be safe.",
+       "sub": "It's not your fault. You won't be in trouble.",
+       "say": "Telling someone is brave, even when the person hurting you is someone you know, date, or live with. It's not your fault, and you won't be in trouble for telling. You deserve to be safe. And you matter, just as you are."
+      },
+      {
+       "k": "points",
+       "h": "Who you can tell",
+       "items": [
+        [
+         "An adult you trust",
+         "A parent, relative, or coach"
+        ],
+        [
+         "Someone at school",
+         "A counselor, teacher, or nurse"
+        ],
+        [
+         "A help line",
+         "Trained people who listen"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         3
+        ]
+       },
+       "say": "You can tell an adult you trust, like a parent, a relative, or a coach. You can tell someone at school, like a counselor, a teacher, or the school nurse. Helping you stay safe is part of their job. Or you can reach a help line, where trained people listen."
+      },
+      {
+       "k": "big",
+       "h": "Ask for Help",
+       "sub": "I need to tell you something hard.",
+       "beats": [
+        "This is a practice called Ask for Help.",
+        "Think of one person you could tell.",
+        "Picture their face.",
+        "Now say this first line, out loud or in a whisper: I need to tell you something hard, and I need your help.",
+        {
+         "t": "Say it once more, a little stronger.",
+         "w": 10
+        }
+       ],
+       "say": "This is a practice called Ask for Help. Think of one person you could tell. Picture their face. Now say this first line, out loud or in a whisper: I need to tell you something hard, and I need your help. Say it once more, a little stronger."
+      },
+      {
+       "k": "points",
+       "h": "If someone is hurting you",
+       "items": [
+        [
+         "Childhelp",
+         "Call or text 1-800-422-4453"
+        ],
+        [
+         "Someone you're going out with",
+         "Love Is Respect 1-866-331-9474"
+        ],
+        [
+         "In Minnesota, Day One",
+         "1-866-223-1111"
+        ],
+        [
+         "In danger right now",
+         "Call 911"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "If someone is hurting you, at home, at school, online, or in a relationship, here is where to reach out. Childhelp, any time, by call or text, at one eight hundred, four two two, four four five three. If it's someone you're close to or going out with, Love Is Respect, at one eight six six, three three one, nine four seven four. In Minnesota, Day One, at one eight six six, two two three, one one one one. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "points",
+       "h": "If you don't want to go on",
+       "items": [
+        [
+         "Call or text 988",
+         "Or chat at 988lifeline.org"
+        ],
+        [
+         "Text HOME to 741741",
+         "In Minnesota, text MN to 741741"
+        ],
+        [
+         "In Minnesota",
+         "**CRISIS (274747) from a cell"
+        ],
+        [
+         "In danger right now",
+         "Call 911"
+        ]
+       ],
+       "cue": {
+        "at": [
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. Call or text nine eight eight, any time, or chat at nine eight eight lifeline dot org. You can also text HOME to seven four one, seven four one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "You matter, and you don't have to carry this alone.",
+       "sub": "Reach out today. Someone will listen.",
+       "say": "You matter, and you don't have to carry this alone. Reach out today. Someone will listen. Later, Pine's practice My Safety Plan can help you plan for hard moments."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+},
   /* The Grove Learn (GWG BLD 730): Start Here, Using The Grove, The Six Parts, Together, and Do This Together.
      Generated from patches/bld730/source in grounded-workshop. */
   grove: {
