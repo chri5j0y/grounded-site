@@ -152,7 +152,12 @@
     var missed = Math.max(0, last - 1);
     return missed === 0 ? 0 : missed <= 3 ? 1 : missed <= 12 ? 2 : 3;
   }
+  // A tree app can cap how dry its tree looks (Maple, GWG BLD 745: only a thirsty look, never drooping).
   function health(s) {
+    var h = healthOf(s);
+    return C && typeof C.maxDry === 'number' ? Math.min(h, C.maxDry) : h;
+  }
+  function healthOf(s) {
     var d = today();
     if (C && C.pause && C.pause()) return 0;   // a gentle pause: the tree holds while hope or company is low
     if (!tended(s, d)) return stateFrom(s, d);
@@ -642,7 +647,7 @@
   }
   function libItemHTML(it, s, age, partOf) {
     var v = GGLibrary.view(it, age), on = inPlan(s, it), open = LIBQ.open === it.key, safe = encodeURIComponent(it.key), pt = partOf[it.part] || {};
-    return '<li class="gt-lib-item" style="--pc:' + (pt.color || '#8B5E1A') + '"><div class="gt-lib-top"><b>' + esc(v.name) + '</b><small>' + esc(pt.part || '') + (it.bedside ? ', From the Bedside' : '') + '</small></div>'
+    return '<li class="gt-lib-item" style="--pc:' + (pt.color || '#8B5E1A') + '"><div class="gt-lib-top"><b>' + esc(v.name) + '</b><small>' + esc(pt.part || '') + (it.ages === 'young' ? ', For Young Adults' : '') + (it.bedside ? ', From the Bedside' : '') + '</small></div>'
       + (v.text ? '<p>' + esc(v.text) + '</p>' : '')
       + '<div class="gt-acts"><button type="button" aria-pressed="' + on + '" onclick="GGTend.libToggle(\'' + safe + '\')">' + (on ? 'In my practices. Take it out' : 'Add to my practices') + '</button>'
       + '<button type="button" aria-expanded="' + open + '" onclick="GGTend.libHow(\'' + safe + '\')">Show me how</button></div>'

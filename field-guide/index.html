@@ -601,13 +601,14 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=tc5"></script>
+<script src="../shared/gg-app.js?v=tc6"></script>
 <script src="../shared/gg-backup.js?v=bk4"></script>
+<script src="../shared/gg-filelock.js?v=fl2"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=src14"></script>
-<script src="../shared/gg-learn.js?v=ln33"></script>
+<script src="../shared/gg-sources.js?v=src15"></script>
+<script src="../shared/gg-learn.js?v=ln34"></script>
 <script src="../shared/gg-print.js?v=pr7"></script>
 <script src="../shared/grove-scene.js?v=w2j"></script>
 <script src="qr.js"></script>
@@ -2331,7 +2332,7 @@ async function stImportLocal(){
   }
 }
 async function stImportFile(file){
-  try { const d = JSON.parse(await file.text()); if (d.app !== 'oak' || !d.clients) throw 0; await stImport(d.clients); }
+  try { const t = await file.text(); const d = window.GGFileLock ? await GGFileLock.read(t, {app: 'oak'}) : JSON.parse(t); if (!d || d.app !== 'oak' || !d.clients) throw 0; await stImport(d.clients); }
   catch(e){ alert("That isn't an Oak practitioner backup. In public Oak, the About page has Download Backup when old practitioner sessions are saved in that browser."); }
 }
 
@@ -6847,7 +6848,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=tc1', '../willow/practices.js?v=tc1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=tc2', '../willow/practices.js?v=tc2'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
@@ -7982,7 +7983,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn1', '../sequoia/guides.js?v=sg2', '../pine/guides.js?v=pg1', '../birch/guides.js?v=bg1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=sg3', '../pine/guides.js?v=pg2', '../birch/guides.js?v=bg1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

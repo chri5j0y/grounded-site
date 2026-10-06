@@ -2,10 +2,11 @@
    FROM CHRIS'S SHELF (gg-shelf.js)
    Links between the Grounded library (/library/) and the When Life Changes guides and
    practices. Each line: "tool:id": [book numbers]. Tools: maple, aspen,
-   oak, willow (When Life Changes guides) and practice (the shared practice library).
-   Matched by topic in the Library session (October 2026). These are
+   pine, birch, oak, sequoia, willow (When Life Changes guides) and practice
+   (the shared practice library). Matched by topic in the Library session
+   (October 2026); Pine, Birch, and Sequoia added in GWG BLD 745. These are
    books for further reading, never sources for a guide. To fix a match,
-   edit the list here. Proofread in the Founder tab's Proofreading card.
+   edit the list here.
    ===================================================================== */
 (function () {
   var BOOKS = {
@@ -333,6 +334,10 @@
 "My First Message",
 "Eugene H. Peterson"
 ],
+"LT-013": [
+"Chicken Soup for the Teenage Soul",
+"Jack Canfield et al."
+],
 "LT-018": [
 "The Secret Garden",
 "Frances Hodgson Burnett"
@@ -348,6 +353,10 @@
 "LT-022": [
 "The Hate U Give",
 "Angie Thomas"
+],
+"LT-023": [
+"Zen and the Art of Motorcycle Maintenance",
+"Robert M. Pirsig"
 ],
 "LT-024": [
 "Wild",
@@ -425,6 +434,10 @@
 "Many Colors",
 "Soong-Chan Rah"
 ],
+"PM-022": [
+"They Like Jesus but Not the Church",
+"Dan Kimball"
+],
 "PM-024": [
 "Restoring the Fallen",
 "Wilson, Friesen, and Paulson"
@@ -439,6 +452,10 @@
 ],
 "PS-003": [
 "Existential Psychotherapy",
+"Irvin D. Yalom"
+],
+"PS-004": [
+"The Gift of Therapy",
 "Irvin D. Yalom"
 ],
 "PS-007": [
@@ -512,6 +529,14 @@
 "SH-009": [
 "The Freedom Writers Diary",
 "The Freedom Writers with Erin Gruwell"
+],
+"SH-012": [
+"Fish!",
+"Lundin, Paul, and Christensen"
+],
+"SH-013": [
+"The Path",
+"Laurie Beth Jones"
 ],
 "TH-055": [
 "The Wisdom of Proverbs, Job and Ecclesiastes",
@@ -2008,6 +2033,581 @@
 "PS-007",
 "LT-029",
 "LT-048"
+],
+"pine:start-hs": [
+"LT-013",
+"SH-009"
+],
+"pine:grades-pressure": [
+"PS-015",
+"CM-001",
+"BD-003"
+],
+"pine:adhd": [
+"BD-004"
+],
+"pine:sports-cut": [
+"BD-005",
+"BD-006",
+"CM-001"
+],
+"pine:path-after": [
+"CM-020",
+"SH-013",
+"PS-007"
+],
+"pine:graduation": [
+"LT-001",
+"SH-013"
+],
+"pine:friend-changes": [
+"CM-011",
+"LT-001"
+],
+"pine:left-out": [
+"CM-011",
+"LT-001",
+"CM-001"
+],
+"pine:bullying": [
+"CM-001",
+"SH-009",
+"LT-013"
+],
+"pine:first-relationship": [
+"LT-027",
+"CM-011"
+],
+"pine:breakup": [
+"CM-001",
+"LT-027",
+"CM-004"
+],
+"pine:dating-abuse": [
+"PS-009",
+"CM-001"
+],
+"pine:divorce": [
+"DY-002",
+"LT-001"
+],
+"pine:stepfamily": [
+"DY-002"
+],
+"pine:moving": [
+"CM-011",
+"LT-018"
+],
+"pine:deployed": [
+"DY-002",
+"LT-001"
+],
+"pine:family-substance": [
+"LT-025",
+"LT-026",
+"CP-012"
+],
+"pine:parent-jail": [
+"LT-022",
+"DY-002"
+],
+"pine:blowup": [
+"PS-010",
+"PS-014",
+"CP-011"
+],
+"pine:lying": [
+"CP-010",
+"PS-014"
+],
+"pine:parent-death": [
+"DY-011",
+"DY-012",
+"DY-013"
+],
+"pine:friend-death": [
+"DY-011",
+"DY-012",
+"CP-007"
+],
+"pine:grandparent-death": [
+"DY-013",
+"DY-015",
+"DY-002"
+],
+"pine:car-crash": [
+"CP-007",
+"PS-009",
+"LT-029"
+],
+"pine:loved-one-ill": [
+"CP-008",
+"DY-002",
+"CP-007"
+],
+"pine:sleep": [
+"BD-003",
+"BD-001"
+],
+"pine:body-image": [
+"CM-001",
+"CM-002",
+"PS-015"
+],
+"pine:eating": [
+"PS-015",
+"CM-001",
+"PS-014"
+],
+"pine:concussion": [
+"BD-005",
+"BD-003"
+],
+"pine:chronic-illness": [
+"CP-008",
+"LT-029",
+"CP-007"
+],
+"pine:substances": [
+"LT-026",
+"LT-025",
+"CP-010"
+],
+"pine:anxiety": [
+"BD-001",
+"PS-015",
+"CM-001"
+],
+"pine:depression": [
+"NA-010",
+"BD-004",
+"PS-010"
+],
+"pine:selfharm": [
+"CM-001",
+"CP-008",
+"NA-010"
+],
+"pine:suicide-thoughts": [
+"PS-007",
+"NA-010",
+"CM-001"
+],
+"pine:counseling": [
+"PS-004",
+"CP-011",
+"PS-014"
+],
+"pine:porn": [
+"CM-001",
+"CP-010",
+"CM-004"
+],
+"pine:social-media": [
+"BD-003",
+"CM-001",
+"NA-008"
+],
+"pine:ai-companions": [
+"WR-006",
+"CM-011"
+],
+"pine:gambling": [
+"CP-012",
+"CP-010",
+"CM-013"
+],
+"pine:sexual-assault": [
+"PS-009"
+],
+"pine:school-threats": [
+"CP-014",
+"PS-009"
+],
+"pine:first-job": [
+"SH-012",
+"CM-020"
+],
+"pine:faith-doubt": [
+"CP-013",
+"LT-019"
+],
+"pine:faith-hurt": [
+"PS-025",
+"CP-019",
+"PM-022"
+],
+"pine:purpose-service": [
+"CM-020",
+"PS-007",
+"CD-012"
+],
+"birch:first-year": [
+"CM-011",
+"CM-020"
+],
+"birch:not-college": [
+"CM-020",
+"SH-013",
+"LT-023"
+],
+"birch:changing-plans": [
+"SH-013",
+"CM-019",
+"CM-020"
+],
+"birch:pressure-burnout": [
+"CP-014",
+"PS-015",
+"CM-007"
+],
+"birch:adhd": [
+"BD-004"
+],
+"birch:what-now": [
+"CM-020",
+"PS-007",
+"SH-013"
+],
+"birch:first-job": [
+"SH-012",
+"CM-020"
+],
+"birch:job-loss": [
+"TH-055",
+"CM-019",
+"PS-007"
+],
+"birch:career-change": [
+"CM-019",
+"CM-020",
+"SH-013"
+],
+"birch:gambling": [
+"CP-012",
+"CP-010",
+"CM-013"
+],
+"birch:moving-out": [
+"CM-021"
+],
+"birch:roommates": [
+"CM-011"
+],
+"birch:first-apartment": [
+"CM-021"
+],
+"birch:moving-back": [
+"CM-001",
+"DY-002"
+],
+"birch:new-city": [
+"CM-011",
+"CM-021"
+],
+"birch:friends": [
+"CM-011",
+"LT-001"
+],
+"birch:loneliness": [
+"CM-011",
+"WR-006"
+],
+"birch:dating": [
+"LT-027",
+"CM-011"
+],
+"birch:breakup": [
+"CM-001",
+"DY-011",
+"LT-027"
+],
+"birch:controlling": [
+"PS-009",
+"CM-001"
+],
+"birch:engaged": [
+"CP-016",
+"CP-015",
+"LT-027"
+],
+"birch:parents-adult": [
+"DY-002",
+"PS-014"
+],
+"birch:estrangement": [
+"DY-002",
+"PS-014"
+],
+"birch:young-parent": [
+"BD-023",
+"LT-004",
+"PS-015"
+],
+"birch:after-baby": [
+"CM-001",
+"PS-012",
+"PS-015"
+],
+"birch:pregnancy-loss": [
+"DY-014"
+],
+"birch:anxiety": [
+"BD-001",
+"PS-015",
+"CM-001"
+],
+"birch:depression": [
+"NA-010",
+"BD-004",
+"PS-010"
+],
+"birch:first-signs": [
+"PS-028",
+"PS-010"
+],
+"birch:substances": [
+"LT-026",
+"CM-013",
+"CP-010"
+],
+"birch:eating": [
+"PS-015",
+"CM-001",
+"PS-014"
+],
+"birch:suicide-thoughts": [
+"PS-007",
+"NA-010",
+"CM-001"
+],
+"birch:friend-suicide": [
+"CP-011",
+"PS-007"
+],
+"birch:selfharm": [
+"CM-001",
+"CP-008",
+"NA-010"
+],
+"birch:sexual-assault": [
+"PS-009"
+],
+"birch:porn": [
+"CM-001",
+"CP-010",
+"CM-004"
+],
+"birch:military": [
+"PS-007",
+"BD-005"
+],
+"birch:coming-home": [
+"PS-009",
+"CP-014",
+"PS-007"
+],
+"birch:grief-young": [
+"DY-011",
+"DY-012",
+"LT-024"
+],
+"birch:faith-own": [
+"CP-013",
+"PM-022",
+"CD-001"
+],
+"birch:faith-hurt": [
+"PS-025",
+"CP-019",
+"PM-022"
+],
+"birch:purpose": [
+"CM-020",
+"PS-007",
+"SH-013"
+],
+"sequoia:retirement": [
+"PS-026",
+"CM-020",
+"CD-040"
+],
+"sequoia:purpose-again": [
+"PS-026",
+"CM-020",
+"PS-007"
+],
+"sequoia:volunteering": [
+"CM-020",
+"PS-026"
+],
+"sequoia:working-longer": [
+"PS-026",
+"CM-020"
+],
+"sequoia:burden": [
+"CP-009",
+"PS-026",
+"CM-001"
+],
+"sequoia:spouse-death": [
+"LT-027",
+"DY-011",
+"DY-012"
+],
+"sequoia:friend-death": [
+"DY-013",
+"PS-026",
+"DY-011"
+],
+"sequoia:child-death": [
+"DY-011",
+"DY-012"
+],
+"sequoia:sibling-death": [
+"DY-011",
+"DY-013"
+],
+"sequoia:grief-stuck": [
+"DY-012",
+"DY-011",
+"CM-004"
+],
+"sequoia:holidays-alone": [
+"DY-013",
+"DY-012"
+],
+"sequoia:pet-death": [
+"DY-011",
+"DY-013",
+"NA-002"
+],
+"sequoia:new-diagnosis": [
+"CP-008",
+"PS-007"
+],
+"sequoia:pain": [
+"BD-001",
+"BD-007",
+"CP-008"
+],
+"sequoia:falls": [
+"BD-007"
+],
+"sequoia:driving": [
+"PS-026"
+],
+"sequoia:hospital": [
+"CP-008",
+"BD-001"
+],
+"sequoia:memory-worry": [
+"BD-010"
+],
+"sequoia:dementia": [
+"BD-010",
+"CP-014",
+"DY-002"
+],
+"sequoia:depression": [
+"NA-010",
+"PS-026",
+"BD-004"
+],
+"sequoia:anxiety": [
+"BD-001",
+"PS-015",
+"CM-001"
+],
+"sequoia:old-memories": [
+"PS-009",
+"PS-026",
+"PS-014"
+],
+"sequoia:moving-home": [
+"PS-026",
+"CD-040"
+],
+"sequoia:downsizing": [
+"PS-026"
+],
+"sequoia:care-move": [
+"PS-026",
+"CP-009"
+],
+"sequoia:affairs": [
+"DY-001",
+"DY-002"
+],
+"sequoia:spouse-caregiving": [
+"CP-014",
+"DY-002",
+"LT-027"
+],
+"sequoia:grandparenting": [
+"CP-009",
+"LT-004"
+],
+"sequoia:raising-grandkids": [
+"CP-009",
+"CP-014"
+],
+"sequoia:estrangement": [
+"DY-002",
+"PS-014"
+],
+"sequoia:worry-adult-children": [
+"LT-025",
+"CM-004"
+],
+"sequoia:kids-deciding": [
+"PS-026",
+"DY-002"
+],
+"sequoia:new-love": [
+"LT-027"
+],
+"sequoia:gray-divorce": [
+"DY-002",
+"CM-001"
+],
+"sequoia:loneliness": [
+"CM-011",
+"WR-006",
+"NA-010"
+],
+"sequoia:friendship": [
+"CM-011",
+"WR-006"
+],
+"sequoia:veterans": [
+"PS-007",
+"CP-014",
+"PS-009"
+],
+"sequoia:invisible": [
+"PS-026",
+"CP-009"
+],
+"sequoia:faith-questions": [
+"CP-013",
+"CD-025",
+"PS-008"
+],
+"sequoia:facing-death": [
+"DY-001",
+"DY-002",
+"DY-004"
+],
+"sequoia:regrets": [
+"DY-002",
+"CM-001",
+"CM-004"
+],
+"sequoia:legacy": [
+"CP-009",
+"DY-001",
+"PS-026"
 ]
 };
   var TITLES = {
@@ -2318,10 +2918,140 @@
 "practice:Share Good News": "Share Good News",
 "practice:Ask for a Hope Story": "Ask for a Hope Story",
 "practice:I Made It Through": "I Made It Through",
-"practice:Clear One Small Space": "Clear One Small Space"
+"practice:Clear One Small Space": "Clear One Small Space",
+"pine:start-hs": "Starting high school",
+"pine:grades-pressure": "Grades, pressure, and perfectionism",
+"pine:adhd": "ADHD and learning differences",
+"pine:sports-cut": "Sports: getting cut, injury, and burnout",
+"pine:path-after": "Choosing a path after high school",
+"pine:graduation": "Graduation, college, and leaving home",
+"pine:friend-changes": "Friendship changes and losing a friend group",
+"pine:left-out": "Feeling lonely or left out",
+"pine:bullying": "Bullying, in person and online",
+"pine:first-relationship": "First relationships and what healthy looks like",
+"pine:breakup": "Breakups",
+"pine:dating-abuse": "Dating abuse and controlling partners",
+"pine:divorce": "Parents' divorce or separation",
+"pine:stepfamily": "A new stepfamily",
+"pine:moving": "Moving or changing schools",
+"pine:deployed": "A parent deployed, and military family life",
+"pine:family-substance": "A family member's drinking or drug use",
+"pine:parent-jail": "A parent in jail or prison",
+"pine:blowup": "In the middle of a blowup",
+"pine:lying": "Lying, sneaking out, and stealing",
+"pine:parent-death": "When a parent or sibling dies",
+"pine:friend-death": "When a friend or classmate dies",
+"pine:grandparent-death": "When a grandparent dies",
+"pine:car-crash": "Car crashes and new drivers",
+"pine:loved-one-ill": "When someone you love is seriously ill",
+"pine:sleep": "Sleep and the teen body clock",
+"pine:body-image": "Body image and comparison",
+"pine:eating": "Eating disorders",
+"pine:concussion": "Concussion and sports injuries",
+"pine:chronic-illness": "Living with a chronic illness or disability",
+"pine:substances": "Vaping, drinking, and drugs",
+"pine:anxiety": "Anxiety and panic",
+"pine:depression": "Depression and feeling numb",
+"pine:selfharm": "Self-harm",
+"pine:suicide-thoughts": "Thoughts of suicide, and making a safety plan",
+"pine:counseling": "Getting counseling, and your rights at 16 in Minnesota",
+"pine:porn": "Pornography",
+"pine:social-media": "Social media, comparison, and phone balance",
+"pine:ai-companions": "AI chatbots and companions",
+"pine:gambling": "Gambling and sports betting",
+"pine:sexual-assault": "Sexual assault and unwanted touching",
+"pine:school-threats": "School threats, lockdowns, and scary news",
+"pine:first-job": "A first job, and balancing work with school",
+"pine:faith-doubt": "Faith questions and doubt",
+"pine:faith-hurt": "Hurt by a faith community",
+"pine:purpose-service": "Finding purpose, and serving others",
+"birch:first-year": "College: the first year",
+"birch:not-college": "Not college, or not yet: work, trades, and apprenticeships",
+"birch:changing-plans": "Changing plans: stopping out, switching majors, starting over",
+"birch:pressure-burnout": "Pressure, grades, and burnout",
+"birch:adhd": "ADHD and learning differences on your own",
+"birch:what-now": "After graduation: the “what now?” season",
+"birch:first-job": "A first full-time job",
+"birch:job-loss": "Losing a job, or not finding one",
+"birch:career-change": "Changing careers early",
+"birch:gambling": "Gambling and sports betting",
+"birch:moving-out": "Moving out for the first time",
+"birch:roommates": "Roommates",
+"birch:first-apartment": "A first apartment: leases, bills, and repairs",
+"birch:moving-back": "Moving back home",
+"birch:new-city": "Moving to a new city",
+"birch:friends": "Making friends after school",
+"birch:loneliness": "Loneliness",
+"birch:dating": "Dating and finding someone",
+"birch:breakup": "Breakups",
+"birch:controlling": "Controlling or abusive relationships",
+"birch:engaged": "Engaged or newly married",
+"birch:parents-adult": "You and your parents, as adults",
+"birch:estrangement": "Hard family ties and estrangement",
+"birch:young-parent": "Becoming a parent young",
+"birch:after-baby": "After the baby: depression and anxiety for moms and dads",
+"birch:pregnancy-loss": "Pregnancy or infant loss",
+"birch:anxiety": "Anxiety and panic",
+"birch:depression": "Depression and feeling stuck",
+"birch:first-signs": "First signs of a serious mental illness",
+"birch:substances": "Drinking, cannabis, and other drugs",
+"birch:eating": "Eating disorders",
+"birch:suicide-thoughts": "Thoughts of suicide, and a safety plan",
+"birch:friend-suicide": "When a friend is thinking about suicide",
+"birch:selfharm": "Self-harm",
+"birch:sexual-assault": "After a sexual assault",
+"birch:porn": "Pornography that's hard to stop",
+"birch:military": "Joining the military, and military life",
+"birch:coming-home": "Coming home from service",
+"birch:grief-young": "Grief when you're young: a parent, a friend, or a peer dies",
+"birch:faith-own": "Faith on your own: questions, doubt, and finding a community",
+"birch:faith-hurt": "Hurt by a faith community",
+"birch:purpose": "Finding purpose and calling",
+"sequoia:retirement": "Retirement: who am I now?",
+"sequoia:purpose-again": "Finding purpose again",
+"sequoia:volunteering": "Volunteering and serving",
+"sequoia:working-longer": "Working longer, or going back to work",
+"sequoia:burden": "Feeling like a burden",
+"sequoia:spouse-death": "Losing a spouse or partner",
+"sequoia:friend-death": "Outliving your friends",
+"sequoia:child-death": "Losing an adult child",
+"sequoia:sibling-death": "Losing a sibling",
+"sequoia:grief-stuck": "When grief won't ease",
+"sequoia:holidays-alone": "Holidays and anniversaries alone",
+"sequoia:pet-death": "Losing a pet",
+"sequoia:new-diagnosis": "A new diagnosis",
+"sequoia:pain": "Living with pain",
+"sequoia:falls": "After a fall",
+"sequoia:driving": "Giving up driving",
+"sequoia:hospital": "Surgery, recovery, or a hospital stay",
+"sequoia:memory-worry": "Worried about your memory",
+"sequoia:dementia": "A dementia diagnosis",
+"sequoia:depression": "Depression in later life",
+"sequoia:anxiety": "Worry and anxiety",
+"sequoia:old-memories": "When old memories return",
+"sequoia:moving-home": "Moving from the family home",
+"sequoia:downsizing": "Downsizing and letting go of things",
+"sequoia:care-move": "Moving to assisted living or a nursing home",
+"sequoia:affairs": "Getting your affairs in order",
+"sequoia:spouse-caregiving": "Caring for a spouse or partner",
+"sequoia:grandparenting": "Grandparenting",
+"sequoia:raising-grandkids": "Raising grandchildren",
+"sequoia:estrangement": "Estrangement from an adult child",
+"sequoia:worry-adult-children": "Worry about adult children",
+"sequoia:kids-deciding": "When your children start deciding for you",
+"sequoia:new-love": "New love late in life",
+"sequoia:gray-divorce": "Divorce late in life",
+"sequoia:loneliness": "Loneliness and living alone",
+"sequoia:friendship": "Friendship in later life",
+"sequoia:veterans": "Growing older as a veteran",
+"sequoia:invisible": "Feeling invisible or written off because of age",
+"sequoia:faith-questions": "Faith questions late in life",
+"sequoia:facing-death": "Facing death and sharing your wishes",
+"sequoia:regrets": "Making peace with regrets",
+"sequoia:legacy": "Leaving a legacy"
 };
-  var HREF = { maple: '/maple/#talk=', aspen: '/aspen/#talk=', pine: '/pine/#life=', birch: '/birch/#life=', oak: '/oak/#life=', willow: '/willow/#guide=', practice: '/grove/#library=' };
-  var FROM = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', willow: 'Willow', practice: 'Practice' };
+  var HREF = { maple: '/maple/#talk=', aspen: '/aspen/#talk=', pine: '/pine/#life=', birch: '/birch/#life=', oak: '/oak/#life=', sequoia: '/sequoia/#life=', willow: '/willow/#guide=', practice: '/grove/#library=' };
+  var FROM = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', practice: 'Practice' };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function books(tool, id) { return (LINKS[tool + ':' + id] || []).filter(function (b) { return BOOKS[b]; }); }
   function html(tool, id) {

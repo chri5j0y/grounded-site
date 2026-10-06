@@ -335,9 +335,16 @@ window.GG_LEARN = {
         [
          "Sit close",
          "And talk about it together"
+        ],
+        [
+         "Faith or Plain",
+         "The grown-up picks the wording"
         ]
        ],
-       "say": "When a grown-up is helping, they see a Grown-up tip under every question. They can tap Why this question? to learn why it matters. The best thing a grown-up can do is sit close, and talk about it together."
+       "cue": {
+        "at": [0, 1, 2, 3]
+       },
+       "say": "When a grown-up is helping, they see a Grown-up tip under every question. They can tap Why this question? to learn why it matters. The best thing a grown-up can do is sit close, and talk about it together. A grown-up also picks the wording, right on the start screen. Faith wording names God, prayer, and faith as one door among several, next to quiet, nature, and family traditions. Plain wording asks the same things without religious words, and scores are the same either way."
       },
       {
        "k": "points",
@@ -734,10 +741,41 @@ window.GG_LEARN = {
        "say": "Today has a morning stretch at the top, and a good thing to share at bedtime at the bottom. Your tree grows a bright leaf for each part you tend today. And you can count your Days Tended and your Rings."
       },
       {
+       "k": "points",
+       "h": "Watch your tree grow",
+       "items": [
+        [
+         "Tree friends",
+         "Surprise visitors as you tend"
+        ],
+        [
+         "Your tree grows up",
+         "From Seed to Grand Old Maple"
+        ],
+        [
+         "A Rainbow Week",
+         "All six parts in one week"
+        ],
+        [
+         "Milestones",
+         "On the Season tab"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         3,
+         4
+        ]
+       },
+       "say": "As you tend your tree, tree friends may come to visit, as a surprise. Every day you tend helps your tree grow up, from a Seed, to a Sprout, all the way to a Grand Old Maple. Six little dots show the parts you tended this week. Tend all six, and you make a Rainbow Week! Your milestones live on the Season tab."
+      },
+      {
        "k": "big",
        "h": "Your tree is always happy when you come back.",
        "sub": "Missed a few days? One practice wakes it up.",
-       "say": "If you miss a few days, your tree gets a little dry, and it rests. It never goes away. Do one practice, and it starts to wake up. Your tree is always happy when you come back."
+       "say": "If you miss a few days, your tree looks a little thirsty. One practice gives it a drink. It never droops, and it never goes away. Your tree is always happy when you come back."
       },
       {
        "k": "tabs",
@@ -1270,7 +1308,7 @@ window.GG_LEARN = {
          "Weather for each part"
         ]
        },
-       "say": "Each child's card shows their grade, their last check-in, and the weather for each part. Brothers and sisters each get their own tree, saved by first name."
+       "say": "Each child's card shows their grade, their last check-in, and the weather for each part. Brothers and sisters each get their own tree, saved by first name. In grade 5, a card called Ready for Middle School? offers two choices. Start My Aspen makes a new tree in Aspen, with a grown-up agreeing, and Maple's rings go along, labeled From Maple. Or tap Stay in Maple, for as long as it fits."
       },
       {
        "k": "card",
@@ -1281,7 +1319,7 @@ window.GG_LEARN = {
         "Not Now"
        ],
        "tap": 0,
-       "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree."
+       "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree. The first time a child's tree opens, a card called Set Up Maple Together lets the grown-up choose Faith or Plain wording, then tap All Set. You can change it any time in Settings, under Faith or Plain Wording. If a Maple Guide set Plain for a school or group, it stays locked, with a short line that says why."
       },
       {
        "k": "big",
@@ -2354,7 +2392,7 @@ window.GG_LEARN = {
     {
      "id": "mp-p-talk",
      "n": 1,
-     "title": "Talking With Little Ones",
+     "title": "Talking with Little Ones",
      "mins": 5,
      "blurb": "How to talk with a child after a check-in, and in all the small moments in between.",
      "scenes": [
@@ -2362,7 +2400,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "maple",
        "eyebrow": "For Grown-ups, Lesson 1",
-       "h": "Talking With Little Ones",
+       "h": "Talking with Little Ones",
        "sub": "The best part happens after the screen.",
        "say": "This lesson is for parents, grandparents, teachers, and every grown-up who loves a child. It is about the talk that comes after a check-in, and all the small talks in between."
       },
@@ -5190,9 +5228,13 @@ window.GG_LEARN = {
         [
          "Darker lines",
          "Mark a new school year"
+        ],
+        [
+         "From Maple",
+         "Rings from Maple, shown apart"
         ]
        ],
-       "say": "Every full check-in adds a growth ring. To see them, open Season and tap My progress over time. Tap any ring to see that check-in. Aspen shows whether each part grew, dipped, or stayed the same since your last ring. And darker lines mark a new school year, so by eighth grade your tree holds years of you."
+       "say": "Every full check-in adds a growth ring. To see them, open Season and tap My progress over time. Tap any ring to see that check-in. Aspen shows whether each part grew, dipped, or stayed the same since your last ring. And darker lines mark a new school year, so by eighth grade your tree holds years of you. If you used Maple before, those rings come along too, marked From Maple and shown apart."
       },
       {
        "k": "tabs",
@@ -5214,22 +5256,56 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Your tree is gentle",
+       "h": "Steady or Hardy",
        "items": [
         [
-         "Thriving",
-         "When you tend it"
+         "Steady",
+         "Gentle, and nothing is ever lost"
         ],
         [
-         "A little dry, then drooping",
-         "After some days away"
+         "Hardy",
+         "A little more challenge, in Settings"
         ],
         [
-         "Resting bare",
-         "Nothing is lost"
+         "After a hard check-in",
+         "Your tree holds still for two weeks"
         ]
        ],
-       "say": "When you tend it, your tree thrives. Miss a few days, and it looks a little dry, then it droops. After a couple of weeks away, it rests bare. It never dies, and nothing is ever taken away. One practice perks it up, and a few days of tending bring it all the way back."
+       "cue": {
+        "at": [0, 4, 6]
+       },
+       "say": "Your tree starts Steady. It is gentle, and nothing is ever lost. Miss a few days, and it may look a little dry, but one practice perks it up. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble, until one practice in that part heals it. And after a hard check-in, your tree holds still for two weeks either way, while you get support."
+      },
+      {
+       "k": "points",
+       "h": "Watch your tree grow up",
+       "items": [
+        [
+         "Tree levels",
+         "From Seed to Golden Aspen"
+        ],
+        [
+         "Tried, Building, Mine",
+         "Practices you keep doing"
+        ],
+        [
+         "Milestones",
+         "Firsts, like a balanced week"
+        ],
+        [
+         "Your Scenery",
+         "New trees and lakes, in Season"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Every day you tend your tree moves it toward its next level, from Seed all the way to Golden Aspen. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, like tending all six parts in one week, a balanced week. And in Season, Your Scenery opens new trees at ten, thirty five, and seventy five days tended, and new lakes at twenty, fifty, and one hundred. No streaks to lose, and nothing is ever taken away."
       },
       {
        "k": "big",
@@ -5501,23 +5577,23 @@ window.GG_LEARN = {
        "h": "Guides in five groups",
        "items": [
         [
-         "Home and family",
+         "Home and Family",
          "Moving, divorce, a death, a new baby"
         ],
         [
-         "Friends and school",
+         "Friends and School",
          "Drama, being left out, bullying"
         ],
         [
-         "Growing up and online",
+         "Growing Up and Online",
          "Phones, sleep, faith, who you are"
         ],
         [
-         "Big world, hard news",
+         "Big World, Hard News",
          "Plus Safety, when someone is hurting"
         ]
        ],
-       "say": "The guides come in five groups. Home and family, for things like moving, divorce, or a death. Friends and school, for drama, being left out, and bullying. Growing up and online, for phones, sleep, big questions about faith, and figuring out who you are. Big world, hard news, for things like storms and scary headlines. And Safety, for when you or a friend is hurting."
+       "say": "The guides come in five groups. Home and Family, for things like moving, divorce, or a death. Friends and School, for drama, being left out, and bullying. Growing Up and Online, for phones, sleep, big questions about faith, and figuring out who you are. Big World, Hard News, for things like storms and scary headlines. And Safety, for when you or a friend is hurting."
       },
       {
        "k": "points",
@@ -5875,7 +5951,7 @@ window.GG_LEARN = {
          "Grades 7 and 8, off unless you turn it on"
         ]
        ],
-       "say": "Each student's page shows more. Tending shows their tree, how many of the last seven days they tended it, and the parts they are tending, with guides for those parts. This week in Aspen shows the week's theme and their reflection question, so you can ask it too. Reflections they chose to share show up here. And in grades seven and eight, an optional question about being offered a vape or other substances stays off unless you turn it on. It never asks whether a student has used anything."
+       "say": "Each student's page shows more. Tending shows their tree, how many of the last seven days they tended it, and the parts they are tending, with guides for those parts. This week in Aspen shows the week's theme and their reflection question, so you can ask it too. Reflections they chose to share show up here. And in grades seven and eight, an optional question about being offered a vape or other substances stays off unless you turn it on. It never asks whether a student has used anything. A student's page also holds their Faith or Plain wording, which you can change there."
       },
       {
        "k": "points",
@@ -5949,7 +6025,7 @@ window.GG_LEARN = {
         "Just try it without saving"
        ],
        "tap": 0,
-       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know. There is no account, and your answers stay right here. A grown-up agrees when your profile is made."
+       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know. There is no account, and your answers stay right here. A grown-up agrees when your profile is made. The grown-up also picks the wording. Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores compare the same either way. A grown-up can change it later on your page in the Grown-ups tab, or in Settings, and a school's Aspen Guide can set Plain for everyone there."
       },
       {
        "k": "points",
@@ -6051,15 +6127,11 @@ window.GG_LEARN = {
        "title": "Profile and Settings",
        "rows": [
         [
-         "Your Profile",
+         "Faith or Plain Wording",
          ""
         ],
         [
-         "Movement Level",
-         ""
-        ],
-        [
-         "The Grove",
+         "Your Tree: Steady or Hardy",
          ""
         ],
         [
@@ -6067,7 +6139,11 @@ window.GG_LEARN = {
          ""
         ],
         [
-         "Daily Reminder",
+         "Heading to High School?",
+         ""
+        ],
+        [
+         "The Grove",
          ""
         ],
         [
@@ -6075,8 +6151,8 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "tap": 3,
-       "say": "To check any of this, tap your picture in your tree, where it says Settings. Under What your grown-up can see, Aspen spells it all out in plain words."
+       "tap": 2,
+       "say": "To check any of this, tap your picture in your tree, where it says Settings. Under What your grown-up can see, Aspen spells it all out in plain words. Settings also holds your Faith or Plain wording, and Steady or Hardy for your tree. In grade 8, a card called Heading to High School? lets you choose. Start My Pine makes your own Pine tree for grades 9 to 12, with a grown-up agreeing, and your check-ins come along, marked From Aspen. Or tap Stay in Aspen, for as long as it fits."
       },
       {
        "k": "points",
@@ -9299,7 +9375,7 @@ window.GG_LEARN = {
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
-          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Never part of a score', 'They are only there to help'], ['Help is right there', '988 and 911, any time']], say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. They are there so that if you need help, it is right there for you, with nine eight eight and nine one one.' },
+          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Never part of a score', 'They are only there to help'], ['One more question', 'Right now, today?'], ['Help is right there', '988 and 911, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. If you answer Sometimes or Often to the direct question, Oak asks one more: Right now, today, are those thoughts with you? A yes, or not sure, puts nine eight eight and nine one one first, so help is right there for you. The calm card also offers one more step: if there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.' },
           { k: 'points', h: 'To take it well', items: [['Find a quiet moment', 'Fifteen minutes, if you can'], ['Go with your first honest answer', 'No need to overthink'], ['Take a break anytime', 'Oak keeps your place']], say: 'A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place.' },
           { k: 'quiz', q: 'What does Not sure mean in a check-in?', opts: ['You did it wrong', 'An honest answer that is always okay', 'Your score goes down'], right: 1, why: 'Not sure is an honest answer, and it never counts against you.', say: 'Quick question. What does Not sure mean in a check-in?' }
         ] },
@@ -9310,7 +9386,7 @@ window.GG_LEARN = {
           { k: 'big', h: 'A Growing Edge is where your next growth begins.', sub: 'It is a part to tend, not a grade.', say: 'A Growing Edge is not a failing grade. It is where your next growth begins. It is a part to tend, and Oak will help you tend it.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Your Results', rows: [['Roots', 'Strong, 8 of 10', '#5F7D48'], ['Trunk', 'Steady, 6 of 10', '#8B5E1A'], ['Bark', 'Growing Edge, 4 of 10', '#B8612F'], ['Branches', 'Steady, 7 of 10', '#8B5E1A'], ['Leaves', 'Steady, 5 of 10', '#8B5E1A'], ['Fruit', 'Strong, 9 of 10', '#5F7D48']], tap: 2, say: 'Your results show each part, with its level and its score. Oak also names your biggest growing edge right now. That is a good place to start.' },
           { k: 'points', h: 'Read it with kindness', items: [['Look for patterns', 'Which parts lean on each other?'], ['Notice your strengths', 'They can carry you while you grow'], ['Pick one part to start', 'Not all six at once']], say: 'Read your results with kindness. Look for patterns. When one part is hurting, another often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with, not all six at once.' },
-          { k: 'points', h: 'Rings and changes', items: [['Each full check-in adds a ring', 'Your tree grows with you'], ['Grew, Dipped, or Same', 'Compared with your last check-in'], ['Like with like', 'Full with full, quick with quick']], say: 'Over time, every full check-in adds a growth ring to your tree. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one.' },
+          { k: 'points', h: 'Rings and changes', items: [['Each full check-in adds a ring', 'Your tree grows with you'], ['Grew, Dipped, or Same', 'Compared with your last check-in'], ['Like with like', 'Full with full, quick with quick'], ['From Pine and From Birch', 'Rings that came along, shown apart']], cue: { at: [0, 1, 1, 2] }, say: 'Over time, every full check-in adds a growth ring to your tree. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one. Rings that came along from Pine or Birch are labeled From Pine or From Birch, and shown apart. And if you came from Birch, a Groundwork card opens your Groundwork notebook to read or print.' },
           { k: 'big', h: 'Every score is a starting point.', say: 'Remember, every score is a starting point. It tells you where you are, so you can choose where to grow.' },
           { k: 'quiz', q: 'What is a Growing Edge?', opts: ['A failing grade', 'A part to tend, where your next growth begins', 'A part you should ignore'], right: 1, why: 'A Growing Edge is a part to tend, not a grade.', say: 'Quick question. What is a Growing Edge?' }
         ] },
@@ -9319,7 +9395,7 @@ window.GG_LEARN = {
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 3', h: 'Building Your Growth Plan', sub: 'Small practices for each part.', say: 'Your growth plan is a short list of practices for each part of your tree. This lesson shows you how to build one that fits your life.' },
           { k: 'points', h: 'Suggestions, never limits', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Choose as many or as few as you like.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Growth Plan: Bark', rows: [['Slow Exhale', 'Chosen', '#5F7D48'], ['Name It', 'Chosen', '#5F7D48'], ['Worry Window', ''], ['Leaves on a Stream', ''], ['How to do this', '']], tap: 2, say: 'Tap any practice to choose it. Tap How to do this to see why it helps, the steps, and what to try if it is hard.' },
-          { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Then add what fits.' },
+          { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Practices written for young adults are tagged For Young Adults. Then add what fits.' },
           { k: 'points', h: 'Practices born from stories', items: [['From the Bedside', 'Practices that grew out of real visits'], ['Linked to their story', 'Watch the lesson or read the story'], ['In the library', 'Ready to add to your plan']], say: 'Some practices are marked From the Bedside. They grew out of real stories from Chris’s work as a chaplain, like Lion’s Breath and One Woodpecker. Each one links to its story.' },
           { k: 'points', h: 'Make it yours', items: [['Write your own', 'Anything that tends a part counts'], ['Start small', 'Two minutes beats zero'], ['Change it anytime', 'Your plan grows with you']], say: 'Make it yours. Write your own practices. Anything that tends a part counts, like calling your sister or taking the long way home. Start small. Two minutes beats zero. And change your plan anytime.' },
           { k: 'quiz', q: 'How many practices should you choose for a part?', opts: ['Exactly the number Oak suggests', 'As many or as few as fit your life', 'Only one'], right: 1, why: 'Oak’s numbers are suggestions, never limits.', say: 'Quick question. How many practices should you choose for a part?' }
@@ -9331,6 +9407,7 @@ window.GG_LEARN = {
           { k: 'points', h: 'On a hard day', items: [['Easier today', 'Swap in a smaller version'], ['Add a note', 'One line about how it went'], ['One is enough', 'Any practice waters your tree']], say: 'On a hard day, tap Easier today for a smaller version of a practice. Add a note if you like, just one line. And remember, one practice is enough to water your tree.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 1, note: { h: 'Week', p: 'A theme, a short check-in, and a question to sit with.' }, say: 'Each week brings a theme, a short check-in, and a question to sit with. The weekly check-in asks one question for each part, plus how you are moving, resting, and eating.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 2, note: { h: 'Season', p: 'Twelve weeks. It begins and ends with a full check-in, and each one adds a ring.' }, say: 'A season is twelve weeks. It begins with a full check-in, and the next full check-in closes it and adds a ring to your tree. The Season tab also has your Days Tended calendar.' },
+          { k: 'points', h: 'Watch your tree grow', items: [['Tree levels', 'From Acorn to Heritage Oak'], ['Tried, Building, Mine', 'Practices you keep doing'], ['Milestones', 'And a balanced week'], ['Steady or Hardy', 'With two grace days a week']], cue: { at: [0, 1, 2, 3] }, say: 'Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all six parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support.' },
           { k: 'big', h: 'No streaks to break. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours.' },
           { k: 'quiz', q: 'What waters your tree for the day?', opts: ['Checking off any one practice', 'Finishing every practice', 'A full check-in'], right: 0, why: 'Any one practice waters your tree. One is enough.', say: 'Quick question. What waters your tree for the day?' }
         ] },
@@ -9341,16 +9418,16 @@ window.GG_LEARN = {
           { k: 'flow', h: 'Two sides to every guide', steps: [['For you', 'When you are going through it'], ['For the helper', 'When you are walking with someone']], say: 'Every guide has two sides. One for you, when you are the one going through it. And one for the helper, when you are walking with someone else.' },
           { k: 'points', h: 'Inside a guide', items: [['A Quick Card', 'The first things to know'], ['What to say, and what to skip', 'Words that help'], ['Faith and meaning', 'For all faith traditions and everything in-between'], ['Practices and where to get help', 'Real next steps']], say: 'Inside a guide, start with the Quick Card, the first things to know. Then words to say and words to skip. Faith and meaning, for all faith traditions and everything in-between. And practices, plus where to get help.' },
           { k: 'card', title: 'Search', body: 'Type what is happening in your own words.', fields: [['Search', 'my dad has dementia']], btns: ['Search'], tap: 0, result: 'Caring for someone with dementia', say: 'Search in your own words, like my dad has dementia, and Oak finds the right guide.' },
-          { k: 'big', h: 'Videos for every guide are on the way.', say: 'Videos for every guide are on the way, one for you, and one for the helper. Until then, every guide can be read aloud.' },
+          { k: 'big', h: 'Two short videos for every guide.', sub: 'For You, and For the Helper.', say: 'Every guide has two short videos at the top. For You, if this is what you are facing. And For the Helper, if you are walking beside someone who is. Each one is a few minutes long, narrated aloud.' },
           { k: 'quiz', q: 'Every When Life Changes guide has two sides. What are they?', opts: ['Easy and hard', 'For you, and for the helper', 'Short and long'], right: 1, why: 'Each guide speaks to the person going through it and the person walking with them.', say: 'Quick question. Every guide has two sides. What are they?' }
         ] },
 
         { id: 'ok-u-home', n: 6, title: 'Your Household and Your Backup', mins: 4, blurb: 'Profiles for everyone, one backup file, and The Grove.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 6', h: 'Your Household and Your Backup', sub: 'Everyone gets their own tree.', say: 'Oak works for a whole household on one device. This last lesson shows how, and how to keep everything safe.' },
           { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine.' },
-          { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back.' },
+          { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back. Save to a File, and the practitioner backup, save locked files too, with a passcode you choose.' },
           { k: 'points', h: 'The Grove', items: [['Your tree is yours', 'Answers always stay private'], ['The grove is ours', 'Your family’s trees, side by side'], ['You choose', 'Show my growth on The Grove, on or off']], say: 'If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings.' },
-          { k: 'points', h: 'Make it easy to come back', items: [['Daily Reminder', 'Pick a time that fits your day'], ['Movement Level', 'Gentle, Moderate, or Athletic'], ['Reading and Display', 'Voice, speed, and text size']], say: 'Finally, settings help Oak fit you. Set a daily reminder. Choose your movement level, so practices fit your body. And set your voice and text size under Reading and Display.' },
+          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose, and safety answers stay yours'], ['Your Age (Optional)', 'At 60, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. A helper never sees your safety answers. Your age is optional, and at 60, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
           { k: 'big', h: 'You know Oak now. Go tend your tree.', say: 'That is the whole tour. You know Oak now. Go tend your tree, a little at a time.' },
           { k: 'quiz', q: 'What does Back up everything save?', opts: ['Only your answers, unlocked', 'One file with every profile, still locked', 'Nothing, it sends your data online'], right: 1, why: 'One file holds every profile on the device, each still locked.', say: 'Last question. What does Back up everything save?' }
         ] }
@@ -9707,7 +9784,7 @@ window.GG_LEARN = {
         {"id": "wl-s-scan", "n": 26, "title": "A Body Scan in the Chair", "mins": 4, "blurb": "Notice your body part by part, and soften what is tight.", "sources": ["mbsr"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "A Body Scan in the Chair", "sub": "Noticing, from the ground up.", "say": "For the hours in the chair beside the bed, this one is for you. We will move slowly through your body, noticing as we go."}, {"k": "big", "h": "Notice, then soften.", "sub": "Whatever you find is okay.", "say": "This is a body scan. You move your attention slowly through your body, one part at a time. You notice what is there: tight, tired, warm, or nothing much at all. Whatever you find is okay. Where you can, you let it soften."}, {"k": "breathe", "h": "Settle into the chair", "sub": "In. And a longer breath out.", "hold": 18, "say": "Sit back in the chair. Let your breath slow down. Breathe in. And a longer breath out."}, {"k": "big", "h": "Your feet", "say": "Start with your feet. Feel them on the floor, or in your shoes. Notice warmth, or coolness, or pressure. Just notice, and let them rest.", "beats": ["Start with your feet.", "Feel them on the floor, or in your shoes.", "Notice warmth, or coolness, or pressure.", {"t": "Just notice, and let them rest.", "w": 10}]}, {"k": "big", "h": "Your legs", "say": "Now your legs. Feel the backs of your legs against the seat. If your knees or calves feel tight, let them soften.", "beats": ["Now your legs.", "Feel the backs of your legs against the seat.", {"t": "If your knees or calves feel tight, let them soften.", "w": 10}]}, {"k": "big", "h": "Your back", "say": "Move up to your back. Notice where it touches the chair, and where it doesn't. Long hours in a chair can leave it stiff. Breathe toward any tight place, and let it ease.", "beats": ["Move up to your back.", "Notice where it touches the chair, and where it doesn't.", "Long hours in a chair can leave it stiff.", {"t": "Breathe toward any tight place, and let it ease.", "w": 12}]}, {"k": "big", "h": "Your hands", "say": "Now your hands. They may be resting in your lap, or holding a hand on the bed. Notice them. Let your fingers loosen.", "beats": ["Now your hands.", "They may be resting in your lap, or holding a hand on the bed.", "Notice them.", {"t": "Let your fingers loosen.", "w": 10}]}, {"k": "big", "h": "Your shoulders and jaw", "say": "Now your shoulders. Many people carry worry here. Let them drop, just a little. And your jaw. Let your teeth part, and your jaw go loose.", "beats": ["Now your shoulders.", "Many people carry worry here.", "Let them drop, just a little.", "And your jaw.", {"t": "Let your teeth part, and your jaw go loose.", "w": 12}]}, {"k": "breathe", "h": "Your whole body", "sub": "Breathing here, beside them.", "hold": 30, "say": "Now feel your whole body at once, sitting here beside them. Breathing in. Breathing out. Let the softening spread."}, {"k": "big", "h": "Come back to this anytime.", "sub": "Your body is carrying a lot.", "say": "Your body is carrying a lot right now. A few minutes of noticing is a kind thing to give it. Come back to this whenever you sit down in that chair."}]}
       ] },
       {"id": "willow-sp-talk", "kind": "support", "title": "Talking Things Through", "who": "Words for the talks that matter most", "lessons": [
-        {"id": "wl-s-children", "n": 27, "title": "Talking With Children About Dying", "mins": 4, "blurb": "Honest, simple words for the children in your family.", "sources": ["dougy"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Talking With Children About Dying", "sub": "The truth, told gently.", "say": "When there are children in your family, and someone they love is dying, this is for you. Children do best with the truth, told gently."}, {"k": "big", "h": "Children notice more than we think.", "sub": "Simple truth helps them feel safe.", "say": "Children notice more than we think. They feel the hush in the house and see the tired faces. When no one explains, they often fill the gaps with something scarier, or decide it is somehow their fault. Simple, honest words help them feel safe."}, {"k": "words", "h": "Use the real words.", "items": ["Grandpa is very sick.", "His body can't get better.", "He is dying.", "When he dies, his body will stop working."], "sub": "Say dying and died.", "say": "Use the real words, even though they are hard to say. Grandpa is very sick. His body can't get better. He is dying. Words like sleeping, or lost, or gone away can confuse a child, or even make them afraid to fall asleep. Dying and died are clear, and clear is kind."}, {"k": "words", "h": "Practice your first sentence.", "items": ["I need to tell you something sad.", "Grandma is dying."], "say": "Let's practice. Think of the child you need to talk with. Say their name, and then one true, simple sentence, out loud or in your head.", "beats": ["Let's practice.", "Think of the child you need to talk with.", {"t": "Say their name, and then one true, simple sentence, out loud or in your head.", "w": 12}]}, {"k": "points", "h": "Short answers, and let them ask", "items": [["Answer what they ask", "Then pause and listen"], ["Ask what they think", "What have you noticed?"], ["I don't know is okay", "Honest is better than perfect"], ["They may ask again", "Repeating helps them understand"]], "say": "Keep your answers short, and let them ask. Answer what they ask, then pause and listen. Ask what they think, what have you noticed. It's okay to say, I don't know. And expect the same question again, and again. Repeating is how children make sense of big news."}, {"k": "points", "h": "Let them be part of it", "items": [["Visit, if they want to", "Tell them first what they will see"], ["Give them a way to help", "A drawing, a song, holding a hand"], ["A card counts too", "If they would rather not visit"]], "say": "Let them be part of it, if they want to be. Before a visit, tell them what they will see, the bed, the quiet breathing, any equipment in the room. Give them a way to help, a drawing for the wall, a song, a hand to hold. If they would rather not visit, a card or a message counts too. Let them choose."}, {"k": "points", "h": "Their grief comes in bursts", "items": [["Sad, then playing", "That is how children grieve"], ["Play helps them work it out", "Even playing hospital or funeral"], ["Questions at odd times", "Bedtime, the car, the bath"], ["Tell their school", "So teachers can watch and help"]], "say": "Children's grief often comes in bursts. They may cry, then run off to play a minute later. That is normal. Play is how they work things out, even playing hospital or funeral. Big questions come at odd times, at bedtime, in the car. And tell their school, so teachers can watch for hard days and help."}, {"k": "big", "h": "Your honesty and your arms are enough.", "sub": "It is okay to cry together.", "say": "You don't need perfect words. It's okay to cry in front of them. It shows them that sadness is what love feels like right now. Your honesty and your arms around them are enough. And your hospice team can help you find words for children. Just ask."}]},
+        {"id": "wl-s-children", "n": 27, "title": "Talking with Children About Dying", "mins": 4, "blurb": "Honest, simple words for the children in your family.", "sources": ["dougy"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Talking with Children About Dying", "sub": "The truth, told gently.", "say": "When there are children in your family, and someone they love is dying, this is for you. Children do best with the truth, told gently."}, {"k": "big", "h": "Children notice more than we think.", "sub": "Simple truth helps them feel safe.", "say": "Children notice more than we think. They feel the hush in the house and see the tired faces. When no one explains, they often fill the gaps with something scarier, or decide it is somehow their fault. Simple, honest words help them feel safe."}, {"k": "words", "h": "Use the real words.", "items": ["Grandpa is very sick.", "His body can't get better.", "He is dying.", "When he dies, his body will stop working."], "sub": "Say dying and died.", "say": "Use the real words, even though they are hard to say. Grandpa is very sick. His body can't get better. He is dying. Words like sleeping, or lost, or gone away can confuse a child, or even make them afraid to fall asleep. Dying and died are clear, and clear is kind."}, {"k": "words", "h": "Practice your first sentence.", "items": ["I need to tell you something sad.", "Grandma is dying."], "say": "Let's practice. Think of the child you need to talk with. Say their name, and then one true, simple sentence, out loud or in your head.", "beats": ["Let's practice.", "Think of the child you need to talk with.", {"t": "Say their name, and then one true, simple sentence, out loud or in your head.", "w": 12}]}, {"k": "points", "h": "Short answers, and let them ask", "items": [["Answer what they ask", "Then pause and listen"], ["Ask what they think", "What have you noticed?"], ["I don't know is okay", "Honest is better than perfect"], ["They may ask again", "Repeating helps them understand"]], "say": "Keep your answers short, and let them ask. Answer what they ask, then pause and listen. Ask what they think, what have you noticed. It's okay to say, I don't know. And expect the same question again, and again. Repeating is how children make sense of big news."}, {"k": "points", "h": "Let them be part of it", "items": [["Visit, if they want to", "Tell them first what they will see"], ["Give them a way to help", "A drawing, a song, holding a hand"], ["A card counts too", "If they would rather not visit"]], "say": "Let them be part of it, if they want to be. Before a visit, tell them what they will see, the bed, the quiet breathing, any equipment in the room. Give them a way to help, a drawing for the wall, a song, a hand to hold. If they would rather not visit, a card or a message counts too. Let them choose."}, {"k": "points", "h": "Their grief comes in bursts", "items": [["Sad, then playing", "That is how children grieve"], ["Play helps them work it out", "Even playing hospital or funeral"], ["Questions at odd times", "Bedtime, the car, the bath"], ["Tell their school", "So teachers can watch and help"]], "say": "Children's grief often comes in bursts. They may cry, then run off to play a minute later. That is normal. Play is how they work things out, even playing hospital or funeral. Big questions come at odd times, at bedtime, in the car. And tell their school, so teachers can watch for hard days and help."}, {"k": "big", "h": "Your honesty and your arms are enough.", "sub": "It is okay to cry together.", "say": "You don't need perfect words. It's okay to cry in front of them. It shows them that sadness is what love feels like right now. Your honesty and your arms around them are enough. And your hospice team can help you find words for children. Just ask."}]},
         {"id": "wl-s-matters", "n": 28, "title": "Saying What Matters", "mins": 4, "blurb": "Four things worth saying, and how to say the ones that are true.", "sources": ["byock4"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Saying What Matters", "sub": "While there is still time.", "say": "When there are things you want to say before it's too late, this is for you. We'll go a little deeper than the words themselves."}, {"k": "words", "h": "The Four Things", "items": ["Please forgive me.", "I forgive you.", "Thank you.", "I love you."], "sub": "Then, when it feels right: goodbye.", "say": "Many people near the end of life, and the people who love them, find four things they want to say. Please forgive me. I forgive you. Thank you. I love you. And then, when it feels right, goodbye. Let's look at what each one carries."}, {"k": "points", "h": "What each one carries", "items": [["Please forgive me", "Owning your part, simply"], ["I forgive you", "Setting down what you carried"], ["Thank you", "Naming one real thing"], ["I love you", "Plain, and out loud"]], "say": "Please forgive me is about owning your part. It can be one sentence. I'm sorry for the years I stayed away. I forgive you sets down something you have carried, sometimes for a long time. Thank you is strongest when it names one real thing. And I love you needs nothing added."}, {"k": "big", "h": "Say the ones that are true.", "sub": "Every family is different.", "say": "You don't have to say all four. Say the ones that are true for you. If forgiveness isn't ready yet, that is honest, and it's okay. A true thank-you means more than a forced I forgive you."}, {"k": "story", "title": "The Wisdom They Share", "lines": ["Marcus had spent twenty-eight years in prison. In his final days, no one came to visit.", "He told me, Real strength is owning what you did. Asking forgiveness.", "Then: Tell the people you love that you love them while you still can. Don't wait until the end of the road like I did."], "lesson": "The words are worth saying while there is still time.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a man named Marcus in his final days. He had spent twenty-eight years in prison, and no one came to visit. He told me he used to think being tough was the only way to survive. Lying there, he saw how wrong he was. Real strength is owning what you did, he said. Asking forgiveness. Then he looked straight at me. Tell the people you love that you love them while you still can. Don't wait until the end of the road like I did."}, {"k": "words", "h": "Choose one to say.", "items": ["I'm sorry for...", "I forgive you for...", "Thank you for...", "I love you because..."], "say": "Now choose one of the four that is true for you. Finish the sentence, in your head or out loud. Take your time.", "beats": ["Now choose one of the four that is true for you.", "Finish the sentence, in your head or out loud.", {"t": "Take your time.", "w": 14}]}, {"k": "points", "h": "If speaking is hard", "items": [["Write it", "A letter, a card, a note"], ["Read it to them", "Or let them read it"], ["Say it in pieces", "One thing today, one tomorrow"], ["Ask for support", "A chaplain or social worker can sit with you"]], "say": "If the words won't come out loud, write them. A letter, a card, a few lines on a napkin. You can read it to them, or let them read it. You can say it in pieces, one thing today and another tomorrow. And your hospice chaplain or social worker can sit with you while you say it."}, {"k": "big", "h": "Goodbye comes when it feels right.", "sub": "A word, or a hand held a little longer.", "say": "Goodbye can come last, when it feels right. For some families it is a word. For others it is a hand held a little longer. Both count."}, {"k": "big", "h": "Say one true thing today.", "say": "There may never be a perfect moment. A true one is enough. Say one of them today, while you still can."}]},
         {"id": "wl-s-dying", "n": 29, "title": "When They Want to Talk About Dying", "mins": 4, "blurb": "How to follow their lead when they bring it up.", "sources": ["convo"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They Want to Talk About Dying", "sub": "Follow their lead.", "say": "When the person you love starts talking about dying, and everything in you wants to change the subject, this is for you."}, {"k": "big", "h": "Changing the subject is a common reflex.", "sub": "It comes from love.", "say": "When they say, I don't think I'm getting better, it's common to jump in. Don't talk like that. You're going to be fine. That reflex comes from love. And it can close a door they just found the courage to open."}, {"k": "big", "h": "Talking about it is often a relief.", "sub": "You only have to stay.", "say": "Many people near the end already know. Carrying it alone, while everyone around them pretends, can be lonely. Talking about it is often a relief to them. You don't have to fix anything. You only have to stay in the conversation."}, {"k": "words", "h": "Words that keep the door open", "items": ["Tell me more.", "What are you thinking about?", "What has that been like?", "What worries you most?"], "say": "A few words can keep the door open. Tell me more. What are you thinking about. What has that been like for you. What worries you most. Then let them talk, and let the pauses be long."}, {"k": "big", "h": "Practice staying.", "say": "Let's practice. Picture them saying, I think I'm dying. Notice the urge to rush in with comfort. Take one slow breath instead. Then say it softly, tell me more.", "beats": ["Let's practice.", "Picture them saying, I think I'm dying.", "Notice the urge to rush in with comfort.", "Take one slow breath instead.", {"t": "Then say it softly, tell me more.", "w": 10}]}, {"k": "story", "title": "A Quiet Doorway", "lines": ["A retired engineer had banned the word hospice. For weeks we talked bridges and puzzles.", "One quiet evening he asked, They brought me here to die, didn't they? I answered honestly, but gently.", "He talked about his wife and his children. His family said it gave them back their father."], "lesson": "When they open the door, walk through it gently.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a retired engineer who had banned the word hospice. No talk of dying. So for weeks we talked bridges and puzzles, and trust came in layers. One quiet evening he looked straight at me and said, They brought me here to die, didn't they? There was no panic in his voice. I answered honestly, but gently. Over the next days he talked about the wife he had lost, and the children he hoped would remember his steady hands. His family later told me those conversations gave them back their father."}, {"k": "points", "h": "What can come next", "items": [["Listen more than you talk", "Silence is okay"], ["Ask what matters most now", "People, places, wishes"], ["It's okay to cry", "You can be sad together"], ["Bring in your hospice team", "They help with these talks"]], "say": "Listen more than you talk. Silence is okay. When it fits, ask what matters most to them now, the people they want near, the wishes they want kept. It's okay to cry. You can be sad together. And your hospice nurse, social worker, and chaplain are good company for these talks."}, {"k": "card", "title": "If they say they want to die", "body": "Being ready is common near the end. It is not the same as a plan to end their life. If they talk about ending their life, tell your hospice team. For your own crisis, call or text 988. For danger right now, call 911.", "say": "Sometimes they say, I just want to die. Being ready, or tired of waiting, is common near the end, and it is not the same as a plan to end their life. You can still say, tell me more. If they talk about ending their life, tell your hospice team, day or night. If you are struggling yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You do not need answers. Just stay close.", "say": "You don't need answers. Your willingness to stay in the conversation is the gift. Let them lead, and stay close."}]},
         {"id": "wl-s-ask", "n": 30, "title": "Asking for What You Need", "mins": 4, "blurb": "Asking your hospice team, your people, and the one you love.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Asking for What You Need", "sub": "The ask is a gift.", "say": "If you have been carrying most of this on your own, this is for you. Asking is a strength, and it opens doors."}, {"k": "big", "h": "The ask is the gift.", "sub": "It shows people how to help.", "say": "Many caregivers wait until they are worn through before they ask. But the ask is a gift. It shows the people around you how to love you both. Your hospice team wants to know what you need."}, {"k": "points", "h": "Ask your hospice team", "items": [["An extra nurse visit", "When something changes or worries you"], ["A hospice aide", "Help with bathing and personal needs"], ["The chaplain or social worker", "Any faith or none; paperwork, family stress"], ["Respite or a volunteer", "So you can rest or step out"]], "say": "Your hospice team is more than the nurse. You can ask for an extra nurse visit when something changes. A hospice aide, to help with bathing. The chaplain, for anyone, of any faith or none. The social worker, for paperwork, money worries, and family stress. And ask about respite or a volunteer, so you can rest or step away for a while."}, {"k": "story", "title": "If She Is Still Here", "lines": ["On my day off, Jenny texted: It's mom. She's taken a turn. Can you come?", "I offered tomorrow. She wrote back: If she is still here.", "I came right away. Carol died peacefully a few hours after I left."], "lesson": "A plain ask lets people know it matters now.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/if-she-is-still-here", "label": "Read the Full Story: If She Is Still Here"}, "say": "On a day off, I got a text from Jenny, a daughter whose family I had been visiting for about a year. It's mom. She's taken a turn and not doing well. Can you come? I wrote back that I could come by tomorrow. She answered, Okay. If she is still here. My heart dropped. I wrote, I can come now if that's okay. I was out the door within minutes, and I stayed close to two hours. Carol died peacefully in her sleep a few hours after I left. I almost said tomorrow. I am so glad I did not."}, {"k": "big", "h": "Plain words help people say yes.", "sub": "You do not need to explain or apologize.", "say": "Jenny's ask was plain. Can you come. Plain words like that let people know it matters now. You don't need to explain, or apologize, or wait until you are sure."}, {"k": "words", "h": "Ask family and friends, specifically", "items": ["Can you call the pharmacy for me?", "Can you sit with Mom Saturday morning?", "Can you be the one who updates everyone?", "Can you come now?"], "say": "With family and friends, specific asks work best. Can you call the pharmacy for me. Can you sit with Mom on Saturday morning, so I can sleep. Can you be the one who updates everyone. And sometimes, simply, can you come now."}, {"k": "words", "h": "Name one ask.", "items": ["Can you...?"], "say": "Let's practice. Think of one thing that would help this week. Think of one person who could do it. Now say the ask to yourself, in one plain sentence.", "beats": ["Let's practice.", "Think of one thing that would help this week.", "Think of one person who could do it.", {"t": "Now say the ask to yourself, in one plain sentence.", "w": 12}]}, {"k": "words", "h": "Ask the one you love, too", "items": ["What would make today better?", "Who would you like to see?", "Would you like company, or quiet?", "What would you like to hear?"], "say": "And ask the person in the bed. Their wishes still lead. What would make today better. Who would you like to see. Would you like company, or quiet. What would you like to hear, music, a story, the news from home."}, {"k": "big", "h": "Send one ask today.", "sub": "Your hospice is there day or night.", "say": "Asking lets other people love you both. Send one ask today. And for anything about their comfort that worries you, call your hospice, day or night."}]},
@@ -10855,11 +10932,11 @@ window.GG_LEARN = {
       "h": "Twenty-two guides, in two groups",
       "items": [
        [
-        "The spirit and the people",
+        "The Spirit and the People",
         "Miracles, forgiveness, fear, family"
        ],
        [
-        "The last days and after",
+        "The Last Days and After",
         "Signs of dying, the rally, the first hour"
        ],
        [
@@ -10867,7 +10944,7 @@ window.GG_LEARN = {
         "\"I'm not ready.\" \"Can they hear me?\""
        ]
       ],
-      "say": "There are twenty two guides, in two groups. The spirit and the people, for hoping for a miracle, forgiveness, fear, and family conflict. And the last days and after, for what dying looks like, the rally, and the first hour after a death. Many titles are the very words people say, like I'm not ready, or are they starving?"
+      "say": "There are twenty two guides, in two groups. The Spirit and the People, for hoping for a miracle, forgiveness, fear, and family conflict. And The Last Days and After, for what dying looks like, the rally, and the first hour after a death. Many titles are the very words people say, like I'm not ready, or are they starving?"
      },
      {
       "k": "card",
@@ -15800,9 +15877,16 @@ window.GG_LEARN = {
         [
          "Full History",
          "Every check-in, in one table"
+        ],
+        [
+         "From Oak",
+         "Kept apart, never compared"
         ]
        ],
-       "say": "On the Season tab, My progress over time shows more. After your second check-in, each part says Grew, Dipped, or Same. Sequoia only compares a full check-in with a full one, and a quick one with a quick one. And Full History keeps every check-in in one table."
+       "cue": {
+        "at": [1, 2, 3, 4]
+       },
+       "say": "On the Season tab, My progress over time shows more. After your second check-in, each part says Grew, Dipped, or Same. Sequoia only compares a full check-in with a full one, and a quick one with a quick one. And Full History keeps every check-in in one table. Check-ins you bring from Oak are labeled From Oak. They stay part of your story, and they are never compared with your Sequoia check-ins. If you used Oak on this device, Bring My Oak Check-ins copies them here, and Oak keeps its own copy."
       },
       {
        "k": "big",
@@ -15971,6 +16055,32 @@ window.GG_LEARN = {
        "h": "Your tree rests. It never dies.",
        "sub": "Tend it once, and watch it wake up.",
        "say": "Your tree on Today is gentle. If a few days go by, it gets a little dry, then it droops, then it rests bare. It never dies, and it never loses a ring. Nothing is lost. Tend it once, and watch it wake up. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
+      },
+      {
+       "k": "points",
+       "h": "Your tree grows up",
+       "items": [
+        [
+         "Tree levels",
+         "From Seed to Giant Sequoia"
+        ],
+        [
+         "This Week",
+         "Six dots, one for each part"
+        ],
+        [
+         "Milestones",
+         "Kept under Season"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         3
+        ]
+       },
+       "say": "Every day you tend moves your tree toward its next level, from Seed and Sprout, through Sapling and Young Sequoia, to Tall Sequoia and Giant Sequoia. The This Week card shows six dots, one for each part you tended this week. Tend all six, and it is a balanced week. Milestones, like your first day tended and your first balanced week, are kept under Season. Every level you reach is yours to keep, and nothing is ever lost."
       },
       {
        "k": "points",
@@ -24058,7 +24168,7 @@ window.GG_LEARN = {
   }
  ]
 },
-  /* Birch Learn (GWG BLD 742): Start Here, Using Birch, The Six Parts, For the People Who Walk With You, and Support for Right Now.
+  /* Birch Learn (GWG BLD 742): Start Here, Using Birch, The Six Parts, For the People Who Walk with You, and Support for Right Now.
      Generated from patches/bld742/source in grounded-workshop. */
   birch: {
  "title": "Learn Birch",
@@ -24757,7 +24867,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Find more practices",
-         "The Grounded practice library"
+         "Some tagged For Young Adults"
         ],
         [
          "Movement Level",
@@ -24768,7 +24878,7 @@ window.GG_LEARN = {
          "A theme, a short check-in, a question"
         ]
        ],
-       "say": "Good. At the bottom of Today, Find more practices opens the Grounded practice library. In Settings, set your Movement Level, so your Leaves practices fit your body and your days. And the Week tab brings a theme, a short weekly check-in, and a question to think about."
+       "say": "Good. At the bottom of Today, Find more practices opens the Grounded practice library. Practices written for your years are tagged For Young Adults. In Settings, set your Movement Level, so your Leaves practices fit your body and your days. And the Week tab brings a theme, a short weekly check-in, and a question to think about."
       },
       {
        "k": "quiz",
@@ -26171,9 +26281,9 @@ window.GG_LEARN = {
   },
   {
    "id": "birch-helper",
-   "title": "For the People Who Walk With You",
+   "title": "For the People Who Walk with You",
    "who": "For parents, partners, mentors, and friends of a young adult",
-   "certTitle": "Birch: For the People Who Walk With You",
+   "certTitle": "Birch: For the People Who Walk with You",
    "certLine": "For finishing every lesson for the people who walk with a young adult.",
    "lessons": [
     {
@@ -26192,7 +26302,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "For the People Who Walk With You, Lesson 1",
+       "eyebrow": "For the People Who Walk with You, Lesson 1",
        "h": "Talking About How They Are Really Doing",
        "sub": "Adult to adult, at their pace.",
        "say": "Welcome. This series is for the people who walk with a young adult. A parent, a partner, a mentor, a coach, an older sibling, a friend, a boss who cares. This first lesson is about one question that can be hard to ask well. How are you really doing?"
@@ -26360,7 +26470,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "For the People Who Walk With You, Lesson 2",
+       "eyebrow": "For the People Who Walk with You, Lesson 2",
        "h": "Respect, Privacy, and Being Invited In",
        "sub": "Their life, their tree, their invitation.",
        "say": "This lesson is about privacy and respect. What a helper sees in Birch, what stays private, and why. It is also about something bigger than any app. How to be the kind of person a young adult wants to invite in."
@@ -26527,7 +26637,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "For the People Who Walk With You, Lesson 3",
+       "eyebrow": "For the People Who Walk with You, Lesson 3",
        "h": "Faith, Doubt, and the Big Questions",
        "sub": "Room to ask, and your steady presence.",
        "say": "This lesson is about faith, doubt, and the big questions that often come alive in the young adult years. Whatever you hold, and whatever they are working out, you can walk with them here."
@@ -26701,7 +26811,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "For the People Who Walk With You, Lesson 4",
+       "eyebrow": "For the People Who Walk with You, Lesson 4",
        "h": "When to Worry, and What to Do",
        "sub": "Signs to notice, and who can help.",
        "say": "This lesson is about the signs worth noticing in a young adult, and what to do. You only need to notice, ask, and know where help is."
@@ -26858,7 +26968,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "For the People Who Walk With You, Lesson 5",
+       "eyebrow": "For the People Who Walk with You, Lesson 5",
        "h": "Launching, Boomeranging, and Every Path",
        "sub": "Every path is a real path.",
        "say": "This lesson is about the road from eighteen to the mid twenties. Moving out, moving back, starting work, school, training, or service, and sometimes starting over. It is also about how to help without taking over."
@@ -26987,7 +27097,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "For the People Who Walk With You, Lesson 6",
+       "eyebrow": "For the People Who Walk with You, Lesson 6",
        "h": "Taking Care of Yourself Too",
        "sub": "Your tree needs water too.",
        "say": "This last lesson is about you. The parent who checks their phone twice before bed. The partner who carries more than anyone sees. The friend or mentor who is always the one they call. Walking with a young adult matters. So do you."
@@ -28171,7 +28281,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Each person tending their tree",
-         "In Maple, Aspen, or Oak"
+         "In their own tree app"
         ],
         [
          "Practices you do together",
@@ -28502,7 +28612,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Anyone tends their tree",
-         "In Maple, Aspen, or Oak"
+         "In their own tree app"
         ],
         [
          "The family does a practice",
@@ -28513,7 +28623,38 @@ window.GG_LEARN = {
          "The count under the grove"
         ]
        ],
-       "say": "Two things grow the grove. Any day anyone tends their own tree, in Maple, Aspen, or Oak. And any day the family does a practice together, and taps We did this today. Under the grove, a line counts your days of growing together."
+       "say": "Two things grow the grove. Any day anyone tends their own tree, in their own tree app. And any day the family does a practice together, and taps We did this today. Under the grove, a line counts your days of growing together."
+      },
+      {
+       "k": "points",
+       "h": "Growing Together",
+       "items": [
+        [
+         "This week",
+         "Days tended, practices together, parts tended"
+        ],
+        [
+         "In all",
+         "Days, practices together, and rings"
+        ],
+        [
+         "Family Milestones",
+         "Ten firsts, kept for good"
+        ],
+        [
+         "Never a contest",
+         "No one is ranked"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         4,
+         5
+        ]
+       },
+       "say": "Below the grove, the Growing Together card adds up the whole family's growth. This week shows days tended, practices done together, and how many of the six parts were tended. In all shows the totals since you began, plus the rings in the grove. It counts only trees whose Show my growth switch is on, and it never shows anyone person by person. Ten Family Milestones, like your first practice together, or a week when every tree was tended, are reached once and kept for good. It is never a contest, and no one is ranked."
       },
       {
        "k": "points",
@@ -29017,7 +29158,7 @@ window.GG_LEARN = {
        "items": [
         [
          "In your own tree app",
-         "Maple, Aspen, or Oak"
+         "The one that fits your age"
         ],
         [
          "With your weekly check-in",
@@ -29428,7 +29569,7 @@ window.GG_LEARN = {
        "steps": [
         [
          "Open your tree app",
-         "Maple, Aspen, or Oak"
+         "Where your own tree grows"
         ],
         [
          "Tap Find more practices",
@@ -29439,7 +29580,7 @@ window.GG_LEARN = {
          "It joins your practices"
         ]
        ],
-       "say": "Found one you like? Open your own tree app, Maple, Aspen, or Oak. Tap Find more practices. Browse by part, or search. Then add what fits, and it joins your practices. In Maple, the steps come in words just for kids."
+       "say": "Found one you like? Open your own tree app. Tap Find more practices. Browse by part, or search. Then add what fits, and it joins your practices. In Maple, the steps come in words just for kids."
       },
       {
        "k": "points",
@@ -29627,7 +29768,7 @@ window.GG_LEARN = {
          "If anyone is in danger"
         ]
        ],
-       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. And if anyone is in danger, call or text nine eight eight, or call nine one one."
+       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. And if anyone is in danger, call or text nine eight eight, or call nine one one. That help is always on the grove page too, in a card called If Someone Needs Help Now."
       },
       {
        "k": "big",

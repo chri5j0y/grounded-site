@@ -543,6 +543,15 @@
     "birch:words to live by": ["lectio"],
     "birch:worry window": ["borkovec"],
     // end BLD 742
+    // Young adult practices in the shared Practice Library (grove/library.js LIB_NEW, GWG BLD 745).
+    // Shown in Oak and The Grove as 'lib'; Birch credits the same names above.
+    "lib:money check-in": ["cfpbfwb"],
+    "lib:starter cushion": ["shed24"],
+    "lib:make one plan": ["murthy"],
+    "lib:call home": ["pewparents"],
+    "lib:plan your answer": ["mtfpanel24"],
+    "lib:find your people for faith": ["smithsnell"],
+    // end BLD 745
     'oak:awe walk': ['ggsc', 'sturm'], 'oak:loving-kindness': ['metta', 'fredrickson'], 'oak:expressive writing': ['pennebaker', 'unknown'],
     'oak:walk or jog': ['noetel'], 'oak:yoga': ['noetel'], 'oak:purpose statement': ['unknown'], 'oak:moral repair letter': ['litz'],
     'maple:three good things': ['froh'], 'aspen:three good things': ['froh'], 'grove-kid:three good things': ['froh'],

@@ -882,7 +882,7 @@
       var ta = toolOf(p);
       html += link(ta.href, 'My tree in ' + ta.tool);
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
-      helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id); if (sq) html += link('/sequoia/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Sequoia'); if (bh) html += link('/birch/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Birch'); if ((!sq && !bh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
+      helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id), oh = oakHelp(q.id); if (sq) html += link('/sequoia/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Sequoia'); if (bh) html += link('/birch/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Birch'); if (oh) html += link('/oak/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Oak'); if ((!sq && !bh && !oh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage my profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
@@ -997,7 +997,7 @@
     if (h.length) { var last = h[h.length - 1]; chips.push([ta.href, 'Last ' + ta.tool + ' check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
     else { chips.push([ta.href, 'Take ' + (/^[AEIOU]/.test(ta.tool) ? 'an ' : 'a ') + ta.tool + ' check-in']); }
     if (v.willow && v.willow.started) chips.push(['/willow/', 'My tree in Willow']);
-    helping().map(getP).filter(Boolean).forEach(function (q) { if (seqHelp(q.id)) chips.push(['/sequoia/#for=' + q.id, 'Helping ' + q.name]); else if (birchHelp(q.id)) chips.push(['/birch/#for=' + q.id, 'Helping ' + q.name]); else chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
+    helping().map(getP).filter(Boolean).forEach(function (q) { if (seqHelp(q.id)) chips.push(['/sequoia/#for=' + q.id, 'Helping ' + q.name]); else if (birchHelp(q.id)) chips.push(['/birch/#for=' + q.id, 'Helping ' + q.name]); else if (oakHelp(q.id)) chips.push(['/oak/#for=' + q.id, 'Helping ' + q.name]); else chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';
     if (!box) { box = document.createElement('section'); box.id = 'ggp-welcome'; box.className = 'ggp-welcome'; box.setAttribute('aria-label', 'Welcome back'); document.querySelector('.hero').insertAdjacentElement('afterend', box); }
@@ -1030,6 +1030,7 @@
   function seqHelp(id) { var o = open[id], s = o && o.data && o.data.sequoia; return !!(s && s.helpersOn); }
   // Birch (GWG BLD 742): a person you help who turned on Add a Helper in Birch.
   function birchHelp(id) { var o = open[id], s = o && o.data && o.data.birch; return !!(s && s.helpersOn); }
+  function oakHelp(id) { var o = open[id], s = o && o.data && o.data.oak; return !!(s && s.helpersOn); }
   function helping() {
     var a = cur && getP(cur.id); if (!a || a.age !== 'adult') return [];
     return Object.keys(open).filter(function (k) { var q = getP(k); return k !== a.id && q && q.age === 'adult' && (q.helpers || []).indexOf(a.id) > -1; });

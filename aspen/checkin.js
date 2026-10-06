@@ -36,6 +36,17 @@
    whether the sacred is a resource or a stressor. A student of
    all faith traditions and everything in-between can score Strong.
 
+   Faith or Plain (Parity Sweep 1, GWG BLD 745): a grown-up sets the
+   wording at setup and can change it later; Faith is the default. Every
+   line that names faith (a question, its tip, or its Why line) has a
+   Plain wording in PLAIN and PLAIN_WHY below. Plain asks the same thing
+   without religious words, keeps the same reverse mark and flag, and
+   scores the same way, so rings compare across the two wordings.
+   Q stays the Faith wording, so anything that reads questions directly
+   still gets Faith. getBank(grade, wording, sens) returns the questions
+   ready to ask with the wording and the optional question applied;
+   whyOf(grade, part, i, wording, sens) returns the matching Why line.
+
    Nothing in this bank asks a student to reveal substance use, dating,
    or who they like. Friends, relationships, and substances are asked as
    readiness and pressure questions.
@@ -377,6 +388,45 @@ const WHY = {
   }
 };
 
+/* Plain wording (BLD 745). [grade][part][index] = [text, tip]. Only the lines that
+   name faith are here; the reverse mark and flag always come from Q. */
+const PLAIN = {
+  '6': {
+    roots: {
+      1: ['Do you ever feel close to something bigger than you, like when you sit quietly, listen to music, or spend time outside?', 'Share a time you felt that way yourself. If they say not really, that\'s okay. Ask where they feel most at peace instead.'],
+      3: ['Do big questions, like why bad things happen, ever leave you feeling worried or weighed down?', 'Listen without correcting or arguing. Thank them for telling you, and ask what brings that feeling. Let them know they\'re loved as they are. A counselor or another grown-up you trust can help too.']
+    }
+  },
+  '7': {
+    roots: {
+      1: ['When life gets hard, does something steady you, like quiet time, music, being outside, or a tradition from your family?', 'Ask what helps most. Share something that helps you. If they don\'t have one yet, explore quiet, nature, or music together without pushing.'],
+      3: ['Do rules or beliefs from your family or community make you feel scared, judged, or not good enough?', 'Listen first. Don\'t defend or correct. Ask: "What happened, or who made you feel that way?" Feeling not good enough is worth taking seriously. If a person or group is causing harm, step in.']
+    }
+  },
+  '8': {
+    roots: {
+      1: ['Do you feel connected to something bigger than yourself, like nature, music, or the people you love, in your own way?', 'Ask what "in your own way" looks like for them. Big questions are a normal part of growing up at this age. Share some of your own, and don\'t push.'],
+      3: ['Do rules or beliefs from your family or community ever make you feel scared, ashamed, or pushed out?', 'Listen first. Don\'t defend or correct. Ask: "What happened, or who made you feel that way?" Feeling pushed out is worth taking seriously. If a person or group is causing harm, step in.'],
+      4: ['Do you take time to be quiet, think, or reflect?', 'Ask what helps them slow down. Protect a few quiet minutes in their day, and take some for yourself too.']
+    }
+  }
+};
+const PLAIN_WHY = {
+  '6': { roots: {
+    1: 'Feeling part of something bigger helps many people feel peaceful and less alone.',
+    3: 'Big questions are normal. If they leave you feeling worried or weighed down, that\'s worth talking about.'
+  } },
+  '7': { roots: {
+    1: 'Something steady, like quiet time or a family tradition, can help you through hard times.',
+    3: 'Rules or beliefs that leave you feeling judged or not good enough can weigh on you. That\'s worth talking about.'
+  } },
+  '8': { roots: {
+    1: 'Feeling connected to something bigger, in your own way, can give you strength and comfort.',
+    3: 'Rules or beliefs that leave you feeling scared, ashamed, or pushed out can weigh on everything. That\'s worth talking about.',
+    4: 'Quiet time to think or reflect helps you feel calm and know yourself better.'
+  } }
+};
+
 /* Optional sensitive questions. Off unless a grown-up turns them on.
    [part, index it replaces, question]. Never sent to The Grove. */
 const SENSITIVE = {
@@ -409,5 +459,27 @@ const SAFETY = {
   intro: 'These help make sure you\'re safe. There\'s no wrong answer, and you can skip if you want.'
 };
 
-window.ASPEN_CHECKIN = { weekly: WEEKLY, version: VERSION, bank: BANK, perPart: PER_PART, bankSizes: BANK_SIZES, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, sensitive: SENSITIVE, sensitiveWhy: SENSITIVE_WHY, safety: SAFETY };
+/* The questions ready to ask: the wording ('faith', the default, or 'plain') and,
+   when sens is on, the optional question in its place. Each is [text, tip, 'r', flag]. */
+function question(grade, part, i, wording, sens) {
+  const g = String(grade), x = sens && SENSITIVE[g];
+  if (x && x[0] === part && x[1] === i) return x[2].slice();
+  const q = ((Q[g] || {})[part] || [])[i]; if (!q) return null;
+  const p = wording === 'plain' && ((PLAIN[g] || {})[part] || {})[i];
+  const out = q.slice(); if (p) { out[0] = p[0]; out[1] = p[1]; }
+  return out;
+}
+function getBank(grade, wording, sens) {
+  const out = {};
+  Object.keys(Q[String(grade)] || {}).forEach(part => { out[part] = (Q[String(grade)][part] || []).map((q, i) => question(grade, part, i, wording, sens)); });
+  return out;
+}
+function whyOf(grade, part, i, wording, sens) {
+  const g = String(grade), x = sens && SENSITIVE[g];
+  if (x && x[0] === part && x[1] === i) return SENSITIVE_WHY[g] || '';
+  const p = wording === 'plain' && ((PLAIN_WHY[g] || {})[part] || {})[i];
+  return p || (((WHY[g] || {})[part] || [])[i]) || '';
+}
+
+window.ASPEN_CHECKIN = { getBank: getBank, question: question, whyOf: whyOf, plain: PLAIN, plainWhy: PLAIN_WHY, weekly: WEEKLY, version: VERSION, bank: BANK, perPart: PER_PART, bankSizes: BANK_SIZES, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, sensitive: SENSITIVE, sensitiveWhy: SENSITIVE_WHY, safety: SAFETY };
 })();

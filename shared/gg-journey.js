@@ -230,7 +230,9 @@ window.GGJourney = {
 /* ---------- Aspen (grades 6 to 8), Rebrand Session 4 ----------
    The same twelve themes, so a family can be on the same week together,
    with intros and reflection questions written for middle schoolers.
-   The Grounded stories show only in the grown-up's view. */
+   Week 7 also carries a Plain wording (plain) for profiles set to Plain
+   (GWG BLD 745); Faith is the default. The Grounded stories show only in
+   the grown-up's view. */
 window.GGJourney.AGES = window.GGJourney.AGES || {};
 window.GGJourney.AGES.aspen = {
  "WEEKS": [
@@ -240,7 +242,8 @@ window.GGJourney.AGES.aspen = {
   { "intro": "Almost everyone misses a day. Then two. That isn't failing. Coming back is the whole practice, and your tree is always glad to see you.", "q": "What helped you come back when you forgot?" },
   { "intro": "Sometimes we carry worries nobody can see, like a heavy backpack under a coat. This week, notice what you've been carrying. You don't have to fix it. Just name it.", "q": "What's been heavy for you lately?" },
   { "intro": "The text you keep meaning to send. The thank you you never said. This week, reach out to someone first.", "q": "Who did you reach out to this week, and how did it feel?" },
-  { "intro": "You don't need the right words. Quiet, wonder, prayer, music, a sky full of stars. This week, notice the moments that feel bigger than you.", "q": "When did you feel part of something bigger than yourself this week?" },
+  { "intro": "You don't need the right words. Quiet, wonder, prayer, music, a sky full of stars. This week, notice the moments that feel bigger than you.", "q": "When did you feel part of something bigger than yourself this week?",
+    "plain": { "intro": "You don't need the right words. Quiet, wonder, music, a sky full of stars. This week, notice the moments that feel bigger than you." } },
   { "intro": "Eight weeks in, some practices are becoming yours. The ones you still do on tired days are like roots. They hold you up.", "q": "Which practice has started to feel like yours?" },
   { "intro": "You don't control everything, but you get a say in a lot: how you treat people, what you practice, and who you're becoming. Use your say this week.", "q": "What do you want more of in your life?" },
   { "intro": "Trees in a grove grow toward each other. This week, grow toward the people you love: family, friends, anyone who is good to you.", "q": "Where did you give or get love this week?" },
@@ -277,7 +280,8 @@ window.GGJourney.AGES.aspen = {
 
 /* Maple's own words (Rebrand Session 4): the twelve weeks, anchors, and movement,
    written two ways, for grades K to 2 and grades 3 to 5. Grounded stories stay
-   in the grown-up's view. */
+   in the grown-up's view. Week 7 in each also carries a Plain wording (plain) for
+   profiles set to Plain (GWG BLD 745); Faith is the default. */
 window.GGJourney.AGES.maple_k2 = {
  "WEEKS": [
   {
@@ -306,7 +310,8 @@ window.GGJourney.AGES.maple_k2 = {
   },
   {
    "intro": "Quiet, wonder, prayer, a song, a starry sky. This week, we look for the big, beautiful things that remind us we are not alone.",
-   "q": "What made you say wow this week?"
+   "q": "What made you say wow this week?",
+   "plain": { "intro": "Quiet, wonder, a song, a starry sky. This week, we look for the big, beautiful things that remind us we are not alone." }
   },
   {
    "intro": "You have been tending your tree for weeks now! Which little things feel easy now? Keep those.",
@@ -431,7 +436,8 @@ window.GGJourney.AGES.maple_35 = {
   },
   {
    "intro": "You don't need fancy words. Quiet, wonder, prayer, music, nature, or your family's traditions can help you feel part of something bigger.",
-   "q": "When did you feel part of something bigger than yourself this week?"
+   "q": "When did you feel part of something bigger than yourself this week?",
+   "plain": { "intro": "You don't need fancy words. Quiet, wonder, music, nature, or your family's traditions can help you feel part of something bigger." }
   },
   {
    "intro": "By now, some practices are starting to feel like yours. This week, notice which ones help most, and keep them.",

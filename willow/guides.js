@@ -11,7 +11,7 @@
    ===================================================================== */
 (function(){
 const LABELS = { you: `For You`, helper: `For the Helper`, what: `What's happening`, say: `Say`, dont: `Don't say`, helps: `What helps`, pro: `For chaplains and doulas`, faith: `Faith notes`, know: `What we know`, means: `What it may mean` };
-const RINGS = [['spirit', `The spirit and the people`], ['last', `The last days and after`]];
+const RINGS = [['spirit', `The Spirit and the People`], ['last', `The Last Days and After`]];
 const FOOT = `When you're worried, call your hospice nurse. They're there day and night.`;
 const TOOL = `Name the feeling first, then talk. "I wish... I worry... I wonder..." works almost everywhere.`;
 

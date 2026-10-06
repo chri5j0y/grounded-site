@@ -13,13 +13,13 @@
    ===================================================================== */
 (function(){
 const LC_RINGS = [
-  { key: "inside", name: "Inside me", color: "#8B5E1A", blurb: "The weather inside you." },
-  { key: "loss", name: "Loss and grief", color: "#6B4226", blurb: "When someone or something you love is gone." },
-  { key: "health", name: "Health and the end of life", color: "#A8542E", blurb: "Bodies, illness, caregiving, and the last threshold." },
-  { key: "family", name: "Relationships and family", color: "#B5824A", blurb: "When the people closest to you change." },
-  { key: "work", name: "Work and money", color: "#4A5D3A", blurb: "When the ground under your life shifts." },
-  { key: "faith", name: "Faith and meaning", color: "#6E4A14", blurb: "When the sacred feels far, or the questions get loud." },
-  { key: "world", name: "Community, country, and world", color: "#3F6E7A", blurb: "When the news comes close to home." },
+  { key: "inside", name: "Inside Me", color: "#8B5E1A", blurb: "The weather inside you." },
+  { key: "loss", name: "Loss and Grief", color: "#6B4226", blurb: "When someone or something you love is gone." },
+  { key: "health", name: "Health and the End of Life", color: "#A8542E", blurb: "Bodies, illness, caregiving, and the last threshold." },
+  { key: "family", name: "Relationships and Family", color: "#B5824A", blurb: "When the people closest to you change." },
+  { key: "work", name: "Work and Money", color: "#4A5D3A", blurb: "When the ground under your life shifts." },
+  { key: "faith", name: "Faith and Meaning", color: "#6E4A14", blurb: "When the sacred feels far, or the questions get loud." },
+  { key: "world", name: "Community, Country, and World", color: "#3F6E7A", blurb: "When the news comes close to home." },
   { key: "safety", name: "Safety", color: "#9C2F2F", blurb: "When someone is in danger. Start here." }
 ];
 const SAP = "https://growwithgrounded.com/maple/#talk=";

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js?v=tc5"></script>
-<script src="/shared/gg-shelf.js?v=fd3"></script>
-<script src="/shared/gg-sources.js?v=src14"></script>
+<script src="/shared/gg-app.js?v=tc6"></script>
+<script src="/shared/gg-shelf.js?v=fd4"></script>
+<script src="/shared/gg-sources.js?v=src15"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -347,6 +347,40 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 .asp-see p{margin:0 0 8px;}
 .asp-see b{display:block;}
 .gt-share{display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600;}
+/* The game layer, scenery, moving on, and rings from other trees (BLD 745) */
+.as-kind{border-left:5px solid var(--teal);}
+.as-kind-line{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.35;margin:0;color:var(--ink);}
+.as-game{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;}
+.as-game .as-wide{grid-column:1/-1;margin:0;}
+.as-level{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.as-k{font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.as-level b{font-family:var(--serif);font-size:28px;line-height:1.1;color:var(--teal);}
+.as-dots{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px;}
+.as-dot{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--pc);background:transparent;}
+.as-dot.on{background:var(--pc);}
+.as-mastery{display:inline-block;font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;border:1px solid var(--teal);color:var(--teal);}
+.as-m-building{background:var(--teal-soft);}
+.as-m-mine{background:var(--teal);color:var(--card);}
+.as-trouble{margin:4px 0 8px;padding:8px 12px;border-radius:10px;background:var(--bud-soft);border-left:4px solid var(--bud);font-size:15px;}
+.as-miles h3,.as-scenery h3{margin-top:0;}
+.as-mile-list{list-style:none;margin:6px 0;padding:0;display:grid;gap:6px;}
+.as-mile-list li{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:6px;}
+.as-mile-list span{color:var(--ink-soft);font-size:14px;}
+.as-h4{font-family:var(--cond);font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 6px;}
+.as-scenes{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;}
+.as-scene{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);min-height:44px;}
+.as-scene span{font-size:13px;color:var(--ink-soft);}
+.as-scene.on{border-color:var(--teal);box-shadow:inset 0 0 0 1.5px var(--teal);}
+.as-scene:disabled{opacity:.6;cursor:default;}
+.as-moving{border-left:5px solid var(--teal);}
+.as-lock{border-left:3px solid var(--teal);padding-left:8px;}
+.as-from-ring{padding-top:10px;margin-top:10px;border-top:1px solid var(--line);}
+.as-cheer{position:fixed;left:50%;top:22%;transform:translate(-50%,10px) scale(.96);z-index:500;background:var(--card);color:var(--ink);border:2px solid var(--teal);border-radius:20px;box-shadow:0 18px 44px rgba(0,0,0,.22);padding:20px 24px;text-align:center;max-width:min(400px,88vw);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
+.as-cheer.show{opacity:1;transform:translate(-50%,0) scale(1);}
+.as-cheer p{font-family:var(--serif);font-size:22px;line-height:1.3;margin:8px 0 0;}
+.as-cheer p.as-cheer-sub{font-family:var(--sans);font-size:15px;color:var(--ink-soft);margin-top:4px;}
+@media (prefers-reduced-motion: reduce){.as-cheer{transition:none;}}
+@media (max-width:560px){.as-game{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -413,12 +447,12 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=lb5"></script>
+<script src="/shared/gg-profiles.js?v=lb6"></script>
 <script src="/shared/gg-filelock.js?v=fl2"></script>
-<script src="checkin.js?v=fd2"></script>
-<script src="/shared/gg-journey.js?v=r6n"></script>
+<script src="checkin.js?v=ps1"></script>
+<script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
-<script src="/shared/gg-tend.js?v=vb7"></script>
+<script src="/shared/gg-tend.js?v=vb8"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -916,8 +950,36 @@ LEARN[8].fruit = [
   ["Hearing about times things got better helps you believe they can get better for you.", "Ask a grown-up: \"Tell me about a time things got better for you.\"|Listen.|Ask what helped.", "Feels awkward? Ask during a quiet moment.", "Grown-ups: share honestly and hopefully."]
 ];
 
+/* Plain wording for practices (Parity Sweep 1, GWG BLD 745). 'grade:part:index' = {t: the practice,
+   L: its Learn more card, with null where the Faith words already fit}. Only practices that name
+   faith are here. A plan keeps its picks by grade, part, and index, so a pick and its checkmarks
+   stay whole when a grown-up changes the wording; only the shown words change. */
+const PLAIN_PR = {
+  '6:roots:4': {t:"Before bed, sit in stillness for a few quiet minutes, in whatever way fits you and your family.",
+    L:["A few quiet minutes before bed help your body and mind settle, so you can rest.", "Get comfortable in bed.|Sit quietly, in whatever way fits you and your family.|Breathe slowly for about two minutes.", null, "Sit quietly together at bedtime."]},
+  '6:roots:7': {t:"Ask someone in your family about a tradition that means a lot to them.",
+    L:["Traditions connect you to the people who came before you. That's a kind of root.", "Ask someone in your family about a tradition that matters to them.|Ask why it's special.|If you want, try it together.", null, null]},
+  '7:roots:3': {t:"Write a short wish or hope for your day.",
+    L:["A short wish or hope for your day helps you start it on purpose.", "In the morning, take a moment.|Write a short wish or hope for your day.|Read it once more before you go.", "Not sure what to write? Try: \"Today I want to be kind.\"", "Share a hope for each other's day."]},
+  '7:roots:7': {t:"Join in a family or cultural tradition this week and notice how it feels.",
+    L:[null, "Pick a family or cultural tradition this week.|Join in.|Notice how it feels.", null, null]},
+  '8:roots:2': {t:"Write down a big question about life you've never said out loud.",
+    L:["Writing down a hidden question helps you face it honestly. Big questions are a sign of growing.", "Think about a big question about life you've never said out loud.|Write it down.|Keep it private, or share it when you're ready.", null, null]},
+  '8:roots:3': {L:[null, null, "Can't think of one? A team, a concert, a family gathering, or nature can all count.", null]},
+  '8:roots:4': {t:"Read a short poem or a favorite passage slowly, twice. Notice what stays with you.",
+    L:["Reading something meaningful slowly lets the words sink in and speak to you.", "Pick a short poem or a passage that means something to you.|Read it slowly, twice.|Notice which words stay with you.", null, null]},
+  '8:roots:6': {t:"Talk with a trusted grown-up about one big question you're still figuring out.",
+    L:["Talking through a big question you're still figuring out helps you know what you think.", "Pick a grown-up you trust.|Share one big question you're still figuring out.|Talk it through together.", null, null]},
+  '8:roots:7': {t:"Ask an elder or someone you look up to what helps them keep going when life is hard.",
+    L:["Hearing how others keep going when life is hard gives you hope and tools.", "Pick an elder or someone you look up to.|Ask: \"What helps you keep going when life is hard?\"|Listen closely.", null, null]},
+  '8:trunk:1': {t:"Help with a project in your neighborhood, school, or community.",
+    L:[null, "Find a project in your neighborhood, school, or community.|Offer to help.|Notice the difference it makes.", null, null]},
+  '8:branches:4': {t:"Think kindly about someone you don't get along with, and wish them well.",
+    L:[null, "Think of someone you don't get along with.|Wish them well.|Notice how you feel.", null, null]}
+};
+
 </script>
-<script src="guides.js"></script>
+<script src="guides.js?v=ps1"></script>
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -950,6 +1012,20 @@ const ANS = Object.fromEntries(ANSWERS.map(a => [a[0], a]));
 const SAFETY_Q = CK.safety.questions.map(q => q[0]);
 const SAFETY_KIND = CK.safety.questions.map(q => q[1]);
 const SAFETY_A = CK.safety.answers;
+/* ---------- Faith or Plain (Parity Sweep 1, GWG BLD 745) ----------
+   A grown-up sets the wording when a student is added and can change it later; Faith is the
+   default. Faith wording names God, prayer, and faith as one door among several. Plain asks the
+   same things without religious words, and scores the same, so rings compare across both.
+   The choice lives in the student's own record (wording), so it stays locked in their profile.
+   An Aspen Guide can lock Plain for a school: a saved plainLock true, in the student's record or
+   in the profile's aspen record, shows Plain and keeps the choice locked. */
+function aspRecord(s){ try { return s && s._pid && window.GGP && GGP.isOpen(s._pid) ? GGP.data(s._pid, 'aspen') : null; } catch(e){ return null; } }
+function plainLocked(s){ if (!s) return false; const r = aspRecord(s); return s.plainLock === true || !!(r && r.plainLock === true); }
+function wordingOf(s){ if (!s) return 'faith'; if (plainLocked(s)) return 'plain'; const r = aspRecord(s), w = s.wording || (r && r.wording); return w === 'plain' ? 'plain' : 'faith'; }
+function isPlain(s){ return wordingOf(s === undefined ? me() : s) === 'plain'; }
+// A practice's words and its Learn more card in the student's wording.
+function prText(g, k, i, plain){ const pr = ((PRACTICES[g] || {})[k] || [])[i]; if (!pr) return ''; const p = plain && PLAIN_PR[g + ':' + k + ':' + i]; return (p && p.t) || pr[2]; }
+function learnRow(g, k, i, plain){ const L = ((LEARN[g] || {})[k] || [])[i]; if (!L) return null; const p = plain && PLAIN_PR[g + ':' + k + ':' + i]; return p && p.L ? L.map((x, j) => p.L[j] != null ? p.L[j] : x) : L; }
 const TREE_STYLES = [
   {key:'aspen', name:'Aspen', need:0},
   {key:'birch', name:'Birch', need:10},
@@ -958,9 +1034,9 @@ const TREE_STYLES = [
 ];
 const THEMES = [
   {key:'lake', name:'Lake', need:0},
-  {key:'winter', name:'Winter lake', need:20},
-  {key:'autumn', name:'Autumn lake', need:50},
-  {key:'dusk', name:'Dusk lake', need:100}
+  {key:'winter', name:'Winter Lake', need:20},
+  {key:'autumn', name:'Autumn Lake', need:50},
+  {key:'dusk', name:'Dusk Lake', need:100}
 ];
 
 /* ---------- storage ---------- */
@@ -978,6 +1054,9 @@ function load(){
     const d = GGP.data(p.id, 'aspen');
     const st = Object.assign(blankStudent(), JSON.parse(JSON.stringify(d.student || {})));
     st.id = p.id; st.name = p.name; st.avatar = p.avatar; st._pid = p.id; delete st._legacy;
+    // Rings from another tree (like From Maple, BLD 745) are kept apart from Aspen's own rings.
+    const fr = (st.rings || []).filter(r => r && r.from);
+    if (fr.length){ st.rings = st.rings.filter(r => !(r && r.from)); st.earlier = (st.earlier || []).concat(fr); }
     const gv = (GGP.data(p.id) || {}).grove, kind = gv && gv.self && gv.self.kind;
     if (kind) st.style = { birch:'birch', maple:'maple', pine:'pine' }[kind] || 'aspen';
     list.push(st);
@@ -991,7 +1070,9 @@ function save(){ try {
   DB.students.forEach(st => {
     if (st._pid && window.GGP && GGP.isOpen(st._pid)){
       const c = JSON.parse(JSON.stringify(st)); delete c._pid; delete c.avatar; delete c.id;
-      GGP.setData(st._pid, 'aspen', {student:c});
+      // Only the student's record is replaced. Anything else saved beside it (rings brought from
+      // another tree, an Aspen Guide's Plain lock) stays as it is.
+      const rec = GGP.data(st._pid, 'aspen'); if (rec) rec.student = c; else GGP.setData(st._pid, 'aspen', {student:c});
       if ((st.avatar||'') !== (GGP.get(st._pid).avatar||'')) GGP.setAvatar(st._pid, st.avatar);
       pids.push(st._pid);
     } else if (st._legacy){ const c = JSON.parse(JSON.stringify(st)); delete c._legacy; legacy.push(c); }
@@ -1100,15 +1181,17 @@ const bankOf = ring => (ring && ring.bank) || 1;
 const isNow = ring => isStd(ring) && bankOf(ring) === CK.bank;
 const sameStd = (a, b) => !!a && !!b && (a.std || 0) === (b.std || 0) && (!isStd(a) || bankOf(a) === bankOf(b));
 /* The questions a checkin asked. sens = the optional sensitive question was turned on. */
-function qsFor(grade, key, sens){
+function qsFor(grade, key, sens, wording){
+  if (CK.getBank) return (CK.getBank(grade, wording || 'faith', sens)[CK_KEY[key]] || []).filter(Boolean);
   const qs = ((CK.questions[String(grade)] || {})[CK_KEY[key]] || []).slice();
   const x = sens && CK.sensitive[String(grade)];
   if (x && x[0] === CK_KEY[key] && qs[x[1]]) qs[x[1]] = x[2];
   return qs;
 }
-const ringQs = (ring, key) => isStd(ring) ? qsFor(ring.grade, key, ring.sens).slice(0, (CK.bankSizes || {})[bankOf(ring)] || CK.perPart) : ((QUESTIONS_V0[ring.grade] || {})[key] || []);
+const ringQs = (ring, key) => isStd(ring) ? qsFor(ring.grade, key, ring.sens, ring.wording).slice(0, (CK.bankSizes || {})[bankOf(ring)] || CK.perPart) : ((QUESTIONS_V0[ring.grade] || {})[key] || []);
 /* Why this question? (students), in the same order as the questions. */
-function whyFor(grade, key, i, sens){
+function whyFor(grade, key, i, sens, wording){
+  if (CK.whyOf) return CK.whyOf(grade, CK_KEY[key], i, wording || 'faith', sens);
   const x = sens && CK.sensitive[String(grade)];
   if (x && x[0] === CK_KEY[key] && x[1] === i) return (CK.sensitiveWhy || {})[String(grade)] || '';
   return (((CK.why || {})[String(grade)] || {})[CK_KEY[key]] || [])[i] || '';
@@ -1200,7 +1283,7 @@ function renderHome(){
     <p class="lede">Aspen is a check-in for spiritual and emotional resilience in grades 6 to 8. A student looks at six parts of their own tree, tends it with small daily practices, and adds a growth ring each season.</p>
     <div class="parts">${PARTS.map(p=>`<div class="part-tile" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><b>${p.name}</b><span>${p.sub}</span></div>`).join('')}</div>
     <div class="steps">
-      <div class="panel step"><h3>Check in</h3><p class="muted">Thirty-six questions, six for each part of the tree. Do it on your own or with a grown-up. Pause anytime and pick up later.</p></div>
+      <div class="panel step"><h3>Check in</h3><p class="muted">Thirty-six questions, six for each part of the tree. Do it on your own or with a grown-up. Pause anytime and pick up later. A grown-up picks Faith or Plain wording, and scores are the same either way.</p></div>
       <div class="panel step"><h3>Tend it every day</h3><p class="muted">Your growth plan suggests a few small practices for each part. Check off any one and your tree is watered for the day. Each week brings a theme and a short check-in.</p></div>
       <div class="panel step"><h3>Watch it grow</h3><p class="muted">Each full check-in adds a ring, and a season of tending runs twelve weeks. Over sixth, seventh, and eighth grade, you build a tree trunk made of your own years.</p></div>
     </div>
@@ -1219,18 +1302,22 @@ function renderStudents(opts){
     <div class="panel" style="max-width:460px">
       <h3>Add a student</h3>
       <div class="field"><label for="new-name">First name or nickname</label><input id="new-name" maxlength="30" autocomplete="off"></div>
-      <div class="field"><span id="gl">Grade</span><div class="seg" role="group" aria-labelledby="gl">${[6,7,8].map(g=>`<button data-g="${g}" aria-pressed="${g===6}" onclick="pickNewGrade(${g})">${g}th</button>`).join('')}</div></div>
+      <div class="field"><span id="gl">Grade</span><div class="seg" role="group" aria-labelledby="gl">${[6,7,8].map(g=>`<button data-g="${g}" aria-pressed="${g===newGrade}" onclick="pickNewGrade(${g})">${g}th</button>`).join('')}</div></div>
+      <div class="field"><span id="wl">Wording, chosen by a grown-up</span><div class="seg" role="group" aria-labelledby="wl"><button data-w="faith" aria-pressed="${newWording==='faith'}" onclick="pickNewWording('faith')">Faith</button><button data-w="plain" aria-pressed="${newWording==='plain'}" onclick="pickNewWording('plain')">Plain</button></div>
+        <p class="muted small" style="margin:6px 0 0">${WORDING_LINE} A grown-up can change it later.</p></div>
       <button class="btn teal" onclick="addStudent()">Add and start</button>
       <p class="muted small" style="margin-top:10px">A grown-up agrees when a new student profile is made. <button class="text-btn" onclick="addStudent(true)" style="background:none;border:0;padding:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit">Just try it without saving</button></p>
     </div>`;
 }
-let newGrade = 6;
+let newGrade = 6, newWording = 'faith';
+const WORDING_LINE = 'Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way.';
 function pickNewGrade(g){ newGrade=g; document.querySelectorAll('#view-students [data-g]').forEach(b=>b.setAttribute('aria-pressed', String(+b.dataset.g===g))); }
+function pickNewWording(w){ newWording = w === 'plain' ? 'plain' : 'faith'; document.querySelectorAll('#view-students [data-w]').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.w===newWording))); }
 function addStudent(tryOnly){
   const name = $('new-name').value.trim();
   if (!name){ $('new-name').focus(); toast('Add a name first.'); return; }
-  const s = {id:uid(), name, grade:newGrade, created:new Date().toISOString(), rings:[], draft:null, plan:null, log:{}, leaves:0, style:'aspen', theme:'lake'};
-  newGrade = 6;
+  const s = {id:uid(), name, grade:newGrade, wording:newWording, created:new Date().toISOString(), rings:[], draft:null, plan:null, log:{}, leaves:0, style:'aspen', theme:'lake'};
+  newGrade = 6; newWording = 'faith';
   if (tryOnly || !window.GGP){ DB.students.push(s); save(); openStudent(s.id); return; }
   const c = JSON.parse(JSON.stringify(s)); delete c.id;
   GGP.createDialog({ age:'aspen', name, carry:{ aspen:{ student:c } }, reason:'Your tree saves in your own Middle school profile, locked with a passcode only you know. The grown-ups who agree can open it too, so they can help.' })
@@ -1244,7 +1331,7 @@ function changePic(){ const s = me(); if (!s) return; GGAv.pick({ value: s.avata
 function pickInfo(p){
   if (p.own) return {key:'own:'+p.id, text:p.own, part:p.part, style:null, min:null, own:true, added:p.added};
   const pr = PRACTICES[p.grade][p.part][p.idx];
-  return {key:`${p.grade}:${p.part}:${p.idx}`, text:pr[2], part:p.part, style:pr[0], min:pr[1], grade:p.grade, idx:p.idx, added:p.added};
+  return {key:`${p.grade}:${p.part}:${p.idx}`, text:prText(p.grade, p.part, p.idx, isPlain()), part:p.part, style:pr[0], min:pr[1], grade:p.grade, idx:p.idx, added:p.added};
 }
 function planItems(s){
   if (!s.plan) return [];
@@ -1303,7 +1390,7 @@ function aspTendGet(){
 }
 // The weekly quick check-in: question 1 of every part (Leaves 1 is sleep, so Rest), plus the tagged Leaves questions.
 function aspWeeklyBank(){
-  const s = me(), g = String(s ? s.grade : 6), Q = CK.questions[g] || {}, tags = (CK.weekly || {})[g] || {}, out = {};
+  const s = me(), g = String(s ? s.grade : 6), Q = CK.getBank ? CK.getBank(g, wordingOf(s)) : (CK.questions[g] || {}), tags = (CK.weekly || {})[g] || {}, out = {};
   PARTS.forEach(p => {
     out[p.key] = (Q[p.key] || []).map((q, i) => ({ t: q[0], s: p.key === 'leaves' ? (i === 0 ? 'rest' : (Object.keys(tags).find(k => tags[k] === i) || null)) : null }));
   });
@@ -1312,10 +1399,10 @@ function aspWeeklyBank(){
 function aspPracticeInfo(key, name){
   const s = me(), grades = [s ? s.grade : 6, 6, 7, 8];
   for (const g of grades){
-    const list = (PRACTICES[g] || {})[key] || [], idx = list.findIndex(pr => pr[2] === name);
+    const list = (PRACTICES[g] || {})[key] || [], idx = list.findIndex((pr, i) => pr[2] === name || prText(g, key, i, true) === name);
     if (idx < 0) continue;
-    const pr = list[idx], L = ((LEARN[g] || {})[key] || [])[idx];
-    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(name, 'aspen') : ''}` : '';
+    const pr = list[idx], plain = isPlain(), L = learnRow(g, key, idx, plain);
+    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(prText(g, key, idx, plain), 'aspen') : ''}` : '';
     return { desc: `${STYLE_NAMES[pr[0]]}, about ${pr[1]} ${pr[1] === 1 ? 'minute' : 'minutes'}`, guide, hard: L ? L[2] : '' };
   }
   return {};
@@ -1329,7 +1416,13 @@ function aspProfileHtml(){
     <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();changePic()">Change picture</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();changeGrade()">Change grade</button>${aspMulti() ? `<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();go('students',{list:true})">All students</button>` : ''}${!s._pid && window.GGP ? `<button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();saveStudentProfile('${s.id}')">Save my tree</button>` : ''}</div>
     ${s._pid ? '' : `<p class="gt-small">${s._legacy ? 'Your rings were saved before Grounded profiles and are not locked yet.' : 'Right now your tree is only kept until this page closes.'}</p>`}</section>`;
 }
-function aspExtraSettings(){ return `<section class="asp-see" id="asp-see"><h3>What your grown-up can see</h3>${ASP_SEE}</section>`; }
+function aspExtraSettings(){
+  const s = me();
+  return (s ? `<section id="as-set-wording"><h3>Faith or Plain Wording</h3><p class="gt-small">${WORDING_LINE}</p>${wordingRadios(s, 'as-word')}</section>` : '')
+    + asGameSettings()
+    + `<section class="asp-see" id="asp-see"><h3>What your grown-up can see</h3>${ASP_SEE}</section>`
+    + movingOnHtml(false);
+}
 
 /* The Guides tab: the six parts, and the When Life Changes guides (written for grown-ups). */
 function renderGuidesTab(){
@@ -1448,13 +1541,13 @@ function renderCheckin(){
     return;
   }
   if (d.step === 'parts'){
-    const p = PARTS[d.page], qs = qsFor(d.grade, p.key, d.sens), ans = d.answers[p.key] || [];
+    const p = PARTS[d.page], wd = wordingOf(s), qs = qsFor(d.grade, p.key, d.sens, wd), ans = d.answers[p.key] || [];
     v.innerHTML = `${prog}
       <div class="part-head" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><div><b>${p.name}</b><span>${p.sub}, part ${d.page+1} of 6</span></div></div>
       <p class="muted">${p.about}</p>
       <p><button class="say-btn" aria-pressed="${readOn}" onclick="toggleRead()">Read Aloud: ${readOn?'on':'off'}</button></p><div class="voice-slot"></div>
       ${qs.map((q,i)=>`<div class="q" id="q-${i}"><p class="qt">${esc(q[0])} <button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button></p>
-        ${whyFor(d.grade, p.key, i, d.sens) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(d.grade, p.key, i, d.sens))}</p></details>` : ''}
+        ${whyFor(d.grade, p.key, i, d.sens, wd) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(d.grade, p.key, i, d.sens, wd))}</p></details>` : ''}
         ${d.mode==='grown' && ans[i] ? `<div class="follow"><b>For the grown-up</b>${esc(q[1])}</div>` : ''}
         <div class="answers" role="group" aria-label="${esc(q[0])}">${ANSWERS.map(a=>`<button class="ans" aria-pressed="${ans[i]===a[0]}" onclick="answer(${i},'${a[0]}')">${a[1]}</button>`).join('')}</div></div>`).join('')}
       <div class="row"><button class="btn ghost" onclick="prevPage()">Back</button><button class="btn" ${ans.filter(Boolean).length<qs.length?'disabled':''} onclick="nextPage()">${d.page<5?'Next part':'Almost done'}</button><button class="btn ghost small" onclick="pauseCheckin()">Pause</button></div>`;
@@ -1477,10 +1570,10 @@ function toggleRead(){ readOn = !readOn; if (!readOn) hush(); renderCheckin(); }
 /* The shared voice picker, speed, and "Get a better voice" help from read.js, shown while read aloud is on. */
 function voiceSlots(){ if (!readOn || !window.GGRead) return; document.querySelectorAll('#view-checkin .voice-slot').forEach(el => { if (!el.firstChild) el.appendChild(GGRead.settings()); }); }
 window.addEventListener('ggread-ready', () => { if (window.GGRead) GGRead.setProfile({ pref: 'male', rate: 0.92, key: 'gg_voice_aspen' }); voiceSlots(); });
-function sayQ(i){ const d = me() && me().draft; if (!d) return; const q = qsFor(d.grade, PARTS[d.page].key, d.sens)[i]; if (q) say(q[0]); }
+function sayQ(i){ const d = me() && me().draft; if (!d) return; const q = qsFor(d.grade, PARTS[d.page].key, d.sens, wordingOf(me()))[i]; if (q) say(q[0]); }
 function toStep(step, page){ const d = me().draft; d.step = step; if (page != null) d.page = page; else if (step==='parts' && d.page==null) d.page = 0; save(); renderCheckin(); toTop(true); }
 function answer(i, a){
-  const s = me(), d = s.draft, p = PARTS[d.page], qs = qsFor(d.grade, p.key, d.sens), q = qs[i];
+  const s = me(), d = s.draft, p = PARTS[d.page], qs = qsFor(d.grade, p.key, d.sens, wordingOf(s)), q = qs[i];
   d.answers[p.key] = d.answers[p.key] || qs.map(() => null);
   const before = d.answers[p.key][i];
   d.answers[p.key][i] = a; save();
@@ -1506,7 +1599,7 @@ function finishCheckin(){
   const answers = {};
   PARTS.forEach(p => { const qa = (d.answers[p.key] || qsFor(d.grade, p.key, d.sens).map(() => null)).slice(); answers[p.key] = {qa, score: partScore(d.grade, p.key, qa, d.sens)}; });
   const safetyFlag = d.safety.some(a => a === 'yes' || a === 'unsure');
-  const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, std:CK.version, bank:CK.bank, sens:!!d.sens, mode:d.mode, answers, safety:d.safety.slice(), flags:d.flags.slice(), safetyFlag};
+  const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, std:CK.version, bank:CK.bank, sens:!!d.sens, wording:wordingOf(s), mode:d.mode, answers, safety:d.safety.slice(), flags:d.flags.slice(), safetyFlag};
   ring.flagged = safetyFlag || ringFlags(ring).length > 0;
   s.rings.push(ring); s.draft = null; s.leaves = (s.leaves||0)+3; save();   // each checkin: one ring, three leaves
   const seasonMsg = window.GGTend ? GGTend.onFullCheckin({date: dayKey(ring.date)}) : null;
@@ -1559,10 +1652,10 @@ function closeCalm(){ $('overlay-root').innerHTML=''; document.removeEventListen
 const aspSuggest = (ring, k) => { const lv = ring ? (levelOf(ringScore(ring, k)) || [])[2] : null; return window.GGTend && GGTend.suggest ? GGTend.suggest(lv) : ({edge:5, steady:4}[lv] || 3); };
 const PART_GUIDES = {roots:['faith','death','identity'], trunk:['identity','grades','cut','startms'], bark:['compare','grades','phone','news'], branches:['friends','leftout','bullying','crush'], leaves:['sleep','looks','eating','vaping'], fruit:['divorce','moving','disaster','news']};
 function guideTitle(id){ let t = id; guidesData().groups.forEach(g => g.topics.forEach(x => { if (x.id === id) t = x.title; })); return t; }
-function guideLinks(k){ return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
+function guideLinks(k, s){ const plain = isPlain(s === undefined ? me() : s); return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].filter(id => !(plain && id === 'faith')).map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
 function learnHTML(g, k, idx){
-  const L = ((typeof LEARN !== 'undefined' && LEARN[g] && LEARN[g][k]) || [])[idx]; if (!L) return '';
-  return `<details class="learn"><summary>Learn more</summary><div><p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(L[2])}</p><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(((PRACTICES[g] || {})[k] || [])[idx] ? PRACTICES[g][k][idx][2] : '', 'aspen') : ''}</div></details>`;
+  const plain = isPlain(), L = learnRow(g, k, idx, plain); if (!L) return '';
+  return `<details class="learn"><summary>Learn more</summary><div><p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(L[2])}</p><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(prText(g, k, idx, plain), 'aspen') : ''}</div></details>`;
 }
 let planDraft = null, planOpen = {};
 function renderPlan(){
@@ -1585,7 +1678,7 @@ function renderPlan(){
       return `<details class="plan-part" style="border-left:6px solid ${pcolor(k)}" ${open ? 'open' : ''} ontoggle="planOpen['${k}']=this.open">
       <summary><span class="pp-name">${PART[k].name} <span class="muted small">${PART[k].sub}</span></span>${suggested.includes(k) ? '<span class="pill">Suggested this week</span>' : ''}<span class="muted small pp-count">${n} picked, about ${aspSuggest(last, k)} suggested</span></summary>
       <div class="pp-body">
-        ${aspRot(g, k, isPicked).show.map(idx => [PRACTICES[g][k][idx], idx]).map(([pr, idx]) => `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${esc(pr[2])}</span></button>${learnHTML(g, k, idx)}</div>`).join('')}
+        ${aspRot(g, k, isPicked).show.map(idx => [PRACTICES[g][k][idx], idx]).map(([pr, idx]) => `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${esc(prText(g, k, idx, isPlain(s)))}</span></button>${learnHTML(g, k, idx)}</div>`).join('')}
         ${(r => r.pages > 1 ? `<p class="row pp-more"><button class="btn ghost small" onclick="aspRotNext('${k}')">Show Me Others (${r.page + 1} of ${r.pages})</button></p>` : '')(aspRot(g, k, isPicked))}
         ${inPart(k).filter(p => p.own).map(p => `<p class="row own-row"><span>${esc(p.own)} <span class="muted small">(your own)</span></span><button class="btn ghost small" onclick="removeOwn('${p.id}')">Remove</button></p>`).join('')}
         <div class="row own-add"><input id="own-${k}" maxlength="120" placeholder="Write your own ${PART[k].name} practice" aria-label="Write your own ${PART[k].name} practice"><button class="btn ghost small" onclick="addOwn('${k}')">Add</button></div>
@@ -1649,7 +1742,7 @@ function dayKey(t){ const d = new Date(t); return d.getFullYear() + '-' + String
 function entryInfo(s, d, key){
   const h = s.hist && s.hist[d] && s.hist[d][key]; if (h) return h;
   const m = /^(\d):([a-z]+):(\d+)$/.exec(key);
-  if (m && PRACTICES[m[1]] && PRACTICES[m[1]][m[2]] && PRACTICES[m[1]][m[2]][+m[3]]) return {text:PRACTICES[m[1]][m[2]][+m[3]][2], part:m[2]};
+  if (m && PRACTICES[m[1]] && PRACTICES[m[1]][m[2]] && PRACTICES[m[1]][m[2]][+m[3]]) return {text:prText(m[1], m[2], +m[3], isPlain(s)), part:m[2]};
   return {text:'Your own practice', part:null};
 }
 function stuckParts(s){
@@ -1711,6 +1804,8 @@ function renderHelpPlan(){
     <div class="panel"><h3>Learn more</h3><p>Every practice has a <b>Learn more</b> button. It tells you why it helps, how to do it step by step, what to do if it's hard, and a way to try it with a grown-up.</p></div>
     <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
     <div class="panel"><h3>No streaks</h3><p>Miss a few days and your tree looks dry or droops a little, but it never dies and nothing is taken away. One practice perks it up, and a few days bring it all the way back.</p></div>
+    <div class="panel"><h3>Watch your tree grow up</h3><p>Every day you tend your tree moves it toward its next stage, from Seed to Golden Aspen. Practices you keep doing move from Tried to Building to Mine. Milestones mark firsts, like tending all six parts in one week, and new scenery opens as you go: Birch, Maple, and Pine trees and new lakes to pick from in Season.</p></div>
+    <div class="panel"><h3>Steady or Hardy</h3><p>Your tree starts Steady: gentle, and nothing is ever lost. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble until one practice heals it. After a hard check-in, the tree holds still for two weeks either way.</p></div>
     <div class="panel"><h3>Easier today</h3><p>Hard day? Tap <b>Easier today</b> on a practice for a smaller version that still counts.</p></div>
     <div class="panel"><h3>Change it anytime</h3><p>Open <b>Growth Plan</b> to add or remove practices whenever you want.</p></div>
     <div class="help-strip"><div><b>Need to talk to someone?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
@@ -1780,7 +1875,8 @@ function renderRings(){
   $('view-rings').innerHTML = `<button class="back" onclick="aspTab('season')">&larr; Back to my tree</button><h2>Your Rings</h2>
     ${n ? `<p class="lede">Every check-in adds a ring. Darker lines mark a new school year. Tap a ring to see that check-in.</p>
       <div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}</button>`).join('')}</div></div><div>${ringDetail(s, sel, false)}</div></div>`
-      : `<p class="lede">No rings yet. Your first check-in adds your first ring.</p><button class="btn" onclick="startCheckin()">Start check-in</button>`}`;
+      : `<p class="lede">No rings yet. Your first check-in adds your first ring.</p><button class="btn" onclick="startCheckin()">Start check-in</button>`}
+    ${fromRingsHtml(s, false)}`;
 }
 
 /* ---------- grown-ups ---------- */
@@ -1800,7 +1896,8 @@ function renderGrown(){
     <div class="panel"><h3>How Aspen works</h3>
       <p>Each check-in has 36 questions, six for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Aspen suggests two parts to care for, and the student builds a growth plan of small daily practices. Each day they tend their tree, each week brings a theme and a short check-in, and a full check-in at the end of a twelve-week season adds a growth ring.</p>
       <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Growing Edge (1 to 4). Students see the levels too, with a reminder that a growing edge is where the next growth begins. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
-      <p>Aspen follows the Grounded tree standard, the same one behind Maple, Oak, and the tools to come, so every check-in measures the same six parts the same way, written for each grade.</p>
+      <p>Roots questions and a few practices come in two wordings, and a grown-up chooses when a student is added. Faith wording, the starting choice, names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way, so rings compare across both. You can change it any time from the student's page here.</p>
+      <p>Aspen follows the Grounded tree standard, the same one behind Maple, Pine, Birch, Oak, and Sequoia, so every check-in measures the same six parts the same way, written for each grade.</p>
     </div>
     <div class="panel"><h3>What you can see</h3>
       <p>Aspen gives students some privacy, in three layers, and tells them so plainly before they start. Kids answer more honestly when they know up front.</p>
@@ -1852,6 +1949,8 @@ function renderGStudent(){
     <div class="me-row">${GGAv.html(s.avatar, s.name, 56)}<div><h2 style="margin:0">${esc(s.name)}</h2><p class="muted" style="margin:0">Grade ${s.grade}</p></div></div>
     <p class="muted small">What you see here: safety answers always, and the big picture of ${esc(s.name)}'s tree. The rest of their answers, the practices they check off, and their reflections are theirs unless they share them.</p>
     ${n ? `<div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickGRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickGRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}${r.flagged?' <span class="marker">Worth a check-in</span>':''}</button>`).join('')}</div></div><div>${ringDetail(s, sel, true)}</div></div>` : '<p class="muted">No check-ins yet.</p>'}
+    ${fromRingsHtml(s, true)}
+    ${wordingPanel(s)}
     ${sensPanel(s)}
     <div class="panel"><h3>Tending</h3>
       <div class="asp-app" style="display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:16px;align-items:center">
@@ -1962,6 +2061,274 @@ window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.aspen = id => { if (guidesData().groups.some(g => g.topics.some(t => t.id === id))) go('guide', {id}); };
 window.addEventListener('gg-learn-close', () => { const v = document.getElementById('view-guide'); if (v && v.offsetParent !== null && renderGuide.last) { const y = window.scrollY; renderGuide({id: renderGuide.last}); window.scrollTo(0, y); } });
 
+/* ---------- Faith or Plain: the setting (Parity Sweep 1, GWG BLD 745) ----------
+   A grown-up changes it: a grown-up profile that agreed for the student, or anyone while the
+   student is not saved in a profile yet (the same rule as the optional question). */
+function canSetWording(s){ return !!s && !plainLocked(s) && canSetSens(s); }
+const LOCK_LINE = 'Your Aspen Guide set Plain wording for your school, so Aspen uses Plain here.';
+function wordingRadios(s, name){
+  const plain = isPlain(s), can = canSetWording(s), dis = can ? '' : ' disabled';
+  return `<label class="gt-radio"><input type="radio" name="${name}" value="faith"${!plain ? ' checked' : ''}${dis} onchange="setWording('faith')"><span><b>Faith</b>Prayer, worship, quiet, nature, and family traditions.</span></label>
+    <label class="gt-radio"><input type="radio" name="${name}" value="plain"${plain ? ' checked' : ''}${dis} onchange="setWording('plain')"><span><b>Plain</b>Peace, values, quiet, nature, and family traditions.</span></label>
+    ${plainLocked(s) ? `<p class="muted small as-lock">${LOCK_LINE}</p>` : can ? '' : `<p class="muted small">A grown-up who agreed for ${esc(s.name)} can change this from their own grown-up profile.</p>`}`;
+}
+function wordingPanel(s){
+  return `<div class="panel" id="as-wording"><h3>Faith or Plain Wording</h3><p>${WORDING_LINE} It changes the Roots questions, a few practices, and the tips you see. Rings compare across both.</p>${wordingRadios(s, 'as-word-g')}</div>`;
+}
+function setWording(w){
+  const s = me(); if (!s) return;
+  if (!canSetWording(s)){ toast(plainLocked(s) ? LOCK_LINE : 'Only a grown-up who agreed can change this.'); refreshWording(); return; }
+  const before = isPlain(s); s.wording = w === 'plain' ? 'plain' : 'faith';
+  if (before !== isPlain(s)) aspRemapTend(s, isPlain(s));
+  planDraft = null; save(); refreshWording();
+  toast(isPlain(s) ? 'Plain wording is on. Scores stay the same.' : 'Faith wording is on. Scores stay the same.');
+}
+function refreshWording(){
+  const v = document.querySelector('.view.active'), name = v ? v.id.replace('view-', '') : '';
+  if (name === 'gstudent') renderGStudent();
+  else if (name === 'dash'){ renderDash(); reopenSettings('as-set-wording'); }
+}
+// The plan's practice names follow the wording, so Today shows the student's own words. When the
+// wording changes, each Faith name becomes its Plain name (or back) everywhere it was saved:
+// the plan, each day's checkmarks, the easier-today marks, and notes. Nothing is lost.
+function aspWordMap(toPlain){
+  const m = {};
+  Object.keys(PLAIN_PR).forEach(id => { const [g, k, i] = id.split(':'), f = (((PRACTICES[g] || {})[k] || [])[+i] || [])[2], p = PLAIN_PR[id].t;
+    if (!f || !p || f === p) return; if (toPlain) m[k + '|' + f] = k + '|' + p; else m[k + '|' + p] = k + '|' + f; });
+  return m;
+}
+function aspRemapTend(s, toPlain){
+  const t = s && s.tend; if (!t || typeof t !== 'object') return;
+  const M = aspWordMap(toPlain), mid = id => M[id] || id;
+  if (t.plan) Object.keys(t.plan).forEach(k => { const x = t.plan[k]; if (x && Array.isArray(x.selected)) x.selected = x.selected.map(n => mid(k + '|' + n).slice(k.length + 1)); });
+  Object.keys(t.days || {}).forEach(d => { const x = t.days[d]; if (!x) return;
+    if (Array.isArray(x.d)) x.d = x.d.map(mid); if (Array.isArray(x.e)) x.e = x.e.map(mid);
+    if (x.n && typeof x.n === 'object'){ const n = {}; Object.keys(x.n).forEach(id => { n[mid(id)] = x.n[id]; }); x.n = n; } });
+}
+function reopenSettings(focus){ if (!window.GGTend) return; GGTend.openSettings(); const f = document.getElementById(focus); if (f) f.scrollIntoView({block:'start'}); }
+
+/* ---------- the game layer (Parity Sweep 1, GWG BLD 745, Decision 3) ----------
+   Pine's full set in Aspen's words: mastery (Tried, Building, Mine), tree levels, milestones,
+   the balance bonus, Steady by default with Hardy by choice, and the 14-day pause after a
+   check-in flags losing hope or feeling alone, or the safety step asks about hurting themselves.
+   Plus Aspen's own unlockable scenery. Never streaks, never shame, no leaderboards, nothing ever
+   taken away. Saved in the student's tending record as pn, so it stays in their profile. */
+const AS_KIND = [
+  'Nice. Small and steady is how an aspen grows.',
+  'That counts. You showed up for yourself today.',
+  'Done. Your tree is better for it.',
+  'Good work. A little each day adds up.',
+  'Checked off. That one was for you.',
+  'Roots grow where no one can see them. Keep going.',
+  'Some days one practice is the whole job.',
+  'Every ring on a tree started as an ordinary day.',
+  'That is one more good thing in today.',
+  'Aspens grow together. You are part of something growing.'
+];
+const AS_MASTERY = [[15, 'Mine'], [5, 'Building'], [1, 'Tried']];
+const AS_LEVELS = [[0, 'Seed'], [1, 'Sprout'], [7, 'Seedling'], [21, 'Sapling'], [45, 'Young Aspen'], [90, 'Tall Aspen'], [180, 'Golden Aspen']];
+const AS_HARDY_DAYS = 10;
+const AS_MILES = [
+  ['day1', 'First Day Tended', 'You tended your tree for the first time.'],
+  ['six', 'All Six in a Day', 'You tended every part of your tree in one day.'],
+  ['week', 'First Full Week', 'You tended your tree all seven days of a week.'],
+  ['balance', 'First Balanced Week', 'You tended all six parts in one week.'],
+  ['mine', 'First Practice That\'s Yours', 'A practice moved all the way to Mine.'],
+  ['ring', 'First Ring', 'You finished a full check-in and added a ring.']
+];
+function asKind(n){ const day = Math.floor(Date.now() / 86400000); return AS_KIND[(day * 7 + (n || 0)) % AS_KIND.length]; }
+function asCheer(text, sub){
+  let el = $('as-cheer');
+  if (!el){ el = document.createElement('div'); el.id = 'as-cheer'; el.className = 'as-cheer'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); }
+  el.innerHTML = `<svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="var(--teal)"/><path d="M18 33l9 9 19-20" fill="none" stroke="var(--card)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><p>${esc(text)}</p>${sub ? `<p class="as-cheer-sub">${esc(sub)}</p>` : ''}`;
+  el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+  clearTimeout(asCheer.t); asCheer.t = setTimeout(() => el.classList.remove('show'), 3800);
+}
+const asD = k => { const p = String(k).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+const asAdd = (k, n) => { const d = asD(k); d.setDate(d.getDate() + n); return dayKey(d); };
+const asMonday = k => asAdd(k, -((asD(k).getDay() + 6) % 7));
+function asTended(t, k){ const x = (t.days || {})[k]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); }
+function asRec(t){ if (!t.pn || typeof t.pn !== 'object') t.pn = {miles:{}, bal:{}}; t.pn.miles = t.pn.miles || {}; t.pn.bal = t.pn.bal || {}; return t.pn; }
+function asDays(t){ return Object.keys(t.days || {}).filter(k => asTended(t, k)).length; }
+function asLevel(n){ let i = 0; AS_LEVELS.forEach((L, j) => { if (n >= L[0]) i = j; }); return {name:AS_LEVELS[i][1], next:AS_LEVELS[i + 1] || null}; }
+function asMasteryCount(t, key, name){ const id = key + '|' + name; return Object.keys(t.days || {}).filter(k => ((t.days[k] || {}).d || []).includes(id)).length; }
+function asMasteryOf(n){ const m = AS_MASTERY.find(x => n >= x[0]); return m ? m[1] : ''; }
+function asWeekParts(t, mon){ const set = {}; for (let i = 0; i < 7; i++){ const x = (t.days || {})[asAdd(mon, i)]; if (x) (x.d || []).forEach(id => { set[id.split('|')[0]] = 1; }); } return set; }
+function asWeeks(t){ const w = {}; Object.keys(t.days || {}).forEach(k => { if (asTended(t, k)){ const m = asMonday(k); (w[m] = w[m] || []).push(k); } }); return w; }
+function asBalanced(t){ return Object.keys(asWeeks(t)).filter(m => Object.keys(asWeekParts(t, m)).length >= 6); }
+function asFullWeeks(t){ const w = asWeeks(t); return Object.keys(w).filter(m => w[m].length >= 7); }
+function asPartLast(t, key){ let last = null; Object.keys(t.days || {}).forEach(k => { if (((t.days[k] || {}).d || []).some(id => id.split('|')[0] === key) && (!last || k > last)) last = k; }); return last; }
+function asPlanParts(t){ const p = t.plan || {}; return PARTS.map(x => x.key).filter(k => { const x = p[k] || {}; return (x.selected || []).length || x.custom || (x.own || []).length || (x.lib || []).length; }); }
+function asItems(t){ const out = [], p = t.plan || {}; PARTS.forEach(x => ((p[x.key] || {}).selected || []).forEach(n => out.push({key:x.key, name:n}))); return out; }
+function asMode(t){ return (t && t.pn && t.pn.mode) === 'hardy' ? 'hardy' : 'steady'; }
+// The pause: for 14 days after a check-in flags losing hope or feeling alone, or the safety step
+// asks for support about hurting themselves, the tree holds as it is and Hardy rests.
+function asPause(){
+  const s = me(); if (!s) return false;
+  const cut = asAdd(today(), -14);
+  return (s.rings || []).some(r => r && !r.from && isStd(r) && dayKey(r.date) >= cut && (ringFlags(r).some(f => f.type === 'hope' || f.type === 'alone') || ringSafe(r).some(x => SAFETY_KIND[x.i] === 'self')));
+}
+// Hardy: a part with practices in the plan, left untended for AS_HARDY_DAYS or more, shows
+// trouble. One practice in that part heals it. Steady never shows trouble.
+function asHardy(t, key){
+  if (asMode(t) !== 'hardy' || asPause() || !asPlanParts(t).includes(key)) return 0;
+  const since = asPartLast(t, key) || asRec(t).hardyFrom || t.start; if (!since) return 0;
+  const n = Math.round((asD(today()) - asD(since)) / 86400000);
+  return n >= AS_HARDY_DAYS ? n : 0;
+}
+function asMilesNow(t){
+  const s = me(), out = {};
+  if (asDays(t) >= 1) out.day1 = 1;
+  if (Object.keys(t.days || {}).some(k => { const set = {}; ((t.days[k] || {}).d || []).forEach(id => { set[id.split('|')[0]] = 1; }); return Object.keys(set).length >= 6; })) out.six = 1;
+  if (asFullWeeks(t).length) out.week = 1;
+  if (asBalanced(t).length) out.balance = 1;
+  if (asItems(t).some(it => asMasteryCount(t, it.key, it.name) >= 15)) out.mine = 1;
+  if (s && (s.rings || []).length) out.ring = 1;
+  (t.rings || []).forEach((r, i) => { out['season' + (i + 1)] = 1; });
+  return out;
+}
+function asMileName(id){ const m = AS_MILES.find(x => x[0] === id); return m ? m[1] : id.indexOf('season') === 0 ? 'Season ' + id.slice(6) + ' Finished' : id; }
+// Records milestones reached for the first time and returns them, so each is cheered once.
+// ringsOnly records just the ring and season milestones, which come from check-ins, not checkmarks.
+function asCheckMiles(t, quiet, ringsOnly){
+  const R = asRec(t), now = asMilesNow(t), fresh = [];
+  Object.keys(now).forEach(id => { if (ringsOnly && !/^(ring|season)/.test(id)) return; if (!R.miles[id]){ R.miles[id] = today(); fresh.push(id); } });
+  if (ringsOnly) return fresh;
+  asBalanced(t).forEach(m => { if (!R.bal[m]){ R.bal[m] = today(); if (!quiet && m === asMonday(today())) fresh.push('bonus'); } });
+  return fresh;
+}
+function asTodayExtra(t){
+  const s = me(); if (!s || !t) return '';
+  const n = window.GGTend ? GGTend.partsOn(today()) : 0, paused = asPause();
+  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Nothing will be lost.' : n ? asKind(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const days = asDays(t), L = asLevel(days), wk = asWeekParts(t, asMonday(today())), wn = Object.keys(wk).length;
+  const trouble = PARTS.filter(p => asHardy(t, p.key));
+  asCheckMiles(t, true, true); if (!Array.isArray(asRec(t).seen)) asSceneryCheck(s, t, true);
+  return `<div class="gt-card as-kind"><p class="as-kind-line">${esc(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
+    <div class="gt-card as-game"><div class="as-level"><span class="as-k">Your tree</span><b>${esc(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${esc(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
+    <div class="as-level"><span class="as-k">This week</span><div class="as-dots" role="img" aria-label="${wn} of 6 parts tended this week">${PARTS.map(p => `<span class="as-dot${wk[p.key] ? ' on' : ''}" style="--pc:${pcolor(p.key)}" title="${p.name}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
+    <p class="gt-small as-wide">${asMode(t) === 'hardy' ? (paused ? 'Hardy is resting for now, and nothing shows trouble.' : 'Hardy is on: a part left untended for ' + AS_HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and nothing is ever lost.'} <button type="button" class="asp-link" onclick="GGTend.openSettings();reopenSettings('as-set-game')">Change</button></p>
+    ${trouble.length ? `<p class="as-trouble as-wide">${trouble.map(p => esc(p.name)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
+    + movingOnHtml(true);
+}
+function asItemTag(key, name, t){ const m = asMasteryOf(asMasteryCount(t, key, name)); return m ? ` <span class="as-mastery as-m-${m.toLowerCase()}">${m}</span>` : ''; }
+function asPartNote(key, t){ const n = asHardy(t, key); return n ? `<p class="as-trouble">Leaves curling: ${n} days since this part was tended. One practice today heals it.</p>` : ''; }
+function asMilestones(t){
+  const R = asRec(t), got = Object.keys(R.miles).sort((a, b) => String(R.miles[a]).localeCompare(String(R.miles[b]))), nb = asBalanced(t).length;
+  return `<div class="gt-card as-miles"><h3>Milestones</h3>${got.length ? `<ul class="as-mile-list">${got.map(id => `<li><b>${esc(asMileName(id))}</b><span>${esc(fmtDate(R.miles[id] + 'T12:00'))}</span></li>`).join('')}</ul>` : '<p class="gt-small">Your first milestone comes with your first day of tending.</p>'}
+    ${nb ? `<p class="gt-small">${nb} balanced week${nb === 1 ? '' : 's'} so far.</p>` : ''}
+    <p class="gt-small">Still ahead: ${AS_MILES.filter(m => !R.miles[m[0]]).map(m => esc(m[1])).join(', ') || 'a new ring every season'}.</p></div>`;
+}
+function asOnCheck(done, key, t, parts){
+  if (!done) return;
+  const s = me(), fresh = asCheckMiles(t), sc = s ? asSceneryCheck(s, t) : [];
+  if (fresh.length || sc.length) save();
+  if (fresh.length){ asCheer(fresh.includes('bonus') ? 'Balanced week. All six parts tended this week.' : 'New milestone: ' + asMileName(fresh.filter(x => x !== 'bonus')[0] || fresh[0]), sc.length ? 'New scenery too: ' + sc.join(', ') + '. Find it in Season.' : asKind(parts)); return; }
+  if (sc.length){ asCheer('New scenery: ' + sc.join(', '), 'Find it in Season, under Your Scenery.'); return; }
+  asCheer(parts >= 6 ? 'All six parts tended today. That is a full day.' : asKind(parts));
+}
+function setAsMode(m){
+  const s = me(), t = aspTendGet(); if (!t){ toast('Open your tree first.'); return; }
+  const R = asRec(t); R.mode = m === 'hardy' ? 'hardy' : 'steady'; if (R.mode === 'hardy') R.hardyFrom = today();
+  save(); toast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + AS_HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and nothing is lost.');
+  if (window.GGTend) GGTend.render(); reopenSettings('as-set-game');
+}
+function asGameSettings(){
+  const t = me() ? aspTendGet() : null, mode = asMode(t), dis = t ? '' : ' disabled';
+  return `<section id="as-set-game"><h3>Your Tree: Steady or Hardy</h3>
+    <label class="gt-radio"><input type="radio" name="as-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${dis} onchange="setAsMode('steady')"><span><b>Steady</b>The gentle tree. It may look dry when you miss days, and nothing is ever lost.</span></label>
+    <label class="gt-radio"><input type="radio" name="as-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${dis} onchange="setAsMode('hardy')"><span><b>Hardy</b>A little more challenge. A part of your plan left untended for ${AS_HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
+    <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>`;
+}
+
+/* ---------- Aspen's unlockable scenery ----------
+   Tree styles and lake scenes open as a student tends their tree (days tended). A style or lake
+   already chosen always stays open, so nothing is ever taken away. */
+const AS_TREE_CFG = {
+  aspen: { pal: [['#9A7A12', '#D9A91E', '#F2CC4E'], ['#8F7C3E', '#C2AE62', '#DCCB8C'], ['#7A6A40', '#9E8A55', '#B8A46E']], trunk: '#BDB5A0', trunkBare: '#A79F8A', fruit: 'leaf', fruitColor: '#F5C518' },
+  birch: { shape: 'birch', fruit: 'catkin', fruitColor: '#7F6610', trunk: '#F4F1EA', trunkBare: '#E6E2D8', trunkEdge: '#8A8A84', limb: '#5A4A3C', pal: [['#4C7A36', '#79A84E', '#A9CF78'], ['#6E7A3C', '#9AA85A', '#C2CC86'], ['#7A6E3A', '#A08F4E', '#C2B070']] },
+  maple: { pal: [['#A3341B', '#D9572B', '#F28A3C'], ['#94603A', '#C08A5C', '#D9B48A'], ['#7D5A3E', '#9E7A58', '#B89878']], trunk: '#6B4226', trunkBare: '#7A5A40', fruit: 'leaf', fruitColor: '#E8452C' },
+  pine: { shape: 'layered', fruit: 'cone', fruitColor: '#8A5A2B', trunk: '#6E4524', trunkBare: '#5A4636', pal: [['#2C5527', '#4A8040', '#78AB64'], ['#4E5A33', '#6E7A48', '#A3AC78'], ['#4F4A30', '#6E6644', '#958B62']] }
+};
+function asSceneryCount(s){ const t = s && s.tend; return t ? asDays(t) : 0; }
+const asOpenStyle = (s, x) => asSceneryCount(s) >= x.need || (s && s.style === x.key);
+const asOpenTheme = (s, x) => asSceneryCount(s) >= x.need || (s && s.theme === x.key);
+function aspTreeCfg(){ const s = me(), st = s && s.style; return AS_TREE_CFG[st && TREE_STYLES.some(x => x.key === st && asOpenStyle(s, x)) ? st : 'aspen']; }
+// Names of scenery opened since last time, and remembers them, so each opening is cheered once.
+function asSceneryCheck(s, t, quiet){
+  const R = asRec(t), open = TREE_STYLES.filter(x => asOpenStyle(s, x)).map(x => 'tree:' + x.key).concat(THEMES.filter(x => asOpenTheme(s, x)).map(x => 'theme:' + x.key));
+  const first = !Array.isArray(R.seen); R.seen = Array.isArray(R.seen) ? R.seen : [];
+  const fresh = open.filter(id => !R.seen.includes(id)); R.seen = R.seen.concat(fresh);
+  if (first || quiet) return [];
+  return fresh.map(id => { const [k, v] = id.split(':'); const x = (k === 'tree' ? TREE_STYLES : THEMES).find(y => y.key === v); return x ? x.name + (k === 'tree' ? ' Tree' : '') : ''; }).filter(Boolean);
+}
+function asSceneryHtml(s){
+  const n = asSceneryCount(s), cur = s.style || 'aspen', th = s.theme || 'lake';
+  const btn = (x, on, open, fn) => `<button type="button" class="as-scene${on ? ' on' : ''}" aria-pressed="${on}"${open ? '' : ' disabled'} onclick="${fn}('${x.key}')"><b>${esc(x.name)}</b><span>${open ? (on ? 'Showing now' : 'Open') : 'Opens at ' + x.need + ' days tended'}</span></button>`;
+  return `<div class="gt-card as-scenery"><h3>Your Scenery</h3><p class="gt-small">New scenery opens as you tend your tree, ${n} day${n === 1 ? '' : 's'} so far. Pick any that is open. Nothing is ever taken away.</p>
+    <h4 class="as-h4">Tree</h4><div class="as-scenes">${TREE_STYLES.map(x => btn(x, x.key === cur, asOpenStyle(s, x), 'pickStyle')).join('')}</div>
+    <h4 class="as-h4">Lake</h4><div class="as-scenes">${THEMES.map(x => btn(x, x.key === th, asOpenTheme(s, x), 'pickTheme')).join('')}</div></div>`;
+}
+function pickStyle(k){ const s = me(), x = TREE_STYLES.find(y => y.key === k); if (!s || !x || !asOpenStyle(s, x)) return; s.style = k; save(); renderDash(); toast(x.name + ' tree it is.'); }
+function pickTheme(k){ const s = me(), x = THEMES.find(y => y.key === k); if (!s || !x || !asOpenTheme(s, x)) return; s.theme = k; save(); renderDash(); toast(x.name + ' it is.'); }
+function asSeasonExtra(t){ const s = me(); return s && t ? asMilestones(t) + asSceneryHtml(s) : ''; }
+
+/* ---------- moving on: Start My Pine (Parity Sweep 1, GWG BLD 745, Decision 6) ----------
+   In grade 8 a gentle card offers two choices: stay in Aspen, or Start My Pine, which makes a
+   new High school profile with Pine, built for grades 9 to 12, as its tree. It copies Aspen's
+   rings into Pine (labeled From Aspen) and the Faith or Plain choice. Aspen's own record stays
+   whole. Never forced, and always in Settings in grade 8. */
+function movingOnHtml(onToday){
+  const s = me(); if (!s || +s.grade !== 8 || !window.GGP) return '';
+  if (onToday && s.stayAspen) return '';
+  return `<${onToday ? 'div class="gt-card as-moving"' : 'section id="as-set-moving"'}><h3>Heading to High School?</h3>
+    <p class="gt-small">${onToday ? 'You are in grade 8. ' : ''}You choose what comes next. Stay in Aspen as long as it fits, or start your own tree in Pine, built for grades 9 to 12. Start My Pine makes a new High school profile for you, with a grown-up agreeing, and brings your Aspen check-ins (labeled From Aspen) and your Faith or Plain wording with you. Aspen keeps its own copy.</p>
+    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyPine()">Start My Pine</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInAspen()">Stay in Aspen</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+}
+function stayInAspen(){ const s = me(); if (!s) return; s.stayAspen = today(); save(); toast('Aspen stays your tree. Start My Pine is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }
+// Aspen rings on the standard, in the shape Pine keeps its history: one entry per ring, the six
+// part scores (a part answered all "Not sure" is kept as unsure), labeled from: 'aspen'.
+function aspenCarry(s){
+  return (s.rings || []).filter(r => r && !r.from && isStd(r) && r.answers).map(r => {
+    const scores = {}, unsure = [];
+    PARTS.forEach(p => { const v = ((r.answers || {})[p.key] || {}).score; if (typeof v === 'number') scores[p.key] = v; else { scores[p.key] = 5; unsure.push(p.key); } });
+    return {id:'aspen-' + r.id, date:dayKey(r.date), from:'aspen', grade:r.grade, scores, unsure, type:'full'};
+  });
+}
+function startMyPine(){
+  const s = me(); if (!s || !window.GGP) return;
+  if (!confirm('Start My Pine makes a new High school profile for you, with Pine as your tree. A grown-up agrees when it is made, the same as Aspen. Your Aspen tree stays as it is. Continue?')) return;
+  const pine = {history: aspenCarry(s), wording: wordingOf(s), aspenCopied: today()};
+  GGP.createDialog({ age:'pine', name:'', carry:{ pine }, reason:'Your new High school profile, ' + s.name + '. Pick a name that is different from your Aspen profile, like your name with a last initial. Your Aspen check-ins and your wording come along into Pine.',
+    onCreated: () => { setTimeout(() => { location.href = '/pine/'; }, 600); } });
+}
+
+/* ---------- rings from another tree: From Maple (Parity Sweep 1, GWG BLD 745) ----------
+   A student who moved up from Maple with Start My Aspen brings Maple's rings, labeled From
+   Maple. They are kept and shown apart, as they were, and never compared with Aspen rings.
+   Read from the student's record (earlier, or rings marked from) and from the profile's aspen
+   history, so either way a ring was carried, it shows. */
+const FROM_NAME = {maple:'From Maple', aspen:'From Aspen', pine:'From Pine'};
+function aspFromRings(s){
+  if (!s) return [];
+  const r = aspRecord(s), seen = {}, out = [];
+  (s.earlier || []).concat(((r && Array.isArray(r.history)) ? r.history : []).filter(e => e && e.from)).forEach(e => {
+    if (!e || !e.from) return; const id = e.id || (e.from + ':' + e.date); if (seen[id]) return; seen[id] = 1; out.push(e);
+  });
+  return out.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+}
+function fromScore(e, k){ if ((e.unsure || []).includes(k)) return null; const v = (e.scores || {})[k]; if (typeof v === 'number') return v; const a = ((e.answers || {})[k] || {}).score; return typeof a === 'number' ? a : null; }
+function fromRingsHtml(s, grown){
+  const list = aspFromRings(s); if (!list.length) return '';
+  const who = grown ? esc(s.name) + '\'s' : 'Your';
+  const names = [...new Set(list.map(e => e.from))];
+  return `<div class="panel as-from"><h3>${names.length === 1 && names[0] === 'maple' ? 'Rings From Maple' : 'Rings From Earlier Trees'}</h3>
+    <p class="muted small">${who} check-ins from before Aspen, kept as they were. They used another tree's questions, so they are shown apart and never compared with Aspen rings.</p>
+    ${list.slice().reverse().map(e => `<div class="as-from-ring"><p style="margin:0 0 6px"><span class="pill">${esc(FROM_NAME[e.from] || 'Earlier')}</span> <b>${e.date ? fmtDate(String(e.date).slice(0, 10) + 'T12:00') : 'Undated'}</b>${e.grade != null && e.grade !== '' ? `<span class="muted small">, ${/^\d+$/.test(String(e.grade)) ? 'grade ' + esc(e.grade) : esc(e.grade)}</span>` : ''}</p>
+      <div class="status-grid">${PARTS.map(p => { const sc = fromScore(e, p.key), l = level(sc); return `<div class="status" style="border-left:5px solid ${pcolor(p.key)}"><b>${p.name}</b><span class="muted small">${p.sub}</span><br><span class="s ${l[1]}">${l[0]}</span>${grown && sc != null ? ` <span class="muted small">${sc} of 10</span>` : ''}</div>`; }).join('')}</div></div>`).join('')}
+  </div>`;
+}
+
 /* ---------- the shared tending engine, set up for Aspen (Rebrand Session 4) ---------- */
 if (window.GGTend) GGTend.init({
   libAge: 'aspen',
@@ -1976,8 +2343,18 @@ if (window.GGTend) GGTend.init({
   weekStem: 'Think about this past week.',
   journey: ((window.GGJourney || {}).AGES || {}).aspen,
   showStory: false, noQuick: true, shareRefl: true, noRecords: true,
-  tree: { pal: [['#9A7A12', '#D9A91E', '#F2CC4E'], ['#8F7C3E', '#C2AE62', '#DCCB8C'], ['#7A6A40', '#9E8A55', '#B8A46E']], trunk: '#BDB5A0', trunkBare: '#A79F8A', fruit: 'leaf', fruitColor: '#F5C518' },
+  // The tree follows the student's chosen scenery (Aspen, or an opened Birch, Maple, or Pine style).
+  get tree(){ return aspTreeCfg(); },
   practiceInfo: aspPracticeInfo,
+  // Faith or Plain, and the game layer (Parity Sweep 1, GWG BLD 745)
+  plain: () => isPlain(),
+  todayExtra: t => asTodayExtra(t),
+  seasonExtra: t => asSeasonExtra(t),
+  itemTag: (key, name, t) => asItemTag(key, name, t),
+  partNote: (key, t) => asPartNote(key, t),
+  pause: () => asPause(),
+  pauseLine: 'Your tree is holding still with you. Nothing dries out or droops while you get support.',
+  onCheck: (done, key, t, parts) => asOnCheck(done, key, t, parts),
   history: () => { const s = me(); return s ? s.rings.map(r => ({ date: dayKey(r.date), type: 'full' })) : []; },
   hasResults: () => !!(me() && me().rings.length),
   ringCount: () => (me() ? me().rings.length : 0),
@@ -2007,7 +2384,7 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="/shared/gg-learn.js?v=ln33" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln33';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=ln34" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=ln34';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=w5" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w5';document.head.appendChild(s)"></script>
 </body>

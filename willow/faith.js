@@ -3,7 +3,7 @@
    Read by Willow and Willow Guide. Edit wording here.
    Every card ends the same way: families practice their faith in their
    own ways. Ask. Cards are drafts until a reviewer from that tradition
-   reads them (see the Owner review list).
+   reads them (see the Founder review list).
    ===================================================================== */
 (function(){
 const INTAKE = {
