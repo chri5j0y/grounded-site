@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln32';
+  var V = 'ln33';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -120,6 +120,7 @@
       '.ln-n{width:34px;height:34px;border-radius:50%;background:var(--ggl-deep);color:var(--ggl-acc);display:grid;place-items:center;font-weight:700;flex:none;}',
       '.ln-item.done .ln-n{background:#5F7D48;color:#fff;}.ln-n svg{width:18px;height:18px;}',
       '.ln-t{flex:1;min-width:0;}.ln-t b{display:block;}.ln-t small{color:var(--ggl-soft);}',
+      '.ln-for,.ggl-for{display:inline-block;font-size:13px;line-height:1.3;font-weight:600;letter-spacing:.2px;color:var(--ggl-soft);border:1px solid var(--ggl-line);border-radius:999px;padding:1px 9px;margin:3px 0 2px;}.ln-t .ln-for{display:table;margin:4px 0 3px;}.ggl-for{margin:0 0 10px;}',
       '.ggl-player{margin-top:6px;}',
       '.ln-stage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#F2ECE0;border:1px solid var(--ggl-line);}',
       '.ln-wm{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;color:#5B4636;font:600 12px/1.1 Barlow,system-ui,sans-serif;pointer-events:none;user-select:none;-webkit-user-select:none;opacity:.92;white-space:nowrap;}.ln-wm img{width:24px;height:24px;border-radius:6px;}.ln-wm i{font-style:normal;}.ln-wm-tl{left:12px;top:12px;}.ln-wm-br{right:12px;bottom:12px;}',
@@ -420,7 +421,7 @@
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src13'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src14'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -677,7 +678,7 @@
       return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
     }).filter(function (t) { return t.lessons.length; });
   }
-  function needPrint() { return script(url('/shared/gg-print.js?v=pr6'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=pr7'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
   function open(app, lessonId, opts) {
@@ -711,6 +712,9 @@
   function appKey(e) { if (e.key === 'Escape' && APP) { e.preventDefault(); close(); } }
   function tracksFor(app) { var L = (window.GG_LEARN || {})[app] || {}; return [SETUP_TRACK].concat((L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; }), guideTracks(app)); }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
+  // Who each video is for (GWG BLD 743): a small, quiet label from the lesson's 'for' key (shared/learn-lessons.js).
+  var FOR_LABEL = { person: 'For the person in hospice', family: 'For family and caregivers', both: 'For both', you: 'For you', helper: 'For the helper', grownup: 'For the grown-up', kids: 'For kids' };
+  function forTag(l, cls) { var t = l && FOR_LABEL[l['for']]; return t ? '<span class="' + cls + '">' + esc(t) + '</span>' : ''; }
   function list() {
     if (CUR) CUR.stop();
     var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app), D = load(app);
@@ -720,7 +724,7 @@
     var card = function (t) {
       var isSup = t.kind === 'support', n = t.lessons.filter(function (l) { return D.done[l.id]; }).length, ok = n === t.lessons.length && certable(t);
       return '<div class="ggl-card"><div class="ggl-spread"><div><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ggl-muted">' + esc(t.who) + '</p>' : '') + '</div>' + (isSup ? '' : '<span class="ggl-muted">' + n + ' of ' + t.lessons.length + '</span>') + '</div>'
-        + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id] && !isSup; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : isSup ? IC.play : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b><small>' + (l.blurb ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !D.done[l.id] && !isSup ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
+        + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id] && !isSup; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : isSup ? IC.play : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b>' + forTag(l, 'ln-for') + '<small>' + (l.blurb ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !D.done[l.id] && !isSup ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
         + (ok ? '<div class="ggl-row"><button class="ggl-btn pri" data-l="cert" data-v="' + esc(t.id) + '">' + IC.award + 'Get Your Certificate</button></div>' : certable(t) ? '<p class="ggl-muted" style="margin-top:10px;font-size:15px">Finish every lesson in this series for a Certificate of Completion.</p>' : '') + '</div>';
     };
     // When Life Changes: a quiet check for each video watched, no counts.
@@ -758,7 +762,7 @@
     var app = APP.app, f = find(app, id); if (!f) return list();
     var D = load(app), el = $('#ggl-in', APP.root), meta = APPS[app];
     var sup = f.t.kind === 'support', gv = f.t.kind === 'guide', pair = gv && f.l.pairId ? (find(app, f.l.pairId) || {}).l : null;
-    el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? 'When Life Changes, ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1><div id="ggl-host"></div>';
+    el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? 'When Life Changes, ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
       app: app, lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,

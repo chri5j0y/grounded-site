@@ -31569,3 +31569,34 @@ window.GG_LEARN = {
  ]
 }
 };
+
+/* ---------- Who each video is for (GWG BLD 743) ----------
+   Each lesson gets a 'for' field, shown as a small label on its card and under its title in the player
+   (shared/gg-learn.js, FOR_LABEL). Keys: person (For the person in hospice), family (For family and caregivers),
+   both (For both), you (For you), helper (For the helper), grownup (For the grown-up), kids (For kids).
+   A track's default comes first; a lesson listed by id takes its own key. Trees with only one audience
+   (Oak, The Grove) carry no label. */
+(function () {
+  var L = window.GG_LEARN || {};
+  var TRACK = {
+    'willow-support': 'family', 'willow-sp-process': 'family', 'willow-sp-calm': 'family', 'willow-sp-meditate': 'family', 'willow-sp-talk': 'family',
+    'willow-start': 'both', 'willow-using': 'both', 'willow-six': 'both', 'willow-you': 'person', 'willow-helpers': 'family',
+    'sequoia-start': 'you', 'sequoia-using': 'you', 'sequoia-six': 'you', 'sequoia-helper': 'helper', 'sequoia-support': 'you',
+    'pine-start': 'you', 'pine-using': 'you', 'pine-six': 'you', 'pine-grownup': 'grownup', 'pine-support': 'you',
+    'birch-start': 'you', 'birch-using': 'you', 'birch-six': 'you', 'birch-helper': 'helper', 'birch-support': 'you',
+    'aspen-start': 'you', 'aspen-using': 'you', 'aspen-six': 'you', 'aspen-grownups': 'grownup', 'aspen-support': 'you',
+    'maple-start': 'both', 'maple-using': 'both', 'maple-six': 'kids', 'maple-grownups': 'grownup', 'maple-support': 'kids'
+  };
+  var LESSON = {
+    // Willow, Support for Right Now: the ones made for the person in the bed as much as for the people beside them
+    'wl-s-ground': 'both', 'wl-s-blessing': 'both', 'wl-s-news': 'both', 'wl-s-panic': 'both', 'wl-s-night': 'both',
+    'wl-s-resting': 'both', 'wl-s-safe': 'both', 'wl-s-matters': 'both',
+    // Aspen and Maple: the lessons that walk a grown-up through their part
+    'as-u-grown': 'grownup', 'mp-u-guide': 'grownup', 'mp-u-kids': 'grownup', 'mp-u-changes': 'grownup'
+  };
+  Object.keys(L).forEach(function (app) {
+    ((L[app] || {}).tracks || []).forEach(function (t) {
+      (t.lessons || []).forEach(function (l) { var k = LESSON[l.id] || TRACK[t.id]; if (k && !l['for']) l['for'] = k; });
+    });
+  });
+})();

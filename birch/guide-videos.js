@@ -3519,7 +3519,7 @@ window.GG_LEARN_GUIDES.birch = {
     "blurb": "For the young adult who moved to a new city: homesickness makes sense, and belonging grows with time and repeated hellos.",
     "sources": [
      "mcc21",
-     "hallfriends18"
+     "hall18"
     ],
     "scenes": [
      {

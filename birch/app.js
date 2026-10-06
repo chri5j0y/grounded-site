@@ -812,7 +812,7 @@ function generateGrowthPlanDoc(mode) {
       </div>
       <div class="growth-plan-footer">
         <p class="growth-plan-footer-link">growwithgrounded.com/birch</p>
-        <p>&copy; ${new Date().getFullYear()} Chris Joy. All rights reserved. This growth plan was made with Birch by Grow With Grounded. Birch&trade; is a trademark of Chris Joy. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
+        <p>&copy; ${new Date().getFullYear()} Grow With Grounded LLC. All rights reserved. This growth plan was made with Grow With Grounded Birch. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
       </div>
     </div>
     <div class="btn-row no-print">
@@ -1111,7 +1111,7 @@ function lcDetail(mode, t) {
     ${window.GGShelf ? GGShelf.html('birch', t.id) : ''}
     ${lcSourcesHtml(t)}
     ${lcHelpHtml(t)}
-    <p class="lc-note">From When Life Changes in Birch&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. In danger right now: 911. Crisis: call or text 988, or text HOME to 741741. &copy; ${new Date().getFullYear()} Chris Joy. You are welcome to print this guide for personal use.</p>
+    <p class="lc-note">From When Life Changes in Birch&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. In danger right now: 911. Crisis: call or text 988, or text HOME to 741741. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use.</p>
   </article>`;
 }
 /* When Life Changes videos (GWG BLD 743): two per guide, For You and For the Helper, played by shared/gg-learn.js

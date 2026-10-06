@@ -604,9 +604,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=src13"></script>
-<script src="../shared/gg-learn.js?v=ln32"></script>
-<script src="../shared/gg-print.js?v=pr6"></script>
+<script src="../shared/gg-sources.js?v=src14"></script>
+<script src="../shared/gg-learn.js?v=ln33"></script>
+<script src="../shared/gg-print.js?v=pr7"></script>
 <script src="../shared/grove-scene.js?v=w2j"></script>
 <script src="qr.js"></script>
 <script>
@@ -1707,7 +1707,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr6'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr7'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
