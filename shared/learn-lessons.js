@@ -9411,7 +9411,7 @@ window.GG_LEARN = {
           { k: 'points', h: 'On a hard day', items: [['Easier today', 'Swap in a smaller version'], ['Add a note', 'One line about how it went'], ['One is enough', 'Any practice waters your tree']], say: 'On a hard day, tap Easier today for a smaller version of a practice. Add a note if you like, just one line. And remember, one practice is enough to water your tree.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 1, note: { h: 'Week', p: 'A theme, a short check-in, and a question to sit with.' }, say: 'Each week brings a theme, a short check-in, and a question to sit with. The weekly check-in asks one question for each part, plus how you are moving, resting, and eating.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 2, note: { h: 'Season', p: 'Twelve weeks. It begins and ends with a full check-in, and each one adds a ring.' }, say: 'A season is twelve weeks. It begins with a full check-in, and the next full check-in closes it and adds a ring to your tree. The Season tab also has your Days Tended calendar.' },
-          { k: 'points', h: 'Watch your tree grow', items: [['Tree levels', 'From Acorn to Heritage Oak'], ['Tried, Building, Mine', 'Practices you keep doing'], ['Milestones', 'And a balanced week'], ['Steady or Hardy', 'Steady by default, Hardy by choice'], ['Grace days', 'Two a week are yours to rest']], cue: { at: [0, 1, 2, 3, 4] }, say: 'Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all six parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support.' },
+          { k: 'points', h: 'Watch your tree grow', items: [['Tree levels', 'From Acorn to Heritage Oak'], ['Tried, Building, Mine', 'Practices you keep doing'], ['Milestones', 'And a balanced week'], ['Steady or Hardy', 'With two grace days a week']], cue: { at: [0, 1, 2, 3] }, say: 'Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all six parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support.' },
           { k: 'big', h: 'No streaks to break. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours.' },
           { k: 'quiz', q: 'What waters your tree for the day?', opts: ['Checking off any one practice', 'Finishing every practice', 'A full check-in'], right: 0, why: 'Any one practice waters your tree. One is enough.', say: 'Quick question. What waters your tree for the day?' }
         ] },
@@ -28285,7 +28285,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Each person tending their tree",
-         "In Maple, Aspen, or Oak"
+         "In their own tree app"
         ],
         [
          "Practices you do together",
@@ -29162,7 +29162,7 @@ window.GG_LEARN = {
        "items": [
         [
          "In your own tree app",
-         "Maple, Aspen, or Oak"
+         "The one that fits your age"
         ],
         [
          "With your weekly check-in",

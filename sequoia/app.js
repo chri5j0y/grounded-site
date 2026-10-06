@@ -1059,10 +1059,14 @@ function sgMilesNow(s) {
 }
 function sgMileName(id) { const m = SG_MILES.find(x => x[0] === id); return m ? m[1] : id.indexOf('season') === 0 ? 'Season ' + id.slice(6) + ' Finished' : id; }
 // Records any milestone reached for the first time, and says so once.
+// quiet (while Today draws): only ring and season milestones, which come from a
+// check-in. Practice milestones and the balanced week wait for sgOnCheck, so the
+// cheer fires the moment one is first reached (GWG BLD 745).
 function sgCheckMiles(s, quiet) {
   const R = sgRec(s), now = sgMilesNow(s), fresh = [];
-  Object.keys(now).forEach(id => { if (!R.miles[id]) { R.miles[id] = sgToday(); fresh.push(id); } });
-  sgBalanced(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = sgToday(); if (!quiet && m === sgMon(sgToday())) fresh.push('bonus'); } });
+  Object.keys(now).forEach(id => { if (quiet && !/^(ring|season)/.test(id)) return; if (!R.miles[id]) { R.miles[id] = sgToday(); fresh.push(id); } });
+  if (quiet) return fresh;
+  sgBalanced(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = sgToday(); if (m === sgMon(sgToday())) fresh.push('bonus'); } });
   return fresh;
 }
 function sgLevelHtml(s) {
