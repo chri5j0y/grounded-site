@@ -9347,7 +9347,7 @@ window.GG_LEARN = {
 
         { id: 'ok-u-home', n: 6, title: 'Your Household and Your Backup', mins: 4, blurb: 'Profiles for everyone, one backup file, and The Grove.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 6', h: 'Your Household and Your Backup', sub: 'Everyone gets their own tree.', say: 'Oak works for a whole household on one device. This last lesson shows how, and how to keep everything safe.' },
-          { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers tend in Oak too, until Pine is ready.' },
+          { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine.' },
           { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back.' },
           { k: 'points', h: 'The Grove', items: [['Your tree is yours', 'Answers always stay private'], ['The grove is ours', 'Your family’s trees, side by side'], ['You choose', 'Show my growth on The Grove, on or off']], say: 'If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings.' },
           { k: 'points', h: 'Make it easy to come back', items: [['Daily Reminder', 'Pick a time that fits your day'], ['Movement Level', 'Gentle, Moderate, or Athletic'], ['Reading and Display', 'Voice, speed, and text size']], say: 'Finally, settings help Oak fit you. Set a daily reminder. Choose your movement level, so practices fit your body. And set your voice and text size under Reading and Display.' },
@@ -19888,7 +19888,7 @@ window.GG_LEARN = {
        "k": "trees",
        "h": "A tree for every age",
        "grove": true,
-       "say": "Everyone in the family has their own tree, in their own app. Maple is for kids. Aspen is for middle schoolers. Oak is for grown-ups, and for high schoolers until Pine is ready. And The Grove is where all of those trees stand together."
+       "say": "Everyone in the family has their own tree, in their own app. Maple is for kids. Aspen is for middle schoolers. Pine is for high schoolers. Oak is for grown-ups. And The Grove is where all of those trees stand together."
       },
       {
        "k": "points",
@@ -20120,7 +20120,7 @@ window.GG_LEARN = {
        "k": "trees",
        "h": "Each tree is shaped by its stage",
        "grove": true,
-       "say": "Once people are added, their trees appear in the grove, shaped by their stage of life. Each person tends their tree in their own app. Maple for kids, Aspen for middle schoolers, and Oak for grown-ups and high schoolers, until Pine is ready."
+       "say": "Once people are added, their trees appear in the grove, shaped by their stage of life. Each person tends their tree in their own app. Maple for kids, Aspen for middle schoolers, Pine for high schoolers, and Oak for grown-ups."
       },
       {
        "k": "card",
