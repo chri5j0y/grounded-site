@@ -7756,8 +7756,9 @@ function plBuild(S){
   const P = PLG(), F = plFmt(S.fmt), ST = plStages(S), T = S.topic ? htTopic(S.topic) : null;
   const guideOnly = cdGuideOnly(T), deck = cdDeckFor(T), times = plTimes(S, F, guideOnly);
   // Pine speaks in Aspen's plan voice until the library gives plans a pine voice of its own.
-  const own = x => x === 'pine' && !((P.bridges || {}).pine) ? 'aspen' : x;
-  const voice = S.fmt === 'family' ? 'maple' : own(ST.main), key = S.fmt === 'family' ? 'all' : own(ST.main);
+  // The format's open and close lines fall back the same way when a format has no pine lines.
+  const own = x => x === 'pine' && !((P.bridges || {}).pine) ? 'aspen' : x, ownF = x => x === 'pine' && !((F.open || {}).pine) ? 'aspen' : x;
+  const voice = S.fmt === 'family' ? 'maple' : own(ST.main), key = S.fmt === 'family' ? 'all' : ownF(ST.main);
   const br = (P.bridges || {})[voice] || [], prac = plPractice(S), pp = plPracticePart(S);
   const steps = [{kind:'open', name:'Arrive', min:times.open, say:((F.open || {})[key] || []).map(plLine)}];
   GV_PARTS.forEach((k, i) => {

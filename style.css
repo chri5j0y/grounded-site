@@ -514,9 +514,9 @@ a.ss-row::after{content:'';position:absolute;right:13px;top:22px;width:8px;heigh
 .ss-title{display:block;font-weight:600;font-size:18px;line-height:1.35;}
 .ss-sub{display:block;font-size:15.5px;color:var(--ink-soft);line-height:1.45;margin-top:2px;}
 .ss-tag{--tc:#8B5E1A;display:inline-block;vertical-align:2px;font-family:'Barlow',sans-serif;font-weight:600;font-size:12.5px;line-height:1;padding:4px 9px;border-radius:999px;color:var(--tc);background:color-mix(in srgb,var(--tc) 12%,transparent);white-space:nowrap;}
-.ss-k5{--tc:#00739A;} .ss-ms{--tc:#1F6F74;} .ss-ad{--tc:#A5601E;} .ss-teen,.ss-teenOnly{--tc:#1F3325;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ss-k5{--tc:#6CCBEB;} :root:not([data-theme="light"]) .ss-ms{--tc:#7FC9C9;} :root:not([data-theme="light"]) .ss-ad{--tc:#E8A955;} :root:not([data-theme="light"]) .ss-teen,:root:not([data-theme="light"]) .ss-teenOnly{--tc:#9DB883;}}
-:root[data-theme="dark"] .ss-k5{--tc:#6CCBEB;} :root[data-theme="dark"] .ss-ms{--tc:#7FC9C9;} :root[data-theme="dark"] .ss-ad{--tc:#E8A955;} :root[data-theme="dark"] .ss-teen,:root[data-theme="dark"] .ss-teenOnly{--tc:#9DB883;}
+.ss-k5{--tc:#00739A;} .ss-ms{--tc:#1F6F74;} .ss-ad{--tc:#A5601E;} .ss-teen,.ss-teenOnly{--tc:#1F3325;} .ss-hs{--tc:#3A6B35;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ss-k5{--tc:#6CCBEB;} :root:not([data-theme="light"]) .ss-ms{--tc:#7FC9C9;} :root:not([data-theme="light"]) .ss-ad{--tc:#E8A955;} :root:not([data-theme="light"]) .ss-teen,:root:not([data-theme="light"]) .ss-teenOnly{--tc:#9DB883;} :root:not([data-theme="light"]) .ss-hs{--tc:#9CC795;}}
+:root[data-theme="dark"] .ss-k5{--tc:#6CCBEB;} :root[data-theme="dark"] .ss-ms{--tc:#7FC9C9;} :root[data-theme="dark"] .ss-ad{--tc:#E8A955;} :root[data-theme="dark"] .ss-teen,:root[data-theme="dark"] .ss-teenOnly{--tc:#9DB883;} :root[data-theme="dark"] .ss-hs{--tc:#9CC795;}
 .ss-card{background:var(--bg-deep);border-radius:10px;padding:14px 18px 18px;margin:0 0 12px;font-size:17px;}
 .ss-card p{margin-bottom:8px;}
 .ss-card ul,.ss-card ol{padding-left:22px;margin-bottom:6px;}
