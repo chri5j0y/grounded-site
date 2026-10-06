@@ -538,6 +538,8 @@ body.cd-noscroll{overflow:hidden;}
 .sq-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#A5492E 0%,#7A2E1C 50%,#4E1B10 100%);}
 /* Pine Guide (GWG BLD 741): evergreen */
 .pn-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#4E8A47 0%,#3A6B35 50%,#20401D 100%);}
+/* Birch Guide (GWG BLD 744): catkin gold */
+.br-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#A58A2A 0%,#7F6610 50%,#463808 100%);}
 #print-root .sq-sheet .sq-qr{display:flex;align-items:center;gap:4mm;margin-top:5mm;break-inside:avoid;}
 #print-root .sq-sheet .sq-qr svg{width:26mm;height:26mm;flex:none;}
 #print-root .sq-sheet p,#print-root .sq-sheet li{font-size:12pt;}
@@ -888,6 +890,10 @@ function start(){
     if (PNG() && (dr.demo || (dr.clientId && CL(dr.clientId)))) setTimeout(() => { if (confirm('You have a Pine visit in progress. Pick up where you left off?')) pnResume(); else { DATA.draft = null; save(); } }, 200);
     return;
   }
+  if (dr && dr.kind === 'br'){
+    if (brHas() && dr.clientId && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Birch visit in progress. Pick up where you left off?')) brResume(); else { DATA.draft = null; save(); } }, 200);
+    return;
+  }
   if (dr && dr.kind === 'sq'){
     if (SQG() && dr.clientId && CL(dr.clientId)) setTimeout(() => { if (confirm('You have a Sequoia visit in progress. Pick up where you left off?')) sqResume(); else { DATA.draft = null; save(); } }, 200);
     return;
@@ -896,9 +902,9 @@ function start(){
 }
 function tabsFor(){
   // Tab order (GWG BLD 743): the Guiding group first, trees youngest to oldest, then a thin divider ('-') and the
-  // Grow With Grounded group for Staff and Founders. Birch takes its slot after Pine once a Birch Guide tab exists (Birch 3).
+  // Grow With Grounded group for Staff and Founders. Birch takes its slot after Pine (Birch Guide, BLD 744).
   // The Sessions tab keeps the key 'guides' so saved routes and data-tab links still open it.
-  const kids = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(pnOpen() ? [['pine','Pine','pine']] : [])];
+  const kids = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(pnOpen() ? [['pine','Pine','pine']] : []), ...(brTab() ? [['birch','Birch','birch']] : [])];
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ...(OR() ? [['orient','Orientation','cap']] : [])];
   if (!LIB) return [...kids, ...grown];
@@ -912,7 +918,7 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => id === '-' ? `<span class="tab-div" role="separator" aria-orientation="vertical" aria-label="Grow With Grounded"></span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -970,6 +976,7 @@ const IC = {
  tree:'<path d="M12 21v-7"/><path d="M12 14c-3.6 0-6.5-2.5-6.5-5.6S8.4 3 12 3s6.5 2.3 6.5 5.4S15.6 14 12 14z"/><path d="M12 17l-3.5 3.5M12 17l3.5 3.5"/><path d="M12 10.5l-2.5-2M12 12l2.8-2.6"/>',
  sequoia:'<path d="M12 21v-3.5"/><path d="M12 2.8 9.2 7.6h1.6L8 12.2h1.9L7 17.5h10l-2.9-5.3H16l-2.8-4.6h1.6z"/><path d="M8.5 21h7"/>',
  pine:'<path d="M12 21v-3"/><path d="M12 2.8 8.6 7.4h2L7.4 12h2.4L6 17.6h12l-3.8-5.6h2.4L13.4 7.4h2z"/><path d="M9.5 9.6l-1.4 1M14.5 9.6l1.4 1M9 14.6l-1.6 1M15 14.6l1.6 1"/><path d="M8.5 21h7"/>',
+ birch:'<path d="M9.5 21V9.5M14.5 21V8"/><path d="M8.8 13h1.4M8.8 17h1.4M13.8 11.5h1.4M13.8 16h1.4"/><path d="M9.5 9.5C6.6 9.5 5 8 5 6.2S6.6 3 8.8 3.4C9.6 2.4 11 2 12.2 2.5c1.1-.6 2.7-.5 3.8.4 2.3-.1 3.6 1.5 3.3 3.3-.3 1.7-2 2.8-4.8 1.8"/><path d="M7 21h10"/>',
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
@@ -997,7 +1004,7 @@ function vHome(){
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 style="margin-top:18px">Start a Session</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1125,6 +1132,7 @@ function vClient(c){
   ${spPersonCard(c)}
   ${saPersonCard(c)}
   ${pnPersonCard(c)}
+  ${brPersonCard(c)}
   ${wlPersonCard(c)}
   ${sqPersonCard(c)}
   ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Oak Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
@@ -1237,6 +1245,7 @@ function vFieldHome(){
   ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="maple">${icon('maple')} Open</button></div></div>` : ''}
   ${saOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SAG().title)}</h3><p class="muted">${esc(SAG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="aspen">${icon('aspen')} Open</button></div></div>` : ''}
   ${pnOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(PNG().title)}</h3><p class="muted">${esc(PNG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="pine">${icon('pine')} Open</button></div></div>` : ''}
+  ${brTab() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(BRG().title)}</h3><p class="muted">${esc(BRG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="birch">${icon('birch')} Open</button></div></div>` : ''}
   ${wlOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(WLG().title)}</h3><p class="muted">${esc(WLG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="willow">${icon('willow')} Open</button></div></div>` : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
@@ -1505,6 +1514,7 @@ function vFounder(){
   const guidesH = () => `  ${FLD ? spFounderCard() : ''}
   ${FLD ? saFounderCard() : ''}
   ${FLD ? `<div class="card"><h3>Pine Guide</h3>${pnFieldRow()}</div>` : ''}
+  ${FLD ? `<div class="card"><h3>Birch Guide</h3>${brFieldRow()}</div>` : ''}
   ${FLD ? `<div class="card"><h3>Sequoia Guide</h3>${sqFieldRow()}</div>` : ''}
   ${FLD ? wlFounderCard() : ''}`;
   // Founder opens to cards (GWG BLD 732). A new update to seal opens Update a Library, so its card is in view.
@@ -1522,7 +1532,7 @@ function vFounder(){
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
     {k: 'pricing', title: 'Private Pricing', desc: 'Rates and pricing notes for Chris and Kayti.'},
     {k: 'field', title: 'What Field Users See', desc: 'Which guides are open to Field users, Orientation, and the welcome.'},
-    FLD ? {k: 'guides', title: 'Maple, Aspen, Pine, Sequoia, and Willow', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
+    FLD ? {k: 'guides', title: 'Maple, Aspen, Pine, Birch, Sequoia, and Willow', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
   ];
   const C2 = secPick('founder', cards), back = h => secPage('founder', 'Back to Founder', h);
   if (C2 === 'ready') return back(readyH);
@@ -1708,13 +1718,14 @@ function lnAct(a, v){
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
 function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr7'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
-// The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, oak, sequoia, willow.
+// The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
   fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree, name: signed.name, title: guide + ' Training', body: ({
     maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
     aspen: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 6 to 8 through Aspen.',
     pine: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 9 to 12 through Pine.',
+    birch: 'Lessons, practice scenarios, and a signed agreement for walking with young adults, 18 to 26, through Birch.',
     oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
     sequoia: 'Lessons, practice scenarios, and a signed agreement for walking with older adults and their families through Sequoia.',
     willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'})[tree],
@@ -1763,7 +1774,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
-const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'pn' ? 'Pine: ' + (PNG() ? pnVisitName(s.visit) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'pn' ? 'Pine: report record' : s.tool === 'st' ? 'Oak: report record' : s.tool === 'sq' ? 'Sequoia: report record' : 'Maple: report record') : s.kind === 'sq' ? 'Sequoia: ' + (SQG() ? sqVisitName(s.visit) : 'visit') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'pn' ? 'Pine: ' + (PNG() ? pnVisitName(s.visit) : 'visit') : s.kind === 'br' ? 'Birch: ' + (brHas() ? (s.notToday ? 'Not today' : brVisitName(s.visit)) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'pn' ? 'Pine: report record' : s.tool === 'br' ? 'Birch: report record' : s.tool === 'st' ? 'Oak: report record' : s.tool === 'sq' ? 'Sequoia: report record' : 'Maple: report record') : s.kind === 'sq' ? 'Sequoia: ' + (SQG() ? sqVisitName(s.visit) : 'visit') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
 function stQuestions(visit, set, key){ if (!STC) return []; return ((set === 'staff' ? STC.staff : STC.questions)[key]) || []; }
 function stScore(run){
   const out = {}, sc = stScale();
@@ -2356,7 +2367,7 @@ const SQG = () => fgPartsLib((FLD && FLD.sequoiaGuide) || null);
 const sqOpen = () => !!SQG() && (TIER !== 'field' || !!(SQG().open && SQG().open.field && (!OR() || orState().complete)));
 const sqPart = k => SQG().parts.find(p => p.key === k);
 const sqIsMe = c => !!(c && c.sq && c.sq.type === 'me');
-const anyMe = c => stIsMe(c) || sqIsMe(c);
+const anyMe = c => stIsMe(c) || sqIsMe(c) || brIsMe(c);
 const sqPeople = () => DATA.clients.filter(c => c.sq && c.sq.type !== 'me');
 const sqMe = () => DATA.clients.find(sqIsMe);
 const sqVisits = id => DATA.sessions.filter(s => s.kind === 'sq' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
@@ -3390,7 +3401,7 @@ const spK2 = g => ['K','1','2'].includes(String(g));
 const spBand = g => spK2(g) ? 'k2' : 'g35';
 const spPeople = () => DATA.clients.filter(c => c.sp);
 const spVisits = id => DATA.sessions.filter(s => s.kind === 'sp' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
-const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && s.tool !== 'st' && s.tool !== 'sq' && s.tool !== 'pn' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
+const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && s.tool !== 'st' && s.tool !== 'sq' && s.tool !== 'pn' && s.tool !== 'br' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
 const SP_GRADES = ['K','1','2','3','4','5'];
@@ -5969,6 +5980,835 @@ async function pnSetField(on){
 }
 function pnPersonCard(c){ return c.pn && pnOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Pine Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="pn-open" data-v="${c.id}">${icon('pine')} Open</button></div></div>` : ''; }
 
+// ---------------- BIRCH GUIDE ----------------
+// GWG BLD 744 (Birch 3). Guided Birch visits with young adults, 18 to 26, for anyone trained who walks with them: campus
+// ministers and college chaplains, young adult and youth pastors, residence life staff, military chaplains and mentors,
+// coaches, apprenticeship and work mentors, and hospital chaplains (plan Decision 20).
+// Built from Sequoia Guide (and Oak Guide) for the adult relationship and the newest structures: the person's own consent
+// and their yes at every visit, People records, Full, Quick, and Open Conversation visits, Not today, impressions, tags,
+// what you offered, referrals, rings, My Own Tree, Report a Concern, Birch Guide Training version 2 as video (DATA.brmod)
+// gating real visits (demo visits always open), the certificate, the Founder open row, and the resume prompt.
+// Built from Pine Guide for: questions read from the public birch/checkin.js (window.BIRCH_CHECKIN) in their own scope,
+// Faith or Plain chosen at each visit, Try this week, the goodbye, the take-home sheet they look over first, and the
+// room rule, recorded at every visit, only when the person is still in high school or a youth program.
+// Birch's own: the youth question at the start of every visit, My Season asked each visit (examples and tips only, never
+// the questions or scores), and the optional betting question (only the person turns it on; never scored; never printed
+// or copied unless they say so). There is no grown-up and no alert to anyone: BIRCH_CHECKIN.ALERT_KINDS is empty.
+// Wording lives in the Field library (FLD.birchGuide). A person is an ordinary People record with a .br profile
+// {type, consent, wording, season, youth}. Visits are sessions with kind 'br', so backups merge them. Report records are
+// sessions with kind 'spr' and tool 'br', never printed or copied.
+// Staff and Founders see the tab once the library holds Birch Guide's wording. Field users see it once
+// birchGuide.open.field is on and Orientation is done (brOpen). Birch Guide: For Guides (BLD 743) keeps using brOpen.
+const BRG = () => fgPartsLib((FLD && FLD.birchGuide) || null);
+const brOpen = () => !!BRG() && (TIER !== 'field' || !!(BRG().open && BRG().open.field && (!OR() || orState().complete)));
+const brHas = () => !!(BRG() && Array.isArray(BRG().parts) && BRG().parts.length === 6 && Array.isArray(BRG().visits));
+const brTab = () => brOpen() && brHas();
+const brPart = k => BRG().parts.find(p => p.key === k);
+// A part in the visit's wording: Plain swaps in the part's plain lines (you, open, practices) where it has them.
+const brPartW = (p, w) => w === 'plain' && p && p.plain ? Object.assign({}, p, p.plain) : p;
+const brIsMe = c => !!(c && c.br && c.br.type === 'me');
+const brPeople = () => DATA.clients.filter(c => c.br && c.br.type !== 'me');
+const brMe = () => DATA.clients.find(brIsMe);
+const brSort = (a, b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0);
+const brVisits = id => DATA.sessions.filter(s => s.kind === 'br' && s.clientId === id).sort(brSort);
+const brReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool === 'br' && (!id || s.clientId === id)).sort(brSort);
+const brTypeName = t => t === 'me' ? 'Me' : (((BRG().people || []).find(x => x[0] === t) || [])[1] || 'Young adult');
+const brVisitName = k => ((BRG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const brConsentName = h => h === 'form' ? 'Consent form' : (((BRG().consent.how || []).find(x => x[0] === h) || [])[1] || '');
+const brForm = () => (BRG().consent || {}).form || null;
+function brConsentCurrent(con){ const F = brForm(); return !(con && con.how === 'form' && F && con.v !== F.version); }
+const brHasConsent = c => brIsMe(c) || !!(c.br.consent && c.br.consent.how && c.br.consent.how !== 'declined' && brConsentCurrent(c.br.consent));
+const brWordName = w => w === 'plain' ? 'Plain wording' : 'Faith wording';
+const BR_HOME = 'https://growwithgrounded.com/birch/';
+const brTM = tmFoot('Birch', 'growwithgrounded.com');
+const brHello = (eb, title, p, extra) => `<div class="hello br-hello"${extra || ''}><div class="eyebrow" style="color:#F2DC8A">${eb}</div><h1>${esc(title)}</h1><p>${p}</p>`;
+
+// ----- the question bank, read from the public birch/checkin.js -----
+let BRC = null, BRC_WAIT = null, BRC_FAIL = false;
+const BR_BANKS = {};
+function brLoad(){
+  if (BRC || BRC_WAIT) return;
+  BRC_FAIL = false;
+  BRC_WAIT = fetch('../birch/checkin.js', {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })
+    .then(src => { const w = {}; new Function('window', src)(w); const C = w.BIRCH_CHECKIN; if (!C || !C.questions || typeof C.getBank !== 'function') throw 0; BRC = C; BRC_WAIT = null; if (DATA && V.tab === 'birch') render(); })
+    .catch(() => { BRC_WAIT = null; BRC_FAIL = true; if (DATA && V.tab === 'birch') render(); });
+}
+function brNeedData(){
+  if (BRC) return '';
+  brLoad();
+  return BRC_FAIL ? `<div class="card"><h3>The Birch questions didn't load</h3><p class="muted">They come from growwithgrounded.com, so this needs a connection. Check it, then try again.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="br-retry">Try Again</button></div>`
+    : `<div class="card"><p class="muted">Loading the Birch questions...</p></div>`;
+}
+const brSeasonOpts = () => ((BRG().season || {}).opts) || ((BRC && BRC.mySeason) || []).map(x => [x.id, x.name]);
+const brSeasonNames = ids => (ids || []).map(id => (brSeasonOpts().find(x => x[0] === id) || [])[1]).filter(Boolean);
+function brBank(r){ const w = r.wording === 'plain' ? 'plain' : 'faith', k = (r.season || []).slice().sort().join(',') + '|' + w; return BR_BANKS[k] || (BR_BANKS[k] = BRC.getBank((r.season || []).slice(), w)); }
+const brQs = (r, key) => BRC ? (brBank(r)[key] || []) : [];
+// The questions a visit asks in one part: all eight in a full visit, Birch's quick check-in (weekly) in a quick one.
+function brIdx(r, key){
+  if (r.visit === 'full') return brQs(r, key).map((q, i) => i);
+  if (r.visit === 'quick') return ((BRC && BRC.weekly) || {})[key] || [0];
+  return [];
+}
+const brScale = () => (BRC && BRC.answers) || BRG().scale || [];
+const brAns = k => brScale().find(a => a[0] === k) || null;
+const BR_STD = () => BRC ? BRC.version : 1;
+const BR_BANK = () => (BRC && BRC.bank) || 1;
+const brImpr = () => BRG().impressions || [['strong','Strong',8],['steady','Steady',6],['strained','Strained',3],['none','Not talked about',null]];
+// Scores 1 to 10 for each part, like Sequoia and Oak. Open conversations score from impressions. The safety step and the
+// optional question never count.
+function brScore(r){
+  const out = {};
+  BRG().parts.forEach(p => {
+    const k = p.key;
+    if (r.visit === 'open'){ const im = brImpr().find(x => x[0] === (r.impr || {})[k]); out[k] = im && im[2] != null ? im[2] : null; return; }
+    let sum = 0, n = 0; const qs = brQs(r, k), qa = (r.ans || {})[k] || {};
+    brIdx(r, k).forEach(i => { const q = qs[i], o = brAns(qa[i]); if (!q || !o || o[2] == null) return; sum += q.r ? 3 - o[2] : o[2]; n++; });
+    out[k] = n ? Math.max(1, Math.min(10, Math.round(1 + 9 * (sum / n) / 3))) : null;
+  });
+  return out;
+}
+const brRingVisit = s => !s.notToday && s.visit !== 'open' && stAvg(s.scores) != null;
+const brHard = (q, a) => { const o = brAns(a); return !!o && o[2] != null && (q.r ? o[2] >= 2 : o[2] === 0); };
+const brFlagOn = (q, a) => !!(q && q.flag && BRC && BRC.flags && BRC.flags[q.flag] && (BRC.flags[q.flag].on || []).includes(a));
+// Flagged answers (alone, hope, hurt), and hurt from the safety step's first question. Nothing is ever sent to anyone.
+function brRunFlags(r){
+  const out = [];
+  if (BRC && r.visit !== 'open') BRG().parts.forEach(p => { const qs = brQs(r, p.key), qa = (r.ans || {})[p.key] || {}; brIdx(r, p.key).forEach(i => { const q = qs[i]; if (q && brFlagOn(q, qa[i]) && !out.includes(q.flag)) out.push(q.flag); }); });
+  if (brHurt(r.safety) && BRC && BRC.flags && BRC.flags.hurt && !out.includes('hurt')) out.push('hurt');
+  return out;
+}
+// The optional question (BIRCH_CHECKIN.OPTIONAL): full visits only, and only when the person turns it on.
+const brOptList = () => (BRC && (BRC.optional || BRC.OPTIONAL)) || [];
+const brOptFor = part => brOptList().filter(q => q.part === part);
+// The youth setting: asked at the start of every visit. A yes brings the room rule, recorded every visit.
+const BR_WHERE = [['sight', 'Another adult is within sight, door open'], ['window', 'At a school, church, or organization: door open or a clear window, staff nearby who know'], ['in', 'Another adult is in the room']];
+const brWhereOpts = () => ((BRG().youth || {}).where) || BR_WHERE;
+const brWhere = s => ((brWhereOpts().find(o => o[0] === (s.room || {}).where) || [])[1]) || 'not recorded';
+
+// ----- the safety step: Birch's two questions, the 'now' follow-up, and the guide's protocol -----
+const BR_SAFE_ON = {safe:['yes','unsure'], self:['yes','unsure'], now:['yes','unsure']};
+const brSafeOn = k => (((BRC && BRC.safety && BRC.safety.on) || BR_SAFE_ON)[k]) || BR_SAFE_ON[k];
+const brSafeQs = () => { const F = BRG().safety || {}, A = (BRC && BRC.safety && BRC.safety.questions) || []; return [[F.opener || (A[0] || [])[0] || '', 'safe'], [F.direct || (A[1] || [])[0] || '', 'self']]; };
+const brSafeAns = () => (BRG().safety || {}).directOpts || (BRC && BRC.safety && BRC.safety.answers) || [['yes','Yes'],['no','No'],['unsure','Not sure'],['skip',"I'd rather not say"]];
+const brHurt = sf => !!sf && !sf.notAsked && brSafeOn('safe').includes(sf.safe);
+const brSelf = sf => !!sf && !sf.notAsked && brSafeOn('self').includes(sf.self);
+const brNow = sf => brSelf(sf) && brSafeOn('now').includes(sf.now);
+const brSafeFlag = sf => brHurt(sf) || brSelf(sf);
+function brSafetyText(sf){
+  if (!sf || (!sf.safe && !sf.self && !sf.notAsked)) return 'Not recorded.';
+  if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
+  const an = x => ((brSafeAns().find(o => o[0] === x) || [])[1] || 'not recorded');
+  return (brSafeFlag(sf) ? 'Concern noted. ' : 'No concern noted. ') + 'Anyone hurting them or making them feel unsafe: ' + an(sf.safe) + '. Thoughts of ending their life or not wanting to be alive: ' + an(sf.self) + '.'
+    + (brSelf(sf) ? ' With them today: ' + an(sf.now) + '.' : '') + ((sf.actions || []).length ? ' Actions: ' + sf.actions.join(', ') + '.' : '');
+}
+const brLineList = ids => { const L = ((BRC && BRC.safety && BRC.safety.lines) || {}); const all = [...(L.calm || []), ...(L.hurt || []), ...(L.topic || [])]; return (ids || []).map(id => all.find(x => x.id === id)).filter(Boolean); };
+const brLinesHTML = list => `<ul style="margin-top:6px">${list.map(x => `<li><b>${esc(x.name)}:</b> ${esc(x.show)}${x.note ? ` <span class="muted">${esc(x.note)}</span>` : ''}</li>`).join('')}</ul>`;
+
+// ----- Birch Guide Training (its own module; gates real visits for everyone; demo visits always open) -----
+const BRM = () => BRG() && BRG().module;
+function brmData(){ DATA.brmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.brmod || {}); return DATA.brmod; }
+/* Birch Guide Training, version 2 (GWG BLD 744): played like Pine and Sequoia Guide Training. Each lesson is a narrated
+   video in the shared player, drawn from FLD.birchGuide.module.lessons[i].video.scenes, with Read It Instead underneath.
+   Watched (closing scene) or read (Mark as Read) both count; lessons open in order; renewing opens all. Fifteen
+   scenarios (pass at 12), then the agreement, renewed yearly. */
+const brmFree = () => { const D = brmData(); return brmState().complete || !!(D.pass || D.signed); };
+const brmOpen = i => { const M = BRM(), D = brmData(); return i <= 0 || brmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+function brmTrack(){ const M = BRM(); return {id:'brg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
+function brmState(){
+  const M = BRM(), D = brmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const brReady = () => !!BRM() && brmState().complete;
+function brmCard(){
+  const m = brmState();
+  if (!BRM()) return '';
+  if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Birch training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="br-mhome">Renew</button></div></div>` : '';
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Birch training' : 'Start with Birch Guide Training'}</h3><p class="muted">${esc(BRM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="br-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="br-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+}
+function vBRM(){
+  const M = BRM(), D = brmData(), s = brmState();
+  if (!M) return `<button class="linkbtn" data-act="br-home">Back to Birch Guide</button><div class="card" style="margin-top:14px"><p>Birch Guide Training isn't on this device yet.</p></div>`;
+  if (V.brml !== undefined) return vBRMLesson(V.brml);
+  if (V.brq) return V.brq.done ? vBRMResult() : vBRMQ();
+  if (V.brs) return vBRMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-act="br-home">Back to Birch Guide</button>
+  ${brHello('Birch Guide', M.title, s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0]), ' style="margin-top:14px"')}${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = brmOpen(i); return step('br-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
+  <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
+  ${step('br-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with young adults`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('br-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="br-mprint">${icon('print')} Save or Print Agreement</button></div>` : ''}${s.complete ? fgGuidePrints('br') : ''}`;
+}
+function vBRMLesson(i){
+  const M = BRM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vBRM();
+  if (!brmOpen(i)) return `<button class="linkbtn" data-act="br-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = stmVid(L), watch = vid && !V.brread;
+  if (watch){ GGLearn.css(); setTimeout(() => brmMount(i), 0); }
+  return `<button class="linkbtn" data-act="br-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="brm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="br-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="br-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="brm-foot">${brmFoot(i)}</div>`;
+}
+// The buttons under a lesson. Redrawn in place when a video finishes, so the player is never torn down.
+function brmFoot(i){
+  const M = BRM(), L = M.lessons[i], n = M.lessons.length, D = brmData(), done = !!D.lessons[L.id];
+  const reading = V.brread || !stmVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="br-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="br-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="br-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="br-mhome">Back to training</button>` : ''}</div>
+  ${all && !brmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="br-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function brmMount(i){
+  const host = $('#brm-host'); if (!host || !window.GGLearn) return;
+  const M = BRM(), L = M.lessons[i], D = brmData(), tr = brmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mark: {tree: 'birch', name: 'Birch Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: '#7F6610',
+    onAt: k => { lastAct = Date.now(); brmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = brmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#brm-foot'); if (f) f.innerHTML = brmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'birch', brm:1, brml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'birch', brm:1}; render(); }});
+}
+function brmNewQuiz(){ const items = BRM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vBRMQ(){
+  const Q = V.brq, items = BRM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="br-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card">${it.s ? `<p class="or-scen">${esc(it.s)}</p>` : ''}<p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="br-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="br-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'br-mfinish' : 'br-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function brmFinish(){
+  const M = BRM(), Q = V.brq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = brmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vBRMResult(){
+  const M = BRM(), Q = V.brq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = brmState();
+  return `<button class="linkbtn" data-act="br-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="br-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="br-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="br-mq">Try Again</button><button class="btn btn-line" data-act="br-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your Answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s || it.q)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vBRMSign(){
+  const A = BRM().agreement, s = brmState(), D = brmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="br-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="br-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="brm-name">Your full name</label><input type="text" id="brm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="brm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="br-msigned">Sign Agreement</button>`}</div>`;
+}
+function brmPrint(){
+  const A = BRM().agreement, D = brmData().signed;
+  fgSheet(ph('Birch Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'birch-guide-agreement'});
+}
+
+// ----- consent: their own, recorded once; the written form, kept encrypted here; a PDF if they want one -----
+function vBRForm(c){
+  const F = brForm();
+  return `<button class="linkbtn" data-act="br-consent" data-v="${c.id}">Back to consent</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p></div>
+  <div class="card"><p class="muted" style="font-size:14px">Hand them the device, or read each line aloud. They check each box and type their name.</p>
+   ${F.boxes.map((b, i) => `<label class="cb"><input type="checkbox" class="brf-box" data-i="${i}"> ${esc(b)}</label>`).join('')}
+   <label class="f" for="brf-name">${esc(F.nameLabel)}</label><input type="text" id="brf-name" autocomplete="off" value="">
+   ${F.byLabel ? `<label class="f" for="brf-by">${esc(F.byLabel)}</label><input type="text" id="brf-by" value="">` : ''}
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(F.pdfNote || '')}</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="br-form-save" data-v="${c.id}">Save Consent</button></div>`;
+}
+function brFormPdf(c){
+  const F = brForm(), con = c.br.consent || {};
+  if (!F || con.how !== 'form') return;
+  fgSheet(ph('Consent') + `<h1>${esc(F.title)}</h1><p>${esc(F.intro)}</p><ul>${F.boxes.map(b => `<li>[x] ${esc(b)}</li>`).join('')}</ul>
+    <p><b>${esc(F.nameLabel)}:</b> ${esc(con.name || '')}${con.by ? ' (' + esc(con.by) + ')' : ''}</p><p><b>Date:</b> ${nice(con.date)}</p><p style="font-size:9pt">Form version ${esc(String(con.v))}. ${esc(F.pdfNote || '')}</p>` + pf(), F.title, {file:'birch-consent', date:con.date, confidential:true});
+}
+function vBRConsent(c){
+  const C = BRG().consent, cur = c.br.consent || {};
+  return `<button class="linkbtn" data-act="br-open" data-v="${c.id}">Back to ${esc(c.name)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(c.name)}</div><h1>${esc(C.title)}</h1><p>${esc(C.lead)}</p></div>
+  <div class="card step-card"><div class="blk say"><div class="lab">Say</div><ul><li>${esc(C.say)}</li></ul></div></div>
+  <div class="card"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${C.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>${C.memoryNote ? `<p class="tipbox" style="margin-top:12px">${esc(C.memoryNote)}</p>` : ''}</div>
+  ${brForm() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(brForm().title)}</h3><p class="muted">${esc(brForm().lead)}</p>
+   ${cur.how === 'form' ? `<p style="margin-top:8px"><span class="pill ${brConsentCurrent(cur) ? 'sage' : 'warn'}">${brConsentCurrent(cur) ? 'Signed' : 'The form changed. Ask again.'}</span> ${nice(cur.date)}${cur.name ? ' by ' + esc(cur.name) : ''}</p>` : ''}
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="br-form" data-v="${c.id}">${cur.how === 'form' ? 'Fill It In Again' : 'Fill In the Form'}</button>${cur.how === 'form' ? `<button class="btn btn-line btn-sm" data-act="br-form-pdf" data-v="${c.id}">${icon('print')} Save or Print the Form</button>` : ''}</div></div>` : ''}
+  <div class="card"><h3>${brForm() ? 'Or record another way' : 'Record it'}</h3>
+   ${C.how.filter(h => h[0] !== 'form').map(h => `<label class="cb"><input type="radio" name="br-ch" value="${h[0]}" ${cur.how === h[0] ? 'checked' : ''}> ${esc(h[1])}</label>`).join('')}
+   <label class="f" for="br-cby">If a guardian is part of their consent, who (relationship only)</label><input type="text" id="br-cby" value="${esc(cur.by||'')}">
+   <label class="f" for="br-cd">Date</label><input type="date" id="br-cd" value="${esc(cur.date || today())}" style="max-width:220px">
+   <button class="btn btn-gold" style="margin-top:14px" data-act="br-consent-save" data-v="${c.id}">Save Consent</button></div>`;
+}
+
+// ----- Report a Concern: adult wording. The person decides who hears, except danger right now (911), a vulnerable adult
+// (MAARC, 1-844-880-1574), and what the law and the guide's organization require of their role. -----
+function vBRReport(cid){
+  const R = Object.assign({title:'Report a Concern', lead:'', steps:[], kinds:[], how:[], recordNote:'Kept encrypted on this device. Never printed, never in a visit note, never on a handout.'}, BRG().report || {});
+  const c = cid ? CL(cid) : null, k = SPG() ? spContact() : {}, where = V.brwhere || 'mn', mn = R.mn || {}, out = R.out || {}, RO = R.roles;
+  const draft = DATA.draft && DATA.draft.kind === 'br';
+  const how = (R.how || []).map(h => Array.isArray(h) ? h : [h, h]);
+  return `<button class="linkbtn" ${c ? `data-act="br-open" data-v="${c.id}"` : 'data-act="br-home"'}>Back${c ? ' to ' + esc(c.name) : ' to Birch Guide'}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Birch Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
+  ${draft ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Your visit is paused.</b> <span class="muted">Everything so far is kept.</span></div><button class="btn btn-gold btn-sm" data-act="br-resume">Back to the Visit</button></div></div>` : ''}
+  <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div>${R.danger ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p>` : ''}</div>
+  ${R.steps.length ? `<div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
+  ${(R.lines || []).length ? `<div class="card"><h3>Help They Can Reach Privately</h3>${R.lines.map(x => `<p style="margin-top:8px"><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}</div>` : ''}
+  ${RO && (RO.items || []).length ? `<div class="card"><h3>${esc(RO.title || 'What your role requires')}</h3>${RO.lead ? `<p class="muted" style="font-size:15px;margin-top:4px">${esc(RO.lead)}</p>` : ''}${RO.items.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>` : ''}
+  ${R.kinds.length ? `<div class="card"><h3>A Vulnerable Adult: What Counts</h3>${R.kinds.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>` : ''}
+  ${R.mn ? `<div class="card"><div class="row" role="group" aria-label="Where are they?"><button class="chip" data-act="br-where" data-v="mn" aria-pressed="${where === 'mn'}">In Minnesota</button><button class="chip" data-act="br-where" data-v="out" aria-pressed="${where === 'out'}">Outside Minnesota</button></div>
+   ${where === 'mn' ? `<h3 style="margin-top:12px">${esc(mn.title || '')}</h3><p style="margin-top:6px">${esc(mn.lead || '')}</p>
+    <div class="row" style="margin-top:10px">${mn.phone ? `<a class="btn btn-gold" href="tel:${esc(mn.tel || String(mn.phone).replace(/[^0-9]/g, ''))}">${icon('phone')} Call ${esc(mn.phone)}</a>` : ''}${mn.form ? `<a class="btn btn-line" href="${esc(mn.form)}" target="_blank" rel="noopener">Mandated reporter online form</a>` : ''}</div>
+    <ul style="margin-top:10px">${(mn.notes || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+   : `<h3 style="margin-top:12px">${esc(out.title || 'Outside Minnesota')}</h3><p style="margin-top:6px">${esc(out.lead || '')}</p>${out.link ? `<div class="row" style="margin-top:10px"><a class="btn btn-line" href="${esc(out.link)}" target="_blank" rel="noopener">${esc(out.linkText || out.link)}</a></div>` : ''}`}</div>` : ''}
+  ${k && (k.who || k.phone || k.step) ? `<div class="card"><h3>Your Reporting Contact</h3><p style="margin-top:6px">${esc(k.who || '')}${k.phone ? ` &middot; <a href="tel:${esc(k.phone.replace(/[^0-9+]/g, ''))}">${esc(k.phone)}</a>` : ''}</p>${k.step ? `<p class="muted" style="margin-top:4px">${esc(k.step)}</p>` : ''}</div>` : ''}
+  ${c ? `<div class="card st-private"><h3>Record what you did</h3><p class="muted" style="font-size:14px">${esc(R.recordNote)}</p>
+   <label class="f" for="brr-what">What you reported (a few plain words)</label><input type="text" id="brr-what" placeholder="Concern about someone hurting them">
+   <div class="grid g2"><div><label class="f" for="brr-how">How</label><select id="brr-how">${how.map(h => `<option value="${esc(h[0])}">${esc(h[1])}</option>`).join('')}</select></div><div><label class="f" for="brr-at">Date and time reported</label><input type="datetime-local" id="brr-at"></div></div>
+   <label class="f" for="brr-ref">Reference number (if you got one)</label><input type="text" id="brr-ref" autocomplete="off">
+   <button class="btn btn-gold" style="margin-top:12px" data-act="br-rep-save" data-v="${c.id}">Save Report Record</button></div>
+   ${brReports(c.id).length ? `<div class="card st-private"><h3>Report Records</h3>${brReports(c.id).map(r => `<div class="list-row"><div class="lr-main"><b>${esc(r.what || 'Report')}</b><br><small class="muted">${nice(r.date)}${r.how ? ' &middot; ' + esc(r.how) : ''}${r.at ? ' &middot; ' + esc(r.at.replace('T', ' ')) : ''}${r.ref ? ' &middot; Ref ' + esc(r.ref) : ''}</small></div></div>`).join('')}</div>` : ''}`
+   : '<p class="muted" style="margin-top:10px">Open a person to record a report on their page.</p>'}`;
+}
+const brShield = cid => `<button class="btn btn-line btn-sm" data-act="br-report" data-v="${cid || ''}">${icon('shield')} Report a Concern</button>`;
+
+// ----- rings: one for each full or quick visit, oldest in the middle -----
+function brRings(c){
+  const vs = brVisits(c.id).filter(brRingVisit).reverse();
+  const n = vs.length, R = 76, cx = 90;
+  const col = a => a >= 8 ? '#4A5D3A' : a >= 5 ? '#8B5E1A' : '#A8542E';
+  const rings = vs.map((s, i) => { const r = 16 + (R - 16) * (n === 1 ? 1 : i / (n - 1)); return `<circle cx="${cx}" cy="${cx}" r="${r.toFixed(1)}" fill="none" stroke="${col(stAvg(s.scores))}" stroke-width="${n > 8 ? 3 : 5}" opacity="${(0.55 + 0.45 * (i + 1) / n).toFixed(2)}"><title>${esc(nice(s.date))}: ${stLevel(Math.round(stAvg(s.scores)))}</title></circle>`; }).join('');
+  return `<svg class="st-rings" viewBox="0 0 180 180" role="img" aria-label="${n} ring${n === 1 ? '' : 's'}"><circle cx="${cx}" cy="${cx}" r="${R + 8}" fill="color-mix(in srgb,var(--gold) 7%,transparent)" stroke="var(--ink)" stroke-width="1.2"/>${rings}<circle cx="${cx}" cy="${cx}" r="7" fill="var(--ink)"/></svg>`;
+}
+function brPartTable(c){
+  const vs = brVisits(c.id).filter(s => stAvg(s.scores) != null).slice(0, 4);
+  if (!vs.length) return '<p class="muted" style="margin-top:8px">No scored visits yet. Each full visit or quick check-in adds a ring.</p>';
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="prog-table"><tr><th>Part</th>${vs.map(s => `<th>${esc(nice(s.date))}${s.visit === 'open' ? '<br><small class="muted">Open</small>' : ''}</th>`).join('')}</tr>
+   ${BRG().parts.map(p => `<tr><td><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)}</td>${vs.map(s => { const v = (s.scores||{})[p.key]; return `<td>${v == null ? '<span class="muted">&middot;</span>' : `<span class="pill ${stLvlCls(v)}">${stLevel(v)}</span>`}</td>`; }).join('')}</tr>`).join('')}</table></div>`;
+}
+
+// ----- views -----
+function vBR(){
+  if (!brHas()) return `<div class="card"><p>Birch Guide isn't on this device yet.</p></div>`;
+  brLoad();
+  if (V.brm) return vBRM();
+  if (V.brrep !== undefined) return vBRReport(V.brrep);
+  if (V.brform){ const c = CL(V.brform); if (c && c.br && brForm()) return vBRForm(c); }
+  if (V.brc){ const c = CL(V.brc); if (c && c.br) return vBRConsent(c); }
+  if (V.brv) return vBRVisit();
+  if (V.brp){ const c = CL(V.brp); if (c && c.br) return vBRPerson(c); }
+  const S = BRG(), list = brPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), me = brMe(), m = brmState();
+  const hello = brHello('Grounded Field Guide&trade;', S.title, esc(S.lead)) + '</div>';
+  const about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>
+  ${S.youth ? `<div class="card"><h3>${esc(S.youth.title)}</h3><p style="margin-top:6px">${esc(S.youth.lead)}</p><ul class="checklist" style="margin-top:8px">${(S.youth.rule || []).map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>${S.youth.note ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(S.youth.note)}</p>` : ''}</div>` : ''}`;
+  const add = `  <div class="card"><h3>Someone new</h3>
+   <div class="grid g2"><div><label class="f" for="br-nn">Code or initials</label><input type="text" id="br-nn" autocomplete="off" placeholder="J.M. or Hall 3"></div>
+   <div><label class="f" for="br-nt">Who they are</label><select id="br-nt">${(S.people || []).map(p => `<option value="${p[0]}">${esc(p[1])}</option>`).join('')}</select></div></div>
+   <p class="muted" style="font-size:14px;margin-top:6px">Never a full name, never a photo.</p>
+   <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="br-new">${icon('plus')} Add Person</button><button class="btn btn-line" data-act="br-demo">${icon('play')} Try a Demo Visit</button><button class="btn btn-line" data-act="br-demo-full">${icon('play')} Demo Full Visit</button></div></div>`;
+  const people = `  <div class="card"><div class="spread"><h3>People</h3>${TIER !== 'field' && LIB ? '<button class="linkbtn" data-tab="clients">All People records</button>' : ''}</div>
+   ${list.length ? list.map(c => { const last = brVisits(c.id)[0]; return `<div class="list-row"><div class="lr-main"><b>${esc(c.name)}</b> <span class="pill">${esc(brTypeName(c.br.type))}</span>${brHasConsent(c) ? '' : ' <span class="pill warn">Consent needed</span>'}<br><small class="muted">${last ? 'Last visit ' + nice(last.date) : 'No visits yet'} &middot; ${brVisits(c.id).length} visits</small></div><button class="btn btn-line btn-sm" data-act="br-open" data-v="${c.id}">Open</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No one yet. Add someone above.</p>'}</div>`;
+  const mine = `  <div class="card st-me"><div class="spread"><div><h3>My Own Tree</h3><p class="muted">${esc(S.meNote || '')}</p></div>${me ? `<button class="btn btn-line btn-sm" data-act="br-open" data-v="${me.id}">Open</button>` : `<button class="btn btn-line btn-sm" data-act="br-me">Start My Tree</button>`}</div></div>`;
+  const need = list.filter(c => !brHasConsent(c)).length;
+  const cards = [
+    {k: 'people', title: 'People', desc: 'Add someone new, try a demo visit, or open someone you walk with.', n: list.length + (list.length === 1 ? ' person' : ' people') + (need ? ', ' + need + ' needing consent' : '')},
+    S.report ? {title: 'Report a Concern', desc: 'Danger right now, a vulnerable adult (MAARC), what your role requires, and help they can reach privately.', act: 'br-report', v: ''} : null,
+    {k: 'me', title: 'My Own Tree', desc: S.meNote || '', n: me ? 'Started' : ''},
+    BRM() ? {title: BRM().title || 'Birch Guide Training', desc: 'Lessons, scenarios, and the agreement for Birch visits.', n: trainNote(m), act: 'br-mhome'} : null,
+    {k: 'about', title: 'About Birch Guide', desc: 'How Birch Guide works, and the youth setting rule.'}];
+  const C = secPick('birch', cards), part = {people: add + people, me: mine, about}[C];
+  if (part) return secPage('birch', 'Back to Birch Guide', part);
+  return hello + `  ${brmCard()}` + secCards('birch', cards);
+}
+function vBRPerson(c){
+  const S = BRG(), me = brIsMe(c), vs = brVisits(c.id), ok = brHasConsent(c), ready = brReady(), con = c.br.consent, reps = brReports(c.id);
+  const latest = vs.find(s => s.plan && Object.values(s.plan).some(a => a && a.length)) || null;
+  return `<button class="linkbtn" data-act="br-home">Back to Birch Guide</button>
+  <div class="page-head spread" style="margin-top:14px"><div><div class="eyebrow">${esc(brTypeName(c.br.type))}${c.br.wording === 'plain' ? ' &middot; Plain wording' : ''}${(c.br.season || []).length ? ' &middot; ' + esc(brSeasonNames(c.br.season).join(', ')) : ''}</div><h1>${esc(c.name)}</h1></div>
+   <div class="row">${me ? '<span class="pill sage">Private</span>' : con ? `<span class="pill ${con.how === 'declined' ? 'warn' : 'sage'}">${esc(brConsentName(con.how))} ${con.date ? nice(con.date) : ''}</span>` : '<span class="pill warn">Consent needed</span>'}</div></div>
+  ${!me && !ok ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${con && con.how === 'declined' ? 'They said no for now' : 'Ask first'}</h3><p class="muted">${con && con.how === 'declined' ? 'Visits stay off. If they change their mind, record it here.' : 'Explain what this is and ask before the first visit. Their own consent is all that is needed.'}</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="br-consent" data-v="${c.id}">${con ? 'Update Consent' : 'Consent'}</button></div>` : ''}
+  ${!ready ? `<div class="card" style="border-left:4px solid var(--gold)"><p>Finish Birch Guide Training to start ${me ? 'your own check-ins' : 'real visits'}. Demo visits are always open.</p><button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="br-mhome">Open Training</button></div>` : ''}
+  ${me || !S.report ? '' : `<div class="row" style="margin:12px 0">${brShield(c.id)}${reps.length ? ` <span class="pill">${reps.length} report record${reps.length === 1 ? '' : 's'}</span>` : ''}</div>`}
+  <div class="card"><h3>Start a Visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="br-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'open' ? 'talk' : v[0] === 'quick' ? 'start' : 'birch')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div>
+   ${me ? '' : '<p class="muted" style="font-size:14px;margin-top:8px">Every visit starts with their own yes, and asks whether they are still in high school or a youth program.</p>'}</div>
+  ${me ? '' : gvPersonCard(c)}
+  ${me ? '' : htPersonCard(c)}
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3>Rings</h3><div class="st-ringwrap">${brRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(brRingVisit).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust is a growing edge.</p></div>${brPartTable(c)}</div>
+   <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${brPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
+    <h3 style="margin-top:20px">Follow-ups</h3>
+    ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-brfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(brVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.youth === 'yes' ? ' <span class="pill">Youth setting</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${brSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}</small></div><button class="btn btn-line btn-sm" data-act="br-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Details</h3>
+   <label class="f">Code or initials</label><input type="text" data-brc="name" value="${esc(c.name)}">
+   <div class="grid g2">${me ? '' : `<div><label class="f">Who they are</label><select data-brc="type">${(S.people || []).map(p => `<option value="${p[0]}" ${p[0] === c.br.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select></div>`}
+   <div><label class="f">Wording</label><select data-brc="wording">${[['faith','Faith wording'],['plain','Plain wording']].map(([v,l]) => `<option value="${v}" ${v === (c.br.wording || 'faith') ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+   ${me ? '' : `<div><label class="f">Status</label><select data-brc="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v === c.status ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`}</div>
+   <p class="muted" style="font-size:14px;margin-top:10px">${esc(((S.season || {}).title) || 'My Season')}: ${esc(brSeasonNames(c.br.season).join(', ') || 'none chosen')}. It is asked again at each visit.</p>
+   <div class="grid g2" style="margin-top:10px"><input type="date" id="br-fd" aria-label="Follow-up date"><input type="text" id="br-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
+   <div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="br-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>${me ? '' : `<button class="btn btn-line btn-sm" data-act="br-consent" data-v="${c.id}">Update Consent</button>`}<button class="btn btn-danger btn-sm" data-act="br-del" data-v="${c.id}">Delete This Record</button></div></div>`;
+}
+function brPlanList(s){
+  const rows = BRG().parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? `<p style="margin-top:8px"><span class="st-dot" style="background:${p.color}"></span><b>${esc(p.part)}:</b> ${a.map(esc).join(', ')}</p>` : ''; }).join('');
+  return (rows || '<p class="muted" style="margin-top:8px">No practices chosen.</p>') + (s.custom ? `<p style="margin-top:8px"><b>Also:</b> ${esc(s.custom)}</p>` : '');
+}
+function brFindVisit(){ return V.brv === 'demo' ? (V.brDemo || null) : DATA.sessions.find(x => x.id === V.brv && x.kind === 'br') || null; }
+const brTold = k => ((((BRG().goodbye || {}).flagOpts || []).find(o => o[0] === k) || [])[1]) || '';
+function vBRVisit(){
+  const s = brFindVisit(); if (!s) return `<div class="card"><p>That visit isn't here anymore.</p></div>`;
+  if (!BRC && !s.notToday && s.visit !== 'open'){ const w = brNeedData(); if (w) return w; }
+  const demo = V.brv === 'demo', c = demo ? s.person : CL(s.clientId), me = brIsMe(c), S = BRG(), O = S.optional || {}, opt = s.opt || {};
+  const back = demo ? `<button class="linkbtn" data-act="br-home">Back to Birch Guide</button>` : `<button class="linkbtn" data-act="br-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
+  const youth = s.youth === 'yes' ? `<b>Youth setting:</b> yes &middot; <b>Room:</b> ${esc(brWhere(s))}` : s.youth === 'no' ? '<b>Youth setting:</b> no' : '';
+  return `${back}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.visit !== 'open' && !s.notToday ? ' &middot; ' + esc(brWordName(s.wording)) : ''}${(s.season || []).length ? ' &middot; ' + esc(brSeasonNames(s.season).join(', ')) : ''}</div><h1>${esc(brVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; they chose to stop, and that was honored' : ''}</p></div>
+  ${me ? '' : `<div class="card"><p><b>Their yes:</b> ${s.notToday ? 'Not today' : 'Yes'}${youth ? ' &middot; ' + youth : ''}</p></div>`}
+  ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="br-del-visit" data-v="${s.id}">Delete</button>`}` : `
+  ${(s.flags || []).length && BRC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => BRC.flags[f] ? `<p style="margin-top:8px"><b>${esc(BRC.flags[f].title)}.</b> ${esc(BRC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+  <div class="card"><h3>The Six Parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
+  ${s.visit === 'open' || !BRC ? '' : `<details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
+   ${S.parts.map(p => { const qs = brQs(s, p.key), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${brIdx(s, p.key).map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i].t)} ${qa[i] ? (brHard(qs[i], qa[i]) ? `<b>${esc((brAns(qa[i]) || [])[1])}</b>` : esc((brAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}`; }).join('')}</details>`}
+  ${s.visit === 'full' ? `<div class="card st-private"><h3>${esc(O.title || 'The Optional Question')}</h3><p class="muted" style="font-size:14px">Private. Never scored, and never printed or copied unless they asked.${opt.share ? ' They asked for it on their sheet and in the visit note.' : ''}</p>
+   ${opt.asked ? (opt.on || []).map(id => { const q = brOptList().find(x => x.id === id), a = (opt.a || {})[id]; return q ? `<p style="margin-top:8px">${esc(q.t)} ${a && a !== 'skip' ? `<b>${esc((brAns(a) || [])[1] || '')}</b>` : `<span class="muted">${esc(O.skip || 'Skipped')}</span>`}</p>` : ''; }).join('') : `<p style="margin-top:8px">${s.stopped ? 'Not asked: they stopped the visit.' : 'Not asked: they kept it off.'}</p>`}</div>` : ''}
+  <div class="card" ${brSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(brSafetyText(s.safety))}</p>${s.told ? `<p class="muted" style="margin-top:6px">${esc(brTold(s.told))}${s.heard ? '. Talked through with them.' : ''}</p>` : ''}</div>
+  ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
+   ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
+   ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
+  <div class="card"><h3>Growth Plan</h3>${brPlanList(s)}${(s.tryh || []).length ? `<p style="margin-top:8px"><b>${esc(((S.takeHome || {}).try) || 'Try this week')}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
+  ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
+  ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
+  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="br-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="br-home-print">${icon('print')} Print Take-Home Sheet</button>${me ? '' : `<button class="btn btn-line" data-act="br-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="br-print-note">${icon('print')} Save or Print Visit Note</button>`}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="br-del-visit" data-v="${s.id}">Delete</button>`}</div>`}`;
+}
+// The visit note: levels, the youth setting and room, what you noticed and offered, referrals, the safety summary.
+// Never answer words, private notes, or the optional question unless the person asked for it.
+function brNote(s, c){
+  const S = BRG(), L = [];
+  L.push('Birch visit: ' + brVisitName(s.visit) + ', ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
+  L.push('Person: ' + (c ? c.name : '') + ' (' + brTypeName(c && c.br ? c.br.type : '') + ')');
+  const con = c && c.br && c.br.consent; if (con) L.push('Consent: ' + brConsentName(con.how) + (con.by ? ' with ' + con.by : '') + (con.date ? ', ' + nice(con.date) : ''));
+  if (s.youth === 'yes') L.push('Youth setting: still in high school or a youth program. Room: ' + brWhere(s) + '. The youth policy applied.');
+  if (s.notToday){ L.push('', 'They said "Not today." The visit ended there.'); return L.join('\n'); }
+  if (s.visit !== 'open') L.push('Wording: ' + brWordName(s.wording).toLowerCase() + '.' + ((s.season || []).length ? ' My Season: ' + brSeasonNames(s.season).join(', ') + '.' : ''));
+  if (s.stopped) L.push('They chose to stop the visit, and it was honored.');
+  L.push('', 'How they are doing:');
+  S.parts.forEach(p => { const v = (s.scores||{})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (s.visit === 'open' && v == null ? 'not talked about' : stLevel(v).toLowerCase() + (v != null && s.visit !== 'open' ? ' (' + v + ' of 10)' : ''))); });
+  if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
+  if ((s.did||[]).length) L.push('Offered: ' + s.did.join(', ') + '.');
+  if ((s.flags || []).length) L.push('Flagged answers: ' + s.flags.length + '. See the visit in the Field Guide.');
+  L.push('Safety: ' + brSafetyText(s.safety));
+  if (s.told) L.push('After the safety step: ' + brTold(s.told).toLowerCase() + '.');
+  const opt = s.opt || {};
+  if (opt.share && opt.asked) (opt.on || []).forEach(id => { const q = brOptList().find(x => x.id === id), a = (opt.a || {})[id]; if (q) L.push('Optional question, shared at their request: ' + q.t + ' ' + (a && a !== 'skip' ? ((brAns(a) || [])[1] || '') : 'skipped') + '.'); });
+  const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
+  if (plan.length || s.custom) L.push('', 'Plan: ' + [...plan, s.custom].filter(Boolean).join('; ') + '.');
+  if ((s.tryh || []).length) L.push('Try this week: ' + s.tryh.join(', ') + '.');
+  if ((s.refs||[]).length) L.push('Referrals: ' + s.refs.join(', ') + '.');
+  if (s.fdate) L.push('Follow-up: ' + nice(s.fdate) + (s.ftext ? ', ' + s.ftext : '') + '.');
+  if (s.summary) L.push('', 'Summary: ' + s.summary);
+  return L.join('\n');
+}
+function brPrintNote(s, c){
+  fgSheet(ph('Confidential visit note') + `<h1>Birch visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(brNote(s, c))}</p>` + pf(), 'Birch visit note', {file:'birch-visit-note', date:s.date, confidential:true});
+}
+// Try this week, in the visit's wording (tryHomePlain replaces a part's list under Plain wording).
+const brTryList = (s, key) => (s.wording === 'plain' && BRG().tryHomePlain && BRG().tryHomePlain[key]) || (BRG().tryHome || {})[key] || [];
+function brTries(s){ const S = BRG(); return (s.tryh || []).map(t => { for (const p of S.parts){ const it = brTryList(s, p.key).find(x => x[0] === t); if (it) return [p, it]; } return null; }).filter(Boolean); }
+// The take-home sheet is theirs: what we did, what's growing strong, their growth plan, what to try, help lines, and a
+// QR code to Birch. They look it over first and can leave out the first three sections. Never scores, answers, notes,
+// flags, or the safety step. The optional question only when they asked for it.
+function brHomeModel(s, c){
+  const S = BRG(), H = Object.assign({title:"From Today's Birch Visit", did:'What we did', share:'Something you want to remember', strong:"What's growing strong", talk:'Worth coming back to', try:'Try this week', help:'When to get more help', helpLines:[], close:''}, S.takeHome || {});
+  const HO = S.handout || {}, name = c ? c.name : '', hide = s.hide || {}, sec = [];
+  if (!hide.did) sec.push({h:H.did, p:[brVisitName(s.visit) + '. We looked at the six parts of your tree: ' + S.parts.map(p => p.part.toLowerCase()).join(', ') + '.' + (s.stopped ? ' We stopped when you chose to.' : '')]});
+  if (s.share && !hide.share) sec.push({h:H.share, p:[s.share]});
+  if (s.talkNote && !hide.talk) sec.push({h:H.talk, p:[s.talkNote]});
+  const strong = S.parts.filter(p => ((s.scores || {})[p.key] || 0) >= 8);
+  if (strong.length) sec.push({h:H.strong, p:[strong.map(p => p.part + ' (' + p.name.toLowerCase() + ')').join(', ')]});
+  const plan = S.parts.flatMap(p => { const P = brPartW(p, s.wording); return ((s.plan || {})[p.key] || []).map(n => { const pr = (P.practices || []).find(x => x.name === n) || (p.practices || []).find(x => x.name === n); return n + ' (' + p.part + ')' + (pr ? ': ' + pr.how : ''); }); });
+  if (plan.length || s.custom) sec.push({h:'Your growth plan', p:[...plan, ...(s.custom ? ['Also: ' + s.custom] : [])]});
+  const tries = brTries(s);
+  if (tries.length) sec.push({h:H.try, p:tries.map(([p, it]) => it[0] + ' (' + p.part + '): ' + it[1])});
+  const opt = s.opt || {};
+  if (opt.share && opt.asked) (opt.on || []).forEach(id => { const q = brOptList().find(x => x.id === id), a = (opt.a || {})[id]; if (q && a && (q.on || []).includes(a)) sec.push({h:q.name || 'Betting and Gambling', p:[q.note], li:brLineList(q.lines).map(x => x.name + ': ' + x.show)}); });
+  sec.push({h:H.help, li:(H.helpLines || []).length ? H.helpLines : (HO.help || []).map(x => x[0] + ': ' + x[1])});
+  return {eyebrow:'Just for you', title:H.title, sub:(name ? name + ', ' : '') + nice(s.date), sec, after:['If you are in danger, call 911. For a mental health crisis, call or text 988. Veterans and service members, call 988 and press 1.'], close:H.close || HO.close || '', foot:brTM};
+}
+const brQR = () => { const S = BRG(), q = ((S.takeHome || {}).qr) || ((S.handout || {}).qr); return Object.assign({url:BR_HOME, label:'Scan to open Birch'}, typeof q === 'string' ? {label:q} : (q || {})); };
+const brFile = (kind, s) => 'birch-' + kind + '-' + (s.date || today()) + '.pdf';
+function brHomeBlocks(s, c){
+  const b = ggSheetBlocks(brHomeModel(s, c)), q = brQR(), f = b.findIndex(x => x.k === 'foot');
+  b.splice(f < 0 ? b.length : f, 0, {k:'qr', url:q.url, t:q.label});
+  return b;
+}
+function brHomePrint(s, c){
+  const m = brHomeModel(s, c), q = brQR(), svg = window.GGQR ? GGQR.svg(q.url, {label:'QR code for ' + q.url.replace(/^https?:\/\//, '')}) : '';
+  printNow(ph(m.eyebrow) + ggSheetHTML(m) + (svg ? `<div class="ht-qr" style="display:flex;align-items:center;gap:4mm;margin-top:4mm"><div style="width:26mm">${svg}</div><p><b>${esc(q.label)}</b><br>${esc(q.url.replace(/^https?:\/\//, ''))}</p></div>` : ''), m.title);
+}
+
+// ----- the visit runner -----
+function brStart(visit, cid, demo){
+  const S = BRG();
+  if (!BRC && visit !== 'open'){ brLoad(); return toast(BRC_FAIL ? "The Birch questions didn't load. Check your connection and try again." : 'Loading the Birch questions. Try again in a moment.'); }
+  const D = S.demo || {}, c = demo ? {id:'demo', name:D.name || 'Sample person', br:{type:D.type || 'person', wording:D.wording || 'faith', season:(D.season || []).slice(), consent:{how:'verbal', date:today()}}} : CL(cid);
+  if (!c || !c.br) return;
+  if (!demo && !brHasConsent(c)) return go('birch', {brc:c.id});
+  if (!demo && !brReady()){ toast('Finish Birch Guide Training to start real visits. Demo visits are always open.'); return go('birch', {brm:1}); }
+  RUN = {kind:'br', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, started:Date.now(), step:0,
+    youth:brIsMe(c) ? 'no' : '', room:{where:''}, yes:brIsMe(c) ? 'yes' : '', wording:c.br.wording === 'plain' ? 'plain' : 'faith', season:(c.br.season || []).slice(), std:BRC ? BRC.version : 1, bank:BR_BANK(),
+    opt:{on:[], a:{}, share:false}, ans:{}, impr:{}, pn:{}, safety:{safe:'', self:'', now:'', notAsked:false, reason:'', reasonText:'', actions:[]},
+    tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:'', share:'', told:'', heard:false, tryh:[], talkNote:'', hide:{did:false, share:false, talk:false}, seenSheet:false, stopped:false};
+  brOpenRun();
+}
+function brSteps(r){
+  const tail = ['close', 'goodbye', 'plan', 'review'];
+  if (r.stopped) return ['open', ...tail];
+  return ['open', ...(r.visit === 'full' ? BRG().parts.map(p => 'p:' + p.key) : r.visit === 'quick' ? ['quick'] : ['talk']), 'safety', ...tail];
+}
+function brOpenRun(){ $('#runner').classList.remove('hide'); brDraw(); clearInterval(runTimer); runTimer = setInterval(tick, 1000); }
+function brKeep(){ if (RUN && RUN.kind === 'br' && !RUN.demo){ DATA.draft = RUN; save(); } }
+function brRedraw(){ brKeep(); const b = $('#run-body'), y = b ? b.scrollTop : 0; brDraw(); const n = $('#run-body'); if (n) n.scrollTop = y; }
+function brQ(key, i, q, num){
+  const cur = ((RUN.ans || {})[key] || {})[i], f = brFlagOn(q, cur) ? BRC.flags[q.flag] : null;
+  return `<div class="st-q"><p>${num ? `<span class="st-n">${num}</span>` : ''}${esc(q.t)}${q.r ? ' <span class="pill" title="Often is the hard answer here">reverse</span>' : ''}</p>
+   ${(q.ex || []).length ? `<p class="muted" style="font-size:14px;margin-top:4px">${q.ex.map(esc).join(' ')}</p>` : ''}
+   <div class="st-opts" role="group" aria-label="${esc(q.t)}">${brScale().map(o => stChip('br-ans', `data-k="${key}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>
+   ${q.tip ? `<div class="tipbox sp-tip"><b>Tip:</b> ${esc(q.tip)}</div>` : ''}${f ? `<p class="wl-hot">${esc(f.guide)}</p>` : ''}</div>`;
+}
+// The optional question, asked right after its part when the person turned it on. Private, never scored.
+function brOptBlock(part){
+  const O = BRG().optional || {}, list = brOptFor(part).filter(q => RUN.opt.on.includes(q.id));
+  return list.map(q => { const a = RUN.opt.a[q.id], hot = a && (q.on || []).includes(a);
+    return `<div class="card st-private" style="margin-top:14px"><h3>${esc(O.title || 'The Optional Question')}</h3><p class="muted" style="font-size:14px">Private. Never scored, and never printed or copied unless they ask.</p>
+   <div class="st-q"><p>${esc(q.t)}</p><div class="st-opts" role="group" aria-label="${esc(q.t)}">${brScale().map(o => stChip('br-opt', `data-k="${q.id}" data-v="${o[0]}"`, a === o[0], o[1])).join('')}${stChip('br-opt', `data-k="${q.id}" data-v="skip"`, a === 'skip', O.skip || 'Skipped')}</div>
+   <div class="tipbox sp-tip"><b>Tip:</b> ${esc(q.tip || '')}</div>${hot ? `<p class="wl-hot">${esc(q.note)}</p>${brLinesHTML(brLineList(q.lines))}` : ''}
+   <label class="cb" style="margin-top:8px"><input type="checkbox" data-bropts="1" ${RUN.opt.share ? 'checked' : ''}> They want this on their take-home sheet and in the visit note</label></div></div>`; }).join('');
+}
+function brSafetyStep(){
+  const F = BRG().safety, A = (BRC && BRC.safety) || {}, sf = RUN.safety, flag = brSafeFlag(sf), hurt = brHurt(sf), self = brSelf(sf), now = brNow(sf);
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  const chips = k => `<div class="st-opts">${brSafeAns().map(o => stChip('br-safe', `data-k="${k}" data-v="${o[0]}"`, sf[k] === o[0], o[1])).join('')}</div>`;
+  const L = A.lines || {}, lead = F.directLead || A.selfLead;
+  return `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
+   ${now ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>${esc(A.title || 'Stay with them now.')}</h3><p style="margin-top:6px">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p><div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div></div>` : ''}
+   <div class="card step-card">${blk('Say', [F.say || A.intro], 'say')}${F.from ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(F.from)}</p>` : ''}</div>
+   ${brSafeQs().map(([q, k]) => `<div class="st-q">${k === 'self' && lead ? `<p class="muted" style="font-size:16px">${esc(lead)}</p>` : ''}<p${k === 'self' && lead ? ' style="margin-top:8px"' : ''}>${esc(q)}</p>${chips(k)}
+     ${k === 'safe' && hurt ? `<div class="card" style="margin-top:10px;border-left:4px solid var(--danger)"><h4>${esc(A.hurtTitle || '')}</h4>${BRC && BRC.flags.hurt ? `<p class="wl-hot">${esc(BRC.flags.hurt.guide)}</p>` : ''}<p style="margin-top:6px">${esc(A.hurtIntro || '')}</p>${brLinesHTML(L.hurt || [])}<div class="row" style="margin-top:8px"><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div></div>` : ''}
+     ${k === 'self' && self ? `<div class="st-q" style="margin-top:10px"><p>${esc(F.now || A.now || '')}</p>${chips('now')}</div><p class="tipbox">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p>` : ''}</div>`).join('')}
+   <div class="tipbox">${esc(F.note)}</div>
+   ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+     <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div>
+     ${self ? `<h4 style="margin-top:14px">Help lines for them</h4>${brLinesHTML(L.calm || [])}` : ''}
+     <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('br-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
+   <label class="cb" style="margin-top:16px"><input type="checkbox" data-brsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
+   ${sf.notAsked ? `<select data-brsafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-brsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+}
+// What needs talking through at goodbye: a safety answer about themselves, or feeling really alone or losing hope.
+const brNeedTalk = r => brSelf(r.safety) || brRunFlags(r).some(f => f === 'alone' || f === 'hope');
+function brDraw(){
+  const S = BRG(), steps = brSteps(RUN); if (RUN.step >= steps.length) RUN.step = steps.length - 1;
+  const st = steps[RUN.step], c = RUN.demo ? RUN.person : CL(RUN.clientId), n = steps.length, me = brIsMe(c);
+  const pct = Math.round(RUN.step / (n - 1) * 100);
+  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if (st === 'open'){
+    const v = S.visits.find(x => x[0] === RUN.visit), Y = S.youth || {}, W = S.wording || {}, SE = S.season || {}, O = S.optional || {}, YS = S.yes || {};
+    const yOpts = Y.opts || [['yes','Yes'],['no','No']];
+    body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(v[1])}${c && !me ? ' with ' + esc(c.name) : ''}</h2><p class="purpose">${esc(v[3])}</p>
+     ${me ? '' : `<div class="card"><h3>${esc(Y.title || 'Still in a Youth Setting')}</h3>${blk('Ask', [Y.ask || 'Still in high school or a youth program?'], 'say')}<div class="st-opts" role="group" aria-label="Youth setting">${yOpts.map(o => stChip('br-youth', `data-v="${o[0]}"`, RUN.youth === o[0], o[1])).join('')}</div>
+      ${RUN.youth === 'yes' ? `<p style="margin-top:10px">${esc(Y.lead || '')}</p><ul class="checklist" style="margin-top:8px">${(Y.rule || []).map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
+       <h4 style="margin-top:12px">Who can see in</h4><div class="st-opts" role="group" aria-label="Who can see in">${brWhereOpts().map(o => stChip('br-room', `data-v="${o[0]}"`, RUN.room.where === o[0], o[1])).join('')}</div>` : ''}
+      ${Y.note ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(Y.note)}</p>` : ''}</div>`}
+     <div class="card step-card">${blk('Say', S.openers.say, 'say')}<div class="tipbox">${esc(S.openers.tip)}</div></div>
+     ${RUN.visit === 'open' ? '' : `<div class="card"><h3>${esc(W.title || 'Faith or Plain Wording')}</h3>${W.lead ? `<p class="muted">${esc(W.lead)}</p>` : ''}${blk('Ask', W.say ? [W.say] : [], 'say')}<div class="st-opts">${(W.opts || [['faith','Faith wording'],['plain','Plain wording']]).map(o => stChip('br-word', `data-v="${o[0]}"`, RUN.wording === o[0], o[1])).join('')}</div>${W.tip ? `<div class="tipbox">${esc(W.tip)}</div>` : ''}</div>
+     <div class="card"><h3>${esc(SE.title || 'My Season')}</h3>${SE.lead ? `<p class="muted">${esc(SE.lead)}</p>` : ''}${blk('Ask', SE.ask ? [SE.ask] : [], 'say')}<div class="st-opts">${brSeasonOpts().map(o => stChip('br-season', `data-v="${o[0]}"`, RUN.season.includes(o[0]), o[1])).join('')}</div>${SE.tip ? `<div class="tipbox">${esc(SE.tip)}</div>` : ''}</div>`}
+     ${RUN.visit === 'full' && brOptList().length ? `<div class="card st-private"><h3>${esc(O.title || 'The Optional Question')}</h3>${O.lead ? `<p class="muted">${esc(O.lead)}</p>` : ''}${blk('Ask them', O.ask ? [O.ask] : [], 'say')}<div class="st-opts">${brOptList().map(q => stChip('br-opton', `data-v="${q.id}"`, RUN.opt.on.includes(q.id), 'Turn on: ' + (q.name || q.id))).join('')}${stChip('br-opton', 'data-v="off"', !RUN.opt.on.length, 'Keep it off')}</div>${O.where ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(O.where)}</p>` : ''}${O.tip ? `<div class="tipbox">${esc(O.tip)}</div>` : ''}</div>` : ''}
+     ${me ? '' : `<div class="card"><h3>${esc(YS.title || 'Their yes, today')}</h3>${YS.say ? `<div class="blk say" style="margin-top:8px"><div class="lab">Say</div><ul><li>${esc(YS.say)}</li></ul></div>` : ''}
+      ${(c.br.consent || {}).how === 'agent' && YS.agentNote ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(YS.agentNote)}</p>` : ''}
+      <div class="st-opts" role="group" aria-label="Their answer" style="margin-top:10px">${stChip('br-yes', 'data-v="yes"', RUN.yes === 'yes', YS.yes || 'Yes, go ahead')}${stChip('br-yes', 'data-v="no"', RUN.yes === 'no', YS.no || 'Not today')}</div>
+      ${YS.staffNote ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(YS.staffNote)}</p>` : ''}</div>`}
+     ${RUN.demo ? '<p class="muted" style="margin-top:12px">Demo visit. Nothing is saved.</p>' : ''}`;
+  } else if (st.startsWith('p:')){
+    const p0 = brPart(st.slice(2)), p = brPartW(p0, RUN.wording), qs = brQs(RUN, p.key);
+    body = `<div class="run-step-n">Part ${S.parts.indexOf(p0) + 1} of 6</div><h2 class="run-step-t st-ph" style="--pc:${p.color}">${esc(p.part)} <small>${esc(p.name)}</small></h2>
+     <div class="card step-card" style="border-left-color:${p.color}">${blk('Say', [p.aloud], 'say')}<p class="muted" style="margin-top:8px"><b>Ask:</b> "${esc(((BRC && BRC.stems) || S.stems || {}).standard || '')}"</p></div>
+     ${brNeedData()}${brIdx(RUN, p.key).map(i => qs[i] ? brQ(p.key, i, qs[i], i + 1) : '').join('')}
+     ${brOptBlock(p.key)}
+     <div class="card" style="margin-top:14px">${blk('Listen for', p.listen)}</div>
+     <label class="f" for="br-pn">Your notes (private)</label><textarea id="br-pn" data-brpn="${p.key}" style="min-height:80px" placeholder="Their words, what you noticed">${esc(RUN.pn[p.key]||'')}</textarea>`;
+  } else if (st === 'quick'){
+    body = `<div class="run-step-n">Quick Check-in</div><h2 class="run-step-t">Birch's quick check-in</h2><p class="muted">One for each part, plus Move and Nourish in Leaves. Read each one aloud. Let them answer in their own words, then tap.</p>
+     <p class="muted" style="margin-top:6px"><b>Ask:</b> "${esc(((BRC && BRC.stems) || S.stems || {}).standard || '')}"</p>
+     ${brNeedData()}${S.parts.map(p => { const qs = brQs(RUN, p.key); return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${brIdx(RUN, p.key).map(i => qs[i] ? brQ(p.key, i, qs[i]) : '').join('')}<details class="st-lf"><summary>Listen for</summary><ul>${(p.listen || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></details></div>`; }).join('')}
+     <label class="f" for="br-pq">Your notes (private)</label><textarea id="br-pq" data-brf="priv" style="min-height:80px">${esc(RUN.priv)}</textarea>`;
+  } else if (st === 'talk'){
+    body = `<div class="run-step-n">Open conversation</div><h2 class="run-step-t">Follow where they lead</h2><p class="muted">Use any of these, in any order. After, mark how each part seemed to you. It is your impression, never their score.</p>
+     ${S.parts.map(p0 => { const p = brPartW(p0, RUN.wording); return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${blk('Ask', [p.aloud, ...(p.open || [])], 'say')}
+      <details class="st-lf"><summary>Listen for</summary><ul>${(p.listen || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>
+      <div class="st-opts" role="group" aria-label="${esc(p.part)}">${brImpr().map(o => stChip('br-impr', `data-k="${p.key}" data-v="${o[0]}"`, RUN.impr[p.key] === o[0], o[1])).join('')}</div>
+      <textarea data-brpn="${p.key}" style="min-height:64px;margin-top:10px" placeholder="Your notes (private)" aria-label="${esc(p.part)} notes">${esc(RUN.pn[p.key]||'')}</textarea></div>`; }).join('')}`;
+  } else if (st === 'safety'){
+    body = brSafetyStep();
+  } else if (st === 'close'){
+    const fl = brRunFlags(RUN);
+    body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2><p class="muted">These go in the visit note, never on the take-home sheet.</p>
+     ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} chose to stop. Mark only what you have.</div>` : ''}
+     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => BRC.flags[f] ? `<p style="margin-top:8px"><b>${esc(BRC.flags[f].title)}.</b> ${esc(BRC.flags[f].guide)}</p>` : '').join('')}${fl.includes('hurt') && S.report ? `<div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div>` : ''}</div>` : ''}
+     ${(S.tags || []).map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('br-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
+     <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${(S.did || []).map(t => stChip('br-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
+     ${me ? '' : `<label class="f" for="br-sum">Summary for the visit note</label><textarea id="br-sum" data-brf="summary" placeholder="A few plain lines your team can read">${esc(RUN.summary)}</textarea>`}
+     ${RUN.visit === 'quick' ? '' : `<label class="f" for="br-priv">Private Notes</label><textarea id="br-priv" data-brf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`}`;
+  } else if (st === 'goodbye'){
+    const G = S.goodbye || {}, need = brNeedTalk(RUN), H = S.takeHome || {};
+    body = `<div class="run-step-n">Goodbye</div><h2 class="run-step-t">Wrap up together</h2>
+     <div class="card step-card">${blk('Say', [G.say], 'say')}${me ? '' : blk('Ask', [G.shareQ], 'say')}</div>
+     <label class="f" for="br-share">${esc(H.share || 'Something you want to remember')} (goes on their take-home sheet, unless they leave it out)</label><input type="text" id="br-share" data-brf="share" value="${esc(RUN.share)}">
+     ${need && !me ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:14px"><h3>${esc(G.flagTitle || '')}</h3><p class="muted">${esc(G.flagLead || '')}</p>
+       ${blk('Say', [brSelf(RUN.safety) ? G.flagSay : G.alertSay], 'say')}
+       <label class="cb" style="margin-top:8px"><input type="checkbox" data-brheard="1" ${RUN.heard ? 'checked' : ''}> ${esc(G.heard || 'I talked it through with them')}</label>
+       <div class="st-opts" style="margin-top:8px">${(G.flagOpts || []).map(o => stChip('br-told', `data-v="${o[0]}"`, RUN.told === o[0], o[1])).join('')}</div></div>` : ''}
+     <h4 style="margin-top:16px">${esc(H.try || 'Try this week')} <span class="muted" style="font-weight:400">(let them pick one or two)</span></h4>
+     ${S.parts.map(p => { const L = brTryList(RUN, p.key); return L.length ? `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${L.map(t => stChip('br-try', `data-v="${esc(t[0])}"`, RUN.tryh.includes(t[0]), t[0])).join('')}</div></div>` : ''; }).join('')}`;
+  } else if (st === 'plan'){
+    body = `<div class="run-step-n">Growth Plan</div><h2 class="run-step-t">Choose one or two small things</h2><p class="muted">Choose together. Less is more. These go on the take-home sheet.</p>
+     ${S.parts.map(p0 => { const p = brPartW(p0, RUN.wording); return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.hand || '')}</small></div><div class="st-opts">${(p.practices || []).map(pr => stChip('br-plan', `data-k="${p.key}" data-v="${esc(pr.name)}"`, (RUN.plan[p.key]||[]).includes(pr.name), pr.name)).join('')}</div></div>`; }).join('')}
+     <label class="f" for="br-cu">Anything else</label><input type="text" id="br-cu" data-brf="custom" value="${esc(RUN.custom)}" placeholder="Call my sister Sunday">
+     ${me ? '' : `<h4 style="margin-top:18px">Referrals</h4><div class="st-opts">${(S.referrals || []).map(t => stChip('br-tog', `data-g="refs" data-v="${esc(t)}"`, RUN.refs.includes(t), t)).join('')}</div>`}
+     ${RUN.demo ? '' : `<div class="grid g2"><div><label class="f" for="br-fd2">Follow-up date</label><input type="date" id="br-fd2" data-brf="fdate" value="${esc(RUN.fdate)}"></div><div><label class="f" for="br-ft2">Follow-up note</label><input type="text" id="br-ft2" data-brf="ftext" value="${esc(RUN.ftext)}" placeholder="Check in again"></div></div>`}`;
+  } else {
+    const H = S.takeHome || {}, R = Object.assign({title:'Look it over together', lead:'', leaveOut:'Leave this out', locked:'', talkNote:'Something else worth coming back to', seen:'They looked over the take-home sheet'}, H.review || {}), m = brHomeModel(brRunAsVisit(), c);
+    const lo = k => `<label class="cb" style="margin-top:6px"><input type="checkbox" data-brhide="${k}" ${RUN.hide[k] ? 'checked' : ''}> ${esc(R.leaveOut)}</label>`;
+    body = `<div class="run-step-n">Take-home sheet</div><h2 class="run-step-t">${esc(R.title)}</h2><p class="muted">${esc(R.lead)}</p>
+     <div class="card"><h4>${esc(H.did || 'What we did')}</h4>${lo('did')}${RUN.share ? `<h4 style="margin-top:12px">${esc(H.share || '')}</h4><p style="margin-top:4px">${esc(RUN.share)}</p>${lo('share')}` : ''}
+      <label class="f" for="br-tn">${esc(R.talkNote)}</label><input type="text" id="br-tn" data-brf="talkNote" value="${esc(RUN.talkNote)}">${lo('talk')}
+      ${R.locked ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.locked)}</p>` : ''}</div>
+     <details class="card"><summary><b>See the whole sheet</b></summary><div class="sa-sheet" style="margin-top:8px">${ggSheetHTML(m)}</div></details>
+     <div class="card"><label class="cb"><input type="checkbox" data-brseen="1" ${RUN.seenSheet ? 'checked' : ''}> ${esc(R.seen)}</label>
+      <p class="muted" style="font-size:14px;margin-top:6px">Make the PDF or print it after you save, from the visit page.</p></div>`;
+  }
+  const last = st === 'review', asking = st.startsWith('p:') || st === 'quick' || st === 'talk' || st === 'safety';
+  $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(S.title)}${RUN.demo ? ' (demo)' : ''}</b><small>${esc(c ? c.name : '')} &middot; ${esc(brVisitName(RUN.visit))}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span>${S.report && !me ? `<button class="bar-btn" data-act="br-run-report" aria-label="Report a concern" title="Report a concern">${icon('shield')}</button>` : ''}<button class="bar-btn" data-act="br-pause" aria-label="Close">&times;</button></div></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="run-body" id="run-body"><div class="wrap">${asking && !RUN.stopped && S.stop ? `<div class="sp-stopbar"><button class="btn btn-line btn-sm" data-act="br-stop">${esc(S.stop.btn)}</button></div>` : ''}${body}</div></div>
+    <div class="run-foot"><div class="run-foot-in"><button class="btn btn-line" data-act="br-prev" ${RUN.step === 0 ? 'disabled style="opacity:.4"' : ''}>${icon('back')} Back</button>
+    ${last ? `<button class="btn btn-gold" data-act="br-save">${icon('check')} ${RUN.demo ? 'Finish Demo' : 'Save Visit'}</button>` : `<button class="btn btn-gold" data-act="br-next">${st === 'open' ? (RUN.yes === 'no' ? (RUN.demo ? 'End the Demo' : 'Record Not Today') : 'Begin') : 'Next'} &rsaquo;</button>`}</div></div>`;
+  tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
+}
+// The visit as it would be saved, for previews and saving.
+function brRunAsVisit(){
+  const r = RUN, asked = r.visit === 'full' && r.opt.on.length > 0 && !r.stopped;
+  return {id:r.id, u:Date.now(), kind:'br', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, bank:r.bank || 1,
+    visit:r.visit, youth:r.youth, room:r.youth === 'yes' ? r.room : null, yes:'yes', wording:r.wording, season:r.season.slice(),
+    ans:r.visit === 'open' ? null : r.ans, impr:r.visit === 'open' ? r.impr : null, scores:brScore(r), flags:brRunFlags(r),
+    opt:{asked, on:asked ? r.opt.on.slice() : [], a:asked ? r.opt.a : {}, share:asked && !!r.opt.share},
+    safety:r.safety, told:r.told, heard:r.heard, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, tryh:r.tryh, share:r.share, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet,
+    summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext, stopped:r.stopped};
+}
+function brNext(){
+  const steps = brSteps(RUN), st = steps[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
+  if (st === 'open' && !brIsMe(c0)){
+    if (!RUN.youth) return alert('Ask whether they are still in high school or a youth program, and mark their answer.');
+    if (RUN.youth === 'yes' && !RUN.room.where) return alert('In a youth setting, another adult must be able to see in. Mark which before you begin.');
+    if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
+    if (RUN.yes === 'no') return brNotToday();
+  }
+  if (st === 'safety'){
+    if (!sf.notAsked && (!sf.safe || !sf.self)) return alert('Ask both safety questions, or check "I didn\'t ask these today" and say why.');
+    if (!sf.notAsked && brSelf(sf) && !sf.now) return alert('Ask whether those thoughts are with them today.');
+    if (sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
+    if (brSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
+  }
+  if (st === 'goodbye' && brNeedTalk(RUN) && !brIsMe(c0)){
+    if (!RUN.heard) return alert('Talk it through with them first, then check the box.');
+    if (!RUN.told) return alert('Mark what they chose, or that you acted as the law or your organization requires.');
+  }
+  RUN.step++; brKeep(); brDraw();
+}
+function brStop(){
+  if (!confirm('Stop the visit now? That is always okay.')) return;
+  const F = BRG().safety || {};
+  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = (F.notAskedReasons || [])[0] || 'They stopped the visit';
+  RUN.step = brSteps(RUN).indexOf('close'); brKeep(); brDraw();
+  toast((BRG().stop || {}).say || 'We can stop right now.');
+}
+function brSaveRun(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId), s = brRunAsVisit();
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ s.person = c; V = {tab:'birch', brv:'demo', brDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  DATA.sessions.push(s); DATA.draft = null;
+  if (c){ touch(c); c.last = today(); c.br.wording = r.wording; c.br.season = r.season.slice(); c.br.youth = r.youth; if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
+  save(); go('birch', {brv:s.id}); toast('Visit saved.');
+}
+function brNotToday(){
+  const r = RUN, c = r.demo ? r.person : CL(r.clientId);
+  RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  if (r.demo){ go('birch'); toast('Demo ended. "Not today" is always honored.'); return; }
+  DATA.sessions.push({id:r.id, u:Date.now(), kind:'br', clientId:r.clientId, date:today(), minutes:0, visit:r.visit, notToday:true, yes:'no', youth:r.youth, room:r.youth === 'yes' ? r.room : null, std:r.std, bank:r.bank || 1, scores:{}, safety:null, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', pn:{}});
+  DATA.draft = null; if (c){ touch(c); c.last = today(); }
+  save(); go('birch', {brp:r.clientId}); toast('Recorded as "Not today." Thank them, and end kindly.');
+}
+function brPause(){
+  if (RUN.demo){ if (!confirm('Close the demo?')) return; }
+  else if (!confirm('Close this visit? Your notes are kept, and you can pick it up again next time you open the Field Guide.')) return;
+  if (!RUN.demo){ DATA.draft = RUN; save(); toast('Visit paused.'); }
+  clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+}
+function brResume(){
+  if (!DATA.draft || DATA.draft.kind !== 'br') return;
+  RUN = DATA.draft; DATA.draft = null; save(); brLoad(); let n = 0;
+  const go2 = () => { if (BRC || RUN.visit === 'open') brOpenRun(); else if (BRC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Birch questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); };
+  go2();
+}
+// Report a Concern during a visit: the visit is paused and kept (a demo just closes), and the report card opens.
+function brRunReport(){
+  if (!RUN) return;
+  const cid = RUN.clientId, demo = RUN.demo;
+  if (!demo){ DATA.draft = RUN; save(); }
+  clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
+  go('birch', {brrep:cid || ''}); toast(demo ? 'Demo closed. Nothing was saved.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
+}
+function brToggle(t){
+  const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
+  const one = () => t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t));
+  const flip = arr => { const i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); t.setAttribute('aria-pressed', i < 0); };
+  switch (a){
+    case 'br-ans': RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][t.dataset.i] = v; return brRedraw();
+    case 'br-opt': RUN.opt.a[k] = v; return brRedraw();
+    case 'br-opton': if (v === 'off'){ RUN.opt.on = []; RUN.opt.a = {}; RUN.opt.share = false; } else { const i = RUN.opt.on.indexOf(v); if (i >= 0) RUN.opt.on.splice(i, 1); else RUN.opt.on.push(v); } return brRedraw();
+    case 'br-impr': RUN.impr[k] = v; one(); break;
+    case 'br-youth': RUN.youth = v; if (v !== 'yes') RUN.room = {where:''}; return brRedraw();
+    case 'br-room': RUN.room.where = v; return brRedraw();
+    case 'br-word': RUN.wording = v === 'plain' ? 'plain' : 'faith'; return brRedraw();
+    case 'br-season': flip(RUN.season); break;
+    case 'br-yes': RUN.yes = v; return brRedraw();
+    case 'br-safe': RUN.safety[k] = v; if (k === 'self' && !brSafeOn('self').includes(v)) RUN.safety.now = ''; return brRedraw();
+    case 'br-act': flip(RUN.safety.actions); break;
+    case 'br-told': RUN.told = v; one(); break;
+    case 'br-try': flip(RUN.tryh); break;
+    case 'br-plan': { const arr = RUN.plan[k] = RUN.plan[k] || [], i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); t.setAttribute('aria-pressed', i < 0); break; }
+    case 'br-tog': flip(RUN[t.dataset.g]); break;
+  }
+  brKeep();
+}
+
+// ----- moving between screens -----
+function brAct(a, v, t){
+  switch (a){
+    case 'br-retry': BRC_FAIL = false; brLoad(); render(); return true;
+    case 'br-home': SEC.birch = null; go('birch'); return true;
+    case 'br-field': brSetField(v === 'on'); return true;
+    case 'br-new': { const n = $('#br-nn').value.trim(); if (!n){ $('#br-nn').focus(); return true; } const c = {id:uid(), u:Date.now(), name:n, service:'Birch', status:'active', followups:[], created:today(), br:{type:$('#br-nt').value, wording:'faith', season:[], youth:'', consent:null}}; DATA.clients.push(c); save(); go('birch', {brc:c.id}); return true; }
+    case 'br-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), br:{type:'me', wording:'faith', season:[]}}; DATA.clients.push(c); save(); go('birch', {brp:c.id}); return true; }
+    case 'br-open': { const c = CL(v); if (!c){ go('birch'); return true; } if (!c.br){ c.br = {type:'person', wording:'faith', season:[], youth:'', consent:null}; touch(c); save(); } go('birch', {brp:v}); return true; }
+    case 'br-consent': go('birch', {brc:v}); return true;
+    case 'br-consent-save': { const c = CL(v), h = (document.querySelector('input[name=br-ch]:checked') || {}).value; if (!c) return true; if (!h){ alert('Choose how consent was given, or Declined.'); return true; } if (h === 'agent' && !$('#br-cby').value.trim()){ $('#br-cby').focus(); alert('Write who is part of their consent (relationship only).'); return true; }
+      c.br.consent = {how:h, by:$('#br-cby').value.trim(), date:$('#br-cd').value || today()}; touch(c); save(); go('birch', {brp:c.id}); toast(h === 'declined' ? 'Recorded. Visits stay off.' : 'Consent recorded.'); return true; }
+    case 'br-form': go('birch', {brform:v}); return true;
+    case 'br-form-save': { const c = CL(v), F = brForm(); if (!c || !F) return true; const boxes = [...document.querySelectorAll('.brf-box')], name = $('#brf-name').value.trim();
+      if (boxes.some(b => !b.checked)){ alert('Every box needs a check before the form is complete. If they don\'t agree to something, stop and talk it through.'); return true; } if (!name){ $('#brf-name').focus(); return true; }
+      c.br.consent = {how:'form', v:F.version, name, by:($('#brf-by') || {value:''}).value.trim(), date:today()}; touch(c); save(); go('birch', {brp:c.id}); toast('Consent recorded.'); return true; }
+    case 'br-form-pdf': { const c = CL(v); if (c && c.br) brFormPdf(c); return true; }
+    case 'br-start': brStart(v, t.dataset.c, false); return true;
+    case 'br-demo': brStart('quick', null, true); return true;
+    case 'br-demo-full': brStart('full', null, true); return true;
+    case 'br-next': brNext(); return true;
+    case 'br-prev': if (RUN && RUN.step > 0){ RUN.step--; brKeep(); brDraw(); } return true;
+    case 'br-save': brSaveRun(); return true;
+    case 'br-pause': brPause(); return true;
+    case 'br-stop': if (RUN) brStop(); return true;
+    case 'br-resume': brResume(); return true;
+    case 'br-ans': case 'br-opt': case 'br-opton': case 'br-impr': case 'br-youth': case 'br-room': case 'br-word': case 'br-season': case 'br-yes': case 'br-safe': case 'br-act': case 'br-told': case 'br-try': case 'br-plan': case 'br-tog':
+      if (RUN && RUN.kind === 'br') brToggle(t); return true;
+    case 'br-mhome': go('birch', {brm:1}); return true;
+    case 'br-ml': if (brmOpen(+v)) go('birch', {brm:1, brml:+v}); return true;
+    case 'br-mreadit': lnStop(); V.brread = v === '1'; render(); return true;
+    case 'br-mread': { const L = BRM().lessons, i = +v, d = brmData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } save(); const nx = L.findIndex((x, j) => j > i && !brmData().lessons[x.id]); if (nx >= 0) go('birch', {brm:1, brml:nx}); else { go('birch', {brm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'br-mq': go('birch', {brm:1, brq:brmNewQuiz()}); return true;
+    case 'br-mpick': V.brq.ans[V.brq.order[V.brq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=br-mnext],[data-act=br-mfinish]'); if (nb) nb.disabled = false; } return true;
+    case 'br-mnext': if (V.brq.ans[V.brq.order[V.brq.i]] !== undefined){ V.brq.i++; render(); } return true;
+    case 'br-mprev': if (V.brq.i > 0){ V.brq.i--; render(); } return true;
+    case 'br-mfinish': brmFinish(); return true;
+    case 'br-msign': go('birch', {brm:1, brs:1}); return true;
+    case 'br-msigned': { const nm = $('#brm-name').value.trim(); if (!nm){ $('#brm-name').focus(); return true; } if (!$('#brm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
+      brmData().signed = {v:BRM().version, date:today(), name:nm}; save(); go('birch', {brm:1}); toast(brReady() ? 'Signed. Birch visits are open.' : 'Signed.'); return true; }
+    case 'br-cert': fgGuideCert('birch', brmState(), brmData().signed, BRM(), 'Birch Guide'); return true;
+    case 'br-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('birch', 'tree')); return true;
+    case 'br-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('birch', 'parts')); return true;
+    case 'br-mprint': brmPrint(); return true;
+    case 'br-report': go('birch', {brrep:v || ''}); return true;
+    case 'br-run-report': brRunReport(); return true;
+    case 'br-where': V.brwhere = v; render(); return true;
+    case 'br-rep-save': { const c = CL(v), what = $('#brr-what').value.trim(); if (!c) return true; if (!what){ $('#brr-what').focus(); return true; }
+      DATA.sessions.push({id:uid(), u:Date.now(), kind:'spr', tool:'br', clientId:c.id, date:today(), what, how:$('#brr-how').value, at:$('#brr-at').value || '', where:V.brwhere || 'mn', ref:$('#brr-ref').value.trim()});
+      touch(c); save(); render(); toast('Report record saved, encrypted on this device.'); return true; }
+    case 'br-visit': go('birch', {brv:v}); return true;
+    case 'br-home-pdf': { const s = brFindVisit(); if (s) ggShare(ggPdf(brHomeBlocks(s, V.brv === 'demo' ? s.person : CL(s.clientId))), brFile('take-home', s), ((BRG().takeHome || {}).title) || 'Take-home sheet'); return true; }
+    case 'br-home-print': { const s = brFindVisit(); if (s) brHomePrint(s, V.brv === 'demo' ? s.person : CL(s.clientId)); return true; }
+    case 'br-copy-note': { const s = brFindVisit(); if (s) copy(brNote(s, V.brv === 'demo' ? s.person : CL(s.clientId))); return true; }
+    case 'br-print-note': { const s = brFindVisit(); if (s) brPrintNote(s, V.brv === 'demo' ? s.person : CL(s.clientId)); return true; }
+    case 'br-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('birch', {brp:s.clientId}); else go('birch'); } return true;
+    case 'br-del': if (confirm('Delete this person and all their visits and report records? This cannot be undone.')){ const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); DATA.clients = DATA.clients.filter(c => c.id !== v); save(); go('birch'); } return true;
+    case 'br-add-fu': { const c = CL(v), d = $('#br-fd').value, tx = $('#br-ft').value.trim(); if (!c) return true; if (!d){ $('#br-fd').focus(); return true; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); return true; }
+  }
+  return false;
+}
+// Typing and choosing inside Birch Guide. ev is 'input' or 'change'. Returns true when handled.
+function brInput(t, ev){
+  if (RUN && RUN.kind === 'br'){
+    if (t.dataset.brf){ RUN[t.dataset.brf] = t.value; brKeep(); return true; }
+    if (t.dataset.brpn){ RUN.pn[t.dataset.brpn] = t.value; brKeep(); return true; }
+    if (t.dataset.bropts && ev === 'change'){ RUN.opt.share = t.checked; brKeep(); return true; }
+    if (t.dataset.brheard && ev === 'change'){ RUN.heard = t.checked; brKeep(); return true; }
+    if (t.dataset.brseen && ev === 'change'){ RUN.seenSheet = t.checked; brKeep(); return true; }
+    if (t.dataset.brhide && ev === 'change'){ RUN.hide[t.dataset.brhide] = t.checked; brRedraw(); return true; }
+    if (t.dataset.brsafe){ if (ev === 'input' && t.dataset.brsafe !== 'reasonText') return true; const k = t.dataset.brsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; brKeep(); if (k === 'notAsked') brRedraw(); return true; }
+    if (t.dataset.bropts || t.dataset.brheard || t.dataset.brseen || t.dataset.brhide) return true;
+  }
+  if (t.dataset.brc && V.brp){ const c = CL(V.brp); if (!c || !c.br) return true;
+    if (ev === 'input' && t.tagName === 'SELECT') return true;
+    const k = t.dataset.brc; if (k === 'name' || k === 'status') c[k] = t.value; else c.br[k] = t.value; touch(c); save(); if (ev === 'change' && t.tagName === 'SELECT') render(); return true; }
+  if (t.dataset.brfu !== undefined && V.brp && ev === 'change'){ const c = CL(V.brp); if (c){ c.followups[+t.dataset.brfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); } return true; }
+  return false;
+}
+
+// ----- Founder: open or close Birch Guide to Field users (through Update a Library) -----
+function brFieldRow(){
+  const S = BRG();
+  if (!S) return `<p class="muted">Birch Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Birch Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done. Everyone takes Birch Guide Training before real visits. Opening it also opens Birch Guide: For Guides in Learn.</small></div><button class="btn btn-line btn-sm" data-act="br-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+}
+async function brSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.birchGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.birchGuide.open = Object.assign({}, next.birchGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title: on ? 'Open Birch Guide to Field users' : 'Close Birch Guide to Field users', note:'', rows:[['Replaces', 'birchGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+function brPersonCard(c){ return c.br && brTab() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Birch Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="br-open" data-v="${c.id}">${icon('birch')} Open</button></div></div>` : ''; }
+
 // ---------------- WILLOW GUIDE ----------------
 // Willow Build Session 3. Chaplains and end-of-life doulas (and a social worker or nurse in that role) walking with a
 // person in hospice and the people who love them. Wording lives in the Field library (FLD.willowGuide): training,
@@ -6299,11 +7139,9 @@ function sgAct(a, v){
    Pine For Guides (GWG BLD 741) is the same again: FLD.pineGuide.forGuides, ids 'pfg-<pine guide>', ring keys pn-*, open
    where Pine Guide is open (pnOpen), shown inside each Pine guide in When Life Changes and grouped by ring in Learn.
    Birch For Guides (GWG BLD 743) is the same again: FLD.birchGuide.forGuides, ids 'bfg-<birch guide>', ring keys br-*,
-   shown in Learn only for now (Birch has no Guide tab or When Life Changes stage in the Field Guide until Birch 3).
-   Staff and Founders see it as soon as it is in the library. Field users see it once birchGuide.open.field is on and
-   Orientation is done, the way pineGuide.open works (brOpen). */
-const BRG = () => (FLD && FLD.birchGuide) || null;
-const brOpen = () => !!BRG() && (TIER !== 'field' || !!(BRG().open && BRG().open.field && (!OR() || orState().complete)));
+   shown in Learn and, since Birch 3 (BLD 744), inside each Birch guide in When Life Changes. BRG and brOpen live in the
+   Birch Guide section. Staff and Founders see it as soon as it is in the library. Field users see it once
+   birchGuide.open.field is on and Orientation is done, the way pineGuide.open works (brOpen). */
 const FGSER = {
   willow: {lib: () => WLG(), on: () => wlOpen(), label: 'Willow Guide', accent: '#5D5A6E', tree: 'willow', who: 'chaplains, doulas, and anyone in that role'},
   oak: {lib: () => STG(), on: () => stOpen(), label: 'Oak Guide', accent: '#8B5E1A', tree: 'oak', who: 'chaplains, pastors, counselors, and anyone in that role'},
@@ -7106,11 +7944,11 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'g
 const HTG = () => (FLD && FLD.hardTalks) || null;
 const htOpen = () => !!HTG() && (TIER !== 'field' || !!(HTG().open && HTG().open.field && (!OR() || orState().complete)));
 const HT_SITE = 'https://growwithgrounded.com';
-const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', pine:'/pine/#life=', oak:'/oak/#life=', sequoia:'/sequoia/#life=', willow:'/willow/#guide='};
-const HT_TM = {maple:'Maple', aspen:'Aspen', pine:'Pine', oak:'Oak', sequoia:'Sequoia', willow:'Willow'};
-// Oak, Sequoia, and Pine guides have two sides: For You (self) and For Someone Helping (helper). Pine's helper side is
-// For the Grown-up.
-const htTwo = src => src === 'oak' || src === 'sequoia' || src === 'pine';
+const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', pine:'/pine/#life=', birch:'/birch/#life=', oak:'/oak/#life=', sequoia:'/sequoia/#life=', willow:'/willow/#guide='};
+const HT_TM = {maple:'Maple', aspen:'Aspen', pine:'Pine', birch:'Birch', oak:'Oak', sequoia:'Sequoia', willow:'Willow'};
+// Oak, Sequoia, Pine, and Birch guides have two sides: For You (self) and For Someone Helping (helper). Pine's helper side
+// is For the Grown-up. Birch (GWG BLD 744) has Oak's shape and reads its own guides (window.BIRCH_GUIDES, T.birch).
+const htTwo = src => src === 'oak' || src === 'sequoia' || src === 'pine' || src === 'birch';
 const htAudNames = src => src === 'pine' ? ['For the teen', 'For the grown-up'] : ['For them', 'For someone helping'];
 // Willow's guides for a topic. A topic can name them itself (T.willow, through a When Life Changes patch). Until then they come
 // from the topic's Oak guides, so every end-of-life topic finds its Willow guides without a library change.
@@ -7129,7 +7967,8 @@ function htWillowIds(T){
 // live here, without changing the library itself (so Download for Editing stays exactly as sealed).
 // Pine reads its own guides (T.pine) once pine/guides.js is loaded, even before the library's stage says src 'pine'.
 function htStagesAll(){ const L = (HTG() && HTG().stages) || []; return L.map(st => st.id === 'willow' && HD && HD.willow ? Object.assign({}, st, {src:'willow', soon:false})
-  : st.id === 'pine' && st.src !== 'pine' && HD && HD.pine && Object.keys(HD.pine).length ? Object.assign({}, st, {src:'pine', soon:false, stand:'', handNote:''}) : st); }
+  : st.id === 'pine' && st.src !== 'pine' && HD && HD.pine && Object.keys(HD.pine).length ? Object.assign({}, st, {src:'pine', soon:false, stand:'', handNote:''})
+  : st.id === 'birch' && st.src !== 'birch' && HD && HD.birch && Object.keys(HD.birch).length ? Object.assign({}, st, {src:'birch', soon:false, stand:'', handNote:''}) : st); }
 const HT_CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
 const HT_ABUSE = /abuse|abused|molest|rape|assault|touched me|hits me|hitting me|beat(s|ing)? me|domestic/;
 const htTopic = id => (HTG().topics || []).find(t => t.id === id) || null;
@@ -7143,14 +7982,14 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn1', '../sequoia/guides.js?v=sg2', '../pine/guides.js?v=pg1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
-    .then(([a, b, c, d, e, f]) => {
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn1', '../sequoia/guides.js?v=sg2', '../pine/guides.js?v=pg1', '../birch/guides.js?v=bg1'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+    .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
       if (!sp || !sa || !st) throw 0;
       const by = list => { const m = {}; (list || []).forEach(t => { if (t && t.id) m[t.id] = t; }); return m; };
-      const wl = run(d).WILLOW_GUIDES, sq = run(e).SEQUOIA_GUIDES, pn = run(f).PINE_GUIDES;
-      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics), willow: by(wl && wl.guides), sequoia: by(sq && sq.topics), pine: by(pn && pn.topics)};
+      const wl = run(d).WILLOW_GUIDES, sq = run(e).SEQUOIA_GUIDES, pn = run(f).PINE_GUIDES, br = run(g).BIRCH_GUIDES;
+      HD = {maple: by(sp.topics), aspen: by((sa.groups || []).flatMap(g => (g.topics || []).map(t => Object.assign({group: g.name}, t)))), oak: by(st.topics), willow: by(wl && wl.guides), sequoia: by(sq && sq.topics), pine: by(pn && pn.topics), birch: by(br && br.topics)};
       HD_WAIT = null; if (DATA && V.tab === 'talks') render();
     })
     .catch(() => { HD_WAIT = null; HD_FAIL = true; if (DATA && V.tab === 'talks') render(); });
@@ -7332,7 +8171,7 @@ function vHTTopic(T){
      <h3 class="ht-gt">${esc(r.g.title)}</h3>
      ${htTwo(r.src) && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick Card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
      ${x || (htTwo(r.src) && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
-     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}${x && r.src === 'sequoia' ? wfgInGuide(r.id, 'sequoia') : ''}${x && r.src === 'pine' ? wfgInGuide(r.id, 'pine') : ''}${x && r.src === 'aspen' && st.id === 'aspen' ? wfgInGuide(r.id, 'aspen') : ''}${x && r.src === 'maple' && st.id === 'maple' ? wfgInGuide(r.id, 'maple') : ''}
+     ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}${x && r.src === 'sequoia' ? wfgInGuide(r.id, 'sequoia') : ''}${x && r.src === 'pine' ? wfgInGuide(r.id, 'pine') : ''}${x && r.src === 'birch' ? wfgInGuide(r.id, 'birch') : ''}${x && r.src === 'aspen' && st.id === 'aspen' ? wfgInGuide(r.id, 'aspen') : ''}${x && r.src === 'maple' && st.id === 'maple' ? wfgInGuide(r.id, 'maple') : ''}
      <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
@@ -7375,6 +8214,7 @@ function htPersonOpen(c){
   if (c.sp && spOpen()) return `<button class="btn btn-line btn-sm" data-act="sp-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.sa && saOpen()) return `<button class="btn btn-line btn-sm" data-act="sa-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.pn && pnOpen()) return `<button class="btn btn-line btn-sm" data-act="pn-open" data-v="${c.id}">Open Their Record</button>`;
+  if (c.br && brTab()) return `<button class="btn btn-line btn-sm" data-act="br-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.st && stOpen()) return `<button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.sq && sqOpen()) return `<button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">Open Their Record</button>`;
   if (c.gv && gvOpen()) return `<button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">Open Their Record</button>`;
@@ -7397,12 +8237,13 @@ function htPersonCard(c){
 }
 // Staff and Founders: guides in the public files that the map doesn't reach, and map ids that aren't there.
 // Sequoia is counted once its stage is in the library (hardTalks.stages, BLD 736). Pine is counted once its guides load
-// and its stage reads them (T.pine, src 'pine', BLD 741).
+// and its stage reads them (T.pine, src 'pine', BLD 741). Birch the same way (T.birch, src 'birch', BLD 744).
 function htCheck(){
   const H = HTG(), sq = !!(HD.sequoia && (H.stages || []).some(st => st.id === 'sequoia')), pn = !!(HD.pine && htStagesAll().some(st => st.id === 'pine' && st.src === 'pine'));
-  const srcs = ['maple','aspen', ...(pn ? ['pine'] : []), 'oak', ...(sq ? ['sequoia'] : [])];
+  const bi = !!(HD.birch && htStagesAll().some(st => st.id === 'birch' && st.src === 'birch'));
+  const srcs = ['maple','aspen', ...(pn ? ['pine'] : []), ...(bi ? ['birch'] : []), 'oak', ...(sq ? ['sequoia'] : [])];
   const used = Object.fromEntries(srcs.map(k => [k, new Set()])), missing = [];
-  (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['og','oak'], ...(pn ? [['pine','pine']] : []), ...(sq ? [['sequoia','sequoia']] : [])].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
+  (H.topics || []).forEach(T => [['maple','maple'],['aspen','aspen'],['oak','oak'],['og','oak'], ...(pn ? [['pine','pine']] : []), ...(bi ? [['birch','birch']] : []), ...(sq ? [['sequoia','sequoia']] : [])].forEach(([k, src]) => (T[k] || []).forEach(id => { if (htGuide(src, id)) used[src].add(id); else missing.push(T.title + ': ' + HT_TM[src] + ' "' + id + '"'); })));
   const loose = Object.keys(used).flatMap(src => Object.keys(HD[src]).filter(id => !used[src].has(id)).map(id => HT_TM[src] + ': ' + HD[src][id].title));
   return {missing, loose, srcs, total: srcs.reduce((n, k) => n + Object.keys(HD[k]).length, 0)};
 }
@@ -7533,9 +8374,9 @@ const CDG = () => (HTG() && HTG().cards) || null;
 const PLG = () => (HTG() && HTG().plans) || null;
 // Willow joins the tree cards once its deck (hardTalks.cards.base.willow) is in the library (Willow Build Session 3).
 // Sequoia joins the same way, once hardTalks.cards.base.sequoia is in the library (GWG BLD 736). Pine joins once
-// hardTalks.cards.base.pine is in the library (GWG BLD 741).
-const cdAges = () => ['maple','aspen', ...((((CDG() || {}).base || {}).pine) ? ['pine'] : []), 'oak', ...((((CDG() || {}).base || {}).sequoia) ? ['sequoia'] : []), ...((((CDG() || {}).base || {}).willow) ? ['willow'] : [])];
-const CD_SRC = {maple:'maple', aspen:'aspen', pine:'pine', oak:'oak', sequoia:'sequoia', willow:'willow'};
+// hardTalks.cards.base.pine is in the library (GWG BLD 741). Birch joins once hardTalks.cards.base.birch is (GWG BLD 744).
+const cdAges = () => ['maple','aspen', ...((((CDG() || {}).base || {}).pine) ? ['pine'] : []), ...((((CDG() || {}).base || {}).birch) ? ['birch'] : []), 'oak', ...((((CDG() || {}).base || {}).sequoia) ? ['sequoia'] : []), ...((((CDG() || {}).base || {}).willow) ? ['willow'] : [])];
+const CD_SRC = {maple:'maple', aspen:'aspen', pine:'pine', birch:'birch', oak:'oak', sequoia:'sequoia', willow:'willow'};
 const cdFaith = () => !!(DATA && DATA.settings.htFaith);
 const cdTxt = c => c == null ? '' : typeof c === 'string' ? c : (cdFaith() ? c.t : (c.n || c.t));
 const cdKind = s => /\.\.\.$/.test(s) ? 'finish' : /^(Show me|Draw|Point)\b/.test(s) ? 'show' : 'q';
@@ -7712,8 +8553,8 @@ function plState(){ if (!PS) PS = plNew(); return PS; }
 const plFmt = id => (PLG().formats || []).find(f => f.id === id) || PLG().formats[0];
 const plLine = x => cdTxt(x);
 // The Grove library's age for a stage. Sequoia and Pine keep their own keys, so practices marked for them come in too
-// (the Grove library serves 'pine' with its teen practices).
-const plAgeKey = st => st === 'oak' ? 'adult' : st;
+// (the Grove library serves 'pine' with its teen practices). Birch reads the adult practices, like Oak.
+const plAgeKey = st => st === 'oak' || st === 'birch' ? 'adult' : st;
 function plStages(S){
   const order = cdAges(), sel = order.filter(x => (S.stages || []).includes(x));
   const list = sel.length ? sel : ['oak'];
@@ -7772,9 +8613,9 @@ function plFromGuide(T, stage, gi){
 function plBuild(S){
   const P = PLG(), F = plFmt(S.fmt), ST = plStages(S), T = S.topic ? htTopic(S.topic) : null;
   const guideOnly = cdGuideOnly(T), deck = cdDeckFor(T), times = plTimes(S, F, guideOnly);
-  // Pine speaks in Aspen's plan voice until the library gives plans a pine voice of its own.
-  // The format's open and close lines fall back the same way when a format has no pine lines.
-  const own = x => x === 'pine' && !((P.bridges || {}).pine) ? 'aspen' : x, ownF = x => x === 'pine' && !((F.open || {}).pine) ? 'aspen' : x;
+  // Pine speaks in Aspen's plan voice until the library gives plans a pine voice of its own, and Birch in Oak's.
+  // The format's open and close lines fall back the same way when a format has no pine or birch lines.
+  const own = x => x === 'pine' && !((P.bridges || {}).pine) ? 'aspen' : x === 'birch' && !((P.bridges || {}).birch) ? 'oak' : x, ownF = x => x === 'pine' && !((F.open || {}).pine) ? 'aspen' : x === 'birch' && !((F.open || {}).birch) ? 'oak' : x;
   const voice = S.fmt === 'family' ? 'maple' : own(ST.main), key = S.fmt === 'family' ? 'all' : ownF(ST.main);
   const br = (P.bridges || {})[voice] || [], prac = plPractice(S), pp = plPracticePart(S);
   const steps = [{kind:'open', name:'Arrive', min:times.open, say:((F.open || {})[key] || []).map(plLine)}];
@@ -7782,7 +8623,7 @@ function plBuild(S){
     const pd = ((P.parts || {})[k] || {})[voice] || {};
     steps.push({kind:'part', k, name: cdPart(k).name, sub: cdPart(k).sub, min: times.parts[k], bridge: br[i] || '', say: plLine(pd.say), listen: pd.listen || '', cards: plCards(S, k, deck), practice: pp === k ? prac : null, focus: S.focus === k});
   });
-  if (guideOnly){ const sf = (P.safety || {})[ST.main] || (ST.main === 'sequoia' ? (P.safety || {}).oak : ST.main === 'pine' ? (P.safety || {}).aspen : null) || {}; steps.push({kind:'safety', name:(P.safety || {}).title || 'Safety step', min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || []}); }
+  if (guideOnly){ const sf = (P.safety || {})[ST.main] || (ST.main === 'sequoia' || ST.main === 'birch' ? (P.safety || {}).oak : ST.main === 'pine' ? (P.safety || {}).aspen : null) || {}; steps.push({kind:'safety', name:(P.safety || {}).title || 'Safety step', min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || []}); }
   steps.push({kind:'close', name:'Close', min:times.close, bridge: br[6] || '', say:((F.close || {})[key] || []).map(plLine)});
   let at = 0; steps.forEach(s => { s.at = at; at += s.min; });
   const title = (S.name || '').trim() || (T ? T.title : 'The whole tree') + ', ' + F.name.toLowerCase();
@@ -8159,6 +9000,7 @@ function printSession(s){
   if (s && s.kind === 'st') return stPrintNote(s, CL(s.clientId));
   if (s && s.kind === 'sq') return sqPrintNote(s, CL(s.clientId));
   if (s && s.kind === 'pn') return pnPrintNote(s, CL(s.clientId));
+  if (s && s.kind === 'br') return brPrintNote(s, CL(s.clientId));
   const g = G(s.guideId) || {steps:[], title:'Session'}, c = s.clientId ? CL(s.clientId) : null;
   fgSheet(ph('Confidential session note') + `<h1>${esc(g.title)}</h1><p>${c ? esc(c.name) + ' &middot; ' : ''}${nice(s.date)} &middot; ${s.minutes||0} minutes</p>
     <h2>Summary</h2><p style="white-space:pre-wrap">${esc(s.summary||'')}</p><h2>Next steps</h2><p style="white-space:pre-wrap">${esc(s.next||'')}</p>
@@ -8271,6 +9113,10 @@ function mergeData(cur, inc){
   Object.entries(ip.lessons || {}).forEach(([k,v]) => { if (v && !out.pnmod.lessons[k]) out.pnmod.lessons[k] = v; });
   out.pnmod.how = Object.assign({}, ip.how || {}, out.pnmod.how || {}); // how each Pine lesson was finished (BLD 741)
   ['last','pass','signed'].forEach(k => { out.pnmod[k] = newer(out.pnmod[k], ip[k]) || null; });
+  const ib = inc.brmod || {}; out.brmod = Object.assign({lessons:{}, last:null, pass:null, signed:null}, out.brmod || {});
+  Object.entries(ib.lessons || {}).forEach(([k,v]) => { if (v && !out.brmod.lessons[k]) out.brmod.lessons[k] = v; });
+  out.brmod.how = Object.assign({}, ib.how || {}, out.brmod.how || {}); // how each Birch lesson was finished (BLD 744)
+  ['last','pass','signed'].forEach(k => { out.brmod[k] = newer(out.brmod[k], ib[k]) || null; });
   // Founder and Staff records (Labels, Learn, and Backup build): approvals, edits, codes, checklists, Learn progress.
   const fo = inc.founder || {}; out.founder = Object.assign({saved:[], draft:null}, out.founder || {});
   (fo.saved || []).forEach(x => { if (!out.founder.saved.some(y => y.id === x.id)) { out.founder.saved.push(x); stats.added++; } });
@@ -8305,6 +9151,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('wl-') && wlAct(a, v, t)) return;
   if (a && a.startsWith('sq-') && sqAct(a, v, t)) return;
   if (a && a.startsWith('pn-') && pnAct(a, v, t)) return;
+  if (a && a.startsWith('br-') && brAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
@@ -8335,7 +9182,7 @@ document.addEventListener('click', async e => {
     case 'cfilter': V.filter = v; render(); break;
     case 'add-fu': { const c = CL(v), d = $('#nfd').value, tx = $('#nft').value.trim(); if (!d){ $('#nfd').focus(); return; } (c.followups = c.followups||[]).push({date:d, text:tx||'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'del-client': if (confirm('Delete this person and all their sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('clients'); } break;
-    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'wl'){ go('willow', {wlv:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'pn') go('pine', {pnrep:s.clientId}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else if (s.tool === 'sq') go('sequoia', {sqrep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'sq'){ go('sequoia', {sqv:s.id}); break; } if (s && s.kind === 'pn'){ go('pine', {pnv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
+    case 'view-session': { const s = DATA.sessions.find(x => x.id === v); if (s && s.kind === 'sp'){ go('maple', {spv:s.id}); break; } if (s && s.kind === 'sa'){ go('aspen', {sav:s.id}); break; } if (s && s.kind === 'wl'){ go('willow', {wlv:s.id}); break; } if (s && s.kind === 'spr'){ if (s.tool === 'sa') go('aspen', {sarec:s.id}); else if (s.tool === 'pn') go('pine', {pnrep:s.clientId}); else if (s.tool === 'br') go('birch', {brrep:s.clientId}); else if (s.tool === 'st') go('oak', {strep:s.clientId}); else if (s.tool === 'sq') go('sequoia', {sqrep:s.clientId}); else go('maple', {sprec:s.id}); break; } if (s && s.kind === 'st'){ go('oak', {stv:s.id}); break; } if (s && s.kind === 'sq'){ go('sequoia', {sqv:s.id}); break; } if (s && s.kind === 'pn'){ go('pine', {pnv:s.id}); break; } if (s && s.kind === 'br'){ go('birch', {brv:s.id}); break; } if (s && s.kind === 'ht'){ go('talks', {htrec:s.id}); break; } if (s){ $('#view').innerHTML = vSession(s); window.scrollTo(0,0); } break; }
     case 'del-session': if (confirm('Delete this session note?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('clients', {client:s.clientId}); else go('home'); } break;
     case 'print-session': printSession(DATA.sessions.find(x => x.id === v)); break;
     case 'lib': go('library', {sub:v}); break;
@@ -8457,6 +9304,7 @@ document.addEventListener('input', e => {
   if (wlInput(t, 'input')) return;
   if (sqInput(t, 'input')) return;
   if (pnInput(t, 'input')) return;
+  if (brInput(t, 'input')) return;
   if (dkInput(t)) return;
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
@@ -8486,6 +9334,7 @@ document.addEventListener('change', e => {
   if (wlInput(t, 'change')) return;
   if (sqInput(t, 'change')) return;
   if (pnInput(t, 'change')) return;
+  if (brInput(t, 'change')) return;
   if (t.dataset.htfaith){ DATA.settings.htFaith = t.checked; save(); if (V.tab === 'talks' && (V.htv === 'cards' || V.htv === 'plans')) cdLive(); return; }
   if (t.dataset.cdbacks){ cdState().backs = t.checked; return; }
   if (t.dataset.cddeck){ cdAct('ht-cdeck', t.value || 'tree', t); return; }
