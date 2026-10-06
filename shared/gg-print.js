@@ -4,7 +4,7 @@
    Each one opens as a print-ready page with a Print or Save as PDF button. Nothing is sent anywhere.
    - GGPrint.certificate(o)     Certificate of Completion, landscape Letter.
                                 o: {tree, name, title, body, date, renew, version, id, kind}
-                                tree is maple, aspen, pine, oak, sequoia, willow, grove, or house (Grow With Grounded).
+                                tree is maple, aspen, pine, birch, oak, sequoia, willow, grove, or house (Grow With Grounded).
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
                                 kind 'parts': the six parts teaching poster, in that tree's voice.
@@ -29,13 +29,17 @@
     aspen: { name: 'Aspen', color: '#1F6F74', ink: '#1F6F74', path: '/aspen/', tag: 'Rooted together.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 6 to 8.', guide: 'Aspen Guide',
       points: ['A check-in for grades 6 to 8, with questions written for each grade.', 'Every check-in adds a growth ring and leaves to their tree, and daily tending happens right in Aspen.', 'Done on their own or with a grown-up.', 'Grown-ups get When Life Changes: guides for hard talks with middle schoolers, from group chats to grief.'],
       parts: { title: 'Six Parts Make You Whole', lead: 'Every middle schooler is like an aspen: growing fast and putting down roots.', words: ['What keeps you steady: faith, family traditions, quiet, or time outside.', 'Goals, things you care about, and trying new things.', 'Naming what you feel, calming down, and asking for help.', 'Friends, family, and belonging somewhere.', 'Sleep, movement, real meals, and screen breaks.', "Hope for what's ahead, and the kindness that grows it."], close: 'Notice all six. Tend the one that needs it.' } },
-    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults.', guide: 'Oak Guide',
+    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults, 25 to 60.', guide: 'Oak Guide',
       points: ['A check-in for the whole person, from root to fruit.', 'A personal growth plan with step-by-step practices.', "When Life Changes: 67 guides for life's hardest seasons."],
       parts: { title: 'Six Parts Make You Whole', lead: 'Being whole means noticing and tending all six.', words: ['Faith, the Sacred, and the practices that steady you.', 'Meaning, calling, and what your life is for.', 'Thoughts and feelings, stress and resilience.', 'Family, friends, and community.', 'Movement, rest, and nourishment.', "Hope, gratitude, and what you're growing toward."], close: 'Shelter for others. Strength for you.' } },
     // Pine (GWG BLD 739, Pine Guide posters GWG BLD 741): the flyer, "A trained Pine Guide serves here.", and the six parts poster.
     pine: { name: 'Pine', color: '#3A6B35', ink: '#3A6B35', path: '/pine/', tag: 'Stand tall through every season.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 9 to 12.', guide: 'Pine Guide',
       points: ['A check-in for grades 9 to 12, with questions written for each grade band.', 'A growth plan with practices, and a tree that grows with every day tended.', 'Next Steps: a private notebook for goals and plans after high school.', "Only the teen's own passcode opens their answers. Grown-ups see only a quiet alert."],
       parts: { title: 'Six Parts Make You Whole', lead: 'High school is a season of fast growth. A whole tree needs all six parts.', words: ['Peace, faith, quiet, and what holds you steady.', "What you care about and where you're headed.", 'Handling stress, mistakes, and big feelings.', 'Friends, family, and the adults in your corner.', 'Moving, resting, and eating well.', 'What you look forward to and believe is possible.'], close: 'Stand tall through every season.' } },
+    // Birch (GWG BLD 742): the flyer for young adults. Birch Guide posters come with Birch Guide.
+    birch: { name: 'Birch', color: '#7F6610', ink: '#7F6610', path: '/birch/', tag: 'New ground, deep roots.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for young adults, 18 to 26.', guide: 'Birch Guide',
+      points: ['A check-in for young adults, 18 to 26, wherever life has you right now.', 'A growth plan with practices, and a tree that grows with every day tended.', 'Groundwork: a private notebook for your plans and the skills you already have.', 'Only your own passcode opens your answers. Helpers see only what you share.'],
+      parts: { title: 'Six Parts Make You Whole', lead: 'New ground brings fast change. A whole tree needs all six parts.', words: ['Faith, the Sacred, quiet, and the practices that steady you.', 'Meaning, calling, and the direction you are choosing.', 'Stress, setbacks, and the feelings that come with change.', 'Friends, family, and the people in your corner.', 'Sleep, movement, and eating well on a real schedule.', "Hope for what's ahead, and the steps that build it."], close: 'New ground, deep roots.' } },
     sequoia: { name: 'Sequoia', color: '#7A2E1C', ink: '#7A2E1C', path: '/sequoia/', tag: 'A long life, still growing.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for older adults, 60 and up.', guide: 'Sequoia Guide',
       points: ['A check-in for the whole person in later life, one question at a time, in larger text.', 'A growth plan with practices that work seated, standing, or in bed.', 'A Legacy Book for the stories and lessons you want to pass on, private until you share a page.', 'When Life Changes: 48 guides for later life, with short videos for you and your helper.'],
       parts: { title: 'Six Parts Make You Whole', lead: 'A long life is still growing in all six parts.', words: ['Faith, the Sacred, and the practices that have carried you.', 'Meaning, legacy, and what your life is for now.', 'Thoughts and feelings, worry and peace.', 'Family, friends, neighbors, and community.', 'Movement, rest, balance, and nourishment.', "Hope, gratitude, and what you're still looking forward to."], close: 'A long life, still growing.' } },
@@ -45,7 +49,7 @@
     grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, side by side.',
       points: ["The family's shared ground, on one device.", 'Everyone tends their own tree in their own app, and the trees stand side by side here.', 'A family wall to cheer each other on, and practices to do together.'] }
   };
-  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['oak', 'Oak', 'Adults'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
+  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '25 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
 
   function qr(u, label) {
     try { if (window.GGQR && GGQR.svg) return GGQR.svg(u, { label: label || 'QR code', border: 2 }); } catch (e) {}
@@ -221,7 +225,7 @@
         css = SCALE + '\n.ov-top{display:flex;align-items:center;gap:0.25in;background:#8B5E1A;color:#FFF8EC;padding:0.45in 0.6in;}.ov-top img{width:0.9in;height:auto;filter:brightness(0) invert(1);}'
           + '.ov-nm{font-size:38pt;font-weight:600;line-height:1;}.ov-nm sup{font-size:.35em;vertical-align:top;position:relative;top:.3em;}.ov-tag{font-size:16pt;font-style:italic;margin-top:6px;color:#FBEBD0;}'
           + '.ov-lead{font-size:13pt;line-height:1.45;margin:0;}'
-          + '.ov-row{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:0.25in;text-align:center;}.ov-row img{width:100%;max-width:0.85in;border-radius:0.16in;}.ov-row b{display:block;font-size:14pt;font-weight:600;margin-top:3px;}.ov-row span{display:block;font-size:8.5pt;color:#6B5A4D;line-height:1.2;}'
+          + '.ov-row{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-top:0.25in;text-align:center;}.ov-row img{width:100%;max-width:0.85in;border-radius:0.16in;}.ov-row b{display:block;font-size:14pt;font-weight:600;margin-top:3px;}.ov-row span{display:block;font-size:8.5pt;color:#6B5A4D;line-height:1.2;}'
           + '.ov-pts{margin:0.25in 0 0;padding-left:1.1em;font-size:12pt;line-height:1.45;}.ov-pts li{margin-bottom:6px;}';
         return page({ win: win, title: 'Grow With Grounded Flyer', size: LETTER, body: body, css: css, tip: 'Letter size, ready for any bulletin board.' });
       }

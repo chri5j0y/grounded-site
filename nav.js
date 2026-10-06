@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=lb3'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=lb4'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -13,7 +13,7 @@
   var HOME = 'https://growwithgrounded.com';
   var mk = function (k) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg" alt="" width="42" height="42">'; };
   var ic = {
-    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'),
+    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'),
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#4A5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-6 14-15 14z"/><path d="M5 19l8.5-8.5"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
@@ -26,7 +26,8 @@
       { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4' },
       { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
       { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', href: HOME + '/pine/', icon: ic.pine, bg: '#E2EEDB' },
-      { id: 'oak', title: 'Oak', desc: 'For adults', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
+      { id: 'birch', title: 'Birch', desc: 'For ages 18 to 26', href: HOME + '/birch/', icon: ic.birch, bg: '#F3EED9' },
+      { id: 'oak', title: 'Oak', desc: 'For ages 25 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
       { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
@@ -48,6 +49,7 @@
     if (p.indexOf('/maple') === 0 || h.indexOf('maple.') === 0) return 'maple';
     if (p.indexOf('/aspen') === 0 || h.indexOf('aspen.') === 0) return 'aspen';
     if (p.indexOf('/pine') === 0) return 'pine';
+    if (p.indexOf('/birch') === 0) return 'birch';
     if (p.indexOf('/sequoia') === 0) return 'sequoia';
     if (p.indexOf('/willow') === 0) return 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
@@ -311,7 +313,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=w6';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=w7';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

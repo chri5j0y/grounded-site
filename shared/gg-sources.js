@@ -282,10 +282,33 @@
     // Pine Guide For Guides (GWG BLD 741)
     aftersuicide18: ["American Foundation for Suicide Prevention and Suicide Prevention Resource Center, After a Suicide: A Toolkit for Schools, second edition (2018)", "https://sprc.org/online-library/after-suicide-toolkit-schools"],
     // end BLD 741
+    // Birch (GWG BLD 742)
+    aca26: ["HealthCare.gov, young adults staying on a parent's plan until 26 (Affordable Care Act)", ""],
+    arnett: ["Jeffrey Jensen Arnett, emerging adulthood, a theory of development from the late teens through the twenties (American Psychologist, 2000)", "https://jeffreyarnett.com/emerging-adulthood"],
+    cfpbfwb: ["Consumer Financial Protection Bureau, Measuring Financial Well-Being: the CFPB Financial Well-Being Scale (2015)", "https://files.consumerfinance.gov/f/201512_cfpb_financial-well-being-user-guide-scale.pdf"],
+    damon08: ["William Damon, The Path to Purpose (2008)", "https://www.edweek.org/leadership/majority-of-youths-found-to-lack-a-direction-in-life/2008/06"],
+    fdupoll: ["Fairleigh Dickinson University Poll, online betting and young men (2024)", "https://www.fdu.edu/news/fdu-poll-finds-online-betting-leads-to-problems-for-young-men/"],
+    healthyminds25: ["Healthy Minds Study, college student mental health improves for a third year, 2024 to 2025 (University of Michigan School of Public Health, 2025)", "https://sph.umich.edu/news/2025posts/college-student-mental-health-third-consecutive-year-improvement.html"],
+    kessler05: ["Kessler and colleagues, lifetime prevalence and age of onset of mental health conditions in the National Comorbidity Survey Replication (Archives of General Psychiatry, 2005)", "https://hcp.hms.harvard.edu/publication/lifetime-prevalence-and-age-onset-distributions-dsm-iv-disorders-national-comorbidity"],
+    mcc21: ["Making Caring Common, Harvard Graduate School of Education, Loneliness in America (2021)", "https://mcc.gse.harvard.edu/reports/loneliness-in-america"],
+    mlq: ["Steger, Frazier, Oishi, and Kaler, the Meaning in Life Questionnaire (Journal of Counseling Psychology, 2006)", "https://singteach.nie.edu.sg/wp-content/uploads/2021/12/Steger-et-al-2006_The-meaning-in-life-questionnaire.pdf"],
+    mtfpanel24: ["Monitoring the Future Panel Study, substance use among adults 19 to 30 (University of Michigan, 2024)", "https://src.isr.umich.edu/?p=1114"],
+    nisvs: ["CDC, National Intimate Partner and Sexual Violence Survey, summary via VAWnet", "https://www.vawnet.org/sc/national-intimate-partner-and-sexual-violence-survey-nisvs"],
+    nsduh24: ["SAMHSA, 2024 National Survey on Drug Use and Health: adult mental illness and suicide (2025)", "https://www.samhsa.gov/data/sites/default/files/reports/rpt56769/2024-nsduh-psr5-adult-ami-suicide.pdf"],
+    nsfsleep: ["Hirshkowitz and colleagues, National Sleep Foundation's sleep duration recommendations (Sleep Health, 2015)", "https://profiles.wustl.edu/en/publications/national-sleep-foundations-updated-sleep-duration-recommendations/"],
+    pewparents: ["Pew Research Center, parents, young adult children, and the transition to adulthood (2024)", "https://www.pewresearch.org/wp-content/uploads/sites/20/2024/01/ST_2024.01.25_Parents-Young-Adults_Report.pdf"],
+    pewrls: ["Pew Research Center, Religious Landscape Study 2023 to 24 (2025)", "https://www.pewresearch.org/religious-landscape-study/age-distribution/18-29/"],
+    shed24: ["Federal Reserve Board, Economic Well-Being of U.S. Households in 2024 (2025)", "https://www.federalreserve.gov/publications/2025-economic-well-being-of-us-households-in-2024-executive-summary.htm"],
+    smithsnell: ["Christian Smith with Patricia Snell, Souls in Transition: The Religious and Spiritual Lives of Emerging Adults (2009)", "https://youthandreligion.nd.edu/announcements/book-announcements/souls-in-transition/"],
+    sumner: ["Purpose in life across education levels (Applied Research in Quality of Life, 2017)", "https://ideas.repec.org/a/spr/ariqol/v12y2017i1d10.1007_s11482-016-9448-9.html"],
+    // end BLD 742
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
   var C = {
+    // Birch (GWG BLD 742)
+    "birch:groundwork": ["damon03", "bronk18", "mlq", "arnett", "yeager18", "snyder", "king", "stanley", "cfpbfwb"],
+    // end BLD 742
     // Pine When Life Changes (GWG BLD 740)
     "pine:adhd": ["mnr3525", "curry17"],
     "pine:ai-companions": ["csmai25"],
@@ -400,6 +423,50 @@
   var P_RE = [[/three good things/i, ['seligman']]];
   // Extra credits where one app's own words make a research claim (Oak's "Why it helps").
   var PX = {
+    // Birch (GWG BLD 742)
+    "birch:a group that lifts you": ["vanderweele"],
+    "birch:best possible self": ["king"],
+    "birch:call home": ["pewparents"],
+    "birch:carry your big questions": ["smithsnell"],
+    "birch:carry your questions": ["smithsnell"],
+    "birch:centering prayer": ["centering"],
+    "birch:examen": ["examen"],
+    "birch:expressive writing": ["pennebaker"],
+    "birch:faith community": ["vanderweele"],
+    "birch:find people who share your values": ["smithsnell"],
+    "birch:find your people for faith": ["smithsnell"],
+    "birch:gratitude letter": ["seligman"],
+    "birch:health basics": ["aca26"],
+    "birch:hold someone in light": ["quaker"],
+    "birch:hope map": ["snyder"],
+    "birch:keep someone in mind": ["quaker"],
+    "birch:kind voice letter": ["neff"],
+    "birch:leaves on a stream": ["act"],
+    "birch:look back on your day": ["examen"],
+    "birch:look out for a friend": ["dazzi"],
+    "birch:loving-kindness": ["metta", "fredrickson"],
+    "birch:make one plan": ["murthy"],
+    "birch:money check-in": ["cfpbfwb"],
+    "birch:movement": ["pag", "noetel"],
+    "birch:my safety plan": ["stanley"],
+    "birch:name it": ["lieberman", "siegel"],
+    "birch:plan your answer": ["mtfpanel24"],
+    "birch:purpose reflection": ["bronk18", "damon03"],
+    "birch:scripture": ["lectio"],
+    "birch:self-compassion break": ["neff"],
+    "birch:silent sitting": ["centering"],
+    "birch:sleep": ["nsfsleep"],
+    "birch:starter cushion": ["shed24"],
+    "birch:steady wake time": [{"label": "Cognitive behavioral therapy for insomnia (CBT-I)", "href": "https://doi.org/10.7326/M14-2841", "adapted": true}, "trauer"],
+    "birch:strength training": ["pag"],
+    "birch:study sprints": [{"label": "Francesco Cirillo, the Pomodoro Technique", "href": "", "adapted": true}],
+    "birch:three good things": ["seligman"],
+    "birch:two hours outdoors": ["white"],
+    "birch:values sort": ["act"],
+    "birch:walk or jog": ["noetel"],
+    "birch:words to live by": ["lectio"],
+    "birch:worry window": ["borkovec"],
+    // end BLD 742
     'oak:awe walk': ['ggsc', 'sturm'], 'oak:loving-kindness': ['metta', 'fredrickson'], 'oak:expressive writing': ['pennebaker', 'unknown'],
     'oak:walk or jog': ['noetel'], 'oak:yoga': ['noetel'], 'oak:purpose statement': ['unknown'], 'oak:moral repair letter': ['litz'],
     'maple:three good things': ['froh'], 'aspen:three good things': ['froh'], 'grove-kid:three good things': ['froh'],

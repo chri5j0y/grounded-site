@@ -52,7 +52,10 @@
      pauseLine    the words under the tree while the pause is on
      tree.shape   'tall' draws a narrow, high crown on a massive flared trunk;
                   'layered' (Pine, GWG BLD 739) draws the tree from the Pine mark on a tall,
-                  straight trunk
+                  straight trunk; 'birch' (Birch, GWG BLD 742) draws the tree from the
+                  Birch mark: two white trunks with dark marks, an airy crown, and catkins
+                  (tree.fruitColor) for each part tended today. Optional for 'birch':
+                  tree.trunkEdge (the thin outline on the white trunks), tree.limb (the color of the limbs)
      Pine's game layer (GWG BLD 739), all optional, for any tool:
      itemTag      (partKey, name, state) => html after a practice name on Today
                   (Pine shows mastery: Tried, Building, Mine)
@@ -213,6 +216,45 @@
     }
     return o + '</g>';
   }
+  // Birch (GWG BLD 742): the tree from the Birch mark (shared/marks/birch.svg, Two Trunks),
+  // drawn in the mark's own units (trunk bases at 48.5 and 56, ground at 90) and scaled into
+  // the scene. Thriving shows the full crown in the palette's shade, body, and light, with a
+  // gold catkin for each part tended today. Dry thins the crown a little; drooping thins it
+  // more and lets it hang; resting bare shows the white trunks and their limbs. Never anything gone.
+  var BIRCH_CROWN = [[31.6,21.7,4.3,0],[35.3,42.3,6.0,0],[71.9,30.5,6.9,0],[56.1,40.3,6.7,0],[31.6,20.0,6.8,0],[55.9,48.1,4.4,0],[32.4,19.5,4.7,0],[40.3,50.2,6.4,0],[34.0,39.3,5.5,0],[32.8,17.5,5.0,0],[59.2,49.2,6.0,0],[34.5,36.9,4.3,0],[59.8,40.8,6.8,0],[49.0,46.4,5.2,0],[48.1,55.0,6.4,0],[34.5,46.8,6.2,0],[34.7,46.9,5.1,0],[50.7,36.5,4.7,0],[28.4,30.8,4.2,0],[53.2,48.8,6.6,0],[52.3,17.1,6.7,0],[32.8,43.8,4.2,0],[65.1,28.1,3.6,1],[24.5,37.2,4.9,1],[54.0,43.6,5.7,1],[74.4,28.1,5.1,1],[47.5,32.8,3.7,1],[58.3,38.6,3.4,1],[37.3,50.1,5.2,1],[64.4,37.1,4.0,1],[67.3,22.6,4.2,1],[74.0,25.6,4.4,1],[52.4,36.2,4.9,1],[45.1,44.3,3.6,1],[66.4,33.7,5.3,1],[43.4,49.3,5.1,1],[50.8,23.1,3.6,1],[48.0,39.7,5.3,1],[57.8,28.8,5.0,1],[73.0,28.6,5.0,1],[57.4,24.3,5.0,1],[60.8,17.3,3.9,1],[40.9,36.6,3.9,1],[60.1,41.7,2.7,2],[39.9,49.5,3.9,2],[76.5,34.6,4.3,2],[51.7,20.2,2.6,2],[38.5,35.0,2.6,2],[56.1,12.7,2.9,2],[33.4,18.9,3.7,2],[61.8,24.4,3.9,2],[60.1,41.8,3.5,2],[53.1,41.8,4.3,2],[69.7,36.9,4.4,2],[44.6,16.2,3.9,2],[52.5,41.6,3.8,2],[52.7,11.1,2.7,2],[46.8,51.4,4.0,2],[44.5,13.6,4.0,2],[36.1,48.3,4.1,2],[53.9,41.2,3.4,2],[44.8,42.2,4.2,2],[37.9,21.4,3.1,2],[49.4,14.2,3.8,2]];
+  var BIRCH_MARKS = [[47.5, 85, 1.6], [47.2, 76, 1.8], [47, 68.4, 2.4], [47.5, 61.6, 1.5], [47.9, 54.1, 1.6], [47.2, 45.8, 2.1], [47.2, 37.9, 1.7], [55.2, 85, 1.9], [55.3, 77.9, 1.6], [54.8, 69.9, 1.7], [54.9, 61, 2.1], [55, 52.2, 2]];
+  function birchTree(T, h, parts, R, cx, cy, gy, tk, pal) {
+    var k = (gy - 22) / 84, f = function (n) { return n.toFixed(2); }, o = '';
+    // birch leaves turn yellow as they fall: a few on the ground when dry or drooping
+    if (h === 1 || h === 2) for (var lf = 0; lf < (h === 1 ? 5 : 12); lf++) o += '<ellipse cx="' + (cx - 100 + R() * 200).toFixed(1) + '" cy="' + (gy - 1 + R() * 3).toFixed(1) + '" rx="3.4" ry="1.8" fill="' + (h === 1 ? '#D8B84A' : '#B89A3A') + '" transform="rotate(' + Math.round(R() * 60 - 30) + ' ' + cx + ' ' + gy + ')"/>';
+    o += '<g transform="translate(' + f(cx - 52 * k) + ' ' + f(gy - 90 * k) + ') scale(' + k.toFixed(4) + ')">';
+    var limb = T.limb || '#5A4A3C', edge = T.trunkEdge || '#8A8A84';
+    o += '<path d="M48.5 46Q41 40 33 36M50.5 40Q57 34 65 31M47.5 58Q42 54 37 52M52 52Q58 48 64 46" stroke="' + limb + '" stroke-width="1.4" fill="none" stroke-linecap="round"/>';
+    if (!pal) o += '<path d="M33 36L29 31M33 36L28 37M65 31L69 25M65 31L70 32M48.6 31L47.6 22M48.6 31L51.4 23M37 52L32 50M64 46L69 43M56 45L57.4 38" stroke="' + limb + '" stroke-width=".9" fill="none" stroke-linecap="round"/>';
+    o += '<g fill="' + tk + '" stroke="' + edge + '" stroke-width=".5"><path d="M43.5 90Q46.5 86 46.8 78L47.0 30.0H50.0L50.2 78Q50.5 86 53.5 90Z"/><path d="M51.8 90Q54.3 86 54.5 78L54.7 44.0H57.3L57.5 78Q57.7 86 60.2 90Z"/></g>';
+    o += '<g stroke="#2C2C2A" stroke-width=".9" stroke-linecap="round">' + BIRCH_MARKS.map(function (m) { return '<path d="M' + m[0] + ' ' + m[1] + 'h' + m[2] + '"/>'; }).join('') + '</g>';
+    if (!pal) return o + '</g>';
+    var keep = [1, .86, .62][h] * (0.9 + 0.1 * Math.min(1, parts / 3)), sag = [0, .8, 2.8][h];
+    [0, 1, 2].forEach(function (layer) {
+      o += '<g fill="' + pal[layer] + '">';
+      BIRCH_CROWN.forEach(function (c, i) {
+        if (c[3] !== layer || ((i * 37) % 100) / 100 > keep) return;
+        o += '<circle cx="' + c[0] + '" cy="' + f(c[1] + sag * (0.4 + (c[1] - 10) / 45)) + '" r="' + c[2] + '"/>';
+      });
+      o += '</g>';
+    });
+    // the fine hanging tips, longer as the tree droops
+    [[30, 40, 48], [34, 46, 54], [66, 40, 49], [70, 44, 55], [38, 50, 58], [62, 50, 58]].forEach(function (t, i) {
+      var y1 = t[2] + sag * 1.6;
+      o += '<path d="M' + t[0] + ' ' + f(t[1] + sag) + 'Q' + (t[0] + (i % 2 ? 1.5 : -1.5)) + ' ' + f((t[1] + y1) / 2 + sag / 2) + ' ' + (t[0] + (i % 2 ? .5 : -.5)) + ' ' + f(y1) + '" stroke="' + pal[1] + '" stroke-width="1.6" fill="none" stroke-linecap="round"/>';
+    });
+    // catkins, one for each part tended today, when the tree is well
+    if (h <= 1) {
+      var spots = [[36, 44], [60, 38], [46, 50], [66, 48], [42, 32], [54, 30]];
+      for (var c = 0; c < Math.min(6, parts); c++) o += '<path d="M' + spots[c][0] + ' ' + spots[c][1] + 'v4.8" stroke="' + (T.fruitColor || '#7F6610') + '" stroke-width="1.7" stroke-linecap="round"/>';
+    }
+    return o + '</g>';
+  }
   function treeSVG(h, parts, big) {
     var R = rng(41), W = 320, H = 250, gy = 210, cx = 160, cy = 104;
     var T = (C && C.tree) || {};
@@ -221,7 +263,7 @@
       ['#7C6A3C', '#AE9A64', '#CDBB86'],   // dry
       ['#6B5634', '#8F7445', '#A88D5C']    // drooping
     ]).concat([null])[h];                  // bare
-    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3)), tall = T.shape === 'tall', layered = T.shape === 'layered';
+    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3)), tall = T.shape === 'tall', layered = T.shape === 'layered', birch = T.shape === 'birch';
     var drop = [0, 2, 9, 0][h];
     var o = '<svg class="gt-tree-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(LINES[h]) + '" xmlns="http://www.w3.org/2000/svg">';
     if (parts >= 6 && h === 0) o += '<circle cx="' + cx + '" cy="' + cy + '" r="112" fill="#F2B33D" opacity=".16"/>';
@@ -231,6 +273,7 @@
     // trunk with its flare into the ground, and the main limbs
     var tk = h === 3 ? (T.trunkBare || '#5A4636') : (T.trunk || '#4E2E12');
     if (layered) return o + layeredTree(T, h, parts, R, cx, cy, gy, tk, pal, drop) + '</svg>';
+    if (birch) return o + birchTree(T, h, parts, R, cx, cy, gy, tk, pal) + '</svg>';
     if (tall) {
       // Sequoia: a massive trunk that flares wide at the ground, short limbs, and a narrow, high crown
       o += '<path d="M' + (cx - 44) + ' ' + gy + 'Q' + (cx - 20) + ' ' + (gy - 4) + ' ' + (cx - 17) + ' ' + (gy - 40) + 'L' + (cx - 10) + ' ' + (cy - 70) + 'H' + (cx + 10) + 'L' + (cx + 17) + ' ' + (gy - 40) + 'Q' + (cx + 20) + ' ' + (gy - 4) + ' ' + (cx + 44) + ' ' + gy + 'Z" fill="' + tk + '"/>';
@@ -509,8 +552,8 @@
      travels (see SHARE TO FAMILY in gg-app.js): first name, which tree, days tended,
      parts tended this week, tended today, days tended this week, and when it was made.
      The share id is random, made once, and kept in the person's own record (s.famId). */
-  var FAM_TREE = { maple: 'maple', aspen: 'aspen', pine: 'pine', oak: 'oak', sequoia: 'sequoia' };
-  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', oak: 'Oak', sequoia: 'Sequoia' };
+  var FAM_TREE = { maple: 'maple', aspen: 'aspen', pine: 'pine', birch: 'birch', oak: 'oak', sequoia: 'sequoia' };
+  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia' };
   function famOk() { return !!(window.GGApp && GGApp.family && C && FAM_TREE[C.tool]); }
   function famFirst() {
     var F = GGApp.family, s = ensure(), n = s && s.famName ? F.firstName(s.famName) : '';
@@ -613,7 +656,7 @@
       G.ready().then(function () {
         if (LIBQ.q !== q || !el('gt-lib-list')) return;
         G.draw(box, q, {
-          here: C.tool === 'maple' || C.tool === 'aspen' || C.tool === 'pine' || C.tool === 'sequoia' ? C.tool : 'oak', localType: 'practice',
+          here: C.tool === 'maple' || C.tool === 'aspen' || C.tool === 'pine' || C.tool === 'birch' || C.tool === 'sequoia' ? C.tool : 'oak', localType: 'practice',
           kid: age === 'maple' || age === 'aspen' || age === 'pine' ? age : false,
           localLabel: 'Practices you can add', localNone: 'No practices to add',
           localKeep: function (x) { var it = GGLibrary.get(x.key); return !!it && GGLibrary.fits(it, age) && (!LIBQ.part || it.part === LIBQ.part); },

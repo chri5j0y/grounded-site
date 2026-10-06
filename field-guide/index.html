@@ -598,15 +598,15 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=tc4"></script>
-<script src="../shared/gg-backup.js?v=bk3"></script>
+<script src="../shared/gg-app.js?v=tc5"></script>
+<script src="../shared/gg-backup.js?v=bk4"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
-<script src="../read.js?v=vc2"></script>
-<script src="../shared/gg-sources.js?v=src12"></script>
-<script src="../shared/gg-learn.js?v=ln31"></script>
-<script src="../shared/gg-print.js?v=pr5"></script>
-<script src="../shared/grove-scene.js?v=w2i"></script>
+<script src="../read.js?v=vc3"></script>
+<script src="../shared/gg-sources.js?v=src13"></script>
+<script src="../shared/gg-learn.js?v=ln32"></script>
+<script src="../shared/gg-print.js?v=pr6"></script>
+<script src="../shared/grove-scene.js?v=w2j"></script>
 <script src="qr.js"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1697,7 +1697,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr5'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr6'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -8568,7 +8568,7 @@ function dkSlideHTML(s, d, n, of){
     case 'title': return `<div class="dks dk-title" ${st}><div class="dk-tl"><div class="dk-by">${D.mark === 'grounded' ? (D.founder ? 'Grow With Grounded' : 'Chaplaincy for every age and stage') : 'By Grow With Grounded'}</div><h1 class="dk-name">${esc(s.h)}${D.mark === 'grounded' ? '' : '<sup>TM</sup>'}</h1>${s.sub ? `<p class="dk-tag">${esc(s.sub)}</p>` : ''}${D.preview ? '<span class="dk-soon">Coming</span>' : ''}<div class="dk-who">${esc([DATA.settings.name, DATA.settings.role].filter(Boolean).join(', '))}</div></div>${dkMarkTile(D, 'dk-tile')}</div>`;
     case 'big': return `<div class="dks dk-big" ${st}><div class="dk-bigin"><h2 class="dk-h">${esc(s.h)}</h2>${sub}</div><div class="dk-n2">${n ? n + ' / ' + of : ''}</div></div>`;
     case 'parts': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-parts">${(L.parts || []).map((p, i) => `<div class="dk-part"><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join('')}</div></div>${foot}</div>`;
-    case 'trees': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-trees">${(L.trees || []).map(t => `<div class="dk-tree${t[0] === D.mark ? ' on' : ''}"><img src="${esc(dkMark(t[0]))}" alt=""><b>${esc(t[1])}</b><span>${esc(t[2])}</span>${t[3] === 'coming' ? '<i>Coming</i>' : ''}</div>`).join('')}</div></div>${foot}</div>`;
+    case 'trees': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-trees" style="--n:${Math.max(1, (L.trees || []).length)}">${(L.trees || []).map(t => `<div class="dk-tree${t[0] === D.mark ? ' on' : ''}"><img src="${esc(dkMark(t[0]))}" alt=""><b>${esc(t[1])}</b><span>${esc(t[2])}</span>${t[3] === 'coming' ? '<i>Coming</i>' : ''}</div>`).join('')}</div></div>${foot}</div>`;
     case 'two': return `<div class="dks dk-paper" ${st}><div class="dk-body">${h}${sub}<div class="dk-two">${(s.cols || []).map(col => `<div><h3 class="dk-ch">${esc(col[0])}</h3>${pts(col[1])}</div>`).join('')}</div></div>${foot}</div>`;
     case 'ask': return `<div class="dks dk-ask" ${st}><div class="dk-bigin"><svg class="dk-askic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/></svg><h2 class="dk-h">${esc(s.h)}</h2>${sub}</div>${foot}</div>`;
     case 'close': { const qr = s.url && window.GGQR ? GGQR.svg(s.url, {label: 'QR code for ' + s.url}) : '';
@@ -8974,9 +8974,9 @@ const DK_CSS = `
 .dk-part{background:color-mix(in srgb,var(--dk) 9%,#fff);border-top:.6cqw solid var(--dk);border-radius:1cqw;padding:2.2cqw 1.4cqw 2.6cqw;min-height:16cqw;display:flex;flex-direction:column;gap:1cqw;}
 .dk-part b{font-family:'Cormorant Garamond',serif;font-size:3cqw;line-height:1;color:var(--dkd);}
 .dk-part span{font-size:1.8cqw;line-height:1.25;}
-.dk-trees{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2cqw;margin-top:4cqw;align-items:start;}
+.dk-trees{display:grid;grid-template-columns:repeat(var(--n,7),minmax(0,1fr));gap:1.2cqw;margin-top:4cqw;align-items:start;}
 .dk-tree{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5cqw;position:relative;}
-.dk-tree img{width:10.5cqw;height:10.5cqw;border-radius:2.4cqw;display:block;box-shadow:0 .4cqw 1cqw rgba(0,0,0,.12);}
+.dk-tree img{width:min(10.5cqw, calc(74cqw / var(--n,7)));height:min(10.5cqw, calc(74cqw / var(--n,7)));border-radius:2.4cqw;display:block;box-shadow:0 .4cqw 1cqw rgba(0,0,0,.12);}
 .dk-tree.on img{outline:.5cqw solid var(--dk);outline-offset:.5cqw;}
 .dk-tree b{font-family:'Cormorant Garamond',serif;font-size:2.3cqw;margin-top:.8cqw;}
 .dk-tree span{font-size:1.35cqw;color:#6B5A4D;line-height:1.2;}

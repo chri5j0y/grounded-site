@@ -1532,7 +1532,7 @@ function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();
   if (a && a.age !== 'adult') {
-    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Sequoia is written for older adults. ${a.age === 'maple' ? '<a href="/maple/">Maple</a> is made for kids.' : a.age === 'aspen' ? '<a href="/aspen/">Aspen</a> is made for middle schoolers.' : '<a href="/oak/">Oak</a> is where high schoolers tend their tree for now.'}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="oakSwitch()">Switch person</button></div></div>`;
+    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Sequoia is written for older adults. ${a.age === 'maple' ? '<a href="/maple/">Maple</a> is made for kids.' : a.age === 'aspen' ? '<a href="/aspen/">Aspen</a> is made for middle schoolers.' : '<a href="/pine/">Pine</a> is made for high schoolers.'}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="oakSwitch()">Switch person</button></div></div>`;
     return;
   }
   if (PROF) {

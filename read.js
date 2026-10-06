@@ -1,4 +1,4 @@
-/* Grounded read-aloud engine, shared by Stories, Maple, Aspen, Oak, The Grove, and the Field Guide.
+/* Grounded read-aloud engine, shared by Stories, Maple, Aspen, Pine, Birch, Oak, Sequoia, Willow, The Grove, and the Field Guide.
    Picks the most natural voice on each device (quality first, with a gentle preference for a
    male or female voice), lets people choose a voice and a speed, shows how to get a better voice,
    and plays a recorded audio file when one exists.
