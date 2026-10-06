@@ -834,7 +834,7 @@
   function backupGo(act, opts) {
     var run = function () { if (window.GGBackup) GGBackup[act](opts); };
     if (window.GGBackup) return run();
-    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=bk3'; s.onload = run;
+    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=bk4'; s.onload = run;
     s.onerror = function () { toast('The backup tool could not load. Check the connection and try again.'); };
     document.head.appendChild(s);
   }

@@ -598,15 +598,15 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=tc4"></script>
-<script src="../shared/gg-backup.js?v=bk3"></script>
+<script src="../shared/gg-app.js?v=tc5"></script>
+<script src="../shared/gg-backup.js?v=bk4"></script>
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
-<script src="../read.js?v=vc2"></script>
-<script src="../shared/gg-sources.js?v=src12"></script>
-<script src="../shared/gg-learn.js?v=ln31"></script>
-<script src="../shared/gg-print.js?v=pr5"></script>
-<script src="../shared/grove-scene.js?v=w2i"></script>
+<script src="../read.js?v=vc3"></script>
+<script src="../shared/gg-sources.js?v=src13"></script>
+<script src="../shared/gg-learn.js?v=ln32"></script>
+<script src="../shared/gg-print.js?v=pr6"></script>
+<script src="../shared/grove-scene.js?v=w2j"></script>
 <script src="qr.js"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1697,7 +1697,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr5'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr6'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
