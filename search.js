@@ -6,7 +6,7 @@
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
    Where the words come from (edit them there, not here):
-     Guides       maple/guides.js, aspen/guides.js, oak/guides.js, sequoia/guides.js, willow/guides.js
+     Guides       maple/guides.js, aspen/guides.js, pine/guides.js, oak/guides.js, sequoia/guides.js, willow/guides.js
      Practices    grove/data.js and grove/library.js
      Stories      stories.html (read as the page is today)
      Tools        TOOLS below
@@ -27,7 +27,7 @@
     { title: 'Oak', sub: 'Check-in for adults, from root to fruit, with 67 When Life Changes guides for hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
-    { title: 'Pine', sub: 'Check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, and Next Steps for life after high school', href: '/pine/', keys: 'pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
+    { title: 'Pine', sub: 'Check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and When Life Changes guides', href: '/pine/', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
     { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and When Life Changes guides', href: '/sequoia/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
@@ -115,9 +115,9 @@
     [/learning (disabilit|difference)\w*/g, 'learningdisability'], [/sports ?betting|sports ?bets?/g, 'sportsbetting'], [/loot ?box(es)?/g, 'lootbox'], [/wet(s|ting)? the bed|pee(s|ing)? (in )?the bed|bed ?wetting/g, 'bedwetting'], [/pull[\s-]?ups/g, 'pullups'], [/leaving home|leave home|leaves home/g, 'leavinghome'], [/moving out|moves out|moved out/g, 'movingout'], [/eating disorders?/g, 'eatingdisorder'], [/not eating|won'?t eat|stopped eating|refus\w* to eat/g, 'noteating'], [/car (accident|crash|wreck)s?/g, 'caraccident'], [/head injur\w*/g, 'concussion']
   ];
   var STOP = ' a an and are about as at be but by can do does for from get how i if in into is it its me my of on or our should so some that the their them they this to up we what when where who why will with you your talk talking tell telling help helping deal dealing handle handling kid kids child children son daughter student students teen teens teenager adult adults someone somebody person people keeps keep always cant wont just really ';
-  // 'hs' (grades 9 to 12) leads Pine's results once Pine's guides are in search; "teen" stays with
-  // Aspen until then, so a search for teens still finds guides.
-  var AGE_HINT = [[/\b(kid|kids|child|children|little|elementary|kindergarten|preschool)\b/, 'k5'], [/\b(high ?schools?|high ?schoolers?|9th|10th|11th|12th|freshman|freshmen|sophomores?)\b/, 'hs'], [/\b(teen|teens|teenager|middle|preteen|tween|6th|7th|8th)\b/, 'ms'], [/\b(adult|adults|husband|wife|spouse|partner|mom|dad|parent|coworker|patient|myself)\b/, 'ad']];
+  // 'hs' (grades 9 to 12) leads Pine's guides (GWG BLD 740); teen, high school, and 9th to 12th go there.
+  // Middle school words still lead Aspen's.
+  var AGE_HINT = [[/\b(kid|kids|child|children|little|elementary|kindergarten|preschool)\b/, 'k5'], [/\b(high ?schools?|high ?schoolers?|teen|teens|teenagers?|9th|10th|11th|12th|freshman|freshmen|sophomores?)\b/, 'hs'], [/\b(middle|middle ?schoolers?|preteen|tween|6th|7th|8th)\b/, 'ms'], [/\b(adult|adults|husband|wife|spouse|partner|mom|dad|parent|coworker|patient|myself)\b/, 'ad']];
 
   /* ---------- crisis words ---------- */
   var CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
@@ -176,7 +176,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg2'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=pg1'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg2'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -194,6 +194,14 @@
         add({ type: 'talk', age: 'ms', ageLabel: 'Grades 6 to 8', title: t.title, sub: g.name, keys: t.keys || '', lead: t.quick, quick: t.quick,
           body: (t.talk || []).concat(t.say || []).join(' '), href: '/aspen/#talk=' + encodeURIComponent(t.id), from: 'Aspen', id: t.id, app: 'aspen' });
       }); });
+      // Pine guides (GWG BLD 740), the same shape as Oak's and Sequoia's
+      var spn = window.PINE_GUIDES;
+      if (spn) spn.topics.forEach(function (t) {
+        var ring = (spn.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        add({ type: 'talk', age: 'hs', ageLabel: 'Grades 9 to 12', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
+          body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
+          href: '/pine/#life=' + encodeURIComponent(t.id), from: 'Pine', id: t.id, app: 'pine' });
+      });
       var so = window.OAK_GUIDES;
       if (so) so.topics.forEach(function (t) {
         var ring = (so.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
@@ -321,6 +329,9 @@
     if (adultOnly(it)) return false;
     if (it.type === 'practice' && kid === 'maple' && (it.ages === 'teen' || it.ages === 'teenOnly')) return false;
     if (it.type === 'practice' && it.ages === 'sequoia') return false;
+    // Pine's guides are written for high schoolers and their grown-ups: kept out of Maple's "More", and in
+    // Aspen's only when they hold no adult-only words
+    if (it.type === 'talk' && it.app === 'pine' && (kid === 'maple' || (kid === 'aspen' && ADULT.test((it.title + ' ' + (it.keys || '') + ' ' + (it.sub || '')).toLowerCase())))) return false;
     return true;
   }
 
@@ -407,7 +418,7 @@
     }
     if (!n) {
       html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
-        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/oak/#life">for adults</a>, <a class="text-link" href="/sequoia/#life">for older adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
+        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/pine/#life">for grades 9 to 12</a>, <a class="text-link" href="/oak/#life">for adults</a>, <a class="text-link" href="/sequoia/#life">for older adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
     }
     panel.innerHTML = html;
     if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'No results';
