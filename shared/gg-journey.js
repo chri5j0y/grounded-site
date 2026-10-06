@@ -576,3 +576,55 @@ window.GGJourney.AGES.sequoia = {
   }
  }
 };
+
+/* ---------- Pine (grades 9 to 12), GWG BLD 739 ----------
+   The same twelve themes, so a family can be on the same week together,
+   with intros and reflection questions written for high schoolers: direct,
+   respectful, never childish. Week 7 also carries a Plain wording (plain)
+   for profiles set to Plain; Faith is the default. Movement fits teens:
+   practice days and rest days for athletes, and a gentle option for an
+   injury, a health limit, or a packed week. The Grounded stories show only
+   in the grown-up's view. */
+window.GGJourney.AGES.pine = {
+ "WEEKS": [
+  { "intro": "Nothing has to be ready. This week you plant, and planting is small. Tend your tree once a day, even for a minute, and let that count.", "q": "What made you want to start, and what are you hoping grows?" },
+  { "intro": "School, practice, a job, your phone, people who need you. This week, notice where your energy leaks, and protect one limit, like a set bedtime or your phone out of reach at night.", "q": "Where did you say yes this week when you needed to say no?" },
+  { "intro": "Your body knows before your brain admits it: a tight jaw, a headache, running on four hours of sleep. This week, listen to it the way you would listen to a good coach.", "q": "What did your body tell you this week, and what did you do about it?" },
+  { "intro": "Somewhere around now, most people miss a day. Then two. That is normal, not failure. Coming back is the practice, and your tree keeps everything you have grown.", "q": "What helped you come back when you drifted?" },
+  { "intro": "Some weight doesn't show: pressure about grades, the future, home, or friends. This week, notice one thing you have been carrying and name it, to yourself or to someone you trust. You don't have to fix it yet.", "q": "What are you carrying that you haven't said out loud?" },
+  { "intro": "The text you keep meaning to send. The person you keep meaning to thank. This week, reach out first. Most people are glad someone did.", "q": "Who did you reach toward this week, and how did it feel?" },
+  { "intro": "Prayer, worship, quiet, music, a night sky, a long run, your family's traditions. However you come, this week notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?",
+    "plain": { "intro": "Quiet, music, a night sky, a long run, your family's traditions. This week, notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?" } },
+  { "intro": "Eight weeks in, some of this is becoming yours. The practices you keep on busy or rough days are your roots. They hold when the season gets hard.", "q": "Which practice has started to hold you?" },
+  { "intro": "You don't control everything: schedules, rules, what other people choose. You still get a say in a lot: how you treat people, what you practice, and who you are becoming. Use your say this week.", "q": "What do you want more of in the life you are building?" },
+  { "intro": "Friends, family by blood or by choice, teammates, the people who show up. This week, notice where kindness moves between you and others, and say thanks out loud once.", "q": "Where did you give or receive love this week?" },
+  { "intro": "Hope isn't only a feeling you wait for. It is a goal, a way to get there, and the next step you take. Take one small step this week and let the feeling catch up.", "q": "What are you looking forward to, and what is one step toward it?" },
+  { "intro": "Look at what grew this season. Some of it you will keep for good. Some of it was only for now. Both count, and both are part of who you are becoming.", "q": "What grew in these twelve weeks, and what are you ready to let go of?" }
+ ],
+ "ANCHORS": {
+  "morning": { "t": "Start on purpose", "b": "Before you open your phone, sit up, take one slow breath, and pick one thing that matters today.", "s": "One breath and one thing that matters, before your phone." },
+  "evening": { "t": "Close the day", "b": "Name one thing that went right and one thing you are setting down. If you can, charge your phone out of reach of your bed.", "s": "One thing that went right. One thing to set down." }
+ },
+ "LEVELS": [
+  { "id": "gentle", "name": "Gentle", "desc": "Easy movement, like walking or stretching. For starting slow, an injury, a health limit, or a packed week." },
+  { "id": "moderate", "name": "Moderate", "desc": "You move some already, like walks, rides, pickup games, or workouts, and want to build a little more." },
+  { "id": "athletic", "name": "Athletic", "desc": "You play a sport or train hard. Practice days count, and rest days are part of training." }
+ ],
+ "LEVEL_MOVE": {
+  "gentle": {
+   "planting": { "t": "Ten minutes, any way you can", "b": "A walk, stretching, shooting hoops, or dancing to a few songs. Hurt or sick? Gentle stretching counts. <strong>Moving at all is the win.</strong>" },
+   "rooting": { "t": "Fifteen to twenty minutes", "b": "A longer walk, a bike ride, or a short body-weight round: squats, wall or knee push-ups, a plank. Stop if anything hurts." },
+   "blooming": { "t": "Twenty to thirty minutes", "b": "Something you enjoy, with a friend if you can: a walk, a swim, a pickup game. Finish with a few slow stretches." }
+  },
+  "moderate": {
+   "planting": { "t": "Thirty minutes, most days", "b": "A fast walk, a ride, a run, a pickup game, or a workout. Add push-ups, squats, and planks three days a week. <strong>Warm up first.</strong>" },
+   "rooting": { "t": "Forty-five minutes, most days", "b": "Mix it up: cardio one day, strength the next, a sport or something new another. Keep one easy day each week." },
+   "blooming": { "t": "An hour on most days", "b": "About an hour of movement a day helps teens most, and it can add up in pieces. Keep one full rest day each week." }
+  },
+  "athletic": {
+   "planting": { "t": "Practice days and rest days", "b": "Keep up your sport or training. Warm up before every session, stretch after, and drink water. <strong>Sleep is part of training.</strong>" },
+   "rooting": { "t": "Train smart", "b": "Take at least one full day off each week, and some time off your main sport across the year. Tell a coach, trainer, or parent if something hurts." },
+   "blooming": { "t": "Your best, safely", "b": "Notice how much stronger or faster you have gotten. Keep your rest day, eat well before and after practice, and never play through pain." }
+  }
+ }
+};

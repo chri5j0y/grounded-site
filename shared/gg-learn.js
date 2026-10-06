@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln29';
+  var V = 'ln30';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -50,6 +50,7 @@
   var APPS = {
     maple: { name: 'Maple', color: '#C4501E', btn: '#A14219', back: 'Back to Maple' },
     aspen: { name: 'Aspen', color: '#1F6F74', btn: '#1F6F74', back: 'Back to Aspen' },
+    pine: { name: 'Pine', color: '#3A6B35', btn: '#3A6B35', back: 'Back to Pine' },
     oak: { name: 'Oak', color: '#3D5A73', btn: '#3D5A73', back: 'Back to Oak' },
     sequoia: { name: 'Sequoia', color: '#7A2E1C', btn: '#7A2E1C', back: 'Back to Sequoia' },
     willow: { name: 'Willow', color: '#5D5A6E', btn: '#5D5A6E', back: 'Back to Willow' },
@@ -196,7 +197,7 @@
       '.ln-wd{position:absolute;inset:0;padding:44px 80px;}.ln-wd h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:44px;margin:0 0 20px;}',
       '.ln-wd p{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:36px;line-height:1.15;margin:0 0 14px;padding-left:20px;border-left:5px solid #8B5E1A;}.ln-wd small{display:block;font-size:21px;color:#6B5A4D;margin-top:8px;}',
       '.ggl-small .ln-st-b{display:none;}.ggl-small .ln-story{padding:44px 54px;}.ggl-small .ln-story h3{font-size:66px;margin-top:14px;}.ggl-small .ln-st-l{font-size:52px;margin-top:26px;}.ggl-small .ln-st-n{font-size:26px;}.ggl-small .ln-st-l{transition-delay:1.2s !important;}.ggl-small .ln-story .ln-eb{font-size:28px;}',
-      '.ln-link{margin:0 0 8px;}.ln-link:empty{display:none;}.ln-link a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ggl-acc);}',
+      '.ln-link{margin:0 0 8px;}.ln-link:empty{display:none;}.ln-link a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ggl-acc);}.ln-link .gg-src a,.ln-link .gg-src-line a{display:inline;min-height:0;font-weight:inherit;}',
       ':root[data-theme="dark"] .ggl-app .ln-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ln-link a{color:var(--ggl-lite);}}',
       '.ln-mu{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:14px;margin:8px 0 0;}.ln-mu-k{font-weight:600;}.ln-mu select{font:inherit;font-size:14px;padding:4px 6px;border-radius:8px;background:transparent;color:inherit;border:1px solid currentColor;}.ln-mu select option{color:#2C1810;background:#FFFCF6;}.ln-mu-b{font:inherit;font-size:14px;padding:5px 10px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;}.ggl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}',
       '.ln-crisis{margin:8px 0 0;padding:8px 12px;border-radius:12px;border-left:5px solid #B8612F;background:rgba(184,97,47,.10);font-size:15px;line-height:1.4;}.ln-crisis b{margin-right:6px;}',
@@ -367,6 +368,7 @@
     if (cfg.mood && MUSIC.hasOwnProperty(cfg.mood)) return cfg.mood;
     if (cfg.track && cfg.track.kind === 'support') return 'calm';
     if (cfg.app === 'maple' || cfg.app === 'aspen') return 'kids';
+    if (cfg.app === 'pine') return 'learning'; // high schoolers get the learning tracks, not the kids' tracks
     if (cfg.app === 'willow') return 'willow';
     return 'learning';
   }
@@ -417,7 +419,7 @@
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src10'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src11'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -674,7 +676,7 @@
       return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
     }).filter(function (t) { return t.lessons.length; });
   }
-  function needPrint() { return script(url('/shared/gg-print.js?v=pr3'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=pr4'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
   function open(app, lessonId, opts) {
@@ -686,7 +688,7 @@
       var root = document.createElement('div');
       root.className = 'ggl ggl-app'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Learn ' + meta.name);
       root.style.setProperty('--ggl-acc', meta.btn); root.style.setProperty('--ggl-bar', meta.color);
-      root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', oak: '#9DB8D0', sequoia: '#E8A48E', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
+      root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', pine: '#9CC795', oak: '#9DB8D0', sequoia: '#E8A48E', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
       root.innerHTML = '<div class="ggl-top"><img src="' + MARK(app + '-tab') + '" alt=""><b>Learn ' + esc(meta.name) + '</b><button class="ggl-x" data-l="close">' + esc(meta.back) + '</button></div><div class="ggl-in" id="ggl-in"></div>';
       document.body.appendChild(root);
       APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide') };

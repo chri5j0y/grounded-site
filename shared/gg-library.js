@@ -1,6 +1,6 @@
 /* =====================================================================
    GROUNDED . SHARED PRACTICE LIBRARY (Rebrand Session 5)
-   One practice library that every app reads: Oak, Maple, Aspen, and
+   One practice library that every app reads: Oak, Maple, Aspen, Pine, and
    The Grove. The words still live in grove/data.js (the practices) and
    grove/library.js (the "Show me how" steps). Edit them there.
 
@@ -14,7 +14,7 @@
    For tools
      GGLibrary.ready()            a promise; resolves true when loaded
      GGLibrary.forPart(part, age) practices for one part that fit an age
-                                  age: 'maple', 'aspen', or 'oak'
+                                  age: 'maple', 'aspen', 'pine', or 'oak'
      GGLibrary.search(q, age)     search the whole library
      GGLibrary.get(key)           one practice, or null
      GGLibrary.view(it, age)      {name, text, busy, why, steps, hard}
@@ -26,7 +26,7 @@
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=fd1', '/grove/library.js?v=vb3'];
+  var FILES = ['/grove/data.js?v=fd2', '/grove/library.js?v=vb4'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -68,7 +68,7 @@
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
       bedside: it.bedside || null,
-      app: age === 'maple' || age === 'aspen' || age === 'sequoia' ? age : 'lib'
+      app: age === 'maple' || age === 'aspen' || age === 'pine' || age === 'sequoia' ? age : 'lib'
     };
   }
   function guideHtml(v) {

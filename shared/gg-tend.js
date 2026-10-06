@@ -50,7 +50,16 @@
      pause        () => true while a recent check-in flagged losing hope or feeling
                   alone. The tree holds as it is: no drying or drooping while it is on.
      pauseLine    the words under the tree while the pause is on
-     tree.shape   'tall' draws a narrow, high crown on a massive flared trunk
+     tree.shape   'tall' draws a narrow, high crown on a massive flared trunk;
+                  'layered' (Pine, GWG BLD 739) draws ragged layered boughs on a tall,
+                  straight trunk
+     Pine's game layer (GWG BLD 739), all optional, for any tool:
+     itemTag      (partKey, name, state) => html after a practice name on Today
+                  (Pine shows mastery: Tried, Building, Mine)
+     partNote     (partKey, state) => html under a part's heading on Today
+                  (Pine's Hardy setting shows trouble on a long untended part)
+     plain        () => true when the profile uses Plain wording: a week in the
+                  journey with its own plain words ({intro, q}) shows those instead
      GGTend.plan()           the saved plan, or null
      GGTend.state()          the saved record, or null
      GGTend.openSettings()   the settings sheet behind the profile picture
@@ -157,6 +166,43 @@
     'Your tree is drooping. It is still here, and one practice is a start.',
     'Your tree is resting bare. Nothing is lost. Tend it once today and watch it wake up.'
   ];
+  // Pine (GWG BLD 739): a tall, straight trunk and ragged layered boughs. Thriving,
+  // dry, and drooping use the palette's shade, body, and light; drooping tiers sag
+  // at the tips; resting bare shows the trunk and its bare limbs. Never anything gone.
+  function layeredTree(T, h, parts, R, cx, cy, gy, tk, pal, drop) {
+    var o = '', top = 18;
+    o += '<path d="M' + (cx - 24) + ' ' + gy + 'Q' + (cx - 10) + ' ' + (gy - 3) + ' ' + (cx - 10) + ' ' + (gy - 22) + 'L' + (cx - 2.5) + ' ' + (top + 10) + 'H' + (cx + 2.5) + 'L' + (cx + 10) + ' ' + (gy - 22) + 'Q' + (cx + 10) + ' ' + (gy - 3) + ' ' + (cx + 24) + ' ' + gy + 'Z" fill="' + tk + '"/>';
+    o += '<path d="M' + (cx - 4) + ' ' + (gy - 4) + 'Q' + (cx - 4) + ' ' + (gy - 80) + ' ' + (cx - 1) + ' ' + (top + 40) + 'M' + (cx + 4) + ' ' + (gy - 5) + 'Q' + (cx + 4) + ' ' + (gy - 80) + ' ' + (cx + 1) + ' ' + (top + 40) + '" stroke="#000" stroke-opacity=".18" stroke-width="1.6" fill="none"/>';
+    var tiers = [[176, 30, 96, 84], [150, 28, 82, 94], [124, 26, 78, 66], [99, 24, 60, 68], [76, 22, 50, 42], [55, 20, 34, 38], [36, 18, 20, 18]];
+    var sag = [0, 2, 8, 0][h];
+    if (!pal) {
+      // resting bare: the limbs still reach out, ready to leaf again
+      tiers.forEach(function (t, i) {
+        o += '<path d="M' + cx + ' ' + (t[0] - 4) + 'Q' + (cx - t[2] * 0.4) + ' ' + (t[0] - 6) + ' ' + (cx - t[2] * 0.72) + ' ' + (t[0] - 2) + 'M' + cx + ' ' + (t[0] - 8) + 'Q' + (cx + t[3] * 0.4) + ' ' + (t[0] - 10) + ' ' + (cx + t[3] * 0.72) + ' ' + (t[0] - 5) + '" stroke="' + tk + '" stroke-width="' + (i < 3 ? 3 : 2) + '" fill="none" stroke-linecap="round"/>';
+      });
+      return o;
+    }
+    var f = function (n) { return n.toFixed(1); };
+    tiers.forEach(function (t, i) {
+      var yb = t[0] + sag * (0.3 + i * 0.05), ay = t[0] - t[1], L = t[2] * (0.96 + 0.04 * Math.min(1, parts / 3)), Rr = t[3] * (0.96 + 0.04 * Math.min(1, parts / 3));
+      o += '<path d="M' + cx + ' ' + (t[0] - 3) + 'Q' + f(cx - L * 0.4) + ' ' + (t[0] - 5) + ' ' + f(cx - L * 0.7) + ' ' + f(yb - 7) + 'M' + cx + ' ' + (t[0] - 6) + 'Q' + f(cx + Rr * 0.4) + ' ' + (t[0] - 8) + ' ' + f(cx + Rr * 0.7) + ' ' + f(yb - 9) + '" stroke="' + tk + '" stroke-width="2" fill="none" stroke-linecap="round"/>';
+      var pts = [[cx, ay], [cx + Rr * 0.35, ay + (yb - ay) * 0.32 - 1], [cx + Rr * 0.7, ay + (yb - ay) * 0.64 - 1], [cx + Rr, yb - 4 + sag * 0.6]];
+      var n = Math.max(5, Math.round((L + Rr) / 13));
+      for (var k = 1; k < n; k++) { var tt = k / n, x = cx + Rr - (Rr + L) * tt, deep = (yb - ay) * (0.18 + 0.16 * R()); pts.push([x + (R() * 3 - 1.5), k % 2 ? yb + R() * 2 : yb - deep]); }
+      pts.push([cx - L, yb - 4 + sag * 0.6], [cx - L * 0.7, ay + (yb - ay) * 0.64 - 1], [cx - L * 0.35, ay + (yb - ay) * 0.32 - 1]);
+      var poly = function (dy) { return pts.map(function (p) { return f(p[0]) + ',' + f(p[1] + dy); }).join(' '); };
+      o += '<polygon points="' + poly(2.2) + '" fill="' + pal[0] + '"/>';
+      o += '<polygon points="' + poly(0) + '" fill="' + pal[1] + '"/>';
+      o += '<polygon points="' + cx + ',' + f(ay + 2) + ' ' + f(cx - L * 0.86) + ',' + f(yb - 5) + ' ' + f(cx - L * 0.3) + ',' + f(yb - (yb - ay) * 0.32) + '" fill="' + pal[2] + '" fill-opacity="0.75"/>';
+      if (h === 0) [[-1, L], [1, Rr]].forEach(function (sd) { o += '<ellipse cx="' + f(cx + sd[0] * sd[1]) + '" cy="' + f(yb - 4) + '" rx="5" ry="2" fill="' + pal[2] + '" transform="rotate(' + (-sd[0] * 12) + ' ' + f(cx + sd[0] * sd[1]) + ' ' + f(yb - 4) + ')"/>'; });
+    });
+    // cones, one for each part tended today, when the tree is well
+    if (h <= 1) for (var k = 0; k < Math.min(6, parts); k++) {
+      var t = tiers[k % 3 + (k > 2 ? 1 : 0)], side = k % 2 ? 1 : -1, ax = cx + side * (t[side > 0 ? 3 : 2] * 0.55), ay2 = t[0] + 2;
+      o += '<g transform="translate(' + f(ax) + ' ' + f(ay2) + ')"><ellipse rx="3.4" ry="5.4" fill="' + (T.fruitColor || '#8A5A2B') + '" stroke="#4E2E12" stroke-width=".8"/><path d="M-3 -1.6H3M-3.2 1.6H3.2" stroke="#4E2E12" stroke-width=".7"/></g>';
+    }
+    return o;
+  }
   function treeSVG(h, parts, big) {
     var R = rng(41), W = 320, H = 250, gy = 210, cx = 160, cy = 104;
     var T = (C && C.tree) || {};
@@ -165,7 +211,7 @@
       ['#7C6A3C', '#AE9A64', '#CDBB86'],   // dry
       ['#6B5634', '#8F7445', '#A88D5C']    // drooping
     ]).concat([null])[h];                  // bare
-    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3)), tall = T.shape === 'tall';
+    var keep = [1, .92, .55, 0][h] * (0.9 + 0.1 * Math.min(1, parts / 3)), tall = T.shape === 'tall', layered = T.shape === 'layered';
     var drop = [0, 2, 9, 0][h];
     var o = '<svg class="gt-tree-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(LINES[h]) + '" xmlns="http://www.w3.org/2000/svg">';
     if (parts >= 6 && h === 0) o += '<circle cx="' + cx + '" cy="' + cy + '" r="112" fill="#F2B33D" opacity=".16"/>';
@@ -174,6 +220,7 @@
     o += '<path d="M0 ' + gy + 'H' + W + '" stroke="#5E7D3F" stroke-width="3"/>';
     // trunk with its flare into the ground, and the main limbs
     var tk = h === 3 ? (T.trunkBare || '#5A4636') : (T.trunk || '#4E2E12');
+    if (layered) return o + layeredTree(T, h, parts, R, cx, cy, gy, tk, pal, drop) + '</svg>';
     if (tall) {
       // Sequoia: a massive trunk that flares wide at the ground, short limbs, and a narrow, high crown
       o += '<path d="M' + (cx - 44) + ' ' + gy + 'Q' + (cx - 20) + ' ' + (gy - 4) + ' ' + (cx - 17) + ' ' + (gy - 40) + 'L' + (cx - 10) + ' ' + (cy - 70) + 'H' + (cx + 10) + 'L' + (cx + 17) + ' ' + (gy - 40) + 'Q' + (cx + 20) + ' ' + (gy - 4) + ' ' + (cx + 44) + ' ' + gy + 'Z" fill="' + tk + '"/>';
@@ -232,7 +279,7 @@
     if (open === 'how' && info.guide) body = '<div class="gt-drawer">' + info.guide + '</div>';
     if (open === 'note') body = '<div class="gt-drawer"><label class="gt-small" for="gt-n-' + safe + '">A note for today (optional)</label><textarea id="gt-n-' + safe + '" rows="2" onchange="GGTend.note(\'' + safe + '\', this.value)">' + esc(note) + '</textarea></div>';
     return '<li class="gt-item' + (done ? ' done' : '') + '"><button type="button" class="gt-check' + (done ? ' on' : '') + '" aria-pressed="' + done + '" aria-label="' + esc(it.name) + (done ? ', done' : '') + '" onclick="GGTend.check(\'' + safe + '\')"></button>'
-      + '<div class="gt-item-main"><b>' + esc(it.name) + (it.custom ? ' <span class="gt-own">Your own</span>' : it.lib ? ' <span class="gt-own">From the library</span>' : '') + '</b>'
+      + '<div class="gt-item-main"><b>' + esc(it.name) + (it.custom ? ' <span class="gt-own">Your own</span>' : it.lib ? ' <span class="gt-own">From the library</span>' : '') + (C.itemTag ? (C.itemTag(it.key, it.name, s) || '') : '') + '</b>'
       + (easy && info.hard ? '<p class="gt-easy"><span>Easier today.</span> ' + esc(info.hard) + '</p>' : (info.desc ? '<p>' + esc(info.desc) + '</p>' : ''))
       + (note && open !== 'note' ? '<p class="gt-note">' + esc(note) + '</p>' : '')
       + '<div class="gt-acts">' + (info.hard ? '<button type="button" aria-pressed="' + easy + '" onclick="GGTend.easy(\'' + safe + '\')">' + (easy ? 'Back to the usual' : 'Easier today') + '</button>' : '')
@@ -267,7 +314,7 @@
         var L = s.level && J.LEVEL_MOVE && J.LEVEL_MOVE[s.level] && J.LEVEL_MOVE[s.level][stretch(weekShown(s))];
         lv = L ? '<div class="gt-level"><b>Move at your level: ' + esc(L.t) + '</b><p>' + L.b + '</p></div>' : '<p class="gt-small gt-level-set"><a class="text-link" href="#" onclick="GGTend.openSettings(\'level\');return false;">Set your movement level</a> to see movement fitted to you.</p>';
       }
-      html += '<section class="gt-part" style="--pc:' + pt.color + '"><h3>' + (C.partIcon ? C.partIcon(pt.key) : '') + '<span>' + esc(pt.part) + '</span><small>' + esc(pt.name) + '</small></h3>' + lv + '<ul>' + mine.map(function (it) { return practiceHtml(s, it); }).join('') + '</ul></section>';
+      html += '<section class="gt-part" style="--pc:' + pt.color + '"><h3>' + (C.partIcon ? C.partIcon(pt.key) : '') + '<span>' + esc(pt.part) + '</span><small>' + esc(pt.name) + '</small></h3>' + (C.partNote ? (C.partNote(pt.key, s) || '') : '') + lv + '<ul>' + mine.map(function (it) { return practiceHtml(s, it); }).join('') + '</ul></section>';
     });
     html += anchorHtml(s, 'evening');
     html += '<div class="btn-row gt-foot"><button class="btn btn-secondary" onclick="GGTend.act(\'plan\')">Change my practices</button>' + (window.GGLibrary ? '<button class="btn btn-secondary" onclick="GGTend.openLib()">Find more practices</button>' : '') + '</div>';
@@ -301,6 +348,7 @@
       return;
     }
     var w = weekShown(s), W = (J.WEEKS || [])[w - 1] || {}, st = (J.SEASONS || {})[stretch(w)] || {}, rec = (s.weeks || {})[weekKey(s)] || null;
+    if (W.plain && C.plain && C.plain()) { var Wp = {}; Object.keys(W).forEach(function (k) { Wp[k] = W[k]; }); Object.keys(W.plain).forEach(function (k) { Wp[k] = W.plain[k]; }); W = Wp; }
     var html = '<div class="gt-weekhead"><p class="gt-kicker">Season ' + (s.season || 1) + ', week ' + w + ' of 12</p><h2>' + esc(W.theme || '') + '</h2><p class="gt-stretch"><b>' + esc(st.name || '') + '.</b> ' + esc(st.line || '') + '</p></div>';
     if (weekNo(s) > 12) html += '<div class="gt-card gt-due"><p><b>Your season check-in is ready.</b> Finish a full check-in to add a ring to your tree and begin a new season.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my season check-in</button></div></div>';
     html += '<div class="gt-card"><p class="gt-intro">' + esc(W.intro || '') + '</p>' + (W.story && C.showStory !== false ? '<p class="gt-story">From Grounded: <a class="text-link" href="' + esc(W.story.url) + '" target="_blank" rel="noopener">' + esc(W.story.title) + '</a>. <i>' + esc(W.story.line) + '</i></p>' : '') + '</div>';
@@ -451,8 +499,8 @@
      travels (see SHARE TO FAMILY in gg-app.js): first name, which tree, days tended,
      parts tended this week, tended today, days tended this week, and when it was made.
      The share id is random, made once, and kept in the person's own record (s.famId). */
-  var FAM_TREE = { maple: 'maple', aspen: 'aspen', oak: 'oak', sequoia: 'sequoia' };
-  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', oak: 'Oak', sequoia: 'Sequoia' };
+  var FAM_TREE = { maple: 'maple', aspen: 'aspen', pine: 'pine', oak: 'oak', sequoia: 'sequoia' };
+  var FAM_NAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', oak: 'Oak', sequoia: 'Sequoia' };
   function famOk() { return !!(window.GGApp && GGApp.family && C && FAM_TREE[C.tool]); }
   function famFirst() {
     var F = GGApp.family, s = ensure(), n = s && s.famName ? F.firstName(s.famName) : '';
@@ -547,7 +595,7 @@
       + (open ? '<div class="gt-drawer">' + GGLibrary.guideHtml(v) + '</div>' : '') + '</li>';
   }
   /* Searching: the same engine as the header search. Practices you can add come first,
-     then "More from Grow With Grounded" (guides, books, pages), kid-safe in Maple and Aspen. */
+     then "More from Grow With Grounded" (guides, books, pages), kid-safe in Maple, Aspen, and Pine. */
   function drawLibFind(box, s, age, partOf) {
     var q = LIBQ.q;
     window.GGSearchLoad().then(function (G) {
@@ -555,8 +603,8 @@
       G.ready().then(function () {
         if (LIBQ.q !== q || !el('gt-lib-list')) return;
         G.draw(box, q, {
-          here: C.tool === 'maple' || C.tool === 'aspen' || C.tool === 'sequoia' ? C.tool : 'oak', localType: 'practice',
-          kid: age === 'maple' || age === 'aspen' ? age : false,
+          here: C.tool === 'maple' || C.tool === 'aspen' || C.tool === 'pine' || C.tool === 'sequoia' ? C.tool : 'oak', localType: 'practice',
+          kid: age === 'maple' || age === 'aspen' || age === 'pine' ? age : false,
           localLabel: 'Practices you can add', localNone: 'No practices to add',
           localKeep: function (x) { var it = GGLibrary.get(x.key); return !!it && GGLibrary.fits(it, age) && (!LIBQ.part || it.part === LIBQ.part); },
           localHTML: function (items) { return '<ul class="gt-lib-ul">' + items.slice(0, 80).map(function (x) { return libItemHTML(GGLibrary.get(x.key), s, age, partOf); }).join('') + '</ul>'; },

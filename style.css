@@ -448,9 +448,8 @@ section:nth-of-type(even):not(.news-band){background:var(--alt);}
 a.tool-mini:hover{border-color:var(--gold);}
 .tool-mini.soon{opacity:.75;}
 .tool-soon{opacity:.85;}
-.aspen-art,.pine-art,.willow-art{width:180px;height:180px;border-radius:24px;display:grid;place-items:center;}
+.aspen-art,.willow-art{width:180px;height:180px;border-radius:24px;display:grid;place-items:center;}
 .aspen-art{background:#1F6F74;}
-.pine-art{background:#F3E1D8;}
 .willow-art{background:#ECE6DE;}
 .urgent-line{font-weight:600;}
 .contact-email,.contact-sub{margin:14px 0 0;font-size:17px;color:var(--ink-soft);}
