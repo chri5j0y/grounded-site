@@ -452,7 +452,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="checkin.js?v=ps1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
-<script src="/shared/gg-tend.js?v=vb8"></script>
+<script src="/shared/gg-tend.js?v=vb9"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -1265,9 +1265,20 @@ function treeSVG(s){
   if (style==='birch') [120,142,166,190,208].forEach((y,i)=> g += `<path d="M${153+(i%2)*6} ${y}h${6+(i%3)*2}" stroke="#2A2A2A" stroke-width="3" stroke-linecap="round"/>`);
   const bc = style==='birch' ? '#8C8C84' : '#5A3414';
   g += `<path d="M158 160Q128 140 104 110M161 140Q192 118 214 92M159 118Q140 100 128 82M161 104Q176 92 188 74" stroke="${bc}" stroke-width="6" fill="none" stroke-linecap="round"/>`;
+  // Birch: once about a dozen leaves are out, a soft leafy shade fills in behind them, the way
+  // the Birch mark's crown has one shade silhouette under its leaves. It grows with the leaves.
+  if (style==='birch' && leaves>=12){
+    let ex = 0, ey = 0;
+    for (let i=0;i<n;i++){ ex = Math.max(ex, Math.abs(SPOTS[i][0]-160)); ey = Math.max(ey, Math.abs(SPOTS[i][1]-108)); }
+    const rx = ex+11, ry = ey+11, N = 22, pt = j => { const t = j/N*Math.PI*2; return [160+Math.cos(t)*rx, 108+Math.sin(t)*ry]; };
+    let d = 'M' + pt(0).map(v=>v.toFixed(1)).join(' ');
+    for (let j=0;j<N;j++){ const t = (j+.5)/N*Math.PI*2, b = 1.13; d += `Q${(160+Math.cos(t)*rx*b).toFixed(1)} ${(108+Math.sin(t)*ry*b).toFixed(1)} ${pt(j+1).map(v=>v.toFixed(1)).join(' ')}`; }
+    g += `<path d="${d}Z" fill="#4C7A36" opacity=".45"/>`;
+  }
   for (let i=0;i<n;i++){
     const [x,y,rot] = SPOTS[i];
-    if (style==='birch'){ g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="${sea==='autumn'&&i%3===0?'#E8B83A':(i%2?'#9CCB5A':'#C8E07A')}" stroke="#44612A" stroke-width="1.2"/>`; }
+    // a birch leaf: rounded at the stem, toothed sides, a pointed tip, hanging at a slight angle
+    if (style==='birch'){ g += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot%70-35})"><path d="M0 -9C4.5 -8.5 8 -4 6.5 0L5.5 1L5.6 2.6L4 3.4L3.6 5.2L2 6L0 10L-2 6L-3.6 5.2L-4 3.4L-5.6 2.6L-5.5 1L-6.5 0C-8 -4 -4.5 -8.5 0 -9Z" fill="${sea==='autumn'&&i%3===0?'#E8B83A':(i%2?'#9CCB5A':'#C8E07A')}"/><path d="M0 -11V6" stroke="#44612A" stroke-width="1" stroke-linecap="round" opacity=".55"/></g>`; }
     else if (style==='maple'){ const c = ['#D9483F','#E8962E','#F2B33D','#3A9B58'][i%4]; g += `<path transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot}) scale(.9)" d="M0 -11L3 -4L10 -6L6 1L11 5L3 5L0 11L-3 5L-11 5L-6 1L-10 -6L-3 -4Z" fill="${c}" stroke="#5A2A12" stroke-width="1" stroke-linejoin="round"/>`; }
     else { const auto = sea==='autumn' && i%4===0; const c = auto ? '#E0A33A' : (i%2?'#7ED3A0':'#2F9E6B'); g += `<path transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot})" d="M-9 0C-5 -6 5 -6 9 0C5 6 -5 6 -9 0Z" fill="${c}" stroke="#123F2E" stroke-width="1.3"/>`; }
   }
