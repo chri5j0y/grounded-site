@@ -468,6 +468,7 @@ function rememberedHtml(t) {
       ${after ? `<div data-read="Read this aloud"><p class="w-eyebrow">${esc(after.title)}</p>${after.lines.map(l => `<p class="w-line-read">${esc(l)}</p>`).join('')}</div>` : ''}</div></div>
     <div class="w-card"><p class="w-eyebrow">The next few days</p>
       <div class="w-links"><button type="button" onclick="W.guide('firsthour')">The first hour after</button><button type="button" onclick="W.guide('official')">Making it official</button><button type="button" onclick="W.guide('relief')">Relief, and the guilt that follows</button><button type="button" onclick="W.go('cuttings')">Their Cuttings</button></div>
+      <p class="w-small">For the days ahead: <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>, the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>, and the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a>.</p>
       <p class="w-small">Your hospice keeps caring for the family. Most offer bereavement support for about 13 months after a death. Ask for it by name.</p></div>
     ${supportCard(true)}
     ${logCard(t)}
@@ -886,6 +887,7 @@ VIEWS.bedside = () => {
     <details class="w-det"><summary>Mixed-faith families</summary><div>${F.mixed.map(x => `<p><b>${esc(x[0])}</b> ${esc(x[1])}</p>`).join('')}</div></details>
     <details class="w-det"><summary>Children and faith</summary><div><p>${esc(F.kids)}</p></div></details>
     <p class="w-small">Tradition cards are drafts until a reviewer from each tradition reads them. If something is wrong for your family, trust your family.</p>`;
+  h += `<h3 class="section-title">When the time comes</h3><div class="w-card"><p>Gentle helps for the family, kept on your device: <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>, a checklist for the first hours and days; the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>; and the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a>.</p></div>`;
   return h;
 };
 
@@ -993,19 +995,30 @@ VIEWS.readings = () => {
     <h3 class="section-title">Words that stay with their people</h3><p class="lead">${esc(RD.rites)}</p>
     <ul class="w-linked">${RD.kept.map(k => `<li><b>${esc(k[0])}.</b> ${esc(k[1])}</li>`).join('')}</ul>`;
 };
+// Bible versions (GWG BLD 748): KJV, ESV, NIV for the passages that have them, shown only while
+// readings.js turns the switch on. KJV is always the text in x.lines.
+function verOf(x) { const vs = RD.versionsOn && RD.versions && RD.versions[x.id]; const v = vs && S.read.ver; return v && vs[v] ? v : 'kjv'; }
+function linesOf(x) { const v = verOf(x); return v === 'kjv' ? x.lines : RD.versions[x.id][v]; }
+function byOf(x) { const v = verOf(x); return v === 'kjv' ? x.by : (RD.bible[v] || {}).name || x.by; }
+function noticeOf(x) { const v = verOf(x); return v === 'kjv' ? '' : (RD.bible[v] || {}).notice || ''; }
+function setVer(v) { S.read.ver = v; render(); }
 function readingHtml(x) {
   let body = '';
-  x.lines.forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
+  linesOf(x).forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
+  const vs = RD.versionsOn && RD.versions && RD.versions[x.id], v = verOf(x), note = noticeOf(x);
+  const sw = vs ? `<div class="btn-row no-print" role="group" aria-label="Bible version" style="margin:4px 0 12px">${[['kjv', 'KJV'], ['esv', 'ESV'], ['niv', 'NIV']].map(o => `<button type="button" class="lc-chip" style="--rc:var(--gold)" aria-pressed="${v === o[0]}" title="${esc(o[0] === 'kjv' ? 'King James Version' : (RD.bible[o[0]] || {}).name || '')}" onclick="W.bibleVer('${o[0]}')">${o[1]}</button>`).join('')}</div>` : '';
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.read.open=null;W.render();W.top()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
-    <h2>${esc(x.title)}</h2><p class="w-small">${esc(x.by)} &middot; ${esc(RIGHTS[x.rights] || '')}</p>
+    <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}
     <div class="w-readtext" data-read="Read this aloud">${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
+    ${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}
   </article>`;
 }
 function openReading(id) { S.read.open = id; S.tab = 'readings'; render(); scrollTop(true); }
 function printReading(id) {
   const x = RD.readings.find(y => y.id === id); if (!x) return;
-  printHtml(x.title, (x.tr ? `<p><i>${esc(x.tr)}</i></p>` : '') + x.lines.map(l => l ? `<p>${esc(l)}</p>` : '<br>').join('') + `<p><small>${esc(x.by)}</small></p>`);
+  const note = noticeOf(x);
+  printHtml(x.title, (x.tr ? `<p><i>${esc(x.tr)}</i></p>` : '') + linesOf(x).map(l => l ? `<p>${esc(l)}</p>` : '<br>').join('') + `<p><small>${esc(byOf(x))}</small></p>` + (note ? `<p><small>${esc(note)}</small></p>` : ''));
 }
 
 /* ---------- Settings ---------- */
@@ -1236,7 +1249,7 @@ Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
   checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
-  guide: openGuide, watch: watchGuide, gList, gFind, printGuide, reading: openReading, printReading,
+  guide: openGuide, watch: watchGuide, gList, gFind, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify

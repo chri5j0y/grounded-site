@@ -1952,7 +1952,8 @@ function renderLegacy() {
     <div class="btn-row"><button class="btn btn-primary" onclick="legPickBook()">Save or Print My Book</button></div>
     ${LG.pick ? legPickHtml(L) : ''}
     <div id="sq-legsheet" class="sq-legsheet" aria-hidden="true"></div>
-    <p class="gt-small sq-legfoot">Your book stays on this device, locked in your profile. You decide what to print or share, and with whom. If you later use Willow, what you write here comes along into Willow's Cuttings.</p>`;
+    <p class="gt-small sq-legfoot">Your book stays on this device, locked in your profile. You decide what to print or share, and with whom. If you later use Willow, what you write here comes along into Willow's Cuttings.</p>
+    <p class="gt-small sq-legfoot">One day, your stories here can help your family write about you. They can use the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>, the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a>, and <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>.</p>`;
 }
 function legChapterHtml(c, L, who) {
   const closed = c.optIn && !L.opened[c.id];
