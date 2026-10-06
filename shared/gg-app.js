@@ -37,11 +37,14 @@
      GGApp.handoff.pending()         The Grove: a check-in waiting, or null
      GGApp.handoff.clear()
 
-   A card from an Aspen Guide (or Pine Guide) visit, into the student's own tree
-     GGApp.visit.url(card, tree)     card {n first name, d date, s strong parts, t tries}
-                                     tree 'aspen' (default) or 'pine': a link to that
-                                     tree with the card after the #
-     GGApp.visit.pending()           Aspen or Pine: a card waiting, or null
+   A card from a Guide visit, into the person's own tree (GWG BLD 746: every tree)
+     GGApp.visit.url(card, tree)     card {n first name, d date, s strong parts, t tries,
+                                     pl 1 only when a Maple Guide's or Aspen Guide's
+                                     organization asks for Plain wording}
+                                     tree 'maple', 'aspen' (default), 'pine', 'birch',
+                                     'oak', or 'sequoia': a link to that tree with the
+                                     card after the #
+     GGApp.visit.pending()           the tree app: a card waiting, or null
      GGApp.visit.clear()
 
    Share to Family: a person's tree, sent by hand to family on other phones
@@ -338,9 +341,13 @@
     return true;
   }
 
-  /* ---------------- A CARD FROM AN ASPEN GUIDE VISIT ----------------
-     Only a first name, the date, strong part names, and what the student chose to try. Never levels,
-     notes, safety answers, the optional question, or a guide's or grown-up's name. */
+  /* ---------------- A CARD FROM A GUIDE VISIT ----------------
+     From any Guide (Maple, Aspen, Pine, Birch, Oak, Sequoia) into the person's own tree.
+     Only a first name, the date, strong part names, and what the person chose to try. Never levels,
+     notes, safety answers, the optional question, or a guide's or grown-up's name.
+     One more field, only for Maple and Aspen: pl 1 when the Guide's organization asks for Plain
+     wording, so the child's or student's tree locks Plain. It is 1 or it is left out; it carries
+     no name and nothing about the organization. */
   var VPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
   function vclean(v) {
     if (!v || typeof v !== 'object') return null;
@@ -353,12 +360,14 @@
       if (a) tries.push([pkId(t[0]), a, b]);
     });
     if (!strong.length && !tries.length) return null;
-    return { n: name.slice(0, 30), d: d, s: strong, t: tries };
+    var out = { n: name.slice(0, 30), d: d, s: strong, t: tries };
+    if (v.pl === 1) out.pl = 1;
+    return out;
   }
   function vcode(v) { var c = vclean(v); return c ? 'v1.' + enc64(JSON.stringify(c)) : ''; }
   function vunpack(s) { try { if (!/^v1\./.test(s)) return null; return vclean(JSON.parse(dec64(s.slice(3)))); } catch (e) { return null; } }
-  // tree: 'aspen' (the default) or 'pine', so a Pine Guide can send a card into the teen's own Pine.
-  var VTREES = { aspen: '/aspen/', pine: '/pine/' };
+  // tree: which tree app the card opens in, so each Guide sends a card into the person's own tree. Aspen is the default.
+  var VTREES = { maple: '/maple/', aspen: '/aspen/', pine: '/pine/', birch: '/birch/', oak: '/oak/', sequoia: '/sequoia/' };
   function vurl(v, tree) { var c = vcode(v); return c ? SITE + (VTREES[tree] || VTREES.aspen) + '#gg-visit=' + c : ''; }
   function takeVisit(h) {
     var m = /[#&]gg-visit=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;
@@ -419,7 +428,7 @@
     return true;
   }
 
-  // The Grove (or Aspen, or Pine) reads what arrived in its own link, then wipes it from the address bar right away.
+  // The Grove (or a tree app) reads what arrived in its own link, then wipes it from the address bar right away.
   if (takeHash(location.hash) | takeVisit(location.hash) | takeFam(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   // A link opened while the page is already open (same tab) only changes the part after the #.
   window.addEventListener('hashchange', function () {

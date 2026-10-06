@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js?v=tc6"></script>
+<script src="/shared/gg-app.js?v=tc7"></script>
 <script src="/shared/gg-shelf.js?v=fd4"></script>
 <script src="/shared/gg-sources.js?v=src15"></script>
 <meta charset="UTF-8">
@@ -452,7 +452,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="checkin.js?v=ps1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
-<script src="/shared/gg-tend.js?v=vb9"></script>
+<script src="/shared/gg-tend.js?v=vb10"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -1449,7 +1449,7 @@ function renderGuidesTab(){
 
 /* ---------- a card from an Aspen Guide visit ----------
    A guide's QR or link carries only a first name, the date, what's growing strong, and what the student chose
-   to try. It lands on the student's own tree, for them. No levels, notes, safety answers, the optional question,
+   to try, and pl 1 when the Guide's school or group asks for Plain wording (that locks Plain on this tree). It lands on the student's own tree, for them. No levels, notes, safety answers, the optional question,
    or anyone else's name ever travel. Grown-up pages never show it. */
 const CK_PART = Object.fromEntries(Object.entries(CK_KEY).map(([k, v]) => [v, k]));
 const vPart = k => PART[CK_PART[k]];
@@ -1474,12 +1474,13 @@ function removeVisitCard(id, i){
   save(); renderDash(); toast('Card removed.');
 }
 let VISIT_SHOWN = false;
+const VISIT_PL_LINE = 'The Aspen Guide\'s school or group uses Plain wording, so adding this card sets this student\'s Aspen to Plain wording, locked, to match.';
 function visitCheck(){
   if (VISIT_SHOWN || !window.GGApp || !GGApp.visit) return;
   const v = GGApp.visit.pending(); if (!v) return;
   VISIT_SHOWN = true;
   const intro = `<p>${v.n ? esc(v.n) + ', here' : 'Here'} is a card from your Aspen visit on ${fmtDate(v.d + 'T12:00')}: what's growing strong and what you want to try. It goes on your own tree, just for you.</p>
-    <p class="ggx-small">If this phone is shared with family, anyone who can open your tree can see it. You can remove it any time.</p>`;
+    <p class="ggx-small">If this phone is shared with family, anyone who can open your tree can see it. You can remove it any time.</p>${v.pl === 1 ? `<p class="ggx-small"><b>For grown-ups:</b> ${VISIT_PL_LINE}</p>` : ''}`;
   const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); toast('The card was not added.'); } };
   const nm = (v.n || '').toLowerCase();
   const people = DB.students.slice().sort((a, b) => (b.name.toLowerCase().split(/\s+/)[0] === nm) - (a.name.toLowerCase().split(/\s+/)[0] === nm));
@@ -1495,7 +1496,9 @@ function visitCheck(){
       st.visitCards = st.visitCards || [];
       if (!st.visitCards.some(x => JSON.stringify({ d: x.d, s: x.s, t: x.t }) === same)) st.visitCards.push(Object.assign({ added: today() }, card));
       if (st.visitCards.length > 12) st.visitCards = st.visitCards.slice(-12);
-      GGApp.visit.clear(); save(); openStudent(st.id); toast('Added to your tree.');
+      // The Aspen Guide's school or group asks for Plain wording: lock Plain on this student's tree (GWG BLD 746).
+      if (v.pl === 1){ const r = aspRecord(st); if (r) r.plainLock = true; else st.plainLock = true; }
+      GGApp.visit.clear(); save(); openStudent(st.id); toast(v.pl === 1 ? 'Added to your tree. Aspen uses Plain wording now.' : 'Added to your tree.');
     } })).concat([{ t: 'My Name Isn\'t Here', kind: 'line', fn: () => { VISIT_SHOWN = false; go('students'); } }, drop]) });
 }
 window.addEventListener('gg-visit', () => { VISIT_SHOWN = false; visitCheck(); });
