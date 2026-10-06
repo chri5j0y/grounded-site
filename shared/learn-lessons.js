@@ -6018,10 +6018,6 @@ window.GG_LEARN = {
         [
          "Grade",
          "7th"
-        ],
-        [
-         "Wording",
-         "Faith or Plain"
         ]
        ],
        "btns": [
