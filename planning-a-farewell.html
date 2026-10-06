@@ -262,7 +262,7 @@ var GGF = {
   $('fw-print').addEventListener('click', function () {
     GGF.print('<p class="p-eb">Grow With Grounded</p><h1>Planning a Farewell</h1>' + SECS.map(function (s) {
       return '<h2>' + esc(s.name) + '</h2><ul class="p-check">' + s.items.map(function (it) { var on = st.c[s.id + '.' + it.id]; return '<li><span class="bx">' + (on ? '&#10003;' : '') + '</span><span>' + esc(it.t) + '<small>' + esc(it.d) + '</small></span></li>'; }).join('') + '</ul>';
-    }).join('') + '<p style="margin-top:6mm">If someone is in danger, or a death was sudden or unexpected, call 911. With hospice, call the hospice’s 24/7 line first. In crisis? Call or text 988.</p>');
+    }).join('') + '<p style="margin-top:6mm">If someone is in danger, or a death was sudden or unexpected, call 911. With hospice, call the hospice’s 24/7 line first. In crisis? Call or text 988.</p><p style="font-size:9pt;color:#6B5A4D">Sources: Federal Trade Commission, Shopping for Funeral Services (the Funeral Rule); Minnesota county vital records pages (Dakota County, Isanti County); Social Security Administration, When Someone Dies; U.S. Department of Veterans Affairs, Burials and Memorials; Bankrate, How to Protect Dead Relatives from Identity Theft.</p>');
   });
   $('fw-clear').addEventListener('click', function () {
     if (!window.confirm('Clear your check marks from this device?')) return;

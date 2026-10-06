@@ -15295,6 +15295,189 @@ window.GG_LEARN = {
       "say": "Last question. What is grief debt?"
      }
     ]
+   },
+   {
+    "id": "wl-h-farewell",
+    "n": 7,
+    "title": "When It's Time to Plan the Farewell",
+    "mins": 4,
+    "blurb": "The Obituary Helper, Planning a Farewell, and the Eulogy Helper, and how each one helps, at your own pace.",
+    "sources": [
+     "obit-bankrate",
+     "obit-msu"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 7",
+      "h": "When It's Time to Plan the Farewell",
+      "sub": "Three helpers, at your own pace.",
+      "say": "This lesson is about three helpers for the days around a goodbye. Planning a Farewell, the Obituary Helper, and the Eulogy Helper. Use them whenever you are ready, and only the parts you need."
+     },
+     {
+      "k": "big",
+      "h": "One small step at a time.",
+      "sub": "Your drafts stay on this device.",
+      "say": "A farewell comes with many small tasks, often all at once. These helpers break them into small steps, and they keep what you type on this device only. Nothing is sent anywhere, and Clear takes it all away whenever you like. To share a draft, print it, save it, or copy it."
+     },
+     {
+      "k": "flow",
+      "h": "Planning a Farewell",
+      "steps": [
+       [
+        "The first hours",
+        "Who to call, and time to sit together"
+       ],
+       [
+        "The first days",
+        "The funeral home, family, and friends"
+       ],
+       [
+        "The service",
+        "Readings, music, and who speaks"
+       ],
+       [
+        "After",
+        "Thank-yous, paperwork, and rest"
+       ]
+      ],
+      "say": "Planning a Farewell is a checklist in four parts. The first hours, with who to call, and time to simply sit together. The first days, with the funeral home, and telling family and friends. The service itself, with readings, music, and who will speak. And after, with thank-you notes, paperwork, and rest. Check off what's done, and let the rest wait.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "The Obituary Helper",
+      "items": [
+       [
+        "Death Notice",
+        "About 80 words"
+       ],
+       [
+        "Newspaper Obituary",
+        "About 200 words"
+       ],
+       [
+        "Online Obituary",
+        "About 500 words"
+       ]
+      ],
+      "say": "The Obituary Helper asks a few gentle questions about their life, then drafts it for you in your own words. A death notice is short, about eighty words, with the service details. A newspaper obituary is about two hundred. An online obituary has room for about five hundred. Copy one, or save it, and change any word you like.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Keep your family safe",
+      "items": [
+       [
+        "Leave out the home address",
+        "The city is enough"
+       ],
+       [
+        "Leave out the full birth date",
+        "And the mother's maiden name"
+       ],
+       [
+        "Ask someone to stay at the home",
+        "During the service"
+       ]
+      ],
+      "say": "A few safety tips come with every draft. Some people read obituaries looking for empty homes and personal details. So leave out the home address. The city is enough. Leave out the full birth date, and the mother's maiden name. And ask a friend or neighbor to stay at the home during the service.",
+      "cue": {
+       "at": [
+        2,
+        4,
+        5
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "The Eulogy Helper",
+      "items": [
+       [
+        "Who they were",
+        "In one sentence"
+       ],
+       [
+        "Three stories",
+        "That show it"
+       ],
+       [
+        "What they gave",
+        "To the people in the room"
+       ],
+       [
+        "What we carry forward",
+        "Their way, in us"
+       ]
+      ],
+      "say": "If you are the one who will speak, the Eulogy Helper walks you through it. Start with who they were, in one sentence. Then three stories that show it. Then what they gave the people in the room. And last, what we carry forward. Read it out loud once or twice before the day, and keep a printed copy in your hand.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Start with one sentence",
+      "items": [
+       "They were the kind of person who..."
+      ],
+      "sub": "Any true sentence is a good start.",
+      "beats": [
+       "Every eulogy starts with one sentence.",
+       "It doesn't have to be perfect, just true.",
+       {
+        "t": "Try it now, out loud or in your head: they were the kind of person who, and finish it in your own words.",
+        "w": 15
+       }
+      ],
+      "say": "Every eulogy starts with one sentence. It doesn't have to be perfect, just true. Try it now, out loud or in your head: they were the kind of person who, and finish it in your own words.",
+      "cue": {
+       "at": [
+        2
+       ]
+      }
+     },
+     {
+      "k": "quiz",
+      "q": "Which of these belongs in an obituary?",
+      "opts": [
+       "The home address",
+       "The day, time, and place of the service",
+       "The mother's maiden name"
+      ],
+      "right": 1,
+      "why": "The service details help people come. The home address and the mother's maiden name stay out, to keep your family safe.",
+      "say": "One question. Which of these belongs in an obituary?"
+     },
+     {
+      "k": "breathe",
+      "h": "A breath for you",
+      "sub": "In for four. Out for six.",
+      "hold": 20,
+      "say": "Before you go, take a breath for yourself. Breathe in for four. And out for six. Once more, slowly. One small step is enough for today."
+     }
+    ],
+    "for": "family"
    }
   ]
  }

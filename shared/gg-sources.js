@@ -31,6 +31,9 @@
 
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
+    /* GWG BLD 748 (CER 2): the obituary safety tips (Willow lesson wl-h-farewell, and the Obituary Helper). */
+    "obit-bankrate": ["Bankrate, how to protect a loved one who has died from identity theft", "https://www.bankrate.com/personal-finance/smart-money/protect-dead-relatives-from-identity-theft"],
+    "obit-msu": ["Michigan State University Extension, The ultimate identity theft", "https://www.canr.msu.edu/news/the_ultimate_identity_theft"],
     byock4: ['Ira Byock, The Four Things That Matter Most', SHELF + 'DY-002'],
     rogers: ['Fred Rogers, "Look for the helpers"', 'https://www.fredrogers.org'], // BLD 731, Maple guides that use the line
     hansen: ['Hansen, Enright, Baskin, and Klatt, a forgiveness program for terminally ill elders (2009)', 'https://doi.org/10.1177/082585970902500106'],

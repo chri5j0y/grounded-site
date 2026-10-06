@@ -4,7 +4,8 @@
 // A Staff and Founder tab. A few setup questions, then the big checklist filled
 // live with the family or the couple, then the editor to dial it in later, and
 // four printouts: Officiant's Script, Order of Service, Program, Family Copy.
-// Funeral types draft an obituary; wedding types keep the license checklist.
+// Funeral types draft an obituary; wedding types keep the license checklist;
+// blessings (home, child, bedside) add a Keepsake Copy of the blessing.
 // Data: the Staff library's ceremonies key (LIB.ceremonies), with a small
 // built-in fallback so the tab works before that library update is applied.
 // Saved services live in DATA.cer.services: encrypted with the rest of this
@@ -122,6 +123,8 @@ function cer(){
 }
 const typeOf = id => cer().types.find(t => t.id === id) || cer().types[0];
 const famOf = id => (typeOf(id) || {}).family || 'funeral';
+// Whom Setup asks about: a person (funerals, bedside), a child, a household (home), or a couple (weddings).
+const whoOf = id => (typeOf(id) || {}).who || (famOf(id) === 'wedding' ? 'couple' : 'person');
 const optName = (list, id) => ((list || []).find(x => String(x.id) === String(id)) || {}).name || '';
 const groupsFor = fam => cer().groups.filter(g => !g.family || g.family === fam || g.family === 'both');
 function partsFor(type){
@@ -183,6 +186,7 @@ function names(s){
     Date: nice(s.date), Time: s.time || '', Place: s.place || '', Officiant: (D().settings || {}).name || ''
   });
   if (fam === 'wedding'){ v.Couple = [v.Partner1, v.Partner2].filter(Boolean).join(' and '); }
+  if (whoOf(s.type) === 'home') v.First = v.Name;
   return v;
 }
 function title(s){
@@ -295,9 +299,9 @@ function reapply(s){
 const RD = id => cer().readings.find(r => r.id === id);
 const fam2for = fam => fam;
 function rScore(r, s){
-  const t = r.tags || {}, fam = famOf(s.type), st = s.setup || {};
-  if (t.for && t.for !== 'both' && t.for !== fam2for(fam)) return -99;
-  let n = 0;
+  const t = r.tags || {}, fam = famOf(s.type), st = s.setup || {}, sug = arr(typeOf(s.type).readings).includes(r.id);
+  if (!sug && t.for && t.for !== 'both' && t.for !== fam2for(fam)) return -99;
+  let n = sug ? 3 : 0;
   if (arr(t.types).includes(s.type)) n += 3; else if (!arr(t.types).length) n += 1;
   const fs = arr(t.faith);
   if (st.faith && fs.length){ if (fs.some(x => faithMatch(x, st.faith) && x !== 'any' && x !== 'all')) n += 3; else if (fs.some(x => x === 'any' || x === 'all')) n += 1; else n -= 5; }
@@ -435,8 +439,8 @@ function headOf(s, eyebrow){
 
 function vHome(){
   const C = cer(), L = list().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
-  const fams = [['funeral', 'Funerals and Memorials'], ['wedding', 'Weddings']];
-  return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Service Builder</h1><p>Build a service live with the family or the couple, then dial it in and print it.</p></div>
+  const fams = [['funeral', 'Funerals and Memorials'], ['wedding', 'Weddings'], ['blessing', 'Blessings']];
+  return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Service Builder</h1><p>Build a service or a blessing live with the family or the couple, then dial it in and print it.</p></div>
   <div class="card"><h2 style="margin-bottom:4px">Start a Service</h2><p class="muted">Pick the kind of service. Setup takes about a minute.</p>
     ${fams.map(([f, l]) => { const ts = C.types.filter(t => t.family === f); return ts.length ? `<h3 style="margin-top:14px">${l}</h3><div class="cer-types">${ts.map(t => `<button type="button" class="cer-type" data-cer="new" data-v="${esc(t.id)}"><b>${esc(t.name)}</b>${t.lead ? `<small>${esc(t.lead)}</small>` : ''}</button>`).join('')}</div>` : ''; }).join('')}
     ${C.full ? '' : `<p class="muted" style="margin-top:12px;font-size:15px">The full set of parts, templates, and readings arrives with the next Staff library update.</p>`}</div>
@@ -454,7 +458,12 @@ function vSetup(s){
   const tScore = t => (st.faith && arr(t.faith).some(f => faithMatch(f, st.faith))) ? 2 : (!arr(t.faith).length || arr(t.faith).some(f => f === 'any' || f === 'all')) ? 1 : 0;
   const tm = tmpls.slice().sort((a, b) => tScore(b) - tScore(a));
   const hasScripture = C.readings.some(r => r.versions);
-  const person = fam === 'wedding'
+  const who = whoOf(s.type), inp = (id, f, l, ph) => `<div><label class="f" for="${id}">${l}</label><input type="text" id="${id}" data-cerf="${f}" value="${esc(f.split('.').reduce((o, k) => (o || {})[k], s) || '')}"${ph ? ` placeholder="${esc(ph)}"` : ''} autocomplete="off"></div>`;
+  const pron = `<label class="f">Pronouns</label>${chips('pron', [['he', 'He'], ['she', 'She'], ['they', 'They']], s.who.pron || 'they')}`;
+  const person = who === 'home' ? `<div class="cer-g2">${inp('cer-n', 'who.name', 'Household', 'Sam and Alex Rivera, or the Rivera family')}${inp('cer-fam', 'who.family', 'Who Lives Here', 'Names, children and pets included')}</div>`
+    : who === 'child' ? `<div class="cer-g2">${inp('cer-n', 'who.name', "Child's Full Name")}${inp('cer-fn', 'who.first', 'Goes By', 'First name or nickname')}${inp('cer-b', 'who.born', 'Born or Welcomed', 'March 3, 2026')}${inp('cer-fam', 'who.family', 'Parents or Family', 'Sam and Alex Rivera')}</div>${pron}`
+    : fam === 'blessing' ? `<div class="cer-g2">${inp('cer-n', 'who.name', 'Full Name')}${inp('cer-fn', 'who.first', 'Goes By', 'First name or nickname')}</div>${inp('cer-fam', 'who.family', 'Family Gathered', 'Who will be in the room')}${pron}`
+    : fam === 'wedding'
     ? `<div class="cer-g2">${[['p1', 'Partner 1'], ['p2', 'Partner 2']].map(([k, l]) => `<div><label class="f" for="cer-${k}n">${l}: Full Name</label><input type="text" id="cer-${k}n" data-cerf="${k}.name" value="${esc((s[k] || {}).name || '')}" autocomplete="off">
         <label class="f" for="cer-${k}f">Goes By</label><input type="text" id="cer-${k}f" data-cerf="${k}.first" value="${esc((s[k] || {}).first || '')}" placeholder="First name" autocomplete="off"></div>`).join('')}</div>`
     : `<div class="cer-g2"><div><label class="f" for="cer-n">Full Name</label><input type="text" id="cer-n" data-cerf="who.name" value="${esc(s.who.name || '')}" autocomplete="off"></div>
@@ -559,14 +568,15 @@ function vEdit(s){
 }
 
 function vPrint(s){
-  const fam = famOf(s.type), hasObit = fam === 'funeral' && Object.values((s.obit || {}).d || {}).some(Boolean);
+  const fam = famOf(s.type), bl = fam === 'blessing', hasObit = fam === 'funeral' && Object.values((s.obit || {}).d || {}).some(Boolean);
   const card = (k, h, p, extra) => `<div class="card"><h3>${h}</h3><p class="muted">${p}</p>${extra || ''}<div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-cer="pr" data-v="${k}">Print or Save as PDF</button><button type="button" class="btn btn-line btn-sm" data-cer="cp" data-v="${k}">Copy Text</button></div></div>`;
   const prog = `<label class="f">Photo for the Cover</label>${s.photo ? `<img class="cer-photo" src="${s.photo}" alt="The cover photo"><div class="row" style="margin-top:8px"><label class="btn btn-line btn-sm" style="cursor:pointer">Change Photo<input type="file" accept="image/*" data-cerph="1" hidden></label><button type="button" class="btn btn-line btn-sm" data-cer="photo-x">Remove Photo</button></div>` : `<label class="btn btn-line btn-sm" style="cursor:pointer">Choose a Photo<input type="file" accept="image/*" data-cerph="1" hidden></label><p class="muted" style="font-size:14px;margin-top:6px">Optional. It stays on this device with the service.</p>`}
     ${fam === 'funeral' ? `<label style="display:flex;gap:8px;align-items:center;margin-top:12px;font-weight:600"><input type="checkbox" data-cer-po="1"${(s.prog || {}).obit !== false ? ' checked' : ''}${hasObit ? '' : ' disabled'}> Include the short obituary${hasObit ? '' : ' (draft one in Obituary first)'}</label>` : ''}`;
   return `${headOf(s, 'Print and Copy')}
   <div class="cer-pc">${card('script', "Officiant's Script", 'Large type, every part with its words, readings in full with their sources, and your notes beside them.')}
-  ${card('order', 'Order of Service', 'One page for the funeral director, the musicians, or the coordinator.')}
-  ${card('program', 'Program', 'A folded half-letter program: print both sides of one letter sheet, then fold.', prog)}
+  ${bl ? card('order', 'Order of Blessing', 'A short page with the parts in order, for the family and anyone leading a part.') : card('order', 'Order of Service', 'One page for the funeral director, the musicians, or the coordinator.')}
+  ${bl ? card('keep', 'Keepsake Copy', 'The blessing itself on one page, to sign, date, and leave with the family: by the door, in a frame, or in a baby book.') : ''}
+  ${card('program', 'Program', (bl ? 'Optional, for a larger gathering. ' : '') + 'A folded half-letter program: print both sides of one letter sheet, then fold.', prog)}
   ${card('family', 'Family Copy', 'A clean copy for the family or the couple to read and approve.')}</div>
   <p class="muted" style="font-size:14px;margin-top:12px">Each reading prints with its source line. The ESV and NIV notices print whenever their text is used.</p>`;
 }
@@ -724,11 +734,12 @@ h1{font-size:2.1em;margin:.1em 0;line-height:1.1;}.meta{color:#6B5A4D;}
 ol{list-style:none;padding:0;margin:1em 0 0;}li{display:flex;gap:1em;justify-content:space-between;border-bottom:1px dotted #CDBFA6;padding:.45em 0;}
 li .r{color:#6B5A4D;font-size:.85em;}li .w{text-align:right;color:#6B5A4D;font-size:.9em;white-space:nowrap;}.toolong{outline:2px dashed #A33D2A;}
 @media print{.sheet{margin:0;box-shadow:none;}.toolong{outline:0;}}@media(max-width:860px){.sheet{zoom:.45;}}`;
-  const body = `<div class="sheet"><div class="box" data-fit="13"><div class="eb">Order of Service</div><h1>${esc(title(s))}</h1><div class="meta">${esc(subline(s))}<br>About ${total(s)} minutes${names(s).Officiant ? '. Officiant: ' + esc(names(s).Officiant) : ''}</div>
+  const body = `<div class="sheet"><div class="box" data-fit="13"><div class="eb">${esc(orderName(s))}</div><h1>${esc(title(s))}</h1><div class="meta">${esc(subline(s))}<br>About ${total(s)} minutes${names(s).Officiant ? '. Officiant: ' + esc(names(s).Officiant) : ''}</div>
     <ol>${orderRows(s).map((r, i) => `<li><span><b>${i + 1}. ${esc(r.name)}</b>${r.rs.length ? `<br><span class="r">${esc(r.rs.join('; '))}</span>` : ''}</span><span class="w">${r.by ? esc(r.by) + '<br>' : ''}${r.mins} min</span></li>`).join('')}</ol></div></div>`;
-  return {title: 'Order of Service', css, body, page: 'size:letter;margin:0;', script: FIT};
+  return {title: orderName(s), css, body, page: 'size:letter;margin:0;', script: FIT};
 }
-function orderText(s){ return ['ORDER OF SERVICE', title(s), subline(s), 'About ' + total(s) + ' minutes', ''].join('\n') + '\n' + orderRows(s).map((r, i) => `${i + 1}. ${r.name}${r.by ? ', ' + r.by : ''} (${r.mins} min)${r.rs.length ? '\n   ' + r.rs.join('; ') : ''}`).join('\n'); }
+const orderName = s => famOf(s.type) === 'blessing' ? 'Order of Blessing' : 'Order of Service';
+function orderText(s){ return [orderName(s).toUpperCase(), title(s), subline(s), 'About ' + total(s) + ' minutes', ''].join('\n') + '\n' + orderRows(s).map((r, i) => `${i + 1}. ${r.name}${r.by ? ', ' + r.by : ''} (${r.mins} min)${r.rs.length ? '\n   ' + r.rs.join('; ') : ''}`).join('\n'); }
 function progObit(s){ if (famOf(s.type) !== 'funeral' || (s.prog || {}).obit === false) return ''; const d = (s.obit || {}).d || {}; return d.newspaper || d.notice || d.online || ''; }
 function programDoc(s){
   const n = names(s), fam = famOf(s.type), allRd = []; onParts(s).forEach(e => (e.rd || []).forEach(x => { if (RD(x.id)) allRd.push(x); }));
@@ -747,19 +758,19 @@ ol{list-style:none;padding:0;margin:0;}li{border-bottom:1px dotted #CDBFA6;paddi
 .toolong{outline:2px dashed #A33D2A;}
 @media print{.toolong{outline:0;}.lab,.bar,.tip{display:none !important;}.sh{margin:0;box-shadow:none;break-after:page;}.pn + .pn{border-left:0;}}
 @media(max-width:1100px){.sh{zoom:.4;}}`;
-  const cover = `<div class="pn cover"><div class="box" data-fit="11" style="display:flex;flex-direction:column;justify-content:center">${s.photo ? `<img src="${s.photo}" alt="">` : ''}<div class="eb">${fam === 'wedding' ? (s.type === 'wedding' ? 'The Wedding of' : esc(typeOf(s.type).name)) : 'In Loving Memory'}</div>
+  const cover = `<div class="pn cover"><div class="box" data-fit="11" style="display:flex;flex-direction:column;justify-content:center">${s.photo ? `<img src="${s.photo}" alt="">` : ''}<div class="eb">${fam === 'wedding' ? (s.type === 'wedding' ? 'The Wedding of' : esc(typeOf(s.type).name)) : fam === 'blessing' ? esc(typeOf(s.type).cover || typeOf(s.type).name) : 'In Loving Memory'}</div>
     <h1>${esc(fam === 'wedding' ? [n.Partner1Full, n.Partner2Full].filter(Boolean).join(' and ') || title(s) : n.Name || title(s))}</h1>${fam !== 'wedding' && lifeLine(s) ? `<div class="d">${esc(lifeLine(s))}</div>` : ''}<div class="l">${esc(subline(s))}</div></div></div>`;
-  const order = `<div class="pn"><div class="box" data-fit="11"><h2>Order of Service</h2><ol>${orderRows(s).map(r => `<li><b>${esc(r.name)}</b>${r.by ? ', ' + esc(r.by) : ''}${r.rs.length ? `<small>${esc(r.rs.join('; '))}</small>` : ''}</li>`).join('')}</ol>${n.Officiant ? `<p style="margin-top:1em;color:#6B5A4D">Officiant: ${esc(n.Officiant)}</p>` : ''}</div></div>`;
+  const order = `<div class="pn"><div class="box" data-fit="11"><h2>${esc(orderName(s))}</h2><ol>${orderRows(s).map(r => `<li><b>${esc(r.name)}</b>${r.by ? ', ' + esc(r.by) : ''}${r.rs.length ? `<small>${esc(r.rs.join('; '))}</small>` : ''}</li>`).join('')}</ol>${n.Officiant ? `<p style="margin-top:1em;color:#6B5A4D">Officiant: ${esc(n.Officiant)}</p>` : ''}</div></div>`;
   const readings = `<div class="pn"><div class="box" data-fit="11" data-flow-from="1">${allRd.length ? `<h2>Readings</h2>${allRd.map(x => rdHTML(s, x)).join('')}` : ''}</div></div>`;
   const ob = progObit(s);
-  const back = `<div class="pn"><div class="box" data-fit="11"><div data-flow-to="1"></div>${ob ? `<h2>${esc(n.Name || 'In Memory')}</h2><div class="ob">${paras(ob)}</div>` : ''}<p class="thanks">${fam === 'wedding' ? 'Thank you for being here to celebrate with us.' : 'The family thanks you for your love and presence.'}</p>${noticeHTML(s)}</div></div>`;
+  const back = `<div class="pn"><div class="box" data-fit="11"><div data-flow-to="1"></div>${ob ? `<h2>${esc(n.Name || 'In Memory')}</h2><div class="ob">${paras(ob)}</div>` : ''}<p class="thanks">${fam === 'wedding' ? 'Thank you for being here to celebrate with us.' : fam === 'blessing' ? 'Thank you for being here to share this blessing.' : 'The family thanks you for your love and presence.'}</p>${noticeHTML(s)}</div></div>`;
   const body = `<div class="lab">Outside: print this side first</div><div class="sh">${back}${cover}</div><div class="lab">Inside: print on the back, then fold in half</div><div class="sh">${order}${readings}</div>`;
   return {title: 'Program', css, body, page: 'size:11in 8.5in;margin:0;', script: FIT, tip: 'Print both sides, flipping on the short edge, then fold in half.'};
 }
 function programText(s){
   const allRd = []; onParts(s).forEach(e => (e.rd || []).forEach(x => { if (RD(x.id)) allRd.push(x); }));
   const ob = progObit(s);
-  return [title(s), lifeLine(s), subline(s), '', 'ORDER OF SERVICE', orderRows(s).map(r => r.name + (r.by ? ', ' + r.by : '') + (r.rs.length ? ' (' + r.rs.join('; ') + ')' : '')).join('\n'), allRd.length ? '\nREADINGS\n' + allRd.map(x => rdText(s, x)).join('\n\n') : '', ob ? '\n' + ob : '', usedNotices(s).join('\n')].filter((x, i) => x || i === 3).join('\n');
+  return [title(s), lifeLine(s), subline(s), '', orderName(s).toUpperCase(), orderRows(s).map(r => r.name + (r.by ? ', ' + r.by : '') + (r.rs.length ? ' (' + r.rs.join('; ') + ')' : '')).join('\n'), allRd.length ? '\nREADINGS\n' + allRd.map(x => rdText(s, x)).join('\n\n') : '', ob ? '\n' + ob : '', usedNotices(s).join('\n')].filter((x, i) => x || i === 3).join('\n');
 }
 function familyDoc(s){
   const css = `.doc{font-size:12.5pt;line-height:1.55;}h1{font-size:26pt;margin:.1em 0;line-height:1.1;}.meta{color:#6B5A4D;}
@@ -768,17 +779,34 @@ function familyDoc(s){
 .lines{margin-top:1.4em;}.lines div{border-bottom:1px solid #9C8B76;height:2em;}.sign{display:grid;grid-template-columns:2fr 1fr;gap:.4in;margin-top:2.4em;}.sign div{border-top:1px solid #2C1810;padding-top:.3em;font-size:10pt;color:#6B5A4D;}
 @media(max-width:640px){.doc{padding:24px 18px;}}`;
   const body = `<div class="doc"><div class="eb">Family Copy, a Draft for Your Approval</div><h1>${esc(title(s))}</h1><div class="meta">${esc(subline(s))}</div>
-    <div class="intro">Here is the service as we have it so far. Read it through, mark anything you would like changed, added, or left out, and send it back. Every word can still change.</div>
+    <div class="intro">Here is the ${famOf(s.type) === 'blessing' ? 'blessing' : 'service'} as we have it so far. Read it through, mark anything you would like changed, added, or left out, and send it back. Every word can still change.</div>
     ${onParts(s).map(e => { const p = partOf(e); return `<div class="part"><h2>${esc(e.title || p.name)}</h2>${paras(partWords(e, s))}${(e.rd || []).map(x => rdHTML(s, x)).join('')}</div>`; }).join('')}
     <h2 style="margin-top:1.4em;font-size:17pt">Changes or Notes</h2><div class="lines"><div></div><div></div><div></div><div></div></div>
     <div class="sign"><div>Approved by</div><div>Date</div></div>${noticeHTML(s)}</div>`;
   return {title: 'Family Copy', css, body};
 }
 function familyText(s){
-  return ['FAMILY COPY, A DRAFT FOR YOUR APPROVAL', title(s), subline(s), '', 'Here is the service as we have it so far. Mark anything you would like changed, added, or left out, and send it back.', ''].join('\n') + '\n'
+  return ['FAMILY COPY, A DRAFT FOR YOUR APPROVAL', title(s), subline(s), '', 'Here is the ' + (famOf(s.type) === 'blessing' ? 'blessing' : 'service') + ' as we have it so far. Mark anything you would like changed, added, or left out, and send it back.', ''].join('\n') + '\n'
     + onParts(s).map(e => [(e.title || partOf(e).name).toUpperCase(), partWords(e, s), ...(e.rd || []).map(x => rdText(s, x))].filter(Boolean).join('\n\n')).join('\n\n') + (usedNotices(s).length ? '\n\n' + usedNotices(s).join('\n') : '');
 }
-const DOCS = {script: [scriptDoc, scriptText], order: [orderDoc, orderText], program: [programDoc, programText], family: [familyDoc, familyText]};
+// The Keepsake Copy (blessings): the parts marked keep in the library (the blessing, the naming, the promises), with their readings; no directions or notes.
+function keepParts(s){ const on = onParts(s), k = on.filter(e => partOf(e).keep); return k.length ? k : on; }
+function keepDoc(s){
+  const n = names(s), t = typeOf(s.type), who = (s.who || {}).family;
+  const css = `.doc{font-size:14pt;line-height:1.6;text-align:center;border:3px double #8B5E1A;padding:.8in .9in;}h1{font-size:30pt;margin:.1em 0 .1em;line-height:1.1;}.meta{color:#6B5A4D;font-style:italic;font-family:"Cormorant Garamond",Georgia,serif;font-size:15pt;}
+.part{margin-top:1.1em;}.part p{margin:.35em 0;}.rd{margin:.8em 0;}.rd h3{font-size:15pt;margin:.2em 0;}.sign{display:grid;grid-template-columns:2fr 1fr;gap:.4in;margin-top:2.2em;text-align:left;}.sign div{border-top:1px solid #2C1810;padding-top:.3em;font-size:10pt;color:#6B5A4D;}
+@media(max-width:640px){.doc{padding:28px 20px;font-size:12.5pt;}h1{font-size:24pt;}}`;
+  const body = `<div class="doc"><div class="eb">${esc(t.cover || t.name)}</div><h1>${esc(n.Name || title(s))}</h1><div class="meta">${esc([who, subline(s)].filter(Boolean).join(', '))}</div>
+    ${keepParts(s).map(e => { const o = optOf(e); return `<div class="part">${paras(partWords(e, s))}${o && o.source && e.text == null ? `<div class="src">${esc(o.source)}</div>` : ''}${(e.rd || []).map(x => rdHTML(s, x)).join('')}</div>`; }).join('')}
+    <div class="sign"><div>Blessed by${n.Officiant ? ' ' + esc(n.Officiant) : ''}</div><div>Date</div></div>${noticeHTML(s)}</div>`;
+  return {title: 'Keepsake Copy', css, body};
+}
+function keepText(s){
+  const t = typeOf(s.type), who = (s.who || {}).family;
+  return [(t.cover || t.name).toUpperCase(), names(s).Name || title(s), [who, subline(s)].filter(Boolean).join(', '), ''].join('\n') + '\n'
+    + keepParts(s).map(e => [partWords(e, s), optOf(e) && optOf(e).source && e.text == null ? optOf(e).source : '', ...(e.rd || []).map(x => rdText(s, x))].filter(Boolean).join('\n\n')).join('\n\n') + (usedNotices(s).length ? '\n\n' + usedNotices(s).join('\n') : '');
+}
+const DOCS = {script: [scriptDoc, scriptText], order: [orderDoc, orderText], program: [programDoc, programText], family: [familyDoc, familyText], keep: [keepDoc, keepText]};
 function printKind(k){ const s = cur(); if (!s || !DOCS[k]) return;
   const n = onParts(s).reduce((a, e) => a + brackets(partWords(e, s)).length, 0);
   if (n && k !== 'order' && !confirm(n + (n === 1 ? ' place' : ' places') + ' in [square brackets] still need your words. You can fill them in the Editor. Print anyway?')) return;
@@ -912,7 +940,7 @@ function headTop(){ const h = document.querySelector('header.bar'), r = document
 window.addEventListener('resize', headTop);
 (function(){ const s = document.createElement('style'); s.id = 'cer-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
-// The session guides that open the Service Builder (funeral, memorial, celebration of life, graveside, wedding, vow renewal).
+// The session guides that open the Service Builder (funeral, memorial, celebration of life, graveside, wedding, vow renewal, blessings, vigil).
 function guideType(g){
   if (!g) return null;
   const x = ((g.id || '') + ' ' + (g.title || '')).toLowerCase(), has = id => cer().types.some(t => t.id === id) ? id : null;
@@ -924,6 +952,8 @@ function guideType(g){
   if (/graveside|committal/.test(x)) return has('graveside') || has('funeral');
   if (/infant/.test(x)) return has('infant-loss') || has('funeral');
   if (/funeral/.test(x)) return has('funeral');
+  if (/vigil sitting/.test(x)) return has('bedside-blessing');
+  if (/bless/.test(x)) return has('house-blessing');
   return null;
 }
 
