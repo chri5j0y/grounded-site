@@ -322,7 +322,8 @@
   function anchorHtml(s, which) {
     var A = (J.ANCHORS || {})[which]; if (!A) return '';
     var x = day(s, today()), on = !!(x && x.a && x.a.indexOf(which) >= 0);
-    return '<div class="gt-anchor gt-' + which + '"><button type="button" class="gt-check' + (on ? ' on' : '') + '" aria-pressed="' + on + '" aria-label="' + esc(A.t) + (on ? ', done' : '') + '" onclick="GGTend.anchor(\'' + which + '\')"></button><div><b>' + esc(A.t) + '</b><p>' + esc(A.b) + '</p></div></div>';
+    // The whole card is the tap target (GWG BLD 743): a tap on the words checks it off, the same as the circle.
+    return '<div class="gt-anchor gt-' + which + (on ? ' on' : '') + '" onclick="GGTend.anchor(\'' + which + '\')"><button type="button" class="gt-check' + (on ? ' on' : '') + '" aria-pressed="' + on + '" aria-label="' + esc(A.t) + (on ? ', done' : '') + '"></button><div><b>' + esc(A.t) + '</b><p>' + esc(A.b) + '</p></div></div>';
   }
   function practiceHtml(s, it) {
     var id = itemId(it.key, it.name), x = day(s, today()), done = !!(x && x.d.indexOf(id) >= 0), easy = !!(x && x.e.indexOf(id) >= 0);

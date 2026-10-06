@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=lb4'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=lb5'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -313,7 +313,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=w7';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=w8';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

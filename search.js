@@ -6,7 +6,7 @@
    Everything runs in the browser. Nothing typed here is sent anywhere.
 
    Where the words come from (edit them there, not here):
-     Guides       maple/guides.js, aspen/guides.js, pine/guides.js, oak/guides.js, sequoia/guides.js, willow/guides.js
+     Guides       maple/guides.js, aspen/guides.js, pine/guides.js, birch/guides.js, oak/guides.js, sequoia/guides.js, willow/guides.js
      Practices    grove/data.js and grove/library.js
      Stories      stories.html (read as the page is today)
      Tools        TOOLS below
@@ -28,7 +28,7 @@
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
     { title: 'Pine', sub: 'Check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and When Life Changes guides', href: '/pine/', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
-    { title: 'Birch', sub: 'Check-in for young adults, 18 to 26, with a growth plan, daily practices, and Groundwork, a private notebook for building your own life', href: '/birch/', keys: 'birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
+    { title: 'Birch', sub: 'Check-in for young adults, 18 to 26, with a growth plan, daily practices, Groundwork, a private notebook for building your own life, and When Life Changes guides', href: '/birch/', keys: 'when life changes guides birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
     { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and When Life Changes guides', href: '/sequoia/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' }
   ];
@@ -118,7 +118,7 @@
   var STOP = ' a an and are about as at be but by can do does for from get how i if in into is it its me my of on or our should so some that the their them they this to up we what when where who why will with you your talk talking tell telling help helping deal dealing handle handling kid kids child children son daughter student students teen teens teenager adult adults someone somebody person people keeps keep always cant wont just really ';
   // 'hs' (grades 9 to 12) leads Pine's guides (GWG BLD 740); teen, high school, and 9th to 12th go there.
   // Middle school words still lead Aspen's. Young adult words (Birch, GWG BLD 742) give 'ya', which
-  // leads Birch's guides once they are built, and still lifts the adult guides a little.
+  // leads Birch's guides (GWG BLD 743) and still lifts the adult guides a little.
   var AGE_HINT = [[/\b(kid|kids|child|children|little|elementary|kindergarten|preschool)\b/, 'k5'], [/\b(high ?schools?|high ?schoolers?|teen|teens|teenagers?|9th|10th|11th|12th|freshman|freshmen|sophomores?)\b/, 'hs'], [/\b(middle|middle ?schoolers?|preteen|tween|6th|7th|8th)\b/, 'ms'], [/\b(young ?adults?|college|university|twenties|20s|18 to 26|emerging ?adults?)\b/, 'ya'], [/\b(adult|adults|husband|wife|spouse|partner|mom|dad|parent|coworker|patient|myself)\b/, 'ad']];
 
   /* ---------- crisis words ---------- */
@@ -178,7 +178,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=pg1'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg2'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=pg1'), load('/birch/guides.js?v=bg1'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg2'), load('/willow/guides.js?v=cn1'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -203,6 +203,14 @@
         add({ type: 'talk', age: 'hs', ageLabel: 'Grades 9 to 12', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/pine/#life=' + encodeURIComponent(t.id), from: 'Pine', id: t.id, app: 'pine' });
+      });
+      // Birch guides (GWG BLD 743), the same shape as Pine's, for young adults, 18 to 26
+      var sbr = window.BIRCH_GUIDES;
+      if (sbr) sbr.topics.forEach(function (t) {
+        var ring = (sbr.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        add({ type: 'talk', age: 'ya', ageLabel: 'Ages 18 to 26', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
+          body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
+          href: '/birch/#life=' + encodeURIComponent(t.id), from: 'Birch', id: t.id, app: 'birch' });
       });
       var so = window.OAK_GUIDES;
       if (so) so.topics.forEach(function (t) {
@@ -323,7 +331,7 @@
   var ADULT = /\b(affair|infidel|cheat\w*|sex|sexual\w*|intimacy|porn\w*|alcohol\w*|drinking|drunk|drugs?|addict\w*|overdos\w*|gambl\w*|abortion|suicid\w*|assisted|euthanas\w*|maid|erotic|hookup)\b/;
   function adultOnly(it) {
     var hay = (it.title + ' ' + (it.keys || '') + ' ' + (it.sub || '')).toLowerCase();
-    if (it.type === 'talk') return (it.app === 'oak' || it.app === 'sequoia' || it.app === 'willow') && ADULT.test(hay);
+    if (it.type === 'talk') return (it.app === 'birch' || it.app === 'oak' || it.app === 'sequoia' || it.app === 'willow') && ADULT.test(hay);
     if (it.type === 'story' || it.type === 'book') return ADULT.test(hay);
     return false;
   }
@@ -334,7 +342,9 @@
     if (it.type === 'practice' && it.ages === 'sequoia') return false;
     // Pine's guides are written for high schoolers and their grown-ups: kept out of Maple's "More", and in
     // Aspen's only when they hold no adult-only words
-    if (it.type === 'talk' && it.app === 'pine' && (kid === 'maple' || (kid === 'aspen' && ADULT.test((it.title + ' ' + (it.keys || '') + ' ' + (it.sub || '')).toLowerCase())))) return false;
+    // Birch's guides (young adults) follow the same rule: never in Maple's "More", and in Aspen's and Pine's
+    // only when they hold no adult-only words (adultOnly above)
+    if (it.type === 'talk' && (it.app === 'pine' || it.app === 'birch') && (kid === 'maple' || (kid === 'aspen' && ADULT.test((it.title + ' ' + (it.keys || '') + ' ' + (it.sub || '')).toLowerCase())))) return false;
     return true;
   }
 
@@ -421,7 +431,7 @@
     }
     if (!n) {
       html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
-        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/pine/#life">for grades 9 to 12</a>, <a class="text-link" href="/oak/#life">for adults</a>, <a class="text-link" href="/sequoia/#life">for older adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
+        '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/pine/#life">for grades 9 to 12</a>, <a class="text-link" href="/birch/#life">for ages 18 to 26</a>, <a class="text-link" href="/oak/#life">for adults</a>, <a class="text-link" href="/sequoia/#life">for older adults</a>, or <a class="text-link" href="/willow/#guides">at the end of life</a>.</p></div>';
     }
     panel.innerHTML = html;
     if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'No results';

@@ -289,6 +289,9 @@
     '.ggp-dlg p{margin:0 0 12px;}' +
     '.ggp-dlg label.ggp-l{display:block;font-weight:600;font-size:14px;margin:14px 0 5px;}' +
     '.ggp-dlg input[type=text],.ggp-dlg input[type=email],.ggp-dlg input[type=password],.ggp-dlg select{width:100%;font:16px Barlow,system-ui,sans-serif;padding:11px 12px;border:1px solid var(--ggp-line);border-radius:10px;background:var(--ggp-card);color:var(--ggp-ink);}' +
+    // Passcode and name boxes keep the dialog's own ink and paper, even with a browser's saved-passcode fill (GWG BLD 743).
+    '.ggp-root{color-scheme:light;}.ggp-dlg input[type=text],.ggp-dlg input[type=email],.ggp-dlg input[type=password]{-webkit-text-fill-color:var(--ggp-ink);caret-color:var(--ggp-ink);opacity:1;}' +
+    '.ggp-dlg input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px var(--ggp-card) inset;box-shadow:0 0 0 40px var(--ggp-card) inset;}' +
     '.ggp-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:18px;}' +
     '.ggp-b{font:600 15px Barlow,system-ui,sans-serif;border-radius:999px;padding:11px 20px;cursor:pointer;border:1px solid var(--ggp-gold);background:transparent;color:var(--ggp-gold);text-transform:none;letter-spacing:0;}' +
     '.ggp-b.ggp-go{background:var(--ggp-gold);color:var(--ggp-on-gold);}' +
@@ -327,6 +330,7 @@
     '.ggp-welcome a.ggp-chip:hover{background:#EADBBE;}';
   var DARK = '' +
     '.ggp-root{--ggp-bg:#1E1A15;--ggp-card:#28221B;--ggp-ink:#F3EDE3;--ggp-soft:#C2B6A4;--ggp-line:#3E352B;--ggp-gold:#D9A847;--ggp-gold-soft:#342A1D;--ggp-on-gold:#1E1A15;--ggp-warn:#F09A86;}' +
+    '.ggp-root{color-scheme:dark;}' +
     '.ggp-btn .ggp-dot{border-color:#1E1A15;}' +
     '.ggp-welcome > div{background:#28221B;border-color:#3E352B;}' +
     '.ggp-welcome h2{color:#F3EDE3;}' +

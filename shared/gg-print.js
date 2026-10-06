@@ -80,7 +80,7 @@
     '.fit{margin:14px auto 40px;transform-origin:top left;}',
     '.sheet{background:#FFFCF6;position:relative;overflow:hidden;box-shadow:0 2px 14px rgba(44,24,16,.18);}',
     '.serif{font-family:"Cormorant Garamond",Georgia,serif;}.cond{font-family:"Barlow Condensed","Arial Narrow",sans-serif;}',
-    '@media print{.bar,.tip{display:none !important;}body{background:none;}.fit{margin:0;transform:none !important;width:auto !important;height:auto !important;}.sheet{box-shadow:none;}}'
+    '@media print{.bar,.tip{display:none !important;}body{background:none;}.fit{margin:0 !important;transform:none !important;width:auto !important;height:auto !important;}.sheet{box-shadow:none;}}'
   ].join('\n');
 
   // Opens the print page in a new tab, so there is a preview to check before printing.
@@ -129,7 +129,7 @@
         + (meta.length ? '<div class="c-meta">' + meta.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</div>' : '')
         + '<div class="c-foot"><div class="c-signs"><div><i></i><span>Kayti Joy, Co-Founder</span></div><div><i></i><span>Chris Joy, Co-Founder</span></div></div>'
         + '<div class="c-qr">' + qr(u, t.scan || ('Scan to learn about ' + t.name)) + '<div><b>' + esc(t.scan || ('Scan to learn about ' + t.name)) + '</b><span>' + esc(short(u)) + '</span></div></div></div>'
-        + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : esc(t.name) + '&trade; by Grow With Grounded&trade;') + '. A record of completed Grow With Grounded training, separate from any license or professional credential.</div>'
+        + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : 'Grow With Grounded ' + esc(t.name) + '&trade;') + '. A record of completed Grow With Grounded training, separate from any license or professional credential.</div>'
         + '</div></div>';
       var css = [
         '.c-frame{position:absolute;inset:0.32in;border:3pt double var(--c);}',
@@ -164,8 +164,9 @@
     '.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(8px * var(--k)) calc(14px * var(--k));margin-top:calc(0.22in * var(--k));}',
     '.parts div{border-top:calc(4px * var(--k)) solid var(--p);padding-top:calc(5px * var(--k));}.parts b{display:block;font-size:calc(15pt * var(--k));font-family:"Cormorant Garamond",Georgia,serif;color:var(--p);}.parts span{font-size:calc(10pt * var(--k));color:#4A3B30;}',
     '.grow{flex:0;}.pad{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding-bottom:calc(0.2in * var(--k));}.pad>*{margin-top:0 !important;}',
+    '.top{flex:none;}.k1 .top img.hero{height:2.95in;object-fit:cover;object-position:center 30%;}',
     '.k2 .top img.hero{height:6.2in;object-fit:cover;}',
-    '.foot{display:flex;align-items:center;justify-content:space-between;gap:calc(0.3in * var(--k));padding:calc(0.25in * var(--k)) calc(0.6in * var(--k));border-top:1px solid #E3D8C4;margin-top:calc(0.2in * var(--k));}',
+    '.foot{display:flex;align-items:center;justify-content:space-between;gap:calc(0.3in * var(--k));padding:calc(0.25in * var(--k)) calc(0.6in * var(--k)) calc(0.4in * var(--k));border-top:1px solid #E3D8C4;margin-top:calc(0.2in * var(--k));}',
     '.qr{display:flex;align-items:center;gap:calc(0.14in * var(--k));}.qr svg{width:calc(1.15in * var(--k));height:calc(1.15in * var(--k));}.qr b{display:block;font-size:calc(13pt * var(--k));}.qr span{display:block;font-size:calc(10pt * var(--k));color:#6B5A4D;margin-top:2px;}',
     '.house{display:flex;align-items:center;gap:8px;text-align:right;}.house img{width:calc(0.4in * var(--k));height:auto;}.house span{font-size:calc(9pt * var(--k));color:#6B5A4D;line-height:1.35;}.house b{display:block;font-size:calc(10pt * var(--k));letter-spacing:2px;color:#8B5E1A;font-family:"Barlow Condensed","Arial Narrow",sans-serif;}',
     '.sheet{display:flex;flex-direction:column;}'

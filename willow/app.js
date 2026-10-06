@@ -723,7 +723,7 @@ VIEWS.history = () => {
 /* ---------- printing (Save or print) ---------- */
 function printHtml(title, html) {
   const box = $('#w-print'); if (!box) return;
-  box.innerHTML = `<div class="w-pr"><p class="w-pr-brand">Willow&trade; by Grow With Grounded</p><h1>${esc(title)}</h1>${html}<p class="w-pr-foot">Kept in Willow, growwithgrounded.com/willow. &copy; ${new Date().getFullYear()} Chris Joy.</p></div>`;
+  box.innerHTML = `<div class="w-pr"><p class="w-pr-brand">Willow&trade; by Grow With Grounded</p><h1>${esc(title)}</h1>${html}<p class="w-pr-foot">Kept in Willow, growwithgrounded.com/willow. &copy; ${new Date().getFullYear()} Grow With Grounded LLC.</p></div>`;
   document.body.classList.add('w-printing');
   const done = () => { document.body.classList.remove('w-printing'); window.removeEventListener('afterprint', done); };
   window.addEventListener('afterprint', done);
@@ -943,7 +943,7 @@ function guideHtml(g) {
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
     ${window.GGShelf ? GGShelf.html('willow', g.id) : ''}
     ${window.GGSources ? GGSources.html('willow:' + g.id) : ''}
-    <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support, not medical care, therapy, or legal advice. &copy; ${new Date().getFullYear()} Chris Joy.</p>
+    <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support, not medical care, therapy, or legal advice. &copy; ${new Date().getFullYear()} Grow With Grounded LLC.</p>
   </article>`;
 }
 function openGuide(id) { S.guide.open = id; S.tab = 'guides'; render(); scrollTop(true); }
