@@ -284,6 +284,8 @@ const TREE_SHAPES = {
 };
 const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
 const DRAW_ORDER = ['bark', 'trunk', 'branches', 'leaves', 'fruit', 'roots'];
+// Results: the Pine logo's own colors, each part shaded by its score
+const LOGO_COLORS = { roots: '#9A7A55', trunk: '#6E4524', bark: '#4A2C14', branches: '#2C5527', leaves: '#4A8040', fruit: '#8A5A2B' };
 const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
 
 // Turns a single curve into a filled shape that tapers from w0 to w1
@@ -320,7 +322,7 @@ function puzzleTreeSvg(opts) {
     const d = DOMAIN_BY_KEY[key];
     const shape = TREE_SHAPES[PIECE_FOR[key]];
     const hero = o.variant === 'hero';
-    const color = hero ? HERO_COLORS[key] : d.color;
+    const color = hero ? HERO_COLORS[key] : o.variant === 'score' ? LOGO_COLORS[key] : d.color;
     let pieceOpacity = 1;
     if (o.variant === 'score' && o.scores) pieceOpacity = 0.2 + 0.8 * ((o.scores[key] || 5) / 10);
     let inner = '';

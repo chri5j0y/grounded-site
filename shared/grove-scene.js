@@ -220,8 +220,14 @@ function groveSceneSVG(o){
     for (let i=0;i<3;i++){ const cx = 260+i*250+R()*60, cy = gy*(.14+R()*.14); bg += `<g fill="#fff" opacity="${skyKey==='day'?.7:.35}"><ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="48" ry="12"/><ellipse cx="${f1(cx+26)}" cy="${f1(cy-8)}" rx="28" ry="12"/></g>`; } }
   const far = sc === 'autumn' ? FAR.autumn : sc === 'winter' && skyKey !== 'night' ? FAR.winter : FAR[skyKey] || FAR.day;
   [[far[0], 60, 95, 30], [far[1], 34, 60, 24]].forEach(([c, hmin, hmax, step]) => { let d = '', x = -10;
-    while (x < W + 20){ const h = hmin + R()*(hmax-hmin), w = 12 + R()*8; d += `M${f1(x-w)} ${gy+2}L${f1(x)} ${f1(gy-h)}L${f1(x+w)} ${gy+2}Z`;
-      if (sc === 'winter' && skyKey !== 'night') bg += `<path d="M${f1(x-w*.3)} ${f1(gy-h*.7)}L${f1(x)} ${f1(gy-h)}L${f1(x+w*.3)} ${f1(gy-h*.7)}Z" fill="#fff" opacity=".85"/>`;
+    // a mixed forest, like The Grove's hero: pines, round crowns, tall poplars, and low clusters
+    while (x < W + 20){ const h = hmin + R()*(hmax-hmin), w = 12 + R()*8, kind = R();
+      if (kind < .38){ d += `M${f1(x-w)} ${gy+2}L${f1(x)} ${f1(gy-h)}L${f1(x+w)} ${gy+2}Z`;
+        if (sc === 'winter' && skyKey !== 'night') bg += `<path d="M${f1(x-w*.3)} ${f1(gy-h*.7)}L${f1(x)} ${f1(gy-h)}L${f1(x+w*.3)} ${f1(gy-h*.7)}Z" fill="#fff" opacity=".85"/>`; }
+      else if (kind < .72){ const r = w*1.05, cy = gy - h + r; d += `M${f1(x-1.6)} ${gy+2}V${f1(cy)}H${f1(x+1.6)}V${gy+2}ZM${f1(x-r)} ${f1(cy)}a${f1(r)} ${f1(r)} 0 1 0 ${f1(r*2)} 0a${f1(r)} ${f1(r)} 0 1 0 ${f1(-r*2)} 0Z`;
+        if (sc === 'winter' && skyKey !== 'night') bg += `<path d="M${f1(x-r*.7)} ${f1(cy-r*.6)}Q${f1(x)} ${f1(cy-r*1.15)} ${f1(x+r*.7)} ${f1(cy-r*.6)}Z" fill="#fff" opacity=".85"/>`; }
+      else if (kind < .88){ const rx = w*.55, ry = h*.5; d += `M${f1(x-rx)} ${f1(gy+2)}C${f1(x-rx)} ${f1(gy-h*.6)} ${f1(x-rx*.5)} ${f1(gy-h)} ${f1(x)} ${f1(gy-h)}C${f1(x+rx*.5)} ${f1(gy-h)} ${f1(x+rx)} ${f1(gy-h*.6)} ${f1(x+rx)} ${f1(gy+2)}Z`; }
+      else { const r = w*.8, hh = Math.min(h*.6, 40); d += `M${f1(x-r*1.6)} ${gy+2}C${f1(x-r*1.6)} ${f1(gy-hh)} ${f1(x+r*1.6)} ${f1(gy-hh)} ${f1(x+r*1.6)} ${gy+2}Z`; }
       x += step + R()*10; }
     bg = bg.replace(/$/, '') + `<path d="${d}" fill="${c}"/>`; });
   if (sc === 'lake'){ const lc = skyKey === 'night' ? '#2B4556' : skyKey === 'dusk' ? '#9B8AA8' : '#86B8CB';
