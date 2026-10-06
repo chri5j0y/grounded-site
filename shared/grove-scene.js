@@ -19,6 +19,8 @@ const STAGE_SOLO = { maple:.62, aspen:.82, pine:.92, birch:.96, adult:1, sequoia
 // A grown-up whose tree is Sequoia (GWG BLD 733) stands as a sequoia: stageOf(age, tree).
 // Birch (young adults, 18 to 26) is drawn and ready; it stands in a grove once the Birch app is built.
 const stageOf = (age, tree) => age === 'maple' || age === 'aspen' || age === 'pine' || age === 'birch' ? age : tree === 'sequoia' ? 'sequoia' : tree === 'birch' ? 'birch' : 'adult';
+// Half the crown's width, as a share of the tree's height, for spacing trees in a row.
+const HALF_W = { maple:.45, aspen:.4, pine:.34, birch:.34, adult:.45, kind:.4, sequoia:.2, willow:.46 };
 const STAGE_NAME = { maple:'Maple', aspen:'Aspen', pine:'Pine', birch:'Birch', adult:'Oak', sequoia:'Sequoia', willow:'Willow' };
 function leafPath(x, y, len, ang, col){ return `<path transform="translate(${f1(x)} ${f1(y)}) rotate(${f1(ang)})" d="M0 0C${f1(len*.25)} ${f1(-len*.32)} ${f1(len*.75)} ${f1(-len*.32)} ${f1(len)} 0C${f1(len*.75)} ${f1(len*.32)} ${f1(len*.25)} ${f1(len*.32)} 0 0Z" fill="${col}"/>`; }
 // Roots: thick where they leave the trunk, thinning as they flow out.
@@ -230,9 +232,19 @@ function groveSceneSVG(o){
   for (let i=0;i<60;i++){ const x = R()*W, y = gy + 12 + R()*(depth-16); soil += `<ellipse cx="${f1(x)}" cy="${f1(y)}" rx="${f1(1+R()*3.4)}" ry="${f1(.8+R()*2)}" fill="${R()>.5?'#8A6B4C':'#2A1D13'}" opacity="${f1(.25+R()*.4)}"/>`; }
   let ground = `<path d="M0 ${gy}C${W*.2} ${gy-5} ${W*.38} ${gy+5} ${W*.55} ${gy}S${W*.85} ${gy-5} ${W} ${gy+2}" fill="none" stroke="${sc==='winter'?'#FFFFFF':'#2C1810'}" stroke-width="${sc==='winter'?5:2}" opacity="${sc==='winter'?.9:.55}"/>`;
   if (sc !== 'winter') for (let i=0;i<60;i++){ const x = R()*W, h = 5+R()*9; ground += `<path d="M${f1(x)} ${gy+1}l${f1(-2+R()*1)} ${f1(-h)}M${f1(x+2)} ${gy+1}l${f1(1+R()*2)} ${f1(-h*.8)}" stroke="${sc==='autumn'?'#B08A4A':'#5E8C3F'}" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>`; }
-  const n = o.trees.length, gap = Math.min(300, 820/Math.max(1,n)), left = 500 - gap*(n-1)/2, maxH = (gy - 14) / 1.08;
+  // Trees stand side by side so their crowns just miss touching. Each tree's half width is
+  // a share of its height (HALF_W); if the row is wider than the scene, every tree is drawn smaller.
+  const n = o.trees.length, gap = 4, avail = W - 60;
+  let maxH = (gy - 14) / 1.08;
+  const opts = (t, i) => Object.assign({ rooting:o.rooting, snow: sc==='winter', solo: n === 1 }, t);
+  const halfOf = (t, tp) => tp.H * (HALF_W[t.stage === 'adult' && t.kind && t.kind !== 'grove' ? 'kind' : t.stage] || .4);
+  let tps = o.trees.map((t, i) => treeParts(opts(t, i), maxH, (o.seed||7) + i*31));
+  let span = tps.reduce((a, tp, i) => a + 2 * halfOf(o.trees[i], tp), 0) + gap * (n - 1);
+  if (span > avail){ maxH *= avail / span; tps = o.trees.map((t, i) => treeParts(opts(t, i), maxH, (o.seed||7) + i*31)); span = tps.reduce((a, tp, i) => a + 2 * halfOf(o.trees[i], tp), 0) + gap * (n - 1); }
+  const xs = []; let cur = W / 2 - span / 2;
+  tps.forEach((tp, i) => { const hw = halfOf(o.trees[i], tp); xs.push(cur + hw); cur += 2 * hw + gap; });
   let roots = '', tops = '', labels = '', vis = '';
-  o.trees.forEach((t, i) => { const x = n === 1 ? 500 : left + gap*i, tp = treeParts(Object.assign({ rooting:o.rooting, snow: sc==='winter', solo: n === 1 }, t), maxH, (o.seed||7) + i*31);
+  o.trees.forEach((t, i) => { const x = n === 1 ? W / 2 : xs[i], tp = tps[i];
     roots += `<g transform="translate(${f1(x)} ${gy})">${tp.roots}</g>`;
     tops += `<g transform="translate(${f1(x)} ${gy})" data-x="${f1(x)}"><g class="sway" style="animation-delay:${f1(-R()*6)}s">${tp.top}</g></g>`;
     if (t.label) labels += `<text x="${f1(x)}" y="${f1(Hh - 18)}" text-anchor="middle" font-family="Barlow, Arial, sans-serif" font-weight="600" font-size="${n > 10 ? 15 : n > 7 ? 18 : 22}" fill="#F4EBDA" stroke="#2C1810" stroke-width="${n > 10 ? 4 : 5}" paint-order="stroke" stroke-linejoin="round">${esc(t.label)}</text>`;
