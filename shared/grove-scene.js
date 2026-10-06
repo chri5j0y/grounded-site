@@ -47,7 +47,8 @@ function markTree(which, t, H, tend, brC, fruitC){
   const TR = tend('trunk') ? TRUNK_TENDED : soft ? '#7A6A58' : (oak ? '#4E2E12' : wil ? '#5A3414' : '#6E4524');
   const BR = tend('branches') ? brC : soft ? '#7A6A58' : (oak ? '#4E2E12' : wil ? '#5A3414' : '#6E4524');
   const BK = tend('bark') ? TONE.bark : (oak ? '#331E0C' : '#4A2C14');
-  let g = MARK_ART[which].replace(/\{TR\}/g, TR).replace(/\{BR\}/g, BR).replace(/\{BK\}/g, BK).replace(/\{L0\}/g, L[0]).replace(/\{L1\}/g, L[1]).replace(/\{L2\}/g, L[2]);
+  // Branches tended on a pine: the darker underside of each tier takes the Branches color, inside the canopy
+  let g = (which === 'pine' && tend('branches') ? MARK_ART.pine.replace(/fill="\{L0\}"\/>/g, 'fill="' + brC + '"/>') : MARK_ART[which]).replace(/\{TR\}/g, TR).replace(/\{BR\}/g, BR).replace(/\{BK\}/g, BK).replace(/\{L0\}/g, L[0]).replace(/\{L1\}/g, L[1]).replace(/\{L2\}/g, L[2]);
   if (wil){
     // a willow: bark lines on the trunk when Bark is tended, snow on the crown, and a small
     // star above a remembered willow
@@ -57,7 +58,6 @@ function markTree(which, t, H, tend, brC, fruitC){
   } else if (!oak){
     // bark on the trunk, and limbs reaching out under the tiers when Branches is tended
     g = g.replace('fill="' + TR + '"/>', 'fill="' + TR + '"/><path d="M48.3 89.4Q48.6 84 48.5 79M50.1 89.6Q50.3 85 50 78.5M51.7 89.4Q51.5 84.5 51.6 79" stroke="' + BK + '" stroke-width="' + (tend('bark') ? .8 : .45) + '" fill="none" stroke-linecap="round"/>');
-    if (tend('branches')) g = g.replace('stroke-linecap="round"/>', 'stroke-linecap="round"/>' + [[22,9],[36,14],[50,19],[64,24],[76,28]].map(([y, w]) => `<path d="M50 ${y-1.5}L${f1(50-w-3)} ${y-1}M50 ${y-2.5}L${f1(50+w+3)} ${y-2}" stroke="${BR}" stroke-width="1.4" stroke-linecap="round"/>`).join(''));
     if (t.snow) g += [[6,9],[16,14],[28,19],[40,24],[52,28]].map(([y, w]) => `<path d="M${f1(50-w*.35)} ${f1(y+5.5)}L50 ${y}L${f1(50+w*.35)} ${f1(y+5.5)}Z" fill="#FFFFFF" opacity=".9"/>`).join('');
   } else if (t.snow) g += [[30,16],[50,13],[70,17]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="11" ry="3.2" fill="#FFFFFF" opacity=".9"/>`).join('');
   if (wil && !soft && tend('fruit')) g += [[32,44],[60,40],[46,52],[70,50]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2" fill="${fruitC}" stroke="${TONE.ink}" stroke-width=".35"/>`).join('');
