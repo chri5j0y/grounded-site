@@ -1379,6 +1379,101 @@ function oakSavePlan() {
     setTimeout(() => showToast('Saved. Your practices are in Today.'), 700);
   }
 }
+// =====================================================================
+// A CARD FROM A Pine GUIDE VISIT (GWG BLD 746)
+// A Guide's QR code or link (GGApp.visit, /shared/gg-app.js) carries only a first
+// name, the date, the strong parts, and what the person chose to try. Never levels,
+// notes, safety answers, the optional question, or anyone else's name. It asks
+// before saving, then lives in the person's own locked profile, as visitCards in
+// the pine record, shows on Today, and can be removed any time.
+// =====================================================================
+let VC_ASKED = null;   // whose tree the waiting card last asked about ('' for no one), so it asks once per person
+function vcHelping() { return false; }
+function vcRec() { return PROF && window.GGP && GGP.isOpen(PROF.id) ? GGP.data(PROF.id, 'pine') : null; }
+function vcList() { const r = vcRec(); return r && Array.isArray(r.visitCards) ? r.visitCards : []; }
+function vcPart(k) { const d0 = DOMAIN_BY_KEY[k]; if (!d0) return null; return typeof partDef === 'function' ? partDef(d0) : d0; }
+function vcPartName(k) { const d = vcPart(k); return d ? d.part + (d.name ? ' (' + String(d.name).toLowerCase() + ')' : '') : ''; }
+// A practice the tree already knows goes in by its own name, so How to do this works; any other goes in as the person's own.
+function vcKnown(k, name) {
+  const d = DOMAIN_BY_KEY[k], n = String(name || '').toLowerCase();
+  const r = d && (d.restore || []).find(x => String(x[0]).toLowerCase() === n || (typeof shownName === 'function' && String(shownName(k, x[0])).toLowerCase() === n));
+  return r ? r[0] : null;
+}
+function vcPlanHas(plan, k, name) {
+  const x = (plan || {})[k] || {}, n = String(name || '').toLowerCase(), known = vcKnown(k, name);
+  return (x.selected || []).some(y => y === known || String(y).toLowerCase() === n) || (x.own || []).some(y => String(y).toLowerCase() === n)
+    || String(x.custom || '').toLowerCase() === n || (x.lib || []).some(l => l && String(l.n || '').toLowerCase() === n);
+}
+function vcAllIn(v) { const plan = window.GGTend && GGTend.plan(); return !!plan && (v.t || []).every(t => vcPlanHas(plan, t[0], t[1])); }
+function vcCardHtml(v, i) {
+  const strong = (v.s || []).map(vcPartName).filter(Boolean), tries = (v.t || []).filter(t => DOMAIN_BY_KEY[t[0]]);
+  return `<p class="gt-small" style="margin:0 0 6px">${escapeHtml(formatDate(v.d))}</p>
+    ${strong.length ? `<p><b>Strong parts:</b> ${strong.map(escapeHtml).join(', ')}</p>` : ''}
+    ${tries.length ? `<p style="margin-top:8px"><b>What you chose to try:</b></p><ul style="margin:4px 0 0;padding-left:20px">${tries.map(t => `<li><b>${escapeHtml(t[1])}</b> <span class="gt-small">${escapeHtml(vcPart(t[0]).part)}</span>${t[2] ? ': ' + escapeHtml(t[2]) : ''}</li>`).join('')}</ul>` : ''}
+    <div class="btn-row" style="margin-top:10px">${tries.length && window.GGTend && !vcHelping() ? (vcAllIn(v) ? '<span class="gt-small">These practices are in your growth plan.</span>' : `<button type="button" class="btn btn-primary btn-sm" onclick="vcAddPlan(${i})">Add to my growth plan</button>`) : ''}<button type="button" class="btn btn-secondary btn-sm" onclick="vcRemove(${i})">Remove this card</button></div>`;
+}
+function vcTodayHtml() {
+  if (vcHelping()) return '';
+  const list = vcList(); if (!list.length) return '';
+  const last = list.length - 1, v = list[last];
+  return `<div class="gt-card vc-card" style="border-left:5px solid var(--gold,#8B5E1A)"><h3>From your visit on ${escapeHtml(formatDate(v.d))}</h3>${vcCardHtml(v, last)}
+    ${list.length > 1 ? `<details style="margin-top:12px"><summary>Earlier visits (${list.length - 1})</summary>${list.slice(0, -1).map((x, i) => `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line,#ddd)">${vcCardHtml(x, i)}</div>`).reverse().join('')}</details>` : ''}
+    <p class="gt-small" style="margin-top:10px">Kept in your own locked profile on this device.</p></div>`;
+}
+function vcAddPlan(i) {
+  const v = vcList()[i]; if (!v || !window.GGTend || vcHelping()) return;
+  if (!GGTend.state()) { showToast('Open your profile to add practices.'); return; }
+  const plan = JSON.parse(JSON.stringify(GGTend.plan() || {})); let n = 0;
+  (v.t || []).forEach(t => {
+    const k = t[0]; if (!DOMAIN_BY_KEY[k] || vcPlanHas(plan, k, t[1])) return;
+    const x = plan[k] || (plan[k] = { selected: [], custom: '', own: [] }); if (!Array.isArray(x.selected)) x.selected = [];
+    const known = vcKnown(k, t[1]); if (known) x.selected.push(known); else (x.own || (x.own = [])).push(String(t[1]));
+    n++;
+  });
+  if (!n) { showToast('These practices are already in your growth plan.'); return; }
+  GGTend.setPlan(plan);
+  showToast(n === 1 ? 'Added to your growth plan. It shows here on Today.' : n + ' practices added to your growth plan. They show here on Today.');
+}
+function vcRemove(i) {
+  const r = vcRec(); if (!r || !Array.isArray(r.visitCards) || !r.visitCards[i]) return;
+  if (!confirm('Remove this card from your tree? Any practices you added stay in your growth plan.')) return;
+  r.visitCards.splice(i, 1); if (!r.visitCards.length) delete r.visitCards;
+  GGP.save(PROF.id).then(() => showToast('Card removed.'), () => showToast('That did not save. Open your profile and try again.'));
+  if (window.GGTend) GGTend.render();
+}
+function vcAdd() {
+  const v = window.GGApp && GGApp.visit.pending(), r = vcRec();
+  if (!v) return;
+  if (!r) { VC_ASKED = null; showToast('Open your profile first, then the card will ask again.'); return; }
+  const card = { d: v.d, s: v.s, t: v.t }, same = JSON.stringify(card);
+  if (!Array.isArray(r.visitCards)) r.visitCards = [];
+  if (!r.visitCards.some(x => JSON.stringify({ d: x.d, s: x.s, t: x.t }) === same)) r.visitCards.push(Object.assign({ added: todayKey() }, card));
+  if (r.visitCards.length > 12) r.visitCards = r.visitCards.slice(-12);
+  GGApp.visit.clear();
+  GGP.save(PROF.id).then(() => showToast('Added to your tree. You will find it on Today.'), () => showToast('That did not save. Open your profile and try again.'));
+  goHome(); if (window.GGTend) GGTend.render();
+}
+function vcCheck(force) {
+  if (!window.GGApp || !GGApp.visit || !GGApp.dialog) return;
+  const v = GGApp.visit.pending(); if (!v) return;
+  const who = PROF ? PROF.id : '';
+  if (!force && VC_ASKED === who) return;
+  VC_ASKED = who;
+  const intro = `<p>${v.n ? escapeHtml(v.n) + ', here' : 'Here'} is a card from your Pine Guide visit on ${escapeHtml(formatDate(v.d))}: your strong parts and what you chose to try. It goes on your own tree, kept in your own locked profile.</p>
+    <p class="ggx-small">You can remove it any time.</p>`;
+  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was not added.'); } };
+  const later = { t: 'Not Now', kind: 'line', fn: () => {} };
+  if (!PROF) {
+    GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your profile first, and this card will ask again.</p>',
+      buttons: [{ t: 'Open My Profile', kind: 'main', fn: () => { if (window.GGP) pnOpenAny(); } }, later, drop] });
+    return;
+  }
+  const first = String(PROF.name || '').trim().split(/\s+/)[0].toLowerCase(), other = !!(v.n && first && first !== v.n.toLowerCase());
+  GGApp.dialog({ title: 'A card from your visit', html: intro + `<p>Add it to ${escapeHtml(PROF.name)}'s tree?</p>` + (other ? `<p class="ggx-small">This card is for ${escapeHtml(v.n)}. If ${escapeHtml(v.n)} has a profile on this device, choose Switch Person.</p>` : ''),
+    buttons: [{ t: 'Add to My Tree', kind: 'main', fn: vcAdd }].concat(other ? [{ t: 'Switch Person', kind: 'line', fn: () => { VC_ASKED = null; pnSwitch(); } }] : [], [later, drop]) });
+}
+window.addEventListener('gg-visit', () => vcCheck(true));
+
 const TEND_CFG = {
   libAge: () => 'pine',
   profileId: () => PROF ? PROF.id : null,
@@ -1407,7 +1502,7 @@ const TEND_CFG = {
   profileHtml: () => pnProfileHtml(),
   extraSettings: () => pnSettingsHtml(),
   lockedHtml: () => pineWho().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${pineWho().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create my profile</button><button class="btn btn-secondary" onclick="startCheckin()">Try a check-in first</button></div></div>`,
-  todayExtra: s => todayKindHtml(s),
+  todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => seasonExtraHtml(s),
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
   partNote: (key, s) => partNoteHtml(key, s),
@@ -1561,8 +1656,8 @@ function profCreateDialog() {
 function profBackup() { if (window.GGP) GGP.backup(); }
 async function profResume() {
   if (!window.GGP) { renderProfileBar(); return; }
-  GGP.on(type => { if (type === 'change' || type === 'data' || type === 'ready') profSync(); });
-  await GGP.ready; profSync();
+  GGP.on(type => { if (type === 'change' || type === 'data' || type === 'ready') { profSync(); vcCheck(); } });
+  await GGP.ready; profSync(); vcCheck();
 }
 
 // =====================================================================

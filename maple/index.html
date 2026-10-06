@@ -2500,13 +2500,98 @@ function mpCheer(text, sub, critter) {
   clearTimeout(mpCheer.t); mpCheer.t = setTimeout(() => el.classList.remove('show'), 3800);
   if (S.readAloud) say(text);
 }
+/* ---------- a card from a Maple Guide visit (GWG BLD 746) ----------
+   A Maple Guide's QR code or link (GGApp.visit, /shared/gg-app.js) carries only a first name, the date,
+   the strong parts, and what the child chose to try. Never levels, notes, safety answers, the optional
+   question, or anyone else's name. It asks before saving, then lives on the child's own tree (visitCards
+   in the kid record), shows on Today, and can be removed any time. When the Guide's school or group asks
+   for Plain wording (pl 1), adding the card also locks Plain on this child's tree (plainLock true in the
+   profile's maple record, or on the kid record when there is no profile yet). */
+const MP_VISIT_PL = 'The Maple Guide\'s school or group uses Plain wording, so adding this card sets this child\'s Maple to Plain wording, locked, to match.';
+let MP_VISIT_ASKED = null;   // which trees were open when the waiting card last asked, so it asks again only when that changes
+function mpVisitPlanHas(plan, k, name) {
+  const x = (plan || {})[k] || {}, n = String(name || '').toLowerCase(), a = actByName(k, name);
+  const same = y => String(y).toLowerCase() === n || (a && actByName(k, y) === a);
+  return (x.selected || []).some(same) || (x.own || []).some(same) || (x.custom && same(x.custom)) || (x.lib || []).some(l => l && same(l.n || ''));
+}
+function mpVisitAllIn(v) { const plan = window.GGTend && GGTend.plan(); return !!plan && (v.t || []).every(t => mpVisitPlanHas(plan, t[0], t[1])); }
+function mpVisitCardHtml(v, i) {
+  const strong = (v.s || []).map(partBy).filter(Boolean), tries = (v.t || []).filter(t => partBy(t[0]));
+  return `${strong.length ? `<p><b>Your strong parts:</b> ${strong.map(p => `<span class="mp-dot on" style="--pc:${p.hex};display:inline-block;vertical-align:-1px;margin-right:4px" aria-hidden="true"></span>${esc(p.name)}`).join(', ')}</p>` : ''}
+    ${tries.length ? `<p style="margin-top:8px"><b>What you chose to try:</b></p><ul style="margin:4px 0 0;padding-left:22px">${tries.map(t => `<li><b>${esc(mpNormName(t[0], t[1]))}</b> <span class="gt-small">${esc(partBy(t[0]).name)}</span>${t[2] ? ': ' + esc(t[2]) : ''}</li>`).join('')}</ul>` : ''}
+    <div class="btn-row" style="margin-top:10px">${tries.length && window.GGTend ? (mpVisitAllIn(v) ? '<span class="gt-small">These are in your growth plan. Look for them on Today!</span>' : `<button type="button" class="btn btn-primary btn-sm" onclick="mpVisitAddPlan(${i})">Add to my growth plan</button>`) : ''}<button type="button" class="btn btn-secondary btn-sm" onclick="mpVisitRemove(${i})">Remove this card</button></div>`;
+}
+function mpVisitHtml() {
+  const list = (MP_KID && MP_KID.visitCards) || []; if (!list.length) return '';
+  const last = list.length - 1, v = list[last];
+  return `<div class="gt-card mp-visit" style="border-left:6px solid var(--sky,#2F7FB8)"><h3>From your visit on ${esc(fmtKey(v.d))}</h3>${mpVisitCardHtml(v, last)}
+    ${list.length > 1 ? `<details style="margin-top:12px"><summary>Earlier visits (${list.length - 1})</summary>${list.slice(0, -1).map((x, i) => `<div style="margin-top:12px;padding-top:10px;border-top:2px solid var(--line)"><p class="gt-small" style="margin:0 0 6px">${esc(fmtKey(x.d, { month: 'long', day: 'numeric', year: 'numeric' }))}</p>${mpVisitCardHtml(x, i)}</div>`).reverse().join('')}</details>` : ''}</div>`;
+}
+function mpVisitAddPlan(i) {
+  const v = ((MP_KID && MP_KID.visitCards) || [])[i]; if (!v || !window.GGTend) return;
+  if (!GGTend.state()) { toast('Open your tree first.'); return; }
+  const plan = JSON.parse(JSON.stringify(GGTend.plan() || {})); let n = 0;
+  (v.t || []).forEach(t => {
+    const k = t[0]; if (!partBy(k) || mpVisitPlanHas(plan, k, t[1])) return;
+    const x = plan[k] || (plan[k] = { selected: [], custom: '', own: [] }); if (!Array.isArray(x.selected)) x.selected = [];
+    const a = actByName(k, t[1]); if (a) x.selected.push(shownTitle(a)); else (x.own || (x.own = [])).push(String(t[1]));
+    n++;
+  });
+  if (!n) { toast('These are already in your growth plan.'); return; }
+  GGTend.setPlan(plan);
+  toast(n === 1 ? 'Added! Find it on Today.' : n + ' practices added! Find them on Today.');
+}
+function mpVisitRemove(i) {
+  const kids = loadKids(), k = kids[S.kid]; if (!k || !Array.isArray(k.visitCards) || !k.visitCards[i]) return;
+  if (!confirm('Remove this card from your tree? Anything you added stays in your growth plan.')) return;
+  k.visitCards.splice(i, 1); if (!k.visitCards.length) delete k.visitCards;
+  saveKids(kids); renderTree(); toast('Card removed.');
+}
+function mpVisitAdd(id, v) {
+  const kids = loadKids(), k = kids[id];
+  if (!k) { MP_VISIT_ASKED = null; toast('Open that tree first, then try again.'); return; }
+  const card = { d: v.d, s: v.s, t: v.t }, same = JSON.stringify(card);
+  if (!Array.isArray(k.visitCards)) k.visitCards = [];
+  if (!k.visitCards.some(x => JSON.stringify({ d: x.d, s: x.s, t: x.t }) === same)) k.visitCards.push(Object.assign({ added: dkey() }, card));
+  if (k.visitCards.length > 12) k.visitCards = k.visitCards.slice(-12);
+  if (v.pl === 1) {
+    if (k._pid && window.GGP && GGP.isOpen(k._pid)) GGP.data(k._pid, 'maple').plainLock = true;
+    else k.plainLock = true;
+  }
+  GGApp.visit.clear();
+  if (!saveKids(kids)) return;
+  openTree(id, 'today');
+  toast(v.pl === 1 ? 'Added to your tree! Maple uses Plain wording now.' : 'Added to your tree!');
+}
+function mpVisitCheck(force) {
+  if (!window.GGApp || !GGApp.visit || !GGApp.dialog) return;
+  const v = GGApp.visit.pending(); if (!v) return;
+  const kids = loadKids(), ids = mpKidIds(), locked = mpLocked(), key = ids.join('|') + '#' + locked.map(p => p.id).join('|');
+  if (!force && MP_VISIT_ASKED === key) return;
+  MP_VISIT_ASKED = key;
+  const intro = `<p>${v.n ? esc(v.n) + ', here' : 'Here'} is a card from your Maple visit on ${esc(fmtKey(v.d, { month: 'long', day: 'numeric', year: 'numeric' }))}! It shows your strong parts and what you chose to try. It goes on your own tree.</p>
+    <p class="ggx-small">Grown-ups: the card holds only a first name, the date, the strong parts, and the practices chosen. You can remove it any time.</p>${v.pl === 1 ? `<p class="ggx-small"><b>For grown-ups:</b> ${MP_VISIT_PL}</p>` : ''}`;
+  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); toast('The card was not added.'); } };
+  const nm = (v.n || '').toLowerCase(), first = id => String(kids[id].name || '').toLowerCase().split(/\s+/)[0];
+  const order = ids.slice().sort((a, b) => (first(b) === nm) - (first(a) === nm) || String(kids[a].name).localeCompare(String(kids[b].name)));
+  const opens = locked.slice(0, 3).map(p => ({ t: 'Open ' + p.name + '\'s Tree', kind: 'line', fn: () => { MP_VISIT_ASKED = null; openKidProfile(p.id, 'today'); } }));
+  if (!order.length) {
+    GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your tree first, or start one, and this card will ask again.</p>',
+      buttons: (opens.length ? opens : [{ t: 'Start My Tree', kind: 'main', fn: () => { MP_VISIT_ASKED = null; go('home'); } }]).concat([{ t: 'Not Now', kind: 'line', fn: () => {} }, drop]) });
+    return;
+  }
+  GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Whose tree does it go on?</p>',
+    buttons: order.slice(0, 4).map((id, i) => ({ t: 'Add to ' + kids[id].name + '\'s Tree', kind: i ? 'line' : 'main', fn: () => mpVisitAdd(id, v) }))
+      .concat(opens, [{ t: 'Not Now', kind: 'line', fn: () => {} }, drop]) });
+}
+window.addEventListener('gg-visit', () => mpVisitCheck(true));
 function mpTodayExtra(s) {
   Promise.resolve().then(mpThirsty);
   const n = window.GGTend ? GGTend.partsOn(dkey()) : 0, paused = mpPause();
   const line = paused ? 'Tend it whenever you like. Your tree is always glad to see you.' : n ? mpKindWord(n) : 'One practice is enough to start. Your tree is waiting for you.';
   const days = mpDays(s), L = mpLevel(days), wk = mpWeekParts(s, mpMonday(dkey())), wn = Object.keys(wk).length;
   const cr = MP_KID ? critterState(MP_KID) : {}, met = CRITTERS.some(c => cr[c.key]);
-  return `<div class="gt-card mp-kind"><p class="mp-kind-line">${esc(line)}</p></div>
+  return mpVisitHtml() + `<div class="gt-card mp-kind"><p class="mp-kind-line">${esc(line)}</p></div>
     <div class="gt-card mp-game"><div class="mp-level"><span class="mp-k">Your tree</span><b>${esc(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${esc(L.next[1])}.` : '. The biggest maple of all!'}</span></div>
     <div class="mp-bal"><span class="mp-k">This week</span><div class="mp-dots" role="img" aria-label="${wn} of 6 parts tended this week">${PARTS.map(p => `<span class="mp-dot${wk[p.key] ? ' on' : ''}" style="--pc:${p.hex}" title="${esc(p.name)}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'A rainbow week! All six parts tended.' : wn + ' of 6 parts. All six makes a rainbow week.'}</span></div>
     <div class="mp-friends"><span class="mp-k">Tree friends</span><div class="critter-shelf">${shelfHTML(cr)}</div><span class="gt-small">${met ? 'Keep tending. Who knows who will visit next?' : 'Keep tending. Someone may come to visit!'}</span></div></div>`
@@ -3162,9 +3247,9 @@ renderPeek();
 renderGrades();
 renderWelcomeBack();
 if (window.GGP) {
-  GGP.on(() => mapleRefresh());
-  GGP.ready.then(() => { const a = GGP.active(); if (a && a.age === 'maple' && $('kid-name') && !$('kid-name').value) $('kid-name').value = a.name; mapleRefresh(); mpAutoOpen(); }, () => mpAutoOpen());
-} else setTimeout(mpAutoOpen, 0);
+  GGP.on(() => { mapleRefresh(); mpVisitCheck(); });
+  GGP.ready.then(() => { const a = GGP.active(); if (a && a.age === 'maple' && $('kid-name') && !$('kid-name').value) $('kid-name').value = a.name; mapleRefresh(); mpAutoOpen(); mpVisitCheck(); }, () => { mpAutoOpen(); mpVisitCheck(); });
+} else setTimeout(() => { mpAutoOpen(); mpVisitCheck(); }, 0);
 const yr = $('copyright-year'); if (yr) yr.textContent = new Date().getFullYear();
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { const m = $('site-menu'); if (m) m.classList.remove('open'); } });
 
