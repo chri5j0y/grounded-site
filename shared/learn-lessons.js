@@ -10855,11 +10855,11 @@ window.GG_LEARN = {
       "h": "Twenty-two guides, in two groups",
       "items": [
        [
-        "The spirit and the people",
+        "The Spirit and the People",
         "Miracles, forgiveness, fear, family"
        ],
        [
-        "The last days and after",
+        "The Last Days and After",
         "Signs of dying, the rally, the first hour"
        ],
        [
@@ -10867,7 +10867,7 @@ window.GG_LEARN = {
         "\"I'm not ready.\" \"Can they hear me?\""
        ]
       ],
-      "say": "There are twenty two guides, in two groups. The spirit and the people, for hoping for a miracle, forgiveness, fear, and family conflict. And the last days and after, for what dying looks like, the rally, and the first hour after a death. Many titles are the very words people say, like I'm not ready, or are they starving?"
+      "say": "There are twenty two guides, in two groups. The Spirit and the People, for hoping for a miracle, forgiveness, fear, and family conflict. And The Last Days and After, for what dying looks like, the rally, and the first hour after a death. Many titles are the very words people say, like I'm not ready, or are they starving?"
      },
      {
       "k": "card",
