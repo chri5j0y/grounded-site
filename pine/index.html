@@ -1059,7 +1059,13 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 .sq-legby{font-size:13px;color:var(--ink-soft);font-style:italic;margin:4px 0 0;}
 .sq-legfoot{margin-top:18px;}
 .pn-date{max-width:220px;}
-/* Six tabs along the bottom on phones */
+/* When Life Changes (GWG BLD 740): guide chips after a check-in, and the teen help lines under the guides */
+.lc-suggest .lc-links button{min-height:44px;}
+.lc-card .btn{text-decoration:none;}
+.lc-help{margin-top:24px;}
+.lc-help h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;margin:0 0 6px;}
+.lc-help .calm-list{margin:0;}
+/* Seven tabs along the bottom on phones */
 @media (max-width:700px){
   #client-nav .nav-btn{font-size:11.5px;letter-spacing:0;padding:8px 1px 9px;min-height:60px;}
   body{padding-bottom:80px;}
@@ -1105,7 +1111,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   <button class="nav-btn" data-icon="rings" data-tab="season" onclick="showView('client-season')"><span>Season</span></button>
   <button class="nav-btn" data-icon="can" data-tab="plan" onclick="showView('client-growthplan')"><span>Growth Plan</span></button>
   <button class="nav-btn" data-icon="path" data-tab="next" onclick="NX.ch=null;showView('client-next')"><span>Next Steps</span></button>
-  <!-- When Life Changes arrives with Pine's guides in the next build: a button here with data-tab="guides" opening #client-life (see PN_LC in app.js). -->
+  <button class="nav-btn" data-icon="door" data-tab="guides" data-lc="1" onclick="LCS.client.open=null;showView('client-life')"><span>When Life Changes</span></button>
   <button class="nav-btn" data-icon="play" data-tab="learn" onclick="window.GGLearn&&GGLearn.open('pine')"><span>Learn</span></button>
 </nav>
 
@@ -1192,6 +1198,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 </div>
 
 <div class="view" id="client-next"></div>
+<div class="view" id="client-life"></div>
 </main>
 
 <footer class="site-footer">
@@ -1218,6 +1225,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 <script src="/shared/gg-journey.js?v=r5n"></script>
 <script src="/shared/gg-library.js?v=src4"></script>
 <script src="/shared/gg-tend.js?v=vb5"></script>
+<script src="/pine/guides.js?v=pg1"></script>
 <script src="/pine/app.js?v=pn5"></script>
 <script>
 /* Read aloud, built in like Oak and Sequoia */
@@ -1250,6 +1258,8 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
       return r;
     };
     var cr = window.calculateResults; if (cr) window.calculateResults = function () { var r = cr.apply(this, arguments); var box = document.querySelector('#client-results-content .results-summary'); if (box && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: document.getElementById('client-results-content'), label: 'Read my results aloud' }), box.firstChild); return r; };
+    /* When Life Changes: a Read aloud button for the guide list and for each guide */
+    var lc = window.renderLC; if (lc) window.renderLC = function () { var r = lc.apply(this, arguments); var h = document.querySelector('#client-life .lc-head'); if (h && !h.querySelector('.gg-rbar')) h.appendChild(R.control({ root: document.getElementById('client-life'), label: 'Read this page aloud' })); var art = document.querySelector('#client-life .lc-article'), q = art && art.querySelector('.lc-quick'); if (q && !art.querySelector('.gg-rbar')) art.insertBefore(R.control({ root: art, label: 'Read this guide aloud' }), q); return r; };
     var sv = window.showView; if (sv) window.showView = function () { R.stop(); return sv.apply(this, arguments); };
   });
 })();

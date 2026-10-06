@@ -41,11 +41,12 @@
    - No leaderboards, no random rewards, no streak shame. Everything pauses its
      penalties for 14 days after a check-in flags losing hope or feeling alone.
 
-   When Life Changes arrives with Pine's guides in the next build. The hook is
-   ready: add a nav button with data-tab="guides" and a #client-life view, and
-   set PN_LC = true below.
+   When Life Changes (GWG BLD 740): Pine's own guides, built like Sequoia's.
+   The words live in pine/guides.js (PINE_GUIDES = {rings, links, topics}); the
+   videos in pine/guide-videos.js, played by shared/gg-learn.js. Two views: For
+   You (the teen) and For the Grown-up. Faith lines show the same in Faith and
+   Plain wording, since the guides are written to the kids' faith rules.
    ===================================================================== */
-const PN_LC = false;   // When Life Changes: on in the next Pine build
 let PROF = null;      // the open Pine profile: { id, name, avatar, age }
 
 /* ---------- the practice library (pine/practices.js) ----------
@@ -936,6 +937,7 @@ function calculateResults() {
       ${told}
     </div>
     ${buildPersonalSections(scores, unsure)}
+    ${lcSuggestHtml(scores, unsure)}
     <div class="reminder-banner"><p>Check in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.</p></div>
     <div class="btn-row"><button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button></div>
     <div id="client-save-box"></div>`;
@@ -968,6 +970,7 @@ function showView(id) {
   const tab = VIEW_TAB[id];
   document.querySelectorAll('#client-nav .nav-btn').forEach(b => { const on = b.getAttribute('data-tab') === tab; b.classList.toggle('active', on); if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
   if (id === 'client-next') renderNext();
+  if (id === 'client-life') renderLC('client');
   if (id === 'client-growthplan') oakPlanOpen();
   if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (window.GGTend) GGTend.render(); }
   scrollToViewTop(id, false, false);
@@ -979,7 +982,8 @@ function printGrowthPlan(sheetId) {
   const sheet = document.getElementById(sheetId);
   if (!sheet) return;
   if (!window.GGApp || !window.ggPdfFromEl) { printGrowthPlanNow(sheetId); return; }
-  GGApp.sheet({ title: 'Pine growth plan', file: 'pine-growth-plan.pdf', print: () => printGrowthPlanNow(sheetId),
+  const guide = /lc-article/.test(sheetId), h = sheet.querySelector('h2,h1,.growth-plan-title');
+  GGApp.sheet({ title: guide ? (h ? h.textContent : 'This guide') : 'Pine growth plan', file: guide ? 'pine-guide.pdf' : 'pine-growth-plan.pdf', print: () => printGrowthPlanNow(sheetId),
     blocks: () => ggPdfFromEl(sheet, { rows: '.growth-plan-domain-header', eyebrow: 'Pine by Grow With Grounded', foot: 'Pine(TM) by Grow With Grounded. growwithgrounded.com/pine' }) });
 }
 function printGrowthPlanNow(sheetId) {
@@ -988,6 +992,183 @@ function printGrowthPlanNow(sheetId) {
   if (!sheet) return;
   sheet.classList.add('print-target');
   window.print();
+}
+
+// =====================================================================
+// WHEN LIFE CHANGES (GWG BLD 740): Pine's own guides, ported from Sequoia.
+// The words live in pine/guides.js (window.PINE_GUIDES = {rings, links, topics});
+// the site-wide search reads the same file. A ring with no guides yet stays
+// hidden, and a small note names the rings still to come. Two views: For You
+// (the teen) and For the Grown-up. Help lines are Pine's teen lines from
+// pine/checkin.js (safety.lines), never another tree's.
+// =====================================================================
+const LC_RINGS = (window.PINE_GUIDES || {}).rings || [];
+const LC_TOPICS = (window.PINE_GUIDES || {}).topics || [];
+const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcPart = k => DOMAIN_BY_KEY[k];
+const lcEsc = s => escapeHtml(s == null ? '' : String(s));
+const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
+function lcMatches(t, q) {
+  if (!q) return true;
+  const words = (t.title + ' ' + (t.keys || '') + ' ' + (t.quick || []).join(' ')).toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/);
+  return q.toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/).filter(Boolean).every(w => words.some(x => x.startsWith(w)));
+}
+function lcList(a) { return '<ul>' + (a || []).map(x => '<li>' + lcEsc(x) + '</li>').join('') + '</ul>'; }
+function lcPartsText(t) { return (t.parts || []).map(k => lcPart(k) ? lcPart(k).part : k).join(', '); }
+// The teen help lines (pine/checkin.js), shown under the guide list and at the end of every guide.
+const LC_HELP_IDS = ['988', 'ctl', 'teenline', 'childhelp', 'mncrisis', '911'];
+function lcHelpHtml() {
+  const L = linesFor(LC_HELP_IDS);
+  return `<div class="lc-help"><h3>Help any time</h3>${L.length ? linesHtml(L, true) : ''}<p class="no-print"><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
+}
+function renderLC(mode) {
+  mode = 'client';
+  const st = LCS[mode], el = document.getElementById(mode + '-life');
+  if (!el) return;
+  if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
+  const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
+  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  el.innerHTML = `<div class="lc-head">
+      <p class="eyebrow">When Life Changes</p>
+      <h2 class="section-title" style="margin-top:4px">Guides for the seasons of high school</h2>
+      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes high school can bring. Each guide has two views: For You, when you are the one going through it, and For the Grown-up, for a parent, guardian, coach, or other adult walking beside you. Most guides have two short videos too.</p>
+    </div>
+    ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: breakup, grades, sleep, a move..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
+    <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
+      <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
+      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+    </div>` : ''}
+    <div id="${mode}-lc-list"></div>
+    ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
+    ${lcHelpHtml()}
+    <p class="lc-note">These guides offer general spiritual and emotional guidance and support, drawn from chaplaincy and trusted youth, family, and mental health organizations. For therapy, medical care, or legal advice, they point you to the right people. In danger right now, call 911. For a crisis, call or text 988.</p>`;
+  lcRenderList(mode);
+  if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
+}
+function lcJoin(a) { return a.length < 2 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join('; ') + '; and ' + a[a.length - 1]; }
+function lcRenderList(mode) {
+  const st = LCS[mode];
+  const box = document.getElementById(mode + '-lc-list');
+  if (!box) return;
+  document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
+  let html = '', n = 0;
+  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+    if (!ts.length) return;
+    n += ts.length;
+    html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
+      <article class="lc-card" style="--rc:${r.color}">
+        <span class="lc-label">Hard season</span>
+        <h4>${lcEsc(t.title)}</h4>
+        ${lcList(t.quick)}
+        <p class="lc-meta">Parts of the tree often affected: ${lcEsc(lcPartsText(t))}.</p>
+        <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
+      </article>`).join('')}</div></div>`;
+  });
+  box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
+}
+/* Search: the same engine as the header search. Pine's guides first, then the rest of Grow With Grounded
+   (kid: 'pine' keeps results written only for adults out). */
+function lcFind(el, mode) {
+  LCS[mode].q = ''; LCS[mode].find = el.value;
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'pine', kid: 'pine', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking It Through',
+    hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips', '#' + mode + '-life .lc-soon'], accent: 'var(--gold)' });
+}
+function lcOpen(mode, id) {
+  mode = 'client';
+  LCS[mode].open = id || null;
+  showView(mode + '-life');
+}
+function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcPersp(mode, p) { mode = 'client'; LCS[mode].persp = p; renderLC(mode); }
+/* Practice links open Pine's own practice guide right under the name. */
+function lcPrac(btn) {
+  const g = btn.nextElementSibling; if (!g) return;
+  const open = g.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function lcPracHtml(t) {
+  return '<div class="lc-pracs">' + (t.practices || []).map(k => {
+    const [part, name] = String(k).split('|'), d = lcPart(part), g = guideHtml(part, name), col = d ? d.color : 'var(--line)', shown = shownName(part, name);
+    if (!g) return `<div class="lc-prac"><span class="lc-practice" style="border-color:${col}">${lcEsc(shown)}</span></div>`;
+    return `<div class="lc-prac" style="--domain-color:${col}"><button type="button" class="lc-practice lc-prac-btn" style="border-color:${col}" aria-expanded="false" onclick="lcPrac(this)">${lcEsc(shown)}<span class="lc-prac-part">${lcEsc(d ? d.part : '')}</span></button><div class="guide">${g}</div></div>`;
+  }).join('') + '</div>';
+}
+function lcSourcesHtml(t) {
+  if (!window.GGSources) return '';
+  if (Array.isArray(t.sources) && t.sources.length) return GGSources.line(t.sources);
+  return GGSources.html('pine:' + t.id);
+}
+function lcDetail(mode, t) {
+  if (!t) { LCS[mode].open = null; return ''; }
+  const r = lcRing(t.ring), st = LCS[mode], self = st.persp !== 'helper', sf = t.self || {}, hp = t.helper || {};
+  const view = self ? `
+      <h3>What this can feel like</h3><p>${lcEsc(t.feel)}</p>
+      <h3>First steps</h3>${lcList(sf.first)}
+      <h3>What helps</h3>${lcList(sf.helps)}
+      <h3>What to tell yourself</h3><div class="lc-say">${(sf.tell || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
+      <h3>Telling your people</h3><p>${lcEsc(sf.people)}</p>`
+    : `
+      <h3>What they may be carrying</h3><p>${lcEsc(t.feel)} ${lcEsc(hp.feel)}</p>
+      <h3>What to say</h3><div class="lc-say">${(hp.say || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
+      <div class="lc-two"><div><b>What not to say or do</b>${lcList(hp.avoid)}</div><div><b>Practical ways to help</b>${lcList(hp.help)}</div></div>
+      <h3>Looking after yourself as the grown-up</h3><p>${lcEsc(hp.you)}</p>`;
+  return `<article class="lc-article" id="${mode}-lc-article" style="--rc:${r.color}">
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px">
+      <button class="lc-back" onclick="lcClose('${mode}')">Back to all guides</button>
+      <button class="btn btn-secondary" onclick="printGrowthPlan('${mode}-lc-article')">Save or Print This Guide</button>
+    </div>
+    <span class="lc-tag">${lcEsc(r.name)}</span>
+    <h2>${lcEsc(t.title)}</h2>
+    <div class="lc-quick"><b>Quick Reference</b>${lcList(t.quick)}</div>
+    ${lcVids(t.id, self)}
+    <div class="lc-toggle no-print" role="group" aria-label="Choose a view">
+      <button aria-pressed="${self}" onclick="lcPersp('${mode}','self')">For You</button>
+      <button aria-pressed="${!self}" onclick="lcPersp('${mode}','helper')">For the Grown-up</button>
+    </div>
+    ${view}
+    ${t.faith ? `<h3>Faith and meaning</h3><p>${lcEsc(t.faith)}</p>` : ''}
+    <h3>Using Pine</h3><p>Parts of the tree this often touches: <b>${lcEsc(lcPartsText(t))}</b>. Practices that can help (tap one to see how):</p>${lcPracHtml(t)}<p>A check-in in a few weeks can show how ${self ? 'you are' : 'they are'} doing.</p>
+    <h3>When to reach out for more help</h3><div class="lc-reach">${lcList(t.reach)}</div>
+    ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}" target="_blank" rel="noopener">${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
+    ${window.GGShelf ? GGShelf.html('pine', t.id) : ''}
+    ${lcSourcesHtml(t)}
+    ${lcHelpHtml()}
+    <p class="lc-note">From When Life Changes in Pine&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. In danger right now: 911. Crisis: call or text 988, or text HOME to 741741. &copy; ${new Date().getFullYear()} Chris Joy. You are welcome to print this guide for personal use.</p>
+  </article>`;
+}
+/* When Life Changes videos (GWG BLD 740): two per guide, For You and For the Grown-up, played by shared/gg-learn.js
+   from pine/guide-videos.js. PN_VIDS lists the guides that have them so far (written by the build's generator).
+   A quiet check shows once a video has been watched on this device (gg-learn:pine). */
+/* PN_VIDS start */const PN_VIDS = ["start-hs", "grades-pressure", "adhd", "sports-cut", "path-after", "graduation", "friend-changes", "left-out", "bullying", "first-relationship", "breakup", "dating-abuse", "divorce", "stepfamily", "moving", "deployed", "family-substance", "parent-jail", "blowup", "lying", "parent-death", "friend-death", "grandparent-death", "car-crash", "loved-one-ill", "sleep", "body-image", "eating", "concussion", "chronic-illness", "substances", "anxiety", "depression", "selfharm", "suicide-thoughts", "counseling", "sextortion", "porn", "social-media", "ai-companions", "gambling", "sexual-assault", "school-threats", "first-job", "money", "faith-doubt", "faith-hurt", "purpose-service"];/* PN_VIDS end */
+function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:pine') || '{}').done || {})[id]); } catch (e) { return false; } }
+function lcVids(gid, self) {
+  if (!PN_VIDS.includes(gid)) return '';
+  const b = (side, name, pri) => { const id = 'pn-g-' + gid + '-' + side, w = lcVidWatched(id);
+    return `<button type="button" class="btn ${pri ? 'btn-primary' : 'btn-secondary'}" onclick="lcWatch('${gid}','${side}')">${w ? '&#10003;' : '&#9654;'} Watch: ${name}${w ? ' <span class="lc-gv-w">Watched</span>' : ''}</button>`; };
+  return `<div class="lc-gv no-print"><div class="btn-row">${b('you', 'For You', self)}${b('helper', 'For the Grown-up', !self)}</div>
+    <p class="lc-gv-note">For You, if this is what you're facing. For the Grown-up, if you're walking beside a teen who is. A few minutes each, narrated aloud.</p></div>`;
+}
+function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('pine', 'pn-g-' + gid + '-' + side, { from: 'guide' }); }
+// gg-learn's Open the Full Guide button lands here.
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.pine = id => { if (LC_TOPICS.some(t => t.id === id)) lcOpen('client', id); };
+window.addEventListener('gg-learn-close', () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
+/* After a check-in: guides that touch the parts carrying the most (each Growing Edge part), two per part,
+   lowest part first. A part marked Not sure yet is left out. */
+function lcSuggestHtml(scores, unsure) {
+  const skip = unsure || [];
+  const low = PART_ORDER.filter(k => !skip.includes(k) && scores[k] != null && scores[k] < 5).sort((a, b) => scores[a] - scores[b]);
+  if (!low.length || !LC_TOPICS.length) return '';
+  const picks = [];
+  low.forEach(k => LC_TOPICS.filter(t => (t.parts || []).includes(k) && !picks.includes(t)).slice(0, 2).forEach(t => picks.push(t)));
+  if (!picks.length) return '';
+  const crisis = scores.fruit <= 2 && !skip.includes('fruit') ? `<p><b>If you are having thoughts of ending your life, call or text 988 now, or text HOME to 741741. In danger right now, call 911.</b></p>` : '';
+  return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
+    <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps.</p>
+    ${crisis}<div class="lc-links">${picks.map(t => `<button type="button" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" onclick="lcOpen('client',null)">Browse all guides</button></div></div>`;
 }
 
 // =====================================================================
@@ -1732,10 +1913,11 @@ renderAboutParts();
 renderProgress();
 renderProfileBar();
 
-/* Deep links: #quick, #checkin, #nextsteps, #plan */
+/* Deep links: #quick, #checkin, #nextsteps, #plan, #life (guides), #life=<id> or #talk=<id> (one guide) */
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
-  if (h === '#nextsteps' || h === '#next') showView('client-next');
+  if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null; showView('client-life'); }
+  else if (h === '#nextsteps' || h === '#next') showView('client-next');
   else if (h === '#plan') showView('client-growthplan');
   else if (h === '#quick') startQuick();
   else if (h === '#checkin' || h === '#check' + 'up') startCheckin();
