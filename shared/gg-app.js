@@ -37,10 +37,11 @@
      GGApp.handoff.pending()         The Grove: a check-in waiting, or null
      GGApp.handoff.clear()
 
-   A card from an Aspen Guide visit, into the student's own Aspen tree
-     GGApp.visit.url(card)           card {n first name, d date, s strong parts, t tries}
-                                     a link to Aspen with the card after the #
-     GGApp.visit.pending()           Aspen: a card waiting, or null
+   A card from an Aspen Guide (or Pine Guide) visit, into the student's own tree
+     GGApp.visit.url(card, tree)     card {n first name, d date, s strong parts, t tries}
+                                     tree 'aspen' (default) or 'pine': a link to that
+                                     tree with the card after the #
+     GGApp.visit.pending()           Aspen or Pine: a card waiting, or null
      GGApp.visit.clear()
 
    Share to Family: a person's tree, sent by hand to family on other phones
@@ -68,8 +69,8 @@
   var CFG = window.GG_APP_CONFIG || {};          // written by the app build: {app, tools:[...], pages:[...]}
   var P = function (name) { return NATIVE && CAP.Plugins ? CAP.Plugins[name] : null; };
   var SITE = 'https://growwithgrounded.com';
-  var TOOLS = ['maple', 'aspen', 'oak', 'sequoia', 'grove', 'field-guide'];
-  var SCHEMES = { 'maple': 'grounded-maple', 'aspen': 'grounded-aspen', 'oak': 'grounded-oak', 'sequoia': 'grounded-sequoia', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
+  var TOOLS = ['maple', 'aspen', 'pine', 'oak', 'sequoia', 'grove', 'field-guide'];
+  var SCHEMES = { 'maple': 'grounded-maple', 'aspen': 'grounded-aspen', 'pine': 'grounded-pine', 'oak': 'grounded-oak', 'sequoia': 'grounded-sequoia', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
 
   document.documentElement.classList.add(NATIVE ? 'gg-native' : 'gg-web');
   if (NATIVE) document.documentElement.classList.add('gg-' + PLATFORM);
@@ -296,7 +297,7 @@
   }
 
   /* ---------------- HANDOFF TO THE GROVE ---------------- */
-  var FROM = { 'maple': 'Maple', 'aspen': 'Aspen', 'oak': 'Oak', 'sequoia': 'Sequoia' };
+  var FROM = { 'maple': 'Maple', 'aspen': 'Aspen', 'pine': 'Pine', 'oak': 'Oak', 'sequoia': 'Sequoia' };
   var AGES = ['maple', 'aspen', 'pine', 'adult'];
   function enc64(s) { return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
   function dec64(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return decodeURIComponent(escape(atob(s))); }
@@ -355,7 +356,9 @@
   }
   function vcode(v) { var c = vclean(v); return c ? 'v1.' + enc64(JSON.stringify(c)) : ''; }
   function vunpack(s) { try { if (!/^v1\./.test(s)) return null; return vclean(JSON.parse(dec64(s.slice(3)))); } catch (e) { return null; } }
-  function vurl(v) { var c = vcode(v); return c ? SITE + '/aspen/#gg-visit=' + c : ''; }
+  // tree: 'aspen' (the default) or 'pine', so a Pine Guide can send a card into the teen's own Pine.
+  var VTREES = { aspen: '/aspen/', pine: '/pine/' };
+  function vurl(v, tree) { var c = vcode(v); return c ? SITE + (VTREES[tree] || VTREES.aspen) + '#gg-visit=' + c : ''; }
   function takeVisit(h) {
     var m = /[#&]gg-visit=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;
     var c = vunpack(m[1]);
@@ -370,7 +373,7 @@
        v  1 (the format)
        i  a random share id that stays the same for that person (12 letters and digits)
        n  first name
-       t  which tree: maple, aspen, oak, or sequoia
+       t  which tree: maple, aspen, pine, oak, or sequoia
        g  days tended (how grown the tree is drawn)
        p  parts tended in the 7 days before it was made, as digits 0 to 5 in PART order
        d  1 if they tended on the day it was made, otherwise 0
@@ -378,7 +381,7 @@
        m  when it was made, in seconds (a newer code replaces an older one)
      Never answers, scores, levels, notes, journals, safety or faith answers, or the growth plan.
      Anything else in a code, or anything out of shape, and the whole code is ignored. */
-  var FPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'], FTREES = ['maple', 'aspen', 'oak', 'sequoia'];
+  var FPARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'], FTREES = ['maple', 'aspen', 'pine', 'oak', 'sequoia'];
   var FKEYS = ['v', 'i', 'n', 't', 'g', 'p', 'd', 'w', 'm'], FPEND = 'gg-fam-in', FBAD = 'gg-fam-bad';
   var F_EARLIEST = 1767225600;   // January 1, 2026
   function fname(s) {
@@ -415,7 +418,7 @@
     return true;
   }
 
-  // The Grove (or Aspen) reads what arrived in its own link, then wipes it from the address bar right away.
+  // The Grove (or Aspen, or Pine) reads what arrived in its own link, then wipes it from the address bar right away.
   if (takeHash(location.hash) | takeVisit(location.hash) | takeFam(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   // A link opened while the page is already open (same tab) only changes the part after the #.
   window.addEventListener('hashchange', function () {
@@ -465,7 +468,7 @@
   }
 
   /* ---------------- DAILY REMINDERS ---------------- */
-  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, maple: 1002, aspen: 1003, 'oak': 1004, sequoia: 1005 };
+  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, maple: 1002, aspen: 1003, 'oak': 1004, sequoia: 1005, pine: 1006 };
   var remind = {
     can: function () { return !!P('LocalNotifications'); },
     get: function (id) { var all = GGStore.json(RKEY, {}); return all[id] || { on: false, time: '07:00' }; },

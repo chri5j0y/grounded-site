@@ -55,6 +55,11 @@
      Add a Helper in their own Sequoia settings.
      GGP.tree(id)                    'sequoia' or 'oak' for a grown-up
      GGP.setTree(id, tree)           'sequoia' or 'oak'
+
+   Pine, the tree for high schoolers (GWG BLD 739)
+   - A High school profile (age "pine") tends its tree in Pine. The
+     privacy model above stays the same: only the teen's passcode opens
+     answers and journal, and a grown-up sees only the shared record.
    ===================================================================== */
 (function () {
   if (window.GGP) return;
@@ -64,7 +69,7 @@
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
     { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Oak', href: '/oak/' },
-    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'Oak', href: '/oak/' },   // Oak until Pine is built (Session 5)
+    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'Pine', href: '/pine/' },   // Pine, built for grades 9 to 12 (GWG BLD 739)
     { id: 'aspen', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Aspen', href: '/aspen/' },
     { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/maple/' }
   ];
@@ -948,10 +953,10 @@
     if (!isHome) return;
     if (!p) { if (box) box.remove(); return; }
     // Your tree is yours. The grove is ours. (Rebrand Session 5)
-    var v = vaultNow(), chips = [], ta = toolOf(p), sq = ta.tool === 'Sequoia';
+    var v = vaultNow(), chips = [], ta = toolOf(p), sq = ta.tool === 'Sequoia', pn = ta.tool === 'Pine';
     chips.push([ta.href, 'Tend my tree in ' + ta.tool]);
     chips.push(['/grove/', 'Visit The Grove']);
-    var h = ((sq ? v.sequoia : v.oak) || {}).history || [];
+    var h = ((sq ? v.sequoia : pn ? v.pine : v.oak) || {}).history || [];
     if (h.length) { var last = h[h.length - 1]; chips.push([ta.href, 'Last ' + ta.tool + ' check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
     else { chips.push([ta.href, 'Take ' + (/^[AEIOU]/.test(ta.tool) ? 'an ' : 'a ') + ta.tool + ' check-in']); }
     if (v.willow && v.willow.started) chips.push(['/willow/', 'My tree in Willow']);

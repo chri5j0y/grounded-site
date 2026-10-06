@@ -180,8 +180,8 @@ const QS = {
 };
 
 // ---------- TEEN WEEKLY CHECK-IN: 8 questions, one per strand ----------
-// Only high schoolers use this, until Pine is ready. Everyone else checks
-// in with Maple, Aspen, or Oak.
+// Kept for the Grove Guide. High schoolers now check in with Pine, and
+// everyone else with Maple, Aspen, Oak, or Sequoia.
 const WEEKLY_STEM = ["This past week, how often was this true?","This past week, how often was this true?","This week, how often?"];
 const WEEKLY = {
  body:["I moved my body on purpose.","I moved my body on purpose.","I played and moved a lot."],
@@ -544,11 +544,10 @@ const SCENERY = [
 
 // ---------- CHECK-IN TOOLS ----------
 // Where each age checks on their tree. The Grove nudges at the end of each
-// season and after twelve weeks. Pine is coming soon, so high schoolers
-// keep The Grove's short weekly check-in until then.
+// season and after twelve weeks. High schoolers check in with Pine.
 const CHECKIN = {
  maple:   { tool:"Maple",    href:"/maple/",    season:"/maple/",            full:"/maple/" },
  aspen:  { tool:"Aspen",   href:"/aspen/",   season:"/aspen/",           full:"/aspen/" },
- pine:{ tool:"The Grove", href:null,          season:null,                  full:null },
+ pine:    { tool:"Pine", href:"/pine/", season:"/pine/#quick",  full:"/pine/#checkin" },
  adult:    { tool:"Oak", href:"/oak/", season:"/oak/#quick",   full:"/oak/#checkin" }
 };

@@ -202,6 +202,44 @@
     vanorden10: ["Van Orden, Witte, Cukrowicz, Braithwaite, Selby, and Joiner, the interpersonal theory of suicide (2010)", "https://eric.ed.gov/?id=EJ884797"],
     zelaya: ["Zelaya, Dahlhamer, and colleagues, chronic pain and high-impact chronic pain among US adults, 2019 (NCHS Data Brief 390, 2020)", "https://www.cdc.gov/nchs/data/databriefs/db390-H.pdf"],
     // end BLD 736
+    // Pine (GWG BLD 739)
+    aapsleep14: ["American Academy of Pediatrics, school start times for adolescents (2014)", "https://publications.aap.org/pediatrics/article/134/3/642/74175/School-Start-Times-for-Adolescents"],
+    aasm16: ["Paruthi and colleagues, American Academy of Sleep Medicine consensus on sleep for children and teens (2016)", "https://aasm.org/resources/pdf/pediatricsleepdurationconsensus.pdf"],
+    bluth16: ["Bluth and colleagues, Making Friends with Yourself, a self-compassion program for teens (Mindfulness, 2016)", ""],
+    bmmrsteen: ["Religiousness, spirituality, and depressive symptoms in adolescent psychiatric patients, using the BMMRS (2009)", "https://www.sciencedirect.com/science/article/abs/pii/S0165032709001827"],
+    brenner: ["Brenner and the AAP Council on Sports Medicine and Fitness, sports specialization and intensive training in young athletes (2016)", "https://publications.aap.org/pediatrics/article-pdf/138/3/e20162148/1344770/peds_20162148.pdf"],
+    bronk18: ["Bronk and colleagues, the Claremont Purpose Scale (2018)", "https://www.semanticscholar.org/paper/Claremont-Purpose-Scale:-A-Measure-that-Assesses-of-Bronk-Riches/9287143c5c62b59944347762f757b4147f2dfa09"],
+    cdcbully23: ["CDC MMWR, social media use and bullying among high school students (2023 YRBS)", "https://www.cdc.gov/mmwr/volumes/73/su/su7304a3.htm"],
+    cdcconnect23: ["CDC MMWR, school connectedness and protective factors among high school students (2023 YRBS)", "https://www.cdc.gov/mmwr/volumes/73/su/su7304a9.htm"],
+    cdcpa: ["CDC, physical activity guidelines for children and adolescents", "https://www.cdc.gov/physical-activity-education/guidelines/index.html"],
+    cdcteendrivers: ["CDC, risk factors for teen drivers", "https://cdc.gov/teen-drivers/risk-factors/index.html"],
+    chs97: ["Snyder and colleagues, the Children's Hope Scale (1997)", "https://www.semanticscholar.org/paper/The-development-and-validation-of-the-Children's-Snyder-Hoza/f3f5b685538a60361f2a51d9be3a497e01ef94fa"],
+    damon03: ["Damon, Menon, and Bronk, the development of purpose during adolescence (2003)", "https://www.semanticscholar.org/paper/The-Development-of-Purpose-During-Adolescence-Damon-Menon/691e52b9ae789d27c4ae40fdcd9476d971037737"],
+    desrosiers: ["Desrosiers and Miller, relational spirituality and depression in adolescent girls (Journal of Clinical Psychology, 2007)", ""],
+    froh09: ["Froh, Kashdan, Ozimkowski, and Miller, who benefits the most from a gratitude intervention in children and adolescents (2009)", "https://greatergood.berkeley.edu/images/uploads/Who_benefits_the_most_from_a_gratitude_intervention_in_children_and_adolescents.pdf"],
+    gollwitzer: ["Peter M. Gollwitzer, implementation intentions: strong effects of simple plans (1999)", "https://doi.org/10.1037/0003-066X.54.7.493", "a"],
+    gould05: ["Gould and colleagues, evaluating iatrogenic risk of youth suicide screening (JAMA, 2005)", "https://pubmed.ncbi.nlm.nih.gov/15811983/"],
+    horowitz12: ["Horowitz and colleagues, the Ask Suicide-Screening Questions for youth (2012)", "https://jamanetwork.com/journals/jamapediatrics/fullarticle/1363508"],
+    mcii: ["Duckworth, Grant, Loew, Oettingen, and Gollwitzer, mental contrasting and implementation intentions in adolescents (2011)", "", "a"],
+    mnconsent: ["Minnesota Statutes 144.3431, minors 16 and older consenting to outpatient mental health services", "https://www.revisor.mn.gov/statutes/2024/cite/144.3431/pdf"],
+    monahan: ["Monahan, Lee, and Steinberg, part-time work and adolescent adjustment (2011)", "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8624.2010.01543.x"],
+    mtf24: ["NIDA, Monitoring the Future survey, 2024 results", "https://nida.nih.gov/news-events/news-releases/2024/12/reported-use-of-most-drugs-among-adolescents-remained-low-in-2024"],
+    odgers: ["Odgers and Jensen, adolescent mental health in the digital age (Journal of Child Psychology and Psychiatry, 2020)", "https://acamh.onlinelibrary.wiley.com/doi/10.1111/jcpp.13190"],
+    phqa: ["Johnson and colleagues, the Patient Health Questionnaire for Adolescents (PHQ-A) (2002)", "https://www.researchgate.net/publication/11492256_The_patient_health_questionnaire_for_adolescents_-_Validation_of_an_instrument_for_the_assessment_of_mental_disorders_among_adolescent_primary_care_patients"],
+    recchia23: ["Recchia and colleagues, physical activity and depressive symptoms in children and adolescents (JAMA Pediatrics, 2023)", "https://jamanetwork.com/journals/jamapediatrics/fullarticle/2799811"],
+    schleider22: ["Schleider and colleagues, a randomized trial of single-session online interventions for adolescent depression (Nature Human Behaviour, 2022)", "https://www.nature.com/articles/s41562-021-01235-0"],
+    schreier13: ["Schreier, Schonert-Reichl, and Chen, volunteering and cardiovascular risk in adolescents (JAMA Pediatrics, 2013)", "https://jamanetwork.com/journals/jamapediatrics/fullarticle/1655500"],
+    selfcompteen: ["Self-compassion and distress in adolescents, meta-analysis", "https://pmc.ncbi.nlm.nih.gov/articles/PMC6061226/"],
+    sgsocial23: ["US Surgeon General, Social Media and Youth Mental Health (2023)", "https://www.hhs.gov/sites/default/files/sg-youth-mental-health-social-media-advisory.pdf"],
+    smithdenton: ["Christian Smith and Melinda Lundquist Denton, Soul Searching: the National Study of Youth and Religion (2005)", "https://youthandreligion.nd.edu/announcements/book-announcements/paperback-publication-of-soul-searching/"],
+    stanley: ["Stanley, Brown, and colleagues, the Safety Planning Intervention with follow-up (JAMA Psychiatry, 2018)", "https://www.rcpsych.ac.uk/docs/default-source/improving-care/nccmh/suicide-prevention/monthly-clinic/comparison-of-safety-planning_stanley_2018.pdf", "a"],
+    steinberg89: ["Steinberg and colleagues, authoritative parenting and adolescents (1989)", "https://pubmed.ncbi.nlm.nih.gov/2612251/"],
+    uspstfanx: ["US Preventive Services Task Force, screening for anxiety in children and adolescents (2022)", "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-anxiety-children-adolescents"],
+    wyman10: ["Wyman and colleagues, an outcome evaluation of the Sources of Strength suicide prevention program (2010)", "https://ojp.gov/ncjrs/virtual-library/abstracts/outcome-evaluation-sources-strength-suicide-prevention-program"],
+    yeager18: ["Yeager, Dahl, and Dweck, why interventions to influence adolescent behavior often fail but could succeed (2018)", "https://pubmed.ncbi.nlm.nih.gov/29232535/"],
+    yeager19: ["Yeager and colleagues, a national experiment reveals where a growth mindset improves achievement (Nature, 2019)", "https://www.nature.com/articles/s41586-019-1466-y"],
+    yrbs23: ["CDC, Youth Risk Behavior Survey Data Summary and Trends Report, 2023", "https://www.cdc.gov/yrbs/dstr/pdf/YRBS-2023-Data-Summary-Trend-Report.pdf"],
+    // end BLD 739
   };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
@@ -243,7 +281,11 @@
     'video:wl-s-say': ['byock4', 'blundon'],
     'video:wl-s-hear': ['blundon'],
     'video:wl-h-weeks': ['kerr'],
-    'video:wl-h-words': ['blundon']
+    'video:wl-h-words': ['blundon'],
+    // Pine (GWG BLD 739)
+    "pine:nextsteps": ["damon03", "bronk18", "yeager18", "schreier13", "monahan", "snyder", "gollwitzer", "mcii", "king", "wyman10"],
+    "pine:journey": ["cdcpa", "brenner", "snyder"]
+    // end BLD 739
   };
 
   // Practices by name, everywhere they appear. P_RE is matched against the name (Aspen names are sentences).
@@ -253,7 +295,18 @@
     'worry window': ['borkovec'], 'expressive writing': ['pennebaker'], 'name it': ['lieberman'], 'say it out loud': ['lieberman'],
     'self-compassion break': ['neff'], 'kind voice letter': ['neff'], 'loving-kindness': ['metta'], 'gratitude letter': ['seligman'],
     'three good things': ['seligman'], 'best possible self': ['king'], 'hope map': ['snyder'], 'two hours outdoors': ['white'],
-    'job crafting': ['wrz'], 'one of the four things': ['byock4'], 'talk about dying, once': ['dazzi']
+    'job crafting': ['wrz'], 'one of the four things': ['byock4'], 'talk about dying, once': ['dazzi'],
+    // Pine (GWG BLD 739)
+    "phone outside the bedroom": ["sgsocial23"],
+    "look out for a friend": ["dazzi", "gould05"],
+    "name your trusted adult": ["wyman10"],
+    "driving calm": ["cdcteendrivers"],
+    "first job balance": ["monahan"],
+    "rest day": ["brenner"],
+    "my brain grows": ["yeager19"],
+    "purpose reflection": ["bronk18", "damon03"],
+    "study sprints": [{"label": "Francesco Cirillo, the Pomodoro Technique", "href": "", "adapted": true}]
+    // end BLD 739
   };
   var P_RE = [[/three good things/i, ['seligman']]];
   // Extra credits where one app's own words make a research claim (Oak's "Why it helps").
@@ -317,7 +370,49 @@
     'sequoia:lonely thoughts check': ['masi'],
     'sequoia:caregiver pause': ['aarpcg'],
     'sequoia:scam pause': ['ic3','ftcfraud'],
-    'sequoia:the four things': ['byock4']
+    'sequoia:the four things': ['byock4'],
+    // Pine (GWG BLD 739)
+    "pine:examen": ["examen"],
+    "pine:scripture": ["lectio"],
+    "pine:carry your questions": ["smithdenton"],
+    "pine:hold someone in light": ["quaker"],
+    "pine:name it": ["lieberman", "siegel"],
+    "pine:self-compassion break": ["bluth16", "selfcompteen"],
+    "pine:worry window": ["borkovec"],
+    "pine:kind voice letter": ["neff"],
+    "pine:phone check": ["sgsocial23", "odgers"],
+    "pine:my safety plan": ["stanley"],
+    "pine:values sort": ["act"],
+    "pine:purpose reflection": ["bronk18", "damon03"],
+    "pine:volunteer": ["schreier13"],
+    "pine:my brain grows": ["yeager19"],
+    "pine:study sprints": [{"label": "Francesco Cirillo, the Pomodoro Technique", "href": "", "adapted": true}],
+    "pine:first job balance": ["monahan"],
+    "pine:one thing that matters": ["schleider22"],
+    "pine:expressive writing": ["pennebaker"],
+    "pine:best possible self": ["king"],
+    "pine:hope map": ["snyder"],
+    "pine:movement": ["recchia23", "cdcpa"],
+    "pine:sleep": ["aasm16", "aapsleep14"],
+    "pine:two hours outdoors": ["white"],
+    "pine:phone outside the bedroom": ["sgsocial23"],
+    "pine:walk or jog": ["recchia23"],
+    "pine:strength training": ["cdcpa"],
+    "pine:steady wake time": [{"label": "Cognitive behavioral therapy for insomnia (CBT-I)", "href": "https://doi.org/10.7326/M14-2841", "adapted": true}, "trauer"],
+    "pine:rest day": ["brenner"],
+    "pine:driving calm": ["cdcteendrivers"],
+    "pine:family": ["holt"],
+    "pine:friends": ["murthy"],
+    "pine:name your trusted adult": ["wyman10"],
+    "pine:gratitude letter": ["froh09"],
+    "pine:faith": ["vanderweele"],
+    "pine:loving-kindness": ["fredrickson"],
+    "pine:easy ways out": ["mtf24", "unknown"],
+    "pine:look out for a friend": ["dazzi", "gould05"],
+    "pine:three good things": ["froh"],
+    "pine:look back on your day": ["examen"],
+    "pine:a group that lifts you": ["vanderweele"]
+    // end BLD 739
   };
 
   // Chris's stories. Published: the Substack link ('' while the link is still to come). Anything not listed is from the notebook.

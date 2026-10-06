@@ -50,6 +50,7 @@
   var APPS = {
     maple: { name: 'Maple', color: '#C4501E', btn: '#A14219', back: 'Back to Maple' },
     aspen: { name: 'Aspen', color: '#1F6F74', btn: '#1F6F74', back: 'Back to Aspen' },
+    pine: { name: 'Pine', color: '#3A6B35', btn: '#3A6B35', back: 'Back to Pine' },
     oak: { name: 'Oak', color: '#3D5A73', btn: '#3D5A73', back: 'Back to Oak' },
     sequoia: { name: 'Sequoia', color: '#7A2E1C', btn: '#7A2E1C', back: 'Back to Sequoia' },
     willow: { name: 'Willow', color: '#5D5A6E', btn: '#5D5A6E', back: 'Back to Willow' },
@@ -367,6 +368,7 @@
     if (cfg.mood && MUSIC.hasOwnProperty(cfg.mood)) return cfg.mood;
     if (cfg.track && cfg.track.kind === 'support') return 'calm';
     if (cfg.app === 'maple' || cfg.app === 'aspen') return 'kids';
+    if (cfg.app === 'pine') return 'learning'; // high schoolers get the learning tracks, not the kids' tracks
     if (cfg.app === 'willow') return 'willow';
     return 'learning';
   }
@@ -686,7 +688,7 @@
       var root = document.createElement('div');
       root.className = 'ggl ggl-app'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Learn ' + meta.name);
       root.style.setProperty('--ggl-acc', meta.btn); root.style.setProperty('--ggl-bar', meta.color);
-      root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', oak: '#9DB8D0', sequoia: '#E8A48E', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
+      root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', pine: '#9CC795', oak: '#9DB8D0', sequoia: '#E8A48E', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
       root.innerHTML = '<div class="ggl-top"><img src="' + MARK(app + '-tab') + '" alt=""><b>Learn ' + esc(meta.name) + '</b><button class="ggl-x" data-l="close">' + esc(meta.back) + '</button></div><div class="ggl-in" id="ggl-in"></div>';
       document.body.appendChild(root);
       APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide') };

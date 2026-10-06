@@ -4,7 +4,7 @@
    Each one opens as a print-ready page with a Print or Save as PDF button. Nothing is sent anywhere.
    - GGPrint.certificate(o)     Certificate of Completion, landscape Letter.
                                 o: {tree, name, title, body, date, renew, version, id, kind}
-                                tree is maple, aspen, oak, sequoia, willow, grove, or house (Grow With Grounded).
+                                tree is maple, aspen, pine, oak, sequoia, willow, grove, or house (Grow With Grounded).
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
                                 kind 'parts': the six parts teaching poster, in that tree's voice.
@@ -32,6 +32,9 @@
     oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults.', guide: 'Oak Guide',
       points: ['A check-in for the whole person, from root to fruit.', 'A personal growth plan with step-by-step practices.', "When Life Changes: 67 guides for life's hardest seasons."],
       parts: { title: 'Six Parts Make You Whole', lead: 'Being whole means noticing and tending all six.', words: ['Faith, the Sacred, and the practices that steady you.', 'Meaning, calling, and what your life is for.', 'Thoughts and feelings, stress and resilience.', 'Family, friends, and community.', 'Movement, rest, and nourishment.', "Hope, gratitude, and what you're growing toward."], close: 'Shelter for others. Strength for you.' } },
+    // Pine (GWG BLD 739): the flyer is live; Pine Guide posters (guide, parts) arrive with the Pine Guide build.
+    pine: { name: 'Pine', color: '#3A6B35', ink: '#3A6B35', path: '/pine/', tag: 'Stand tall through every season.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 9 to 12.',
+      points: ['A check-in for grades 9 to 12, with questions written for each grade band.', 'A growth plan with practices, and a tree that grows with every day tended.', 'Next Steps: a private notebook for goals and plans after high school.', "Only the teen's own passcode opens their answers. Grown-ups see only a quiet alert."] },
     sequoia: { name: 'Sequoia', color: '#7A2E1C', ink: '#7A2E1C', path: '/sequoia/', tag: 'A long life, still growing.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for older adults, 60 and up.', guide: 'Sequoia Guide',
       points: ['A check-in for the whole person in later life, one question at a time, in larger text.', 'A growth plan with practices that work seated, standing, or in bed.', 'A Legacy Book for the stories and lessons you want to pass on, private until you share a page.', 'When Life Changes: 48 guides for later life, with short videos for you and your helper.'],
       parts: { title: 'Six Parts Make You Whole', lead: 'A long life is still growing in all six parts.', words: ['Faith, the Sacred, and the practices that have carried you.', 'Meaning, legacy, and what your life is for now.', 'Thoughts and feelings, worry and peace.', 'Family, friends, neighbors, and community.', 'Movement, rest, balance, and nourishment.', "Hope, gratitude, and what you're still looking forward to."], close: 'A long life, still growing.' } },
@@ -41,7 +44,7 @@
     grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, side by side.',
       points: ["The family's shared ground, on one device.", 'Everyone tends their own tree in their own app, and the trees stand side by side here.', 'A family wall to cheer each other on, and practices to do together.'] }
   };
-  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12, coming soon'], ['oak', 'Oak', 'Adults'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
+  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['oak', 'Oak', 'Adults'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
 
   function qr(u, label) {
     try { if (window.GGQR && GGQR.svg) return GGQR.svg(u, { label: label || 'QR code', border: 2 }); } catch (e) {}
