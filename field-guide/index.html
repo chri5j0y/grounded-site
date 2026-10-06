@@ -601,7 +601,7 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=tc6"></script>
+<script src="../shared/gg-app.js?v=tc7"></script>
 <script src="../shared/gg-backup.js?v=bk4"></script>
 <script src="../shared/gg-filelock.js?v=fl2"></script>
 <script src="../shared/gg-pdf.js"></script>
@@ -7415,7 +7415,7 @@ function vWLReport(cid){
   return `<button class="linkbtn" ${c ? `data-act="wl-open" data-v="${c.id}"` : 'data-tab="willow"'}>Back${c ? ' to ' + esc(c.name) : ' to Willow Guide'}</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Willow Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   ${draft ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Your visit is paused.</b> <span class="muted">Everything so far is kept.</span></div><button class="btn btn-gold btn-sm" data-act="wl-resume">Back to the Visit</button></div></div>` : ''}
-  <div class="card" style="border-left:4px solid var(--danger)"><p><b>Call the hospice nurse line first, any hour.</b></p><div class="row" style="margin-top:10px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div>${R.danger ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p>` : ''}</div>
+  <div class="card" style="border-left:4px solid var(--danger)"><p><b>Call the hospice 24/7 line first, any hour.</b></p><div class="row" style="margin-top:10px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div>${R.danger ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p>` : ''}</div>
   ${(R.steps || []).length ? `<div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${(R.lines || []).length ? `<div class="card"><h3>Help They Can Reach Privately</h3>${R.lines.map(x => `<p style="margin-top:8px"><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}</div>` : ''}
   ${RO && (RO.items || []).length ? `<div class="card"><h3>${esc(RO.title || 'What your role requires')}</h3>${RO.lead ? `<p class="muted" style="font-size:15px;margin-top:4px">${esc(RO.lead)}</p>` : ''}${RO.items.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>` : ''}
@@ -8839,7 +8839,7 @@ function plBuild(S){
   const adultFam = S.fmt === 'family' && ['birch','oak','sequoia','willow'].includes(ST.main);
   const voice = S.fmt === 'family' && !adultFam ? 'maple' : own(ST.main), key = S.fmt === 'family' && !adultFam ? 'all' : ownF(ST.main);
   const oneF = (PLG().formats || []).find(f => f.id === 'one') || {};
-  const fLines = w => adultFam ? ((F[w] || {})[ST.main] || (F[w] || {}).oak || (oneF[w] || {})[key] || (oneF[w] || {}).oak || (F[w] || {}).all || []) : ((F[w] || {})[key] || []);
+  const fLines = w => adultFam ? ((F[w] || {})[ST.main] || (oneF[w] || {})[ST.main] || (F[w] || {}).oak || (oneF[w] || {}).oak || (F[w] || {}).all || []) : ((F[w] || {})[key] || []);
   const br = (P.bridges || {})[voice] || [], prac = plPractice(S), pp = plPracticePart(S);
   const steps = [{kind:'open', name:'Arrive', min:times.open, say:fLines('open').map(plLine)}];
   GV_PARTS.forEach((k, i) => {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js?v=tc6"></script>
+<script src="/shared/gg-app.js?v=tc7"></script>
 <script src="/shared/gg-shelf.js?v=fd4"></script>
 <script src="/shared/gg-sources.js?v=src15"></script>
 <meta charset="UTF-8">
@@ -903,7 +903,7 @@ a.big-btn{text-decoration:none;}
 <script src="/maple/checkin.js?v=ps1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
-<script src="/shared/gg-tend.js?v=vb9"></script>
+<script src="/shared/gg-tend.js?v=vb10"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -2518,7 +2518,7 @@ function mpVisitAllIn(v) { const plan = window.GGTend && GGTend.plan(); return !
 function mpVisitCardHtml(v, i) {
   const strong = (v.s || []).map(partBy).filter(Boolean), tries = (v.t || []).filter(t => partBy(t[0]));
   return `${strong.length ? `<p><b>Your strong parts:</b> ${strong.map(p => `<span class="mp-dot on" style="--pc:${p.hex};display:inline-block;vertical-align:-1px;margin-right:4px" aria-hidden="true"></span>${esc(p.name)}`).join(', ')}</p>` : ''}
-    ${tries.length ? `<p style="margin-top:8px"><b>What you chose to try:</b></p><ul style="margin:4px 0 0;padding-left:22px">${tries.map(t => `<li><b>${esc(mpNormName(t[0], t[1]))}</b> <span class="gt-small">${esc(partBy(t[0]).name)}</span>${t[2] ? ': ' + esc(t[2]) : ''}</li>`).join('')}</ul>` : ''}
+    ${tries.length ? `<p style="margin-top:8px"><b>What you chose to try:</b></p><ul style="margin:4px 0 0;padding-left:22px">${tries.map(t => `<li><b>${esc(mpNormName(t[0], t[1]))}</b> <span class="gt-small">(${esc(partBy(t[0]).name)})</span>${t[2] ? ': ' + esc(t[2]) : ''}</li>`).join('')}</ul>` : ''}
     <div class="btn-row" style="margin-top:10px">${tries.length && window.GGTend ? (mpVisitAllIn(v) ? '<span class="gt-small">These are in your growth plan. Look for them on Today!</span>' : `<button type="button" class="btn btn-primary btn-sm" onclick="mpVisitAddPlan(${i})">Add to my growth plan</button>`) : ''}<button type="button" class="btn btn-secondary btn-sm" onclick="mpVisitRemove(${i})">Remove this card</button></div>`;
 }
 function mpVisitHtml() {

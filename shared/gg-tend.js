@@ -729,7 +729,7 @@
     state: function () { return ensure(); },
     plan: function () { var s = ensure(); return s ? s.plan : null; },
     setPlan: function (p) { var s = ensure(); if (!s) return false; var old = s.plan || {}; s.plan = JSON.parse(JSON.stringify(p));
-      Object.keys(old).forEach(function (k) { var L = (old[k] || {}).lib; if (L && L.length) { if (!s.plan[k]) s.plan[k] = { selected: [] }; if (!s.plan[k].lib) s.plan[k].lib = L; } });
+      Object.keys(old).forEach(function (k) { var L = (old[k] || {}).lib, O = (old[k] || {}).own; if (L && L.length) { if (!s.plan[k]) s.plan[k] = { selected: [] }; if (!s.plan[k].lib) s.plan[k].lib = L; } if (O && O.length) { if (!s.plan[k]) s.plan[k] = { selected: [] }; if (!s.plan[k].own) s.plan[k].own = O; } });   // library picks and own practices (a visit card's) stay when the plan is rebuilt
       persist(); renderToday(); return true; },
     openLib: function (part) { openLib(part); }, closeLib: function () { closeLib(); },
     shareFamily: function () { openFamily(); }, closeFamily: function () { closeFamily(); }, famDraw: function () { famDraw(); }, famCopy: function () { famCopy(); }, famShare: function () { famShare(); },

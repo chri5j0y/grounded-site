@@ -1425,11 +1425,11 @@ function vcPlanHas(plan, k, name) {
     || String(x.custom || '').toLowerCase() === n || (x.lib || []).some(l => l && String(l.n || '').toLowerCase() === n);
 }
 function vcAllIn(v) { const plan = window.GGTend && GGTend.plan(); return !!plan && (v.t || []).every(t => vcPlanHas(plan, t[0], t[1])); }
-function vcCardHtml(v, i) {
+function vcCardHtml(v, i, dated) {
   const strong = (v.s || []).map(vcPartName).filter(Boolean), tries = (v.t || []).filter(t => DOMAIN_BY_KEY[t[0]]);
-  return `<p class="gt-small" style="margin:0 0 6px">${escapeHtml(formatDate(v.d))}</p>
+  return `${dated ? `<p class="gt-small" style="margin:0 0 6px">${escapeHtml(formatDate(v.d))}</p>` : ''}
     ${strong.length ? `<p><b>Strong parts:</b> ${strong.map(escapeHtml).join(', ')}</p>` : ''}
-    ${tries.length ? `<p style="margin-top:8px"><b>What you chose to try:</b></p><ul style="margin:4px 0 0;padding-left:20px">${tries.map(t => `<li><b>${escapeHtml(t[1])}</b> <span class="gt-small">${escapeHtml(vcPart(t[0]).part)}</span>${t[2] ? ': ' + escapeHtml(t[2]) : ''}</li>`).join('')}</ul>` : ''}
+    ${tries.length ? `<p style="margin-top:8px"><b>What you chose to try:</b></p><ul style="margin:4px 0 0;padding-left:20px">${tries.map(t => `<li><b>${escapeHtml(t[1])}</b> <span class="gt-small">(${escapeHtml(vcPart(t[0]).part)})</span>${t[2] ? ': ' + escapeHtml(t[2]) : ''}</li>`).join('')}</ul>` : ''}
     <div class="btn-row" style="margin-top:10px">${tries.length && window.GGTend && !vcHelping() ? (vcAllIn(v) ? '<span class="gt-small">These practices are in your growth plan.</span>' : `<button type="button" class="btn btn-primary btn-sm" onclick="vcAddPlan(${i})">Add to my growth plan</button>`) : ''}<button type="button" class="btn btn-secondary btn-sm" onclick="vcRemove(${i})">Remove this card</button></div>`;
 }
 function vcTodayHtml() {
@@ -1437,7 +1437,7 @@ function vcTodayHtml() {
   const list = vcList(); if (!list.length) return '';
   const last = list.length - 1, v = list[last];
   return `<div class="gt-card vc-card" style="border-left:5px solid var(--gold,#8B5E1A)"><h3>From your visit on ${escapeHtml(formatDate(v.d))}</h3>${vcCardHtml(v, last)}
-    ${list.length > 1 ? `<details style="margin-top:12px"><summary>Earlier visits (${list.length - 1})</summary>${list.slice(0, -1).map((x, i) => `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line,#ddd)">${vcCardHtml(x, i)}</div>`).reverse().join('')}</details>` : ''}
+    ${list.length > 1 ? `<details style="margin-top:12px"><summary>Earlier visits (${list.length - 1})</summary>${list.slice(0, -1).map((x, i) => `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line,#ddd)">${vcCardHtml(x, i, true)}</div>`).reverse().join('')}</details>` : ''}
     <p class="gt-small" style="margin-top:10px">Kept in your own locked profile on this device.</p></div>`;
 }
 function vcAddPlan(i) {
