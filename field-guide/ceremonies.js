@@ -260,7 +260,7 @@ function build(s, keepOld){
   if (T) (T.parts || []).forEach(tp => {
     const id = typeof tp === 'string' ? tp : tp.part, p = parts.find(x => x.id === id) || PART(id); if (!p) return;
     const e = mkEntry(p, true, tp.option, s);
-    const vOf = r => r && r.versions ? (r.versions[s.bible] ? s.bible : 'kjv') : null;
+    const vOf = r => r && r.versions ? (r.versions[s.bible] && !offIds().includes(s.bible) ? s.bible : 'kjv') : null;
     if (tp.readings) e.rd = arr(tp.readings).map(id => RD(id)).filter(Boolean).map(r => ({id: r.id, ver: vOf(r)}));
     else if (tp.hint){ const r = hintReading(tp.hint); if (r) e.rd = [{id: r.id, ver: vOf(r)}]; }
     out.push(e);
@@ -308,16 +308,23 @@ function rScore(r, s){
   if (st.tone && arr(t.tone).includes(st.tone)) n += 1;
   return n;
 }
+// Bible versions (GWG BLD 749): a version marked off (NIV, until Biblica gives written permission)
+// is never offered, shown, or printed; a saved reading that chose it shows and prints KJV.
+const verOff = v => !!v && (v.off === true || (v.id === 'niv' && v.on !== true));
+const offIds = () => (cer().bible.versions || []).filter(verOff).map(v => v.id).concat((cer().bible.versions || []).some(v => v.id === 'niv') ? [] : ['niv']);
+const onVers = () => (cer().bible.versions || []).filter(v => !verOff(v));
+const offName = id => { const v = (cer().bible.versions || []).find(x => x.id === id); return (v && (v.short || v.name)) || String(id || '').toUpperCase(); };
 function vers(r){
-  const B = cer().bible, out = [];
-  (B.versions || []).forEach(v => { if (r.versions && r.versions[v.id]) out.push(v); });
-  if (!out.length && r.versions) Object.keys(r.versions).forEach(k => out.push({id: k, name: k.toUpperCase(), short: k.toUpperCase()}));
+  const out = [];
+  onVers().forEach(v => { if (r.versions && r.versions[v.id]) out.push(v); });
+  if (!out.length && r.versions) Object.keys(r.versions).filter(k => !offIds().includes(k)).forEach(k => out.push({id: k, name: k.toUpperCase(), short: k.toUpperCase()}));
   return out;
 }
 const vShort = id => { const v = (cer().bible.versions || []).find(x => x.id === id); return (v && (v.short || v.abbr)) || String(id || '').toUpperCase(); };
 function rText(r, ver){
   if (!r) return '';
-  if (r.versions){ const v = r.versions[ver] ? ver : (r.versions.kjv ? 'kjv' : Object.keys(r.versions)[0]); return {text: r.versions[v] || '', ver: v}; }
+  if (r.versions){ const off = offIds(), ok = k => r.versions[k] && !off.includes(k);
+    const v = ok(ver) ? ver : (r.versions.kjv ? 'kjv' : Object.keys(r.versions).find(ok) || Object.keys(r.versions)[0]); return {text: r.versions[v] || '', ver: v}; }
   return {text: r.text || '', ver: null};
 }
 const byOfR = r => r.by || r.author || '';
@@ -326,7 +333,7 @@ const rHead = (r, ver) => r.kind === 'scripture' ? (r.ref || r.title) + (ver ? '
 const rNote = r => (r.bring ? '<p class="cer-do"><b>Bring Your Own Copy</b>' + esc([r.title, byOfR(r)].filter(Boolean).join(', ')) + '</p>' : '') + (r.note ? `<p class="cer-do"><b>Note</b>${esc(r.note)}</p>` : '');
 function usedNotices(s){
   const used = new Set(); onParts(s).forEach(e => (e.rd || []).forEach(x => { const r = RD(x.id); if (r && r.versions) used.add(rText(r, x.ver).ver); }));
-  return (cer().bible.versions || []).filter(v => used.has(v.id) && v.notice).map(v => v.notice);
+  return onVers().filter(v => used.has(v.id) && v.notice).map(v => v.notice);
 }
 
 // ---------- views ----------
@@ -486,7 +493,7 @@ function vSetup(s){
     <label class="f">Setting</label>${chips('setting', L(SU.settings, fam), st.setting)}
     ${L(SU.honors, fam).length ? `<label class="f">Honors and Rituals</label>${chips('honors', L(SU.honors, fam), st.honors, true)}` : ''}
     <label class="f">Who Speaks</label>${chips('speakers', L(SU.speakers, fam), st.speakers, true)}
-    ${hasScripture ? `<label class="f">Bible Version</label>${chips('bible', (C.bible.versions || []).map(v => [v.id, v.short || v.name]), s.bible || C.bible.default || 'kjv')}` : ''}</div>
+    ${hasScripture ? `<label class="f">Bible Version</label>${chips('bible', onVers().map(v => [v.id, v.short || v.name]), offIds().includes(s.bible) ? 'kjv' : s.bible || C.bible.default || 'kjv')}${offIds().includes(s.bible) ? `<p class="muted" style="font-size:15px;margin-top:6px">${esc(offName(s.bible))} is waiting on permission; showing KJV</p>` : ''}` : ''}</div>
   <div class="card"><h3>Start From a Template</h3><p class="muted">Templates for this ceremony, the closest match to the faith first.</p>
     <div class="cer-tmpl" style="margin-top:10px"><button type="button" class="cer-type" data-cer="tmpl" data-v="" aria-pressed="${!s.template}"><b>The Usual Parts</b><small>The parts that fit these answers.</small></button>
     ${tm.map(t => `<button type="button" class="cer-type" data-cer="tmpl" data-v="${esc(t.id)}" aria-pressed="${s.template === t.id}"><b>${esc(t.name)}</b>${t.note ? `<small>${esc(t.note)}</small>` : ''}</button>`).join('')}</div>
@@ -499,6 +506,7 @@ function readingBlock(s, e){
     return `<div class="cer-rd"><div class="spread"><span class="rt">${esc(rHead(r, tx.ver))}${r.kind !== 'scripture' && r.ref ? ` <span class="muted">${esc(r.ref)}</span>` : ''}</span>
       <span class="row">${vs.length > 1 ? `<select aria-label="Bible version" data-cerv="${e.k}|${i}">${vs.map(v => `<option value="${esc(v.id)}"${v.id === tx.ver ? ' selected' : ''}>${esc(v.short || v.name)}</option>`).join('')}</select>` : ''}
       <button type="button" class="btn btn-line btn-sm" data-cer="rd-x" data-v="${e.k}|${i}" aria-label="Remove ${esc(r.title)}">Remove</button></span></div>
+      ${x.ver && x.ver !== tx.ver && offIds().includes(x.ver) ? `<p class="muted cer-off" style="font-size:14px;margin:2px 0 4px">${esc(offName(x.ver))} is waiting on permission; showing ${esc(vShort(tx.ver))}</p>` : ''}
       ${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}${rNote(r)}${tx.text ? `<details><summary class="muted" style="font-size:15px;cursor:pointer">Read it</summary><p>${esc(tx.text)}</p></details>` : ''}</div>`; }).join('');
   return chosen + (S.pick === e.k ? picker(s, e) : `<button type="button" class="btn btn-line btn-sm" data-cer="pick" data-v="${e.k}" style="margin-top:4px">Add a Reading</button>`);
 }
@@ -578,7 +586,7 @@ function vPrint(s){
   ${bl ? card('keep', 'Keepsake Copy', 'The blessing itself on one page, to sign, date, and leave with the family: by the door, in a frame, or in a baby book.') : ''}
   ${card('program', 'Program', (bl ? 'Optional, for a larger gathering. ' : '') + 'A folded half-letter program: print both sides of one letter sheet, then fold.', prog)}
   ${card('family', 'Family Copy', 'A clean copy for the family or the couple to read and approve.')}</div>
-  <p class="muted" style="font-size:14px;margin-top:12px">Each reading prints with its source line. The ESV and NIV notices print whenever their text is used.</p>`;
+  <p class="muted" style="font-size:14px;margin-top:12px">Each reading prints with its source line. The NKJV and ESV notices print whenever their text is used.</p>`;
 }
 
 // Prefills: setup answers first, then Checklist notes. Each part's notes fill only the first question that asks for them.
@@ -875,7 +883,7 @@ function act(k, v, el){
     case 'pmore': S.pmore += 30; { const e = entry(S.pick), l = document.getElementById('cer-pick-list'); if (e && l) l.innerHTML = pickList(s, e); } return;
     case 'rd-add': { const i = v.indexOf('|'), e = entry(v.slice(0, i)), id = v.slice(i + 1), r = RD(id); if (!e || !r) return; e.rd = e.rd || [];
       if (e.rd.some(x => x.id === id)){ toast('Already added.'); return; }
-      e.rd.push({id, ver: r.versions ? (r.versions[s.bible] ? s.bible : 'kjv') : null}); e.touched = true; keep(s); S.pick = null; rerender(true); toast('Reading added.'); return; }
+      e.rd.push({id, ver: r.versions ? (r.versions[s.bible] && !offIds().includes(s.bible) ? s.bible : 'kjv') : null}); e.touched = true; keep(s); S.pick = null; rerender(true); toast('Reading added.'); return; }
     case 'rd-x': { const [ek, i] = v.split('|'), e = entry(ek); if (!e) return; e.rd.splice(+i, 1); keep(s); rerender(true); return; }
     case 'up': move(v, -1); return;
     case 'down': move(v, 1); return;
