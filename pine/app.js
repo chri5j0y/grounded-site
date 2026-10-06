@@ -280,14 +280,14 @@ const TREE_SHAPES = {
     kind: 'taper', dx: 0, dy: -8, delay: 0.65, seam: true, joints: true,
     paths: [
       ['M200 74 C200 60 200 46 200 26', 6, 2],
-      ['M197 234 C182 233 160 234 104 236', 6, 2],
-      ['M203 230 C218 229 240 230 296 232', 6, 2],
-      ['M197 198 C182 197 160 198 117 200', 5, 1.8],
-      ['M203 194 C218 193 240 194 283 196', 5, 1.8],
-      ['M197 155 C182 154 160 155 132 157', 4, 1.4],
-      ['M203 151 C218 150 240 151 268 153', 4, 1.4],
-      ['M197 112 C182 111 160 112 147 114', 3, 1.2],
-      ['M203 108 C218 107 240 108 253 110', 3, 1.2]
+      ['M197 234 C182 233 160 234 108 236', 6, 2],
+      ['M203 230 C218 229 240 230 292 232', 6, 2],
+      ['M197 198 C182 197 160 198 121 200', 5, 1.8],
+      ['M203 194 C218 193 240 194 279 196', 5, 1.8],
+      ['M197 155 C182 154 160 155 136 157', 4, 1.4],
+      ['M203 151 C218 150 240 151 264 153', 4, 1.4],
+      ['M197 112 C182 111 160 112 151 114', 3, 1.2],
+      ['M203 108 C218 107 240 108 249 110', 3, 1.2]
     ]
   },
   // the tiers of the Pine mark: [y of the lower edge, height, reach left, reach right]
@@ -295,7 +295,7 @@ const TREE_SHAPES = {
   fruit: { kind: 'cones', dx: 0, dy: -18, delay: 1.1, cones: [[140, 247], [262, 247], [150, 211], [252, 211], [162, 168], [238, 168], [178, 125]] }
 };
 const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
-const DRAW_ORDER = ['branches', 'leaves', 'fruit', 'bark', 'trunk', 'roots'];
+const DRAW_ORDER = ['branches', 'bark', 'trunk', 'leaves', 'fruit', 'roots'];
 const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
 
 // Turns a single curve into a filled shape that tapers from w0 to w1
