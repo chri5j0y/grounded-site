@@ -20024,7 +20024,13 @@ window.GG_LEARN = {
          "One question for each part, about 2 minutes"
         ]
        ],
-       "say": "There are two ways to check in. The full check-in asks seven questions for each part, forty two in all, and takes about ten minutes. The Quick Check-in asks one question for each part, and takes about two. The first time, Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve."
+       "say": "There are two ways to check in. The full check-in asks seven questions for each part, forty two in all, and takes about ten minutes. The Quick Check-in asks one question for each part, and takes about two. The first time, Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve.",
+       "cue": {
+        "at": [
+         1,
+         2
+        ]
+       }
       },
       {
        "k": "points",
@@ -24321,7 +24327,14 @@ window.GG_LEARN = {
          "With something hard"
         ]
        ],
-       "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Their grown-ups still get a quiet alert if a check-in asks for a caring conversation."
+       "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Their grown-ups still get a quiet alert if a check-in asks for a caring conversation.",
+       "cue": {
+        "at": [
+         0,
+         1,
+         0
+        ]
+       }
       },
       {
        "k": "trees",
