@@ -409,6 +409,8 @@ function seasonText() { const n = seasonsNow().map(seasonName).filter(Boolean); 
 function sensOn() { return !!rec().askOpt; }
 function ageNow() { const a = parseInt(rec().age, 10); return isNaN(a) ? null : a; }
 function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
+// Groundwork's words (birch/groundwork.js), read here so the game layer can count skills.
+const GW = window.BIRCH_GROUNDWORK || { chapters: [], intro: [], skills: {} };
 
 // =====================================================================
 // CHECKIN: one question on the screen at a time
@@ -706,11 +708,11 @@ function renderGrowthPlanBuilder(mode) {
       </div>
       <div class="practice-picker">
         <div class="practice-picker-label">Suggested: about ${oakSuggest(scores[d.key])} practices</div>
-        <div class="practice-list" id="cp-list-${mode}-${d.key}">${d.restore.map((r, i) => `
+        <div class="practice-list" id="cp-list-${mode}-${d.key}">${seasonOrder(d.key, d.restore).map((r, i) => `
           <div class="practice-item" data-i="${i}">
             <label class="practice-option">
               <input type="checkbox" class="sq-pick-box" name="cp-${mode}-${d.key}" value="${escapeHtml(r[0])}" onchange="enforcePracticeLimit(this,'${mode}','${d.key}')">
-              <span class="practice-option-text"><strong>${escapeHtml(shownName(d.key, r[0]))}.</strong> ${shownLine(d.key, r[0], r[1])}${practiceMeta(d.key, r[0])}</span>
+              <span class="practice-option-text"><strong>${escapeHtml(shownName(d.key, r[0]))}.</strong> ${shownLine(d.key, r[0], r[1])}${practiceMeta(d.key, r[0])}${fitsSeason(d.key, r[0]) ? '<span class="pm-tags"><span class="pm-tag pm-fit">Fits your season</span></span>' : ''}</span>
             </label>
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0])}</div>
@@ -727,6 +729,10 @@ function renderGrowthPlanBuilder(mode) {
 }
 // No limits on practices, only suggestions: about 3 for a Strong part, 4 for Steady,
 // 5 for a Growing Edge. Choosing one now only refreshes that part's list.
+// My Season (decision 6) only orders the practices: ones that fit the person's seasons
+// come first. It never changes scores, and every practice stays on the list.
+function fitsSeason(key, name) { const m = seasonsNow(); return !!m.length && ((SP.SEASON || {})[key + '|' + name] || []).some(id => m.includes(id)); }
+function seasonOrder(key, rows) { return rows.filter(r => fitsSeason(key, r[0])).concat(rows.filter(r => !fitsSeason(key, r[0]))); }
 function enforcePracticeLimit(el, mode, key) { oakRotApply(mode, key, el && !el.checked ? el : null); }
 // Six at a time: chosen practices first, then up to 6 unchosen. Show Me Others brings the next 6.
 const OAK_ROT = {}, OAK_ROT_N = 6;
@@ -1222,8 +1228,8 @@ const TEND_CFG = {
   history: () => (personalHistory || []).filter(e => e && !e.from),
   hasResults: () => !!window.currentClientEntry,
   toast: m => showToast(m),
-  profileHtml: () => pnProfileHtml(),
-  extraSettings: () => pnSettingsHtml(),
+  profileHtml: () => bcProfileHtml(),
+  extraSettings: () => bcSettingsHtml(),
   lockedHtml: () => birchWho().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${birchWho().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Only your passcode opens it.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create my profile</button><button class="btn btn-secondary" onclick="startCheckin()">Try a check-in first</button></div></div>`,
   todayExtra: s => todayKindHtml(s),
   seasonExtra: s => seasonExtraHtml(s),
@@ -1258,62 +1264,80 @@ function sortEntries(list) {
 function openPersonalFilePicker() { document.getElementById('personal-file-input').click(); }
 
 // =====================================================================
-// EARLIER RINGS: from Oak (a one-time copy) and from Aspen (read in place)
-// Kept, labeled earlier, and never compared with Pine rings.
+// EARLIER RINGS: from Oak and from Pine, copied once on the person's tap
+// Kept, labeled From Oak or From Pine, and never compared with Birch rings.
+// The source record always stays whole (copy, never move).
 // =====================================================================
-function bringOakHtml() {
-  if (!PROF || !window.GGP) return '';
-  const oak = GGP.data(PROF.id, 'oak'), r = rec();
-  const n = ((oak && oak.history) || []).filter(e => e && e.scores).length;
-  if (!n || r.oakBrought) return '';
-  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here so Pine shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
+const FROM_NAME = { oak: 'From Oak', pine: 'From Pine', aspen: 'From Aspen', birch: 'From Birch' };
+function ringCopy(e, from) {
+  const c = JSON.parse(JSON.stringify(e)), f = e.from || from;
+  c.id = f + '-' + String(e.id || e.date).replace(/^(oak|pine)-/, ''); c.from = f;
+  delete c.answers; delete c.safety; delete c.sens; delete c.flags; delete c.reflections;
+  return c;
+}
+function oakRings() { return PROF && window.GGP ? (((GGP.data(PROF.id, 'oak') || {}).history) || []).filter(e => e && e.scores && e.from !== 'birch') : []; }
+function pineRings() { return PROF && window.GGP ? (((GGP.data(PROF.id, 'pine') || {}).history) || []).filter(e => e && e.scores && !e.from) : []; }
+function bringHtml() {
+  if (!PROF || HELP || !window.GGP) return '';
+  const r = rec(), o = oakRings().length, p = pineRings().length;
+  let h = '';
+  if (o && !r.oakBrought) h += `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${o} check-in${o === 1 ? '' : 's'} saved in Oak. Copy them here so Birch shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
+  if (p && !r.pineBrought) h += `<div class="gt-card sq-bring"><h3>Bring My Pine Check-ins</h3><p>You have ${p} check-in${p === 1 ? '' : 's'} saved in Pine. Copy them here, labeled From Pine. Pine keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringPine()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringPine(true)">Not Now</button></div></div>`;
+  return h;
+}
+function bringList(list, from) {
+  const ids = new Set(personalHistory.map(e => e.id)); let n = 0;
+  list.forEach(e => { const c = ringCopy(e, from); if (!ids.has(c.id) && !ids.has(e.id)) { personalHistory.push(c); ids.add(c.id); n++; } });
+  sortEntries(personalHistory);
+  return n;
+}
+// A Pine notebook that came along with a Start My Oak becomes Groundwork's From Pine chapter.
+function takePineNotebook(ns) {
+  const L = gwRec(); if (!L || L.fromPine || !ns || !ns.answers || !Object.keys(ns.answers).length) return false;
+  L.fromPine = { answers: JSON.parse(JSON.stringify(ns.answers)), opened: JSON.parse(JSON.stringify(ns.opened || {})), from: 'pine', copied: todayKey() };
+  return true;
 }
 function bringOak(skip) {
   if (!PROF || !window.GGP) return;
-  const oak = GGP.data(PROF.id, 'oak'), r = rec();
-  let n = 0;
-  if (!skip) {
-    const ids = new Set(personalHistory.map(e => e.id));
-    ((oak && oak.history) || []).forEach(e => { if (e && e.scores && !ids.has('oak-' + e.id) && !ids.has(e.id)) { const c = JSON.parse(JSON.stringify(e)); c.id = 'oak-' + (e.id || e.date); c.from = 'oak'; personalHistory.push(c); n++; } });
-    sortEntries(personalHistory);
-  }
+  const r = rec(); let n = 0, nb = false;
+  if (!skip) { n = bringList(oakRings(), 'oak'); nb = takePineNotebook((GGP.data(PROF.id, 'oak') || {}).nextsteps); }
   r.oakBrought = todayKey();
-  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Oak check-ins are here now, labeled From Oak.' : 'Nothing new to bring.'); if (window.GGTend) GGTend.render(); renderProgress(); });
+  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Oak check-ins are here now, labeled.' + (nb ? ' Your Pine notebook is in Groundwork.' : '') : 'Nothing new to bring.'); if (window.GGTend) GGTend.render(); renderProgress(); });
 }
-// A teen who moved up from Aspen keeps Aspen's rings in the same profile. Pine shows
-// the ones on the standard as earlier rings, labeled From Aspen. Nothing is copied.
-function aspenRings() {
-  if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return [];
-  const a = GGP.data(PROF.id, 'aspen'), st = a && a.student;
-  return ((st && st.rings) || []).filter(r => r && r.answers && r.std).map(r => {
-    const scores = {}, unsure = [];
-    PART_ORDER.forEach(k => { const v = ((r.answers || {})[k] || {}).score; if (typeof v === 'number') scores[k] = v; else { scores[k] = 5; unsure.push(k); } });
-    return { id: 'aspen-' + r.id, date: String(r.date || '').slice(0, 10), from: 'aspen', grade: r.grade, scores, unsure, type: 'full' };
-  });
+function bringPine(skip) {
+  if (!PROF || !window.GGP) return;
+  const r = rec(); let n = 0, nb = false;
+  if (!skip) { n = bringList(pineRings(), 'pine'); nb = takePineNotebook((GGP.data(PROF.id, 'pine') || {}).nextsteps); }
+  r.pineBrought = todayKey();
+  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Pine check-ins are here now, labeled From Pine.' + (nb ? ' Your Next Steps notebook is in Groundwork.' : '') : 'Nothing new to bring.'); if (window.GGTend) GGTend.render(); renderProgress(); });
 }
-const FROM_NAME = { oak: 'From Oak', aspen: 'From Aspen' };
 
 // =====================================================================
 // PROFILES: Grounded profiles, shared by every page (/shared/gg-profiles.js)
-// Pine opens High school profiles (age "pine") only. Kids, middle schoolers,
-// and adults are pointed to their own trees.
+// A Birch profile is an adult profile whose tree is Birch (GGP.tree). Any adult
+// profile opened here tends a Birch tree, the way Sequoia works; one whose tree
+// is Oak or Sequoia sees a gentle note, never a block. Kids, middle schoolers,
+// and high schoolers are pointed to their own trees.
 // =====================================================================
 function profSync() {
   const a = window.GGP && GGP.active();
-  if (a && a.age === 'pine') {
-    const d = (PROF = { id: a.id, name: a.name, avatar: a.avatar, age: a.age }, rec());
+  if (a && a.age === 'adult') {
+    PROF = { id: a.id, name: a.name, avatar: a.avatar, age: a.age };
+    const d = rec();
     window.personalHistory = d.history.slice(); personalHistory = window.personalHistory;
     window.personalFileLoaded = true;
-  } else if (PROF) {
-    PROF = null;
+    if (HELP && !helpedWithBirch().some(p => p.id === HELP)) HELP = null;
+  } else if (PROF || HELP) {
+    PROF = null; HELP = null;
     window.personalHistory = []; personalHistory = window.personalHistory;
     window.personalFileLoaded = false; window.currentClientEntry = null; window.lastClientScores = null;
   }
   loadBank();
-  renderProfileBar(); renderSaveBox(); renderProgress(); renderAboutParts();
-  if (window.GGTend) GGTend.render();
-  if (document.getElementById('client-growthplan').classList.contains('active')) oakPlanOpen();
-  if (document.getElementById('client-next').classList.contains('active')) renderNext();
+  renderProfileBar(); renderSaveBox(); renderProgress(); renderAboutParts(); renderHelpBanner();
+  if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render();
+  if (document.getElementById('client-growthplan').classList.contains('active')) { if (HELP) renderHelpPlan(); else oakPlanOpen(); }
+  if (document.getElementById('client-ground').classList.contains('active')) renderGround();
+  helpFromHash();
 }
 async function profPersist() {
   if (!PROF || !window.GGP) return;
@@ -1321,59 +1345,67 @@ async function profPersist() {
   await GGP.save(PROF.id);
 }
 function profLock() { if (window.GGP) GGP.lock().then(() => showToast('Locked. Your profile is safe on this device.')); }
-const OTHER_TREE = { maple: '<a href="/maple/">Maple</a> is made for kids.', aspen: '<a href="/aspen/">Aspen</a> is made for middle schoolers.', adult: '<a href="/oak/">Oak</a> is made for adults, and <a href="/sequoia/">Sequoia</a> for older adults.' };
+const OTHER_TREE = { maple: '<a href="/maple/">Maple</a> is made for kids.', aspen: '<a href="/aspen/">Aspen</a> is made for middle schoolers.', pine: '<a href="/pine/">Pine</a> is made for high schoolers.' };
+const TREE_NAME = { birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia' };
+function treeNow(id) { return window.GGP && GGP.tree ? GGP.tree(id) : 'birch'; }
 function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();
-  if (a && a.age !== 'pine') {
-    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Pine is made for high schoolers. ${OTHER_TREE[a.age] || OTHER_TREE.adult}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="pnSwitch()">Switch person</button></div></div>`;
+  if (a && a.age !== 'adult') {
+    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Birch is built for young adults, 18 to 26. ${OTHER_TREE[a.age] || ''}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="bcSwitch()">Switch person</button></div></div>`;
     return;
   }
   if (PROF) {
     const t = new Date(a.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+    const tree = treeNow(a.id);
+    const nudge = tree !== 'birch' && !HELP ? `<p class="pbar-kids">Your profile's tree is ${TREE_NAME[tree] || 'Oak'}${tree === 'sequoia' ? ', built for 60 and up' : ', built for adults 25 to 60'}. If you are 26 or younger, you can make Birch your tree, so My tree opens here. <button type="button" class="text-btn" onclick="makeBirchMine()">Make Birch My Tree</button></p>` : '';
+    const helps = helpedWithBirch();
+    const helpRow = helps.length ? `<div class="sq-helprow"><span>You help:</span>${helps.map(p => `<button type="button" class="btn ${HELP === p.id ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="helpOpen('${p.id}')">${escapeHtml(p.name)}</button>`).join('')}${HELP ? '<button type="button" class="btn btn-secondary btn-sm" onclick="helpBack()">My Own Birch</button>' : ''}</div>` : '';
     bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGTend.openSettings()" aria-label="Profile and Settings">${GGAv.html(a.avatar, a.name, 44)}</button>
-      <div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>${gradeNow() ? 'Grade ' + escapeHtml(gradeNow()) + '. ' : ''}Saving to your own profile on this device. Unlocked until ${t}.</span></div>
-      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div></div>`;
+      <div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Saving to your own profile on this device. Unlocked until ${t}.</span></div>
+      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${nudge}${helpRow}</div>`;
   } else {
-    bar.innerHTML = `<div class="pbar pbar-off">${pineWhoHtml()}</div>`;
+    bar.innerHTML = `<div class="pbar pbar-off">${birchWhoHtml()}</div>`;
   }
 }
-/* Who's tending today? Every high schooler on this device keeps their own tree in their
+function makeBirchMine() { if (PROF && window.GGP && GGP.setTree) { GGP.setTree(PROF.id, 'birch'); showToast('Birch is your tree now. You can change it in Picture, passcode, and more.'); renderProfileBar(); } }
+/* Who's tending today? Every young adult on this device keeps their own tree in their
    own locked profile. One skips the list and goes straight to their passcode. */
-function pineWho() { return window.GGP ? GGP.list().filter(p => p.age === 'pine').sort((a, b) => String(a.name).localeCompare(String(b.name))) : []; }
-function pineOthers() { return window.GGP ? GGP.list().filter(p => p.age !== 'pine') : []; }
-function pineWhoHtml() {
-  const teens = pineWho(), others = pineOthers();
-  const otherLine = others.length ? `<p class="pbar-kids">Kids, middle schoolers, and adults tend their trees in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, <a href="/oak/">Oak</a>, and <a href="/sequoia/">Sequoia</a>.</p>` : '';
-  if (!teens.length) return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create your own private profile, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.</span></div>
+function birchWho() { return window.GGP ? GGP.list().filter(p => p.age === 'adult' && p.tree === 'birch').sort((a, b) => String(a.name).localeCompare(String(b.name))) : []; }
+function birchOthers() { return window.GGP ? GGP.list().filter(p => !(p.age === 'adult' && p.tree === 'birch')) : []; }
+function birchWhoHtml() {
+  const mine = birchWho(), others = birchOthers(), adults = others.filter(p => p.age === 'adult').length;
+  const otherLine = others.length ? `<p class="pbar-kids">Other trees on this device: kids, middle schoolers, and high schoolers tend theirs in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, and <a href="/pine/">Pine</a>; adults in <a href="/oak/">Oak</a> (built for 25 to 60) and <a href="/sequoia/">Sequoia</a> (60 and up).${adults ? ' <button type="button" class="text-btn" onclick="GGP.openDialog()">Open another profile here</button>' : ''}</p>` : '';
+  if (!mine.length) return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create your own private profile, locked with a passcode only you know. Only your passcode opens it.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${otherLine}`;
-  if (teens.length === 1) { const a = teens[0];
+  if (mine.length === 1) { const a = mine[0];
     return `<div class="pbar-who"><strong>Welcome back${a.name ? ', ' + escapeHtml(a.name) : ''}</strong><span>Open your profile to see your tree and today's practices.</span></div>
-      <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="pnOpenWho(0)">Open my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="profCreateDialog()">Add a person</button></div>${otherLine}`; }
+      <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="bcOpenWho(0)">Open my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="profCreateDialog()">Add a person</button></div>${otherLine}`; }
   return `<div class="pbar-who"><strong>Who's tending today?</strong><span>Tap your picture, then enter your passcode. Each person's tree stays locked in their own profile.</span></div>
-    <div class="oak-people">${teens.map((a, i) => `<button type="button" class="oak-person" onclick="pnOpenWho(${i})">${GGAv.html(a.avatar, a.name, 56)}<b>${escapeHtml(a.name)}</b></button>`).join('')}
+    <div class="oak-people">${mine.map((a, i) => `<button type="button" class="oak-person" onclick="bcOpenWho(${i})">${GGAv.html(a.avatar, a.name, 56)}<b>${escapeHtml(a.name)}</b></button>`).join('')}
       <button type="button" class="oak-person oak-add" onclick="profCreateDialog()"><span class="oak-plus" aria-hidden="true">+</span><b>Add a person</b></button></div>${otherLine}`;
 }
-function pnOpenWho(i) {
-  const a = pineWho()[i]; if (!a || !window.GGP) return;
+function bcOpenWho(i) {
+  const a = birchWho()[i]; if (!a || !window.GGP) return;
   GGP.openDialog({ id: a.id }).then(ok => { if (ok && window.currentClientEntry) setTimeout(savePersonalFile, 50); });
 }
-function pnOpenAny() {
-  const n = pineWho().length;
-  if (n === 1) { pnOpenWho(0); return; }
+function bcOpenAny() {
+  const n = birchWho().length;
+  if (n === 1) { bcOpenWho(0); return; }
   if (!n) { profCreateDialog(); return; }
   const b = document.getElementById('st-profile-bar'); if (b) b.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
-function pnSwitch() {
+function bcSwitch() {
   if (!window.GGP) return;
   if (window.GGTend) GGTend.closeSettings();
+  HELP = null;
   GGP.lock().then(() => { showToast('Locked. Choose who is tending.'); const b = document.getElementById('st-profile-bar'); if (b) b.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
 }
 function profCreateDialog() {
   if (!window.GGP) return;
   const carry = {};
-  if (LOCAL.grade || LOCAL.wording) carry.pine = { grade: LOCAL.grade, wording: LOCAL.wording };
-  GGP.createDialog({ age: 'pine', carry: Object.keys(carry).length ? carry : null, reason: window.currentClientEntry ? 'Your check-in and growth plan will save to your own profile, locked with a passcode only you know. A grown-up agrees when it is made.' : 'Your own profile keeps your tree, practices, check-ins, and Next Steps on this device, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.' })
+  if (LOCAL.wording || LOCAL.seasons.length) carry.birch = { wording: LOCAL.wording || undefined, seasons: LOCAL.seasons.slice() };
+  GGP.createDialog({ age: 'adult', tree: 'birch', carry: Object.keys(carry).length ? carry : null, reason: window.currentClientEntry ? 'Your check-in and growth plan will save to your own profile, locked with a passcode only you know.' : 'Your own profile keeps your tree, practices, check-ins, and Groundwork on this device, locked with a passcode only you know.' })
     .then(ok => { if (ok && window.currentClientEntry) setTimeout(savePersonalFile, 50); });
 }
 function profBackup() { if (window.GGP) GGP.backup(); }
@@ -1386,199 +1418,380 @@ async function profResume() {
 // =====================================================================
 // SETTINGS, behind the profile picture
 // =====================================================================
-// What a grown-up can see (decision 4), Aspen's promise rewritten for high school.
-const PN_SEE = `<p><b>A quiet note, only when it matters</b>If a check-in shows you might be thinking about not wanting to be alive, feeling alone, or losing hope, a grown-up who agreed to your profile gets a quiet note in The Grove to check in with you. The note never says what you answered.</p>
-  <p><b>The big picture, only while you leave it on</b>Days tended, rings, and which parts you tended, through The Grove. You can turn this off any time with Show my growth on The Grove.</p>
-  <p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, your optional questions, your reflections, and your Next Steps notebook. If you say someone is hurting you, that stays with you too, and Pine shows you help from outside your home. Only your passcode opens your profile. A grown-up can help reset a forgotten passcode, but can never read what is inside.</p>`;
-function pnProfileHtml() {
+const BC_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, the optional question, your reflections, and your Groundwork notebook stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone, and no one gets an alert.</p>
+  <p><b>Helpers, only if you choose</b>You can let someone you trust open your Birch with their own passcode. They see only what you share, and never your safety answers, flags, or Groundwork. This stays off unless you turn it on.</p>
+  <p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>`;
+function bcProfileHtml() {
   const a = window.GGP && GGP.active();
-  if (!a || a.age !== 'pine') return `<section><h3>Your Profile</h3><p>Open your profile, or create one, to keep your tree, practices, check-ins, and Next Steps on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();pnOpenAny()">Open my profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profCreateDialog()">Create my profile</button></div></section>`;
-  const oakN = (((GGP.data(a.id, 'oak') || {}).history) || []).length;
-  return `<section><h3>Your Profile</h3><p class="gt-who">${GGAv.html(a.avatar, a.name, 44)}<b>${escapeHtml(a.name)}</b> <span class="gt-small">${gradeNow() ? 'Grade ' + escapeHtml(gradeNow()) : 'Grade not set'}</span></p>
-    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();askGrade(true)">Change grade</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="pnSwitch()">Switch person</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profLock()">Lock</button></div>
-    ${oakN && !rec().oakBrought ? `<p class="gt-small">You have ${oakN} check-in${oakN === 1 ? '' : 's'} in Oak. <button type="button" class="text-btn" onclick="GGTend.closeSettings();bringOak()">Bring them into Pine</button></p>` : ''}
+  if (!a || a.age !== 'adult') return `<section><h3>Your Profile</h3><p>Open your profile, or create one, to keep your tree, practices, check-ins, and Groundwork on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();bcOpenAny()">Open my profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profCreateDialog()">Create my profile</button></div></section>`;
+  const r = rec(), o = oakRings().length, p = pineRings().length, tree = treeNow(a.id);
+  return `<section><h3>Your Profile</h3><p class="gt-who">${GGAv.html(a.avatar, a.name, 44)}<b>${escapeHtml(a.name)}</b></p>
+    <p class="gt-small">Your tree: <b>${TREE_NAME[tree] || 'Oak'}</b>. Change it in Picture, passcode, and more.${tree !== 'birch' ? ' <button type="button" class="text-btn" onclick="makeBirchMine();reopenSettings()">Make Birch My Tree</button>' : ''}</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="bcSwitch()">Switch person</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profLock()">Lock</button></div>
+    ${o && !r.oakBrought ? `<p class="gt-small">You have ${o} check-in${o === 1 ? '' : 's'} in Oak. <button type="button" class="text-btn" onclick="GGTend.closeSettings();bringOak()">Bring them into Birch</button></p>` : ''}
+    ${p && !r.pineBrought ? `<p class="gt-small">You have ${p} check-in${p === 1 ? '' : 's'} in Pine. <button type="button" class="text-btn" onclick="GGTend.closeSettings();bringPine()">Bring them into Birch</button></p>` : ''}
     <p class="gt-small">Everyone on this device can have their own tree. Switching locks yours first, so no one sees anyone else's.</p></section>`;
 }
-function pnSettingsHtml() {
-  const s = window.GGTend && GGTend.state(), open = !!PROF, plain = isPlain(), mode = pnMode(s);
-  return `<section id="pn-set-wording"><h3>Faith or Plain Wording</h3><p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores never change between the two.</p>
-      <label class="gt-radio"><input type="radio" name="pn-word" value="faith"${!plain ? ' checked' : ''} onchange="setWording('faith')"><span><b>Faith</b>Prayer, worship, quiet, nature, and family traditions.</span></label>
-      <label class="gt-radio"><input type="radio" name="pn-word" value="plain"${plain ? ' checked' : ''} onchange="setWording('plain')"><span><b>Plain</b>Peace, values, quiet, nature, and family traditions.</span></label></section>
-    <section id="pn-set-sens"><h3>Optional Questions</h3><p class="gt-small">Two extra questions: one about pressure to vape, drink, or use drugs to cope, and one about pressure or control from someone you are close to. They never count toward a score, never send a note to anyone, and are never shared. Only you can turn them on.</p>
-      <label class="gt-switch"><input type="checkbox"${sensOn() ? ' checked' : ''}${open ? '' : ' disabled'} onchange="setSens(this.checked)"> Ask me the optional questions</label></section>
+const AGES_PICK = ['18', '19', '20', '21', '22', '23', '24', '25', '26', '27'];
+function bcSettingsHtml() {
+  const s = window.GGTend && GGTend.state(), open = !!PROF && !HELP, plain = isPlain(), mode = pnMode(s), mine = seasonsNow(), age = ageNow();
+  if (HELP) return helperSettingsHtml();
+  return `<section id="bc-set-season"><h3>My Season</h3><p class="gt-small">Choose any that fit your life right now, or none. My Season changes only the examples, tips, and help lines you see. The questions and your scores stay the same.</p>
+      ${SEASONS.map(x => `<label class="gt-switch"><input type="checkbox"${mine.includes(x.id) ? ' checked' : ''} onchange="setSeason('${x.id}',this.checked)"> <span><b>${escapeHtml(x.name)}</b><br><small>${escapeHtml(x.line || '')}</small></span></label>`).join('')}</section>
+    <section id="pn-set-wording"><h3>Faith or Plain Wording</h3><p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores never change between the two.</p>
+      <label class="gt-radio"><input type="radio" name="pn-word" value="faith"${!plain ? ' checked' : ''} onchange="setWording('faith')"><span><b>Faith</b>Prayer, worship, quiet, nature, and traditions.</span></label>
+      <label class="gt-radio"><input type="radio" name="pn-word" value="plain"${plain ? ' checked' : ''} onchange="setWording('plain')"><span><b>Plain</b>Peace, values, quiet, nature, and traditions.</span></label></section>
+    <section id="pn-set-sens"><h3>Optional Question</h3><p class="gt-small">One extra question about betting and gambling, on sports, online games, or anything else for money. It never counts toward a score, is never shared, and is never shown to a helper. Only you can turn it on.</p>
+      <label class="gt-switch"><input type="checkbox"${sensOn() ? ' checked' : ''}${open ? '' : ' disabled'} onchange="setSens(this.checked)"> Ask me the optional question</label></section>
     <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
       <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may look dry when you miss days, and nothing is ever lost.</span></label>
       <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b>A little more challenge. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
       <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
-    <section class="asp-see" id="pn-see"><h3>What Your Grown-up Can See</h3>${PN_SEE}</section>
-    ${movingOnHtml(false)}`;
+    ${helperSettingsHtml()}
+    <section id="bc-set-age"><h3>Your Age (Optional)</h3><p class="gt-small">Only used to offer the step into Oak from 25. It stays in your profile.</p>
+      <select class="sq-select" aria-label="Your age"${open ? '' : ' disabled'} onchange="setAge(this.value)"><option value="">Rather not say</option>${AGES_PICK.map(v => `<option value="${v}"${String(age) === v ? ' selected' : ''}>${v === '27' ? '27 or older' : v}</option>`).join('')}</select></section>
+    <section class="asp-see" id="bc-see"><h3>What Stays Private</h3>${BC_SEE}</section>
+    ${moveOakHtml(false)}`;
 }
-function reopenSettings(focus) { if (window.GGTend) { GGTend.openSettings(); const f = document.getElementById(focus); if (f) f.scrollIntoView({ block: 'start' }); } }
+function reopenSettings(focus) { if (window.GGTend) { GGTend.openSettings(); const f = document.getElementById(focus || 'gt-set-helpers'); if (f) f.scrollIntoView({ block: 'start' }); } }
 function setWording(w) {
   rec().wording = w === 'plain' ? 'plain' : 'faith';
   persistRec().then(() => {
     loadBank(); renderAboutParts();
     if (window.lastClientScores) { renderGrowthPlanBuilder('client'); const b = document.querySelector('#client-growthplan-builder .domain-card'); if (b) delete b.dataset.filled; oakPrefillPlan(); }
     if (window.GGTend) GGTend.render();
-    if (document.getElementById('client-next').classList.contains('active')) renderNext();
+    if (document.getElementById('client-ground').classList.contains('active')) renderGround();
     showToast(w === 'plain' ? 'Plain wording is on. Your scores stay the same.' : 'Faith wording is on. Your scores stay the same.');
   });
 }
+function setSeason(id, on) {
+  const r = rec(); let list = Array.isArray(r.seasons) ? r.seasons.slice() : [];
+  list = list.filter(x => x !== id); if (on) list.push(id);
+  r.seasons = SEASONS.map(x => x.id).filter(x => list.includes(x));
+  persistRec().then(() => { loadBank(); if (window.GGTend) GGTend.render(); const c = document.getElementById('pn-setup'); if (c) c.scrollIntoView({ block: 'nearest' }); showToast(r.seasons.length ? 'My Season: ' + seasonText() + '. The questions stay the same.' : 'No season chosen. The questions stay the same.'); });
+}
 function setSens(on) {
   if (!PROF) return;
-  rec().askSens = !!on;
-  persistRec().then(() => showToast(on ? 'The optional questions will be in your next full check-in.' : 'The optional questions are off.'));
+  rec().askOpt = !!on;
+  persistRec().then(() => showToast(on ? 'The optional question will be in your next full check-in.' : 'The optional question is off.'));
 }
-// First open: set Pine up together (decision 8). The grown-up who agreed and the teen
-// choose the wording, the teen chooses the grade, and both read what stays private.
+function setAge(v) {
+  if (!PROF) return;
+  const r = rec(); if (v) r.age = v; else delete r.age;
+  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(v ? 'Saved.' : 'Age cleared.'); });
+}
+// First open: set Birch up. My Season, the wording, and an optional age. Change any time in Settings.
 function setupCardHtml() {
-  if (!PROF) return '';
+  if (!PROF || HELP) return '';
   const r = rec(); if (r.setup) return '';
-  const G = CKB.grades || [['9', 'Grade 9'], ['10', 'Grade 10'], ['11', 'Grade 11'], ['12', 'Grade 12']], plain = isPlain();
-  return `<div class="gt-card pn-setup" id="pn-setup"><h3>Set Up Pine Together</h3><p>Welcome to Pine. If the grown-up who agreed to your profile is with you, choose these together. You can change them any time in Settings.</p>
-    <h4 class="sq-h4">Your Grade</h4><div class="pn-grades">${G.map(g => `<button type="button" class="btn btn-sm ${gradeNow() === g[0] ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${gradeNow() === g[0]}" onclick="setupPick('grade','${g[0]}')">${escapeHtml(g[1])}</button>`).join('')}</div>
+  const plain = isPlain(), mine = seasonsNow();
+  return `<div class="gt-card pn-setup" id="pn-setup"><h3>Set Up Birch</h3><p>Welcome to Birch. A few choices make it fit your life. You can change them any time in Settings.</p>
+    <h4 class="sq-h4">My Season</h4><p class="gt-small">Pick any that fit, or none. It changes only examples and tips, never the questions or your scores.</p><div class="pn-grades">${SEASONS.map(x => `<button type="button" class="btn btn-sm ${mine.includes(x.id) ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${mine.includes(x.id)}" onclick="setSeason('${x.id}',${!mine.includes(x.id)})">${escapeHtml(x.name)}</button>`).join('')}</div>
     <h4 class="sq-h4">Wording</h4><div class="pn-grades"><button type="button" class="btn btn-sm ${!plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${!plain}" onclick="setupPick('wording','faith')">Faith</button><button type="button" class="btn btn-sm ${plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${plain}" onclick="setupPick('wording','plain')">Plain</button></div>
     <p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way.</p>
-    <details class="pn-see-d"><summary>What your grown-up can see</summary>${PN_SEE}</details>
+    <details class="pn-see-d"><summary>What stays private</summary>${BC_SEE}</details>
     <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="setupDone()">All Set</button></div></div>`;
 }
 function setupPick(what, v) {
-  const r = rec(); if (what === 'grade') r.grade = v; else r.wording = v === 'plain' ? 'plain' : 'faith';
-  persistRec().then(() => { loadBank(); renderAboutParts(); renderProfileBar(); if (window.GGTend) GGTend.render(); const c = document.getElementById('pn-setup'); if (c) c.scrollIntoView({ block: 'nearest' }); });
+  const r = rec(); if (what === 'wording') r.wording = v === 'plain' ? 'plain' : 'faith';
+  persistRec().then(() => { loadBank(); renderAboutParts(); if (window.GGTend) GGTend.render(); const c = document.getElementById('pn-setup'); if (c) c.scrollIntoView({ block: 'nearest' }); });
 }
 function setupDone() {
   const r = rec(); if (!r.wording) r.wording = 'faith';
   r.setup = todayKey();
-  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(gradeNow() ? 'Pine is ready. Start with a check-in.' : 'Pine is ready. Pine will ask your grade at your first check-in.'); });
+  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast('Birch is ready. Start with a check-in.'); });
 }
-// Moving on (decision 10). In grade 12, or any time from Settings: stay in Pine, or
-// Start My Oak, which makes a new adult profile and copies Pine's rings (labeled earlier)
-// and the Next Steps notebook into it. Pine's own record stays whole. Never forced.
-// Start My Birch takes this card's place once Birch is live.
-function movingOnHtml(onToday) {
-  if (!PROF) return '';
-  const r = rec();
-  if (onToday && (gradeNow() !== '12' || r.stayPine)) return '';
-  return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="pn-set-moving"'}><h3>Turning 18, or Finishing High School?</h3>
-    <p class="gt-small">${onToday ? 'You are in grade 12. ' : ''}You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Oak. Start My Oak makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine) and your Next Steps notebook with you. Pine keeps its own copy. Birch, made for ages 18 to 26, is on its way, and it will take this step's place.</p>
-    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyOak()">Start My Oak</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInPine()">Stay in Pine</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+// Moving on (decision 15). From 25, a gentle card on Today, and any time in Settings:
+// Move My Tree to Oak. The same profile switches its tree; Oak gets a one-time copy of
+// Birch's rings, labeled From Birch. Birch's record and Groundwork stay whole, and
+// Groundwork prints whole. Never forced.
+function moveOakHtml(onToday) {
+  if (!PROF || HELP) return '';
+  const r = rec(), age = ageNow();
+  if (onToday && (age == null || age < 25 || r.stayBirch || r.movedToOak || treeNow(PROF.id) !== 'birch')) return '';
+  return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="bc-set-moving"'}><h3>Ready for Oak?</h3>
+    <p class="gt-small">${onToday ? 'Birch is built for 18 to 26, and Oak for adults 25 to 60. ' : ''}You choose when. Stay in Birch as long as it fits, or move your tree to Oak. Move My Tree to Oak keeps this same profile: Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can print your whole Groundwork notebook first, and come back to it here any time.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToOak()">Move My Tree to Oak</button><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}gwPrintAll()">Print My Groundwork</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInBirch()">Stay in Birch</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
 }
-function stayInPine() { rec().stayPine = todayKey(); persistRec().then(() => { showToast('Pine stays your tree. Start My Oak is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
-function startMyOak() {
+function stayInBirch() { rec().stayBirch = todayKey(); persistRec().then(() => { showToast('Birch stays your tree. Move My Tree to Oak is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+function moveToOak() {
   if (!PROF || !window.GGP) return;
-  if (!confirm('Start My Oak makes a new adult profile for you. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
-  const r = rec(), name = PROF.name;
-  const rings = (r.history || []).filter(e => e && e.scores && !e.from).map(e => { const c = JSON.parse(JSON.stringify(e)); c.id = 'pine-' + e.id; c.from = 'pine'; delete c.std; delete c.answers; delete c.safety; delete c.sens; delete c.flags; delete c.reflections; return c; });
-  const ns = r.nextsteps ? Object.assign(JSON.parse(JSON.stringify(r.nextsteps)), { from: 'pine', copied: todayKey() }) : null;
-  const oak = { history: rings }; if (ns) oak.nextsteps = ns;
-  GGP.createDialog({ age: 'adult', name: '', carry: { oak }, reason: 'Your new adult profile, ' + name + '. Pick a name that is different from your Pine profile, like your name with a last initial. Your Pine check-ins and Next Steps notebook come along.', onCreated: () => { setTimeout(() => { location.href = '/oak/'; }, 600); } });
+  if (!confirm('Move your tree to Oak? This same profile opens in Oak from now on. Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can switch back any time in Picture, passcode, and more.')) return;
+  const r = rec(), oak = GGP.data(PROF.id, 'oak');
+  if (!Array.isArray(oak.history)) oak.history = [];
+  if (!r.movedToOak) {
+    const have = new Set(oak.history.map(e => e.id));
+    (r.history || []).filter(e => e && e.scores && !e.from && e.by !== 'tapped').forEach(e => { const c = ringCopy(e, 'birch'); c.from = 'birch'; c.id = 'birch-' + e.id; if (!have.has(c.id)) oak.history.push(c); });
+    oak.history.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+  }
+  r.movedToOak = todayKey();
+  GGP.save(PROF.id).then(() => { if (GGP.setTree) GGP.setTree(PROF.id, 'oak'); showToast('Your tree is Oak now. Birch keeps everything.'); setTimeout(() => { location.href = '/oak/'; }, 900); });
 }
 
 // =====================================================================
-// NEXT STEPS (decision 13): a private notebook for goals, values, and plans
-// after high school. Chapters and prompts come from /pine/nextsteps.js. Saved
-// locked in the teen's profile under pine.nextsteps; every prompt can be
-// skipped; the faith and meaning chapter stays closed until the teen opens it;
-// printed or shared only when the teen chooses. Never in Share to Family.
+// HELPERS (Sequoia's model). Off unless the person turns on Add a Helper.
+// A helper opens the person's Birch with their own passcode and sees only
+// what the person shares. Roots and notes start private. Never the safety
+// step, flags, help notes, the optional question, or Groundwork
+// (BIRCH_CHECKIN.NEVER_SHARE).
 // =====================================================================
-const NS = window.PINE_NEXTSTEPS || { chapters: [], intro: [] };
-const NX = { ch: null, edit: null, pick: false };
-function nsRec() {
-  if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null;
-  const d = rec(); if (!d.nextsteps || typeof d.nextsteps !== 'object') d.nextsteps = {};
-  if (!d.nextsteps.answers) d.nextsteps.answers = {}; if (!d.nextsteps.opened) d.nextsteps.opened = {};
-  return d.nextsteps;
+const SHARE_DEF = { tree: true, plan: true, faith: false, notes: false };
+const SHARE_ROWS = [
+  ['tree', 'How my tree is doing', 'The level of each part and the dates of check-ins. Never your answers.'],
+  ['plan', 'My growth plan', 'The practices you chose, so a helper can do them with you.'],
+  ['faith', 'My Roots part', 'Your Roots level, and Roots practices in your plan. Off unless you turn it on.'],
+  ['notes', 'My notes', 'Anything you wrote in "Sit with this" during a check-in.']
+];
+const BY_LABEL = { self: 'They answered', tapped: 'They answered, a helper tapped' };
+function shareOf(id) { const d = GGP.data(id, 'birch'); return Object.assign({}, SHARE_DEF, d.share || {}); }
+function helpedWithBirch() {
+  if (!PROF || !window.GGP || !GGP.helping) return [];
+  return GGP.helping().filter(id => GGP.isOpen(id) && GGP.data(id, 'birch').helpersOn).map(id => GGP.get(id)).filter(Boolean);
 }
-const nsChapter = id => (NS.chapters || []).find(c => c.id === id);
-const nsT = (c, k) => (isPlain() && c['plain' + k[0].toUpperCase() + k.slice(1)]) || c[k] || '';
-const nsP = p => (isPlain() && p.plain) || p.t;
-const nsHelp = p => (isPlain() && p.plainHelp) || p.help || '';
-function nsWritten(c, L) { return (c.prompts || []).filter(p => L.answers[p.id] && String(L.answers[p.id].text || '').trim()).length; }
-function renderNext() {
-  const el = document.getElementById('client-next'); if (!el) return;
-  const L = nsRec();
+function helperSettingsHtml() {
+  if (!PROF || !window.GGP) return '';
+  if (HELP) {
+    const n = escapeHtml((GGP.get(HELP) || {}).name || 'They');
+    return `<section id="gt-set-helpers"><h3>Helping ${n}</h3><p class="gt-small">${n} chooses what helpers see, in their own Birch settings. Their safety answers are never shared.</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();helpBack()">Back to My Own Birch</button></div></section>`;
+  }
+  const d = rec(), on = !!d.helpersOn, sh = shareOf(PROF.id);
+  const hs = (GGP.helpers(PROF.id) || []).map(id => GGP.get(id)).filter(Boolean);
+  const can = GGP.list().filter(p => p.age === 'adult' && p.id !== PROF.id && !hs.some(x => x.id === p.id));
+  return `<section id="gt-set-helpers"><h3>Add a Helper</h3>
+    <p class="gt-small">A helper is someone you trust, like a parent, a partner, a mentor, or a friend. They open your Birch with their own passcode, and they can sit with you for a check-in. This stays off unless you turn it on, and only you can turn it on.</p>
+    <label class="gt-switch"><input type="checkbox" id="bc-helpers-on"${on ? ' checked' : ''} onchange="bcHelpersOn(this.checked)"> Let helpers open my Birch</label>
+    ${on ? `<h4 class="sq-h4">What Helpers See</h4>${SHARE_ROWS.map(x => `<label class="gt-switch"><input type="checkbox"${sh[x[0]] ? ' checked' : ''} onchange="bcShare('${x[0]}',this.checked)"> <span><b>${escapeHtml(x[1])}</b><br><small>${escapeHtml(x[2])}</small></span></label>`).join('')}
+      <p class="gt-small"><b>Never shared:</b> your safety answers, flags and their notes, the optional question, and your Groundwork notebook.</p>
+      <h4 class="sq-h4">Your Helpers</h4>
+      ${hs.length ? hs.map(x => `<p class="sq-helper">${GGAv.html(x.avatar, x.name, 32)}<b>${escapeHtml(x.name)}</b><button type="button" class="text-btn" onclick="dropHelper('${x.id}')">Remove</button></p>`).join('') : '<p class="gt-small">No helpers yet.</p>'}
+      ${can.length ? `<label class="gt-small" for="bc-hid">Add a helper</label><select id="bc-hid" class="sq-select">${can.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('')}</select>
+        <label class="gt-small" for="bc-hpass">Their own passcode (they type it)</label><input type="password" id="bc-hpass" class="sq-select" autocomplete="off">
+        <div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="addHelperNow()">Add as a Helper</button></div>`
+        : '<p class="gt-small">A helper first creates their own Grounded profile on this device (the profile button at the top of the page), then comes back here with you to be added.</p>'}` : ''}
+  </section>`;
+}
+function bcHelpersOn(on) {
+  if (!PROF) return;
+  const d = rec(); d.helpersOn = !!on; if (on && !d.share) d.share = Object.assign({}, SHARE_DEF);
+  GGP.save(PROF.id).then(() => { showToast(on ? 'Helpers can be added now. Choose what they see.' : 'Your Birch is closed to helpers.'); reopenSettings(); });
+}
+function bcShare(k, v) { if (!PROF) return; const d = rec(); d.share = Object.assign({}, SHARE_DEF, d.share || {}); d.share[k] = !!v; GGP.save(PROF.id); }
+function addHelperNow() {
+  const hid = (document.getElementById('bc-hid') || {}).value, pass = (document.getElementById('bc-hpass') || {}).value;
+  if (!pass) { showToast('Your helper types their own passcode.'); return; }
+  GGP.addHelper(PROF.id, hid, pass).then(() => { showToast(((GGP.get(hid) || {}).name || 'They') + ' is now a helper.'); reopenSettings(); }).catch(e => showToast(e && e.message ? e.message : 'That did not work. Try again.'));
+}
+function dropHelper(id) {
+  const n = (GGP.get(id) || {}).name || 'this helper';
+  if (!confirm('Remove ' + n + ' as a helper? They will no longer open your profile.')) return;
+  GGP.removeHelper(PROF.id, id); showToast(n + ' is no longer a helper.'); reopenSettings();
+}
+// Helper view
+function helpOpen(id) {
+  if (!helpedWithBirch().some(p => p.id === id)) return;
+  HELP = id; window.currentClientEntry = null; renderProfileBar(); renderHelpBanner(); showView('client-today');
+}
+function helpBack() { HELP = null; setMode('self'); loadBank(); renderProfileBar(); renderHelpBanner(); showView('client-today'); }
+function helpFromHash() {
+  const m = /^#for=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m || !PROF) return;
+  if (helpedWithBirch().some(p => p.id === m[1])) { try { history.replaceState(null, '', location.pathname); } catch (e) {} helpOpen(m[1]); }
+}
+function renderHelpBanner() {
+  const b = document.getElementById('sq-help-banner'); if (!b) return;
+  if (!HELP) { b.innerHTML = ''; b.hidden = true; return; }
+  const n = escapeHtml((GGP.get(HELP) || {}).name || 'them');
+  b.hidden = false;
+  b.innerHTML = `<p><b>You are helping ${n}.</b> You see only what ${n} chooses to share.</p><button type="button" class="btn btn-secondary btn-sm" onclick="helpBack()">Back to My Own Birch</button>`;
+}
+function helpLevels(e, sh) {
+  return `<div class="lvl-list">${ALL_DOMAINS.filter(d => d.key !== 'roots' || sh.faith).map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part}</b><span class="lvl-pill">${stLevel(stShown(e, d.key))}</span></div>`).join('')}</div>`;
+}
+function renderHelpTabs() {
+  if (!HELP || !window.GGP) return;
+  const p = GGP.get(HELP) || {}, n = escapeHtml(p.name || 'them'), d = GGP.data(HELP, 'birch'), sh = shareOf(HELP);
+  const own = (d.history || []).filter(e => e && e.scores && !e.from), last = own[own.length - 1];
+  const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give. The check-in saves to ${n}'s tree, marked as taken together. The safety questions stay with ${n}, for their own check-ins.</p>
+    <div class="btn-row"><button class="btn btn-primary" onclick="startCheckin('tapped','${HELP}')">${n} Answers, I Tap</button><button class="btn btn-secondary" onclick="startQuick('tapped','${HELP}')">Quick Check-in Together</button></div></div>`;
+  const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(formatDate(last.date))}${last.by === 'tapped' ? ', taken together' : ''}.</p>${helpLevels(last, sh)}` : '<p>No check-ins yet.</p>'}
+    ${own.length ? `<h4 class="sq-h4">Check-ins</h4><ul class="gt-hist">${own.slice().reverse().slice(0, 8).map(e => `<li><b>${escapeHtml(formatDate(e.date))}</b><span>${e.type === 'quick' ? 'Quick' : 'Full'}${e.by === 'tapped' ? ', ' + escapeHtml(BY_LABEL.tapped) + (e.helper ? ' (' + escapeHtml(e.helper) + ')' : '') : ''}</span></li>`).join('')}</ul>` : ''}
+    ${sh.notes && last && last.reflections ? ALL_DOMAINS.filter(dd => (dd.key !== 'roots' || sh.faith) && String(last.reflections[dd.key] || '').trim()).map(dd => `<p class="gt-small"><b>${dd.part}:</b> ${escapeHtml(last.reflections[dd.key])}</p>`).join('') : ''}</div>` : `<div class="gt-card"><p>${n} keeps their tree private. You can still check in together.</p></div>`;
+  const todayEl = document.getElementById('client-today'), weekEl = document.getElementById('client-week'), seasonEl = document.getElementById('client-season');
+  if (todayEl) todayEl.innerHTML = tree + acts;
+  const rest = `<div class="gt-card"><p>${n}'s weeks and seasons stay on ${n}'s own screen. Here you can check in together and see what ${n} shares.</p><div class="btn-row"><button class="btn btn-secondary" onclick="showView('client-today')">Back to Today</button></div></div>`;
+  if (weekEl) weekEl.innerHTML = rest;
+  if (seasonEl) seasonEl.innerHTML = rest;
+}
+function renderHelpPlan() {
+  const box = document.getElementById('client-growthplan-builder'); if (!box || !HELP) return;
+  const n = escapeHtml((GGP.get(HELP) || {}).name || 'them'), d = GGP.data(HELP, 'birch'), sh = shareOf(HELP), plan = (d.tend && d.tend.plan) || null;
+  document.getElementById('client-growthplan-generate-row').style.display = 'none';
+  document.getElementById('client-growthplan-doc').innerHTML = '';
+  if (!sh.plan) { box.innerHTML = `<p class="lead">${n} keeps their growth plan private.</p>`; return; }
+  if (!plan) { box.innerHTML = `<p class="lead">${n} has not chosen practices yet.</p>`; return; }
+  box.innerHTML = `<p class="lead">${n}'s practices. You can do them together.</p>` + ALL_DOMAINS.filter(dd => dd.key !== 'roots' || sh.faith).map(dd => {
+    const x = plan[dd.key] || {}, names = (x.selected || []).map(nm => shownName(dd.key, nm)).concat(x.custom ? [x.custom] : [], (x.lib || []).map(l => l.n));
+    if (!names.length) return '';
+    return `<div class="domain-card" style="--domain-color:${dd.color};border-left-color:${dd.color};"><div class="card-head">${partIcon(dd, 26)}<div><div class="domain-name" style="color:${dd.color};">${dd.part}</div><div class="card-sub">${dd.name}</div></div></div><ul class="sq-planlist">${names.map(nm => `<li>${escapeHtml(nm)}</li>`).join('')}</ul></div>`;
+  }).join('');
+}
+
+// =====================================================================
+// GROUNDWORK (decision 10): a private notebook for who you are becoming and
+// the life you are building, plus Skills I've Got. Chapters, prompts, and
+// skills come from /birch/groundwork.js. Saved locked in the profile under
+// birch.groundwork; every prompt and skill can be skipped; the faith and
+// meaning chapter stays closed until the person opens it; the From Pine
+// chapter holds Pine's Next Steps as written; printed or shared only by
+// choice. Never in Share to Family, never shown to a helper.
+// =====================================================================
+const GX = { ch: null, edit: null, pick: false, how: null };
+function gwRec() {
+  if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null;
+  const d = rec(); if (!d.groundwork || typeof d.groundwork !== 'object') d.groundwork = {};
+  const g = d.groundwork; if (!g.answers) g.answers = {}; if (!g.opened) g.opened = {}; if (!g.skills) g.skills = {};
+  return g;
+}
+const gwChapter = id => (GW.chapters || []).find(c => c.id === id);
+const gwT = (c, k) => (isPlain() && c['plain' + k[0].toUpperCase() + k.slice(1)]) || c[k] || '';
+const gwP = p => (isPlain() && p.plain) || p.t;
+const gwHelp = p => (isPlain() && p.plainHelp) || p.help || '';
+function gwWritten(c, L) { return (c.prompts || []).filter(p => L.answers[p.id] && String(L.answers[p.id].text || '').trim()).length + (c.fromPine && L.fromPine ? Object.keys(L.fromPine.answers || {}).length : 0); }
+function gwChapters(L) { const all = (GW.chapters || []).filter(c => !c.fromPine || (L && L.fromPine)); return all.filter(c => c.fromPine).concat(all.filter(c => !c.fromPine)); }
+function gwSkillsAll() { const out = []; Object.keys(GW.skills || {}).forEach(ch => (GW.skills[ch] || []).forEach(x => out.push(Object.assign({ ch }, x)))); return out; }
+function renderGround() {
+  const el = document.getElementById('client-ground'); if (!el) return;
+  if (HELP) { el.innerHTML = `<div class="section-title">${escapeHtml(GW.title || 'Groundwork')}</div><div class="gt-card"><p>Groundwork is a private notebook. It stays with the person who writes it, and helpers never see it.</p></div>`; return; }
+  const L = gwRec();
   if (!L) {
-    el.innerHTML = `<div class="section-title">Next Steps</div>${(NS.intro || []).slice(0, 3).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h3>Your notebook is kept in your profile</h3><p>Next Steps is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${pineWho().length ? 'pnOpenAny()' : 'profCreateDialog()'}">${pineWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
+    el.innerHTML = `<div class="section-title">${escapeHtml(GW.title || 'Groundwork')}</div>${(GW.intro || []).slice(0, 3).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
+      <div class="gt-card gt-empty"><h3>Your notebook is kept in your profile</h3><p>Groundwork is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${birchWho().length ? 'bcOpenAny()' : 'profCreateDialog()'}">${birchWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
     return;
   }
-  const c = NX.ch && nsChapter(NX.ch);
-  if (c) { el.innerHTML = nsChapterHtml(c, L); return; }
-  const total = (NS.chapters || []).reduce((t, ch) => t + nsWritten(ch, L), 0);
-  el.innerHTML = `<div class="section-title">Next Steps</div>
-    ${(NS.intro || []).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
+  if (GX.ch === 'skills') { el.innerHTML = gwSkillsPage(L); return; }
+  const c = GX.ch && gwChapter(GX.ch);
+  if (c) { el.innerHTML = gwChapterHtml(c, L); return; }
+  const chs = gwChapters(L), total = chs.reduce((t, ch) => t + gwWritten(ch, L), 0), sk = gwSkillsAll(), done = skillsDone().length;
+  el.innerHTML = `<div class="section-title">${escapeHtml(GW.title || 'Groundwork')}</div>
+    ${(GW.intro || []).filter((t, i) => i < 4 || L.fromPine).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
     <p class="sq-legcount">${total ? `${total} ${total === 1 ? 'page' : 'pages'} written so far.` : 'Nothing written yet. One prompt is enough to start.'}</p>
-    <div class="sq-chapters">${(NS.chapters || []).map(ch => { const n = nsWritten(ch, L), closed = ch.optIn && !L.opened[ch.id];
-      return `<button type="button" class="sq-chapter${closed ? ' closed' : ''}" onclick="nsOpen('${ch.id}')"><b>${escapeHtml(nsT(ch, 'title'))}</b><span>${closed ? 'Opens only when you choose' : n ? n + ' of ' + (ch.prompts || []).length + ' written' : (ch.prompts || []).length + ' prompts'}</span></button>`; }).join('')}</div>
-    <div class="btn-row"><button class="btn btn-primary" onclick="nsPickBook()">Save or Print My Notebook</button></div>
-    ${NX.pick ? nsPickHtml(L) : ''}
-    <div id="pn-nssheet" class="sq-legsheet" aria-hidden="true"></div>
-    <p class="gt-small sq-legfoot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>
-    ${window.GGSources ? GGSources.html('pine:nextsteps') : ''}`;
+    <div class="sq-chapters">${chs.map(ch => { const n = gwWritten(ch, L), closed = ch.optIn && !L.opened[ch.id], np = (ch.prompts || []).length;
+      return `<button type="button" class="sq-chapter${closed ? ' closed' : ''}" onclick="gwOpen('${ch.id}')"><b>${escapeHtml(gwT(ch, 'title'))}</b><span>${closed ? 'Opens only when you choose' : ch.fromPine ? 'Written in Pine, and room to keep going' : n ? n + ' of ' + np + ' written' : np + ' prompts'}${(GW.skills || {})[ch.id] ? '. Skills too' : ''}</span></button>`; }).join('')}
+      ${sk.length ? `<button type="button" class="sq-chapter bc-skills-btn" onclick="gwOpen('skills')"><b>${escapeHtml(GW.skillsTitle || 'Skills I\'ve Got')}</b><span>${done} of ${sk.length} marked, at your own pace.</span></button>` : ''}</div>
+    <div class="btn-row"><button class="btn btn-primary" onclick="gwPickBook()">Save or Print My Notebook</button></div>
+    ${GX.pick ? gwPickHtml(L) : ''}
+    <div id="bc-gwsheet" class="sq-legsheet" aria-hidden="true"></div>
+    <p class="gt-small sq-legfoot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. It is never part of Share to Family, and helpers never see it.</p>
+    ${window.GGSources ? GGSources.html('birch:groundwork') : ''}`;
 }
-function nsChapterHtml(c, L) {
+function gwSkillHtml(x, L) {
+  const s = L.skills[x.id], on = !!(s && s.done), ln = x.link || {};
+  let more = '';
+  const prac = ln.practice || ((SP.BY_SKILL || {})[x.id] || [])[0];
+  if (prac) { const [part, name] = String(prac).split('|'), g = guideHtml(part, name); if (g) more += `<button type="button" class="text-btn" aria-expanded="${GX.how === x.id}" onclick="GX.how=GX.how==='${x.id}'?null:'${x.id}';renderGround()">A practice for this: ${escapeHtml(shownName(part, name))}</button>${GX.how === x.id ? `<div class="guide open bc-skill-guide">${g}</div>` : ''}`; }
+  if (ln.guide && /^oak:/.test(ln.guide)) more += `<a class="text-link" href="/oak/#life=${encodeURIComponent(ln.guide.slice(4))}">A guide for this, in Oak</a> `;
+  if (Array.isArray(x.site) && x.site[1]) more += ` <a class="text-link" href="${escapeHtml(x.site[1])}" target="_blank" rel="noopener">${escapeHtml(x.site[0] || 'Start here')}</a>`;
+  return `<li class="bc-skill${on ? ' done' : ''}"><label class="bc-skill-row"><input type="checkbox"${on ? ' checked' : ''} onchange="gwSkill('${x.id}',this.checked)"> <span><b>${escapeHtml(x.t)}</b>${x.help ? `<small>${escapeHtml(x.help)}</small>` : ''}${on && s.done ? `<small class="bc-skill-when">Marked ${escapeHtml(formatDate(s.done))}</small>` : ''}</span></label>${more ? `<div class="bc-skill-more">${more}</div>` : ''}</li>`;
+}
+function gwSkillsList(ch, L) { const list = (GW.skills || {})[ch] || []; return list.length ? `<ul class="bc-skills">${list.map(x => gwSkillHtml(x, L)).join('')}</ul>` : ''; }
+function gwSkillsPage(L) {
+  const SK = GW.skills || {};
+  return `<button type="button" class="lc-back" onclick="gwOpen(null)">Back to all chapters</button>
+    <h2 class="section-title" style="margin-top:10px">${escapeHtml(GW.skillsTitle || 'Skills I\'ve Got')}</h2>
+    <p class="lead">Practical skills for the life you are building. Mark what you can do already, and come back for the rest when life asks for it. Nothing here is graded, and unmarking takes nothing away.</p>
+    ${Object.keys(SK).map(ch => { const c = gwChapter(ch); return `<h3 class="bc-skills-h">${escapeHtml(c ? gwT(c, 'title') : ch)}</h3>${gwSkillsList(ch, L)}`; }).join('')}
+    <div class="btn-row"><button class="btn btn-primary" onclick="gwPrint(['skills'])">Save or Print My Skills</button><button class="btn btn-secondary" onclick="gwOpen(null)">Back to All Chapters</button></div>
+    <div id="bc-gwsheet" class="sq-legsheet" aria-hidden="true"></div>`;
+}
+function skillsDone() { try { const g = PROF && !HELP && window.GGP && GGP.isOpen(PROF.id) ? (rec().groundwork || {}) : {}; return Object.keys(g.skills || {}).filter(k => g.skills[k] && g.skills[k].done); } catch (e) { return []; } }
+function gwSkill(id, on) {
+  const L = gwRec(); if (!L) return;
+  const x = gwSkillsAll().find(y => y.id === id);
+  if (on) L.skills[id] = { done: todayKey(), t: x ? x.t : '' }; else delete L.skills[id];
+  // Marking a skill done is a milestone in the game layer; reached once, kept for good.
+  const st = window.GGTend && GGTend.state(), fresh = on && st ? checkMiles(st).filter(m => m !== 'bonus') : [];
+  persistRec().then(() => { renderGround(); if (fresh.length) pnCheer('New milestone: ' + mileName(fresh[0]), 'Skills I\'ve Got'); else showToast(on ? 'Marked. That is one more thing you can do.' : 'Unmarked. Nothing is lost.'); });
+}
+function gwPineHtml(L) {
+  const F = L.fromPine || {}, A = F.answers || {}, PC = GW.pineChapters || {}, groups = {};
+  Object.keys(A).forEach(pid => { const k = pid.split('-')[0]; (groups[k] = groups[k] || []).push([pid, A[pid]]); });
+  const title = k => { const t = PC[k]; return typeof t === 'string' ? t : t ? ((isPlain() && t.plain) || t.t) : k; };
+  if (!Object.keys(groups).length) return '<p class="gt-small">Nothing was written in Pine\'s Next Steps.</p>';
+  return `<div class="bc-frompine">${Object.keys(groups).map(k => `<h3 class="bc-skills-h">${escapeHtml(title(k))}</h3>${groups[k].map(([pid, a]) => `<article class="sq-prompt has"><h3>${escapeHtml(a.q || '')}</h3><div class="sq-legans">${escapeHtml(a.text || '').replace(/\n/g, '<br>')}</div><p class="gt-small">Written in Pine${a.date ? ', ' + escapeHtml(formatDate(a.date)) : ''}${a.when ? '. By ' + escapeHtml(formatDate(a.when)) : ''}</p></article>`).join('')}`).join('')}</div>`;
+}
+function gwChapterHtml(c, L) {
   const closed = c.optIn && !L.opened[c.id];
-  let h = `<button type="button" class="lc-back" onclick="nsOpen(null)">Back to all chapters</button>
-    <h2 class="section-title" style="margin-top:10px">${escapeHtml(nsT(c, 'title'))}</h2>${nsT(c, 'lead') ? `<p class="lead">${escapeHtml(nsT(c, 'lead'))}</p>` : ''}`;
-  if (closed) return h + `<div class="sq-optin"><p>${escapeHtml(nsT(c, 'note') || NS.careLine || '')}</p>
-      <div class="btn-row"><button class="btn btn-primary" onclick="nsOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="nsOpen(null)">Not Now</button></div></div>`;
+  let h = `<button type="button" class="lc-back" onclick="gwOpen(null)">Back to all chapters</button>
+    <h2 class="section-title" style="margin-top:10px">${escapeHtml(gwT(c, 'title'))}</h2>${gwT(c, 'lead') ? `<p class="lead">${escapeHtml(gwT(c, 'lead'))}</p>` : ''}`;
+  if (closed) return h + `<div class="sq-optin"><p>${escapeHtml(gwT(c, 'note') || GW.careLine || '')}</p>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gwOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="gwOpen(null)">Not Now</button></div></div>`;
+  if (c.fromPine) h += gwPineHtml(L) + '<h3 class="bc-skills-h">Keep Writing</h3>';
   h += `<p class="gt-small">Skip any prompt. Write a little or a lot. The microphone key on your phone's keyboard lets you speak instead of type.</p>`;
   h += (c.prompts || []).map(p => {
-    const a = L.answers[p.id] || null, editing = NX.edit === p.id, has = a && String(a.text || '').trim();
-    return `<article class="sq-prompt${has ? ' has' : ''}" id="np-${p.id}">
-      <h3>${escapeHtml(nsP(p))}</h3>${nsHelp(p) ? `<p class="sq-help">${escapeHtml(nsHelp(p))}</p>` : ''}
-      ${p.care ? `<p class="sq-care">${escapeHtml(NS.careLine || '')} <button type="button" class="text-btn" onclick="showCalm('hurt')">Help from outside your home</button></p>` : ''}
-      ${editing ? `<label class="gt-small" for="nt-${p.id}">Your words</label><textarea id="nt-${p.id}" class="reflection-area sq-legtext" rows="6" maxlength="20000">${escapeHtml(a ? a.text : '')}</textarea>
-        ${p.when ? `<label class="gt-small" for="nw-${p.id}">By when (optional)</label><input type="date" id="nw-${p.id}" class="sq-select pn-date" value="${escapeHtml(a && a.when ? a.when : '')}">` : ''}
-        <div class="btn-row"><button class="btn btn-primary" onclick="nsSave('${p.id}')">Save</button><button class="btn btn-secondary" onclick="NX.edit=null;renderNext()">Cancel</button>${has ? `<button class="btn btn-secondary" onclick="nsDelete('${p.id}')">Remove</button>` : ''}</div>`
-      : has ? `<div class="sq-legans">${escapeHtml(a.text).replace(/\n/g, '<br>')}</div><p class="gt-small">${escapeHtml(a.date ? formatDate(a.date) : '')}${a.when ? '. By ' + escapeHtml(formatDate(a.when)) : ''}</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="nsEdit('${p.id}')">Edit</button></div>`
-      : `<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="nsEdit('${p.id}')">Write This One</button></div>`}
+    const a = L.answers[p.id] || null, editing = GX.edit === p.id, has = a && String(a.text || '').trim();
+    return `<article class="sq-prompt${has ? ' has' : ''}" id="gp-${p.id}">
+      <h3>${escapeHtml(gwP(p))}</h3>${gwHelp(p) ? `<p class="sq-help">${escapeHtml(gwHelp(p))}</p>` : ''}
+      ${p.care ? `<p class="sq-care">${escapeHtml(GW.careLine || '')} <button type="button" class="text-btn" onclick="showCalm()">Help lines</button></p>` : ''}
+      ${editing ? `<label class="gt-small" for="gt-${p.id}">Your words</label><textarea id="gt-${p.id}" class="reflection-area sq-legtext" rows="6" maxlength="20000">${escapeHtml(a ? a.text : '')}</textarea>
+        ${p.when ? `<label class="gt-small" for="gw-${p.id}">${escapeHtml(c.whenLabel || 'By when (optional)')}</label><input type="date" id="gw-${p.id}" class="sq-select pn-date" value="${escapeHtml(a && a.when ? a.when : '')}">` : ''}
+        <div class="btn-row"><button class="btn btn-primary" onclick="gwSave('${p.id}')">Save</button><button class="btn btn-secondary" onclick="GX.edit=null;renderGround()">Cancel</button>${has ? `<button class="btn btn-secondary" onclick="gwDelete('${p.id}')">Remove</button>` : ''}</div>`
+      : has ? `<div class="sq-legans">${escapeHtml(a.text).replace(/\n/g, '<br>')}</div><p class="gt-small">${escapeHtml(a.date ? formatDate(a.date) : '')}${a.when ? '. ' + escapeHtml((c.whenLabel || 'By when').replace(/ \(optional\)$/, '')) + ' ' + escapeHtml(formatDate(a.when)) : ''}</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="gwEdit('${p.id}')">Edit</button></div>`
+      : `<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="gwEdit('${p.id}')">Write This One</button></div>`}
     </article>`;
   }).join('');
-  h += `<div class="btn-row"><button class="btn btn-primary" onclick="nsPrint(['${c.id}'])">Save or Print This Chapter</button>${c.optIn ? `<button class="btn btn-secondary" onclick="nsOptIn('${c.id}', false)">Close This Chapter</button>` : ''}<button class="btn btn-secondary" onclick="nsOpen(null)">Back to All Chapters</button></div>
-    <div id="pn-nssheet" class="sq-legsheet" aria-hidden="true"></div>`;
+  if ((GW.skills || {})[c.id]) h += `<h3 class="bc-skills-h">${escapeHtml(GW.skillsTitle || 'Skills I\'ve Got')}</h3>${gwSkillsList(c.id, L)}`;
+  h += `<div class="btn-row"><button class="btn btn-primary" onclick="gwPrint(['${c.id}'])">Save or Print This Chapter</button>${c.optIn ? `<button class="btn btn-secondary" onclick="gwOptIn('${c.id}', false)">Close This Chapter</button>` : ''}<button class="btn btn-secondary" onclick="gwOpen(null)">Back to All Chapters</button></div>
+    <div id="bc-gwsheet" class="sq-legsheet" aria-hidden="true"></div>`;
   return h;
 }
-function nsOpen(id) { NX.ch = id; NX.edit = null; NX.pick = false; renderNext(); scrollToViewTop('client-next', true, false); }
-function nsEdit(pid) { NX.edit = pid; renderNext(); const t = document.getElementById('nt-' + pid); if (t) { t.focus(); t.scrollIntoView({ block: 'center' }); } }
-function nsSave(pid) {
-  const L = nsRec(); if (!L) return;
-  const text = (document.getElementById('nt-' + pid) || {}).value || '', when = ((document.getElementById('nw-' + pid) || {}).value || '').trim();
-  const c = nsChapter(NX.ch), p = c && (c.prompts || []).find(x => x.id === pid);
+function gwOpen(id) { GX.ch = id; GX.edit = null; GX.pick = false; GX.how = null; renderGround(); scrollToViewTop('client-ground', true, false); }
+function gwEdit(pid) { GX.edit = pid; renderGround(); const t = document.getElementById('gt-' + pid); if (t) { t.focus(); t.scrollIntoView({ block: 'center' }); } }
+function gwSave(pid) {
+  const L = gwRec(); if (!L) return;
+  const text = (document.getElementById('gt-' + pid) || {}).value || '', when = ((document.getElementById('gw-' + pid) || {}).value || '').trim();
+  const c = gwChapter(GX.ch), p = c && (c.prompts || []).find(x => x.id === pid);
   if (!text.trim()) delete L.answers[pid];
-  else { L.answers[pid] = { text: text.slice(0, 20000), date: todayKey(), q: p ? nsP(p) : '' }; if (when) L.answers[pid].when = when; }
-  NX.edit = null;
-  persistRec().then(() => { renderNext(); showToast(text.trim() ? 'Saved in your notebook.' : 'Left blank. Come back any time.'); const a = document.getElementById('np-' + pid); if (a) a.scrollIntoView({ block: 'center' }); });
+  else { L.answers[pid] = { text: text.slice(0, 20000), date: todayKey(), q: p ? gwP(p) : '' }; if (when) L.answers[pid].when = when; }
+  GX.edit = null;
+  persistRec().then(() => { renderGround(); showToast(text.trim() ? 'Saved in your notebook.' : 'Left blank. Come back any time.'); const a = document.getElementById('gp-' + pid); if (a) a.scrollIntoView({ block: 'center' }); });
 }
-function nsDelete(pid) {
+function gwDelete(pid) {
   if (!confirm('Remove what is written here? This cannot be undone unless you have a backup.')) return;
-  const L = nsRec(); if (!L) return; delete L.answers[pid]; NX.edit = null; persistRec().then(renderNext);
+  const L = gwRec(); if (!L) return; delete L.answers[pid]; GX.edit = null; persistRec().then(renderGround);
 }
-function nsOptIn(id, on) {
-  const L = nsRec(); if (!L) return;
+function gwOptIn(id, on) {
+  const L = gwRec(); if (!L) return;
   if (on) L.opened[id] = todayKey(); else delete L.opened[id];
-  persistRec().then(() => { if (!on) NX.ch = null; renderNext(); showToast(on ? 'Open. Stop any time.' : 'Closed. What you wrote stays in your notebook.'); });
+  persistRec().then(() => { if (!on) GX.ch = null; renderGround(); showToast(on ? 'Open. Stop any time.' : 'Closed. What you wrote stays in your notebook.'); });
 }
-function nsPickBook() { NX.pick = !NX.pick; renderNext(); }
-function nsPickHtml(L) {
-  const ready = (NS.chapters || []).filter(c => nsWritten(c, L));
-  if (!ready.length) return '<p class="gt-small">Write in a chapter first, and it can be saved or printed here.</p>';
-  return `<div class="gt-card sq-pick"><h3>Choose the Chapters</h3><p class="gt-small">Choose what goes in. Share the pages only if you want to, and only with people you choose.</p>${ready.map(c => `<label class="gt-switch"><input type="checkbox" name="pn-pick" value="${c.id}" checked> ${escapeHtml(nsT(c, 'title'))}</label>`).join('')}
-    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="nsPrint(Array.from(document.querySelectorAll('input[name=pn-pick]:checked')).map(x=>x.value))">Save or Print</button></div></div>`;
+function gwPickBook() { GX.pick = !GX.pick; renderGround(); }
+function gwPickHtml(L) {
+  const ready = gwChapters(L).filter(c => gwWritten(c, L)).map(c => [c.id, gwT(c, 'title')]);
+  if (skillsDone().length) ready.push(['skills', GW.skillsTitle || 'Skills I\'ve Got']);
+  if (!ready.length) return '<p class="gt-small">Write in a chapter or mark a skill first, and it can be saved or printed here.</p>';
+  return `<div class="gt-card sq-pick"><h3>Choose the Chapters</h3><p class="gt-small">Choose what goes in. Share the pages only if you want to, and only with people you choose.</p>${ready.map(c => `<label class="gt-switch"><input type="checkbox" name="bc-pick" value="${c[0]}" checked> ${escapeHtml(c[1])}</label>`).join('')}
+    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="gwPrint(Array.from(document.querySelectorAll('input[name=bc-pick]:checked')).map(x=>x.value))">Save or Print</button></div></div>`;
 }
-function nsPrint(ids) {
-  const L = nsRec(); if (!L || !ids.length) { showToast('Choose a chapter first.'); return; }
-  const chs = ids.map(nsChapter).filter(c => c && nsWritten(c, L));
-  if (!chs.length) { showToast('Write in this chapter first, then save or print it.'); return; }
-  const box = document.getElementById('pn-nssheet'); if (!box) return;
-  box.innerHTML = `<div class="growth-plan-doc sq-legdoc" id="pn-nsdoc"><div class="growth-plan-header"><div class="growth-plan-title">${escapeHtml(PROF ? PROF.name + '\'s Next Steps' : 'My Next Steps')}</div><div class="growth-plan-meta">${formatDate(null)}</div></div>
-    ${chs.map(c => `<div class="growth-plan-domain"><div class="growth-plan-domain-header"><div class="growth-plan-domain-name">${escapeHtml(nsT(c, 'title'))}</div></div>${(c.prompts || []).filter(p => L.answers[p.id] && String(L.answers[p.id].text || '').trim()).map(p => { const a = L.answers[p.id]; return `<h3 class="sq-legq">${escapeHtml(nsP(p))}</h3><p class="sq-lega">${escapeHtml(a.text).replace(/\n/g, '<br>')}</p>${a.when ? `<p class="sq-legby">By ${escapeHtml(formatDate(a.when))}</p>` : ''}`; }).join('')}</div>`).join('')}
-    <div class="growth-plan-footer"><p>Kept with Pine by Grow With Grounded. These words belong to the person who wrote them.</p></div></div>`;
+// The whole notebook, every chapter written and every skill marked (for Moving to Oak).
+function gwPrintAll() {
+  const L = gwRec(); if (!L) { showToast('Open your profile first.'); return; }
+  if (!document.getElementById('client-ground').classList.contains('active')) { GX.ch = null; GX.pick = false; showView('client-ground'); }
+  gwPrint(gwChapters(L).map(c => c.id).concat(['skills']));
+}
+function gwPrint(ids) {
+  const L = gwRec(); if (!L || !ids.length) { showToast('Choose a chapter first.'); return; }
+  const chs = ids.map(gwChapter).filter(c => c && gwWritten(c, L)), sk = ids.includes('skills') ? gwSkillsAll().filter(x => L.skills[x.id] && L.skills[x.id].done) : [];
+  if (!chs.length && !sk.length) { showToast('Write in this chapter or mark a skill first, then save or print it.'); return; }
+  const box = document.getElementById('bc-gwsheet'); if (!box) return;
+  const pine = c => { if (!c.fromPine || !L.fromPine) return ''; const A = L.fromPine.answers || {}; return Object.keys(A).map(pid => `<h3 class="sq-legq">${escapeHtml(A[pid].q || '')}</h3><p class="sq-lega">${escapeHtml(A[pid].text || '').replace(/\n/g, '<br>')}</p><p class="sq-legby">Written in Pine${A[pid].date ? ', ' + escapeHtml(formatDate(A[pid].date)) : ''}</p>`).join(''); };
+  box.innerHTML = `<div class="growth-plan-doc sq-legdoc" id="bc-gwdoc"><div class="growth-plan-header"><div class="growth-plan-title">${escapeHtml(PROF ? PROF.name + '\'s Groundwork' : 'My Groundwork')}</div><div class="growth-plan-meta">${formatDate(null)}</div></div>
+    ${chs.map(c => `<div class="growth-plan-domain"><div class="growth-plan-domain-header"><div class="growth-plan-domain-name">${escapeHtml(gwT(c, 'title'))}</div></div>${pine(c)}${(c.prompts || []).filter(p => L.answers[p.id] && String(L.answers[p.id].text || '').trim()).map(p => { const a = L.answers[p.id]; return `<h3 class="sq-legq">${escapeHtml(gwP(p))}</h3><p class="sq-lega">${escapeHtml(a.text).replace(/\n/g, '<br>')}</p>${a.when ? `<p class="sq-legby">${escapeHtml((c.whenLabel || 'By when').replace(/ \(optional\)$/, ''))} ${escapeHtml(formatDate(a.when))}</p>` : ''}`; }).join('')}</div>`).join('')}
+    ${sk.length ? `<div class="growth-plan-domain"><div class="growth-plan-domain-header"><div class="growth-plan-domain-name">${escapeHtml(GW.skillsTitle || 'Skills I\'ve Got')}</div></div><ul class="sq-planlist">${sk.map(x => `<li>${escapeHtml(x.t)} <span class="sq-legby">${escapeHtml(formatDate(L.skills[x.id].done))}</span></li>`).join('')}</ul></div>` : ''}
+    <div class="growth-plan-footer"><p>Kept with Birch by Grow With Grounded. These words belong to the person who wrote them.</p></div></div>`;
   box.removeAttribute('aria-hidden');
-  const sheet = document.getElementById('pn-nsdoc');
-  if (window.GGApp && window.ggPdfFromEl) GGApp.sheet({ title: 'Next Steps', file: 'next-steps.pdf', print: () => printGrowthPlanNow('pn-nsdoc'),
-    blocks: () => ggPdfFromEl(sheet, { rows: '.growth-plan-domain-header', eyebrow: 'Next Steps', foot: 'Pine(TM) by Grow With Grounded. growwithgrounded.com/pine' }) });
-  else printGrowthPlanNow('pn-nsdoc');
+  const sheet = document.getElementById('bc-gwdoc');
+  if (window.GGApp && window.ggPdfFromEl) GGApp.sheet({ title: 'Groundwork', file: 'groundwork.pdf', print: () => printGrowthPlanNow('bc-gwdoc'),
+    blocks: () => ggPdfFromEl(sheet, { rows: '.growth-plan-domain-header', eyebrow: 'Groundwork', foot: 'Birch(TM) by Grow With Grounded. growwithgrounded.com/birch' }) });
+  else printGrowthPlanNow('bc-gwdoc');
 }
 
 // ---------- SAVE TO A FILE: locked with a passcode (shared/gg-filelock.js) ----------
@@ -1592,9 +1805,9 @@ function savePersonalFile() {
     sortEntries(personalHistory);
   }
   if (PROF) { profPersist().then(() => { showToast('Saved to your profile.'); renderSaveBox(); renderProgress(); }); return; }
-  const data = { app: 'pine', type: 'personal', version: 1, savedAt: new Date().toISOString(), entries: personalHistory };
+  const data = { app: 'birch', type: 'personal', version: 1, savedAt: new Date().toISOString(), entries: personalHistory };
   if (!window.GGFileLock) { showToast('Saving to a file needs a newer browser.'); return; }
-  GGFileLock.save({ app: 'pine', filename: `pine-my-results-${todayKey()}.json`, data, what: 'your Pine results' }).then(ok => {
+  GGFileLock.save({ app: 'birch', filename: `birch-my-results-${todayKey()}.json`, data, what: 'your Birch results' }).then(ok => {
     if (ok) { showToast('Saved to a locked file. Keep it, and its passcode, somewhere safe.'); renderSaveBox(); renderProgress(); }
   });
 }
@@ -1605,12 +1818,12 @@ function loadPersonalFile(input) {
   const reader = new FileReader();
   reader.onload = () => {
     const take = data => {
-      if (!data || !['pine', 'oak'].includes(data.app) || data.type !== 'personal' || !Array.isArray(data.entries)) throw new Error('Not a Pine results file');
+      if (!data || !['birch', 'pine', 'oak'].includes(data.app) || data.type !== 'personal' || !Array.isArray(data.entries)) throw new Error('Not a Birch results file');
       const valid = data.entries.filter(e => e && e.scores && typeof e.scores === 'object');
       const ids = new Set(personalHistory.map(e => e.id));
       valid.forEach((e, i) => {
         if (!e.id) e.id = 'saved-' + i + '-' + String(e.date);
-        if (data.app === 'oak') { e.from = 'oak'; e.id = 'oak-' + e.id; }
+        if (data.app !== 'birch' && !e.from) { e.from = data.app; e.id = data.app + '-' + e.id; }
         if (!ids.has(e.id)) { personalHistory.push(e); ids.add(e.id); }
       });
       sortEntries(personalHistory);
@@ -1619,8 +1832,8 @@ function loadPersonalFile(input) {
       renderSaveBox(); renderProgress();
       showToast(`Loaded ${valid.length} saved result${valid.length !== 1 ? 's' : ''}.`);
     };
-    const fail = () => showToast('That file is not a Pine results file.');
-    if (window.GGFileLock) GGFileLock.read(reader.result, { app: 'pine', what: 'your Pine results' }).then(d => { if (d) { try { take(d); } catch (e) { fail(); } } }).catch(fail);
+    const fail = () => showToast('That file is not a Birch, Pine, or Oak results file.');
+    if (window.GGFileLock) GGFileLock.read(reader.result, { app: 'birch', what: 'your results' }).then(d => { if (d) { try { take(d); } catch (e) { fail(); } } }).catch(fail);
     else { try { take(JSON.parse(reader.result)); } catch (e) { fail(); } }
   };
   reader.readAsText(file);
@@ -1653,7 +1866,7 @@ function renderSaveBox() {
 function renderProgress() {
   const container = document.getElementById('client-progress-content');
   if (!container) return;
-  const list = personalHistory.filter(e => e && e.scores).concat(aspenRings());
+  const list = personalHistory.filter(e => e && e.scores);
   const pending = window.currentClientEntry && !list.some(e => e.id === currentClientEntry.id);
   if (pending) list.push(currentClientEntry);
   sortEntries(list);
@@ -1665,18 +1878,19 @@ function renderProgress() {
 }
 
 // ---------- CHART + TABLE ----------
-// Rings compare only within the same standard, bank, grade band, and kind (full with full,
-// quick with quick). Rings from Oak or Aspen are labeled and never compared.
+// Rings compare only within the same standard, bank, and kind (full with full, quick with
+// quick). Rings from Pine or Oak are labeled and never compared. A check-in taken
+// together with a helper is marked, and compares like any Birch ring.
 function stShown(entry, k) { return (entry.unsure || []).includes(k) ? null : (entry.scores || {})[k]; }
 function earlierLabel(e) { return e.from ? (FROM_NAME[e.from] || 'Earlier') : !e.std ? 'Earlier' : ''; }
 function renderHistoryChartAndTable(container, history) {
-  const pine = history.filter(e => !e.from && e.std);
-  const last = pine[pine.length - 1] || null;
+  const own = history.filter(e => !e.from && e.std);
+  const last = own[own.length - 1] || null;
   const kind = e => e.type === 'quick' ? 'quick' : 'full';
-  const same = (a, b) => a.std === b.std && (a.bank || 1) === (b.bank || 1) && (a.band || '9-10') === (b.band || '9-10') && kind(a) === kind(b);
-  const prev = last ? pine.slice(0, -1).reverse().find(e => same(e, last)) : null;
+  const same = (a, b) => a.std === b.std && (a.bank || 1) === (b.bank || 1) && kind(a) === kind(b);
+  const prev = last ? own.slice(0, -1).reverse().find(e => same(e, last)) : null;
   let cmp = '';
-  if (!last) cmp = '<p class="muted" style="font-size:15px;">Your rings from before Pine are kept below, labeled. Your first Pine check-in starts your Pine rings.</p>';
+  if (!last) cmp = '<p class="muted" style="font-size:15px;">Your rings from before Birch are kept below, labeled. Your first Birch check-in starts your Birch rings.</p>';
   else if (!prev) cmp = `<p class="muted" style="font-size:15px;">Your next ${kind(last) === 'quick' ? 'quick ' : ''}check-in will show how each part has grown.</p>`;
   else cmp = `<p style="font-size:15px;margin:0 0 6px;">Compared with your ${kind(last) === 'quick' ? 'quick ' : ''}check-in on ${escapeHtml(formatDate(prev.date))}:</p><div class="ring-cmp">` + ALL_DOMAINS.map(d => {
     const a = stShown(prev, d.key), b = stShown(last, d.key);
@@ -1689,7 +1903,7 @@ function renderHistoryChartAndTable(container, history) {
   tableHtml += `</tr></thead><tbody>`;
   history.slice().reverse().forEach(s => {
     const lab = earlierLabel(s);
-    tableHtml += `<tr><td>${escapeHtml(formatDate(s.date))}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}${lab ? ` <span class="earlier-tag">${escapeHtml(lab)}</span>` : s.band ? ` <span class="quick-tag">${escapeHtml(s.band === '11-12' ? 'Grades 11 to 12' : 'Grades 9 to 10')}</span>` : ''}</td>`;
+    tableHtml += `<tr><td>${escapeHtml(formatDate(s.date))}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}${lab ? ` <span class="earlier-tag">${escapeHtml(lab)}</span>` : s.by === 'tapped' ? ' <span class="quick-tag">Taken Together</span>' : ''}</td>`;
     ALL_DOMAINS.forEach(d => { const v = stShown(s, d.key); tableHtml += `<td>${v == null ? 'Not sure yet' : `${stLevel(v)}<br><small>${v} of 10</small>`}</td>`; });
     tableHtml += `</tr>`;
   });
@@ -1699,7 +1913,7 @@ function renderHistoryChartAndTable(container, history) {
     <div class="chart-container">
       <div class="section-title" style="margin-top:0;">Full History</div>
       ${tableHtml}
-      ${history.some(e => earlierLabel(e)) ? '<p class="muted" style="font-size:14px;margin-top:8px;">Rings marked From Oak, From Aspen, or Earlier used other questions. They stay here as part of your story, and they are never compared with Pine rings. Pine rings compare only with rings from the same grades.</p>' : ''}
+      ${history.some(e => earlierLabel(e)) ? '<p class="muted" style="font-size:14px;margin-top:8px;">Rings marked From Pine, From Oak, or Earlier used other questions. They stay here as part of your story, and they are never compared with Birch rings.</p>' : ''}
     </div>`;
 }
 
@@ -1714,11 +1928,11 @@ function toggleSiteMenu(btn) {
   const open = document.getElementById('site-menu').classList.toggle('open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
-// Text size: Pine starts at the normal size; larger text stays a setting.
+// Text size: Birch starts at the normal size; larger text stays a setting.
 const TEXT_SIZES = ['', 'ts-1', 'ts-2'];
 const TEXT_LABELS = ['A+', 'A++', 'A'];
 let textSize = 0;
-try { const v = localStorage.getItem('pine:text-size'); if (v !== null) textSize = parseInt(v, 10) || 0; } catch (e) {}
+try { const v = localStorage.getItem('birch:text-size'); if (v !== null) textSize = parseInt(v, 10) || 0; } catch (e) {}
 function applyTextSize() {
   document.documentElement.classList.remove('ts-1', 'ts-2');
   if (TEXT_SIZES[textSize]) document.documentElement.classList.add(TEXT_SIZES[textSize]);
@@ -1727,7 +1941,7 @@ function applyTextSize() {
 }
 function cycleTextSize() {
   textSize = (textSize + 1) % TEXT_SIZES.length;
-  try { localStorage.setItem('pine:text-size', String(textSize)); } catch (e) {}
+  try { localStorage.setItem('birch:text-size', String(textSize)); } catch (e) {}
   applyTextSize();
 }
 applyTextSize();
@@ -1735,15 +1949,17 @@ renderAboutParts();
 renderProgress();
 renderProfileBar();
 
-/* Deep links: #quick, #checkin, #nextsteps, #plan, #life (guides), #life=<id> or #talk=<id> (one guide) */
+/* Deep links: #quick, #checkin, #groundwork, #skills, #plan, #about, #life (Oak's guides for now), #for=<id> (a helper) */
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
-  if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null; showView('client-life'); }
-  else if (h === '#nextsteps' || h === '#next') showView('client-next');
+  if (h.startsWith('#life') || h.startsWith('#talk=')) { location.href = '/oak/' + h.replace(/^#talk=/, '#life='); }
+  else if (h === '#groundwork' || h === '#ground') { GX.ch = null; showView('client-ground'); }
+  else if (h === '#skills') { GX.ch = 'skills'; showView('client-ground'); }
   else if (h === '#plan') showView('client-growthplan');
   else if (h === '#quick') startQuick();
   else if (h === '#checkin' || h === '#check' + 'up') startCheckin();
   else if (h === '#about') showView('client-intro');
+  else if (h.startsWith('#for=')) helpFromHash();
 }
 window.addEventListener('hashchange', fromHash);
 setTimeout(fromHash, 60);

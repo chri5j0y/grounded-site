@@ -1629,26 +1629,42 @@ function setupDone() {
   r.setup = todayKey();
   persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(gradeNow() ? 'Pine is ready. Start with a check-in.' : 'Pine is ready. Pine will ask your grade at your first check-in.'); });
 }
-// Moving on (decision 10). In grade 12, or any time from Settings: stay in Pine, or
-// Start My Oak, which makes a new adult profile and copies Pine's rings (labeled earlier)
-// and the Next Steps notebook into it. Pine's own record stays whole. Never forced.
-// Start My Birch takes this card's place once Birch is live.
+// Moving on (decision 10; Start My Birch, GWG BLD 742). In grade 12, or any time from
+// Settings: stay in Pine, or Start My Birch, which makes a new adult profile with Birch,
+// built for ages 18 to 26, as its tree, and copies Pine's rings (labeled From Pine), the
+// Next Steps notebook (into Groundwork's From Pine chapter), and the Faith or Plain choice.
+// Pine's own record stays whole. Never forced. Start My Oak stays as a smaller second
+// choice for anyone who prefers Oak.
 function movingOnHtml(onToday) {
   if (!PROF) return '';
   const r = rec();
   if (onToday && (gradeNow() !== '12' || r.stayPine)) return '';
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="pn-set-moving"'}><h3>Turning 18, or Finishing High School?</h3>
-    <p class="gt-small">${onToday ? 'You are in grade 12. ' : ''}You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Oak. Start My Oak makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine) and your Next Steps notebook with you. Pine keeps its own copy. Birch, made for ages 18 to 26, is on its way, and it will take this step's place.</p>
-    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyOak()">Start My Oak</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInPine()">Stay in Pine</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+    <p class="gt-small">${onToday ? 'You are in grade 12. ' : ''}You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Birch, built for ages 18 to 26. Start My Birch makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine), your Next Steps notebook, and your Faith or Plain choice with you. Pine keeps its own copy.</p>
+    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyBirch()">Start My Birch</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInPine()">Stay in Pine</button>' : ''}</div>
+    <p class="gt-small">Prefer Oak, built for adults 25 to 60? <button type="button" class="text-btn" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyOak()">Start My Oak instead</button></p></${onToday ? 'div' : 'section'}>`;
 }
-function stayInPine() { rec().stayPine = todayKey(); persistRec().then(() => { showToast('Pine stays your tree. Start My Oak is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+function stayInPine() { rec().stayPine = todayKey(); persistRec().then(() => { showToast('Pine stays your tree. Start My Birch is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+function pineCarry() {
+  const r = rec();
+  const rings = (r.history || []).filter(e => e && e.scores && !e.from).map(e => { const c = JSON.parse(JSON.stringify(e)); c.id = 'pine-' + e.id; c.from = 'pine'; delete c.std; delete c.answers; delete c.safety; delete c.sens; delete c.flags; delete c.reflections; return c; });
+  const ns = r.nextsteps && r.nextsteps.answers && Object.keys(r.nextsteps.answers).length ? JSON.parse(JSON.stringify(r.nextsteps)) : null;
+  return { rings, ns, wording: r.wording === 'plain' ? 'plain' : 'faith' };
+}
+function startMyBirch() {
+  if (!PROF || !window.GGP) return;
+  if (!confirm('Start My Birch makes a new adult profile for you, with Birch as your tree. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
+  const name = PROF.name, c = pineCarry();
+  const birch = { history: c.rings, wording: c.wording, pineCopied: todayKey() };
+  if (c.ns) birch.groundwork = { answers: {}, opened: {}, skills: {}, fromPine: { answers: c.ns.answers || {}, opened: c.ns.opened || {}, from: 'pine', copied: todayKey() } };
+  GGP.createDialog({ age: 'adult', tree: 'birch', name: '', carry: { birch }, reason: 'Your new adult profile, ' + name + '. Pick a name that is different from your Pine profile, like your name with a last initial. Your Pine check-ins, Next Steps notebook, and wording come along into Birch.',
+    onCreated: id => { try { if (id && GGP.setTree && GGP.tree(id) !== 'birch') GGP.setTree(id, 'birch'); } catch (e) {} setTimeout(() => { location.href = '/birch/'; }, 600); } });
+}
 function startMyOak() {
   if (!PROF || !window.GGP) return;
-  if (!confirm('Start My Oak makes a new adult profile for you. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
-  const r = rec(), name = PROF.name;
-  const rings = (r.history || []).filter(e => e && e.scores && !e.from).map(e => { const c = JSON.parse(JSON.stringify(e)); c.id = 'pine-' + e.id; c.from = 'pine'; delete c.std; delete c.answers; delete c.safety; delete c.sens; delete c.flags; delete c.reflections; return c; });
-  const ns = r.nextsteps ? Object.assign(JSON.parse(JSON.stringify(r.nextsteps)), { from: 'pine', copied: todayKey() }) : null;
-  const oak = { history: rings }; if (ns) oak.nextsteps = ns;
+  if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults 25 to 60. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
+  const name = PROF.name, c = pineCarry();
+  const oak = { history: c.rings }; if (c.ns) oak.nextsteps = Object.assign(c.ns, { from: 'pine', copied: todayKey() });
   GGP.createDialog({ age: 'adult', name: '', carry: { oak }, reason: 'Your new adult profile, ' + name + '. Pick a name that is different from your Pine profile, like your name with a last initial. Your Pine check-ins and Next Steps notebook come along.', onCreated: () => { setTimeout(() => { location.href = '/oak/'; }, 600); } });
 }
 
