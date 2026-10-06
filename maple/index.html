@@ -2532,7 +2532,7 @@ function mpOnCheck(done, key, s, parts) {
    My Aspen makes a new Middle school profile with Aspen as its tree (a grown-up agrees), and
    copies Maple's rings, labeled From Maple, and the Faith or Plain choice. The copies keep
    only the date, grade, and each part's score, never the answers or the safety step. Maple
-   keeps its own record whole. Aspen reads them from student.fromMaple. */
+   keeps its own record whole. Aspen reads them from student.earlier, and the wording from aspen.wording. */
 function mpMovingHtml(onToday) {
   const k = MP_KID; if (!k || String(k.grade) !== '5' || !window.GGP) return '';
   if (onToday && k.stayMaple) return '';
@@ -2548,9 +2548,9 @@ function stayInMaple() {
 }
 function mapleCarry(k) {
   const rings = (k.checkins || []).filter(c => c && c.answers && c.std).map(c => {
-    const scores = {};
-    PARTS.forEach(p => { const v = ((c.answers || {})[p.key] || {}).score; scores[p.key] = typeof v === 'number' ? v : null; });
-    return { id: 'maple-' + c.id, date: c.date, from: 'maple', grade: c.grade, std: c.std, scores, wording: c.wording === 'plain' ? 'plain' : 'faith' };
+    const scores = {}, unsure = [];
+    PARTS.forEach(p => { const v = ((c.answers || {})[p.key] || {}).score; if (typeof v === 'number') scores[p.key] = v; else unsure.push(p.key); });
+    return { id: 'maple-' + c.id, date: c.date, from: 'maple', grade: c.grade, scores, unsure };
   });
   return { rings, wording: kidWording(k) };
 }
@@ -2558,8 +2558,8 @@ function startMyAspen() {
   const k = MP_KID; if (!k || !window.GGP) return;
   if (!confirm(`Start My Aspen makes a new Middle school profile for ${k.name}, with Aspen as their tree. A grown-up agrees when it is made. ${k.name}'s Maple tree stays as it is. Continue?`)) return;
   const c = mapleCarry(k);
-  const student = { rings: [], draft: null, plan: null, log: {}, leaves: 0, style: 'aspen', theme: 'lake', grade: 6, wording: c.wording, fromMaple: c.rings, mapleCopied: dkey() };
-  GGP.createDialog({ age: 'aspen', name: '', avatar: k.avatar || '', carry: { aspen: { student } },
+  const student = { rings: [], draft: null, plan: null, log: {}, leaves: 0, style: 'aspen', theme: 'lake', grade: 6, earlier: c.rings, mapleCopied: dkey() };
+  GGP.createDialog({ age: 'aspen', name: '', avatar: k.avatar || '', carry: { aspen: { student, wording: c.wording } },
     reason: `${k.name}'s new Middle school profile. Pick a name that is different from the Maple profile, like the first name with a last initial. ${k.name}'s Maple rings and wording come along into Aspen.`,
     onCreated: () => { setTimeout(() => { location.href = '/aspen/'; }, 600); } });
 }

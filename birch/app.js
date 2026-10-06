@@ -1272,10 +1272,14 @@ function milesNow(s) {
 function items(s) { const out = []; const p = s.plan || {}; PART_ORDER.forEach(k => { const x = p[k] || {}; (x.selected || []).forEach(n => out.push({ key: k, name: n })); }); return out; }
 function mileName(id) { const m = MILES.find(x => x[0] === id); return m ? m[1] : id.indexOf('season') === 0 ? 'Season ' + id.slice(6) + ' Finished' : id; }
 // Records any milestone reached for the first time, and says so once.
+// quiet (while Today draws): only ring and season milestones, which come from a
+// check-in. Practice milestones and the balanced-week bonus wait for onCheckGame,
+// so the cheer fires the moment one is first reached (GWG BLD 745).
 function checkMiles(s, quiet) {
   const R = pnRec(s), now = milesNow(s), fresh = [];
-  Object.keys(now).forEach(id => { if (!R.miles[id]) { R.miles[id] = todayKey(); fresh.push(id); } });
-  balancedWeeks(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = todayKey(); if (!quiet && m === mondayOf(todayKey())) fresh.push('bonus'); } });
+  Object.keys(now).forEach(id => { if (quiet && !/^(ring|season)/.test(id)) return; if (!R.miles[id]) { R.miles[id] = todayKey(); fresh.push(id); } });
+  if (quiet) return fresh;
+  balancedWeeks(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = todayKey(); if (m === mondayOf(todayKey())) fresh.push('bonus'); } });
   return fresh;
 }
 function todayKindHtml(s) {

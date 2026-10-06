@@ -5501,23 +5501,23 @@ window.GG_LEARN = {
        "h": "Guides in five groups",
        "items": [
         [
-         "Home and family",
+         "Home and Family",
          "Moving, divorce, a death, a new baby"
         ],
         [
-         "Friends and school",
+         "Friends and School",
          "Drama, being left out, bullying"
         ],
         [
-         "Growing up and online",
+         "Growing Up and Online",
          "Phones, sleep, faith, who you are"
         ],
         [
-         "Big world, hard news",
+         "Big World, Hard News",
          "Plus Safety, when someone is hurting"
         ]
        ],
-       "say": "The guides come in five groups. Home and family, for things like moving, divorce, or a death. Friends and school, for drama, being left out, and bullying. Growing up and online, for phones, sleep, big questions about faith, and figuring out who you are. Big world, hard news, for things like storms and scary headlines. And Safety, for when you or a friend is hurting."
+       "say": "The guides come in five groups. Home and Family, for things like moving, divorce, or a death. Friends and School, for drama, being left out, and bullying. Growing Up and Online, for phones, sleep, big questions about faith, and figuring out who you are. Big World, Hard News, for things like storms and scary headlines. And Safety, for when you or a friend is hurting."
       },
       {
        "k": "points",
