@@ -613,6 +613,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="qr.js"></script>
 <script src="share.js?v=sc1"></script>
+<script src="ceremonies.js?v=cb1"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 (function(){ var t = Date.now(); ['codes','lib-founder','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
@@ -910,7 +911,7 @@ function tabsFor(){
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ...(OR() ? [['orient','Orientation','cap']] : [])];
   if (!LIB) return [...kids, ...grown];
-  const t = [['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['safety','Safety','shield'], ['-'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['safety','Safety','shield'], ['-'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['founder','Founder','key']);
   return t;
 }
@@ -920,7 +921,7 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => id === '-' ? `<span class="tab-div" role="separator" aria-orientation="vertical" aria-label="Grow With Grounded"></span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : ''};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : ''};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1046,7 +1047,7 @@ function vGuide(g){
   return `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}</h1></div>
   <div class="card"><p class="purpose">${mark(g.purpose)}</p>
-    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${g.id}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${g.id}">${icon('print')} Save or Print Guide</button></div></div>
+    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${g.id}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${g.id}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div></div>
   ${g.prep && g.prep.length ? `<div class="card"><h3>Before you begin</h3><ul class="checklist" style="margin-top:8px">${g.prep.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${g.steps.map((s,i) => `<div class="card step-card"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)} ${s.m ? `<span class="min">about ${s.m} min</span>` : ''}</h4>${stepHTML(s,i)}</div>`).join('')}
   ${g.after && g.after.length ? `<div class="card"><h3>After the session</h3><ul class="checklist" style="margin-top:8px">${g.after.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
@@ -9304,6 +9305,8 @@ function mergeData(cur, inc){
   out.plans = out.plans.filter(x => !(out.deleted.plans[x.id] && out.deleted.plans[x.id] >= (x.u || 0)));
   // Saved presentation decks (Presentations session): newest copy wins; deleted ones stay deleted.
   { const dm = dkMerge(out, inc); stats.added += dm.added; stats.updated += dm.updated; }
+  // Saved services (Service Builder, BLD 747): newest copy wins; deleted ones stay deleted.
+  if (window.GGCer){ const cm = GGCer.merge(out, inc); stats.added += cm.added; stats.updated += cm.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));
   const tp = inc.training && inc.training.progress || {};
