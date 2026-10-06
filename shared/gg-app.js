@@ -69,8 +69,9 @@
   var CFG = window.GG_APP_CONFIG || {};          // written by the app build: {app, tools:[...], pages:[...]}
   var P = function (name) { return NATIVE && CAP.Plugins ? CAP.Plugins[name] : null; };
   var SITE = 'https://growwithgrounded.com';
-  var TOOLS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove', 'field-guide'];
-  var SCHEMES = { 'maple': 'grounded-maple', 'aspen': 'grounded-aspen', 'pine': 'grounded-pine', 'birch': 'grounded-birch', 'oak': 'grounded-oak', 'sequoia': 'grounded-sequoia', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
+  // Willow joined the app lists in GWG BLD 745, so its phone app opens and is opened like the others.
+  var TOOLS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove', 'field-guide'];
+  var SCHEMES = { 'maple': 'grounded-maple', 'aspen': 'grounded-aspen', 'pine': 'grounded-pine', 'birch': 'grounded-birch', 'oak': 'grounded-oak', 'sequoia': 'grounded-sequoia', 'willow': 'grounded-willow', 'grove': 'grounded-grove', 'field-guide': 'grounded-fieldguide' };
 
   document.documentElement.classList.add(NATIVE ? 'gg-native' : 'gg-web');
   if (NATIVE) document.documentElement.classList.add('gg-' + PLATFORM);
@@ -468,7 +469,9 @@
   }
 
   /* ---------------- DAILY REMINDERS ---------------- */
-  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, maple: 1002, aspen: 1003, 'oak': 1004, sequoia: 1005, pine: 1006, birch: 1007 };
+  // Willow's number, 1008, is saved for it (GWG BLD 745). Willow sets no daily reminder: it stays
+  // gentle keeping only, so nothing in Willow calls remind.set.
+  var RKEY = 'gg-reminders-v1', RID = { grove: 1001, maple: 1002, aspen: 1003, 'oak': 1004, sequoia: 1005, pine: 1006, birch: 1007, willow: 1008 };
   var remind = {
     can: function () { return !!P('LocalNotifications'); },
     get: function (id) { var all = GGStore.json(RKEY, {}); return all[id] || { on: false, time: '07:00' }; },

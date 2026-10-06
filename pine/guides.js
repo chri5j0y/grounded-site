@@ -4387,7 +4387,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Someone online asking for money, gift cards, codes, or your bank login: stop, don't pay, and tell a trusted adult. Report scams to the Federal Trade Commission at reportfraud.ftc.gov.",
-   "Someone threatening to share a picture of you unless you pay: you are not in trouble. Tell a trusted adult, and contact the CyberTipline, 1-800-843-5678. Take It Down (takeitdown.ncmec.org) can help remove images. The guide Sextortion and Threats With a Picture has more.",
+   "Someone threatening to share a picture of you unless you pay: you are not in trouble. Tell a trusted adult, and contact the CyberTipline, 1-800-843-5678. Take It Down (takeitdown.ncmec.org) can help remove images. The guide Sextortion and Threats with a Picture has more.",
    "Betting or gambling to win money back: Minnesota problem gambling helpline, 1-800-333-4673, or text HOPE to 53342, any time.",
    "Money worry that keeps you up at night, or feels hopeless: talk with your school counselor or a trusted adult. If it turns into not wanting to be here, call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."

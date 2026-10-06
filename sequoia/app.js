@@ -31,6 +31,9 @@
    The game layer (Sequoia's own)
    - Big checkmarks and a short line of kind words when a practice is done.
    - A simple graph of days tended and part levels over time.
+   - Gentle tree levels (Seed to Giant Sequoia), milestones, and the balanced
+     week (BLD 745). No Hardy: a level is kept for good. Rings From Oak are
+     labeled, set apart, and never count toward a level or a milestone.
    - The legacy thread: the Legacy Book, its own tab.
    - The gentle tree from Oak (dry, droop, rest). It never dies or loses rings,
      and it holds still for two weeks after a check-in flags losing hope or
@@ -1005,14 +1008,88 @@ function sqCheer(text) {
 // (or the safety step asked for care), the tree holds as it is. Nothing dries or droops.
 function sqPause() {
   const cut = new Date(Date.now() - 14 * 86400000).toISOString().slice(0, 10);
-  return (personalHistory || []).some(e => e && e.date >= cut && e.kind !== 'observed' && (
+  return (personalHistory || []).some(e => e && !e.from && e.date >= cut && e.kind !== 'observed' && (
     (e.flags || []).some(f => f === 'hope' || f === 'alone') ||
     ['sometimes', 'often'].includes((e.safety || {}).direct) || ['often', 'always'].includes((e.safety || {}).opener)));
 }
 function todayKindHtml(s) {
-  const n = window.GGTend ? GGTend.partsOn(new Date().toISOString().slice(0, 10)) : 0;
+  const n = window.GGTend ? GGTend.partsOn(sgToday()) : 0;
   const lineA = sqPause() ? 'Your tree is holding still with you this season. Tend it when you can. Nothing will be lost.' : n ? kindWord(n) : 'One practice is enough to start. A big checkmark is waiting.';
-  return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>` + bringOakHtml();
+  return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>` + (s ? sgLevelHtml(s) : '') + bringOakHtml();
+}
+
+// =====================================================================
+// GENTLE LEVELS AND MILESTONES (GWG BLD 745, decision 3): the shared core in
+// Sequoia's gentle shape. Tree levels by days tended, milestones, and the
+// balanced week. No Hardy and nothing ever shows trouble: a level, once
+// reached, is kept for good. Only days tended in Sequoia count; rings From Oak
+// never count toward a level or a milestone. Saved in tend.sg.
+// =====================================================================
+const SG_LEVELS = [[0, 'Seed'], [1, 'Sprout'], [7, 'Seedling'], [21, 'Sapling'], [45, 'Young Sequoia'], [90, 'Tall Sequoia'], [180, 'Giant Sequoia']];
+const SG_MILES = [
+  ['day1', 'First Day Tended', 'You tended your tree for the first time.'],
+  ['six', 'All Six in a Day', 'You tended every part of your tree in one day.'],
+  ['week', 'First Full Week', 'You tended your tree all seven days of a week.'],
+  ['balance', 'First Balanced Week', 'You tended all six parts in one week.'],
+  ['days30', 'Thirty Days Tended', 'Thirty days of tending, in your own time.'],
+  ['days100', 'One Hundred Days Tended', 'One hundred days of tending. A long life grows this way.'],
+  ['ring', 'First Ring', 'You finished a whole season and added a ring.']
+];
+const sgD = k => { const p = String(k).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+const sgAdd = (k, n) => { const d = sgD(k); d.setDate(d.getDate() + n); return dkey(d); };
+const sgMon = k => sgAdd(k, -((sgD(k).getDay() + 6) % 7));
+function sgToday() { return dkey(new Date()); }
+function sgRec(s) { if (!s.sg || typeof s.sg !== 'object') s.sg = { miles: {}, bal: {} }; s.sg.miles = s.sg.miles || {}; s.sg.bal = s.sg.bal || {}; return s.sg; }
+function sgTended(s, k) { const x = (s.days || {})[k]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); }
+function sgDays(s) { return Object.keys(s.days || {}).filter(k => sgTended(s, k)).length; }
+function sgLevel(n) { let i = 0; SG_LEVELS.forEach((L, j) => { if (n >= L[0]) i = j; }); return { name: SG_LEVELS[i][1], next: SG_LEVELS[i + 1] || null }; }
+function sgWeekParts(s, mon) { const set = {}; for (let i = 0; i < 7; i++) { const x = (s.days || {})[sgAdd(mon, i)]; if (x) (x.d || []).forEach(id => { set[id.split('|')[0]] = 1; }); } return set; }
+function sgWeeks(s) { const w = {}; Object.keys(s.days || {}).forEach(k => { if (sgTended(s, k)) { const m = sgMon(k); (w[m] = w[m] || []).push(k); } }); return w; }
+function sgBalanced(s) { return Object.keys(sgWeeks(s)).filter(m => Object.keys(sgWeekParts(s, m)).length >= 6); }
+function sgMilesNow(s) {
+  const n = sgDays(s), w = sgWeeks(s), out = {};
+  if (n >= 1) out.day1 = 1;
+  if (n >= 30) out.days30 = 1;
+  if (n >= 100) out.days100 = 1;
+  if (Object.keys(s.days || {}).some(k => { const set = {}; ((s.days[k] || {}).d || []).forEach(id => { set[id.split('|')[0]] = 1; }); return Object.keys(set).length >= 6; })) out.six = 1;
+  if (Object.keys(w).some(m => w[m].length >= 7)) out.week = 1;
+  if (sgBalanced(s).length) out.balance = 1;
+  (s.rings || []).forEach((r, i) => { out[i ? 'season' + (i + 1) : 'ring'] = 1; });
+  return out;
+}
+function sgMileName(id) { const m = SG_MILES.find(x => x[0] === id); return m ? m[1] : id.indexOf('season') === 0 ? 'Season ' + id.slice(6) + ' Finished' : id; }
+// Records any milestone reached for the first time, and says so once.
+function sgCheckMiles(s, quiet) {
+  const R = sgRec(s), now = sgMilesNow(s), fresh = [];
+  Object.keys(now).forEach(id => { if (!R.miles[id]) { R.miles[id] = sgToday(); fresh.push(id); } });
+  sgBalanced(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = sgToday(); if (!quiet && m === sgMon(sgToday())) fresh.push('bonus'); } });
+  return fresh;
+}
+function sgLevelHtml(s) {
+  if (HELP) return '';
+  const days = sgDays(s), L = sgLevel(days), wk = sgWeekParts(s, sgMon(sgToday())), wn = Object.keys(wk).length;
+  sgCheckMiles(s, true);
+  return `<div class="gt-card pn-game"><div class="pn-level"><span class="pn-level-k">Your tree</span><b>${escapeHtml(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${escapeHtml(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
+    <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 6 parts tended this week">${ALL_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
+    <p class="gt-small pn-mode-line">A gentle tree: every level you reach is yours to keep, and nothing is ever lost.</p></div>`;
+}
+function sgMilesHtml(s) {
+  if (HELP) return '';
+  const R = sgRec(s), got = Object.keys(R.miles).sort((a, b) => String(R.miles[a]).localeCompare(String(R.miles[b])));
+  const nb = sgBalanced(s).length;
+  return `<div class="gt-card pn-miles"><h3>Milestones</h3>${got.length ? `<ul class="pn-mile-list">${got.map(id => `<li><b>${escapeHtml(sgMileName(id))}</b><span>${escapeHtml(formatDate(R.miles[id]))}</span></li>`).join('')}</ul>` : '<p class="gt-small">Your first milestone comes with your first day of tending.</p>'}
+    ${nb ? `<p class="gt-small">${nb} balanced week${nb === 1 ? '' : 's'} so far.</p>` : ''}
+    <p class="gt-small">Still ahead: ${SG_MILES.filter(m => !R.miles[m[0]]).map(m => escapeHtml(m[1])).join(', ') || 'a new ring every season'}.</p></div>`;
+}
+function sgOnCheck(done, s, parts) {
+  if (!done) return;
+  const fresh = s ? sgCheckMiles(s) : [];
+  if (fresh.length) {
+    if (PROF && window.GGP) GGP.save(PROF.id);
+    sqCheer(fresh.includes('bonus') ? 'Balanced week. All six parts tended this week.' : 'New milestone: ' + sgMileName(fresh.filter(x => x !== 'bonus')[0] || fresh[0]));
+    return;
+  }
+  sqCheer(parts >= 6 ? 'All six parts tended today. That is a full day.' : kindWord(parts));
 }
 // The simple graph: days tended each week, and each part's level at each check-in.
 function pad2(n) { return String(n).padStart(2, '0'); }
@@ -1041,7 +1118,7 @@ function daysGraphHtml() {
   return `<div class="sq-graph-box"><h4>Days Tended, Week by Week</h4>${svg}<p class="gt-small">${total} day${total === 1 ? '' : 's'} tended in the last twelve weeks. Every bar counts, short ones too.</p></div>`;
 }
 function levelsGraphHtml(list) {
-  const full = (list || []).filter(e => e && e.scores && e.kind !== 'observed' && e.type !== 'quick').slice(-8);
+  const full = (list || []).filter(e => e && e.scores && !e.from && e.kind !== 'observed' && e.type !== 'quick').slice(-8);
   if (!full.length) return `<div class="sq-graph-box"><h4>Your Parts Over Time</h4><p class="gt-small">After your first full check-in, each part of your tree shows here, one point for each check-in.</p></div>`;
   const W = 220, H = 56, n = full.length, xs = i => n === 1 ? W / 2 : 10 + i * (W - 20) / (n - 1), ys = v => 6 + (10 - v) / 9 * (H - 12);
   const rows = ALL_DOMAINS.map(d => {
@@ -1063,20 +1140,22 @@ function graphCardHtml() {
 function bringOakHtml() {
   if (!PROF || !window.GGP || HELP) return '';
   const oak = GGP.data(PROF.id, 'oak'), sq = GGP.data(PROF.id, 'sequoia');
-  const n = ((oak && oak.history) || []).filter(e => e && e.scores).length;
+  const have = new Set(personalHistory.map(e => e.id));
+  const n = ((oak && oak.history) || []).filter(e => e && e.scores && e.from !== 'sequoia' && !have.has(e.id) && !have.has('oak-' + e.id)).length;
   if (!n || sq.oakBrought) return '';
-  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here so your Sequoia tree shows your whole story. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
+  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here, labeled From Oak, so your Sequoia tree shows your whole story. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
 }
 function bringOak(skip) {
   if (!PROF || !window.GGP) return;
   const oak = GGP.data(PROF.id, 'oak'), sq = GGP.data(PROF.id, 'sequoia');
   if (!skip) {
+    // Move My Tree to Sequoia (from Oak) saves its copies as 'oak-' + id; either way, one copy only.
     const ids = new Set(personalHistory.map(e => e.id));
-    ((oak && oak.history) || []).forEach(e => { if (e && e.scores && !ids.has(e.id)) { const c = JSON.parse(JSON.stringify(e)); c.from = 'oak'; personalHistory.push(c); } });
+    ((oak && oak.history) || []).forEach(e => { if (e && e.scores && e.from !== 'sequoia' && !ids.has(e.id) && !ids.has('oak-' + e.id)) { const c = JSON.parse(JSON.stringify(e)); c.from = 'oak'; personalHistory.push(c); } });
     sortEntries(personalHistory);
   }
   sq.oakBrought = new Date().toISOString().slice(0, 10);
-  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : 'Your Oak check-ins are here now.'); if (window.GGTend) GGTend.render(); renderProgress(); });
+  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : 'Your Oak check-ins are here now, labeled From Oak.'); if (window.GGTend) GGTend.render(); renderProgress(); });
 }
 
 
@@ -1421,20 +1500,17 @@ const TEND_CFG = {
     const d = DOMAIN_BY_KEY[key], r = d && d.restore.find(x => x[0] === name), g = GUIDES[key + '|' + name];
     return { desc: r ? r[1] : '', guide: guideHtml(key, name, true), hard: g ? (g.adapt || g.hard) : '' };
   },
-  history: () => (personalHistory || []).filter(e => e && e.kind !== 'observed'),
+  history: () => (personalHistory || []).filter(e => e && e.kind !== 'observed' && !e.from),
   hasResults: () => !!window.currentClientEntry,
   toast: m => showToast(m),
   profileHtml: () => oakProfileHtml(),
   extraSettings: () => helperSettingsHtml(),
   lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
   todayExtra: s => todayKindHtml(s),
-  seasonExtra: () => graphCardHtml(),
+  seasonExtra: s => graphCardHtml() + (s ? sgMilesHtml(s) : ''),
   pause: () => sqPause(),
   pauseLine: 'Your tree is holding still with you. It will not dry out while you get support.',
-  onCheck: (done, key, s, parts, before) => {
-    if (!done) return;
-    sqCheer(parts >= 6 ? 'All six parts tended today. That is a full day.' : kindWord(parts));
-  },
+  onCheck: (done, key, s, parts, before) => sgOnCheck(done, s, parts),
   store: {
     get: () => { if (!PROF || !window.GGP) return null; const d = GGP.data(PROF.id, 'sequoia'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
     save: () => (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve()
@@ -1688,7 +1764,7 @@ function helpLevels(e, sh) {
 function renderHelpTabs() {
   if (!HELP) return;
   const p = GGP.get(HELP) || {}, n = escapeHtml(p.name || 'them'), d = sqRec(HELP), sh = shareOf(HELP);
-  const own = d.history.filter(e => e && e.scores && e.kind !== 'observed'), last = own[own.length - 1];
+  const own = d.history.filter(e => e && e.scores && e.kind !== 'observed' && !e.from), last = own[own.length - 1];
   const seen = d.history.filter(e => e && e.kind === 'observed');
   const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give, or answer from what you see if they can no longer say. Every check-in is marked with who answered.</p>
     <div class="btn-row"><button class="btn btn-primary" onclick="startCheckin('tapped','${HELP}')">${n} Answers, I Tap</button><button class="btn btn-secondary" onclick="startQuick('tapped','${HELP}')">Quick Check-in Together</button><button class="btn btn-secondary" onclick="startCheckin('observed','${HELP}')">I'm Answering From What I See</button></div></div>
@@ -1930,19 +2006,25 @@ function renderProgress() {
 // ---------- CHART + TABLE RENDERING ----------
 // Rings compare only within the same standard and the same kind (full with full,
 // quick with quick). Check-ins from before the standard are labeled earlier and never compared.
+// Rings From Oak (Bring My Oak Check-ins, or Move My Tree to Sequoia in Oak) are labeled,
+// set apart, and never compared with Sequoia rings (GWG BLD 745, like Birch's From Pine).
 function stShown(entry, k) { return (entry.unsure || []).includes(k) ? null : (entry.scores || {})[k]; }
+const SQ_FROM = { oak: 'From Oak', birch: 'From Birch', pine: 'From Pine' };
+function earlierLabel(e) { return e.from ? (SQ_FROM[e.from] || 'Earlier') : !e.std ? 'Earlier' : ''; }
 function renderHistoryChartAndTable(container, history, personal) {
   if (history.length === 0) {
     container.innerHTML = '<p style="font-size:13px;color:var(--ink-soft);">No results saved yet.</p>';
     return;
   }
-  const last = history[history.length - 1];
-  const treeSvg = `<div style="max-width:260px;margin:0 auto;">${puzzleTreeSvg({ variant: 'score', scores: last.scores, seam: '#2C1810' })}</div>`;
+  const own = history.filter(e => !e.from);
+  const last = own[own.length - 1] || null;
+  const treeSvg = last ? `<div style="max-width:260px;margin:0 auto;">${puzzleTreeSvg({ variant: 'score', scores: last.scores, seam: '#2C1810' })}</div>` : '';
   const kind = e => e.type === 'quick' ? 'quick' : 'full';
-  const prev = last.std ? history.slice(0, -1).reverse().find(e => e.std === last.std && kind(e) === kind(last)) : null;
+  const prev = last && last.std ? own.slice(0, -1).reverse().find(e => e.std === last.std && kind(e) === kind(last)) : null;
 
   let cmp = '';
-  if (!last.std) cmp = '<p class="muted" style="font-size:14px;">This is an earlier check-in, from before the questions were updated. Your next check-in starts a new set of rings.</p>';
+  if (!last) cmp = '<p class="muted" style="font-size:14px;">Your rings from Oak are kept below, labeled From Oak. Your first Sequoia check-in starts your Sequoia rings.</p>';
+  else if (!last.std) cmp = '<p class="muted" style="font-size:14px;">This is an earlier check-in, from before the questions were updated. Your next check-in starts a new set of rings.</p>';
   else if (!prev) cmp = `<p class="muted" style="font-size:14px;">Your next ${kind(last) === 'quick' ? 'quick ' : ''}check-in will show how each part has grown.</p>`;
   else {
     cmp = `<p style="font-size:14px;margin:0 0 6px;">Compared with your ${kind(last) === 'quick' ? 'quick ' : ''}check-in on ${escapeHtml(String(prev.date || ''))}:</p><div class="ring-cmp">` + ALL_DOMAINS.map(d => {
@@ -1957,7 +2039,8 @@ function renderHistoryChartAndTable(container, history, personal) {
   ALL_DOMAINS.forEach(d => tableHtml += `<th>${d.part}</th>`);
   tableHtml += `</tr></thead><tbody>`;
   history.slice().reverse().forEach(s => {
-    tableHtml += `<tr><td>${escapeHtml(String(s.date || ''))}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}${!s.std ? ' <span class="earlier-tag">Earlier</span>' : ''}</td>`;
+    const lab = earlierLabel(s);
+    tableHtml += `<tr><td>${escapeHtml(String(s.date || ''))}${s.type === 'quick' ? ' <span class="quick-tag">Quick</span>' : ''}${lab ? ` <span class="earlier-tag">${escapeHtml(lab)}</span>` : ''}</td>`;
     ALL_DOMAINS.forEach(d => { const v = stShown(s, d.key); tableHtml += `<td>${v == null ? 'Not sure yet' : `${stLevel(v)}<br><small>${v} of 10</small>`}</td>`; });
     tableHtml += `</tr>`;
   });
@@ -1965,14 +2048,15 @@ function renderHistoryChartAndTable(container, history, personal) {
 
   container.innerHTML = `
     <div class="chart-container">
-      <div class="section-title" style="margin-top:0;">Most Recent Tree</div>
+      ${last ? '<div class="section-title" style="margin-top:0;">Most Recent Tree</div>' : ''}
       ${treeSvg}
       ${cmp}
     </div>
     <div class="chart-container">
       <div class="section-title" style="margin-top:0;">Full History</div>
       ${tableHtml}
-      ${history.some(e => !e.std) ? '<p class="muted" style="font-size:13px;margin-top:8px;">Check-ins marked Earlier used the questions from before the update. They stay here, but they are not compared with newer ones.</p>' : ''}
+      ${history.some(e => e.from) ? '<p class="muted" style="font-size:13px;margin-top:8px;">Rings marked From Oak came along from your Oak tree. They stay here as part of your story, and they are never compared with Sequoia rings.</p>' : ''}
+      ${history.some(e => !e.from && !e.std) ? '<p class="muted" style="font-size:13px;margin-top:8px;">Check-ins marked Earlier used the questions from before the update. They stay here, but they are not compared with newer ones.</p>' : ''}
     </div>
   `;
 }

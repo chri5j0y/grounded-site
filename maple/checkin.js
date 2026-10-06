@@ -12,10 +12,22 @@
      Oak 8, written for each grade or life stage. Maple asks 4.
    - Every question has a tip for the grown-up or guide, and a short
      "Why this question?" line for the grown-up (WHY).
-   - Four answers plus "I don't know." Scores run 1 to 10 for every tool.
+   - Three answers plus "I don't know." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (marked 'r').
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
    - A safety step fitted to the age, always with 988 and 911.
+
+   Faith or Plain (GWG BLD 745, Pine's way): a grown-up sets it at setup,
+   and it can change any time in settings. Faith is the default. Every
+   spiritual line (a question, its tip, or its "why") has a Plain wording
+   in PLAIN and WHY_PLAIN, by grade, part, and place in the list. Plain asks
+   the same thing without religious words, keeps the same reverse marks and
+   flags, and so scores compare across the two. Faith follows the kids'
+   faith wording: invite, don't assume; God is one door among several;
+   start from family; ask about experience, never belief; God is never
+   the judge. questions stays the Faith bank, as Maple Guide reads it.
+   getBank(grade, wording) gives the questions with the wording applied,
+   and whyOf(grade, part, i, wording) the "why" line.
 
    Each question: [text, tip] or [text, tip, 'r'] or [text, tip, 'r', flag].
    'r' means "yes" is the hard answer. flag names a sign a grown-up
@@ -516,6 +528,56 @@ const WHY = {
   }
 };
 
+/* Plain wording: { grade: { part: { place: { t, tip } } } }. Only the lines that
+   name faith, prayer, God, or the holy are here; everything else reads the same. */
+const PLAIN = {
+  K: { roots: {
+    1: { tip: 'If not, ask what feels scary at night. A night light, a song, or a calm bedtime routine can help.' },
+    2: { t: 'Do you have a quiet time, like a song or a hug before bed?', tip: 'Share one quiet practice from your own family, like a song, a story, or kind words.' }
+  } },
+  1: { roots: {
+    2: { t: 'Do you ever sit quietly and feel peaceful?', tip: 'Try one minute of quiet together, in your family\'s own way.' }
+  } },
+  2: { roots: {
+    2: { t: 'When you are scared, does something help you feel held, like a song, a story, or a hug?' }
+  } },
+  3: { roots: {
+    2: { t: 'Do you have something special that helps you feel calm, like quiet time, music, or time outside?', tip: 'Share a calming practice or tradition from your own family.' }
+  } },
+  4: { roots: {
+    1: { t: 'Do you feel close to something good and bigger than you, like nature, your family, or your community?', tip: 'Ask what feels good and bigger than them. Listen without correcting.' }
+  }, branches: {
+    1: { t: 'Do you feel like you belong somewhere, like a team, club, class, or group?' }
+  } },
+  5: { roots: {
+    1: { t: 'Do you have big questions about life, or what matters, and someone to ask?' },
+    2: { t: 'Do you have a practice that helps you feel peaceful, like nature, music, or quiet?' }
+  } }
+};
+const WHY_PLAIN = {
+  K: { roots: { 2: 'Small quiet rituals, like a song or a hug, help young children feel held.' } },
+  1: { roots: { 2: 'Quiet time can help children feel peaceful and connected.' } },
+  3: { roots: {
+    1: 'Noticing amazing things builds wonder, one of the deepest roots a child can grow.',
+    2: 'Something that brings calm, like quiet time, music, or time outside, can help children feel steady.'
+  } },
+  4: { roots: { 1: 'Feeling close to something good and bigger than themselves can give children comfort and meaning.' },
+    branches: { 1: 'Belonging to a team, club, class, or group gives children support beyond home.' } }
+};
+const isPlainW = w => w === 'plain';
+// The questions for one grade, with the wording applied: { part: [[text, tip, r, flag], ...] }.
+function getBank(grade, wording) {
+  const g = Q[grade] || {}, pl = isPlainW(wording) ? (PLAIN[grade] || {}) : {}, out = {};
+  Object.keys(g).forEach(k => {
+    out[k] = g[k].map((q, i) => { const p = (pl[k] || {})[i]; if (!p) return q; const c = q.slice(); if (p.t) c[0] = p.t; if (p.tip) c[1] = p.tip; return c; });
+  });
+  return out;
+}
+function whyOf(grade, part, i, wording) {
+  const p = isPlainW(wording) && ((WHY_PLAIN[grade] || {})[part] || {})[i];
+  return p || (((WHY[grade] || {})[part]) || [])[i] || '';
+}
+
 // The safety step. Feeling safe for every grade; the gentle direct question for grades 3 to 5 only.
 const SAFETY = {
   young: [
@@ -539,5 +601,6 @@ const WEEKLY = {
   '3': { move: 1, nourish: 2 }, '4': { move: 1 }, '5': { move: 1, nourish: 2 }
 };
 
-window.MAPLE_CHECKIN = { weekly: WEEKLY, version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, safety: SAFETY };
+window.MAPLE_CHECKIN = { weekly: WEEKLY, version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, safety: SAFETY,
+  plain: PLAIN, whyPlain: WHY_PLAIN, wordings: [['faith', 'Faith'], ['plain', 'Plain']], getBank: getBank, whyOf: whyOf };
 })();

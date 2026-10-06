@@ -969,6 +969,19 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 .sq-cheer.show{opacity:1;transform:translate(-50%,0) scale(1);}
 .sq-cheer p{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.3;margin:10px 0 0;}
 @media (prefers-reduced-motion: reduce){.sq-cheer{transition:none;}}
+/* Gentle levels and milestones (GWG BLD 745), Birch's shapes at Sequoia's larger sizes */
+.pn-game{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;}
+.pn-game .pn-mode-line{grid-column:1/-1;margin:0;}
+@media (max-width:560px){.pn-game{grid-template-columns:1fr;}}
+.pn-level,.pn-bal{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.pn-level-k{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.pn-level b{font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.1;color:var(--gold);}
+.pn-dots{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px;}
+.pn-dot{width:24px;height:24px;border-radius:50%;border:2.5px solid var(--pc);background:transparent;}
+.pn-dot.on{background:var(--pc);}
+.pn-miles .pn-mile-list{list-style:none;margin:6px 0;padding:0;display:grid;gap:6px;}
+.pn-mile-list li{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:6px;}
+.pn-mile-list span{color:var(--ink-soft);font-size:15px;}
 /* The simple graph */
 .sq-graphs h3{margin-top:0;}
 .sq-graph-box{margin:14px 0 6px;}

@@ -918,6 +918,20 @@ const PARTS = [
       why: 'Kids with a strong sense of the holy tend to be more resilient, and saying thank you helps them notice the good.',
       rainy: 'Stay close. Share your own family\'s practices of faith, pray or sit quietly together, and let them ask big questions without rushing to answer.',
       sel: 'Connects to self-awareness and a sense of belonging.'
+    },
+    // Plain wording (GWG BLD 745): the same roots without religious words.
+    plain: {
+      k2: { you: 'Your roots are the things that hold you close, like hugs, quiet time, and your family\'s ways.' },
+      g35: {
+        you: 'Your roots are what holds you when things feel wobbly: quiet moments, wonder, and the things your family cares about most.',
+        sunny: ['I know I am loved.', 'I have something that helps me feel calm.', 'I feel peaceful when I sit quietly.']
+      },
+      kind: { cloud: 'Your roots are holding on. Keep drinking from what helps you feel calm and loved.' },
+      tip: 'Ask: "When do you feel most safe and loved?" You can share a calming practice or tradition from your own family.',
+      guide: {
+        why: 'Kids with a strong sense of wonder and belonging tend to be more resilient, and saying thank you helps them notice the good.',
+        rainy: 'Stay close. Share your own family\'s calming practices, sit quietly together, and let them ask big questions without rushing to answer.'
+      }
     }
   },
   {
@@ -1083,201 +1097,207 @@ const FLAG_SIGNS = {
 
 const ACTIVITIES = [
   /* Eight for each part (Rebrand Session 4). k2 is for grades K to 2, g35 for grades 3 to 5,
-     easy is the "Easier today" version, and strand (Leaves only) is move, rest, or nourish. */
-  { id: "thanks-note", part: "roots", title: "Thank-you note",
+     easy is the "Easier today" version, and strand (Leaves only) is move, rest, or nourish.
+     plain (GWG BLD 745) holds the Plain wording of any line that names faith or prayer.
+     Titles are Title Case (GWG BLD 745); saved plans written with the older sentence case
+     titles, or in the other wording, are read forward by mpNormTend. */
+  { id: "thanks-note", part: "roots", title: "Thank-You Note",
     k2: "Draw a thank-you picture for someone and give it to them.",
     g35: ["Think of someone who has been kind to you.", "Write or draw a thank-you note to them.", "Give it to them in person and read it out loud if you can."],
     easy: "Just say thank you to one person today." },
-  { id: "three-good", part: "roots", title: "Three good things",
+  { id: "three-good", part: "roots", title: "Three Good Things",
     k2: "At bedtime, tell your grown-up three good things from today.",
     g35: ["At bedtime, think back over your day.", "Name three good things, big or small.", "Say thank you for them, in your family's way."],
     easy: "Name one good thing instead of three." },
-  { id: "quiet-together", part: "roots", title: "Quiet together",
+  { id: "quiet-together", part: "roots", title: "Quiet Together",
     k2: "Sit quietly or pray with your family for one minute.",
     g35: ["Find a quiet spot with your family.", "Share a prayer or sit still together for one minute.", "Notice how your body feels afterward."],
-    easy: "Take three quiet breaths together." },
-  { id: "wonder-walk", part: "roots", title: "Wonder walk",
+    easy: "Take three quiet breaths together.",
+    plain: { k2: "Sit quietly with your family for one minute.", g35: ["Find a quiet spot with your family.", "Sit still together for one minute.", "Notice how your body feels afterward."] } },
+  { id: "wonder-walk", part: "roots", title: "Wonder Walk",
     k2: "Go outside with your grown-up and find something amazing, like a bug, a cloud, or a leaf.",
     g35: ["Take a short walk outside with a grown-up.", "Look for three things that make you say wow.", "Talk about what made them amazing."],
     easy: "Look out the window and find one amazing thing." },
-  { id: "family-tradition", part: "roots", title: "Our family way",
+  { id: "family-tradition", part: "roots", title: "Our Family Way",
     k2: "Do something your family always does together, like a song, a prayer, or a special meal.",
     g35: ["Ask a grown-up about a tradition your family keeps.", "Do it together this week.", "Ask why it matters to them."],
-    easy: "Ask your grown-up about one thing your family always does." },
-  { id: "bedtime-blessing", part: "roots", title: "Bedtime blessing",
+    easy: "Ask your grown-up about one thing your family always does.",
+    plain: { k2: "Do something your family always does together, like a song, a story, or a special meal." } },
+  { id: "bedtime-blessing", part: "roots", title: "Bedtime Blessing",
     k2: "At bedtime, your grown-up says a blessing or kind words over you.",
     g35: ["At bedtime, ask a grown-up for a blessing, a prayer, or kind words.", "Then say one back to them.", "Notice how it feels to be loved."],
-    easy: "Trade one kind word at bedtime." },
-  { id: "safe-place", part: "roots", title: "My safe place",
+    easy: "Trade one kind word at bedtime.",
+    plain: { title: "Bedtime Kind Words", k2: "At bedtime, your grown-up says kind words over you, like \"I love you\" or \"I'm proud of you.\"", g35: ["At bedtime, ask a grown-up for kind words, like \"I love you\" or \"I'm proud of you.\"", "Then say some back to them.", "Notice how it feels to be loved."] } },
+  { id: "safe-place", part: "roots", title: "My Safe Place",
     k2: "Draw a place where you feel safe and happy.",
     g35: ["Think of a place where you feel safe and calm.", "Draw it with lots of details.", "When you feel scared, close your eyes and picture it."],
     easy: "Close your eyes and picture your safe place for a moment." },
-  { id: "look-up", part: "roots", title: "Look up",
+  { id: "look-up", part: "roots", title: "Look Up",
     k2: "Look at the sky, the moon, or the stars and say what you see.",
     g35: ["Go outside or look out a window at the sky.", "Notice the clouds, the moon, or the stars.", "Wonder out loud with a grown-up about how big the world is."],
     easy: "Look up at the sky for ten seconds." },
 
-  { id: "strength-detective", part: "trunk", title: "Strength detective",
+  { id: "strength-detective", part: "trunk", title: "Strength Detective",
     k2: "Ask your grown-up: \"What is something I am good at?\"",
     g35: ["Ask a grown-up to watch for one of your strengths this week.", "They tell you what they noticed, like \"You were brave when...\"", "Write it down and keep it somewhere you can see it."],
     easy: "Your grown-up names one thing you did well today." },
-  { id: "all-about-me", part: "trunk", title: "All about me",
+  { id: "all-about-me", part: "trunk", title: "All About Me",
     k2: "Draw three things you love to do.",
     g35: ["Draw or write three things you love to do.", "Add one thing you are learning to get better at.", "Share it with someone."],
     easy: "Draw just one thing you love to do." },
-  { id: "helper-job", part: "trunk", title: "Helper job",
+  { id: "helper-job", part: "trunk", title: "Helper Job",
     k2: "Pick one way to help at home or at school.",
     g35: ["Pick one job that helps your family or class.", "Do it every day this week.", "Notice how it feels to help."],
     easy: "Help with one small thing, like setting out spoons." },
-  { id: "proud-jar", part: "trunk", title: "Proud jar",
+  { id: "proud-jar", part: "trunk", title: "Proud Jar",
     k2: "Each day, tell your grown-up one thing you did that made you proud.",
     g35: ["Find a jar or a box.", "Each day, write one thing you did that made you proud and put it in.", "At the end of the week, read them all."],
     easy: "Say one thing you did today that you liked." },
-  { id: "try-again", part: "trunk", title: "Try it again",
+  { id: "try-again", part: "trunk", title: "Try It Again",
     k2: "Pick something tricky and try it one more time.",
     g35: ["Pick something that is hard for you right now.", "Practice it for a few minutes each day.", "Notice how you are getting better, even a little."],
     easy: "Try the tricky thing just one time." },
-  { id: "big-question", part: "trunk", title: "Big question",
+  { id: "big-question", part: "trunk", title: "Big Question",
     k2: "Ask your grown-up a question you wonder about.",
     g35: ["Think of something you really wonder about.", "Look for the answer with a grown-up, in a book or by asking someone.", "Tell someone what you learned."],
     easy: "Say one thing you wonder about." },
-  { id: "make-something", part: "trunk", title: "Make something",
+  { id: "make-something", part: "trunk", title: "Make Something",
     k2: "Build, draw, or make something that is all yours.",
     g35: ["Pick something to make: a drawing, a fort, a song, or a story.", "Work on it a little each day.", "Show it to someone when it is done."],
     easy: "Make one small drawing." },
-  { id: "how-can-i-help", part: "trunk", title: "How can I help?",
+  { id: "how-can-i-help", part: "trunk", title: "How Can I Help?",
     k2: "Ask a grown-up, \"How can I help?\" and do it.",
     g35: ["Ask someone at home or school, \"How can I help you today?\"", "Do what they ask, as well as you can.", "Notice how it feels to be needed."],
     easy: "Ask \"How can I help?\" one time." },
 
-  { id: "name-it", part: "bark", title: "Name it to tame it",
+  { id: "name-it", part: "bark", title: "Name It to Tame It",
     k2: "When a feeling gets big, say its name: \"I feel mad.\"",
     g35: ["When a feeling gets big, stop for a moment.", "Say its name out loud: \"I feel mad\" or \"I feel worried.\"", "Notice if it gets a little smaller."],
     easy: "Point to how you feel on a feelings face." },
-  { id: "feelings-weather", part: "bark", title: "Feelings weather",
+  { id: "feelings-weather", part: "bark", title: "Feelings Weather",
     k2: "Tell your grown-up what weather your feelings are today.",
     g35: ["Once a day, check your feelings weather.", "Is it sunny, cloudy, rainy, or stormy inside?", "Tell a grown-up and say why."],
     easy: "Just say the weather word: sunny, cloudy, rainy, or stormy." },
-  { id: "balloon-breaths", part: "bark", title: "Balloon breaths",
+  { id: "balloon-breaths", part: "bark", title: "Balloon Breaths",
     k2: "Breathe in slowly like a balloon. Let it out slowly. Three times.",
     g35: ["Put your hands on your belly.", "Breathe in slowly and fill your belly like a balloon.", "Let it out slowly. Do it three times."],
     easy: "One big balloon breath is enough." },
-  { id: "calm-corner", part: "bark", title: "Calm corner",
+  { id: "calm-corner", part: "bark", title: "Calm Corner",
     k2: "Make a cozy calm spot with a blanket and a soft toy.",
     g35: ["Pick a quiet corner at home.", "Add things that help you calm down, like a pillow, a book, or a squishy ball.", "Go there when feelings get big."],
     easy: "Hug a pillow or a soft toy for one minute." },
-  { id: "shake-it-out", part: "bark", title: "Shake it out",
+  { id: "shake-it-out", part: "bark", title: "Shake It Out",
     k2: "Shake your hands, arms, and legs like a wet puppy, then stand still.",
     g35: ["When you feel wound up, shake out your hands, arms, and legs.", "Count to ten while you shake.", "Then stand still and take one slow breath."],
     easy: "Shake your hands for five seconds." },
-  { id: "worry-box", part: "bark", title: "Worry box",
+  { id: "worry-box", part: "bark", title: "Worry Box",
     k2: "Draw a worry and put it in a box for your grown-up to help with.",
     g35: ["Write or draw a worry on a small piece of paper.", "Put it in a worry box.", "Once a day, look at a worry with a grown-up and talk about it."],
     easy: "Tell one worry to your grown-up." },
-  { id: "kind-words-to-me", part: "bark", title: "Kind words to me",
+  { id: "kind-words-to-me", part: "bark", title: "Kind Words to Me",
     k2: "Say something kind to yourself, like \"I can do hard things.\"",
     g35: ["When you make a mistake, notice what you say to yourself.", "Change it to something kind, like \"I am still learning.\"", "Say it out loud or in your head."],
     easy: "Say \"I am okay\" to yourself." },
-  { id: "five-senses", part: "bark", title: "Five senses",
+  { id: "five-senses", part: "bark", title: "Five Senses",
     k2: "Name something you can see, something you can hear, and something you can touch.",
     g35: ["When you feel upset, stop and look around.", "Name five things you see, four things you can touch, and three things you hear.", "Notice if you feel calmer."],
     easy: "Name one thing you can see right now." },
 
-  { id: "kindness-three", part: "branches", title: "Kindness three",
+  { id: "kindness-three", part: "branches", title: "Kindness Three",
     k2: "Do three kind things this week and tell your grown-up.",
     g35: ["Plan three kind things to do this week.", "Do them on purpose, for family, friends, or classmates.", "Tell your grown-up about each one."],
     easy: "Do one kind thing today." },
-  { id: "people-tree", part: "branches", title: "My people tree",
+  { id: "people-tree", part: "branches", title: "My People Tree",
     k2: "Draw a tree and put your people on the branches.",
     g35: ["Draw a big tree with lots of branches.", "Write the names of your people on the branches.", "Put a star by someone you can go to for help."],
     easy: "Name one person who loves you." },
-  { id: "ask-to-play", part: "branches", title: "Ask to play",
+  { id: "ask-to-play", part: "branches", title: "Ask to Play",
     k2: "Ask someone new to play with you.",
     g35: ["Look for someone who might be alone.", "Ask them to play or sit with you.", "Try it again with someone new next week."],
     easy: "Smile and say hi to someone new." },
-  { id: "special-time", part: "branches", title: "Special time",
+  { id: "special-time", part: "branches", title: "Special Time",
     k2: "Have ten minutes with your grown-up where you pick what to play.",
     g35: ["Plan ten minutes with a grown-up, just the two of you.", "You pick what to do.", "Do it again later this week."],
     easy: "Sit close with your grown-up for two minutes." },
-  { id: "call-someone", part: "branches", title: "Call someone",
+  { id: "call-someone", part: "branches", title: "Call Someone",
     k2: "Call or video chat a grandparent, cousin, or friend.",
     g35: ["Pick someone you miss, like a grandparent or a cousin.", "Call them, video chat, or send a card.", "Ask them a question about their day."],
     easy: "Wave or send a picture to someone you miss." },
-  { id: "make-it-right", part: "branches", title: "Make it right",
+  { id: "make-it-right", part: "branches", title: "Make It Right",
     k2: "If you hurt someone, say sorry and do something kind.",
     g35: ["Think about a time you hurt someone, even by accident.", "Say sorry, and say what you will do next time.", "Do something kind to help make it right."],
     easy: "Say \"I'm sorry\" with a hug or a high five." },
-  { id: "friend-cheer", part: "branches", title: "Friend cheer",
+  { id: "friend-cheer", part: "branches", title: "Friend Cheer",
     k2: "Tell a friend something you like about them.",
     g35: ["Notice something good about a friend or classmate.", "Tell them, like \"You are really good at drawing.\"", "See how it makes them feel."],
     easy: "Say one nice thing to someone today." },
-  { id: "helping-hands", part: "branches", title: "Helping hands",
+  { id: "helping-hands", part: "branches", title: "Helping Hands",
     k2: "Help a friend or a brother or sister with something hard.",
     g35: ["Look for someone who needs a hand.", "Ask, \"Do you want help?\"", "Help them, and let them say thank you."],
     easy: "Pick up something someone dropped." },
 
-  { id: "move-wiggle", part: "leaves", title: "Move and wiggle", strand: "move",
+  { id: "move-wiggle", part: "leaves", title: "Move and Wiggle", strand: "move",
     k2: "Run, dance, or jump every day. Little bits add up.",
     g35: ["Find fun ways to move every day, like tag, dancing, or biking.", "Little bits add up, like 10 minutes here and there.", "Try to move for an hour in all."],
     easy: "Dance to one song." },
-  { id: "screens-off", part: "leaves", title: "Screens off, lights low", strand: "rest",
+  { id: "screens-off", part: "leaves", title: "Screens Off, Lights Low", strand: "rest",
     k2: "Turn off screens before bed and pick a calm bedtime story.",
     g35: ["Turn off screens an hour before bed.", "Pick a calm bedtime routine, like a story, a bath, or a stretch.", "Go to bed at about the same time each night."],
     easy: "Turn off screens a few minutes before bed." },
-  { id: "water-check", part: "leaves", title: "Water check", strand: "nourish",
+  { id: "water-check", part: "leaves", title: "Water Check", strand: "nourish",
     k2: "Drink a glass of water and notice how you feel.",
     g35: ["Drink a glass of water with each meal.", "Keep a water bottle nearby.", "Notice how your body feels."],
     easy: "Take a few sips of water right now." },
-  { id: "animal-moves", part: "leaves", title: "Animal moves", strand: "move",
+  { id: "animal-moves", part: "leaves", title: "Animal Moves", strand: "move",
     k2: "Move like animals: hop like a frog, stomp like a bear, flap like a bird.",
     g35: ["Pick five animals.", "Move like each one for 30 seconds.", "Go faster, then slow down like a sleepy turtle."],
     easy: "Hop like a frog three times." },
-  { id: "outside-play", part: "leaves", title: "Outside play", strand: "move",
+  { id: "outside-play", part: "leaves", title: "Outside Play", strand: "move",
     k2: "Play outside every day, even for a little while.",
     g35: ["Go outside every day this week.", "Run, climb, bike, or play a game.", "Try something new outside one day."],
     easy: "Step outside and take five big steps." },
-  { id: "rest-break", part: "leaves", title: "Rest break", strand: "rest",
+  { id: "rest-break", part: "leaves", title: "Rest Break", strand: "rest",
     k2: "Lie down, close your eyes, and rest for a few minutes.",
     g35: ["Find a quiet time in your day.", "Lie down or sit with your eyes closed for five minutes.", "Let your body be still and heavy."],
     easy: "Close your eyes for ten slow counts." },
-  { id: "rainbow-plate", part: "leaves", title: "Rainbow plate", strand: "nourish",
+  { id: "rainbow-plate", part: "leaves", title: "Rainbow Plate", strand: "nourish",
     k2: "Find red, green, and yellow foods on your plate.",
     g35: ["At one meal each day, count the colors on your plate.", "Try for three colors, like red apples, green beans, and yellow corn.", "Try one new food this week."],
     easy: "Find one color on your plate." },
-  { id: "kitchen-helper", part: "leaves", title: "Kitchen helper", strand: "nourish",
+  { id: "kitchen-helper", part: "leaves", title: "Kitchen Helper", strand: "nourish",
     k2: "Help make a snack or a meal with your grown-up.",
     g35: ["Help a grown-up make a meal or a snack.", "Wash, stir, or set the table.", "Eat it together and talk about your day."],
     easy: "Help set out one thing for a meal." },
 
-  { id: "hope-map", part: "fruit", title: "Hope map",
+  { id: "hope-map", part: "fruit", title: "Hope Map",
     k2: "Draw something you want to do, then draw how you will get there.",
     g35: ["Draw something you want to do or learn.", "Draw two different paths to get there.", "At the end, write \"I can do it!\""],
     easy: "Say one thing you want to try someday." },
-  { id: "looking-forward", part: "fruit", title: "Looking forward",
+  { id: "looking-forward", part: "fruit", title: "Looking Forward",
     k2: "Draw something fun that is coming up.",
     g35: ["Think of something good coming up soon.", "Draw it or write about it.", "Count down the days on your calendar."],
     easy: "Tell someone one fun thing coming up." },
-  { id: "tomorrow-wish", part: "fruit", title: "Tomorrow wish",
+  { id: "tomorrow-wish", part: "fruit", title: "Tomorrow Wish",
     k2: "Before bed, say one good thing you hope happens tomorrow.",
     g35: ["Before bed, think about tomorrow.", "Say one good thing you hope happens.", "In the morning, look for it."],
     easy: "Make your wish as you fall asleep." },
-  { id: "good-news", part: "fruit", title: "Good news",
+  { id: "good-news", part: "fruit", title: "Good News",
     k2: "At dinner, everyone shares one piece of good news.",
     g35: ["At dinner or bedtime, ask everyone for one piece of good news.", "Share yours too.", "Notice how good news can be small."],
     easy: "Tell one good thing that happened today." },
-  { id: "brave-step", part: "fruit", title: "Brave step",
+  { id: "brave-step", part: "fruit", title: "Brave Step",
     k2: "Pick one small brave thing to try this week.",
     g35: ["Think of something that feels a little scary to try.", "Pick one small step toward it.", "Do it, then tell someone how it went."],
     easy: "Say one brave thing you could try." },
-  { id: "hope-story", part: "fruit", title: "Hope story",
+  { id: "hope-story", part: "fruit", title: "Hope Story",
     k2: "Ask your grown-up about a time something hard got better.",
     g35: ["Ask a grown-up about a hard time in their life.", "Ask what helped it get better.", "Think about what might help you too."],
     easy: "Ask: \"What helps you feel better when you're sad?\"" },
-  { id: "smile-maker", part: "fruit", title: "Smile maker",
+  { id: "smile-maker", part: "fruit", title: "Smile Maker",
     k2: "Do something to make someone smile.",
     g35: ["Think of someone who might need a smile.", "Make them a card, tell a joke, or help them.", "Notice how hope grows when we share it."],
     easy: "Smile at someone today." },
-  { id: "plant-a-seed", part: "fruit", title: "Plant a seed",
+  { id: "plant-a-seed", part: "fruit", title: "Plant a Seed",
     k2: "Plant a seed and watch it grow.",
     g35: ["Plant a seed in a cup of dirt.", "Water it and check on it every day.", "Write down what changes, even small things."],
     easy: "Check on your seed and say hi to it." }
@@ -1310,10 +1330,34 @@ const partBy = key => PARTS.find(p => p.key === key);
 const CK = window.MAPLE_CHECKIN;
 const GRADE_KEYS = CK.grades.map(g => g[0]);
 const isK2 = g => g === 'k2' || g === 'K' || g === '1' || g === '2';
-const gradeData = (p, grade) => isK2(grade) ? p.k2 : p.g35;
+/* Faith or Plain (GWG BLD 745, Pine's way). A grown-up sets it at setup and can change it in
+   settings; Faith is the default. It is saved in the child's own record (kid.wording) inside
+   their Kids profile. Plain asks the same things without religious words, so scores compare
+   across the two. A Plain lock (kid.plainLock, or plainLock in the profile's maple record),
+   which Maple Guide can set for a school, keeps Plain on and shows the setting as locked.
+   S.wording is the wording in use: the open child's, or the one chosen for this check-in. */
+function curWording() { return S.wording === 'plain' ? 'plain' : 'faith'; }
+const isPlain = () => curWording() === 'plain';
+function plainLocked(k) {
+  if (!k) return false;
+  if (k.plainLock === true) return true;
+  try { return !!(k._pid && window.GGP && GGP.isOpen(k._pid) && (GGP.data(k._pid, 'maple') || {}).plainLock === true); } catch (e) { return false; }
+}
+const kidWording = k => k && (plainLocked(k) || k.wording === 'plain') ? 'plain' : 'faith';
+function partW(p) {
+  if (!isPlain() || !p.plain) return p;
+  const x = p.plain;
+  return Object.assign({}, p, { k2: Object.assign({}, p.k2, x.k2), g35: Object.assign({}, p.g35, x.g35), kind: Object.assign({}, p.kind, x.kind), tip: x.tip || p.tip, guide: Object.assign({}, p.guide, x.guide) });
+}
+const gradeData = (p, grade) => { const q = partW(p); return isK2(grade) ? q.k2 : q.g35; };
+const kindLine = (p, w) => { const k = partW(p).kind; return k[w] || k.skip; };
+// A practice in the wording in use. Its id never changes; its shown title can (Bedtime Blessing, Bedtime Kind Words).
+const actW = a => (isPlain() && a.plain) ? Object.assign({}, a, a.plain) : a;
+const shownTitle = a => actW(a).title;
 const gradeLabel = g => g === 'k2' ? 'Grades K to 2' : g === '35' ? 'Grades 3 to 5' : ((CK.grades.find(x => x[0] === g) || [])[1] || '');
-const qsFor = (grade, key) => ((CK.questions[grade] || {})[key]) || [];
-const whyFor = (grade, key, i) => ((((CK.why || {})[grade] || {})[key]) || [])[i] || '';   // Why this question? (for the grown-up)
+// The questions in a wording (the one in use unless a saved check-in names its own).
+const qsFor = (grade, key, wording) => ((CK.getBank ? CK.getBank(grade, wording || curWording()) : CK.questions[grade]) || {})[key] || [];
+const whyFor = (grade, key, i, wording) => CK.whyOf ? CK.whyOf(grade, key, i, wording || curWording()) : ((((CK.why || {})[grade] || {})[key]) || [])[i] || '';   // Why this question? (for the grown-up)
 const safetyFor = grade => isK2(grade) ? CK.safety.young : CK.safety.older;
 const ANS = Object.fromEntries(CK.answers.map(a => [a[0], a]));
 const ANS_ICON = {
@@ -1822,14 +1866,14 @@ function finishCheckin(lastKey) {
   const nudge = saveNudge(id); if (nudge) $('view-results').insertAdjacentHTML('afterbegin', nudge);
   go('results');
 }
-function concernInfo(answers, grade, safety) {
+function concernInfo(answers, grade, safety, wording) {
   const rainy = PARTS.filter(p => answers[p.key] && answers[p.key].w === 'rain');
   const skipped = PARTS.filter(p => answers[p.key] && answers[p.key].w === 'skip');
   const flags = [];
   PARTS.forEach(p => {
     const a = answers[p.key];
     if (a && a.signs) a.signs.forEach(s => { if (FLAG_SIGNS[s]) flags.push({ sign: s, type: FLAG_SIGNS[s], part: p }); });
-    if (a && a.qa) qsFor(grade, p.key).forEach((q, i) => { if (q[3] && (a.qa[i] === 'yes' || a.qa[i] === 'some')) flags.push({ sign: q[0], ans: ANS[a.qa[i]][1], type: q[3], part: p }); });
+    if (a && a.qa) qsFor(grade, p.key, wording).forEach((q, i) => { if (q[3] && (a.qa[i] === 'yes' || a.qa[i] === 'some')) flags.push({ sign: q[0], ans: ANS[a.qa[i]][1], type: q[3], part: p }); });
   });
   const sq = safetyFor(grade), safe = [];
   (safety || []).forEach((v, i) => { if ((v === 'yes' || v === 'unsure') && sq[i]) safe.push({ kind: sq[i][1], q: sq[i][0], ans: v }); });
@@ -1850,13 +1894,13 @@ function safetyNoteHTML(info, name) {
 function answersHTML(rec) {
   if (!rec || rec.std !== CK.version) return '';
   return `<details><summary>See every answer from ${fmtDate(rec.date)}</summary>${PARTS.map(p => {
-    const a = rec.answers[p.key] || {}, lv = levelOf(a.score), qs = qsFor(rec.grade, p.key);
+    const a = rec.answers[p.key] || {}, lv = levelOf(a.score), qs = qsFor(rec.grade, p.key, rec.wording);
     return `<p style="margin:12px 0 0"><b>${p.name}</b>${lv ? `<span class="lvl ${lv[0]}">${lv[1]}</span>` : '<span class="lvl">Skipped</span>'}</p>${a.qa && a.qa.length ? `<ul class="ans-list">${qs.map((q, i) => { const an = ANS[a.qa[i]], hard = an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1); return `<li${hard ? ' class="hard"' : ''}>${esc(q[0])} <i>${an ? esc(an[1]) : 'No answer'}</i></li>`; }).join('')}</ul>` : ''}`;
   }).join('')}${rec.safety ? `<p style="margin:12px 0 0"><b>Staying safe</b></p><ul class="ans-list">${safetyFor(rec.grade).map((q, i) => { const v = rec.safety[i]; return `<li${v && v !== 'no' ? ' class="hard"' : ''}>${esc(q[0])} <i>${v ? CK.safety.answers.find(x => x[0] === v)[1] : 'Skipped'}</i></li>`; }).join('')}</ul>` : ''}</details>`;
 }
 function grownNoteHTML(info, name, rec) {
   let h = safetyNoteHTML(info, name);
-  if (info.concern) h += `<p>${esc(name)} may be carrying something heavy right now. Spend some unhurried time together, ask about the rainy parts, and listen more than you fix. If it doesn't lift in a couple of weeks, reach out to someone you trust, like a pastor, teacher, school counselor, or ${esc(name)}'s doctor.</p>`;
+  if (info.concern) h += `<p>${esc(name)} may be carrying something heavy right now. Spend some unhurried time together, ask about the rainy parts, and listen more than you fix. If it doesn't lift in a couple of weeks, reach out to someone you trust, like ${isPlain() ? '' : 'a pastor, '}a teacher, a school counselor, or ${esc(name)}'s doctor.</p>`;
   info.flags.forEach(f => {
     if (f.type === 'bully') h += `<p>${saidHTML(f, name)}. Listen first and ask what has been happening. Then let their teacher or school know so they can help. <button class="link-btn" onclick="openTalk('bullied','tree')">Read the Being bullied guide</button></p>`;
     if (f.type === 'alone') h += `<p>${saidHTML(f, name)}. Extra closeness this week, like one-on-one time, a walk, or a bedtime talk, can make a big difference. <button class="link-btn" onclick="openTalk('sadness','tree')">Read the Sadness that lingers guide</button></p>`;
@@ -1888,11 +1932,11 @@ function thenNowHTML(prev, cur, name) {
     <ul class="tn-lines">${lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`;
 }
 function renderResults(rec, lastKey) {
-  const info = concernInfo(rec.answers, rec.grade, rec.safety);
+  const info = concernInfo(rec.answers, rec.grade, rec.safety, rec.wording);
   const name = S.name;
   const kind = PARTS.map(p => {
     const a = rec.answers[p.key] || { w: 'skip' };
-    return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(p.kind[a.w] || p.kind.skip)}</span></li>`;
+    return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(kindLine(p, a.w))}</span></li>`;
   }).join('');
   let note = '';
   if (S.mode === 'grown') {
@@ -1990,7 +2034,7 @@ function renderPlan() {
   const allSunny = !sug.length;
   const groups = order.map(k => {
     const p = partBy(k);
-    const acts = ACTIVITIES.filter(a => a.part === k);
+    const acts = ACTIVITIES.filter(a => a.part === k).map(actW);
     const n = acts.filter(a => S.picks.includes(a.id)).length;
     return `<div class="act-group"><h3>${dot(p)}${p.name}${sug.includes(k) ? '<span class="suggest">Suggested for you</span>' : ''}<span class="part-count" data-count="${k}">${n} of ${PER_PART}</span></h3>
       <div class="act-grid">${acts.map(a => `<button class="act" aria-pressed="${S.picks.includes(a.id)}" data-act="${a.id}" onclick="toggleAct('${a.id}')">
@@ -2137,7 +2181,7 @@ function renderTree() {
   MP_KID = kid;
   const tab = S.treeTab || 'today';
   const last = kid.checkins[kid.checkins.length - 1];
-  const info = last ? concernInfo(last.answers, last.grade, last.safety) : null;
+  const info = last ? concernInfo(last.answers, last.grade, last.safety, last.wording) : null;
   $('view-tree').innerHTML = `<div class="mp-app">
     <div class="mt-head"><button class="kid-pic" onclick="GGTend.openSettings()" aria-label="${esc(kid.name)}'s picture and settings">${GGAv.html(kid.avatar, kid.name, 60)}<span>Settings</span></button>
       <div class="mp-who"><h2 class="kid">${esc(kid.name)}'s tree</h2><p>${esc(gradeLabel(kid.grade || ''))}${mpMulti() ? ` <span aria-hidden="true">/</span> <button class="link-btn" onclick="go('home')">Whose tree?</button>` : ''}</p></div>
@@ -2169,7 +2213,7 @@ function treeTabHTML(kid) { return ''; }
    before (picked in Maple, later carried in The Grove) becomes Today's practices. */
 function actsToPlan(acts) {
   const out = {}; PARTS.forEach(p => { out[p.key] = { selected: [], custom: '', own: [] }; });
-  (acts || []).forEach(id => { const a = ACTIVITIES.find(x => x.id === id); if (a && out[a.part]) out[a.part].selected.push(a.title); });
+  (acts || []).forEach(id => { const a = ACTIVITIES.find(x => x.id === id); if (a && out[a.part]) out[a.part].selected.push(shownTitle(a)); });
   return out;
 }
 function mpTendGet() {
@@ -2177,6 +2221,26 @@ function mpTendGet() {
   if (!MP_KID.tend || typeof MP_KID.tend !== 'object') MP_KID.tend = {};
   const t = MP_KID.tend;
   if (!t.plan && MP_KID.plan && (MP_KID.plan.acts || []).length) t.plan = actsToPlan(MP_KID.plan.acts);
+  mpNormTend(t);
+  return t;
+}
+/* Saved practice names, read forward (GWG BLD 745): a plan or a day's checkmarks saved with an
+   older sentence case title ("Balloon breaths"), or in the other wording ("Bedtime Blessing" and
+   "Bedtime Kind Words"), shows under the practice's title in the wording in use. The practice's
+   id never changes, so nothing is lost when the wording changes. */
+const ACT_ALIAS = {};
+ACTIVITIES.forEach(a => [a.title, a.plain && a.plain.title].forEach(t => { if (t) ACT_ALIAS[a.part + '|' + t.toLowerCase()] = a; }));
+const actByName = (part, name) => ACT_ALIAS[part + '|' + String(name || '').toLowerCase()] || null;
+function mpNormName(part, name) { const a = actByName(part, name); return a ? shownTitle(a) : name; }
+function mpNormId(id) { const i = String(id).indexOf('|'); if (i < 0) return id; const k = id.slice(0, i); return k + '|' + mpNormName(k, id.slice(i + 1)); }
+function mpNormTend(t) {
+  if (!t || typeof t !== 'object') return t;
+  Object.keys(t.plan || {}).forEach(k => { const x = t.plan[k]; if (x && Array.isArray(x.selected)) x.selected = x.selected.map(n => mpNormName(k, n)).filter((n, i, a) => a.indexOf(n) === i); });
+  Object.keys(t.days || {}).forEach(d => {
+    const x = t.days[d]; if (!x || typeof x !== 'object') return;
+    ['d', 'e'].forEach(f => { if (Array.isArray(x[f])) x[f] = x[f].map(mpNormId).filter((n, i, a) => a.indexOf(n) === i); });
+    if (x.n && typeof x.n === 'object') { const n = {}; Object.keys(x.n).forEach(id => { n[mpNormId(id)] = x.n[id]; }); x.n = n; }
+  });
   return t;
 }
 function mpTendSave() {
@@ -2198,16 +2262,16 @@ function mpSeasonSync() {
 }
 // The weekly quick check-in: question 1 of every part (Leaves 1 is sleep, so Rest), plus the tagged Leaves questions.
 function mpWeeklyBank() {
-  const g = String((MP_KID && MP_KID.grade) || 'K'), Q = CK.questions[g] || {}, tags = (CK.weekly || {})[g] || {}, out = {};
+  const g = String((MP_KID && MP_KID.grade) || 'K'), Q = CK.getBank ? CK.getBank(g, curWording()) : (CK.questions[g] || {}), tags = (CK.weekly || {})[g] || {}, out = {};
   PARTS.forEach(p => {
     out[p.key] = (Q[p.key] || []).map((q, i) => ({ t: q[0], s: p.key === 'leaves' ? (i === 0 ? 'rest' : (Object.keys(tags).find(k => tags[k] === i) || null)) : null }));
   });
   return out;
 }
 function mpPracticeInfo(key, name) {
-  const a = ACTIVITIES.find(x => x.part === key && x.title === name); if (!a) return {};
-  const young = isK2(MP_KID && MP_KID.grade);
-  return { desc: young ? a.k2 : a.g35[0], guide: `<ol>${a.g35.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Do it together.</b> A grown-up can read it out loud and cheer for every try.</p>${window.GGSources ? GGSources.practice(a.title, 'maple') : ''}`, hard: a.easy || '' };
+  const a0 = actByName(key, name); if (!a0) return {};
+  const a = actW(a0), young = isK2(MP_KID && MP_KID.grade);
+  return { desc: young ? a.k2 : a.g35[0], guide: `<ol>${a.g35.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Do it together.</b> A grown-up can read it out loud and cheer for every try.</p>${window.GGSources ? GGSources.practice(a0.title, 'maple') : ''}`, hard: a.easy || '' };
 }
 function mpInit(kid) {
   if (!window.GGTend) return;
@@ -2268,7 +2332,7 @@ function mpRenderPlan() {
     const p = partBy(k), lv = mpLevelOf(k), n = window.GGTend && GGTend.suggest ? GGTend.suggest(lv ? lv[0] : null) : 3;
     const x = MP_PLAN[k], picked = x.selected.length + x.own.length;
     return `<div class="act-group"><h3>${dot(p)}${p.name}<small class="mp-sub">${esc(p.value)}</small>${sug.includes(k) ? '<span class="suggest">Suggested for you</span>' : ''}<span class="part-count">${picked} picked. About ${n} is a good start.</span></h3>
-      <div class="act-grid">${mpRot(k).show.map(a => `<button class="act" aria-pressed="${x.selected.includes(a.title)}" onclick="mpToggle('${k}','${a.id}')">
+      <div class="act-grid">${mpRot(k).show.map(actW).map(a => `<button class="act" aria-pressed="${x.selected.includes(a.title)}" onclick="mpToggle('${k}','${a.id}')">
         <strong>${esc(a.title)}<span class="box">${ICONS.check}</span></strong>
         ${young ? `<p>${esc(a.k2)}</p>` : `<ol>${a.g35.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`}</button>`).join('')}</div>
       ${(r => r.pages > 1 ? `<div class="mp-more"><button class="soft-btn" onclick="mpRotNext('${k}')">Show Me Others (${r.page + 1} of ${r.pages})</button></div>` : '')(mpRot(k))}
@@ -2284,9 +2348,9 @@ function mpRenderPlan() {
    Show Me Others brings the next 6, around to the first set after the last. The place in the
    rotation lives in memory only. */
 const MP_ROT = {}, MP_ROT_N = 6;
-function mpRotOpen(k) { const x = MP_PLAN[k]; return ACTIVITIES.filter(a => a.part === k && !x.selected.includes(a.title)); }
+function mpRotOpen(k) { const x = MP_PLAN[k]; return ACTIVITIES.filter(a => a.part === k && !x.selected.includes(shownTitle(a))); }
 function mpRot(k) {
-  const x = MP_PLAN[k], chosen = ACTIVITIES.filter(a => a.part === k && x.selected.includes(a.title)), open = mpRotOpen(k);
+  const x = MP_PLAN[k], chosen = ACTIVITIES.filter(a => a.part === k && x.selected.includes(shownTitle(a))), open = mpRotOpen(k);
   const pages = Math.max(1, Math.ceil(open.length / MP_ROT_N)), id = S.kid + '-' + k;
   const page = MP_ROT[id] = Math.min(MP_ROT[id] || 0, pages - 1);
   return { show: chosen.concat(open.slice(page * MP_ROT_N, page * MP_ROT_N + MP_ROT_N)), page, pages };
@@ -2299,9 +2363,9 @@ function mpRotNext(k) {
 }
 function mpToggle(k, id) {
   const a = ACTIVITIES.find(x => x.id === id); if (!a || !MP_PLAN) return;
-  const x = MP_PLAN[k], i = x.selected.indexOf(a.title);
+  const x = MP_PLAN[k], i = x.selected.indexOf(shownTitle(a));
   // Taking one out keeps it in view: the list turns to the set it now belongs to.
-  if (i >= 0) { x.selected.splice(i, 1); const at = mpRotOpen(k).indexOf(a); if (at >= 0) MP_ROT[S.kid + '-' + k] = Math.floor(at / MP_ROT_N); } else { x.selected.push(a.title); if (S.readAloud) say(a.title); }
+  if (i >= 0) { x.selected.splice(i, 1); const at = mpRotOpen(k).indexOf(a); if (at >= 0) MP_ROT[S.kid + '-' + k] = Math.floor(at / MP_ROT_N); } else { x.selected.push(shownTitle(a)); if (S.readAloud) say(shownTitle(a)); }
   const y = window.scrollY; mpRenderPlan(); window.scrollTo(0, y);
 }
 function mpOwnAdd(k) {
@@ -2324,7 +2388,7 @@ function mpRenderGuides() {
   const box = $('mp-guides'); if (!box || !MP_KID) return;
   const young = isK2(MP_KID.grade);
   box.innerHTML = `<div class="banner-note mp-guides"><h3 class="kid">Your Six Parts</h3>
-      ${PARTS.map(p => `<p>${dot(p)}<span><b style="color:${p.hex}">${p.name}</b> <span class="mp-sub">${esc(p.value)}</span><br>${esc((young ? p.k2 : p.g35).you)}</span></p>`).join('')}</div>
+      ${PARTS.map(p => `<p>${dot(p)}<span><b style="color:${p.hex}">${p.name}</b> <span class="mp-sub">${esc(p.value)}</span><br>${esc(gradeData(p, young ? 'K' : '5').you)}</span></p>`).join('')}</div>
     <div class="banner-note"><h3 class="kid">For grown-ups</h3><p>When Life Changes guides, and how Maple works.</p>
       <div class="action-row"><button class="soft-btn" onclick="go('life')">When Life Changes</button><button class="soft-btn" onclick="go('guide')">Grown-up Guide</button></div></div>`;
 }
@@ -2367,7 +2431,7 @@ function todayHTML(kid, landKey) {
   if (S.dayView === 'yesterday' && !canYest) S.dayView = 'today';
   const day = S.dayView === 'yesterday' ? yest : today;
   const log = plan.log[day] || [];
-  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean);
+  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(actW);
   const doneN = acts.filter(a => log.includes(a.id)).length;
   return `<div class="today">${treeBox}
     <div>
@@ -2415,7 +2479,7 @@ function shelfHTML(cr) {
   return CRITTERS.map(c => `<span class="${cr[c.key] ? '' : 'locked'}" title="${esc(c.need)}">${critterIcon(c.key)}${cr[c.key] ? c.name : c.need}</span>`).join('');
 }
 function sayAct(id) {
-  const a = ACTIVITIES.find(x => x.id === id);
+  const a0 = ACTIVITIES.find(x => x.id === id), a = a0 && actW(a0);
   if (a) say(`${a.title}. ${isK2(S.grade) ? a.k2 : a.g35.join(' ')}`);
 }
 function setDay(d) { S.dayView = d; renderTree(); }
@@ -2507,7 +2571,7 @@ function swayTreeSoft() {
 function planTabHTML(kid) {
   const plan = kid.plan;
   if (!plan) return `<div class="banner-note"><p>No growth plan yet.</p><button class="big-btn" onclick="openPlan(false)">Make my growth plan</button></div>`;
-  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean);
+  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(actW);
   return `<div class="plan-summary">
       <p class="kid-text" style="font-size:19px;margin:0">Practicing for ${plan.weeks} weeks, ${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Full days practiced: ${doneDays(plan)}.</p>
       <ul>${acts.map(a => `<li>${dot(partBy(a.part))}${esc(a.title)}</li>`).join('')}</ul>
@@ -2522,10 +2586,10 @@ function checkinsTabHTML(kid) {
   if (!cs.length) return '<p>No check-ins yet.</p>';
   if (!S.cuSel || !kid.checkins.find(c => c.id === S.cuSel)) S.cuSel = cs[0].id;
   const sel = kid.checkins.find(c => c.id === S.cuSel);
-  const planActs = sel.plan && sel.plan.acts ? sel.plan.acts.map(id => (ACTIVITIES.find(a => a.id === id) || {}).title).filter(Boolean) : [];
+  const planActs = sel.plan && sel.plan.acts ? sel.plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(shownTitle) : [];
   return `<div class="cu-grid">${cs.map(c => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()">${treeSVG(c.answers, { label: 'Tree from ' + fmtDate(c.date) })}${fmtDate(c.date)}</button>`).join('')}</div>
     <div class="cu-detail"><h3 class="kid" style="font-family:var(--kid);font-weight:500;font-size:24px;color:var(--sky);margin:0">${fmtDate(sel.date)}</h3>${sel.std ? '' : '<p class="kid-text" style="font-size:16px;margin:4px 0 0">An earlier check-in, from before the new questions.</p>'}
-      <ul class="kind-list">${PARTS.map(p => { const a = sel.answers[p.key] || { w: 'skip' }; return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(p.kind[a.w] || p.kind.skip)}</span></li>`; }).join('')}</ul>
+      <ul class="kind-list">${PARTS.map(p => { const a = sel.answers[p.key] || { w: 'skip' }; return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(kindLine(p, a.w))}</span></li>`; }).join('')}</ul>
       ${planActs.length ? `<p class="kid-text" style="font-size:18px;margin-top:14px">Growth plan from this check-in: ${planActs.map(esc).join(', ')}.</p>` : ''}
     </div>`;
 }
@@ -2571,7 +2635,7 @@ function showPrint() {
 }
 function renderPrint(kid) {
   const plan = kid.plan;
-  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean);
+  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(actW);
   const last = kid.checkins[kid.checkins.length - 1];
   const days = plan.weeks * 7;
   const chunk = (from, to) => `<p class="tracker-label">Days ${from} to ${to}</p><table class="tracker ${acts.length <= 6 ? 'roomy' : acts.length <= 12 ? 'mid' : ''}"><thead><tr><th class="act-name">Activity</th>${Array.from({ length: to - from + 1 }, (_, i) => `<th>${from + i}</th>`).join('')}</tr></thead>

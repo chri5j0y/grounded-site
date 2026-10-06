@@ -2172,52 +2172,80 @@ function questionsBlock(d) {
   return `<p class="q-stem">${Q_STEM}</p>` + QUESTIONS[d.key].map((q, i) => questionHtml(d.key, i, q.t)).join('');
 }
 
-// ---------- safety ----------
-const SAFE_OPTS = [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', "I'd rather not say"]];
+// ---------- safety (GWG BLD 745: Birch's newest shape, with Oak's help lines) ----------
+// The opener and the direct question keep their wording. After Sometimes or Often to the
+// direct question, one more: "Right now, today, are those thoughts with you?" A Yes or Not
+// sure opens the calm card with 988 and 911 first. A helper tapping never sees this step.
+const SAFETY = CKB.safety || {};
+const SAFE_OPTS = SAFETY.directOpts || [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', "I'd rather not say"]];
+const NOW_OPTS = SAFETY.nowOpts || [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', "I'd rather not say"]];
+const SAFE_ON = SAFETY.on || { opener: ['often', 'always'], direct: ['sometimes', 'often'], now: ['yes', 'unsure'] };
+const safeOn = (which, v) => !!v && (SAFE_ON[which] || []).includes(v);
+// True when a saved check-in's safety step asked for support (older saved check-ins read the same way).
+function safeAsked(sf) { sf = sf || {}; return safeOn('direct', sf.direct) || safeOn('opener', sf.opener) || safeOn('now', sf.now); }
+function nowHtml() {
+  if (!safeOn('direct', ST_SAFE.direct)) return '';
+  const o3 = ST_SAFE.now || '';
+  return `<div class="q-card${o3 ? ' answered' : ''}" data-s="now" role="radiogroup" aria-label="Right now, today">
+      <p class="q-text">${escapeHtml(SAFETY.now || 'Right now, today, are those thoughts with you?')}</p>
+      <div class="q-opts">${NOW_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o3 === x[0]}" onclick="answerSafe('now','${x[0]}')">${x[1]}</button>`).join('')}</div>
+    </div>`;
+}
 function safetyHtml() {
+  if (CK.by === 'tapped') return `<div class="safe-wrap"><p class="safe-lead">The safety questions stay with ${escapeHtml(CK.name)}, for their own check-ins.</p></div>`;
   const o1 = (ST_SAFE.opener || ''), o2 = (ST_SAFE.direct || '');
   return `<div class="safe-wrap">
-    <p class="safe-lead">Two last questions. They're here because we care, and your answers stay on this device.</p>
+    <p class="safe-lead">${escapeHtml(SAFETY.lead || "Two last questions. They're here because we care, and your answers stay on this device.")}</p>
     <div class="q-card${o1 ? ' answered' : ''}" data-s="opener" role="radiogroup" aria-label="Hopeless or a burden">
-      <p class="q-text">Some seasons are heavy. In the past two weeks, how often have you felt hopeless, or like a burden to others?</p>
+      <p class="q-text">${escapeHtml(SAFETY.opener || '')}</p>
       <div class="q-opts">${Q_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o1 === x[0]}" onclick="answerSafe('opener','${x[0]}')">${x[1]}</button>`).join('')}</div>
     </div>
+    ${SAFETY.directLead ? `<p class="safe-lead">${escapeHtml(SAFETY.directLead)}</p>` : ''}
     <div class="q-card${o2 ? ' answered' : ''}" data-s="direct" role="radiogroup" aria-label="Thoughts of ending your life">
-      <p class="q-text">In the past two weeks, have you had thoughts of ending your life or hurting yourself?</p>
+      <p class="q-text">${escapeHtml(SAFETY.direct || '')}</p>
       <div class="q-opts">${SAFE_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o2 === x[0]}" onclick="answerSafe('direct','${x[0]}')">${x[1]}</button>`).join('')}</div>
     </div>
+    <div class="oak-now">${nowHtml()}</div>
     <p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now?</button></p>
   </div>`;
 }
 function answerSafe(which, val) {
   ST_SAFE[which] = val;
+  if (which === 'direct') { if (!safeOn('direct', val)) delete ST_SAFE.now; document.querySelectorAll('.oak-now').forEach(n => { n.innerHTML = nowHtml(); }); }
   document.querySelectorAll(`[data-s="${which}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
   const c = document.querySelector(`[data-s="${which}"]`); if (c) c.classList.add('answered');
-  if ((which === 'direct' && val !== 'no' && val !== 'skip') || (which === 'opener' && (val === 'often' || val === 'always'))) showCalm();
+  if (which === 'now' && safeOn('now', val)) showCalm('now');
+  else if (which === 'direct' && safeOn('direct', val)) showCalm('self');
+  else if (which === 'opener' && safeOn('opener', val)) showCalm('burden');
 }
-function showCalm() {
-  if (document.getElementById('calm-card')) return;
-  const home = ST_SAFE.home;
+function lineHtml(x, first) {
+  const sms = x.sms ? 'sms:' + x.sms + (x.smsBody ? '?&body=' + encodeURIComponent(x.smsBody) : '') : '';
+  const href = x.tel ? 'tel:' + x.tel : sms || x.url || '';
+  const main = href ? `<a href="${escapeHtml(href)}"${!x.tel && !sms ? ' target="_blank" rel="noopener"' : ''}>${escapeHtml(x.show || x.tel || '')}</a>` : `<span>${escapeHtml(x.show || '')}</span>`;
+  const extra = x.tel && sms ? ` <span class="pn-or">or <a href="${escapeHtml(sms)}">${x.smsBody ? 'text ' + escapeHtml(x.smsBody) + ' to ' + escapeHtml(x.sms) : 'text ' + escapeHtml(x.sms)}</a></span>` : '';
+  return `<li${first ? ' class="calm-first"' : ''}><b>${escapeHtml(x.name)}</b>${main}${extra}${x.note ? `<span class="sq-linenote">${escapeHtml(x.note)}</span>` : ''}</li>`;
+}
+// why: 'self' (direct question), 'now' (thoughts are with them today: 988 and 911 first),
+// 'burden' (the opener), or nothing (the help link). The home flag moves the home lines up.
+function showCalm(why) {
+  const old = document.getElementById('calm-card'); if (old) old.remove();
+  const home = ST_SAFE.home, lines = SAFETY.lines || [];
+  const first = x => (why === 'now' && (x.id === '988' || x.id === '911')) || (home && x.first === 'home');
+  let lead = `<p>${escapeHtml(SAFETY.intro || "If you're thinking about suicide or feel unsafe, reach out now. Someone will listen.")}</p>`;
+  if (why === 'self' || why === 'now') lead = `<p><b>${escapeHtml(SAFETY.yes || '')}</b></p>${SAFETY.burden ? `<p>${escapeHtml(SAFETY.burden)}</p>` : ''}${SAFETY.means ? `<p>${escapeHtml(SAFETY.means)}</p>` : ''}`;
+  else if (why === 'burden') lead = `<p>${escapeHtml(SAFETY.burden || '')}</p>${lead}`;
   const wrap = document.createElement('div');
   wrap.id = 'calm-card'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
-    <h2 id="calm-title">You matter, and you don't have to carry this alone.</h2>
-    <p>If you're thinking about suicide or feel unsafe, reach out now. Someone will listen.</p>
-    <ul class="calm-list">
-      <li><b>988 Suicide and Crisis Lifeline</b><a href="tel:988">Call 988</a> or <a href="sms:988">text 988</a>, any time. Veterans, call 988 and press 1.</li>
-      <li><b>Crisis Text Line in Minnesota</b><a href="sms:741741?&body=MN">Text MN to 741741</a></li>
-      <li><b>Minnesota mobile crisis</b><a href="tel:274747">Call **CRISIS (274747)</a> from a cell phone</li>
-      <li><b>Central Minnesota, 24 hours</b><a href="tel:13202535555">320-253-5555</a></li>
-      ${home ? '' : ''}<li${home ? ' class="calm-first"' : ''}><b>National Domestic Violence Hotline</b><a href="tel:18007997233">1-800-799-7233</a>, or text START to 88788</li>
-      <li><b>SAMHSA National Helpline</b><a href="tel:18006624357">1-800-662-4357</a>, for substance use and mental health help</li>
-      <li><b>In immediate danger?</b><a href="tel:911">Call 911</a></li>
-    </ul>
+    <h2 id="calm-title">${escapeHtml(SAFETY.title || "You matter, and you don't have to carry this alone.")}</h2>
+    ${lead}
+    <ul class="calm-list">${lines.map(x => lineHtml(x, first(x))).join('')}</ul>
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
   document.body.appendChild(wrap);
   wrap.addEventListener('click', e => { if (e.target === wrap) closeCalm(); });
   document.addEventListener('keydown', calmKey);
-  const b = wrap.querySelector('button'); if (b) b.focus();
+  const b = wrap.querySelector('.calm-row button'); if (b) b.focus();
 }
 function calmKey(e) { if (e.key === 'Escape') closeCalm(); }
 function closeCalm() { const c = document.getElementById('calm-card'); if (c) c.remove(); document.removeEventListener('keydown', calmKey); }
@@ -2763,7 +2791,7 @@ function renderQuotes() {
 // its check-ins, under "oak" > "tend".
 // =====================================================================
 function oakLatestEntry() {
-  const list = (personalHistory || []).filter(e => e && e.scores);
+  const list = (personalHistory || []).filter(e => e && e.scores && !e.from);
   const full = list.filter(e => e.type !== 'quick');
   return full[full.length - 1] || list[list.length - 1] || null;
 }
@@ -2781,6 +2809,7 @@ function oakPrefillPlan() {
   });
 }
 function oakPlanOpen() {
+  if (HELP) { renderHelpPlan(); return; }
   if (!window.lastClientScores) {
     const e = oakLatestEntry();
     if (e) { window.lastClientScores = e.scores; window.lastClientUnsure = e.unsure || []; renderGrowthPlanBuilder('client'); }
@@ -2798,7 +2827,187 @@ function oakSavePlan() {
     setTimeout(() => showToast('Saved. Your practices are in Today.'), 700);
   }
 }
-if (window.GGTend) GGTend.init({
+// =====================================================================
+// THE GAME LAYER (GWG BLD 745, Decision 3: Pine's full set plus grace days)
+// Mastery, tree levels, milestones, the balance bonus, Steady by default with
+// Hardy by choice, the 14-day pause after a hope or alone flag or a safety
+// answer, and grace days: two a week are yours to rest. Five days tended makes a
+// full week, and Hardy never counts grace days. Never streaks, never shame, never
+// random rewards, never anything taken away. Saved in tend.ok.
+// =====================================================================
+const todayKey = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const KIND_WORDS = [
+  'Nice. Small and steady is how an oak grows.',
+  'That counts. You showed up for yourself today.',
+  'Done. Your tree is better for it.',
+  'Good work. A little each day adds up.',
+  'Checked off. That was for you.',
+  'Well tended. Rest is part of the work too.',
+  'Roots grow where no one can see them. Keep going.',
+  'Solid. Some days one practice is the whole job.',
+  'Every ring on an oak started as an ordinary day.',
+  'That is one more good thing in today.'
+];
+function kindWord(n) { const day = Math.floor(Date.now() / 86400000); return KIND_WORDS[(day * 7 + (n || 0)) % KIND_WORDS.length]; }
+function pnCheer(text, sub) {
+  let el = document.getElementById('sq-cheer');
+  if (!el) { el = document.createElement('div'); el.id = 'sq-cheer'; el.className = 'sq-cheer'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); }
+  el.innerHTML = `<svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="var(--gold)"/><path d="M18 33l9 9 19-20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><p>${escapeHtml(text)}</p>${sub ? `<p class="pn-cheer-sub">${escapeHtml(sub)}</p>` : ''}`;
+  el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+  clearTimeout(pnCheer.t); pnCheer.t = setTimeout(() => el.classList.remove('show'), 3800);
+}
+const MASTERY = [[15, 'Mine'], [5, 'Building'], [1, 'Tried']];
+const TREE_LEVELS = [[0, 'Acorn'], [1, 'Sprout'], [7, 'Seedling'], [21, 'Sapling'], [45, 'Young Oak'], [90, 'Tall Oak'], [180, 'Heritage Oak']];
+const HARDY_DAYS = 10, GRACE_DAYS = 2;
+const MILES = [
+  ['day1', 'First Day Tended', 'You tended your tree for the first time.'],
+  ['six', 'All Six in a Day', 'You tended every part of your tree in one day.'],
+  ['week', 'First Full Week', 'Five days tended in one week, with two grace days to rest.'],
+  ['balance', 'First Balanced Week', 'You tended all six parts in one week.'],
+  ['mine', 'First Practice That\'s Yours', 'A practice moved all the way to Mine.'],
+  ['ring', 'First Ring', 'You finished a whole season and added a ring.']
+];
+const pd = s => String(s).split('-').map(Number);
+const dOf = s => { const p = pd(s); return new Date(p[0], p[1] - 1, p[2]); };
+const keyOf = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const addD = (s, n) => { const d = dOf(s); d.setDate(d.getDate() + n); return keyOf(d); };
+const mondayOf = s => { const d = dOf(s); return addD(s, -((d.getDay() + 6) % 7)); };
+function sTended(s, k) { const x = (s.days || {})[k]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); }
+function pnRec(s) { if (!s.ok || typeof s.ok !== 'object') s.ok = { miles: {}, bal: {} }; s.ok.miles = s.ok.miles || {}; s.ok.bal = s.ok.bal || {}; return s.ok; }
+function daysTended(s) { return Object.keys(s.days || {}).filter(k => sTended(s, k)).length; }
+function treeLevel(n) { let i = 0; TREE_LEVELS.forEach((L, j) => { if (n >= L[0]) i = j; }); return { name: TREE_LEVELS[i][1], next: TREE_LEVELS[i + 1] || null }; }
+function masteryCount(s, key, name) { const id = key + '|' + name; return Object.keys(s.days || {}).filter(k => ((s.days[k] || {}).d || []).includes(id)).length; }
+function masteryOf(n) { const m = MASTERY.find(x => n >= x[0]); return m ? m[1] : ''; }
+function weekPartsSet(s, mon) { const set = {}; for (let i = 0; i < 7; i++) { const x = (s.days || {})[addD(mon, i)]; if (x) (x.d || []).forEach(id => { set[id.split('|')[0]] = 1; }); } return set; }
+function weeksOf(s) { const w = {}; Object.keys(s.days || {}).forEach(k => { if (sTended(s, k)) { const m = mondayOf(k); (w[m] = w[m] || []).push(k); } }); return w; }
+function balancedWeeks(s) { return Object.keys(weeksOf(s)).filter(m => Object.keys(weekPartsSet(s, m)).length >= 6); }
+// Grace days: a full week is five days tended; the other two are rest that counts.
+function fullWeeks(s) { const w = weeksOf(s); return Object.keys(w).filter(m => w[m].length >= 7 - GRACE_DAYS); }
+// Grace days left this week: untended days from Monday through yesterday use them first.
+function graceLeft(s) { const t = todayKey(), mon = mondayOf(t); let used = 0; for (let d = mon; d < t; d = addD(d, 1)) if (!sTended(s, d)) used++; return Math.max(0, GRACE_DAYS - used); }
+// Days since a date, not counting up to GRACE_DAYS untended days in each week.
+function daysPastGrace(since) {
+  const t = todayKey(), per = {}; let n = 0, i = 0;
+  for (let d = addD(since, 1); d <= t && i < 800; d = addD(d, 1), i++) { const m = mondayOf(d); per[m] = (per[m] || 0) + 1; if (per[m] > GRACE_DAYS) n++; }
+  return n;
+}
+function partLastTended(s, key) { let last = null; Object.keys(s.days || {}).forEach(k => { if (((s.days[k] || {}).d || []).some(id => id.split('|')[0] === key) && (!last || k > last)) last = k; }); return last; }
+function planParts(s) { const p = s.plan || {}; return PART_ORDER.filter(k => { const x = p[k] || {}; return (x.selected || []).length || x.custom || (x.own || []).length || (x.lib || []).length; }); }
+function pnMode(s) { return (s && s.ok && s.ok.mode) === 'hardy' ? 'hardy' : 'steady'; }
+// The pause: for 14 days after a check-in flags losing hope or feeling alone, or the
+// safety step asks for support, the tree holds as it is and Hardy rests.
+function pnPause() {
+  const cut = addD(todayKey(), -14);
+  return (personalHistory || []).some(e => e && !e.from && e.date >= cut && ((e.flags || []).some(f => f === 'hope' || f === 'alone') || safeAsked(e.safety)));
+}
+// Hardy: a part with practices in the plan, left untended for HARDY_DAYS or more (grace
+// days not counted), shows trouble. One practice in that part heals it. Steady never does.
+function hardyDays(s, key) {
+  if (pnMode(s) !== 'hardy' || pnPause() || !planParts(s).includes(key)) return 0;
+  const since = partLastTended(s, key) || pnRec(s).hardyFrom || s.start; if (!since) return 0;
+  if (daysPastGrace(since) < HARDY_DAYS) return 0;
+  return Math.round((dOf(todayKey()) - dOf(since)) / 86400000);
+}
+function items(s) { const out = []; const p = s.plan || {}; PART_ORDER.forEach(k => { const x = p[k] || {}; (x.selected || []).forEach(n => out.push({ key: k, name: n })); }); return out; }
+function milesNow(s) {
+  const n = daysTended(s), out = {};
+  if (n >= 1) out.day1 = 1;
+  if (Object.keys(s.days || {}).some(k => { const set = {}; ((s.days[k] || {}).d || []).forEach(id => { set[id.split('|')[0]] = 1; }); return Object.keys(set).length >= 6; })) out.six = 1;
+  if (fullWeeks(s).length) out.week = 1;
+  if (balancedWeeks(s).length) out.balance = 1;
+  if (items(s).some(it => masteryCount(s, it.key, it.name) >= 15)) out.mine = 1;
+  (s.rings || []).forEach((r, i) => { out[i ? 'season' + (i + 1) : 'ring'] = 1; });
+  return out;
+}
+function mileName(id) { const m = MILES.find(x => x[0] === id); return m ? m[1] : id.indexOf('season') === 0 ? 'Season ' + id.slice(6) + ' Finished' : id; }
+// Records any milestone reached for the first time, and says so once.
+function checkMiles(s, quiet) {
+  const R = pnRec(s), now = milesNow(s), fresh = [];
+  Object.keys(now).forEach(id => { if (!R.miles[id]) { R.miles[id] = todayKey(); fresh.push(id); } });
+  balancedWeeks(s).forEach(m => { if (!R.bal[m]) { R.bal[m] = todayKey(); if (!quiet && m === mondayOf(todayKey())) fresh.push('bonus'); } });
+  return fresh;
+}
+function todayKindHtml(s) {
+  const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0, paused = pnPause();
+  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Nothing will be lost.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = Object.keys(wk).length, gl = graceLeft(s);
+  const trouble = PART_ORDER.filter(k => hardyDays(s, k));
+  checkMiles(s, true);
+  return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
+    <div class="gt-card pn-game"><div class="pn-level"><span class="pn-level-k">Your tree</span><b>${escapeHtml(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${escapeHtml(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
+    <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 6 parts tended this week">${ALL_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
+    <p class="gt-small ok-grace"><b>Grace days.</b> ${gl ? `${gl} of ${GRACE_DAYS} left this week.` : 'Both are resting days this week.'} Two days a week are yours to rest, so five days tended makes a full week.</p>
+    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? (paused ? 'Hardy is resting for now, and nothing shows trouble.' : 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days, grace days not counted, shows trouble until you tend it.') : 'Steady tree: gentle, and nothing is ever lost.'} <button type="button" class="text-btn" onclick="reopenSettings('pn-set-game')">Change</button></p>
+    ${trouble.length ? `<p class="pn-trouble">${trouble.map(k => escapeHtml(DOMAIN_BY_KEY[k].part)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
+    + gwCardHtml() + moveSeqHtml(true);
+}
+function itemTagHtml(key, name, s) { const m = masteryOf(masteryCount(s, key, name)); return m ? ` <span class="pn-mastery pn-m-${m.toLowerCase()}">${m}</span>` : ''; }
+function partNoteHtml(key, s) { const n = hardyDays(s, key); return n ? `<p class="pn-trouble">Leaves browning: ${n} days since this part was tended. One practice today heals it.</p>` : ''; }
+function milestonesHtml(s) {
+  const R = pnRec(s), got = Object.keys(R.miles).sort((a, b) => String(R.miles[a]).localeCompare(String(R.miles[b])));
+  const nb = balancedWeeks(s).length;
+  return `<div class="gt-card pn-miles"><h3>Milestones</h3>${got.length ? `<ul class="pn-mile-list">${got.map(id => `<li><b>${escapeHtml(mileName(id))}</b><span>${escapeHtml(formatDate(R.miles[id]))}</span></li>`).join('')}</ul>` : '<p class="gt-small">Your first milestone comes with your first day of tending.</p>'}
+    ${nb ? `<p class="gt-small">${nb} balanced week${nb === 1 ? '' : 's'} so far.</p>` : ''}
+    <p class="gt-small">Still ahead: ${MILES.filter(m => !R.miles[m[0]]).map(m => escapeHtml(m[1])).join(', ') || 'a new ring every season'}.</p></div>`;
+}
+function onCheckGame(done, key, s, parts) {
+  if (!done) return;
+  const fresh = checkMiles(s);
+  if (fresh.length) { persistTend(); pnCheer(fresh.includes('bonus') ? 'Balanced week. All six parts tended this week.' : 'New milestone: ' + mileName(fresh.filter(x => x !== 'bonus')[0] || fresh[0]), kindWord(parts)); return; }
+  pnCheer(parts >= 6 ? 'All six parts tended today. That is a full day.' : kindWord(parts));
+}
+function persistTend() { return PROF && window.GGP ? GGP.save(PROF.id) : Promise.resolve(); }
+function setPnMode(m) {
+  const s = window.GGTend && GGTend.state(); if (!s) { showToast('Open your profile first.'); return; }
+  const R = pnRec(s); R.mode = m === 'hardy' ? 'hardy' : 'steady'; if (R.mode === 'hardy') R.hardyFrom = todayKey();
+  persistTend().then(() => { showToast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + HARDY_DAYS + ' days, grace days not counted.' : 'Steady tree. Gentle, and nothing is lost.'); GGTend.render(); reopenSettings('pn-set-game'); });
+}
+function reopenSettings(focus) { if (window.GGTend) { GGTend.openSettings(); const f = document.getElementById(focus || 'gt-set-helpers'); if (f) f.scrollIntoView({ block: 'start' }); } }
+
+// The simple graph: days tended each week, and each part's level at each Oak check-in.
+function weeksTended(n) {
+  const out = [], now = new Date(), back = (now.getDay() + 6) % 7, mon = new Date(now.getFullYear(), now.getMonth(), now.getDate() - back);
+  for (let w = n - 1; w >= 0; w--) {
+    let c = 0; const start = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() - w * 7);
+    for (let i = 0; i < 7; i++) { const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i); if (window.GGTend && GGTend.tended(keyOf(d))) c++; }
+    out.push({ start, n: c });
+  }
+  return out;
+}
+function daysGraphHtml() {
+  const W = weeksTended(12), bw = 30, gap = 10, H = 120, x0 = 34;
+  const total = W.reduce((t, w) => t + w.n, 0);
+  let svg = `<svg class="sq-graph" viewBox="0 0 ${x0 + W.length * (bw + gap) + 4} ${H + 46}" role="img" aria-label="Days tended in each of the last 12 weeks: ${W.map(w => w.n).join(', ')}">`;
+  [0, 7].forEach(v => { const y = 10 + H - v / 7 * H; svg += `<line x1="${x0 - 4}" x2="${x0 + W.length * (bw + gap)}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/><text x="${x0 - 8}" y="${y + 5}" text-anchor="end" class="sq-ax">${v}</text>`; });
+  W.forEach((w, i) => {
+    const h = Math.max(w.n ? 4 : 0, w.n / 7 * H), x = x0 + i * (bw + gap), y = 10 + H - h;
+    svg += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="var(--gold)" opacity="${i === W.length - 1 ? 1 : .78}"/>`;
+    svg += `<text x="${x + bw / 2}" y="${(w.n ? y - 5 : 10 + H - 5)}" text-anchor="middle" class="sq-val">${w.n}</text>`;
+    if (i % 2 === 1 || i === W.length - 1) svg += `<text x="${x + bw / 2}" y="${H + 30}" text-anchor="middle" class="sq-ax">${i === W.length - 1 ? 'This week' : w.start.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</text>`;
+  });
+  svg += '</svg>';
+  return `<div class="sq-graph-box"><h4>Days Tended, Week by Week</h4>${svg}<p class="gt-small">${total} day${total === 1 ? '' : 's'} tended in the last twelve weeks. Every bar counts, short ones too, and five days with two grace days is a full week.</p></div>`;
+}
+function levelsGraphHtml(list) {
+  const full = (list || []).filter(e => e && e.scores && !e.from && e.std && e.type !== 'quick').slice(-8);
+  if (!full.length) return `<div class="sq-graph-box"><h4>Your Parts Over Time</h4><p class="gt-small">After your first full Oak check-in, each part of your tree shows here, one point for each check-in.${(list || []).some(e => e && e.from) ? ' Rings From Pine and From Birch are kept in your history, apart from this graph.' : ''}</p></div>`;
+  const W = 220, H = 56, n = full.length, xs = i => n === 1 ? W / 2 : 10 + i * (W - 20) / (n - 1), ys = v => 6 + (10 - v) / 9 * (H - 12);
+  const rows = ALL_DOMAINS.map(d => {
+    const pts = full.map((e, i) => ({ i, v: stShown(e, d.key) })).filter(p => p.v != null);
+    const last = pts.length ? pts[pts.length - 1].v : null;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" class="sq-spark" role="img" aria-label="${d.part}: ${pts.map(p => stLevel(p.v)).join(', ') || 'not sure yet'}">`;
+    svg += `<line x1="0" x2="${W}" y1="${ys(8)}" y2="${ys(8)}" stroke="var(--line)" stroke-dasharray="3 4"/><line x1="0" x2="${W}" y1="${ys(5)}" y2="${ys(5)}" stroke="var(--line)" stroke-dasharray="3 4"/>`;
+    if (pts.length > 1) svg += `<polyline points="${pts.map(p => xs(p.i).toFixed(1) + ',' + ys(p.v).toFixed(1)).join(' ')}" fill="none" stroke="${d.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+    pts.forEach(p => { svg += `<circle cx="${xs(p.i).toFixed(1)}" cy="${ys(p.v).toFixed(1)}" r="5" fill="${d.color}" stroke="var(--card)" stroke-width="2"/>`; });
+    svg += '</svg>';
+    return `<div class="sq-row" style="--domain-color:${d.color}"><b>${d.part}</b>${svg}<span>${last == null ? 'Not sure yet' : stLevel(last)}</span></div>`;
+  }).join('');
+  return `<div class="sq-graph-box"><h4>Your Parts Over Time</h4><p class="gt-small">One point for each full Oak check-in, oldest on the left. The dashed lines mark Steady and Strong.${(list || []).some(e => e && e.from) ? ' Rings From Pine and From Birch stay in your history, apart from this graph.' : ''}</p>${rows}</div>`;
+}
+function graphCardHtml() { return `<div class="gt-card sq-graphs"><h3>Your Growth Over Time</h3>${daysGraphHtml()}${levelsGraphHtml(personalHistory)}</div>`; }
+function seasonExtraHtml(s) { return graphCardHtml() + (s ? milestonesHtml(s) : ''); }
+
+const TEND_CFG = {
   libAge: () => (PROF && PROF.age === 'pine') ? 'pine' : 'oak',
   profileId: () => PROF ? PROF.id : null,
   tool: 'oak', toolName: 'Oak',
@@ -2813,13 +3022,22 @@ if (window.GGTend) GGTend.init({
     const d = DOMAIN_BY_KEY[key], r = d && d.restore.find(x => x[0] === name), g = GUIDES[key + '|' + name];
     return { desc: r ? r[1] : '', guide: guideHtml(key, name, true), hard: g ? g.hard : '' };
   },
-  history: () => personalHistory || [],
+  // Rings From Pine and From Birch stay in the history table, set apart (never counted here).
+  history: () => (personalHistory || []).filter(e => e && !e.from),
   hasResults: () => !!window.currentClientEntry,
   toast: m => showToast(m),
   profileHtml: () => oakProfileHtml(),
+  extraSettings: () => oakSettingsHtml(),
   lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button></div></div>`,
+  todayExtra: s => todayKindHtml(s),
+  seasonExtra: s => seasonExtraHtml(s),
+  itemTag: (key, name, s) => itemTagHtml(key, name, s),
+  partNote: (key, s) => partNoteHtml(key, s),
+  pause: () => pnPause(),
+  pauseLine: 'Your tree is holding still with you. Nothing dries out or browns while you get support.',
+  onCheck: (done, key, s, parts) => onCheckGame(done, key, s, parts),
   store: {
-    get: () => { if (!PROF || !window.GGP) return null; const d = GGP.data(PROF.id, 'oak'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
+    get: () => { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'oak'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
     save: () => (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve()
   },
   actions: {
@@ -2829,7 +3047,8 @@ if (window.GGTend) GGTend.init({
     createProfile: () => profCreateDialog(), openProfile: () => oakOpenAny(),
     lock: () => profLock(), textSize: () => cycleTextSize()
   }
-});
+};
+if (window.GGTend) GGTend.init(TEND_CFG);
 setTimeout(() => { if (window.GGTend) GGTend.render(); }, 0);
 
 // ---------- SELF CHECK-IN: SAVE AND LOAD MY FILE ----------
@@ -2876,6 +3095,7 @@ function openPersonalFilePicker() {
 // Older Oak profiles move in the first time they are opened.
 // =====================================================================
 let PROF = null; // { id, name, avatar }
+let HELP = null; // the id of the person a helper is helping, while in helper view (GWG BLD 745)
 function profSync() {
   const a = window.GGP && GGP.active();
   if (a) {
@@ -2885,14 +3105,17 @@ function profSync() {
     PROF = { id: a.id, name: a.name, avatar: a.avatar, age: a.age };
     window.personalHistory = d.history.slice(); personalHistory = window.personalHistory;
     window.personalFileLoaded = true;
-  } else if (PROF) {
-    PROF = null;
+    if (HELP && !helpedWithOak().some(p => p.id === HELP)) HELP = null;
+  } else if (PROF || HELP) {
+    PROF = null; HELP = null;
     window.personalHistory = []; personalHistory = window.personalHistory;
     window.personalFileLoaded = false; window.currentClientEntry = null;
   }
-  renderProfileBar(); renderSaveBox(); renderProgress();
-  if (window.GGTend) GGTend.render();
+  renderProfileBar(); renderSaveBox(); renderProgress(); renderHelpBanner();
+  if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render();
   if (document.getElementById('client-growthplan').classList.contains('active')) oakPlanOpen();
+  if (document.getElementById('client-ground').classList.contains('active')) renderGround();
+  helpFromHash();
 }
 async function profPersist() {
   if (!PROF || !window.GGP) return;
@@ -2905,11 +3128,14 @@ function renderProfileBar() {
   if (PROF) {
     const a = GGP.active(), t = new Date(a.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
     const young = a.age !== 'adult' ? `<div class="pbar-who" style="flex-basis:100%"><span>Oak is written for grown-ups. ${a.age === 'maple' ? '<a href="/maple/">Maple</a> is made for kids.' : a.age === 'aspen' ? '<a href="/aspen/">Aspen</a> is made for middle schoolers.' : '<a href="/pine/">Pine</a> is made for high schoolers. Your Oak check-ins stay safe here, and only your passcode opens them.'}</span></div>`
-      // Birch (GWG BLD 742): a grown-up whose tree is Birch sees where it lives. Oak stays open to them too.
-      : GGP.tree && GGP.tree(a.id) === 'birch' ? `<div class="pbar-who" style="flex-basis:100%"><span>Your tree is <a href="/birch/">Birch</a>, built for young adults, 18 to 26. Oak is here for you too, and you can switch trees any time in Manage my profile.</span></div>` : '';
+      // Birch (GWG BLD 742) and Sequoia (GWG BLD 745): a grown-up whose tree lives elsewhere sees where. Oak stays open to them too.
+      : treeNow(a.id) === 'birch' ? `<div class="pbar-who" style="flex-basis:100%"><span>Your tree is <a href="/birch/">Birch</a>, built for young adults, 18 to 26. Oak is here for you too, and you can switch trees any time in Manage my profile.</span></div>`
+      : treeNow(a.id) === 'sequoia' ? `<div class="pbar-who" style="flex-basis:100%"><span>Your tree is <a href="/sequoia/">Sequoia</a>, built for 60 and up. Oak is here for you too, and you can switch trees any time in Manage my profile.</span></div>` : '';
+    const helps = a.age === 'adult' ? helpedWithOak() : [];
+    const helpRow = helps.length ? `<div class="sq-helprow"><span>You help:</span>${helps.map(p => `<button type="button" class="btn ${HELP === p.id ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="helpOpen('${p.id}')">${escapeHtml(p.name)}</button>`).join('')}${HELP ? '<button type="button" class="btn btn-secondary btn-sm" onclick="helpBack()">My Own Oak</button>' : ''}</div>` : '';
     bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGTend.openSettings()" aria-label="Profile and Settings">${GGAv.html(a.avatar, a.name, 40)}</button>
       <div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Saving to your Grounded profile on this device. Unlocked until ${t}.</span></div>
-      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${young}</div>`;
+      <div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button><button type="button" class="btn btn-secondary btn-sm" onclick="profLock()">Lock</button></div>${young}${helpRow}</div>`;
   } else {
     bar.innerHTML = `<div class="pbar pbar-off">${oakWhoHtml('bar')}</div>`;
   }
@@ -2966,6 +3192,7 @@ function oakOpenAny() {
 function oakSwitch() {
   if (!window.GGP) return;
   if (window.GGTend) GGTend.closeSettings();
+  HELP = null;
   GGP.lock().then(() => { showToast('Locked. Choose who is tending.'); const b = document.getElementById('st-profile-bar'); if (b) b.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
 }
 function oakProfileHtml() {

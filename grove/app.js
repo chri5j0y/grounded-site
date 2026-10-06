@@ -47,6 +47,7 @@ Object.assign(ICON, {
  branches:`<path d="M12 21V11"/><path d="M12 15L6 9M12 12l6-6M6 9L4 5.5M6 9H2.8M18 6l1-3M18 6h3"/>`,
  leaves:`<path d="M12 21v-9"/><path d="M12 12C7 12 4 9 5 4c5 0 7 3 7 8z"/><path d="M12 15c4 0 7-2.5 6.5-7-4 0-6.5 2.5-6.5 7z"/>`,
  fruit:`<path d="M12 7.5c-.8-2-.8-3.6.2-5"/><path d="M12.3 6c2.6-2 5.6-.4 5 1.8-2 .6-3.8.2-5-1.8z"/><circle cx="12" cy="14.3" r="6.3"/>`,
+ sequoia:`<path d="M12 2.4c-2 1.5-2.9 3.9-2.3 6.3.4 1.4 1.3 2.2 2.3 2.2s1.9-.8 2.3-2.2c.6-2.4-.3-4.8-2.3-6.3z"/><path d="M12.6 13.2c1.5-.9 3.2-.8 4.1.2-1.3 1-2.9 1-4.1-.2zM11.4 15.6c-1.5-.9-3.2-.8-4.1.2 1.3 1 2.9 1 4.1-.2z"/><path d="M8.6 21.5c1.6-1 2.2-3 2.2-6.2V10.6M15.4 21.5c-1.6-1-2.2-3-2.2-6.2V10.6M6.5 21.5h11"/>`,
  tree:`<circle cx="12" cy="8" r="5"/><circle cx="7.4" cy="11.2" r="3.4"/><circle cx="16.6" cy="11.2" r="3.4"/><path d="M12 13.5V21M9 21h6"/>`,
  grove:`<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>`
 });
@@ -71,7 +72,9 @@ Object.assign(ICON, {
 // Engagement guardrails (on purpose): no badges or unread counts, no
 // endless scroll (this week, folded weeks), reactions show who, never
 // totals, no streaks, growth only adds, and growth comes from tending and
-// family practices only, never from posting or reacting.
+// family practices only, never from posting or reacting. Group totals and
+// family milestones (BLD 745) add the whole family together, never person by
+// person, and a milestone once reached is kept.
 // =====================================================================
 const { stageOf, skyNow, sceneSVG } = window.GGScene;
 const $ = s => document.querySelector(s);
@@ -113,7 +116,7 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 
 
 /* ---------- the family grove, saved on this device ---------- */
 const STORE = 'gg-grove-family-v1', OLD = 'the-grove-v1', OLDER = 'tending-the-garden-v1';
-const blank = () => ({ v:1, id: uid(), start: today(), wall: [], reacts: {}, done: {}, grew: {}, kinds: {}, scenery: 'forest', seen: {}, intro: false, scale: 1, family: [], famGone: {} });
+const blank = () => ({ v:1, id: uid(), start: today(), wall: [], reacts: {}, done: {}, grew: {}, kinds: {}, scenery: 'forest', seen: {}, intro: false, scale: 1, family: [], famGone: {}, miles: {} });
 let G = blank();
 function load() {
   try { const j = JSON.parse(localStorage.getItem(STORE)); if (j && j.v) G = Object.assign(blank(), j); else {
@@ -181,7 +184,7 @@ function famHtml() {
   let h = `<div class="card gv-fam"><h3>Family Trees</h3>`;
   if (!list.length) return h + `<p class="muted">Family on other phones can send you their tree. In their own tree app (Oak, Birch, Sequoia, Pine, Aspen, or Maple), they tap Share to Family and send you the link or QR code.</p></div>`;
   h += `<p class="muted">Trees shared from family's own phones. Each one shows how it looked when it was shared.</p><ul class="gv-fam-list">`;
-  h += list.map(f => { const wk = famWeek(f); return `<li><span class="gv-fam-ic" aria-hidden="true">${icon(f.t === 'oak' || f.t === 'sequoia' ? 'tree' : f.t === 'birch' ? 'birch' : f.t === 'pine' ? 'pine' : f.t === 'aspen' ? 'leaves' : 'maple')}</span><div><b>${esc(f.n)}</b> <small>${FAM_TOOL[f.t]}</small><span>${esc(famLine(f))}${wk ? ' · ' + esc(wk) : ''}</span></div><button type="button" class="btn btn-line btn-sm" data-act="famdrop" data-id="${esc(f.id)}" aria-label="Remove ${esc(f.n)}'s tree">Remove</button></li>`; }).join('');
+  h += list.map(f => { const wk = famWeek(f); return `<li><span class="gv-fam-ic" aria-hidden="true">${icon(f.t === 'oak' ? 'tree' : f.t === 'sequoia' ? 'sequoia' : f.t === 'birch' ? 'birch' : f.t === 'pine' ? 'pine' : f.t === 'aspen' ? 'leaves' : 'maple')}</span><div><b>${esc(f.n)}</b> <small>${FAM_TOOL[f.t]}</small><span>${esc(famLine(f))}${wk ? ' · ' + esc(wk) : ''}</span></div><button type="button" class="btn btn-line btn-sm" data-act="famdrop" data-id="${esc(f.id)}" aria-label="Remove ${esc(f.n)}'s tree">Remove</button></li>`; }).join('');
   return h + `</ul><p class="muted">A shared tree is a snapshot. To see it grow, ask them to share again from their tree app.</p></div>`;
 }
 function famDrop(id) {
@@ -259,9 +262,9 @@ function viewGrove() {
   if (!G.intro) h += `<div class="banner gv-intro"><h3>Where our trees grow together</h3><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += `<div class="section-head"><h2>Our Grove</h2><p>${ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.'}</p></div>`;
   h += `<div class="gv-scene">${sceneSVG({ w: 1000, h: 470, gy: 330, trees: trees.length ? trees : [{ stage: 'adult', g: .05, parts: [], kind: 'grove' }], sky: skyNow(), scenery: scen, visitors: vis, uid: 'gv', seed: 11, label: 'Your family grove' })}</div>`;
-  h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : 'The grove grows when anyone tends their tree or the family does a practice together.'}${next ? ` Next visitor: ${esc(next.name)}, at ${next.days} days.` : ''}</p>`;
+  h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : 'The grove grows when anyone tends their tree or the family does a practice together.'}${next ? ` Next visitor: ${esc(next.name)}, at ${next.days} ${next.days === 1 ? 'day' : 'days'}.` : ''}</p>`;
   if (fam.length > famShown.length) h += `<p class="muted">${fam.length - famShown.length} more family ${fam.length - famShown.length === 1 ? 'tree is' : 'trees are'} in the Family Trees list.</p>`;
-  if (!ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/birch/">Birch</a><a class="btn btn-line btn-sm" href="/sequoia/">Sequoia</a><a class="btn btn-line btn-sm" href="/pine/">Pine</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>`;
+  if (!ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/birch/">Birch</a><a class="btn btn-line btn-sm" href="/sequoia/">Sequoia</a><a class="btn btn-line btn-sm" href="/pine/">Pine</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>` + (days ? togetherHtml(days) : '') + helpCardHtml();
   h += `<div class="gv-people" role="list">${ps.map(p => { const t = treeOf(p); return `<button type="button" role="listitem" class="gv-person${S.sel === p.id ? ' on' : ''}" aria-pressed="${S.sel === p.id}" data-act="sel" data-id="${esc(p.id)}">${window.GGAv ? GGAv.html(p.avatar, p.name, 44) : ''}<b>${esc(p.name)}</b><span>${t.show ? `${t.days} ${t.days === 1 ? 'day' : 'days'} tended` : 'Growing quietly'}</span></button>`; }).join('')}</div>`;
   const sp = S.sel && who(S.sel);
   if (sp) {
@@ -274,15 +277,92 @@ function viewGrove() {
       + `<p class="muted">The big picture only. Never answers, levels, or notes.</p><a class="btn btn-gold btn-sm" href="${tool.href}">Go tend your tree in ${tool.name}</a></div>`;
   }
   h += famHtml();
+  h += togetherHtml(days);
   const a = me();
   if (a) {
     const mine = who(a.id), md = myDays(mine), gd = days;
-    const row = (list, cur, act, n) => `<div class="unlock-row">${list.map(k => { const ok = n >= k.days; return `<button type="button" class="chip${cur === k.id ? ' on' : ''}${ok ? '' : ' is-off'}" ${ok ? `data-act="${act}" data-id="${k.id}"` : 'disabled'} aria-pressed="${cur === k.id}">${esc(k.name)}${ok ? '' : ` (${k.days} days)`}</button>`; }).join('')}</div>`;
+    const row = (list, cur, act, n) => `<div class="unlock-row">${list.map(k => { const ok = n >= k.days; return `<button type="button" class="chip${cur === k.id ? ' on' : ''}${ok ? '' : ' is-off'}" ${ok ? `data-act="${act}" data-id="${k.id}"` : 'disabled'} aria-pressed="${cur === k.id}">${esc(k.name)}${ok ? '' : ` (${k.days} ${k.days === 1 ? 'day' : 'days'})`}</button>`; }).join('')}</div>`;
     h += `<div class="card"><h3>Your tree in the grove</h3><p class="muted">Days you tend in ${esc(toolOf(who(a.id) || a).name)} unlock new kinds of trees. Days the family grows together unlock scenery for everyone.</p>
       <label class="lbl">Kind of tree</label>${row(KINDS, G.kinds[a.id] || 'grove', 'kind', md)}
       <label class="lbl">Scenery</label>${row(SCENES, scen, 'scenery', gd)}</div>`;
   }
-  return h;
+  return h + helpCardHtml();
+}
+
+/* ---------- growing together: group totals and family milestones (GWG BLD 745) ----------
+   Decision 3: The Grove's flavor of the game layer. Totals are the whole family's, added
+   together, never ranked or split person by person (no leaderboards). They count only what
+   already shows here: trees whose "Show my growth" switch is on, Family Trees shared by hand,
+   and the practices done together. Milestones are reached once and kept for good in
+   G.miles {id: date}. Growth only adds: a quiet week never takes a milestone away. */
+const FAM_MILES = [
+  ['grow1', 'First Day Growing Together', 'The grove grew for the first time.'],
+  ['together1', 'First Practice Together', 'The family did a practice side by side.'],
+  ['grow7', 'A Week of Growing Together', 'Seven days of the grove growing.'],
+  ['sixparts', 'All Six Parts in One Week', 'Together, the family tended every part of the tree in one week.'],
+  ['alltrees', 'Every Tree Tended in One Week', 'Every tree in the grove was tended in the same week.'],
+  ['together10', 'Ten Practices Together', 'Ten practices done side by side.'],
+  ['ring1', 'A First Ring in the Family', 'A tree in the grove finished a season and added a ring.'],
+  ['grow30', 'Thirty Days Growing Together', 'A month of days in the grove.'],
+  ['together50', 'Fifty Practices Together', 'Fifty practices done side by side.'],
+  ['grow100', 'One Hundred Days Growing Together', 'One hundred days of the grove growing.']
+];
+function famTotals(days) {
+  const w0 = weekStart(today()), w1 = addDays(w0, 6), parts = new Set();
+  let weekDays = 0, allDays = 0, rings = 0, shown = 0, tendedWk = 0;
+  people().forEach(p => {
+    const t = treeOf(p); if (!t.show || t.remembered) return;
+    shown++; allDays += t.days; rings += t.rings;
+    const wk = t.recent.filter(r => r.d >= w0 && r.d <= w1);
+    weekDays += wk.length; if (wk.length) tendedWk++;
+    wk.forEach(r => (r.parts || []).forEach(k => parts.add(k)));
+  });
+  famList().forEach(f => {
+    shown++; allDays += f.g || 0;
+    if (weekStart(famDate(f.u)) === w0 && f.w) { weekDays += f.w; tendedWk++; famParts(f).forEach(k => parts.add(k)); }
+  });
+  let together = 0, togetherWk = 0;
+  Object.keys(G.done || {}).forEach(d => { const n = Object.keys(G.done[d] || {}).length; together += n; if (d >= w0 && d <= w1) togetherWk += n; });
+  return { days, weekDays, allDays, rings, shown, tendedWk, parts: parts.size, together, togetherWk };
+}
+function famMilesNow(T) {
+  const out = {};
+  if (T.days >= 1) out.grow1 = 1;
+  if (T.days >= 7) out.grow7 = 1;
+  if (T.days >= 30) out.grow30 = 1;
+  if (T.days >= 100) out.grow100 = 1;
+  if (T.together >= 1) out.together1 = 1;
+  if (T.together >= 10) out.together10 = 1;
+  if (T.together >= 50) out.together50 = 1;
+  if (T.parts >= 6) out.sixparts = 1;
+  if (T.shown >= 2 && T.tendedWk === T.shown) out.alltrees = 1;
+  if (T.rings >= 1) out.ring1 = 1;
+  return out;
+}
+function famMilesCheck(T) {
+  if (!G.miles || typeof G.miles !== 'object') G.miles = {};
+  const now = famMilesNow(T), fresh = Object.keys(now).filter(id => !G.miles[id]);
+  if (!fresh.length) return;
+  fresh.forEach(id => { G.miles[id] = today(); }); save();
+  const m = FAM_MILES.find(x => x[0] === fresh[fresh.length - 1]);
+  if (m) setTimeout(() => toast('New family milestone: ' + m[1] + '.'), 300);
+}
+const famN = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+function togetherHtml(days) {
+  const T = famTotals(days); famMilesCheck(T);
+  const got = FAM_MILES.filter(m => G.miles && G.miles[m[0]]), ahead = FAM_MILES.filter(m => !(G.miles && G.miles[m[0]]));
+  return `<div class="card gv-totals"><h3>Growing Together</h3><p class="muted">The whole family's growth, added together. Never a contest: every day anyone tends counts for all of you.</p>
+    <dl class="gv-stats gv-stats-wrap"><div><dt>Days Tended This Week</dt><dd>${T.weekDays}</dd></div><div><dt>Practices Together This Week</dt><dd>${T.togetherWk}</dd></div><div><dt>Parts Tended This Week</dt><dd>${T.parts} of 6</dd></div></dl>
+    <dl class="gv-stats gv-stats-wrap"><div><dt>Days Tended in All</dt><dd>${T.allDays}</dd></div><div><dt>Practices Together</dt><dd>${T.together}</dd></div><div><dt>Rings in the Grove</dt><dd>${T.rings}</dd></div></dl>
+    <p class="muted">${T.shown ? `Counting ${famN(T.shown, 'tree', 'trees')} whose growth is shown here, and the practices you do together.` : 'Trees count here when their "Show my growth on The Grove" switch is on, and so do the practices you do together.'}</p>
+    <h3 class="gv-miles-h">Family Milestones</h3>
+    ${got.length ? `<ul class="gv-miles">${got.map(m => `<li><b>${esc(m[1])}</b><span>${esc(nice(G.miles[m[0]]))}</span><small>${esc(m[2])}</small></li>`).join('')}</ul>` : '<p class="muted">Your first family milestone comes with your first day of growing together.</p>'}
+    ${ahead.length ? `<p class="muted">Still ahead: ${ahead.map(m => esc(m[1])).join(', ')}.</p>` : '<p class="muted">Every family milestone reached. The grove keeps growing.</p>'}</div>`;
+}
+
+/* ---------- help, any time (GWG BLD 745) ---------- */
+function helpCardHtml() {
+  return `<div class="card gv-help" role="note"><h3>If Someone Needs Help Now</h3><p>If you or someone in your family is thinking about ending their life, or is in crisis, call or text <a class="text-link" href="tel:988">988</a>, any time, day or night.</p><p>If anyone is in danger right now, call <a class="text-link" href="tel:911">911</a>.</p></div>`;
 }
 
 /* ---------- The wall ---------- */
@@ -367,6 +447,8 @@ function viewHow() {
     <p>The Grove is the family's shared ground. Every tree in your household stands here side by side, shaped by its life stage.</p>
     <h3>What grows the grove</h3>
     <p>Two things: each person tending their own tree, and the practices you do together. Critters visit and scenery unlocks as the days add up. Growth only adds. A quiet week never takes anything away.</p>
+    <h3>Growing Together</h3>
+    <p>The Growing Together card adds up the whole family's growth: days tended, practices done together, parts tended this week, and rings. It is never a contest, and no one is ranked. Family milestones, like your first practice together or a week when every tree was tended, are reached once and kept for good.</p>
     <h3>The Wall</h3>
     <p>Short posts and reactions, so you can cheer each other on. When someone tends their tree with their switch on, a small note appears. Reactions show who reacted, not running totals. There's no endless feed: you see this week, and older weeks fold away.</p>
     <h3>What stays private</h3>

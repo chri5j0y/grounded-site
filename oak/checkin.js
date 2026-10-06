@@ -391,11 +391,41 @@ const FLAGS = {
     guide: 'They named not feeling safe at home. Ask privately whether they are safe right now. Share the domestic violence line, and follow your reporting duties for vulnerable adults.' }
 };
 
-// The safety step. Unchanged in wording.
+// The safety step (GWG BLD 745, the newest shape, from Birch). The opener and the
+// direct question keep their wording, so every Oak check-in still reads the same.
+// The opener is answered on the answer scale; the direct question uses directOpts.
+// now is asked only after Sometimes or Often to the direct question; a Yes or Not
+// sure to it opens the calm card with 988 and 911 at the top. The calm card adds
+// yes, burden, and means after a yes. Direct wording is the research-informed way
+// to ask, and asking does not plant the idea. Nothing here is ever sent to anyone
+// or shown to a helper. The Field Guide reads opener, direct, and directOpts only
+// from its own library, so the added keys change nothing there.
 const SAFETY = {
+  lead: 'Two last questions. They\'re here because we care, and your answers stay on this device.',
   opener: 'Some seasons are heavy. In the past two weeks, how often have you felt hopeless, or like a burden to others?',
+  directLead: 'Sometimes, when life gets heavy, people feel hopeless or like a burden, and think about not wanting to be alive. Many adults have had that thought, and it is safe to say so here.',
   direct: 'In the past two weeks, have you had thoughts of ending your life or hurting yourself?',
-  directOpts: [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', 'I\'d rather not say']]
+  directOpts: [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', 'I\'d rather not say']],
+  now: 'Right now, today, are those thoughts with you?',
+  nowOpts: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', 'I\'d rather not say']],
+  // Which answers count. 'skip' is respected and never counts as a yes.
+  on: { opener: ['often', 'always'], direct: ['sometimes', 'often'], now: ['yes', 'unsure'] },
+  yes: 'Thank you for telling me. You matter, and this can get better with help. Please reach out now. Someone will listen, any time.',
+  burden: 'You matter to people, even when it is hard to see. Feeling like a burden is a sign to reach out, not a fact about you.',
+  means: 'If there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.',
+  title: 'You matter, and you don\'t have to carry this alone.',
+  intro: 'If you\'re thinking about suicide or feel unsafe, reach out now. Someone will listen.',
+  // Oak's help lines, in the order shown. tel and sms are dialable; smsBody is the
+  // word to text. first: 'home' moves a line to the top when the home flag shows.
+  lines: [
+    { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call 988', tel: '988', sms: '988', note: 'Or text 988, any time. Veterans, call 988 and press 1.' },
+    { id: 'ctl', name: 'Crisis Text Line in Minnesota', show: 'Text MN to 741741', sms: '741741', smsBody: 'MN' },
+    { id: 'mncrisis', name: 'Minnesota mobile crisis', show: 'Call **CRISIS (274747)', tel: '274747', note: 'From a cell phone.' },
+    { id: 'central', name: 'Central Minnesota, 24 hours', show: '320-253-5555', tel: '13202535555' },
+    { id: 'dv', name: 'National Domestic Violence Hotline', show: '1-800-799-7233', tel: '18007997233', sms: '88788', smsBody: 'START', first: 'home' },
+    { id: 'samhsa', name: 'SAMHSA National Helpline', show: '1-800-662-4357', tel: '18006624357', note: 'For substance use and mental health help.' },
+    { id: '911', name: 'In immediate danger?', show: 'Call 911', tel: '911' }
+  ]
 };
 
 window.OAK_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, stems: STEMS, questions: Q, staff: STAFF, flags: FLAGS, safety: SAFETY };

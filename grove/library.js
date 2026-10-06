@@ -16,7 +16,8 @@
    words for the Today card plus its how-to.
    ages: "all" (everyone), "teen" (middle school, high school, and
    adults), "teenOnly" (middle school and high school only), "sequoia"
-   (Sequoia, for older adults, only).
+   (Sequoia, for older adults, only), "young" (Birch, for young adults,
+   and Oak and the Grove's adults; written in GWG BLD 742, added in BLD 745).
    ===================================================================== */
 
 const HOW = {
@@ -859,7 +860,88 @@ const LIB_NEW = [
    text:"Ask a grandparent or older relative about their life when they were your age.", busy:"Ask one older relative one question about their teen years.",
    how:["Older relatives carry stories you won't hear anywhere else, and asking makes both of you feel closer.",
     "Call or visit a grandparent or older relative.|Ask: What was your life like at my age?|Ask: What were you worried about, and what helped?|Write down or record one story.",
-    "No grandparent nearby? An older neighbor, a mentor, or someone at your faith community works too."] },
+    "No grandparent nearby? An older neighbor, a mentor, or someone at your faith community works too."] }, // Birch (written in GWG BLD 742, added in GWG BLD 745): practices for young adults. "young" items fit Birch and Oak (adults);
+ // "teen" items fit middle school and up, Birch included.
+ { id:"br-money-check-in", part:"bark", strand:"mind", ages:"young", name:"Money Check-in",
+   text:"Ten minutes a week: look at your account, one bill, and one goal.", busy:"Open your bank app and look at this week, without judging.",
+   how:["Money worry crowds your thinking and your sleep. The Consumer Financial Protection Bureau describes financial well-being as feeling in control day to day, able to handle a surprise, and on track for your goals. A short, regular look builds that sense of control.",
+    "Open your bank app and look at what came in and went out this week, without judging.|Check one bill's due date.|Name one money goal, even a small one.|Once a month, make a simple budget: what comes in, what has to go out, and what's left.|Once a year, check your credit report at annualcreditreport.com.",
+    "If looking makes your stomach drop, start with one number. Behind on rent, food, or bills? In Minnesota, dial 211 for local help."] },
+ { id:"br-starter-cushion", part:"fruit", strand:"hope", ages:"young", name:"Starter Cushion",
+   text:"Set aside one small amount each week toward a cushion for surprises.", busy:"Move $5 to savings today.",
+   how:["A small cushion turns a surprise bill into a bump instead of a crisis. In the Federal Reserve's 2024 survey, about 63 percent of adults could cover a $400 emergency with cash or its equivalent.",
+    "Pick an amount you won't miss much, even $5 or $10.|Set up an automatic transfer to a separate savings account on payday.|Aim for $400 first, then one month of rent or bills.|Raise the amount when your pay goes up.",
+    "Nothing left over right now? That's common. Start with $1, or set aside the next refund or gift."] },
+ { id:"br-cook-on-a-budget", part:"leaves", strand:"nourish", ages:"young", name:"Cook on a Budget",
+   text:"Learn a few cheap, filling meals you can make without a recipe.", busy:"Make one simple meal from what you already have.",
+   how:["Knowing a few simple meals saves money, feeds you better than takeout, and makes a small kitchen feel like home.",
+    "Pick one meal from basics: rice and beans, pasta with vegetables, eggs and toast, a sheet pan of chicken and potatoes.|Make it tonight.|Learn one new meal a month until you have five you can make without looking.|Cook a double batch and save the extra for a busy night.",
+    "Tiny kitchen or no time? A microwave, a rice cooker, and a few staples go a long way. If food, weight, or exercise starts to feel like rules you can't break, tell someone you trust."] },
+ { id:"br-health-basics", part:"leaves", strand:"body", ages:"young", name:"Health Basics",
+   text:"Pick a clinic and a pharmacy, save a photo of your insurance card, and know the after-hours line.", busy:"Save one clinic's number in your phone.",
+   how:["Many people choose a doctor, a pharmacy, and insurance on their own for the first time as young adults. Having the basics ready makes it easier to get help when you need it.",
+    "Save a photo of your insurance card, or write \"none yet.\"|Look up one clinic and one pharmacy near you, and save their numbers.|Book a yearly visit and a dental or eye exam.|Write your questions down before you go.",
+    "No insurance, or not sure? Call a clinic and ask about sliding scale fees. Community health centers can help. Poison Help: 1-800-222-1222, any time."] },
+ { id:"br-shift-workers-rest-plan", part:"leaves", strand:"rest", ages:"young", name:"Shift Worker's Rest Plan",
+   text:"Working nights or changing shifts? Protect a set sleep window in a dark, quiet room.", busy:"Pick tomorrow's sleep window and tell the people you live with.",
+   how:["Night shifts, swing shifts, and newborns all pull sleep out of line with daylight. A plan for when and where you sleep helps your body catch up.",
+    "Pick a sleep window that fits your shift, and protect it like a shift.|Make the room dark and quiet: blackout curtains or an eye mask, earplugs or a fan.|Put your phone on Do Not Disturb.|Tell the people you live with your sleep hours.",
+    "Drowsy after a night shift? Never drive drowsy or after using. Call a ride. If you're always exhausted, talk with a doctor."] },
+ { id:"br-weekly-reset", part:"trunk", strand:"create", ages:"teen", name:"Weekly Reset",
+   text:"Once a week, take thirty minutes to look back, clear the decks, and plan the week ahead.", busy:"Clear one small thing and name one plan for the week.",
+   how:["When life changes fast, a short weekly reset keeps small things from piling up into big ones. It turns a blur of days into a week you chose.",
+    "Pick a calm half hour.|Look back: what went well, and what slipped?|Clear one small thing: a bill, a dish pile, an email.|Plan three things for the week ahead, plus one thing to look forward to.",
+    "Missed a few weeks? Pick up where you left off. A reset is a fresh start, not a test."] },
+ { id:"br-big-choice-map", part:"trunk", strand:"create", ages:"teen", name:"Big Choice Map",
+   text:"For a big decision, lay out your options, what matters most, and one small test you can try.", busy:"Write your options side by side, including \"wait.\"",
+   how:["Big choices about school, work, moves, and relationships can spin in your head. Writing them out slows the spin, so you can choose by your values instead of your fear.",
+    "Write your options side by side, including \"wait.\"|Under each, write what it costs, what it gives, and how it fits your top three values.|Ask one person who knows you and one who knows the path.|Try a small test: a visit, a shadow day, a budget, a conversation.",
+    "Still torn? Sleep on it, then notice which option you feel relief about. There's often no perfect answer, only a good next step."] },
+ { id:"br-wins-file", part:"trunk", strand:"create", ages:"young", name:"Wins File",
+   text:"Keep a running list of what you've done well, for a résumé, a review, or a raise.", busy:"Add one win from this week.",
+   how:["Most people forget their wins by review time. A running list makes it easier to update a résumé, ask for a raise, or remember what you're good at on a low day.",
+    "Start a note called Wins.|Add three things you've done in the last few months: a problem solved, a skill learned, a project finished.|Add one line every Friday.|Before a review or a raise talk, pick your three strongest and say what each did for the team.",
+    "Don't feel like you have wins? Showing up on time, training someone, or staying calm on a hard day all count."] },
+ { id:"br-start-strong-at-a-new-job", part:"trunk", strand:"create", ages:"young", name:"Start Strong at a New Job",
+   text:"In a new job, learn the basics: your pay, your schedule, who to ask, and how to speak up.", busy:"Read your last pay stub line by line.",
+   how:["The first weeks of a job set the tone. Knowing how you're paid, who to ask, and what's expected lowers stress and helps you grow there or leave well.",
+    "Read your first pay stub or offer line by line: pay rate, hours, taxes taken out, benefits.|Write down one question to ask.|Learn the name of one person you can ask anything.|After a month, ask your supervisor what's going well and what to work on.",
+    "If anyone at work makes you feel unsafe or doesn't pay you what you earned, write down what happened and when, and talk with HR, a trusted coworker, or your state's labor office."] },
+ { id:"br-roommate-talk", part:"branches", strand:"connect", ages:"young", name:"Roommate Talk",
+   text:"Agree on the basics with roommates before they turn into fights: cleaning, guests, quiet, money.", busy:"Write the one home rule that matters most to you.",
+   how:["Most roommate fights are about small things that were never said out loud. Agreeing early makes home a place you can rest.",
+    "Write the four things that matter most to you at home: dishes, guests, quiet hours, shared costs.|Ask your roommates to do the same.|Sit down for thirty minutes and agree on each one, and write it down.|Check in after a month and adjust.",
+    "Already tense? Start with one issue and use \"I\" words: \"I sleep badly when it's loud after midnight.\" If you ever feel unsafe at home, reach out to someone you trust."] },
+ { id:"br-make-one-plan", part:"branches", strand:"connect", ages:"teen", name:"Make One Plan",
+   text:"Make one plan with one person this week, in person if you can.", busy:"Text one person a specific time and place.",
+   how:["Loneliness is common, and the US Surgeon General's advisory names young people among the loneliest. Friendships grow when someone makes a plan on purpose.",
+    "Pick one person.|Text a specific plan: a time, a place, a thing. \"Tacos Thursday at 6?\" beats \"we should hang out.\"|Make one plan a week.|Notice who leaves you feeling more like yourself, and see them more.",
+    "New in town or between friend groups? That's common, and it changes. Say yes to one invitation, or be the one who invites."] },
+ { id:"br-join-and-go-three-times", part:"branches", strand:"connect", ages:"young", name:"Join and Go Three Times",
+   text:"Join one group, a class, team, crew, or community, and go three times before you decide.", busy:"Look up one group that meets this week.",
+   how:["Leaving school ends the built-in places where friends get made. A group that meets regularly gives you the same faces again and again, which is how strangers become friends.",
+    "Pick one group to try: a rec league, a class, a volunteer crew, a parents' group, a faith community, a game night.|Go once.|Go twice.|Go a third time before you decide.",
+    "Shy? Bring someone, or set a small goal: learn one name each time."] },
+ { id:"br-call-home", part:"branches", strand:"connect", ages:"young", name:"Call Home",
+   text:"A regular call with a parent or relative, on your terms, with a topic you choose.", busy:"Send one person back home a quick hello.",
+   how:["Family relationships change as you become an adult, and they can grow closer in a new way. In a 2024 Pew Research Center study, most young adults said they were satisfied with their relationship with their parents.",
+    "Pick one person back home.|Call or video chat for twenty minutes.|Bring one thing to share and one question to ask.|Set a regular time, so it's easy to keep.",
+    "If calls turn into lectures, try a shorter call with a set topic. If someone in your family hurts you or makes you feel unsafe, skip this one and lean on other people."] },
+ { id:"br-plan-your-answer", part:"branches", strand:"connect", ages:"young", name:"Plan Your Answer",
+   text:"Decide before the party what you'll say to a drink, a hit, or neither, and how you'll get home.", busy:"Plan your ride home before you go out.",
+   how:["Choosing ahead of time makes it easier to do what you want in the moment. And going easy is common: binge drinking among adults 19 to 30 is at an all-time low in the Monitoring the Future study.",
+    "Decide your plan: how much, or none.|Write one line you'd actually say, like \"I'm good, I've got an early shift.\"|Plan your ride home before you go.|Tell one friend your plan so you can back each other up.",
+    "Never drive drowsy or after using. Call a ride. If someone can't wake up or is struggling to breathe, call 911. The SAMHSA National Helpline is 1-800-662-4357, any time."] },
+ { id:"br-find-your-people-for-faith", part:"roots", strand:"spirit", ages:"young", name:"Find Your People for Faith",
+   text:"Visit one faith community, or start one practice of your own, as an adult choosing for yourself.", busy:"Write down what you're looking for in a community.",
+   how:["As adults, many people choose faith practices and communities for themselves for the first time. A national study of people in their twenties found faith was often reshaped in these years.",
+    "Write down what you're looking for: quiet, music, service, teaching, people your age, a place for questions.|Find one community or one practice that might fit.|Go three times before you decide.|If it's not the fit, try another. You're allowed to choose.",
+    "If a faith community hurt you before, go at your own pace, and leave anywhere that makes you feel unsafe or small. If faith isn't part of your life, look for a group that shares your deepest values."] },
+ { id:"br-your-own-timeline", part:"fruit", strand:"hope", ages:"teen", name:"Your Own Timeline",
+   text:"When it feels like everyone else is ahead, look at how far you've come instead.", busy:"Name one thing that's true now that wasn't a year ago.",
+   how:["Comparing your behind the scenes with everyone else's highlights wears down hope. People move, start, stop, and start over on very different timelines.",
+    "Write three things that are true now that weren't true two years ago: a skill, a place, a person, a lesson.|When you catch yourself comparing, ask: what's one next step on my own road?|Mute or unfollow accounts that leave you feeling behind.",
+    "If feeling behind turns into feeling there's no point in trying, talk with someone you trust, or call or text 988."] },
 ];
 
 // =====================================================================
@@ -885,8 +967,9 @@ const LIBRARY = (function(){
   return out;
 })();
 const LIB_BY_KEY = Object.fromEntries(LIBRARY.map(it => [it.key, it]));
-// Which practices fit which tree. "teen" means middle school and up.
-const libFits = (it, age) => it.ages === 'all' || (it.ages === 'teen' ? age !== 'maple' : it.ages === 'teenOnly' ? (age === 'aspen' || age === 'pine') : it.ages === 'sequoia' ? age === 'sequoia' : true);
+// Which practices fit which tree. "teen" means middle school and up; "young" means
+// young adults (Birch) and grown-ups (Oak).
+const libFits = (it, age) => it.ages === 'all' || (it.ages === 'teen' ? age !== 'maple' : it.ages === 'teenOnly' ? (age === 'aspen' || age === 'pine') : it.ages === 'sequoia' ? age === 'sequoia' : it.ages === 'young' ? (age === 'birch' || age === 'oak' || age === 'adult') : true);
 function libSearch(q, age){
   const words = String(q || '').toLowerCase().split(/\s+/).filter(Boolean);
   const hits = LIBRARY.filter(it => (!age || libFits(it, age)) && words.every(w => it.find.includes(w)));
