@@ -107,10 +107,12 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .tab[aria-selected="true"]{color:#fff;border-bottom-color:#D9A847;}
 .tab.safety{color:#F1B39F;}
 .tab-div{flex:0 0 auto;align-self:center;width:1px;height:22px;margin:0 8px;background:rgba(244,235,218,.32);} /* BLD 743: Guiding tabs | Grow With Grounded tabs */
-/* Group labels in the tab bar (Chris, October 7, 2026): For Guides | Staff and Founders | Founders. Staff and Founders only. */
+/* Group labels in the tab bar (Chris, October 7, 2026): For Everyone | Staff and Founders | Founders. Staff and Founders only. */
 .tab-grp{flex:0 0 auto;align-self:center;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;line-height:1.1;letter-spacing:1.2px;text-transform:uppercase;color:#D9A847;opacity:.85;padding:0 4px 0 8px;white-space:nowrap;}
 .tab-grp + .tab{padding-left:8px;}
-.aud-row{margin:-8px 0 14px;}
+.aud-row{margin:-8px 0 14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
+.aud-note{font-size:calc(14px * var(--scale));color:var(--ink-soft);font-style:italic;}
+.aud-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
 .pill.aud svg{width:13px;height:13px;}
 .pill.aud-g{background:color-mix(in srgb,var(--sage) 18%,transparent);color:var(--sage);}
 .pill.aud-s{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold-deep);}
@@ -928,29 +930,31 @@ function tabsFor(){
   // A Field-tier Premarital Guide (GWG BLD 752) gets the Premarital tab after the trees; Staff and Founders keep theirs below.
   if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...(pgTab() ? [['premarital','Premarital','heart']] : []), ['learn','Learn','play'], ...(OR() ? [['orient','Orientation','cap']] : [])];
   if (!LIB) return [...kids, ...grown];
-  // Tabs in groups by who has them (Chris, October 7, 2026). For Guides: exactly the tabs a Field user also has
-  // (Home, each tree the Founder has opened to Field, Premarital once open to Field, Learn), in the Field order.
-  // Staff and Founders: trees still closed to Field, then the Grow With Grounded tabs, Safety last. Founders: the Founder tab.
-  // A group starts with a ['-', label] entry; render() draws its divider and small label.
-  const pm = ['premarital','Premarital','heart'], pmG = tabAud('premarital') === 'guides';
-  const first = [['home','Home','home'], ...kids, ...grown, ...(pmG ? [pm] : []), ['learn','Learn','play']];
-  const t = [['-','For Guides'], ...first.filter(x => tabAud(x[0]) === 'guides'), ['-','Staff and Founders'], ...first.filter(x => tabAud(x[0]) !== 'guides'), ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ...(pmG ? [] : [pm]), ['share','Share','link'], ['training','Training','cap'], ['safety','Safety','shield']];
+  // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
+  // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
+  // Field yet. Staff and Founders: the paid services and the Grow With Grounded tabs, Safety last (Field users get
+  // safety on their Home and in each Guide). Founders: the Founder tab. A ['-', label] entry starts each group.
+  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap'], ['safety','Safety','shield']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key']);
   return t;
 }
-// Who has a tab: 'guides' (Field users too), 'staff' (Staff and Founders), or 'founder'. Read from the same open.field
-// switches tabsFor uses for Field users, so a tab moves into For Guides the moment the Founder opens it to Field.
+// Who a tab is meant for: 'guides' (every tab the Field Guide offers Guides), 'staff' (paid services and the Grow With
+// Grounded tabs, Staff and Founders only, Chris firm), or 'founder'.
+const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder') return 'founder';
-  if (id === 'home' || id === 'learn' || id === 'orient') return 'guides';
-  const g = {maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG, premarital: PGG}[id];
-  if (!g) return 'staff';
-  const G = g(), fld = !!(G && G.open && G.open.field) && (id !== 'aspen' || !!SPG()) && (id !== 'premarital' || pgHas()) && (id !== 'birch' || brHas());
-  return fld ? 'guides' : 'staff';
+  if (id === 'home' || id === 'learn' || id === 'orient' || TREE_G()[id]) return 'guides';
+  return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
+const audTag = k => { const a = AUD[k]; return `<span class="pill aud aud-${a[1]}">${icon(a[1] === 'f' ? 'key' : 'people')}${a[0]}</span>`; };
 // The pill at the top of each tab's page, for Staff and Founders. Field users see their own tabs only, so no pill.
-const audPill = tab => { if (TIER === 'field' || !LIB || tab === 'settings') return ''; const a = AUD[tabAud(tab)]; return `<div class="aud-row"><span class="pill aud aud-${a[1]}">${icon(a[1] === 'f' ? 'key' : 'people')}${a[0]}</span></div>`; };
+// A tree the Founder has not opened to Field yet adds a quiet note.
+const audPill = tab => {
+  if (TIER === 'field' || !LIB || tab === 'settings') return '';
+  const g = TREE_G()[tab], G = g && g(), shut = g && !(G && G.open && G.open.field);
+  return `<div class="aud-row">${audTag(tabAud(tab))}${shut ? '<span class="aud-note">Not yet open to Guides</span>' : ''}</div>`;
+};
 const notice = () => ((LIB || FDR || FLD || {}).brand || {}).notice || '';
 function render(){
   const tabs = tabsFor();
@@ -1043,12 +1047,12 @@ function vHome(){
   ${sgHomeCard()}
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
-  <h3 style="margin-top:18px">Start a Session</h3>
+  <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
   <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
-    <div class="card"><h3>Recent Sessions</h3>
+    <div class="card"><h3 class="aud-h">Recent Sessions ${audTag('staff')}</h3>
       ${recent.length ? recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(c ? c.name : 'No person')}</b> <span class="muted">${esc(sessTitle(s))}</span><br><small class="muted">${nice(s.date)}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No sessions yet. Start one above.</p>'}</div>
   </div>
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>In a crisis?</b> <span class="muted">Open the Crisis Protocol, or call now.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="guide" data-v="crisis">Crisis Protocol</button><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
@@ -1315,6 +1319,7 @@ function fieldDue(){
 const OR = () => (FLD && FLD.orientation) || null;
 const addYear = s => { const [y,m,d] = s.split('-').map(Number); const t = new Date(y + 1, m-1, d); return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; };
 const orLessonsDone = () => OR().lessons.every(l => DATA.orient.lessons[l.id]);
+const orName = () => TIER === 'field' ? 'Field Guide Orientation' : 'Staff Orientation'; // Staff and Founders take Staff Orientation (Chris)
 const orStaffSec = () => (TIER !== 'field' && LIB && LIB.orientationStaff) || null;
 function orState(){
   const O = OR(), D = DATA.orient, t = today(), S = orStaffSec();
@@ -1341,7 +1346,7 @@ function orStatusCard(){
     return `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><div class="spread"><div><span class="pill sage">${icon('check')} Orientation complete</span><p class="muted" style="margin-top:8px">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.${soon ? ' Renewal is open now: retake the scenarios and sign the agreement again.' : ''}</p></div></div>
      <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-cert">${icon('print')} Save or Print Certificate</button><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Save or Print Agreement</button><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="or-home">${soon ? 'Renew Now' : 'Review Orientation'}</button></div></div>`;
   }
-  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>${s.renewing ? 'Time to renew Orientation' : 'Field Guide Orientation'}</h3><p class="muted">${s.renewing ? 'Retake the scenarios and sign the agreement again.' : `${s.done} of ${s.total} steps done.`}</p>${orBar(s.done, s.total)}
+  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>${s.renewing ? 'Time to renew ' + orName() : orName()}</h3><p class="muted">${s.renewing ? 'Retake the scenarios and sign the agreement again.' : `${s.done} of ${s.total} steps done.`}</p>${orBar(s.done, s.total)}
    <button class="btn btn-gold btn-sm" style="margin-top:12px" data-act="or-home">${s.done ? 'Continue' : 'Start'} Orientation</button></div>`;
 }
 function vOrient(){
@@ -1357,7 +1362,7 @@ function vOrient(){
   const hero = s.complete ? ['Orientation complete', `You're all set. Renew by ${nice(s.renewBy)}.`]
     : s.renewing ? ['Time to renew Orientation', s.changed ? 'Our standards have changed since you last signed. Retake the scenarios and sign the agreement again. The lessons are here if you want a refresher.' : "It's been a year. Retake the scenarios and sign the agreement again. The lessons are here if you want a refresher."]
     : ['Welcome. Let\'s get you started.', esc(O.intro[0])];
-  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade; Orientation</div><h1>${hero[0]}</h1><p>${hero[1]}</p>${orBar(s.done, s.total)}</div>
+  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">${TIER === 'field' ? 'Grounded Field Guide&trade; Orientation' : 'Grounded Field Guide&trade;: Staff Orientation'}</div><h1>${hero[0]}</h1><p>${hero[1]}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? orStatusCard() : ''}
   ${s.changed && O.changes && O.changes.length ? `<div class="card"><h3>What changed</h3><ul class="checklist" style="margin-top:8px">${O.changes.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${!s.complete && !s.renewing ? `<div class="card">${O.intro.slice(1).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>` : ''}
@@ -1449,7 +1454,7 @@ function orSign(){
 function orPrintCert(){
   const s = orState(), D = DATA.orient; if (!s.complete) return;
   fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
-    GGPrint.certificate({tree:'house', name: D.signed.name, title:'Grounded Field Guide Orientation', body:'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.'), date: s.doneOn, renew: s.renewBy, version: OR().version, id: D.signed.id || '', kind:'training'}); });
+    GGPrint.certificate({tree:'house', name: D.signed.name, title: TIER === 'field' ? 'Grounded Field Guide Orientation' : 'Grounded Staff Orientation', body:'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.'), date: s.doneOn, renew: s.renewBy, version: OR().version, id: D.signed.id || '', kind:'training'}); });
 }
 function orPrintAgreement(){
   const A = OR().agreement, D = DATA.orient.signed;
