@@ -995,8 +995,9 @@ VIEWS.readings = () => {
     <h3 class="section-title">Words that stay with their people</h3><p class="lead">${esc(RD.rites)}</p>
     <ul class="w-linked">${RD.kept.map(k => `<li><b>${esc(k[0])}.</b> ${esc(k[1])}</li>`).join('')}</ul>`;
 };
-// Bible versions (GWG BLD 748): KJV, ESV, NIV for the passages that have them, shown only while
-// readings.js turns the switch on. KJV is always the text in x.lines.
+// Bible versions (GWG BLD 748, 749): KJV, NKJV, ESV for the passages that have them, shown only while
+// readings.js turns the switch on. KJV is always the text in x.lines. The switch lists the versions in
+// readings.js BIBLE, so a saved choice that is no longer offered (NIV) shows KJV.
 function verOf(x) { const vs = RD.versionsOn && RD.versions && RD.versions[x.id]; const v = vs && S.read.ver; return v && vs[v] ? v : 'kjv'; }
 function linesOf(x) { const v = verOf(x); return v === 'kjv' ? x.lines : RD.versions[x.id][v]; }
 function byOf(x) { const v = verOf(x); return v === 'kjv' ? x.by : (RD.bible[v] || {}).name || x.by; }
@@ -1006,7 +1007,7 @@ function readingHtml(x) {
   let body = '';
   linesOf(x).forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
   const vs = RD.versionsOn && RD.versions && RD.versions[x.id], v = verOf(x), note = noticeOf(x);
-  const sw = vs ? `<div class="btn-row no-print" role="group" aria-label="Bible version" style="margin:4px 0 12px">${[['kjv', 'KJV'], ['esv', 'ESV'], ['niv', 'NIV']].map(o => `<button type="button" class="lc-chip" style="--rc:var(--gold)" aria-pressed="${v === o[0]}" title="${esc(o[0] === 'kjv' ? 'King James Version' : (RD.bible[o[0]] || {}).name || '')}" onclick="W.bibleVer('${o[0]}')">${o[1]}</button>`).join('')}</div>` : '';
+  const sw = vs ? `<div class="btn-row no-print" role="group" aria-label="Bible version" style="margin:4px 0 12px">${Object.keys(RD.bible).filter(k => k === 'kjv' || vs[k]).map(k => [k, RD.bible[k].short || k.toUpperCase()]).map(o => `<button type="button" class="lc-chip" style="--rc:var(--gold)" aria-pressed="${v === o[0]}" title="${esc(o[0] === 'kjv' ? 'King James Version' : (RD.bible[o[0]] || {}).name || '')}" onclick="W.bibleVer('${o[0]}')">${o[1]}</button>`).join('')}</div>` : '';
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.read.open=null;W.render();W.top()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
     <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}
