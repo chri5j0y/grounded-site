@@ -3298,7 +3298,7 @@ const LC_TOPICS = (window.OAK_GUIDES || {}).topics || [];
 
 /* ===================== WHEN LIFE CHANGES ===================== */
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self' }, prac: { q: '', ring: 'all', open: null, persp: 'helper' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k);
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : { key: k, name: '', color: 'var(--ink-soft)' }); // HA 2: the Health and Ability guides live in ring 'life'
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 function lcMatches(t, q) {
@@ -3316,7 +3316,7 @@ function renderLC(mode) {
       <h2 class="section-title" style="margin-top:4px">Guides for life's hardest seasons</h2>
       <p class="lead"><b>How to show up.</b> ${mode === 'prac'
         ? 'Quick references and full guides for walking with someone through a hard season: what they may be carrying, what to say and not say, and when to bring in more help. Each guide prints as a handout you can leave with a family.'
-        : 'Quick references and full guides for more than 60 hard seasons of life, from grief and diagnosis to burnout, betrayal, and doubt. Each guide has two views: one for when you are going through it, and one for when you are helping someone else.'}</p>
+        : 'Quick references and full guides for more than 70 hard seasons of life, from grief and diagnosis to burnout, betrayal, and doubt. Each guide has two views: one for when you are going through it, and one for when you are helping someone else.'}</p>
     </div>
     <input class="lc-search no-print" type="search" placeholder="Search: grief, diagnosis, divorce, burnout, faith..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
@@ -3421,7 +3421,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 719): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from oak/guide-videos.js. LC_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
-/* LC_VIDS start */const LC_VIDS = ["anxiety", "sadness", "loneliness", "burnout", "anger", "shame", "lost", "trauma", "adhd", "spouse-death", "parent-death", "child-death", "pregnancy-loss", "suicide-loss", "dying-loved", "ambiguous-loss", "grief-days", "pet-death", "diagnosis", "chronic", "own-death", "eol-plan", "bedside", "after-death", "addiction", "caregiving", "dementia-care", "disability", "eating", "accident", "porn", "gambling", "divorce", "marriage-strain", "betrayal", "infertility", "estrangement", "aging-parents", "empty-nest", "struggling-child", "newparent", "incarceration", "job-loss", "money-crisis", "retirement", "career-change", "moving", "military", "faith-crisis", "leaving-faith", "spiritual-dryness", "moral-injury", "forgiveness", "church-hurt", "political-division", "immigration", "community-violence", "disaster", "news-overwhelm", "prejudice", "suicidal-self", "suicidal-other", "escalating", "domestic-violence", "past-abuse", "assault", "self-harm"];/* LC_VIDS end */
+/* LC_VIDS start */const LC_VIDS = ["anxiety", "sadness", "loneliness", "burnout", "anger", "shame", "lost", "trauma", "adhd", "spouse-death", "parent-death", "child-death", "pregnancy-loss", "suicide-loss", "dying-loved", "ambiguous-loss", "grief-days", "pet-death", "diagnosis", "chronic", "own-death", "eol-plan", "bedside", "after-death", "addiction", "caregiving", "dementia-care", "disability", "eating", "accident", "porn", "gambling", "divorce", "marriage-strain", "betrayal", "infertility", "estrangement", "aging-parents", "empty-nest", "struggling-child", "newparent", "incarceration", "job-loss", "money-crisis", "retirement", "career-change", "moving", "military", "faith-crisis", "leaving-faith", "spiritual-dryness", "moral-injury", "forgiveness", "church-hurt", "political-division", "immigration", "community-violence", "disaster", "news-overwhelm", "prejudice", "suicidal-self", "suicidal-other", "escalating", "domestic-violence", "past-abuse", "assault", "self-harm", "pacing", "work-ability", "parenting-ability", "child-ability", "hearing", "vision", "autistic", "serious-mi", "brain-injury", "faith-access"];/* LC_VIDS end */
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('oak', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!LC_VIDS.includes(gid)) return '';

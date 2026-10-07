@@ -13126,7 +13126,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Hold the hard questions.",
       "sub": "Without rushing to answer.",
-      "say": "If they ask why, you don't have to have an answer. Listening, staying, and saying, your questions are welcome with me, often helps more than any explanation."
+      "say": "If they ask why, you don't have to have an answer. Listening, staying, and saying, your questions are welcome with me, often helps more than any explanation. Many traditions have honest words for lament, and they can hold both of you."
      },
      {
       "k": "big",
