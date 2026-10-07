@@ -178,9 +178,11 @@
   #gg-print .p-ch{break-before:page;}
   #gg-print h2.p-cht{font-size:22pt;border-bottom:none;margin:0 0 3mm;}
   #gg-print h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:14pt;margin:5mm 0 1.5mm;color:#2C1810;break-after:avoid;}
-  #gg-print .p-ex{break-inside:avoid-page;margin-top:2mm;padding-top:1mm;border-top:.6pt solid #E2D8C3;}
+  #gg-print .p-ex{margin-top:2mm;padding-top:1mm;border-top:.6pt solid #E2D8C3;}
   #gg-print .p-q{font-weight:600;margin:2.5mm 0 1mm;break-after:avoid;}
+  #gg-print .p-lines{break-inside:avoid;}
   #gg-print .p-lines i{display:block;height:9mm;border-bottom:.6pt solid #B9A98F;}
+  #gg-print .p-ch > p{margin:0 0 2mm;}
   #gg-print .p-ans{white-space:pre-wrap;margin:0 0 2mm;padding:1.5mm 3mm;border-left:2pt solid #8B5E1A;}
   #gg-print .p-box{list-style:none;padding-left:2mm;margin:1mm 0;}
   #gg-print .p-tog{margin:2.5mm 0 0;padding:2mm 3mm;background:#F6EEDF;border-left:2pt solid #8B5E1A;-webkit-print-color-adjust:exact;print-color-adjust:exact;}

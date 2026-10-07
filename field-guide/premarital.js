@@ -11,7 +11,9 @@
 // Minnesota reduced license fee (with a per couple switch, Also using PREPARE/ENRICH); and the couple's
 // Certificate of Completion. Leaders' names come from Settings and the couple's record.
 // Data: the Staff library's premarital key (LIB.premarital), with a small built-in fallback so the tab works
-// before that library update is applied. App data (questions, GMCore, results, faith) loads from ../marriage/.
+// before that library update is applied. A Field-tier Premarital Guide (GWG BLD 752) has no Staff library, so the
+// Field Guide passes ctx.field and the tab reads FLD.premaritalGuide.program (the same shape) instead; its
+// statement.defaults leaves the letterhead blank for the Guide's own Settings (pmRole, pmOrg, pmAddress, pmPhone). App data (questions, GMCore, results, faith) loads from ../marriage/.
 // Couples live in DATA.pm.couples: encrypted with the rest of this device's records and carried in backups
 // (merged by GGPm.merge). Nothing is sent.
 // =====================================================================
@@ -64,7 +66,7 @@ const STATUS = [['starting', 'Getting Started'], ['sessions', 'In Sessions'], ['
 const NAV = [['sessions', 'Sessions'], ['hours', 'Hours Log'], ['card', 'Their Card'], ['statement', 'Educator\'s Statement'], ['cert', 'Certificate'], ['about', 'The Couple']];
 const APP_LINK = 'https://growwithgrounded.com/marriage/';
 
-let CTX = {lib: null, data: null, save: () => {}};
+let CTX = {lib: null, field: null, data: null, save: () => {}};
 const S = {view: 'home', id: null, n: null, cardErr: '', cardBusy: false};
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -79,7 +81,7 @@ async function copyText(t){ try { await navigator.clipboard.writeText(t); } catc
 // ---------- the library (LIB.premarital, filled in from the fallback where a piece is missing) ----------
 let PC = null, PCsrc = null;
 function pm(){
-  const L = (CTX.lib && CTX.lib.premarital) || null;
+  const L = (CTX.lib && CTX.lib.premarital) || (CTX.field && CTX.field.premaritalGuide && CTX.field.premaritalGuide.program) || null;
   if (PC && PCsrc === L) return PC;
   const has = !!(L && Array.isArray(L.sessions) && L.sessions.length);
   const part = k => Object.assign({}, FB[k], (L && L[k]) || {});
@@ -400,7 +402,10 @@ function vCard(c){
 const invLine = c => { const P = pm().statement; return c.pe ? (P.inventoryPE || FB.statement.inventoryPE) : (P.inventory || FB.statement.inventory); };
 function stmtDefaults(c){
   const L = (c.log || []).map(x => x.date).filter(Boolean).sort();
-  return {p1: c.p1.full || c.p1.name || '', p2: c.p2.full || c.p2.name || '', educator: me(), role: '', org: 'Grow With Grounded LLC', address: 'St. Cloud, Minnesota', phone: '320-291-7393',
+  const df = pm().statement.defaults, st = D().settings || {};
+  const lh = df ? {role: st.pmRole || df.role || '', org: st.pmOrg || df.org || '', address: st.pmAddress || df.address || '', phone: st.pmPhone || df.phone || ''}
+    : {role: '', org: 'Grow With Grounded LLC', address: 'St. Cloud, Minnesota', phone: '320-291-7393'};
+  return {p1: c.p1.full || c.p1.name || '', p2: c.p2.full || c.p2.name || '', educator: me(), role: lh.role, org: lh.org, address: lh.address, phone: lh.phone,
     start: L[0] || '', end: L[L.length - 1] || '', hours: String(Math.round(logMins(c) / 60 * 100) / 100), inventory: invLine(c), signed: ''};
 }
 function stmtVals(c){ const d = stmtDefaults(c), s = c.stmt || {}; const o = {}; Object.keys(d).forEach(k => { o[k] = (s[k] != null && s[k] !== '') ? s[k] : d[k]; }); (pm().statement.fields || []).forEach(([k]) => { if (!(k in o)) o[k] = s[k] || ''; }); return o; }
@@ -682,11 +687,11 @@ span.pm-ck{display:inline-block;font-size:13px;font-weight:700;color:var(--dange
 (function(){ const s = document.createElement('style'); s.id = 'pm-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
 const API = window.GGPm = {
-  // ctx: {lib, data, save}. A different DATA (another unlock) starts fresh at the couples list.
+  // ctx: {lib, field, data, save}. A different DATA (another unlock) starts fresh at the couples list.
   view(ctx){
     ctx = ctx || {};
     if (CTX.data && ctx.data !== CTX.data){ S.view = 'home'; S.id = null; }
-    CTX = {lib: ctx.lib || null, data: ctx.data || null, save: typeof ctx.save === 'function' ? ctx.save : () => {}};
+    CTX = {lib: ctx.lib || null, field: ctx.field || null, data: ctx.data || null, save: typeof ctx.save === 'function' ? ctx.save : () => {}};
     needM();
     return `<div id="pm-root">${inner()}</div>`;
   },
@@ -700,6 +705,6 @@ const API = window.GGPm = {
     return {added, updated};
   },
   // For tests and the lead.
-  state: S, data: pm, current: cur, readCard, codeOf, talkList, summaryOf, faithOf, printer: null, last: null
+  state: S, data: pm, current: cur, page: openPage, readCard, codeOf, talkList, summaryOf, faithOf, printer: null, last: null
 };
 })();
