@@ -5461,7 +5461,7 @@ const LC_TOPICS = [
     "“Asking for access is normal.”",
     "“The form is the problem, not me.”"
    ],
-   "people": "Try, to a new coworker: “I'm blind. Feel free to say your name when you start talking to me, and I'll take it from there.” To a friend: “If I want help, I'll ask. If you offer, I might say no, and that's okay.” To a manager: “Could the training materials come in an accessible digital format? My screen reader handles those well.”"
+   "people": "Try, to a new coworker: “I'm blind. Please say your name when you start talking to me, and I'll take it from there.” To a friend: “If I want help, I'll ask. If you offer, I might say no, and that's okay.” To a manager: “Could the training materials come in an accessible digital format? My screen reader handles those well.”"
   },
   "helper": {
    "feel": "A parent, sibling, partner, or friend may want to help so much that they take over. Most blind and low vision young adults want the same thing others their age want: to do things themselves, with access that works. Some have been blind all their lives; others are adjusting to vision loss. Ask, then follow their lead.",
@@ -5551,7 +5551,7 @@ const LC_TOPICS = [
     "Plan dates that work for your body and energy: the place, the time of day, how you'll get there and home."
    ],
    "helps": [
-    "Telling it your way: short, matter-of-fact, and with what it means for a date, like “I use a wheelchair, so let's pick a place with step-free access.”",
+    "Telling it your way: short, matter-of-fact, and with what it means for a date, like “I use a wheelchair, so let's pick a place with access with no steps.”",
     "Watching how someone responds. Curiosity and respect are good signs. Pity, pressure, or jokes at your expense are good reasons to move on.",
     "Choosing date ideas that fit, and suggesting them yourself.",
     "Keeping your own friends, interests, and care team, so a partner is one support among several.",
@@ -5764,7 +5764,7 @@ const LC_TOPICS = [
     "If you're carrying hurt or hard questions, name one person you trust enough to talk with: a faith leader, a chaplain, a friend, or a counselor."
    ],
    "helps": [
-    "Asking plainly for what helps you take part, like step-free access, an interpreter or captions, large print or braille, a quiet space, a ride, or a role that fits your energy.",
+    "Asking plainly for what helps you take part, like access with no steps, an interpreter or captions, large print or braille, a quiet space, a ride, or a role that fits your energy.",
     "Remembering that worship from home, online, by audio, or in a short practice counts fully.",
     "Looking for communities that already include people with disabilities in leadership, music, teaching, and service, not only as people to be helped.",
     "Setting limits on how others pray for you. You can say, “Please ask me first,” or “I'd rather you pray for my peace than my cure.”",
@@ -5777,7 +5777,7 @@ const LC_TOPICS = [
     "“My questions are welcome.”",
     "“I can ask for what helps me take part.”"
    ],
-   "people": "Try, to a faith leader: “I use a wheelchair. Is there step-free access to the sanctuary and the fellowship hall? I'd like to join a small group too.” Or: “I'm Deaf. Could the livestream have captions, or could we talk about an interpreter?” To someone who wants to pray for healing: “Thank you for caring. Please ask me first, and I'd love prayers for strength and peace.” To a chaplain or friend: “I keep wondering why this happened to me. Can we talk about it?”"
+   "people": "Try, to a faith leader: “I use a wheelchair. Is there access with no steps to the sanctuary and the fellowship hall? I'd like to join a small group too.” Or: “I'm Deaf. Could the livestream have captions, or could we talk about an interpreter?” To someone who wants to pray for healing: “Thank you for caring. Please ask me first, and I'd love prayers for strength and peace.” To a chaplain or friend: “I keep wondering why this happened to me. Can we talk about it?”"
   },
   "helper": {
    "feel": "A family member, friend, faith leader, or partner may see someone they love shut out of a community, hurt by words meant to comfort, or quietly wrestling with big questions. They may still have deep faith, have stepped away, or be somewhere in-between. Your part is to listen to their experience, never to argue them into or out of belief, and to help their community make room.",

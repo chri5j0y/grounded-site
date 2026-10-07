@@ -12585,12 +12585,12 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Say your first sentence.",
       "sub": "Short, matter-of-fact, and yours.",
-      "say": "Let's find your words. Think about what you'd want a new date to know. Say your first sentence out loud, short and matter-of-fact, like: I use a wheelchair, so let's pick a place with step-free access.",
+      "say": "Let's find your words. Think about what you'd want a new date to know. Say your first sentence out loud, short and matter-of-fact, like: I use a wheelchair, so let's pick a place with access with no steps.",
       "beats": [
        "Let's find your words.",
        "Think about what you'd want a new date to know.",
        {
-        "t": "Say your first sentence out loud, short and matter-of-fact, like: I use a wheelchair, so let's pick a place with step-free access.",
+        "t": "Say your first sentence out loud, short and matter-of-fact, like: I use a wheelchair, so let's pick a place with access with no steps.",
         "w": 14
        }
       ]
@@ -13019,7 +13019,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "It is fair to ask.",
       "sub": "Access is part of welcome.",
-      "say": "It's fair to ask a community for access: step-free entry, an interpreter, captions on the livestream, large print, a quieter seat, or a ride. And worship from home, online, by audio, or in a short quiet practice counts fully."
+      "say": "It's fair to ask a community for access: entry with no steps, an interpreter, captions on the livestream, large print, a quieter seat, or a ride. And worship from home, online, by audio, or in a short quiet practice counts fully."
      },
      {
       "k": "big",
