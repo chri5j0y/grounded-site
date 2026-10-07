@@ -1,8 +1,10 @@
 // =====================================================================
-// GROUNDED FIELD GUIDE (TM): the Share Card Builder (GWG BLD 746).
+// GROUNDED FIELD GUIDE (TM): the Share Card Builder (GWG BLD 746; Painting look,
+// The Grounded Marriage, and named bios, GWG BLD 757).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A Staff and Founder tab. Pick a subject, a message, a platform, a format,
-// and a look; it draws the card or banner at the platform's exact size and
+// and a look (Light, Dark, Tree Color, or Painting, which sets the words over the
+// subject's own painting with a soft shade); it draws the card or banner at the platform's exact size and
 // saves it as a PNG. Bios for each platform sit below with a Copy button.
 // Data: the Staff library's brand.share, with a small built-in fallback so
 // the tab works before that library update is applied. Everything is drawn
@@ -26,6 +28,7 @@ const FB = {
     {id: 'sequoia', name: 'Sequoia', color: '#7A2E1C', tagline: 'A long life, still growing.', line: 'Built for older adults, 60 and up.'},
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
     {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, classrooms, churches, and groups.'},
+    {id: 'marriage', name: 'The Grounded Marriage', mark: 'marriage/mark.svg', color: '#3F5F86', tagline: 'Before the Vows and After the Vows: a private place for the two of you to talk, grow, and keep growing.', line: 'For couples. Everything stays on your device.', url: 'growwithgrounded.com/marriage', always: true},
     {id: 'field', name: 'Grounded Field Guide', mark: 'favicon.svg', color: '#2E2118', tagline: 'Every Grounded tool and guide, in one place.', line: 'For chaplains, pastors, teachers, school counselors, and parents.', url: 'growwithgrounded.com/field-guide'}
   ],
   messages: [],
@@ -39,8 +42,12 @@ const FB = {
   ]
 };
 const KINDS = [['tagline', 'Tagline'], ['intro', 'Intro'], ['what', 'What We Do'], ['pitch', 'Pitch'], ['slogan', 'Slogan']];
-const LOOKS = [['light', 'Light'], ['dark', 'Dark'], ['tree', 'Tree Color']];
+const LOOKS = [['light', 'Light'], ['dark', 'Dark'], ['tree', 'Tree Color'], ['painting', 'Painting']];
 const FORMATS = [['card', 'Card'], ['square', 'Square'], ['banner', 'Banner']];
+// The Painting look: each subject's wide painting, and where its main tree stands (a fraction of the image width).
+const FOCUS = {maple: .37, aspen: .36, pine: .38, birch: .18, oak: .72, sequoia: .22, willow: .21, grove: .5, home: .74, marriage: .64};
+// People named in the bios (bios may name a person who is not a card subject).
+const PEOPLE = {chris: 'Chris Joy', kayti: 'Kayti Joy'};
 // Banner safe areas as fractions [left, top, right, bottom]: profile photos sit at the lower left on X, LinkedIn, and Facebook.
 const SAFE = {facebook: [.12, .1, .92, .9], x: [.22, .12, .92, .88], linkedin: [.25, .1, .94, .9], substack: [.06, .1, .94, .9]};
 
@@ -56,6 +63,10 @@ function data(){
   const d = (LIB && LIB.brand && LIB.brand.share) || {};
   const fbS = id => FB.subjects.find(x => x.id === id) || {};
   const subjects = (Array.isArray(d.subjects) && d.subjects.length ? d.subjects : FB.subjects).map(s => Object.assign({}, fbS(treeKey(s) || s.id), s));
+  // Built-in subjects a library may not list yet (The Grounded Marriage) join before the Field Guide.
+  FB.subjects.filter(f => f.always && !subjects.some(s => s.id === f.id || (isMarriage(f) && isMarriage(s)))).forEach(f => {
+    const at = subjects.findIndex(s => isLogo(s) && !isGWG(s)); subjects.splice(at < 0 ? subjects.length : at, 0, Object.assign({}, f));
+  });
   return {
     subjects,
     messages: Array.isArray(d.messages) ? d.messages : FB.messages,
@@ -81,6 +92,16 @@ function markUrl(s){
 const isLogo = s => /favicon\.svg$/.test(markUrl(s));
 const siteOf = s => s.url || (treeKey(s) ? 'growwithgrounded.com/' + treeKey(s) : 'growwithgrounded.com');
 const isGWG = s => s.id === 'gwg' || /^grow with grounded$/i.test(s.name || '');
+const isMarriage = s => s.id === 'marriage' || /grounded marriage/i.test(s.name || '') || /marriage\/mark/.test(s.mark || '');
+// The subject's painting: a tree's own wide painting, The Grounded Marriage's, or the home painting for Grow With Grounded and the Field Guide.
+function heroOf(s){
+  const fx = +s.focus;
+  if (s.hero) return {url: /^(https?:|\/)/.test(s.hero) ? s.hero : '../' + String(s.hero).replace(/^(\.\.\/|\.\/)+/, ''), fx: fx >= 0 && fx <= 1 ? fx : .5};
+  const t = treeKey(s);
+  if (t) return {url: '../shared/heroes/' + t + '-wide.webp', fx: FOCUS[t]};
+  if (isMarriage(s)) return {url: '../marriage/hero-wide.webp', fx: FOCUS.marriage};
+  return {url: '../shared/heroes/home-wide.webp', fx: FOCUS.home};
+}
 
 function messagesFor(D, sub){
   const list = D.messages.filter(m => m && m.text && (m.subject === 'all' || m.subject === sub.id || (treeKey(sub) && m.subject === treeKey(sub))));
@@ -107,6 +128,7 @@ function palette(sub, look){
   const c = sub.color || GOLD, logo = isLogo(sub);
   if (look === 'dark') return {bg: '#1E1510', glow: '#2E2118', band: '#2A1E15', ink: '#F2EADC', soft: '#BFB09A', acc: logo ? '#D9A847' : mix(c, '#F6E7CF', .5), logo: '#D9A847'};
   if (look === 'tree') return {bg: c, glow: mix(c, '#FFFFFF', .14), band: mix(c, '#000000', .22), ink: '#FFF8EC', soft: mix(c, '#FFF8EC', .82), acc: mix(c, '#FFE9B8', .8), logo: '#FFF8EC'};
+  if (look === 'painting') return {bg: '#2A1E15', glow: '#2A1E15', band: 'rgba(12,8,5,.52)', ink: '#FFF8EC', soft: '#F1E7D6', acc: logo ? '#F2D08E' : mix(c, '#FFF1DA', .66), logo: '#FFF8EC'};
   return {bg: CREAM, glow: '#F0E8D8', band: '#E9DFCB', ink: INK, soft: SOFT, acc: logo ? GOLD : c, logo: GOLD};
 }
 
@@ -115,6 +137,9 @@ const IMG = {};
 function loadImg(url){
   if (IMG[url]) return IMG[url];
   IMG[url] = fetch(url).then(r => { if (!r.ok) throw new Error('mark ' + r.status); return r.text(); }).then(txt => {
+    // The tab icon wraps the house tree in a light tile; the cards use the tree itself, so it can take each look's color.
+    const tree = txt.slice(1).match(/<svg\b[^>]*viewBox="0 0 3200 3536"[^>]*>[\s\S]*?<\/svg>/);
+    if (tree) txt = tree[0].replace(/^<svg\b/, '<svg xmlns="http://www.w3.org/2000/svg"').replace(/\s(x|y)="[^"]*"/g, '');
     // Give the SVG a large size so it draws crisp at any scale.
     const vb = (txt.match(/viewBox="([^"]+)"/) || [])[1]; const p = vb ? vb.trim().split(/[\s,]+/).map(Number) : [0, 0, 100, 100];
     const k = 1200 / Math.max(p[2], p[3]); const w = Math.round(p[2] * k), h = Math.round(p[3] * k);
@@ -124,6 +149,22 @@ function loadImg(url){
   });
   IMG[url].catch(() => { delete IMG[url]; });
   return IMG[url];
+}
+// A painting (same-origin WebP), kept once loaded.
+function loadPhoto(url){
+  const key = 'photo:' + url;
+  if (IMG[key]) return IMG[key];
+  IMG[key] = new Promise((ok, no) => { const img = new Image(); img.onload = () => ok(img); img.onerror = () => no(new Error('painting ' + url)); img.src = url; });
+  IMG[key].catch(() => { delete IMG[key]; });
+  return IMG[key];
+}
+// Draw the painting to cover the canvas with its main tree near x = place (a fraction of W); returns where the tree landed.
+function cover(ctx, img, W, H, fx, place){
+  const iw = img.naturalWidth || 2000, ih = img.naturalHeight || 800, k = Math.max(W / iw, H / ih), dw = iw * k, dh = ih * k;
+  const dx = Math.min(0, Math.max(W - dw, W * place - fx * dw));
+  const dy = (H - dh) * .56;
+  ctx.drawImage(img, dx, dy, dw, dh);
+  return (dx + fx * dw) / W;
 }
 // The house logo drawn in one color (for the Dark and Tree Color looks).
 function tint(img, color){
@@ -198,29 +239,70 @@ function fit(ctx, o, R, cap){
 async function draw(canvas, cur, look){
   const {sub, text, plat, W, H} = cur;
   await fonts();
-  const logo = isLogo(sub), P = palette(sub, look);
+  const logo = isLogo(sub), P = palette(sub, look), pnt = look === 'painting', hero = pnt ? heroOf(sub) : null;
   const showMarks = S.marks && isGWG(sub);
   const imgs = await Promise.all([loadImg(markUrl(sub)), ...(showMarks ? TREES.map(t => loadImg('../shared/marks/' + t + '.svg')) : [])]);
+  const photo = pnt ? await loadPhoto(hero.url) : null;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
   const banner = S.format === 'banner', horiz = banner || W / H >= 1.3;
-  // Background: a soft warm glow from below and a thin ground band.
-  ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
-  ctx.save(); ctx.translate(W / 2, H * 1.2); ctx.scale(W / H * .9, 1);
-  const r = H * 1.25, g = ctx.createRadialGradient(0, 0, 0, 0, 0, r); g.addColorStop(0, P.glow); g.addColorStop(.6, P.bg); g.addColorStop(1, P.bg);
-  ctx.fillStyle = g; ctx.fillRect(-r, -r, 2 * r, 2 * r); ctx.restore();
   const band = Math.round(H * (banner ? .07 : .075)); const bandTop = H - band;
-  ctx.fillStyle = P.band; ctx.fillRect(0, bandTop, W, band);
+  // The Painting look: the main tree stays in view, and the words sit on the open side of the painting.
+  let side = 'center', place = .5;
+  if (pnt && horiz && Math.abs(hero.fx - .5) > .08){ side = hero.fx < .5 ? 'right' : 'left'; place = side === 'right' ? (banner ? .2 : .25) : (banner ? .8 : .75); }
   // The region the words and marks stay inside.
   let R;
   if (banner){ const f = plat.safeBox || SAFE[plat.id] || [.1, .12, .9, .88]; R = {x: W * f[0], y: H * f[1], w: W * (f[2] - f[0]), h: Math.min(H * f[3], bandTop - H * .04) - H * f[1]}; }
+  else if (pnt && side !== 'center') R = side === 'right' ? {x: W * .46, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07} : {x: W * .06, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07};
+  else if (pnt && !horiz) R = {x: W * .07, y: H * .06, w: W * .86, h: (bandTop - H * .05) * .62 - H * .06};
   else R = {x: W * .07, y: H * .07, w: W * .86, h: bandTop - H * .05 - H * .07};
-  const o = {horiz, logo, name: sub.name || '', msg: String(text || '').trim(), line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
+  const RS = Object.assign({}, R);
+  // A banner's words stop short of its painting's tree.
+  if (pnt && banner && side !== 'center'){
+    const edge = W * (hero.fx + (side === 'right' ? .1 : -.1));
+    if (side === 'right' && edge > R.x && edge < R.x + R.w * .6){ R.w -= edge - R.x; R.x = edge; }
+    if (side === 'left' && edge < R.x + R.w && edge > R.x + R.w * .4) R.w = edge - R.x;
+  }
+  const o ={horiz, logo, name: sub.name || '', msg: String(text || '').trim(), line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
   const cap = banner ? H * (W / H >= 3.9 ? .045 : .03) : horiz ? Math.min(H * .036, W * .022) : W * .03;
-  const m = fit(ctx, o, R, cap);
+  const m = fit(ctx, o, R, pnt && side !== 'center' && !banner ? cap * .92 : cap);
+  // Where the block sits: centered in the region, or toward the open side of a banner's painting.
+  let bx = m ? R.x + (R.w - m.W) / 2 : 0; const by = m ? R.y + (R.h - m.H) / 2 : 0;
+  if (m && pnt && banner && side !== 'center'){ bx = side === 'right' ? R.x + R.w - m.W : R.x; }
+  if (pnt){
+    // The painting, a light all-over shade, then a soft deeper shade behind the words so they read.
+    ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+    cover(ctx, photo, W, H, hero.fx, place);
+    ctx.fillStyle = 'rgba(14,10,6,.2)'; ctx.fillRect(0, 0, W, H);
+    if (horiz && !banner && side !== 'center'){
+      const g = ctx.createLinearGradient(side === 'right' ? W : 0, 0, side === 'right' ? W * .3 : W * .7, 0);
+      g.addColorStop(0, 'rgba(14,10,6,.66)'); g.addColorStop(.55, 'rgba(14,10,6,.5)'); g.addColorStop(1, 'rgba(14,10,6,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    } else if (!horiz){
+      const g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, 'rgba(14,10,6,.62)'); g.addColorStop(.5, 'rgba(14,10,6,.44)'); g.addColorStop(.8, 'rgba(14,10,6,.08)'); g.addColorStop(1, 'rgba(14,10,6,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+    if (m){
+      // An oval of shade under the block itself, in every format.
+      const cx = bx + m.W / 2, cy = by + m.H / 2, rx = m.W * .62 + m.u * 6, ry = m.H * .62 + m.u * 5;
+      ctx.save(); ctx.translate(cx, cy); ctx.scale(rx / ry, 1);
+      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, ry); g.addColorStop(0, 'rgba(14,10,6,.5)'); g.addColorStop(.6, 'rgba(14,10,6,.36)'); g.addColorStop(1, 'rgba(14,10,6,0)');
+      ctx.fillStyle = g; ctx.fillRect(-ry, -ry, 2 * ry, 2 * ry); ctx.restore();
+    }
+  } else {
+    // Background: a soft warm glow from below.
+    ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+    ctx.save(); ctx.translate(W / 2, H * 1.2); ctx.scale(W / H * .9, 1);
+    const r = H * 1.25, g = ctx.createRadialGradient(0, 0, 0, 0, 0, r); g.addColorStop(0, P.glow); g.addColorStop(.6, P.bg); g.addColorStop(1, P.bg);
+    ctx.fillStyle = g; ctx.fillRect(-r, -r, 2 * r, 2 * r); ctx.restore();
+  }
+  // A thin ground band.
+  ctx.fillStyle = P.band; ctx.fillRect(0, bandTop, W, band);
   if (m){
-    const u = m.u, bx = R.x + (R.w - m.W) / 2, by = R.y + (R.h - m.H) / 2;
+    const u = m.u;
     const markImg = logo && P.logo !== GOLD ? tint(imgs[0], P.logo) : imgs[0];
+    if (pnt){ ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = u * .9; ctx.shadowOffsetY = u * .08; }
     let tx, ty, align;
     if (horiz){
       ctx.drawImage(markImg, bx, by + (m.H - m.markH) / 2, m.markW, m.markH);
@@ -238,13 +320,14 @@ async function draw(canvas, cur, look){
       ty += u * 1.3; let x = horiz ? tx : tx - m.rowW / 2;
       imgs.slice(1).forEach(im => { ctx.drawImage(im, x, ty, m.rowH, m.rowH); x += m.rowH + u * .55; });
     }
+    ctx.shadowColor = 'rgba(0,0,0,0)'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
   }
-  canvas.fit = m ? {x: R.x + (R.w - m.W) / 2, y: R.y + (R.h - m.H) / 2, w: m.W, h: m.H, u: m.u, R, parts: m.parts} : null;
+  canvas.fit = m ? {x: bx, y: by, w: m.W, h: m.H, u: m.u, R, parts: m.parts, side} : null;
   // The site, small at the bottom, in the ground band.
   const us = Math.max(band * .4, 9);
   if (us >= 9){
     ctx.font = `600 ${us}px Barlow, system-ui, sans-serif`; ctx.letterSpacing = (us * .08) + 'px'; ctx.fillStyle = look === 'light' ? SOFT : P.soft; ctx.textBaseline = 'middle';
-    if (banner){ ctx.textAlign = 'right'; ctx.fillText(siteOf(sub), R.x + R.w, bandTop + band / 2); }
+    if (banner){ ctx.textAlign = 'right'; ctx.fillText(siteOf(sub), RS.x + RS.w, bandTop + band / 2); }
     else { ctx.textAlign = 'center'; ctx.fillText(siteOf(sub), W / 2, bandTop + band / 2); }
     ctx.letterSpacing = '0px';
   }
@@ -273,7 +356,9 @@ function chips(key, list, val){ return `<div class="sc-chips" role="group">${lis
 const clip = (t, n) => { t = String(t); return t.length > n ? t.slice(0, n - 3).replace(/\s+\S*$/, '') + '...' : t; };
 
 function biosHtml(D){
-  const subName = id => (D.subjects.find(s => s.id === id) || {}).name || (id === 'all' ? 'Every Subject' : id);
+  // A bio's subject is a card subject (Grow With Grounded) or a person (Chris Joy, Kayti Joy); a person's name comes from PEOPLE or the start of the bio's label.
+  const subName = id => { const s = D.subjects.find(x => x.id === id || (id === 'grounded' && isGWG(x))); if (s) return s.name; if (PEOPLE[id]) return PEOPLE[id]; if (id === 'all') return 'Every Subject';
+    const b = D.bios.find(x => x.subject === id && x.label); return b ? String(b.label).split(',')[0] : id; };
   const platName = id => (D.platforms.find(p => p.id === id) || {}).name || id;
   const subs = [...new Set(D.bios.map(b => b.subject))];
   const list = D.bios.map((b, i) => [b, i]).filter(([b]) => S.bios === 'all' || b.subject === S.bios);
@@ -281,7 +366,8 @@ function biosHtml(D){
   const plats = [...new Set(order)].filter(p => list.some(([b]) => b.platform === p));
   return `<div class="card sc-bios" style="margin-top:18px"><h2 style="margin-bottom:4px">Bios</h2><p class="muted">A bio for each platform, written to its length. Tap Copy and paste it into the profile.</p>
   ${subs.length > 1 ? `<label class="f" for="sc-biosub">Show</label><select id="sc-biosub" data-sc="bios"><option value="all">Every Bio</option>${subs.map(s => `<option value="${esc(s)}"${S.bios === s ? ' selected' : ''}>${esc(subName(s))}</option>`).join('')}</select>` : ''}
-  ${plats.length ? plats.map(p => `<h3 style="margin-top:16px">${esc(platName(p))}</h3>${list.filter(([b]) => b.platform === p).map(([b, i]) => { const n = chars(b.text), lim = +b.limit || 0; return `<div class="sc-bio"><div class="spread"><b>${esc(subName(b.subject))}${b.label ? ', ' + esc(b.label) : ''}</b><span class="sc-count${lim && n > lim ? ' over' : ''}">${n}${lim ? ' of ' + lim : ''} characters</span></div><p>${esc(b.text)}</p><button type="button" class="btn btn-line btn-sm" data-sc="copy-bio" data-v="${i}">Copy</button></div>`; }).join('')}`).join('') : `<p class="muted" style="margin-top:10px">The bios arrive with the next Staff library update.</p>`}</div>`;
+  ${plats.length ? plats.map(p => `<h3 style="margin-top:16px">${esc(platName(p))}</h3>${list.filter(([b]) => b.platform === p).map(([b, i]) => { const n = chars(b.text), lim = +b.limit || 0; const aim = +b.aim || 0, nm = subName(b.subject), head = b.label ? (String(b.label).indexOf(nm) === 0 ? b.label : nm + ', ' + b.label) : nm + ', ' + platName(b.platform) + (b.part ? ' ' + b.part : '');
+      return `<div class="sc-bio"><div class="spread"><b>${esc(head)}</b><span class="sc-count${lim && n > lim ? ' over' : ''}">${n}${aim ? ' characters, aiming for ' + aim + (lim ? ' (' + platName(b.platform) + ' allows ' + lim + ')' : '') : (lim ? ' of ' + lim : '') + ' characters'}</span></div><p>${esc(b.text)}</p><button type="button" class="btn btn-line btn-sm" data-sc="copy-bio" data-v="${i}">Copy</button></div>`; }).join('')}`).join('') : `<p class="muted" style="margin-top:10px">The bios arrive with the next Staff library update.</p>`}</div>`;
 }
 function inner(){
   const c = current(), {D, sub, msgs, plat, fmts, W, H} = c;
