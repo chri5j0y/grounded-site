@@ -10,6 +10,8 @@
                                         already chose to share
 
    How it stays private
+   - Nothing about a person's Health and Ability choice ever rides on a card
+     (GWG BLD 756): seal and open drop life, lifeOffer, and learn.
    - The card is sealed (AES-GCM) with a short spoken code, like
      "cedar lantern 47". The code is never in the link or the QR code.
      The person showing the code reads it aloud. Without it, the link
@@ -64,8 +66,11 @@
     var s = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
     return new Response(s).arrayBuffer().then(function (buf) { return new Uint8Array(buf); });
   }
+  // Health and Ability (GWG BLD 756): a person's choice (vault.life), its offer date, and watched marks never ride on a card.
+  var NEVER = ['life', 'lifeOffer', 'learn'];
+  function noLife(obj) { if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return obj; var o = {}; Object.keys(obj).forEach(function (k) { if (NEVER.indexOf(k) < 0) o[k] = obj[k]; }); return o; }
   function seal(kind, obj, c) {
-    var body = enc.encode(JSON.stringify({ k: kind, v: 1, d: obj }));
+    var body = enc.encode(JSON.stringify({ k: kind, v: 1, d: noLife(obj) }));
     var salt = crypto.getRandomValues(new Uint8Array(12)), iv = crypto.getRandomValues(new Uint8Array(12));
     return squeeze(body).then(function (sq) {
       var plain = new Uint8Array(sq.b.length + 1); plain[0] = sq.z; plain.set(sq.b, 1);
@@ -86,7 +91,7 @@
         .then(function (b) {
           if (!b) return null;
           var o = JSON.parse(dec.decode(b));
-          return o && (!kind || o.k === kind) ? o.d : null;
+          return o && (!kind || o.k === kind) ? noLife(o.d) : null;
         });
     } catch (e) { return Promise.resolve(null); }
   }

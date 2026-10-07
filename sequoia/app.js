@@ -35,7 +35,7 @@
      week (BLD 745). No Hardy: a level is kept for good. Rings From Oak are
      labeled, set apart, and never count toward a level or a milestone.
    - The legacy thread: the Legacy Book, its own tab.
-   - The gentle tree from Oak (dry, droop, rest). It never dies or loses rings,
+   - The gentle tree from Oak (missed days rest in soft mist). It never dies or loses rings,
      and it holds still for two weeks after a check-in flags losing hope or
      feeling alone.
    ===================================================================== */
@@ -504,6 +504,7 @@ function questionHtml(key, i, text) {
   return `<div class="q-card sq-one${cur ? ' answered' : ''}" data-q="${key}-${i}" role="radiogroup" aria-label="${escapeHtml(text)}">
     <p class="q-text sq-qtext">${escapeHtml(text)}</p>
     <div class="q-opts sq-opts">${Q_OPTS.map(o => `<button type="button" data-v="${o[0]}" aria-pressed="${cur === o[0]}" onclick="answerQ('${key}', ${i}, '${o[0]}')"><span class="sq-dot" aria-hidden="true"></span>${o[1]}</button>`).join('')}</div>
+    ${q && q.life && CK.by === 'self' && window.GGLifeKit ? GGLifeKit.notesHtml(q, 'sequoia', true) : ''}
     ${q && q.why ? `<details class="q-why"><summary>Why this question?</summary><p>${escapeHtml(q.why)}</p>${srcSmall(q.src)}</details>` : ''}
   </div>`;
 }
@@ -571,6 +572,7 @@ function showCalm(why) {
     <h2 id="calm-title">${escapeHtml(SAFETY.title || 'You matter, and you don\'t have to carry this alone.')}</h2>
     ${lead}
     ${linesHtml(home)}
+    ${why !== 'direct' && why !== 'home' && !home && window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
   document.body.appendChild(wrap);
@@ -710,6 +712,12 @@ function signsHtml(d) {
 // =====================================================================
 // GROWTH PLAN
 // =====================================================================
+// Health and Ability (GWG BLD 756): practices that fit the person's choice come first with a "Fits You"
+// tag and their adapt line (Sequoia's seated, bed, and chronic flags count, see sequoia/practices.js).
+// Nothing is hidden, and Easier today stays on every tending card as before.
+function lifeTags(key, name) { const f = FLAGS[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeFitHtml(key, name) { return window.GGLifeKit && GGLifeKit.fits(lifeTags(key, name)) ? GGLifeKit.fitHtml(lifeTags(key, name).adapt) : ''; }
+function lifeOrder(mode, key, rows) { return mode === 'client' && window.GGLife ? GGLife.order(rows, r => lifeTags(key, r[0])) : rows; }
 function renderGrowthPlanBuilder(mode) {
   const containerId = mode === 'client' ? 'client-growthplan-builder' : 'prac-growthplan-builder';
   const generateRowId = mode === 'client' ? 'client-growthplan-generate-row' : 'prac-growthplan-generate-row';
@@ -723,11 +731,11 @@ function renderGrowthPlanBuilder(mode) {
       </div>
       <div class="practice-picker">
         <div class="practice-picker-label">${(n => `Suggested: about ${n} practices`)(oakSuggest(scores[d.key]))}</div>
-        <div class="practice-list" id="cp-list-${mode}-${d.key}">${d.restore.map((r, i) => `
+        <div class="practice-list" id="cp-list-${mode}-${d.key}">${lifeOrder(mode, d.key, d.restore).map((r, i) => `
           <div class="practice-item" data-i="${i}">
             <label class="practice-option">
               <input type="checkbox" class="sq-pick-box" name="cp-${mode}-${d.key}" value="${r[0]}" onchange="enforcePracticeLimit(this,'${mode}','${d.key}')">
-              <span class="practice-option-text"><strong>${r[0]}.</strong> ${r[1]}${practiceMeta(d.key, r[0])}</span>
+              <span class="practice-option-text"><strong>${r[0]}.</strong> ${r[1]}${practiceMeta(d.key, r[0])}${mode === 'client' ? lifeFitHtml(d.key, r[0]) : ''}</span>
             </label>
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0], mode === 'client')}</div>
@@ -849,7 +857,8 @@ function buildPersonalSections(scores, includeStories) {
   entries.slice(0, 2).forEach(d => { html += block(d, 'strength-block', `<p>${d.strength_msg}</p>`); });
   html += `</div><div class="personal-section"><div class="personal-section-title">Where your tree needs tending</div>`;
   entries.slice(-2).reverse().forEach((d, gi) => {
-    html += block(d, 'growth-block', `<ul>${d.growth_steps.map(s => `<li>${s}</li>`).join('')}</ul>${includeStories && gi === 0 ? storyCardHtml(d) : ''}`);
+    const extra = d.score < 5 && CK.by === 'self' && window.GGLifeKit ? GGLifeKit.stepsHtml('sequoia', d.key) : '';
+    html += block(d, 'growth-block', `<ul>${d.growth_steps.map(s => `<li>${s}</li>`).join('')}${extra}</ul>${includeStories && gi === 0 ? storyCardHtml(d) : ''}`);
   });
   return html + `</div>`;
 }
@@ -939,6 +948,8 @@ function calculateResults(mode) {
     renderGrowthPlanBuilder('client');
     if (PROF) { const c = JSON.parse(JSON.stringify(entry)); personalHistory.push(c); sortEntries(personalHistory); profPersist(); }
     if (PROF && !ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(entry); if (msg) setTimeout(() => showToast(msg), 900); }
+    // Health and Ability (GWG BLD 756): one quiet card after a full check-in, at most once per profile.
+    if (!ST_QUICK && CK.by === 'self' && !HELP && window.GGLife) { const host = document.querySelector('#client-results-content .results-summary'); if (host) GGLife.offerCard(host, 'sequoia', { onChoose: () => reopenSettings('sq-set-life') }); }
     oakPrefillPlan();
     renderSaveBox();
     renderProgress();
@@ -1005,7 +1016,7 @@ function sqCheer(text) {
   clearTimeout(sqCheer.t); sqCheer.t = setTimeout(() => el.classList.remove('show'), 3600);
 }
 // The pause: while a check-in in the last two weeks flagged losing hope or feeling alone
-// (or the safety step asked for care), the tree holds as it is. Nothing dries or droops.
+// (or the safety step asked for care), the tree holds as it is. Nothing is lost.
 function sqPause() {
   const cut = new Date(Date.now() - 14 * 86400000).toISOString().slice(0, 10);
   return (personalHistory || []).some(e => e && !e.from && e.date >= cut && e.kind !== 'observed' && (
@@ -1304,7 +1315,7 @@ function renderLC(mode) {
   if (!el) return;
   if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
   const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
-  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  if (st.ring !== 'all' && st.ring !== 'life' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for this season of life</h2>
@@ -1313,11 +1324,12 @@ function renderLC(mode) {
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: retirement, grief, a fall, memory..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All topics</button>
-      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
-    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1.</p>`;
+    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1.</p>
+    ${window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}`;
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
@@ -1327,9 +1339,9 @@ function lcRenderList(mode) {
   const box = document.getElementById(mode + '-lc-list');
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
-  let html = '', n = 0;
-  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+  let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
+  LC_RINGS.concat(LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
@@ -1341,8 +1353,22 @@ function lcRenderList(mode) {
         <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
       </article>`).join('')}</div></div>`;
   });
+  if (st.ring === 'all' && n) html += lcLifeRingHtml(mode);
   box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
 }
+/* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
+   sequoia/guides.js, and Picked for You at the top when the person has made a choice. */
+const LC_LIFE = window.GGLifeKit && GGLifeKit.tagged(LC_TOPICS).length ? GGLifeKit.RING : null;
+function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
+function lcPickedHtml(mode) {
+  const ts = window.GGLifeKit ? GGLifeKit.picked('sequoia', LC_TOPICS) : [];
+  return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
+}
+function lcLifeRingHtml(mode) {
+  const ts = LC_LIFE ? GGLifeKit.tagged(LC_TOPICS) : [];
+  return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
+}
+if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) renderLC('client'); });
 /* Search: the same engine as the header search. Sequoia's guides first, then the rest of Grow With Grounded. */
 function lcFind(el, mode) {
   LCS[mode].q = ''; LCS[mode].find = el.value;
@@ -1416,9 +1442,9 @@ function lcDetail(mode, t) {
 }
 /* When Life Changes videos (GWG BLD 734): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from sequoia/guide-videos.js. SQ_VIDS lists the guides that have them so far (written by the build's generator).
-   A quiet check shows once a video has been watched on this device (gg-learn:sequoia). */
+   A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
 /* SQ_VIDS start */const SQ_VIDS = ["retirement", "purpose-again", "volunteering", "working-longer", "burden", "spouse-death", "friend-death", "child-death", "sibling-death", "grief-stuck", "holidays-alone", "pet-death", "new-diagnosis", "pain", "falls", "hearing", "vision", "driving", "hospital", "appetite", "memory-worry", "dementia", "depression", "anxiety", "old-memories", "moving-home", "downsizing", "care-move", "fixed-income", "scams", "affairs", "spouse-caregiving", "grandparenting", "raising-grandkids", "estrangement", "worry-adult-children", "kids-deciding", "new-love", "gray-divorce", "elder-abuse", "loneliness", "friendship", "veterans", "invisible", "faith-questions", "facing-death", "regrets", "legacy"];/* SQ_VIDS end */
-function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:sequoia') || '{}').done || {})[id]); } catch (e) { return false; } }
+function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('sequoia', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!SQ_VIDS.includes(gid)) return '';
   const b = (side, name, pri) => { const id = 'sq-g-' + gid + '-' + side, w = lcVidWatched(id);
@@ -1430,7 +1456,7 @@ function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('sequoia', 'sq-g-
 // gg-learn's Open the Full Guide button lands here.
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.sequoia = id => { if (LC_TOPICS.some(t => t.id === id)) lcOpen('client', id); };
-window.addEventListener('gg-learn-close', () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
+['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } }));
 /* After a check-in: guides that touch the parts carrying the most, two per part, lowest part first. */
 function lcSuggestHtml(scores) {
   const low = PART_ORDER.filter(k => scores[k] <= 4).sort((a, b) => scores[a] - scores[b]);
@@ -1603,12 +1629,12 @@ const TEND_CFG = {
   hasResults: () => !!window.currentClientEntry,
   toast: m => showToast(m),
   profileHtml: () => oakProfileHtml(),
-  extraSettings: () => helperSettingsHtml(),
-  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
+  extraSettings: () => (!HELP && window.GGLifeKit ? GGLifeKit.settingsHtml('sequoia', 'sq-set-life') : '') + helperSettingsHtml(),
+  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => graphCardHtml() + (s ? sgMilesHtml(s) : ''),
   pause: () => sqPause(),
-  pauseLine: 'Your tree is holding still with you. It will not dry out while you get support.',
+  pauseLine: 'Your tree is holding still with you while you get support. Nothing is lost.',
   onCheck: (done, key, s, parts, before) => sgOnCheck(done, s, parts),
   store: {
     get: () => { if (!PROF || !window.GGP) return null; const d = sqNamesForward(GGP.data(PROF.id, 'sequoia')); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1697,9 +1723,9 @@ function profSync() {
     PROF = { id: a.id, name: a.name, avatar: a.avatar, age: a.age };
     window.personalHistory = d.history.slice(); personalHistory = window.personalHistory;
     window.personalFileLoaded = true;
-    if (HELP && !(GGP.helping() || []).includes(HELP)) HELP = null;
+    if (HELP && !(GGP.helping() || []).includes(HELP)) { HELP = null; if (window.GGLife) GGLife.use(null); }
   } else if (PROF || HELP) {
-    PROF = null; HELP = null;
+    PROF = null; HELP = null; if (window.GGLife) GGLife.use(null);
     window.personalHistory = []; personalHistory = window.personalHistory;
     window.personalFileLoaded = false; window.currentClientEntry = null;
   }
@@ -1860,9 +1886,9 @@ function dropHelper(id) {
 // Helper view
 function helpOpen(id) {
   if (!helpedWithSequoia().some(p => p.id === id)) return;
-  HELP = id; window.currentClientEntry = null; renderProfileBar(); showView('client-today');
+  HELP = id; if (window.GGLife) GGLife.use(id); window.currentClientEntry = null; renderProfileBar(); showView('client-today');
 }
-function helpBack() { HELP = null; setMode('self'); renderProfileBar(); showView('client-today'); }
+function helpBack() { HELP = null; if (window.GGLife) GGLife.use(null); setMode('self'); renderProfileBar(); showView('client-today'); }
 function helpFromHash() {
   const m = /^#for=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m || !PROF) return;
   if (helpedWithSequoia().some(p => p.id === m[1])) { try { history.replaceState(null, '', location.pathname); } catch (e) {} helpOpen(m[1]); }
@@ -1938,7 +1964,7 @@ function renderLegacy() {
   if (HELP && !shareOf(HELP).legacy) { el.innerHTML = `<div class="section-title">Legacy Book</div><p class="lead">${who} keeps their Legacy Book private.</p>`; return; }
   if (!L) {
     el.innerHTML = `<div class="section-title">Your Legacy Book</div>${(LEG.intro || []).slice(0, 2).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h3>Your book is kept in your profile</h3><p>The Legacy Book is saved inside a private Grounded profile on this device, locked with a passcode only you know, so no one else can read it. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="${oakAdults().length ? 'oakOpenAny()' : 'profCreateDialog()'}">${oakAdults().length ? 'Open my profile' : 'Create a profile'}</button></div></div>`;
+      <div class="gt-card gt-empty"><h2>Your book is kept in your profile</h2><p>The Legacy Book is saved inside a private Grounded profile on this device, locked with a passcode only you know, so no one else can read it. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="${oakAdults().length ? 'oakOpenAny()' : 'profCreateDialog()'}">${oakAdults().length ? 'Open my profile' : 'Create a profile'}</button></div></div>`;
     return;
   }
   const c = LG.ch && legChapter(LG.ch);

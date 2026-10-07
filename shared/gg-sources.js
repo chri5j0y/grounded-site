@@ -52,6 +52,7 @@
     karney95: ["Karney and Bradbury, the longitudinal course of marital quality and stability: a review of theory, method, and research (Psychological Bulletin, 1995)", "https://doi.org/10.1037/0033-2909.118.1.3"],
     mahoney10: ["Mahoney, religion in families, 1999 to 2009: a relational spirituality framework (Journal of Marriage and Family, 2010)", "https://doi.org/10.1111/j.1741-3737.2010.00732.x"],
     fiese02: ["Fiese, Tomcho, Douglas, Josephs, Poltrock, and Baker, a review of 50 years of research on naturally occurring family routines and rituals: cause for celebration? (Journal of Family Psychology, 2002)", "https://doi.org/10.1037/0893-3200.16.4.381"],
+    miserandino: ["Christine Miserandino, The Spoon Theory (But You Don't Look Sick, 2003)", "https://butyoudontlooksick.com", "a"],
     stanley06sd: ["Stanley, Rhoades, and Markman, sliding versus deciding: inertia and the premarital cohabitation effect (Family Relations, 2006)", "https://doi.org/10.1111/j.1741-3729.2006.00418.x"],
     gottman99: ["Gottman and Silver, The Seven Principles for Making Marriage Work (Harmony, 1999): softened start-up, repair attempts, and turning toward", "https://www.gottman.com", "a"],
     hawkins08: ["Hawkins, Blanchard, Baldwin, and Fawcett, does marriage and relationship education work? A meta-analytic study (Journal of Consulting and Clinical Psychology, 2008)", "https://pubmed.ncbi.nlm.nih.gov/18837590/"],
@@ -773,9 +774,9 @@
   function css() {
     if (done || typeof document === 'undefined' || !document.head) return; done = true;
     var st = document.createElement('style'); st.id = 'gg-src-css';
-    st.textContent = '.gg-src{margin:16px 0 0;font-size:13.5px;line-height:1.45;opacity:.85;}.gg-src p{margin:3px 0;}'
+    st.textContent = '.gg-src{margin:16px 0 0;font-size:13.5px;line-height:1.45;}.gg-src p{margin:3px 0;}'
       + '.gg-src a,.gg-src-line a{color:inherit;text-decoration:underline;text-underline-offset:2px;}'
-      + '.gg-src-k{font-weight:600;}.gg-src-line{display:block;font-size:13px;line-height:1.4;opacity:.9;margin-top:4px;}'
+      + '.gg-src-k{font-weight:600;}.gg-src-line{display:block;font-size:13px;line-height:1.4;margin-top:4px;}'
       + '@media print{.gg-src{opacity:1;font-size:10pt;}.gg-src a{text-decoration:none;}}';
     document.head.appendChild(st);
   }

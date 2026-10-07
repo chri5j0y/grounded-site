@@ -17,16 +17,17 @@
                                   age: 'maple', 'aspen', 'pine', 'birch', or 'oak'
      GGLibrary.search(q, age)     search the whole library
      GGLibrary.get(key)           one practice, or null
-     GGLibrary.view(it, age)      {name, text, busy, why, steps, hard}
-                                  in the words for that age
-     GGLibrary.info(key, age)     {desc, guide, hard} for a tending card
+     GGLibrary.view(it, age)      {name, text, busy, why, steps, hard, life, adapt}
+                                  in the words for that age (life and adapt: Health and
+                                  Ability tags from grove/data.js, GWG BLD 756)
+     GGLibrary.info(key, age)     {desc, guide, hard, life, adapt} for a tending card
    Sources and Credits (GWG BLD 713): every "Show me how" ends with the quiet Sources line from
    shared/gg-sources.js (Adapted from, Sources, and the story a bedside practice was born from).
    ===================================================================== */
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=fd3', '/grove/library.js?v=vb5'];
+  var FILES = ['/grove/data.js?v=b756', '/grove/library.js?v=b756'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -68,6 +69,8 @@
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
       bedside: it.bedside || null,
+      life: Array.isArray(it.life) ? it.life.slice() : [],
+      adapt: it.adapt || '',
       app: age === 'maple' || age === 'aspen' || age === 'pine' || age === 'birch' || age === 'sequoia' ? age : 'lib'
     };
   }
@@ -90,7 +93,7 @@
   function info(key, age) {
     var it = get(key); if (!it) return {};
     var v = view(it, age);
-    return { desc: v.text, guide: guideHtml(v), hard: v.busy || v.hard };
+    return { desc: v.text, guide: guideHtml(v), hard: v.busy || v.hard, life: v.life, adapt: v.adapt };
   }
 
   window.GGLibrary = { ready: ready, forPart: forPart, search: search, get: get, view: view, info: info, guideHtml: guideHtml, fits: fits };

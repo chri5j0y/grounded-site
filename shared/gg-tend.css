@@ -5,17 +5,36 @@
 .gt-card h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;margin:0 0 6px;line-height:1.15;}
 .gt-small{font-size:14px;color:var(--ink-soft);margin:6px 0 0;}
 .gt-empty p{margin:0 0 6px;}
-.gt-treecard{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:center;}
-.gt-tree{line-height:0;}
+/* The living Today scene (GWG BLD 756): the painting is drawn by gg-living.js */
 .gt-tree-svg{width:100%;height:auto;display:block;}
-.gt-tree.perk .gt-tree-svg{animation:gtPerk .7s ease-out;transform-origin:50% 84%;}
-@keyframes gtPerk{0%{transform:scale(1)}35%{transform:scale(1.035) translateY(-3px)}100%{transform:scale(1)}}
-@media (prefers-reduced-motion:reduce){.gt-tree.perk .gt-tree-svg{animation:none;}}
-.gt-status{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;line-height:1.2;margin:0;}
+.gt-card.gt-today{padding:0;overflow:hidden;}
+.gt-scene-wait{aspect-ratio:2.2/1;background:linear-gradient(180deg,#DCE4EA,#C9D3C0);}
+.gt-today-body{padding:16px 22px 18px;}
+.gt-today-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;}
+.gt-line{font-family:var(--kid,'Cormorant Garamond'),Georgia,serif;font-size:24px;font-weight:700;line-height:1.2;margin:0;min-width:0;text-wrap:balance;}
+.mp-app .gt-line{font-weight:500;}
+.gt-count{margin:0;font-variant-numeric:lining-nums tabular-nums;}
+.gt-marks{list-style:none;margin:14px 0 4px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;}
+.gt-mark{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);text-align:center;min-width:0;}
+.gt-mark-name{overflow-wrap:anywhere;}
+.gt-mark-dot{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:var(--pc,var(--gold));transition:background .8s ease,border-color .8s ease,box-shadow .8s ease,color .8s ease;}
+.gt-mark-dot svg{width:18px;height:18px;}
+.gt-mark.on .gt-mark-dot{border-color:var(--pc,var(--gold));background:radial-gradient(circle at 50% 40%,rgba(255,240,200,.55),rgba(255,240,200,0) 60%),var(--pc,var(--gold));color:#fff;box-shadow:0 0 14px color-mix(in srgb,var(--pc,#E0B25A) 70%,transparent);}
+.gt-mark.on{color:var(--ink);font-weight:600;}
+.gt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+@media (prefers-reduced-motion:reduce){.gt-mark-dot{transition:none;}}
+.gt-today-foot{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:4px 24px;margin-top:6px;}
+.gt-season-line{margin:0 0 6px;}
+.gt-today-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-top:12px;}
+.gt-rest{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0;}
+.gt-rest .gt-small{margin:0;}
+.gt-rest button[aria-pressed="true"]{border-color:var(--gold);}
+.gt-today .gt-fam-row{margin:0;}
+.gt-cal-day.rest{box-shadow:inset 0 0 0 2px var(--card),inset 0 0 0 3px var(--ink-soft);border:1px dashed var(--ink-soft);}
 .gt-stats{display:flex;gap:28px;margin:14px 0 4px;}
 .gt-stats div{display:flex;flex-direction:column-reverse;}
 .gt-stats dt{font-size:13px;color:var(--ink-soft);}
-.gt-stats dd{margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;line-height:1;}
+.gt-stats dd{margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;line-height:1;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:'lnum' 1,'tnum' 1;}
 .gt-anchor{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:0 0 16px;border-radius:14px;background:var(--bg-deep,rgba(128,112,90,.08));}
 .gt-anchor p{margin:2px 0 0;font-size:15px;color:var(--ink-soft);}
 .gt-anchor{cursor:pointer;-webkit-tap-highlight-color:transparent;}
@@ -107,7 +126,10 @@
 .gt-switch input{width:20px;height:20px;}
 .gt-sheet input[type=time]{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);}
 @media (max-width:640px){
-  .gt-treecard,.gt-seasoncard{grid-template-columns:1fr;}
+  .gt-seasoncard{grid-template-columns:1fr;}
+  .gt-today-body{padding:14px 16px 16px;}
+  .gt-line{font-size:22px;}
+  .gt-marks{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:12px;}
   .gt-seasoncard>div:first-child{max-width:180px;margin:0 auto;}
   .gt-card{padding:16px;}
   .gt-wsum li b{min-width:0;width:100%;}
@@ -124,3 +146,8 @@
 .gt-lib-top small{font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;color:var(--ink-soft);}
 .gt-earlier-note{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:12px 0;}
 .gt-earlier-note p{white-space:pre-wrap;margin:4px 0 0;}
+/* accessibility pass (BLD 756): numbers in the display serif use lining figures, so a 1 never reads like an I */
+.gt-card h2,.gt-card h3,.gt-line,.gt-part h3,.gt-weekhead h2,.gt-sheet-head h2{font-variant-numeric:lining-nums;}
+.gt-card.gt-empty h2{font-size:22px;margin:0 0 8px;line-height:1.2;}
+.gt-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.gt-card.pn-setup h2{font-size:22px;margin:0 0 8px;line-height:1.2;}

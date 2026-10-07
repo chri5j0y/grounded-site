@@ -966,6 +966,10 @@ const LIBRARY = (function(){
     it.find = it.findName + ' ' + it.findText + ' ' + low([(it.how || []).join(' ')]); });
   return out;
 })();
+/* LIFE start: every library practice carries its life tags and adapt line from PRACTICE_LIFE (grove/data.js). */
+LIBRARY.forEach(it => { const b = (typeof PRACTICE_LIFE !== 'undefined' ? PRACTICE_LIFE : {})[it.name]; if (!b) return;
+  it.life = b[0].slice(); if (b[1]) { it.adapt = b[1]; if (it.life.indexOf('gentle') < 0) it.life.push('gentle'); } });
+/* LIFE end */
 const LIB_BY_KEY = Object.fromEntries(LIBRARY.map(it => [it.key, it]));
 // Which practices fit which tree. "teen" means middle school and up; "young" means
 // young adults (Birch) and grown-ups (Oak).
