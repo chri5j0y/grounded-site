@@ -223,7 +223,7 @@
           + partsStrip()
           + '<ul class="ov-pts"><li><b>Check-ins</b> for every age, with a growth plan and daily practices.</li><li><b>When Life Changes:</b> guides for the conversations nobody plans for, written for every age.</li><li><b>Private by design:</b> no account, and answers stay on your device.</li><li><b>For professionals:</b> the Grounded Field Guide, with training for chaplains, teachers, and caregivers.</li></ul></div>'
           + '<div class="grow"></div>' + footer(t, 'Scan to see every tree', 'In crisis? Call or text 988, any time.', SITE + '/tools.html');
-        css = SCALE + '\n.ov-top{display:flex;align-items:center;gap:0.25in;background:#8B5E1A;color:#FFF8EC;padding:0.45in 0.6in;}.ov-top img{width:0.9in;height:auto;filter:brightness(0) invert(1);}'
+        css = SCALE + '\n.ov-top{display:flex;align-items:center;gap:0.25in;background:#8B5E1A;color:#FFF8EC;padding:0.45in 0.6in;}.ov-top img{width:0.9in;height:auto;}'
           + '.ov-nm{font-size:38pt;font-weight:600;line-height:1;}.ov-nm sup{font-size:.35em;vertical-align:top;position:relative;top:.3em;}.ov-tag{font-size:16pt;font-style:italic;margin-top:6px;color:#FBEBD0;}'
           + '.ov-lead{font-size:13pt;line-height:1.45;margin:0;}'
           + '.ov-row{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-top:0.25in;text-align:center;}.ov-row img{width:100%;max-width:0.85in;border-radius:0.16in;}.ov-row b{display:block;font-size:14pt;font-weight:600;margin-top:3px;}.ov-row span{display:block;font-size:8.5pt;color:#6B5A4D;line-height:1.2;}'

@@ -569,7 +569,7 @@ a.ss-row::after{content:'';position:absolute;right:13px;top:22px;width:8px;heigh
 .pg-hero.ph .cer-sub{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6);}
 .ph-marriage{--shade-rgb:22,15,5;} .ph-celebrations{--shade-rgb:16,12,6;} .ph-farewells{--shade-rgb:12,9,4;}
 .ph-hard-seasons{--shade-rgb:24,14,3;} .ph-growth{--shade-rgb:13,14,6;} .ph-speaking{--shade-rgb:22,14,3;}
-.ph-tools{--shade-rgb:14,13,7;}
+.ph-teams{--shade-rgb:14,12,6;} .ph-tools{--shade-rgb:14,13,7;}
 .pg-hero.strip.ph-tools{min-height:clamp(380px,40vw,560px);align-items:flex-start;padding-top:56px;background-position:center bottom;background-color:rgb(var(--shade-rgb));}
 @media (max-width:700px){.pg-hero.ph{min-height:720px;padding:36px 0 28px;background-position:center bottom;}
 .pg-hero.ph .cer-actions{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:10px;}
