@@ -1319,6 +1319,7 @@ function fieldDue(){
 const OR = () => (FLD && FLD.orientation) || null;
 const addYear = s => { const [y,m,d] = s.split('-').map(Number); const t = new Date(y + 1, m-1, d); return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; };
 const orLessonsDone = () => OR().lessons.every(l => DATA.orient.lessons[l.id]);
+const orName = () => TIER === 'field' ? 'Field Guide Orientation' : 'Staff Orientation'; // Staff and Founders take Staff Orientation (Chris)
 const orStaffSec = () => (TIER !== 'field' && LIB && LIB.orientationStaff) || null;
 function orState(){
   const O = OR(), D = DATA.orient, t = today(), S = orStaffSec();
@@ -1345,7 +1346,7 @@ function orStatusCard(){
     return `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><div class="spread"><div><span class="pill sage">${icon('check')} Orientation complete</span><p class="muted" style="margin-top:8px">Completed ${nice(s.doneOn)}. Renew by ${nice(s.renewBy)}.${soon ? ' Renewal is open now: retake the scenarios and sign the agreement again.' : ''}</p></div></div>
      <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="or-print-cert">${icon('print')} Save or Print Certificate</button><button class="btn btn-line btn-sm" data-act="or-print-agree">${icon('print')} Save or Print Agreement</button><button class="btn ${soon ? 'btn-gold' : 'btn-line'} btn-sm" data-act="or-home">${soon ? 'Renew Now' : 'Review Orientation'}</button></div></div>`;
   }
-  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>${s.renewing ? 'Time to renew Orientation' : 'Field Guide Orientation'}</h3><p class="muted">${s.renewing ? 'Retake the scenarios and sign the agreement again.' : `${s.done} of ${s.total} steps done.`}</p>${orBar(s.done, s.total)}
+  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><h3>${s.renewing ? 'Time to renew ' + orName() : orName()}</h3><p class="muted">${s.renewing ? 'Retake the scenarios and sign the agreement again.' : `${s.done} of ${s.total} steps done.`}</p>${orBar(s.done, s.total)}
    <button class="btn btn-gold btn-sm" style="margin-top:12px" data-act="or-home">${s.done ? 'Continue' : 'Start'} Orientation</button></div>`;
 }
 function vOrient(){
@@ -1361,7 +1362,7 @@ function vOrient(){
   const hero = s.complete ? ['Orientation complete', `You're all set. Renew by ${nice(s.renewBy)}.`]
     : s.renewing ? ['Time to renew Orientation', s.changed ? 'Our standards have changed since you last signed. Retake the scenarios and sign the agreement again. The lessons are here if you want a refresher.' : "It's been a year. Retake the scenarios and sign the agreement again. The lessons are here if you want a refresher."]
     : ['Welcome. Let\'s get you started.', esc(O.intro[0])];
-  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade; Orientation</div><h1>${hero[0]}</h1><p>${hero[1]}</p>${orBar(s.done, s.total)}</div>
+  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">${TIER === 'field' ? 'Grounded Field Guide&trade; Orientation' : 'Grounded Field Guide&trade;: Staff Orientation'}</div><h1>${hero[0]}</h1><p>${hero[1]}</p>${orBar(s.done, s.total)}</div>
   ${s.complete ? orStatusCard() : ''}
   ${s.changed && O.changes && O.changes.length ? `<div class="card"><h3>What changed</h3><ul class="checklist" style="margin-top:8px">${O.changes.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${!s.complete && !s.renewing ? `<div class="card">${O.intro.slice(1).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>` : ''}
@@ -1453,7 +1454,7 @@ function orSign(){
 function orPrintCert(){
   const s = orState(), D = DATA.orient; if (!s.complete) return;
   fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
-    GGPrint.certificate({tree:'house', name: D.signed.name, title:'Grounded Field Guide Orientation', body:'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.'), date: s.doneOn, renew: s.renewBy, version: OR().version, id: D.signed.id || '', kind:'training'}); });
+    GGPrint.certificate({tree:'house', name: D.signed.name, title: TIER === 'field' ? 'Grounded Field Guide Orientation' : 'Grounded Staff Orientation', body:'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.'), date: s.doneOn, renew: s.renewBy, version: OR().version, id: D.signed.id || '', kind:'training'}); });
 }
 function orPrintAgreement(){
   const A = OR().agreement, D = DATA.orient.signed;
