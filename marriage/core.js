@@ -19,7 +19,8 @@
      a: one digit (0 to 5, 0 is skipped) for each question in BTV_Q.questions, in order; when the app has
      faith.js, the digits for GM_FAITH.two.questions follow. Readers ignore digits past what they know.
      The private safety questions are never on a card.
-   GMCore.answersOf(a) -> {id: v} from a card's digits (the two-tradition digits included when faith.js is here). */
+   GMCore.answersOf(a) -> {id: v} from a card's digits (the two-tradition digits included when faith.js is here).
+   GMCore.week (GWG BLD 755)  The Week Card for the couple's leaders: make, read, codeOf, link, clean (see below). */
 (function () {
   'use strict';
   var ROUNDS = 250000;
@@ -115,13 +116,15 @@
   /* ---------- the Week Card (GWG BLD 755) ----------
      Before a session, the couple can choose to share a short card with their leaders, locked with their shared word
      exactly like the answers card (PBKDF2 then AES-GCM, salt 16, iv 12), carried after the # as #gmw=w1.<code>.
-     {v: 1, s: session ('' or '1' to '6' or 'e1' to 'e3'), n, to (first names), on (YYYY-MM-DD),
+     {v: 1, m: 'one' or 'two' (one device for both, or one partner's own device), s: session ('' or '1' to '6' or 'e1' to 'e3'),
+      n, to (first names; on two devices n made it), on (YYYY-MM-DD),
       vid: [video titles watched], pr: [practices tried], wb: [{w: first name, t: exercise title, a: answer}], q: their question}
      The leader pastes it into the Field Guide (field-guide/premarital.js keeps its own reader of this same format). */
   var WLIM = { list: 40, item: 160, wb: 24, ans: 1500, q: 500 };
   function wclean(o) {
     if (!o || typeof o !== 'object' || Array.isArray(o) || o.v !== 1) return null;
-    if (Object.keys(o).sort().join(',') !== 'n,on,pr,q,s,to,v,vid,wb') return null;
+    if (Object.keys(o).sort().join(',') !== 'm,n,on,pr,q,s,to,v,vid,wb') return null;
+    if (o.m !== 'one' && o.m !== 'two') return null;
     if (typeof o.s !== 'string' || !/^(|[1-9]|e[1-9])$/.test(o.s)) return null;
     if (typeof o.n !== 'string' || !o.n || fname(o.n) !== o.n || typeof o.to !== 'string' || (o.to && fname(o.to) !== o.to)) return null;
     if (typeof o.on !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(o.on)) return null;
@@ -135,7 +138,7 @@
       wb.push({ w: x.w, t: x.t.slice(0, WLIM.item), a: x.a.slice(0, WLIM.ans) });
     }
     if (typeof o.q !== 'string') return null;
-    return { v: 1, s: o.s, n: o.n, to: o.to, on: o.on, vid: vid, pr: pr, wb: wb, q: o.q.slice(0, WLIM.q) };
+    return { v: 1, m: o.m, s: o.s, n: o.n, to: o.to, on: o.on, vid: vid, pr: pr, wb: wb, q: o.q.slice(0, WLIM.q) };
   }
   function wmake(obj, word) {
     var c0 = wclean(obj); if (!c0) return Promise.reject(new Error('not a week card'));

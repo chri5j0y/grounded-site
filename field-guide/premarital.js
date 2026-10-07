@@ -16,6 +16,11 @@
 // statement.defaults leaves the letterhead blank for the Guide's own Settings (pmRole, pmOrg, pmAddress, pmPhone). App data (questions, GMCore, results, faith) loads from ../marriage/.
 // Couples live in DATA.pm.couples: encrypted with the rest of this device's records and carried in backups
 // (merged by GGPm.merge). Nothing is sent.
+// GWG BLD 755, the Week Card: before a session the couple can choose to share a short card from the app (videos
+// watched, practices tried, workbook answers they marked Share With Our Leaders, one question), locked with their
+// shared word like their answers card (#gmw=w1.<code>, read here with its own reader of the same format). The leader
+// pastes it on that session's page, the couple types their word, and it shows at the top of that session as
+// premarital.weekCard.title ("From the Couple This Week"), kept in c.week {sessionKey: [{brought, yes, card}]}.
 // GWG BLD 753, The Grounded Marriage: Essentials: each couple has program 'full' (the default; older couples read
 // as full) or 'essentials' (premarital.essentials: three two-hour sessions keyed e1 to e3, a 6 hour target, and its
 // own Certificate of Completion). The Educator's Statement prints only at 12 logged hours, for every couple. The
@@ -62,6 +67,7 @@ const FB = {
     seal: 'Sign and date in front of a notary, or mark the statement with the church seal. Print it on the educator\'s letterhead.',
     fee: {standard: 125, reduced: 50, confirmed: false}
   },
+  weekCard: {title: 'From the Couple This Week', lead: 'Before a session, the couple can choose to share a Week Card from The Grounded Marriage app: the videos they watched, the practices they tried, workbook answers they marked to share, and one question. Paste the link here, then let the couple type their shared word.', yes: 'The couple said yes to sharing this Week Card with us for this session.', empty: 'No Week Card for this session yet. It is always the couple\'s choice.'},
   card: {lead: 'If the couple wants to, they can share their cards from The Grounded Marriage app with you. Paste one card link from each partner, then let the couple type the word only the two of them know.', yes: 'Both partners said yes to sharing this card with us for our sessions.'},
   safety: {lead: 'Meet with each partner alone for a few minutes. Whatever they share stays with them. Give each person these lines privately.', lines: [['Love Is Respect', 'Call 1-866-331-9474 or text LOVEIS to 22522'], ['National Domestic Violence Hotline', 'Call 1-800-799-7233'], ['Day One (Minnesota)', 'Call 1-866-223-1111'], ['988 Suicide and Crisis Lifeline', 'Call or text 988'], ['Emergency', 'Call 911']]},
   credits: []
@@ -73,7 +79,7 @@ const NAV = [['sessions', 'Sessions'], ['hours', 'Hours Log'], ['card', 'Their C
 const APP_LINK = 'https://growwithgrounded.com/marriage/';
 
 let CTX = {lib: null, field: null, data: null, save: () => {}};
-const S = {view: 'home', id: null, n: null, cardErr: '', cardBusy: false};
+const S = {view: 'home', id: null, n: null, cardErr: '', cardBusy: false, weekErr: '', weekBusy: false};
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -95,7 +101,7 @@ function pm(){
     full: has,
     sessions: has ? L.sessions : FB.sessions,
     app: part('app'), before: part('before'), results: part('results'), refer: part('refer'), faith: part('faith'), pe: part('pe'), certificate: part('certificate'),
-    hours: part('hours'), statement: part('statement'), card: part('card'), safety: part('safety')
+    hours: part('hours'), statement: part('statement'), card: part('card'), safety: part('safety'), weekCard: part('weekCard')
   });
   PC.statement.fee = Object.assign({}, FB.statement.fee, PC.statement.fee || {});
   PCsrc = L;
@@ -340,6 +346,7 @@ function vSession(c){
   const lines = (P.safety.lines || []).map(([n, h]) => `<li><b>${esc(n)}</b>: ${esc(h)}</li>`).join('');
   const wbs = s.workbook ? (Array.isArray(s.workbook) ? s.workbook : [s.workbook]) : [];
   return `${head(c, sLabel(s))}
+  ${weekBlock(c, s)}
   <div class="card"><div class="spread"><h2>${esc(s.title)}</h2><span class="pill">${esc(s.mins || at)} minutes</span></div>
     ${cv ? `<p class="pm-note">Covered in ${esc(sLabel(cv))}.${deep ? ' Chosen to go deeper: lead the full plan, building on what the couple shared in Essentials.' : ''}</p>` : ''}
     ${(s.goals || []).length ? `<h3 style="margin-top:10px">Goals</h3><ul class="pm-ul">${s.goals.map(g => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
@@ -463,6 +470,82 @@ function vCard(c){
     <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="cardin"${S.cardBusy ? ' disabled' : ''}>${S.cardBusy ? 'Opening' : 'Bring In Their Card'}</button></div>
     <p class="muted" style="font-size:14px;margin-top:10px">The word is used once to open the card and is never kept. The answers stay on this device, encrypted with your records.</p></div>`;
   return `${head(c, 'Their Card')}${form}${body}`;
+}
+
+// ---------- the Week Card (GWG BLD 755) ----------
+// The same lock as the answers card: base64url of salt (16), iv (12), then AES-GCM text; PBKDF2 (250,000 rounds,
+// SHA-256) from the shared word, trimmed and lowercase. Inside: {v: 1, m: 'one' or 'two', s: '' or a session key,
+// n, to, on, vid: [titles], pr: [titles], wb: [{w, t, a}], q}. marriage/core.js (GMCore.week) makes it.
+function weekCodeOf(t){
+  t = String(t || '').trim(); const m = /(?:^|[#&?])gmw=(w1\.[A-Za-z0-9_-]{20,90000})/.exec(t);
+  return m ? m[1] : (/^w1\.[A-Za-z0-9_-]{20,90000}$/.test(t) ? t : '');
+}
+function weekOk(o){
+  if (!o || typeof o !== 'object' || Array.isArray(o) || o.v !== 1) return null;
+  if (Object.keys(o).sort().join(',') !== 'm,n,on,pr,q,s,to,v,vid,wb') return null;
+  const nm = x => typeof x === 'string' && x.length <= 40 && x === x.trim() && !/[<>&"`\\\u0000-\u001F\u007F]/.test(x);
+  if ((o.m !== 'one' && o.m !== 'two') || typeof o.s !== 'string' || !/^(|[1-9]|e[1-9])$/.test(o.s) || !nm(o.n) || !o.n || !nm(o.to) || typeof o.on !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(o.on)) return null;
+  const strs = a => Array.isArray(a) && a.length <= 40 && a.every(x => typeof x === 'string') ? a.map(x => x.slice(0, 160)) : null;
+  const vid = strs(o.vid), pr = strs(o.pr); if (!vid || !pr || typeof o.q !== 'string' || !Array.isArray(o.wb) || o.wb.length > 24) return null;
+  const wb = []; for (const x of o.wb){ if (!x || typeof x !== 'object' || Object.keys(x).sort().join(',') !== 'a,t,w' || !nm(x.w) || typeof x.t !== 'string' || typeof x.a !== 'string') return null; wb.push({w: x.w, t: x.t.slice(0, 160), a: x.a.slice(0, 1500)}); }
+  return {v: 1, m: o.m, s: o.s, n: o.n, to: o.to, on: o.on, vid, pr, wb, q: o.q.slice(0, 500)};
+}
+async function readWeek(code, word){
+  const all = unb64u(code.slice(3)), enc = new TextEncoder();
+  const base = await crypto.subtle.importKey('raw', enc.encode(String(word).trim().toLowerCase()), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name: 'PBKDF2', salt: all.slice(0, 16), iterations: 250000, hash: 'SHA-256'}, base, {name: 'AES-GCM', length: 256}, false, ['decrypt']);
+  let pt; try { pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: all.slice(16, 28)}, key, all.slice(28)); } catch (e) { throw new Error('word'); }
+  let o = null; try { o = JSON.parse(new TextDecoder().decode(pt)); } catch (e) {}
+  o = weekOk(o); if (!o) throw new Error('link'); return o;
+}
+const weeksOf = (c, k) => ((c.week || {})[k] || []);
+const sesName = k => { const x = SES(k); return x ? sLabel(x) : (/^e\d$/.test(k) ? 'Essentials Session ' + k.slice(1) : 'Session ' + k); };
+function weekOne(x, k, i){
+  const w = x.card, br = t => esc(t).replace(/\n/g, '<br>');
+  const who = w.m === 'one' && w.to ? esc(w.n) + ' and ' + esc(w.to) : esc(w.n);
+  const ul = arr => `<ul class="pm-ul">${arr.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`;
+  return `<div class="pm-wk1"><p class="muted" style="font-size:15px">From ${who}, made ${esc(nice(w.on))}.${w.s && w.s !== k ? ' They made it for ' + esc(sesName(w.s)) + '.' : ''} ${x.yes ? esc(x.yes.text) + ' (' + esc(nice(x.yes.on)) + ')' : ''}</p>
+    ${w.q ? `<h4>Their Question</h4><p class="pm-quote">${br(w.q)}</p>` : ''}
+    ${w.vid.length ? `<h4>Videos Watched</h4>${ul(w.vid)}` : ''}
+    ${w.pr.length ? `<h4>Practices Tried</h4>${ul(w.pr)}` : ''}
+    ${w.wb.length ? `<h4>From The Couple Workbook</h4>${w.wb.map(y => `<div class="pm-wkwb"><b>${esc(y.t)}</b> <small class="muted">${esc(y.w)}</small><p>${br(y.a)}</p></div>`).join('')}` : ''}
+    <div class="row" style="margin-top:8px"><button type="button" class="btn btn-danger btn-sm" data-pm="weekx" data-v="${i}">Remove This Week Card</button></div></div>`;
+}
+function weekForm(){
+  const W = pm().weekCard;
+  return `<label class="f" for="pm-wl">Week Card Link</label><input type="text" id="pm-wl" autocomplete="off" spellcheck="false" placeholder="Paste the Week Card link">
+    <label class="f" for="pm-ww">Their Shared Word</label><input type="password" id="pm-ww" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="The couple types it">
+    <label class="pm-yes"><input type="checkbox" id="pm-wy"> <span>${esc(W.yes || '')}</span></label>
+    ${S.weekErr ? `<p class="pm-err" role="alert">${esc(S.weekErr)}</p>` : ''}
+    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-pm="weekin"${S.weekBusy ? ' disabled' : ''}>${S.weekBusy ? 'Opening' : 'Bring In Their Week Card'}</button></div>
+    <p class="muted" style="font-size:14px;margin-top:10px">The word is used once to open the card and is never kept. The card stays on this device, encrypted with your records.</p>`;
+}
+function weekBlock(c, s){
+  const W = pm().weekCard, k = skey(s), have = weeksOf(c, k);
+  if (have.length) return `<div class="card pm-week"><div class="spread"><h2>${esc(W.title || 'From the Couple This Week')}</h2><span class="pill sage">Read Only</span></div>
+    ${have.map((x, i) => weekOne(x, k, i)).join('')}
+    <details class="pm-det pm-wkadd"${S.weekErr ? ' open' : ''}><summary><h3>Add Another Week Card</h3></summary>${weekForm()}</details></div>`;
+  return `<details class="card pm-det pm-week"${S.weekErr ? ' open' : ''}><summary><h3>${esc(W.title || 'From the Couple This Week')}</h3></summary>
+    <p class="muted" style="font-size:15px">${esc(W.empty || '')}</p>${W.lead ? `<p>${esc(W.lead)}</p>` : ''}${weekForm()}</details>`;
+}
+async function weekIn(c){
+  const k = String(S.n), code = weekCodeOf(val('pm-wl')), word = val('pm-ww'), yes = (document.getElementById('pm-wy') || {}).checked;
+  S.weekErr = '';
+  if (!val('pm-wl').trim()){ S.weekErr = 'Paste the Week Card link first.'; rerender(true); return; }
+  if (!code){ S.weekErr = 'That link does not look like a Week Card from The Grounded Marriage. Copy it again from their phone.'; rerender(true); return; }
+  if (!word.trim()){ S.weekErr = 'The couple types their shared word to open the card.'; rerender(true); return; }
+  if (!yes){ S.weekErr = 'Check the box once the couple says yes to sharing this Week Card.'; rerender(true); return; }
+  S.weekBusy = true; rerender(true);
+  try {
+    const w = await readWeek(code, word);
+    c.week = c.week || {}; const L = (c.week[k] = c.week[k] || []);
+    const same = L.findIndex(x => x.card.n === w.n && x.card.on === w.on && x.card.m === w.m);
+    const e = {brought: today(), yes: {on: today(), text: pm().weekCard.yes || 'The couple said yes.'}, card: w};
+    if (same >= 0) L[same] = e; else L.push(e);
+    keep(c); S.weekBusy = false; rerender(true); toast('Their Week Card is in.');
+  } catch (e){
+    S.weekBusy = false; S.weekErr = e && e.message === 'word' ? 'That word did not open the Week Card. Let the couple try again.' : 'That Week Card could not be read. The couple can make a fresh one.'; rerender(true);
+  }
 }
 
 // ---------- the Educator's Statement ----------
@@ -633,7 +716,7 @@ function rerender(keepScroll){
   const y = window.scrollY; r.innerHTML = inner();
   window.scrollTo(0, keepScroll ? y : 0);
 }
-function goView(v){ S.view = v; S.cardErr = ''; rerender(); }
+function goView(v){ S.view = v; S.cardErr = ''; S.weekErr = ''; rerender(); }
 const val = id => ((document.getElementById(id) || {}).value || '');
 
 async function cardIn(c){
@@ -674,6 +757,8 @@ function act(k, v){
     case 'logadd': { const m = Math.max(0, +val('pm-lm') || 0); if (!m){ toast('Add the minutes first.'); return; } c.log = c.log || []; c.log.push({id: uid(), date: val('pm-ld') || today(), mins: m, n: nk(val('pm-ln')), notes: val('pm-lt')}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Added. ' + hrs(logMins(c)) + ' in all.'); return; }
     case 'logdel': c.log = (c.log || []).filter(x => x.id !== v); keep(c); rerender(true); return;
     case 'cardin': cardIn(c); return;
+    case 'weekin': weekIn(c); return;
+    case 'weekx': { const k = String(S.n), L = weeksOf(c, k), i = +v; if (!L[i] || !confirm('Remove this Week Card from this device? The couple can share it again anytime.')) return; L.splice(i, 1); if (!L.length) delete c.week[k]; keep(c); rerender(true); return; }
     case 'cardx': if (!confirm('Remove their card from this device? They can share it again anytime.')) return; c.card = null; keep(c); rerender(true); return;
     case 'sreset': c.stmt = {}; keep(c); rerender(true); toast('Filled again from the log.'); return;
     case 'print': if (logMins(c) < STMT() * 60){ toast('The Educator\'s Statement opens at ' + STMT() + ' logged hours.'); return; } printStatement(c); return;
@@ -768,6 +853,11 @@ span.pm-ck{display:inline-block;font-size:13px;font-weight:700;color:var(--dange
 .pm-note{font-weight:600;}
 .pm-ol{margin:8px 0 0;padding-left:22px;}.pm-ol li{margin:6px 0;}
 .pm-upg{border-left:4px solid var(--sage);}
+.pm-week{border-left:4px solid var(--gold);}
+.pm-wk1{padding:10px 0;border-top:1px solid var(--line);}.pm-wk1:first-of-type{border-top:0;}
+.pm-wk1 h4{margin:12px 0 4px;font-size:calc(18px * var(--scale));}
+.pm-wkwb{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--bg-deep);overflow-wrap:anywhere;}.pm-wkwb p{margin:4px 0 0;}
+.pm-wkadd{margin-top:10px;}
 .pm-lock{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--bg-deep);border-left:4px solid var(--gold);}.pm-lock p{margin:4px 0 0;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'pm-css'; s.textContent = CSS; document.head.appendChild(s); })();
@@ -791,6 +881,6 @@ const API = window.GGPm = {
     return {added, updated};
   },
   // For tests and the lead.
-  state: S, data: pm, program: pmc, current: cur, page: openPage, readCard, codeOf, talkList, summaryOf, faithOf, printer: null, last: null
+  state: S, data: pm, program: pmc, current: cur, page: openPage, readCard, codeOf, readWeek, weekCodeOf, talkList, summaryOf, faithOf, printer: null, last: null
 };
 })();
