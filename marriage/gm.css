@@ -190,12 +190,14 @@
 }
 /* The Grounded Marriage brand (GWG BLD 755): Two Trees, One Ground, Denim (approved/grounded-marriage-look.html).
    Denim leads (#3F5F86, dark #9DB9DD), powder pink is the warm second color, sage is the ground. */
-body.gm-denim{--bg:#F7F9FB;--bg-deep:#EEF2F7;--ink:#1E2836;--ink-soft:#5B687A;--line:#DCE3EC;--card:#FFFFFF;
+body.gm-denim main{--bg:#F7F9FB;--bg-deep:#EEF2F7;--ink:#1E2836;--ink-soft:#5B687A;--line:#DCE3EC;--card:#FFFFFF;
   --gold:#3F5F86;--gold-deep:#2F4867;--pink:#E7A9B9;--rose:#A24E6B;--clay:#A24E6B;--plum:#A24E6B;--sage:#5F7D48;--gm-hero:#3F5F86;--alt:#EEF2F7;--page-grain:none;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body.gm-denim{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body.gm-denim main{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
   --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;--alt:#141A22;--page-grain:none;}}
-:root[data-theme="dark"] body.gm-denim{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
+:root[data-theme="dark"] body.gm-denim main{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
   --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;--alt:#141A22;--page-grain:none;}
+/* the denim look lives inside main, so the site header, logo, and footer keep the Grounded colors */
+body.gm-denim main{background:var(--bg);color:var(--ink);}
 .gm-denim .ff-card{box-shadow:0 6px 20px rgba(30,40,54,.06);}
 .gm-denim .ff-tips li::before{background:var(--pink);}
 .gm-denim .btv-scale button[aria-pressed="true"]{color:#fff;}

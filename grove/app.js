@@ -76,7 +76,7 @@ Object.assign(ICON, {
 // family milestones (BLD 745) add the whole family together, never person by
 // person, and a milestone once reached is kept.
 // =====================================================================
-const { stageOf, skyNow, sceneSVG } = window.GGScene;
+const { stageOf, skyNow } = window.GGScene;
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 const T = window.GROVE_TOGETHER || { practices: [], featured: [], themes: [] };
@@ -256,7 +256,7 @@ function alertsHtml() {
 /* The living Today scene (GWG BLD 756): The Grove's own painting, with light from the whole family's
    tending today (parts tended in anyone's tree that shows on The Grove, and practices done together).
    Days with no tending rest in soft mist; it never wilts, droops, or goes bare. Butterflies drift by as
-   the day is tended (shared/gg-living.js). The family grove below (shared/grove-scene.js) stays as it is. */
+   the day is tended (shared/gg-living.js). Our Grove below shows each person's painted tree (shared/gg-grove-row.js). */
 let GV_DONE = 0;
 function groveToday() {
   const d = today(), parts = new Set();
@@ -286,14 +286,22 @@ function groveTodayHtml() {
 function viewGrove() {
   const ps = people(), days = groveDays(), vis = VISITORS.filter(c => days >= c.days).map(c => c.id), next = VISITORS.find(c => days < c.days);
   const scen = SCENES.find(x => x.id === G.scenery && days >= x.days) ? G.scenery : 'forest';
-  const trees = ps.slice(0, 8).map(p => { const t = treeOf(p); return { stage: t.willow ? 'willow' : stageFor(p), remembered: t.remembered, g: t.remembered ? 1 : t.show ? Math.min(1, .12 + t.days / 60) : .1, parts: t.remembered ? [] : t.parts, kind: t.willow ? 'grove' : (G.kinds[p.id] || 'grove'), label: p.name }; });
+  // Each person's painted tree (GWG BLD 756): a warm glow when tended today, the parts as small
+  // markers, and a little mist after a day or more of rest. A remembered willow stays, softer.
+  const d0 = today();
+  const trees = ps.slice(0, 8).map(p => { const t = treeOf(p), last = t.recent.map(r => r.d).filter(x => x <= d0).sort().pop() || '';
+    const td = t.recent.filter(r => r.d === d0).reduce((a, r) => a.concat(r.parts || []), []);
+    return { id: p.id, on: S.sel === p.id, stage: t.willow ? 'willow' : stageFor(p), remembered: t.remembered, private: !t.show,
+      g: t.remembered ? 1 : t.show ? Math.min(1, .12 + t.days / 60) : .1, today: td, week: t.remembered ? [] : t.parts,
+      tended: t.show && last === d0, misty: t.show && (!last || between(last, d0) >= 2), kind: t.willow ? 'grove' : (G.kinds[p.id] || 'grove'), label: p.name }; });
   const fam = famList(), famRoom = Math.max(0, 14 - trees.length), famShown = fam.slice(0, famRoom);
-  famShown.forEach(f => trees.push({ stage: FAM_STAGE[f.t] || 'adult', g: Math.min(1, .12 + f.g / 60), parts: famParts(f), kind: 'grove', label: f.n }));
+  famShown.forEach(f => { const made = famDate(f.u), on = !!f.d && made === d0, pp = famParts(f);
+    trees.push({ stage: FAM_STAGE[f.t] || 'adult', g: Math.min(1, .12 + f.g / 60), today: on ? pp : [], week: pp, tended: on, misty: !on && between(made, d0) >= 2, kind: 'grove', label: f.n }); });
   let h = '';
   if (!G.intro) h += `<div class="banner gv-intro"><h2 class="gv-h3">Where our trees grow together</h2><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += groveTodayHtml();
   h += `<div class="section-head"><h2>Our Grove</h2><p>${ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.'}</p></div>`;
-  h += `<div class="gv-scene">${sceneSVG({ w: 1000, h: 470, gy: 330, trees: trees.length ? trees : [{ stage: 'adult', g: .05, parts: [], kind: 'grove' }], sky: skyNow(), scenery: scen, visitors: vis, uid: 'gv', seed: 11, label: 'Your family grove' })}</div>`;
+  h += `<div class="gv-scene">${window.GGGroveRow ? GGGroveRow.html({ trees: trees.length ? trees : [{ stage: 'adult', g: .05, kind: 'grove', private: true }], sky: skyNow(), scenery: scen, visitors: vis, pick: true, label: 'Your family grove' }) : ''}</div>`;
   h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : 'The grove grows when anyone tends their tree or the family does a practice together.'}${next ? ` Next visitor: ${esc(next.name)}, at ${next.days} ${next.days === 1 ? 'day' : 'days'}.` : ''}</p>`;
   if (fam.length > famShown.length) h += `<p class="muted">${fam.length - famShown.length} more family ${fam.length - famShown.length === 1 ? 'tree is' : 'trees are'} in the Family Trees list.</p>`;
   if (!ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button><a class="btn btn-line btn-sm" href="/oak/">Oak</a><a class="btn btn-line btn-sm" href="/birch/">Birch</a><a class="btn btn-line btn-sm" href="/sequoia/">Sequoia</a><a class="btn btn-line btn-sm" href="/pine/">Pine</a><a class="btn btn-line btn-sm" href="/aspen/">Aspen</a><a class="btn btn-line btn-sm" href="/maple/">Maple</a></div></div>` + (days ? togetherHtml(days) : '') + helpCardHtml();

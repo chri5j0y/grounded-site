@@ -331,7 +331,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 @media(max-width:520px){ .st-bar-row{grid-template-columns:1fr auto;} .st-bar{grid-column:1 / -1;order:3;} }
 .gv-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#3E5A42 0%,#2A4230 48%,#1F3325 100%);}
 .gv-stage{border-radius:16px;overflow:hidden;line-height:0;border:1px solid var(--line);box-shadow:var(--shadow);}
-.gv-stage svg{width:100%;height:auto;display:block;}
+.gv-stage>svg{width:100%;height:auto;display:block;}
 .gv-mini{max-height:220px;}
 .gv-card{border-left:4px solid #3A6B46;}
 .gv-dots{display:inline-flex;gap:5px;vertical-align:middle;margin-left:6px;}
@@ -351,7 +351,7 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .gv-pl{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--pc);}
 .gv-steps{margin:6px 0 8px 20px;}
 .gv-steps li{margin:3px 0;}
-.gv-print-tree svg{width:100%;height:auto;}
+.gv-print-tree>svg{width:100%;height:auto;}
 @media print{ .gv-pt{border-collapse:collapse;width:100%;} .gv-pt th,.gv-pt td{border:.5pt solid #CFC3AD;padding:2mm;text-align:center;font-size:8.5pt;} .gv-pt td{height:8mm;} .gv-print-tree{margin:3mm 0;} }
 /* ---------- When Life Changes ---------- */
 .ht-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A5432 0%,#523823 50%,#2E2118 100%);}
@@ -617,6 +617,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-learn.js?v=b756"></script>
 <script src="../shared/gg-print.js?v=pr8"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
+<script src="../shared/gg-grove-row.js?v=gr1"></script>
 <script src="qr.js"></script>
 <script src="share.js?v=sc1"></script>
 <script src="ceremonies.js?v=cb4"></script>
@@ -3054,7 +3055,7 @@ function sqInput(t, ev){
 // Walking alongside someone through The Grove's twelve weeks. Moved here from The Grove's
 // "For someone in my care" mode in session 11. Wording lives in the Field library (FLD.groveGuide).
 // The practices, weeks, and seasons come from the public grove/data.js and grove/library.js, so
-// there's one place to edit them. The tree is drawn by /shared/grove-scene.js, same as The Grove.
+// there's one place to edit them. The tree is the painted mark from /shared/gg-grove-row.js, same as The Grove.
 // A person's tree is c.gv on their People record, so one person can have Oak visits and a
 // Grove tree. Staff and Founders always see it; Field users once FLD.groveGuide.open.field is on
 // and Orientation is done.
@@ -3112,10 +3113,16 @@ function gvStatus(T){
 }
 const gvVisitors = T => GD && T.start ? GD.CRITTERS.filter(x => gvTended(T) >= x.days).map(x => x.id) : [];
 function gvScene(c, opts){
-  const T = c.gv, wi = gvWeek(T), rooting = !!(wi && wi.season === 'rooting');
-  if (!window.GGScene) return '';
-  return GGScene.sceneSVG(Object.assign({w:1000, h:400, gy: rooting ? 262 : 292, trees:[{stage: GGScene.stageOf(T.age), g: gvGrowth(T, wi), parts: T.parts || [], kind: T.kind || 'grove'}],
-    sky:'day', scenery:'forest', rooting, visitors: gvVisitors(T), seed:11, uid:'gv' + c.id, label: esc(c.name) + "'s tree in The Grove"}, opts || {}));
+  let o; const T = c.gv, wi = gvWeek(T);
+  if (!window.GGScene || !window.GGGroveRow) return '';
+  // Their painted tree over The Grove's painting (GWG BLD 756), sized by growth: a warm glow on a
+  // day watered, the parts they tend as small markers, and a little mist after a day or more of rest.
+  o = Object.assign({visitors: gvVisitors(T)}, opts || {});
+  const d0 = today(), W = T.watered || {}, last = Object.keys(W).filter(k => W[k] && (!T.start || k >= T.start) && k <= d0).sort().pop() || '';
+  const parts = T.parts || [], wet = !!W[d0], wk = last && gvDiff(last, d0) < 7;
+  return GGGroveRow.html({solo: true, mini: !!o.mini, sky: 'day', scenery: 'forest', visitors: o.visitors, label: c.name + "'s tree in The Grove",
+    trees: [{stage: GGScene.stageOf(T.age), g: gvGrowth(T, wi), kind: T.kind || 'grove', today: wet ? parts : [], week: wk ? parts : [], tended: wet,
+      misty: !!T.start && !(wi && wi.before) && (!last || gvDiff(last, d0) >= 2)}]});
 }
 const gvTheme = (T, k) => GD.isKid(T.age) ? GD.KID_WEEK[k-1].theme : GD.WEEKS[k-1].theme;
 const gvQ = (T, k) => GD.isKid(T.age) ? GD.KID_WEEK[k-1].q : GD.WEEKS[k-1].q;
@@ -3289,7 +3296,7 @@ function gvPrintGrew(c){
   const S = GVG(), T = c.gv, wi = gvWeek(T);
   const ent = Array.from({length:12}, (_, i) => (T.journal || {})[i + 1] ? `<div class="pr-step"><h3>Week ${i + 1}: ${esc(gvTheme(T, i + 1))}</h3><p><i>${esc(gvQ(T, i + 1))}</i></p><p style="white-space:pre-wrap">${esc(T.journal[i + 1])}</p></div>` : '').join('');
   fgSheet(ph('For You') + `<h1>What Grew</h1><p>${esc(c.name.replace(/\.+$/, ''))}. Started ${nice(T.start)}. ${gvDaysText(T)}. ${wi.done ? 'Twelve weeks complete.' : 'Through Week ' + wi.week + '.'}</p>
-    <div class="gv-print-tree">${gvScene(c, {uid:'gvp' + c.id})}</div>
+    <div class="gv-print-tree">${gvScene(c)}</div>
     <h2>The parts they tended</h2><p>${(T.parts || []).map(p => esc(GD.PART[p].name)).join(', ')}</p>
     <h2>In their words</h2>${ent || '<p>Nothing written yet.</p>'}
     <div class="pr-foot">${esc(S.sheetClose)}<br>${esc(tmFoot('The Grove'))}</div>`, 'What Grew', {file:'grove-what-grew'});
@@ -3298,7 +3305,7 @@ function gvPrintGrew(c){
 // ----- Oak and Sequoia person pages: their Grove tree, or plant one from their visit -----
 function gvPersonCard(c){
   if (!gvOpen() || !c || anyMe(c)) return '';
-  if (gvPlanted(c)) return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">${esc(gvStatus(c.gv))}. ${gvDaysText(c.gv)}.</p></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">${icon('grove')} Open Their Tree</button></div><div class="gv-stage gv-mini" style="margin-top:10px">${gvScene(c, {uid:'gvm' + c.id, h:300, gy:220, visitors:[]})}</div></div>`;
+  if (gvPlanted(c)) return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">${esc(gvStatus(c.gv))}. ${gvDaysText(c.gv)}.</p></div><button class="btn btn-line btn-sm" data-act="gv-open" data-v="${c.id}">${icon('grove')} Open Their Tree</button></div><div class="gv-stage gv-mini" style="margin-top:10px">${gvScene(c, {mini: true, visitors:[]})}</div></div>`;
   return `<div class="card gv-card"><div class="spread"><div><h3>The Grove</h3><p class="muted">Oak notices. The Grove tends. Plant their tree, and the parts that weren't strong in their last visit come picked.</p></div><button class="btn btn-gold btn-sm" data-act="gv-plant" data-v="${c.id}">${icon('grove')} Plant Their Grove Tree</button></div></div>`;
 }
 
