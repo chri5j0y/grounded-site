@@ -234,6 +234,7 @@ function render() {
   paintNav(); renderBar();
   const v = $('#w-view'); if (!v) return;
   v.innerHTML = (VIEWS[S.tab] || VIEWS.today)();
+  if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: W_SCENE });
   v.querySelectorAll('[data-read]').forEach(el => addRead(el));
   if (S.tab === 'guides' && !S.guide.open && S.guide.find) { const i = v.querySelector('.lc-search'); if (i) gFind(i); }
 }
@@ -364,7 +365,7 @@ function did(part, id) {
   const t = target(), r = rec(t); if (!r) return;
   const d = r.days[today()] = r.days[today()] || {}; d.done = d.done || [];
   if (!d.done.includes(part + ':' + id)) d.done.push(part + ':' + id);
-  persist(t).then(() => { publish(t); render(); toast('Done for today. That\'s enough.'); });
+  persist(t).then(() => { publish(t); render(); if (window.GGLiving) GGLiving.burst(2); toast('Done for today. That\'s enough.'); });
 }
 function another() {
   const t = target(), r = rec(t); if (!r) return;
@@ -375,6 +376,23 @@ function lineHtml() {
   const L = line();
   return `<div class="w-line" role="note">${icon('phone', 20)}<div>${L ? `<b>${esc(L.name || 'Hospice 24/7 line')}</b> <a href="${telHref(L.phone)}">${esc(L.phone)}</a><span>Call any time, day or night, before 911 for anything hospice can help with.</span>` : `<b>Worried? Call your hospice first, day or night.</b><span>${me() ? '<button type="button" class="text-btn" onclick="W.settings(\'line\')">Add your hospice\'s 24/7 number</button> so it is one tap away.' : 'Their number is on your admission papers or the fridge sheet.'}</span>`}</div></div>`;
 }
+/* The living Today scene (GWG BLD 756): Willow's own painting, with light from today's gentle thing.
+   One practice a day is plenty here, so one brings full light. Days without one rest in a light morning
+   mist only; it never wilts, droops, or goes bare. Fireflies drift at dusk (shared/gg-living.js). */
+function willowScene(r, self) {
+  const d = today(), done = new Set(((r.days || {})[d] || {}).done || []).size;
+  const tended = k => !!(((r.days || {})[k] || {}).done || []).length;
+  let miss = 0; const any = Object.keys(r.days || {}).some(k => k < d && tended(k));
+  if (any) { for (let i = 1; i <= 30; i++) { const x = new Date(); x.setDate(x.getDate() - i); if (tended(dstr(x))) break; miss++; } }
+  const who = self ? 'Your willow' : 'Their willow', hr = new Date().getHours();
+  const light = done ? 1 : miss ? 0.3 : 0.55;
+  const line = done ? who + ' is in full light today. That\'s enough.'
+    : miss ? who + ' is resting in a soft morning mist. One gentle thing brings the light, whenever it fits.'
+    : (hr < 12 ? 'Good morning. ' : hr < 17 ? 'Good afternoon. ' : 'Good evening. ') + who + ' is ready for today.';
+  W_SCENE = done;
+  return { light, line, done };
+}
+let W_SCENE = 0;
 function treeCard(r, id, role) {
   const self = id === (me() || {}).id, c = lastOwn(r), rings = ringsOf(r), show = sees('tree');
   const who = self ? 'your' : esc(nameOf(id)) + '\'s';
@@ -382,8 +400,10 @@ function treeCard(r, id, role) {
   if (c && show) words = `<ul class="w-words">${PARTS.map(p => c.levels && c.levels[p.key] ? `<li style="--pc:${p.color}"><b>${p.part}</b><span>${esc(C.words[c.levels[p.key]])}</span></li>` : '').join('')}</ul><p class="w-small">From ${self ? 'your' : 'the'} check-in on ${nice(c.date)}${c.by === 'tapped' ? ', answered with a helper tapping' : ''}.</p>`;
   else if (c && !show) words = `<p>${esc(nameOf(id))} keeps how their tree is doing private. That's their choice to make.</p>`;
   else words = `<p>${self ? 'Your' : esc(nameOf(id)) + '\'s'} tree is planted. A first check-in gives it words.</p>`;
-  return `<div class="w-card w-treecard">
-    <div class="w-treewrap">${willowSVG({ rings, label: 'A willow tree with ' + rings + ' rings' })}<p class="w-rings">${rings ? rings + (rings === 1 ? ' ring' : ' rings') : 'No rings yet'}</p></div>
+  const sc = willowScene(r, self);
+  return `<div class="w-card w-treecard w-treelive">
+    <div class="w-treewrap">${window.GGLiving ? GGLiving.html({ app: 'willow', light: sc.light, label: sc.line }) : willowSVG({ rings, label: 'A willow tree with ' + rings + ' rings' })}
+      <p class="w-sceneline">${esc(sc.line)}</p><p class="w-rings">${rings ? rings + (rings === 1 ? ' ring' : ' rings') : 'No rings yet'}</p></div>
     <div class="w-treetext">
       <p class="w-eyebrow">${self ? 'Your tree' : who + ' tree'}</p>
       ${words}
@@ -950,8 +970,8 @@ function guideHtml(g) {
 }
 function openGuide(id) { S.guide.open = id; S.tab = 'guides'; render(); scrollTop(true); }
 /* When Life Changes videos (Build B1, October 2026): two per guide, played by shared/gg-learn.js from willow/guide-videos.js.
-   A quiet check shows once a video has been watched on this device (gg-learn:willow). */
-function vidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:willow') || '{}').done || {})[id]); } catch (e) { return false; } }
+   A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
+function vidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('willow', id)); } catch (e) { return false; } }
 function guideVids(gid) {
   const b = (side, name, cls) => { const id = 'wl-g-' + gid + '-' + side, w = vidWatched(id);
     return `<button type="button" class="btn ${cls} w-gv-btn" onclick="W.watch('${gid}','${side}')">${icon(w ? 'check' : 'play', 18)} Watch: ${name}${w ? '<span class="w-gv-w">Watched</span>' : ''}</button>`; };
@@ -962,7 +982,7 @@ function watchGuide(gid, side) { if (window.GGLearn) GGLearn.open('willow', 'wl-
 // gg-learn's Open the Full Guide button lands here.
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.willow = id => { if (G.guides.some(g => g.id === id)) openGuide(id); };
-window.addEventListener('gg-learn-close', () => { if (S.tab === 'guides' && S.guide.open) { const y = window.scrollY; render(); window.scrollTo(0, y); } });
+['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (S.tab === 'guides' && S.guide.open) { const y = window.scrollY; render(); window.scrollTo(0, y); } }));
 function printGuide(id) {
   const g = G.guides.find(x => x.id === id); if (!g) return;
   printHtml(g.title, g.parts.map(p => `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('') + `<p>${esc(G.foot)}</p>` + (window.GGSources ? GGSources.html('willow:' + g.id) : ''));

@@ -532,6 +532,29 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .gv-prac-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
 .gv-prac-top small{font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;color:var(--ink-soft);}
 .gv-kid{font-size:calc(14px * var(--scale));}
+/* the living Today scene (GWG BLD 756) */
+.gv-today{padding:0;overflow:hidden;}
+.gv-today .gl-scene{border-radius:0;}
+.gv-today-strip{padding:12px 16px 14px;}
+.gv-marks{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.gv-marks li{display:flex;align-items:center;gap:6px;font-size:calc(14px * var(--scale));color:var(--ink-soft);}
+.gv-marks li span{width:12px;height:12px;border-radius:50%;border:2px solid var(--pc);background:transparent;}
+.gv-marks li.on{color:var(--ink);font-weight:600;}
+.gv-marks li.on span{background:var(--pc);box-shadow:0 0 0 3px color-mix(in srgb,var(--pc) 30%,transparent);}
+.gv-today-line{margin:8px 0 0;font-size:calc(16px * var(--scale));}
+.gv-marks .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+/* Show Ways Everyone Can Join First (GWG BLD 756) */
+.gv-joinrow{margin:4px 0 14px;}
+.gv-switch{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;min-height:48px;}
+.gv-switch b{display:block;font-size:calc(16px * var(--scale));}
+.gv-switch small{display:block;color:var(--ink-soft);font-size:calc(14px * var(--scale));margin-top:2px;}
+.gv-track{flex:0 0 auto;position:relative;width:44px;height:26px;border-radius:999px;background:var(--line);margin-top:2px;transition:background .2s;}
+.gv-track::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s;}
+.gv-switch[aria-checked="true"] .gv-track{background:#3F7C9C;}
+.gv-switch[aria-checked="true"] .gv-track::after{transform:translateX(18px);}
+.gv-switch:focus-visible{outline:3px solid #3F7C9C;outline-offset:2px;}
+.gv-join{font-size:calc(14px * var(--scale));border-left:3px solid #3F7C9C;padding-left:10px;margin:8px 0;}
+@media (prefers-reduced-motion:reduce){.gv-track,.gv-track::after{transition:none;}}
 .gv-acts{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:8px;}
 .text-btn{background:none;border:none;padding:4px 0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
 .gv-steps{margin:8px 0 0;}
@@ -590,6 +613,7 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 <script src="/grove/data.js?v=fd3"></script>
 <script src="/grove/library.js?v=vb5"></script>
 <script src="/shared/grove-scene.js?v=w2k"></script>
+<script src="/shared/gg-living.js?v=lv1"></script>
 <script src="/shared/gg-avatars.js"></script>
 <script src="/shared/gg-profiles.js?v=lb6"></script>
 <script src="/grove/together.js?v=r5a"></script>

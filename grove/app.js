@@ -231,6 +231,7 @@ function render() {
   renderTabs();
   const v = $('#view');
   v.innerHTML = hereBar() + alertsHtml() + ({ grove: viewGrove, wall: viewWall, together: viewTogether, earlier: viewEarlier, how: viewHow, library: viewLibrary }[S.tab] || viewGrove)();
+  if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: GV_DONE });
   if (S.tab === 'library' && S.lib.q) libFind();
 }
 window.render = render;
@@ -252,6 +253,36 @@ function alertsHtml() {
 }
 
 /* ---------- Our grove ---------- */
+/* The living Today scene (GWG BLD 756): The Grove's own painting, with light from the whole family's
+   tending today (parts tended in anyone's tree that shows on The Grove, and practices done together).
+   Days with no tending rest in soft mist; it never wilts, droops, or goes bare. Butterflies drift by as
+   the day is tended (shared/gg-living.js). The family grove below (shared/grove-scene.js) stays as it is. */
+let GV_DONE = 0;
+function groveToday() {
+  const d = today(), parts = new Set();
+  people().forEach(p => treeOf(p).recent.forEach(r => { if (r.d === d) (r.parts || []).forEach(k => parts.add(k)); }));
+  Object.keys(G.done[d] || {}).forEach(id => { const pr = TP[id]; if (pr && pr.part) parts.add(pr.part); });
+  const anyToday = parts.size > 0 || Object.keys(G.done[d] || {}).length > 0 || !!G.grew[d];
+  const done = parts.size || (anyToday ? 1 : 0);
+  const before = Object.keys(G.grew).filter(k => k < d).sort();
+  let miss = 0;
+  if (before.length) { const last = before[before.length - 1]; miss = Math.max(0, between(last, d) - 1); }
+  const lvl = miss === 0 ? 0 : miss <= 3 ? 1 : 2, base = [0.55, 0.3, 0.12][lvl];
+  const light = Math.min(1, base + done * (1 - base) / 3), hr = new Date().getHours();
+  const line = done >= 3 ? 'The grove is in full light today.'
+    : done ? (lvl === 2 ? 'The sun is finding the grove again. Welcome back.' : 'The light is coming in. The grove is warming up.')
+    : lvl === 0 ? (hr < 12 ? 'Good morning.' : hr < 17 ? 'Good afternoon.' : 'Good evening.') + ' The grove is ready for today.'
+    : lvl === 1 ? 'The grove is waiting in the morning mist. One practice brings the sun.'
+    : 'The grove has been resting in the mist. Nothing is lost. One practice brings the sun.';
+  return { light, line, done, parts: [...parts] };
+}
+function groveTodayHtml() {
+  if (!window.GGLiving) return '';
+  const sc = groveToday(); GV_DONE = sc.done;
+  return `<div class="card gv-today">${GGLiving.html({ app: 'grove', light: sc.light, label: sc.line })}
+    <div class="gv-today-strip"><ul class="gv-marks" aria-label="Parts the family tended today">${PARTS6.map(p => `<li class="${sc.parts.includes(p.key) ? 'on' : ''}" style="--pc:${p.color}"><span aria-hidden="true"></span>${p.name}<b class="sr-only">${sc.parts.includes(p.key) ? ', tended today' : ''}</b></li>`).join('')}</ul>
+    <p class="gv-today-line">${esc(sc.line)}</p></div></div>`;
+}
 function viewGrove() {
   const ps = people(), days = groveDays(), vis = VISITORS.filter(c => days >= c.days).map(c => c.id), next = VISITORS.find(c => days < c.days);
   const scen = SCENES.find(x => x.id === G.scenery && days >= x.days) ? G.scenery : 'forest';
@@ -260,6 +291,7 @@ function viewGrove() {
   famShown.forEach(f => trees.push({ stage: FAM_STAGE[f.t] || 'adult', g: Math.min(1, .12 + f.g / 60), parts: famParts(f), kind: 'grove', label: f.n }));
   let h = '';
   if (!G.intro) h += `<div class="banner gv-intro"><h3>Where our trees grow together</h3><p><b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Cheer each other on, do a few things together, and watch the grove grow.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
+  h += groveTodayHtml();
   h += `<div class="section-head"><h2>Our Grove</h2><p>${ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.'}</p></div>`;
   h += `<div class="gv-scene">${sceneSVG({ w: 1000, h: 470, gy: 330, trees: trees.length ? trees : [{ stage: 'adult', g: .05, parts: [], kind: 'grove' }], sky: skyNow(), scenery: scen, visitors: vis, uid: 'gv', seed: 11, label: 'Your family grove' })}</div>`;
   h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : 'The grove grows when anyone tends their tree or the family does a practice together.'}${next ? ` Next visitor: ${esc(next.name)}, at ${next.days} ${next.days === 1 ? 'day' : 'days'}.` : ''}</p>`;
@@ -405,17 +437,23 @@ function weekNo() { return Math.floor(Math.max(0, between(G.start, today())) / 7
 function doneToday(id) { return !!(G.done[today()] || {})[id]; }
 function practiceCard(pr, featured) {
   const open = S.open === pr.id, done = doneToday(pr.id), part = PARTS6.find(x => x.key === pr.part) || {};
-  return `<div class="${featured ? 'card gv-featured' : 'gv-prac'}" style="--pc:${part.color}"><div class="gv-prac-top"><b>${esc(pr.name)}</b><small>${esc(part.name || '')}</small></div><p>${esc(pr.text)}</p>${pr.kid ? `<p class="muted gv-kid">For little ones: ${esc(pr.kid)}</p>` : ''}
+  return `<div class="${featured ? 'card gv-featured' : 'gv-prac'}" style="--pc:${part.color}"><div class="gv-prac-top"><b>${esc(pr.name)}</b><small>${esc(part.name || '')}</small></div><p>${esc(pr.text)}</p>${pr.kid ? `<p class="muted gv-kid">For little ones: ${esc(pr.kid)}</p>` : ''}${G.joinFirst && pr.adapt ? `<p class="gv-join"><b>Everyone can join.</b> ${esc(pr.adapt)}</p>` : ''}
     <div class="gv-acts"><button type="button" class="btn ${done ? 'btn-line' : 'btn-gold'} btn-sm" aria-pressed="${done}" data-act="did" data-id="${pr.id}">${done ? 'Done today. Undo' : 'We did this today'}</button><button type="button" class="text-btn" aria-expanded="${open}" data-act="how" data-id="${pr.id}">${open ? 'Hide how' : 'Show me how'}</button></div>
     ${open ? `<ol class="gv-steps">${String(pr.steps || '').split('|').filter(Boolean).map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}</div>`;
 }
+/* Show Ways Everyone Can Join First (GWG BLD 756): a family setting, kept with the grove on this device. It holds
+   no one's health information. When it is on, practices with a seated or gentle way (grove/together.js life tags)
+   come first, with their way for everyone to join. Nothing is hidden. */
+const joinFits = x => !!(x.adapt || (x.life || []).includes('gentle'));
+function joinOrder(list) { return G.joinFirst ? list.filter(joinFits).concat(list.filter(x => !joinFits(x))) : list; }
 function viewTogether() {
   const w = weekNo(), feat = TP[T.featured[w]];
   let h = `<div class="section-head"><h2>Together</h2><p>Things your family does side by side. Each one grows the grove. Suggestions only: do one, do several, or skip a week.</p></div>`;
   if (feat) h += `<p class="gv-kicker">This week's theme: ${esc(T.themes[w] || '')}</p>` + practiceCard(feat, true);
   h += `<div class="gv-chips"><button type="button" class="chip${!S.part ? ' on' : ''}" aria-pressed="${!S.part}" data-act="part" data-id="">All parts</button>${PARTS6.map(p => `<button type="button" class="chip${S.part === p.key ? ' on' : ''}" aria-pressed="${S.part === p.key}" data-act="part" data-id="${p.key}">${p.name}</button>`).join('')}</div>`;
+  h += `<div class="gv-joinrow"><button type="button" class="gv-switch" role="switch" aria-checked="${!!G.joinFirst}" data-act="joinfirst"><span class="gv-track" aria-hidden="true"></span><span><b>Show Ways Everyone Can Join First</b><small>${G.joinFirst ? 'On. Seated and gentle ways come first, with a way for everyone to join.' : 'Off. Turn it on to put seated and gentle ways first.'}</small></span></button></div>`;
   PARTS6.filter(p => !S.part || S.part === p.key).forEach(p => {
-    const list = T.practices.filter(x => x.part === p.key); if (!list.length) return;
+    const list = joinOrder(T.practices.filter(x => x.part === p.key)); if (!list.length) return;
     h += `<section class="gv-partsec" style="--pc:${p.color}"><h3>${icon(p.key)}${p.name} <small>${p.sub}</small></h3>${list.map(x => practiceCard(x, false)).join('')}</section>`;
   });
   return h;
@@ -510,7 +548,7 @@ function drop(id) {
 function did(id) {
   const d = today(), day = G.done[d] || (G.done[d] = {});
   if (day[id]) { delete day[id]; if (!Object.keys(day).length) delete G.done[d]; save(); render(); return; }
-  const a = me(); day[id] = { by: a ? a.id : null, at: new Date().toISOString() }; G.grew[d] = 1; save(); render(); toast('Nice work. The grove grew today.');
+  const a = me(); day[id] = { by: a ? a.id : null, at: new Date().toISOString() }; G.grew[d] = 1; save(); render(); if (window.GGLiving) GGLiving.burst(2); toast('Nice work. The grove grew today.');
 }
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab]');
@@ -532,6 +570,7 @@ document.addEventListener('click', e => {
   else if (act === 'did') did(id);
   else if (act === 'how' || act === 'libhow') { S.open = S.open === id ? '' : id; render(); }
   else if (act === 'part') { S.part = id; render(); }
+  else if (act === 'joinfirst') { G.joinFirst = !G.joinFirst; save(); render(); const b = document.querySelector('[data-act="joinfirst"]'); if (b) b.focus(); toast(G.joinFirst ? 'Ways everyone can join come first.' : 'Back to the usual order.'); }
   else if (act === 'oldnotes') { S.open = S.open === 'oldnotes' ? '' : 'oldnotes'; render(); }
   else if (act === 'famdrop') famDrop(id);
   else if (act === 'seen') { const p = who(id), s = p && (p.shared || {}).safety; if (s) { G.seen[id] = s.flag; save(); render(); } }

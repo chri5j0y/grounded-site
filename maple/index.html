@@ -395,6 +395,16 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .act-group h3 .part-dot{width:34px;height:34px;}
 .act-group h3 .part-dot svg{width:20px;height:20px;}
 .suggest{font-family:var(--sans);font-size:13px;font-weight:600;background:var(--sun-soft);color:var(--ink);border-radius:999px;padding:3px 10px;}
+/* Health and Ability (GWG BLD 756) */
+.mp-fits{display:inline-block;font-family:var(--sans);font-size:12.5px;font-weight:700;background:var(--sky);color:var(--bg);border-radius:999px;padding:2px 9px;margin:2px 0 6px;}
+.mp-adapt{margin:6px 0 0;font-size:14.5px;line-height:1.45;color:var(--ink-soft);font-style:italic;}
+.mp-idea{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--sun-soft);color:var(--ink);font-size:15px;}
+.mp-ex{list-style:none;margin:8px 0 0;padding:8px 12px;border-radius:12px;background:var(--sun-soft);color:var(--ink);font-size:15.5px;}
+.mp-ex li{padding:2px 0;}
+.mp-life-lines{margin-top:14px;}
+.mp-life-lines ul{padding-left:18px;}
+.mp-life-lines li{margin:6px 0;}
+.mp-life-lines small{display:block;color:var(--ink-soft);}
 .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;}
 .act{text-align:left;border:3px solid var(--outline);background:var(--card);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;}
 .act strong{font-family:var(--kid);font-weight:500;font-size:20px;display:flex;justify-content:space-between;gap:8px;align-items:center;}
@@ -898,9 +908,11 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=lb6"></script>
+<script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-filelock.js?v=fl2"></script>
 <script src="/maple/guides.js?v=ps1"></script>
 <script src="/maple/checkin.js?v=ps1"></script>
+<script src="/maple/life.js?v=hl1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=src5"></script>
 <script src="/shared/gg-tend.js?v=vb10"></script>
@@ -1339,6 +1351,12 @@ const ACTIVITIES = [
     easy: "Check on your seed and say hi to it." }
 ];
 
+/* Health and Ability (GWG BLD 756, HA 1): maple/life.js adds eight activities and puts life tags and
+   an adapt line on every activity. Ids never change, so saved plans and check-offs keep working. */
+const MPL = window.MAPLE_LIFE || { acts: {}, add: [], notes: [], steps: {} };
+(MPL.add || []).forEach(a => { if (!ACTIVITIES.some(x => x.id === a.id)) ACTIVITIES.push(JSON.parse(JSON.stringify(a))); });
+ACTIVITIES.forEach(a => { const t = (MPL.acts || {})[a.id]; if (t) { a.life = t.life.slice(); a.adapt = t.adapt; } });
+
 /* Tree friends (the game layer, GWG BLD 745): critters come to visit as a surprise as days of
    tending add up. Kids never see a count to earn them, only a friend who shows up. */
 const CRITTERS = [
@@ -1775,11 +1793,12 @@ function renderStep(first, mapleKey) {
       <div class="learn-card tree kid-text"><small>What ${p.key === 'trunk' ? 'a ' : ''}${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for a tree</small>${esc(g.tree)}</div>
       <div class="learn-card you kid-text"><small>What your ${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for you</small>${esc(g.you)}</div>
     </div>
-    <div class="qs">${qs.map((q, i) => `<div class="qcard${qa[i] ? ' answered' : ''}">
+    <div class="qs">${qs.map((q, i) => { const ln = q[3] ? { ex: [], tip: [] } : mpNote(p.key, i, loadKids()[kidId(S.name || '')] || { _pid: null }); return `<div class="qcard${qa[i] ? ' answered' : ''}">
       <div class="qline"><p class="qtext" id="q-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
       <div class="ans-row" role="group" aria-labelledby="q-${i}">${CK.answers.map(an => `<button class="ansb" aria-pressed="${qa[i] === an[0]}" onclick="pickAns(${i},'${an[0]}')">${ANS_ICON[an[0]]}<span>${esc(an[1])}</span></button>`).join('')}</div>
-      ${S.mode === 'grown' ? `<p class="qtip"><b>Grown-up tip.</b> ${esc(q[1])}</p>${whyFor(S.grade, p.key, i) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(S.grade, p.key, i))}</p></details>` : ''}` : ''}
-    </div>`).join('')}</div>
+      ${ln.ex.length ? `<ul class="mp-ex kid-text" aria-label="An example">${ln.ex.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${S.mode === 'grown' ? `<p class="qtip"><b>Grown-up tip.</b> ${esc(q[1])}${ln.tip.map(x => ' ' + esc(x)).join('')}</p>${whyFor(S.grade, p.key, i) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(S.grade, p.key, i))}</p></details>` : ''}` : ''}
+    </div>`; }).join('')}</div>
     <div class="step-nav">
       <button class="soft-btn" onclick="${S.step === 0 ? 'go(\'home\')' : 'prevStep()'}">Back</button>
       <button class="soft-btn" onclick="skipStep()">Skip</button>
@@ -2004,6 +2023,7 @@ function renderResults(rec, lastKey) {
         <p class="lead kid-text" style="font-size:19px">Here is your whole tree today.</p>
         <ul class="kind-list">${kind}</ul>
         ${note}
+        <div id="mp-life-offer" class="no-print"></div>
         ${thenNowHTML(S.prior, rec, name)}
         <div class="action-row">
           <button class="soft-btn" onclick="openTree(kidId(S.name), 'tree')">Go to my tree</button>
@@ -2012,6 +2032,9 @@ function renderResults(rec, lastKey) {
       </div>
     </div>`;
   if (lastKey) maple('results-tree', lastKey);
+  // Their Health and Ability: one quiet card for the grown-up after the child's first check-in (kept once, in the child's vault).
+  const lk = loadKids()[kidId(name)];
+  if (window.GGLife && lk && lk.checkins.length === 1 && mpLifeUse(lk)) GGLife.offerCard($('mp-life-offer'), 'maple', { forChild: true, onChoose: () => GGLife.dialog('maple', { forChild: true, id: mpLifePid(lk) || undefined }) });
   if (S.readAloud) setTimeout(() => say(`Great job, ${name}! Here is your whole tree today.`), 500);
 }
 
@@ -2245,6 +2268,7 @@ function renderTree() {
     <details class="grown-box grown-section"${S.mode === 'grown' ? ' open' : ''}><summary>For grown-ups</summary><div class="inner">
       ${info ? grownNoteHTML(info, kid.name, last) : '<p>No check-ins yet.</p>'}
       ${mpGrownTending(kid)}
+      ${window.GGLife ? `<p style="margin-top:10px"><b>Their Health and Ability.</b> Choose together anything that's part of ${esc(kid.name)}'s life right now, so activities and guides that fit come first. It stays locked in ${esc(kid.name)}'s profile. <button class="link-btn" onclick="mpLifeDialog()">Their Health and Ability</button></p>${mpLifeLinesHtml()}` : ''}
       <div class="action-row" style="margin-top:10px">
         <button class="soft-btn" onclick="exportKid('${esc(S.kid)}')">Save ${esc(kid.name)} to a file</button>
         <button class="danger-link" onclick="removeKid('${esc(S.kid)}')">Remove ${esc(kid.name)}</button>
@@ -2318,7 +2342,42 @@ function mpWeeklyBank() {
 function mpPracticeInfo(key, name) {
   const a0 = actByName(key, name); if (!a0) return {};
   const a = actW(a0), young = isK2(MP_KID && MP_KID.grade);
-  return { desc: young ? a.k2 : a.g35[0], guide: `<ol>${a.g35.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Do it together.</b> A grown-up can read it out loud and cheer for every try.</p>${window.GGSources ? GGSources.practice(a0.title, 'maple') : ''}`, hard: a.easy || '' };
+  return { desc: young ? a.k2 : a.g35[0], guide: `<ol>${a.g35.map(x => `<li>${esc(x)}</li>`).join('')}</ol>${a0.adapt ? `<p><b>Another way.</b> ${esc(a0.adapt)}</p>` : ''}<p><b>Do it together.</b> A grown-up can read it out loud and cheer for every try.</p>${window.GGSources ? GGSources.practice(a0.title, 'maple') : ''}`, hard: a.easy || '' };
+}
+
+/* ---------- Their Health and Ability (GWG BLD 756, HA 1) ----------
+   The grown-up chooses it together with the child, in Settings or For grown-ups. It lives in the
+   child's locked Kids profile (shared/gg-life.js), never in open storage, a printout, or The Grove.
+   The child sees only the effects: activities that fit come first with Fits You and their other
+   way, guides Picked for You, and a few examples. Questions, scores, flags, and help lines never change.
+   A tree not yet saved in a profile uses the choice for this visit only, and only when no grown-up
+   profile is open (so a grown-up's own choice is never used for a child). */
+function mpLifePid(k) { k = k || MP_KID || loadKids()[S.kid]; return (k && k._pid) || null; }
+function mpLifeOk(k) { if (!window.GGLife) return false; const pid = mpLifePid(k); if (pid) return !!(window.GGP && GGP.isOpen(pid)); return !(window.GGP && GGP.active && GGP.active()); }
+function mpLifeUse(k) { const ok = mpLifeOk(k); if (window.GGLife) GGLife.use(ok ? mpLifePid(k) : null); return ok; }
+function mpLifeIds(k) { return mpLifeUse(k) ? GGLife.chosen('maple') : []; }
+const mpUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
+function mpFits(a) { return !!a && mpLifeOk() && GGLife.fits({ life: a.life || [], adapt: a.adapt || '' }); }
+function mpNote(part, i, k) {
+  const out = { ex: [], tip: [] }, ids = mpLifeIds(k); if (!ids.length) return out;
+  (MPL.notes || []).forEach(n => { if (n.part !== part || n.i !== i || (n.grades && !n.grades.includes(String(S.grade)))) return; ids.forEach(id => { const x = (n.n || {})[id]; if (x) { if (x.ex) out.ex.push(x.ex); if (x.tip) out.tip.push(x.tip); } }); });
+  out.ex = mpUniq(out.ex); out.tip = mpUniq(out.tip); return out;
+}
+function mpSteps(part) { const St = MPL.steps || {}; return mpUniq(mpLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '')); }
+function mpLifeLinesHtml() {
+  const L = mpLifeUse() ? GGLife.lines('maple') : []; if (!L.length) return '';
+  const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
+  return `<div class="mp-life-lines no-print"><h3>${esc(GGLife.LINES_TITLE || 'Information and Support')}</h3><p class="gt-small">For information and support. In an emergency, call 911. In a crisis, call or text 988.</p><ul>${L.map(x => `<li><b>${esc(x.name)}</b> ${href(x) ? `<a class="text-link" href="${esc(href(x))}"${x.tel ? '' : ' target="_blank" rel="noopener"'}>${esc(x.how)}</a>` : esc(x.how)}${x.tel && x.url ? ` <a class="text-link" href="${esc(x.url)}" target="_blank" rel="noopener">Website</a>` : ''}<small>${esc(x.note || '')}</small></li>`).join('')}</ul></div>`;
+}
+function mpLifeDialog() {
+  const k = MP_KID; if (!window.GGLife || !k) return;
+  if (!mpLifeUse(k)) { toast(k._pid ? 'Open ' + k.name + '\'s tree first.' : 'Save ' + k.name + '\'s tree in a Kids profile first, then choose together.'); return; }
+  GGLife.dialog('maple', { forChild: true, id: mpLifePid(k) || undefined });
+}
+function mpLifeMount() {
+  const host = $('mp-life-host'); if (!host || !window.GGLife || !MP_KID) return;
+  if (!mpLifeUse(MP_KID)) { host.innerHTML = `<h3>Their Health and Ability</h3><p class="gt-small">For the grown-up. ${MP_KID._pid ? `Open ${esc(MP_KID.name)}'s tree with your grown-up profile to choose together.` : `Save ${esc(MP_KID.name)}'s tree in a Kids profile first, then choose together here. It stays locked in their profile.`}</p>`; return; }
+  GGLife.chooser(host, { tree: 'maple', forChild: true, id: mpLifePid(MP_KID) || undefined });
 }
 function mpInit(kid) {
   if (!window.GGTend) return;
@@ -2327,7 +2386,7 @@ function mpInit(kid) {
   libAge: 'maple',
   profileId: () => (MP_KID && MP_KID._pid) || null,
     tool: 'maple', toolName: 'Maple',
-    maxDry: 1,   // only a thirsty look, never drooping (Parity Sweep 1)
+    maxDry: 1,   // only a light mist, never drooping (Parity Sweep 1, BLD 756)
     els: { today: 'mp-today', week: 'mp-week', season: 'mp-season' },
     parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.value, color: p.hex })),
     moveKey: 'leaves',
@@ -2370,7 +2429,8 @@ function mpProfileHtml() {
     <p class="gt-small">${k._pid ? `${esc(k.name)} can open this tree with their own secret picture code, and the grown-ups who agreed can always open it too.` : k._legacy ? 'This tree was saved before Grounded profiles and is not locked yet.' : 'Right now this tree is only kept until this page closes.'}</p></section>`;
 }
 function mpExtraSettings() {
-  return mpWordingHtml() + `<section class="mp-see" id="mp-see"><h3>What your grown-up can see</h3>${MP_SEE}</section>` + mpMovingHtml(false);
+  if (window.GGLife) Promise.resolve().then(mpLifeMount);
+  return mpWordingHtml() + (window.GGLife ? `<section id="mp-set-life"><div id="mp-life-host"><h3>Their Health and Ability</h3></div></section>` : '') + `<section class="mp-see" id="mp-see"><h3>What your grown-up can see</h3>${MP_SEE}</section>` + mpMovingHtml(false);
 }
 
 /* ---------- Faith or Plain: setup and settings (GWG BLD 745) ---------- */
@@ -2424,7 +2484,7 @@ function mpSetupDone() {
 /* ---------- The game layer (Decision 3, GWG BLD 745) ----------
    Maple's own: tree friends who come as a surprise, nurture, and kind words. The shared core:
    tree levels, milestones, the balance bonus (a rainbow week), and the 14-day pause after a
-   check-in that says a child feels alone or without hope. Only a thirsty look, never drooping,
+   check-in that says a child feels alone or without hope. Missed days rest in a light mist, never drooping,
    and no Hardy setting. No streaks, no currency, nothing ever taken away. Saved in tend.mp. */
 const MP_KIND = [
   'You did it! Your tree says thank you.',
@@ -2445,7 +2505,6 @@ const MP_MILES = [
   ['balance', 'First Rainbow Week', 'You tended all six parts in one week.'],
   ['ring', 'First Ring', 'You finished a whole season and grew a ring.']
 ];
-const MP_THIRSTY = 'Your tree looks a little thirsty. One practice gives it a drink.';
 const mpMonday = k => addDays(k, -((keyDate(k).getDay() + 6) % 7));
 function mpTended(s, k) { const x = (s.days || {})[k]; return !!(x && (((x.d || []).length) || ((x.a || []).length))); }
 function mpRec(s) { if (!s.mp || typeof s.mp !== 'object') s.mp = {}; s.mp.miles = s.mp.miles || {}; s.mp.bal = s.mp.bal || {}; s.mp.friends = s.mp.friends || {}; return s.mp; }
@@ -2483,14 +2542,6 @@ function mpPause() {
     const info = concernInfo(c.answers || {}, c.grade, c.safety, c.wording);
     return info.flags.some(f => f.type === 'alone' || f.type === 'hope') || info.safe.some(x => x.kind === 'self');
   });
-}
-// Only a thirsty look: when the shared tree would droop or rest bare, Maple shows it a little dry instead.
-function mpThirsty() {
-  if (!window.GGTend || mpPause()) return;
-  const h = GGTend.health(); if (h < 1) return;
-  const box = $('gt-tree'), st = document.querySelector('#mp-today .gt-status');
-  if (box && h > 1 && GGTend.treeSVG) box.innerHTML = GGTend.treeSVG(1, GGTend.partsOn(dkey()));
-  if (st) st.textContent = MP_THIRSTY;
 }
 function mpCheer(text, sub, critter) {
   let el = $('mp-cheer');
@@ -2586,7 +2637,6 @@ function mpVisitCheck(force) {
 }
 window.addEventListener('gg-visit', () => mpVisitCheck(true));
 function mpTodayExtra(s) {
-  Promise.resolve().then(mpThirsty);
   const n = window.GGTend ? GGTend.partsOn(dkey()) : 0, paused = mpPause();
   const line = paused ? 'Tend it whenever you like. Your tree is always glad to see you.' : n ? mpKindWord(n) : 'One practice is enough to start. Your tree is waiting for you.';
   const days = mpDays(s), L = mpLevel(days), wk = mpWeekParts(s, mpMonday(dkey())), wn = Object.keys(wk).length;
@@ -2671,14 +2721,17 @@ function mpRenderPlan() {
   if (!MP_PLAN) { const t = mpTendGet(); MP_PLAN = JSON.parse(JSON.stringify((t && t.plan) || {})); }
   PARTS.forEach(p => { const x = MP_PLAN[p.key] = MP_PLAN[p.key] || {}; x.selected = x.selected || []; x.own = x.own || []; x.custom = x.custom || ''; if (x.custom) { x.own.push(x.custom); x.custom = ''; } });
   const young = isK2(MP_KID.grade), answers = (MP_KID.checkins[MP_KID.checkins.length - 1] || {}).answers || {};
+  mpLifeUse(MP_KID);
   const sug = suggestedParts(answers), order = sug.concat(PARTS.map(p => p.key).filter(k => !sug.includes(k)));
   const groups = order.map(k => {
     const p = partBy(k), lv = mpLevelOf(k), n = window.GGTend && GGTend.suggest ? GGTend.suggest(lv ? lv[0] : null) : 3;
     const x = MP_PLAN[k], picked = x.selected.length + x.own.length;
     return `<div class="act-group"><h3>${dot(p)}${p.name}<small class="mp-sub">${esc(p.value)}</small>${sug.includes(k) ? '<span class="suggest">Suggested for you</span>' : ''}<span class="part-count">${picked} picked. About ${n} is a good start.</span></h3>
-      <div class="act-grid">${mpRot(k).show.map(actW).map(a => `<button class="act" aria-pressed="${x.selected.includes(a.title)}" onclick="mpToggle('${k}','${a.id}')">
+      ${lv && lv[0] === 'edge' ? mpSteps(k).map(t => `<p class="mp-idea"><b>An idea:</b> ${esc(t)}</p>`).join('') : ''}
+      <div class="act-grid">${mpRot(k).show.map(actW).map(a => { const fit = mpFits(a); return `<button class="act" aria-pressed="${x.selected.includes(a.title)}" onclick="mpToggle('${k}','${a.id}')">
         <strong>${esc(a.title)}<span class="box">${ICONS.check}</span></strong>
-        ${young ? `<p>${esc(a.k2)}</p>` : `<ol>${a.g35.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`}</button>`).join('')}</div>
+        ${fit ? `<span class="mp-fits">${esc(GGLife.FITS || 'Fits You')}</span>` : ''}
+        ${young ? `<p>${esc(a.k2)}</p>` : `<ol>${a.g35.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`}${fit && a.adapt ? `<p class="mp-adapt">${esc(a.adapt)}</p>` : ''}</button>`; }).join('')}</div>
       ${(r => r.pages > 1 ? `<div class="mp-more"><button class="soft-btn" onclick="mpRotNext('${k}')">Show Me Others (${r.page + 1} of ${r.pages})</button></div>` : '')(mpRot(k))}
       ${x.own.length ? `<ul class="mp-own">${x.own.map((o, i) => `<li><span>${esc(o)}</span> <button class="link-btn" onclick="mpOwnRemove('${k}',${i})">Take off</button></li>`).join('')}</ul>` : ''}
       <div class="mp-own-add"><label class="sr-only" for="mp-own-${k}">Your own idea for ${p.name}</label><input id="mp-own-${k}" class="name-input" maxlength="80" placeholder="Your own idea" onkeydown="if(event.key==='Enter')mpOwnAdd('${k}')"><button class="soft-btn" onclick="mpOwnAdd('${k}')">Add mine</button></div></div>`;
@@ -2692,7 +2745,7 @@ function mpRenderPlan() {
    Show Me Others brings the next 6, around to the first set after the last. The place in the
    rotation lives in memory only. */
 const MP_ROT = {}, MP_ROT_N = 6;
-function mpRotOpen(k) { const x = MP_PLAN[k]; return ACTIVITIES.filter(a => a.part === k && !x.selected.includes(shownTitle(a))); }
+function mpRotOpen(k) { const x = MP_PLAN[k], open = ACTIVITIES.filter(a => a.part === k && !x.selected.includes(shownTitle(a))); return mpLifeOk() ? GGLife.order(open, a => ({ life: a.life || [], adapt: a.adapt || '' })) : open; }
 function mpRot(k) {
   const x = MP_PLAN[k], chosen = ACTIVITIES.filter(a => a.part === k && x.selected.includes(shownTitle(a))), open = mpRotOpen(k);
   const pages = Math.max(1, Math.ceil(open.length / MP_ROT_N)), id = S.kid + '-' + k;
@@ -3178,7 +3231,7 @@ function renderGuide() {
       <li><b>Stay close,</b> even if your child picks On my own. Sit nearby and be ready to talk.</li>
       <li><b>Weave in your family's faith.</b> Roots, what grounds you, leaves room for every family to fill it in with their own tradition: prayer, scripture, worship, blessings, or quiet. Share what holds you.</li>
       <li><b>Choose Faith or Plain wording.</b> Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words, and scores are the same either way. You choose it when you set up your child's tree, and you can change it any time in Settings.</li>
-      <li><b>Make the growth plan a family project.</b> Check in on their tree together each day, cheer when a tree friend comes to visit, and celebrate each new level and milestone. A tree that misses a few days only looks a little thirsty, and one practice gives it a drink.</li>
+      <li><b>Make the growth plan a family project.</b> Check in on their tree together each day, cheer when a tree friend comes to visit, and celebrate each new level and milestone. A tree that misses a few days only rests in a light morning mist, and one practice brings the light back.</li>
       <li><b>Each child gets their own check-in.</b> Brothers and sisters save separately by first name.</li>
       <li><b>Grandparents, foster parents, and other caregivers</b> can use Maple just the same.</li>
     </ul>
@@ -3275,13 +3328,17 @@ function renderLife() {
       <div class="ring-chips no-print" role="group" aria-label="Filter by topic">
         <button class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="setLifeRing('all')">All topics</button>
         ${RINGS.map(r => `<button class="ring-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="setLifeRing('${r.key}')">${esc(r.name)}</button>`).join('')}
+        ${lifeTagged().length ? `<button class="ring-chip" style="--rc:${LIFE_RING.color}" data-ring="life" onclick="setLifeRing('life')">${esc(LIFE_RING.name)}</button>` : ''}
       </div>
       <div id="life-list"></div>
-      <p class="talk-note">These guides offer general support for families and teachers, drawn from trusted children’s health and grief organizations. They are not a substitute for professional care. In an emergency, call 911. For a mental health crisis, call or text 988.</p>`;
+      <p class="talk-note">These guides offer general support for families and teachers, drawn from trusted children’s health and grief organizations. They are not a substitute for professional care. In an emergency, call 911. For a mental health crisis, call or text 988.</p>
+      <div id="life-lines"></div>`;
   }
   renderLifeList();
 }
 function setLifeRing(k) { LIFE.ring = k; renderLifeList(); }
+const LIFE_RING = { key: 'life', name: 'Health and Ability', color: '#2F6E8C', blurb: 'For a child living with a health condition or a disability, or with someone in the family who is. Open to every family. More guides are coming.' };
+function lifeTagged() { return TOPICS.filter(t => Array.isArray(t.life) && t.life.length); }
 /* Search: the same engine as the header search. Maple's guides first, then the rest of Grow With Grounded (kid-safe). */
 function lifeFind(el) {
   if (!window.GGFind) return;
@@ -3292,19 +3349,26 @@ function renderLifeList() {
   document.querySelectorAll('.ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === LIFE.ring));
   const rings = RINGS.filter(r => LIFE.ring === 'all' || r.key === LIFE.ring);
   let html = '', count = 0;
-  rings.forEach(r => {
-    const ts = TOPICS.filter(t => t.ring === r.key && topicMatches(t, LIFE.q));
-    if (!ts.length) return;
-    count += ts.length;
-    html += `<div class="ring-block" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="talk-grid">${ts.map(t => `
-      <article class="talk-card" style="--rc:${r.color}">
-        <span class="label">Guide</span>
+  const block = (r, ts, label) => `<div class="ring-block" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="talk-grid">${ts.map(t => `
+      <article class="talk-card" style="--rc:${(ringBy(t.ring) || r).color}">
+        <span class="label">${label || 'Guide'}</span>
         <h4>${esc(t.title)}</h4>
         <ul>${t.quick.map(q => `<li>${esc(q)}</li>`).join('')}</ul>
         <p class="meta">Often rainy: ${esc(t.rainy)}. Try: ${t.acts.map(actTitle).map(esc).join(', ')}.</p>
         <button class="soft-btn" onclick="openTalk('${t.id}')">Talking It Through</button>
       </article>`).join('')}</div></div>`;
+  // Picked for You: guides tagged for the open child's Health and Ability choice, first.
+  const picks = LIFE.ring === 'all' && !LIFE.q && MP_KID && mpLifeUse(MP_KID) ? GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean) : [];
+  if (picks.length) html += block({ name: 'Picked for You', color: LIFE_RING.color, blurb: `Guides that fit ${MP_KID.name}'s Health and Ability. Every guide stays open.` }, picks, 'Picked for You');
+  rings.forEach(r => {
+    const ts = TOPICS.filter(t => t.ring === r.key && topicMatches(t, LIFE.q));
+    if (!ts.length) return;
+    count += ts.length;
+    html += block(r, ts);
   });
+  // The Health and Ability ring: every guide tagged for any choice, open to every family.
+  if (LIFE.ring === 'all' || LIFE.ring === 'life') { const ts = lifeTagged().filter(t => topicMatches(t, LIFE.q)); if (ts.length) { count += ts.length; html += block(LIFE_RING, ts, 'Health and Ability'); } }
+  const ll = $('life-lines'); if (ll) ll.innerHTML = MP_KID ? mpLifeLinesHtml() : '';
   $('life-list').innerHTML = count ? html : `<div class="no-results"><p>No guides match “${esc(LIFE.q)}.” Try another word, or browse all topics.</p><button class="soft-btn" onclick="LIFE.q='';$('life-search').value='';setLifeRing('all')">Show all topics</button></div>`;
 }
 function openTalk(id, from) {
@@ -3340,6 +3404,7 @@ function openTalk(id, from) {
     ${window.GGShelf ? GGShelf.html('maple', t.id) : ''}
     ${window.GGSources ? GGSources.html('maple:' + t.id) : ''}
     <p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance, not a substitute for professional care. Emergency: 911. Crisis: call or text 988. &copy; ${new Date().getFullYear()} ${OWNER}. Free to print for families and classrooms.</p>
+    ${MP_KID ? mpLifeLinesHtml() : ''}
   </article>`;
   openTalk.last = id;
   go('talk');
@@ -3359,7 +3424,15 @@ function printTalkNow() {
    from maple/guide-videos.js. MV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:maple). */
 /* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "family-illness", "own-illness", "family-mental-health", "addiction", "dementia", "disability", "food-worries", "accident", "bedwetting", "divorce", "new-baby", "blended", "deployed", "jail", "foster", "money", "home-loss", "home-conflict", "sibling-leaves", "bullied", "unkind", "friendship", "new-school", "school-worry", "lockdown", "online-trouble", "attention", "lying", "moving", "community-tragedy", "fire", "crime", "immigration", "deported-classmate", "politics", "school-violence", "protests", "prejudice", "scary-news", "war", "disasters", "outbreaks", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn"];/* MV_VIDS end */
-function mvVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:maple') || '{}').done || {})[id]); } catch (e) { return false; } }
+// Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
+function mvVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('maple', id)); } catch (e) { return false; } }
+window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-talk'); if (v && v.offsetParent !== null && openTalk.last) { const y = window.scrollY; openTalk(openTalk.last, LIFE.from); window.scrollTo(0, y); } });
+// Their Health and Ability changed (or a profile opened or locked): re-order what shows it.
+if (window.GGLife) GGLife.on(() => {
+  const v = document.querySelector('.view.active');
+  if (v && v.id === 'view-life' && $('life-list')) renderLifeList();
+  if (v && v.id === 'view-tree' && S.treeTab === 'plan' && MP_PLAN) { const y = window.scrollY; mpRenderPlan(); window.scrollTo(0, y); }
+});
 function mvVids(gid) {
   if (!MV_VIDS.includes(gid)) return '';
   const b = (side, name, pri) => { const id = 'mp-g-' + gid + '-' + side, w = mvVidWatched(id);

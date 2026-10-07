@@ -200,6 +200,16 @@ h3{font-family:var(--sans);font-weight:700;font-size:20px;}
 .check[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf-soft);}
 .tagline{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft);margin-top:2px;}
 .pill{display:inline-block;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:700;background:var(--teal-soft);color:var(--ink);}
+/* Health and Ability (GWG BLD 756) */
+.as-fits{display:inline-block;border-radius:20px;padding:1px 9px;font-size:12.5px;font-weight:700;background:var(--teal);color:var(--bg);margin:0 0 4px;}
+.as-adapt{display:block;margin-top:4px;font-size:14px;color:var(--ink-soft);font-style:italic;}
+.as-idea{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--teal-soft);color:var(--ink);font-size:15px;}
+.as-ex{list-style:none;margin:8px 0 0;padding:8px 12px;border-radius:12px;background:var(--teal-soft);color:var(--ink);font-size:15px;}
+.as-ex li{padding:2px 0;}
+.as-life-lines{margin-top:14px;}
+.as-life-lines ul{padding-left:18px;}
+.as-life-lines li{margin:6px 0;}
+.as-life-lines small{display:block;color:var(--ink-soft);}
 .unlocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
 .unlock{border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--card);text-align:left;font-size:14px;}
 .unlock[aria-pressed="true"]{border-color:var(--hero);background:var(--teal-soft);}
@@ -448,6 +458,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=lb6"></script>
+<script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-filelock.js?v=fl2"></script>
 <script src="checkin.js?v=ps1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
@@ -980,9 +991,22 @@ const PLAIN_PR = {
 
 </script>
 <script src="guides.js?v=ps1"></script>
+<script src="life.js?v=hl1"></script>
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* Health and Ability (GWG BLD 756, HA 1): aspen/life.js tags every practice through a side table,
+   LIFE_PR ("grade:part:index" -> {life, adapt}), so saved plans keep working, and adds eight new
+   practices to every grade at the end of each list (old indexes never move). */
+const ASL = window.ASPEN_LIFE || { pr: {}, add: [], notes: [], steps: {} };
+const LIFE_PR = Object.assign({}, ASL.pr);
+[6, 7, 8].forEach(g => (ASL.add || []).forEach(a => {
+  const list = (PRACTICES[g] || {})[a.part]; if (!list || list.some(r => r[2] === a.row[2])) return;
+  list.push(a.row.slice()); const i = list.length - 1;
+  (LEARN[g][a.part] = LEARN[g][a.part] || [])[i] = a.learn.slice();
+  LIFE_PR[g + ':' + a.part + ':' + i] = { life: a.life.slice(), adapt: a.adapt };
+}));
 
 const PARTS = [
   {key:'roots', name:'Roots', sub:'What grounds you', about:'Feeling held by something bigger, and knowing you matter.'},
@@ -1413,7 +1437,8 @@ function aspPracticeInfo(key, name){
     const list = (PRACTICES[g] || {})[key] || [], idx = list.findIndex((pr, i) => pr[2] === name || prText(g, key, i, true) === name);
     if (idx < 0) continue;
     const pr = list[idx], plain = isPlain(), L = learnRow(g, key, idx, plain);
-    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(prText(g, key, idx, plain), 'aspen') : ''}` : '';
+    const ad = asTag(g, key, idx).adapt;
+    const guide = L ? `<p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol>${ad ? `<p><b>Another way.</b> ${esc(ad)}</p>` : ''}<p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(prText(g, key, idx, plain), 'aspen') : ''}` : '';
     return { desc: `${STYLE_NAMES[pr[0]]}, about ${pr[1]} ${pr[1] === 1 ? 'minute' : 'minutes'}`, guide, hard: L ? L[2] : '' };
   }
   return {};
@@ -1443,8 +1468,10 @@ function renderGuidesTab(){
       ${PARTS.map(p => `<p style="margin:10px 0 0"><b style="color:${pcolor(p.key)}">${p.name}</b> <span class="muted">${esc(p.sub)}</span><br>${esc(p.about)}</p>`).join('')}</div>
     <div class="panel"><h3 style="margin-top:0">When life gets hard</h3>
       <p class="muted">These guides are written for grown-ups, to help them talk with you about hard things. You can read them too, or ask your grown-up to read one with you.</p>
-      ${G.groups.map(g => `<div class="life-group"><h4>${esc(g.name)}</h4><div class="topics">${g.topics.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}</div>
-    <div class="help-strip"><div><b>Need to talk to someone right now?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
+      ${(LG => LG.picks.length ? `<div class="life-group"><h4>Picked for You</h4><div class="topics">${LG.picks.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}
+      ${G.groups.map(g => `<div class="life-group"><h4>${esc(g.name)}</h4><div class="topics">${g.topics.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}
+      ${(LG => LG.all.length ? `<div class="life-group"><h4>Health and Ability</h4><div class="topics">${LG.all.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
+    <div class="help-strip"><div><b>Need to talk to someone right now?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>${asLifeLinesHtml()}`;
 }
 
 /* ---------- a card from an Aspen Guide visit ----------
@@ -1560,10 +1587,11 @@ function renderCheckin(){
       <div class="part-head" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><div><b>${p.name}</b><span>${p.sub}, part ${d.page+1} of 6</span></div></div>
       <p class="muted">${p.about}</p>
       <p><button class="say-btn" aria-pressed="${readOn}" onclick="toggleRead()">Read Aloud: ${readOn?'on':'off'}</button></p><div class="voice-slot"></div>
-      ${qs.map((q,i)=>`<div class="q" id="q-${i}"><p class="qt">${esc(q[0])} <button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button></p>
+      ${qs.map((q,i)=>{ const ln = q[3] ? {ex:[], tip:[]} : asNote(p.key, i, d.grade); return `<div class="q" id="q-${i}"><p class="qt">${esc(q[0])} <button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button></p>
         ${whyFor(d.grade, p.key, i, d.sens, wd) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(d.grade, p.key, i, d.sens, wd))}</p></details>` : ''}
-        ${d.mode==='grown' && ans[i] ? `<div class="follow"><b>For the grown-up</b>${esc(q[1])}</div>` : ''}
-        <div class="answers" role="group" aria-label="${esc(q[0])}">${ANSWERS.map(a=>`<button class="ans" aria-pressed="${ans[i]===a[0]}" onclick="answer(${i},'${a[0]}')">${a[1]}</button>`).join('')}</div></div>`).join('')}
+        ${d.mode==='grown' && ans[i] ? `<div class="follow"><b>For the grown-up</b>${esc(q[1])}${ln.tip.map(x => ' ' + esc(x)).join('')}</div>` : ''}
+        <div class="answers" role="group" aria-label="${esc(q[0])}">${ANSWERS.map(a=>`<button class="ans" aria-pressed="${ans[i]===a[0]}" onclick="answer(${i},'${a[0]}')">${a[1]}</button>`).join('')}</div>
+        ${ln.ex.length ? `<ul class="as-ex" aria-label="An example">${ln.ex.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`; }).join('')}
       <div class="row"><button class="btn ghost" onclick="prevPage()">Back</button><button class="btn" ${ans.filter(Boolean).length<qs.length?'disabled':''} onclick="nextPage()">${d.page<5?'Next part':'Almost done'}</button><button class="btn ghost small" onclick="pauseCheckin()">Pause</button></div>`;
     voiceSlots();
     if (readOn) say(`${p.name}. ${qs[0][0]}`);
@@ -1653,7 +1681,7 @@ function showCalm(o){
     : o.during ? 'That sounds hard. You matter, and people want to help. When you can, tell a grown-up you trust, like a parent, teacher, school counselor, or another family member. These are here too, any time.'
     : 'These people want to help, any time. You can also tell a grown-up you trust, like a parent, teacher, school counselor, or another family member.';
   $('overlay-root').innerHTML = `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="calm-h" onclick="if(event.target===this)closeCalm()"><div class="calm">
-    <h2 id="calm-h">${head}</h2><p>${body}</p>${calmList()}
+    <h2 id="calm-h">${head}</h2><p>${body}</p>${calmList()}${o.final || o.during ? '' : asLifeLinesHtml()}
     <button class="btn teal" id="calm-close" onclick="closeCalm()">${o.during?'Keep going':'Close'}</button></div></div>`;
   $('calm-close').focus();
   document.addEventListener('keydown', calmKey);
@@ -1669,7 +1697,8 @@ function guideTitle(id){ let t = id; guidesData().groups.forEach(g => g.topics.f
 function guideLinks(k, s){ const plain = isPlain(s === undefined ? me() : s); return `<p class="small guide-links"><b>For your grown-up:</b> ${PART_GUIDES[k].filter(id => !(plain && id === 'faith')).map(id => `<a href="#" onclick="go('guide',{id:'${id}'});return false;">${esc(guideTitle(id))}</a>`).join(', ')}</p>`; }
 function learnHTML(g, k, idx){
   const plain = isPlain(), L = learnRow(g, k, idx, plain); if (!L) return '';
-  return `<details class="learn"><summary>Learn more</summary><div><p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(L[2])}</p><p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(prText(g, k, idx, plain), 'aspen') : ''}</div></details>`;
+  const ad = asTag(g, k, idx).adapt;
+  return `<details class="learn"><summary>Learn more</summary><div><p><b>Why it helps.</b> ${esc(L[0])}</p><p style="margin-bottom:2px"><b>How to do it.</b></p><ol>${L[1].split('|').map(x => `<li>${esc(x)}</li>`).join('')}</ol><p><b>If it's hard.</b> ${esc(L[2])}</p>${ad ? `<p><b>Another way.</b> ${esc(ad)}</p>` : ''}<p><b>Try it with a grown-up.</b> ${esc(L[3])}</p>${window.GGSources ? GGSources.practice(prText(g, k, idx, plain), 'aspen') : ''}</div></details>`;
 }
 let planDraft = null, planOpen = {};
 function renderPlan(){
@@ -1683,6 +1712,8 @@ function renderPlan(){
   const isPicked = (k, idx) => pd.picks.some(p => !p.own && p.part === k && p.idx === idx && p.grade === g);
   const order = [...suggested, ...PARTS.map(p => p.key).filter(k => !suggested.includes(k))];
   const total = pd.picks.length;
+  asLifeUse(s);
+  const edge = k => { const sc = last ? ringScore(last, k) : null; return sc != null && sc < 5; };
   box.innerHTML = `
     ${inApp ? '' : `<button class="back" onclick="planDraft=null;go('dash')">&larr; Back to my tree</button>`}
     <h2>Your growth plan</h2>
@@ -1692,7 +1723,8 @@ function renderPlan(){
       return `<details class="plan-part" style="border-left:6px solid ${pcolor(k)}" ${open ? 'open' : ''} ontoggle="planOpen['${k}']=this.open">
       <summary><span class="pp-name">${PART[k].name} <span class="muted small">${PART[k].sub}</span></span>${suggested.includes(k) ? '<span class="pill">Suggested this week</span>' : ''}<span class="muted small pp-count">${n} picked, about ${aspSuggest(last, k)} suggested</span></summary>
       <div class="pp-body">
-        ${aspRot(g, k, isPicked).show.map(idx => [PRACTICES[g][k][idx], idx]).map(([pr, idx]) => `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${esc(prText(g, k, idx, isPlain(s)))}</span></button>${learnHTML(g, k, idx)}</div>`).join('')}
+        ${edge(k) ? asSteps(k).map(t => `<p class="as-idea"><b>An idea:</b> ${esc(t)}</p>`).join('') : ''}
+        ${aspRot(g, k, isPicked).show.map(idx => [PRACTICES[g][k][idx], idx]).map(([pr, idx]) => { const fit = asFits(g, k, idx), ad = asTag(g, k, idx).adapt; return `<div class="pick-row"><button class="pick" aria-pressed="${isPicked(k, idx)}" onclick="togglePick('${k}',${idx})"><span class="stl">${STYLE_NAMES[pr[0]]}<br>${pr[1]} min</span><span>${fit ? `<span class="as-fits">${esc(GGLife.FITS || 'Fits You')}</span><br>` : ''}${esc(prText(g, k, idx, isPlain(s)))}${fit && ad ? `<span class="as-adapt">${esc(ad)}</span>` : ''}</span></button>${learnHTML(g, k, idx)}</div>`; }).join('')}
         ${(r => r.pages > 1 ? `<p class="row pp-more"><button class="btn ghost small" onclick="aspRotNext('${k}')">Show Me Others (${r.page + 1} of ${r.pages})</button></p>` : '')(aspRot(g, k, isPicked))}
         ${inPart(k).filter(p => p.own).map(p => `<p class="row own-row"><span>${esc(p.own)} <span class="muted small">(your own)</span></span><button class="btn ghost small" onclick="removeOwn('${p.id}')">Remove</button></p>`).join('')}
         <div class="row own-add"><input id="own-${k}" maxlength="120" placeholder="Write your own ${PART[k].name} practice" aria-label="Write your own ${PART[k].name} practice"><button class="btn ghost small" onclick="addOwn('${k}')">Add</button></div>
@@ -1711,16 +1743,17 @@ function togglePick(k, idx){
 // usual order. Show Me Others brings the next 6, around to the first set after the last.
 // The place in the rotation lives in memory only.
 const ASP_ROT = {}, ASP_ROT_N = 6;
+function aspOrder(g, k, list){ return asLifeOk() ? GGLife.order(list, idx => asTag(g, k, idx)) : list; }
 function aspRot(g, k, isPicked){
   const all = ((PRACTICES[g] || {})[k] || []).map((pr, idx) => idx);
-  const chosen = all.filter(idx => isPicked(k, idx)), open = all.filter(idx => !isPicked(k, idx));
+  const chosen = all.filter(idx => isPicked(k, idx)), open = aspOrder(g, k, all.filter(idx => !isPicked(k, idx)));
   const pages = Math.max(1, Math.ceil(open.length / ASP_ROT_N)), id = g + '-' + k;
   const page = ASP_ROT[id] = Math.min(ASP_ROT[id] || 0, pages - 1);
   return {show: chosen.concat(open.slice(page * ASP_ROT_N, page * ASP_ROT_N + ASP_ROT_N)), page, pages};
 }
 // Taking a practice out keeps it in view: the list turns to the set it now belongs to.
 function aspRotTo(g, k, idx){
-  const pd = planDraft, open = ((PRACTICES[g] || {})[k] || []).map((pr, i) => i).filter(i => !pd.picks.some(p => !p.own && p.part === k && p.idx === i && p.grade === g));
+  const pd = planDraft, open = aspOrder(g, k, ((PRACTICES[g] || {})[k] || []).map((pr, i) => i).filter(i => !pd.picks.some(p => !p.own && p.part === k && p.idx === i && p.grade === g)));
   const at = open.indexOf(idx); if (at >= 0) ASP_ROT[g + '-' + k] = Math.floor(at / ASP_ROT_N);
 }
 function aspRotNext(k){
@@ -1817,7 +1850,7 @@ function renderHelpPlan(){
     <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a growing edge. There's no limit, and you can write your own. After a check-in, Aspen points to two parts that could use some care, but you can choose any.</p></div>
     <div class="panel"><h3>Learn more</h3><p>Every practice has a <b>Learn more</b> button. It tells you why it helps, how to do it step by step, what to do if it's hard, and a way to try it with a grown-up.</p></div>
     <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
-    <div class="panel"><h3>No streaks</h3><p>Miss a few days and your tree looks dry or droops a little, but it never dies and nothing is taken away. One practice perks it up, and a few days bring it all the way back.</p></div>
+    <div class="panel"><h3>No streaks</h3><p>Miss a few days and your tree rests in a soft mist, and nothing is taken away. One practice brings the light back, and a few days bring it all the way back.</p></div>
     <div class="panel"><h3>Watch your tree grow up</h3><p>Every day you tend your tree moves it toward its next stage, from Seed to Golden Aspen. Practices you keep doing move from Tried to Building to Mine. Milestones mark firsts, like tending all six parts in one week, and new scenery opens as you go: Birch, Maple, and Pine trees and new lakes to pick from in Season.</p></div>
     <div class="panel"><h3>Steady or Hardy</h3><p>Your tree starts Steady: gentle, and nothing is ever lost. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble until one practice heals it. After a hard check-in, the tree holds still for two weeks either way.</p></div>
     <div class="panel"><h3>Easier today</h3><p>Hard day? Tap <b>Easier today</b> on a practice for a smaller version that still counts.</p></div>
@@ -1965,11 +1998,12 @@ function renderGStudent(){
     ${n ? `<div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickGRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickGRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}${r.flagged?' <span class="marker">Worth a check-in</span>':''}</button>`).join('')}</div></div><div>${ringDetail(s, sel, true)}</div></div>` : '<p class="muted">No check-ins yet.</p>'}
     ${fromRingsHtml(s, true)}
     ${wordingPanel(s)}
+    ${asLifePanel(s)}
     ${sensPanel(s)}
     <div class="panel"><h3>Tending</h3>
       <div class="asp-app" style="display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:16px;align-items:center">
         <div>${window.GGTend ? GGTend.treeSVG(h, 0) : ''}</div>
-        <div><p style="margin:0"><b>${['Thriving','A little dry','Drooping','Resting bare'][h] || 'Thriving'}.</b> ${week7} of the last 7 days tended, ${aspDays(s)} in all.</p>
+        <div><p style="margin:0"><b>${['In the light','In the morning mist','Resting in the mist','Resting in the mist'][h] || 'In the light'}.</b> ${week7} of the last 7 days tended, ${aspDays(s)} in all.</p>
           ${t.start ? `<p class="muted small">Season ${t.season || 1}, week ${Math.min(12, wk || 1)} of 12.</p>` : '<p class="muted small">The season starts with the first full check-in.</p>'}
           <p class="small" style="margin-top:8px"><b>Parts ${esc(s.name)} is tending:</b> ${tendingParts.length ? tendingParts.map(p => `<span style="color:${pcolor(p.key)};font-weight:700">${p.name}</span>`).join(', ') : 'none chosen yet'}.</p></div>
       </div>
@@ -1978,6 +2012,7 @@ function renderGStudent(){
     ${W ? `<div class="panel"><h3>This week in Aspen: ${esc(W.theme || '')}</h3>${kq ? `<p>${esc(s.name)}'s reflection question this week: "${esc(kq)}"</p>` : ''}${W.story ? `<p class="muted">For you, a story from Grounded: <a href="${esc(W.story.url)}" target="_blank" rel="noopener">${esc(W.story.title)}</a>. <i>${esc(W.story.line)}</i> Read it first, and share what fits in your own words.</p>` : ''}</div>` : ''}
     <div class="panel"><h3>Reflections ${esc(s.name)} shared</h3>${shared.length ? shared.map(x => `<p style="margin:8px 0 0"><b>${fmtDate(x.date + 'T12:00')}</b><br>${esc(x.refl)}</p>`).join('') : `<p class="muted">Nothing shared yet. Weekly reflections are ${esc(s.name)}'s own unless they choose to share one with you.</p>`}</div>
     <div class="row"><button class="btn ghost small" onclick="removeStudent('${s.id}')">Remove this student from this device</button></div>`;
+  asLifeMountG(s);
 }
 /* The optional question about being offered a vape or other substances (grades 7 and 8).
    Off unless a grown-up turns it on. For a saved student, only a grown-up profile can change it. */
@@ -2018,13 +2053,58 @@ function importFile(input){
 
 /* ---------- When Life Changes ---------- */
 function guidesData(){ return (window.ASPEN_GUIDES && window.ASPEN_GUIDES.groups) ? window.ASPEN_GUIDES : {groups:[]}; }
+
+/* ---------- Their Health and Ability (GWG BLD 756, HA 1) ----------
+   A grown-up who agreed for the student chooses it together with them, in the grown-up view. It lives
+   in the student's locked profile (shared/gg-life.js). The student sees only the effects: practices
+   that fit come first with Fits You and their other way, guides Picked for You, a few examples, and
+   information lines below the crisis lines. Questions, scores, flags, and alerts never change.
+   A student not saved in a profile uses the choice for this visit only, and only when no grown-up
+   profile is open, so a grown-up's own choice is never used for a student. */
+function asLifePid(s){ s = s || me(); return (s && s._pid) || null; }
+function asLifeOk(s){ s = s || me(); if (!window.GGLife || !s) return false; const pid = asLifePid(s); if (pid) return !!(window.GGP && GGP.isOpen(pid)); return !(window.GGP && GGP.active && GGP.active()); }
+function asLifeUse(s){ const ok = asLifeOk(s); if (window.GGLife) GGLife.use(ok ? asLifePid(s) : null); return ok; }
+function asLifeIds(s){ return asLifeUse(s) ? GGLife.chosen('aspen') : []; }
+const asUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
+const asTag = (g, k, idx) => LIFE_PR[g + ':' + k + ':' + idx] || { life: [] };
+function asFits(g, k, idx){ return asLifeOk() && GGLife.fits(asTag(g, k, idx)); }
+function asNote(part, i, grade){
+  const out = { ex: [], tip: [] }, ids = asLifeIds(); if (!ids.length) return out;
+  (ASL.notes || []).forEach(n => { if (n.part !== part || n.i !== i || (n.grades && !n.grades.includes(String(grade)))) return; ids.forEach(id => { const x = (n.n || {})[id]; if (x) { if (x.ex) out.ex.push(x.ex); if (x.tip) out.tip.push(x.tip); } }); });
+  out.ex = asUniq(out.ex); out.tip = asUniq(out.tip); return out;
+}
+function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '')); }
+function asLifeLinesHtml(){
+  const L = asLifeUse() ? GGLife.lines('aspen') : []; if (!L.length) return '';
+  const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
+  return `<div class="as-life-lines"><h3>${esc(GGLife.LINES_TITLE || 'Information and Support')}</h3><p class="muted small">For information and support. In danger right now, call 911. In a crisis, call or text 988.</p><ul>${L.map(x => `<li><b>${esc(x.name)}</b> ${href(x) ? `<a href="${esc(href(x))}"${x.tel ? '' : ' target="_blank" rel="noopener"'}>${esc(x.how)}</a>` : esc(x.how)}${x.tel && x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">Website</a>` : ''}<small>${esc(x.note || '')}</small></li>`).join('')}</ul></div>`;
+}
+// Pine and Birch never suggest Hardy while pain or mental health is chosen; Aspen follows the same rule.
+function asHardyRests(){ return asLifeIds().some(id => id === 'pain' || id === 'mind'); }
+// Picked for You and the Health and Ability group, for the open student.
+function asLifeGroups(){
+  const all = [], picks = [], ids = asLifeIds();
+  guidesData().groups.forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { all.push(t); if (t.life.some(x => ids.includes(x))) picks.push(t); } }));
+  return { all, picks };
+}
+function asLifePanel(s){
+  if (!window.GGLife) return '';
+  const can = canSetSens(s) && asLifeOk(s);
+  return `<div class="panel" id="as-life-g"><div id="as-life-host"><h3>Their Health and Ability</h3>${can ? '' : `<p class="muted small">${s._pid ? `Only a grown-up who agreed for ${esc(s.name)} can choose this, together with them. Open your own grown-up profile first.` : `Save ${esc(s.name)}'s tree in a profile first, or close the grown-up profile on this device to choose for this visit only.`}</p>`}</div><div id="as-life-offer"></div></div>`;
+}
+function asLifeMountG(s){
+  if (!window.GGLife || !s || !canSetSens(s) || !asLifeUse(s)) return;
+  const host = $('as-life-host'); if (host) GGLife.chooser(host, { tree: 'aspen', forChild: true, id: asLifePid(s) || undefined });
+  // One quiet card after the student's first full check-in, shown to the grown-up here, at most once.
+  if ((s.rings || []).some(isStd)) { const o = $('as-life-offer'); if (o) GGLife.offerCard(o, 'aspen', { forChild: true, onChoose: () => { const h = $('as-life-g'); if (h) h.scrollIntoView({ block: 'start' }); } }); }
+}
 function renderLife(){
   const G = guidesData();
   $('view-life').innerHTML = `<h2>When Life Changes</h2>
     <p class="lede"><b>How to show up.</b> Guides for grown-ups talking with a middle schooler about hard things. Each has a quick card for right now and a full "Talking It Through" guide, with trusted sources.</p>
     <input class="life-search" id="life-search" type="search" placeholder="Search: vaping, group chats, grief, bullying..." aria-label="Search the guides and all of Grow With Grounded" value="${esc(LIFE_FIND)}" oninput="lifeFind(this)" enterkeyhint="search">
-    <div id="life-groups">${G.groups.map(g=>`<div class="life-group"><h3>${esc(g.name)}</h3><div class="topics">${g.topics.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}</div>
-    <div class="help-strip"><div><b>Is someone in danger right now?</b><br><span class="muted">Call or text 988, or call 911.</span></div><button class="btn small" onclick="showCalm()">See the calm card</button></div>`;
+    <div id="life-groups">${(LG => LG.picks.length && me() ? `<div class="life-group"><h3>Picked for ${esc(me().name)}</h3><div class="topics">${LG.picks.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}${G.groups.map(g=>`<div class="life-group"><h3>${esc(g.name)}</h3><div class="topics">${g.topics.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}${(LG => LG.all.length ? `<div class="life-group"><h3>Health and Ability</h3><p class="muted small">For a student living with a health condition, pain, a disability, or mental health, or with someone in the family who is. Open to every family. More guides are coming.</p><div class="topics">${LG.all.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
+    <div class="help-strip"><div><b>Is someone in danger right now?</b><br><span class="muted">Call or text 988, or call 911.</span></div><button class="btn small" onclick="showCalm()">See the calm card</button></div>${asLifeLinesHtml()}`;
   if (LIFE_FIND) lifeFind($('life-search'));
 }
 /* Search: the same engine as the header search. Aspen's guides first, then the rest of Grow With Grounded (kid-safe). */
@@ -2061,7 +2141,16 @@ function renderGuide(opts){
    from aspen/guide-videos.js. AV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:aspen). */
 /* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "body", "bedwetting", "compare", "phone", "pictures", "porn", "vaping", "gambling", "ai", "sleep", "looks", "eating", "wholike", "faith", "identity", "illness", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting"];/* AV_VIDS end */
-function avVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:aspen') || '{}').done || {})[id]); } catch (e) { return false; } }
+// Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
+function avVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('aspen', id)); } catch (e) { return false; } }
+window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-guide'); if (v && v.offsetParent !== null && renderGuide.last) { const y = window.scrollY; renderGuide({id: renderGuide.last}); window.scrollTo(0, y); } });
+// Their Health and Ability changed (or a profile opened or locked): re-order what shows it.
+if (window.GGLife) GGLife.on(() => {
+  const v = document.querySelector('.view.active'), n = v ? v.id.replace('view-', '') : '';
+  if (n === 'dash' && ASP_TAB === 'plan' && $('asp-plan')) { const y = window.scrollY; renderPlan(); window.scrollTo(0, y); }
+  if (n === 'dash' && ASP_TAB === 'guides') renderGuidesTab();
+  if (n === 'life') renderLife();
+});
 function avVids(gid) {
   if (!AV_VIDS.includes(gid)) return '';
   const b = (side, name, pri) => { const id = 'as-g-' + gid + '-' + side, w = avVidWatched(id);
@@ -2249,9 +2338,9 @@ function setAsMode(m){
 }
 function asGameSettings(){
   const t = me() ? aspTendGet() : null, mode = asMode(t), dis = t ? '' : ' disabled';
-  return `<section id="as-set-game"><h3>Your Tree: Steady or Hardy</h3>
-    <label class="gt-radio"><input type="radio" name="as-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${dis} onchange="setAsMode('steady')"><span><b>Steady</b>The gentle tree. It may look dry when you miss days, and nothing is ever lost.</span></label>
-    <label class="gt-radio"><input type="radio" name="as-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${dis} onchange="setAsMode('hardy')"><span><b>Hardy</b>A little more challenge. A part of your plan left untended for ${AS_HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
+  return `<section id="as-set-game"><h3>Your Tree: Steady or Hardy</h3>${asHardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and nothing is ever lost. Rest Week on Today holds your tree still any time.</p>' : ''}
+    <label class="gt-radio"><input type="radio" name="as-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${dis} onchange="setAsMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and nothing is ever lost.</span></label>
+    <label class="gt-radio"><input type="radio" name="as-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${dis} onchange="setAsMode('hardy')"><span><b>Hardy</b>${asHardyRests() ? 'Here whenever you want it.' : 'A little more challenge.'} A part of your plan left untended for ${AS_HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
     <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>`;
 }
 
@@ -2367,7 +2456,7 @@ if (window.GGTend) GGTend.init({
   itemTag: (key, name, t) => asItemTag(key, name, t),
   partNote: (key, t) => asPartNote(key, t),
   pause: () => asPause(),
-  pauseLine: 'Your tree is holding still with you. Nothing dries out or droops while you get support.',
+  pauseLine: 'Your tree is holding still with you. It stays in the light while you get support.',
   onCheck: (done, key, t, parts) => asOnCheck(done, key, t, parts),
   history: () => { const s = me(); return s ? s.rings.map(r => ({ date: dayKey(r.date), type: 'full' })) : []; },
   hasResults: () => !!(me() && me().rings.length),

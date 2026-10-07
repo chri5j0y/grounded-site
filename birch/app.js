@@ -472,7 +472,9 @@ function stQ(key, i) {
   return null;
 }
 function srcSmall(list) { return list && list.length && window.GGSources ? GGSources.line(list, { tag: 'small' }) : ''; }
-function tipHtml(q) { return CK_MODE === 'trust' && q && q.tip ? `<div class="pn-follow" role="note"><b>To talk about together</b>${escapeHtml(q.tip)}</div>` : ''; }
+// Health and Ability notes (GWG BLD 756) add an example and a tip, like My Season, only when the person answers for themselves.
+function lifeNote(q) { return CK.by === 'self' && window.GGLifeKit ? GGLifeKit.notes(q, 'birch') : { ex: [], tip: '' }; }
+function tipHtml(q) { const t = q ? [q.tip, lifeNote(q).tip].filter(Boolean).join(' ') : ''; return CK_MODE === 'trust' && t ? `<div class="pn-follow" role="note"><b>To talk about together</b>${escapeHtml(t)}</div>` : ''; }
 function questionHtml(key, i, text) {
   const cur = key.indexOf('sens_') === 0 ? ST_SENS[key.slice(5)] : (ST_ANS[key] || {})[i];
   const q = stQ(key, i);
@@ -480,6 +482,7 @@ function questionHtml(key, i, text) {
     <p class="q-text sq-qtext">${escapeHtml(text)}</p>
     <div class="q-opts sq-opts">${Q_OPTS.map(o => `<button type="button" data-v="${o[0]}" aria-pressed="${cur === o[0]}" onclick="answerQ('${key}', ${i}, '${o[0]}')"><span class="sq-dot" aria-hidden="true"></span>${o[1]}</button>`).join('')}</div>
     ${q && q.ex && q.ex.length ? `<ul class="bc-ex" aria-label="For your season">${q.ex.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
+    ${q && lifeNote(q).ex.length ? `<ul class="bc-ex" aria-label="Examples that fit you">${lifeNote(q).ex.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
     <div class="pn-tipbox">${cur ? tipHtml(q) : ''}</div>
     ${q && q.why ? `<details class="q-why"><summary>Why this question?</summary><p>${escapeHtml(q.why)}</p>${srcSmall(q.src)}</details>` : ''}
   </div>`;
@@ -555,6 +558,7 @@ function showCalm(why, flagKey) {
     <h2 id="calm-title">${escapeHtml(title)}</h2>
     ${lead}
     ${linesHtml(list, false, first)}
+    ${why !== 'hurt' && why !== 'self' && why !== 'now' ? lifeLinesHtml() : ''}
     ${why !== 'hurt' && LINES.hurt.length ? '<p class="gt-small"><button type="button" class="text-btn" onclick="showCalm(\'hurt\')">Someone hurting or threatening you? Help any time</button></p>' : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
@@ -711,11 +715,11 @@ function renderGrowthPlanBuilder(mode) {
       </div>
       <div class="practice-picker">
         <div class="practice-picker-label">Suggested: about ${oakSuggest(scores[d.key])} practices</div>
-        <div class="practice-list" id="cp-list-${mode}-${d.key}">${seasonOrder(d.key, d.restore).map((r, i) => `
+        <div class="practice-list" id="cp-list-${mode}-${d.key}">${lifeOrder(d.key, seasonOrder(d.key, d.restore)).map((r, i) => `
           <div class="practice-item" data-i="${i}">
             <label class="practice-option">
               <input type="checkbox" class="sq-pick-box" name="cp-${mode}-${d.key}" value="${escapeHtml(r[0])}" onchange="enforcePracticeLimit(this,'${mode}','${d.key}')">
-              <span class="practice-option-text"><strong>${escapeHtml(shownName(d.key, r[0]))}.</strong> ${shownLine(d.key, r[0], r[1])}${practiceMeta(d.key, r[0])}${fitsSeason(d.key, r[0]) ? '<span class="pm-tags"><span class="pm-tag pm-fit">Fits your season</span></span>' : ''}</span>
+              <span class="practice-option-text"><strong>${escapeHtml(shownName(d.key, r[0]))}.</strong> ${shownLine(d.key, r[0], r[1])}${practiceMeta(d.key, r[0])}${fitsSeason(d.key, r[0]) ? '<span class="pm-tags"><span class="pm-tag pm-fit">Fits your season</span></span>' : ''}${lifeFitHtml(d.key, r[0])}</span>
             </label>
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0])}</div>
@@ -734,6 +738,12 @@ function renderGrowthPlanBuilder(mode) {
 // 5 for a Growing Edge. Choosing one now only refreshes that part's list.
 // My Season (decision 6) only orders the practices: ones that fit the person's seasons
 // come first. It never changes scores, and every practice stays on the list.
+// Health and Ability (GWG BLD 756): practices that fit the person's choice come first with a
+// "Fits You" tag and their adapt line. Nothing is hidden, and the plan never shows the choice.
+function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeFits(key, name) { return !!window.GGLifeKit && GGLifeKit.fits(lifeTags(key, name)); }
+function lifeFitHtml(key, name) { return lifeFits(key, name) ? GGLifeKit.fitHtml(lifeTags(key, name).adapt) : ''; }
+function lifeOrder(key, rows) { return window.GGLife ? GGLife.order(rows, r => lifeTags(key, r[0])) : rows; }
 function fitsSeason(key, name) { const m = seasonsNow(); return !!m.length && ((SP.SEASON || {})[key + '|' + name] || []).some(id => m.includes(id)); }
 function seasonOrder(key, rows) { return rows.filter(r => fitsSeason(key, r[0])).concat(rows.filter(r => !fitsSeason(key, r[0]))); }
 function enforcePracticeLimit(el, mode, key) { oakRotApply(mode, key, el && !el.checked ? el : null); }
@@ -863,7 +873,7 @@ function buildPersonalSections(scores, unsure) {
   let html = `<div class="personal-section"><div class="personal-section-title">Your strongest parts, and how to lean on them</div>`;
   entries.slice(0, 2).map(partDef).forEach(d => { if (d.strength_msg) html += block(d, 'strength-block', `<p>${d.strength_msg}</p>`); });
   html += `</div><div class="personal-section"><div class="personal-section-title">Where your tree needs tending</div>`;
-  entries.slice(-2).reverse().map(partDef).forEach(d => { html += block(d, 'growth-block', d.growth_steps.length ? `<ul>${d.growth_steps.map(s => `<li>${s}</li>`).join('')}</ul>` : '<p>Your growth plan has practices for this part.</p>'); });
+  entries.slice(-2).reverse().map(partDef).forEach(d => { const extra = d.score < 5 && window.GGLifeKit ? GGLifeKit.stepsHtml('birch', d.key) : ''; html += block(d, 'growth-block', d.growth_steps.length || extra ? `<ul>${d.growth_steps.map(s => `<li>${s}</li>`).join('')}${extra}</ul>` : '<p>Your growth plan has practices for this part.</p>'); });
   return html + `</div>`;
 }
 // Flagged answers from this check-in: alone, hope, bully from the questions, and hurt
@@ -944,6 +954,8 @@ function calculateResults() {
     personalHistory.push(JSON.parse(JSON.stringify(entry))); sortEntries(personalHistory); profPersist();
     if (!ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(entry); if (msg) setTimeout(() => showToast(msg), 900); }
   }
+  // Health and Ability (GWG BLD 756): one quiet card after a full check-in, at most once per profile.
+  if (!ST_QUICK && CK.by === 'self' && !HELP && window.GGLife) { const host = document.querySelector('#client-results-content .results-summary'); if (host) GGLife.offerCard(host, 'birch', { onChoose: () => reopenSettings('bc-set-life') }); }
   oakPrefillPlan();
   renderSaveBox();
   renderProgress();
@@ -993,8 +1005,10 @@ function lcHelpHtml(t) {
   const ids = t ? (Array.isArray(t.lines) ? t.lines : LC_TOPIC_LINES[t.id] || []) : [];
   const topic = linesFor(ids).filter(x => !calm.some(y => y.id === x.id));
   const L = calm.concat(topic, end);
-  return `<div class="lc-help"><h3>Help any time</h3>${L.length ? linesHtml(L, true) : ''}<p class="no-print"><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
+  return `<div class="lc-help"><h3>Help any time</h3>${L.length ? linesHtml(L, true) : ''}${lifeLinesHtml()}<p class="no-print"><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
 }
+// Health and Ability lines (shared/gg-life.js): information and support, always below the crisis lines.
+function lifeLinesHtml() { return window.GGLifeKit ? GGLifeKit.linesHtml('birch', x => lineHtml(x)) : ''; }
 const LC_OAK = '<p class="lc-oak no-print"><a class="text-link" href="/oak/#life">More guides in Oak</a></p>';
 function renderLC(mode) {
   mode = 'client';
@@ -1002,7 +1016,7 @@ function renderLC(mode) {
   if (!el) return;
   if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
   const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
-  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  if (st.ring !== 'all' && st.ring !== 'life' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for the years of new ground</h2>
@@ -1011,7 +1025,7 @@ function renderLC(mode) {
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: roommates, a first job, debt, a breakup..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
-      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
@@ -1027,9 +1041,9 @@ function lcRenderList(mode) {
   const box = document.getElementById(mode + '-lc-list');
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
-  let html = '', n = 0;
-  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+  let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
+  LC_RINGS.concat(LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
@@ -1041,8 +1055,22 @@ function lcRenderList(mode) {
         <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
       </article>`).join('')}</div></div>`;
   });
+  if (st.ring === 'all' && n) html += lcLifeRingHtml(mode);
   box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
 }
+/* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
+   birch/guides.js, and Picked for You at the top when the person has made a choice. */
+const LC_LIFE = window.GGLifeKit && GGLifeKit.tagged(LC_TOPICS).length ? GGLifeKit.RING : null;
+function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
+function lcPickedHtml(mode) {
+  const ts = window.GGLifeKit ? GGLifeKit.picked('birch', LC_TOPICS) : [];
+  return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
+}
+function lcLifeRingHtml(mode) {
+  const ts = LC_LIFE ? GGLifeKit.tagged(LC_TOPICS) : [];
+  return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
+}
+if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) lcRenderList('client'); });
 /* Search: the same engine as the header search. Birch's guides first, then the rest of Grow With Grounded.
    Birch is an adult app, so nothing is held back. */
 function lcFind(el, mode) {
@@ -1116,9 +1144,9 @@ function lcDetail(mode, t) {
 }
 /* When Life Changes videos (GWG BLD 743): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from birch/guide-videos.js. BR_VIDS lists the guides that have them so far (written by the build's generator).
-   A quiet check shows once a video has been watched on this device (gg-learn:birch). */
+   A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
 /* BR_VIDS start */const BR_VIDS = ["first-year", "not-college", "changing-plans", "pressure-burnout", "adhd", "what-now", "first-job", "job-loss", "career-change", "money-basics", "debt", "gambling", "moving-out", "roommates", "first-apartment", "moving-back", "new-city", "housing", "friends", "loneliness", "dating", "breakup", "controlling", "engaged", "parents-adult", "estrangement", "unplanned-pregnancy", "young-parent", "after-baby", "pregnancy-loss", "anxiety", "depression", "first-signs", "substances", "eating", "health-26", "suicide-thoughts", "friend-suicide", "selfharm", "sexual-assault", "images", "porn", "military", "coming-home", "grief-young", "faith-own", "faith-hurt", "purpose"];/* BR_VIDS end */
-function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:birch') || '{}').done || {})[id]); } catch (e) { return false; } }
+function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('birch', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!BR_VIDS.includes(gid)) return '';
   const b = (side, name, pri) => { const id = 'br-g-' + gid + '-' + side, w = lcVidWatched(id);
@@ -1130,7 +1158,7 @@ function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('birch', 'br-g-' 
 // gg-learn's Open the Full Guide button lands here.
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.birch = id => { if (lcHas(id)) lcOpen('client', id); };
-window.addEventListener('gg-learn-close', () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
+['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } }));
 /* After a check-in: guides that touch the parts carrying the most (each Growing Edge part), two per part,
    lowest part first. A part marked Not sure yet is left out. My Season may move its own guides
    (birch/checkin.js mySeason guides) to the front of each part's list; it never hides any. */
@@ -1528,7 +1556,7 @@ const TEND_CFG = {
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
   partNote: (key, s) => partNoteHtml(key, s),
   pause: () => pnPause(),
-  pauseLine: 'Your tree is holding still with you. Nothing dries out or browns while you get support.',
+  pauseLine: 'Your tree is holding still with you while you get support. Nothing is lost.',
   onCheck: (done, key, s, parts) => onCheckGame(done, key, s, parts),
   store: {
     get: () => { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'birch'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1618,9 +1646,9 @@ function profSync() {
     const d = rec();
     window.personalHistory = d.history.slice(); personalHistory = window.personalHistory;
     window.personalFileLoaded = true;
-    if (HELP && !helpedWithBirch().some(p => p.id === HELP)) HELP = null;
+    if (HELP && !helpedWithBirch().some(p => p.id === HELP)) { HELP = null; if (window.GGLife) GGLife.use(null); }
   } else if (PROF || HELP) {
-    PROF = null; HELP = null;
+    PROF = null; HELP = null; if (window.GGLife) GGLife.use(null);
     window.personalHistory = []; personalHistory = window.personalHistory;
     window.personalFileLoaded = false; window.currentClientEntry = null; window.lastClientScores = null;
   }
@@ -1690,7 +1718,7 @@ function bcOpenAny() {
 function bcSwitch() {
   if (!window.GGP) return;
   if (window.GGTend) GGTend.closeSettings();
-  HELP = null;
+  HELP = null; if (window.GGLife) GGLife.use(null);
   GGP.lock().then(() => { showToast('Locked. Choose who is tending.'); const b = document.getElementById('st-profile-bar'); if (b) b.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
 }
 function profCreateDialog() {
@@ -1730,14 +1758,15 @@ function bcSettingsHtml() {
   if (HELP) return helperSettingsHtml();
   return `<section id="bc-set-season"><h3>My Season</h3><p class="gt-small">Choose any that fit your life right now, or none. My Season changes only the examples, tips, and help lines you see. The questions and your scores stay the same.</p>
       ${SEASONS.map(x => `<label class="gt-switch"><input type="checkbox"${mine.includes(x.id) ? ' checked' : ''} onchange="setSeason('${x.id}',this.checked)"> <span><b>${escapeHtml(x.name)}</b><br><small>${escapeHtml(x.line || '')}</small></span></label>`).join('')}</section>
+    ${window.GGLifeKit ? GGLifeKit.settingsHtml('birch', 'bc-set-life') : ''}
     <section id="pn-set-wording"><h3>Faith or Plain Wording</h3><p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores never change between the two.</p>
       <label class="gt-radio"><input type="radio" name="pn-word" value="faith"${!plain ? ' checked' : ''} onchange="setWording('faith')"><span><b>Faith</b>Prayer, worship, quiet, nature, and traditions.</span></label>
       <label class="gt-radio"><input type="radio" name="pn-word" value="plain"${plain ? ' checked' : ''} onchange="setWording('plain')"><span><b>Plain</b>Peace, values, quiet, nature, and traditions.</span></label></section>
     <section id="pn-set-sens"><h3>Optional Question</h3><p class="gt-small">One extra question about betting and gambling, on sports, online games, or anything else for money. It never counts toward a score, is never shared, and is never shown to a helper. Only you can turn it on.</p>
       <label class="gt-switch"><input type="checkbox"${sensOn() ? ' checked' : ''}${open ? '' : ' disabled'} onchange="setSens(this.checked)"> Ask me the optional question</label></section>
     <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
-      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may look dry when you miss days, and nothing is ever lost.</span></label>
-      <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b>A little more challenge. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. Missed days rest in soft mist, and nothing is ever lost.<span class="steady-fit">${steadyFits() ? ' Steady fits you best right now.' : ''}</span></span></label>
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b><span class="hardy-pitch">${steadyFits() ? '' : 'A little more challenge. '}</span>A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
       <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     ${helperSettingsHtml()}
     <section id="bc-set-age"><h3>Your Age (Optional)</h3><p class="gt-small">Only used to offer the step into Oak from 25. It stays in your profile.</p>
@@ -1745,6 +1774,10 @@ function bcSettingsHtml() {
     <section class="asp-see" id="bc-see"><h3>What Stays Private</h3>${BC_SEE}</section>
     ${moveOakHtml(false)}`;
 }
+// Health and Ability (GWG BLD 756): with pain, a serious illness, or a mental health condition chosen,
+// Birch never suggests Hardy. Steady is named as the fit; Hardy stays the person's own choice.
+function steadyFits() { return !!window.GGLife && GGLife.chosen('birch').some(id => id === 'pain' || id === 'serious' || id === 'mind'); }
+if (window.GGLifeKit) GGLifeKit.on(() => { const on = steadyFits(); document.querySelectorAll('.steady-fit').forEach(x => { x.textContent = on ? ' Steady fits you best right now.' : ''; }); document.querySelectorAll('.hardy-pitch').forEach(x => { x.textContent = on ? '' : 'A little more challenge. '; }); });
 function reopenSettings(focus) { if (window.GGTend) { GGTend.openSettings(); const f = document.getElementById(focus || 'gt-set-helpers'); if (f) f.scrollIntoView({ block: 'start' }); } }
 function setWording(w) {
   rec().wording = w === 'plain' ? 'plain' : 'faith';
@@ -1881,9 +1914,9 @@ function dropHelper(id) {
 // Helper view
 function helpOpen(id) {
   if (!helpedWithBirch().some(p => p.id === id)) return;
-  HELP = id; window.currentClientEntry = null; renderProfileBar(); renderHelpBanner(); showView('client-today');
+  HELP = id; if (window.GGLife) GGLife.use(id); window.currentClientEntry = null; renderProfileBar(); renderHelpBanner(); showView('client-today');
 }
-function helpBack() { HELP = null; setMode('self'); loadBank(); renderProfileBar(); renderHelpBanner(); showView('client-today'); }
+function helpBack() { HELP = null; if (window.GGLife) GGLife.use(null); setMode('self'); loadBank(); renderProfileBar(); renderHelpBanner(); showView('client-today'); }
 function helpFromHash() {
   const m = /^#for=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (!m || !PROF) return;
   if (helpedWithBirch().some(p => p.id === m[1])) { try { history.replaceState(null, '', location.pathname); } catch (e) {} helpOpen(m[1]); }

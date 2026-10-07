@@ -59,6 +59,11 @@ html,body{overflow-x:clip;}
 .w-words b{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:13px;color:var(--pc);}
 .w-words span{font-size:16.5px;line-height:1.45;}
 @media (max-width:640px){.w-treecard{grid-template-columns:1fr;}.w-tree{max-width:180px;}}
+/* the living Today scene (GWG BLD 756): the painting spans the card, the words sit below it */
+.w-treelive{grid-template-columns:1fr;gap:14px;}
+.w-treelive .w-treewrap{text-align:left;}
+.w-treelive .gl-scene{border-radius:14px;}
+.w-sceneline{font-size:16.5px;line-height:1.45;margin:10px 0 0 !important;}
 
 /* practice of the day */
 .w-practice{border-top:5px solid var(--pc);}

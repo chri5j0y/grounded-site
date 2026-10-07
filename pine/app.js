@@ -191,7 +191,7 @@ function partLine(k) { const p = CK_PART[k] || {}; return (isPlain() && p.plainL
 const FLAGS_P = spGet('FLAGS') || {};
 function practiceMeta(key, name) {
   const m = (META[key] || {})[name], f = FLAGS_P[key + '|' + name] || {};
-  const fit = f.seated ? '<span class="pm-tag pm-fit">Seated or low energy</span>' : '';
+  const fit = (lifeFits(key, name) ? `<span class="pm-tag pm-fit pm-you">${(window.GGLife && GGLife.FITS) || 'Fits You'}</span>` : '') + (f.seated ? '<span class="pm-tag pm-fit">Seated or low energy</span>' : '');
   if (!m) return fit ? `<span class="pm-tags">${fit}</span>` : '';
   return `<span class="pm-tags"><span class="pm-tag">${DISC[m[0]] || ''}</span><span class="pm-tag">${m[1]}</span><span class="pm-tag pm-ev pm-ev-${m[2]}">${EV[m[2]] || ''}</span>${fit}</span>`;
 }
@@ -211,6 +211,7 @@ function guideHtml(key, name) {
   const m = (META[key] || {})[name];
   if (m && m[3]) s += `<p class="guide-src"><a class="text-link" href="${m[3]}" target="_blank" rel="noopener">Learn more at the source</a></p>`;
   if (g.adapt) s += '<p><strong>Seated or low energy.</strong> ' + g.adapt + '</p>';
+  else { const ad = (FLAGS_P[key + '|' + name] || {}).adapt; if (ad) s += '<p><strong>Another way.</strong> ' + escapeHtml(ad) + '</p>'; }
   if (window.GGSources) s += GGSources.line(GGSources.practiceList(name, 'pine'), { practice: true });
   return s;
 }
@@ -219,6 +220,44 @@ function toggleGuide(btn) {
   const open = g.classList.toggle('open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   btn.innerHTML = open ? 'Hide guide &uarr;' : 'How to do this &darr;';
+}
+
+// =====================================================================
+// HEALTH AND ABILITY (GWG BLD 756, HA 1). The teen's choice lives in shared/gg-life.js, locked in
+// their own vault (only their passcode opens it; a grown-up never sees it, and alerts never mention
+// it). It only reorders and adds lines: practices that fit show first with Fits You and their adapt
+// line, a few check-in questions get an example or tip, growth ideas add one line per choice for a
+// Growing Edge part, guides get Picked for You, and information lines sit below the crisis lines.
+// Questions, scores, flags, alerts, and crisis lines never change. pine/life.js holds the data.
+// =====================================================================
+const PL = window.PINE_LIFE || { notes: [], steps: {} };
+const lifeOn = () => !!window.GGLife;
+function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeFits(key, name) { return lifeOn() && GGLife.fits(lifeTags(key, name)); }
+function lifeIds() { return lifeOn() ? GGLife.chosen('pine') : []; }
+const lifeUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
+// Check-in notes for one question: { ex: [], tip: [] }. Never on a flagged question.
+function lifeNote(q) {
+  const out = { ex: [], tip: [] }; if (!q || q.flag || q._k == null) return out;
+  const ids = lifeIds(); if (!ids.length) return out;
+  (PL.notes || []).forEach(n => { if (n.part !== q._k || n.i !== q._i) return; ids.forEach(id => { const x = (n.n || {})[id]; if (x) { if (x.ex) out.ex.push(x.ex); if (x.tip) out.tip.push(x.tip); } }); });
+  out.ex = lifeUniq(out.ex); out.tip = lifeUniq(out.tip); return out;
+}
+// One growth idea line per chosen id, for a Growing Edge part.
+function lifeSteps(key) { const S = PL.steps || {}; return lifeUniq(lifeIds().map(id => ((S[key] || {})[id]) || ((S.any || {})[id]) || '')); }
+// Information and support lines for the choice, always shown BELOW the crisis lines.
+function lifeLinesHtml(collapsed) {
+  const L = lifeOn() ? GGLife.lines('pine') : []; if (!L.length) return '';
+  const title = (window.GGLife && GGLife.LINES_TITLE) || 'Information and Support';
+  const body = `<p class="gt-small">For information and support. In a crisis, use the lines above.</p><ul class="calm-list sq-lines">${L.map(x => lineHtml(x)).join('')}</ul>`;
+  return collapsed ? `<details class="pn-life-lines"><summary>${escapeHtml(title)}</summary>${body}</details>` : `<div class="pn-life-lines"><h3>${escapeHtml(title)}</h3>${body}</div>`;
+}
+// Steady or Hardy: Hardy is never suggested while pain, a serious illness, or mental health is chosen.
+function hardyRests() { return lifeIds().some(id => id === 'pain' || id === 'serious' || id === 'mind'); }
+function mountLifeChooser() {
+  const host = document.getElementById('pn-life-host'); if (!host || !lifeOn()) return;
+  GGLife.use(null);
+  GGLife.chooser(host, { tree: 'pine' });
 }
 
 // =====================================================================
@@ -440,7 +479,7 @@ function bankFor(band, wording) {
 }
 function sensList() { return typeof CKB.sensitiveList === 'function' ? CKB.sensitiveList() : (CKB.SENSITIVE || CKB.sensitive || []); }
 let QUESTIONS = {};
-function loadBank() { QUESTIONS = bankFor(bandNow(), isPlain() ? 'plain' : 'faith'); }
+function loadBank() { QUESTIONS = bankFor(bandNow(), isPlain() ? 'plain' : 'faith'); Object.keys(QUESTIONS).forEach(k => (QUESTIONS[k] || []).forEach((q, i) => { if (q && typeof q === 'object') { q._k = k; q._i = i; } })); }
 loadBank();
 const Q_STEM = (CKB.stems || {}).standard || 'In the past two weeks, how often have you...';
 const quickQ = key => ((QUESTIONS[key] || [])[0] || {}).t || '';
@@ -464,13 +503,14 @@ function stQ(key, i) {
   return null;
 }
 function srcSmall(list) { return list && list.length && window.GGSources ? GGSources.line(list, { tag: 'small' }) : ''; }
-function tipHtml(q) { return CK_MODE === 'trust' && q && q.tip ? `<div class="pn-follow" role="note"><b>To talk about together</b>${escapeHtml(q.tip)}</div>` : ''; }
+function tipHtml(q) { const lt = lifeNote(q).tip; return CK_MODE === 'trust' && q && (q.tip || lt.length) ? `<div class="pn-follow" role="note"><b>To talk about together</b>${escapeHtml(q.tip || '')}${lt.map(x => ' ' + escapeHtml(x)).join('')}</div>` : ''; }
 function questionHtml(key, i, text) {
   const cur = key.indexOf('sens_') === 0 ? ST_SENS[key.slice(5)] : (ST_ANS[key] || {})[i];
   const q = stQ(key, i);
   return `<div class="q-card sq-one${cur ? ' answered' : ''}" data-q="${key}-${i}" role="radiogroup" aria-label="${escapeHtml(text)}">
     <p class="q-text sq-qtext">${escapeHtml(text)}</p>
     <div class="q-opts sq-opts">${Q_OPTS.map(o => `<button type="button" data-v="${o[0]}" aria-pressed="${cur === o[0]}" onclick="answerQ('${key}', ${i}, '${o[0]}')"><span class="sq-dot" aria-hidden="true"></span>${o[1]}</button>`).join('')}</div>
+    ${(ex => ex.length ? `<ul class="bc-ex" aria-label="An example">${ex.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : '')(lifeNote(q).ex)}
     <div class="pn-tipbox">${cur ? tipHtml(q) : ''}</div>
     ${q && q.why ? `<details class="q-why"><summary>Why this question?</summary><p>${escapeHtml(q.why)}</p>${srcSmall(q.src)}</details>` : ''}
   </div>`;
@@ -546,6 +586,7 @@ function showCalm(why, flagKey) {
     <h2 id="calm-title">${escapeHtml(title)}</h2>
     ${lead}
     ${linesHtml(list, false, first)}
+    ${why === 'hurt' || why === 'self' || why === 'now' ? '' : lifeLinesHtml(true)}
     ${why !== 'hurt' && LINES.hurt.length ? '<p class="gt-small"><button type="button" class="text-btn" onclick="showCalm(\'hurt\')">Someone hurting you? Help from outside your home</button></p>' : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
@@ -719,11 +760,11 @@ function renderGrowthPlanBuilder(mode) {
       </div>
       <div class="practice-picker">
         <div class="practice-picker-label">Suggested: about ${oakSuggest(scores[d.key])} practices</div>
-        <div class="practice-list" id="cp-list-${mode}-${d.key}">${d.restore.map((r, i) => `
+        <div class="practice-list" id="cp-list-${mode}-${d.key}">${(lifeOn() ? GGLife.order(d.restore, r => lifeTags(d.key, r[0])) : d.restore).map((r, i) => `
           <div class="practice-item" data-i="${i}">
             <label class="practice-option">
               <input type="checkbox" class="sq-pick-box" name="cp-${mode}-${d.key}" value="${escapeHtml(r[0])}" onchange="enforcePracticeLimit(this,'${mode}','${d.key}')">
-              <span class="practice-option-text"><strong>${escapeHtml(shownName(d.key, r[0]))}.</strong> ${shownLine(d.key, r[0], r[1])}${practiceMeta(d.key, r[0])}</span>
+              <span class="practice-option-text"><strong>${escapeHtml(shownName(d.key, r[0]))}.</strong> ${shownLine(d.key, r[0], r[1])}${lifeFits(d.key, r[0]) && lifeTags(d.key, r[0]).adapt ? `<span class="pn-adapt">${escapeHtml(lifeTags(d.key, r[0]).adapt)}</span>` : ''}${practiceMeta(d.key, r[0])}</span>
             </label>
             <button type="button" class="guide-toggle" aria-expanded="false" onclick="toggleGuide(this)">How to do this &darr;</button>
             <div class="guide">${guideHtml(d.key, r[0])}</div>
@@ -834,6 +875,7 @@ function planHelpHtml() {
   const ids = ['988', 'ctl', 'mncrisis', '911'];
   f.forEach(k => ((ST_FLAGS[k] || {}).lines || []).forEach(id => { if (!ids.includes(id)) ids.push(id); }));
   if (e && safeOn('safe', (e.safety || {}).safe)) LINES.hurt.forEach(x => { if (!ids.includes(x.id)) ids.push(x.id); });
+  // The plan's page keeps the choice private: the help lines only, never the Health and Ability lines.
   return `<div class="growth-plan-next sq-planhelp"><div class="growth-plan-next-label">Help Any Time</div>${linesHtml(linesFor(ids), true)}</div>`;
 }
 
@@ -864,7 +906,7 @@ function buildPersonalSections(scores, unsure) {
   let html = `<div class="personal-section"><div class="personal-section-title">Your strongest parts, and how to lean on them</div>`;
   entries.slice(0, 2).map(partDef).forEach(d => { if (d.strength_msg) html += block(d, 'strength-block', `<p>${d.strength_msg}</p>`); });
   html += `</div><div class="personal-section"><div class="personal-section-title">Where your tree needs tending</div>`;
-  entries.slice(-2).reverse().map(partDef).forEach(d => { html += block(d, 'growth-block', d.growth_steps.length ? `<ul>${d.growth_steps.map(s => `<li>${s}</li>`).join('')}</ul>` : '<p>Your growth plan has practices for this part.</p>'); });
+  entries.slice(-2).reverse().map(partDef).forEach(d => { const steps = d.growth_steps.concat(d.score < 5 ? lifeSteps(d.key).map(escapeHtml) : []); html += block(d, 'growth-block', steps.length ? `<ul>${steps.map(s => `<li>${s}</li>`).join('')}</ul>` : '<p>Your growth plan has practices for this part.</p>'); });
   return html + `</div>`;
 }
 // Flagged answers from this check-in: alone, hope, bully from the questions, and hurt
@@ -935,6 +977,7 @@ function calculateResults() {
       <div class="interpretation">${interpretResults(scores, unsure)}</div>
       ${flagBoxHtml(flags, entry)}
       ${told}
+      <div id="pn-life-offer" class="no-print"></div>
     </div>
     ${buildPersonalSections(scores, unsure)}
     ${lcSuggestHtml(scores, unsure)}
@@ -952,6 +995,8 @@ function calculateResults() {
     pineTeenAlert(entry);
     if (!ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(entry); if (msg) setTimeout(() => showToast(msg), 900); }
   }
+  // Health and Ability: one quiet card after the first full check-in, at most once (gg-life.js keeps the flag in the vault).
+  if (!ST_QUICK && lifeOn() && (!PROF || personalHistory.filter(e => e && !e.from && e.type !== 'quick').length === 1)) GGLife.offerCard(document.getElementById('pn-life-offer'), 'pine', { onChoose: () => reopenSettings('pn-set-life') });
   oakPrefillPlan();
   renderSaveBox();
   renderProgress();
@@ -1020,7 +1065,7 @@ function lcPartsText(t) { return (t.parts || []).map(k => lcPart(k) ? lcPart(k).
 const LC_HELP_IDS = ['988', 'ctl', 'teenline', 'childhelp', 'mncrisis', '911'];
 function lcHelpHtml() {
   const L = linesFor(LC_HELP_IDS);
-  return `<div class="lc-help"><h3>Help any time</h3>${L.length ? linesHtml(L, true) : ''}<p class="no-print"><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
+  return `<div class="lc-help"><h3>Help any time</h3>${L.length ? linesHtml(L, true) : ''}<p class="no-print"><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div><div class="no-print">${lifeLinesHtml(false)}</div>`;
 }
 function renderLC(mode) {
   mode = 'client';
@@ -1028,7 +1073,8 @@ function renderLC(mode) {
   if (!el) return;
   if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
   const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
-  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  if (st.ring !== 'all' && st.ring !== 'life' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  if (st.ring === 'life' && !lcLifeTopics().length) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for the seasons of high school</h2>
@@ -1038,6 +1084,7 @@ function renderLC(mode) {
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
       ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+      ${lcLifeTopics().length ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
@@ -1046,6 +1093,8 @@ function renderLC(mode) {
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
+const LC_LIFE = { key: 'life', name: 'Health and Ability', color: '#3F6E8C', blurb: 'Living with a health condition, pain, a disability, or mental health, or caring about someone who is. Open to everyone. More guides are coming.' };
+function lcLifeTopics() { return LC_TOPICS.filter(t => Array.isArray(t.life) && t.life.length); }
 function lcJoin(a) { return a.length < 2 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join('; ') + '; and ' + a[a.length - 1]; }
 function lcRenderList(mode) {
   const st = LCS[mode];
@@ -1053,19 +1102,26 @@ function lcRenderList(mode) {
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
   let html = '', n = 0;
-  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
-    if (!ts.length) return;
-    n += ts.length;
-    html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
-      <article class="lc-card" style="--rc:${r.color}">
-        <span class="lc-label">Hard season</span>
+  const card = (t, col, label) => `
+      <article class="lc-card" style="--rc:${col}">
+        <span class="lc-label">${label || 'Hard season'}</span>
         <h4>${lcEsc(t.title)}</h4>
         ${lcList(t.quick)}
         <p class="lc-meta">Parts of the tree often affected: ${lcEsc(lcPartsText(t))}.</p>
         <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
-      </article>`).join('')}</div></div>`;
+      </article>`;
+  const ringBlock = (r, ts, label) => `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => card(t, (lcRing(t.ring) || r).color || r.color, label)).join('')}</div></div>`;
+  // Picked for You: guides tagged for the teen's Health and Ability choice, first.
+  const picks = st.ring === 'all' && !st.q && lifeOn() ? GGLife.picks('pine', LC_TOPICS).map(id => LC_TOPICS.find(t => t.id === id)).filter(Boolean) : [];
+  if (picks.length) html += ringBlock({ name: 'Picked for You', color: LC_LIFE.color, blurb: 'Guides that fit what you chose in Health and Ability. Every guide stays open to you.' }, picks, 'Picked for You');
+  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+    if (!ts.length) return;
+    n += ts.length;
+    html += ringBlock(r, ts);
   });
+  // The Health and Ability ring: every guide tagged for any choice, open to everyone.
+  if (st.ring === 'all' || st.ring === 'life') { const ts = lcLifeTopics().filter(t => lcMatches(t, st.q)); if (ts.length) { n += ts.length; html += ringBlock(LC_LIFE, ts, 'Health and Ability'); } }
   box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
 }
 /* Search: the same engine as the header search. Pine's guides first, then the rest of Grow With Grounded
@@ -1143,7 +1199,9 @@ function lcDetail(mode, t) {
    from pine/guide-videos.js. PN_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:pine). */
 /* PN_VIDS start */const PN_VIDS = ["start-hs", "grades-pressure", "adhd", "sports-cut", "path-after", "graduation", "friend-changes", "left-out", "bullying", "first-relationship", "breakup", "dating-abuse", "divorce", "stepfamily", "moving", "deployed", "family-substance", "parent-jail", "blowup", "lying", "parent-death", "friend-death", "grandparent-death", "car-crash", "loved-one-ill", "sleep", "body-image", "eating", "concussion", "chronic-illness", "substances", "anxiety", "depression", "selfharm", "suicide-thoughts", "counseling", "sextortion", "porn", "social-media", "ai-companions", "gambling", "sexual-assault", "school-threats", "first-job", "money", "faith-doubt", "faith-hurt", "purpose-service"];/* PN_VIDS end */
-function lcVidWatched(id) { try { return !!((JSON.parse(localStorage.getItem('gg-learn:pine') || '{}').done || {})[id]); } catch (e) { return false; } }
+// Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
+function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('pine', id)); } catch (e) { return false; } }
+window.addEventListener('gg-learn-marks', () => { if (LCS.client.open && document.getElementById('client-life') && document.getElementById('client-life').classList.contains('active')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
 function lcVids(gid, self) {
   if (!PN_VIDS.includes(gid)) return '';
   const b = (side, name, pri) => { const id = 'pn-g-' + gid + '-' + side, w = lcVidWatched(id);
@@ -1494,7 +1552,8 @@ const TEND_CFG = {
   weekStem: 'This past week, how often have you...',
   practiceInfo: (key, name) => {
     const d = DOMAIN_BY_KEY[key], r = d && d.restore.find(x => x[0] === name), g = GUIDES[key + '|' + name], pl = plainOf(key, name), gg = Object.assign({}, g || {}, (pl && pl.g) || {});
-    return { desc: r ? shownLine(key, name, r[1]) : '', guide: guideHtml(key, name), hard: g ? (gg.adapt || gg.hard) : '' };
+    const ad = lifeFits(key, name) ? lifeTags(key, name).adapt : '';
+    return { desc: r ? shownLine(key, name, r[1]) : '', guide: guideHtml(key, name), hard: ad || (g ? (gg.adapt || gg.hard) : '') };
   },
   history: () => (personalHistory || []).filter(e => e && !e.from),
   hasResults: () => !!window.currentClientEntry,
@@ -1507,7 +1566,7 @@ const TEND_CFG = {
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
   partNote: (key, s) => partNoteHtml(key, s),
   pause: () => pnPause(),
-  pauseLine: 'Your tree is holding still with you. Nothing dries out or browns while you get support.',
+  pauseLine: 'Your tree is holding still with you. It stays in the light while you get support.',
   onCheck: (done, key, s, parts) => onCheckGame(done, key, s, parts),
   store: {
     get: () => { if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'pine'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1522,6 +1581,18 @@ const TEND_CFG = {
   }
 };
 if (window.GGTend) GGTend.init(TEND_CFG);
+// Health and Ability changed (or the profile did): re-order the plan builder (keeping what is checked),
+// the guides, and Today. Nothing about the choice is ever written outside the vault.
+function lifeRefresh() {
+  const doc = document.getElementById('client-growthplan-doc');
+  if (window.lastClientScores && document.querySelector('#client-growthplan-builder .domain-card') && !(doc && doc.innerHTML.trim())) {
+    const keep = collectGrowthPlan('client'); renderGrowthPlanBuilder('client');
+    ALL_DOMAINS.forEach(d => { const p = keep[d.key] || {}, on = new Set(p.selected || []); document.querySelectorAll(`input[name="cp-client-${d.key}"]`).forEach(c => { c.checked = on.has(c.value); }); const cu = document.getElementById(`cp-client-${d.key}-custom`); if (cu) cu.value = p.custom || ''; oakRotApply('client', d.key); });
+    const b = document.querySelector('#client-growthplan-builder .domain-card'); if (b) b.dataset.filled = '1';
+  }
+  const lc = document.getElementById('client-life'); if (lc && lc.classList.contains('active')) renderLC('client');
+}
+if (window.GGLife) GGLife.on(() => lifeRefresh());
 setTimeout(() => { if (window.GGTend) GGTend.render(); }, 0);
 
 window.personalHistory = [];
@@ -1678,14 +1749,16 @@ function pnProfileHtml() {
 }
 function pnSettingsHtml() {
   const s = window.GGTend && GGTend.state(), open = !!PROF, plain = isPlain(), mode = pnMode(s);
+  Promise.resolve().then(mountLifeChooser);
   return `<section id="pn-set-wording"><h3>Faith or Plain Wording</h3><p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores never change between the two.</p>
       <label class="gt-radio"><input type="radio" name="pn-word" value="faith"${!plain ? ' checked' : ''} onchange="setWording('faith')"><span><b>Faith</b>Prayer, worship, quiet, nature, and family traditions.</span></label>
       <label class="gt-radio"><input type="radio" name="pn-word" value="plain"${plain ? ' checked' : ''} onchange="setWording('plain')"><span><b>Plain</b>Peace, values, quiet, nature, and family traditions.</span></label></section>
     <section id="pn-set-sens"><h3>Optional Questions</h3><p class="gt-small">Two extra questions: one about pressure to vape, drink, or use drugs to cope, and one about pressure or control from someone you are close to. They never count toward a score, never send a note to anyone, and are never shared. Only you can turn them on.</p>
       <label class="gt-switch"><input type="checkbox"${sensOn() ? ' checked' : ''}${open ? '' : ' disabled'} onchange="setSens(this.checked)"> Ask me the optional questions</label></section>
-    <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
-      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may look dry when you miss days, and nothing is ever lost.</span></label>
-      <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b>A little more challenge. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
+    <section id="pn-set-life"><div id="pn-life-host"><h3>Health and Ability</h3></div></section>
+    <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>${hardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and nothing is ever lost. Rest Week on Today holds your tree still any time.</p>' : ''}
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and nothing is ever lost.</span></label>
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b>${hardyRests() ? `Here whenever you want it. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.` : `A little more challenge. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.`}</span></label>
       <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     <section class="asp-see" id="pn-see"><h3>What Your Grown-up Can See</h3>${PN_SEE}</section>
     ${movingOnHtml(false)}`;
