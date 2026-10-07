@@ -4689,6 +4689,982 @@ const LC_TOPICS = [
     "https://www.semanticscholar.org/paper/The-Development-of-Purpose-During-Adolescence-Damon-Menon/691e52b9ae789d27c4ae40fdcd9476d971037737"
    ]
   ]
+ },
+ {
+  "id": "own-health",
+  "ring": "life",
+  "title": "Taking over your own health",
+  "life": [
+   "health",
+   "pain",
+   "serious",
+   "mind",
+   "moving"
+  ],
+  "sources": [
+   "gottransition",
+   "mnconsent"
+  ],
+  "keys": "taking over my own health managing my own health health care transition adult doctor pediatrician refill prescription order my meds book my own appointment call the doctor myself talk to the doctor alone without my parents my medical info insurance card turning 18 health privacy at 18 independence health condition asthma diabetes epilepsy allergies medicine schedule pharmacy health skills",
+  "parts": [
+   "trunk",
+   "leaves",
+   "branches"
+  ],
+  "quick": [
+   "Running your own health is a set of skills, and high school is the time to learn them, one at a time.",
+   "Start small: know your condition in a sentence, know your medicines, and ask one question yourself at each visit.",
+   "Time alone with your doctor is a normal part of growing up. Many clinics offer it to teens.",
+   "At 18, the law treats you as an adult in health care. Practicing now makes that day easier."
+  ],
+  "feel": "Maybe a parent has handled your appointments, refills, and forms for as long as you can remember, and it works. Maybe you already do more than your friends know. Either way, the day is coming when the doctor turns to you, the pharmacy asks for you, and the forms want your signature. That can feel exciting, a little scary, or just like one more thing. Some teens worry about forgetting something important. Some feel ready and wish the adults would step back. Some would rather not think about their health at all, because it already takes up enough of life. All of that makes sense. Taking over is not a test you pass in one day. It is a set of skills you build, with people beside you while you learn.",
+  "self": {
+   "first": [
+    "Learn to say your condition, your medicines, and your allergies in two or three sentences. Keep them in your phone.",
+    "Pick one task to take over this month: ordering a refill, booking an appointment, or checking in at the front desk.",
+    "At your next visit, ask one question yourself, and ask for a few minutes alone with your doctor if you want them."
+   ],
+   "helps": [
+    "A short health note in your phone: your condition, medicines and doses, allergies, your doctors, and your insurance card photo.",
+    "Practicing a task three times with a parent nearby before you do it on your own.",
+    "Writing questions down before a visit, and writing the answers down after.",
+    "Asking the clinic when they usually move teens to an adult doctor, and what to do first.",
+    "Counting your routine as part of your day, not an extra: medicine, meals, rest, and checks all count."
+   ],
+   "tell": [
+    "“I'm learning this one skill at a time.”",
+    "“Asking my own questions is part of growing up.”",
+    "“It's okay to forget sometimes. I'll make a plan for next time.”"
+   ],
+   "people": "Try, with a parent: “Can I make the call this time, and you stay nearby in case I get stuck?” With your doctor: “Could I have a few minutes on my own today?”"
+  },
+  "helper": {
+   "feel": "Teens want more say over their own lives, and their health is part of that. Many also feel nervous about getting something wrong, or tired of a condition that already asks so much. They may push back, forget, or seem not to care, when underneath they are unsure where to start. Some teens have already been managing more than you realize. Most do best when the handover is gradual, planned, and celebrated.",
+   "say": [
+    "“Which part of this would you like to run next?”",
+    "“I'll stay close while you learn it.”",
+    "“What do you want to ask the doctor today?”",
+    "“You handled that call well.”"
+   ],
+   "avoid": [
+    "Answering every question at the visit before your teen can speak.",
+    "Handing everything over at once, the week before they leave home.",
+    "Treating a missed refill or dose as proof they can't do it. Solve it together.",
+    "Keeping all the information in your own head. Share it with them."
+   ],
+   "help": [
+    "Make a list together of every task you do now, and choose one at a time to hand over.",
+    "Offer your teen time alone with their doctor at visits. Many clinics start this in the early teens.",
+    "Help them build a health note in their phone and a simple refill reminder.",
+    "Ask the care team about the move to adult care: when it usually happens and what to prepare.",
+    "Learn what changes at 18, when your teen becomes the one who decides who can see their health information, and talk about it together ahead of time."
+   ],
+   "you": "Stepping back from something you have carried for years can feel strange, even sad. Your role is changing, not ending: from manager to coach, and then to someone they call for advice. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Growing up includes learning to look after the body and life you've been given. Some teens find that prayer, a faith community, or a sense of being held helps them carry the routine on hard days. Others find that steadiness in family, friends, music, or quiet time. If faith is part of your life, it can be one steady place in the middle of appointments and refills. If it isn't, the same need points to whatever helps you feel grounded and not alone.",
+  "practices": [
+   "trunk|My Own Appointment",
+   "trunk|Life Skill of the Month",
+   "trunk|Next Steps Page",
+   "branches|Say What You Need",
+   "branches|Name Your Trusted Adult",
+   "leaves|Pacing Your Day"
+  ],
+  "reach": [
+   "A medical emergency, or danger right now: call 911.",
+   "Questions about a medicine: your doctor or your pharmacist.",
+   "Feeling down, numb, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Moving to adult health care: Got Transition has checklists for teens and families.",
+   "School supports for a health condition in Minnesota: PACER Center, 952-838-9000."
+  ],
+  "more": [
+   [
+    "Got Transition: moving to adult health care",
+    "https://gottransition.org/six-core-elements"
+   ],
+   [
+    "PACER Center (Minnesota)",
+    "https://www.pacer.org/"
+   ],
+   [
+    "Minor consent in Minnesota, Minnesota Department of Health",
+    "https://www.health.state.mn.us/people/adolescent/youth/minorconsent.pdf"
+   ]
+  ]
+ },
+ {
+  "id": "pain-fatigue",
+  "ring": "life",
+  "title": "Chronic pain and fatigue",
+  "life": [
+   "pain",
+   "health"
+  ],
+  "sources": [
+   "miserandino"
+  ],
+  "keys": "chronic pain always hurts headaches migraines stomach pain joint pain back pain fatigue always tired exhausted no energy flare flare up bad days good days pacing spoons spoon theory crash after doing too much missing school can't keep up people think i'm faking invisible illness pain that won't go away tired all the time sports and pain rest without guilt",
+  "parts": [
+   "leaves",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Pain and tiredness that keep coming back are real, even when no one can see them.",
+   "Pacing helps: plan your energy like a budget, and rest before you crash, not after.",
+   "Gentle movement on good days and rest without guilt on hard days both count.",
+   "Your doctor and your school can help you make a plan, so you can keep doing what matters to you."
+  ],
+  "feel": "Maybe it's headaches that keep coming back, a stomach that hurts most days, joints that ache, or a tiredness that sleep doesn't fix. Maybe it started after an illness or an injury, or no one is sure why. Some days are fine, and then a bad day knocks out your plans. You might feel frustrated that people can't see it, or worried that teachers or friends think you're making it up. You might push hard on a good day and pay for it for three days after. You might miss practice, plans, or class and feel like you're falling behind. You might also be really good at reading your body by now. All of this is real. Pain and fatigue that keep coming back are common, and there are ways to live well alongside them.",
+  "self": {
+   "first": [
+    "Tell your doctor what the pain or tiredness is like: when it comes, how long it lasts, and what it keeps you from doing.",
+    "Try a simple log for two weeks: energy, pain, sleep, and what you did. Patterns help you and your doctor.",
+    "Plan tomorrow like an energy budget: one big thing, small things around it, and rest built in."
+   ],
+   "helps": [
+    "Pacing: spreading your energy across the day and the week, so good days don't turn into crash days.",
+    "Some people use spoons to explain it: you start each day with a set number, and every task costs some. It's a quick way to tell friends how much you have today.",
+    "Gentle movement that fits your body, on the days it fits: stretching, walking, swimming, or a chair workout.",
+    "Slow breathing around pain, with a long, soft exhale.",
+    "A school plan, like a 504 plan, for things like breaks, a place to rest, extra time, or catching up after missed days.",
+    "A short list of what helped on good days, to read on hard ones."
+   ],
+   "tell": [
+    "“Rest is part of my plan, not a failure.”",
+    "“A hard day doesn't erase my good ones.”",
+    "“I can do what matters to me, at my own pace.”"
+   ],
+   "people": "Try, with a friend: “I've only got a little energy today. Can we hang out at my place instead?” With a teacher: “My pain flares sometimes. Can we plan how I'll catch up if I miss class?”"
+  },
+  "helper": {
+   "feel": "Teens living with pain or fatigue that keeps coming back often feel doubted, by teachers, coaches, friends, and sometimes themselves. They may push through to keep up, then crash. They may pull back from activities to avoid explaining. Worry, low mood, and poor sleep can travel with pain, and each can make the others heavier. They need adults who believe them and help them plan.",
+   "say": [
+    "“I believe you. What's it like today?”",
+    "“How much energy do you have for this week? Let's plan around it.”",
+    "“What would help most right now: rest, distraction, or company?”",
+    "“You don't have to earn rest.”"
+   ],
+   "avoid": [
+    "“You look fine,” or “Just push through it.”",
+    "Treating every bad day as a reason to stop all activities. Ask what an easier version looks like.",
+    "Talking about their pain in front of others without asking.",
+    "Giving medical advice yourself. Bring questions to their doctor."
+   ],
+   "help": [
+    "Help them keep a simple log to bring to the doctor, and go to appointments as a back-up voice.",
+    "Work with the school on a 504 plan if pain or fatigue affects class, attendance, or tests. In Minnesota, PACER Center helps families with school plans.",
+    "Help them plan their week like an energy budget, with rest built in before big days.",
+    "Protect sleep: a steady wake time and a calm wind-down help many teens with pain.",
+    "Watch for low mood or worry that lasts two weeks or more, and help them talk with their doctor or a counselor."
+   ],
+   "you": "Watching your teen hurt, and not being able to fix it, is one of the hardest parts of being a parent. Find someone you can be honest with too. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Pain can raise big questions, and it can make prayer or worship feel harder to reach some days. Some teens find comfort in a short prayer, music, or a faith community that welcomes them on a seated, quiet day. Others find steadiness in friends, family, or time outside. If faith is part of your life, you can bring the pain there honestly, words or no words. If it isn't, the same honesty helps with someone you trust. Faith Questions When Your Body Hurts is a guide for the bigger questions.",
+  "practices": [
+   "leaves|Pacing Your Day",
+   "leaves|Gentle Body Check",
+   "bark|Slow Exhale",
+   "bark|Reset on a Rough Day",
+   "leaves|Rest Day",
+   "fruit|Good Day List"
+  ],
+  "reach": [
+   "New, severe, or different pain, or a medical emergency: call your doctor right away, or call 911.",
+   "Pain or tiredness that keeps you from school or activities: talk with your doctor about a plan, and ask your school about a 504 plan.",
+   "Feeling down, numb, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "School plans in Minnesota: PACER Center, 952-838-9000."
+  ],
+  "more": [
+   [
+    "The Spoon Theory, Christine Miserandino",
+    "https://butyoudontlooksick.com"
+   ],
+   [
+    "PACER Center (Minnesota)",
+    "https://www.pacer.org/"
+   ],
+   [
+    "Got Transition: moving to adult health care",
+    "https://gottransition.org/six-core-elements"
+   ]
+  ]
+ },
+ {
+  "id": "iep-transition",
+  "ring": "life",
+  "title": "Disability, school, and planning what's next",
+  "life": [
+   "learning",
+   "autism",
+   "moving",
+   "hearing",
+   "seeing",
+   "health"
+  ],
+  "sources": [
+   "mnr3525",
+   "ocrpse"
+  ],
+  "keys": "iep 504 plan 504 special education accommodations disability at school transition planning transition plan iep meeting run my own iep self advocacy what comes after high school college disability services work job training extra time testing accommodations case manager learning disability physical disability hearing vision autism adhd health condition plan for after graduation turning 18 rights",
+  "parts": [
+   "trunk",
+   "fruit",
+   "branches"
+  ],
+  "quick": [
+   "An IEP or a 504 plan is there so school works for you. You can help shape it.",
+   "In Minnesota, an IEP starts planning for life after high school in grade 9: school, work, and living on your own.",
+   "Your IEP meeting is about you. You can be in the room, speak, and even lead part of it.",
+   "After high school there is no IEP. In college or training, you ask the disability office for what helps, so practicing now matters."
+  ],
+  "feel": "Maybe you've had an IEP or a 504 plan for years, and the meetings feel like adults talking about you. Maybe you just got one and aren't sure what it means. Some students feel grateful for the support. Some feel embarrassed to use it in front of friends, or wish they didn't need it. Some aren't sure what they want after high school, and planning feels like pressure. You might also be proud of how much you've figured out about how you learn and what helps. All of this makes sense. A plan is a tool, not a label, and the person who knows best what helps is you.",
+  "self": {
+   "first": [
+    "Ask your case manager or counselor for a copy of your plan, and read the part about what helps you.",
+    "Write three lines about yourself: what you're good at, what's hard, and what helps most. Bring them to your next meeting.",
+    "Think about one thing you might want after high school, even a rough idea: a kind of work, school, or where you'd like to live."
+   ],
+   "helps": [
+    "Being at your own IEP meeting, and speaking first or sharing your three lines.",
+    "Knowing your accommodations by name, like extra time, notes, a quiet room, captions, or breaks, and how to ask for them.",
+    "Trying out a job, a class, or a program while you still have support around you.",
+    "Asking someone whose path looks like yours how they got there.",
+    "Learning how college and work supports work: there, you ask for them yourself, with the right papers."
+   ],
+   "tell": [
+    "“My plan helps me show what I know.”",
+    "“I'm the expert on what helps me.”",
+    "“I can ask for what I need.”"
+   ],
+   "people": "Try, at your meeting: “Can I start by sharing what helps me?” With a teacher: “I have extra time on tests in my plan. Can we set that up for Friday?”"
+  },
+  "helper": {
+   "feel": "Students with a disability or health condition often sit through meetings about their own lives without being asked much. Many want more say, and some don't yet know they can have it. Using supports in front of classmates can feel exposing. Planning for after high school can stir hope and worry for students and families alike. Each student chooses their own words for their disability, and some don't want to talk about it at all.",
+   "say": [
+    "“What do you want the team to know about you?”",
+    "“What helps you most, and what doesn't?”",
+    "“What could you see yourself doing after high school?”",
+    "“Would you like to lead part of the meeting?”"
+   ],
+   "avoid": [
+    "Talking about them across the table as if they aren't there.",
+    "Deciding their future for them, or limiting it before they've tried.",
+    "Pointing out their accommodations in front of classmates.",
+    "Assuming college is the only good path, or that it's out of reach."
+   ],
+   "help": [
+    "Help them prepare a few written lines for their meeting, and support them in speaking first.",
+    "Ask the school how the transition part of the plan works. In Minnesota, the IEP addresses transition during grade 9; federal law requires it by 16.",
+    "Look for chances to try work, classes, or programs while support is still close.",
+    "Learn together how supports change after high school: no IEP, and the student asks for help themselves.",
+    "In Minnesota, PACER Center helps families with IEPs, 504 plans, and transition. Ask early about what changes at 18."
+   ],
+   "you": "Advocating for a student over many years is tiring, and handing them the microphone takes trust. The goal is a young adult who can speak up for themselves, and knows you'll be there if they want help. Pine keeps a teen's answers private; if a check-in shows they are losing hope or feeling alone, a grown-up sees only a quiet “Please check in.”"
+  },
+  "faith": "Many traditions teach that each person is made with gifts to share, and that a community is better when everyone belongs. Some teens find that confidence in a youth group or faith community that makes room for how they learn and move. Others find it with family, mentors, or friends. If faith is part of your life, it can remind you that your worth was never measured by a test. If it isn't, the same truth holds: your worth was never measured by a test.",
+  "practices": [
+   "trunk|Next Steps Page",
+   "branches|Say What You Need",
+   "trunk|Ask Someone About Their Path",
+   "trunk|Name Your Gifts",
+   "fruit|Hope Map",
+   "trunk|Life Skill of the Month"
+  ],
+  "reach": [
+   "Questions about your IEP or 504 plan: your case manager, school counselor, or principal.",
+   "Families in Minnesota working through IEPs, 504 plans, and transition: PACER Center, 952-838-9000.",
+   "Finding services for work, housing, and living on your own in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Feeling down or anxious for two weeks or more: tell a parent, your doctor, or a school counselor.",
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "PACER Center: transition to life after high school",
+    "https://www.pacer.org/"
+   ],
+   [
+    "Students with disabilities preparing for college, U.S. Department of Education",
+    "https://www.ed.gov/higher-education/students-disabilities-preparing-postsecondary-education"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ]
+  ]
+ },
+ {
+  "id": "deaf-hoh",
+  "ring": "life",
+  "title": "Deaf or hard of hearing",
+  "life": [
+   "hearing"
+  ],
+  "sources": [],
+  "keys": "deaf hard of hearing hoh hearing loss hearing aids cochlear implant asl american sign language sign language interpreter captions cc lip reading speechreading deaf community deaf culture can't hear in class group conversations missing jokes left out at lunch noisy cafeteria fm system remote mic 504 iep accommodations deaf friends tired from listening listening fatigue",
+  "parts": [
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "quick": [
+   "Being Deaf or hard of hearing is one part of who you are, and many people find real belonging in the Deaf community.",
+   "You choose your own words: Deaf, deaf, hard of hearing, or none of them. Each person decides.",
+   "Captions, interpreters, a remote mic, and good seating are tools that make the room work. You can ask for them.",
+   "Listening all day is tiring. Breaks and quiet time are part of the plan, not a weakness."
+  ],
+  "feel": "Maybe you were born Deaf and sign is your first language. Maybe you use hearing aids or a cochlear implant, or your hearing changed more recently. School can be loud, fast, and full of group talk that's hard to follow. You might miss the joke at lunch, nod along when you didn't catch it, or feel worn out by the end of the day from working so hard to listen. You might feel proud of your language and your community, or tired of explaining, or both. Some teens feel at home with Deaf friends and out of step in hearing spaces. Some are still figuring out where they fit. All of that makes sense. The barriers are often in the room, not in you, and rooms can change.",
+  "self": {
+   "first": [
+    "Name the one place where talking is hardest for you, like lunch, group work, or a team huddle, and one thing that would help there.",
+    "Check your school plan: captions, an interpreter, a remote mic, notes, or seating. Ask for what you need by name.",
+    "Find one place where communication is easy for you, online or in person, and spend time there this week."
+   ],
+   "helps": [
+    "Telling people how to talk with you: face me, one at a time, text it, or wait for the interpreter.",
+    "Captions on everything, from class videos to movies with friends.",
+    "Deaf friends and mentors, through a Deaf club, a camp, an online group, or a school program.",
+    "Breaks from listening during a long day, and quiet time after school.",
+    "Planning ahead for group events: a seat with a view, a friend who will catch you up, or a text thread."
+   ],
+   "tell": [
+    "“I'm not the problem. The room can change.”",
+    "“Asking people to face me is fair.”",
+    "“My language and my community are mine to be proud of.”"
+   ],
+   "people": "Try, with a friend: “I miss things in loud places. Can you face me, or text me the plan?” With a teacher: “Can you turn on captions, and repeat what students say before you answer?”"
+  },
+  "helper": {
+   "feel": "Deaf and hard of hearing teens often work harder than anyone sees just to follow a day. Group talk, hallways, and lunch can leave them on the edge of the conversation, and fatigue from listening is real. Some feel proud of Deaf identity and sign language; some are still finding their place between Deaf and hearing worlds. They know what helps them communicate, and they do best when the adults around them make the room work instead of asking them to try harder.",
+   "say": [
+    "“How do you want me to talk with you so it works best?”",
+    "“What was the hardest place to follow today?”",
+    "“What words do you use for yourself?”",
+    "“Let's ask for captions there.”"
+   ],
+   "avoid": [
+    "Saying “never mind” or “it's not important” when they ask you to repeat.",
+    "Talking louder or slower instead of facing them and speaking clearly.",
+    "Speaking to the interpreter instead of to them.",
+    "Treating sign language or Deaf friends as a last resort."
+   ],
+   "help": [
+    "Make sure their school plan covers what they need: captions, interpreters, a remote mic, notes, and seating.",
+    "Face them, get their attention first, and keep your mouth visible. Repeat or text what others say in a group.",
+    "Help them find Deaf friends and mentors. In Minnesota, the state's Deaf and Hard of Hearing Services can point you to programs and help.",
+    "Turn on captions at home, and plan family events so they can follow along.",
+    "Make sure they know 988 has an ASL option by videophone, and that they can text 988 too."
+   ],
+   "you": "Some parents grieve when they learn their child is Deaf or hard of hearing, and many later find a rich community they didn't know about. Learning even a little sign, if your teen signs, says “I'm in your world too.” Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Many faith communities offer interpreters, captioned livestreams, printed words, or Deaf congregations where worship happens in sign. If faith is part of your life, you can ask your community for what helps you take part. Some teens find it meaningful to pray or reflect in sign or in silence. If faith isn't part of your life, belonging can come through Deaf clubs, teams, and friends who share your language.",
+  "practices": [
+   "branches|Say What You Need",
+   "branches|Friends",
+   "branches|Clubs",
+   "branches|One Reach-Out a Day",
+   "trunk|Name Your Gifts",
+   "roots|Quiet Senses"
+  ],
+  "reach": [
+   "Feeling like you can't go on: text 988, or reach 988 in ASL by videophone (tap ASL Now on the 988 website). In Minnesota you can also text MN to 741741.",
+   "Danger right now: call or text 911 where text to 911 is available, or have someone call for you.",
+   "Feeling down, left out, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor, and ask for an interpreter if you need one.",
+   "Help finding services and programs in Minnesota: Minnesota Deaf and Hard of Hearing Services.",
+   "School plans in Minnesota: PACER Center, 952-838-9000."
+  ],
+  "more": [
+   [
+    "988 Lifeline (ASL Now)",
+    "https://988lifeline.org/"
+   ],
+   [
+    "Minnesota Deaf and Hard of Hearing Services",
+    "https://mn.gov/deaf-hard-of-hearing/"
+   ],
+   [
+    "PACER Center (Minnesota)",
+    "https://www.pacer.org/"
+   ]
+  ]
+ },
+ {
+  "id": "blind-low-vision",
+  "ring": "life",
+  "title": "Blind or low vision",
+  "life": [
+   "seeing"
+  ],
+  "sources": [],
+  "keys": "blind low vision visually impaired vision loss can't see the board screen reader braille large print magnifier white cane guide dog orientation and mobility getting around school assistive technology audiobooks voiceover talkback driving can't drive rides independence friends don't get it sports adapted 504 iep accommodations losing my vision",
+  "parts": [
+   "trunk",
+   "branches",
+   "leaves"
+  ],
+  "quick": [
+   "Being blind or having low vision is one part of who you are. Many blind people live full, independent lives, and so can you.",
+   "You choose your own words: blind, low vision, visually impaired, or none of them.",
+   "Screen readers, braille, large print, a cane, and good lighting are tools that open doors. You can ask for them.",
+   "Skills like getting around on your own and using your tech grow with practice, and high school is a great time to build them."
+  ],
+  "feel": "Maybe you've been blind since birth and know your tools well. Maybe your vision is changing, and you're still learning what that means. School is full of things made for eyes: the board, slides, handouts, hallways, and faces across a crowded room. You might feel frustrated when materials come late, or tired of explaining. You might worry about what friends think of your cane or your magnifier, or about driving when friends start to. You might also be proud of what you've figured out, and impatient for people to stop underestimating you. All of that makes sense. The barriers are often in how things are made, not in you, and most of them can change.",
+  "self": {
+   "first": [
+    "Name one thing at school that's hard to access, like slides, handouts, or getting to a new room, and one tool or change that would fix it.",
+    "Check your school plan: materials in the format you use, on time, plus extra time and the tech you need.",
+    "Pick one independence skill to practice this month: a new route, a new app, or a task at home."
+   ],
+   "helps": [
+    "Getting materials in your format, on time: braille, large print, or a file your screen reader can read.",
+    "Orientation and mobility practice, so new places feel less new.",
+    "Tech that fits you: a screen reader, magnification, voice assistants, and apps that read text out loud.",
+    "Blind friends and mentors who know the tricks, through a camp, a program, or an online group.",
+    "Planning rides and routes ahead, so you can say yes to plans."
+   ],
+   "tell": [
+    "“I do things my own way, and my way works.”",
+    "“Asking for my format is fair.”",
+    "“I'm more than what I can or can't see.”"
+   ],
+   "people": "Try, with a teacher: “Can I get the slides before class, in a file my screen reader can read?” With a friend: “Can you tell me where you're sitting when I come in?”"
+  },
+  "helper": {
+   "feel": "Blind and low vision teens often spend energy their classmates never see: finding the room, waiting for materials, decoding a crowded hallway. Many face low expectations from adults more than limits from their own bodies. They want independence, and they need the tools and practice to build it. Some are proud of their skills and their community; some, especially with changing vision, are still finding their way and may grieve what's changing.",
+   "say": [
+    "“What would make this easier to get to on your own?”",
+    "“How do you want me to help, if at all?”",
+    "“What words do you use for yourself?”",
+    "“Let's ask the school for that in your format.”"
+   ],
+   "avoid": [
+    "Grabbing their arm or moving their things without asking.",
+    "Doing tasks for them that they can learn to do themselves.",
+    "Saying “look over there” and pointing. Use words like “on your left.”",
+    "Treating their cane, guide dog, or magnifier as something to hide."
+   ],
+   "help": [
+    "Make sure the school plan covers materials in the right format, on time, with the tech they need.",
+    "Ask about orientation and mobility training and independent living skills, and give them chances to practice.",
+    "Help them find blind mentors and friends. In Minnesota, State Services for the Blind helps people who are blind or losing vision, including students planning for work.",
+    "Say who you are when you walk in, describe what's around, and ask before you guide.",
+    "Plan transportation together so they can join the things their friends do."
+   ],
+   "you": "Watching your teen face barriers can bring out the urge to protect. The bigger gift is confidence: tools, skills, practice, and your belief that they can. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Many faith communities offer large print, braille, or audio versions of their readings, and welcome people who need a guide or a seat near the front. If faith is part of your life, you can ask for the format that lets you take part, and for prayers or songs you can learn by heart. If faith isn't part of your life, music, nature, and people who know you can be places of peace and belonging too.",
+  "practices": [
+   "branches|Say What You Need",
+   "trunk|Life Skill of the Month",
+   "trunk|Ask Someone About Their Path",
+   "fruit|Capture the Moment",
+   "branches|Clubs",
+   "roots|Sacred Music"
+  ],
+  "reach": [
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911.",
+   "Feeling down, left out, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor.",
+   "Training, technology, and planning for work in Minnesota: State Services for the Blind.",
+   "School plans in Minnesota: PACER Center, 952-838-9000."
+  ],
+  "more": [
+   [
+    "Minnesota State Services for the Blind",
+    "https://mn.gov/deed/ssb/"
+   ],
+   [
+    "National Federation of the Blind",
+    "https://nfb.org/"
+   ],
+   [
+    "PACER Center (Minnesota)",
+    "https://www.pacer.org/"
+   ]
+  ]
+ },
+ {
+  "id": "autistic-hs",
+  "ring": "life",
+  "title": "Autistic in high school",
+  "life": [
+   "autism"
+  ],
+  "sources": [
+   "kenny16"
+  ],
+  "keys": "autistic autism asperger's on the spectrum neurodivergent sensory overload loud hallways bright lights noise cancelling headphones meltdown shutdown masking camouflaging exhausted after school special interests stimming routines changes in schedule making friends social rules small talk group projects 504 iep accommodations quiet space being misunderstood different brain",
+  "parts": [
+   "bark",
+   "branches",
+   "trunk"
+  ],
+  "quick": [
+   "Being autistic is one way a brain can work, with real strengths and real challenges. Nothing about it needs fixing to be worthy.",
+   "You choose your own words. Many people say autistic; some say on the spectrum or a person with autism.",
+   "Sensory overload, schedule changes, and constant social rules are hard. Quiet breaks, headphones, and a plan for changes help.",
+   "Pretending to be someone else all day is exhausting. You deserve places where you can just be you."
+  ],
+  "feel": "High school can be a lot: loud hallways, bright lights, crowded lunchrooms, changing schedules, group projects, and social rules nobody explains. You might come home completely drained, even on a good day. You might hide your stims, rehearse conversations, or copy how other people act just to get through, and then feel worn out or lost. You might have interests you love more than anything, and friends who don't get them, or a few friends who really do. Some teens feel proud to be autistic. Some just found out and are still figuring out what it means. Some feel misunderstood by teachers who see behavior instead of what's underneath. All of that makes sense. Your brain isn't wrong. It works its own way, and school can make more room for it.",
+  "self": {
+   "first": [
+    "Notice what drains you most at school, like noise, lights, crowds, or surprises, and pick one tool for it: headphones, sunglasses, a quiet spot, or a heads-up about changes.",
+    "Plan one quiet break into your day, before you're overloaded, not after.",
+    "Spend time this week with something you love, or someone who shares it."
+   ],
+   "helps": [
+    "A school plan with what helps you: a quiet place to reset, warnings before changes, written instructions, or a different way to do group work.",
+    "Knowing your own signs of overload, and having a way to step out before it builds up.",
+    "Friends who share your interests, through a club, a team, a game, or online.",
+    "Time to recover after school without needing to talk.",
+    "Telling people how you communicate best: text, writing, direct words, or time to think before answering."
+   ],
+   "tell": [
+    "“My brain works its own way, and that's okay.”",
+    "“I don't have to perform all day.”",
+    "“What I love matters.”"
+   ],
+   "people": "Try, with a teacher: “Can you tell me ahead of time when the schedule changes?” With a friend: “I'm not ignoring you. I just need a quiet minute.”"
+  },
+  "helper": {
+   "feel": "Autistic teens often spend enormous energy managing a world built for other brains: sensory overload, unspoken social rules, and constant change. Many hide their autistic traits to fit in, which can lead to exhaustion, anxiety, and low mood. What adults see as defiance or rudeness may be overload, confusion, or a need for clear words. Autistic teens also bring deep focus, honesty, loyalty, and passions that can grow into a life's work.",
+   "say": [
+    "“What helps you feel calm at school?”",
+    "“Tell me about what you're into lately.”",
+    "“Do you want quiet right now, or company?”",
+    "“What words do you use for yourself?”"
+   ],
+   "avoid": [
+    "Insisting on eye contact or small talk as proof of respect.",
+    "Treating a meltdown or shutdown as bad behavior.",
+    "Brushing off their interests, or using them only as rewards.",
+    "Surprising them with changes when a heads-up is possible."
+   ],
+   "help": [
+    "Work with the school on a 504 plan or IEP that includes what helps: a quiet place, warnings before changes, written steps, and other ways to do group work.",
+    "Learn their signs of overload, and plan a way out before it builds.",
+    "Protect recovery time after school. Many autistic teens need quiet before they can talk.",
+    "Help them find people who share their interests, and autistic mentors or groups. In Minnesota, the Autism Society of Minnesota offers camps, classes, and support for autistic people and their families.",
+    "Watch for anxiety, low mood, or burnout that lasts, and find a counselor who understands autism."
+   ],
+   "you": "You may have spent years explaining your teen to others. It helps to have your own support too, from other parents who understand. Let your teen teach you what being autistic is like for them. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Some autistic teens find faith communities a place of deep meaning, especially when the routines are steady and the welcome is real. Others find services too loud, long, or crowded, and do better with a quieter time, a seat near the door, or worship from home. If faith is part of your life, you can ask for what helps you take part. If it isn't, steady routines, nature, music, and the things you love can be places of peace too.",
+  "practices": [
+   "roots|Quiet Senses",
+   "bark|Before the Big Moment",
+   "branches|Say What You Need",
+   "branches|Friends",
+   "trunk|Name Your Gifts",
+   "bark|Five Senses Pause"
+  ],
+  "reach": [
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Texting works if talking is hard.",
+   "Danger right now: call 911.",
+   "Feeling worn out, anxious, or down for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
+   "Programs and support in Minnesota: Autism Society of Minnesota.",
+   "School plans in Minnesota: PACER Center, 952-838-9000."
+  ],
+  "more": [
+   [
+    "Autism Society of Minnesota",
+    "https://ausm.org/"
+   ],
+   [
+    "PACER Center (Minnesota)",
+    "https://www.pacer.org/"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ]
+  ]
+ },
+ {
+  "id": "serious-illness",
+  "ring": "life",
+  "title": "A serious illness or long treatment as a teen",
+  "life": [
+   "serious",
+   "health"
+  ],
+  "sources": [],
+  "keys": "serious illness cancer leukemia tumor chemo chemotherapy radiation transplant surgery long hospital stay in the hospital treatment for months missing school homebound hair loss body changes scared of dying friends drifting away missing prom missing sports why me tired of being sick child life social worker hospital teacher my diagnosis my treatment",
+  "parts": [
+   "fruit",
+   "branches",
+   "bark"
+  ],
+  "quick": [
+   "A serious illness can turn your life upside down. Every feeling you have about it makes sense.",
+   "You can ask your own questions and have a say in your care. Your care team wants to hear from you.",
+   "Staying connected to friends, school, and the things you love helps, even in small ways.",
+   "On treatment weeks, small is enough. Rest, getting through the day, and one good thing all count."
+  ],
+  "feel": "Maybe it started with a diagnosis no one saw coming. Maybe you've been in and out of the hospital for months. Your days might be shaped by appointments, side effects, and waiting. You might miss school, practices, and plans, and watch friends go on without you. Your body might look or feel different. You might feel scared, angry, numb, or strangely calm, sometimes all in one day. You might worry about your family, or feel tired of everyone treating you like you might break. You might also find out how strong you are, and who your real friends are. All of that is real. You are still you, and you still get a say in your life.",
+  "self": {
+   "first": [
+    "Write down your questions for your care team, and ask at least one yourself. You can ask how your treatment works and what to expect.",
+    "Choose who you want to tell, and what you want them to know. A short version for most people and a longer one for close friends works well.",
+    "Plan one thing to look forward to this week, even something small."
+   ],
+   "helps": [
+    "Asking your care team to talk with you directly, not just with your parents.",
+    "The hospital team that helps teens cope: child life specialists, social workers, psychologists, chaplains, and hospital teachers. Ask who is there for you.",
+    "Staying connected in small ways: texts, video calls, a game online, a friend who visits.",
+    "Keeping up with school in a way that fits your energy. Ask your school and your hospital what's possible.",
+    "Something that is yours: music, art, a show, a project, or a goal for after treatment.",
+    "Rest without guilt. Healing takes energy."
+   ],
+   "tell": [
+    "“I'm still me.”",
+    "“I can have a hard day and a good moment in the same day.”",
+    "“My questions matter.”"
+   ],
+   "people": "Try, with a friend: “I'm going to miss a lot of school. Will you text me what's going on?” With your doctor: “Can you explain that to me directly? I want to understand.”"
+  },
+  "helper": {
+   "feel": "Teens facing serious illness carry fear, loss, and changes in their bodies, often while trying to protect the people they love. They want to be treated as capable, included in decisions, and seen as more than a patient. They may hide how scared they are, or seem angry or withdrawn. Missing friends and normal teen life can hurt as much as the treatment. Siblings and parents carry a great deal too.",
+   "say": [
+    "“What questions do you have that no one has answered yet?”",
+    "“What would make today a little better?”",
+    "“You can tell me the scary stuff. I can handle it.”",
+    "“Who do you want to see, and who would you rather not?”"
+   ],
+   "avoid": [
+    "Making decisions about their care without including them.",
+    "Forced cheer, or “Stay positive.” Every feeling is allowed.",
+    "Sharing their health news online or with others without asking.",
+    "Letting the illness become the only thing anyone talks about."
+   ],
+   "help": [
+    "Ask the care team to include your teen in conversations, and give them time alone with the doctors.",
+    "Ask who on the hospital team supports teens: child life specialists, social workers, psychologists, chaplains, and hospital teachers.",
+    "Help them stay connected: visits when they want them, video calls, and friends' messages.",
+    "Work with the school on a plan for missed days and keeping up at home or in the hospital.",
+    "Look after siblings too, and accept help with meals, rides, and the house. Courageous Parents Network offers videos and guides for parents of a child with a serious illness."
+   ],
+   "you": "Walking with a child through serious illness is one of the hardest things a parent can do. You deserve support of your own: a friend, a counselor, a support group, or a chaplain. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Serious illness often raises the biggest questions: why this is happening, what comes next, and where to find strength. Some teens find comfort in prayer, a hospital chaplain, a faith community that shows up with meals and messages, or a sense that God is with them in it. Some feel angry or far from God for a while, and that honesty is welcome. Others find strength in family, friends, music, or nature. Faith Questions When Your Body Hurts is a guide for the bigger questions.",
+  "practices": [
+   "fruit|Something to Look Forward To",
+   "branches|One Reach-Out a Day",
+   "bark|Worry Window",
+   "leaves|Rest Day",
+   "fruit|Good Day List",
+   "fruit|Something Funny"
+  ],
+  "reach": [
+   "A medical emergency: call 911, or follow the plan your care team gave you.",
+   "Questions about your illness or treatment: your doctor, nurse, or care team, any time.",
+   "Feeling hopeless, very scared, or down for two weeks or more: tell your parent, your care team, or the hospital psychologist or social worker.",
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Moving to adult care later on: Got Transition has checklists for teens and families."
+  ],
+  "more": [
+   [
+    "Courageous Parents Network",
+    "https://courageousparentsnetwork.org/"
+   ],
+   [
+    "Got Transition: moving to adult health care",
+    "https://gottransition.org/six-core-elements"
+   ]
+  ]
+ },
+ {
+  "id": "mh-longterm",
+  "ring": "life",
+  "title": "Living with a mental health condition long-term",
+  "life": [
+   "mind"
+  ],
+  "sources": [
+   "samhsarecovery",
+   "mnconsent"
+  ],
+  "keys": "mental health condition mental illness long term diagnosis bipolar ocd obsessive compulsive anxiety disorder depression ptsd eating disorder recovery relapse therapy therapist psychiatrist medication meds side effects hospital stay partial program going back to school after a hospital stay stigma people don't understand telling friends good days bad days warning signs relapse plan living well",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches"
+  ],
+  "quick": [
+   "A mental health condition is a health condition. Many people live full lives with one, with the right support.",
+   "Recovery is a path, not a finish line. Good stretches and harder stretches can both be part of it.",
+   "Knowing your early warning signs, and having a plan for them, gives you more say.",
+   "You decide who knows. A few trusted people who understand can make a big difference."
+  ],
+  "feel": "Maybe you've had a diagnosis for a while, or maybe it's new and you're still taking it in. You might have a therapist, a psychiatrist, medicine, or a stay in a hospital or program behind you. You might feel relieved to have a name for what's been happening, or frustrated that it's not going away. Some days you might feel like yourself, and some days the condition takes up all the space. You might worry what friends would think, or feel tired of appointments and check-ins. You might also know yourself better than most people your age. All of that is real. A mental health condition is part of your life, not the whole of who you are.",
+  "self": {
+   "first": [
+    "With your counselor or doctor, write down your early warning signs: the small changes that come before a harder stretch.",
+    "Make a plan for those signs: who you'll tell, what helps, and what to do if it gets worse. Keep it in your phone.",
+    "Pick one daily anchor that helps you, like a steady wake time, a walk, or ten quiet minutes, and protect it."
+   ],
+   "helps": [
+    "Staying connected with your therapist or doctor, even during good stretches.",
+    "Bringing questions about medicine to your doctor. Changes go best when you make them together.",
+    "Steady sleep, regular meals, movement, and time outside. They support every treatment plan.",
+    "A few people who know what's going on and how to help on a hard day.",
+    "A school plan if your condition affects attendance, focus, or tests. A 504 plan can cover that.",
+    "Remembering what has helped before, on the days it's hard to believe it will."
+   ],
+   "tell": [
+    "“This is a health condition, not a character flaw.”",
+    "“A hard stretch isn't starting over.”",
+    "“I know my signs, and I have a plan.”"
+   ],
+   "people": "Try, with a friend: “I have anxiety that comes and goes. If I cancel last minute, it's not about you.” With a parent: “I'm noticing some of my warning signs. Can we talk tonight?”"
+  },
+  "helper": {
+   "feel": "Teens living with a long-term mental health condition carry the condition and the stigma around it. They may feel different, tired of treatment, or afraid of the next hard stretch. They may hide symptoms to avoid worrying you, or to avoid another appointment. A good stretch can bring hope and pressure at once. They do best with adults who treat the condition as a health condition, stay steady, and help them lead their own recovery.",
+   "say": [
+    "“What helps when things start to slide?”",
+    "“I'm not going anywhere, on good days or hard ones.”",
+    "“What do you want me to notice, and what do you want me to leave to you?”",
+    "“You're more than this diagnosis.”"
+   ],
+   "avoid": [
+    "Treating every bad mood as a symptom.",
+    "“You were doing so well.” A hard stretch is part of the path, not a failure.",
+    "Telling others about their condition without asking.",
+    "Changing or stopping their medicine without their doctor."
+   ],
+   "help": [
+    "Help them build a plan with their counselor or doctor: warning signs, what helps, who to call, and when to get help fast.",
+    "Keep appointments steady, and help with the practical parts: rides, refills, insurance.",
+    "Protect sleep, meals, movement, and time with people. They support recovery.",
+    "Work with the school on a plan for attendance and catching up, especially after a hospital stay or program.",
+    "Learn about the condition. The NAMI HelpLine, 1-800-950-6264, offers information and support for families (not a crisis line)."
+   ],
+   "you": "Loving someone through a long-term condition can wear you down, and worry can become constant. Your own support matters: a friend, a counselor, or a family group. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.” In Minnesota, at 16, a teen can ask for outpatient counseling on their own."
+  },
+  "faith": "Some teens find steady strength in prayer, a faith community, or the sense that they are loved on every kind of day. Some have heard that more faith would make the condition go away, and that can hurt. A mental health condition is a health condition, and treatment and faith can go together. If faith is part of your life, a youth leader or chaplain who understands mental health can be a good support. If it isn't, the same need for steady love points to the people who stay.",
+  "practices": [
+   "bark|My Safety Plan",
+   "bark|Speak Up About Your Mood",
+   "leaves|Steady Wake Time",
+   "bark|Reset on a Rough Day",
+   "fruit|Good Day List",
+   "branches|Name Your Trusted Adult"
+  ],
+  "reach": [
+   "Thoughts of ending your life, or you feel unsafe: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
+   "Danger right now: call 911.",
+   "Your warning signs are showing: tell your parent and your counselor or doctor today.",
+   "Want to talk to another teen: Teen Line, 800-852-8336, or text TEEN to 839863 (evenings).",
+   "Information and support for you or your family: NAMI HelpLine, 1-800-950-6264 (not a crisis line).",
+   "In Minnesota, at 16 you can ask for outpatient counseling on your own."
+  ],
+  "more": [
+   [
+    "NAMI HelpLine",
+    "https://www.nami.org/talktous"
+   ],
+   [
+    "NAMI Minnesota",
+    "https://namimn.org/"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ]
+ },
+ {
+  "id": "young-carer",
+  "ring": "life",
+  "title": "Helping care for a parent or sibling",
+  "life": [
+   "close"
+  ],
+  "sources": [
+   "aacy"
+  ],
+  "keys": "young carer caregiver caregiving youth taking care of my mom taking care of my dad helping my sibling brother sister with a disability parent with a chronic illness parent with mental illness disabled parent sick parent medicine reminders cooking cleaning watching siblings no time for homework missing school can't hang out tired guilty resentful nobody knows what i do at home",
+  "parts": [
+   "branches",
+   "leaves",
+   "trunk"
+  ],
+  "quick": [
+   "Millions of teens help care for someone in their family. What you do matters, and so do you.",
+   "Helping can bring pride, closeness, and skills. It can also bring tiredness, worry, and missing out. Both can be true.",
+   "You deserve time that is just for you, and adults who know what you carry.",
+   "If the load is too much for school, sleep, or friends, tell an adult you trust. That's not letting your family down."
+  ],
+  "feel": "Maybe your mom lives with a health condition and you help with meals and medicine. Maybe your dad has a mental health condition and some days you hold the house together. Maybe your brother or sister has a disability, and you help with routines, rides, or watching out for them. You might be proud of what you do, and close to the person you help. You might also feel tired, worried, or guilty for wanting a normal teen life. You might feel resentful sometimes, then bad for feeling that way. Friends might not understand why you can't always hang out. Teachers might not know why homework is late. All of that makes sense. Loving your family and needing a break can live side by side.",
+  "self": {
+   "first": [
+    "Make a quick list of what you do at home in a week. Seeing it can help you, and the adults around you, understand what you carry.",
+    "Tell one adult outside your home, like a school counselor, teacher, coach, or relative, what your week is really like.",
+    "Plan twenty minutes this week that are just for you."
+   ],
+   "helps": [
+    "A school counselor who knows your situation and can help with deadlines and stress.",
+    "Time that is yours: a club, a sport, a friend, a show, or rest.",
+    "Other teens who get it. Young carer programs and sibling groups exist, online and in person.",
+    "Knowing what to do in an emergency, and having adults you can call.",
+    "Talking with your family about sharing the load, if that's possible."
+   ],
+   "tell": [
+    "“What I do matters, and so do I.”",
+    "“Needing a break doesn't mean I love them less.”",
+    "“Asking for help is part of caring well.”"
+   ],
+   "people": "Try, with a counselor: “I help take care of someone at home, and some weeks it's a lot. Can we talk about school?” With a friend: “I can't always hang out because I help at home. I still want to be invited.”"
+  },
+  "helper": {
+   "feel": "Teens who help care for a parent or sibling often carry more than the adults around them realize. Many feel proud and close to the person they help, and also tired, worried, isolated, or behind at school. Caregiving youth report more isolation, worry, low mood, and missed school than their peers. They may not call themselves caregivers, and they may hide the load to protect their family.",
+   "say": [
+    "“Thank you for everything you do. I see it.”",
+    "“What's your week like at home?”",
+    "“What would help you most right now?”",
+    "“You get to have time that's just yours.”"
+   ],
+   "avoid": [
+    "Assuming they're fine because they seem so mature.",
+    "Leaning on them for adult jobs without checking how they're doing.",
+    "Making them feel guilty for wanting time with friends.",
+    "Telling their story to others without asking."
+   ],
+   "help": [
+    "Name what they do, and thank them. Many young carers never hear it.",
+    "Find ways to share the load: other relatives, friends, community or faith groups, or services for the person who needs help.",
+    "Protect their time for school, sleep, friends, and activities.",
+    "Let the school counselor know, with your teen's okay, so school can be flexible when needed.",
+    "Connect them with others who understand. The American Association of Caregiving Youth and the Sibling Support Project offer support for young carers and siblings."
+   ],
+   "you": "If you are the parent who needs help, it can be painful to see your child carry so much. Accepting help from other adults is one of the best things you can do for them. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "Many traditions honor caring for family as a deep act of love, and also teach rest. Some teens find strength in prayer, a faith community that brings meals or rides, or a youth group where they can just be a teen. Others find it in friends, music, or time outside. If faith is part of your life, you can bring the tiredness and the love there honestly. If it isn't, the same truth stands: you are worth caring for too.",
+  "practices": [
+   "branches|Time Just for You",
+   "branches|Ask for Help",
+   "leaves|Rest Day",
+   "bark|Self-Compassion Break",
+   "fruit|Something Funny",
+   "branches|Name Your Trusted Adult"
+  ],
+  "reach": [
+   "An emergency with the person you help: call 911.",
+   "Feeling overwhelmed, down, or anxious for two weeks or more: tell a school counselor, a doctor, or another adult you trust.",
+   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Want to talk to another teen: Teen Line, 800-852-8336, or text TEEN to 839863 (evenings).",
+   "If someone at home is hurting you: Childhelp, call or text 1-800-422-4453, any time.",
+   "A family member's mental health condition: NAMI HelpLine, 1-800-950-6264, for information and support (not a crisis line)."
+  ],
+  "more": [
+   [
+    "American Association of Caregiving Youth",
+    "https://aacy.org/"
+   ],
+   [
+    "Sibling Support Project",
+    "https://siblingsupport.org/"
+   ],
+   [
+    "NAMI HelpLine",
+    "https://www.nami.org/talktous"
+   ]
+  ]
+ },
+ {
+  "id": "faith-body",
+  "ring": "life",
+  "title": "Faith questions when your body hurts",
+  "life": [
+   "health",
+   "pain",
+   "serious",
+   "moving"
+  ],
+  "sources": [
+   "reynolds14"
+  ],
+  "keys": "faith and illness why me why did god let this happen is this a punishment did i do something wrong prayed for healing nothing changed prayer didn't work angry at god god feels far away can't get to church youth group not accessible people said i need more faith disability and faith chronic illness and faith pain and prayer hope meaning purpose spiritual questions sick and faith",
+  "parts": [
+   "roots",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Living with pain, illness, or a body that works differently can raise big questions. Asking them is honest, not wrong.",
+   "Your condition is not a punishment. Nothing you did or didn't believe caused it.",
+   "Faith can be a help, a weight, or both. Noticing which one it is for you right now is a good place to start.",
+   "Grounded welcomes all faith traditions and everything in-between. Your questions can stay open while you live your life."
+  ],
+  "feel": "Maybe you've asked “Why me?” more times than you can count. Maybe someone told you that if you prayed harder or believed more, you'd be healed, and you're left wondering what that says about you. Maybe you prayed for something to change and it didn't. Maybe your place of worship has stairs you can't climb, services too long for your energy, or lights and sound that are too much. Some teens feel closer to God through illness or disability; some feel far away, angry, or confused; some feel all of that in the same week. Some don't think in terms of God at all, and still wonder what this means for their life. All of these are honest places to be.",
+  "self": {
+   "first": [
+    "Write down one question you carry about your body and your life, or about God, if that fits you. You don't have to answer it.",
+    "Notice whether faith, or whatever grounds you, feels like a help right now, a weight, or both.",
+    "If someone's words about faith and your condition hurt you, tell an adult you trust. You don't have to carry that alone."
+   ],
+   "helps": [
+    "Saying what hurts in honest words. Many traditions have prayers of lament for exactly this, and plain honest words work too.",
+    "Short ways to pray or reflect that fit your energy: one sentence, a breath prayer, music, or silence.",
+    "A faith mentor, chaplain, or youth leader who listens without rushing to explain, if you want a faith voice.",
+    "Asking your faith community for what helps you take part: a ramp, a seat near the door, a livestream, a quieter space.",
+    "Other places that hold you up: family, friends, nature, music, art, or helping someone else."
+   ],
+   "tell": [
+    "“My body is not a punishment.”",
+    "“My questions are welcome.”",
+    "“I can belong, just as I am.”"
+   ],
+   "people": "Try, with a parent: “I've been wondering why this happened to me. I don't need answers. Can I just tell you?” With a youth leader: “It's hard for me to get into the building. Can we figure out a way I can be there?”"
+  },
+  "helper": {
+   "feel": "Teens living with illness, pain, or disability often carry spiritual questions alongside the physical ones. Some find deep strength in faith. Some have heard hurtful messages: that illness is punishment, or that enough faith would heal them. Some feel shut out of a faith community that isn't built for their body. Questions and anger about God can come from pain, not from losing faith. What they need most is someone who listens without needing to settle every question.",
+   "say": [
+    "“That's a real question. I'm glad you told me.”",
+    "“Nothing you did caused this.”",
+    "“Is faith feeling like a help right now, a weight, or both?”",
+    "“What would help you be part of things at worship, if you want to?”"
+   ],
+   "avoid": [
+    "“Everything happens for a reason,” or “God doesn't give you more than you can handle.”",
+    "Suggesting that more faith or more prayer would bring healing.",
+    "Arguing them out of anger or doubt.",
+    "Pushing them back to a community or practice that is hurting them right now."
+   ],
+   "help": [
+    "Listen first, and let questions stay open. You don't need every answer.",
+    "If someone said their condition was a punishment, or that weak faith is why they aren't healed, name that as untrue and hurtful, and stand with your teen.",
+    "Help your faith community make room: access, seating, quieter spaces, livestreams, and a role for your teen to serve and lead.",
+    "Offer a faith mentor or chaplain they choose, if they want one.",
+    "Watch for questions that sit on top of something heavier, like hopelessness or low mood, and get support for that."
+   ],
+   "you": "You may have your own questions about why your child is hurting. Bring them to someone you trust, so you can stay open to your teen's. Your faith or your doubts don't have to match theirs. In Pine, their check-in answers, faith answers included, stay private to them; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+  },
+  "faith": "This guide's topic is faith, so it sits at the center here, offered as one door among several. Many traditions have honest prayers of complaint and lament, and stories of people who asked God why and were not turned away. For many teens with a long-term illness, finding strength in faith goes with feeling better over time, while feeling punished or abandoned weighs more heavily, which is why that weight deserves a gentle listener, not a lecture. If faith isn't part of your life, the same questions about meaning and fairness are real, and people who love you, nature, music, and purpose can hold you up too.",
+  "practices": [
+   "roots|Lament",
+   "roots|Breath Prayer",
+   "roots|Carry Your Questions",
+   "roots|What Holds Me Up",
+   "roots|Talk With a Faith Mentor",
+   "roots|Quiet Senses"
+  ],
+  "reach": [
+   "Feeling hopeless, or like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911.",
+   "Feeling down or anxious for two weeks or more: tell a parent, your doctor, or a school counselor.",
+   "If someone in a faith community is hurting you or threatening you: tell a trusted adult outside that group, or call or text Childhelp at 1-800-422-4453.",
+   "A trusted adult who welcomes questions: a parent, a youth leader, a chaplain, a faith mentor, or your school counselor."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ]
  }
 ];
 window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };

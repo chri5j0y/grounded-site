@@ -4772,10 +4772,1089 @@ const LC_TOPICS = [
     "https://greatergood.berkeley.edu"
    ]
   ]
+ },
+ {
+  "id": "college-disability",
+  "ring": "life",
+  "title": "Disability at college: accommodations and asking",
+  "keys": "disability at college disability services disability resource center accessibility office accommodations academic adjustments extra time on tests testing center note taker captions interpreter asl audio textbooks screen reader accessible housing elevator flare missed class attendance chronic illness at college mental health accommodations iep ended 504 plan ended documentation do i have to tell my professor disclose my disability trade school apprenticeship community college online classes registering with disability services professor said no",
+  "parts": [
+   "trunk",
+   "branches",
+   "bark"
+  ],
+  "quick": [
+   "In college, supports don't follow you from high school. An IEP or a 504 plan ends at graduation, and you ask for accommodations yourself, through the school's disability services office.",
+   "Accommodations are changes to how things are done so you can take part fully: extra test time, captions, accessible rooms or housing, materials you can read, or flexibility for a health condition.",
+   "You choose what to share. Disability services usually needs documentation; your instructors usually need only your accommodation letter, not your diagnosis.",
+   "Ask early, before the first test or the first hard week. Asking is a skill, and it gets easier."
+  ],
+  "feel": "Maybe you had a school plan for years, with people who set things up for you, and now the first step is yours. Maybe your disability or condition is new, or you never had a plan and wonder whether you'd even qualify. You might worry that asking will make people see you as less capable, or that you should be able to manage without help. You might be tired of explaining your body or your brain to one more office. Many students wait until they're already behind. Wherever you're starting, a disability is part of how you live and learn, not a measure of how much you belong. Often the barrier is in the building, the format, or the schedule, and those can change.",
+  "self": {
+   "first": [
+    "Find your school's disability services office (it may be called accessibility services or the disability resource center) and ask how to register. Do it this term, even if you're not sure you'll use it.",
+    "Gather what you have: an old IEP or 504 plan, a letter from a doctor or specialist, or recent testing. Ask the office what they accept.",
+    "Write down what has helped you learn before, and what gets in the way. That list is the heart of your first meeting."
+   ],
+   "helps": [
+    "Knowing the words: an accommodation is a change in how things are done, like extra time, a quieter testing room, captions, or materials in a format you can use. It doesn't lower the standard; it opens the door.",
+    "Sending your accommodation letter to each instructor early in the term, and following up with a short message about tests.",
+    "Asking for housing or access needs before move-in: an accessible room, an elevator route, an emergency plan that fits you.",
+    "Planning for flares or hard weeks with a health condition: ask disability services ahead of time what flexibility is possible with attendance or deadlines.",
+    "Building your own week around your energy: classes when you're at your best, rest between, and assignments broken into steps.",
+    "Finding people who get it: a disability student group, a peer mentor, or one friend you can be honest with.",
+    "Choosing your own words. Some people say “a person with a disability,” and some say “disabled.” Use the words that fit you."
+   ],
+   "tell": [
+    "“Asking for what I need is part of doing college well.”",
+    "“The door can change. I still belong in the room.”",
+    "“I'm the expert on how I learn best.”"
+   ],
+   "people": "Try, with disability services: “I had a 504 plan in high school, and I'd like to set up accommodations here. What do you need from me?” With an instructor: “I'm sending my accommodation letter for this class. Can we confirm how tests will work?” With a friend: “I use captions and sit up front. Want to sit with me?” With a family member: “I'm handling the accommodation meetings myself. I'd love to tell you how it went.”"
+  },
+  "helper": {
+   "feel": "A parent, mentor, partner, or friend may have spent years advocating at school meetings. In college, the student leads, and the school talks with them, not you. They may feel unsure or tired of explaining, or may want to try without supports and see. Your role shifts from speaking for them to cheering them on while they speak for themselves.",
+   "say": [
+    "“You know what works for you. What helped most in high school?”",
+    "“Want to practice what you'll say at the first meeting?”",
+    "“Asking for accommodations is using the tools you have a right to.”",
+    "“However you decide to handle it, I'm in your corner.”"
+   ],
+   "avoid": [
+    "Calling the school or the professors for them, unless they ask you to.",
+    "“You don't look disabled,” or “Maybe you won't need it in college.”",
+    "Pushing them to share their diagnosis with every instructor. That's their choice.",
+    "Treating a hard week as proof they can't do college."
+   ],
+   "help": [
+    "Help them find old paperwork, like an IEP, a 504 plan, or doctor's letters, and then hand it over.",
+    "Rehearse the first meeting with them, if they want, and let them lead the real one.",
+    "Ask about the practical pieces: a ride, a room that works, how they'll get materials, and who to call on a hard day.",
+    "If money or forms are a barrier, help them ask the school's financial aid office and Disability Hub MN about resources.",
+    "Notice their strengths out loud. Many students with disabilities hear far more about what's hard."
+   ],
+   "you": "Stepping back after years of advocating can feel like letting go of the wheel. It's also how they become their own best advocate. If they use Birch, they choose what to share with you; their answers stay on their own device."
+  },
+  "faith": "If faith is part of your life, a campus ministry or a congregation near school can be a place to belong, and it's fair to ask about access there too: a ramp, a sound system, a quiet place. If faith isn't part of your life, any community built around what you care about can do the same.",
+  "practices": [
+   "branches|Say What You Need",
+   "trunk|Study Sprints",
+   "trunk|Weekly Reset",
+   "leaves|Pacing Your Day",
+   "bark|Before the Big Moment",
+   "branches|Ask for Help"
+  ],
+  "reach": [
+   "To set up accommodations: your school's disability services or accessibility office. Ask how to register and what documentation they accept.",
+   "If an accommodation isn't being followed: talk with disability services first. Your school also has a process for concerns about disability access.",
+   "For help finding health, housing, and money resources in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "For a mental health condition: your campus counseling center, or the NAMI HelpLine, 1-800-950-6264, weekdays (not a crisis line).",
+   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Students with Disabilities Preparing for Postsecondary Education (U.S. Department of Education)",
+    "https://www.ed.gov/higher-education/students-disabilities-preparing-postsecondary-education"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ],
+   [
+    "Got Transition: moving to adult health care",
+    "https://gottransition.org/six-core-elements"
+   ]
+  ],
+  "life": [
+   "learning",
+   "autism",
+   "moving",
+   "hearing",
+   "seeing",
+   "health",
+   "pain",
+   "mind"
+  ],
+  "lines": [
+   "nami"
+  ],
+  "sources": [
+   "ocrpse",
+   "socialmodel"
+  ]
+ },
+ {
+  "id": "work-disability",
+  "ring": "life",
+  "title": "Disability or illness at work: accommodations and telling your boss",
+  "keys": "disability at work illness at work reasonable accommodation accommodations at work ada americans with disabilities act tell my boss tell my manager disclose disability disclosure job interview should i tell them chronic illness at work flare days time off for appointments schedule change work from home standing desk screen reader captions interpreter quiet workspace written instructions mental health at work hr human resources job accommodation network jan eeoc fired because of disability first job with a disability",
+  "parts": [
+   "trunk",
+   "bark",
+   "branches"
+  ],
+  "quick": [
+   "Under the Americans with Disabilities Act, employers with 15 or more employees must make reasonable accommodations for qualified workers with disabilities, unless it would cause undue hardship. Many smaller employers will work with you too.",
+   "An accommodation is any change in the work setting or in how things are usually done that helps you do the job: a schedule change, a different desk or screen, captions, written instructions, or a quieter space.",
+   "Telling your boss is your choice: whether, when, and how much. To ask for an accommodation, you share what you need, and the employer may ask for some medical information to support it.",
+   "The Job Accommodation Network (askjan.org) gives confidential guidance on accommodations, for workers and employers."
+  ],
+  "feel": "Maybe you're heading into a first job and wondering whether to say anything. Maybe a condition that was quiet in school is louder now, with long shifts, early mornings, or a boss who doesn't know. You might worry that telling will cost you the job, or that hiding it is wearing you out. You might feel you have to prove you're twice as good. Some days you push through and pay for it later. All of that is common. Work can fit a body and a brain that work their own way, and asking for a change is a normal part of working.",
+  "self": {
+   "first": [
+    "Write down what makes work harder and what would help: a schedule, a tool, a setting, a way of getting instructions. Think about tasks, not diagnoses.",
+    "Look up your workplace's accommodation process. It may be in the handbook or with human resources. If there isn't one, your manager is usually the first step.",
+    "Look up your condition on askjan.org to see accommodation ideas that others have used, and bring two or three to the conversation."
+   ],
+   "helps": [
+    "Asking in plain words, ideally in writing: what you need and how it helps you do the job. You don't need special legal words to ask.",
+    "Keeping a short record: when you asked, who you talked with, and what was agreed.",
+    "Deciding ahead how much to share. You might say “a health condition” or “a disability” without naming it, or name it if that feels right.",
+    "Planning for hard days: what you'll do on a flare day, who you'll tell, and how the work gets covered.",
+    "Choosing jobs and shifts that fit your energy and your body where you can. That's wise planning, not giving up.",
+    "Getting help with benefits questions before changing hours or jobs if you receive disability benefits. In Minnesota, Disability Hub MN can help.",
+    "Remembering what you bring. Many people with disabilities are expert problem solvers, because they have had to be."
+   ],
+   "tell": [
+    "“Asking for what I need helps me do my best work.”",
+    "“I decide what I share, and when.”",
+    "“My worth at work isn't measured by pushing through pain.”"
+   ],
+   "people": "Try, to a manager: “I have a health condition that sometimes affects my mornings. Could I start at ten on those days and stay later? I'd like to set that up formally.” Or: “I do my best work with written instructions. Could you send the steps in a message?” To human resources: “I'd like to request an accommodation. What's the process here?” To a coworker you trust: “I may step away for a few minutes sometimes. It's a health thing, and I'm handling it.”"
+  },
+  "helper": {
+   "feel": "A parent, partner, friend, or mentor may see a young adult wearing themselves out to keep a job, or afraid to say anything at all. They may feel they have to choose between their health and their paycheck. Your part is to help them think it through, not to decide for them or to call their employer.",
+   "say": [
+    "“What would make the work easier on your body?”",
+    "“You're allowed to ask. Want to practice how you'd say it?”",
+    "“How much you share is your call.”",
+    "“You bring a lot to that job.”"
+   ],
+   "avoid": [
+    "Calling their boss, or telling anyone at their work, without their say-so.",
+    "“Just push through,” or “Don't tell them anything, ever.”",
+    "Treating a job change or reduced hours as failure.",
+    "Giving legal advice. Point them to the right people instead."
+   ],
+   "help": [
+    "Help them write the request in plain words, and read it over if they ask.",
+    "Look at askjan.org together for accommodation ideas that fit their work.",
+    "If something goes wrong, help them write down what happened and find the right help, like human resources, the EEOC, or Disability Hub MN.",
+    "Offer practical help on hard weeks: a ride, a meal, or a quiet evening without questions.",
+    "If they receive disability benefits, encourage them to get benefits advice before changing jobs or hours."
+   ],
+   "you": "It's hard to watch someone you love push through pain to keep a job. You can't fix the workplace, and you don't have to. Helping them think it through and ask is real help. If they use Birch, they choose what you see."
+  },
+  "faith": "If faith is part of your life, it may shape how you think about work, rest, and your worth, and some traditions teach that a person's value isn't measured by output. If faith isn't part of your life, the same truth holds: your worth doesn't depend on how much your body can do on a given day.",
+  "practices": [
+   "branches|Say What You Need",
+   "trunk|Start Strong at a New Job",
+   "leaves|Pacing Your Day",
+   "leaves|Rest Before You're Spent",
+   "bark|Hard-Day Plan",
+   "trunk|Worth Beyond Doing"
+  ],
+  "reach": [
+   "For confidential guidance on workplace accommodations: the Job Accommodation Network, at askjan.org.",
+   "For questions about disability rights at work, or to file a complaint: the U.S. Equal Employment Opportunity Commission, at eeoc.gov. Deadlines apply, so ask early.",
+   "In Minnesota, for help with work, benefits, and health resources: Disability Hub MN, 1-866-333-2466.",
+   "For help with bills or housing during a hard stretch: Minnesota 211, dial 211.",
+   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Job Accommodation Network (JAN)",
+    "https://askjan.org"
+   ],
+   [
+    "EEOC: disability rights at work",
+    "https://www.eeoc.gov/wysk/what-you-should-know-about-eeoc-and-enforcement-americans-disabilities-act"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ]
+  ],
+  "life": [
+   "health",
+   "pain",
+   "moving",
+   "hearing",
+   "seeing",
+   "learning",
+   "autism",
+   "mind",
+   "serious"
+  ],
+  "lines": [
+   "mn211"
+  ],
+  "sources": [
+   "eeocada",
+   "jan"
+  ]
+ },
+ {
+  "id": "pain-fatigue",
+  "ring": "life",
+  "title": "Chronic pain, fatigue, and pacing",
+  "keys": "chronic pain chronic fatigue always tired exhausted no energy pacing spoons spoon theory spoonie flare flare up crash boom and bust push and crash fibromyalgia migraine endometriosis arthritis back pain long covid me cfs pots autoimmune lupus crohns invisible illness you dont look sick tired of explaining canceling plans again friends dont understand pain at work pain at school rest without guilt good days bad days",
+  "parts": [
+   "leaves",
+   "bark",
+   "trunk",
+   "fruit"
+  ],
+  "quick": [
+   "Pain or tiredness that stays, or keeps coming back, is real, even when no one can see it. Many young adults live with it.",
+   "Pacing means planning your energy the way you'd plan money: spending some, saving some, and resting before you run out, instead of pushing until you crash.",
+   "Some people picture a day's energy as a handful of spoons, and every task costs a few. It's a simple way to plan, and to explain it to others.",
+   "Rest is part of the plan, not a failure of it. Your doctor is the one to help with treatment; you're the expert on your own days."
+  ],
+  "feel": "Maybe you wake up already tired, or the pain is there before your feet touch the floor. Maybe people say you don't look sick, or that you're too young to feel this way. On a good day you try to catch up on everything, then pay for it for three days after. You might be canceling plans again and worrying that friends will give up on you. You might grieve the body you used to have, or the life your friends seem to be living. And you might be tired of explaining. All of that makes sense. Living with pain or fatigue takes real skill, and pacing is a skill you can grow.",
+  "self": {
+   "first": [
+    "For one week, jot down your energy and pain each morning and evening, on a scale of your choosing, and what you did that day. Patterns show up quickly.",
+    "Pick your top three things for tomorrow, and let the rest wait. Plan a rest before you think you'll need it.",
+    "Make a short list for your next doctor visit: what's changed, what helps, what makes it worse, and your top question."
+   ],
+   "helps": [
+    "Planning by energy, not by hope. Some people count a day in spoons: each task costs some, and when they're gone, they're gone. Plan the day so you finish with one left.",
+    "Breaking big tasks into small pieces, with rest in between, even on good days. Steady beats boom and bust.",
+    "Resting before you're spent, not after. Short, planned rests often help more than one long crash.",
+    "Keeping a hard-day plan ready: the smallest version of each must-do, food that's easy, and who you'll text.",
+    "Gentle movement your body allows on better days, if your doctor agrees. Small and steady counts.",
+    "Asking for flexibility at school or work, like a later start, breaks, or working from home some days.",
+    "Telling the people close to you how pacing works, so a canceled plan isn't taken as not caring.",
+    "Being as kind to yourself as you would be to a friend in pain."
+   ],
+   "tell": [
+    "“Rest is part of the plan.”",
+    "“A smaller version still counts.”",
+    "“My worth isn't measured by what my body can do today.”"
+   ],
+   "people": "Try, to a friend: “I live with a health condition that limits my energy. If I cancel, it's not about you. Can we plan things that can flex, like a movie at my place?” To a boss or instructor: “I have a condition that flares. Could we plan now for what happens on a flare day?” To a doctor: “The fatigue is affecting my work and my sleep. Here's what I've tracked this month.”"
+  },
+  "helper": {
+   "feel": "A parent, partner, roommate, or friend may see someone who looks fine and still can't make it through the day. It can be confusing when they're full of energy one day and in bed the next. They may feel guilty, misunderstood, or afraid of being a burden. What helps most is believing them, and helping them pace instead of push.",
+   "say": [
+    "“I believe you.”",
+    "“What does today look like for you? Let's plan around that.”",
+    "“No need to explain. Want to do something low-key instead?”",
+    "“Rest is part of it. You're not letting anyone down.”"
+   ],
+   "avoid": [
+    "“You don't look sick,” or “You were fine yesterday.”",
+    "Suggesting cures, diets, or supplements. Leave treatment to their doctor.",
+    "Pushing them to do more on a good day. That's often what brings the crash.",
+    "Taking canceled plans personally."
+   ],
+   "help": [
+    "Plan things that can flex: at home, shorter, or easy to leave.",
+    "Offer specific help on hard days: a meal, a ride, picking up a prescription, or quiet company.",
+    "Learn the pacing idea, so you can help them stop before the crash instead of after.",
+    "Go with them to an appointment if they want, and help them keep notes.",
+    "Look after your own rest too, especially if you share a home."
+   ],
+   "you": "Loving someone with pain or fatigue can be tiring and sad, especially when you can't fix it. Your belief and your steady presence matter more than solutions. If they use Birch, they choose what you see."
+  },
+  "faith": "If faith is part of your life, it may be a source of strength on hard days, through a short prayer, a familiar song, or a community that brings meals. Pain can also bring hard questions, and those are worth bringing honestly to someone you trust. If faith isn't part of your life, meaning can come through the people you love and the small good things a day still holds.",
+  "practices": [
+   "leaves|Pacing Your Day",
+   "leaves|Rest Before You're Spent",
+   "bark|Body Kindness Scan",
+   "bark|Hard-Day Plan",
+   "trunk|Worth Beyond Doing",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "Pain or fatigue that's new, getting worse, or changing: see your doctor or clinic. Bring your notes.",
+   "Workshops for living well with a long-term condition or pain, led by people who live with one: the Self-Management Resource Center, at selfmanagementresource.com.",
+   "For help at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
+   "In Minnesota, for health, housing, and money resources: Disability Hub MN, 1-866-333-2466.",
+   "Feeling hopeless, or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now, or a medical emergency: call 911."
+  ],
+  "more": [
+   [
+    "The Spoon Theory, by Christine Miserandino",
+    "https://butyoudontlooksick.com"
+   ],
+   [
+    "Self-Management Resource Center",
+    "https://selfmanagementresource.com/"
+   ],
+   [
+    "Job Accommodation Network (JAN)",
+    "https://askjan.org"
+   ]
+  ],
+  "life": [
+   "pain",
+   "health",
+   "serious",
+   "close"
+  ],
+  "lines": [
+   "mn211"
+  ],
+  "sources": [
+   "miserandino",
+   "cdsmp"
+  ]
+ },
+ {
+  "id": "living-well-mi",
+  "ring": "life",
+  "title": "Living well with a serious mental illness",
+  "keys": "living with mental illness serious mental illness bipolar disorder schizophrenia schizoaffective psychosis recovery major depression ocd ptsd long term mental health diagnosis after a hospital stay after the psych ward relapse warning signs staying well taking meds side effects treatment team therapist psychiatrist peer support nami peer to peer back to school after hospital back to work stigma telling people about my diagnosis my brother has bipolar my partner has schizophrenia living a full life",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches",
+   "trunk"
+  ],
+  "quick": [
+   "Many people live full lives with a serious mental illness, like bipolar disorder, schizophrenia, or severe depression. Recovery is common, and it often means building a good life alongside the condition.",
+   "Recovery is a whole-person idea: your health, a safe place to live, a sense of purpose, and people who know you.",
+   "Knowing your own early warning signs, and having a plan for them, is one of the strongest tools you have.",
+   "You and your treatment team decide the treatment. You're the expert on your own life, and you choose who else is involved."
+  ],
+  "feel": "Maybe the diagnosis is new, after a frightening few months or a hospital stay. Maybe you've lived with it for years and you're tired of people treating you like the diagnosis. You might grieve the plans that got interrupted, or worry about it happening again. You might be weighing medicine, side effects, school, work, and who to tell. Some days it's a small part of your life; other days it takes up the whole room. All of that is common. A serious mental illness is something you live with, not who you are, and many people your age are building good lives with one.",
+  "self": {
+   "first": [
+    "Write down your own early warning signs: the first small changes you notice when things start to slip, like sleep, spending, thoughts, or pulling away.",
+    "Next to them, write what helps, who you'd tell, and what you'd like them to do. Share it with one person you trust and your treatment team.",
+    "Keep your next appointment, and bring your questions. If something about your treatment isn't working, say so plainly."
+   ],
+   "helps": [
+    "A steady rhythm: the same wake time, regular meals, daylight, and movement your body likes. Sleep is often the first thing to shift.",
+    "Staying connected with your treatment team, and being honest with them about side effects or skipped doses. Decisions about medicine belong to you and your prescriber, together.",
+    "Peer support from people who live with a mental health condition too, like NAMI's Peer-to-Peer classes or a local support group.",
+    "Going easy on alcohol, cannabis, and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
+    "Purpose, at your own pace: school, work, volunteering, or something you make. Your school's disability services office and work accommodations can help.",
+    "Choosing who to tell, and how much. You can name it, or simply say you have a health condition you manage.",
+    "Your own words for it. Some say “I live with bipolar disorder,” some say “I have a mental illness.” Use what fits you."
+   ],
+   "tell": [
+    "“I'm a whole person, not a diagnosis.”",
+    "“Noticing early is a strength.”",
+    "“Recovery is a path, and I'm on it.”"
+   ],
+   "people": "Try, to a friend: “I live with a mental health condition. Most days it's managed. If I seem off, here's what helps.” To family: “Here are my early warning signs, and here's what I'd like you to do if you see them.” To a treatment team: “I'd like you to be able to talk with my mom if I'm in a crisis. What do I sign?”"
+  },
+  "helper": {
+   "feel": "A parent, partner, sibling, or friend may feel relief at having a name for it, and fear about what comes next. You may have seen them very unwell, and wonder whether it will happen again. They're an adult who leads their own treatment, and your steady, respectful presence is one of the strongest supports they can have.",
+   "say": [
+    "“You're still you. I'm here for the long haul.”",
+    "“What would you like me to do if I notice your warning signs?”",
+    "“How are you doing, really? No fixing, just listening.”",
+    "“I'm proud of how you're taking care of yourself.”"
+   ],
+   "avoid": [
+    "Defining them by the diagnosis, or using it as an insult in an argument.",
+    "Checking whether they took their medicine as if you were in charge of it.",
+    "Arguing about whether a belief or a voice is real. Talk about the feelings and the stress instead.",
+    "Waiting until a crisis to talk about a plan."
+   ],
+   "help": [
+    "Ask them to share their early warning signs and what they'd like you to do. Agree on it while things are calm.",
+    "Ask whether they'd sign a release so their treatment team can talk with you. It's their choice.",
+    "Help with the steady things: rides to appointments, a quiet home, regular meals together.",
+    "Learn about the illness, and find support for yourself. NAMI's Family-to-Family classes are for family and friends.",
+    "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911."
+   ],
+   "you": "Loving someone with a serious mental illness can be a long road, with good years and hard weeks. Get your own support, rest, and people. If they use Birch, they choose what you see; safety answers are never shown, and no alert goes to anyone."
+  },
+  "faith": "If faith is part of your life, a faith community can be one more steady place, with people who knew you before and will know you after. Some people also carry hard messages, like being told to just pray more, or that treatment shows weak faith. Many traditions welcome both faith and good treatment, and a trusted faith leader can talk that through with you. If faith isn't part of your life, steadiness can come from people who know you well.",
+  "practices": [
+   "bark|My Safety Plan",
+   "bark|Speak Up About Your Mood",
+   "leaves|Steady Wake Time",
+   "bark|Hard-Day Plan",
+   "branches|Ask for Help",
+   "leaves|Appointment Prep"
+  ],
+  "reach": [
+   "Early warning signs coming back, or treatment not working: call your treatment team soon, before a crisis.",
+   "Thoughts of not wanting to be alive, or of harming someone: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone. A mobile crisis team can talk with you or come to you.",
+   "Danger right now: call 911.",
+   "NAMI HelpLine, for information, peer programs, and classes for families (not a crisis line): 1-800-950-6264, weekdays.",
+   "SAMHSA National Helpline, for help finding treatment: 1-800-662-4357, any time, in English and Spanish."
+  ],
+  "more": [
+   [
+    "NAMI programs: Peer-to-Peer and Family-to-Family",
+    "https://www.nami.org/programs/"
+   ],
+   [
+    "SAMHSA: Working Definition of Recovery",
+    "https://store.samhsa.gov/sites/default/files/d7/priv/pep12-recdef.pdf"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ],
+  "life": [
+   "mind",
+   "close"
+  ],
+  "lines": [
+   "nami",
+   "samhsa"
+  ],
+  "sources": [
+   "samhsarec",
+   "namiprog"
+  ]
+ },
+ {
+  "id": "autistic-adult",
+  "ring": "life",
+  "title": "Autistic adult life",
+  "keys": "autistic autism autism spectrum asperger diagnosed as an adult late diagnosis do i have autism sensory overload too loud too bright meltdown shutdown burnout masking exhausted after people routine change stims stimming special interest friendships small talk dating work interview job accommodations living on my own executive function college independence developmental disability intellectual disability my brother is autistic my partner is autistic",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk"
+  ],
+  "quick": [
+   "Autism is a different way of sensing, thinking, and connecting, and many autistic adults are building lives that fit who they are. Many say “autistic” or “autistic person”; some prefer “person with autism.” You choose your own words.",
+   "Sensory needs are real needs. Too much noise, light, or people can drain you fast, and planning recovery time helps.",
+   "Many autistic adults spend a lot of energy hiding their differences to fit in. Places and people where you can be yourself give that energy back.",
+   "You can ask for changes at school and work, like written instructions, a quieter space, or a predictable schedule. Often the barrier is the setting, not you."
+  ],
+  "feel": "Maybe you've known you were autistic since childhood, and now the supports that came with school are gone. Maybe you were diagnosed recently, and suddenly a lot of your life makes sense, along with some grief for the years you thought something was wrong with you. You might be worn out from trying to act like everyone else at work, in class, or with friends. You might love your interests deeply and wish more people did. Change, crowds, and small talk can cost a lot; quiet, routine, and your own people can give a lot back. All of that is part of an ordinary autistic life, and it can be a good one.",
+  "self": {
+   "first": [
+    "Notice what drains you and what restores you for one week: sounds, lights, people, changes, and the things that bring you back.",
+    "Plan one quiet reset into each busy day, like headphones on the bus, a walk alone, or twenty minutes with your interest.",
+    "Pick one thing at school or work that's harder than it needs to be, and think of a change that would help."
+   ],
+   "helps": [
+    "Knowing your sensory needs and having tools ready: headphones, sunglasses, a quiet spot, comfortable clothes.",
+    "Predictable routines, with a heads-up plan for changes. A written schedule or a calendar can carry a lot.",
+    "Asking for what helps in plain words: “I do best with written instructions,” or “Could I have a heads-up before plans change?”",
+    "Finding your people: friends who share an interest, a group built around something you love, or other autistic adults.",
+    "Planning scripts for hard moments, like calling a doctor, starting a new job, or saying no.",
+    "Watching for burnout: when everything gets harder for weeks, more rest and less demand usually help. Talk with your doctor if it lasts.",
+    "Getting help with the parts of adult life that take a lot of steps, like bills, forms, and appointments. In Minnesota, Disability Hub MN can help.",
+    "Honoring your strengths: focus, honesty, deep knowledge, and noticing details others miss."
+   ],
+   "tell": [
+    "“My brain works its own way, and that's okay.”",
+    "“Rest after people isn't rude. It's what I need.”",
+    "“I can ask for the setting to change.”"
+   ],
+   "people": "Try, to a friend: “I'm autistic. I like hanging out, and I sometimes need to leave early to recharge. It's not about you.” To a boss: “I do my best work with clear written priorities and a heads-up before schedule changes.” To a roommate: “Quiet mornings really help me. Could we agree on that?”"
+  },
+  "helper": {
+   "feel": "A parent, sibling, partner, or friend may see someone who's capable and creative, and also worn out by a world that's loud and unpredictable. They may have spent years being told to act differently. What helps most is respect: believing what they tell you about their senses and needs, and treating them as the expert on their own life.",
+   "say": [
+    "“What helps you recharge? Let's plan for that.”",
+    "“Tell me more about it,” when they share their interest.",
+    "“No need to explain. Leave whenever you need to.”",
+    "“What would make this easier?”"
+   ],
+   "avoid": [
+    "“You don't seem autistic,” or “Everyone's a little autistic.”",
+    "Pushing eye contact, small talk, or staying longer than they want.",
+    "Speaking for them, or about them in front of them.",
+    "Treating a meltdown or shutdown as bad behavior. It's overload."
+   ],
+   "help": [
+    "Give clear plans and heads-ups about changes, and keep your word when you can.",
+    "Make room for quiet: a calm space at home, or a plan to leave events early.",
+    "Help with multi-step adult tasks if they ask, then hand them over.",
+    "Learn from autistic adults themselves. Their own words teach the most.",
+    "Notice and name their strengths."
+   ],
+   "you": "Supporting an autistic young adult means learning a new way of seeing things, and that's a gift to you too. If they use Birch, they choose what to share with you."
+  },
+  "faith": "If faith is part of your life, a faith community can be a place to belong, and it's fair to ask for what helps you take part, like a quieter seat, a printed order of service, or a smaller group. If faith isn't part of your life, any community built around something you love can do the same.",
+  "practices": [
+   "bark|Quiet the Senses",
+   "branches|Plan Your Answer",
+   "trunk|Weekly Reset",
+   "branches|Join and Go Three Times",
+   "trunk|Name Your Gifts",
+   "branches|Say What You Need"
+  ],
+  "reach": [
+   "In Minnesota, for help with health, housing, work, and money resources: Disability Hub MN, 1-866-333-2466.",
+   "For help at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
+   "For anxiety, depression, or burnout that lasts: talk with your doctor or a counselor, ideally one who works with autistic adults.",
+   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Autism Society",
+    "https://autismsociety.org"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ],
+   [
+    "Job Accommodation Network (JAN)",
+    "https://askjan.org"
+   ]
+  ],
+  "life": [
+   "autism",
+   "close"
+  ],
+  "lines": [
+   "nami"
+  ],
+  "sources": [
+   "kenny16",
+   "socialmodel"
+  ]
+ },
+ {
+  "id": "deaf-hoh",
+  "ring": "life",
+  "title": "Deaf or hard of hearing",
+  "keys": "deaf hard of hearing hoh hearing loss losing my hearing hearing aids cochlear implant asl american sign language interpreter captions cart live captioning lip reading listening fatigue tired from listening group conversations restaurants too loud masks phone calls video calls deaf community deaf culture deafblind college interpreter work accommodations job interview dating hearing people my friend is deaf my brother is deaf 988 asl videophone",
+  "parts": [
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "quick": [
+   "Deaf, deaf, and hard of hearing people live full lives in many ways: with sign language, speech, hearing aids, cochlear implants, captions, or a mix. Many in the Deaf community say “Deaf” with a capital D for their culture and language. You choose your own words.",
+   "Listening and lip reading all day takes real energy. Planning quiet breaks is wise, not weak.",
+   "You can ask for access at school and work: interpreters, captions, written notes, seating, and meetings that work for you.",
+   "988 serves Deaf and hard of hearing people in ASL by videophone (use ASL Now on the 988 website), and you can also text 988."
+  ],
+  "feel": "Maybe you've been Deaf all your life, with your own language and community, and the hearing world keeps forgetting you're there. Maybe your hearing is changing and you're still figuring out what that means. You might be tired after a day of straining to follow conversations, or quietly left out of the joke at the table. You might be tired of asking people to repeat themselves or to face you. You might also feel deep pride in your language, your culture, and your people. All of that can be true at once. Often the barrier is the room, the meeting, or the video without captions, and those can change.",
+  "self": {
+   "first": [
+    "Think about where communication works well for you and where it breaks down: classes, work, family, friends, or appointments.",
+    "Write one or two plain sentences that tell people how to communicate with you, and keep them ready in your phone.",
+    "If you need access at school or work, ask now: disability services at school, or your manager or human resources at work."
+   ],
+   "helps": [
+    "Asking for what works: an interpreter, live captions, written notes, the agenda ahead of time, or a seat where you can see faces.",
+    "Turning on captions everywhere you can: your phone, video calls, streaming, and live events.",
+    "Planning breaks from listening. Listening fatigue is real, and a quiet half hour can restore a lot.",
+    "Choosing places that work for you, like a quieter restaurant, a booth, good lighting, or meeting one on one.",
+    "Finding community, like Deaf or hard of hearing groups, ASL events, or online spaces, if that fits you.",
+    "Keeping hearing appointments and checking your hearing tech, if you use it. Whether to use hearing aids or an implant is your choice, with your audiologist or doctor.",
+    "Knowing how to reach help your way: 988 by ASL videophone or by text, and 911 by text where it's available."
+   ],
+   "tell": [
+    "“My way of communicating is a real way of communicating.”",
+    "“Asking for access is normal.”",
+    "“I belong in the conversation.”"
+   ],
+   "people": "Try, to a group: “I'm hard of hearing. Please face me and let one person talk at a time.” Or: “I'm Deaf. I'll have an interpreter at the meeting; please speak to me, not to the interpreter.” To a boss: “Could we turn on captions for team calls and send notes after meetings?” To a friend: “Could we pick a quieter place? I'll hear you so much better.”"
+  },
+  "helper": {
+   "feel": "A parent, sibling, partner, or friend may not realize how much effort following a conversation takes, or how often a Deaf or hard of hearing person is left out. Some young adults are proud members of the Deaf community; others are adjusting to hearing loss. Respect how they communicate, and follow their lead.",
+   "say": [
+    "“What works best for you when we talk?”",
+    "“Want me to fill you in on what you missed?”",
+    "“Let's pick somewhere quieter.”",
+    "“I'd love to learn some sign language.”"
+   ],
+   "avoid": [
+    "“Never mind,” or “It's not important,” when they ask you to repeat something.",
+    "Talking louder or slower in an exaggerated way, or covering your mouth.",
+    "Talking to an interpreter or a companion instead of to them.",
+    "Deciding for them about hearing aids, implants, or sign language."
+   ],
+   "help": [
+    "Face them, with light on your face, and get their attention before you start.",
+    "Use captions on video calls and shows, and text for plans and details.",
+    "At gatherings, make sure one person speaks at a time, and fill them in on side conversations.",
+    "Learn some sign language if they use it, especially family members.",
+    "Back them up when they ask for access, and let them lead."
+   ],
+   "you": "You don't have to get it perfect. Asking how they like to communicate, and remembering, says a lot. If they use Birch, they choose what to share with you."
+  },
+  "faith": "If faith is part of your life, it's fair to ask your community for what helps you take part: an interpreter, captions on a livestream, printed words, or a Deaf congregation or ministry. If faith isn't part of your life, any community where you can communicate fully can be a place to belong.",
+  "practices": [
+   "branches|Say What You Need",
+   "branches|Join and Go Three Times",
+   "branches|One Reach-Out a Day",
+   "leaves|Rest Before You're Spent",
+   "leaves|Appointment Prep",
+   "trunk|Name Your Gifts"
+  ],
+  "reach": [
+   "For a crisis, in ASL: 988 by videophone (use ASL Now on the 988 website), or text 988, any time.",
+   "In Minnesota, for services for people who are Deaf, deafblind, or hard of hearing and their families: the Deaf and Hard of Hearing Services Division, at mn.gov/deaf-hard-of-hearing.",
+   "For access at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
+   "For health, housing, and money resources in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Danger right now: call 911, or text 911 where it's available."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline (ASL Now)",
+    "https://988lifeline.org/"
+   ],
+   [
+    "National Association of the Deaf",
+    "https://www.nad.org"
+   ],
+   [
+    "Hearing Loss Association of America",
+    "https://www.hearingloss.org"
+   ],
+   [
+    "Minnesota Deaf and Hard of Hearing Services Division",
+    "https://mn.gov/deaf-hard-of-hearing/"
+   ]
+  ],
+  "life": [
+   "hearing",
+   "close"
+  ],
+  "lines": [],
+  "sources": [
+   "cdcdisab",
+   "asl988",
+   "socialmodel"
+  ]
+ },
+ {
+  "id": "blind-low-vision",
+  "ring": "life",
+  "title": "Blind or low vision",
+  "keys": "blind low vision visually impaired vision loss losing my sight legally blind white cane guide dog screen reader voiceover talkback magnifier large print braille audio books accessible materials orientation and mobility getting around transit rides driving cant drive job with low vision college with low vision accessible website inaccessible app reading menus my friend is blind my sister is blind state services for the blind",
+  "parts": [
+   "branches",
+   "trunk",
+   "leaves"
+  ],
+  "quick": [
+   "Blind and low vision people live full lives using many tools: a cane, a guide dog, a screen reader, magnification, braille, audio, and good planning. Many say “blind”; some say “a person with low vision” or “visually impaired.” You choose your own words.",
+   "Often the barrier is the world around you: an app that doesn't work with a screen reader, print-only forms, or a bus stop with no announcements. Those can change.",
+   "You can ask for access at school and work: accessible materials, screen reader friendly tools, magnification, and time to learn a new route.",
+   "In Minnesota, State Services for the Blind helps with work, independent living, and access to print."
+  ],
+  "feel": "Maybe you've been blind all your life and you're fluent in your tools, and the world keeps handing you inaccessible forms. Maybe your vision is changing, and you're facing things like giving up driving or learning a screen reader for the first time. You might be tired of people grabbing your arm, talking to your friend instead of you, or acting amazed that you do ordinary things. You might also feel quietly proud of how much you've figured out. All of that can be true at once. You're the expert on how you get around and get things done.",
+  "self": {
+   "first": [
+    "Think about where access works well for you and where it breaks down: school, work, getting around, apps, or paperwork.",
+    "Pick one barrier and one person or office who could change it, like disability services, your manager, or the app's support team.",
+    "If your vision is changing, keep your eye appointments, and ask about low vision services and training with new tools."
+   ],
+   "helps": [
+    "Asking for what works: materials in a format you can use, screen reader friendly tools, magnification, or a described layout of a new room.",
+    "Learning and practicing your tools at your own pace, and getting orientation and mobility training for new places or routes if it fits you.",
+    "Planning transportation: transit, rides, and trusted people, so getting places isn't a daily scramble.",
+    "Organizing your space your way, and asking roommates or family to keep things where you put them.",
+    "Finding community, like blind or low vision groups, mentors who've been there, or online spaces.",
+    "Speaking up when a website, app, or form isn't accessible. Often the fix is the builder's job, not yours.",
+    "Noticing your strengths: memory, planning, problem solving, and the confidence you've built."
+   ],
+   "tell": [
+    "“I get things done my way, and my way works.”",
+    "“Asking for access is normal.”",
+    "“The form is the problem, not me.”"
+   ],
+   "people": "Try, to a new coworker: “I'm blind. Feel free to say your name when you start talking to me, and I'll take it from there.” To a friend: “If I want help, I'll ask. If you offer, I might say no, and that's okay.” To a manager: “Could the training materials come in an accessible digital format? My screen reader handles those well.”"
+  },
+  "helper": {
+   "feel": "A parent, sibling, partner, or friend may want to help so much that they take over. Most blind and low vision young adults want the same thing others their age want: to do things themselves, with access that works. Some have been blind all their lives; others are adjusting to vision loss. Ask, then follow their lead.",
+   "say": [
+    "“Want a hand, or are you good?”",
+    "“It's me, Sam,” when you walk up, using your own name.",
+    "“The door's about ten steps ahead, on your right.”",
+    "“How do you like things set up?”"
+   ],
+   "avoid": [
+    "Grabbing their arm, cane, or guide dog without asking. Never pet or distract a working guide dog.",
+    "Talking to the person with them instead of to them.",
+    "Moving their things without telling them.",
+    "Acting amazed at ordinary things, or treating them as an inspiration."
+   ],
+   "help": [
+    "Say who you are when you approach, and say when you're leaving.",
+    "Give clear, specific directions, like “on your left” and “about ten steps,” instead of “over there.”",
+    "If they want a guide, offer your elbow and let them take it.",
+    "Send things in formats they can use, like accessible digital files, not photos of text.",
+    "Help with rides if they ask, without making it a favor they owe you."
+   ],
+   "you": "Stepping back can be harder than stepping in, and it's often the most respectful help. If they use Birch, they choose what to share with you."
+  },
+  "faith": "If faith is part of your life, it's fair to ask your community for what helps you take part, like readings in braille or large print, an accessible digital order of service, or a ride. If faith isn't part of your life, any community where you're welcome as you are can be a place to belong.",
+  "practices": [
+   "branches|Say What You Need",
+   "leaves|Appointment Prep",
+   "branches|Join and Go Three Times",
+   "fruit|Savoring Walk",
+   "trunk|Name Your Gifts",
+   "branches|Ask for Help"
+  ],
+  "reach": [
+   "In Minnesota, for help with work, independent living, and access to print: State Services for the Blind, at mn.gov/deed/ssb.",
+   "For access at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
+   "For health, housing, and money resources in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Vision that's changing: see your eye doctor, and ask about low vision services.",
+   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "National Federation of the Blind",
+    "https://nfb.org"
+   ],
+   [
+    "American Council of the Blind",
+    "https://www.acb.org"
+   ],
+   [
+    "Minnesota State Services for the Blind",
+    "https://mn.gov/deed/ssb/"
+   ]
+  ],
+  "life": [
+   "seeing",
+   "close"
+  ],
+  "lines": [],
+  "sources": [
+   "cdcdisab",
+   "socialmodel"
+  ]
+ },
+ {
+  "id": "dating-disability",
+  "ring": "life",
+  "title": "Dating and marriage with a disability or illness",
+  "keys": "dating with a disability dating with chronic illness when to tell a date disclose my disability on a dating app first date accessible date ideas will anyone want me am i a burden relationship with a disability partner with a disability caregiving partner marriage and disability benefits ssi marriage getting married with a disability intimacy sex and disability fatigue and dating mental illness and dating my partner is sick my boyfriend has a disability my girlfriend has a chronic illness engaged",
+  "parts": [
+   "branches",
+   "trunk",
+   "fruit"
+  ],
+  "quick": [
+   "People with disabilities and health conditions date, fall in love, and build good marriages. You deserve love and respect, and you have a lot to offer.",
+   "When and how to tell someone is your choice. Some share early to see who stays; others wait until there's trust. Either way is okay.",
+   "A good partner treats you as a whole person and an equal, not a project or a patient. Love that controls, isolates, or threatens isn't love.",
+   "If you receive disability benefits, ask before marrying or moving in together, because household rules can change benefits. In Minnesota, Disability Hub MN can help."
+  ],
+  "feel": "Maybe you're wondering whether anyone will want to date someone with your body, your brain, or your diagnosis. Maybe you've had a date go quiet after you told them, or a partner who treated you like a patient. You might worry about being a burden, about fatigue on date nights, or about when to bring it up. If you're serious with someone, you might be thinking about marriage, money, care, and what the future holds. All of that is common. Dating takes some courage for everyone, and you bring as much to a relationship as anyone does.",
+  "self": {
+   "first": [
+    "Think about what you want someone to know about your life with a disability or illness, and the words you'd like to use.",
+    "Decide roughly when you'd like to share: on your profile, before a first date, or once there's some trust. It's your call.",
+    "Plan dates that work for your body and energy: the place, the time of day, how you'll get there and home."
+   ],
+   "helps": [
+    "Telling it your way: short, matter-of-fact, and with what it means for a date, like “I use a wheelchair, so let's pick a place with step-free access.”",
+    "Watching how someone responds. Curiosity and respect are good signs. Pity, pressure, or jokes at your expense are good reasons to move on.",
+    "Choosing date ideas that fit, and suggesting them yourself.",
+    "Keeping your own friends, interests, and care team, so a partner is one support among several.",
+    "Sharing care in a long relationship: a partner can help with some things, and outside help can carry others, so you stay partners first.",
+    "Getting benefits advice before marrying or moving in together, if you receive disability benefits.",
+    "Bringing questions about intimacy, medicines, or your body to your doctor. Those are normal questions."
+   ],
+   "tell": [
+    "“I deserve love and respect, just as I am.”",
+    "“I decide when to share my story.”",
+    "“The right person will want to know all of me.”"
+   ],
+   "people": "Try, to a date: “Before we meet, a heads-up: I live with a chronic illness, so some days I have less energy. Could we plan something low-key?” To a partner: “I want us to be partners, not patient and caregiver. Can we talk about which things you'll help with and where we'll get other help?” To a friend: “I'm nervous about telling the person I'm seeing. Can I practice with you?”"
+  },
+  "helper": {
+   "feel": "A parent, sibling, or friend may feel protective, worried about rejection or about someone taking advantage. A partner may be learning what it means to love someone with a disability or illness. The young adult is an adult with the same hopes as anyone: love, respect, and a life together. Your part is to cheer them on and respect their choices.",
+   "say": [
+    "“Anyone would be lucky to be with you.”",
+    "“Want to practice what you'll say?”",
+    "“How are you two sharing the load?”",
+    "“I'm happy for you.”"
+   ],
+   "avoid": [
+    "“Are you sure they really like you?” or “Be careful, they might leave when it gets hard.”",
+    "Assuming they can't date, marry, or have a family.",
+    "Treating their partner as their caregiver, or asking the partner about them as if they weren't there.",
+    "Telling their dates about their condition for them."
+   ],
+   "help": [
+    "Treat their relationships the way you would anyone's: interest, respect, and an invitation to the next family dinner.",
+    "Help with practical pieces if they ask, like rides or an accessible place to meet.",
+    "If you're the partner, keep your own friends and rest, and talk about care openly together.",
+    "If you see signs of control, isolation, or threats, say what you notice gently, and share Love Is Respect.",
+    "Point them to good benefits advice if marriage or moving in is on the horizon."
+   ],
+   "you": "Watching someone you love risk their heart is hard for any parent or friend. Trust them, and be a safe place to land. If they use Birch, they choose what you see."
+  },
+  "faith": "If faith is part of your life, your tradition may have a lot to say about love, commitment, and the worth of every person, and some couples find strength in praying or worshiping together. Some also carry hurtful messages about disability and marriage, and those are worth talking through with someone you trust. If faith isn't part of your life, your own values about love and respect can guide you.",
+  "practices": [
+   "branches|Say What You Need",
+   "branches|Plan Your Answer",
+   "branches|Respect Check",
+   "trunk|Worth Beyond Doing",
+   "leaves|Pacing Your Day",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "If someone you're dating or with is controlling, threatening, or hurting you: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time.",
+   "In Minnesota, for anyone being hurt by someone close to them: Day One, 1-866-223-1111, any time.",
+   "Before marrying or moving in together, if you receive disability benefits: Disability Hub MN, 1-866-333-2466, for benefits help.",
+   "Questions about intimacy, medicines, or your body: your doctor or clinic.",
+   "Feeling hopeless, or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ]
+  ],
+  "life": [
+   "health",
+   "pain",
+   "moving",
+   "hearing",
+   "seeing",
+   "learning",
+   "autism",
+   "mind",
+   "serious",
+   "close"
+  ],
+  "lines": [
+   "loveisrespect",
+   "dayone"
+  ],
+  "sources": [
+   "socialmodel"
+  ]
+ },
+ {
+  "id": "young-carer",
+  "ring": "life",
+  "title": "Caring for a parent or sibling in your twenties",
+  "keys": "young caregiver young adult caregiver caring for my mom caring for my dad caring for a parent caring for my brother caring for my sister sibling with a disability parent with mental illness parent with cancer parent with ms chronically ill parent living at home to help moved home to take care of family missing out friends dont get it guilt resentment burned out caregiver burnout college and caregiving work and caregiving future plans who will care for my sibling respite care support group",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk",
+   "leaves"
+  ],
+  "quick": [
+   "Many young adults help care for a parent, a brother or sister, or another family member with an illness, a disability, or a mental health condition. Nearly one in four US adults gives this kind of care.",
+   "Caring can come with love, pride, and real skill, and also with tiredness, worry, and feeling out of step with friends. All of it can be true at once.",
+   "You're allowed to have your own life too: school, work, friends, rest, and plans. Sharing the care makes it last.",
+   "Help exists: other family members, the person's care team, local services, and support groups for caregivers."
+  ],
+  "feel": "Maybe you've helped care for someone since you were a kid, and it's just how your family works. Maybe a parent got sick or a sibling's needs grew, and you moved home, cut back at school, or turned down a job. You might be proud of what you do and quietly exhausted. You might feel guilty when you want time for yourself, or a flash of resentment followed by more guilt. Friends may not understand why you can't just come out. You might wonder how your own plans fit. All of that is common for young caregivers, and none of it means you love them less.",
+  "self": {
+   "first": [
+    "Write down what you do in a typical week to help: rides, meds pickups, meals, appointments, money, watching a sibling, or being the calm one.",
+    "Circle one thing someone else could share, and ask them this week: another family member, a friend, the person's care team, or a local service.",
+    "Put one thing just for you on the calendar, and treat it like an appointment."
+   ],
+   "helps": [
+    "Naming yourself as a caregiver. It helps you find support and explains why you're tired.",
+    "Asking the person's care team what services exist, like respite care, home help, or a social worker who can connect you with more.",
+    "Talking with your school or job about flexibility. Many have options for family caregivers.",
+    "Keeping one or two friends close who know what's going on, even if you see them less.",
+    "Finding other young caregivers, online or in person. Being understood without explaining is a relief.",
+    "Planning ahead as a family when you can: who does what, what happens if you move, and long-term plans for a sibling who'll need support.",
+    "Caring for your own body: sleep, food, and a doctor's visit of your own."
+   ],
+   "tell": [
+    "“I can love my family and still need a life of my own.”",
+    "“Asking for help keeps me able to help.”",
+    "“My own plans matter too.”"
+   ],
+   "people": "Try, to a sibling or relative: “I've been doing most of Mom's appointments. Could you take Tuesdays?” To a friend: “I help take care of my brother, so I can't always come out. I still want to be invited.” To a boss or instructor: “I help care for a family member with a health condition. Can we talk about some flexibility?”"
+  },
+  "helper": {
+   "feel": "A parent, relative, friend, or mentor may see a young adult carrying more than most people their age, often quietly. They may feel torn between family and their own future, and guilty about wanting more. They need people who notice what they do, share some of the load, and remind them their own life matters.",
+   "say": [
+    "“You do so much for your family. How are you doing?”",
+    "“What's one thing I could take off your plate this week?”",
+    "“It's okay to want your own life too.”",
+    "“I still want to invite you, even if you can't always come.”"
+   ],
+   "avoid": [
+    "“You're such a good kid,” as the only thing you say. Praise can make it harder to admit they're struggling.",
+    "Assuming they'll always be the one who stays or helps.",
+    "Making them choose between family and their future without talking it through.",
+    "Disappearing because plans keep getting canceled."
+   ],
+   "help": [
+    "Take one specific task regularly: a ride, a meal, or a few hours with the person they care for.",
+    "If you're a parent or relative, share the care fairly, and plan together for the long term.",
+    "Help them look into respite care, a social worker, or caregiver support groups.",
+    "Keep inviting them, and plan things that work around caregiving.",
+    "Encourage their own plans for school, work, or a move, and help make them possible."
+   ],
+   "you": "Caring for the caregiver is quiet, important work. If you're also caring for the same person, your own rest matters too. If they use Birch, they choose what to share with you."
+  },
+  "faith": "If faith is part of your life, caring for family may feel like part of your calling, and a faith community can share the load with meals, rides, and prayer. Some also feel pressure that a good person never needs a break. Many traditions honor both care for others and rest. If faith isn't part of your life, your values about family and fairness can guide how the care is shared.",
+  "practices": [
+   "branches|A Break for the Helper",
+   "branches|Ask for Help",
+   "bark|Self-Compassion Break",
+   "trunk|Big Choice Map",
+   "leaves|Rest Before You're Spent",
+   "fruit|Your Own Timeline"
+  ],
+  "reach": [
+   "For help with bills, food, housing, and local services: Minnesota 211, dial 211 or call 1-800-543-7709, any time.",
+   "For services for a family member with a disability in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "If a family member has a mental health condition: the NAMI HelpLine, 1-800-950-6264, weekdays, and NAMI's classes for families (not a crisis line).",
+   "If a vulnerable adult is being hurt, neglected, or taken advantage of in Minnesota: MAARC, 1-844-880-1574, any time.",
+   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "AARP and the National Alliance for Caregiving: Caregiving in the US 2025",
+    "https://www.aarp.org/press/releases/2025-07-24-new-report-reveals-crisis-point-for-americas-63-million-family-caregivers.html"
+   ],
+   [
+    "Sibling Support Project",
+    "https://siblingsupport.org/"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ]
+  ],
+  "life": [
+   "close"
+  ],
+  "lines": [
+   "mn211",
+   "nami"
+  ],
+  "sources": [
+   "aarpcg"
+  ]
+ },
+ {
+  "id": "faith-disability",
+  "ring": "life",
+  "title": "Faith and disability: finding a community that welcomes you",
+  "keys": "faith and disability church accessibility accessible worship wheelchair church no ramp no interpreter at church asl worship large print braille bible sensory friendly service autism at church mental illness at church chronic illness and faith why me is this a punishment pray for healing told i need more faith healing pressure people praying over me without asking left church because of disability disability ministry inclusion congregation synagogue mosque temple online worship worship from home finding a faith community belonging questions for god",
+  "parts": [
+   "roots",
+   "branches"
+  ],
+  "quick": [
+   "For many people with a disability or an illness, faith is a deep source of strength, and a faith community is part of how they belong. For others, faith brings hard questions or hurt. Both are real, and Grounded welcomes all faith traditions and everything in-between.",
+   "Belonging is more than getting in the door. It's being invited, welcomed, known, and needed, with your gifts used, not only your needs met.",
+   "It's fair to ask a community for access: a ramp, an interpreter, captions on a livestream, large print, a quieter seat, or a ride.",
+   "Questions like “Why me?” or “Is this a punishment?” are common, and worth bringing to someone you trust. Pressure to be healed, or blame for not being healed, is not something you have to carry."
+  ],
+  "feel": "Maybe your faith has carried you through hospital stays, hard diagnoses, or a lifetime of being underestimated. Maybe you'd love to belong to a community but can't get in the building, can't follow the service, or feel stared at when you do. Maybe someone prayed over you without asking, told you that you'd be healed if you had more faith, or suggested your disability was a punishment, and you've kept your distance since. Maybe you're carrying questions of your own about why. You might feel lonely for the community you used to have, or you might be looking for one for the first time. Whatever you're carrying, your questions and your place at the table both belong.",
+  "self": {
+   "first": [
+    "Think about what welcome would look like for you: what you'd need to get in, follow along, take part, and be known.",
+    "If you're looking for a community, ask ahead: about access, about how they include people with disabilities, and whether there's a disability ministry or group.",
+    "If you're carrying hurt or hard questions, name one person you trust enough to talk with: a faith leader, a chaplain, a friend, or a counselor."
+   ],
+   "helps": [
+    "Asking plainly for what helps you take part, like step-free access, an interpreter or captions, large print or braille, a quiet space, a ride, or a role that fits your energy.",
+    "Remembering that worship from home, online, by audio, or in a short practice counts fully.",
+    "Looking for communities that already include people with disabilities in leadership, music, teaching, and service, not only as people to be helped.",
+    "Setting limits on how others pray for you. You can say, “Please ask me first,” or “I'd rather you pray for my peace than my cure.”",
+    "Bringing your own questions honestly, whether in prayer, in lament, in your tradition's writings, or with a trusted guide. Many traditions have long, honest words for suffering.",
+    "Leaving a community that keeps hurting you, and looking for one that welcomes you. That's not leaving your faith.",
+    "Offering your gifts. Many communities are richer because people with disabilities teach, lead, and serve in them."
+   ],
+   "tell": [
+    "“I belong, just as I am.”",
+    "“My questions are welcome.”",
+    "“I can ask for what helps me take part.”"
+   ],
+   "people": "Try, to a faith leader: “I use a wheelchair. Is there step-free access to the sanctuary and the fellowship hall? I'd like to join a small group too.” Or: “I'm Deaf. Could the livestream have captions, or could we talk about an interpreter?” To someone who wants to pray for healing: “Thank you for caring. Please ask me first, and I'd love prayers for strength and peace.” To a chaplain or friend: “I keep wondering why this happened to me. Can we talk about it?”"
+  },
+  "helper": {
+   "feel": "A family member, friend, faith leader, or partner may see someone they love shut out of a community, hurt by words meant to comfort, or quietly wrestling with big questions. They may still have deep faith, have stepped away, or be somewhere in-between. Your part is to listen to their experience, never to argue them into or out of belief, and to help their community make room.",
+   "say": [
+    "“Has your faith been more of a comfort or a struggle lately?”",
+    "“What would help you feel at home there?”",
+    "“Want me to come with you, or ask about access ahead of time?”",
+    "“Your questions are welcome with me.”"
+   ],
+   "avoid": [
+    "Telling them their disability happened for a reason, or is a test, or will be healed if they believe enough.",
+    "Praying over them, or touching them, without asking.",
+    "Pushing them to go back to a community that hurt them, or to leave their faith.",
+    "Treating them as a project to be fixed rather than a person who belongs."
+   ],
+   "help": [
+    "Ask about access ahead of time, and go with them the first time if they'd like.",
+    "Speak up in your own community about barriers: the steps, the sound system, the service with no captions, the program with no place for someone who needs to move.",
+    "Invite them to serve, lead, or teach, not only to receive.",
+    "Help them find another community if theirs keeps hurting them.",
+    "Listen to their hard questions without rushing to answer them."
+   ],
+   "you": "It can hurt to watch someone you love be shut out of a place that matters to you both. You can't fix every community, and you don't have to. Your welcome counts. If they use Birch, they choose what to share with you."
+  },
+  "faith": "This guide is about faith, so faith runs through it. If faith isn't part of your life, the same questions of belonging still matter: where you're invited, welcomed, known, and needed. Grounded welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "roots|Find Your People for Faith",
+   "branches|Faith Community",
+   "roots|Carry Your Questions",
+   "roots|Lament",
+   "roots|Quiet Time",
+   "branches|Say What You Need"
+  ],
+  "reach": [
+   "For spiritual support: a chaplain at your hospital or campus, or a faith leader you trust. Many chaplains serve people of every faith and none.",
+   "For access at a faith community: ask its leaders directly, and bring a friend if that helps.",
+   "In Minnesota, for health, housing, and money resources: Disability Hub MN, 1-866-333-2466.",
+   "If you're carrying spiritual hurt that won't let go, a counselor can help alongside a faith leader.",
+   "Feeling hopeless, or having thoughts of not wanting to be alive: call or text 988, any time.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "Baylor Collaborative on Faith and Disability",
+    "https://bcdd.soe.baylor.edu/projects/disability-faith-flourishing-initiative"
+   ],
+   [
+    "Erik Carter on the facets of belonging (Vanderbilt Kennedy Center)",
+    "https://notables.vkcsites.org/2019/05/carter-explores-facets-of-true-belonging-inclusion-of-people-with-disabilities-in-our-communities/"
+   ],
+   [
+    "Joni and Friends (a Christian disability ministry)",
+    "https://joniandfriends.org"
+   ]
+  ],
+  "life": [
+   "moving",
+   "hearing",
+   "seeing",
+   "autism",
+   "learning",
+   "health",
+   "pain",
+   "mind",
+   "serious",
+   "close"
+  ],
+  "lines": [],
+  "sources": [
+   "carter19",
+   "rcope"
+  ]
  }
 ];
 window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 })();
+/* Health and Ability guides (GWG BLD 757, HA 2): ring 'life' (GGLifeKit.RING), with life tags, lines, and sources. Generated by worker B. */
 /* LIFE tags start: Health and Ability tags (GWG BLD 756, HA 1). life: shared/gg-life.js ids. Generated by worker A. */
 (function () { var G = window.BIRCH_GUIDES; if (!G || !G.topics) return; var L = {"adhd": ["learning"], "health-26": ["health", "serious"], "first-signs": ["mind", "close"], "eating": ["mind", "health"], "anxiety": ["mind"], "depression": ["mind"], "after-baby": ["mind", "health"], "pressure-burnout": ["mind", "learning"], "substances": ["mind"], "selfharm": ["mind"], "coming-home": ["mind"], "friend-suicide": ["close", "mind"], "suicide-thoughts": ["mind"]};
   G.topics.forEach(function (t) { if (L[t.id]) t.life = L[t.id].slice(); }); })();

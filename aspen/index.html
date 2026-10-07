@@ -1471,7 +1471,7 @@ function renderGuidesTab(){
     <div class="panel"><h3 style="margin-top:0">When life gets hard</h3>
       <p class="muted">These guides are written for grown-ups, to help them talk with you about hard things. You can read them too, or ask your grown-up to read one with you.</p>
       ${(LG => LG.picks.length ? `<div class="life-group"><h4>Picked for You</h4><div class="topics">${LG.picks.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}
-      ${G.groups.map(g => `<div class="life-group"><h4>${esc(g.name)}</h4><div class="topics">${g.topics.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}
+      ${asOtherGroups(G).map(g => `<div class="life-group"><h4>${esc(g.name)}</h4><div class="topics">${g.topics.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}
       ${(LG => LG.all.length ? `<div class="life-group"><h4>Health and Ability</h4><div class="topics">${LG.all.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
     <div class="help-strip"><div><b>Need to talk to someone right now?</b><br><span class="muted">Help is free, private, and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>${asLifeLinesHtml()}`;
 }
@@ -1979,7 +1979,7 @@ function renderGrown(){
       </ul>
       <a class="btn small" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a>
     </div>
-    <div class="panel"><h3>When Life Changes</h3><p>49 guides for talking with a middle schooler about hard things, from grief and divorce to group chats, AI chatbots, and scary news. Each has a quick card and a full "Talking It Through" guide with trusted sources.</p><button class="btn teal small" onclick="go('life')">Open When Life Changes</button></div>`;
+    <div class="panel"><h3>When Life Changes</h3><p>58 guides for talking with a middle schooler about hard things, from grief and divorce to group chats, AI chatbots, scary news, and health and ability. Each has a quick card and a full "Talking It Through" guide with trusted sources.</p><button class="btn teal small" onclick="go('life')">Open When Life Changes</button></div>`;
 }
 let gSel = {};
 function openG(id){ CUR = id; go('gstudent'); }
@@ -2086,10 +2086,15 @@ function asLifeLinesHtml(){
 }
 // Pine and Birch never suggest Hardy while pain or mental health is chosen; Aspen follows the same rule.
 function asHardyRests(){ return asLifeIds().some(id => id === 'pain' || id === 'mind'); }
-// Picked for You and the Health and Ability group, for the open student.
+// Picked for You and the Health and Ability group, for the open student. The Health and Ability guides
+// (GWG BLD 757, HA 2: the "Health and Ability" group in aspen/guides.js) come first, then the tagged guides from the
+// other groups. That group shows only here, never twice. Faith-topic guides stay out of Picked for You when Plain
+// wording is set, like the faith guide's part links (guideLinks); they stay in the group, one tap away.
+const AS_LIFE_GROUP = 'Health and Ability', AS_FAITH_GUIDES = ['faith', 'why-me'];
+function asOtherGroups(G){ return (G || guidesData()).groups.filter(g => g.name !== AS_LIFE_GROUP); }
 function asLifeGroups(){
-  const all = [], picks = [], ids = asLifeIds();
-  guidesData().groups.forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { all.push(t); if (t.life.some(x => ids.includes(x))) picks.push(t); } }));
+  const all = [], picks = [], ids = asLifeIds(), plain = isPlain(), gs = guidesData().groups;
+  gs.filter(g => g.name === AS_LIFE_GROUP).concat(asOtherGroups()).forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { all.push(t); if (t.life.some(x => ids.includes(x)) && !(plain && AS_FAITH_GUIDES.includes(t.id))) picks.push(t); } }));
   return { all, picks };
 }
 function asLifePanel(s){
@@ -2108,7 +2113,7 @@ function renderLife(){
   $('view-life').innerHTML = `<h2>When Life Changes</h2>
     <p class="lede"><b>How to show up.</b> Guides for grown-ups talking with a middle schooler about hard things. Each has a quick card for right now and a full "Talking It Through" guide, with trusted sources.</p>
     <input class="life-search" id="life-search" type="search" placeholder="Search: vaping, group chats, grief, bullying..." aria-label="Search the guides and all of Grow With Grounded" value="${esc(LIFE_FIND)}" oninput="lifeFind(this)" enterkeyhint="search">
-    <div id="life-groups">${(LG => LG.picks.length && me() ? `<div class="life-group"><h3>Picked for ${esc(me().name)}</h3><div class="topics">${LG.picks.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}${G.groups.map(g=>`<div class="life-group"><h3>${esc(g.name)}</h3><div class="topics">${g.topics.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}${(LG => LG.all.length ? `<div class="life-group"><h3>Health and Ability</h3><p class="muted small">For a student living with a health condition, pain, a disability, or mental health, or with someone in the family who is. Open to every family. More guides are coming.</p><div class="topics">${LG.all.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
+    <div id="life-groups">${(LG => LG.picks.length && me() ? `<div class="life-group"><h3>Picked for ${esc(me().name)}</h3><div class="topics">${LG.picks.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}${asOtherGroups(G).map(g=>`<div class="life-group"><h3>${esc(g.name)}</h3><div class="topics">${g.topics.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}${(LG => LG.all.length ? `<div class="life-group"><h3>Health and Ability</h3><p class="muted small">For a student living with a health condition, pain, a disability, or mental health, or with someone in the family who is. Open to every family.</p><div class="topics">${LG.all.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
     <div class="help-strip"><div><b>Is someone in danger right now?</b><br><span class="muted">Call or text 988, or call 911.</span></div><button class="btn small" onclick="showCalm()">See the calm card</button></div>${asLifeLinesHtml()}`;
   if (LIFE_FIND) lifeFind($('life-search'));
 }
@@ -2145,7 +2150,7 @@ function renderGuide(opts){
    Two narrated videos per guide, For You (the student) and For the Grown-up, played by shared/gg-learn.js
    from aspen/guide-videos.js. AV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:aspen). */
-/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "body", "bedwetting", "compare", "phone", "pictures", "porn", "vaping", "gambling", "ai", "sleep", "looks", "eating", "wholike", "faith", "identity", "illness", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting"];/* AV_VIDS end */
+/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "body", "bedwetting", "compare", "phone", "pictures", "porn", "vaping", "gambling", "ai", "sleep", "looks", "eating", "wholike", "faith", "identity", "illness", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting", "school-health", "pain-headaches", "moving-included", "deaf-hoh", "blind-low-vision", "autistic-ms", "sibling-disability", "telling-friends", "why-me"];/* AV_VIDS end */
 // Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
 function avVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('aspen', id)); } catch (e) { return false; } }
 window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-guide'); if (v && v.offsetParent !== null && renderGuide.last) { const y = window.scrollY; renderGuide({id: renderGuide.last}); window.scrollTo(0, y); } });

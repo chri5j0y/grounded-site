@@ -1298,7 +1298,7 @@ const LC_RINGS = (window.SEQUOIA_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.SEQUOIA_GUIDES || {}).topics || [];
 const SAP = 'https://growwithgrounded.com/maple/#talk=';
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' }; // 'life': Health and Ability (BLD 757)
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
@@ -1443,7 +1443,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 734): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from sequoia/guide-videos.js. SQ_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
-/* SQ_VIDS start */const SQ_VIDS = ["retirement", "purpose-again", "volunteering", "working-longer", "burden", "spouse-death", "friend-death", "child-death", "sibling-death", "grief-stuck", "holidays-alone", "pet-death", "new-diagnosis", "pain", "falls", "hearing", "vision", "driving", "hospital", "appetite", "memory-worry", "dementia", "depression", "anxiety", "old-memories", "moving-home", "downsizing", "care-move", "fixed-income", "scams", "affairs", "spouse-caregiving", "grandparenting", "raising-grandkids", "estrangement", "worry-adult-children", "kids-deciding", "new-love", "gray-divorce", "elder-abuse", "loneliness", "friendship", "veterans", "invisible", "faith-questions", "facing-death", "regrets", "legacy"];/* SQ_VIDS end */
+/* SQ_VIDS start */const SQ_VIDS = ["retirement", "purpose-again", "volunteering", "working-longer", "burden", "spouse-death", "friend-death", "child-death", "sibling-death", "grief-stuck", "holidays-alone", "pet-death", "new-diagnosis", "pain", "falls", "hearing", "vision", "driving", "hospital", "appetite", "memory-worry", "dementia", "depression", "anxiety", "old-memories", "moving-home", "downsizing", "care-move", "fixed-income", "scams", "affairs", "spouse-caregiving", "grandparenting", "raising-grandkids", "estrangement", "worry-adult-children", "kids-deciding", "new-love", "gray-divorce", "elder-abuse", "loneliness", "friendship", "veterans", "invisible", "faith-questions", "facing-death", "regrets", "legacy", "several-conditions", "energy-pacing", "lifelong-disability", "adult-child-disability", "stroke", "heart-lung"];/* SQ_VIDS end */
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('sequoia', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!SQ_VIDS.includes(gid)) return '';

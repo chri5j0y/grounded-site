@@ -1975,7 +1975,7 @@ function grownNoteHTML(info, name, rec) {
   else if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
   if (info.skipped.length) h += `<p><b>Skipped:</b> ${info.skipped.map(p => p.name).join(', ')}. A skip can be a quiet signal too. You might gently ask about it later.</p>`;
   if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the growth plan going.</p>`;
-  return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 60 hard talks.</p>`;
+  return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 68 hard talks.</p>`;
 }
 function thenNowHTML(prev, cur, name) {
   if (!prev || prev.std !== cur.std) return '';
@@ -3252,7 +3252,7 @@ function renderGuide() {
     </ul>
 
     <h3 class="grown" id="g-changes">When life changes</h3>
-    <p>Big changes shake a child's whole tree: loss, illness, divorce, moves, scary news, and more. Maple has a full section called <b>When Life Changes</b> with 60 guides for parents, guardians, and teachers. Each has a quick reference and a full <b>Talking It Through</b> guide with what to say, questions kids ask, and when to get more help.</p>
+    <p>Big changes shake a child's whole tree: loss, illness, divorce, moves, scary news, and more. Maple has a full section called <b>When Life Changes</b> with 68 guides for parents, guardians, and teachers. Each has a quick reference and a full <b>Talking It Through</b> guide with what to say, questions kids ask, and when to get more help.</p>
     <p class="no-print"><button class="soft-btn" onclick="go('life')">Open When Life Changes</button></p>
 
     <h3 class="grown" id="g-reach">When to reach out</h3>
@@ -3332,7 +3332,7 @@ function renderLife() {
       </div>
       <div class="ring-chips no-print" role="group" aria-label="Filter by topic">
         <button class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="setLifeRing('all')">All topics</button>
-        ${RINGS.map(r => `<button class="ring-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="setLifeRing('${r.key}')">${esc(r.name)}</button>`).join('')}
+        ${RINGS.filter(r => r.key !== 'life').map(r => `<button class="ring-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="setLifeRing('${r.key}')">${esc(r.name)}</button>`).join('')}
         ${lifeTagged().length ? `<button class="ring-chip" style="--rc:${LIFE_RING.color}" data-ring="life" onclick="setLifeRing('life')">${esc(LIFE_RING.name)}</button>` : ''}
       </div>
       <div id="life-list"></div>
@@ -3342,8 +3342,11 @@ function renderLife() {
   renderLifeList();
 }
 function setLifeRing(k) { LIFE.ring = k; renderLifeList(); }
-const LIFE_RING = { key: 'life', name: 'Health and Ability', color: '#2F6E8C', blurb: 'For a child living with a health condition or a disability, or with someone in the family who is. Open to every family. More guides are coming.' };
-function lifeTagged() { return TOPICS.filter(t => Array.isArray(t.life) && t.life.length); }
+/* Health and Ability (BLD 756 ring, BLD 757 guides): maple/guides.js lists the ring (key 'life') and its own eight guides;
+   the ring here shows them first, then every other guide tagged with life. */
+const LIFE_RING = ringBy('life') || { key: 'life', name: 'Health and Ability', color: '#2F6E8C', blurb: 'For a child living with a health condition or a disability, or with someone in the family who is. Open to every family.' };
+const lifeFirst = list => list.filter(t => t.ring === 'life').concat(list.filter(t => t.ring !== 'life'));
+function lifeTagged() { return lifeFirst(TOPICS.filter(t => Array.isArray(t.life) && t.life.length)); }
 /* Search: the same engine as the header search. Maple's guides first, then the rest of Grow With Grounded (kid-safe). */
 function lifeFind(el) {
   if (!window.GGFind) return;
@@ -3352,7 +3355,7 @@ function lifeFind(el) {
 }
 function renderLifeList() {
   document.querySelectorAll('.ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === LIFE.ring));
-  const rings = RINGS.filter(r => LIFE.ring === 'all' || r.key === LIFE.ring);
+  const rings = RINGS.filter(r => r.key !== 'life' && (LIFE.ring === 'all' || r.key === LIFE.ring));
   let html = '', count = 0;
   const block = (r, ts, label) => `<div class="ring-block" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="talk-grid">${ts.map(t => `
       <article class="talk-card" style="--rc:${(ringBy(t.ring) || r).color}">
@@ -3363,7 +3366,7 @@ function renderLifeList() {
         <button class="soft-btn" onclick="openTalk('${t.id}')">Talking It Through</button>
       </article>`).join('')}</div></div>`;
   // Picked for You: guides tagged for the open child's Health and Ability choice, first.
-  const picks = LIFE.ring === 'all' && !LIFE.q && MP_KID && mpLifeUse(MP_KID) ? GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean) : [];
+  const picks = LIFE.ring === 'all' && !LIFE.q && MP_KID && mpLifeUse(MP_KID) ? lifeFirst(GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean)) : [];
   if (picks.length) html += block({ name: 'Picked for You', color: LIFE_RING.color, blurb: `Guides that fit ${MP_KID.name}'s Health and Ability. Every guide stays open.` }, picks, 'Picked for You');
   rings.forEach(r => {
     const ts = TOPICS.filter(t => t.ring === r.key && topicMatches(t, LIFE.q));
@@ -3377,8 +3380,10 @@ function renderLifeList() {
   $('life-list').innerHTML = count ? html : `<div class="no-results"><p>No guides match “${esc(LIFE.q)}.” Try another word, or browse all topics.</p><button class="soft-btn" onclick="LIFE.q='';$('life-search').value='';setLifeRing('all')">Show all topics</button></div>`;
 }
 function openTalk(id, from) {
-  const t = TOPICS.find(x => x.id === id);
-  if (!t) return;
+  const t0 = TOPICS.find(x => x.id === id);
+  if (!t0) return;
+  // Faith or Plain (BLD 757): a guide whose topic is faith carries plain, the same fields without religious words.
+  const plainT = !!(t0.plain && isPlain()), t = plainT ? Object.assign({}, t0, t0.plain) : t0;
   LIFE.from = from || null;
   const r = ringBy(t.ring);
   const list = a => `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
@@ -3400,7 +3405,7 @@ function openTalk(id, from) {
     <h3>How to start</h3><div class="say-lines">${t.start.map(s => `<p>${esc(s)}</p>`).join('')}</div>
     <h3>Questions kids often ask</h3>${t.asks.map(([q, a]) => `<div class="qa"><b>“${esc(q)}”</b>${esc(a)}</div>`).join('')}
     <div class="two-col" style="margin-top:14px"><div><b>What helps</b>${list(t.helps)}</div><div><b>What to avoid</b>${list(t.avoid)}</div></div>
-    <h3>Faith and the holy</h3><p>${esc(t.faith)}</p>
+    <h3>${plainT ? 'What steadies a family' : 'Faith and the holy'}</h3><p>${esc(t.faith)}</p>
     <h3>Using Maple</h3><p>Parts of the tree that often get rainy: <b>${esc(t.rainy)}</b>. Activities that can help: ${t.acts.map(actTitle).map(esc).join(', ')}. A new check-in in a few weeks can show how your child is doing.</p>
     <h3>The days and weeks after</h3>${list(t.after)}
     <h3>For teachers</h3>${list(t.teach)}
@@ -3428,7 +3433,7 @@ function printTalkNow() {
    Two narrated videos per guide, For You (the child) and For the Grown-up, played by shared/gg-learn.js
    from maple/guide-videos.js. MV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:maple). */
-/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "family-illness", "own-illness", "family-mental-health", "addiction", "dementia", "disability", "food-worries", "accident", "bedwetting", "divorce", "new-baby", "blended", "deployed", "jail", "foster", "money", "home-loss", "home-conflict", "sibling-leaves", "bullied", "unkind", "friendship", "new-school", "school-worry", "lockdown", "online-trouble", "attention", "lying", "moving", "community-tragedy", "fire", "crime", "immigration", "deported-classmate", "politics", "school-violence", "protests", "prejudice", "scary-news", "war", "disasters", "outbreaks", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn"];/* MV_VIDS end */
+/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "family-illness", "own-illness", "family-mental-health", "addiction", "dementia", "disability", "food-worries", "accident", "bedwetting", "divorce", "new-baby", "blended", "deployed", "jail", "foster", "money", "home-loss", "home-conflict", "sibling-leaves", "bullied", "unkind", "friendship", "new-school", "school-worry", "lockdown", "online-trouble", "attention", "lying", "moving", "community-tragedy", "fire", "crime", "immigration", "deported-classmate", "politics", "school-violence", "protests", "prejudice", "scary-news", "war", "disasters", "outbreaks", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn", "health-condition", "moving-differently", "hearing-differently", "seeing-differently", "autism-brain", "sibling-health", "ask-stare-tease", "why-happen"];/* MV_VIDS end */
 // Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
 function mvVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('maple', id)); } catch (e) { return false; } }
 window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-talk'); if (v && v.offsetParent !== null && openTalk.last) { const y = window.scrollY; openTalk(openTalk.last, LIFE.from); window.scrollTo(0, y); } });
