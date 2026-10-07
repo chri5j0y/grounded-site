@@ -7,6 +7,11 @@
      --sw / --swd the wide scene, light and dark     --sn / --snd the narrow scene
      --dot / --dot-dark  the six-part strip dots
    Art: shared/heroes/*.svg and shared/marks/*.svg (drawn by the tree art scripts).
+   Painted heroes (GWG BLD 755): add class gg-photo and set
+     --pw the wide image   --pn the phone image   --px where the wide image sits on narrow screens
+     --sky the color of the image's top edge (fills any gap above a full-width image)
+   Add gg-full to show the wide image at full width, never cropped at the sides (The Grove).
+   Marks (BLD 755) are painted tiles cut from these images, in an SVG with a rounded clip.
    ===================================================================== */
 .gg-hero{position:relative;overflow:hidden;background:var(--band);color:#FFFFFF;min-height:560px;display:flex;flex-direction:column;justify-content:flex-start;isolation:isolate}
 .gg-hero-scene{position:absolute;z-index:-1;bottom:0;height:560px;width:3600px;left:max(calc(50% - 1800px), calc(100% - 2400px));background-image:var(--sw);background-size:100% 100%;background-repeat:no-repeat}
@@ -80,5 +85,33 @@
 @media (max-width: 380px){
   .gg-hero h1{font-size:44px}
   .gg-hero-tag{font-size:25px}
+}
+
+/* =====================================================================
+   Painted heroes (GWG BLD 755): laid out like the site pages. The title, tagline, and
+   buttons sit centered over the picture with a soft shade at the top; the picture is
+   anchored to the bottom so the tree shows below the words, on phones too.
+   ===================================================================== */
+:root .gg-hero.gg-photo{--shade:linear-gradient(180deg,rgba(18,11,6,.58) 0%,rgba(18,11,6,.34) 38%,rgba(18,11,6,0) 62%);background:var(--sky,#2A1A0E);min-height:640px}
+:root .gg-hero.gg-photo .gg-hero-scene{display:block;position:absolute;z-index:-1;top:0;right:0;bottom:0;left:0;width:100%;height:100%;margin:0;background-color:var(--sky,#2A1A0E);background-image:var(--shade),var(--pw);background-size:cover,cover;background-position:center,var(--px,50%) bottom;background-repeat:no-repeat}
+.gg-photo .gg-hero-text{padding:52px 20px 40px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.gg-photo .gg-hero-text > *{max-width:640px}
+.gg-photo .gg-hero-lock,.gg-photo .gg-hero-actions{justify-content:center}
+.gg-photo h1,.gg-photo .gg-hero-tag,.gg-photo .gg-hero-sub,.gg-photo .gg-hero-by{text-shadow:0 2px 10px rgba(0,0,0,.55)}
+.gg-photo .gg-hero-mark{box-shadow:0 0 0 2px rgba(255,255,255,.85),0 4px 14px rgba(0,0,0,.35)}
+/* the small helper line under the buttons gets its own stronger shade */
+.gg-photo .gg-hero-pro{display:inline-block;padding:8px 16px;border-radius:14px;background:rgba(18,11,6,.52);color:#FFFFFF;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+@media (min-width: 901px){
+  /* The Grove: the whole row of trees, never cropped at the sides */
+  :root .gg-hero.gg-photo.gg-full{min-height:max(40vw,560px)}
+  :root .gg-hero.gg-photo.gg-full .gg-hero-scene{background-size:cover,100% auto;background-position:center,center bottom}
+}
+@media (max-width: 900px){
+  :root .gg-hero.gg-photo{min-height:700px}
+  :root .gg-hero.gg-photo .gg-hero-scene{position:absolute;z-index:-1;height:100%;width:100%;margin:0;background-image:var(--shade),var(--pn,var(--pw));background-size:cover,cover;background-position:center,center bottom}
+  .gg-photo .gg-hero-text{padding:32px 16px 24px}
+  .gg-photo .gg-hero-actions{flex-direction:row;flex-wrap:wrap;gap:12px;width:100%;max-width:440px}
+  .gg-photo .gg-hero-btn{flex:1 1 140px;width:auto;padding:0 14px;white-space:nowrap}
+  .gg-photo .gg-hero-pro{font-size:14px;padding:7px 12px}
 }
 @media print{ .gg-hero,.gg-parts{display:none !important} }

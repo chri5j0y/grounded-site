@@ -188,3 +188,67 @@
   #gg-print .p-tog{margin:2.5mm 0 0;padding:2mm 3mm;background:#F6EEDF;border-left:2pt solid #8B5E1A;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   #gg-print .p-foot{margin-top:10mm;padding-top:3mm;border-top:.6pt solid #E2D8C3;font-size:9pt;color:#6B5A4D;}
 }
+/* The Grounded Marriage brand (GWG BLD 755): Two Trees, One Ground, Denim (approved/grounded-marriage-look.html).
+   Denim leads (#3F5F86, dark #9DB9DD), powder pink is the warm second color, sage is the ground. */
+body.gm-denim{--bg:#F7F9FB;--bg-deep:#EEF2F7;--ink:#1E2836;--ink-soft:#5B687A;--line:#DCE3EC;--card:#FFFFFF;
+  --gold:#3F5F86;--gold-deep:#2F4867;--pink:#E7A9B9;--rose:#A24E6B;--clay:#A24E6B;--plum:#A24E6B;--sage:#5F7D48;--gm-hero:#3F5F86;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body.gm-denim{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
+  --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;}}
+:root[data-theme="dark"] body.gm-denim{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
+  --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;}
+.gm-denim .ff-card{box-shadow:0 6px 20px rgba(30,40,54,.06);}
+.gm-denim .ff-tips li::before{background:var(--pink);}
+.gm-denim .btv-scale button[aria-pressed="true"]{color:#fff;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gm-denim .btv-scale button[aria-pressed="true"]{color:#141A22;}}
+:root[data-theme="dark"] .gm-denim .btv-scale button[aria-pressed="true"]{color:#141A22;}
+.gm-denim .btn-primary:hover{background:var(--gold-deep);}
+/* the hero: a denim landscape, the words centered over it, the picture anchored to the bottom */
+.gm-hero{position:relative;overflow:hidden;color:#fff;text-align:center;background:var(--gm-hero);min-height:420px;display:flex;align-items:center;}
+.gm-hero .gmh-scene{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.gm-hero .gmh-sky{fill:var(--gm-hero);}
+.gm-hero .gmh-phone{display:none;}
+.gm-hero-in{position:relative;z-index:1;width:100%;padding-top:34px;padding-bottom:96px;}
+.gm-back{display:inline-block;color:#EAF1FA;text-decoration:none;font-weight:600;font-size:15px;margin-bottom:14px;border-bottom:1px solid rgba(234,241,250,.6);}
+.gm-back:hover{color:#fff;border-bottom-color:#fff;}
+.gm-lock{display:flex;justify-content:center;margin:0 0 10px;}
+.gm-mark{width:72px;height:72px;border-radius:16px;box-shadow:0 6px 18px rgba(10,20,35,.28);}
+.gm-mark-d{display:none;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gm-mark-l{display:none;}:root:not([data-theme="light"]) .gm-mark-d{display:block;}}
+:root[data-theme="dark"] .gm-mark-l{display:none;}:root[data-theme="dark"] .gm-mark-d{display:block;}
+.gm-hero .gm-eb{color:#F7D6DE !important;margin-bottom:6px;}
+.gm-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(38px,5.6vw,58px);line-height:1.06;margin:0 auto 10px;max-width:760px;color:#fff;text-shadow:0 1px 12px rgba(10,20,35,.35);}
+.gm-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2.6vw,25px);color:#EEF3FA;margin:0 auto;max-width:620px;text-shadow:0 1px 10px rgba(10,20,35,.35);}
+.gm-hero .gm-way a{color:#fff;text-decoration-color:var(--pink);}
+@media(max-width:700px){ .gm-hero{min-height:480px;} .gm-hero .gmh-wide{display:none;} .gm-hero .gmh-phone{display:block;} .gm-hero-in{padding-top:22px;padding-bottom:120px;} .gm-mark{width:60px;height:60px;border-radius:14px;} }
+/* Your Tree, Then Your Grove (marriage/together.js) and the invites */
+.gm-tg{border-top:4px solid var(--gold);}
+.gm-tg-steps{list-style:none;counter-reset:tg;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:12px;}
+.gm-tg-steps li{counter-increment:tg;position:relative;padding:12px 14px 12px 54px;border:1px solid var(--line);border-radius:14px;background:var(--bg);min-width:0;}
+.gm-tg-steps li::before{content:counter(tg);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--card);font-weight:700;font-size:15px;display:grid;place-items:center;}
+.gm-tg-steps li:nth-child(even)::before{background:var(--pink);color:#1E2836;}
+.gm-tg-steps b{display:block;font-size:18px;}
+.gm-tg-steps p{margin:2px 0 0;font-size:16.5px;color:var(--ink-soft);}
+.gm-tg-steps a{color:var(--gold);font-weight:700;}
+.gm-inv{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);}
+.gm-inv h3{margin:0 0 4px;font-size:22px;}
+.gm-inv .btv-who{margin-top:10px;}
+.gm-inv .btv-person h3{font-size:20px;}
+.gm-inv .ff-links{margin-top:8px;}
+.gm-inv .ff-links a{font-size:15.5px;padding:8px 14px;}
+.gm-prs{margin-top:16px;}
+.gm-prs ul{list-style:none;padding:0;margin:8px 0 0;}
+.gm-prs li{padding:12px 0;border-top:1px solid var(--line);}
+.gm-prs li:first-child{border-top:0;}
+.gm-prs li b{font-size:17.5px;}
+.gm-prs li small{display:block;color:var(--ink-soft);font-size:15px;}
+.gm-prs li p{margin:6px 0 0;font-size:16.5px;}
+.gm-prs .gm-faith{margin-top:8px;font-size:16px;}
+/* The Week Card */
+.gm-wk{border-left:5px solid var(--pink);}
+.gm-wk-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.gm-wk-list label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer;font-size:16px;line-height:1.45;min-width:0;overflow-wrap:anywhere;}
+.gm-wk-list label:has(input:checked){border-color:var(--gold);}
+.gm-wk-list input{width:18px;height:18px;margin-top:2px;accent-color:var(--gold);flex:none;}
+.gm-wk-list small{display:block;color:var(--ink-soft);font-size:14.5px;}
+.gm-wk h3{margin:18px 0 2px;font-size:21px;}
+.gm-wk .gm-check{font-weight:600;}

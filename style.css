@@ -546,7 +546,7 @@ a.ss-row::after{content:'';position:absolute;right:13px;top:22px;width:8px;heigh
 .pg-hero{position:relative;overflow:hidden;color:#fff;text-align:center;display:flex;align-items:center;min-height:clamp(400px,36vw,600px);padding:72px 0 88px;border-top:none !important;
   background-color:#2A1C10;background-image:var(--img);background-size:cover;background-position:var(--pos,center);background-repeat:no-repeat;}
 .pg-hero::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 58% 62% at 50% 50%, rgba(18,10,3,var(--shade-c,.66)) 0%, rgba(18,10,3,var(--shade-m,.42)) 55%, rgba(18,10,3,var(--shade-e,.22)) 100%);}
+  background:radial-gradient(ellipse 58% 62% at 50% 50%, rgba(var(--shade-rgb,18,10,3),var(--shade-c,.66)) 0%, rgba(var(--shade-rgb,18,10,3),var(--shade-m,.42)) 55%, rgba(var(--shade-rgb,18,10,3),var(--shade-e,.22)) 100%);}
 .pg-hero-in{position:relative;width:100%;}
 .pg-hero .eyebrow{color:#FFE7BD !important;font-weight:700;letter-spacing:3.2px;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,.7);margin-bottom:8px;}
 .pg-hero h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(42px,6vw,76px);line-height:1.04;color:#fff;margin:0 auto;max-width:900px;text-shadow:0 2px 6px rgba(0,0,0,.55),0 4px 26px rgba(0,0,0,.5);}
@@ -560,7 +560,22 @@ a.ss-row::after{content:'';position:absolute;right:13px;top:22px;width:8px;heigh
 :root[data-theme="dark"] .pg-hero.soft{--shade-c:.6;--shade-m:.4;--shade-e:.24;}
 @media (max-width:700px){.pg-hero{background-image:var(--img-n,var(--img));min-height:340px;padding:56px 0 72px;}.pg-hero.strip{min-height:200px;padding:36px 0 40px;}}
 
-/* Service detail pages: the banner sits on a slim strip cut from the wood photos, tinted in the family color */
+/* Service detail pages (BLD 755): each family has its own painted image, anchored to the bottom so the main object shows below the words; the shade takes its tint from the image */
+.pg-hero.ph{min-height:660px;align-items:stretch;padding:48px 0 40px;background-position:center bottom;background-color:rgb(var(--shade-rgb));}
+.pg-hero.ph .pg-hero-in{display:flex;flex-direction:column;align-items:center;}
+.pg-hero.ph .cer-actions{margin-top:auto;padding-top:24px;}
+.pg-hero.ph.ph-top .cer-actions{margin-top:24px;padding-top:0;}
+.pg-hero.ph .cp-back{color:#FFE7BD;border-bottom-color:rgba(255,231,189,.6);text-shadow:0 1px 4px rgba(0,0,0,.7);}
+.pg-hero.ph .cer-sub{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6);}
+.ph-marriage{--shade-rgb:22,15,5;} .ph-celebrations{--shade-rgb:16,12,6;} .ph-farewells{--shade-rgb:12,9,4;}
+.ph-hard-seasons{--shade-rgb:24,14,3;} .ph-growth{--shade-rgb:13,14,6;} .ph-speaking{--shade-rgb:22,14,3;}
+.ph-tools{--shade-rgb:14,13,7;}
+.pg-hero.strip.ph-tools{min-height:clamp(380px,40vw,560px);align-items:flex-start;padding-top:56px;background-position:center bottom;background-color:rgb(var(--shade-rgb));}
+@media (max-width:700px){.pg-hero.ph{min-height:720px;padding:36px 0 28px;background-position:center bottom;}
+.pg-hero.ph .cer-actions{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:10px;}
+.pg-hero.ph .cer-actions .btn{padding:10px 16px;font-size:14px;}
+.pg-hero.strip.ph-tools{min-height:640px;padding-top:40px;background-position:center bottom;}}
+/* Tools for Families pages keep the slim strip cut from the wood photos, tinted in the family color */
 .cer-banner.cp-banner.cel,.cer-banner.cp-banner.svcp{background-color:#5A3A12 !important;background-image:linear-gradient(180deg,rgba(var(--tint,142,95,29),.80),rgba(var(--tint,142,95,29),.88)),url(/shared/heroes/page-services-narrow.webp) !important;background-size:cover !important;background-position:center !important;}
 .cer-banner.cp-banner.far{background-color:#3A2E4E !important;background-image:linear-gradient(180deg,rgba(78,62,102,.80),rgba(78,62,102,.88)),url(/shared/heroes/page-about-narrow.webp) !important;background-size:cover !important;background-position:center !important;}
 @media (min-width:701px){.cer-banner.cp-banner.cel,.cer-banner.cp-banner.svcp{background-image:linear-gradient(180deg,rgba(var(--tint,142,95,29),.80),rgba(var(--tint,142,95,29),.88)),url(/shared/heroes/page-services-wide.webp) !important;}.cer-banner.cp-banner.far{background-image:linear-gradient(180deg,rgba(78,62,102,.80),rgba(78,62,102,.88)),url(/shared/heroes/page-about-wide.webp) !important;}}
