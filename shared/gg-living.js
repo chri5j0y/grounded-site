@@ -60,7 +60,7 @@
     + '@media (max-width:600px){.gl-scene,.gl-scene[data-app="grove"]{aspect-ratio:1/1;}}'
     + '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gl-scene{--gl-dim:.86;background:#2A3036;}}'
     + ':root[data-theme="dark"] .gl-scene{--gl-dim:.86;background:#2A3036;}'
-    + '.gl-paint{position:absolute;inset:0;background-image:var(--gl-wide);background-size:cover;background-repeat:no-repeat;background-position:var(--gl-wx,50%) 100%;transition:filter 1.6s ease;}'
+    + '.gl-paint{position:absolute;inset:-2px;background-image:var(--gl-wide);background-size:cover;background-repeat:no-repeat;background-position:var(--gl-wx,50%) 100%;transition:filter 1.6s ease;}'
     + '@media (max-width:600px){.gl-paint{background-image:var(--gl-phone);background-position:var(--gl-px,50%) var(--gl-py,100%);}}'
     + '.gl-mist,.gl-warm,.gl-rays{position:absolute;pointer-events:none;}'
     + '.gl-mist{inset:0;transition:opacity 1.8s ease;background:linear-gradient(180deg,rgba(236,240,244,.6),rgba(226,232,238,.38) 55%,rgba(230,234,238,.62));}'
