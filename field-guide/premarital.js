@@ -131,7 +131,7 @@ const minsFor = (c, s) => (c.log || []).filter(x => String(x.n) === skey(s)).red
 
 // ---------- The Grounded Marriage app data (data only), loaded once from the public app ----------
 // questions.js (window.BTV_Q), core.js (window.GMCore), results.js (window.GM_RESULTS), faith.js (window.GM_FAITH).
-const MV = '1';
+const MV = '2';
 const MFILES = [['questions.js', 'BTV_Q'], ['core.js', 'GMCore'], ['results.js', 'GM_RESULTS'], ['faith.js', 'GM_FAITH']];
 let ML = 'idle';
 function needM(){

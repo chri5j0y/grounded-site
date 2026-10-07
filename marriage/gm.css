@@ -191,11 +191,11 @@
 /* The Grounded Marriage brand (GWG BLD 755): Two Trees, One Ground, Denim (approved/grounded-marriage-look.html).
    Denim leads (#3F5F86, dark #9DB9DD), powder pink is the warm second color, sage is the ground. */
 body.gm-denim{--bg:#F7F9FB;--bg-deep:#EEF2F7;--ink:#1E2836;--ink-soft:#5B687A;--line:#DCE3EC;--card:#FFFFFF;
-  --gold:#3F5F86;--gold-deep:#2F4867;--pink:#E7A9B9;--rose:#A24E6B;--clay:#A24E6B;--plum:#A24E6B;--sage:#5F7D48;--gm-hero:#3F5F86;}
+  --gold:#3F5F86;--gold-deep:#2F4867;--pink:#E7A9B9;--rose:#A24E6B;--clay:#A24E6B;--plum:#A24E6B;--sage:#5F7D48;--gm-hero:#3F5F86;--alt:#EEF2F7;--page-grain:none;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body.gm-denim{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
-  --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;}}
+  --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;--alt:#141A22;--page-grain:none;}}
 :root[data-theme="dark"] body.gm-denim{--bg:#141A22;--bg-deep:#0F141B;--ink:#ECF1F7;--ink-soft:#AEBBCB;--line:#2F3B4B;--card:#1C2430;
-  --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;}
+  --gold:#9DB9DD;--gold-deep:#B4CBE8;--pink:#D995A8;--rose:#EDB5C4;--clay:#EDB5C4;--plum:#EDB5C4;--sage:#9DB883;--gm-hero:#22324A;--alt:#141A22;--page-grain:none;}
 .gm-denim .ff-card{box-shadow:0 6px 20px rgba(30,40,54,.06);}
 .gm-denim .ff-tips li::before{background:var(--pink);}
 .gm-denim .btv-scale button[aria-pressed="true"]{color:#fff;}
@@ -203,7 +203,7 @@ body.gm-denim{--bg:#F7F9FB;--bg-deep:#EEF2F7;--ink:#1E2836;--ink-soft:#5B687A;--
 :root[data-theme="dark"] .gm-denim .btv-scale button[aria-pressed="true"]{color:#141A22;}
 .gm-denim .btn-primary:hover{background:var(--gold-deep);}
 /* the hero: a denim landscape, the words centered over it, the picture anchored to the bottom */
-.gm-hero{position:relative;overflow:hidden;color:#fff;text-align:center;background:var(--gm-hero);min-height:420px;display:flex;align-items:center;}
+.gm-hero{position:relative;overflow:hidden;color:#fff;text-align:center;background:var(--gm-hero);min-height:440px;display:flex;align-items:center;padding:0 !important;border-top:none !important;}
 .gm-hero .gmh-scene{position:absolute;inset:0;width:100%;height:100%;display:block;}
 .gm-hero .gmh-sky{fill:var(--gm-hero);}
 .gm-hero .gmh-phone{display:none;}

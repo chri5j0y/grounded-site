@@ -766,7 +766,7 @@
   function wbText(ex, e) {
     var out = [], t = e.t || [];
     if (ex.kind === 'choose' && e.c !== '' && e.c != null && ex.choices && ex.choices[+e.c]) out.push(ex.choices[+e.c]);
-    t.forEach(function (x, k) { x = String(x || '').trim(); if (!x) return; var pr = (ex.kind === 'write' || ex.kind === 'list') && ex.prompts && ex.prompts[k]; out.push(pr ? pr + ' ' + x : x); });
+    t.forEach(function (x, k) { x = String(x || '').trim(); if (!x) return; var pr = (ex.kind === 'write' || ex.kind === 'list') && ex.prompts && ex.prompts[k]; out.push(pr ? pr + '\n' + x : x); });
     return out.join('\n');
   }
   function weekItems() {
@@ -1091,7 +1091,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=ln38', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=ln39', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
