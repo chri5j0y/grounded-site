@@ -12187,7 +12187,8 @@ window.GG_LEARN = {
     "mins": 7,
     "blurb": "Feeling loved, and saying what matters to the people who matter.",
     "sources": [
-     "byock4"
+     "byock4",
+     "esv"
     ],
     "scenes": [
      {
@@ -12292,7 +12293,7 @@ window.GG_LEARN = {
        "label": "Read the Full Story"
       },
       "hold": 2,
-      "say": "Let me tell you about Kathy. Her dementia has taken most of her words. I have been visiting her for over a year, long enough to learn how to hear her anyway. One day she was glowing, more animated than I had seen her in months. I asked if I could read a chapter from the Bible, and she said, yes, that would be nice. If I speak in the tongues of men or of angels, but do not have love, I am only a resounding gong or a clanging cymbal. She closed her eyes and took the words in slowly, like water. When I told her it all comes down to love, she tapped the page. This is true, she said. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
+      "say": "Let me tell you about Kathy. Her dementia has taken most of her words. I have been visiting her for over a year, long enough to learn how to hear her anyway. One day she was glowing, more animated than I had seen her in months. I asked if I could read a chapter from the Bible, and she said, yes, that would be nice. If I speak in the tongues of men and of angels, but have not love, I am a noisy gong or a clanging cymbal. She closed her eyes and took the words in slowly, like water. When I told her it all comes down to love, she tapped the page. This is true, she said. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
      },
      {
       "k": "big",

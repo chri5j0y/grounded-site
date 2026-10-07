@@ -31,6 +31,8 @@
 
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
+    // The Kathy story's verse (1 Corinthians 13:1) in the ESV (Chris, October 7, 2026).
+    esv: ["Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. ESV Text Edition: 2025. The ESV text may not be quoted in any publication made available to the public by a Creative Commons license. The ESV may not be translated in whole or in part into any other language. Used by permission. All rights reserved.", "https://www.esv.org"],
     // BLD 750 Before the Vows (worker Q). Reused: stanley06, rcope.
     larson94: ["Larson and Holman, premarital predictors of marital quality and stability (Family Relations, 1994)", "https://doi.org/10.2307/585327"],
     halford03: ["Halford, Markman, Kline, and Stanley, best practices in couple relationship education (Journal of Marital and Family Therapy, 2003)", "https://scholarsarchive.byu.edu/facpub/4257"],
