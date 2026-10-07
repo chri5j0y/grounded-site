@@ -545,7 +545,7 @@
     $('btv-app').hidden = which !== 'check'; $('btv-learn').hidden = which !== 'learn';
     if (which === 'learn') {
       $('btv-learn').innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-      need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=ln36', function () { return !!window.GGLearn; }); }).then(function () {
+      need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=ln37', function () { return !!window.GGLearn; }); }).then(function () {
         if (window.GGLearn) learnList(); else $('btv-learn').innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
       });
     } else if (CTL) { CTL.stop(); CTL = null; }
