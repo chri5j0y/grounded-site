@@ -2387,6 +2387,10 @@ const LC_TOPICS = [
     "https://growwithgrounded.com/the-grounded-marriage.html"
    ],
    [
+    "Before the Vows",
+    "https://growwithgrounded.com/before-the-vows/"
+   ],
+   [
     "Love Is Respect",
     "https://www.loveisrespect.org/"
    ],

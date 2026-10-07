@@ -31,6 +31,18 @@
 
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
+    // BLD 750 Before the Vows (worker Q). Reused: stanley06, rcope.
+    larson94: ["Larson and Holman, premarital predictors of marital quality and stability (Family Relations, 1994)", "https://doi.org/10.2307/585327"],
+    halford03: ["Halford, Markman, Kline, and Stanley, best practices in couple relationship education (Journal of Marital and Family Therapy, 2003)", "https://scholarsarchive.byu.edu/facpub/4257"],
+    gottman98: ["Gottman, Coan, Carrere, and Swanson, predicting marital happiness and stability from newlywed interactions (Journal of Marriage and the Family, 1998)", "https://doi.org/10.2307/353438"],
+    markman10: ["Markman, Stanley, and Blumberg, Fighting for Your Marriage, third edition (the PREP approach, 2010)", "https://books.wiley.com/titles/9780470485910"],
+    dew12: ["Dew, Britt, and Huston, examining the relationship between financial issues and divorce (Family Relations, 2012)", "https://doi.org/10.1111/j.1741-3729.2012.00715.x"],
+    karney95: ["Karney and Bradbury, the longitudinal course of marital quality and stability: a review of theory, method, and research (Psychological Bulletin, 1995)", "https://doi.org/10.1037/0033-2909.118.1.3"],
+    mahoney10: ["Mahoney, religion in families, 1999 to 2009: a relational spirituality framework (Journal of Marriage and Family, 2010)", "https://doi.org/10.1111/j.1741-3737.2010.00732.x"],
+    stanley06sd: ["Stanley, Rhoades, and Markman, sliding versus deciding: inertia and the premarital cohabitation effect (Family Relations, 2006)", "https://doi.org/10.1111/j.1741-3729.2006.00418.x"],
+    gottman99: ["Gottman and Silver, The Seven Principles for Making Marriage Work (Harmony, 1999): softened start-up, repair attempts, and turning toward", "https://www.gottman.com", "a"],
+    hawkins08: ["Hawkins, Blanchard, Baldwin, and Fawcett, does marriage and relationship education work? A meta-analytic study (Journal of Consulting and Clinical Psychology, 2008)", "https://pubmed.ncbi.nlm.nih.gov/18837590/"],
+    // end BLD 750 Before the Vows
     /* GWG BLD 748 (CER 2): the obituary safety tips (Willow lesson wl-h-farewell, and the Obituary Helper). */
     "obit-bankrate": ["Bankrate, how to protect a loved one who has died from identity theft", "https://www.bankrate.com/personal-finance/smart-money/protect-dead-relatives-from-identity-theft"],
     "obit-msu": ["Michigan State University Extension, The ultimate identity theft", "https://www.canr.msu.edu/news/the_ultimate_identity_theft"],

@@ -33,6 +33,7 @@
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, 22 When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' },
     { title: 'Obituary Helper', sub: 'For families: guided questions and three drafts, a Death Notice, a Newspaper Obituary, and an Online Obituary', href: '/obituary-helper.html', keys: 'obituary obituaries obit death notice newspaper online memorial write writing died death funeral family survived by preceded in death' },
     { title: 'Planning a Farewell', sub: 'For families: a checklist for the first hours, the first days, the service, and after', href: '/planning-a-farewell.html', keys: 'funeral planning plan checklist what to do after death who to call someone died death certificate certificates funeral home arrangements burial cremation memorial service hospice after a death' },
+    { title: 'Before the Vows', sub: 'For couples: each of you answers privately, then Talk About This shows where you differ, with questions to start each conversation', href: '/before-the-vows/', keys: 'before the vows couple couples engaged engagement fiance fiancee newlywed newly married marriage married wedding premarital premarital questions marriage prep relationship check-in check in talk about money in-laws conflict communication faith children kids expectations compatibility quiz questionnaire inventory' },
     { title: 'Eulogy Helper', sub: 'For the one who will speak: prompts, an outline, a reading time, and tips for speaking through tears', href: '/eulogy-helper.html', keys: 'eulogy eulogies speech speaking funeral memorial tribute remarks words celebration of life life story stories crying tears' }
   ];
 
@@ -181,7 +182,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=pg2'), load('/birch/guides.js?v=bg1'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg3'), load('/willow/guides.js?v=cn2'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=pg2'), load('/birch/guides.js?v=bg2'), load('/oak/guides.js'), load('/sequoia/guides.js?v=sg3'), load('/willow/guides.js?v=cn2'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
