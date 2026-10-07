@@ -16,6 +16,12 @@
 // statement.defaults leaves the letterhead blank for the Guide's own Settings (pmRole, pmOrg, pmAddress, pmPhone). App data (questions, GMCore, results, faith) loads from ../marriage/.
 // Couples live in DATA.pm.couples: encrypted with the rest of this device's records and carried in backups
 // (merged by GGPm.merge). Nothing is sent.
+// GWG BLD 753, The Grounded Marriage: Essentials: each couple has program 'full' (the default; older couples read
+// as full) or 'essentials' (premarital.essentials: three two-hour sessions keyed e1 to e3, a 6 hour target, and its
+// own Certificate of Completion). The Educator's Statement prints only at 12 logged hours, for every couple. The
+// Upgrade to the Full Program moves an Essentials couple to full with c.upg {on, from, deeper: [full session
+// numbers chosen to go deeper]}; their logged hours stay, and each full session shows the Essentials session that
+// covered it. Log rows for Essentials sessions carry n 'e1' to 'e3'; full sessions keep their numbers.
 // =====================================================================
 (function(){
 'use strict';
@@ -95,8 +101,27 @@ function pm(){
   PCsrc = L;
   return PC;
 }
-const SES = n => pm().sessions.find(x => +x.n === +n);
-const target = () => +pm().hours.target || 12;
+// ---------- the two programs: the full Grounded Marriage, and Essentials (premarital.essentials) ----------
+const ESS = () => { const E = pm().essentials; return E && Array.isArray(E.sessions) && E.sessions.length ? E : null; };
+const isEss = c => !!(c && c.program === 'essentials' && ESS());
+const isUpg = c => !!(c && !isEss(c) && c.upg && ESS());
+// The program a couple follows: the full one as is, or Essentials laid over it.
+function pmc(c){
+  const P = pm(); if (!isEss(c)) return P;
+  const E = ESS();
+  return Object.assign({}, P, {ess: true, sessions: E.sessions, hours: Object.assign({}, P.hours, E.hours || {}),
+    certificate: Object.assign({}, P.certificate, E.certificate || {}), faith: Object.assign({}, P.faith, E.faith || {})});
+}
+const skey = s => String(s.id || s.n);
+const sLabel = s => (s.id ? 'Essentials Session ' : 'Session ') + s.n;
+const nk = v => /^e\d+$/.test(String(v)) ? String(v) : (Math.max(0, +v || 0));
+const SES = k => pm().sessions.concat((ESS() || {}).sessions || []).find(x => skey(x) === String(k));
+const target = c => +pmc(c).hours.target || 12;
+const STMT = () => +pm().hours.target || 12;
+const coveredBy = n => ((ESS() || {}).sessions || []).find(s => (s.covers || []).includes(+n)) || null;
+const progName = c => isEss(c) ? (ESS().title || 'The Grounded Marriage: Essentials') : (pm().program || 'The Grounded Marriage');
+const deeper = c => (c.upg && Array.isArray(c.upg.deeper)) ? c.upg.deeper.map(Number) : [];
+const minsFor = (c, s) => (c.log || []).filter(x => String(x.n) === skey(s)).reduce((a, x) => a + (+x.mins || 0), 0);
 
 // ---------- The Grounded Marriage app data (data only), loaded once from the public app ----------
 // questions.js (window.BTV_Q), core.js (window.GMCore), results.js (window.GM_RESULTS), faith.js (window.GM_FAITH).
@@ -129,7 +154,7 @@ const logMins = c => (c.log || []).reduce((a, x) => a + (+x.mins || 0), 0);
 const me = () => (D().settings || {}).name || '';
 const leaders = c => (c.leaders || '').trim() || me();
 function sess(c, n){ c.sess = c.sess || {}; c.sess[n] = c.sess[n] || {ck: {}, notes: ''}; c.sess[n].ck = c.sess[n].ck || {}; return c.sess[n]; }
-function newCouple(a, b, wed){ return {id: uid(), u: Date.now(), made: Date.now(), status: 'starting', p1: {name: a, full: ''}, p2: {name: b, full: ''}, wedding: wed || '', sess: {}, log: [], card: null, stmt: {}, pre: {}, fb: {}, pe: false, leaders: '', cert: {}}; }
+function newCouple(a, b, wed, prog){ return {id: uid(), u: Date.now(), made: Date.now(), status: 'starting', program: prog === 'essentials' ? 'essentials' : 'full', p1: {name: a, full: ''}, p2: {name: b, full: ''}, wedding: wed || '', sess: {}, log: [], card: null, stmt: {}, pre: {}, fb: {}, pe: false, leaders: '', cert: {}}; }
 
 // ---------- faith backgrounds (GM_FAITH: the Service Builder's traditions plus Rather not say) ----------
 // Each partner's comes from what they picked in The Couple, or else from their v2 card's fb.
@@ -166,7 +191,7 @@ function twoDiff(c, id){
   try { const x = +G.answersOf(k.a.a)[id] || 0, y = +G.answersOf(k.b.a)[id] || 0; return !!(x && y && G.differs(x, y)); } catch (e){ return false; }
 }
 function faithBlock(c){
-  const P = pm().faith, F = FA(), a = faithOf(c, 'p1').id, b = faithOf(c, 'p2').id;
+  const P = pmc(c).faith, F = FA(), a = faithOf(c, 'p1').id, b = faithOf(c, 'p2').id;
   let h = `<div class="card pm-faith"><h3>${esc(P.title || 'Built to Their Faith')}</h3>${P.lead ? `<p>${esc(P.lead)}</p>` : ''}<ul class="pm-ul">${faithLines(c)}</ul>`;
   if (!F){ needM(); return h + loadingNote('the faith notes') + '</div>'; }
   const ids = [a, b].filter(named);
@@ -191,8 +216,28 @@ function faithBlock(c){
 
 // ---------- views ----------
 function bar(c){
-  const done = logMins(c), t = target() * 60, pc = Math.min(100, Math.round(done / t * 100));
-  return `<div class="pm-bar" role="img" aria-label="${esc(hrs(done))} of ${target()} hours"><span style="width:${pc}%"></span></div><small class="muted">${hnum(done)} of ${target()} hours logged</small>`;
+  const done = logMins(c), t = target(c) * 60, pc = Math.min(100, Math.round(done / t * 100));
+  return `<div class="pm-bar" role="img" aria-label="${esc(hrs(done))} of ${target(c)} hours"><span style="width:${pc}%"></span></div><small class="muted">${hnum(done)} of ${target(c)} hours logged</small>`;
+}
+// The program picker (when the library has Essentials), the couple's program pill, and the upgrade card.
+function progPick(id, sel){
+  const E = ESS(); if (!E) return '';
+  return `<div style="margin-top:12px;max-width:520px"><label class="f" for="${id}">Program</label><select id="${id}"${id === 'pm-c-prog' ? ' data-pmprog="1"' : ''}>
+    <option value="full"${sel !== 'essentials' ? ' selected' : ''}>${esc(pm().program || 'The Grounded Marriage')} (${STMT()} Hours)</option>
+    <option value="essentials"${sel === 'essentials' ? ' selected' : ''}>${esc(E.title || 'The Grounded Marriage: Essentials')} (${+(E.hours || {}).target || 6} Hours)</option></select>
+    ${E.price ? `<small class="muted">Essentials: ${esc(E.price)}</small>` : ''}</div>`;
+}
+const progPill = c => isEss(c) ? ' <span class="pill">Essentials</span>' : isUpg(c) ? ' <span class="pill">Upgraded From Essentials</span>' : '';
+function upgradeBlock(c){
+  const E = ESS(), U = (E && E.upgrade) || null; if (!U || !isEss(c)) return '';
+  return `<div class="card pm-upg"><h3>${esc(U.title || 'Upgrade to the Full Program')}</h3>${U.lead ? `<p>${esc(U.lead)}</p>` : ''}
+    ${(U.steps || []).length ? `<ol class="pm-ol">${U.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : ''}
+    ${U.price ? `<p class="muted" style="font-size:15px">${esc(U.price)}</p>` : ''}
+    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-pm="upgrade">${esc(U.title || 'Upgrade to the Full Program')}</button></div></div>`;
+}
+function upgrade(c){
+  const U = (ESS() || {}).upgrade || {};
+  c.program = 'full'; c.upg = {on: today(), from: 'essentials', deeper: (U.suggest || []).map(Number).slice(0, +U.count || 3)}; keep(c);
 }
 function vHome(){
   const P = pm(), L = list().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
@@ -201,16 +246,17 @@ function vHome(){
     <div class="pm-g3"><div><label class="f" for="pm-a">First Partner</label><input type="text" id="pm-a" autocomplete="off" placeholder="First name"></div>
     <div><label class="f" for="pm-b">Second Partner</label><input type="text" id="pm-b" autocomplete="off" placeholder="First name"></div>
     <div><label class="f" for="pm-w">Wedding Date</label><input type="date" id="pm-w"></div></div>
+    ${progPick('pm-p', 'full')}
     <div class="row" style="margin-top:14px"><button type="button" class="btn btn-gold" data-pm="add">Add the Couple</button></div></div>
   <div class="card"><h2 style="margin-bottom:4px">Couples</h2>
-    ${L.length ? L.map(c => `<div class="pm-row"><div class="m"><b>${esc(names(c))}</b> <span class="pill ${c.status === 'complete' ? 'sage' : 'gold'}">${esc((STATUS.find(x => x[0] === c.status) || STATUS[0])[1])}</span>${c.pe ? ' <span class="pill">PREPARE/ENRICH</span>' : ''}<br><small class="muted">${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) : 'Wedding date not set yet'}</small><div style="max-width:320px">${bar(c)}</div></div>
+    ${L.length ? L.map(c => `<div class="pm-row"><div class="m"><b>${esc(names(c))}</b> <span class="pill ${c.status === 'complete' ? 'sage' : 'gold'}">${esc((STATUS.find(x => x[0] === c.status) || STATUS[0])[1])}</span>${progPill(c)}${c.pe ? ' <span class="pill">PREPARE/ENRICH</span>' : ''}<br><small class="muted">${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) : 'Wedding date not set yet'}</small><div style="max-width:320px">${bar(c)}</div></div>
       <div class="row"><button type="button" class="btn btn-gold btn-sm" data-pm="open" data-v="${c.id}">Open</button><button type="button" class="btn btn-danger btn-sm" data-pm="del" data-v="${c.id}">Delete</button></div></div>`).join('')
       : '<p class="muted">Couples you add show here. They stay on this device, encrypted with your records, and travel in your backups.</p>'}</div>
   ${P.full ? '' : '<p class="muted" style="margin-top:12px;font-size:15px">The full session plans arrive with the next Staff library update.</p>'}`;
 }
 function head(c, eyebrow){
   return `<button type="button" class="linkbtn" data-pm="home">&larr; All Couples</button>
-  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target()} hours logged.</p></div>
+  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p></div>
   <div class="pm-chips">${STATUS.map(([k, l]) => `<button type="button" class="chip" data-pm="status" data-v="${k}" aria-pressed="${(c.status || 'starting') === k}">${l}</button>`).join('')}</div></div>
   <div class="pm-nav">${NAV.map(([v, l]) => `<button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="${v}"${(S.view === v || (v === 'sessions' && S.view === 'session')) ? ' aria-current="page"' : ''}>${l}</button>`).join('')}</div>`;
 }
@@ -232,11 +278,26 @@ function referBlock(){
   return `<details class="card pm-det"><summary><h3>${esc(R.title || 'When to Add Sessions or Refer')}</h3></summary>${R.lead ? `<p>${esc(R.lead)}</p>` : ''}
     ${R.items.map(x => `<div class="pm-tip${x.id === 'safety' ? ' pm-safe' : ''}"><b>${esc(x.title)}</b>${x.when ? `<p><span class="pm-min">When</span> ${esc(x.when)}</p>` : ''}${x.what ? `<p><span class="pm-min">What to Do</span> ${esc(x.what)}</p>` : ''}${x.id === 'safety' ? `<ul class="pm-ul">${lines}</ul>` : ''}</div>`).join('')}</details>`;
 }
+function sessCard(c, s, extra){
+  const st = sess(c, skey(s)), n = (s.outline || []).length, d = Object.keys(st.ck).filter(k => st.ck[k]).length, lg = minsFor(c, s);
+  return `<div class="card pm-sc"><div class="spread"><div style="min-width:0"><div class="eyebrow">${sLabel(s)}</div><h3>${esc(s.title)}</h3>${extra || ''}<small class="muted">${d} of ${n} parts checked${lg ? ', ' + esc(hrs(lg)) + ' logged' : ''}${st.notes ? ', notes kept' : ''}</small></div>
+      <button type="button" class="btn btn-gold btn-sm" data-pm="session" data-v="${skey(s)}">Open ${sLabel(s)}</button></div></div>`;
+}
 function vSessions(c){
+  let body;
+  if (isUpg(c)){
+    const E = ESS(), U = E.upgrade || {}, dp = deeper(c), want = +U.count || 3, em = E.sessions.reduce((a, s) => a + minsFor(c, s), 0);
+    body = `<div class="card pm-upg"><h2>${esc(pm().program || 'The Grounded Marriage')}, From Essentials</h2>
+      <p>Upgraded from Essentials on ${esc(nice(c.upg.on))}. ${esc(hrs(em))} logged in Essentials stay in the log, and each full session below shows the Essentials session that covered it. ${dp.length} of ${want} sessions chosen to go deeper.</p>
+      ${U.pick ? `<p class="muted" style="font-size:15px">${esc(U.pick)}</p>` : ''}</div>
+      ${pm().sessions.map(s => { const cv = coveredBy(s.n), on = dp.includes(+s.n);
+        return sessCard(c, s, `<div class="pm-tags">${cv ? `<span class="pill sage">Covered in ${esc(sLabel(cv))}</span>` : ''}${on ? '<span class="pill gold">Going Deeper</span>' : ''}</div>
+          <label class="pm-yes" style="margin:4px 0 6px"><input type="checkbox" data-pmdeep="${s.n}"${on ? ' checked' : ''}> <span>Go deeper here</span></label>`); }).join('')}
+      <details class="card pm-det"><summary><h3>Essentials Sessions</h3></summary>
+        ${E.sessions.map(s => { const lg = minsFor(c, s); return `<div class="pm-row"><div class="m"><b>${esc(sLabel(s))}: ${esc(s.title)}</b><br><small class="muted">${lg ? esc(hrs(lg)) + ' logged' : 'Not logged'}</small></div><button type="button" class="btn btn-line btn-sm" data-pm="session" data-v="${skey(s)}">Open</button></div>`; }).join('')}</details>`;
+  } else body = pmc(c).sessions.map(s => sessCard(c, s)).join('') + upgradeBlock(c);
   return `${head(c, 'Sessions')}${vBefore(c)}
-  ${pm().sessions.map(s => { const st = sess(c, s.n), n = (s.outline || []).length, d = Object.keys(st.ck).filter(k => st.ck[k]).length, lg = (c.log || []).filter(x => +x.n === +s.n).reduce((a, x) => a + (+x.mins || 0), 0);
-    return `<div class="card pm-sc"><div class="spread"><div style="min-width:0"><div class="eyebrow">Session ${s.n}</div><h3>${esc(s.title)}</h3><small class="muted">${d} of ${n} parts checked${lg ? ', ' + esc(hrs(lg)) + ' logged' : ''}${st.notes ? ', notes kept' : ''}</small></div>
-      <button type="button" class="btn btn-gold btn-sm" data-pm="session" data-v="${s.n}">Open Session ${s.n}</button></div></div>`; }).join('')}
+  ${body}
   ${tipsBlock(false)}${referBlock()}`;
 }
 function talkFor(c, areas){
@@ -271,18 +332,20 @@ function resultsBlock(c){
 function pills(arr){ return `<div class="pm-tags">${arr.map(x => `<span class="pill">${esc(Array.isArray(x) ? x[1] : x)}</span>`).join('')}</div>`; }
 function vSession(c){
   const s = SES(S.n); if (!s) return vSessions(c);
-  const st = sess(c, s.n), P = pm();
+  const st = sess(c, skey(s)), P = pmc(c), group = s.id ? ESS().sessions : pm().sessions, nx = group[group.indexOf(s) + 1] || null;
+  const cv = isUpg(c) && !s.id ? coveredBy(s.n) : null, deep = cv && deeper(c).includes(+s.n);
   let at = 0;
   const rows = (s.outline || []).map((r, i) => { const from = at; at += +r[0] || 0;
     return `<li><label><input type="checkbox" data-pmck="${i}"${st.ck[i] ? ' checked' : ''}><span><span class="pm-min">${from} to ${at} min</span> ${esc(r[1])}</span></label></li>`; }).join('');
   const lines = (P.safety.lines || []).map(([n, h]) => `<li><b>${esc(n)}</b>: ${esc(h)}</li>`).join('');
-  const wb = s.workbook || null;
-  return `${head(c, 'Session ' + s.n)}
+  const wbs = s.workbook ? (Array.isArray(s.workbook) ? s.workbook : [s.workbook]) : [];
+  return `${head(c, sLabel(s))}
   <div class="card"><div class="spread"><h2>${esc(s.title)}</h2><span class="pill">${esc(s.mins || at)} minutes</span></div>
+    ${cv ? `<p class="pm-note">Covered in ${esc(sLabel(cv))}.${deep ? ' Chosen to go deeper: lead the full plan, building on what the couple shared in Essentials.' : ''}</p>` : ''}
     ${(s.goals || []).length ? `<h3 style="margin-top:10px">Goals</h3><ul class="pm-ul">${s.goals.map(g => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
     <h3 style="margin-top:14px">The Plan</h3><ul class="pm-ck">${rows}</ul>
     ${s.practice ? `<h3 style="margin-top:14px">Practice</h3><p>${esc(s.practice)}</p>` : ''}
-    ${wb ? `<h3 style="margin-top:14px">The Couple Workbook</h3><p>Chapter ${esc(wb.chapter)}${wb.title ? ': ' + esc(wb.title) : ''}</p>${(wb.exercises || []).length ? pills(wb.exercises) : ''}` : ''}
+    ${wbs.length ? `<h3 style="margin-top:14px">The Couple Workbook</h3>${wbs.map(wb => `<p>Chapter ${esc(wb.chapter)}${wb.title ? ': ' + esc(wb.title) : ''}</p>${(wb.exercises || []).length ? pills(wb.exercises) : ''}`).join('')}` : ''}
     ${(s.videos || []).length ? `<h3 style="margin-top:14px">Videos</h3>${pills(s.videos)}<small class="muted">In The Grounded Marriage app, ${esc(APP_LINK.replace(/^https:\/\//, ''))}</small>` : ''}
     ${(s.practices || []).length ? `<h3 style="margin-top:14px">Practices for Two</h3>${pills(s.practices)}` : ''}
     ${s.tryWeek ? `<h3 style="margin-top:14px">Try This Week</h3><p>${esc(s.tryWeek)}</p>` : ''}
@@ -292,21 +355,25 @@ function vSession(c){
   ${s.safety ? `<div class="card pm-safe"><h3>Time With Each Partner Alone</h3><p>${esc(P.safety.lead || '')}</p><ul class="pm-ul">${lines}</ul></div>` : ''}
   ${s.results ? resultsBlock(c) + tipsBlock(true) : ''}
   ${s.faith ? faithBlock(c) : ''}
-  ${s.finish ? `<div class="card"><h3>Finishing Well</h3><p>Confirm the hours, sign the Educator's Statement, and present the Certificate of Completion.</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="statement">Educator's Statement</button><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="cert">Certificate of Completion</button></div></div>` : ''}
-  <div class="card"><label class="f" for="pm-notes">Notes for Session ${s.n}</label><textarea id="pm-notes" data-pmn="${s.n}" placeholder="What the couple shared, what to come back to">${esc(st.notes || '')}</textarea>
-    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="logsess" data-v="${s.n}">Log This Session (${esc(s.mins || 120)} minutes, today)</button>${s.n < pm().sessions.length ? `<button type="button" class="btn btn-line" data-pm="session" data-v="${s.n + 1}">Session ${s.n + 1}</button>` : ''}</div></div>
+  ${s.finish && isEss(c) ? `<div class="card"><h3>Finishing Well</h3><p>${esc(ESS().finish || 'Confirm the hours and present the Certificate of Completion.')}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="cert">Certificate of Completion</button></div></div>${upgradeBlock(c)}` : ''}
+  ${s.finish && !isEss(c) ? `<div class="card"><h3>Finishing Well</h3><p>Confirm the hours, sign the Educator's Statement, and present the Certificate of Completion.</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="statement">Educator's Statement</button><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="cert">Certificate of Completion</button></div></div>` : ''}
+  <div class="card"><label class="f" for="pm-notes">Notes for ${sLabel(s)}</label><textarea id="pm-notes" data-pmn="${skey(s)}" placeholder="What the couple shared, what to come back to">${esc(st.notes || '')}</textarea>
+    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="logsess" data-v="${skey(s)}">Log This Session (${esc(s.mins || 120)} minutes, today)</button>${nx ? `<button type="button" class="btn btn-line" data-pm="session" data-v="${skey(nx)}">${sLabel(nx)}</button>` : ''}</div></div>
   ${(s.credits || []).length ? `<p class="pm-src">Sources: ${s.credits.map(esc).join('. ')}.</p>` : ''}`;
 }
 function vHours(c){
   const L = (c.log || []).slice().sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-  const opts = sel => `<option value="0"${+sel === 0 ? ' selected' : ''}>Other</option>` + pm().sessions.map(s => `<option value="${s.n}"${+sel === +s.n ? ' selected' : ''}>Session ${s.n}</option>`).join('');
+  const os = [['0', 'Other']].concat((isEss(c) || isUpg(c)) ? ESS().sessions.map(s => [skey(s), sLabel(s)]) : [], isEss(c) ? [] : pm().sessions.map(s => [skey(s), sLabel(s)]));
+  const opts = sel => os.map(([v, l]) => `<option value="${v}"${String(sel) === v ? ' selected' : ''}>${esc(l)}</option>`).join('');
+  const first = arr => { const s = arr.find(x => !minsFor(c, x)); return s ? skey(s) : '0'; };
+  const dflt = isEss(c) ? first(ESS().sessions) : isUpg(c) ? first(pm().sessions.filter(s => deeper(c).includes(+s.n))) : Math.min(pm().sessions.length, ((c.log || []).length || 0) + 1);
   return `${head(c, 'Hours Log')}
-  <div class="card"><div class="spread"><h2>Hours Toward ${target()}</h2><span class="pm-big">${esc(hrs(logMins(c)))}</span></div>${bar(c)}
-    <p class="muted" style="font-size:15px;margin-top:8px">${esc(pm().hours.note || '')}</p></div>
+  <div class="card"><div class="spread"><h2>Hours Toward ${target(c)}</h2><span class="pm-big">${esc(hrs(logMins(c)))}</span></div>${bar(c)}
+    <p class="muted" style="font-size:15px;margin-top:8px">${esc(pmc(c).hours.note || '')}</p></div>
   <div class="card"><h3>Add Time</h3>
     <div class="pm-g4"><div><label class="f" for="pm-ld">Date</label><input type="date" id="pm-ld" value="${today()}"></div>
     <div><label class="f" for="pm-lm">Minutes</label><input type="number" id="pm-lm" min="0" step="5" value="120"></div>
-    <div><label class="f" for="pm-ln">Session</label><select id="pm-ln">${opts(Math.min(pm().sessions.length, ((c.log || []).length || 0) + 1))}</select></div>
+    <div><label class="f" for="pm-ln">Session</label><select id="pm-ln">${opts(dflt)}</select></div>
     <div><label class="f" for="pm-lt">Notes</label><input type="text" id="pm-lt" autocomplete="off"></div></div>
     <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="logadd">Add to the Log</button></div></div>
   <div class="card"><h3>The Log</h3>
@@ -381,7 +448,7 @@ function vCard(c){
       <p class="muted" style="font-size:15px">Brought in ${esc(nice(k.brought))}. ${k.yes ? esc(k.yes.text) + ' (' + esc(nice(k.yes.on)) + ')' : ''}</p>
       ${old ? '<p class="pm-warn">A card was made with an earlier set of questions, so some answers may not line up. The couple can make fresh cards.</p>' : ''}
       ${Bq ? '' : loadingNote('the answers')}
-      ${have.length === 2 && Bq ? `<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-pm="session" data-v="2">Strengths and Growing Edges (Session 2)</button></div>` : ''}
+      ${have.length === 2 && Bq ? `<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-pm="session" data-v="${isEss(c) ? 'e1' : '2'}">Strengths and Growing Edges (${isEss(c) ? 'Essentials Session 1' : 'Session 2'})</button></div>` : ''}
       ${have.length === 2 && Bq ? (tl.length ? `<h3 style="margin-top:12px">Talk About This (${tl.length})</h3><ul class="pm-ul">${tl.map(x => `<li><b style="font-weight:600">${esc(x.text)}</b><br><small class="muted">${esc(areaName(x.area))}${x.talk ? ': ' + esc(x.talk) : ''}</small></li>`).join('')}</ul>` : '<p>Their answers sit close together on every question.</p>') : ''}
       <div class="row" style="margin-top:12px"><button type="button" class="btn btn-danger btn-sm" data-pm="cardx">Remove the Cards</button></div></div>
       ${Bq ? (Bq.areas || []).map(a => { const aq = (Bq.questions || []).filter(q => q.area === a.id); if (!aq.length) return '';
@@ -416,17 +483,20 @@ function fillText(v){
 }
 const peSwitch = c => `<label class="pm-yes"><input type="checkbox" data-pmpe="1"${c.pe ? ' checked' : ''}> <span><b style="font-weight:600">${esc(pm().pe.label || 'Also using PREPARE/ENRICH')}</b><br><small class="muted">${esc(pm().pe.lead || '')}</small></span></label>`;
 function vStatement(c){
-  const P = pm().statement, v = stmtVals(c), f = P.fee || {}, short = logMins(c) < target() * 60;
+  const P = pm().statement, v = stmtVals(c), f = P.fee || {}, short = logMins(c) < STMT() * 60;
+  const lock = isEss(c) ? ((ESS().statement || {}).locked || 'Essentials is six hours. The Educator\'s Statement needs at least 12 hours, so it stays locked until 12 hours are logged.')
+    : `The Educator's Statement confirms at least ${STMT()} hours of premarital education, so printing opens once ${STMT()} hours are logged.`;
   return `${head(c, 'Educator\'s Statement')}
   <div class="card"><h2>${esc(P.title || 'Educator\'s Statement')}</h2><p>${esc(P.intro || '')}</p>
     ${f.standard ? `<p class="muted" style="font-size:15px">${esc(f.note || ('The license fee is $' + f.standard + ', or $' + f.reduced + ' with the Educator\'s Statement.'))}${f.confirmed ? '' : ' <span class="pm-ck">Check with the County</span>'}${f.source ? `<br><i>Source: ${esc(f.source)}</i>` : ''}</p>` : ''}
-    ${short ? `<p class="pm-warn">${esc(hrs(logMins(c)))} logged so far. The statement confirms at least ${target()} hours, so finish the log first.</p>` : ''}</div>
+    ${short ? `<div class="pm-lock" id="pm-lock"><b>Locked Until ${STMT()} Hours</b><p>${esc(hrs(logMins(c)))} logged so far. ${esc(lock)}</p></div>` : ''}</div>
+  ${short ? upgradeBlock(c) : ''}
   <div class="card"><h3>Details</h3><p class="muted" style="font-size:15px">Filled from the couple and the hours log. Change anything here; it prints exactly as shown.</p>
     ${peSwitch(c)}
     <div class="pm-g2" style="margin-top:8px">${(P.fields || []).map(([k, l]) => `<div><label class="f" for="pm-s-${esc(k)}">${esc(l)}</label><input type="${DATEF.includes(k) ? 'date' : 'text'}" id="pm-s-${esc(k)}" data-pms="${esc(k)}" value="${esc(v[k] || '')}" autocomplete="off"></div>`).join('')}</div>
     <h3 style="margin-top:16px">The Statement</h3><p class="pm-quote" id="pm-quote">${esc(fillText(v))}</p>
     <p class="muted" style="font-size:15px">${esc(P.seal || '')}</p>
-    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="print">Print or Save as PDF</button><button type="button" class="btn btn-line" data-pm="sreset">Fill Again From the Log</button></div>
+    <div class="row" style="margin-top:12px">${short ? `<button type="button" class="btn btn-gold" data-pm="print" disabled aria-disabled="true">Printing Opens at ${STMT()} Hours</button>` : '<button type="button" class="btn btn-gold" data-pm="print">Print or Save as PDF</button>'}<button type="button" class="btn btn-line" data-pm="sreset">Fill Again From the Log</button></div>
     ${(P.sources || []).length ? `<p class="pm-src">Sources: ${P.sources.map(esc).join('. ')}.</p>` : ''}</div>`;
 }
 
@@ -437,19 +507,20 @@ function certDefaults(c){
 }
 function certVals(c){ const d = certDefaults(c), s = c.cert || {}, o = {}; Object.keys(d).forEach(k => { o[k] = (s[k] != null && s[k] !== '') ? s[k] : d[k]; }); return o; }
 function vCert(c){
-  const P = pm().certificate, v = certVals(c), short = logMins(c) < target() * 60;
+  const P = pmc(c).certificate, v = certVals(c), short = logMins(c) < target(c) * 60;
   return `${head(c, P.title || 'Certificate of Completion')}
   <div class="card"><h2>${esc(P.title || 'Certificate of Completion')}</h2><p>${esc(P.lead || '')}</p>
-    ${short ? `<p class="pm-warn">${esc(hrs(logMins(c)))} logged so far. The Grounded Marriage is ${target()} hours; finish the log first.</p>` : ''}
+    ${short ? `<p class="pm-warn">${esc(hrs(logMins(c)))} logged so far. ${esc(P.program || 'The Grounded Marriage')} is ${target(c)} hours; finish the log first.</p>` : ''}
     <div class="pm-g2">${(P.fields || FB.certificate.fields).map(([k, l]) => `<div><label class="f" for="pm-ct-${esc(k)}">${esc(l)}</label><input type="${DATEF.includes(k) ? 'date' : 'text'}" id="pm-ct-${esc(k)}" data-pmct="${esc(k)}" value="${esc(v[k] || '')}" autocomplete="off"></div>`).join('')}</div>
-    <p class="pm-quote" id="pm-cq">${esc(certLine(v))}</p>
+    <p class="pm-quote" id="pm-cq">${esc(certLine(c, v))}</p>
     <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="cprint">Print the Certificate</button><button type="button" class="btn btn-line" data-pm="creset">Fill Again From the Log</button></div></div>`;
 }
-const certText = v => String(pm().certificate.text || FB.certificate.text).replace(/\{hours\}/g, v.hours || String(target()));
-const certLine = v => `${v.names || '________________'}, ${pm().certificate.for || 'for completing'} ${pm().certificate.program || 'The Grounded Marriage'}: ${certText(v)}. ${v.leaders ? (pm().certificate.led || 'Led by') + ' ' + v.leaders + ', ' : ''}${nice(v.date)}.`;
+const certText = (c, v) => String(pmc(c).certificate.text || FB.certificate.text).replace(/\{hours\}/g, v.hours || String(target(c)));
+const certLine = (c, v) => { const P = pmc(c).certificate, pg = P.program || 'The Grounded Marriage';
+  return `${v.names || '________________'}, ${P.for || 'for completing'} ${pg}${/:/.test(pg) ? ',' : ':'} ${certText(c, v)}. ${v.leaders ? (P.led || 'Led by') + ' ' + v.leaders + ', ' : ''}${nice(v.date)}.`; };
 function splitLeaders(s){ return String(s || '').split(/\s*(?:,\s*and\s+|,|&|\band\b)\s*/).map(x => x.trim()).filter(Boolean).slice(0, 4); }
 function printCert(c){
-  const P = pm().certificate, v = certVals(c), ls = splitLeaders(v.leaders), logo = new URL('/favicon.svg', location.href).href;
+  const P = pmc(c).certificate, v = certVals(c), ls = splitLeaders(v.leaders), logo = new URL('/favicon.svg', location.href).href;
   const css = `@page{size:11in 8.5in;margin:0;}
 .cw{max-width:11in;margin:14px auto 40px;padding:0 14px;}
 .cert{container-type:inline-size;position:relative;width:100%;aspect-ratio:11/8.5;background:#FFFCF6;box-shadow:0 2px 14px rgba(44,24,16,.18);overflow:hidden;}
@@ -475,7 +546,7 @@ function printCert(c){
     <div class="cn">${esc(v.names || '')}</div>
     <div class="cs">${esc(P.for || 'for completing')}</div>
     <div class="cp">${esc(P.program || 'The Grounded Marriage')}</div>
-    <div class="cb">${esc(certText(v))}</div>
+    <div class="cb">${esc(certText(c, v))}</div>
     ${P.wish ? `<div class="cwish">${esc(P.wish)}</div>` : ''}
     <div class="cd">${esc(nice(v.date))}</div></div>
     <div class="cl">${(ls.length ? ls : ['']).map(n => `<div><i></i><span>${esc((P.led || 'Led by') + (n ? ' ' + n : ''))}</span></div>`).join('')}</div>
@@ -497,6 +568,7 @@ function vAbout(c){
     <label class="f" for="pm-c-notes">Notes</label><textarea id="pm-c-notes" data-pmc="notes">${esc(c.notes || '')}</textarea></div>
   <div class="card"><h3>${esc(pm().faith.title || 'Built to Their Faith')}</h3><p class="muted" style="font-size:15px">${esc(pm().faith.pick || 'Each partner\'s faith background comes from their card, or pick it here.')}</p>
     <div class="pm-g2">${sel('p1')}${sel('p2')}</div>${F ? '' : loadingNote('the list of faith backgrounds')}</div>
+  ${ESS() ? `<div class="card"><h3>Program</h3>${progPick('pm-c-prog', isEss(c) ? 'essentials' : 'full')}${isUpg(c) ? `<p class="muted" style="font-size:15px;margin-top:8px">Upgraded from Essentials on ${esc(nice(c.upg.on))}. Their Essentials hours stay in the log.</p>` : ''}</div>${upgradeBlock(c)}` : ''}
   <div class="card"><h3>PREPARE/ENRICH</h3>${peSwitch(c)}</div>`;
 }
 
@@ -587,7 +659,7 @@ function act(k, v){
   const c = cur();
   switch (k){
     case 'home': S.id = null; goView('home'); return;
-    case 'add': { const a = val('pm-a').trim(), b = val('pm-b').trim(); if (!a || !b){ toast('Add both first names.'); return; } const x = newCouple(a, b, val('pm-w')); list().push(x); keep(x); S.id = x.id; toast('Couple added.'); goView('sessions'); return; }
+    case 'add': { const a = val('pm-a').trim(), b = val('pm-b').trim(); if (!a || !b){ toast('Add both first names.'); return; } const x = newCouple(a, b, val('pm-w'), val('pm-p') || 'full'); list().push(x); keep(x); S.id = x.id; toast('Couple added.'); goView('sessions'); return; }
     case 'open': S.id = v; goView('sessions'); return;
     case 'del': { const x = list().find(y => y.id === v); if (!x || !confirm('Delete ' + names(x) + '? This removes their sessions, log, and card from this device.')) return; const d = D(); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.pm = d.deleted.pm || {}; d.deleted.pm[x.id] = Date.now(); d.pm.couples = list().filter(y => y !== x); CTX.save(); toast('Deleted.'); rerender(true); return; }
     case 'copylink': copyText(pm().app.link || APP_LINK); if (c){ c.pre = c.pre || {}; if (!c.pre.link){ c.pre.link = Date.now(); keep(c); rerender(true); } } return;
@@ -596,14 +668,15 @@ function act(k, v){
   switch (k){
     case 'go': goView(v); return;
     case 'status': c.status = v; keep(c); rerender(true); return;
-    case 'session': S.n = +v; goView('session'); return;
-    case 'logsess': { const s = SES(v); c.log = c.log || []; c.log.push({id: uid(), date: today(), mins: +(s && s.mins) || 120, n: +v, notes: ''}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Logged. ' + hrs(logMins(c)) + ' in all.'); return; }
-    case 'logadd': { const m = Math.max(0, +val('pm-lm') || 0); if (!m){ toast('Add the minutes first.'); return; } c.log = c.log || []; c.log.push({id: uid(), date: val('pm-ld') || today(), mins: m, n: +val('pm-ln') || 0, notes: val('pm-lt')}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Added. ' + hrs(logMins(c)) + ' in all.'); return; }
+    case 'session': S.n = String(v); goView('session'); return;
+    case 'upgrade': if (!isEss(c) || !confirm('Move ' + names(c) + ' to the full program? Their logged hours stay, and three more sessions bring them to ' + STMT() + ' hours.')) return; upgrade(c); goView('sessions'); toast('Upgraded to the full program.'); return;
+    case 'logsess': { const s = SES(v); c.log = c.log || []; c.log.push({id: uid(), date: today(), mins: +(s && s.mins) || 120, n: nk(v), notes: ''}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Logged. ' + hrs(logMins(c)) + ' in all.'); return; }
+    case 'logadd': { const m = Math.max(0, +val('pm-lm') || 0); if (!m){ toast('Add the minutes first.'); return; } c.log = c.log || []; c.log.push({id: uid(), date: val('pm-ld') || today(), mins: m, n: nk(val('pm-ln')), notes: val('pm-lt')}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Added. ' + hrs(logMins(c)) + ' in all.'); return; }
     case 'logdel': c.log = (c.log || []).filter(x => x.id !== v); keep(c); rerender(true); return;
     case 'cardin': cardIn(c); return;
     case 'cardx': if (!confirm('Remove their card from this device? They can share it again anytime.')) return; c.card = null; keep(c); rerender(true); return;
     case 'sreset': c.stmt = {}; keep(c); rerender(true); toast('Filled again from the log.'); return;
-    case 'print': printStatement(c); return;
+    case 'print': if (logMins(c) < STMT() * 60){ toast('The Educator\'s Statement opens at ' + STMT() + ' logged hours.'); return; } printStatement(c); return;
     case 'creset': c.cert = {}; keep(c); rerender(true); toast('Filled again from the log.'); return;
     case 'cprint': printCert(c); return;
   }
@@ -618,7 +691,7 @@ document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('[data-pm]'); if (!t || !t.closest('#pm-root')) return;
   e.preventDefault(); act(t.dataset.pm, t.dataset.v || '');
 });
-function setLog(c, spec, value){ const [f, id] = spec.split('|'), x = (c.log || []).find(y => y.id === id); if (!x) return; x[f] = f === 'mins' || f === 'n' ? Math.max(0, +value || 0) : value; keep(c); }
+function setLog(c, spec, value){ const [f, id] = spec.split('|'), x = (c.log || []).find(y => y.id === id); if (!x) return; x[f] = f === 'mins' ? Math.max(0, +value || 0) : f === 'n' ? nk(value) : value; keep(c); }
 document.addEventListener('change', e => {
   const t = e.target; if (!t.closest || !t.closest('#pm-root')) return; const c = cur(); if (!c) return;
   if (t.dataset.pmck != null){ const st = sess(c, S.n); if (t.checked) st.ck[t.dataset.pmck] = Date.now(); else delete st.ck[t.dataset.pmck]; keep(c); return; }
@@ -627,12 +700,22 @@ document.addEventListener('change', e => {
   if (t.dataset.pmf){ c.fb = c.fb || {}; if (t.value) c.fb[t.dataset.pmf] = t.value; else delete c.fb[t.dataset.pmf]; keep(c); return; }
   if (t.dataset.pml){ setLog(c, t.dataset.pml, t.value); rerender(true); return; }
   if (t.dataset.pmc === 'wedding'){ c.wedding = t.value; keep(c); return; }
+  if (t.dataset.pmprog){
+    if (t.value === 'essentials'){ c.program = 'essentials'; delete c.upg; keep(c); }
+    else if (isEss(c)){ if ((c.log || []).some(x => /^e\d+$/.test(String(x.n)))) upgrade(c); else { c.program = 'full'; keep(c); } }
+    rerender(true); return;
+  }
+  if (t.dataset.pmdeep){
+    const n = +t.dataset.pmdeep, d = deeper(c).filter(x => x !== n), max = +((ESS() || {}).upgrade || {}).count || 3;
+    if (t.checked && d.length >= max){ t.checked = false; toast('Choose ' + max + '. Uncheck one first.'); return; }
+    if (t.checked) d.push(n); c.upg.deeper = d.sort((a, b) => a - b); keep(c); rerender(true); return;
+  }
 });
 document.addEventListener('input', e => {
   const t = e.target; if (!t.closest || !t.closest('#pm-root')) return; const c = cur(); if (!c) return;
   if (t.dataset.pmn){ sess(c, t.dataset.pmn).notes = t.value; keep(c); return; }
   if (t.dataset.pms){ c.stmt = c.stmt || {}; c.stmt[t.dataset.pms] = t.value; keep(c); const q = document.getElementById('pm-quote'); if (q) q.textContent = fillText(stmtVals(c)); return; }
-  if (t.dataset.pmct){ c.cert = c.cert || {}; c.cert[t.dataset.pmct] = t.value; keep(c); const q = document.getElementById('pm-cq'); if (q) q.textContent = certLine(certVals(c)); return; }
+  if (t.dataset.pmct){ c.cert = c.cert || {}; c.cert[t.dataset.pmct] = t.value; keep(c); const q = document.getElementById('pm-cq'); if (q) q.textContent = certLine(c, certVals(c)); return; }
   if (t.dataset.pml && t.tagName === 'INPUT' && t.type === 'text'){ setLog(c, t.dataset.pml, t.value); return; }
   if (t.dataset.pmc){ const [a, b] = t.dataset.pmc.split('.'); if (b) c[a][b] = t.value; else c[a] = t.value; keep(c); return; }
 });
@@ -683,6 +766,9 @@ span.pm-ck{display:inline-block;font-size:13px;font-weight:700;color:var(--dange
 .pm-fg{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--bg-deep);}.pm-fg p{margin:4px 0;}
 .pm-sub{display:block;margin-top:8px;}
 .pm-note{font-weight:600;}
+.pm-ol{margin:8px 0 0;padding-left:22px;}.pm-ol li{margin:6px 0;}
+.pm-upg{border-left:4px solid var(--sage);}
+.pm-lock{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--bg-deep);border-left:4px solid var(--gold);}.pm-lock p{margin:4px 0 0;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'pm-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
@@ -705,6 +791,6 @@ const API = window.GGPm = {
     return {added, updated};
   },
   // For tests and the lead.
-  state: S, data: pm, current: cur, page: openPage, readCard, codeOf, talkList, summaryOf, faithOf, printer: null, last: null
+  state: S, data: pm, program: pmc, current: cur, page: openPage, readCard, codeOf, talkList, summaryOf, faithOf, printer: null, last: null
 };
 })();
