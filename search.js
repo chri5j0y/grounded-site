@@ -22,7 +22,7 @@
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with 60 When Life Changes guides for grown-ups', href: '/maple/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
+    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with 68 When Life Changes guides for grown-ups', href: '/maple/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
     { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 58 When Life Changes guides for grown-ups', href: '/aspen/', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
     { title: 'Oak', sub: 'Check-in for adults, 25 to 60, from root to fruit, with 67 When Life Changes guides for hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
