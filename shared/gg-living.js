@@ -41,7 +41,7 @@
     pine:    { w: { sun: [.23, .25], tree: [.37, .55], x: .36 }, p: { sun: [.20, .25], tree: [.45, .55], x: .4, y: 1, r: 1.25 }, touch: 'soar' },
     sequoia: { w: { sun: [.875, .42], tree: [.25, .35], x: .3 }, p: { sun: [.85, .20], tree: [.5, .3], x: .5, y: 1, r: 1.25 }, touch: 'seeds' },
     willow:  { w: { sun: [.83, .72], tree: [.25, .45], x: .3 }, p: { sun: [.92, .55], tree: [.4, .45], x: .4, y: 1, r: 1.25 }, touch: 'fireflies', ray: .45 },
-    grove:   { w: { sun: [.51, .20], tree: [.5, .7], x: .5 }, p: { sun: [.51, .18], tree: [.5, .75], x: .5, y: 1, r: .5625 }, touch: 'butterflies' }
+    grove:   { w: { sun: [.51, .20], tree: [.5, .7], x: .5 }, p: { sun: [.51, .18], tree: [.5, .75], x: .5, y: .62, r: .5625 }, touch: 'butterflies' }
   };
   var CAP = { birds: 4, leaves: 8, soar: 1, seeds: 10, fireflies: 9, butterflies: 5 };
   function app(a) { return APPS[a] ? a : 'oak'; }
@@ -56,10 +56,11 @@
   /* ---------- styles, added once ---------- */
   var CSS = ''
     + '.gl-scene{position:relative;overflow:hidden;aspect-ratio:2.2/1;background:#CFD9E2;border-radius:14px 14px 0 0;isolation:isolate;--gl-dim:1;}'
-    + '@media (max-width:600px){.gl-scene{aspect-ratio:1/1;}}'
+    + '.gl-scene[data-app="grove"]{aspect-ratio:2.5/1;}'   // The Grove shows its whole painting, all seven trees, never cropped at the sides
+    + '@media (max-width:600px){.gl-scene,.gl-scene[data-app="grove"]{aspect-ratio:1/1;}}'
     + '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gl-scene{--gl-dim:.86;background:#2A3036;}}'
     + ':root[data-theme="dark"] .gl-scene{--gl-dim:.86;background:#2A3036;}'
-    + '.gl-paint{position:absolute;inset:0;background-image:var(--gl-wide);background-size:cover;background-repeat:no-repeat;background-position:var(--gl-wx,50%) 100%;transition:filter 1.6s ease;}'
+    + '.gl-paint{position:absolute;inset:-2px;background-image:var(--gl-wide);background-size:cover;background-repeat:no-repeat;background-position:var(--gl-wx,50%) 100%;transition:filter 1.6s ease;}'
     + '@media (max-width:600px){.gl-paint{background-image:var(--gl-phone);background-position:var(--gl-px,50%) var(--gl-py,100%);}}'
     + '.gl-mist,.gl-warm,.gl-rays{position:absolute;pointer-events:none;}'
     + '.gl-mist{inset:0;transition:opacity 1.8s ease;background:linear-gradient(180deg,rgba(236,240,244,.6),rgba(226,232,238,.38) 55%,rgba(230,234,238,.62));}'
