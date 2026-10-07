@@ -452,7 +452,7 @@
       '<label class="ggp-check"><input type="checkbox" id="ggp-young"' + (st.band === 'young' ? ' checked' : '') + '> <span>' + (other ? 'They are' : 'I am') + ' 26 or younger</span></label>' +
       '<label class="ggp-check"><input type="checkbox" id="ggp-older"' + (st.band === 'older' ? ' checked' : '') + '> <span>' + (other ? 'They are' : 'I am') + ' 55 or older</span></label>' +
       '<div id="ggp-treepick"' + (st.band ? '' : ' hidden') + '><label class="ggp-l">' + (other ? 'Their tree' : 'My tree') + '</label><div class="ggp-ages" id="ggp-trees">' + treeBtns(st) + '</div>' +
-      '<span class="ggp-small">Change it any time in Manage my profile.</span></div></div>';
+      '<span class="ggp-small">Change it any time in Manage My Profile.</span></div></div>';
   }
   function treeWire(d, st) {
     var yk = $(d, '#ggp-young'), ok = $(d, '#ggp-older'); if (!yk || !ok) return;
@@ -912,7 +912,7 @@
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
       helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id), oh = oakHelp(q.id); if (sq) html += link('/sequoia/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Sequoia'); if (bh) html += link('/birch/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Birch'); if (oh) html += link('/oak/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Oak'); if ((!sq && !bh && !oh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
-      html += item('manage', 'Manage my profile');
+      html += item('manage', 'Manage My Profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
       html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('bk', 'Back up everything') + item('ld', 'Load a backup') + item('lock', 'Lock');

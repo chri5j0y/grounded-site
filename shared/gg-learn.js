@@ -24,7 +24,7 @@
      or in memory for this visit only when nobody is unlocked, so it travels in the one backup file, still locked.
      Old open gg-learn:<app> marks are moved into the vault once, on the first unlock, then removed.
      GGLearn.watched(app, id) and GGLearn.marks(app) read them; the window event gg-learn-marks says they changed.
-   - Health and Ability (GWG BLD 756): shared/learn-life.js (window.GG_LEARN_LIFE[app], one support track per app)
+   - Health and Ability (GWG BLD 756): shared/learn-life.js (window.GG_LEARN_LIFE[app].tracks, group 'life')
      loads only when the Support group opens, and adds its Health and Ability videos there, first when the person
      has a Health and Ability choice (shared/gg-life.js). Willow has none.
    - A series earns a certificate when every lesson in it is finished and it has three or more
@@ -724,18 +724,23 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=ll1', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_T = {};
+  var LIFE_SRC = '/shared/learn-life.js?v=hl1', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
       return script(url('/shared/gg-life.js?v=lf1'), function () { return !!window.GGLife; });
     });
   }
-  function lifeTrack(app) {
-    if (LIFE_T[app]) return LIFE_T[app];
-    var T = (window.GG_LEARN_LIFE || {})[app];
-    if (!T || !Array.isArray(T.lessons) || !T.lessons.length) return null;
-    return (LIFE_T[app] = Object.assign({}, T, { id: T.id || ('life-' + app), kind: 'support', title: T.title || 'Health and Ability', life: true }));
+  // The tracks of shared/learn-life.js (group: 'life'), with the videos that fit the person's choice first
+  // (GGLife.order, nothing removed); with no choice, the how-to on the setting comes first.
+  function lifeTracks(app) {
+    var X = (window.GG_LEARN_LIFE || {})[app], fit = lifeFirst();
+    return ((X && X.tracks) || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; }).map(function (t) {
+      var ls = t.lessons.slice();
+      if (fit && window.GGLife) ls = GGLife.order(ls, function (l) { return l.life || []; });
+      else ls.sort(function (a, b) { return (b.howto ? 1 : 0) - (a.howto ? 1 : 0); });
+      return Object.assign({}, t, { kind: 'support', group: 'life', title: t.title || X.title || 'Health and Ability', lessons: ls });
+    });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
   function needPrint() { return script(url('/shared/gg-print.js?v=pr8'), function () { return !!window.GGPrint; }); }
@@ -744,7 +749,7 @@
   function open(app, lessonId, opts) {
     var meta = APPS[app]; if (!meta) return;
     css();
-    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && /^life-/.test(lessonId) ? needLife(app) : null; }).then(function () {
+    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () {
       if (APP) close(true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
       var root = document.createElement('div');
@@ -772,8 +777,8 @@
   function appKey(e) { if (e.key === 'Escape' && APP) { e.preventDefault(); close(); } }
   function tracksFor(app) {
     var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
-    var lt = lifeTrack(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
-    if (lt) sup = lifeFirst() ? [lt].concat(sup) : sup.concat([lt]);
+    var lt = lifeTracks(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
+    if (lt.length) sup = lifeFirst() ? lt.concat(sup) : sup.concat(lt);
     return [SETUP_TRACK].concat(rest, sup, guideTracks(app));
   }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
