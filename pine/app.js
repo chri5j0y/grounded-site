@@ -1560,7 +1560,7 @@ const TEND_CFG = {
   toast: m => showToast(m),
   profileHtml: () => pnProfileHtml(),
   extraSettings: () => pnSettingsHtml(),
-  lockedHtml: () => pineWho().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${pineWho().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create my profile</button><button class="btn btn-secondary" onclick="startCheckin()">Try a check-in first</button></div></div>`,
+  lockedHtml: () => pineWho().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${pineWho().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create my profile</button><button class="btn btn-secondary" onclick="startCheckin()">Try a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => seasonExtraHtml(s),
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
@@ -1785,7 +1785,7 @@ function setupCardHtml() {
   if (!PROF) return '';
   const r = rec(); if (r.setup) return '';
   const G = CKB.grades || [['9', 'Grade 9'], ['10', 'Grade 10'], ['11', 'Grade 11'], ['12', 'Grade 12']], plain = isPlain();
-  return `<div class="gt-card pn-setup" id="pn-setup"><h3>Set Up Pine Together</h3><p>Welcome to Pine. If the grown-up who agreed to your profile is with you, choose these together. You can change them any time in Settings.</p>
+  return `<div class="gt-card pn-setup" id="pn-setup"><h2>Set Up Pine Together</h2><p>Welcome to Pine. If the grown-up who agreed to your profile is with you, choose these together. You can change them any time in Settings.</p>
     <h4 class="sq-h4">Your Grade</h4><div class="pn-grades">${G.map(g => `<button type="button" class="btn btn-sm ${gradeNow() === g[0] ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${gradeNow() === g[0]}" onclick="setupPick('grade','${g[0]}')">${escapeHtml(g[1])}</button>`).join('')}</div>
     <h4 class="sq-h4">Wording</h4><div class="pn-grades"><button type="button" class="btn btn-sm ${!plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${!plain}" onclick="setupPick('wording','faith')">Faith</button><button type="button" class="btn btn-sm ${plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${plain}" onclick="setupPick('wording','plain')">Plain</button></div>
     <p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way.</p>
@@ -1865,7 +1865,7 @@ function renderNext() {
   const L = nsRec();
   if (!L) {
     el.innerHTML = `<div class="section-title">Next Steps</div>${(NS.intro || []).slice(0, 3).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h3>Your notebook is kept in your profile</h3><p>Next Steps is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${pineWho().length ? 'pnOpenAny()' : 'profCreateDialog()'}">${pineWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
+      <div class="gt-card gt-empty"><h2>Your notebook is kept in your profile</h2><p>Next Steps is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${pineWho().length ? 'pnOpenAny()' : 'profCreateDialog()'}">${pineWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
     return;
   }
   const c = NX.ch && nsChapter(NX.ch);

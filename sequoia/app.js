@@ -1630,7 +1630,7 @@ const TEND_CFG = {
   toast: m => showToast(m),
   profileHtml: () => oakProfileHtml(),
   extraSettings: () => (!HELP && window.GGLifeKit ? GGLifeKit.settingsHtml('sequoia', 'sq-set-life') : '') + helperSettingsHtml(),
-  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
+  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => graphCardHtml() + (s ? sgMilesHtml(s) : ''),
   pause: () => sqPause(),
@@ -1964,7 +1964,7 @@ function renderLegacy() {
   if (HELP && !shareOf(HELP).legacy) { el.innerHTML = `<div class="section-title">Legacy Book</div><p class="lead">${who} keeps their Legacy Book private.</p>`; return; }
   if (!L) {
     el.innerHTML = `<div class="section-title">Your Legacy Book</div>${(LEG.intro || []).slice(0, 2).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h3>Your book is kept in your profile</h3><p>The Legacy Book is saved inside a private Grounded profile on this device, locked with a passcode only you know, so no one else can read it. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="${oakAdults().length ? 'oakOpenAny()' : 'profCreateDialog()'}">${oakAdults().length ? 'Open my profile' : 'Create a profile'}</button></div></div>`;
+      <div class="gt-card gt-empty"><h2>Your book is kept in your profile</h2><p>The Legacy Book is saved inside a private Grounded profile on this device, locked with a passcode only you know, so no one else can read it. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="${oakAdults().length ? 'oakOpenAny()' : 'profCreateDialog()'}">${oakAdults().length ? 'Open my profile' : 'Create a profile'}</button></div></div>`;
     return;
   }
   const c = LG.ch && legChapter(LG.ch);

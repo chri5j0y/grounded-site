@@ -265,7 +265,7 @@
   /* ---------- Today ---------- */
   function needProfile(where) {
     if (C && C.lockedHtml) { var lh = C.lockedHtml(where); if (lh) return lh; }   // a tool's own "who's tending" screen (Oak, Rebrand Session 4)
-    return '<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary" onclick="GGTend.act(\'openProfile\')">Open my profile</button></div><p class="gt-small"><a class="text-link" href="#" onclick="GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a></p></div>';
+    return '<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary" onclick="GGTend.act(\'openProfile\')">Open my profile</button></div><p class="gt-small"><a class="text-link" href="#" onclick="GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a></p></div>';
   }
   function anchorHtml(s, which) {
     var A = (J.ANCHORS || {})[which]; if (!A) return '';
@@ -310,12 +310,13 @@
     if (C.todayExtra) html += C.todayExtra(s) || '';
     if (!list.length) {
       var hasCheck = (C.history() || []).length > 0;
-      html += '<div class="gt-card gt-empty"><h3>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h3><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for each growing edge. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
+      html += '<div class="gt-card gt-empty"><h2>' + (hasCheck ? 'Choose your practices' : 'Start with a check-in') + '</h2><p>' + (hasCheck ? 'Your growth plan is where you choose practices for each part of your tree. Start with about 3 for each part, and a few more for each growing edge. They show up here every day, ready to check off.' : 'The check-in shows how each part of your tree is doing. Then your growth plan turns it into small daily practices that show up here.') + '</p><div class="btn-row">'
         + (hasCheck ? '<button class="btn btn-primary" onclick="GGTend.act(\'plan\')">Build my growth plan</button>' : '<button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button>' + (C.noQuick ? '' : '<button class="btn btn-secondary" onclick="GGTend.act(\'quickCheckin\')">Quick Check-in, 2 minutes</button>'))
         + '</div></div>';
       box.innerHTML = html; liven(sc); return;
     }
     html += anchorHtml(s, 'morning');
+    html += '<h2 class="gt-sr">Today\'s Practices</h2>';
     C.parts.forEach(function (pt) {
       var mine = list.filter(function (it) { return it.key === pt.key; });
       if (!mine.length) return;
@@ -355,7 +356,7 @@
     var s = ensure();
     if (!s) { box.innerHTML = needProfile('week'); return; }
     if (!s.start) {
-      box.innerHTML = '<div class="gt-card gt-empty"><h3>Your season starts with a full check-in</h3><p>A season is twelve weeks. Each week brings a theme, a short check-in, and a question to sit with. It begins the day you finish your first full check-in.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button></div></div>' + calendarHtml(s);
+      box.innerHTML = '<div class="gt-card gt-empty"><h2>Your season starts with a full check-in</h2><p>A season is twelve weeks. Each week brings a theme, a short check-in, and a question to sit with. It begins the day you finish your first full check-in.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'fullCheckin\')">Begin my check-in</button></div></div>' + calendarHtml(s);
       return;
     }
     var w = weekShown(s), W = (J.WEEKS || [])[w - 1] || {}, st = (J.SEASONS || {})[stretch(w)] || {}, rec = (s.weeks || {})[weekKey(s)] || null;
@@ -443,9 +444,9 @@
       + groveSettingsHtml(s)
       + (C.extraSettings ? C.extraSettings() : '')
       + '<section><h3>Daily Reminder</h3>' + (can ? '<label class="gt-switch"><input type="checkbox"' + (rem && rem.on ? ' checked' : '') + ' onchange="GGTend.remind(this.checked)"> Remind me to tend my tree</label><label class="gt-small" for="gt-rtime">Time</label> <input type="time" id="gt-rtime" value="' + esc((rem && rem.time) || '08:00') + '" onchange="GGTend.remind(null)">' : '<p class="gt-small">Daily reminders come with the ' + esc(C.toolName) + ' phone app. They are set on your phone, and nothing is sent to a server.</p>') + '</section>'
-      + '<section><h3>Reading and Display</h3><div class="btn-row">' + (window.GGRead && GGRead.settings ? '<button class="btn btn-secondary btn-sm" onclick="GGRead.settings()">Read Aloud Voice</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.act(\'textSize\')">Text Size</button><button class="btn btn-secondary btn-sm" onclick="GGTend.theme()">Light or dark</button></div></section>'
+      + '<section><h3>Reading and Display</h3><div class="btn-row">' + (window.GGRead && GGRead.settings ? '<button class="btn btn-secondary btn-sm" onclick="GGRead.settings()">Read Aloud Voice</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.act(\'textSize\')">Text Size</button><button class="btn btn-secondary btn-sm" onclick="GGTend.theme()">Light or dark</button>' + (window.GGEase ? '<button class="btn btn-secondary btn-sm" onclick="GGEase.open(this)">Ease of Use</button>' : '') + '</div></section>'
       + (C.noRecords ? '' : '<section><h3>Your Records</h3><div class="btn-row">' + '<button class="btn btn-secondary btn-sm" onclick="GGBackupGo(\'make\')">Back up everything</button><button class="btn btn-secondary btn-sm" onclick="GGBackupGo(\'pick\')">Load a backup</button>' + '<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'progress\')">Save or load a results file</button></div><p class="gt-small">Back up everything saves one file with every profile on this device (each still locked), The Grove, and settings. Load it on any device to bring it all back. Everything stays on this device. To delete a profile and everything in it, open Picture, passcode, and more.</p></section>')
-      + '<section><h3>About</h3><p><a class="text-link" href="#" onclick="GGTend.closeSettings();GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a></p></section>'
+      + '<section><h3>About</h3><p><a class="text-link" href="#" onclick="GGTend.closeSettings();GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/accessibility.html">Accessibility</a></p></section>'
       + '</div></div>';
     document.body.insertAdjacentHTML('beforeend', html);
     var sheet = el('gt-settings'), f = focus === 'level' ? el('gt-set-level') : sheet.querySelector('.gt-x');

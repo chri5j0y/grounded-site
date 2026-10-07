@@ -1550,7 +1550,7 @@ const TEND_CFG = {
   toast: m => showToast(m),
   profileHtml: () => bcProfileHtml(),
   extraSettings: () => bcSettingsHtml(),
-  lockedHtml: () => birchWho().length ? `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>${birchWho().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h3>Your tree grows in your profile</h3><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Only your passcode opens it.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create my profile</button><button class="btn btn-secondary" onclick="startCheckin()">Try a check-in first</button></div></div>`,
+  lockedHtml: () => birchWho().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${birchWho().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Only your passcode opens it.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create my profile</button><button class="btn btn-secondary" onclick="startCheckin()">Try a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => seasonExtraHtml(s),
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
@@ -1810,7 +1810,7 @@ function setupCardHtml() {
   if (!PROF || HELP) return '';
   const r = rec(); if (r.setup) return '';
   const plain = isPlain(), mine = seasonsNow();
-  return `<div class="gt-card pn-setup" id="pn-setup"><h3>Set Up Birch</h3><p>Welcome to Birch. A few choices make it fit your life. You can change them any time in Settings.</p>
+  return `<div class="gt-card pn-setup" id="pn-setup"><h2>Set Up Birch</h2><p>Welcome to Birch. A few choices make it fit your life. You can change them any time in Settings.</p>
     <h4 class="sq-h4">My Season</h4><p class="gt-small">Pick any that fit, or none. It changes only examples and tips, never the questions or your scores.</p><div class="pn-grades">${SEASONS.map(x => `<button type="button" class="btn btn-sm ${mine.includes(x.id) ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${mine.includes(x.id)}" onclick="setSeason('${x.id}',${!mine.includes(x.id)})">${escapeHtml(x.name)}</button>`).join('')}</div>
     <h4 class="sq-h4">Wording</h4><div class="pn-grades"><button type="button" class="btn btn-sm ${!plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${!plain}" onclick="setupPick('wording','faith')">Faith</button><button type="button" class="btn btn-sm ${plain ? 'btn-primary' : 'btn-secondary'}" aria-pressed="${plain}" onclick="setupPick('wording','plain')">Plain</button></div>
     <p class="gt-small">Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way.</p>
@@ -1989,7 +1989,7 @@ function renderGround() {
   const L = gwRec();
   if (!L) {
     el.innerHTML = `<div class="section-title">${escapeHtml(GW.title || 'Groundwork')}</div>${(GW.intro || []).slice(0, 3).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h3>Your notebook is kept in your profile</h3><p>Groundwork is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${birchWho().length ? 'bcOpenAny()' : 'profCreateDialog()'}">${birchWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
+      <div class="gt-card gt-empty"><h2>Your notebook is kept in your profile</h2><p>Groundwork is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${birchWho().length ? 'bcOpenAny()' : 'profCreateDialog()'}">${birchWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
     return;
   }
   if (GX.ch === 'skills') { el.innerHTML = gwSkillsPage(L); return; }

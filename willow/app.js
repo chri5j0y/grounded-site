@@ -751,10 +751,10 @@ function printHtml(title, html) {
   setTimeout(() => { window.print(); setTimeout(done, 1500); }, 60);
 }
 function needProfileHtml(what) {
-  return `<div class="w-card w-empty"><p class="w-eyebrow">${esc(what)}</p><h3>This lives in a locked profile</h3><p>${esc(what)} is personal, so Willow keeps it in the person's own profile, locked with a passcode, on this device.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button>${GP() && GGP.list().length ? `<button type="button" class="btn btn-secondary" onclick="W.open()">Open my profile</button>` : ''}</div></div>`;
+  return `<div class="w-card w-empty"><p class="w-eyebrow">${esc(what)}</p><h2 class="w-h3">This lives in a locked profile</h2><p>${esc(what)} is personal, so Willow keeps it in the person's own profile, locked with a passcode, on this device.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button>${GP() && GGP.list().length ? `<button type="button" class="btn btn-secondary" onclick="W.open()">Open my profile</button>` : ''}</div></div>`;
 }
 function privateHtml(what) {
-  return `<div class="w-card w-empty"><p class="w-eyebrow">${esc(what)}</p><h3>Kept private</h3><p>${esc(nameOf(target()))} keeps this private for now. That's their choice to make, and Willow honors it. They can change it any time in Settings.</p></div>`;
+  return `<div class="w-card w-empty"><p class="w-eyebrow">${esc(what)}</p><h2 class="w-h3">Kept private</h2><p>${esc(nameOf(target()))} keeps this private for now. That's their choice to make, and Willow honors it. They can change it any time in Settings.</p></div>`;
 }
 
 /* ---------- What matters to me ---------- */

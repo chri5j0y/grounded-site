@@ -13,7 +13,7 @@
 .gt-today-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;}
 .gt-line{font-family:var(--kid,'Cormorant Garamond'),Georgia,serif;font-size:24px;font-weight:700;line-height:1.2;margin:0;min-width:0;text-wrap:balance;}
 .mp-app .gt-line{font-weight:500;}
-.gt-count{margin:0;font-variant-numeric:tabular-nums;}
+.gt-count{margin:0;font-variant-numeric:lining-nums tabular-nums;}
 .gt-marks{list-style:none;margin:14px 0 4px;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;}
 .gt-mark{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);text-align:center;min-width:0;}
 .gt-mark-name{overflow-wrap:anywhere;}
@@ -34,7 +34,7 @@
 .gt-stats{display:flex;gap:28px;margin:14px 0 4px;}
 .gt-stats div{display:flex;flex-direction:column-reverse;}
 .gt-stats dt{font-size:13px;color:var(--ink-soft);}
-.gt-stats dd{margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;line-height:1;}
+.gt-stats dd{margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;line-height:1;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:'lnum' 1,'tnum' 1;}
 .gt-anchor{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;margin:0 0 16px;border-radius:14px;background:var(--bg-deep,rgba(128,112,90,.08));}
 .gt-anchor p{margin:2px 0 0;font-size:15px;color:var(--ink-soft);}
 .gt-anchor{cursor:pointer;-webkit-tap-highlight-color:transparent;}
@@ -146,3 +146,8 @@
 .gt-lib-top small{font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;color:var(--ink-soft);}
 .gt-earlier-note{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:12px 0;}
 .gt-earlier-note p{white-space:pre-wrap;margin:4px 0 0;}
+/* accessibility pass (BLD 756): numbers in the display serif use lining figures, so a 1 never reads like an I */
+.gt-card h2,.gt-card h3,.gt-line,.gt-part h3,.gt-weekhead h2,.gt-sheet-head h2{font-variant-numeric:lining-nums;}
+.gt-card.gt-empty h2{font-size:22px;margin:0 0 8px;line-height:1.2;}
+.gt-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.gt-card.pn-setup h2{font-size:22px;margin:0 0 8px;line-height:1.2;}

@@ -599,3 +599,15 @@ a.ss-row::after{content:'';position:absolute;right:13px;top:22px;width:8px;heigh
 section.after-strip,section.about-lead,section.stories-body{border-top:none !important;padding-top:40px;}
 section.about-lead{padding-bottom:36px;}
 .page-head.after-strip .lead{margin-top:0;}
+
+/* Accessibility pass (BLD 756): deeper text tones for the small uppercase labels in light mode, so they read clearly on the cream bands. Dark mode keeps its own colors. */
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--eb-gold:#7A5216;--eb-sage:#4A6638;--eb-clay:#9A4E24;}}
+:root[data-theme="light"]{--eb-gold:#7A5216;--eb-sage:#4A6638;--eb-clay:#9A4E24;}
+.eyebrow{color:var(--eb-gold,var(--gold));}
+#tools .eyebrow,.tool-group{color:var(--eb-sage,var(--sage));}
+#ceremonies .eyebrow,.cer-card .eyebrow{color:var(--eb-clay,var(--clay));}
+.cer-fam.cel .eyebrow{color:var(--eb-clay,var(--clay)) !important;}
+.inquiry .lab .opt{opacity:1;color:var(--ink-soft);}
+.text-link{color:var(--eb-gold,var(--gold));}
+/* Accessibility pass (BLD 756): on the smallest phones (and at high zoom) the header keeps every button on screen; the tree still links home. */
+@media (max-width:360px){.brand .brand-name{display:none;}}

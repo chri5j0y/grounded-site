@@ -147,10 +147,14 @@
       '.ggl-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:12px;border:1.5px solid var(--ggl-acc);background:transparent;color:var(--ggl-acc);font:inherit;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;}',
       '.ggl-btn.pri{background:var(--ggl-acc);color:#FFF8EC;}.ggl-btn.quiet{border-color:var(--ggl-line);color:var(--ggl-soft);}',
       '.ggl-btn svg{width:20px;height:20px;flex:none;}.ggl-btn:focus-visible,.ln-item:focus-visible{outline:3px solid var(--ggl-acc);outline-offset:2px;}',
+      /* Read Instead (BLD 756): the whole script as text, one tap away */
+      '.ln-read{margin:12px 0 4px;padding:16px 18px;border:1px solid var(--ggl-line);border-radius:14px;background:var(--ggl-card);color:var(--ggl-ink);font-size:calc(18px * var(--ggl-scale));line-height:1.6;}.ln-read[hidden]{display:none;}',
+      '.ln-read h3{font-family:Cormorant Garamond,Georgia,serif;font-size:1.45em;line-height:1.2;margin:0 0 4px;}.ln-read h4{font-size:1em;margin:16px 0 4px;color:var(--ggl-ink);}.ln-read p{margin:0 0 8px;}.ln-read .ln-rd-do{display:block;font-style:italic;color:var(--ggl-soft);margin:2px 0 8px;}',
+      '.ln-read a{color:inherit;text-decoration:underline;text-underline-offset:3px;}.ln-read ol{margin:4px 0 8px;padding-left:1.4em;}.ln-read .ln-rd-q{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0;}.ln-read .ln-rd-end{margin-top:14px;padding-top:10px;border-top:1px solid var(--ggl-line);}.ln-read .gg-src-line,.ln-read small{display:block;color:var(--ggl-soft);font-size:.8em;margin-top:6px;}',
       '.ln-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}.ln-ctl .ggl-cn{margin-left:auto;color:var(--ggl-soft);font-size:15px;}',
       '.ln-opts{display:grid;gap:8px;margin:8px 0;}.ln-opts .ggl-btn{justify-content:flex-start;text-align:left;white-space:normal;min-height:52px;border-color:var(--ggl-line);color:var(--ggl-ink);font-weight:500;}',
-      '.ln-opts .ln-right{border-color:#5F7D48 !important;background:rgba(95,125,72,.14) !important;}.ln-opts .ln-wrong{border-color:#B8612F !important;}',
-      '.ln-yes b{color:#5F7D48;}.ln-no b{color:#B8612F;}.ln-yes,.ln-no{color:var(--ggl-ink);}',
+      '.ln-opts .ln-right,.ln-rd-q .ln-right{border-color:#5F7D48 !important;background:rgba(95,125,72,.14) !important;}.ln-opts .ln-wrong,.ln-rd-q .ln-wrong{border-color:#B8612F !important;}',
+      '.ln-yes b{color:#5F7D48;}.ln-no b{color:#A0532A;}.ln-yes,.ln-no{color:var(--ggl-ink);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ln-yes b{color:#A9C98F;}:root:not([data-theme="light"]) .ln-no b{color:#EBA27E;}}:root[data-theme="dark"] .ln-yes b{color:#A9C98F;}:root[data-theme="dark"] .ln-no b{color:#EBA27E;}',
       /* the closing scene: buttons sit on the screen when there is room, under it on small phones */
       '.ggl-endbar{display:none;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 4px;}.ggl-endbar.on{display:flex;}',
       '.ggl-endbar.over{position:absolute;left:0;right:0;bottom:6%;margin:0;padding:0 16px;}',
@@ -448,7 +452,8 @@
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
       + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Help right now:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
       + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
-      + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><span class="ggl-cn"></span></div>'
+      + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><button class="ggl-btn quiet" data-g="read" aria-expanded="false">Read Instead</button><span class="ggl-cn"></span></div>'
+      + '<section class="ln-read" hidden tabindex="-1" aria-label="Read Instead"></section>'
       + '<div class="ln-vs"></div></div>';
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
@@ -601,6 +606,42 @@
         if (!busy && Date.now() - start > (spoke ? 1500 : 4000)) { clearInterval(P.tick); P.nx = setTimeout(function () { if (t === P.tok) show(Math.min(P.i + 1, N - 1)); }, 1100); }
       }, 200);
     }
+    /* Read Instead: the full script as text (every sentence, the pause-and-do moments, the question, and the sources) */
+    function readHtml() {
+      var h = '<h3>' + esc(l.title || '') + '</h3>' + (l.blurb ? '<p>' + esc(l.blurb) + '</p>' : '');
+      (l.scenes || []).forEach(function (sc, j) {
+        var hd = sc.k === 'quiz' ? (sc.q || 'Quick question') : (sc.h || sc.title || sc.eyebrow || '');
+        if (hd && j) h += '<h4>' + esc(hd) + '</h4>';
+        var B = beatsOf(sc);
+        if (sc.k === 'quiz') {
+          h += '<div class="ln-rd-q" role="group" aria-label="Answer">' + (sc.opts || []).map(function (o, k) { return '<button type="button" class="ggl-btn" data-g="rans" data-s="' + j + '" data-v="' + k + '">' + esc(o) + '</button>'; }).join('') + '</div><div class="ggl-fb" aria-live="polite"></div>';
+          return;
+        }
+        var para = [];
+        B.forEach(function (b) { para.push(esc(b.t)); if (b.w) { h += '<p>' + para.join(' ') + '</p><span class="ln-rd-do">Pause here and try it, about ' + Math.round(b.w) + ' seconds.</span>'; para = []; } });
+        if (para.length) h += '<p>' + para.join(' ') + '</p>';
+        if (sc.link && sc.link.href) h += '<p><a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a></p>';
+      });
+      return h + '<div class="ln-rd-end">' + srcLine(l) + '<p><button type="button" class="ggl-btn" data-g="read">Back to the Video</button></p></div>';
+    }
+    function readToggle(on) {
+      var r = $('.ln-read', host), b = $('.ln-ctl [data-g="read"]', host);
+      if (on) { setPlay(false); r.innerHTML = readHtml(); r.hidden = false; b.setAttribute('aria-expanded', 'true'); b.textContent = 'Back to the Video'; try { r.focus({ preventScroll: false }); } catch (e) {} watchRead(r); }
+      else { r.hidden = true; r.innerHTML = ''; b.setAttribute('aria-expanded', 'false'); b.textContent = 'Read Instead'; try { b.focus(); } catch (e) {} }
+    }
+    // reading to the end counts the same as watching (once any question is answered)
+    function watchRead(r) {
+      var end = $('.ln-rd-end', r); if (!end) return;
+      var go = function () { if (!hasQuiz || answered) finish(); };
+      if (!('IntersectionObserver' in window)) return go();
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); go(); } }); io.observe(end);
+    }
+    function readAnswer(b) {
+      var sc = l.scenes[+b.getAttribute('data-s')] || {}, v = +b.getAttribute('data-v'), ok = v === sc.right, wrap = b.parentNode, fb = wrap.nextElementSibling;
+      wrap.querySelectorAll('.ggl-btn').forEach(function (x, j) { x.classList.toggle('ln-right', ok && j === v); x.classList.toggle('ln-wrong', !ok && j === v); });
+      if (!ok) { fb.innerHTML = '<p class="ln-no"><b>Not quite.</b> Try another answer.</p>'; return; }
+      answered = true; finish(); fb.innerHTML = '<p class="ln-yes"><b>That\'s it.</b> ' + esc(sc.why || '') + '</p>';
+    }
     function onClick(ev) {
       var b = ev.target.closest('[data-g]'); if (!b || !host.contains(b)) return;
       var g = b.getAttribute('data-g');
@@ -611,6 +652,8 @@
           if (window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
         }
       }
+      else if (g === 'read') readToggle($('.ln-read', host).hidden);
+      else if (g === 'rans') readAnswer(b);
       else if (g === 'back') show(P.i - 1);
       else if (g === 'next') show(P.i + 1);
       else if (g === 'restart') { setPlay(false); show(0); }
@@ -821,7 +864,7 @@
         : back(['cats'], 'Back to Learn') + '<div class="ggl-eb" style="margin-top:6px">How to Show Up</div>' + H2(GD.title || 'When Life Changes') + (GD.intro ? '<p class="ggl-muted">' + esc(GD.intro) + '</p>' : '')
           + '<div class="ggl-cats">' + gd.map(function (t) { var w = watched([t]); return '<button class="ggl-card ggl-cat" data-l="ring" data-v="' + esc(t.id) + '"><h3>' + esc(t.title) + '</h3><p class="ggl-cat-n">' + t.lessons.length + ' videos' + (w ? ', ' + w + ' watched' : '') + '<span class="ggl-cat-go">' + IC.play + '</span></p></button>'; }).join('') + '</div>';
     } else html = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1><p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>'
-      + voiceCard()
+      + '<h2 class="ggl-sr">Videos</h2>' + voiceCard()
       + (cats.length ? '<div class="ggl-cats">' + cats.map(catCard).join('') + '</div>' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>')
       + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
       + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';

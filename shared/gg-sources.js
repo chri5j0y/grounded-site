@@ -774,9 +774,9 @@
   function css() {
     if (done || typeof document === 'undefined' || !document.head) return; done = true;
     var st = document.createElement('style'); st.id = 'gg-src-css';
-    st.textContent = '.gg-src{margin:16px 0 0;font-size:13.5px;line-height:1.45;opacity:.85;}.gg-src p{margin:3px 0;}'
+    st.textContent = '.gg-src{margin:16px 0 0;font-size:13.5px;line-height:1.45;}.gg-src p{margin:3px 0;}'
       + '.gg-src a,.gg-src-line a{color:inherit;text-decoration:underline;text-underline-offset:2px;}'
-      + '.gg-src-k{font-weight:600;}.gg-src-line{display:block;font-size:13px;line-height:1.4;opacity:.9;margin-top:4px;}'
+      + '.gg-src-k{font-weight:600;}.gg-src-line{display:block;font-size:13px;line-height:1.4;margin-top:4px;}'
       + '@media print{.gg-src{opacity:1;font-size:10pt;}.gg-src a{text-decoration:none;}}';
     document.head.appendChild(st);
   }
