@@ -607,14 +607,14 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=tc7"></script>
+<script src="../shared/gg-app.js?v=b756"></script>
 <script src="../shared/gg-backup.js?v=bk4"></script>
 <script src="../shared/gg-filelock.js?v=fl2"></script>
 <script src="../shared/gg-pdf.js"></script>
-<script src="../shared/gg-bridge.js"></script>
+<script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=src20"></script>
-<script src="../shared/gg-learn.js?v=ln39"></script>
+<script src="../shared/gg-sources.js?v=b756"></script>
+<script src="../shared/gg-learn.js?v=b756"></script>
 <script src="../shared/gg-print.js?v=pr8"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="qr.js"></script>
@@ -8443,7 +8443,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=ps3', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=sg3', '../pine/guides.js?v=pg2', '../birch/guides.js?v=bg3'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=b756', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=b756', '../pine/guides.js?v=pg2', '../birch/guides.js?v=b756'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
