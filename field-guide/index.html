@@ -613,14 +613,14 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=src19"></script>
-<script src="../shared/gg-learn.js?v=ln38"></script>
-<script src="../shared/gg-print.js?v=pr7"></script>
+<script src="../shared/gg-sources.js?v=src20"></script>
+<script src="../shared/gg-learn.js?v=ln39"></script>
+<script src="../shared/gg-print.js?v=pr8"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="qr.js"></script>
 <script src="share.js?v=sc1"></script>
 <script src="ceremonies.js?v=cb4"></script>
-<script src="premarital.js?v=pm3"></script>
+<script src="premarital.js?v=pm4"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 (function(){ var t = Date.now(); ['codes','lib-founder','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
@@ -1731,7 +1731,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr7'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr8'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -7148,7 +7148,7 @@ function pgPoster(){
       <div class="foot"><div class="qr">${qr}<div><b>Scan to open The Grounded Marriage</b><span>${esc(short)}</span></div></div><div class="hs2">Grow With Grounded&trade;<br>growwithgrounded.com</div></div></div>`;
     const css = `.sheet{width:8.5in;height:11in;margin:14px auto 40px;background:#FFFCF6;display:flex;flex-direction:column;box-shadow:0 2px 14px rgba(44,24,16,.18);overflow:hidden;--c:${c};}
 @media screen and (max-width:8.6in){.sheet{width:100%;height:auto;min-height:0;margin:0;}}
-.band{background:var(--c);color:#FFF8EC;padding:.7in .6in .55in;}.hs{display:flex;align-items:center;gap:10px;}.hs img{width:.4in;height:auto;filter:brightness(0) invert(1);}.hs span{font-family:"Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:3px;font-weight:600;font-size:11pt;}
+.band{background:var(--c);color:#FFF8EC;padding:.7in .6in .55in;}.hs{display:flex;align-items:center;gap:10px;}.hs img{width:.4in;height:auto;}.hs span{font-family:"Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:3px;font-weight:600;font-size:11pt;}
 .nm{font-family:"Cormorant Garamond",Georgia,serif;font-size:50pt;font-weight:600;line-height:1;margin-top:.3in;}.tg{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:22pt;margin-top:.14in;color:#F2EAF8;}
 .pad{flex:1;display:flex;flex-direction:column;justify-content:center;padding:.4in .6in;}
 .here{background:#F4EEF8;border-left:7px solid var(--c);padding:.22in .26in;}.here span{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:30pt;font-weight:600;color:var(--c);line-height:1.1;}.here small{display:block;font-size:14pt;line-height:1.4;color:#4A3B30;margin-top:8px;}

@@ -124,7 +124,7 @@
       '.ggl-player{margin-top:6px;}',
       '.ln-stage{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#F2ECE0;border:1px solid var(--ggl-line);}',
       '.ln-wm{position:absolute;z-index:6;display:flex;align-items:center;gap:6px;color:#5B4636;font:600 12px/1.1 Barlow,system-ui,sans-serif;pointer-events:none;user-select:none;-webkit-user-select:none;opacity:.92;white-space:nowrap;}.ln-wm img{width:24px;height:24px;border-radius:6px;}.ln-wm i{font-style:normal;}.ln-wm-tl{left:12px;top:12px;}.ln-wm-br{right:12px;bottom:12px;}',
-      '.ln-on-cover .ln-wm{color:#FFFFFF;}.ln-on-cover .ln-wm-tl img{filter:brightness(0) invert(1);}.ln-on-end .ln-wm-br{display:none;}',
+      '.ln-on-cover .ln-wm{color:#FFFFFF;}.ln-on-end .ln-wm-br{display:none;}',
       '.ggl-small .ln-wm span{display:none;}.ggl-small .ln-wm img{width:15px;height:15px;border-radius:4px;}.ggl-small .ln-wm-tl{left:5px;top:5px;}.ggl-small .ln-wm-br{right:5px;bottom:5px;}.ggl-small .ln-tt{top:86px;}.ggl-small .ln-six{padding-top:84px;}',
       '.ln-prog{display:flex;gap:5px;margin:10px 0;}.ln-prog span{flex:1;height:5px;border-radius:3px;background:var(--ggl-line);}.ln-prog span.on{background:var(--ggl-acc);}',
       '.ln-cap{font-size:calc(19px * var(--ggl-scale));line-height:1.5;min-height:3em;margin:6px 0;color:var(--ggl-ink);}.ln-cap .w.on{color:var(--ggl-acc);}',
@@ -421,7 +421,7 @@
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src19'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=src20'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -678,7 +678,7 @@
       return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
     }).filter(function (t) { return t.lessons.length; });
   }
-  function needPrint() { return script(url('/shared/gg-print.js?v=pr7'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=pr8'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
   function open(app, lessonId, opts) {

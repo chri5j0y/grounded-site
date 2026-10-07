@@ -11,8 +11,14 @@
    Two devices: a card carries one partner's first name, the other's, Faith or Plain, the faith background, and the
    answers as digits, locked with a word only the two of them know, after the # in a link or QR code (marriage/core.js).
    A check-in card carries one partner's written check-in answers the same way.
+   The Week Card (GWG BLD 755): before a session, the couple can choose to share a short card with their leaders
+   (videos watched, practices tried, workbook answers marked Share With Our Leaders, and one question), locked with
+   their shared word the same way and carried as #gmw=w1.<code> (GMCore.week). Nothing is sent anywhere else.
+   Your Tree, Then Your Grove (GWG BLD 755): marriage/together.js (GM_TOGETHER) in the hub and After the Vows, with
+   invites to each partner's own Tree (Birch or Oak) and to a Grove together; the card shows without it too.
    Data: marriage/questions.js (BTV_Q), core.js (GMCore), faith.js (GM_FAITH), results.js (GM_RESULTS),
-   workbook.js (GM_WB), money.js (GM_MONEY), practices.js (GM_PR), after.js (GM_AFTER), learn.js (GG_LEARN_GM). */
+   workbook.js (GM_WB), money.js (GM_MONEY), practices.js (GM_PR), after.js (GM_AFTER), learn.js (GG_LEARN_GM),
+   together.js (GM_TOGETHER). */
 (function () {
   'use strict';
   var KEY = 'gg_gm_v1', OLDKEY = 'gg_btv_v1', PEND = 'gg-gm-in', PENDM = 'gg-gm-min';
@@ -25,6 +31,7 @@
   var Q = window.BTV_Q || { version: 0, areas: [], questions: [], scale: [], safety: {} };
   var AREAS = Q.areas, QS = Q.questions, SCALE = Q.scale, SAFETY = Q.safety || {};
   var F = window.GM_FAITH || null, RS = window.GM_RESULTS || null, WB = window.GM_WB || null, MN = window.GM_MONEY || null, PR = window.GM_PR || null, AF = window.GM_AFTER || null;
+  var TG = (window.GM_TOGETHER && typeof window.GM_TOGETHER === 'object') ? window.GM_TOGETHER : null;
   var TWOQ = (F && F.two && Array.isArray(F.two.questions)) ? F.two.questions : [];
   var TWO_AREA = { id: 'two', name: 'Two Traditions, One Home', lead: F && F.two ? F.two.lead : '' };
   function qsIn(aid) { return aid === 'two' ? TWOQ : QS.filter(function (q) { return q.area === aid; }); }
@@ -299,10 +306,12 @@
           '<div class="btv-paste"><label class="ff-f"><span class="l">Got a link from ' + esc(theirs) + '?</span><span class="h">Scan their QR code with this device’s camera, or paste their link here.</span><input id="btv-paste" autocomplete="off" placeholder="Paste the link"></label><div class="ff-row">' + btn('paste', 'Open This Card', sec()) + '</div></div>'
           : '<p class="btv-small">When you finish, you can make a card for ' + esc(theirs) + ' and open theirs. Bring your card to your sessions too.</p>') + '</div>';
     }
+    h += weekHub();
     if (WB) h += '<div class="ff-card sage"><h2>' + esc(WB.title) + '</h2>' + (WB.lead ? '<p class="ff-sub">' + esc(WB.lead) + '</p>' : '') + '<p class="btv-small">Each of you writes privately. Choose Show My Partner on any exercise you would like to read together.</p><div class="ff-row">' +
       whoButtons('wb') + (oneDevice() ? btn('wb-read', 'Read Together', sec()) : '') + btn('wb-print', 'Print the Workbook', sec()) + '</div><p class="btv-small">Print the Workbook prints the six chapters with blank lines to write on. To print your own answers too, open your workbook first.</p></div>';
     if (MN) h += '<div class="ff-card sage"><h2>' + esc(MN.title) + '</h2>' + (MN.lead ? '<p class="ff-sub">' + esc(MN.lead) + '</p>' : '') + '<div class="ff-row">' + moneyButtons() + '</div></div>';
     if (PR) h += '<div class="ff-card sage"><h2>' + esc(PR.title) + '</h2>' + (PR.lead ? '<p class="ff-sub">' + esc(PR.lead) + '</p>' : '') + '<div class="ff-row">' + btn('pr', 'Open Practices for Two', sec()) + '</div></div>';
+    h += tgHtml();
     return h + '<div class="ff-row">' + btn('setup', 'Names and Settings', sec()) + '</div>';
   }
   function whoButtons(act) {
@@ -472,7 +481,8 @@
       '<label class="ff-f"><span class="h">Notes for yourself, if you like</span><textarea data-wb="' + id + '" data-k="0" rows="2">' + esc((e.t || [])[0] || '') + '</textarea></label>';
     return '<section class="gm-ex-card"><h3>' + esc(ex.title) + '</h3>' + (ex.lead ? '<p class="ff-sub">' + esc(ex.lead) + '</p>' : '') + body +
       (ex.together ? '<p class="btv-talk">' + esc(ex.together) + '</p>' : '') +
-      '<label class="gm-check"><input type="checkbox" data-wbsh="' + id + '"' + (e.sh ? ' checked' : '') + '><span>Show my partner' + (oneDevice() ? ' when we Read Together' : '') + '</span></label></section>';
+      '<label class="gm-check"><input type="checkbox" data-wbsh="' + id + '"' + (e.sh ? ' checked' : '') + '><span>Show my partner' + (oneDevice() ? ' when we Read Together' : '') + '</span></label>' +
+      '<label class="gm-check"><input type="checkbox" data-wbld="' + id + '"' + (e.ld ? ' checked' : '') + '><span>Share with our leaders on our Week Card</span></label></section>';
   }
   function reflectHtml(ch, w) {
     var r = ch.reflect; if (!r) return '';
@@ -632,7 +642,7 @@
       h += '<div class="ff-card gold"><h2>After the Vows</h2><p>' + esc(AF.opens) + '</p>' + (setup() && st.s.wd ? '<p class="btv-small">Your wedding date on this device: ' + esc(niceDate(st.s.wd)) + '.</p>' : '') +
         (setup() ? '<div class="ff-row">' + btn('married', 'We’re Married') + btn('setup', 'Set Your Wedding Date', sec()) + '</div>' : '<div class="ff-row">' + btn('start', 'Get Started') + '</div>') + '</div>';
       if (PR) h += '<div class="ff-card sage"><h2>' + esc(PR.title) + '</h2>' + (PR.lead ? '<p class="ff-sub">' + esc(PR.lead) + '</p>' : '') + '<div class="ff-row">' + btn('pr', 'Open Practices for Two', sec()) + '</div></div>';
-      return h;
+      return h + tgHtml();
     }
     var k = monthKey(), M = AF.monthly, Y = AF.firstYear;
     h += '<div class="ff-card gold"><h2>After the Vows</h2>' + (AF.lead ? '<p>' + esc(AF.lead) + '</p>' : '') + '</div>';
@@ -644,7 +654,7 @@
     h += '</div>';
     h += '<div class="ff-card"><h2>' + esc(Y.title) + '</h2>' + (Y.lead ? '<p class="ff-sub">' + esc(Y.lead) + '</p>' : '') + roundStatus('fy') +
       '<div class="btv-note"><p>' + esc(Y.invite) + '</p><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Counseling">Book Your First-Year Check-in</a></div></div>';
-    return h;
+    return h + tgHtml();
   }
   function vRound() {
     var w = V.who, k = V.rk, R = roundOf(k), d = dataOf(w), e = d.mo[k] || { r: {} };
@@ -670,8 +680,140 @@
       'The card carries your first names and your check-in answers, locked with your shared word.', 'QR code for your check-in card');
   }
 
+  /* ---------- Your Tree, Then Your Grove (marriage/together.js), and the invites ---------- */
+  var APP_LINKS = { '/birch/': 'Open Birch', '/oak/': 'Open Oak', '/grove/': 'Open The Grove' };
+  function siteBase() { return /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; }
+  function safeLink(u) { u = String(u || ''); return /^\/[A-Za-z0-9/_#.?=&-]*$/.test(u) || /^https:\/\/growwithgrounded\.com\//.test(u) ? u : ''; }
+  function coupleFw() {
+    var s = setup(); if (!s) return { faith: false, plain: true, groups: [] };
+    var ws = ['a', 'b'], f = ws.filter(function (w) { return s.fwp[w] === 'faith'; });
+    var groups = []; f.forEach(function (w) { var it = faithItem(s.fb[w]); if (it && known(s.fb[w]) && groups.indexOf(it.group) < 0) groups.push(it.group); });
+    return { faith: f.length > 0, plain: f.length < 2, groups: groups };
+  }
+  // A practice's Faith line: each partner's own tradition's line (faithBy, keyed by the faith.js group) when that
+  // partner chose Faith wording and a background, or else the general Faith line.
+  function tgFaith(p, fw) {
+    var by = p.faithBy && typeof p.faithBy === 'object' ? p.faithBy : {}, out = [];
+    fw.groups.forEach(function (g) { if (typeof by[g] === 'string' && out.indexOf(by[g]) < 0) out.push(by[g]); });
+    if (!out.length && typeof p.faith === 'string' && p.faith) out.push(p.faith);
+    return out;
+  }
+  function tgPractice(p, fw) {
+    var meta = [p.when, p.time].filter(function (t) { return t && typeof t === 'string'; }).map(esc).join(' &middot; ');
+    var faith = fw.faith ? tgFaith(p, fw) : [], plain = typeof p.plain === 'string' ? p.plain : '';
+    var body = '';
+    if (faith.length && fw.plain && plain) body = '<p><b>Plain:</b> ' + esc(plain) + '</p>' + faith.map(function (l) { return '<p class="gm-faith"><b>Faith:</b> ' + esc(l) + '</p>'; }).join('');
+    else if (faith.length) body = faith.map(function (l) { return '<p class="gm-faith">' + esc(l) + '</p>'; }).join('');
+    else body = plain ? '<p>' + esc(plain) + '</p>' : '';
+    return '<li><b>' + esc(p.title || '') + '</b>' + (meta ? '<small>' + meta + '</small>' : '') + body + '</li>';
+  }
+  function tgHtml() {
+    var T = TG || {}, steps = Array.isArray(T.steps) ? T.steps.filter(function (x) { return x && x.title; }) : [];
+    var prs = Array.isArray(T.practices) ? T.practices.filter(function (x) { return x && x.title; }) : [];
+    var s = setup(), A = s ? nm('a') : '', B = s ? nm('b') : '';
+    var h = '<div class="ff-card gm-tg" id="gm-tg"><h2>' + esc(T.title || 'Your Tree, Then Your Grove') + '</h2>' +
+      '<p class="ff-sub">' + esc(T.lead || 'Each of you grows a Tree of your own, and then the two of you grow a Grove together.') + '</p>';
+    if (steps.length) h += '<ol class="gm-tg-steps">' + steps.map(function (x) {
+      var ls = (Array.isArray(x.links) ? x.links : []).map(function (k) { return k && { href: safeLink(k.href), label: k.label }; }).filter(function (k) { return k && k.href && k.label; });
+      var l = safeLink(x.link); if (l && !ls.some(function (k) { return k.href === l; })) ls.push({ href: l, label: APP_LINKS[l] || 'Open' });
+      return '<li><b>' + esc(x.title) + '</b>' + (x.text ? '<p>' + esc(x.text) + '</p>' : '') + (ls.length ? '<p>' + ls.map(function (k) { return '<a href="' + esc(k.href) + '">' + esc(k.label) + '</a>'; }).join(' &middot; ') + '</p>' : '') + '</li>';
+    }).join('') + '</ol>';
+    // the invites: each partner onto their own Tree (Birch or Oak, by age), and the two of them into a Grove
+    var person = function (w, name) {
+      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 26, and Oak for ages 25 to 60. Choose the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
+        '<div class="ff-links"><a href="/birch/">Birch, Ages 18 to 26</a><a href="/oak/">Oak, Ages 25 to 60</a></div>' +
+        '<div class="ff-row">' + btn('invite', 'Copy ' + (name ? esc(name) + '’s' : 'an') + ' Invite', { to: w, cls: 'btn-secondary ff-sm' }) + '</div></div>';
+    };
+    h += '<div class="gm-inv"><h3>Your Invites</h3><p class="btv-small">Each Tree lives on its own device, behind its own lock, so each of you grows at your own pace.</p>' +
+      '<div class="btv-who">' + person('a', A) + person('b', B) + '</div>' +
+      '<div class="btv-note"><p><b>Your Grove, Together</b><br>When you each have a Tree, start a Grove, where your two trees stand side by side.</p><div class="ff-row"><a class="btn btn-primary ff-sm" href="/grove/">Open The Grove</a>' + btn('invite', 'Copy a Grove Invite', { to: 'grove', cls: 'btn-secondary ff-sm' }) + '</div></div>' +
+      '<p class="ff-status" id="gm-invst" role="status" aria-live="polite"></p></div>';
+    if (prs.length) {
+      var fw = coupleFw();
+      h += '<details class="btv-more gm-prs"><summary>Family Practices (' + prs.length + ')</summary>' + (fw.faith ? '' : '<p class="btv-small">Shown in Plain wording. Choose Faith wording in your check-in to see the Faith version.</p>') +
+        '<ul>' + prs.map(function (p) { return tgPractice(p, fw); }).join('') + '</ul></details>';
+    }
+    return h + srcLine(T.sources) + '</div>';
+  }
+  function copyText(t, done) {
+    var fail = function () { var a = document.createElement('textarea'); a.value = t; a.setAttribute('readonly', ''); a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select(); var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} a.remove(); done(ok); };
+    try { if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(t).then(function () { done(true); }, fail); return; } } catch (e) {}
+    fail();
+  }
+  function copyInvite(to) {
+    var base = siteBase(), name = to === 'a' || to === 'b' ? nm(to) : '', t;
+    if (to === 'grove') t = 'Let’s grow a Grove together, where our two trees stand side by side: ' + base + '/grove/';
+    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded. Birch is for ages 18 to 26: ' + base + '/birch/ and Oak is for ages 25 to 60: ' + base + '/oak/ Everything stays on your own device.';
+    copyText(t, function (ok) { var el = $('gm-invst'); if (el) el.textContent = ok ? 'Invite copied. Paste it in a message.' : 'Copy did not work here. ' + t; });
+  }
+
+  /* ---------- the Week Card (GMCore.week) ---------- */
+  var WEEK_HERE = 'This link is a Week Card for your leaders. They paste it into their Field Guide, and you type your shared word there.';
+  function weekHash(start) {
+    var h = location.hash || ''; if (!/(?:^|[#&?])gmw=w1\./.test(h)) return false;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    if (!start) say(WEEK_HERE);
+    return true;
+  }
+  function weekWho() { return !setup() ? [] : oneDevice() ? ['a', 'b'] : [st.s.me]; }
+  function weekReady() { var ws = weekWho(); return ws.length && ws.every(function (w) { return !!DATA[w]; }); }
+  function weekHub() {
+    var two = !oneDevice();
+    return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">Before each session, you can choose to share a short card with your leaders: the videos you watched, the practices you tried, any workbook answers you marked Share With Our Leaders, and one question you want to talk about.</p>' +
+      '<p class="btv-small">It is your choice, and it is locked with your shared word. You open it with your leaders at your session' + (two ? ', and each of you can make one from your own device' : '') + '.</p>' +
+      '<div class="ff-row">' + btn('week', 'Make a Week Card', { cls: 'btn-primary ff-sm' }) + '</div></div>';
+  }
+  function wbText(ex, e) {
+    var out = [], t = e.t || [];
+    if (ex.kind === 'choose' && e.c !== '' && e.c != null && ex.choices && ex.choices[+e.c]) out.push(ex.choices[+e.c]);
+    t.forEach(function (x, k) { x = String(x || '').trim(); if (!x) return; var pr = (ex.kind === 'write' || ex.kind === 'list') && ex.prompts && ex.prompts[k]; out.push(pr ? pr + '\n' + x : x); });
+    return out.join('\n');
+  }
+  function weekItems() {
+    var L = learnData(), D = lload(), since = new Date(Date.now() - 14 * 864e5), cut = since.getFullYear() + '-' + ('0' + (since.getMonth() + 1)).slice(-2) + '-' + ('0' + since.getDate()).slice(-2);
+    var vids = []; if (L) L.tracks.forEach(function (tr) { tr.lessons.forEach(function (l) { if (D.done[l.id]) vids.push({ id: l.id, title: l.title, on: String(D.done[l.id]) >= cut }); }); });
+    var prs = []; (PR ? PR.items : []).forEach(function (p) { prs.push({ id: 'p-' + p.id, title: p.title }); });
+    ((TG && Array.isArray(TG.practices)) ? TG.practices : []).forEach(function (p) { if (p && p.title && p.id) prs.push({ id: 't-' + p.id, title: p.title }); });
+    var wbs = []; weekWho().forEach(function (w) { (WB ? WB.chapters : []).forEach(function (ch) { ch.exercises.forEach(function (ex) { var e = DATA[w].wb[ex.id]; if (e && e.ld && hasWords(e)) wbs.push({ id: w + '-' + ex.id, w: nm(w), t: ex.title, a: wbText(ex, e) }); }); }); });
+    return { vids: vids, prs: prs, wbs: wbs };
+  }
+  function vWeek() {
+    var I = weekItems(), two = !oneDevice();
+    var row = function (kind, it, checked, small) { return '<label><input type="checkbox" data-wk="' + kind + '" value="' + esc(it.id) + '"' + (checked ? ' checked' : '') + '><span>' + esc(it.title || it.t) + (small ? '<small>' + small + '</small>' : '') + '</span></label>'; };
+    var sel = '<option value="">Our next session</option>' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '">Session ' + n + '</option>'; }).join('') + [1, 2, 3].map(function (n) { return '<option value="e' + n + '">Essentials Session ' + n + '</option>'; }).join('');
+    return '<div class="ff-card gm-wk"><h2>Make a Week Card</h2><p class="ff-sub">Choose what to share with your leaders this week. Only what you check goes on the card.</p>' +
+      '<div class="ff-grid"><label class="ff-f"><span class="l">For which session?</span><select id="gm-wk-s">' + sel + '</select></label></div>' +
+      '<h3>Videos You Watched</h3>' + (I.vids.length ? '<div class="gm-wk-list">' + I.vids.map(function (v) { return row('vid', v, v.on); }).join('') + '</div>' : '<p class="btv-small">Videos you finish in Learn show here.</p>') +
+      '<h3>Practices You Tried</h3>' + (I.prs.length ? '<div class="gm-wk-list">' + I.prs.map(function (p) { return row('pr', p, false); }).join('') + '</div>' : '<p class="btv-small">Practices for Two show here.</p>') +
+      '<h3>From The Couple Workbook</h3>' + (I.wbs.length ? '<div class="gm-wk-list">' + I.wbs.map(function (x) { return row('wb', x, true, esc(x.w) + ': ' + esc(x.a.length > 140 ? x.a.slice(0, 140) + '...' : x.a)); }).join('') + '</div>'
+        : '<p class="btv-small">In The Couple Workbook, choose Share With Our Leaders on any exercise you would like to bring' + (two ? ' from your own answers' : '') + '.</p>') +
+      '<h3>One Question</h3><label class="ff-f"><span class="h">One question you want to talk about at your session, if you like.</span><textarea id="gm-wk-q" rows="2" maxlength="500"></textarea></label>' +
+      '<label class="gm-check"><input type="checkbox" id="gm-wk-yes"><span>' + (two ? 'I say yes to sharing this card with our leaders.' : 'We both say yes to sharing this card with our leaders.') + '</span></label>' +
+      '<div class="ff-row">' + btn('wk-make', 'Lock and Make the Card') + btn('leave-talk', 'Lock and Close', sec()) + '<span class="ff-status" id="gm-wkst" role="status" aria-live="polite"></span></div>' +
+      '<p class="btv-small">Nothing is sent anywhere. The card rides in a link you bring to your leaders, and it opens only with your shared word.</p></div>';
+  }
+  function makeWeek() {
+    var msg = $('gm-wkst'), W = C.week;
+    if (!W) { if (msg) msg.textContent = 'The Week Card could not load. Refresh the page and try again.'; return; }
+    if (!($('gm-wk-yes') || {}).checked) { if (msg) msg.textContent = 'Check the yes box first. Sharing is always your choice.'; return; }
+    var I = weekItems(), on = function (kind) { return Array.prototype.filter.call(document.querySelectorAll('[data-wk="' + kind + '"]'), function (x) { return x.checked; }).map(function (x) { return x.value; }); };
+    var pick = function (list, ids) { return list.filter(function (x) { return ids.indexOf(x.id) >= 0; }); };
+    var ws = weekWho(), card = { v: 1, m: oneDevice() ? 'one' : 'two', s: ($('gm-wk-s') || {}).value || '', n: nm(ws[0]), to: oneDevice() ? nm('b') : nm(other(st.s.me)), on: today(),
+      vid: pick(I.vids, on('vid')).map(function (x) { return x.title; }), pr: pick(I.prs, on('pr')).map(function (x) { return x.title; }),
+      wb: pick(I.wbs, on('wb')).map(function (x) { return { w: x.w, t: x.t, a: x.a.slice(0, W.LIM.ans) }; }).slice(0, W.LIM.wb), q: String(($('gm-wk-q') || {}).value || '').trim().slice(0, W.LIM.q) };
+    if (!card.vid.length && !card.pr.length && !card.wb.length && !card.q) { if (msg) msg.textContent = 'Choose at least one thing to share, or write your question.'; return; }
+    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. At your session, you type it into your leaders’ Field Guide to open the card. Capital letters do not matter.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
+      check: function (v) { return v[0].trim().length < 4 ? 'Use at least 4 letters. Longer is safer.' : v[0].trim().toLowerCase() !== v[1].trim().toLowerCase() ? 'The two words are different.' : ''; } })
+      .then(function (v) { if (!v) return; return W.make(card, v[0]).then(function (code) { go('wcard', { code: code }); }); })
+      .catch(function () { if (msg) msg.textContent = 'The card could not be made. Try again.'; });
+  }
+  function vWCard(code) {
+    return cardView(C.week.link(code), 'Your Week Card', 'Send this link to your leaders, or bring it to your session. There, you type your shared word into their Field Guide to open it.',
+      'The card carries your first names, the videos, practices, and workbook answers you chose, and your question, locked with your shared word. Nothing else from the app goes on it.', 'QR code for your Week Card');
+  }
+
   /* ---------- render ---------- */
-  var BEFORE_VIEWS = { hub: 1, answer: 1, safety: 1, safehelp: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1 };
+  var BEFORE_VIEWS = { hub: 1, answer: 1, safety: 1, safehelp: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1, week: 1, wcard: 1 };
   function render() {
     var el = $('gm-app'); if (!el) return;
     if (!subtle) { el.innerHTML = '<div class="ff-card"><p>This browser cannot lock answers. Try a current version of Safari, Chrome, Edge, or Firefox.</p></div>'; return; }
@@ -699,6 +841,8 @@
     else if (v === 'after') h = vAfter();
     else if (v === 'round') h = vRound();
     else if (v === 'mcard') h = vMCard(V.code);
+    else if (v === 'week') h = weekReady() ? vWeek() : (V.view = 'hub', vHub());
+    else if (v === 'wcard') h = vWCard(V.code);
     else h = vWelcome();
     el.innerHTML = '<p class="btv-say" id="btv-say" role="status" aria-live="polite"></p>' + h;
     tabMark();
@@ -850,6 +994,15 @@
     }
     else if (a === 'mpaste') { var c3 = mcodeOf($('gm-mpaste').value); if (!c3) { say('That link is not a Grounded Marriage check-in. Copy the whole link and try again.'); return; } openM(c3); }
     else if (a === 'leave-after') { saveAll().then(function () { lockAll(); go('after'); say('Locked. Each passcode opens it again.'); }); }
+    /* Your Tree, Then Your Grove: invites */
+    else if (a === 'invite') copyInvite(b.getAttribute('data-to'));
+    /* the Week Card */
+    else if (a === 'week') {
+      lockAll();
+      var wkOpen = oneDevice() ? unlockBoth('Each of you types your own passcode to make your Week Card together.') : unlock(st.s.me, 'Your Week Card is made from your own answers.');
+      wkOpen.then(function (ok) { if (ok) { V.wk = null; go('week'); } else { lockAll(); render(); } });
+    }
+    else if (a === 'wk-make') makeWeek();
     else if (a === 'clear') {
       if (!window.confirm('Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device. It cannot be undone.')) return;
       try { localStorage.removeItem(KEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}
@@ -860,6 +1013,7 @@
     var t = e.target;
     if (t.name === 'btv-mode') { var f = $('btv-me-f'); if (f) f.hidden = t.value !== 'two'; }
     if (t.hasAttribute && t.hasAttribute('data-wbsh') && DATA[V.who]) { var ex = exById(t.getAttribute('data-wbsh')); if (ex) { exEntry(DATA[V.who], ex).sh = t.checked ? 1 : 0; saveSoon(V.who); var s = $('gm-wbst'); if (s) s.textContent = t.checked ? 'Your partner can read this one.' : 'This one stays private.'; } }
+    if (t.hasAttribute && t.hasAttribute('data-wbld') && DATA[V.who]) { var exl = exById(t.getAttribute('data-wbld')); if (exl) { exEntry(DATA[V.who], exl).ld = t.checked ? 1 : 0; saveSoon(V.who); var sl = $('gm-wbst'); if (sl) sl.textContent = t.checked ? 'This one can go on your Week Card.' : 'This one stays off your Week Card.'; } }
     if (t.hasAttribute && t.hasAttribute('data-wbc') && DATA[V.who]) { var ex2 = exById(t.getAttribute('data-wbc')); if (ex2) { exEntry(DATA[V.who], ex2).c = +t.value; saveSoon(V.who); } }
   });
   document.addEventListener('input', function (e) {
@@ -872,6 +1026,7 @@
   });
   window.addEventListener('pagehide', function () { ['a', 'b'].forEach(function (w) { if (KEYS[w]) save(w); }); });
   window.addEventListener('hashchange', function () {
+    if (weekHash()) return;
     if (!takeHash()) return;
     var c = pendingCard(); if (c) { if (setup()) { st.inCard = c; persist(); } openCard(c); return; }
     var m = pendingM(); if (m) openM(m);
@@ -923,7 +1078,7 @@
     var el = $('gm-learn'), D = lload();
     el.innerHTML = '<button type="button" class="btn btn-secondary ff-sm" data-lback="1">&larr; All Lessons</button><div class="btv-eb">' + esc(f.t.title) + '</div><h2 class="btv-lh">' + esc(f.l.title) + '</h2><div id="gm-player"></div><div class="btv-lsrc">' + (window.GGSources ? GGSources.lesson('', f.l) : '') + '</div>';
     CTL = GGLearn.player($('gm-player'), {
-      app: 'gm', lesson: f.l, track: f.t, tracks: L.tracks, done: D.done, at: D.at[f.l.id] || 0, accent: '#8B5E1A', mark: { name: 'The Grounded Marriage' },
+      app: 'gm', lesson: f.l, track: f.t, tracks: L.tracks, done: D.done, at: D.at[f.l.id] || 0, accent: '#3F5F86', mark: { name: 'The Grounded Marriage' },
       onAt: function (i) { var d = lload(); d.at[f.l.id] = i; lkeep(d); },
       onDone: function (lid) { var d = lload(); if (!d.done[lid]) { d.done[lid] = today(); lkeep(d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { learnPlay(nid); },
@@ -936,7 +1091,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=ln38', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=ln39', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
@@ -958,6 +1113,7 @@
   }
 
   /* ---------- start ---------- */
+  var wk0 = weekHash(true);
   takeHash();
   if (st && st.s) V.view = 'hub';
   var pc0 = pendingCard(), pm0 = pendingM();
@@ -967,6 +1123,7 @@
   tabsSetup(); tabMark();
   var src = $('gm-src');
   if (src && window.GGSources && Q.sources && Q.sources.length) src.innerHTML = GGSources.line(Q.sources);
+  if (wk0) setTimeout(function () { say(WEEK_HERE); }, 60);
   if (pc0) setTimeout(function () { openCard(pendingCard() || pc0); }, 200);
   else if (pm0) setTimeout(function () { openM(pendingM() || pm0); }, 200);
   window.GGGM = { state: function () { return st; }, view: function () { return V; }, Q: Q };
