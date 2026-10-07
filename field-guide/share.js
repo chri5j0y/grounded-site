@@ -1,11 +1,15 @@
 // =====================================================================
 // GROUNDED FIELD GUIDE (TM): the Share Card Builder (GWG BLD 746; Painting look,
-// The Grounded Marriage, and named bios, GWG BLD 757).
+// The Grounded Marriage, and named bios, GWG BLD 757; print sizes, QR codes, the Services, the
+// Field Guide mark, and TM on every name, GWG BLD 758).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A Staff and Founder tab. Pick a subject, a message, a platform, a format,
 // and a look (Light, Dark, Tree Color, or Painting, which sets the words over the
 // subject's own painting with a soft shade); it draws the card or banner at the platform's exact size and
-// saves it as a PNG. Bios for each platform sit below with a Copy button.
+// saves it as a PNG. Print makes a 4 by 6 card, 5 by 7, 8.5 by 11 flyer, 11 by 17 poster, or 2 by 3.5
+// business card at 300 dpi with an eighth inch of bleed, saved as a PNG or a one page PDF, with the
+// trim and safe lines shown in the preview only. An optional QR code leads to the subject's page.
+// Bios for each platform sit below with a Copy button.
 // Data: the Staff library's brand.share, with a small built-in fallback so
 // the tab works before that library update is applied. Everything is drawn
 // on this device; nothing is sent anywhere.
@@ -29,7 +33,7 @@ const FB = {
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
     {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, classrooms, churches, and groups.'},
     {id: 'marriage', name: 'The Grounded Marriage', mark: 'marriage/mark.svg', color: '#3F5F86', tagline: 'Before the Vows and After the Vows: a private place for the two of you to talk, grow, and keep growing.', line: 'For couples. Everything stays on your device.', url: 'growwithgrounded.com/marriage', always: true},
-    {id: 'field', name: 'Grounded Field Guide', mark: 'favicon.svg', color: '#2E2118', tagline: 'Every Grounded tool and guide, in one place.', line: 'For chaplains, pastors, teachers, school counselors, and parents.', url: 'growwithgrounded.com/field-guide'}
+    {id: 'field', name: 'Grounded Field Guide', mark: 'shared/marks/fieldguide.svg', color: '#2E2118', tagline: 'Every Grounded tool and guide, in one place.', line: 'For chaplains, pastors, teachers, school counselors, and parents.', url: 'growwithgrounded.com/field-guide'}
   ],
   messages: [],
   bios: [],
@@ -44,6 +48,48 @@ const FB = {
 const KINDS = [['tagline', 'Tagline'], ['intro', 'Intro'], ['what', 'What We Do'], ['pitch', 'Pitch'], ['slogan', 'Slogan']];
 const LOOKS = [['light', 'Light'], ['dark', 'Dark'], ['tree', 'Tree Color'], ['painting', 'Painting']];
 const FORMATS = [['card', 'Card'], ['square', 'Square'], ['banner', 'Banner']];
+// Print: sizes in inches (short side, long side), drawn at 300 dpi with an eighth inch of bleed on every edge.
+// Safe: how far inside the trim the words, marks, and QR code stay.
+const DPI = 300, BLEED = .125;
+const PRINT = {id: 'print', name: 'Print'};
+const PSIZES = [
+  {id: 'p4x6', name: '4 by 6 Card', a: 4, b: 6, safe: .1875},
+  {id: 'p5x7', name: '5 by 7', a: 5, b: 7, safe: .1875},
+  {id: 'p85x11', name: '8.5 by 11 Flyer', a: 8.5, b: 11, safe: .25},
+  {id: 'p11x17', name: '11 by 17 Poster', a: 11, b: 17, safe: .375},
+  {id: 'pbiz', name: '2 by 3.5 Business Card', a: 2, b: 3.5, safe: .125}
+];
+const ORIENTS = [['tall', 'Tall'], ['wide', 'Wide']];
+// The Services as subjects: each family on the Services page and each service page, with its own painting.
+const SVC_FAM = [
+  {id: 'fam-marriage', name: 'Marriage', hero: 'page-marriage', tagline: 'Your vows, your way.', line: 'Weddings, elopements, vow renewals, and The Grounded Marriage\u2122.', url: 'growwithgrounded.com/services.html#marriage'},
+  {id: 'fam-celebrations', name: 'Celebrations', hero: 'page-celebrations', tagline: 'Days to remember.', line: 'Child blessings, house blessings, and milestone celebrations.', url: 'growwithgrounded.com/services.html#celebrations'},
+  {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, bedside blessings, and pregnancy and infant loss.', url: 'growwithgrounded.com/services.html#farewells'},
+  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'You\'re not alone.', line: 'End-of-life support, and grief and caregiver support.', url: 'growwithgrounded.com/services.html#hard-seasons'},
+  {id: 'fam-growth', name: 'Growth', hero: 'page-growth', tagline: 'Grow deeper. Rest well.', line: 'Spiritual guidance, and meditation, sound, and movement.', url: 'growwithgrounded.com/services.html#growth'},
+  {id: 'fam-teams', name: 'For Teams', hero: 'page-teams', tagline: 'Talks, conferences, and trainings for the people who do this work.', line: 'Speaking, training, and the Grounded Field Guide\u2122 for organizations.', url: 'growwithgrounded.com/services.html#for-teams'}
+];
+const SVC_PAGES = [
+  ['weddings', 'Weddings', 'page-marriage', 'Your story, your vows, and a ceremony that sounds like the two of you.', 'Marriage'],
+  ['elopements', 'Elopements', 'page-marriage', 'Just the two of you, or a handful of people you love, anywhere that matters to you.', 'Marriage'],
+  ['vow-renewals', 'Vow Renewals', 'page-marriage', 'For couples who would say it all again, and want the people they love to hear it.', 'Marriage'],
+  ['premarital-counseling', 'Premarital Sessions', 'page-marriage', 'The Grounded Marriage\u2122: build a strong foundation before the wedding day, with a couple who has been married 22 years.', 'Marriage'],
+  ['child-blessings', 'Child Blessings', 'page-celebrations', 'Welcoming a new life into a family and a circle of people who will love them.', 'Celebrations'],
+  ['house-blessings', 'House Blessings', 'page-celebrations', 'A new home, or a new beginning in an old one.', 'Celebrations'],
+  ['milestones', 'Milestone Celebrations', 'page-celebrations', 'Graduations, retirements, recovery anniversaries, and other thresholds worth honoring.', 'Celebrations'],
+  ['funerals-memorials', 'Funerals and Memorials', 'page-farewells', 'Honest, personal services that sound like the person you love.', 'Farewells'],
+  ['celebrations-of-life', 'Celebrations of Life', 'page-farewells', 'Stories, music, laughter, and room for tears.', 'Farewells'],
+  ['bedside-blessings', 'Bedside Blessings', 'page-farewells', 'Prayers, blessings, and quiet rituals for the last days, at home, in hospice, or in the hospital.', 'Farewells'],
+  ['pregnancy-infant-loss', 'Pregnancy and Infant Loss', 'page-farewells', 'Gentle support and ceremony for parents and families after miscarriage, stillbirth, or the death of a baby.', 'Farewells'],
+  ['end-of-life-support', 'End-of-Life Support', 'page-hard-seasons', 'Presence for the last chapter, for the person dying and the people who love them.', 'Hard Seasons'],
+  ['grief-caregiver-support', 'Grief and Caregiver Support', 'page-hard-seasons', 'For the ones carrying more than they can say.', 'Hard Seasons'],
+  ['spiritual-guidance', 'Spiritual Guidance', 'page-growth', 'One-on-one guidance for your inner life, whatever shape it is in.', 'Growth'],
+  ['meditation-sound-movement', 'Meditation, Sound, and Movement', 'page-growth', 'A quiet place for your body to settle and breathe again.', 'Growth'],
+  ['speaking-training', 'Speaking and Training', 'page-speaking', 'Real stories and practical tools for the people who do this work.', 'For Teams'],
+  ['organizations', 'For Organizations', 'page-teams', 'For churches, schools, and hospices: trained Guides, safety built in, and support for your people.', 'For Teams']
+];
+const SERVICES = SVC_FAM.map(f => Object.assign({svc: 'family', mark: 'favicon.svg', color: GOLD, focus: .5}, f, {hero: 'shared/heroes/' + f.hero + '-wide.webp'})).concat(
+  SVC_PAGES.map(([pg, name, hero, tagline, fam]) => ({id: 'svc-' + pg, svc: 'page', name, mark: 'favicon.svg', color: GOLD, hero: 'shared/heroes/' + hero + '-wide.webp', focus: .5, tagline, line: fam + ', with Grow With Grounded\u2122.', url: 'growwithgrounded.com/' + pg + '.html'})));
 // The Painting look: each subject's wide painting, and where its main tree stands (a fraction of the image width).
 const FOCUS = {maple: .37, aspen: .36, pine: .38, birch: .18, oak: .72, sequoia: .22, willow: .21, grove: .5, home: .74, marriage: .64};
 // People named in the bios (bios may name a person who is not a card subject).
@@ -52,7 +98,7 @@ const PEOPLE = {chris: 'Chris Joy', kayti: 'Kayti Joy'};
 const SAFE = {facebook: [.12, .1, .92, .9], x: [.22, .12, .92, .88], linkedin: [.25, .1, .94, .9], substack: [.06, .1, .94, .9]};
 
 let LIB = null;
-const S = {subject: 'gwg', msg: 'tag', own: '', platform: 'facebook', format: 'card', look: 'light', marks: true, bios: 'all'};
+const S = {subject: 'gwg', msg: 'tag', own: '', platform: 'facebook', format: 'card', look: 'light', marks: true, bios: 'all', orient: 'tall', qr: false};
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const slug = s => String(s).replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -67,6 +113,8 @@ function data(){
   FB.subjects.filter(f => f.always && !subjects.some(s => s.id === f.id || (isMarriage(f) && isMarriage(s)))).forEach(f => {
     const at = subjects.findIndex(s => isLogo(s) && !isGWG(s)); subjects.splice(at < 0 ? subjects.length : at, 0, Object.assign({}, f));
   });
+  // The Services join after every Grounded subject (built in; a library may add more).
+  SERVICES.forEach(v => { if (!subjects.some(s => s.id === v.id)) subjects.push(Object.assign({}, v)); });
   return {
     subjects,
     messages: Array.isArray(d.messages) ? d.messages : FB.messages,
@@ -84,6 +132,7 @@ function treeKey(s){
 }
 function markUrl(s){
   const t = treeKey(s), m = s.mark;
+  if (isField(s)) return '../shared/marks/fieldguide.svg';
   if (m && /^(https?:|\/)/.test(m)) return m;
   if (m && /[\/.]/.test(m)) return '../' + m.replace(/^(\.\.\/|\.\/)+/, '');
   if (t) return '../shared/marks/' + t + '.svg';
@@ -92,13 +141,22 @@ function markUrl(s){
 const isLogo = s => /favicon\.svg$/.test(markUrl(s));
 const siteOf = s => s.url || (treeKey(s) ? 'growwithgrounded.com/' + treeKey(s) : 'growwithgrounded.com');
 const isGWG = s => s.id === 'gwg' || /^grow with grounded$/i.test(s.name || '');
-const isMarriage = s => s.id === 'marriage' || /grounded marriage/i.test(s.name || '') || /marriage\/mark/.test(s.mark || '');
+const isMarriage = s => !s.svc && (s.id === 'marriage' || /grounded marriage/i.test(s.name || '') || /marriage\/mark/.test(s.mark || ''));
+const isField = s => !s.svc && (s.id === 'field' || s.id === 'fieldguide' || /field guide/i.test(s.name || ''));
+// The name as the card prints it, with TM on every Grounded name (Grow With Grounded, each tree, The Grove, The Grounded Marriage, Grounded Field Guide).
+function cardName(s){
+  let n = String(s.name || '').trim();
+  if (isField(s) && /^(the )?(grounded )?field guide$/i.test(n)) n = 'Grounded Field Guide';
+  const tm = !s.svc && (isGWG(s) || isMarriage(s) || isField(s) || !!treeKey(s));
+  return tm && n && !/\u2122$/.test(n) ? n + '\u2122' : n;
+}
 // The subject's painting: a tree's own wide painting, The Grounded Marriage's, or the home painting for Grow With Grounded and the Field Guide.
 function heroOf(s){
   const fx = +s.focus;
   if (s.hero) return {url: /^(https?:|\/)/.test(s.hero) ? s.hero : '../' + String(s.hero).replace(/^(\.\.\/|\.\/)+/, ''), fx: fx >= 0 && fx <= 1 ? fx : .5};
   const t = treeKey(s);
   if (t) return {url: '../shared/heroes/' + t + '-wide.webp', fx: FOCUS[t]};
+  if (isField(s)) return {url: '../shared/heroes/fieldguide-wide.webp', fx: .47};
   if (isMarriage(s)) return {url: '../marriage/hero-wide.webp', fx: FOCUS.marriage};
   return {url: '../shared/heroes/home-wide.webp', fx: FOCUS.home};
 }
@@ -114,6 +172,14 @@ function current(){
   let text = sub.tagline || '';
   if (S.msg === 'own') text = S.own;
   else if (S.msg.startsWith('m:')){ const m = msgs[+S.msg.slice(2)]; if (m) text = m.text; else S.msg = 'tag'; }
+  if (S.platform === 'print'){
+    const fmts = PSIZES.map(p => [p.id, p.name]);
+    if (!fmts.some(([k]) => k === S.format)) S.format = fmts[0][0];
+    const ps = PSIZES.find(p => p.id === S.format), wide = S.orient === 'wide';
+    const inW = wide ? ps.b : ps.a, inH = wide ? ps.a : ps.b;
+    const print = {size: ps, inW, inH, bleed: BLEED * DPI, safe: ps.safe * DPI, dpi: DPI};
+    return {D, sub, msgs, text, plat: PRINT, fmts, print, W: Math.round((inW + 2 * BLEED) * DPI), H: Math.round((inH + 2 * BLEED) * DPI)};
+  }
   const plat = D.platforms.find(p => p.id === S.platform) || D.platforms[0];
   const fmts = FORMATS.filter(([k]) => k === 'square' ? true : Array.isArray(plat[k]));
   if (!fmts.some(([k]) => k === S.format)) S.format = fmts[0][0];
@@ -209,6 +275,7 @@ function measure(ctx, o, u, R, parts){
   const colW = horiz ? R.w - markW - gapM : R.w;
   if (colW < u * 8) return null;
   const name = wrap(ctx, o.name, F_NAME(u), colW); if (name.lines.length > 2 || name.w > colW) return null;
+  // A TM sits small and raised after the name; the name is measured with it at full size, so it always fits.
   const msgLimit = o.msg.length > 120 ? 6 : 4;
   const msg = o.msg ? wrap(ctx, o.msg, F_MSG(u), colW) : {lines: [], widths: [], w: 0}; if (msg.lines.length > msgLimit || msg.w > colW) return null;
   const line = parts.line && o.line ? wrap(ctx, o.line, F_LINE(u), colW, (u * 0.025) + 'px') : {lines: [], widths: [], w: 0}; if (line.lines.length > 3 || line.w > colW) return null;
@@ -235,9 +302,34 @@ function fit(ctx, o, R, cap){
   return got;
 }
 
+// The name, line by line; a closing TM is drawn small and raised.
+function nameLines(ctx, blk, font, size, tx, ty, align, color){
+  ctx.font = font; ctx.fillStyle = color; ctx.textAlign = 'left';
+  const small = font.replace(/([\d.]+)px/, (a, n) => (+n * .4) + 'px');
+  blk.lines.forEach((l, i) => {
+    ty += size * 1.08; const y = ty - size * .04 - size * .2;
+    const tm = /\u2122$/.test(l), base = tm ? l.slice(0, -1) : l;
+    ctx.font = font; const w1 = ctx.measureText(base).width; ctx.font = small; const w2 = tm ? ctx.measureText('\u2122').width + size * .03 : 0;
+    const x = align === 'center' ? tx - (w1 + w2) / 2 : tx;
+    ctx.font = font; ctx.fillText(base, x, y);
+    if (tm){ ctx.font = small; ctx.fillText('\u2122', x + w1 + size * .03, y - size * .38); }
+  });
+  ctx.font = font; ctx.textAlign = align;
+}
+// A QR code in a white tile with its quiet zone, crisp at whole pixels.
+function drawQR(ctx, M, x, y, s, pnt){
+  const n = M.length, q = 2, ms = Math.max(1, Math.floor(s / (n + 2 * q))), real = ms * (n + 2 * q);
+  const ox = Math.round(x + (s - real) / 2), oy = Math.round(y + (s - real) / 2), r = ms * 1.5;
+  ctx.save();
+  if (pnt){ ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = ms * 2; }
+  ctx.fillStyle = '#FFFFFF'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(ox, oy, real, real, r) : ctx.rect(ox, oy, real, real); ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = '#1E1510';
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) if (M[j][i]) ctx.fillRect(ox + (i + q) * ms, oy + (j + q) * ms, ms, ms);
+}
 // Draw one card or banner on a canvas of exactly W by H pixels.
 async function draw(canvas, cur, look){
-  const {sub, text, plat, W, H} = cur;
+  const {sub, text, plat, W, H} = cur, pr = cur.print || null;
   await fonts();
   const logo = isLogo(sub), P = palette(sub, look), pnt = look === 'painting', hero = pnt ? heroOf(sub) : null;
   const showMarks = S.marks && isGWG(sub);
@@ -246,7 +338,9 @@ async function draw(canvas, cur, look){
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
   const banner = S.format === 'banner', horiz = banner || W / H >= 1.3;
-  const band = Math.round(H * (banner ? .07 : .075)); const bandTop = H - band;
+  // Print: the site line sits inside the safe area, so the ground band grows past the bleed to hold it.
+  const usP = pr ? Math.max(.1 * DPI, Math.min(H * .026, .3 * DPI)) : 0;
+  const band = pr ? Math.round(Math.max(H * .07, pr.safe + usP * 1.9) + pr.bleed) : Math.round(H * (banner ? .07 : .075)); const bandTop = H - band;
   // The Painting look: the main tree stays in view, and the words sit on the open side of the painting.
   let side = 'center', place = .5;
   if (pnt && horiz && Math.abs(hero.fx - .5) > .08){ side = hero.fx < .5 ? 'right' : 'left'; place = side === 'right' ? (banner ? .2 : .25) : (banner ? .8 : .75); }
@@ -256,6 +350,11 @@ async function draw(canvas, cur, look){
   else if (pnt && side !== 'center') R = side === 'right' ? {x: W * .46, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07} : {x: W * .06, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07};
   else if (pnt && !horiz) R = {x: W * .07, y: H * .06, w: W * .86, h: (bandTop - H * .05) * .62 - H * .06};
   else R = {x: W * .07, y: H * .07, w: W * .86, h: bandTop - H * .05 - H * .07};
+  // Print: everything stays inside the safe area (trim, then the safe margin).
+  if (pr){
+    const k = pr.bleed + pr.safe, x0 = Math.max(R.x, k), y0 = Math.max(R.y, k), x1 = Math.min(R.x + R.w, W - k), y1 = Math.min(R.y + R.h, bandTop - pr.safe * .5);
+    R = {x: x0, y: y0, w: x1 - x0, h: y1 - y0};
+  }
   const RS = Object.assign({}, R);
   // A banner's words stop short of its painting's tree.
   if (pnt && banner && side !== 'center'){
@@ -263,12 +362,29 @@ async function draw(canvas, cur, look){
     if (side === 'right' && edge > R.x && edge < R.x + R.w * .6){ R.w -= edge - R.x; R.x = edge; }
     if (side === 'left' && edge < R.x + R.w && edge > R.x + R.w * .4) R.w = edge - R.x;
   }
-  const o ={horiz, logo, name: sub.name || '', msg: String(text || '').trim(), line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
+  // The QR code to the subject's page: a white tile beside the words (wide) or under them (tall).
+  const qrUrl = 'https://' + String(siteOf(sub)).replace(/^https?:\/\//, '');
+  const qrM = S.qr && window.GGQR ? (() => { try { return window.GGQR.matrix(qrUrl); } catch (e){ return null; } })() : null;
+  let qs = 0, qgap = 0; const R0 = Object.assign({}, R);
+  // Beside the words on wide cards; under them on tall cards and where the words share a painting with its tree.
+  const qrSide = horiz && !(pnt && !banner && side !== 'center');
+  if (qrM){
+    qs = Math.round(Math.min(Math.min(R.w, R.h) * .42, Math.max(Math.min(W, H) * .2, pr ? (pr.size.id === 'pbiz' ? .6 : .8) * DPI : 0)));
+    qgap = Math.round(Math.min(W, H) * .035);
+    if (qrSide) R.w -= qs + qgap; else R.h -= qs + qgap;
+  }
+  const o ={horiz, logo, name: cardName(sub), msg: String(text || '').trim(), line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
   const cap = banner ? H * (W / H >= 3.9 ? .045 : .03) : horiz ? Math.min(H * .036, W * .022) : W * .03;
   const m = fit(ctx, o, R, pnt && side !== 'center' && !banner ? cap * .92 : cap);
   // Where the block sits: centered in the region, or toward the open side of a banner's painting.
-  let bx = m ? R.x + (R.w - m.W) / 2 : 0; const by = m ? R.y + (R.h - m.H) / 2 : 0;
+  let bx = m ? R.x + (R.w - m.W) / 2 : 0; let by = m ? R.y + (R.h - m.H) / 2 : 0;
   if (m && pnt && banner && side !== 'center'){ bx = side === 'right' ? R.x + R.w - m.W : R.x; }
+  // With a QR code, the block and the code are centered together in the whole region.
+  let qx = 0, qy = 0;
+  if (qrM && m){
+    if (qrSide){ if (!(pnt && banner && side !== 'center')) bx = R0.x + (R0.w - (m.W + qgap + qs)) / 2; qx = bx + m.W + qgap; qy = by + (m.H - qs) / 2; qy = Math.max(R0.y, Math.min(qy, R0.y + R0.h - qs)); }
+    else { by = R0.y + (R0.h - (m.H + qgap + qs)) / 2; qx = R0.x + (R0.w - qs) / 2; qy = by + m.H + qgap; }
+  }
   if (pnt){
     // The painting, a light all-over shade, then a soft deeper shade behind the words so they read.
     ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
@@ -313,7 +429,7 @@ async function draw(canvas, cur, look){
     }
     ctx.textAlign = align; ctx.textBaseline = 'alphabetic';
     const lines = (blk, font, size, lh, color, spacing) => { ctx.font = font; ctx.fillStyle = color; ctx.letterSpacing = spacing || '0px'; blk.lines.forEach(l => { ty += size * lh; ctx.fillText(l, tx, ty - size * (lh - 1) / 2 - size * .2); }); ctx.letterSpacing = '0px'; };
-    lines(m.name, F_NAME(u), u * 4.4, 1.08, P.ink);
+    nameLines(ctx, m.name, F_NAME(u), u * 4.4, tx, ty, align, P.ink); ty += m.name.lines.length * u * 4.4 * 1.08;
     if (m.msg.lines.length){ ty += u * .7; lines(m.msg, F_MSG(u), u * 2.5, 1.22, P.acc); }
     if (m.line.lines.length){ ty += u * .8; lines(m.line, F_LINE(u), u * 1.25, 1.4, P.soft, (u * .025) + 'px'); }
     if (m.rowH){
@@ -321,13 +437,15 @@ async function draw(canvas, cur, look){
       imgs.slice(1).forEach(im => { ctx.drawImage(im, x, ty, m.rowH, m.rowH); x += m.rowH + u * .55; });
     }
     ctx.shadowColor = 'rgba(0,0,0,0)'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    if (qrM) drawQR(ctx, qrM, qx, qy, qs, pnt);
   }
-  canvas.fit = m ? {x: bx, y: by, w: m.W, h: m.H, u: m.u, R, parts: m.parts, side} : null;
+  canvas.fit = m ? {x: bx, y: by, w: m.W, h: m.H, u: m.u, R, parts: m.parts, side, qr: qrM ? {x: qx, y: qy, s: qs, url: qrUrl} : null} : null;
   // The site, small at the bottom, in the ground band.
-  const us = Math.max(band * .4, 9);
+  const us = pr ? usP : Math.max(band * .4, 9);
   if (us >= 9){
     ctx.font = `600 ${us}px Barlow, system-ui, sans-serif`; ctx.letterSpacing = (us * .08) + 'px'; ctx.fillStyle = look === 'light' ? SOFT : P.soft; ctx.textBaseline = 'middle';
     if (banner){ ctx.textAlign = 'right'; ctx.fillText(siteOf(sub), RS.x + RS.w, bandTop + band / 2); }
+    else if (pr){ ctx.textAlign = 'center'; ctx.fillText(siteOf(sub), W / 2, H - pr.bleed - pr.safe - us * .62); }
     else { ctx.textAlign = 'center'; ctx.fillText(siteOf(sub), W / 2, bandTop + band / 2); }
     ctx.letterSpacing = '0px';
   }
@@ -351,8 +469,14 @@ const CSS = `
 .sc-count{font-weight:600;font-size:14px;color:var(--ink-soft);}
 .sc-count.over{color:var(--danger);}
 .sc-wrap select,.sc-bios select{max-width:100%;}
+.sc-guide{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:14px;color:var(--ink-soft);}
+.sc-guide i{display:inline-block;width:18px;height:0;border-top:2px dashed;vertical-align:middle;margin-right:6px;}
+.sc-guide .tr i{color:#C0392B;} .sc-guide .sf i{color:#1F78C8;}
+.sc-guide .bl i{border:0;height:10px;width:14px;background:rgba(255,255,255,.55);outline:1px solid var(--line);}
+.sc-saves{display:flex;flex-wrap:wrap;gap:8px;}
 `;
 function chips(key, list, val){ return `<div class="sc-chips" role="group">${list.map(([k, l]) => `<button type="button" class="chip" data-sc="${key}" data-v="${esc(k)}" aria-pressed="${val === k}">${esc(l)}</button>`).join('')}</div>`; }
+const fmtIn = n => String(n);
 const clip = (t, n) => { t = String(t); return t.length > n ? t.slice(0, n - 3).replace(/\s+\S*$/, '') + '...' : t; };
 
 function biosHtml(D){
@@ -370,7 +494,7 @@ function biosHtml(D){
       return `<div class="sc-bio"><div class="spread"><b>${esc(head)}</b><span class="sc-count${lim && n > lim ? ' over' : ''}">${n}${aim ? ' characters, aiming for ' + aim + (lim ? ' (' + platName(b.platform) + ' allows ' + lim + ')' : '') : (lim ? ' of ' + lim : '') + ' characters'}</span></div><p>${esc(b.text)}</p><button type="button" class="btn btn-line btn-sm" data-sc="copy-bio" data-v="${i}">Copy</button></div>`; }).join('')}`).join('') : `<p class="muted" style="margin-top:10px">The bios arrive with the next Staff library update.</p>`}</div>`;
 }
 function inner(){
-  const c = current(), {D, sub, msgs, plat, fmts, W, H} = c;
+  const c = current(), {D, sub, msgs, plat, fmts, W, H} = c, pr = c.print;
   const groups = KINDS.map(([k, l]) => [l, msgs.map((m, i) => [m, i]).filter(([m]) => (m.kind || 'slogan') === k)]).filter(g => g[1].length);
   const msgSel = `<select id="sc-msg" data-sc="msg"><optgroup label="Tagline"><option value="tag"${S.msg === 'tag' ? ' selected' : ''}>${esc(clip(sub.tagline || 'The tagline', 80))}</option></optgroup>
     ${groups.map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(([m, i]) => `<option value="m:${i}"${S.msg === 'm:' + i ? ' selected' : ''}>${esc(clip(m.text, 80))}</option>`).join('')}</optgroup>`).join('')}
@@ -379,17 +503,22 @@ function inner(){
   <div class="sc-wrap">
     <div class="card">
       <label class="f" for="sc-sub">Subject</label>
-      <select id="sc-sub" data-sc="subject">${D.subjects.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</select>
+      <select id="sc-sub" data-sc="subject">${[['Grounded', D.subjects.filter(s => !s.svc)], ['Services: Families', D.subjects.filter(s => s.svc === 'family')], ['Services: Pages', D.subjects.filter(s => s.svc === 'page')]].filter(g => g[1].length).map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</optgroup>`).join('')}</select>
       <label class="f" for="sc-msg">Message</label>${msgSel}
       ${S.msg === 'own' ? `<label class="f" for="sc-own">Your Message</label><textarea id="sc-own" data-sc="own" rows="3" placeholder="Type the words for the card.">${esc(S.own)}</textarea>` : ''}
-      <label class="f">Platform</label>${chips('platform', D.platforms.map(p => [p.id, p.name]), plat.id)}
-      <label class="f">Format</label>${chips('format', fmts, S.format)}
+      <label class="f">Platform</label>${chips('platform', D.platforms.map(p => [p.id, p.name]).concat([[PRINT.id, PRINT.name]]), plat.id)}
+      <label class="f">${c.print ? 'Size' : 'Format'}</label>${chips('format', fmts, S.format)}
+      ${c.print ? `<label class="f">Orientation</label>${chips('orient', ORIENTS, S.orient)}` : ''}
       <label class="f">Look</label>${chips('look', LOOKS, S.look)}
       ${isGWG(sub) ? `<label class="sc-cb"><input type="checkbox" data-sc="marks"${S.marks ? ' checked' : ''}> Show the eight tree marks</label>` : ''}
+      <label class="sc-cb"><input type="checkbox" data-sc="qr"${S.qr ? ' checked' : ''}> Add a QR Code to ${esc(siteOf(sub))}</label>
     </div>
     <div class="card sc-prev">
-      <div class="sc-stage"><canvas id="sc-canvas" width="${W}" height="${H}" role="img" aria-label="${esc(sub.name)} ${esc(plat.name)} ${esc(S.format)} preview"></canvas></div>
-      <div class="sc-meta"><span class="muted"><b>${esc(plat.name)} ${esc((FORMATS.find(f => f[0] === S.format) || [])[1] || '')}</b>, ${W} by ${H} pixels</span><button type="button" class="btn btn-gold" data-sc="save">Save Image</button></div>
+      <div class="sc-stage"><canvas id="sc-canvas" width="${W}" height="${H}" role="img" aria-label="${esc(sub.name)} ${esc(plat.name)} ${esc(pr ? pr.size.name : S.format)} preview"></canvas></div>
+      ${pr ? `<div class="sc-guide"><span class="tr"><i></i>Trim</span><span class="sf"><i></i>Safe area: words and codes stay inside</span><span class="bl"><i></i>Bleed: the picture runs past the trim</span></div>` : ''}
+      <div class="sc-meta"><span class="muted">${pr ? `<b>${esc(pr.size.name)}, ${esc(S.orient === 'wide' ? 'Wide' : 'Tall')}</b>, ${fmtIn(pr.inW)} by ${fmtIn(pr.inH)} inches plus bleed, ${W} by ${H} pixels at ${DPI} dpi` : `<b>${esc(plat.name)} ${esc((FORMATS.find(f => f[0] === S.format) || [])[1] || '')}</b>, ${W} by ${H} pixels`}</span>
+        <span class="sc-saves"><button type="button" class="btn btn-gold" data-sc="save">Save Image</button>${pr ? '<button type="button" class="btn btn-line" data-sc="save-pdf">Save PDF</button>' : ''}</span></div>
+      ${pr ? `<p class="muted" style="margin-top:8px;font-size:15px">Print ready at ${DPI} dpi with an eighth inch of bleed on every edge. The trim and safe lines show here only; the saved file is clean.</p>` : ''}
       ${(plat.safe || plat.safeNote) && S.format === 'banner' ? `<p class="muted" style="margin-top:8px;font-size:15px">${esc(plat.safe || plat.safeNote)}</p>` : ''}
     </div>
   </div>
@@ -400,7 +529,18 @@ function paint(){
   const cv = document.getElementById('sc-canvas'); if (!cv) return;
   const t = ++TOKEN, c = current();
   const off = document.createElement('canvas');
-  draw(off, c, S.look).then(() => { if (t !== TOKEN || !document.body.contains(cv)) return; cv.width = off.width; cv.height = off.height; cv.getContext('2d').drawImage(off, 0, 0); cv.dataset.ready = '1'; }).catch(e => { console.warn('Share card', e); });
+  draw(off, c, S.look).then(() => { if (t !== TOKEN || !document.body.contains(cv)) return; cv.width = off.width; cv.height = off.height; const x = cv.getContext('2d'); x.drawImage(off, 0, 0); if (c.print) guides(x, c); cv.dataset.ready = '1'; }).catch(e => { console.warn('Share card', e); });
+}
+// The preview's print guides: the bleed lightened, the trim line, and the safe line.
+function guides(x, c){
+  const {W, H} = c, b = c.print.bleed, k = b + c.print.safe, lw = Math.max(2, Math.round(Math.min(W, H) / 320));
+  x.save();
+  x.fillStyle = 'rgba(255,255,255,.5)';
+  x.fillRect(0, 0, W, b); x.fillRect(0, H - b, W, b); x.fillRect(0, b, b, H - 2 * b); x.fillRect(W - b, b, b, H - 2 * b);
+  x.lineWidth = lw; x.setLineDash([lw * 5, lw * 3]);
+  x.strokeStyle = '#C0392B'; x.strokeRect(b, b, W - 2 * b, H - 2 * b);
+  x.strokeStyle = '#1F78C8'; x.strokeRect(k, k, W - 2 * k, H - 2 * k);
+  x.restore();
 }
 function rerender(){ const r = document.getElementById('sc-root'); if (!r) return; r.innerHTML = inner(); paint(); }
 function toast(t){ const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
@@ -409,18 +549,67 @@ async function copyText(t){
   catch (e){ const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (x){} a.remove(); }
   toast('Copied.');
 }
-async function save(){
+function fileName(c, ext){
+  const parts = c.print ? [slug(c.sub.name), 'Print', slug(c.print.size.name), S.orient === 'wide' ? 'Wide' : 'Tall', c.W + 'x' + c.H, DPI + 'dpi'] : [slug(c.sub.name), slug(c.plat.name), (FORMATS.find(f => f[0] === S.format) || ['', 'Card'])[1], c.W + 'x' + c.H];
+  return parts.join('-') + '.' + ext;
+}
+function download(blob, name){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); toast('Saved ' + name); }
+const blobOf = (cv, type, q) => new Promise(ok => cv.toBlob(ok, type, q));
+// CRC32 for PNG chunks.
+let CRC = null;
+function crc32(bytes){
+  if (!CRC){ CRC = new Uint32Array(256); for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; CRC[n] = c >>> 0; } }
+  let c = 0xFFFFFFFF; for (let i = 0; i < bytes.length; i++) c = CRC[(c ^ bytes[i]) & 255] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+// Mark a PNG as 300 dpi (a pHYs chunk after the header), so print shops and editors read its true size.
+async function withDpi(blob, dpi){
+  const src = new Uint8Array(await blob.arrayBuffer()), ppm = Math.round(dpi / .0254);
+  const ch = new Uint8Array(21), dv = new DataView(ch.buffer);
+  dv.setUint32(0, 9); ch.set([112, 72, 89, 115], 4); dv.setUint32(8, ppm); dv.setUint32(12, ppm); ch[16] = 1;
+  dv.setUint32(17, crc32(ch.subarray(4, 17)));
+  const at = 33; // signature (8) and IHDR (25)
+  return new Blob([src.subarray(0, at), ch, src.subarray(at)], {type: 'image/png'});
+}
+// A one page PDF holding the card as a high quality JPEG: the page is the full bleed size, with the TrimBox at the finished size.
+async function pdfOf(cv, c){
+  const jpg = new Uint8Array(await (await blobOf(cv, 'image/jpeg', .95)).arrayBuffer());
+  const pw = c.W / DPI * 72, ph = c.H / DPI * 72, bp = BLEED * 72, f = n => (Math.round(n * 1000) / 1000).toString();
+  const content = 'q ' + f(pw) + ' 0 0 ' + f(ph) + ' 0 0 cm /Im0 Do Q';
+  const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
+  const push = x => { const b = typeof x === 'string' ? enc.encode(x) : x; parts.push(b); len += b.length; };
+  push('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  const obj = (n, body, stream) => { offs[n] = len; push(n + ' 0 obj\n' + body); if (stream){ push('\nstream\n'); push(stream); push('\nendstream'); } push('\nendobj\n'); };
+  obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2, '<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  obj(3, '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + f(pw) + ' ' + f(ph) + '] /BleedBox [0 0 ' + f(pw) + ' ' + f(ph) + '] /TrimBox [' + f(bp) + ' ' + f(bp) + ' ' + f(pw - bp) + ' ' + f(ph - bp) + '] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>');
+  obj(4, '<< /Length ' + enc.encode(content).length + ' >>', content);
+  obj(5, '<< /Type /XObject /Subtype /Image /Width ' + c.W + ' /Height ' + c.H + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + jpg.length + ' >>', jpg);
+  obj(6, '<< /Title (' + String(cardName(c.sub)).replace(/\u2122/g, '').replace(/[()\\]/g, '') + ' ' + c.print.size.name + ') /Producer (Grounded Field Guide) >>');
+  const xref = len; let x = 'xref\n0 7\n0000000000 65535 f \n';
+  for (let i = 1; i <= 6; i++) x += String(offs[i]).padStart(10, '0') + ' 00000 n \n';
+  push(x + 'trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n' + xref + '\n%%EOF\n');
+  return new Blob(parts, {type: 'application/pdf'});
+}
+async function save(pdf){
   const c = current(); const cv = await draw(document.createElement('canvas'), c, S.look);
-  const name = [slug(c.sub.name), slug(c.plat.name), (FORMATS.find(f => f[0] === S.format) || ['', 'Card'])[1], c.W + 'x' + c.H].join('-') + '.png';
-  cv.toBlob(b => { if (!b) return; const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); toast('Saved ' + name); }, 'image/png');
+  if (c.print && pdf){ download(await pdfOf(cv, c), fileName(c, 'pdf')); return; }
+  let b = await blobOf(cv, 'image/png'); if (!b) return;
+  if (c.print){ try { b = await withDpi(b, DPI); } catch (e){} }
+  download(b, fileName(c, 'png'));
 }
 
 document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('#sc-root [data-sc]'); if (!t || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' || t.type === 'checkbox') return;
   const k = t.dataset.sc, v = t.dataset.v;
-  if (k === 'save'){ save(); return; }
+  if (k === 'save'){ save(false); return; }
+  if (k === 'save-pdf'){ save(true); return; }
   if (k === 'copy-bio'){ const b = data().bios[+v]; if (b) copyText(b.text); return; }
-  if (k === 'platform' || k === 'format' || k === 'look'){ S[k] = v; rerender(); }
+  if (k === 'platform' || k === 'format' || k === 'look' || k === 'orient'){
+    // A business card prints wide; the other print sizes start tall.
+    if (k === 'format' && S.platform === 'print' && v !== S.format) S.orient = v === 'pbiz' ? 'wide' : (S.format === 'pbiz' ? 'tall' : S.orient);
+    S[k] = v; rerender();
+  }
 });
 document.addEventListener('change', e => {
   const t = e.target; if (!t.closest || !t.closest('#sc-root') || !t.dataset.sc) return;
@@ -428,6 +617,7 @@ document.addEventListener('change', e => {
   if (k === 'subject'){ S.subject = t.value; S.msg = 'tag'; rerender(); }
   else if (k === 'msg'){ S.msg = t.value; rerender(); if (S.msg === 'own'){ const o = document.getElementById('sc-own'); if (o) o.focus(); } }
   else if (k === 'marks'){ S.marks = t.checked; paint(); }
+  else if (k === 'qr'){ S.qr = t.checked; paint(); }
   else if (k === 'bios'){ S.bios = t.value; rerender(); }
 });
 let ownT = null;
@@ -442,6 +632,8 @@ window.GGShare = {
   view(lib){ LIB = lib || null; setTimeout(paint, 0); return `<div id="sc-root">${inner()}</div>`; },
   // For tests and the lead: draw any card off screen. o = {subject, msg, own, platform, format, look, marks}.
   render(o){ Object.assign(S, o || {}); return draw(document.createElement('canvas'), current(), S.look); },
-  state: S, data
+  // For tests: the saved files as Blobs (PNG with its dpi, and the print PDF).
+  async files(o){ Object.assign(S, o || {}); const c = current(), cv = await draw(document.createElement('canvas'), c, S.look); const png = await blobOf(cv, 'image/png'); return {png: c.print ? await withDpi(png, DPI) : png, pdf: c.print ? await pdfOf(cv, c) : null, name: fileName(c, 'png'), W: c.W, H: c.H}; },
+  state: S, data, cardName
 };
 })();

@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Field Guide">
 <title>Grounded Field Guide</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E2118'/%3E%3Crect x='17' y='12' width='30' height='40' rx='3' fill='none' stroke='%23D9A847' stroke-width='3.5'/%3E%3Cpath d='M24 22h16M24 30h16M24 38h10' stroke='%23F4EBDA' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="../shared/marks/fieldguide-tab.svg">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%232E2118'/%3E%3Crect x='17' y='12' width='30' height='40' rx='3' fill='none' stroke='%23D9A847' stroke-width='3.5'/%3E%3Cpath d='M24 22h16M24 30h16M24 38h10' stroke='%23F4EBDA' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
@@ -47,6 +47,18 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .lock::after{content:'';position:absolute;inset:14px;border:1px solid rgba(217,168,71,.35);border-radius:18px;pointer-events:none;}
 .lock-card{width:100%;max-width:420px;text-align:center;}
 .lock-tree{width:120px;height:auto;color:#D9A847;}
+/* The Field Guide painting (GWG BLD 758): the lock screen and the Home hero show it, with the words over a soft shade, like the app heroes. */
+.lock{background-color:#2A1A0E;background-image:linear-gradient(180deg,rgba(18,11,6,.7) 0%,rgba(18,11,6,.48) 45%,rgba(18,11,6,.66) 100%),url('../shared/heroes/fieldguide-wide.webp');background-size:cover,cover;background-position:center,center 72%;background-repeat:no-repeat;}
+.lock-card{background:rgba(18,11,6,.42);border-radius:18px;padding:24px 20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
+img.lock-tree{height:120px;display:inline-block;border-radius:22px;box-shadow:0 0 0 2px rgba(255,255,255,.85),0 4px 14px rgba(0,0,0,.35);}
+.lock-title,.lock-gwg,.lock-sub{text-shadow:0 2px 10px rgba(0,0,0,.55);}
+.hello.fg-hero{background-color:#2A1A0E;background-image:linear-gradient(90deg,rgba(18,11,6,.8) 0%,rgba(18,11,6,.56) 48%,rgba(18,11,6,.12) 100%),url('../shared/heroes/fieldguide-wide.webp');background-size:cover,cover;background-position:center,center 74%;background-repeat:no-repeat;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;}
+.hello.fg-hero h1,.hello.fg-hero p,.hello.fg-hero .eyebrow{text-shadow:0 2px 10px rgba(0,0,0,.6);}
+.hello.fg-hero p{color:#F4EBDA;}
+@media(max-width:700px){
+  .lock{background-image:linear-gradient(180deg,rgba(18,11,6,.72) 0%,rgba(18,11,6,.5) 50%,rgba(18,11,6,.66) 100%),url('../shared/heroes/fieldguide-phone.webp');background-position:center,center 70%;}
+  .hello.fg-hero{background-image:linear-gradient(180deg,rgba(18,11,6,.78) 0%,rgba(18,11,6,.5) 50%,rgba(18,11,6,.14) 100%),url('../shared/heroes/fieldguide-phone.webp');background-position:center,center 80%;min-height:320px;justify-content:flex-start;}
+}
 .lock-gwg{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:30px;line-height:1.1;color:#F4EBDA;margin-top:10px;}
 .gwg-w{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15pt;line-height:1;color:#2A1C12;height:auto !important;white-space:nowrap;}
 .pf{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:14px;font-weight:600;padding:5px 10px;border-radius:20px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;}
@@ -89,6 +101,8 @@ h1{font-size:calc(40px * var(--scale));} h2{font-size:calc(32px * var(--scale));
 .bar-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:8px 14px;min-height:60px;}
 .brand{display:flex;align-items:center;gap:10px;color:#D9A847;text-decoration:none;margin-right:auto;min-width:0;}
 .brand .b-tree{height:40px;width:auto;flex:none;}
+.brand img.b-mark{width:40px;border-radius:9px;}
+@media(max-width:640px){ .brand img.b-mark{width:34px;} }
 .brand .b-gwg{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:#F4EBDA;white-space:nowrap;flex:none;}
 .brand .b-sep{color:rgba(244,235,218,.4);font-size:22px;}
 .tm{font-size:.42em;font-weight:600;vertical-align:super;line-height:0;margin-left:1px;}
@@ -597,7 +611,7 @@ body.cd-noscroll{overflow:hidden;}
 <!-- Grounded Field Guide(TM). (c) 2026 Grow With Grounded LLC. Proprietary and confidential. Unauthorized copying or use is prohibited. -->
 <section class="lock" id="lock" role="main" aria-label="Field Guide sign in">
   <div class="lock-card">
-    <svg class="lock-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><br>
+    <img class="lock-tree" src="../shared/marks/fieldguide.svg" alt="" width="120" height="120"><br>
     <div class="lock-gwg">Grow With Grounded</div>
     <h1 class="lock-title">Field Guide<span class="lock-tm">&trade;</span></h1>
     <div id="lock-body"></div>
@@ -607,7 +621,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="app" class="hide">
 <nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../tools.html">Tools</a><a href="../stories.html">Stories</a><a href="../about.html">About</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><a href="../accessibility.html">Accessibility</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
   <header class="bar"><div class="bar-in">
-    <a class="brand" href="#" data-tab="home" aria-label="Field Guide home"><svg class="b-tree" viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg><span class="b-gwg">Grow With Grounded<span class="tm" aria-hidden="true">&trade;</span></span><span class="b-sep">/</span><span class="b-name">Field Guide<sup>&trade;</sup></span></a>
+    <a class="brand" href="#" data-tab="home" aria-label="Field Guide home"><img class="b-tree b-mark" src="../shared/marks/fieldguide.svg" alt="" width="40" height="40"><span class="b-gwg">Grow With Grounded<span class="tm" aria-hidden="true">&trade;</span></span><span class="b-sep">/</span><span class="b-name">Field Guide<sup>&trade;</sup></span></a>
     <button class="bar-btn fg-theme" type="button" aria-label="Switch to dark mode"></button>
     <button class="bar-btn" data-menu="tools" aria-label="Tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span class="lbl">Tools</span></button>
     <button class="bar-btn" data-menu="me" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -631,6 +645,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="qr.js"></script>
 <script src="share.js?v=b757"></script>
 <script src="ceremonies.js?v=cb4"></script>
+<script src="sessions.js"></script>
 <script src="premarital.js?v=pm4"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1030,9 +1045,14 @@ const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<span class="w gwg-w">Grow With Grounded</span>`;
 const CATS = [['start','Getting Started'],['eol','End-of-Life Support'],['ceremony','Ceremonies'],['counsel','Spiritual Guidance'],['grief','Grief & Caregiver Support'],['speaking','Speaking & Training'],['self','For You'],['safety','Safety']];
 const catIcon = c => ({start:'start', eol:'eol', ceremony:'ceremony', counsel:'counsel', grief:'grief', speaking:'speaking', self:'self', safety:'safety'}[c]);
-const G = id => LIB.guides.find(g => g.id === id);
+// Session guides as this person sees them: their own versions in place, then their own sessions (GWG BLD 758, sessions.js).
+const GL = () => !LIB ? [] : window.GGSes ? GGSes.list() : LIB.guides;
+const G = id => !LIB ? null : window.GGSes ? GGSes.get(id) : LIB.guides.find(g => g.id === id);
 const CL = id => DATA.clients.find(c => c.id === id);
 const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief & Caregiver Support', speaking:'Speaking & Training', self:'For You', safety:'Safety'};
+if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m), esc, icon,
+  guideHTML: (g, pv) => vGuide(g, pv), saveAll: (g, adds) => sesSaveAll(g, adds), cats: CATS, services: SERVICE_NAMES});
+const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
 // ---------------- HOME ----------------
 function vHome(){
@@ -1043,12 +1063,12 @@ function vHome(){
   const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !anyMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
   const quick = [['first-conversation','Free First Conversation','30 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
-  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
+  return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${sgHomeCard()}
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1061,12 +1081,16 @@ function addDays(s, n){ const [y,m,d] = s.split('-').map(Number); const t = new 
 
 // ---------------- GUIDES ----------------
 function vGuides(){
-  if (V.guide) return vGuide(G(V.guide));
+  if (V.guide){ const g = G(V.guide); if (window.GGSes) GGSes.state.mode = null; if (g) return vGuide(g); }
+  // Your Sessions and the Session Builder (GWG BLD 758) open inside the Sessions tab.
+  if (window.GGSes && GGSes.open()) return GGSes.view();
   // Guides open to one card per kind of session (GWG BLD 732). Each card opens its guides.
-  const item = g => `<button class="gitem" data-act="guide" data-v="${g.id}"><span class="qi">${icon(catIcon(g.cat))}</span><span><b>${esc(g.title)}</b><small>${esc(g.length)}</small></span><span class="arr" aria-hidden="true">&rsaquo;</span></button>`;
-  const cards = CATS.map(([c,l]) => { const gs = LIB.guides.filter(g => g.cat === c); if (!gs.length) return null;
-    const names = gs.slice(0, 3).map(g => g.title).join(', ') + (gs.length > 3 ? ', and ' + (gs.length - 3) + ' more' : '');
-    return {k: c, title: l, desc: names, n: gs.length + (gs.length === 1 ? ' guide' : ' guides'), accent: c === 'safety' ? 'var(--danger)' : 'var(--gold)', gs}; }).filter(Boolean);
+  const item = g => `<button class="gitem" data-act="guide" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat))}</span><span><b>${esc(g.title)}${sesPill(g)}</b><small>${esc(g.length)}</small></span><span class="arr" aria-hidden="true">&rsaquo;</span></button>`;
+  const all = GL(), own = all.filter(g => g._mine).length;
+  const cards = CATS.map(([c,l]) => { const gs = all.filter(g => g.cat === c); if (!gs.length) return null;
+    const names = gs.slice(0, 3).map(g => g.title).join(', ') + (gs.length > 3 ? ', and ' + (gs.length - 3) + ' more' : ''), mine = gs.filter(g => g._mine).length;
+    return {k: c, title: l, desc: names, n: gs.length + (gs.length === 1 ? ' guide' : ' guides') + (mine ? ', ' + mine + ' of yours' : ''), accent: c === 'safety' ? 'var(--danger)' : 'var(--gold)', gs}; }).filter(Boolean);
+  if (window.GGSes) cards.push({k: 'builder', act: 'ses-builder', eb: 'Your Sessions', title: 'Session Builder', desc: 'Build your own session from blank or from a copy of any session. Customize any guide from its page.', n: own ? own + (own === 1 ? ' session of yours' : ' sessions of yours') : '', accent: 'var(--sage)'});
   const C = secPick('guides', cards);
   if (C){ const x = cards.find(y => y.k === C); return secPage('guides', 'Back to Sessions', `<div class="page-head"><div class="eyebrow">Session guides</div><h1>${x.title}</h1></div>${x.gs.map(item).join('')}`); }
   return `<div class="page-head"><div class="eyebrow">Session guides</div><h1>The Grounded way</h1><p>Step-by-step guides for every session. Read one ahead of time, or tap Start to be walked through it live.</p></div>
@@ -1082,17 +1106,24 @@ function toolLink(k){
   const t = LIB.tools.flatMap(g => g[1]).find(x => x[2] === k);
   return t ? `<a class="btn btn-line btn-sm" href="${esc(t[1])}" target="_blank" rel="noopener">${icon('link')} ${esc(t[0])}</a>` : '';
 }
-function vGuide(g){
+// pv: the Session Builder's preview (no buttons that leave the page). Guide-level who, bring, ask, and words come from
+// the Session Builder (GWG BLD 758); library guides without them show just as before.
+function vGuide(g, pv){
   const docs = (g.docs||[]).map(d => LIB.docs.find(x => x.id === d)).filter(Boolean);
   const emails = (g.emails||[]).map(e => LIB.emails.find(x => x.id === e)).filter(Boolean);
-  return `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>
-  <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}</h1></div>
-  <div class="card"><p class="purpose">${mark(g.purpose)}</p>
-    <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${g.id}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${g.id}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div></div>
+  const lst = (h, a, say) => a && a.length ? `<div class="card"><h3>${h}</h3>${say ? `<div class="blk say" style="margin-top:8px"><ul>${a.map(x => `<li>${mark(x)}</li>`).join('')}</ul></div>` : `<ul class="checklist" style="margin-top:8px">${a.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul>`}</div>` : '';
+  const deb = g.debrief && g.id !== 'debrief';
+  return `${pv ? '' : `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>`}
+  <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}${sesPill(g)}</h1></div>
+  <div class="card"><p class="purpose">${mark(g.purpose)}</p>${g.who ? `<p style="margin-top:8px"><b>Who It Is For:</b> ${mark(g.who)}</p>` : ''}
+    ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
   ${g.prep && g.prep.length ? `<div class="card"><h3>Before you begin</h3><ul class="checklist" style="margin-top:8px">${g.prep.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
+  ${lst('What to Bring', g.bring)}${lst('Questions to Ask', g.ask)}
   ${g.steps.map((s,i) => `<div class="card step-card"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)} ${s.m ? `<span class="min">about ${s.m} min</span>` : ''}</h4>${stepHTML(s,i)}</div>`).join('')}
+  ${lst('Words That Help', g.words, true)}
   ${g.after && g.after.length ? `<div class="card"><h3>After the session</h3><ul class="checklist" style="margin-top:8px">${g.after.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
-  ${(docs.length || emails.length || (g.links||[]).length) ? `<div class="card"><h3>Goes with this guide</h3><div class="row" style="margin-top:10px">
+  ${(docs.length || emails.length || (g.links||[]).length || deb) ? `<div class="card"><h3>Goes with this guide</h3><div class="row" style="margin-top:10px">
+    ${deb ? `<button class="btn btn-line btn-sm" data-act="guide" data-v="debrief">${icon('self')} After-Session Debrief</button>` : ''}
     ${docs.map(d => `<button class="btn btn-line btn-sm" data-act="doc" data-v="${d.id}">${icon('print')} ${esc(d.title)}</button>`).join('')}
     ${emails.map(e => `<button class="btn btn-line btn-sm" data-act="email" data-v="${e.id}">${icon('copy')} Email: ${esc(e.title)}</button>`).join('')}
     ${(g.links||[]).map(toolLink).join('')}</div></div>` : ''}`;
@@ -1122,11 +1153,13 @@ function drawRun(){
   let body = '';
   if (st < 0){
     body = `<div class="run-step-n">Before you begin</div><h2 class="run-step-t">${esc(g.title)}</h2><p class="purpose">${mark(g.purpose)}</p>
-      <div class="card" style="margin-top:14px">${(g.prep||[]).map((x,i) => `<label class="tick ${RUN.prep[i]?'done':''}"><input type="checkbox" data-prep="${i}" ${RUN.prep[i]?'checked':''}><span>${mark(x)}</span></label>`).join('') || '<p class="muted">No preparation needed.</p>'}</div>`;
+      <div class="card" style="margin-top:14px">${(g.prep||[]).map((x,i) => `<label class="tick ${RUN.prep[i]?'done':''}"><input type="checkbox" data-prep="${i}" ${RUN.prep[i]?'checked':''}><span>${mark(x)}</span></label>`).join('') || '<p class="muted">No preparation needed.</p>'}</div>
+      ${(g.bring||[]).length ? `<div class="card"><h3>What to Bring</h3><ul class="checklist" style="margin-top:8px">${g.bring.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}`;
   } else if (st < n){
     const s = g.steps[st];
     body = `<div class="run-step-n">Step ${st+1} of ${n}${s.m ? ` &middot; about ${s.m} min` : ''}</div><h2 class="run-step-t">${esc(s.t)}</h2>
       <div class="card step-card">${stepHTML(s, st)}</div>
+      ${(g.ask||[]).length || (g.words||[]).length ? `<details class="card"><summary><b>Questions to Ask and Words That Help</b></summary>${(g.ask||[]).length ? `<div class="blk"><div class="lab">Ask</div><ul>${g.ask.map(x => `<li>${mark(x)}</li>`).join('')}</ul></div>` : ''}${(g.words||[]).length ? `<div class="blk say"><div class="lab">Say</div><ul>${g.words.map(x => `<li>${mark(x)}</li>`).join('')}</ul></div>` : ''}</details>` : ''}
       <label class="f" for="rn">Notes for this step</label><textarea id="rn" data-note="${st}" placeholder="Names, words they used, what you noticed...">${esc(RUN.notes[st]||'')}</textarea>`;
   } else {
     body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">Close the session</h2>
@@ -1144,7 +1177,7 @@ function drawRun(){
   tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
 }
 function saveRun(){
-  const s = {id:RUN.id, u:Date.now(), clientId:RUN.clientId, guideId:RUN.guideId, date:today(), minutes:Math.max(1, Math.round((Date.now()-RUN.started)/60000)), notes:RUN.notes, summary:RUN.summary, next:RUN.next, fee:RUN.fee, paid:RUN.paid, grace:RUN.grace};
+  const s = {id:RUN.id, u:Date.now(), clientId:RUN.clientId, guideId:RUN.guideId, title:(G(RUN.guideId) || {}).title || '', date:today(), minutes:Math.max(1, Math.round((Date.now()-RUN.started)/60000)), notes:RUN.notes, summary:RUN.summary, next:RUN.next, fee:RUN.fee, paid:RUN.paid, grace:RUN.grace};
   DATA.sessions.push(s);
   const c = RUN.clientId ? CL(RUN.clientId) : null;
   if (c){ touch(c); c.last = today(); if (RUN.fdate) (c.followups = c.followups||[]).push({date:RUN.fdate, text:RUN.ftext||'Follow up', done:false}); }
@@ -1180,7 +1213,7 @@ function vClient(c){
   ${wlPersonCard(c)}
   ${sqPersonCard(c)}
   ${c.st && stOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Oak Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="st-open" data-v="${c.id}">${icon('tree')} Open</button></div></div>` : ''}
-  <div class="card"><h3>Start a Session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${LIB.guides.filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
+  <div class="card"><h3>Start a Session</h3><div class="row" style="margin-top:10px"><select id="cg" style="max-width:360px">${GL().filter(g => g.cat !== 'self' && g.cat !== 'safety').map(g => `<option value="${esc(g.id)}">${esc(g.title)}${g._mine ? (g._mine === 'new' ? ' (Your Session)' : ' (Your Version)') : ''}</option>`).join('')}</select><button class="btn btn-gold" data-act="start-for" data-v="${c.id}">${icon('play')} Start</button></div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Details</h3>
     <label class="f">Name or initials</label><input type="text" data-c="name" value="${esc(c.name)}">
@@ -1200,7 +1233,7 @@ function vClient(c){
   <div class="row" style="margin-top:14px"><button class="btn btn-danger btn-sm" data-act="del-client" data-v="${c.id}">Delete This Record</button></div>`;
 }
 function vSession(s){
-  const g = G(s.guideId) || {steps:[], title:'Session'}, c = s.clientId ? CL(s.clientId) : null;
+  const g = G(s.guideId) || {steps:[], title:s.title || 'Session'}, c = s.clientId ? CL(s.clientId) : null;
   return `<button class="btn btn-line btn-sm" data-act="${c ? 'open-client' : 'home'}" data-v="${c ? c.id : ''}">${icon('back')} Back</button>
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${nice(s.date)} &middot; ${s.minutes||0} minutes</div><h1>${esc(g.title)}</h1><p>${c ? esc(c.name) : 'No record attached'}</p></div>
   <div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary||'No summary.')}</p><h4 style="margin-top:14px">Next steps</h4><p style="white-space:pre-wrap">${esc(s.next||'None noted.')}</p></div>
@@ -1284,7 +1317,7 @@ function vSafety(){
 // ---------------- FIELD HOME ----------------
 function vFieldHome(){
   const w = FLD.welcome;
-  return `<div class="hello"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
+  return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
   ${sgHomeCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
@@ -1824,7 +1857,7 @@ const stLevel = sc => sc == null ? 'Not scored' : sc >= 8 ? 'Strong' : sc >= 5 ?
 const stLvlCls = sc => sc == null ? '' : sc >= 8 ? 'sage' : sc >= 5 ? 'gold' : 'warn';
 const stConsentName = h => h === 'before' ? 'Recorded before import' : h === 'form' ? 'Consent form' : ((STG().consent.how.find(x => x[0] === h) || [])[1] || '');
 const stHasConsent = c => stIsMe(c) || !!(c.st.consent && c.st.consent.how && c.st.consent.how !== 'declined' && stConsentCurrent(c.st.consent));
-const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'pn' ? 'Pine: ' + (PNG() ? pnVisitName(s.visit) : 'visit') : s.kind === 'br' ? 'Birch: ' + (brHas() ? (s.notToday ? 'Not today' : brVisitName(s.visit)) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'pn' ? 'Pine: report record' : s.tool === 'br' ? 'Birch: report record' : s.tool === 'st' ? 'Oak: report record' : s.tool === 'sq' ? 'Sequoia: report record' : s.tool === 'wl' ? 'Willow: report record' : 'Maple: report record') : s.kind === 'sq' ? 'Sequoia: ' + (SQG() ? sqVisitName(s.visit) : 'visit') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || 'Session');
+const sessTitle = s => s.kind === 'wl' ? 'Willow: ' + (WLG() ? wlVisitName(s.visit) : 'visit') : s.kind === 'sp' ? 'Maple: ' + (SPG() ? spVisitName(s.visit) : 'visit') : s.kind === 'sa' ? 'Aspen: ' + (SAG() ? saVisitName(s.visit) : 'visit') : s.kind === 'pn' ? 'Pine: ' + (PNG() ? pnVisitName(s.visit) : 'visit') : s.kind === 'br' ? 'Birch: ' + (brHas() ? (s.notToday ? 'Not today' : brVisitName(s.visit)) : 'visit') : s.kind === 'spr' ? (s.tool === 'sa' ? 'Aspen: report record' : s.tool === 'pn' ? 'Pine: report record' : s.tool === 'br' ? 'Birch: report record' : s.tool === 'st' ? 'Oak: report record' : s.tool === 'sq' ? 'Sequoia: report record' : s.tool === 'wl' ? 'Willow: report record' : 'Maple: report record') : s.kind === 'sq' ? 'Sequoia: ' + (SQG() ? sqVisitName(s.visit) : 'visit') : s.kind === 'st' ? 'Oak: ' + (STG() ? stVisitName(s.visit) : 'visit') : s.kind === 'ht' ? 'Hard Talk: ' + (s.topicTitle || 'topic') : ((G(s.guideId) || {}).title || s.title || 'Session');
 function stQuestions(visit, set, key){ if (!STC) return []; return ((set === 'staff' ? STC.staff : STC.questions)[key]) || []; }
 function stScore(run){
   const out = {}, sc = stScale();
@@ -7218,6 +7251,20 @@ async function pgSetField(on){
   V.upd = {lvl:'field', title: on ? 'Open Premarital Guide to Field users' : 'Close Premarital Guide to Field users', note:'', rows:[['Replaces', 'premaritalGuide.open.field']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
+// ----- Founder: Save for Everyone puts a session guide into the Staff library (through Update a Library, GWG BLD 758) -----
+// It replaces the guide with the same id, or adds a new one at the end. The Founder seals it and uploads lib-staff.js.
+async function sesSaveAll(g){
+  const cur = await pendingPlain('staff');
+  if (!cur || !Array.isArray(cur.guides)) return alert("This device can't open the Staff library, so it can't update it. See \"Finish setup.\"");
+  const clean = JSON.parse(JSON.stringify(g)); Object.keys(clean).forEach(k => { if (k[0] === '_') delete clean[k]; });
+  const next = JSON.parse(JSON.stringify(cur)); let i = next.guides.findIndex(x => x.id === clean.id); const add = i < 0;
+  if (add) i = next.guides.length;
+  if (!add && same(next.guides[i], clean)){ toast('The Staff library already has this version.'); return go('guides', {guide: clean.id}); }
+  next.guides[i] = clean; next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V = {tab: 'founder', upd: {lvl: 'staff', title: (add ? 'Add a session for everyone: ' : 'Update a session for everyone: ') + clean.title,
+    note: add ? 'A new session guide for every Staff member and Founder.' : 'This version of the guide, for every Staff member and Founder.', rows: [[add ? 'Adds' : 'Replaces', 'guides.' + i]], warns: [], from: cur._rev || 0, next}};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
 // Settings: the letterhead the Educator's Statement fills in for a Field-tier Premarital Guide.
 function pgSettingsCard(){
   if (!pgTab()) return '';
@@ -9508,9 +9555,12 @@ function printDoc(d, filled){
 }
 function printGuide(g){
   const L = (lab, a, cls) => a && a.length ? `<p><b>${lab}:</b></p><ul>${a.map(x => `<li class="${cls||''}">${esc(x)}</li>`).join('')}</ul>` : '';
-  fgSheet(ph('Session guide') + `<h1>${esc(g.title)}</h1><p><i>${esc(g.purpose)}</i></p><p><b>Length:</b> ${esc(g.length)}</p>`
+  const ul = (h, a) => a && a.length ? `<h2>${h}</h2><ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+  fgSheet(ph('Session guide') + `<h1>${esc(g.title)}</h1><p><i>${esc(g.purpose)}</i></p><p><b>Length:</b> ${esc(g.length)}</p>${g.who ? `<p><b>Who It Is For:</b> ${esc(g.who)}</p>` : ''}`
     + (g.prep ? `<h2>Before you begin</h2><ul>${g.prep.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
+    + ul('What to Bring', g.bring) + ul('Questions to Ask', g.ask)
     + `<h2>Steps</h2>` + g.steps.map((s,i) => `<div class="pr-step"><h3>${i+1}. ${esc(s.t)}${s.m ? ` (about ${s.m} min)` : ''}</h3>${L('Say', s.say, 'pr-say')}${L('Ask', s.ask)}${L('Do', s.do)}${s.tip ? `<p><i>${esc(s.tip)}</i></p>` : ''}</div>`).join('')
+    + ul('Words That Help', g.words)
     + (g.after ? `<h2>After the session</h2><ul>${g.after.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '') + pf(), g.title, {file:g.title});
 }
 function printSession(s){
@@ -9519,7 +9569,7 @@ function printSession(s){
   if (s && s.kind === 'sq') return sqPrintNote(s, CL(s.clientId));
   if (s && s.kind === 'pn') return pnPrintNote(s, CL(s.clientId));
   if (s && s.kind === 'br') return brPrintNote(s, CL(s.clientId));
-  const g = G(s.guideId) || {steps:[], title:'Session'}, c = s.clientId ? CL(s.clientId) : null;
+  const g = G(s.guideId) || {steps:[], title:s.title || 'Session'}, c = s.clientId ? CL(s.clientId) : null;
   fgSheet(ph('Confidential session note') + `<h1>${esc(g.title)}</h1><p>${c ? esc(c.name) + ' &middot; ' : ''}${nice(s.date)} &middot; ${s.minutes||0} minutes</p>
     <h2>Summary</h2><p style="white-space:pre-wrap">${esc(s.summary||'')}</p><h2>Next steps</h2><p style="white-space:pre-wrap">${esc(s.next||'')}</p>
     <h2>Step Notes</h2>${g.steps.map((st,i) => s.notes && s.notes[i] ? `<h3>${esc(st.t)}</h3><p style="white-space:pre-wrap">${esc(s.notes[i])}</p>` : '').join('')}
@@ -9599,6 +9649,8 @@ function mergeData(cur, inc){
   { const dm = dkMerge(out, inc); stats.added += dm.added; stats.updated += dm.updated; }
   // Saved services (Service Builder, BLD 747): newest copy wins; deleted ones stay deleted.
   if (window.GGCer){ const cm = GGCer.merge(out, inc); stats.added += cm.added; stats.updated += cm.updated; }
+  // Your Sessions (your versions and your own sessions, BLD 758): newest copy wins; deleted ones stay deleted.
+  if (window.GGSes){ const sm = GGSes.merge(out, inc); stats.added += sm.added; stats.updated += sm.updated; }
   // Premarital couples (Premarital Sessions, BLD 750): newest copy wins; deleted ones stay deleted.
   if (window.GGPm){ const pm = GGPm.merge(out, inc); stats.added += pm.added; stats.updated += pm.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
@@ -9694,6 +9746,7 @@ document.addEventListener('click', async e => {
     case 'reset': resetDevice(); break;
     case 'guide': go('guides', {guide:v}); break;
     case 'back-guides': go('guides'); break;
+    case 'ses-builder': if (window.GGSes){ GGSes.state.mode = 'home'; GGSes.state.draft = null; } go('guides'); break;
     case 'start': startSession(v); break;
     case 'start-for': startSession($('#cg').value, v); break;
     case 'pick': startSession(v, t.dataset.c || null); break;

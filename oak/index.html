@@ -2842,22 +2842,21 @@ async function profResume() {
 
 // =====================================================================
 // SETTINGS, behind the profile picture (GWG BLD 745): Steady or Hardy and grace
-// days, optional helpers, an optional age (only for the step into Sequoia at 60),
+// days, optional helpers, an optional birthday (only for the step into Sequoia at 60),
 // what stays private, Groundwork from Birch, and Move My Tree to Sequoia.
 // Saved in the profile under "oak".
 // =====================================================================
 const TREE_NAME = { birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia' };
 function treeNow(id) { return window.GGP && GGP.tree ? GGP.tree(id) : 'oak'; }
 function okRec() { if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'oak'); if (!Array.isArray(d.history)) d.history = []; return d; }
-function ageNow() { const r = okRec(), a = r ? parseInt(r.age, 10) : NaN; return isNaN(a) ? null : a; }
+function ageNow() { const r = okRec(); return r && GGP.moveOn ? GGP.moveOn.age(PROF.id, r.age) : null; }   // the birthday first (GWG BLD 758), else an older optional age
 function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
 const OK_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your reflections, and your safety answers stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone.</p>
   <p><b>Helpers, only if you choose</b>You can let someone you trust open your Oak with their own passcode. They see only what you share, and never your safety answers or flags. This stays off unless you turn it on.</p>
   <p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>`;
-const AGES_PICK = [['54', 'Under 55'], ['55', '55'], ['56', '56'], ['57', '57'], ['58', '58'], ['59', '59'], ['60', '60 or older']];
 function oakSettingsHtml() {
   if (HELP) return helperSettingsHtml();
-  const s = window.GGTend && GGTend.state(), open = !!okRec(), mode = pnMode(s), age = ageNow();
+  const s = window.GGTend && GGTend.state(), mode = pnMode(s);
   if (PROF && PROF.age !== 'adult') return '';
   return `${window.GGLifeKit ? GGLifeKit.settingsHtml('oak', 'ok-set-life') : ''}<section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
       <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. Missed days rest in soft mist, and nothing is ever lost.<span class="steady-fit">${steadyFits() ? ' Steady fits you best right now.' : ''}</span></span></label>
@@ -2865,23 +2864,20 @@ function oakSettingsHtml() {
       <p class="gt-small"><b>Grace days.</b> Two days a week are yours to rest. Five days tended makes a full week, and Hardy never counts grace days.</p>
       <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     ${helperSettingsHtml()}
-    <section id="ok-set-age"><h3>Your Age (Optional)</h3><p class="gt-small">Only used to offer the step into Sequoia, built for 60 and up, when you reach 60. It stays in your profile.</p>
-      <select class="sq-select" aria-label="Your age"${open ? '' : ' disabled'} onchange="setAge(this.value)"><option value="">Rather not say</option>${AGES_PICK.map(v => `<option value="${v[0]}"${String(age) === v[0] ? ' selected' : ''}>${v[1]}</option>`).join('')}</select></section>
+    ${PROF && window.GGP && GGP.moveOn ? GGP.moveOn.birthdayHtml(PROF.id, { section: 'ok-set-birthday', why: 'Only used to offer the step into Sequoia, built for 60 and up, on your 60th birthday.' }) : ''}
     <section class="asp-see" id="ok-see"><h3>What Stays Private</h3>${OK_SEE}</section>
     ${gwSettingsHtml()}
     ${moveSeqHtml(false)}`;
 }
-function setAge(v) {
-  const r = okRec(); if (!r) return;
-  if (v) r.age = v; else delete r.age;
-  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(v ? 'Saved.' : 'Age cleared.'); });
-}
 
 // =====================================================================
-// MOVING ON (Decision 6, GWG BLD 745). At 60, a gentle card on Today, and any time
-// in Settings: Move My Tree to Sequoia. The same profile switches its tree;
-// Sequoia gets a one-time copy of Oak's rings, labeled From Oak (id 'oak-' + id).
-// Oak's record stays whole. Never forced. Modeled on Birch's Move My Tree to Oak.
+// MOVING ON (Decision 6, GWG BLD 745; move-on offers, GWG BLD 758). MOVE-ON OFFER START.
+// On the 60th birthday (the optional birthday in Settings, kept in the profile and shared
+// by its trees, GGP.moveOn), a gentle card on Today, and any time in Settings: Move My Tree
+// to Sequoia. The same profile switches its tree, so the Health and Ability choices stay;
+// Sequoia gets a one-time copy of Oak's rings, labeled From Oak (id 'oak-' + id). Oak's
+// record stays whole. Never forced. Stay in Oak (staySeq) means Today never asks again;
+// Settings keeps the way back. Modeled on Birch's Move My Tree to Oak.
 // =====================================================================
 function ringCopy(e) {
   const c = JSON.parse(JSON.stringify(e));
@@ -2894,10 +2890,12 @@ function moveSeqHtml(onToday) {
   const r = okRec(), age = ageNow(); if (!r) return '';
   if (onToday && (age == null || age < 60 || r.staySeq || r.movedToSequoia || treeNow(PROF.id) !== 'oak')) return '';
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="ok-set-moving"'}><h3>Ready for Sequoia?</h3>
-    <p class="gt-small">${onToday ? 'Oak is built for adults 26 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
-    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToSequoia()">Move My Tree to Sequoia</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInOak()">Stay in Oak</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+    <p class="gt-small">${onToday ? (age === 60 && GGP.moveOn.isBirthday(PROF.id) ? 'Happy 60th birthday! ' : '') + 'Oak is built for adults 26 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToSequoia()">Move My Tree to Sequoia</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInOak()">Stay in Oak</button>' : ''}</div>
+    ${!onToday && r.staySeq ? GGP.moveOn.stayNote(r.staySeq, 'Oak', 'Move My Tree to Sequoia') : ''}</${onToday ? 'div' : 'section'}>`;
 }
 function stayInOak() { const r = okRec(); if (!r) return; r.staySeq = todayKey(); persistRec().then(() => { showToast('Oak stays your tree. Move My Tree to Sequoia is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+// MOVE-ON OFFER END
 function moveToSequoia() {
   if (!PROF || !window.GGP) return;
   if (!confirm('Move your tree to Sequoia? This same profile opens in Sequoia from now on. Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything. You can switch back any time in Picture, passcode, and more.')) return;

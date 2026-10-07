@@ -5,6 +5,7 @@
    - GGPrint.certificate(o)     Certificate of Completion, landscape Letter.
                                 o: {tree, name, title, body, date, renew, version, id, kind}
                                 tree is maple, aspen, pine, birch, oak, sequoia, willow, grove, or house (Grow With Grounded).
+                                A tree's certificate carries its own leaf in each corner (shared/leaves/<tree>.svg).
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
                                 kind 'parts': the six parts teaching poster, in that tree's voice.
@@ -117,7 +118,10 @@
       var t = T[o.tree] || T.house, house = !T[o.tree] || o.tree === 'house', u = SITE + t.path;
       var mark = house ? '<img class="c-logo-big" src="' + A('/favicon.svg') + '" alt="">' : '<img class="c-mark" src="' + A('/shared/marks/' + o.tree + '.svg') + '" alt="">';
       var meta = [o.date ? 'Completed ' + nice(o.date) : '', o.renew ? 'Renew by ' + nice(o.renew) : '', o.version ? 'Version ' + o.version : '', o.id ? 'Certificate ' + o.id : ''].filter(Boolean);
-      var body = '<div class="c-frame" style="--c:' + t.color + '"><div class="c-in">'
+      // The tree's own leaf in each corner (GWG BLD 758), turned to point along the frame.
+      var LEAVES = { maple: 1, aspen: 1, pine: 1, birch: 1, oak: 1, sequoia: 1, willow: 1, grove: 1 };
+      var corners = !house && LEAVES[o.tree] ? ['tl', 'tr', 'bl', 'br'].map(function (k) { return '<img class="c-leaf c-' + k + '" src="' + A('/shared/leaves/' + o.tree + '.svg') + '" alt="">'; }).join('') : '';
+      var body = '<div class="c-frame" style="--c:' + t.color + '">' + corners + '<div class="c-in">'
         + (house ? '' : '<div class="c-house"><img src="' + A('/favicon.svg') + '" alt=""><span class="cond">GROW WITH GROUNDED</span></div>')
         + '<div style="flex:.5"></div>' + mark
         + '<div class="c-title serif">Certificate of Completion</div>'
@@ -145,7 +149,10 @@
         '.c-foot{margin-top:auto;width:100%;display:flex;align-items:flex-end;justify-content:space-between;gap:0.4in;}',
         '.c-signs{display:flex;gap:0.4in;}.c-signs div{display:flex;flex-direction:column;align-items:flex-start;width:2.5in;}.c-signs i{display:block;width:100%;border-bottom:0.75pt solid #2C1810;height:0.42in;}.c-signs span{font-size:9.5pt;color:#4A3B30;margin-top:4px;text-align:left;}',
         '.c-qr{display:flex;align-items:center;gap:0.1in;text-align:left;}.c-qr svg{width:0.85in;height:0.85in;}.c-qr b{display:block;font-size:9.5pt;max-width:1.4in;line-height:1.25;}.c-qr span{display:block;font-size:8.5pt;color:#6B5A4D;margin-top:2px;}',
-        '.c-tm{font-size:7.5pt;color:#7A6A5D;margin-top:0.1in;}'
+        '.c-tm{font-size:7.5pt;color:#7A6A5D;margin-top:0.1in;}',
+        '.c-leaf{position:absolute;width:0.44in;height:0.44in;z-index:1;}',
+        '.c-tl{top:0.02in;left:0.02in;transform:rotate(-90deg);}.c-tr{top:0.02in;right:0.02in;}',
+        '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}'
       ].join('\n');
       return page({ win: win, title: 'Certificate of Completion', size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.' });
     });

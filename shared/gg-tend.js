@@ -219,6 +219,20 @@
   }
   loadLiving();
 
+  /* ---------- the leaves (GWG BLD 758) ---------- */
+  // shared/gg-leaves.css, next to this file with the same version: list bullets, the
+  // divider, a card corner, and the tended leaf, each in the app's own leaf.
+  var LEAF_TREES = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove'];
+  function leafTree(t) {
+    var r = document.documentElement;
+    if (!t) { var seg = (location.pathname.split('/').filter(Boolean)[0] || '').toLowerCase(); t = LEAF_TREES.indexOf(seg) >= 0 ? seg : ''; }
+    if (t && LEAF_TREES.indexOf(t) >= 0) r.setAttribute('data-gg-tree', t);
+    if (document.getElementById('gg-leaves-css')) return;
+    var l = document.createElement('link'); l.id = 'gg-leaves-css'; l.rel = 'stylesheet'; l.href = LIVING_SRC.replace(/gg-living\.js/, 'gg-leaves.css');
+    (document.head || document.documentElement).appendChild(l);
+  }
+  leafTree();
+
   /* ---------- Rest Week ---------- */
   // One tap holds the scene still and kind for seven days: no mist, nothing lost,
   // and Hardy rests. Ends early with one tap. Never limited and never counted.
@@ -327,7 +341,7 @@
       }
       html += '<section class="gt-part" style="--pc:' + pt.color + '"><h3>' + (C.partIcon ? C.partIcon(pt.key) : '') + '<span>' + esc(pt.part) + '</span><small>' + esc(pt.name) + '</small></h3>' + (C.partNote ? (C.partNote(pt.key, s) || '') : '') + lv + '<ul>' + mine.map(function (it) { return practiceHtml(s, it); }).join('') + '</ul></section>';
     });
-    html += anchorHtml(s, 'evening');
+    html += '<div class="gg-leaf-rule" aria-hidden="true"><i></i></div>' + anchorHtml(s, 'evening');
     html += '<div class="btn-row gt-foot"><button class="btn btn-secondary" onclick="GGTend.act(\'plan\')">Change my practices</button>' + (window.GGLibrary ? '<button class="btn btn-secondary" onclick="GGTend.openLib()">Find more practices</button>' : '') + '</div>';
     box.innerHTML = html; liven(sc);
   }
@@ -416,7 +430,7 @@
     var html = '';
     if (s && s.start) {
       var w = weekShown(s), due = weekNo(s) >= 12, n = ringN(s);
-      html += '<div class="gt-card gt-seasoncard"><div>' + ringsSVG(n, w) + '</div><div><p class="gt-kicker">Season ' + (s.season || 1) + '</p><h2>Week ' + w + ' of 12</h2><p>This season began ' + nice(s.start) + '. ' + (n ? 'Your tree has ' + n + ' ring' + (n === 1 ? '' : 's') + (C.ringCount ? ', one for each full check-in.' : ', one for each season you have finished.') : 'Finish this season with a full check-in to add your first ring.') + '</p>'
+      html += '<div class="gt-card gt-seasoncard gg-leaf-corner"><div>' + ringsSVG(n, w) + '</div><div><p class="gt-kicker">Season ' + (s.season || 1) + '</p><h2>Week ' + w + ' of 12</h2><p>This season began ' + nice(s.start) + '. ' + (n ? 'Your tree has ' + n + ' ring' + (n === 1 ? '' : 's') + (C.ringCount ? ', one for each full check-in.' : ', one for each season you have finished.') : 'Finish this season with a full check-in to add your first ring.') + '</p>'
         + (due ? '<p class="gt-due-line"><b>Your season check-in is ready.</b> A full check-in now adds a ring and begins a new season.</p>' : '<p class="gt-small">The full check-in comes due at week 12. You can check in anytime.</p>') + '</div></div>';
     } else if (s) {
       html += '<div class="gt-card"><h2>Your first season</h2><p>A season is twelve weeks of tending, from Planting to Rooting to Blooming. It begins the day you finish your first full check-in. Every season you finish adds a ring to your tree.</p></div>';
@@ -658,7 +672,7 @@
   // A practice tended: a soft glow and a few living touches (none with reduced motion or during Rest Week)
   function perk() { if (window.GGLiving) GGLiving.burst(2); }
   var api = {
-    init: function (cfg) { C = cfg; J = mergeJourney(window.GGJourney || {}, cfg.journey); wrapHardy(); },
+    init: function (cfg) { C = cfg; J = mergeJourney(window.GGJourney || {}, cfg.journey); wrapHardy(); leafTree(SCENE_APP[cfg.tool]); },
     rest: function () { restToggle(); },
     resting: function () { var s = ensure(); return !!(s && restOn(s, today())); },
     suggest: suggest,

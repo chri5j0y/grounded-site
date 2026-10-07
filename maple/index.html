@@ -2669,25 +2669,42 @@ function mpOnCheck(done, key, s, parts) {
   mpCheer(parts >= 6 ? 'All six parts tended today. What a day!' : mpKindWord(parts));
 }
 
-/* ---------- Moving on (Decision 6, GWG BLD 745) ----------
-   In grade 5, a gentle card offers Start My Aspen, never forced, next to Stay in Maple. Start
-   My Aspen makes a new Middle school profile with Aspen as its tree (a grown-up agrees), and
-   copies Maple's rings, labeled From Maple, and the Faith or Plain choice. The copies keep
-   only the date, grade, and each part's score, never the answers or the safety step. Maple
-   keeps its own record whole. Aspen reads them from student.earlier, and the wording from aspen.wording. */
+/* ---------- Moving on (Decision 6, GWG BLD 745; move-on offers, GWG BLD 758) ----------
+   MOVE-ON OFFER START. After grade 5, a gentle card offers Start My Aspen, never forced,
+   next to Stay in Maple: at the start of the next school year (a grade 5 check-in from an
+   earlier school year, GGP.moveOn.gradeDue), or as soon as the grown-up marks grade 5
+   finished in Settings (k.done5). Stay in Maple (k.stayMaple) means Today never asks again;
+   Settings keeps the way back. Start My Aspen makes a new Middle school profile with Aspen
+   as its tree (a grown-up agrees), and copies Maple's rings, labeled From Maple, and the
+   Faith or Plain choice, and offers to bring their Health and Ability choices. The copies
+   keep only the date, grade, and each part's score, never the answers or the safety step.
+   Maple keeps its own record whole. Aspen reads them from student.earlier, and the wording
+   from aspen.wording. */
+function mpMoveDue(k) { return !!(k && window.GGP && GGP.moveOn && GGP.moveOn.gradeDue('5', k.checkins || [], k.done5)); }
 function mpMovingHtml(onToday) {
-  const k = MP_KID; if (!k || String(k.grade) !== '5' || !window.GGP) return '';
-  if (onToday && k.stayMaple) return '';
-  const nm = esc(k.name);
+  const k = MP_KID; if (!k || !window.GGP) return '';
+  const due = mpMoveDue(k), nm = esc(k.name);
+  if (onToday && (!due || k.stayMaple || k.movedAspen)) return '';
+  if (!onToday && !due && String(k.grade) !== '5' && !k.stayMaple) return '';
+  const lead = due ? (k.done5 ? `${nm} finished grade 5. ` : `A new school year is here, and ${nm} finished grade 5. `) : `${nm} is in grade 5. `;
+  const start = `<button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyAspen()">Start My Aspen</button>`;
   return `<${onToday ? 'div class="gt-card mp-moving"' : 'section id="mp-set-moving"'}><h3>Ready for Middle School?</h3>
-    <p class="gt-small">${onToday ? `${nm} is in grade 5. ` : ''}There is no rush. ${nm} can stay in Maple as long as it fits, or start a new tree in Aspen, built for grades 6 to 8. Start My Aspen makes a new Middle school profile with a grown-up, and brings ${nm}'s Maple rings (labeled From Maple) and the Faith or Plain choice along. Maple keeps its own copy.</p>
-    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyAspen()">Start My Aspen</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInMaple()">Stay in Maple</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+    <p class="gt-small">${lead}There is no rush. ${nm} can stay in Maple as long as it fits, or start a new tree in Aspen, built for grades 6 to 8. Start My Aspen makes a new Middle school profile with a grown-up, and brings ${nm}'s Maple rings (labeled From Maple) and the Faith or Plain choice along. Maple keeps its own copy.</p>
+    <div class="btn-row">${start}${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInMaple()">Stay in Maple</button>' : ''}${!onToday && !due ? `<button class="btn btn-secondary btn-sm" onclick="mpDone5()">Grade 5 Is Done</button>` : ''}</div>
+    ${!onToday && !due ? '<p class="gt-small">Today offers Start My Aspen at the start of the next school year, or as soon as you tap Grade 5 Is Done.</p>' : ''}
+    ${!onToday && k.stayMaple ? GGP.moveOn.stayNote(k.stayMaple, 'Maple', 'Start My Aspen', k.name) : ''}</${onToday ? 'div' : 'section'}>`;
 }
 function stayInMaple() {
   if (!mpSetKid(x => { x.stayMaple = dkey(); })) return;
   if (window.GGTend) GGTend.render();
   toast('Maple stays your tree. Start My Aspen is in Settings whenever you want it.');
 }
+function mpDone5() {
+  if (!mpSetKid(x => { x.done5 = dkey(); })) return;
+  if (window.GGTend) { GGTend.closeSettings(); GGTend.render(); }
+  toast('Grade 5 is done. Start My Aspen is ready on Today.');
+}
+/* MOVE-ON OFFER END */
 function mapleCarry(k) {
   const rings = (k.checkins || []).filter(c => c && c.answers && c.std).map(c => {
     const scores = {}, unsure = [];
@@ -2701,9 +2718,9 @@ function startMyAspen() {
   if (!confirm(`Start My Aspen makes a new Middle school profile for ${k.name}, with Aspen as their tree. A grown-up agrees when it is made. ${k.name}'s Maple tree stays as it is. Continue?`)) return;
   const c = mapleCarry(k);
   const student = { rings: [], draft: null, plan: null, log: {}, leaves: 0, style: 'aspen', theme: 'lake', grade: 6, earlier: c.rings, mapleCopied: dkey() };
-  GGP.createDialog({ age: 'aspen', name: '', avatar: k.avatar || '', carry: { aspen: { student, wording: c.wording } },
+  GGP.createDialog({ age: 'aspen', name: '', avatar: k.avatar || '', carry: { aspen: { student, wording: c.wording } }, lifeFrom: k._pid || null, lifeWho: k.name,   // GWG BLD 758: their Health and Ability, on a yes
     reason: `${k.name}'s new Middle school profile. Pick a name that is different from the Maple profile, like the first name with a last initial. ${k.name}'s Maple rings and wording come along into Aspen.`,
-    onCreated: () => { setTimeout(() => { location.href = '/aspen/'; }, 600); } });
+    onCreated: () => { if (k._pid && GGP.isOpen(k._pid)) mpSetKid(x => { x.movedAspen = dkey(); }); setTimeout(() => { location.href = '/aspen/'; }, 600); } });
 }
 
 /* ---------- The wording on the check-in start screen (for a grown-up helping) ---------- */
