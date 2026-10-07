@@ -256,7 +256,7 @@ function lifeLinesHtml(collapsed) {
 function hardyRests() { return lifeIds().some(id => id === 'pain' || id === 'serious' || id === 'mind'); }
 function mountLifeChooser() {
   const host = document.getElementById('pn-life-host'); if (!host || !lifeOn()) return;
-  GGLife.use(null);
+  if (GGLife.who() !== (window.GGP && GGP.active() ? GGP.active().id : null)) GGLife.use(null);
   GGLife.chooser(host, { tree: 'pine' });
 }
 

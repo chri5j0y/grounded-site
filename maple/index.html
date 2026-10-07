@@ -396,7 +396,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .act-group h3 .part-dot svg{width:20px;height:20px;}
 .suggest{font-family:var(--sans);font-size:13px;font-weight:600;background:var(--sun-soft);color:var(--ink);border-radius:999px;padding:3px 10px;}
 /* Health and Ability (GWG BLD 756) */
-.mp-fits{display:inline-block;font-family:var(--sans);font-size:12.5px;font-weight:700;background:var(--sky);color:var(--bg);border-radius:999px;padding:2px 9px;margin:2px 0 6px;}
+.mp-fits{display:inline-block;align-self:flex-start;width:max-content;font-family:var(--sans);font-size:12.5px;font-weight:700;background:var(--sky);color:var(--bg);border-radius:999px;padding:2px 9px;margin:2px 0 6px;}
 .mp-adapt{margin:6px 0 0;font-size:14.5px;line-height:1.45;color:var(--ink-soft);font-style:italic;}
 .mp-idea{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--sun-soft);color:var(--ink);font-size:15px;}
 .mp-ex{list-style:none;margin:8px 0 0;padding:8px 12px;border-radius:12px;background:var(--sun-soft);color:var(--ink);font-size:15.5px;}
@@ -2354,7 +2354,10 @@ function mpPracticeInfo(key, name) {
    profile is open (so a grown-up's own choice is never used for a child). */
 function mpLifePid(k) { k = k || MP_KID || loadKids()[S.kid]; return (k && k._pid) || null; }
 function mpLifeOk(k) { if (!window.GGLife) return false; const pid = mpLifePid(k); if (pid) return !!(window.GGP && GGP.isOpen(pid)); return !(window.GGP && GGP.active && GGP.active()); }
-function mpLifeUse(k) { const ok = mpLifeOk(k); if (window.GGLife) GGLife.use(ok ? mpLifePid(k) : null); return ok; }
+// GGLife.use announces a change, so it is called only when the child in view changes, and this
+// page's own listener ignores that announcement (no render loops).
+let MP_LIFE_CTX, MP_LIFE_QUIET = false;
+function mpLifeUse(k) { const ok = mpLifeOk(k), id = ok ? mpLifePid(k) : null; if (window.GGLife && id !== MP_LIFE_CTX) { MP_LIFE_CTX = id; MP_LIFE_QUIET = true; try { GGLife.use(id); } finally { MP_LIFE_QUIET = false; } } return ok; }
 function mpLifeIds(k) { return mpLifeUse(k) ? GGLife.chosen('maple') : []; }
 const mpUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
 function mpFits(a) { return !!a && mpLifeOk() && GGLife.fits({ life: a.life || [], adapt: a.adapt || '' }); }
@@ -3429,6 +3432,7 @@ function mvVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched &&
 window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-talk'); if (v && v.offsetParent !== null && openTalk.last) { const y = window.scrollY; openTalk(openTalk.last, LIFE.from); window.scrollTo(0, y); } });
 // Their Health and Ability changed (or a profile opened or locked): re-order what shows it.
 if (window.GGLife) GGLife.on(() => {
+  if (MP_LIFE_QUIET) return;
   const v = document.querySelector('.view.active');
   if (v && v.id === 'view-life' && $('life-list')) renderLifeList();
   if (v && v.id === 'view-tree' && S.treeTab === 'plan' && MP_PLAN) { const y = window.scrollY; mpRenderPlan(); window.scrollTo(0, y); }

@@ -201,7 +201,7 @@ h3{font-family:var(--sans);font-weight:700;font-size:20px;}
 .tagline{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft);margin-top:2px;}
 .pill{display:inline-block;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:700;background:var(--teal-soft);color:var(--ink);}
 /* Health and Ability (GWG BLD 756) */
-.as-fits{display:inline-block;border-radius:20px;padding:1px 9px;font-size:12.5px;font-weight:700;background:var(--teal);color:var(--bg);margin:0 0 4px;}
+.as-fits{display:inline-block;width:max-content;border-radius:20px;padding:1px 9px;font-size:12.5px;font-weight:700;background:var(--teal);color:var(--bg);margin:0 0 4px;}
 .as-adapt{display:block;margin-top:4px;font-size:14px;color:var(--ink-soft);font-style:italic;}
 .as-idea{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:var(--teal-soft);color:var(--ink);font-size:15px;}
 .as-ex{list-style:none;margin:8px 0 0;padding:8px 12px;border-radius:12px;background:var(--teal-soft);color:var(--ink);font-size:15px;}
@@ -2063,7 +2063,10 @@ function guidesData(){ return (window.ASPEN_GUIDES && window.ASPEN_GUIDES.groups
    profile is open, so a grown-up's own choice is never used for a student. */
 function asLifePid(s){ s = s || me(); return (s && s._pid) || null; }
 function asLifeOk(s){ s = s || me(); if (!window.GGLife || !s) return false; const pid = asLifePid(s); if (pid) return !!(window.GGP && GGP.isOpen(pid)); return !(window.GGP && GGP.active && GGP.active()); }
-function asLifeUse(s){ const ok = asLifeOk(s); if (window.GGLife) GGLife.use(ok ? asLifePid(s) : null); return ok; }
+// GGLife.use announces a change, so it is called only when the student in view changes, and this
+// page's own listener ignores that announcement (no render loops).
+let AS_LIFE_CTX, AS_LIFE_QUIET = false;
+function asLifeUse(s){ const ok = asLifeOk(s), id = ok ? asLifePid(s) : null; if (window.GGLife && id !== AS_LIFE_CTX){ AS_LIFE_CTX = id; AS_LIFE_QUIET = true; try { GGLife.use(id); } finally { AS_LIFE_QUIET = false; } } return ok; }
 function asLifeIds(s){ return asLifeUse(s) ? GGLife.chosen('aspen') : []; }
 const asUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
 const asTag = (g, k, idx) => LIFE_PR[g + ':' + k + ':' + idx] || { life: [] };
@@ -2146,6 +2149,7 @@ function avVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched &&
 window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-guide'); if (v && v.offsetParent !== null && renderGuide.last) { const y = window.scrollY; renderGuide({id: renderGuide.last}); window.scrollTo(0, y); } });
 // Their Health and Ability changed (or a profile opened or locked): re-order what shows it.
 if (window.GGLife) GGLife.on(() => {
+  if (AS_LIFE_QUIET) return;
   const v = document.querySelector('.view.active'), n = v ? v.id.replace('view-', '') : '';
   if (n === 'dash' && ASP_TAB === 'plan' && $('asp-plan')) { const y = window.scrollY; renderPlan(); window.scrollTo(0, y); }
   if (n === 'dash' && ASP_TAB === 'guides') renderGuidesTab();
