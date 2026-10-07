@@ -1,4 +1,4 @@
-/* Before the Vows (GWG BLD 750). The ff- styles follow the Tools for Families pages (BLD 748). */
+/* The Grounded Marriage (GWG BLD 751; grown from Before the Vows, BLD 750). The ff- styles follow the Tools for Families pages (BLD 748). */
 .ff-body{max-width:860px;margin:0 auto;}
 .ff-lead{font-size:19px;color:var(--ink);line-height:1.6;margin:0 0 12px;}
 .ff-private{font-size:15.5px;color:var(--ink-soft);margin:6px 0 0;display:flex;gap:8px;align-items:flex-start;}
@@ -43,7 +43,7 @@
 #gg-print{display:none;}
 @media(max-width:700px){ .ff-grid{grid-template-columns:1fr;} .ff-card{padding:20px 18px;} .ff-card > h2{font-size:25px;} }
 
-/* Before the Vows */
+/* Before the Vows side (BLD 750) */
 .btv-body p{overflow-wrap:anywhere;}
 .btv-say{min-height:0;margin:0;font-weight:600;color:var(--sage);font-size:16px;}
 .btv-say:not(:empty){margin:14px 0 0;}
@@ -127,6 +127,43 @@
 .btv-drow{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:12px;}
 .btv-drow .btn{margin-top:0;}
 @media(max-width:700px){ .btv-who{grid-template-columns:1fr;} .btv-scale{gap:4px;} .btv-scale button{font-size:13px;padding:8px 2px;} .btv-q legend{font-size:17px;} }
+/* The Grounded Marriage (BLD 751) */
+.btv-tabs{flex-wrap:wrap;}
+.gm-way{margin:12px 0 0;font-size:17px;}
+.gm-way a{color:#FFF3DC;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
+.gm-set{margin-top:22px;padding-top:14px;border-top:1px dashed var(--line);}
+.gm-set h3{margin:0 0 4px;font-size:22px;}
+.gm-check{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;font-size:16px;cursor:pointer;}
+.gm-check input{width:18px;height:18px;margin-top:3px;accent-color:var(--gold);flex:none;}
+.gm-inline{margin:0;}
+.gm-ex{border-left-color:var(--gold);}
+.gm-ex .ff-tips li{font-size:16px;}
+.gm-ex-card{margin:18px 0 0;padding:16px 0 0;border-top:1px solid var(--line);min-width:0;}
+.gm-ex-card > h3{margin:0 0 4px;font-size:23px;}
+.gm-ex-card > h4,.gm-ra h4{margin:0 0 6px;font-size:20px;}
+.gm-ex-card .btv-person p{margin:0 0 8px;color:var(--ink);overflow-wrap:anywhere;}
+.gm-pq{margin:10px 0 4px;font-weight:600;}
+.gm-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.gm-pick{margin-top:6px;}
+.gm-try{margin-top:22px;padding-top:12px;border-top:1px dashed var(--line);}
+.gm-try h3{margin:0;font-size:22px;}
+.gm-res > h3{font-size:26px;margin:0 0 4px;}
+.gm-res.gm-strong{border-left:5px solid var(--sage);}
+.gm-res.gm-talk{border-left:5px solid var(--gold);}
+.gm-res.gm-grow{border-left:5px solid var(--plum);}
+.gm-ra{padding:12px 0 0;margin-top:12px;border-top:1px solid var(--line);}
+.gm-ra p{margin:0;}
+.gm-mg{margin-top:20px;}
+.gm-mg h3{margin:0 0 2px;font-size:22px;}
+.gm-tot{border-left-color:var(--gold);}
+.gm-tot .btv-lines li{justify-content:space-between;}
+.gm-steps{margin:12px 0 0;padding-left:24px;display:flex;flex-direction:column;gap:8px;font-size:17px;line-height:1.55;}
+.gm-faith{margin:12px 0 0;padding:10px 14px;border-radius:12px;background:var(--bg);border-left:4px solid var(--plum);}
+.gm-qq{color:var(--ink) !important;font-size:17px !important;font-weight:600;}
+.gm-qh{font-size:21px;margin:0;}
+.gm-src{margin-top:16px;}
+.btv-note .btn{margin-top:0;}
+@media(max-width:700px){ .btv-tabs button{padding:10px 10px;font-size:15px;} }
 @media print{
   body > *:not(#gg-print){display:none !important;}
   html,body{background:#fff !important;}
@@ -137,5 +174,17 @@
   #gg-print h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:16pt;margin:6mm 0 2mm;padding-bottom:1mm;border-bottom:.6pt solid #E2D8C3;break-after:avoid;color:#2C1810;}
   #gg-print ul.p-list{margin:0;padding-left:5mm;}
   #gg-print ul.p-list li{margin:0 0 2.6mm;break-inside:avoid;}
+  @page{size:letter;}
+  #gg-print .p-ch{break-before:page;}
+  #gg-print h2.p-cht{font-size:22pt;border-bottom:none;margin:0 0 3mm;}
+  #gg-print h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:14pt;margin:5mm 0 1.5mm;color:#2C1810;break-after:avoid;}
+  #gg-print .p-ex{margin-top:2mm;padding-top:1mm;border-top:.6pt solid #E2D8C3;}
+  #gg-print .p-q{font-weight:600;margin:2.5mm 0 1mm;break-after:avoid;}
+  #gg-print .p-lines{break-inside:avoid;}
+  #gg-print .p-lines i{display:block;height:9mm;border-bottom:.6pt solid #B9A98F;}
+  #gg-print .p-ch > p{margin:0 0 2mm;}
+  #gg-print .p-ans{white-space:pre-wrap;margin:0 0 2mm;padding:1.5mm 3mm;border-left:2pt solid #8B5E1A;}
+  #gg-print .p-box{list-style:none;padding-left:2mm;margin:1mm 0;}
+  #gg-print .p-tog{margin:2.5mm 0 0;padding:2mm 3mm;background:#F6EEDF;border-left:2pt solid #8B5E1A;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   #gg-print .p-foot{margin-top:10mm;padding-top:3mm;border-top:.6pt solid #E2D8C3;font-size:9pt;color:#6B5A4D;}
 }

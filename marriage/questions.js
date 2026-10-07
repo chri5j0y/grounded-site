@@ -1,5 +1,5 @@
 /* =====================================================================
-   BEFORE THE VOWS: the questions (before-the-vows/questions.js)   GWG BLD 750, October 2026
+   BEFORE THE VOWS: the questions (marriage/questions.js, moved unchanged from before-the-vows/ in BLD 751)   GWG BLD 750, October 2026
    An original couple's check-in in 12 areas. Every question is written fresh in Grounded's voice.
    Nothing here comes from PREPARE/ENRICH, SYMBIS, FOCCUS, RELATE, or any licensed inventory.
    The areas follow the premarital education research: background, each person's habits, and how

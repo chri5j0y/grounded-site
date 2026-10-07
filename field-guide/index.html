@@ -540,6 +540,12 @@ body.cd-noscroll{overflow:hidden;}
 .pn-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#4E8A47 0%,#3A6B35 50%,#20401D 100%);}
 /* Birch Guide (GWG BLD 744): catkin gold */
 .br-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#A58A2A 0%,#7F6610 50%,#463808 100%);}
+/* Premarital Guide (GWG BLD 752): premaritalGuide.color (--pg) and colorDark (--pgd) tint its tab, hero, and Home card */
+.pg-tint{--gold:var(--pg);--gold-deep:color-mix(in srgb,var(--pg) 78%,#000);--gold-soft:var(--pg);}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pg-tint{--gold:var(--pgd);--gold-deep:color-mix(in srgb,var(--pgd) 82%,#fff);--gold-soft:var(--pgd);}}:root[data-theme="dark"] .pg-tint{--gold:var(--pgd);--gold-deep:color-mix(in srgb,var(--pgd) 82%,#fff);--gold-soft:var(--pgd);}
+.pg-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,color-mix(in srgb,var(--pg) 72%,#fff) 0%,var(--pg) 50%,color-mix(in srgb,var(--pg) 50%,#000) 100%);}
+.pg-about>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:44px;}.pg-about>summary::-webkit-details-marker{display:none;}
+.pg-about>summary::after{content:'+';margin-left:auto;font-size:24px;color:var(--gold);font-weight:600;}.pg-about[open]>summary::after{content:'\2212';}.pg-about>summary h3{margin:0;}
 #print-root .sq-sheet .sq-qr{display:flex;align-items:center;gap:4mm;margin-top:5mm;break-inside:avoid;}
 #print-root .sq-sheet .sq-qr svg{width:26mm;height:26mm;flex:none;}
 #print-root .sq-sheet p,#print-root .sq-sheet li{font-size:12pt;}
@@ -607,14 +613,14 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=src18"></script>
-<script src="../shared/gg-learn.js?v=ln37"></script>
+<script src="../shared/gg-sources.js?v=src19"></script>
+<script src="../shared/gg-learn.js?v=ln38"></script>
 <script src="../shared/gg-print.js?v=pr7"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="qr.js"></script>
 <script src="share.js?v=sc1"></script>
 <script src="ceremonies.js?v=cb4"></script>
-<script src="premarital.js?v=pm1"></script>
+<script src="premarital.js?v=pm2"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 (function(){ var t = Date.now(); ['codes','lib-founder','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
@@ -910,7 +916,8 @@ function tabsFor(){
   // The Sessions tab keeps the key 'guides' so saved routes and data-tab links still open it.
   const kids = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(pnOpen() ? [['pine','Pine','pine']] : []), ...(brTab() ? [['birch','Birch','birch']] : [])];
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ...(OR() ? [['orient','Orientation','cap']] : [])];
+  // A Field-tier Premarital Guide (GWG BLD 752) gets the Premarital tab after the trees; Staff and Founders keep theirs below.
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...(pgTab() ? [['premarital','Premarital','heart']] : []), ['learn','Learn','play'], ...(OR() ? [['orient','Orientation','cap']] : [])];
   if (!LIB) return [...kids, ...grown];
   const t = [['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['safety','Safety','shield'], ['-'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['founder','Founder','key']);
@@ -922,7 +929,7 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic]) => id === '-' ? `<span class="tab-div" role="separator" aria-orientation="vertical" aria-label="Grow With Grounded"></span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'field' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
   $('#view').innerHTML = (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1252,6 +1259,7 @@ function vFieldHome(){
   ${pnOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(PNG().title)}</h3><p class="muted">${esc(PNG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="pine">${icon('pine')} Open</button></div></div>` : ''}
   ${brTab() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(BRG().title)}</h3><p class="muted">${esc(BRG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="birch">${icon('birch')} Open</button></div></div>` : ''}
   ${wlOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(WLG().title)}</h3><p class="muted">${esc(WLG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="willow">${icon('willow')} Open</button></div></div>` : ''}
+  ${pgTab() ? pgTint(`<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><h3>${esc(PGG().title)}</h3><p class="muted">${esc(PGG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="premarital">${icon('heart')} Open</button></div></div>`) : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
   ${fieldDue()}
@@ -1520,6 +1528,7 @@ function vFounder(){
   ${FLD ? saFounderCard() : ''}
   ${FLD ? `<div class="card"><h3>Pine Guide</h3>${pnFieldRow()}</div>` : ''}
   ${FLD ? `<div class="card"><h3>Birch Guide</h3>${brFieldRow()}</div>` : ''}
+  ${FLD ? `<div class="card"><h3>Premarital Guide</h3>${pgFieldRow()}</div>` : ''}
   ${FLD ? `<div class="card"><h3>Sequoia Guide</h3>${sqFieldRow()}</div>` : ''}
   ${FLD ? wlFounderCard() : ''}`;
   // Founder opens to cards (GWG BLD 732). A new update to seal opens Update a Library, so its card is in view.
@@ -1537,7 +1546,7 @@ function vFounder(){
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
     {k: 'pricing', title: 'Private Pricing', desc: 'Rates and pricing notes for Chris and Kayti.'},
     {k: 'field', title: 'What Field Users See', desc: 'Which guides are open to Field users, Orientation, and the welcome.'},
-    FLD ? {k: 'guides', title: 'Maple, Aspen, Pine, Birch, Sequoia, and Willow', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
+    FLD ? {k: 'guides', title: 'Maple, Aspen, Pine, Birch, Sequoia, Willow, and Premarital Guide', desc: 'Open each guide to Field users, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
   ];
   const C2 = secPick('founder', cards), back = h => secPage('founder', 'Back to Founder', h);
   if (C2 === 'ready') return back(readyH);
@@ -6960,6 +6969,241 @@ async function brSetField(on){
 }
 function brPersonCard(c){ return c.br && brTab() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Birch Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="br-open" data-v="${c.id}">${icon('birch')} Open</button></div></div>` : ''; }
 
+// ---------------- PREMARITAL GUIDE (GWG BLD 752) ----------------
+// A Field-tier Guide built the way Birch Guide is (BLD 744): pastors and ministers, officiants, mentor couples, and
+// chaplains lead The Grounded Marriage with couples. Wording, Premarital Guide Training version 2, and program (the
+// Staff library's premarital session plans in the same shape, with the letterhead left blank for Settings) live in
+// the Field library (FLD.premaritalGuide). Field users see the Premarital tab once premaritalGuide.open.field is on
+// and Orientation is done (pgOpen). Real couples open once the training is complete (pgReady); a practice couple is
+// always open and nothing in it is kept. The tab itself is premarital.js (GGPm), the same one Staff and Founders use
+// with LIB.premarital; here it reads FLD.premaritalGuide.program. Couples live in DATA.pm, training in DATA.pgmod.
+const PGG = () => (FLD && FLD.premaritalGuide) || null;
+const pgOpen = () => TIER === 'field' && !!PGG() && !!(PGG().open && PGG().open.field && (!OR() || orState().complete));
+const pgHas = () => !!(PGG() && PGG().module && PGG().program && Array.isArray(PGG().program.sessions) && PGG().program.sessions.length);
+const pgTab = () => pgOpen() && pgHas();
+const pgTint = html => `<div class="pg-tint" style="--pg:${esc((PGG() && PGG().color) || '#6E5A8A')};--pgd:${esc((PGG() && PGG().colorDark) || '#BCA9DB')}">${html}</div>`;
+const pgHello = (eb, title, p, extra) => `<div class="hello pg-hello"${extra || ''}><div class="eyebrow" style="color:#E8DDF5">${eb}</div><h1>${esc(title)}</h1><p>${p}</p>`;
+let PG_DEMO = null;
+function vPG(){
+  if (!pgHas() || !window.GGPm) return `<div class="card"><p>Premarital Guide isn't on this device yet.</p></div>`;
+  if (V.pgm) return pgTint(vPGM());
+  const G = PGG(), m = pgmState(), ctx = {lib: null, field: FLD};
+  if (V.pgdemo){
+    PG_DEMO = PG_DEMO || {settings: DATA.settings, pm: {couples: []}};
+    return pgTint(`<button class="linkbtn" data-act="pg-home">Back to Premarital Guide</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Practice couple.</b> <span class="muted">Try every step with a made-up couple. Nothing in practice is kept, and it clears when you leave.</span></div>` + GGPm.view(Object.assign(ctx, {data: PG_DEMO, save: () => {}})));
+  }
+  PG_DEMO = null;
+  const about = `<details class="card pg-about"><summary><h3>About Premarital Guide</h3></summary>${G.intro.map(t => `<p style="margin-top:10px">${esc(t)}</p>`).join('')}
+   <p style="margin-top:10px"><b>For</b> ${esc(G.who.join(', '))}.</p>
+   <h4 style="margin-top:14px">Lines to give each partner privately</h4><ul class="checklist" style="margin-top:6px">${G.lines.map(x => `<li>${icon('phone')}<span><b>${esc(x[0])}:</b> ${esc(x[1])}</span></li>`).join('')}</ul></details>`;
+  const hello = pgHello('Grounded Field Guide&trade;', G.title, esc(G.tagline || G.lead)) + `<p style="margin-top:6px">${esc(G.lead)}</p></div>`;
+  if (!pgReady()) return pgTint(hello + pgmCard() + about);
+  const tr = `<div class="card"><div class="spread"><div><b>${esc(PGM().title)}</b> <span class="muted">${esc(trainNote(m))}.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="pg-mhome">Training and Certificate</button><button class="btn btn-line btn-sm" data-act="pg-demo">${icon('play')} Practice Couple</button></div></div></div>`;
+  return pgTint(hello + (m.dueSoon ? pgmCard() : '') + GGPm.view(Object.assign(ctx, {data: DATA, save})) + tr + about);
+}
+
+// ----- Premarital Guide Training, version 2: played like Birch Guide Training (six video lessons with Read It
+// Instead, fifteen scenarios, pass at 12, then the agreement, renewed yearly). It gates real couples. -----
+const PGM = () => PGG() && PGG().module;
+function pgmData(){ DATA.pgmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.pgmod || {}); return DATA.pgmod; }
+const pgmFree = () => { const D = pgmData(); return pgmState().complete || !!(D.pass || D.signed); };
+const pgmOpen = i => { const M = PGM(), D = pgmData(); return i <= 0 || pgmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+function pgmTrack(){ const M = PGM(); return {id:'pgg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
+function pgmState(){
+  const M = PGM(), D = pgmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+const pgReady = () => !!PGM() && pgmState().complete;
+function pgmCard(){
+  const m = pgmState();
+  if (!PGM()) return '';
+  if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Premarital Guide training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="pg-mhome">Renew</button></div></div>` : '';
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Premarital Guide training' : 'Start with Premarital Guide Training'}</h3><p class="muted">${esc(PGM().intro[0])}</p>${orBar(m.done, m.total)}
+   <p class="muted" style="font-size:15px;margin-top:8px">Real couples open once the training is complete. A practice couple is always open.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="pg-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="pg-demo">${icon('play')} Try a Practice Couple</button></div></div>`;
+}
+function vPGM(){
+  const M = PGM(), D = pgmData(), s = pgmState();
+  if (!M) return `<button class="linkbtn" data-act="pg-home">Back to Premarital Guide</button><div class="card" style="margin-top:14px"><p>Premarital Guide Training isn't on this device yet.</p></div>`;
+  if (V.pgml !== undefined) return vPGMLesson(V.pgml);
+  if (V.pgq) return V.pgq.done ? vPGMResult() : vPGMQ();
+  if (V.pgs) return vPGMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  return `<button class="linkbtn" data-act="pg-home">Back to Premarital Guide</button>
+  ${pgHello('Premarital Guide', M.title, s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0]), ' style="margin-top:14px"')}${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${M.intro.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = pgmOpen(i); return step('pg-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
+  <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
+  ${step('pg-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios with couples`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('pg-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="row" style="margin-top:16px"><button class="btn btn-line btn-sm" data-act="pg-mprint">${icon('print')} Save or Print Agreement</button></div>
+  <div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate and Poster</h3><p class="muted">Print your Certificate of Completion, and a poster that lets couples know a trained Premarital Guide serves here. Each has a small QR code.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="pg-cert">${icon('print')} Certificate</button><button class="btn btn-line btn-sm" data-act="pg-poster">${icon('print')} Poster</button></div></div>` : ''}`;
+}
+function vPGMLesson(i){
+  const M = PGM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vPGM();
+  if (!pgmOpen(i)) return `<button class="linkbtn" data-act="pg-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = stmVid(L), watch = vid && !V.pgread;
+  if (watch){ GGLearn.css(); setTimeout(() => pgmMount(i), 0); }
+  return `<button class="linkbtn" data-act="pg-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="pgm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="pg-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="pg-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="pgm-foot">${pgmFoot(i)}</div>`;
+}
+function pgmFoot(i){
+  const M = PGM(), L = M.lessons[i], n = M.lessons.length, D = pgmData(), done = !!D.lessons[L.id];
+  const reading = V.pgread || !stmVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="pg-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="pg-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="pg-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="pg-mhome">Back to training</button>` : ''}</div>
+  ${all && !pgmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="pg-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function pgmMount(i){
+  const host = $('#pgm-host'); if (!host || !window.GGLearn) return;
+  const M = PGM(), L = M.lessons[i], D = pgmData(), tr = pgmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mark: {name: 'Premarital Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: (PGG() && PGG().color) || '#6E5A8A',
+    onAt: k => { lastAct = Date.now(); pgmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = pgmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#pgm-foot'); if (f) f.innerHTML = pgmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:'premarital', pgm:1, pgml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:'premarital', pgm:1}; render(); }});
+}
+function pgmNewQuiz(){ const items = PGM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vPGMQ(){
+  const Q = V.pgq, items = PGM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="pg-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card">${it.s ? `<p class="or-scen">${esc(it.s)}</p>` : ''}<p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="pg-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="pg-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'pg-mfinish' : 'pg-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function pgmFinish(){
+  const M = PGM(), Q = V.pgq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = pgmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vPGMResult(){
+  const M = PGM(), Q = V.pgq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = pgmState();
+  return `<button class="linkbtn" data-act="pg-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="pg-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="pg-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="pg-mq">Try Again</button><button class="btn btn-line" data-act="pg-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your Answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s || it.q)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vPGMSign(){
+  const A = PGM().agreement, s = pgmState(), D = pgmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="pg-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="pg-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="pgm-name">Your full name</label><input type="text" id="pgm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="pgm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="pg-msigned">Sign Agreement</button>`}</div>`;
+}
+function pgmPrint(){
+  const A = PGM().agreement, D = pgmData().signed;
+  fgSheet(ph('Premarital Guide agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'premarital-guide-agreement'});
+}
+// The Certificate of Completion (shared/gg-print.js, with the Grow With Grounded mark) and the poster, drawn here
+// from premaritalGuide.poster in Premarital Guide's own color, with a QR code to The Grounded Marriage app.
+function pgCert(){
+  const st = pgmState(), D = pgmData().signed, C = PGG().cert || {};
+  if (!st.complete || !D) return;
+  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree: 'house', name: D.name, title: C.title || PGM().title, body: C.body || '', date: D.date, renew: st.renewBy, version: PGM().version, kind: 'training'}));
+}
+const PG_APP = 'https://growwithgrounded.com/marriage/';
+function pgQR(){ return new Promise(ok => { if (window.GGQR && GGQR.svg) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-qr.js'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function pgPoster(){
+  if (!pgReady() || !window.GGPm || !GGPm.page) return;
+  const G = PGG(), Pz = G.poster || {}, c = G.color || '#6E5A8A', short = PG_APP.replace(/^https:\/\//, '').replace(/\/$/, '');
+  const fav = new URL('/favicon.svg', location.href).href;
+  pgQR().then(() => {
+    const qr = window.GGQR && GGQR.svg ? GGQR.svg(PG_APP, {label: 'QR code for ' + short, border: 2}) : '';
+    const body = `<div class="sheet"><div class="band"><div class="hs"><img src="${fav}" alt=""><span>GROW WITH GROUNDED</span></div><div class="nm">${esc((G.program && G.program.program) || 'The Grounded Marriage')}</div><div class="tg">${esc(G.tagline || '')}</div></div>
+      <div class="pad"><div class="here"><span>${esc(Pz.line || 'A trained Premarital Guide serves here.')}</span><small>${esc(Pz.sub || '')}</small></div>
+      ${Pz.who ? `<p class="who">${esc(Pz.who)}</p>` : ''}</div>
+      <div class="foot"><div class="qr">${qr}<div><b>Scan to open The Grounded Marriage</b><span>${esc(short)}</span></div></div><div class="hs2">Grow With Grounded&trade;<br>growwithgrounded.com</div></div></div>`;
+    const css = `.sheet{width:8.5in;height:11in;margin:14px auto 40px;background:#FFFCF6;display:flex;flex-direction:column;box-shadow:0 2px 14px rgba(44,24,16,.18);overflow:hidden;--c:${c};}
+@media screen and (max-width:8.6in){.sheet{width:100%;height:auto;min-height:0;margin:0;}}
+.band{background:var(--c);color:#FFF8EC;padding:.7in .6in .55in;}.hs{display:flex;align-items:center;gap:10px;}.hs img{width:.4in;height:auto;filter:brightness(0) invert(1);}.hs span{font-family:"Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:3px;font-weight:600;font-size:11pt;}
+.nm{font-family:"Cormorant Garamond",Georgia,serif;font-size:50pt;font-weight:600;line-height:1;margin-top:.3in;}.tg{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:22pt;margin-top:.14in;color:#F2EAF8;}
+.pad{flex:1;display:flex;flex-direction:column;justify-content:center;padding:.4in .6in;}
+.here{background:#F4EEF8;border-left:7px solid var(--c);padding:.22in .26in;}.here span{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:30pt;font-weight:600;color:var(--c);line-height:1.1;}.here small{display:block;font-size:14pt;line-height:1.4;color:#4A3B30;margin-top:8px;}
+.who{font-size:15pt;color:#4A3B30;margin:.3in 0 0;}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:.3in;padding:.3in .6in .45in;border-top:1px solid #E3D8C4;}.qr{display:flex;align-items:center;gap:.14in;}.qr svg{width:1.2in;height:1.2in;}.qr b{display:block;font-size:13pt;}.qr span{display:block;font-size:10pt;color:#6B5A4D;margin-top:2px;}.hs2{text-align:right;font-size:10pt;color:#6B5A4D;line-height:1.4;}
+@media print{.sheet{margin:0;box-shadow:none;width:8.5in;height:11in;}}`;
+    GGPm.page('Premarital Guide Poster', css, body, 'size:8.5in 11in;margin:0;', 'Letter size, ready for any bulletin board.');
+  });
+}
+
+// ----- Founder: open or close Premarital Guide to Field users (through Update a Library) -----
+function pgFieldRow(){
+  const S = PGG();
+  if (!S) return `<p class="muted">Premarital Guide isn't in the Field library yet. Add it with Update a Library.</p>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="list-row" style="border-top:0;padding-top:0"><div class="lr-main"><b>Premarital Guide</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Field users also need Orientation done. They take Premarital Guide Training before real couples, then lead The Grounded Marriage in their own Premarital tab.</small></div><button class="btn btn-line btn-sm" data-act="pg-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+}
+async function pgSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.premaritalGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.premaritalGuide.open = Object.assign({}, next.premaritalGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  V.upd = {lvl:'field', title: on ? 'Open Premarital Guide to Field users' : 'Close Premarital Guide to Field users', note:'', rows:[['Replaces', 'premaritalGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+// Settings: the letterhead the Educator's Statement fills in for a Field-tier Premarital Guide.
+function pgSettingsCard(){
+  if (!pgTab()) return '';
+  const s = DATA.settings, f = (k, l, ph) => `<label class="f" for="pgs-${k}">${l}</label><input type="text" id="pgs-${k}" data-set="${k}" value="${esc(s[k] || '')}" placeholder="${ph}">`;
+  return `<div class="card"><h3>Premarital Guide</h3><p class="muted">Your letterhead for the Educator's Statement. Each couple's statement fills in from here, and you can change it there.</p>
+   ${f('pmRole', "Your Title or Credential", 'Pastor, ordained minister...')}${f('pmOrg', 'Organization (the Letterhead)', 'Your church or practice')}${f('pmAddress', 'Address', 'Street, city, state')}${f('pmPhone', 'Phone', 'Your phone')}</div>`;
+}
+function pgAct(a, v, t){
+  switch (a){
+    case 'pg-home': go('premarital'); return true;
+    case 'pg-demo': go('premarital', {pgdemo:1}); return true;
+    case 'pg-field': pgSetField(v === 'on'); return true;
+    case 'pg-mhome': go('premarital', {pgm:1}); return true;
+    case 'pg-ml': if (pgmOpen(+v)) go('premarital', {pgm:1, pgml:+v}); return true;
+    case 'pg-mreadit': lnStop(); V.pgread = v === '1'; render(); return true;
+    case 'pg-mread': { const L = PGM().lessons, i = +v, d = pgmData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } save(); const nx = L.findIndex((x, j) => j > i && !pgmData().lessons[x.id]); if (nx >= 0) go('premarital', {pgm:1, pgml:nx}); else { go('premarital', {pgm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'pg-mq': go('premarital', {pgm:1, pgq:pgmNewQuiz()}); return true;
+    case 'pg-mpick': V.pgq.ans[V.pgq.order[V.pgq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=pg-mnext],[data-act=pg-mfinish]'); if (nb) nb.disabled = false; } return true;
+    case 'pg-mnext': if (V.pgq.ans[V.pgq.order[V.pgq.i]] !== undefined){ V.pgq.i++; render(); } return true;
+    case 'pg-mprev': if (V.pgq.i > 0){ V.pgq.i--; render(); } return true;
+    case 'pg-mfinish': pgmFinish(); return true;
+    case 'pg-msign': go('premarital', {pgm:1, pgs:1}); return true;
+    case 'pg-msigned': { const nm = $('#pgm-name').value.trim(); if (!nm){ $('#pgm-name').focus(); return true; } if (!$('#pgm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
+      pgmData().signed = {v:PGM().version, date:today(), name:nm}; save(); go('premarital', {pgm:1}); toast(pgReady() ? 'Signed. Real couples are open.' : 'Signed.'); return true; }
+    case 'pg-cert': pgCert(); return true;
+    case 'pg-poster': pgPoster(); return true;
+    case 'pg-mprint': pgmPrint(); return true;
+  }
+  return false;
+}
+
 // ---------------- WILLOW GUIDE ----------------
 // Willow Build Session 3. Chaplains and end-of-life doulas (and a social worker or nurse in that role) walking with a
 // person in hospice and the people who love them. Wording lives in the Field library (FLD.willowGuide): training,
@@ -8199,7 +8443,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=sg3', '../pine/guides.js?v=pg2', '../birch/guides.js?v=bg2'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=ps3', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=sg3', '../pine/guides.js?v=pg2', '../birch/guides.js?v=bg3'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -9141,6 +9385,7 @@ function vSettings(){
    <label class="f">Role</label><input type="text" data-set="role" value="${esc(s.role||'')}" placeholder="Founder, practitioner in training...">
    <label class="f">Lock automatically after</label><select data-set="autolock">${[2,5,10,15].map(m => `<option value="${m}" ${+s.autolock===m?'selected':''}>${m} minutes</option>`).join('')}<option value="0" ${!+s.autolock?'selected':''}>Only when my unlock time ends</option></select>
    <label class="f">Text Size</label><select data-set="scale">${[['1','Normal'],['1.12','Larger'],['1.25','Largest']].map(([v,l]) => `<option value="${v}" ${String(s.scale)===v?'selected':''}>${l}</option>`).join('')}</select></div>
+  ${pgSettingsCard()}
   <div class="card"><h3>Backup and Moving Devices</h3><p class="muted">One Grow With Grounded Backup file holds everything on this device: your Field Guide (sealed with your passcode, with every Founder and Staff record), plus any Grounded profiles, The Grove, and settings. Loading a backup combines it with what's here: new things are added, the newest version of anything edited on both devices is kept, and nothing is lost. Send a backup either direction, anytime. Older Field Guide backup files load here too.</p>
    <p style="margin-top:8px">${DATA.lastBackup ? 'Last backup: ' + new Date(DATA.lastBackup).toLocaleString() : 'No backups yet.'}</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="export">Back Up Everything</button><label class="btn btn-line" style="cursor:pointer">Load a Backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div></div>
@@ -9349,6 +9594,10 @@ function mergeData(cur, inc){
   Object.entries(ib.lessons || {}).forEach(([k,v]) => { if (v && !out.brmod.lessons[k]) out.brmod.lessons[k] = v; });
   out.brmod.how = Object.assign({}, ib.how || {}, out.brmod.how || {}); // how each Birch lesson was finished (BLD 744)
   ['last','pass','signed'].forEach(k => { out.brmod[k] = newer(out.brmod[k], ib[k]) || null; });
+  const ipg = inc.pgmod || {}; out.pgmod = Object.assign({lessons:{}, how:{}, last:null, pass:null, signed:null}, out.pgmod || {}); // Premarital Guide Training (BLD 752)
+  Object.entries(ipg.lessons || {}).forEach(([k,v]) => { if (v && !out.pgmod.lessons[k]) out.pgmod.lessons[k] = v; });
+  out.pgmod.how = Object.assign({}, ipg.how || {}, out.pgmod.how || {});
+  ['last','pass','signed'].forEach(k => { out.pgmod[k] = newer(out.pgmod[k], ipg[k]) || null; });
   // Founder and Staff records (Labels, Learn, and Backup build): approvals, edits, codes, checklists, Learn progress.
   const fo = inc.founder || {}; out.founder = Object.assign({saved:[], draft:null}, out.founder || {});
   (fo.saved || []).forEach(x => { if (!out.founder.saved.some(y => y.id === x.id)) { out.founder.saved.push(x); stats.added++; } });
@@ -9384,6 +9633,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('sq-') && sqAct(a, v, t)) return;
   if (a && a.startsWith('pn-') && pnAct(a, v, t)) return;
   if (a && a.startsWith('br-') && brAct(a, v, t)) return;
+  if (a && a.startsWith('pg-') && pgAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
