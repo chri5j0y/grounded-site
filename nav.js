@@ -27,7 +27,7 @@
       { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
       { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', href: HOME + '/pine/', icon: ic.pine, bg: '#E2EEDB' },
       { id: 'birch', title: 'Birch', desc: 'For ages 18 to 26', href: HOME + '/birch/', icon: ic.birch, bg: '#F3EED9' },
-      { id: 'oak', title: 'Oak', desc: 'For ages 25 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
+      { id: 'oak', title: 'Oak', desc: 'For ages 26 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
       { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },

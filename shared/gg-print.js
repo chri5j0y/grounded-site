@@ -29,7 +29,7 @@
     aspen: { name: 'Aspen', color: '#1F6F74', ink: '#1F6F74', path: '/aspen/', tag: 'Rooted together.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 6 to 8.', guide: 'Aspen Guide',
       points: ['A check-in for grades 6 to 8, with questions written for each grade.', 'Every check-in adds a growth ring and leaves to their tree, and daily tending happens right in Aspen.', 'Done on their own or with a grown-up.', 'Grown-ups get When Life Changes: guides for hard talks with middle schoolers, from group chats to grief.'],
       parts: { title: 'Six Parts Make You Whole', lead: 'Every middle schooler is like an aspen: growing fast and putting down roots.', words: ['What keeps you steady: faith, family traditions, quiet, or time outside.', 'Goals, things you care about, and trying new things.', 'Naming what you feel, calming down, and asking for help.', 'Friends, family, and belonging somewhere.', 'Sleep, movement, real meals, and screen breaks.', "Hope for what's ahead, and the kindness that grows it."], close: 'Notice all six. Tend the one that needs it.' } },
-    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults, 25 to 60.', guide: 'Oak Guide',
+    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults, 26 to 60.', guide: 'Oak Guide',
       points: ['A check-in for the whole person, from root to fruit.', 'A personal growth plan with step-by-step practices.', "When Life Changes: 77 guides for life's hardest seasons."],
       parts: { title: 'Six Parts Make You Whole', lead: 'Being whole means noticing and tending all six.', words: ['Faith, the Sacred, and the practices that steady you.', 'Meaning, calling, and what your life is for.', 'Thoughts and feelings, stress and resilience.', 'Family, friends, and community.', 'Movement, rest, and nourishment.', "Hope, gratitude, and what you're growing toward."], close: 'Shelter for others. Strength for you.' } },
     // Pine (GWG BLD 739, Pine Guide posters GWG BLD 741): the flyer, "A trained Pine Guide serves here.", and the six parts poster.
@@ -49,7 +49,7 @@
     grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, side by side.',
       points: ["The family's shared ground, on one device.", 'Everyone tends their own tree in their own app, and the trees stand side by side here.', 'A family wall to cheer each other on, and practices to do together.'] }
   };
-  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '25 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
+  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '26 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
 
   function qr(u, label) {
     try { if (window.GGQR && GGQR.svg) return GGQR.svg(u, { label: label || 'QR code', border: 2 }); } catch (e) {}

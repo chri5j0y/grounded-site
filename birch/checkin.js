@@ -5,7 +5,7 @@
    index.html or app.js.
 
    Birch is the tree for young adults, 18 to 26 (GWG BLD 742). It sits
-   between Pine (grades 9 to 12) and Oak (adults, 25 to 60). It follows
+   between Pine (grades 9 to 12) and Oak (adults, 26 to 60). It follows
    the Grounded tree standard, version 1, the same as Pine, Oak, and
    Sequoia:
    - Six parts in one order: Roots (What grounds you), Trunk (Purpose),

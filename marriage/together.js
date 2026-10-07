@@ -1,6 +1,6 @@
 /* =====================================================================
    THE GROUNDED MARRIAGE: Your Tree, Then Your Grove (marriage/together.js)   GWG BLD 755, October 2026
-   Each partner plants their own Tree (Birch 18 to 26, Oak 25 to 60), then the two of them plant a Grove
+   Each partner plants their own Tree (Birch 18 to 26, Oak 26 to 60), then the two of them plant a Grove
    together, with family practices in a Plain and a Faith version.
    Shape: window.GM_TOGETHER = {title, lead, steps: [{id, title, text, link, links?}],
      practices: [{id, title, when, plain, faith, time, faithBy?}], sources: ['id', ...]}.
@@ -18,7 +18,7 @@ window.GM_TOGETHER = {
   {
    "id": "tree-plant",
    "title": "Each of You Plants a Tree",
-   "text": "Each partner opens their own Tree: Birch for ages 18 to 26, or Oak for ages 25 to 60. Six parts make you whole, and your Tree helps you tend them all with check-ins, practices, and a growth plan. Your Tree stays on your own device, and you share only what you choose.",
+   "text": "Each partner opens their own Tree: Birch for ages 18 to 26, or Oak for ages 26 to 60. Six parts make you whole, and your Tree helps you tend them all with check-ins, practices, and a growth plan. Your Tree stays on your own device, and you share only what you choose.",
    "link": "",
    "links": [
     {
@@ -26,7 +26,7 @@ window.GM_TOGETHER = {
      "href": "/birch/"
     },
     {
-     "label": "Oak (25 to 60)",
+     "label": "Oak (26 to 60)",
      "href": "/oak/"
     }
    ]

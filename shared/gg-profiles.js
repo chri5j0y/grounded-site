@@ -59,7 +59,7 @@
    Birch, the tree for young adults (GWG BLD 742)
    - The same pattern as Sequoia: the age stays "adult" and p.tree is
      'birch'. Anyone who says they are 26 or younger may choose Birch
-     (built for 18 to 26) or Oak (built for 25 to 60), and switch any
+     (built for 18 to 26) or Oak (built for 26 to 60), and switch any
      time. Saying yes opens the tree pick with Birch chosen.
    - Helpers work in Birch the Sequoia way, only when the person turns on
      Add a Helper in their own Birch settings (birch.helpersOn).
@@ -94,7 +94,7 @@
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
   // A grown-up's own tree (Sequoia, GWG BLD 733). The age stays "adult" either way.
   // Birch (GWG BLD 742) joins the same way: p.tree 'birch', the age still "adult".
-  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/oak/', who: 'Built for adults, 25 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/birch/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/sequoia/', who: 'Built for older adults, 60 and up' } };
+  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/oak/', who: 'Built for adults, 26 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/birch/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/sequoia/', who: 'Built for older adults, 60 and up' } };
   // Which trees each age question offers: 26 or younger (Birch first), 55 or older.
   var BAND = { young: ['birch', 'oak'], older: ['oak', 'sequoia'] };
   function treeOf(p) { return p && p.age === 'adult' && (p.tree === 'sequoia' || p.tree === 'birch') ? p.tree : 'oak'; }

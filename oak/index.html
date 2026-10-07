@@ -12,7 +12,7 @@
 <link rel="icon" type="image/svg+xml" href="/shared/marks/oak-tab.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Oak by Grow With Grounded | Shelter for others. Strength for you</title>
-<meta name="description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 25 to 60.">
+<meta name="description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 26 to 60.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://growwithgrounded.com/oak/">
 <meta property="og:image" content="https://growwithgrounded.com/oak/share-image.png">
@@ -22,7 +22,7 @@
 <link rel="canonical" href="https://growwithgrounded.com/oak/">
 <meta property="og:site_name" content="Grow With Grounded">
 <meta property="og:title" content="Oak by Grow With Grounded">
-<meta property="og:description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 25 to 60.">
+<meta property="og:description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 26 to 60.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Oak by Grow With Grounded">
 <meta name="twitter:description" content="Shelter for others. Strength for you. From Grow With Grounded.">
@@ -1007,7 +1007,7 @@ html.ts-2 main{zoom:1.25;}
     <div class="gg-hero-lock"><img class="gg-hero-mark" src="/shared/marks/oak.svg" alt="" width="64" height="64"><h1 id="hero-title">Oak<sup>&trade;</sup></h1></div>
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Shelter for others. Strength for you.</p>
-    <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 25 to 60.</p>
+    <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 26 to 60.</p>
     <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');document.getElementById('client-nav').scrollIntoView({behavior:'smooth'})">How it works</button></div>
     <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Grounded Field Guide.</p>
     <div id="hero-tree-slot" hidden></div>
@@ -2894,7 +2894,7 @@ function moveSeqHtml(onToday) {
   const r = okRec(), age = ageNow(); if (!r) return '';
   if (onToday && (age == null || age < 60 || r.staySeq || r.movedToSequoia || treeNow(PROF.id) !== 'oak')) return '';
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="ok-set-moving"'}><h3>Ready for Sequoia?</h3>
-    <p class="gt-small">${onToday ? 'Oak is built for adults 25 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
+    <p class="gt-small">${onToday ? 'Oak is built for adults 26 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
     <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToSequoia()">Move My Tree to Sequoia</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInOak()">Stay in Oak</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
 }
 function stayInOak() { const r = okRec(); if (!r) return; r.staySeq = todayKey(); persistRec().then(() => { showToast('Oak stays your tree. Move My Tree to Sequoia is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }

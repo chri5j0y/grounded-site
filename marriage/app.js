@@ -720,8 +720,8 @@
     }).join('') + '</ol>';
     // the invites: each partner onto their own Tree (Birch or Oak, by age), and the two of them into a Grove
     var person = function (w, name) {
-      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 26, and Oak for ages 25 to 60. Choose the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
-        '<div class="ff-links"><a href="/birch/">Birch, Ages 18 to 26</a><a href="/oak/">Oak, Ages 25 to 60</a></div>' +
+      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 26, and Oak for ages 26 to 60. Choose the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
+        '<div class="ff-links"><a href="/birch/">Birch, Ages 18 to 26</a><a href="/oak/">Oak, Ages 26 to 60</a></div>' +
         '<div class="ff-row">' + btn('invite', 'Copy ' + (name ? esc(name) + '’s' : 'an') + ' Invite', { to: w, cls: 'btn-secondary ff-sm' }) + '</div></div>';
     };
     h += '<div class="gm-inv"><h3>Your Invites</h3><p class="btv-small">Each Tree lives on its own device, behind its own lock, so each of you grows at your own pace.</p>' +
@@ -743,7 +743,7 @@
   function copyInvite(to) {
     var base = siteBase(), name = to === 'a' || to === 'b' ? nm(to) : '', t;
     if (to === 'grove') t = 'Let’s grow a Grove together, where our two trees stand side by side: ' + base + '/grove/';
-    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded. Birch is for ages 18 to 26: ' + base + '/birch/ and Oak is for ages 25 to 60: ' + base + '/oak/ Everything stays on your own device.';
+    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded. Birch is for ages 18 to 26: ' + base + '/birch/ and Oak is for ages 26 to 60: ' + base + '/oak/ Everything stays on your own device.';
     copyText(t, function (ok) { var el = $('gm-invst'); if (el) el.textContent = ok ? 'Invite copied. Paste it in a message.' : 'Copy did not work here. ' + t; });
   }
 

@@ -23291,7 +23291,7 @@ window.GG_LEARN = {
         ],
         [
          "Your own tree",
-         "Oak, for adults 25 to 60"
+         "Oak, for adults 26 to 60"
         ]
        ],
        "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same six parts as Pine."

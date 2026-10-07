@@ -24,7 +24,7 @@ const FB = {
     {id: 'aspen', name: 'Aspen', color: '#1F6F74', tagline: 'Rooted together.', line: 'Built for grades 6 to 8, their families, and their teachers.'},
     {id: 'pine', name: 'Pine', color: '#3A6B35', tagline: 'Stand tall through every season.', line: 'Built for grades 9 to 12.'},
     {id: 'birch', name: 'Birch', color: '#7F6610', tagline: 'New ground, deep roots.', line: 'Built for young adults, 18 to 26.'},
-    {id: 'oak', name: 'Oak', color: '#3D5A73', tagline: 'Shelter for others. Strength for you.', line: 'Built for adults, 25 to 60.'},
+    {id: 'oak', name: 'Oak', color: '#3D5A73', tagline: 'Shelter for others. Strength for you.', line: 'Built for adults, 26 to 60.'},
     {id: 'sequoia', name: 'Sequoia', color: '#7A2E1C', tagline: 'A long life, still growing.', line: 'Built for older adults, 60 and up.'},
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
     {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, classrooms, churches, and groups.'},
