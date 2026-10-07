@@ -307,7 +307,9 @@
   function dec64(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return decodeURIComponent(escape(atob(s))); }
   function pad(n) { return String(n).padStart(2, '0'); }
   function today() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-  // Only these fields travel, and only in this shape.
+  // Only these fields travel, and only in this shape. Health and Ability (vault.life, GWG BLD 756) never travels in a
+  // handoff, a Visit card, or Share to Family: each code below is built from its own short list of fields, and anything
+  // else in an entry, including life, is dropped.
   function clean(e) {
     if (!e || !FROM[e.from]) return null;
     var ans = {}, n = 0;

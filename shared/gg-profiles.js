@@ -64,6 +64,16 @@
    - Helpers work in Birch the Sequoia way, only when the person turns on
      Add a Helper in their own Birch settings (birch.helpersOn).
 
+   Health and Ability (GWG BLD 756, shared/gg-life.js)
+   - The choice is kept inside the vault, at the top beside email
+     (vault.life), shared by every tree; never in the open list or shared.
+     Manage my profile has a Health and Ability row (Maple and Aspen: Their
+     Health and Ability, set by a grown-up with the child). A new profile made
+     with carry (Start My Birch, Start My Oak) asks "Bring your Health and
+     Ability choices?" and copies it only on a yes. Move My Tree keeps it,
+     since it is the same profile. Clear My Choices erases it.
+   - Learn watched marks are kept in the vault too (vault.learn, gg-learn.js).
+
    Pine, the tree for high schoolers (GWG BLD 739)
    - A High school profile (age "pine") tends its tree in Pine. The
      privacy model above stays the same: only the teen's passcode opens
@@ -522,6 +532,8 @@
           step3(d);
         };
       }
+      // Start My Birch and Start My Oak (Pine): bring the Health and Ability choice only on a yes.
+      var lifeFrom = (function () { var v = opt.carry && cur && open[cur.id] && open[cur.id].data, l = v && v.life; return l && ((l.ids || []).length || l.none || l.rather || l.gentle) ? l : null; })();
       function step3(d) {
         var minor = isMinor(st.age);
         d.show('<h2 id="ggp-title">One last step</h2>' +
@@ -530,12 +542,16 @@
           (minor ? grownBlock(st.name, st.age)
             : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +
+          (lifeFrom && !minor ? '<hr class="ggp-sep"><p style="margin:0"><b>Bring your Health and Ability choices?</b></p><label class="ggp-check" style="margin-top:6px"><input type="checkbox" id="ggp-life"> <span>Yes, copy them into the new profile, locked there too. You can change them any time.</span></label>' : '') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Create profile</button></div>');
         $(d, '[data-back]').onclick = function () { st.pass = null; step2(d); };
         $(d, '[data-go]').onclick = function () {
           var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null, helperOf: keep, tree: st.age === 'adult' && st.band && BAND[st.band].indexOf(st.tree) >= 0 ? st.tree : 'oak' };
           try { if (minor) Object.assign(o, readGrown(d)); else if (!$(d, '#ggp-agree').checked) throw new Error('Please check the box to agree.'); }
           catch (e) { return d.msg(e.message); }
+          var lb = $(d, '#ggp-life');
+          if (lifeFrom && lb && lb.checked) { o.carry = Object.assign({}, o.carry || {}); o.carry.life = { ids: (lifeFrom.ids || []).slice(), none: !!lifeFrom.none, rather: !!lifeFrom.rather, gentle: !!lifeFrom.gentle, shareHelpers: false, set: todayStr() }; }
+          else if (o.carry && o.carry.life) { o.carry = Object.assign({}, o.carry); delete o.carry.life; }
           run(d, function () { return createProfile(o); }).then(function (id) {
             d.close(true); toast(st.name + '\'s profile is ready.');
             if (opt.onCreated) opt.onCreated(id);
@@ -729,6 +745,7 @@
             '<div id="ggp-treepick"' + (band ? '' : ' hidden') + '><label class="ggp-l" for="ggp-tree">Tree</label><select id="ggp-tree">' + (BAND[band] || []).map(function (x) { return '<option value="' + x + '"' + (t === x ? ' selected' : '') + '>' + TREE[x].tool + ' (' + TREE[x].who + ')</option>'; }).join('') + '</select><span class="ggp-small">Sets where My tree opens. Check-ins already saved stay where they are.</span></div>'; })() : '') +
         (isAdult ? '<label class="ggp-l" for="ggp-email">Email, optional</label><input type="email" id="ggp-email" value="' + esc(v.email || '') + '" placeholder="Fills in contact forms on this site"><span class="ggp-small">It stays in your locked profile and is only sent if you send a form.</span>' : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b ggp-go" data-save>Save changes</button></div>' +
+        (cur.id === id || grownOpens(p.age) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>' + (grownOpens(p.age) ? 'Their Health and Ability' : 'Health and Ability') + '</b></p><p class="ggp-small">' + (grownOpens(p.age) ? 'Set it together with ' + esc(p.name) + ', so guides and practices that fit show first. It stays locked in this profile, and changes nothing about questions or scores.' : 'Choose what is part of your life right now, so guides and practices that fit show first. It stays locked in your profile, and changes nothing about questions or scores.') + '</p><button type="button" class="ggp-link" data-life>' + (grownOpens(p.age) ? 'Open Their Health and Ability' : 'Open Health and Ability') + '</button>' : '') +
         (kids.filter(function (k) { return k.age !== 'adult'; }).length ? '<hr class="ggp-sep"><p><b>Kids you can open</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age !== 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
         (kids.filter(function (k) { return k.age === 'adult'; }).length ? '<hr class="ggp-sep"><p><b>People you help</b></p><p class="ggp-small">' + kids.filter(function (k) { return k.age === 'adult'; }).map(function (k) { return esc(k.name); }).join(', ') + '</p>' : '') +
         (isAdult && (p.helpers || []).length ? '<hr class="ggp-sep"><p><b>Helpers</b></p><p class="ggp-small">They open this profile in Willow, Birch, or Sequoia with their own passcode, and see only what you choose to share there.</p>' + (p.helpers || []).map(getP).filter(Boolean).map(function (h) { return '<p class="ggp-small" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>' + esc(h.name) + '</span>' + (cur.id === id ? '<button type="button" class="ggp-link" data-rmhelper="' + h.id + '">Remove</button>' : '') + '</p>'; }).join('') : '') +
@@ -763,6 +780,7 @@
         save(id).then(function () { emit('change'); toast('Saved.'); view(d); });
       };
       var ag = $(d, '[data-addgrown]'); if (ag) ag.onclick = function () { addGrown(d); };
+      var lf = $(d, '[data-life]'); if (lf) lf.onclick = function () { lifeGo(function () { GGLife.dialog(lifeTree(p), { id: id, forChild: grownOpens(p.age) }); }); };
       d.el.querySelectorAll('[data-rmhelper]').forEach(function (b) { b.onclick = function () { var h = getP(b.dataset.rmhelper); if (!h || !confirm('Remove ' + h.name + ' as a helper? They will no longer open ' + p.name + '\'s profile.')) return; removeHelper(id, h.id); toast(h.name + ' is no longer a helper.'); view(d); }; });
       $(d, '[data-code]').onclick = function () { changeCode(d); };
       $(d, '[data-backup]').onclick = function () { backup(id); };
@@ -843,6 +861,16 @@
     document.head.appendChild(s);
   }
   window.GGBackupGo = backupGo;
+
+  /* Health and Ability (shared/gg-life.js), loaded when Manage my profile opens it, if the page has not already. */
+  function lifeGo(fn) {
+    if (window.GGLife) return fn();
+    var s = document.querySelector('script[data-gglife]');
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=lf1'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
+    s.addEventListener('load', function () { if (window.GGLife) fn(); });
+    s.addEventListener('error', function () { toast('That could not load. Check the connection and try again.'); });
+  }
+  function lifeTree(p) { return !p ? 'oak' : p.age === 'adult' ? treeOf(p) : p.age; }
 
   /* =====================================================================
      NAVIGATION BUTTON

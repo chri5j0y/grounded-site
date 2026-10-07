@@ -20,7 +20,13 @@
    - GGLearn.player(host, cfg)  plays one lesson (the Field Guide uses this with its own records).
    - GGLearn.open(app)          the Learn tab in a tree app: series list, player, certificates, flyer.
      App lessons live in shared/learn-lessons.js (window.GG_LEARN), loaded the first time Learn opens.
-     Progress is kept on this device under gg-learn:<app> and travels in the one backup file.
+     Progress (watched marks) is kept inside the unlocked profile's locked vault (vault.learn[app], GWG BLD 756),
+     or in memory for this visit only when nobody is unlocked, so it travels in the one backup file, still locked.
+     Old open gg-learn:<app> marks are moved into the vault once, on the first unlock, then removed.
+     GGLearn.watched(app, id) and GGLearn.marks(app) read them; the window event gg-learn-marks says they changed.
+   - Health and Ability (GWG BLD 756): shared/learn-life.js (window.GG_LEARN_LIFE[app], one support track per app)
+     loads only when the Support group opens, and adds its Health and Ability videos there, first when the person
+     has a Health and Ability choice (shared/gg-life.js). Willow has none.
    - A series earns a certificate when every lesson in it is finished and it has three or more
      lessons (or says cert: true). Certificates, posters, and flyers come from shared/gg-print.js.
    - When Life Changes videos (Build B1, October 2026): two per guide, For You and For the Helper.
@@ -661,9 +667,48 @@
   }
 
   /* ---------------- the Learn tab in a tree app ---------------- */
+  /* Watched marks live inside the unlocked profile's vault (GWG BLD 756), never open in browser storage.
+     Nobody unlocked: kept in memory for this visit only. */
   var KEY = function (app) { return 'gg-learn:' + app; };
-  function load(app) { try { var d = JSON.parse(localStorage.getItem(KEY(app)) || '{}'); return { done: d.done || {}, at: d.at || {} }; } catch (e) { return { done: {}, at: {} }; } }
-  function keep(app, d) { try { localStorage.setItem(KEY(app), JSON.stringify({ done: d.done, at: d.at })); } catch (e) {} }
+  var MEM = {}, MOVED = {};
+  function who() { var G = window.GGP, a = G && G.active && G.active(); return a && G.data && G.data(a.id) ? a.id : null; }
+  function box(id) { var v = window.GGP.data(id); if (!v.learn || typeof v.learn !== 'object' || Array.isArray(v.learn)) v.learn = {}; return v.learn; }
+  function marksEvent(app) { try { window.dispatchEvent(new CustomEvent('gg-learn-marks', { detail: { app: app || null } })); } catch (e) {} }
+  // The old open marks (gg-learn:<app>) move into the vault once, then leave browser storage.
+  function migrate(id) {
+    if (!id || MOVED[id]) return; MOVED[id] = 1;
+    var moved = false;
+    Object.keys(APPS).forEach(function (app) {
+      var raw = null; try { raw = localStorage.getItem(KEY(app)); } catch (e) {}
+      if (raw == null) return;
+      var old = {}; try { old = JSON.parse(raw) || {}; } catch (e) {}
+      var B = box(id), r = B[app] = B[app] && typeof B[app] === 'object' ? B[app] : { done: {}, at: {} };
+      r.done = r.done || {}; r.at = r.at || {};
+      Object.keys(old.done || {}).forEach(function (k) { var d = old.done[k]; if (!r.done[k] || (d && d < r.done[k])) r.done[k] = d; });
+      Object.keys(old.at || {}).forEach(function (k) { if (r.at[k] == null) r.at[k] = old.at[k]; });
+      moved = true;
+    });
+    if (!moved) return;
+    Promise.resolve(window.GGP.save(id)).then(function () {
+      Object.keys(APPS).forEach(function (app) { try { localStorage.removeItem(KEY(app)); } catch (e) {} });
+      marksEvent(null);
+    });
+  }
+  function load(app) {
+    var id = who(), r;
+    if (id) { migrate(id); r = box(id)[app] || {}; } else r = MEM[app] || {};
+    return { done: Object.assign({}, r.done || {}), at: Object.assign({}, r.at || {}) };
+  }
+  function keep(app, d) {
+    var id = who(), rec = { done: Object.assign({}, d.done || {}), at: Object.assign({}, d.at || {}) };
+    if (id) { box(id)[app] = rec; window.GGP.save(id); } else MEM[app] = rec;
+    marksEvent(app);
+  }
+  function watched(app, lid) { return !!load(app).done[lid]; }
+  (function hook(n) {
+    if (window.GGP && GGP.on) { GGP.on(function (type) { if (type === 'change' || type === 'ready' || type === 'data') { migrate(who()); marksEvent(null); } }); if (GGP.ready && GGP.ready.then) GGP.ready.then(function () { migrate(who()); marksEvent(null); }); return; }
+    if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
+  })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=gv4', aspen: '/aspen/guide-videos.js?v=av3', maple: '/maple/guide-videos.js?v=mv2', sequoia: '/sequoia/guide-videos.js?v=sv3', pine: '/pine/guide-videos.js?v=pv2', birch: '/birch/guide-videos.js?v=bv1' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
@@ -678,13 +723,28 @@
       return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
     }).filter(function (t) { return t.lessons.length; });
   }
+  // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
+  var LIFE_SRC = '/shared/learn-life.js?v=ll1', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_T = {};
+  function needLife(app) {
+    if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
+    return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
+      return script(url('/shared/gg-life.js?v=lf1'), function () { return !!window.GGLife; });
+    });
+  }
+  function lifeTrack(app) {
+    if (LIFE_T[app]) return LIFE_T[app];
+    var T = (window.GG_LEARN_LIFE || {})[app];
+    if (!T || !Array.isArray(T.lessons) || !T.lessons.length) return null;
+    return (LIFE_T[app] = Object.assign({}, T, { id: T.id || ('life-' + app), kind: 'support', title: T.title || 'Health and Ability', life: true }));
+  }
+  function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
   function needPrint() { return script(url('/shared/gg-print.js?v=pr8'), function () { return !!window.GGPrint; }); }
 
   var APP = null; // {app, root, view, lesson}
   function open(app, lessonId, opts) {
     var meta = APPS[app]; if (!meta) return;
     css();
-    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () {
+    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && /^life-/.test(lessonId) ? needLife(app) : null; }).then(function () {
       if (APP) close(true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
       var root = document.createElement('div');
@@ -710,7 +770,12 @@
     try { window.dispatchEvent(new CustomEvent('gg-learn-close')); } catch (e) {} // pages can refresh watched marks
   }
   function appKey(e) { if (e.key === 'Escape' && APP) { e.preventDefault(); close(); } }
-  function tracksFor(app) { var L = (window.GG_LEARN || {})[app] || {}; return [SETUP_TRACK].concat((L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; }), guideTracks(app)); }
+  function tracksFor(app) {
+    var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
+    var lt = lifeTrack(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
+    if (lt) sup = lifeFirst() ? [lt].concat(sup) : sup.concat([lt]);
+    return [SETUP_TRACK].concat(rest, sup, guideTracks(app));
+  }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
   // Who each video is for (GWG BLD 743): a small, quiet label from the lesson's 'for' key (shared/learn-lessons.js).
   var FOR_LABEL = { person: 'For the person in hospice', family: 'For family and caregivers', both: 'For both', you: 'For you', helper: 'For the helper', grownup: 'For the grown-up', kids: 'For kids' };
@@ -786,7 +851,7 @@
     if (a === 'close') close();
     else if (a === 'home') list();
     else if (a === 'cats') { APP.cat = null; APP.ring = null; list(); }
-    else if (a === 'cat') { APP.cat = v; APP.ring = null; list(); }
+    else if (a === 'cat') { APP.cat = v; APP.ring = null; if (v === 'sup') { var at = APP.app; needLife(at).then(function () { if (APP && APP.app === at && APP.cat === 'sup') list(); }); } else list(); }
     else if (a === 'ring') { APP.cat = 'gd'; APP.ring = v; list(); }
     else if (a === 'open') lesson(v);
     else if (a === 'cert') { var t = tracksFor(APP.app).filter(function (x) { return x.id === v; })[0]; if (t) cert(APP.app, t); }
@@ -794,5 +859,5 @@
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();
