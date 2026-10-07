@@ -117,7 +117,7 @@ function leave(){
 const CSS = `
 #ses-root .card{min-width:0;}
 .ses-pill{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:12px;background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);margin-left:6px;vertical-align:middle;white-space:nowrap;}
-.ses-pill.lock{background:color-mix(in srgb,var(--danger) 14%,transparent);color:var(--danger);}
+.ses-pill.keep{background:color-mix(in srgb,var(--danger) 14%,transparent);color:var(--danger);}
 .ses-mine{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
 .ses-nav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px;}
 .ses-nav .btn[aria-current="page"]{background:var(--umber);border-color:var(--umber);color:#F4EBDA;}
@@ -171,7 +171,7 @@ const pill = g => g && g._mine ? `<span class="ses-pill">${g._mine === 'new' ? '
 function stepEd(s, i, n){
   const lock = isSafety(s);
   const mv = `<div class="ses-mv"><button type="button" class="btn btn-line btn-sm" data-ses="up" data-v="${i}" aria-label="Move step ${i + 1} up"${i ? '' : ' disabled'}>&uarr;</button><button type="button" class="btn btn-line btn-sm" data-ses="down" data-v="${i}" aria-label="Move step ${i + 1} down"${i < n - 1 ? '' : ' disabled'}>&darr;</button>${lock ? '' : `<button type="button" class="btn btn-line btn-sm" data-ses="rm" data-v="${i}">Remove</button>`}</div>`;
-  const head = `<div class="ses-st"><span class="n">STEP ${i + 1}</span>${lock ? `<b style="flex:1;min-width:140px">${esc(s.t)}</b><span class="ses-pill lock">Always Included</span>` : `<input type="text" class="tt" data-sess="${i}|t" value="${esc(s.t || '')}" aria-label="Step ${i + 1} name" placeholder="Step name">`}
+  const head = `<div class="ses-st"><span class="n">STEP ${i + 1}</span>${lock ? `<b style="flex:1;min-width:140px">${esc(s.t)}</b><span class="ses-pill keep">Always Included</span>` : `<input type="text" class="tt" data-sess="${i}|t" value="${esc(s.t || '')}" aria-label="Step ${i + 1} name" placeholder="Step name">`}
     <input type="number" class="mm" min="0" max="600" inputmode="numeric" data-sess="${i}|m" value="${esc(s.m || '')}" aria-label="Step ${i + 1} minutes" placeholder="min">${mv}</div>`;
   if (lock) return `<div class="ses-step">${head}<div class="ses-fixed">${STEPL.map(([k, l]) => (s[k] || []).length ? `<b>${l}</b><ul>${s[k].map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '').join('')}${s.tip ? `<p style="margin-top:6px"><i>${esc(s.tip)}</i></p>` : ''}<p class="ses-hint" style="margin-top:6px">The safety step stays in every session, word for word, with the 988 button. Move it or change its minutes.</p></div></div>`;
   return `<div class="ses-step">${head}<div class="ses-g2">${STEPL.map(([k, l]) => `<div><label class="f">${l}</label>${ta(`data-sess="${i}|${k}" aria-label="Step ${i + 1}: ${l}"`, s[k], 'One per line')}</div>`).join('')}

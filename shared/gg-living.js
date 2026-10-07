@@ -144,7 +144,7 @@
     var tree = place(sc, 'tree') || { x: W / 2, y: H / 2 };
     if (t === 'birds') items.push({ t: t, x: -20, y: H * (.1 + R() * .22), v: .5 + R() * .4, p: R() * 6, s: .8 + R() * .4 });
     else if (t === 'soar') items.push({ t: t, x: -40, y: H * (.12 + R() * .12), v: .35, p: R() * 6, s: 1.2 });
-    else if (t === 'leaves') items.push({ t: t, x: tree.x + (R() - .5) * W * .16, y: tree.y - H * .08 + R() * H * .12, v: .35 + R() * .35, p: R() * 6, r: R() * 6, c: A.leaf[Math.floor(R() * A.leaf.length)], f: A.flutter ? 1 : 0, gy: H * (.86 + R() * .1), sh: a, k: .2 + R() * .08 });
+    else if (t === 'leaves') items.push({ t: t, x: tree.x + (R() - .5) * W * .16, y: tree.y - H * .08 + R() * H * .12, v: .35 + R() * .35, p: R() * 6, r: R() * 6, c: A.leaf[Math.floor(R() * A.leaf.length)], f: A.flutter ? 1 : 0, gy: H * (.86 + R() * .1), sh: a, k: .27 + R() * .09 });
     else if (t === 'seeds') items.push({ t: t, x: R() * W, y: H * (.25 + R() * .5), v: .15 + R() * .2, p: R() * 6, life: 0 });
     else if (t === 'fireflies') items.push({ t: t, x: W * (.08 + R() * .84), y: H * (.45 + R() * .45), v: .2, p: R() * 6, life: 0 });
     else items.push({ t: 'butterflies', x: W * (.15 + R() * .7), y: H * (.6 + R() * .3), v: .4, p: R() * 6, life: 0, c: ['#F2C14E', '#F7F2E8', '#E9A3B8', '#9EC9F0'][Math.floor(R() * 4)] });

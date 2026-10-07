@@ -1049,7 +1049,7 @@ const catIcon = c => ({start:'start', eol:'eol', ceremony:'ceremony', counsel:'c
 const GL = () => !LIB ? [] : window.GGSes ? GGSes.list() : LIB.guides;
 const G = id => !LIB ? null : window.GGSes ? GGSes.get(id) : LIB.guides.find(g => g.id === id);
 const CL = id => DATA.clients.find(c => c.id === id);
-const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief & Caregiver Support', speaking:'Speaking & Training', self:'For You', safety:'Safety'};
+const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief & Caregiver Support', speaking:'Speaking & Training', meditation:'Meditation, Sound, and Movement', self:'For You', safety:'Safety'};
 if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m), esc, icon,
   guideHTML: (g, pv) => vGuide(g, pv), saveAll: (g, adds) => sesSaveAll(g, adds), cats: CATS, services: SERVICE_NAMES});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';

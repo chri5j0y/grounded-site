@@ -961,6 +961,9 @@ function guideType(g){
   if (/infant/.test(x)) return has('infant-loss') || has('funeral');
   if (/funeral/.test(x)) return has('funeral');
   if (/vigil sitting/.test(x)) return has('bedside-blessing');
+  if (/child/.test(x) && /bless/.test(x)) return has('child-blessing') || has('house-blessing');
+  if (/bedside/.test(x) && /bless/.test(x)) return has('bedside-blessing') || has('house-blessing');
+  if (/house/.test(x) && /bless/.test(x)) return has('house-blessing');
   if (/bless/.test(x)) return has('house-blessing');
   return null;
 }
