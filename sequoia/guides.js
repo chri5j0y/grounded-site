@@ -4,7 +4,8 @@
    Read by Sequoia (/sequoia/) and the site-wide search. Each topic has Oak's shape: id, ring, title, keys, parts, quick,
    feel, self {first, helps, tell, people}, helper {feel, say, avoid, help, you}, faith, practices ("part|Name", matching
    sequoia/practices.js), reach, more. Generated from patches/bld734/source (and later builds) in grounded-workshop:
-   edit the data there and rebuild. Groups A to D: BLD 734. Groups E to H: BLD 735.
+   edit the data there and rebuild. Groups A to D: BLD 734. Groups E to H: BLD 735. Health and Ability guides
+   (ring 'life', with life tags): BLD 757, patches/bld757 in grounded-workshop.
    ===================================================================== */
 (function(){
 const LC_RINGS = [
@@ -4552,6 +4553,602 @@ const LC_TOPICS = [
    [
     "Allen and colleagues, legacy activities near the end of life (research)",
     "https://doi.org/10.1089/jpm.2007.0294"
+   ]
+  ]
+ },
+ {
+  "id": "several-conditions",
+  "ring": "life",
+  "title": "Living with several conditions at once",
+  "life": [
+   "health",
+   "pain",
+   "serious"
+  ],
+  "keys": "several conditions many conditions multiple chronic conditions multimorbidity too many doctors too many appointments too many pills medicines list specialists diabetes heart arthritis copd kidney blood pressure overwhelmed health conditions juggling",
+  "parts": [
+   "leaves",
+   "bark",
+   "trunk"
+  ],
+  "quick": [
+   "Living with more than one long-term condition is the most common way to grow older. You are in good company.",
+   "Your doctors know your conditions. You know your life. Tell them what matters most to you.",
+   "Keep one up-to-date list of every medicine, vitamin, and supplement, and bring it to every visit.",
+   "Ask one person on your care team to help you see the whole picture, not only one part.",
+   "You choose the words for what you live with. You are a whole person, not a list of diagnoses."
+  ],
+  "feel": "Tired of appointments, tired of pills, tired of being a patient. Some days it can feel like your calendar belongs to your conditions. You may feel confused when one doctor's advice seems to pull against another's, or worried that something is being missed. Some people feel guilty for not keeping up with every instruction. Others feel a quiet grief for the body and the freedom they had before.",
+  "self": {
+   "first": [
+    "Make one list of every condition, every medicine, vitamin, and supplement (with the dose), and every doctor. Keep a copy in your wallet or purse.",
+    "Before your next visit, write down what matters most to you right now: a walk with a friend, gardening, church or temple, time with the grandchildren, staying in your home.",
+    "Ask your main doctor or nurse: Who can help me see the whole picture? Is there anything I could stop or simplify?",
+    "Bring someone along, or ask for the visit notes, so you don't have to remember everything."
+   ],
+   "helps": [
+    "Telling your care team what you want your days to be for, so the plan can be built around it.",
+    "Asking your pharmacist to look over all your medicines together once a year, or after any hospital stay.",
+    "A simple weekly page: appointments, refills, and one thing you are looking forward to.",
+    "A pill organizer, a phone alarm, or a helper's reminder.",
+    "A workshop for living well with long-term conditions, led by people who live with them too.",
+    "Leaving room in the week for rest and for things that have nothing to do with health."
+   ],
+   "tell": [
+    "“I am more than my conditions.”",
+    "“It's fine to ask what matters most, and to say what matters to me.”",
+    "“One day, one list, one step.”"
+   ],
+   "people": "Try: “I have a lot of appointments right now. Could you help me with rides on Tuesdays?” or “I'd love a visit that isn't about my health.”"
+  },
+  "helper": {
+   "feel": "They may feel worn out by appointments and medicines, and frustrated when advice from different doctors doesn't fit together. Many older adults keep quiet about how hard it is, so they won't seem ungrateful or like a burden.",
+   "say": [
+    "“What matters most to you right now?”",
+    "“Which appointment or medicine feels hardest?”",
+    "“Would it help if I came along and took notes?”",
+    "“Let's plan something this week that has nothing to do with doctors.”"
+   ],
+   "avoid": [
+    "Talking about them only as their conditions, or speaking to the doctor over them.",
+    "Changing or stopping any medicine yourself. Questions about medicines belong with their doctor or pharmacist.",
+    "Comparing them with someone else who “has the same thing.”",
+    "Taking over the whole calendar without asking."
+   ],
+   "help": [
+    "Help keep the medicine and doctor list up to date, with their say on every line.",
+    "Offer rides, or help them find rides, to the appointments that matter most.",
+    "Before a visit, help them write down their questions and what matters most to them.",
+    "Keep the rest of life going: a meal, a game, a drive, a visit with no health talk."
+   ],
+   "you": "Keeping track of many conditions is real work, and it can fill your own week too. Share the load with others, keep your own appointments, and keep your own rest. Your steady presence matters more than knowing every detail."
+  },
+  "faith": "For some people, faith steadies them when the body feels like a long list of problems: a prayer before appointments, a community that brings meals and rides, a sense of being known as a whole person. For others, many illnesses at once can raise hard questions or make worship hard to reach. Both belong. A chaplain or faith leader can visit, or bring worship home, if you'd like. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "leaves|Appointment Prep",
+   "leaves|Medicine",
+   "leaves|Pacing Your Day",
+   "trunk|Values Sort",
+   "trunk|Worth Beyond Doing",
+   "bark|Hard-Day Plan"
+  ],
+  "reach": [
+   "Questions about your medicines, or how they mix with each other or with alcohol: ask your pharmacist or doctor.",
+   "Feeling overwhelmed by many doctors and plans: ask your main doctor or nurse who can help you see the whole picture, such as a care coordinator or social worker.",
+   "Chest pain, trouble breathing, or a sudden change: call 911.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Rides, meals, and help at home anywhere in the US: Eldercare Locator, 1-800-677-1116.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, for help at home and planning ahead.",
+   "Workshops for living well with long-term conditions: the Self-Management Resource Center can help you find one."
+  ],
+  "more": [
+   [
+    "Self-Management Resource Center",
+    "https://selfmanagementresource.com/"
+   ],
+   [
+    "National Institute on Aging, health information",
+    "https://www.nia.nih.gov/health"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "energy-pacing",
+  "ring": "life",
+  "title": "Energy, fatigue, and pacing",
+  "life": [
+   "pain",
+   "health",
+   "serious",
+   "moving"
+  ],
+  "keys": "energy fatigue tired exhausted worn out no energy pacing spoons spoon theory rest naps flare bad days good days boom and bust overdoing it tired all the time chronic fatigue low energy",
+  "parts": [
+   "leaves",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Fatigue that comes with a condition is real. It is not laziness, and rest alone may not fix it.",
+   "Pacing means spending your energy on purpose: a little, then rest, before you're spent.",
+   "Some people picture a day's energy as a handful of spoons. Spend them on what matters most first.",
+   "Fatigue that is new, or much worse, deserves a talk with your doctor or nurse.",
+   "Rest is part of tending yourself, not a failure."
+  ],
+  "feel": "Tired in a way sleep doesn't fix. Frustrated that a small task can take a whole morning, or that a good day can cost you the next two. Some people feel guilty resting while others work, or embarrassed to cancel plans again. Many feel a quiet grief for the energy they used to have.",
+  "self": {
+   "first": [
+    "For one week, jot down your energy morning, midday, and evening, from 0 to 10, and what you did. Look for your best hours.",
+    "Each morning, name one thing you must do, one thing you want to do, and when you will rest.",
+    "Tell your doctor or nurse if fatigue is new, much worse, or keeping you from what matters. Bring your notes.",
+    "Pick two short rest times today, and rest even if you feel fine."
+   ],
+   "helps": [
+    "Saving your best hours for what matters most to you.",
+    "Breaking big jobs into small pieces across the week, with rest in between.",
+    "Sitting to do what you can: a stool at the sink, a chair in the shower, a seat while you cook.",
+    "Saying no, or not today, without a long explanation.",
+    "Keeping one spoon back for the unexpected.",
+    "Letting someone else carry the heavy things, so you can spend your energy on the good ones."
+   ],
+   "tell": [
+    "“Rest is part of how I take care of myself.”",
+    "“A smaller day is still a good day.”",
+    "“I spend my energy on what matters.”"
+   ],
+   "people": "Try: “I'd love to come. Can we make it an hour, and somewhere I can sit?” or “I have energy for one thing today. I'd like it to be time with you.”"
+  },
+  "helper": {
+   "feel": "They may feel tired in a way that's hard to explain, and worried you'll think they aren't trying. Many older adults push through on good days, then pay for it for days after.",
+   "say": [
+    "“How much energy do you have today?”",
+    "“What would you most like to spend it on?”",
+    "“Would it help if I did this part, so you can save your energy for that?”",
+    "“Let's keep it short. I'd rather see you rested.”"
+   ],
+   "avoid": [
+    "“You just need more exercise,” or “You slept all afternoon.”",
+    "Planning long days without rest built in.",
+    "Doing everything for them without asking. Choosing where to spend their energy is theirs.",
+    "Treating a canceled plan as a sign they don't care."
+   ],
+   "help": [
+    "Ask what time of day is best, and plan visits then.",
+    "Offer to carry, lift, drive, or shop, as a choice they can turn down.",
+    "Make plans that can shrink: shorter visits, closer places, a chair waiting.",
+    "Help them tell their doctor if fatigue is new or getting worse."
+   ],
+   "you": "Watching someone run out of energy can stir worry and impatience. Both are human. Pacing your own help matters too: share the load, rest yourself, and remember that a short, warm visit is a real gift."
+  },
+  "faith": "Many traditions honor rest: a sabbath, a day set apart, prayer that asks nothing but stillness. For some people, that permission to rest is a deep comfort when energy is low. For others, being unable to serve or attend worship as before brings sadness. Both belong. Shorter prayers, worship by phone or video, or a visit from a faith leader can fit a smaller day. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "leaves|Pacing Your Day",
+   "leaves|Rest Before You're Spent",
+   "leaves|Smart Nap",
+   "fruit|Comfort Within Reach",
+   "bark|Self-Compassion Break",
+   "branches|Ask for Help"
+  ],
+  "reach": [
+   "Fatigue that is new, much worse, or comes with other changes: tell your doctor or nurse. Bring a week of energy notes.",
+   "Questions about whether a medicine adds to your tiredness: ask your pharmacist or doctor.",
+   "Feeling hopeless, or so worn down you think about ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Help at home, meals, and rides anywhere in the US: Eldercare Locator, 1-800-677-1116.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
+   "Workshops for living well with long-term conditions and fatigue: the Self-Management Resource Center can help you find one."
+  ],
+  "more": [
+   [
+    "Christine Miserandino, The Spoon Theory",
+    "https://butyoudontlooksick.com"
+   ],
+   [
+    "Self-Management Resource Center",
+    "https://selfmanagementresource.com/"
+   ],
+   [
+    "National Institute on Aging, health information",
+    "https://www.nia.nih.gov/health"
+   ]
+  ]
+ },
+ {
+  "id": "lifelong-disability",
+  "ring": "life",
+  "title": "Growing older with a lifelong disability",
+  "life": [
+   "autism",
+   "moving",
+   "hearing",
+   "seeing"
+  ],
+  "keys": "lifelong disability disabled since birth since childhood aging with a disability polio cerebral palsy spina bifida intellectual disability developmental disability autistic deaf blind wheelchair growing older new changes post polio losing helpers independent living",
+  "parts": [
+   "trunk",
+   "branches",
+   "leaves"
+  ],
+  "quick": [
+   "You bring decades of knowing what works for you. You are the expert on your own life.",
+   "Growing older can bring new changes on top of familiar ones. Both deserve attention.",
+   "Not every new symptom is your disability, and not every one is age. Ask your doctor to look.",
+   "Many barriers are in the world around you: steps, forms, rushed visits. Asking for what works is your right.",
+   "You choose your own words. Many people say Deaf, blind, or autistic; many say a person with a disability. Both are welcome here."
+  ],
+  "feel": "Proud of a life built your own way, and maybe tired of explaining it again. Some people notice their body changing in new ways: more pain, less energy, a wheelchair or cane needed more often. Others are losing the people who knew them best, like parents, siblings, or long-time helpers. You may feel frustrated when a new doctor sees only the disability, or only your age, and not you.",
+  "self": {
+   "first": [
+    "Write down what has changed in the last year: energy, pain, strength, hearing, sight, or mood. Bring it to your doctor.",
+    "Make a short list of what helps you, ready to hand to a new doctor, nurse, or helper.",
+    "Ask your doctor: Could this be something new, and not only my disability or my age?",
+    "Name the people you count on now, and one or two you'd like to add."
+   ],
+   "helps": [
+    "Your own know-how: the routines, tools, and ways of doing things you have built over a lifetime.",
+    "Equipment that fits your body now, even if it's different from before.",
+    "People who share your experience: a disability community, a Deaf club, a peer group, an independent living center.",
+    "Planning ahead for help at home, so the choices stay yours.",
+    "Rest and pacing, as energy changes.",
+    "Time with people who know you as you, not as a patient."
+   ],
+   "tell": [
+    "“I know what works for me.”",
+    "“Changing how I do things is still doing them.”",
+    "“My life has been my own, and it still is.”"
+   ],
+   "people": "Try: “It helps me when you face me and speak clearly,” or “Please ask me, not the person with me.”"
+  },
+  "helper": {
+   "feel": "They have lived a whole life with a disability and know a great deal about what works. Growing older can add new changes, and the loss of helpers who knew them well. Many are tired of being spoken about instead of spoken to.",
+   "say": [
+    "“What works best for you?”",
+    "“What has changed lately, and what would help?”",
+    "“Do you want me to say anything, or will you?”",
+    "“Tell me how you like to do this.”"
+   ],
+   "avoid": [
+    "Speaking to the doctor, the server, or anyone else over them.",
+    "Calling them an inspiration, or brave for doing ordinary things.",
+    "Assuming every new problem is “just the disability” or “just age.”",
+    "Taking over a task they have done their own way for years."
+   ],
+   "help": [
+    "Ask how they like things done, and do it that way.",
+    "Help them bring a list of changes and needs to the doctor, if they want help.",
+    "Notice barriers around them, like steps, poor lighting, or noisy rooms, and help change those.",
+    "Help them plan ahead for support at home, with their choices at the center."
+   ],
+   "you": "You may be one of the people they count on most, and you may be growing older too. Talk with them early about the future, and build a wider circle of help together, so no one person carries it all."
+  },
+  "faith": "For some people, faith has been a steady companion through a lifetime of living with a disability. For others, faith communities have been places of welcome, or of barriers: steps, sound systems, or people who prayed for a cure they never asked for. Both experiences are real. You decide what you want from a faith community, and a faith leader who listens can help make worship easier to reach. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "branches|Say What You Need",
+   "trunk|Name Your Gifts",
+   "leaves|Appointment Prep",
+   "bark|Quiet the Senses",
+   "branches|Ask for Help",
+   "leaves|Rest Before You're Spent"
+  ],
+  "reach": [
+   "New pain, weakness, tiredness, or changes in hearing, sight, or thinking: tell your doctor or nurse, and ask whether it could be something new.",
+   "In Minnesota: Disability Hub MN, 1-866-333-2466, for help with health, housing, independent living, and money resources.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, for help at home and planning ahead.",
+   "Anywhere in the US: Eldercare Locator, 1-800-677-1116, for local services.",
+   "If someone is hurting you, neglecting you, or taking your money in Minnesota: MAARC, 1-844-880-1574. Danger right now: call 911.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Deaf and hard of hearing callers can reach a counselor in ASL through the 988 website. Veterans: dial 988, then press 1."
+  ],
+  "more": [
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ],
+   [
+    "Aging well with a lifelong disability (research review, 2024)",
+    "https://doi.org/10.1093/geront/gnae092"
+   ]
+  ]
+ },
+ {
+  "id": "adult-child-disability",
+  "ring": "life",
+  "title": "Who will help my adult child? Aging parents of adults with disabilities",
+  "life": [
+   "close",
+   "autism"
+  ],
+  "keys": "adult child with a disability son daughter intellectual disability developmental disability autism down syndrome aging parent who will care for my child when im gone future planning guardianship supported decision making special needs trust group home siblings letter of intent worry",
+  "parts": [
+   "branches",
+   "fruit",
+   "bark"
+  ],
+  "quick": [
+   "“Who will help my child when I can't?” is one of the heaviest questions a parent can carry. You don't have to answer it alone, or all at once.",
+   "Plan with your son or daughter, not only for them. Their wishes, likes, and voice come first.",
+   "Write down what you know: routines, health, likes, fears, and the people who matter to them.",
+   "Ask about planning help: The Arc's Center for Future Planning, your county case manager, and a lawyer who knows disability planning.",
+   "Many families have no plan yet. Starting with one small step counts."
+  ],
+  "feel": "Love and worry, often in the same breath. Some parents have cared for their son or daughter for fifty years or more and can't picture anyone else doing it. You may feel tired, afraid of what happens if you get sick, guilty about leaning on your other children, or overwhelmed by words like guardianship, trusts, and waiting lists. Some feel a deep pride in the life your family has built together.",
+  "self": {
+   "first": [
+    "Start a letter about your son or daughter: daily routines, health and medicines, what they love, what upsets them, how they communicate, and who matters to them.",
+    "Ask your son or daughter, in the way that works for them, what they want: where to live, who to see, what they enjoy doing.",
+    "Call your county case manager, or Disability Hub MN in Minnesota, and ask what planning help is available.",
+    "Make an appointment with a lawyer who knows disability planning to ask about the choices that fit your family."
+   ],
+   "helps": [
+    "Planning in small steps, one conversation or one page at a time.",
+    "Widening your adult child's circle now: friends, neighbors, a day program, a faith community, people who know them well.",
+    "Talking early with siblings or other family about what they can and can't do, without assuming.",
+    "Letting other people learn your child's routines while you are here to teach them.",
+    "Meeting other parents in the same season, through The Arc or a parent group.",
+    "Caring for your own health. Your son or daughter needs you well, too."
+   ],
+   "tell": [
+    "“I don't have to solve the whole future today.”",
+    "“My child's voice belongs in this plan.”",
+    "“Asking for help is part of loving them well.”"
+   ],
+   "people": "Try: “I want to start planning for the future. Would you sit down with me and help me think it through?”"
+  },
+  "helper": {
+   "feel": "They may carry a lifetime of caring and a deep fear about what comes after them. Many parents have heard “someone will step in” for years without a real plan, and the question can feel too big to start.",
+   "say": [
+    "“What do you most hope for him or her?”",
+    "“What would help you start?”",
+    "“Could I sit with you while you write some of it down?”",
+    "“What does your son or daughter want?”"
+   ],
+   "avoid": [
+    "“Don't worry, it'll all work out.”",
+    "Promising to take over care you can't truly give.",
+    "Making decisions about the adult child without asking them.",
+    "Giving legal or money advice. Point them to a lawyer, The Arc, or the county."
+   ],
+   "help": [
+    "Offer to help gather papers, make calls, or sit in on a planning meeting.",
+    "Get to know their son or daughter yourself, so the circle grows.",
+    "Learn one routine, so you could step in for a day.",
+    "Give the parent real breaks, and help them keep their own appointments."
+   ],
+   "you": "Being asked to be part of someone's future can be an honor and a weight. Be honest about what you can give, and help build a wider circle so no one person carries it all, including you."
+  },
+  "faith": "For some families, faith has been a steady support through a lifetime of caring, and a faith community can become part of the circle that surrounds your son or daughter. For others, faith communities have not always made room, and that hurt is real. If you want, a faith leader can help you think through the future, or help your congregation welcome your adult child more fully. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "trunk|Legacy Letter",
+   "fruit|Make Your Wishes Known",
+   "bark|Worry Window",
+   "branches|Ask for Help",
+   "branches|Caregiver Pause",
+   "branches|Active Listening"
+  ],
+  "reach": [
+   "Future planning for families of adults with intellectual and developmental disabilities: The Arc's Center for Future Planning, or your local Arc chapter.",
+   "In Minnesota: Disability Hub MN, 1-866-333-2466, for help with services, housing, and planning.",
+   "Your county case manager or social worker, for services, waiting lists, and support at home.",
+   "A lawyer who knows disability planning, for questions about guardianship, supported decision-making, wills, and trusts.",
+   "Help for you as a caregiver: Eldercare Locator, 1-800-677-1116, or in Minnesota, Minnesota Aging Pathways, 1-800-333-2433.",
+   "If you believe a vulnerable adult is being hurt, neglected, or taken advantage of in Minnesota: MAARC, 1-844-880-1574. Danger right now: call 911.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1."
+  ],
+  "more": [
+   [
+    "The Arc, Center for Future Planning",
+    "https://futureplanning.thearc.org/"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "stroke",
+  "ring": "life",
+  "title": "After a stroke",
+  "life": [
+   "memory",
+   "moving",
+   "health"
+  ],
+  "keys": "stroke after a stroke tia mini stroke brain attack aphasia speech words weakness one side paralysis rehab therapy recovery balance memory fatigue depression after stroke be fast warning signs",
+  "parts": [
+   "leaves",
+   "bark",
+   "trunk"
+  ],
+  "quick": [
+   "A new stroke is an emergency. Sudden balance loss, eye changes, a drooping face, arm weakness, or trouble speaking: call 911 right away.",
+   "Recovery often continues for months. Your rehab team can tell you what to work on next.",
+   "Words, movement, memory, and mood can all change. You are still you.",
+   "Low mood after a stroke is common, and help works. Tell your doctor or nurse.",
+   "You choose what to call what you live with, and you set the pace of the conversation."
+  ],
+  "feel": "Shaken, frustrated, or frightened. A stroke can change things overnight: how you walk, how you speak, how you remember, how tired you feel. Some people feel embarrassed when words come out wrong, or angry at a hand that won't do what it used to. Many feel sad or flat for a while. Some feel grateful to be here and grieving at the same time.",
+  "self": {
+   "first": [
+    "Learn the warning signs of a new stroke with your family, and keep 911 close.",
+    "Ask your rehab team: What should I work on now? What can I do at home? When will we check progress?",
+    "Bring someone to appointments, or ask for written notes, so you don't have to remember everything.",
+    "Tell your doctor or nurse if you feel low, flat, or worried most days."
+   ],
+   "helps": [
+    "Practice in small, regular pieces, with rest in between.",
+    "Asking people to slow down, give you time, and ask one question at a time.",
+    "Tools that help you talk: writing, pictures, a word board, yes and no questions.",
+    "Doing things seated, and setting up your home so what you need is within reach.",
+    "Counting what you can do this week, not only what you used to do.",
+    "Time with people who make you laugh."
+   ],
+   "tell": [
+    "“I am still me.”",
+    "“Slow progress is still progress.”",
+    "“I can take my time.”"
+   ],
+   "people": "Try: “Please give me time to answer. I know what I want to say; the words take longer now.”"
+  },
+  "helper": {
+   "feel": "They may feel frustrated, frightened, or embarrassed by changes in speech, movement, or memory. Many feel sad or flat for a while after a stroke, and some are too tired to explain.",
+   "say": [
+    "“Take your time. I'm listening.”",
+    "“Do you want help, or would you like to try?”",
+    "“What did you work on in therapy this week?”",
+    "“You're still you to me.”"
+   ],
+   "avoid": [
+    "Finishing their sentences, or speaking to others as if they can't understand.",
+    "Talking louder. Slower and simpler usually helps more.",
+    "Doing everything for them. Practice is part of recovery.",
+    "“At least it wasn't worse,” as the first thing you say."
+   ],
+   "help": [
+    "Learn the warning signs of a new stroke, and call 911 right away if you see them.",
+    "Help them practice what their therapists suggest, at their pace.",
+    "Ask one question at a time, and wait for the answer.",
+    "Watch for low mood that lasts, and help them tell their doctor."
+   ],
+   "you": "Life can change for you overnight too, and caring after a stroke can be tiring. Ask the rehab team what you can do, accept help with rides and meals, and keep your own rest and your own people."
+  },
+  "faith": "For some people, faith becomes a steady place after a stroke: familiar prayers known by heart, music, a community that visits. For others, a stroke can raise hard questions, or make worship hard to reach. Both belong. Prayers and songs learned long ago often stay even when other words are hard to find. A chaplain or faith leader can visit if you'd like. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "bark|Body Kindness Scan",
+   "leaves|Rest Before You're Spent",
+   "leaves|Chair Stretch",
+   "leaves|Appointment Prep",
+   "trunk|Worth Beyond Doing",
+   "branches|Say What You Need"
+  ],
+  "reach": [
+   "Signs of a new stroke, even if they go away: sudden loss of balance, trouble seeing, a drooping face, arm weakness, or trouble speaking. Call 911 right away and note the time.",
+   "Questions about recovery, therapy, and what to practice at home: ask your doctor and your rehab team.",
+   "Low mood, flatness, or worry most days: tell your doctor or nurse. Help works.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Help at home, rides, and meals anywhere in the US: Eldercare Locator, 1-800-677-1116.",
+   "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433. Disability Hub MN, 1-866-333-2466, for equipment, housing, and independent living resources."
+  ],
+  "more": [
+   [
+    "American Stroke Association, stroke symptoms and warning signs",
+    "https://www.stroke.org/en/about-stroke/stroke-symptoms"
+   ],
+   [
+    "National Institute on Aging, health information",
+    "https://www.nia.nih.gov/health"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ]
+ },
+ {
+  "id": "heart-lung",
+  "ring": "life",
+  "title": "Living with heart or lung disease, and oxygen",
+  "life": [
+   "health",
+   "serious"
+  ],
+  "keys": "heart disease heart failure lung disease copd emphysema pulmonary fibrosis oxygen tank concentrator cannula short of breath breathless breathing trouble cardiac rehab pulmonary rehab afraid to breathe swelling tired heart attack",
+  "parts": [
+   "leaves",
+   "bark",
+   "branches"
+  ],
+  "quick": [
+   "Chest pain, severe breathlessness, or breathing that suddenly gets much worse: call 911.",
+   "Ask your care team for a written plan: what to watch for, what to do, and who to call.",
+   "Ask whether cardiac or pulmonary rehab fits you. Many people find it helps them do more with less fear.",
+   "Oxygen is a tool that helps you live your life. Use it as your doctor prescribes, and keep it away from smoking and open flames.",
+   "Feeling short of breath can be frightening. Fear and breath affect each other, and calm can be practiced."
+  ],
+  "feel": "Worried about the next breath, or the next spell. Some people feel tied to the oxygen tubing, or self-conscious using it in public. Many feel tired, frustrated that stairs or a walk to the mailbox take so much, and afraid of a trip back to the hospital. Some quietly stop going places. Some feel grateful for every good day.",
+  "self": {
+   "first": [
+    "Ask your doctor or nurse for a written plan: what changes to watch for, what to do, and who to call.",
+    "Ask whether cardiac rehab or pulmonary rehab would fit you.",
+    "If you use oxygen, ask your supplier to show you, and whoever helps you, how to use and store it safely.",
+    "Keep your medicine list and your plan where helpers and emergency workers can find them."
+   ],
+   "helps": [
+    "Pacing: doing a little, then resting, and sitting to do what you can.",
+    "Calm breathing your care team has taught you, never forced.",
+    "Planning outings: a seat near the door, a spare oxygen supply, a shorter visit.",
+    "A support group of people living with heart or lung disease.",
+    "Keeping one good thing on the calendar each week.",
+    "Telling your doctor about worry or low mood. It's common, and help works."
+   ],
+   "tell": [
+    "“One breath at a time.”",
+    "“My oxygen helps me live my life.”",
+    "“Rest is part of the plan.”"
+   ],
+   "people": "Try: “I'd love to come. Could we sit near the door, and keep it to an hour?” or “I may need to stop and catch my breath. Just wait with me.”"
+  },
+  "helper": {
+   "feel": "They may feel frightened when breath runs short, embarrassed about oxygen in public, and tired of how much effort small things take. Many play down symptoms so no one will worry.",
+   "say": [
+    "“I'm here. No rush.”",
+    "“What does your plan say to do?”",
+    "“Would a shorter visit work better today?”",
+    "“Is there anything you've stopped doing that you miss?”"
+   ],
+   "avoid": [
+    "Rushing them, or talking quickly while they catch their breath.",
+    "Lecturing about past habits, like smoking.",
+    "Adjusting oxygen or medicines yourself. Those belong with their care team.",
+    "Smoking, or using open flames, near their oxygen."
+   ],
+   "help": [
+    "Learn their written plan, and know when to call 911.",
+    "Help keep their home safe for oxygen: no smoking, flames kept away, tubing out of walkways.",
+    "Plan outings around breath: closer parking, seats, rest stops, spare oxygen.",
+    "Offer rides to rehab or a support group."
+   ],
+   "you": "Watching someone struggle to breathe can be frightening, and it's natural to hover. Learn the plan, so you know what to do, and then let calm be your gift. Keep your own rest, and talk with someone about your own worry."
+  },
+  "faith": "For some people, faith shows up in the breath itself: a short prayer with each breath, psalms or chants known by heart, a sense of being held when breathing is hard. For others, illness raises hard questions, or makes worship hard to reach. Both belong. Worship by phone or video, or a visit from a faith leader, can bring community close. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "leaves|Breathe",
+   "bark|Slow Exhale",
+   "leaves|Pacing Your Day",
+   "leaves|Appointment Prep",
+   "branches|Support Group",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "Chest pain, severe breathlessness, lips or fingers turning blue, or a sudden change: call 911.",
+   "Symptoms that are slowly getting worse, like more swelling or more breathlessness: follow your written plan and call your doctor or nurse.",
+   "Questions about oxygen equipment, supplies, and safe use: call your oxygen supplier.",
+   "Questions about medicines: ask your pharmacist or doctor.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Help at home, rides, and meals anywhere in the US: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433."
+  ],
+  "more": [
+   [
+    "American Lung Association, Better Breathers Club support groups",
+    "https://www.lung.org/help-support/better-breathers-club"
+   ],
+   [
+    "National Institute on Aging, health information",
+    "https://www.nia.nih.gov/health"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
    ]
   ]
  }

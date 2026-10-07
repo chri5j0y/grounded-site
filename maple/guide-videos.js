@@ -2,7 +2,7 @@
    MAPLE . When Life Changes videos (GWG BLD 727 and 731, October 2026)
    Two narrated videos for each Maple guide: For You (the child, grades K to 5) and For the Grown-up
    (the parent or helper beside them). Played by shared/gg-learn.js, which loads this file the first time
-   Maple's Learn opens. Inside Me, Close to Home: Loss, and Safety (BLD 727); the other six groups (BLD 731): all 60 guides, 120 videos.
+   Maple's Learn opens. Inside Me, Close to Home: Loss, and Safety (BLD 727); the other six groups (BLD 731); Health and Ability (BLD 757): all 68 guides, 136 videos.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
    the same as shared/learn-lessons.js. Generated from patches/bld731/source (bld727 source for its groups) in grounded-workshop:
    edit the data there and rebuild. Proofreading lines are in the Founder library.
@@ -48,6 +48,10 @@ window.GG_LEARN_GUIDES.maple = {
 [
 "mp-safety",
 "Safety"
+],
+[
+"mp-life",
+"Health and Ability"
 ]
 ],
 "guides": [
@@ -15345,6 +15349,1936 @@ window.GG_LEARN_GUIDES.maple = {
 "h": "Calm and warm keeps them telling.",
 "sub": "Check in again in a few days.",
 "say": "If your child seems troubled by it, or keeps looking for it, talk with their doctor or a counselor. Check in again in a few days, and practice the plan now and then. Calm and warm keeps them telling."
+}
+]
+}
+},
+{
+"id": "health-condition",
+"ring": "mp-life",
+"title": "A Health Condition Every Day",
+"you": {
+"id": "mp-g-health-condition-you",
+"guide": "health-condition",
+"side": "you",
+"title": "A Health Condition Every Day",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "A Health Condition Every Day",
+"sub": "For You",
+"say": "Some kids have a health condition, like asthma, allergies, diabetes, or seizures. It means their body needs a little extra help, every day or some days. If that's you, this is for you."
+},
+{
+"k": "card",
+"title": "It is not your fault.",
+"body": "Lots of kids have one.",
+"say": "You didn't do anything to cause it. A health condition is not a punishment. Bodies are all different, and lots and lots of kids have one."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Mad",
+"Scared",
+"Tired",
+"Brave",
+"Okay"
+],
+"say": "You might feel mad about medicine. Or scared before the doctor. Or tired of it all. You might feel brave, or just okay. Every feeling is allowed."
+},
+{
+"k": "points",
+"h": "Your helpers",
+"items": [
+[
+"Your grown-ups",
+"At home"
+],
+[
+"The school nurse",
+"At school"
+],
+[
+"Your doctor",
+"At the clinic"
+]
+],
+"say": "You have a whole team of helpers. Your grown-ups at home. The school nurse at school. And your doctor. Their job is to help your body. Your job is to tell them how you feel.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Squeeze, and let go.",
+"sub": "Like a lemon in your hands.",
+"say": "When something is hard, like a shot or a medicine you don't like, your hands can help. Squeeze your hands tight, like you're squeezing a lemon. Now let them go soft, and take a slow breath.",
+"beats": [
+"When something is hard, like a shot or a medicine you don't like, your hands can help.",
+"Squeeze your hands tight, like you're squeezing a lemon.",
+{
+"t": "Now let them go soft, and take a slow breath.",
+"w": 8
+}
+]
+},
+{
+"k": "card",
+"title": "Tell a grown-up.",
+"body": "If your body feels different, or you feel sad a long time.",
+"say": "If your body feels different, or something hurts, tell a grown-up right away. And if you feel sad or worried for a long time, tell them that too. Telling is brave."
+},
+{
+"k": "big",
+"h": "You are a kid first.",
+"sub": "Your health is just one part of you.",
+"say": "You can play, learn, laugh, and have friends. Your health condition is one part of you. You are a kid first, and you are loved."
+}
+]
+},
+"helper": {
+"id": "mp-g-health-condition-helper",
+"guide": "health-condition",
+"side": "helper",
+"title": "A Health Condition Every Day",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"CDC Healthy Schools: How Schools Can Support Students with Chronic Health Conditions",
+"https://www.cdc.gov/healthyschools/chronic_conditions/pdfs/2017_02_15-How-Schools-Can-Students-with-CHC_Final_508.pdf"
+],
+[
+"PACER Center",
+"https://www.pacer.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "A Health Condition Every Day",
+"sub": "For the Grown-up",
+"say": "When your child lives with a health condition, like asthma, allergies, diabetes, or epilepsy, this is for you, the grown-up beside them. The medical plan comes from their doctor. This is about the rest: the words, the feelings, and the everyday."
+},
+{
+"k": "big",
+"h": "They learn it from you.",
+"sub": "Calm, simple, true words.",
+"say": "Young children learn what their condition means from how the grown-ups around them talk about it. Calm, simple, true words help them feel steady. Use the same few words each time, and let your child choose the words they like for their own body."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"May think it is a punishment"
+],
+[
+"Grades 3 to 5",
+"Notice they are different"
+],
+[
+"Every age",
+"Want you close"
+]
+],
+"say": "Here's what this can look like. Young children may think their condition is a punishment, or fight medicine they don't understand. Older children notice they're different from friends, and some hide symptoms so they don't miss out. At every age, they want to know you'll stay close.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Nothing you did made this happen.\"",
+"\"Lots of kids have it.\"",
+"\"We take care of it together.\""
+],
+"say": "Try words like these. Nothing you did made this happen. Lots of kids have it. We know how to take care of it, together. When they ask if it will go away, tell the truth as you know it, and say you'll learn as you go."
+},
+{
+"k": "points",
+"h": "Give them a real job",
+"items": [
+[
+"Hold it",
+"The inhaler or the snack"
+],
+[
+"Choose",
+"Which arm, which bandage"
+],
+[
+"Remind you",
+"Of the next step"
+]
+],
+"say": "Children feel steadier when they have a small, real part. They can hold the inhaler or the snack. They can choose which arm, or which bandage. Older kids can remind you of the next step. Add one more job as they grow.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "flow",
+"h": "School that feels safe",
+"steps": [
+[
+"Meet the nurse",
+"Make a written plan"
+],
+[
+"Tell the teacher",
+"What helps, kept private"
+],
+[
+"Visit together",
+"Where to go"
+],
+[
+"Plan for missed days",
+"A way to catch up"
+]
+],
+"say": "School matters a lot here. Meet with the school nurse and make a written plan. Tell the teacher what helps, and ask that it stay private from classmates. Visit together so your child knows where to go. And plan for missed days, so catching up feels doable.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "Plan, instead of no.",
+"body": "Parties, sports, and sleepovers, with a plan.",
+"say": "Worry can make us say no to everything. Try planning instead. A safe snack for the party. A coach who knows the plan. A sleepover with a call at bedtime. Ordinary days of play and friends are part of growing well."
+},
+{
+"k": "big",
+"h": "One ordinary joy this week.",
+"sub": "Picture it. Plan it.",
+"say": "Take a slow breath. Think of one thing your child loves that has nothing to do with their health. Now pick a time this week to do it together.",
+"beats": [
+"Take a slow breath.",
+"Think of one thing your child loves that has nothing to do with their health.",
+{
+"t": "Now pick a time this week to do it together.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "New symptoms: their doctor. Worry that lasts: the school counselor.",
+"say": "Call their doctor about any new or worsening symptoms, and ask about a child life specialist for hard procedures. If worry, sadness, or fear of medical care lasts more than a couple of weeks, talk with their doctor or the school counselor. And look after yourself too. You're carrying a lot."
+},
+{
+"k": "big",
+"h": "A kid first.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Calm words, a small real job, and plenty of ordinary days. Your child is a kid first. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "moving-differently",
+"ring": "mp-life",
+"title": "Moving Differently: Wheels, Braces, and Joining In",
+"you": {
+"id": "mp-g-moving-differently-you",
+"guide": "moving-differently",
+"side": "you",
+"title": "Moving Differently: Wheels, Braces, and Joining In",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Moving Differently: Wheels, Braces, and Joining In",
+"sub": "For You",
+"say": "Some kids move with a wheelchair. Some use braces, crutches, or a walker. Some bodies just move in their own way. If that's you, this is for you."
+},
+{
+"k": "card",
+"title": "Your way is a real way.",
+"body": "Rolling, walking, scooting, all of it.",
+"say": "Rolling is moving. Walking with braces is moving. Scooting, crawling, and dancing in a chair are moving too. Your way of getting around is a real way, and it works."
+},
+{
+"k": "card",
+"title": "The stairs are the problem.",
+"body": "Not you.",
+"say": "Sometimes a place has only stairs, or a game doesn't fit. That isn't your fault. The problem is the stairs, or the game. Grown-ups can help change it, so everyone can come in and play."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Proud",
+"Strong",
+"Left out",
+"Frustrated",
+"Happy"
+],
+"say": "You might feel proud and strong. Sometimes you might feel left out, or frustrated when your body or a place won't let you do what you want. And lots of times, you just feel happy. Every feeling is okay."
+},
+{
+"k": "words",
+"h": "You can say",
+"items": [
+"\"Can you wait for me?\"",
+"\"Can we play a game I can join?\"",
+"\"Please ask before you push.\""
+],
+"say": "You can say what you need. Try one of these out loud, in a strong voice. Can you wait for me? Can we play a game I can join? Please ask before you push my chair.",
+"beats": [
+"You can say what you need.",
+"Try one of these out loud, in a strong voice.",
+"Can you wait for me?",
+"Can we play a game I can join?",
+{
+"t": "Please ask before you push my chair.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Tell a grown-up.",
+"body": "If something hurts, or you keep getting left out.",
+"say": "If your body hurts, or your chair or braces don't fit right, tell a grown-up. And if kids keep leaving you out, tell a grown-up you trust, like a parent, a teacher, or your school counselor."
+},
+{
+"k": "big",
+"h": "There is a place for you.",
+"sub": "Just as you are.",
+"say": "You belong on the playground, in the classroom, and in every game. There is a place for you, just as you are."
+}
+]
+},
+"helper": {
+"id": "mp-g-moving-differently-helper",
+"guide": "moving-differently",
+"side": "helper",
+"title": "Moving Differently: Wheels, Braces, and Joining In",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"PACER Center",
+"https://www.pacer.org/"
+],
+"socialmodel"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Moving Differently: Wheels, Braces, and Joining In",
+"sub": "For the Grown-up",
+"say": "When your child moves with a wheelchair, braces, crutches, or in their own way, this is for you, the grown-up beside them. Their doctors and therapists guide the body. This is about belonging, words, and joining in."
+},
+{
+"k": "big",
+"h": "Look for what can change.",
+"sub": "Often the barrier is the stairs, not the child.",
+"say": "Here's a helpful way to see it. Often the barrier isn't your child's body. It's the stairs, the game, or the plan that left them out. When you look for what can change around your child, you both have more to work with."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Joy, curiosity, wheels and all"
+],
+[
+"Grades 3 to 5",
+"Notice being left out"
+],
+[
+"Every age",
+"Proud of their own way"
+]
+],
+"say": "Here's what this can look like. Young children move through the world with joy and curiosity, and may not notice a difference until someone points it out. Older children notice being left out: the game that never fits, the friend who forgets to wait. At every age, many are proud of their own way of moving.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that fit",
+"items": [
+"\"You use a wheelchair.\"",
+"\"Your body moves its own way.\"",
+"\"The stairs are the problem.\""
+],
+"say": "Your words shape theirs. Say, you use a wheelchair, rather than stuck in a chair. Say, your body moves its own way. And when a place leaves them out, say, the stairs are the problem. Ask what words your child likes. Each person chooses their own words."
+},
+{
+"k": "points",
+"h": "Joining in",
+"items": [
+[
+"Talk to teachers",
+"Adapt the games"
+],
+[
+"Practice asking",
+"Can you wait for me?"
+],
+[
+"Find places",
+"Built for every body"
+]
+],
+"say": "Joining in takes a little planning. Talk with the teacher and the physical education teacher about adapting games, so your child plays instead of watching. Practice asking with your child: can you wait for me? And find adapted sports, swim times, and playgrounds built for every body.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Their equipment is their space.",
+"body": "Ask before touching or pushing.",
+"say": "A wheelchair, walker, or crutches are part of your child's space. Teach siblings, friends, and even helpful grown-ups to ask before touching or pushing. It tells your child their body and their choices are theirs."
+},
+{
+"k": "words",
+"h": "Too heavy to carry",
+"items": [
+"Pity",
+"Praise for ordinary things",
+"Sitting out by default"
+],
+"say": "A few things weigh a child down. Pity, which tells them their life is smaller. Praise for ordinary things, as if eating lunch were a wonder. And sitting out by default, when a little planning would let them join."
+},
+{
+"k": "big",
+"h": "One place that welcomes every body.",
+"sub": "Picture it. Plan a visit.",
+"say": "Take a slow breath. Think of one place your child would love to go, a park, a pool, or a friend's house. Now picture one thing you could ask or plan so they can join in there.",
+"beats": [
+"Take a slow breath.",
+"Think of one place your child would love to go, a park, a pool, or a friend's house.",
+{
+"t": "Now picture one thing you could ask or plan so they can join in there.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Pain or new changes: their doctor. Sadness that lasts: the school counselor.",
+"say": "Talk with their doctor or therapist about pain, new changes in movement, or equipment that no longer fits. If your child seems sad, left out, or worried for more than a couple of weeks, talk with their doctor or the school counselor. And save a little rest for yourself."
+},
+{
+"k": "big",
+"h": "There is a place for them.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Plain words, joining in, and an eye on what can change. There is a place for your child, just as they are. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "hearing-differently",
+"ring": "mp-life",
+"title": "Hearing Differently",
+"you": {
+"id": "mp-g-hearing-differently-you",
+"guide": "hearing-differently",
+"side": "you",
+"title": "Hearing Differently",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Hearing Differently",
+"sub": "For You",
+"say": "Some kids hear a little. Some hear a lot with hearing aids. Some don't hear with their ears at all, and talk with their hands. If you hear in your own way, this is for you."
+},
+{
+"k": "card",
+"title": "Your way is a real way.",
+"body": "Eyes, hands, ears, and words.",
+"say": "You can understand people with your eyes, your hands, your hearing aids, and the words on the screen. Signing is talking. Reading lips is listening. Your way works."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Proud",
+"Tired",
+"Left out",
+"Curious",
+"Happy"
+],
+"say": "You might feel proud of how you talk. You might feel tired after a noisy day. Sometimes you might feel left out, when everyone laughs and you don't know why. Every feeling is okay."
+},
+{
+"k": "words",
+"h": "You can say",
+"items": [
+"\"Can you face me?\"",
+"\"What did you say?\"",
+"\"What's funny?\""
+],
+"say": "You can always ask. You can say, or sign: can you face me? What did you say? What's funny? Asking is smart, and good friends are glad to help."
+},
+{
+"k": "big",
+"h": "Tap a beat.",
+"sub": "Feel it with your hands.",
+"say": "Here's something fun. Put your hand flat on a table or the floor. Tap a beat, slow, then fast, and feel it in your fingers.",
+"beats": [
+"Here's something fun.",
+"Put your hand flat on a table or the floor.",
+{
+"t": "Tap a beat, slow, then fast, and feel it in your fingers.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Tell a grown-up.",
+"body": "If your ears hurt, or you feel left out a lot.",
+"say": "If your ears hurt, or your hearing aids feel wrong, tell a grown-up. And if you feel left out a lot, tell a grown-up you trust, like a parent, a teacher, or your school counselor."
+},
+{
+"k": "big",
+"h": "You belong here.",
+"sub": "Just as you are.",
+"say": "There are lots of kids and grown-ups who hear like you do. You belong with your friends, your family, and your class, just as you are."
+}
+]
+},
+"helper": {
+"id": "mp-g-hearing-differently-helper",
+"guide": "hearing-differently",
+"side": "helper",
+"title": "Hearing Differently",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"PACER Center",
+"https://www.pacer.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Hearing Differently",
+"sub": "For the Grown-up",
+"say": "When your child is Deaf, hard of hearing, or hears in their own way, this is for you, the grown-up beside them. Their audiologist and doctors guide the hearing side. This is about belonging, words, and everyday life."
+},
+{
+"k": "big",
+"h": "Your family chooses.",
+"sub": "The words, and the way you talk.",
+"say": "Families choose their own words, like Deaf, hard of hearing, or hearing differently. Many Deaf people see Deafness as a community and a culture with its own language. Families also choose how they talk: signing, speaking, or both. Choose with your child and their team, and use those words every time."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Tired in noisy places"
+],
+[
+"Grades 3 to 5",
+"Missing jokes and group talk"
+],
+[
+"Every age",
+"Want to belong"
+]
+],
+"say": "Here's what this can look like. Young children may get tired or upset in noisy places, and not know why. Older children notice missing jokes, group talk, and announcements. At every age, what they want most is to belong.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "Everyday things that help",
+"items": [
+[
+"Attention first",
+"A tap, a wave, the lights"
+],
+[
+"Face them",
+"Good light, mouth and hands clear"
+],
+[
+"Captions on",
+"Every show and video"
+]
+],
+"say": "A few everyday things help a lot. Get their attention first, with a tap, a wave, or a flick of the lights. Face them when you talk, in good light, with your mouth and hands easy to see. And turn captions on for every show and video.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Never say never mind.",
+"body": "Repeat it, or write it. They deserve the whole joke.",
+"say": "When your child misses something, it's tempting to say never mind, it doesn't matter. To a child, that says they don't matter. Repeat it, sign it, or write it down. They deserve the whole joke, and the whole conversation."
+},
+{
+"k": "flow",
+"h": "At school",
+"steps": [
+[
+"Where they sit",
+"See the teacher and friends"
+],
+[
+"Captions and notes",
+"On every video"
+],
+[
+"The right helpers",
+"Interpreter or teacher of the Deaf"
+]
+],
+"say": "School matters a lot here. Ask where your child sits, so they can see the teacher, an interpreter, and their friends. Ask for captions on every video, and written directions. And ask who can help, like an interpreter, or a teacher for the Deaf and hard of hearing.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Friends who share their way.",
+"body": "Other kids, and grown-ups, who hear like them.",
+"say": "Belonging grows when a child knows others who share their way of talking. Look for other kids who sign or use hearing aids, and, if your family wants, Deaf grown-ups your child can look up to. Learning some sign language together, if your family uses it, says this is all of ours."
+},
+{
+"k": "big",
+"h": "One moment they missed.",
+"sub": "Picture it. Plan to share it.",
+"say": "Take a slow breath. Think of one place where your child often misses out, like dinner or the car. Now picture one small change, like facing each other or writing it down, so they can be part of it.",
+"beats": [
+"Take a slow breath.",
+"Think of one place where your child often misses out, like dinner or the car.",
+{
+"t": "Now picture one small change, like facing each other or writing it down, so they can be part of it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Hearing changes: their audiologist. Loneliness that lasts: the school team.",
+"say": "Talk with their audiologist or doctor about any change in hearing, ear pain, or trouble with hearing aids or implants. If your child seems lonely, left out, or worried for more than a couple of weeks, talk with their school team or the school counselor. And care for yourself too."
+},
+{
+"k": "big",
+"h": "They belong here.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Their words, their way of talking, and a place where they belong. Your child is the expert on their own day. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "seeing-differently",
+"ring": "mp-life",
+"title": "Seeing Differently",
+"you": {
+"id": "mp-g-seeing-differently-you",
+"guide": "seeing-differently",
+"side": "you",
+"title": "Seeing Differently",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Seeing Differently",
+"sub": "For You",
+"say": "Some kids see a little. Some see things only up close. Some don't see with their eyes at all. Glasses don't change it. If you see in your own way, this is for you."
+},
+{
+"k": "card",
+"title": "Your way is a real way.",
+"body": "Hands, ears, nose, and eyes.",
+"say": "You learn about the world with your hands, your ears, your nose, and the part your eyes can see. Reading braille is reading. Using a cane is walking. Listening to a book is reading too. Your way works."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Proud",
+"Curious",
+"Unsure",
+"Left out",
+"Happy"
+],
+"say": "You might feel proud of how you read or get around. You might feel unsure in a new room, or when someone moves your things. Sometimes you might feel left out. Every feeling is okay."
+},
+{
+"k": "words",
+"h": "You can say",
+"items": [
+"\"Who's there?\"",
+"\"Please say my name.\"",
+"\"Where is it?\""
+],
+"say": "You can always ask. You can say: who's there? Please say my name when you talk to me. Where is it? Asking is smart, and good friends are glad to help."
+},
+{
+"k": "big",
+"h": "Listen close.",
+"sub": "Find three sounds.",
+"say": "Let's try something. Sit still, and listen close. Find three sounds you can hear right now, near or far.",
+"beats": [
+"Let's try something.",
+"Sit still, and listen close.",
+{
+"t": "Find three sounds you can hear right now, near or far.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Tell a grown-up.",
+"body": "If your eyes hurt, or you feel left out a lot.",
+"say": "If your eyes hurt, or seeing changes, tell a grown-up. And if you feel left out a lot, tell a grown-up you trust, like a parent, a teacher, or your school counselor."
+},
+{
+"k": "big",
+"h": "You belong here.",
+"sub": "Just as you are.",
+"say": "There are lots of kids and grown-ups who see like you do. You belong with your friends, your family, and your class, just as you are."
+}
+]
+},
+"helper": {
+"id": "mp-g-seeing-differently-helper",
+"guide": "seeing-differently",
+"side": "helper",
+"title": "Seeing Differently",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"PACER Center",
+"https://www.pacer.org/"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Seeing Differently",
+"sub": "For the Grown-up",
+"say": "When your child is blind, has low vision, or sees in their own way, this is for you, the grown-up beside them. Their eye doctors guide the vision side. This is about belonging, words, and everyday life."
+},
+{
+"k": "big",
+"h": "Your family chooses the words.",
+"sub": "Blind, low vision, or seeing differently.",
+"say": "Families choose their own words, like blind, low vision, or seeing differently. Many blind people use the word blind with pride, as part of who they are. Choose with your child, and use those words every time."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Explore by touch and sound"
+],
+[
+"Grades 3 to 5",
+"Notice what they miss"
+],
+[
+"Every age",
+"Want to belong"
+]
+],
+"say": "Here's what this can look like. Young children explore by touch, sound, and smell, and may feel unsure in new or crowded places. Older children notice what they miss, like a wave across the room or a picture on the board. At every age, they want to belong.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "Everyday things that help",
+"items": [
+[
+"Say your name",
+"Coming and going"
+],
+[
+"Use words for where",
+"Not over there"
+],
+[
+"Keep things in place",
+"Tell them when they move"
+]
+],
+"say": "A few everyday things help a lot. Say your name when you come close, and say when you leave. Use words for where things are: your cup is by your right hand, not over there. And keep things in the same place, and tell them when something moves.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Offer your arm.",
+"body": "Never grab or steer.",
+"say": "When your child needs a guide, offer your arm and let them take it. Never grab their arm or steer them from behind. Teach friends and family to do the same. It tells your child their body and their choices are theirs."
+},
+{
+"k": "flow",
+"h": "At school",
+"steps": [
+[
+"A vision teacher",
+"Braille, large print, tools"
+],
+[
+"Safe travel",
+"A mobility instructor"
+],
+[
+"Materials early",
+"Start with the class"
+]
+],
+"say": "School matters a lot here. Ask about a teacher for students who are blind or have low vision, who can help with braille, large print, and tools. Ask about an orientation and mobility instructor, who teaches safe travel with a cane. And ask that materials come early, so your child starts with the class.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Their tools are theirs.",
+"body": "A cane, braille, a magnifier, a screen reader.",
+"say": "A cane, braille, a magnifier, or a screen reader are your child's tools for learning and getting around. Treat them with respect, keep them within reach, and celebrate their skill with them. Some kids feel shy using them around friends. That's normal, and it often eases with friends who understand."
+},
+{
+"k": "big",
+"h": "Describe one moment.",
+"sub": "Picture it. Put it into words.",
+"say": "Take a slow breath. Think of one moment your child might miss, like a sunset, a smile, or a funny face. Now picture how you could describe it in words, so they can share it with you.",
+"beats": [
+"Take a slow breath.",
+"Think of one moment your child might miss, like a sunset, a smile, or a funny face.",
+{
+"t": "Now picture how you could describe it in words, so they can share it with you.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Vision changes: their eye doctor. Loneliness that lasts: the school team.",
+"say": "Talk with their eye doctor about any change in vision, eye pain, or headaches. If your child seems lonely, left out, or worried for more than a couple of weeks, talk with their school team or the school counselor. And care for yourself too."
+},
+{
+"k": "big",
+"h": "They belong here.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Their words, their tools, and a world described out loud. Your child is the expert on their own day. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "autism-brain",
+"ring": "mp-life",
+"title": "Autism: How My Brain Works",
+"you": {
+"id": "mp-g-autism-brain-you",
+"guide": "autism-brain",
+"side": "you",
+"title": "Autism: How My Brain Works",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Autism: How My Brain Works",
+"sub": "For You",
+"say": "Some kids are autistic. That means their brain works in its own way. If you're autistic, or you have autism, this is for you."
+},
+{
+"k": "points",
+"h": "An autistic brain can",
+"items": [
+[
+"Notice details",
+"Things others miss"
+],
+[
+"Love things a lot",
+"Trains, animals, maps"
+],
+[
+"Feel things big",
+"Sounds, lights, changes"
+]
+],
+"say": "An autistic brain is a real way to be. It can notice details other people miss. It can love some things a whole lot, like trains, animals, or maps. And it can feel sounds, lights, and changes in a really big way.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Nothing is wrong with you.",
+"body": "Some things are harder. Some are easier.",
+"say": "Nothing is wrong with you. Some things are harder for your brain, like loud rooms or surprises. Some things are easier, like remembering facts about what you love. Lots of kids and grown-ups are autistic too."
+},
+{
+"k": "words",
+"h": "Things that can help",
+"items": [
+"Headphones",
+"A quiet spot",
+"A picture schedule",
+"Moving my body"
+],
+"say": "When things feel too big, some things can help. Headphones. A quiet spot. A picture schedule, so you know what's next. Moving your body in ways that calm you, like rocking or flapping. You can ask for what helps."
+},
+{
+"k": "big",
+"h": "Press, and let go.",
+"sub": "Palms together. Count to five.",
+"say": "Here's something that helps lots of kids. Press your hands together, hard, and count to five. Now let go, and feel your hands relax.",
+"beats": [
+"Here's something that helps lots of kids.",
+"Press your hands together, hard, and count to five.",
+{
+"t": "Now let go, and feel your hands relax.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Tell a grown-up.",
+"body": "What helps, and what feels too big.",
+"say": "You can tell a grown-up what helps you and what feels too big. If you feel sad, scared, or alone a lot, tell a grown-up you trust, like a parent, a teacher, or your school counselor."
+},
+{
+"k": "big",
+"h": "Your brain is a good brain.",
+"sub": "Just the way it works.",
+"say": "Your brain is a good brain, just the way it works. You are loved, all of you."
+}
+]
+},
+"helper": {
+"id": "mp-g-autism-brain-helper",
+"guide": "autism-brain",
+"side": "helper",
+"title": "Autism: How My Brain Works",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"Child Mind Institute",
+"https://childmind.org"
+],
+[
+"PACER Center",
+"https://www.pacer.org/"
+],
+"kenny16"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Autism: How My Brain Works",
+"sub": "For the Grown-up",
+"say": "When your child is autistic, this is for you, the grown-up beside them, and maybe getting ready to talk with them about it. Their doctors and therapists guide the clinical side. This is about words, belonging, and everyday life."
+},
+{
+"k": "big",
+"h": "Knowing can bring relief.",
+"sub": "There is a reason, and nothing is wrong with them.",
+"say": "Many children feel relief when they learn they're autistic, in kind words. There is a reason some things feel so big, and nothing is wrong with them. Many families tell their child early, in small pieces, and keep adding as the child grows."
+},
+{
+"k": "words",
+"h": "Your family chooses the words",
+"items": [
+"\"You are autistic.\"",
+"\"You have autism.\"",
+"\"Your brain works its own way.\""
+],
+"say": "Families choose their own words. Many autistic people prefer to say, I am autistic, because it's part of who they are. Others say, I have autism. Some children like, my brain works its own way. Ask your child what fits, and use it."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Big feelings, few words"
+],
+[
+"Grades 3 to 5",
+"Notice they are different"
+],
+[
+"Every age",
+"Want to be understood"
+]
+],
+"say": "Here's what this can look like. Young children may not have words for why some sounds or changes feel so big. Older children notice they think differently, and friendships and unwritten rules can be confusing. At every age, they want to be understood.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"A calm spot",
+"Senses can settle"
+],
+[
+"A heads-up",
+"Before changes"
+],
+[
+"Their interests",
+"A doorway in"
+],
+[
+"Calming movement",
+"When it is safe"
+]
+],
+"say": "A few things help a lot. A calm spot, where their senses can settle. A heads-up before changes, or a picture schedule. Their interests, which are a strength and a doorway in. And room for movement that calms them, like rocking or flapping, when it's safe.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "Join them in what they love.",
+"body": "Trains, dinosaurs, maps, or music.",
+"say": "Your child's deep interests aren't a problem to manage. They're a place to meet. Ten minutes on the floor talking trains, maps, or dinosaurs says, I like how your brain works. It also builds the trust that helps on hard days."
+},
+{
+"k": "words",
+"h": "Too heavy to carry",
+"items": [
+"Talk of autism as sad",
+"Stopping harmless movement",
+"Constant surprises"
+],
+"say": "A few things weigh a child down. Hearing autism talked about as sad or scary. Being stopped from calming movements that hurt no one. And constant surprises and rushed changes. Small shifts here make a big difference."
+},
+{
+"k": "big",
+"h": "Three things you love about their brain.",
+"sub": "Picture them. Say one this week.",
+"say": "Take a slow breath. Think of three things you love about how your child's brain works. Now pick one to tell them this week, in words they'll understand.",
+"beats": [
+"Take a slow breath.",
+"Think of three things you love about how your child's brain works.",
+{
+"t": "Now pick one to tell them this week, in words they'll understand.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Therapy questions: their care team. Sadness that lasts: the school counselor.",
+"say": "Talk with their doctor or care team about sleep, eating, or new worries, and any therapy questions. If your child seems sad, very worried, or left out for more than a couple of weeks, talk with the school counselor or their doctor. And find people who get it, for you too."
+},
+{
+"k": "big",
+"h": "A good brain.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Kind words, their own words, and room for how their brain works. Your child has a good brain. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "sibling-health",
+"ring": "mp-life",
+"title": "A Brother or Sister with a Disability or Illness",
+"you": {
+"id": "mp-g-sibling-health-you",
+"guide": "sibling-health",
+"side": "you",
+"title": "A Brother or Sister with a Disability or Illness",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"Sibling Support Project",
+"https://siblingsupport.org/"
+],
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "A Brother or Sister with a Disability or Illness",
+"sub": "For You",
+"say": "Maybe your brother or sister has a disability, or gets sick a lot, or is in the hospital. If that's your family, this is for you, the brother or sister."
+},
+{
+"k": "card",
+"title": "It is not your fault.",
+"body": "And you can't catch it.",
+"say": "Nothing you did, said, or thought made it happen. A disability isn't something you can catch. Most illnesses aren't either. Your grown-ups and the doctors are taking care of your brother or sister."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Proud",
+"Worried",
+"Jealous",
+"Lonely",
+"Mixed up"
+],
+"say": "You might feel proud of them. You might feel worried. Sometimes you might feel jealous, or lonely, when grown-ups are busy. You might feel all of it at once. Every feeling is okay. You can love someone and still feel mad."
+},
+{
+"k": "big",
+"h": "Hand on your heart.",
+"sub": "My feelings matter too.",
+"say": "Put your hand on your heart. Feel it beating. Now say, out loud or inside: My feelings matter too.",
+"beats": [
+"Put your hand on your heart.",
+"Feel it beating.",
+{
+"t": "Now say, out loud or inside: My feelings matter too.",
+"w": 8
+}
+]
+},
+{
+"k": "points",
+"h": "You can ask for",
+"items": [
+[
+"Your own time",
+"Just you and a grown-up"
+],
+[
+"The truth",
+"What is happening"
+],
+[
+"A break",
+"To just be a kid"
+]
+],
+"say": "You can ask for things too. Your own time with a grown-up, just the two of you. The truth about what's happening, in words you understand. And a break, to just play and be a kid.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Grown-ups do the big taking care of.",
+"body": "Your job is to be a kid.",
+"say": "Helping a little can feel good, like making a card. The big taking care of is a grown-up job. If you feel sad, worried, or mad for a long time, tell a grown-up you trust, like a parent, a teacher, or your school counselor."
+},
+{
+"k": "big",
+"h": "You matter just as much.",
+"sub": "Always.",
+"say": "Your brother or sister matters so much. And so do you. You matter just as much, always."
+}
+]
+},
+"helper": {
+"id": "mp-g-sibling-health-helper",
+"guide": "sibling-health",
+"side": "helper",
+"title": "A Brother or Sister with a Disability or Illness",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"Sibling Support Project",
+"https://siblingsupport.org/"
+],
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"Child Mind Institute",
+"https://childmind.org"
+],
+"sibsupport"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "A Brother or Sister with a Disability or Illness",
+"sub": "For the Grown-up",
+"say": "When one of your children has a disability or a long or serious illness, this is for you, about the brothers and sisters. You're stretched thin. Small, steady things help siblings most."
+},
+{
+"k": "big",
+"h": "Siblings carry a quiet share.",
+"sub": "Love, worry, and needs of their own.",
+"say": "Brothers and sisters carry a quiet share. They love fiercely, and they notice everything: the hospital bag, the extra appointments, the tired faces. Many decide not to add to the load, and keep their own needs to themselves."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Fear they caused it"
+],
+[
+"Grades 3 to 5",
+"Guilt, jealousy, pride"
+],
+[
+"Some kids",
+"Become the easy child"
+]
+],
+"say": "Here's what this can look like. Young siblings may worry they caused it or can catch it, and may act younger to get close again. Older siblings can feel proud, jealous, and guilty for being healthy, all at once. And some become the easy child, who never asks for anything.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Simple, true words",
+"items": [
+"\"Nothing you did caused it.\"",
+"\"You can't catch it.\"",
+"\"I miss you. Let's make time.\""
+],
+"say": "Silence fills with worry, so give simple, true updates. Nothing you did caused it. You can't catch it. When you've been gone a lot, say so: I've been busy with your brother. I miss you. Let's make some time that's just ours."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Their own time",
+"On the calendar, protected"
+],
+[
+"A plan for hospital days",
+"Who is with them"
+],
+[
+"A sibling group",
+"Kids who understand"
+],
+[
+"Their teacher",
+"Someone who notices"
+]
+],
+"say": "What helps. Regular time that's just theirs, on the calendar, and protected. A plan for hospital days, so they know who will be with them. A sibling group, like a Sibshop, where they meet kids who understand. And telling their teacher, so someone at school notices how they are.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Too heavy for a sibling",
+"items": [
+"Being a caregiver",
+"Being the easy child",
+"Being left out \"to protect them\""
+],
+"say": "A few things are too heavy for a sibling. Being expected to be a caregiver. Being praised for needing nothing, which can become pressure. And being left out of what's happening, to protect them. Most kids imagine worse than the truth."
+},
+{
+"k": "big",
+"h": "A note just for them.",
+"sub": "Picture it. Write it this week.",
+"say": "Take a slow breath. Picture your other child, the one who waits. Now think of one sentence you could write in a note for their lunch or pillow, just for them.",
+"beats": [
+"Take a slow breath.",
+"Picture your other child, the one who waits.",
+{
+"t": "Now think of one sentence you could write in a note for their lunch or pillow, just for them.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Sadness or worry that lasts: their doctor or school counselor.",
+"say": "If a sibling's sadness, worry, anger, or trouble sleeping lasts more than a couple of weeks, talk with their doctor or school counselor. Ask the hospital whether a child life specialist or social worker supports siblings. And let others carry some of the load, so you can rest too."
+},
+{
+"k": "big",
+"h": "Every child matters here.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "True words, protected time, and a place with kids who understand. Every child matters here. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "ask-stare-tease",
+"ring": "mp-life",
+"title": "When Other Kids Ask, Stare, or Tease",
+"you": {
+"id": "mp-g-ask-stare-tease-you",
+"guide": "ask-stare-tease",
+"side": "you",
+"title": "When Other Kids Ask, Stare, or Tease",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"StopBullying.gov",
+"https://www.stopbullying.gov"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "When Other Kids Ask, Stare, or Tease",
+"sub": "For You",
+"say": "Sometimes kids ask about your wheelchair, your hearing aids, your medicine, or how you do things. Sometimes they stare. Sometimes they tease. If that happens to you, this is for you."
+},
+{
+"k": "points",
+"h": "Three different things",
+"items": [
+[
+"Asking",
+"Kids are curious"
+],
+[
+"Staring",
+"They saw something new"
+],
+[
+"Teasing",
+"Unkind, and not okay"
+]
+],
+"say": "These are three different things. Asking is when kids are curious. Staring is when they see something new. Teasing is when someone is unkind on purpose, and that is not okay.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "If they ask",
+"items": [
+"\"I use hearing aids. They help me hear.\"",
+"\"I don't want to talk about it.\""
+],
+"say": "If they ask, you can give an easy answer. Like, I use hearing aids, they help me hear. Or you can say, I don't want to talk about it. Both are okay. You never have to explain your body."
+},
+{
+"k": "big",
+"h": "Sit tall. Say it strong.",
+"sub": "\"That's just how I do it.\"",
+"say": "Let's practice. Sit or stand tall, and take a big breath. Now say it out loud, in a strong voice: That's just how I do it.",
+"beats": [
+"Let's practice.",
+"Sit or stand tall, and take a big breath.",
+{
+"t": "Now say it out loud, in a strong voice: That's just how I do it.",
+"w": 8
+}
+]
+},
+{
+"k": "card",
+"title": "If they tease, tell.",
+"body": "Grown-ups will help it stop.",
+"say": "If someone teases you about your body or your brain, it isn't your fault. Tell a grown-up you trust, like a parent, a teacher, or your school counselor. Tell again if it doesn't stop. Grown-ups will help."
+},
+{
+"k": "card",
+"title": "Find your people.",
+"body": "Friends who like you just as you are.",
+"say": "Some kids will ask, and then want to play. Look for the friends who like you just as you are. They're out there, and you deserve them."
+},
+{
+"k": "big",
+"h": "Nothing is wrong with you.",
+"sub": "You belong here.",
+"say": "Being different isn't something wrong. You belong in your class, on the playground, and with your friends, just as you are."
+}
+]
+},
+"helper": {
+"id": "mp-g-ask-stare-tease-helper",
+"guide": "ask-stare-tease",
+"side": "helper",
+"title": "When Other Kids Ask, Stare, or Tease",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"StopBullying.gov",
+"https://www.stopbullying.gov"
+],
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"National Association of School Psychologists",
+"https://www.nasponline.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "When Other Kids Ask, Stare, or Tease",
+"sub": "For the Grown-up",
+"say": "When your child gets asked about, stared at, or teased because of how they move, hear, see, learn, or live with a health condition, this is for you, the grown-up beside them."
+},
+{
+"k": "points",
+"h": "Three different moments",
+"items": [
+[
+"A question",
+"A ready answer"
+],
+[
+"A stare",
+"A choice"
+],
+[
+"Teasing",
+"Grown-ups act"
+]
+],
+"say": "It helps to sort three different moments. A curious question, which a ready answer can handle. A stare, where your child gets to choose: smile, wave, or look away. And teasing, which is bullying, where grown-ups step in.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Curious classmates, blunt questions"
+],
+[
+"Grades 3 to 5",
+"Stares and whispers sting more"
+],
+[
+"Some kids",
+"Hide to fit in"
+]
+],
+"say": "Here's what this can look like. Young children and their classmates are curious and blunt, and a child may feel fine one day and hurt the next. Older children feel stares and whispers more. And some begin hiding their equipment, or skipping activities, to fit in.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Practice two lines",
+"items": [
+"\"I use a wheelchair. It's how I get around.\"",
+"\"I don't want to talk about it.\""
+],
+"say": "Practice two lines together. An easy answer, in your child's own words, like, I use a wheelchair, it's how I get around. And a not-now line, like, I don't want to talk about it. Your child never owes anyone an explanation."
+},
+{
+"k": "card",
+"title": "Teasing is bullying.",
+"body": "Act quickly. Keep notes. Follow up.",
+"say": "Teasing about a disability or a condition is bullying, and it isn't your child's job to fix it. Tell the teacher and the school, keep notes on what happened and when, and follow up until it stops. Ignore it rarely works when it keeps happening."
+},
+{
+"k": "flow",
+"h": "Working with school",
+"steps": [
+[
+"Ask your child",
+"What helps, what to share"
+],
+[
+"Talk to the teacher",
+"Questions and teasing"
+],
+[
+"Plan together",
+"A kind class, a safe adult"
+]
+],
+"say": "Work with the school. First ask your child what they'd like shared, and what helps. Then talk with the teacher about the questions kids ask, and about any teasing. Plan together, so the class learns kindly and your child has a safe grown-up to go to.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Friends who get them.",
+"body": "Places where your child is known and welcome.",
+"say": "The best protection is belonging. Help your child find a friend or two, and places where they're known and wanted, like a club, a team, or a group of kids who share their experience. One good friend changes how a hard day feels."
+},
+{
+"k": "big",
+"h": "Rehearse it together.",
+"sub": "Picture the question. Hear their answer.",
+"say": "Take a slow breath. Picture a classmate asking your child a question about their body. Now picture your child giving their easy answer, calm and strong, and you smiling at them after.",
+"beats": [
+"Take a slow breath.",
+"Picture a classmate asking your child a question about their body.",
+{
+"t": "Now picture your child giving their easy answer, calm and strong, and you smiling at them after.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Teasing that continues: the school, right away.",
+"say": "Talk with the school right away if teasing keeps happening, gets physical, or spreads online. If your child seems sad, scared to go to school, or withdrawn for more than a couple of weeks, talk with their doctor or the school counselor. And take care of yourself. This one can hurt a parent's heart too."
+},
+{
+"k": "big",
+"h": "They belong here.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "A ready answer, a right to say not now, and grown-ups who act. Your child belongs here, just as they are. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "why-happen",
+"ring": "mp-life",
+"title": "Big Questions: Why Did This Happen?",
+"you": {
+"id": "mp-g-why-happen-you",
+"guide": "why-happen",
+"side": "you",
+"title": "Big Questions: Why Did This Happen?",
+"sideName": "For You",
+"mins": 2,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Big Questions: Why Did This Happen?",
+"sub": "For You",
+"say": "Maybe you live with a health condition or a disability, or someone in your family does. Maybe you've wondered, why did this happen? This is for you."
+},
+{
+"k": "card",
+"title": "Big questions are okay.",
+"body": "Asking is a good thing.",
+"say": "Why me? Why my family? Is it fair? Those are big questions. Kids ask them, and grown-ups ask them too. Asking is a good thing. You can always bring your questions to a grown-up who loves you."
+},
+{
+"k": "big",
+"h": "It is not your fault.",
+"sub": "It is not a punishment.",
+"say": "Here's something true. It is not your fault. Nothing you did, said, or thought made it happen. And it is not a punishment. Bodies and brains come in lots of different ways, and sometimes people get sick."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Curious",
+"Sad",
+"Mad",
+"Mixed up",
+"Okay"
+],
+"say": "You might feel curious, or sad, or mad that it isn't fair. You might feel mixed up. Or you might feel okay today. Every feeling is allowed, even the mad ones."
+},
+{
+"k": "points",
+"h": "Ways families find comfort",
+"items": [
+[
+"Talking",
+"With someone who loves you"
+],
+[
+"Quiet",
+"Outside, or a cozy spot"
+],
+[
+"Together",
+"A song, a prayer, a hug"
+]
+],
+"say": "Families find comfort in lots of ways. Some talk with someone who loves them. Some find a quiet spot, or go outside and look at the sky. Some sing, some pray, and some just hug. You can ask your grown-up what helps your family.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Hug yourself.",
+"sub": "You are loved, just as you are.",
+"say": "Let's try something. Wrap your arms around yourself, in a big, gentle hug. Now say, out loud or inside: I am loved, just as I am.",
+"beats": [
+"Let's try something.",
+"Wrap your arms around yourself, in a big, gentle hug.",
+{
+"t": "Now say, out loud or inside: I am loved, just as I am.",
+"w": 8
+}
+]
+},
+{
+"k": "big",
+"h": "You are not alone.",
+"sub": "Bring your questions any time.",
+"say": "Nobody knows every answer. But you are not alone with your questions. Bring them to a grown-up who loves you, any time."
+}
+]
+},
+"helper": {
+"id": "mp-g-why-happen-helper",
+"guide": "why-happen",
+"side": "helper",
+"title": "Big Questions: Why Did This Happen?",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+[
+"HealthyChildren.org (American Academy of Pediatrics)",
+"https://www.healthychildren.org"
+],
+[
+"Child Mind Institute",
+"https://childmind.org"
+]
+],
+"scenes": [
+{
+"k": "title",
+"hero": "maple",
+"eyebrow": "When Life Changes",
+"h": "Big Questions: Why Did This Happen?",
+"sub": "For the Grown-up",
+"say": "When a child living with a health condition or disability, or their brother or sister, asks why did this happen, this is for you. It's one of the biggest questions a child can ask, and you don't need every answer to help."
+},
+{
+"k": "big",
+"h": "Listen first.",
+"sub": "\"What do you think?\"",
+"say": "Start by listening. Ask, what do you think? A child's answer often shows what they're really asking. Some are asking, did I cause this? Some are asking, will it get better? Some are asking, does God still love me? Each needs something different."
+},
+{
+"k": "points",
+"h": "What this looks like by age",
+"items": [
+[
+"K to 2nd grade",
+"Think they caused it"
+],
+[
+"Grades 3 to 5",
+"Ask why, and is it fair"
+],
+[
+"Every age",
+"Need to hear they are loved"
+]
+],
+"say": "Here's what this can look like. Young children often think they caused what happens around them, and may decide it's a punishment. Older children ask why it happened to them and not others, and whether it's fair. At every age, they need to hear they are loved.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Say it more than once.",
+"body": "Not your fault. Not a punishment.",
+"say": "Say this clearly, and more than once, over weeks. It is not your fault. It is not a punishment. Nothing you did, said, or thought made it happen. Young children need to hear it many times before it settles."
+},
+{
+"k": "card",
+"title": "\"I don't know. I wonder too.\"",
+"body": "Honest, and close.",
+"say": "It's okay not to have the answer. I don't know all the answers, I wonder that too sometimes, is honest. Follow it with what you do know: you are loved, and we're in this together. Children can hold not knowing, when they're held."
+},
+{
+"k": "points",
+"h": "Faith, if your family has it",
+"items": [
+[
+"A comfort",
+"You are loved, you are not alone"
+],
+[
+"A weight",
+"Blame, a test, a punishment"
+],
+[
+"Your words",
+"Your tradition, with gentleness"
+]
+],
+"say": "If your family has faith, it can be a deep comfort here, when it says you are loved and you are not alone. It weighs on a child when it sounds like blame, a test, or a punishment. Answer in your own tradition's words, with gentleness, and never present God as the judge of a child's body.",
+"cue": {
+"at": [
+0,
+1,
+2
+]
+}
+},
+{
+"k": "words",
+"h": "Ways to find steadiness",
+"items": [
+"A prayer or blessing",
+"A walk outside",
+"A song or a candle",
+"Quiet, together"
+],
+"say": "Offer your family's ways of finding steadiness as an invitation. For some families, a prayer or a blessing. For others, a walk outside, a song, a candle, or quiet time together. A faith leader, a hospital chaplain, or a counselor can help you find words too."
+},
+{
+"k": "big",
+"h": "Your own big question.",
+"sub": "Notice it. Breathe with it.",
+"say": "Take a slow breath. Notice your own big question about your child, the one you carry quietly. Breathe with it for a moment, and let yourself not have to answer it right now.",
+"beats": [
+"Take a slow breath.",
+"Notice your own big question about your child, the one you carry quietly.",
+{
+"t": "Breathe with it for a moment, and let yourself not have to answer it right now.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "When to reach out",
+"body": "Self-blame or sadness that lasts: their doctor or school counselor.",
+"say": "If your child keeps blaming themselves, or sadness or worry lasts more than a couple of weeks, talk with their doctor or the school counselor. A faith leader, chaplain, or child life specialist can help with the big questions too. And bring your own questions to someone you trust."
+},
+{
+"k": "big",
+"h": "Loved, and not alone.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Listen first, say it isn't their fault, and stay close in the not knowing. Your child is loved, and not alone. The full guide has more, whenever you want it."
 }
 ]
 }

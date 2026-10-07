@@ -1050,7 +1050,7 @@ function printGrowthPlanNow(sheetId) {
 const LC_RINGS = (window.PINE_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.PINE_GUIDES || {}).topics || [];
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' ? LC_LIFE : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
@@ -1093,8 +1093,9 @@ function renderLC(mode) {
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
-const LC_LIFE = { key: 'life', name: 'Health and Ability', color: '#3F6E8C', blurb: 'Living with a health condition, pain, a disability, or mental health, or caring about someone who is. Open to everyone. More guides are coming.' };
-function lcLifeTopics() { return LC_TOPICS.filter(t => Array.isArray(t.life) && t.life.length); }
+const LC_LIFE = { key: 'life', name: 'Health and Ability', color: '#3F6E8C', blurb: 'Living with a health condition, pain, a disability, or mental health, or caring about someone who is. Open to everyone.' };
+// The guides written for this ring (ring 'life', GWG BLD 757) come first, then the other guides tagged for it.
+function lcLifeTopics() { const ts = LC_TOPICS.filter(t => Array.isArray(t.life) && t.life.length); return ts.filter(t => t.ring === 'life').concat(ts.filter(t => t.ring !== 'life')); }
 function lcJoin(a) { return a.length < 2 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join('; ') + '; and ' + a[a.length - 1]; }
 function lcRenderList(mode) {
   const st = LCS[mode];
@@ -1198,7 +1199,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 740): two per guide, For You and For the Grown-up, played by shared/gg-learn.js
    from pine/guide-videos.js. PN_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:pine). */
-/* PN_VIDS start */const PN_VIDS = ["start-hs", "grades-pressure", "adhd", "sports-cut", "path-after", "graduation", "friend-changes", "left-out", "bullying", "first-relationship", "breakup", "dating-abuse", "divorce", "stepfamily", "moving", "deployed", "family-substance", "parent-jail", "blowup", "lying", "parent-death", "friend-death", "grandparent-death", "car-crash", "loved-one-ill", "sleep", "body-image", "eating", "concussion", "chronic-illness", "substances", "anxiety", "depression", "selfharm", "suicide-thoughts", "counseling", "sextortion", "porn", "social-media", "ai-companions", "gambling", "sexual-assault", "school-threats", "first-job", "money", "faith-doubt", "faith-hurt", "purpose-service"];/* PN_VIDS end */
+/* PN_VIDS start */const PN_VIDS = ["start-hs", "grades-pressure", "adhd", "sports-cut", "path-after", "graduation", "friend-changes", "left-out", "bullying", "first-relationship", "breakup", "dating-abuse", "divorce", "stepfamily", "moving", "deployed", "family-substance", "parent-jail", "blowup", "lying", "parent-death", "friend-death", "grandparent-death", "car-crash", "loved-one-ill", "sleep", "body-image", "eating", "concussion", "chronic-illness", "substances", "anxiety", "depression", "selfharm", "suicide-thoughts", "counseling", "sextortion", "porn", "social-media", "ai-companions", "gambling", "sexual-assault", "school-threats", "first-job", "money", "faith-doubt", "faith-hurt", "purpose-service", "own-health", "pain-fatigue", "iep-transition", "deaf-hoh", "blind-low-vision", "autistic-hs", "serious-illness", "mh-longterm", "young-carer", "faith-body"];/* PN_VIDS end */
 // Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('pine', id)); } catch (e) { return false; } }
 window.addEventListener('gg-learn-marks', () => { if (LCS.client.open && document.getElementById('client-life') && document.getElementById('client-life').classList.contains('active')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });

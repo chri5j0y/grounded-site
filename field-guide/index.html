@@ -613,13 +613,13 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=b756"></script>
-<script src="../shared/gg-learn.js?v=b756"></script>
-<script src="../shared/gg-print.js?v=pr8"></script>
+<script src="../shared/gg-sources.js?v=b757"></script>
+<script src="../shared/gg-learn.js?v=b757"></script>
+<script src="../shared/gg-print.js?v=b757"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=gr1"></script>
 <script src="qr.js"></script>
-<script src="share.js?v=sc1"></script>
+<script src="share.js?v=b757"></script>
 <script src="ceremonies.js?v=cb4"></script>
 <script src="premarital.js?v=pm4"></script>
 <script>
@@ -1732,7 +1732,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=pr8'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b757'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -8450,7 +8450,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=b756', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=b756', '../pine/guides.js?v=pg2', '../birch/guides.js?v=b756'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=b757', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=b757', '../pine/guides.js?v=b757', '../birch/guides.js?v=b757'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

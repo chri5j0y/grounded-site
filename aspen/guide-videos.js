@@ -2,7 +2,7 @@
    ASPEN . When Life Changes videos (GWG BLD 724 to 726, October 2026)
    Two narrated videos for each Aspen guide: For You (the student, grades 6 to 8) and For the Grown-up
    (the parent or helper beside them). Played by shared/gg-learn.js, which loads this file the first time
-   Aspen's Learn opens. So far: Home and Family and Safety (BLD 724), Friends and School and Big World, Hard News (BLD 725), Growing Up and Online (BLD 726): all 49 guides, 98 videos.
+   Aspen's Learn opens. So far: Home and Family and Safety (BLD 724), Friends and School and Big World, Hard News (BLD 725), Growing Up and Online (BLD 726): all 49 guides, 98 videos. Health and Ability (GWG BLD 757, HA 2, from patches/bld757/source/A): 9 guides, 18 videos, 58 guides in all.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
    the same as shared/learn-lessons.js. Generated from patches/bld726/source (bld724 and bld725 source for the earlier groups) in grounded-workshop:
    edit the data there and rebuild. Proofreading lines are in the Founder library.
@@ -32,6 +32,10 @@ window.GG_LEARN_GUIDES.aspen = {
 [
 "as-safety",
 "Safety"
+],
+[
+"life",
+"Health and Ability"
 ]
 ],
 "guides": [
@@ -11729,6 +11733,2072 @@ window.GG_LEARN_GUIDES.aspen = {
 "911: danger right now"
 ],
 "music": "safety"
+}
+},
+{
+"id": "school-health",
+"ring": "life",
+"title": "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days",
+"you": {
+"id": "as-g-school-health-you",
+"guide": "school-health",
+"side": "you",
+"title": "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"cdcschoolchc"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days",
+"sub": "For You",
+"say": "If you have a health condition and you're figuring out how to handle it at school, this is for you. Asthma, diabetes, seizures, allergies, headaches, a stomach that acts up. Lots of kids in your school are handling something too."
+},
+{
+"k": "big",
+"h": "School can work for your body.",
+"sub": "There are people whose job is to help.",
+"say": "Here's the main thing. School can work for your body. Some grown-ups at school are there to help with this. You don't have to figure it out alone."
+},
+{
+"k": "points",
+"h": "Your school team",
+"items": [
+[
+"The school nurse",
+"For your body, during the day"
+],
+[
+"A teacher you trust",
+"For class and catching up"
+],
+[
+"The school counselor",
+"For the feelings part"
+]
+],
+"say": "Here's your team. The school nurse, for what your body needs during the day. A teacher you trust, for class and catching up after missed days. And the school counselor, for the feelings part, like being tired of it, or worried, or left out.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "A plan can help.",
+"body": "Like rest breaks, water in class, or extra time.",
+"say": "Some kids have a plan at school, sometimes called a 504 plan. It lists the things that help you learn with your condition. Like rest breaks, water or a snack in class, or extra time after a sick day. You can help write it."
+},
+{
+"k": "words",
+"h": "Hiding it is common",
+"items": [
+"Skipping the nurse",
+"Not saying you feel sick",
+"Pretending you're fine"
+],
+"say": "A lot of kids hide their condition to fit in. They skip the nurse, or don't say they feel sick, or pretend they're fine. That makes sense. Tell a grown-up you want more privacy. There's usually a quieter way."
+},
+{
+"k": "big",
+"h": "One thing to tell the nurse.",
+"sub": "Practice it now.",
+"say": "Let's practice. Picture walking into the nurse's office. Think of one thing you'd want the nurse to know about your body. Maybe it's what a bad day feels like, or what helps. Now say it out loud, in your own words.",
+"beats": [
+"Let's practice.",
+"Picture walking into the nurse's office.",
+"Think of one thing you'd want the nurse to know about your body.",
+"Maybe it's what a bad day feels like, or what helps.",
+{
+"t": "Now say it out loud, in your own words.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Missed days are not your fault.",
+"body": "Ask for a plan to catch up, one step at a time.",
+"say": "If you miss school because of your health, that is not your fault. Ask your grown-up and your teachers for a plan to catch up, one step at a time. And if you start feeling down a lot, tell someone. That's common, and help is there."
+},
+{
+"k": "big",
+"h": "You are a student first.",
+"sub": "Your voice belongs in the plan.",
+"say": "You are a student first, with a body that needs some extra things. Your voice belongs in the plan. Each time you speak up, it gets a little easier."
+}
+]
+},
+"helper": {
+"id": "as-g-school-health-helper",
+"guide": "school-health",
+"side": "helper",
+"title": "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days",
+"sideName": "For the Grown-up",
+"mins": 5,
+"sources": [
+"cdcschoolchc",
+"gottransition",
+"pinquartshen11"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler manage a health condition at school, this is for you. Asthma, diabetes, epilepsy, allergies, migraines, a gut or joint condition."
+},
+{
+"k": "big",
+"h": "One team around one student.",
+"say": "Things go better when the student, the family, the school nurse, the doctor, and teachers work as one team. That kind of teamwork is linked to fewer missed days. Your job is to build the team, and to keep your child at the center of it."
+},
+{
+"k": "flow",
+"h": "Three doors at school",
+"steps": [
+[
+"The school nurse",
+"A health plan for days and emergencies"
+],
+[
+"A 504 plan",
+"Changes so they can take part"
+],
+[
+"An IEP",
+"If learning itself is affected"
+]
+],
+"say": "There are three doors to know. The school nurse can write a health plan with you, for daily needs and emergencies. A 504 plan lists the changes your child needs to take part fully, like rest breaks, water in class, an elevator pass, or a plan for makeup work. And if the condition affects learning itself, ask about an evaluation for an IEP. Put every request in writing, and keep copies.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "points",
+"h": "Plan for missed days",
+"items": [
+[
+"Who sends the work",
+"One person, one place"
+],
+[
+"What really matters",
+"Not every worksheet"
+],
+[
+"A way back in",
+"A quiet first day back"
+]
+],
+"say": "Plan for missed days before they happen. Decide who sends the work, so it comes from one person to one place. Ask teachers what really matters, so your child isn't buried under every worksheet. And plan a way back in, like a quiet check-in with a teacher on the first day back.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Hand over a little at a time.",
+"body": "Middle school is when kids start taking over.",
+"say": "Middle school is when kids start taking over their own health, a little at a time. Health teams often begin that planning around ages 12 to 14. Start small. Your child tells the nurse what they need. They answer the doctor's first question at the next visit. Stay close, and let them lead."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"Who do you want to know, and what?\"",
+"\"What would make a hard day easier?\"",
+"\"You can be part of the meeting.\""
+],
+"say": "Here are words that help. Who at school do you want to know, and what do you want them to know? What would make a hard health day at school easier? And this one. You can be part of the meeting. It's about you, so your ideas count."
+},
+{
+"k": "card",
+"title": "If they hide it, get curious.",
+"body": "Skipping the nurse is often about fitting in.",
+"say": "Many kids hide a condition to fit in. They skip the nurse, or a dose, or say they feel fine when they don't. Get curious instead of angry. Ask what makes it hard, and look for a more private way with the nurse. And whenever skipping something could be risky, bring the doctor in right away."
+},
+{
+"k": "big",
+"h": "Watch their mood, too.",
+"say": "Kids with a long-term illness are more likely to feel low than other kids. Watch their mood as closely as their health. Bring in the school counselor early. If your child ever talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Write their first line.",
+"sub": "For the next school meeting.",
+"say": "Try this now. Think about your child's next school meeting. Picture them sitting at the table with you. Now say out loud the first sentence you will use to invite their voice. Something like, what do you want your teachers to know?",
+"beats": [
+"Try this now.",
+"Think about your child's next school meeting.",
+"Picture them sitting at the table with you.",
+"Now say out loud the first sentence you will use to invite their voice.",
+{
+"t": "Something like, what do you want your teachers to know?",
+"w": 10
+}
+]
+},
+{
+"k": "big",
+"h": "Build the team. Keep them at the center.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Build the team, and keep your child at the center of it. You're doing a lot, so lean on a parent center or another family who has been there. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "pain-headaches",
+"ring": "life",
+"title": "Pain or Headaches That Keep Coming Back",
+"you": {
+"id": "as-g-pain-headaches-you",
+"guide": "pain-headaches",
+"side": "you",
+"title": "Pain or Headaches That Keep Coming Back",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"miserandino"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Pain or Headaches That Keep Coming Back",
+"sub": "For You",
+"say": "If you get headaches, stomachaches, or other pain that keeps coming back, this is for you. Pain that nobody can see is still real. You're not making it up."
+},
+{
+"k": "words",
+"h": "It can feel like",
+"items": [
+"Tired of hurting",
+"Left out",
+"Doubted",
+"Worried it won't stop"
+],
+"say": "Living with pain can make you tired of hurting. It can leave you out of things you love. Sometimes people doubt you. And sometimes you worry it won't stop. All of that makes sense."
+},
+{
+"k": "card",
+"title": "Picture your energy as spoons.",
+"body": "Each thing you do costs one. Hard days have fewer.",
+"say": "Here's a picture some people use. Imagine your energy for the day is a handful of spoons. Getting ready costs one. A class costs one. Practice might cost two. On a hard day, you start with fewer. That's not lazy. That's just today."
+},
+{
+"k": "big",
+"h": "How many spoons today?",
+"sub": "Count them on your fingers.",
+"say": "Let's try it. Hold up your hands. Think about how much energy you have right now. Count your spoons for today on your fingers, from one to ten. Now pick one thing you could skip or shrink today, to save a spoon.",
+"beats": [
+"Let's try it.",
+"Hold up your hands.",
+"Think about how much energy you have right now.",
+"Count your spoons for today on your fingers, from one to ten.",
+{
+"t": "Now pick one thing you could skip or shrink today, to save a spoon.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "On a hard day",
+"items": [
+[
+"Tell a grown-up",
+"Early, not at empty"
+],
+[
+"Spend spoons on what matters",
+"Friends count too"
+],
+[
+"Rest is a plan",
+"Not quitting"
+]
+],
+"say": "On a hard day, tell a grown-up early, before you're at empty. Spend your spoons on what matters most, and friends count. And remember, rest is a plan, not quitting.",
+"cue": {
+"at": [
+0,
+1,
+2
+]
+}
+},
+{
+"k": "card",
+"title": "Help the doctor help you.",
+"body": "When it comes, how long, what helps.",
+"say": "You can help the doctor help you. With your grown-up, keep simple notes. When the pain comes, how long it lasts, and what helps. Then at the visit, try telling the doctor one thing yourself."
+},
+{
+"k": "card",
+"title": "If you feel down a lot, say so.",
+"body": "A counselor or a grown-up you trust.",
+"say": "Pain can make you feel down. If you feel down a lot, or stop wanting to do things you love, tell a grown-up you trust or the school counselor. That's a smart, strong move."
+},
+{
+"k": "big",
+"h": "Your pain is real. So are you.",
+"sub": "More than a bad day.",
+"say": "Your pain is real. And so are you, with what you love, what you're good at, and what makes you laugh. You are more than a bad day."
+}
+]
+},
+"helper": {
+"id": "as-g-pain-headaches-helper",
+"guide": "pain-headaches",
+"side": "helper",
+"title": "Pain or Headaches That Keep Coming Back",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"miserandino",
+"pinquartshen11",
+"cdcschoolchc"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Pain or Headaches That Keep Coming Back",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler with headaches, migraines, stomach pain, or joint pain that keeps coming back, this is for you. It's hard to watch a child hurt, especially when no one else can see it."
+},
+{
+"k": "big",
+"h": "Believe them first.",
+"say": "The first gift is simple. Believe them. Kids with pain that keeps coming back often hear that they're faking, or trying to skip something. Being believed at home makes everything else easier, including telling you the truth on good days and bad ones."
+},
+{
+"k": "flow",
+"h": "Take it to the doctor, with notes",
+"steps": [
+[
+"When it comes",
+"Time of day, what was happening"
+],
+[
+"How long it lasts",
+"Minutes, hours, days"
+],
+[
+"What helps",
+"And what makes it worse"
+]
+],
+"say": "Take it to the doctor, and bring notes you keep together. When the pain comes, and what was happening. How long it lasts. And what helps, and what seems to make it worse. Every question about the cause, treatment, or medicine belongs with the doctor.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Spoons: a way to talk about energy",
+"body": "Each task costs one. Hard days start with fewer.",
+"say": "Some people living with long-term illness picture a day's energy as a handful of spoons. Each task costs one, and a hard day starts with fewer. It gives your child words to plan, to say no without guilt, and to explain to friends why they bailed. Ask, how many spoons do you have today?"
+},
+{
+"k": "points",
+"h": "On flare days",
+"items": [
+[
+"Choose what matters",
+"Not everything"
+],
+[
+"Rest before empty",
+"Not after"
+],
+[
+"Keep a little going",
+"Friends, school, what they love"
+]
+],
+"say": "On flare days, help them choose what matters most, not everything. Rest before they hit empty, not after. And keep a little of friends, school, and what they love going, even in a smaller form. Canceling everything can feel safe, and it can also shrink a kid's world.",
+"cue": {
+"at": [
+0,
+1,
+2
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"I believe you.\"",
+"\"How many spoons today?\"",
+"\"Resting isn't quitting. It's planning.\""
+],
+"say": "Here are words that help. I believe you. Tell me what it feels like today. How many spoons do you have? And this one. Resting on a hard day isn't quitting. It's planning."
+},
+{
+"k": "words",
+"h": "Try not to say",
+"items": [
+"\"You were fine yesterday.\"",
+"\"It's probably just stress.\"",
+"\"Push through it.\""
+],
+"say": "Try not to say, you were fine yesterday. Pain comes and goes, and that's part of it. Try not to guess, it's probably just stress. Let the doctor sort out causes. And try not to say, push through it."
+},
+{
+"k": "big",
+"h": "Soften your own shoulders.",
+"sub": "Then say the words.",
+"say": "Try this now. Let your shoulders drop, and breathe out slowly. Picture your child on a hard pain day, curled up on the couch. Now say out loud, in your own voice, I believe you.",
+"beats": [
+"Try this now.",
+"Let your shoulders drop, and breathe out slowly.",
+"Picture your child on a hard pain day, curled up on the couch.",
+{
+"t": "Now say out loud, in your own voice, I believe you.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Watch their mood, and plan for school.",
+"body": "The counselor. A 504 plan for flare days.",
+"say": "Kids living with a long-term condition are more likely to feel low. Watch for giving up on things they love, or pulling away. Bring in the school counselor, and ask the school about a 504 plan for flare days and makeup work. If your child talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Believe them. Pace with them.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Believe them, and pace with them. Your own rest counts too, on this long road. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "moving-included",
+"ring": "life",
+"title": "Moving Differently and Being Included",
+"you": {
+"id": "as-g-moving-included-you",
+"guide": "moving-included",
+"side": "you",
+"title": "Moving Differently and Being Included",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"barnessocial"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Moving Differently and Being Included",
+"sub": "For You",
+"say": "If you use a wheelchair, crutches, braces, or a walker, or your body just moves its own way, this is for you. You belong in the middle of things, not on the edge."
+},
+{
+"k": "big",
+"h": "The problem is often the stairs, not you.",
+"say": "Here's something a lot of disabled people say. The hardest part often isn't your body. It's the world around it. Stairs with no ramp. A trip nobody planned for you. A game with no place for you. Those things can change."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Left out",
+"Tired of explaining",
+"Stared at",
+"Proud of what you do"
+],
+"say": "You might feel left out, or tired of explaining. You might feel stared at. And some days, you might feel proud of everything you do. Every one of those makes sense."
+},
+{
+"k": "points",
+"h": "You can speak up",
+"items": [
+[
+"What works for you",
+"You know your body best"
+],
+[
+"What keeps you out",
+"Tell a grown-up"
+],
+[
+"The words you like",
+"You choose them"
+]
+],
+"say": "You can speak up. You know what works for your body better than anyone. If something at school keeps you out, tell a grown-up, because that's a problem with the plan, not with you. And you get to choose the words people use about you.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Name one place you want in.",
+"sub": "A team, a trip, a table.",
+"say": "Let's try something. Take a slow breath. Think of one place you want to be part of. A team, a club, a field trip, or a lunch table. Now say it out loud, and add, I want in.",
+"beats": [
+"Let's try something.",
+"Take a slow breath.",
+"Think of one place you want to be part of.",
+"A team, a club, a field trip, or a lunch table.",
+{
+"t": "Now say it out loud, and add, I want in.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Bring that to a grown-up.",
+"body": "Plans work best when they start early.",
+"say": "Bring that to a grown-up you trust, a parent, the counselor, or a teacher. Plans work best when they start early, so you're in it from the start, not added at the end. Adaptive sports and clubs are worth asking about too."
+},
+{
+"k": "card",
+"title": "If someone is mean about it",
+"body": "It is not your fault. Tell a grown-up the same day.",
+"say": "If anyone teases you, copies how you move, or touches your chair or crutches without asking, it's not your fault. Tell a grown-up you trust the same day. You won't be in trouble for telling."
+},
+{
+"k": "big",
+"h": "You belong in the middle of things.",
+"sub": "Your voice helps make room.",
+"say": "You belong in the middle of things. Your voice helps make room, for you and for the next kid too."
+}
+]
+},
+"helper": {
+"id": "as-g-moving-included-helper",
+"guide": "moving-included",
+"side": "helper",
+"title": "Moving Differently and Being Included",
+"sideName": "For the Grown-up",
+"mins": 5,
+"sources": [
+"barnessocial",
+"carterbelong",
+"apadisability"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Moving Differently and Being Included",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler who uses a wheelchair, crutches, braces, or a walker, or whose body moves its own way, this is for you. They want what every middle schooler wants: friends, a place, and a say."
+},
+{
+"k": "big",
+"h": "Look for the barrier, not the problem.",
+"say": "Many disabled people put it this way. The hardest part is often not the body, but the world around it. Steps with no ramp. A field trip that never thought about access. A gym class with no role for them. When something goes wrong, look for the barrier in the plan, not the problem in the kid."
+},
+{
+"k": "points",
+"h": "Belonging has layers",
+"items": [
+[
+"Present",
+"In the room"
+],
+[
+"Invited",
+"Asked to come"
+],
+[
+"Known",
+"Seen as themselves"
+],
+[
+"Needed",
+"With a real role"
+]
+],
+"say": "Belonging has layers. Being present, in the room. Being invited. Being known, for who they really are. And being needed, with a real role. A student can be present every day and never be invited to the lunch table or the team.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "flow",
+"h": "Plan ahead, together",
+"steps": [
+[
+"Field trips and events",
+"Ask early about access"
+],
+[
+"Gym class and recess",
+"A real role, not a bench"
+],
+[
+"Drills and emergencies",
+"A clear plan"
+]
+],
+"say": "Plan ahead with the school, and bring your child into the planning. Ask early about field trips, assemblies, and events. Ask how gym class and recess will give them a real role, not a seat on the bench. And make sure fire drills and emergencies have a clear plan for them. If your child has a 504 plan or an IEP, that's where these belong.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"What works best for you here?\"",
+"\"Let's plan it so you're in from the start.\"",
+"\"Which words do you like?\""
+],
+"say": "Here are words that help. What works best for you here? Let's plan this so you're in it from the start. And, which words do you like people to use? Some people like person-first words. Others say disabled, with pride. Your child gets to choose."
+},
+{
+"k": "points",
+"h": "What to leave out",
+"items": [
+[
+"Deciding for them",
+"Ask first"
+],
+[
+"\"You're an inspiration\"",
+"For ordinary things"
+],
+[
+"\"Sit this one out\"",
+"As the whole plan"
+]
+],
+"say": "Some things are best left out. Deciding for them what they can or can't do. Ask, and check with the doctor about activity. Calling them an inspiration for ordinary things. And accepting, they can sit this one out, as the whole plan.",
+"cue": {
+"at": [
+1,
+3,
+4
+]
+}
+},
+{
+"k": "big",
+"h": "Walk the route in your mind.",
+"say": "Try this now. Think of one place your child will go this month, a trip, a game, or a party. Walk the route in your mind, from the car to the door to the room. Now say out loud the one barrier you will check on before that day.",
+"beats": [
+"Try this now.",
+"Think of one place your child will go this month, a trip, a game, or a party.",
+"Walk the route in your mind, from the car to the door to the room.",
+{
+"t": "Now say out loud the one barrier you will check on before that day.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Their space, their equipment",
+"body": "Never touch or push a wheelchair without asking.",
+"say": "Teach the people around your child that a wheelchair, crutches, or a walker are part of their personal space. Nobody touches or pushes them without asking. Watch for teasing or copying how they move, and act the same day if it happens."
+},
+{
+"k": "card",
+"title": "Find places where they are the athlete.",
+"body": "Adaptive sports, clubs, and camps.",
+"say": "Look for places where your child is the athlete, not the exception. Adaptive sports, clubs, and camps can give them teammates who get it. Their therapists, the school, or your parks and recreation office can point you to options. And find other parents too. You deserve company on this road."
+},
+{
+"k": "big",
+"h": "Plan them in, from the start.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Plan them in, from the start, and let them lead where they can. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "deaf-hoh",
+"ring": "life",
+"title": "Deaf or Hard of Hearing",
+"you": {
+"id": "as-g-deaf-hoh-you",
+"guide": "deaf-hoh",
+"side": "you",
+"title": "Deaf or Hard of Hearing",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"apadisability"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Deaf or Hard of Hearing",
+"sub": "For You",
+"say": "If you're Deaf or hard of hearing, this is for you. Maybe you sign, maybe you speak, maybe you do both. However you communicate, you deserve to be part of the conversation."
+},
+{
+"k": "big",
+"h": "Your words. Your way.",
+"sub": "Deaf, hard of hearing, or your own word.",
+"say": "You get to choose your words. Some people say Deaf, with a capital D, with pride in Deaf culture and sign language. Some say hard of hearing. Some use other words. Your way is the right way for you."
+},
+{
+"k": "words",
+"h": "Hard moments",
+"items": [
+"Fast group talk",
+"Videos with no captions",
+"\"Never mind\"",
+"Feeling left out"
+],
+"say": "Some moments are hard. A table where everyone talks at once. A video with no captions. Someone saying, never mind. Feeling left out of the joke. Those moments are about how people communicate. They're not about you being less."
+},
+{
+"k": "points",
+"h": "Things you can ask for",
+"items": [
+[
+"Face me when you talk",
+"So I can see you"
+],
+[
+"Captions on, please",
+"Every video"
+],
+[
+"Say it again, or write it",
+"Not \"never mind\""
+]
+],
+"say": "Here are things you can ask for. Face me when you talk. Captions on, please. And say it again, or write it down, instead of never mind. Asking isn't being difficult. It's how you get in.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Pick your request.",
+"sub": "Sign it, say it, or type it.",
+"say": "Let's practice. Pick the request you need most. Picture the person you'd ask, a teacher, a coach, or a friend. Now sign it, say it, or type it, right now.",
+"beats": [
+"Let's practice.",
+"Pick the request you need most.",
+"Picture the person you'd ask, a teacher, a coach, or a friend.",
+{
+"t": "Now sign it, say it, or type it, right now.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Find people who get it.",
+"body": "Deaf and hard of hearing friends, groups, and camps.",
+"say": "It helps to have friends who get it without explaining. Ask a grown-up to help you find Deaf and hard of hearing groups, camps, or events. Being understood without effort feels good."
+},
+{
+"k": "card",
+"title": "Help in your language",
+"body": "988 has counselors who sign. You can also text 988.",
+"say": "If you ever feel really low, or don't want to be alive, help is there in your language. The 988 Lifeline has counselors who sign, by videophone, through ASL Now on the 988 website. You can also text 988. And tell a grown-up you trust."
+},
+{
+"k": "big",
+"h": "You belong in the conversation.",
+"sub": "Your way of talking counts.",
+"say": "You belong in the conversation. Your language, your way of talking, and your voice all count."
+}
+]
+},
+"helper": {
+"id": "as-g-deaf-hoh-helper",
+"guide": "deaf-hoh",
+"side": "helper",
+"title": "Deaf or Hard of Hearing",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"apadisability",
+"kbia988asl",
+"carterbelong"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Deaf or Hard of Hearing",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler who is Deaf or hard of hearing, this is for you. Your child may sign, speak, use hearing aids or a cochlear implant, or none of these. Whatever their way, they deserve to be in the conversation."
+},
+{
+"k": "big",
+"h": "Follow their lead on words.",
+"say": "Many Deaf people see Deafness as a culture and a language community, and write Deaf with a capital D. Others say hard of hearing, or have a hearing loss. Each person chooses their own words. Ask your child which they like, and use them, even if they're different from yours."
+},
+{
+"k": "points",
+"h": "Where it gets hard",
+"items": [
+[
+"Fast talk",
+"Lunch tables and group chats"
+],
+[
+"No captions",
+"Videos and announcements"
+],
+[
+"Faces turned away",
+"Teachers at the board"
+],
+[
+"\"Never mind\"",
+"Left out of the moment"
+]
+],
+"say": "Much of what's hard is how the world communicates. Fast group talk, at lunch and in group chats. Videos and announcements with no captions. Teachers talking while facing the board. And people saying, never mind.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "flow",
+"h": "What school can provide",
+"steps": [
+[
+"An interpreter",
+"Qualified, for every class"
+],
+[
+"Captions",
+"On every video"
+],
+[
+"Listening tools and seating",
+"Faces in view"
+]
+],
+"say": "Work with the school, often through an IEP or a 504 plan, for what your child needs. A qualified interpreter. Captions on every video, every time. An assistive listening system, and seating where they can see faces. Questions about hearing, devices, or treatment belong with the family, the audiologist, and the doctor.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Make home the easy place.",
+"body": "One voice at a time. Faces in view. No \"never mind.\"",
+"say": "Make home the place where communication is easy. One person talks at a time. Faces stay in view, and the lights stay on. If your child signs, the family learns to sign too, as much as you can. And nobody says never mind."
+},
+{
+"k": "big",
+"h": "One change at your table.",
+"say": "Try this now. Picture your family at dinner, everyone talking at once. Notice where your child sits, and what they can see. Now say out loud one change you will make at your table this week.",
+"beats": [
+"Try this now.",
+"Picture your family at dinner, everyone talking at once.",
+"Notice where your child sits, and what they can see.",
+{
+"t": "Now say out loud one change you will make at your table this week.",
+"w": 10
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"How do you want to talk about this?\"",
+"\"Which words do you like?\"",
+"\"I'll say it again, or write it.\""
+],
+"say": "Here are words that help. How do you want to talk about this, sign, speech, text, or all three? Which words do you like? And, if you miss something, I'll say it again or write it."
+},
+{
+"k": "card",
+"title": "Peers who get it",
+"body": "Deaf and hard of hearing groups, camps, and events.",
+"say": "Help your child find Deaf and hard of hearing peers, through school programs, camps, or community events. Middle school friendships run on fast talk, and being understood without effort can be a deep relief. The audiologist or the school's Deaf and hard of hearing teacher can point you to options."
+},
+{
+"k": "card",
+"title": "Crisis help in ASL",
+"body": "988: ASL Now on the website, or text 988.",
+"say": "Know this, just in case. The 988 Lifeline has counselors who sign, by videophone, through ASL Now on the 988 website, and anyone can text 988. If your child ever talks about not wanting to be alive, stay with them and reach out together. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Their language. Their way. In the conversation.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Their language, their way, in the conversation. That's the goal. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "blind-low-vision",
+"ring": "life",
+"title": "Blind or Low Vision",
+"you": {
+"id": "as-g-blind-low-vision-you",
+"guide": "blind-low-vision",
+"side": "you",
+"title": "Blind or Low Vision",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"apadisability"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Blind or Low Vision",
+"sub": "For You",
+"say": "If you're blind or have low vision, this is for you. Maybe you read braille, use a screen reader, or zoom way in. However you do it, your way works."
+},
+{
+"k": "big",
+"h": "Your way works.",
+"sub": "And your words are yours.",
+"say": "You get to choose your words. Lots of people say blind, plainly and proudly. Some say low vision. Some use other words. You're the expert on how you see and how you get around."
+},
+{
+"k": "words",
+"h": "Things that get in the way",
+"items": [
+"Small print",
+"Late materials",
+"People pointing",
+"Being grabbed"
+],
+"say": "Some things get in the way. Small print. Materials that come late. People who point and say, over there. People who grab your arm to help. Those are about how the world does things. They're not about you being less."
+},
+{
+"k": "points",
+"h": "Things you can say",
+"items": [
+[
+"Please say your name",
+"When you walk up"
+],
+[
+"Use words, not pointing",
+"On my left, by the door"
+],
+[
+"I've got it, thanks",
+"Or, can I take your elbow?"
+]
+],
+"say": "Here are things you can say. Please say your name when you walk up. Use words, not pointing, like on my left, by the door. And, I've got it, thanks. Or, can I take your elbow? You decide what help you want.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Pick one and say it.",
+"sub": "Like you mean it.",
+"say": "Let's practice. Pick the line you need most. Picture someone at school who needs to hear it. Take a breath. Now say it out loud, calm and clear.",
+"beats": [
+"Let's practice.",
+"Pick the line you need most.",
+"Picture someone at school who needs to hear it.",
+"Take a breath.",
+{
+"t": "Now say it out loud, calm and clear.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Find people who get it.",
+"body": "Blind and low vision friends, camps, and programs.",
+"say": "It helps to know other kids who are blind or have low vision. Ask a grown-up to help you find groups, camps, or summer programs. You can trade tips, and nobody needs anything explained."
+},
+{
+"k": "card",
+"title": "Tell a grown-up you trust.",
+"body": "If someone is mean, or you feel down a lot.",
+"say": "If someone teases you, moves your things on purpose, or leaves you out, it's not your fault. Tell a grown-up you trust the same day. And if you feel down a lot, tell someone. That's a strong move."
+},
+{
+"k": "big",
+"h": "You know your way.",
+"sub": "Your independence matters.",
+"say": "You know your way, and your independence matters. Keep speaking up for the way that works for you."
+}
+]
+},
+"helper": {
+"id": "as-g-blind-low-vision-helper",
+"guide": "blind-low-vision",
+"side": "helper",
+"title": "Blind or Low Vision",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"apadisability",
+"barnessocial",
+"carterbelong"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Blind or Low Vision",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler who is blind or has low vision, this is for you. Your child may read braille, use a screen reader, use large print or magnification, travel with a cane, or use a mix. Their way works."
+},
+{
+"k": "big",
+"h": "Their words, their way.",
+"say": "Many blind people say blind plainly, as a fact and sometimes with pride. Others say low vision or visually impaired. Each person chooses their own words. Ask your child, and use theirs, even if they're different from yours."
+},
+{
+"k": "points",
+"h": "Where school gets hard",
+"items": [
+[
+"Small print",
+"Handouts and tests"
+],
+[
+"Late formats",
+"Braille after the unit ends"
+],
+[
+"Unread slides",
+"And silent videos"
+],
+[
+"Busy halls",
+"Backpacks and crowds"
+]
+],
+"say": "Much of what makes school hard is format. Handouts and tests in small print. Braille books that arrive after the unit is over. Slides no one reads aloud. And hallways full of backpacks and crowds.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "flow",
+"h": "The team at school",
+"steps": [
+[
+"A vision teacher",
+"Formats and technology"
+],
+[
+"Orientation and mobility",
+"Traveling with independence"
+],
+[
+"An IEP or 504 plan",
+"Materials on time, every time"
+]
+],
+"say": "Get to know the team. A teacher of students with visual impairments, for braille, formats, and technology. An orientation and mobility specialist, for traveling with independence. And an IEP or a 504 plan that says materials come in your child's format on time, every time. Questions about their eyes belong with the family and the eye doctor.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Teach a few habits.",
+"body": "Say your name. Describe. Offer an elbow. Say goodbye.",
+"say": "Teach friends, relatives, and teachers a few habits. Say your name when you walk up. Describe what's happening out loud. Offer an elbow instead of steering. And say when you're leaving, so no one talks to an empty room."
+},
+{
+"k": "big",
+"h": "Describe the room you are in.",
+"say": "Try this now. Look around the room you're in. Imagine your child just walked in beside you. Now describe the room out loud, in words, the way you would for them: where things are, and who is here.",
+"beats": [
+"Try this now.",
+"Look around the room you're in.",
+"Imagine your child just walked in beside you.",
+{
+"t": "Now describe the room out loud, in words, the way you would for them: where things are, and who is here.",
+"w": 12
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"How do you like to read this?\"",
+"\"Want my elbow, or are you good?\"",
+"\"Which words do you like?\""
+],
+"say": "Here are words that help. How do you like to read this, braille, audio, or large print? Want my elbow, or are you good? And, which words do you like?"
+},
+{
+"k": "card",
+"title": "Let them do it their way.",
+"body": "Independence is the goal at this age.",
+"say": "Independence is a big goal in middle school. Let your child do things their own way, even when it takes longer. Doing it for them can feel kind, and it can also tell them you don't think they can. Help them find blind and low vision peers too, through camps and programs."
+},
+{
+"k": "card",
+"title": "Watch the heart too.",
+"body": "Social life is visual at this age.",
+"say": "Middle school social life is very visual, with glances and phones held up to share. Watch for being left out, and for low mood. Bring in the school counselor if it hangs on. If your child ever talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Their way works.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Their way works. Help the world catch up, and let them lead. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "autistic-ms",
+"ring": "life",
+"title": "Autistic in Middle School",
+"you": {
+"id": "as-g-autistic-ms-you",
+"guide": "autistic-ms",
+"side": "you",
+"title": "Autistic in Middle School",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"kenny16"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Autistic in Middle School",
+"sub": "For You",
+"say": "If you're autistic, or you're figuring out that you might be, this is for you. Your brain works in its own way. That's not broken. It's you."
+},
+{
+"k": "big",
+"h": "Your brain works its own way.",
+"sub": "Your words are yours.",
+"say": "Lots of people say autistic, the way someone might say left-handed. Some say they have autism. Some use other words. You get to choose. And whatever word you use, your brain has real strengths."
+},
+{
+"k": "words",
+"h": "Middle school can be a lot",
+"items": [
+"Loud halls",
+"Bright lights",
+"Changes",
+"Unspoken rules"
+],
+"say": "Middle school can be a lot. Loud halls. Bright lights. Changes in the schedule. And social rules nobody explains. If you come home wiped out, that makes total sense. You've been working hard all day."
+},
+{
+"k": "points",
+"h": "Things that can help",
+"items": [
+[
+"A quiet place",
+"To reset"
+],
+[
+"A heads-up",
+"Before changes"
+],
+[
+"Moving or fidgeting",
+"If it calms you"
+]
+],
+"say": "Here are things that can help. A quiet place to reset. A heads-up before changes. And moving or fidgeting in ways that calm you. You can ask for these. A grown-up can help put them in your school plan.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "What is your best reset?",
+"sub": "Headphones, a walk, a fidget, quiet.",
+"say": "Let's figure out yours. Think about a time you felt overloaded, and then felt better. What helped you reset? Headphones, a walk, a fidget, quiet, or something else. Now say your best reset out loud, so you remember it.",
+"beats": [
+"Let's figure out yours.",
+"Think about a time you felt overloaded, and then felt better.",
+"What helped you reset?",
+"Headphones, a walk, a fidget, quiet, or something else.",
+{
+"t": "Now say your best reset out loud, so you remember it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Find your people.",
+"body": "Friends who love what you love.",
+"say": "Friends can start with what you love. A club, a team, a game, or a group built around your interest. You don't have to be friends with everyone. A few good ones who get you is plenty."
+},
+{
+"k": "card",
+"title": "If someone is mean, tell a grown-up.",
+"body": "The same day. It is not your fault.",
+"say": "If someone teases you, tricks you, or leaves you out on purpose, it's not your fault. Tell a grown-up you trust the same day. And if you feel down or worried a lot, tell someone. Help is there."
+},
+{
+"k": "big",
+"h": "You are not too much.",
+"sub": "You are you.",
+"say": "You are not too much, and you are not too little. You are you, with a brain that notices things others miss."
+}
+]
+},
+"helper": {
+"id": "as-g-autistic-ms-helper",
+"guide": "autistic-ms",
+"side": "helper",
+"title": "Autistic in Middle School",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"kenny16",
+"apadisability",
+"carterbelong"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Autistic in Middle School",
+"sub": "For the Grown-up",
+"say": "If you're helping an autistic middle schooler, this is for you. Your child may notice details others miss, love some things deeply, and find much of middle school loud, fast, and confusing. All of that can be true at once."
+},
+{
+"k": "big",
+"h": "Ask them which words they like.",
+"say": "Many autistic people, and many families, prefer the word autistic, because autism is part of how their brain works. Others prefer a person with autism. Each person chooses their own words. Ask your child, and use theirs."
+},
+{
+"k": "points",
+"h": "The load of middle school",
+"items": [
+[
+"Senses",
+"Noise, lights, crowds"
+],
+[
+"Change",
+"A new class every hour"
+],
+[
+"Unspoken rules",
+"Social codes no one explains"
+],
+[
+"Masking",
+"Hiding what feels natural"
+]
+],
+"say": "Middle school carries a heavy load. The senses: noise, lights, and crowds. Change, with a new class every hour. Unspoken social rules. And masking, which means copying others and hiding what feels natural, all day long. Many autistic kids come home exhausted.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "card",
+"title": "A meltdown is overload.",
+"body": "Calm and space first. Talk later.",
+"say": "A meltdown or a shutdown is usually overload, not a choice to misbehave. In the moment, lower the load. Fewer words, less noise, more space. Keep everyone safe, and wait. Talk about it later, when they're calm, and look for what filled the cup."
+},
+{
+"k": "flow",
+"h": "Build supports into the day",
+"steps": [
+[
+"A quiet place",
+"And permission to use it"
+],
+[
+"A heads-up",
+"Before changes"
+],
+[
+"Clear instructions",
+"Written down"
+],
+[
+"Room to move",
+"Fidget, pace, or stim"
+]
+],
+"say": "Work with the school, often through an IEP or a 504 plan, to build supports into the day. A quiet place, and permission to use it. A heads-up before changes. Clear instructions, written down. And room to move, fidget, or stim in ways that calm. Questions about evaluations, therapies, or medicine belong with the family and the doctor.",
+"cue": {
+"at": [
+1,
+2,
+3,
+4
+]
+}
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"What was hardest, and what helped?\"",
+"\"You don't have to look at me.\"",
+"\"Tell me about the thing you love.\""
+],
+"say": "Here are words that help. What was the hardest part of today, and what helped? You don't have to look at me to talk. And, tell me about the thing you love. I want to understand it."
+},
+{
+"k": "big",
+"h": "Ask about their world.",
+"say": "Try this now. Think about the thing your child loves most right now. A game, an animal, a show, a system, a fact. Now say out loud one real question you could ask them about it tonight, and mean it.",
+"beats": [
+"Try this now.",
+"Think about the thing your child loves most right now.",
+"A game, an animal, a show, a system, a fact.",
+{
+"t": "Now say out loud one real question you could ask them about it tonight, and mean it.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Friendship can look different.",
+"body": "Shared interests, small groups, online.",
+"say": "Friendship can look different. Many autistic kids connect best around a shared interest, in smaller groups, or online. Help your child find clubs, teams, and groups built around what they love, and autistic peers when you can."
+},
+{
+"k": "card",
+"title": "Watch for bullying and worry.",
+"body": "Act the same day. Keep the counselor close.",
+"say": "Autistic students are bullied more often, so watch for it, and act the same day. Kids who mask a lot can also carry more worry and low mood. Keep the counselor close. If your child ever talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Lower the load. Honor who they are.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Lower the load, and honor who they are. Rest for you counts too. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "sibling-disability",
+"ring": "life",
+"title": "A Sibling With a Disability or Illness",
+"you": {
+"id": "as-g-sibling-disability-you",
+"guide": "sibling-disability",
+"side": "you",
+"title": "A Sibling With a Disability or Illness",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"sibsupport"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Sibling With a Disability or Illness",
+"sub": "For You",
+"say": "If your brother or sister lives with a disability or an illness, this is for you. You matter too, and so do your feelings."
+},
+{
+"k": "words",
+"h": "You might feel",
+"items": [
+"Proud",
+"Jealous",
+"Embarrassed",
+"Worried",
+"Guilty"
+],
+"say": "You might feel proud of them. You might feel jealous of the time they get. Sometimes embarrassed, sometimes worried, sometimes guilty for feeling any of it. All of these can be true on the same day. None of them make you a bad brother or sister."
+},
+{
+"k": "big",
+"h": "You can love them and still be mad.",
+"sub": "Both can be true.",
+"say": "Here's something to keep. You can love your sibling and still be mad about how things are. You can be glad you're healthy and also sad for them. Both can be true."
+},
+{
+"k": "big",
+"h": "Say one thing you usually keep inside.",
+"sub": "Quietly, just for you.",
+"say": "Let's take a moment. Breathe in slowly, and let it out. Think of one feeling about your sibling that you usually keep inside. You don't have to share it with anyone. Just say it quietly to yourself, in a whisper.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out.",
+"Think of one feeling about your sibling that you usually keep inside.",
+"You don't have to share it with anyone.",
+{
+"t": "Just say it quietly to yourself, in a whisper.",
+"w": 10
+}
+]
+},
+{
+"k": "points",
+"h": "Things you can ask for",
+"items": [
+[
+"Time just for you",
+"Even a little"
+],
+[
+"Answers",
+"About their condition"
+],
+[
+"A break",
+"From helping, sometimes"
+]
+],
+"say": "You can ask your grown-up for things too. Time just for you, even a little. Answers to your questions about your sibling's condition. And a break from helping, sometimes. Helping is kind. But the grown-up jobs belong to the grown-ups.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Other kids get it.",
+"body": "Groups for brothers and sisters, like Sibshops.",
+"say": "There are groups just for brothers and sisters of kids with disabilities or illness. They're fun, and nobody needs anything explained. Ask your grown-up to help you look for one."
+},
+{
+"k": "card",
+"title": "If it gets heavy, tell someone.",
+"body": "A parent, the counselor, or a teacher.",
+"say": "If you feel worried all the time, or really down, tell a grown-up you trust. A parent, the school counselor, or a teacher. Your feelings deserve a place to go."
+},
+{
+"k": "big",
+"h": "You matter too.",
+"sub": "Your story counts.",
+"say": "You matter too. Your story counts, and you deserve care and attention of your own."
+}
+]
+},
+"helper": {
+"id": "as-g-sibling-disability-helper",
+"guide": "sibling-disability",
+"side": "helper",
+"title": "A Sibling With a Disability or Illness",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"sibsupport",
+"aacy",
+"carterbelong"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "A Sibling With a Disability or Illness",
+"sub": "For the Grown-up",
+"say": "If you're raising or helping a middle schooler whose brother or sister lives with a disability or an illness, this is for you. You're carrying a lot. This video is about the child who sometimes gets less of you."
+},
+{
+"k": "big",
+"h": "Siblings carry a quiet share.",
+"say": "Brothers and sisters carry a quiet share of family life. Many feel deep love and pride. And also jealousy, embarrassment, worry, guilt for being healthy, or anger about the time their sibling needs. Programs for siblings grew from the discovery that they had real needs and few places to meet them."
+},
+{
+"k": "card",
+"title": "They may hide it to protect you.",
+"body": "Say out loud that every feeling is welcome.",
+"say": "A middle schooler may hide hard feelings to avoid adding to your load. So say it out loud. Every feeling is welcome here, the hard ones too. You can love your brother and be mad about how things are. Both can be true."
+},
+{
+"k": "points",
+"h": "What helps",
+"items": [
+[
+"Time just for them",
+"Even fifteen minutes"
+],
+[
+"Honest information",
+"Simple and true"
+],
+[
+"Words for friends",
+"And a say about visits"
+]
+],
+"say": "Here's what helps. Time that belongs only to this child, even fifteen minutes a week. Honest, simple information about their sibling's condition, because silence grows into worry. And words for questions from friends, plus a say in when friends come over.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Helping, or carrying?",
+"body": "Keep the grown-up jobs with grown-ups.",
+"say": "Many siblings help at home, and helping can grow kindness and skill. Watch for the line where helping turns into carrying. Missing school, losing friends, staying up worried, or feeling responsible for their sibling's safety. Keep the adult jobs with adults."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"How are you doing? Not your sister. You.\"",
+"\"Both can be true.\"",
+"\"This time is just for you.\""
+],
+"say": "Here are words that help. How are you doing? Not your sister. You. It's okay to love him and be mad about how things are. Both can be true. And, this time is just for you."
+},
+{
+"k": "words",
+"h": "Try not to say",
+"items": [
+"\"You're the easy one.\"",
+"\"At least you're healthy.\"",
+"Only sibling talk"
+],
+"say": "Try not to say, you're the easy one, or at least you're healthy. Both can make their needs feel smaller. And try not to make every conversation about their sibling."
+},
+{
+"k": "big",
+"h": "Name their time.",
+"say": "Try this now. Picture your week, day by day. Find fifteen minutes that could belong only to this child. Now say out loud the day and the time, and one thing you could do together.",
+"beats": [
+"Try this now.",
+"Picture your week, day by day.",
+"Find fifteen minutes that could belong only to this child.",
+{
+"t": "Now say out loud the day and the time, and one thing you could do together.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Groups for siblings, and for you",
+"body": "Sibshops. Other parents. The counselor.",
+"say": "Look for a sibling group, like a Sibshop, where your child can meet other kids who get it. Keep the school counselor in the loop if worry or sadness hangs on. And find support for yourself too. If your child ever talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Every child in the family counts.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Every child in the family counts, and so do you. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "telling-friends",
+"ring": "life",
+"title": "Telling Friends, or Not",
+"you": {
+"id": "as-g-telling-friends-you",
+"guide": "telling-friends",
+"side": "you",
+"title": "Telling Friends, or Not",
+"sideName": "For You",
+"mins": 3,
+"sources": [],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Telling Friends, or Not",
+"sub": "For You",
+"say": "If you live with a health condition, a disability, or something about your mind or body that friends might ask about, this is for you. Who knows is mostly up to you."
+},
+{
+"k": "big",
+"h": "It's your story.",
+"sub": "You decide who hears it.",
+"say": "Here's the big idea. It's your story. You decide who hears it, and how much. Some kids tell everyone. Some tell one close friend. Some keep it private. All of those can be good choices."
+},
+{
+"k": "points",
+"h": "Three answers to have ready",
+"items": [
+[
+"A short one",
+"For anyone who asks"
+],
+[
+"A longer one",
+"For close friends"
+],
+[
+"\"I'd rather not say\"",
+"Kind and firm"
+]
+],
+"say": "It helps to have three answers ready. A short one, for anyone who asks. A longer one, for close friends who've earned it. And, I'd rather not talk about it. That one is kind, firm, and always allowed.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "big",
+"h": "Make your short answer.",
+"sub": "One sentence, in your words.",
+"say": "Let's make your short answer. Think about what friends might ask. Pick one simple, true sentence you'd be okay saying to anyone. Now say it out loud, like you're answering a friend at lunch.",
+"beats": [
+"Let's make your short answer.",
+"Think about what friends might ask.",
+"Pick one simple, true sentence you'd be okay saying to anyone.",
+{
+"t": "Now say it out loud, like you're answering a friend at lunch.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "A few grown-ups may need to know.",
+"body": "Like the nurse or a coach, for safety.",
+"say": "A few grown-ups may need to know, to keep you safe. Like the school nurse, a coach, or a friend's parent at a sleepover. You can help decide what they hear, and how."
+},
+{
+"k": "card",
+"title": "Don't skip what keeps you well.",
+"body": "Ask a grown-up for a more private way.",
+"say": "Sometimes kids skip medicine or the nurse so nobody asks questions. That can make your body pay. Tell a grown-up you want more privacy. There's usually a quieter way."
+},
+{
+"k": "card",
+"title": "If someone spreads it or teases",
+"body": "Not your fault. Tell a grown-up the same day.",
+"say": "If someone shares your story without asking, or teases you about it, that's on them, not you. Tell a grown-up you trust the same day. And remember, posts and screenshots last, so think before you share online."
+},
+{
+"k": "big",
+"h": "Your story, your choice.",
+"sub": "You can change your mind anytime.",
+"say": "Your story, your choice. And you can change your mind anytime."
+}
+]
+},
+"helper": {
+"id": "as-g-telling-friends-helper",
+"guide": "telling-friends",
+"side": "helper",
+"title": "Telling Friends, or Not",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"carterbelong",
+"apadisability"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Telling Friends, or Not",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler decide whether to tell friends about a health condition, a disability, or a mental health condition, this is for you. The question comes up again and again, with every new friend, team, and sleepover."
+},
+{
+"k": "big",
+"h": "It is their choice, whenever safety allows.",
+"say": "Who knows is your child's choice, whenever safety allows. Some kids want everyone to know so they can stop explaining. Some tell one or two friends. Some keep it private. Each can be a good choice. What matters is that it's theirs, made with your help, and that they can change their mind."
+},
+{
+"k": "points",
+"h": "Help them build three answers",
+"items": [
+[
+"A short version",
+"For anyone"
+],
+[
+"A longer version",
+"For close friends"
+],
+[
+"\"I'd rather not say\"",
+"Always allowed"
+]
+],
+"say": "Help them build three answers. A short version for anyone, like, I have diabetes, so sometimes I check my blood sugar. A longer version for close friends. And a kind, firm, I'd rather not talk about it. Practice them together, out loud.",
+"cue": {
+"at": [
+1,
+2,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Some adults need to know for safety.",
+"body": "Explain why. Decide together how much.",
+"say": "A few adults may need to know for safety. The school nurse, a coach, a friend's parent at a sleepover. Explain why, and let your child help decide what those adults hear and how. Being part of that decision builds trust."
+},
+{
+"k": "card",
+"title": "When hiding turns risky",
+"body": "Skipping medicine or the nurse to avoid questions.",
+"say": "Hiding can turn risky when it means skipping medicine, the nurse, or an inhaler to avoid questions. If that's happening, get curious instead of angry. Ask what makes it hard, and look for a more private way with the nurse and the doctor."
+},
+{
+"k": "big",
+"h": "Remember your own choice.",
+"say": "Try this now. Think of a time you chose not to tell someone something personal about you. Notice how much that choice mattered to you. Now say out loud, the way you'll say it to your child, it's your story to tell.",
+"beats": [
+"Try this now.",
+"Think of a time you chose not to tell someone something personal about you.",
+"Notice how much that choice mattered to you.",
+{
+"t": "Now say out loud, the way you'll say it to your child, it's your story to tell.",
+"w": 10
+}
+]
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"It's your story.\"",
+"\"Want to practice what you'd say?\"",
+"\"If someone is unkind, I want to know.\""
+],
+"say": "Here are words that help. It's your story. You decide who hears it. Want to practice what you'd say? And, if someone is unkind about it, I want to know."
+},
+{
+"k": "points",
+"h": "Try not to",
+"items": [
+[
+"Tell for them",
+"Without asking first"
+],
+[
+"Push either way",
+"\"Be open,\" or \"keep it quiet\""
+],
+[
+"Post about it",
+"Without their yes"
+]
+],
+"say": "Try not to tell other parents, teachers, or relatives without asking first, unless safety requires it. Try not to push them either way, toward be open, or toward keep it quiet. And never post about their condition online without their yes.",
+"cue": {
+"at": [
+0,
+1,
+2
+]
+}
+},
+{
+"k": "card",
+"title": "If someone spreads it",
+"body": "Unkind, and sometimes bullying. Act the same day.",
+"say": "If a friend shares their story without permission or teases them about it, that's unkind, and sometimes it's bullying. Help them tell a trusted adult at school the same day. If your child ever talks about not wanting to be alive, stay with them and call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Their story. Their choice. Your help.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Their story, their choice, with your help. The full guide has more, whenever you want it."
+}
+]
+}
+},
+{
+"id": "why-me",
+"ring": "life",
+"title": "Why Me? Faith and a Body That's Different",
+"you": {
+"id": "as-g-why-me-you",
+"guide": "why-me",
+"side": "you",
+"title": "Why Me? Faith and a Body That's Different",
+"sideName": "For You",
+"mins": 3,
+"sources": [
+"uabspirit"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Why Me? Faith and a Body That's Different",
+"sub": "For You",
+"say": "If you live with an illness or a disability, and you've ever wondered, why me, this is for you. Big questions are welcome here."
+},
+{
+"k": "big",
+"h": "Why me? is a real question.",
+"sub": "People have asked it for thousands of years.",
+"say": "Why me? Is this fair? Did I do something wrong? These are real questions. People have asked them for thousands of years. You're allowed to ask them too, out loud."
+},
+{
+"k": "big",
+"h": "It is not a punishment.",
+"sub": "No one caused this by being bad.",
+"say": "Here's something true. Your illness or disability is not a punishment. No one caused it by being bad. Not you, and not your family."
+},
+{
+"k": "words",
+"h": "Places people find help",
+"items": [
+"Prayer or worship",
+"A faith leader",
+"Quiet or nature",
+"Family traditions"
+],
+"say": "People find help with big questions in different places. Some pray, or go to worship, or talk with a faith leader. Some find it in quiet, in nature, in music, or in their family's traditions. Start with what your family does, and notice what helps you."
+},
+{
+"k": "big",
+"h": "Ask your big question.",
+"sub": "Out loud, or in a whisper.",
+"say": "Let's take a moment. Breathe in slowly, and let it out. Think of the biggest question you have about your body or your life. You don't need an answer right now. Just ask it, out loud or in a whisper.",
+"beats": [
+"Let's take a moment.",
+"Breathe in slowly, and let it out.",
+"Think of the biggest question you have about your body or your life.",
+"You don't need an answer right now.",
+{
+"t": "Just ask it, out loud or in a whisper.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Bring it to someone you trust.",
+"body": "A parent, a faith leader, or the counselor.",
+"say": "Bring your question to someone you trust. A parent, a grandparent, a faith leader, or the school counselor. They might not have every answer. Wondering together still helps."
+},
+{
+"k": "card",
+"title": "If someone said something that hurt",
+"body": "Tell a grown-up. You can feel how you feel.",
+"say": "Some kids hear that they'd be healed if they believed more, or get prayed over without being asked. If something like that hurt or confused you, tell a grown-up you trust. You're allowed to feel how you feel."
+},
+{
+"k": "big",
+"h": "You are loved, just as you are.",
+"sub": "Questions and all.",
+"say": "You are loved, just as you are, questions and all. Your big questions don't push anyone away. They invite people closer."
+}
+]
+},
+"helper": {
+"id": "as-g-why-me-helper",
+"guide": "why-me",
+"side": "helper",
+"title": "Why Me? Faith and a Body That's Different",
+"sideName": "For the Grown-up",
+"mins": 4,
+"sources": [
+"uabspirit",
+"carterbelong"
+],
+"scenes": [
+{
+"k": "title",
+"hero": "aspen",
+"eyebrow": "When Life Changes",
+"h": "Why Me? Faith and a Body That's Different",
+"sub": "For the Grown-up",
+"say": "If you're helping a middle schooler with an illness or a disability who is asking big questions, about why, about fairness, about God, this is for you. You don't need perfect answers."
+},
+{
+"k": "big",
+"h": "Let the question be asked.",
+"say": "Why me? Is this fair? Did I do something wrong? Middle schoolers living with an illness or a disability often ask the biggest questions there are. The first gift is simple. Let the question be asked out loud, and don't rush to settle it."
+},
+{
+"k": "card",
+"title": "Start from your own family.",
+"body": "Faith and prayer, or quiet, nature, and tradition.",
+"say": "Start from your own family. For many families, these questions live in prayer, in a congregation, in sacred stories, or in a grandparent's steady trust. For others, they live in quiet, nature, art, and family traditions. Both are doors to meaning. Walk through the ones your family knows."
+},
+{
+"k": "points",
+"h": "Resource, or weight?",
+"items": [
+[
+"Strength",
+"Faith that holds them up"
+],
+[
+"Weight",
+"Feeling punished or abandoned"
+],
+[
+"Both",
+"On the same day"
+]
+],
+"say": "Faith can be a resource or a weight. For teens living with a chronic illness, finding strength in faith tends to go with doing better, and feeling punished or abandoned by God tends to go with a harder time. So listen for both. And know they can show up on the same day.",
+"cue": {
+"at": [
+1,
+1,
+3
+]
+}
+},
+{
+"k": "card",
+"title": "Say it plainly: not a punishment.",
+"body": "No one caused this by being bad.",
+"say": "Some kids have heard that illness is a punishment, or that enough faith would heal them, or have been prayed over without being asked. Say it plainly. No one caused this by being bad. Then let them tell you how those moments felt, without defending anyone."
+},
+{
+"k": "words",
+"h": "Words that help",
+"items": [
+"\"That's a real question.\"",
+"\"It's not a punishment.\"",
+"\"I'm not going anywhere.\""
+],
+"say": "Here are words that help. That's a real question. People have asked it for thousands of years. No one caused this by being bad. And, I don't know all the answers. I'm not going anywhere."
+},
+{
+"k": "words",
+"h": "Try not to say",
+"items": [
+"\"Everything happens for a reason.\"",
+"\"God only gives you what you can handle.\"",
+"\"Pray harder.\""
+],
+"say": "Try not to say, everything happens for a reason, or, God only gives you what you can handle. Kids can hear blame in these. And try not to promise that enough faith or prayer will make it go away."
+},
+{
+"k": "big",
+"h": "Practice the steady answer.",
+"say": "Try this now. Picture your child asking you, why me, with tears in their eyes. Let your shoulders soften. Now say out loud, slowly, I don't know all the answers, and I'm not going anywhere.",
+"beats": [
+"Try this now.",
+"Picture your child asking you, why me, with tears in their eyes.",
+"Let your shoulders soften.",
+{
+"t": "Now say out loud, slowly, I don't know all the answers, and I'm not going anywhere.",
+"w": 10
+}
+]
+},
+{
+"k": "card",
+"title": "Help them belong.",
+"body": "Talk with your faith leader about taking part.",
+"say": "A faith community can be a place where your child is fully welcome, or a place with steps, long services, loud rooms, or no role for them. Talk with your faith leader about what would help your child take part. And if questions turn into deep hopelessness, bring in the counselor. If your child talks about not wanting to be alive, call or text 988. For danger right now, call 911."
+},
+{
+"k": "big",
+"h": "Wonder with them. Stay with them.",
+"sub": "The full guide has more, whenever you want it.",
+"say": "Wonder with them, and stay with them. That is often the most faithful answer there is. The full guide has more, whenever you want it."
+}
+]
 }
 }
 ]

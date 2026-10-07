@@ -41,6 +41,10 @@ window.GG_LEARN_GUIDES.pine = {
   [
    "pn-meaning",
    "Work, Money, Faith, and Meaning"
+  ],
+  [
+   "life",
+   "Health and Ability"
   ]
  ],
  "guides": [
@@ -11077,6 +11081,1930 @@ window.GG_LEARN_GUIDES.pine = {
       "h": "Believe in who they are becoming.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Purpose grows a little at a time. Keep noticing, keep inviting, and keep believing in who they're becoming. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "own-health",
+   "ring": "life",
+   "title": "Taking Over Your Own Health",
+   "you": {
+    "id": "pn-g-own-health-you",
+    "guide": "own-health",
+    "side": "you",
+    "title": "Taking Over Your Own Health",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For you, if you live with a health condition: run more of your own health, one skill at a time.",
+    "sources": [
+     "gottransition"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Taking Over Your Own Health",
+      "sub": "For You",
+      "say": "If you live with a health condition, or you just see a doctor more than most people, this is for you. It's about running more of your own health, one skill at a time."
+     },
+     {
+      "k": "big",
+      "h": "A set of skills, not one big day.",
+      "sub": "You learn them one at a time.",
+      "say": "Someday the doctor will turn to you. The pharmacy will ask for you. The forms will want your signature. That can sound like a lot. But taking over your health isn't one big day. It's a set of skills, and high school is a great time to learn them, one at a time, with people beside you."
+     },
+     {
+      "k": "flow",
+      "h": "Start with what you know",
+      "steps": [
+       [
+        "Your condition",
+        "In a sentence or two"
+       ],
+       [
+        "Your medicines",
+        "Names, doses, times"
+       ],
+       [
+        "Your allergies",
+        "And your doctors"
+       ]
+      ],
+      "say": "Start with what you know. Can you say your condition in a sentence or two? Can you name your medicines, how much you take, and when? Do you know your allergies, and who your doctors are? Put all of it in a short note in your phone. That note is a real tool, and it's yours."
+     },
+     {
+      "k": "big",
+      "h": "Say your health in two sentences.",
+      "sub": "Out loud, the way you would at a new office.",
+      "say": "Let's try it now. Picture yourself at a new doctor's office. They ask what they should know about you. Say your answer out loud in two sentences, your condition and your main medicine.",
+      "beats": [
+       "Let's try it now.",
+       "Picture yourself at a new doctor's office.",
+       "They ask what they should know about you.",
+       {
+        "t": "Say your answer out loud in two sentences, your condition and your main medicine.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "One task this month",
+      "items": [
+       [
+        "Order a refill",
+        "Call, tap, or ask at the counter"
+       ],
+       [
+        "Book an appointment",
+        "With a parent nearby"
+       ],
+       [
+        "Ask one question",
+        "Yourself, at the visit"
+       ]
+      ],
+      "say": "Now pick one task to take over this month. Maybe you order a refill. Maybe you book your next appointment, with a parent nearby in case you get stuck. Or you ask one question yourself at your next visit. Practice it a few times, then pick the next one."
+     },
+     {
+      "k": "card",
+      "title": "Time alone with your doctor",
+      "body": "Many clinics offer it to teens. You can ask for it.",
+      "say": "Many clinics give teens a few minutes alone with the doctor. It's a normal part of growing up, and you can ask for it. It's a good time to bring up anything you'd rather say on your own. And at eighteen, the law treats you as an adult in health care, so practicing now makes that day easier."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "I'm learning this one skill at a time.",
+       "Asking my own questions is part of growing up.",
+       "Forgetting once means I need a better plan."
+      ],
+      "say": "Here are words to keep. I'm learning this one skill at a time. Asking my own questions is part of growing up. And if you forget something, it doesn't mean you can't do this. It means you need a better reminder, and that's easy to fix."
+     },
+     {
+      "k": "big",
+      "h": "Your body, your life, your voice.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You're becoming the person who knows your body best and speaks up for it. That's a skill you'll use your whole life. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-own-health-helper",
+    "guide": "own-health",
+    "side": "helper",
+    "title": "Taking Over Your Own Health",
+    "sideName": "For the Grown-up",
+    "mins": 4,
+    "blurb": "For the grown-up beside a teen with a health condition: hand over the wheel one task at a time.",
+    "sources": [
+     "gottransition",
+     "mnconsent"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Taking Over Your Own Health",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, or other grown-up of a teen who lives with a health condition. You've probably carried the appointments, refills, and forms for years. Now it's time to start handing them over."
+     },
+     {
+      "k": "big",
+      "h": "From manager, to coach, to advisor.",
+      "say": "Your role is changing, not ending. For years you've been the manager. In high school you become the coach. And after eighteen, you become the person they call for advice. The goal is a young adult who can run their own health, and knows they can still ask you."
+     },
+     {
+      "k": "flow",
+      "h": "A handover that works",
+      "steps": [
+       [
+        "List every task",
+        "Everything you do now"
+       ],
+       [
+        "Pick one",
+        "Teach it, then watch"
+       ],
+       [
+        "Let it be theirs",
+        "Then pick the next"
+       ]
+      ],
+      "say": "A good handover is gradual. Make a list together of every task you do now. Refills, appointments, forms, insurance, logs. Pick one. Teach it, then watch while they do it a few times. When it's theirs, celebrate it, and pick the next one. Starting early beats handing everything over the week before they leave home."
+     },
+     {
+      "k": "big",
+      "h": "Write down three tasks you do now.",
+      "sub": "Circle the easiest one to hand over.",
+      "say": "Take a moment. Think about last month and everything you did for your teen's health. Write down three of those tasks on paper or in your phone. Then circle the one that would be easiest to hand over first.",
+      "beats": [
+       "Take a moment.",
+       "Think about last month and everything you did for your teen's health.",
+       "Write down three of those tasks on paper or in your phone.",
+       {
+        "t": "Then circle the one that would be easiest to hand over first.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "At the visit",
+      "items": [
+       [
+        "Let them speak first",
+        "Then add what they missed"
+       ],
+       [
+        "Time alone",
+        "Offer it, and step out"
+       ],
+       [
+        "Questions written down",
+        "Before and after"
+       ]
+      ],
+      "say": "At the visit, let your teen speak first, then add what they missed. Offer them time alone with the doctor, and step out without fuss. Many clinics start this in the early teens. And help them write their questions down before the visit, and the answers after."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Which part would you like to run next?",
+       "I'll stay close while you learn it.",
+       "You handled that well."
+      ],
+      "say": "Words that help. Which part of this would you like to run next? I'll stay close while you learn it. And when they do it, say so. You handled that call well. A slip, like a missed refill, is a problem to solve together, not proof they can't do it."
+     },
+     {
+      "k": "card",
+      "title": "Talk about 18 ahead of time.",
+      "body": "Who they want to share their health information with is their choice then.",
+      "say": "Talk about eighteen ahead of time. At eighteen, your teen becomes the one who decides who can see their health information and talk with their doctors. Ask together what that will look like, and what forms the clinic uses. And if they ever seem low for weeks, help them reach their doctor or a counselor. In Minnesota, at sixteen, they can ask for counseling on their own."
+     },
+     {
+      "k": "big",
+      "h": "Stepping back is a kind of love.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Stepping back from something you've carried for years can feel strange, even sad. It's also one of the most loving things you'll do. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pain-fatigue",
+   "ring": "life",
+   "title": "Chronic Pain and Fatigue",
+   "you": {
+    "id": "pn-g-pain-fatigue-you",
+    "guide": "pain-fatigue",
+    "side": "you",
+    "title": "Chronic Pain and Fatigue",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For you, if pain or tiredness keeps coming back: pace your energy, and rest without guilt.",
+    "sources": [
+     "miserandino"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Chronic Pain and Fatigue",
+      "sub": "For You",
+      "say": "If pain or tiredness keeps coming back for you, whether it's headaches, aches, or an exhaustion sleep doesn't fix, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "It's real, even when no one can see it.",
+      "say": "Pain and fatigue that keep coming back are real, even when no one can see them. Maybe people say you look fine. Maybe you worry they think you're making it up. You're not. And there are ways to live well alongside it."
+     },
+     {
+      "k": "card",
+      "title": "The good day trap",
+      "body": "Push hard today, crash for three days after.",
+      "say": "Here's a pattern many people know. You feel good, so you do everything. Then you crash, for a day, or three. It makes sense to grab a good day. But spreading your energy out usually gets you more good days overall. That's called pacing."
+     },
+     {
+      "k": "flow",
+      "h": "Plan your energy like a budget",
+      "steps": [
+       [
+        "One big thing",
+        "What matters most today"
+       ],
+       [
+        "Small things around it",
+        "Only what fits"
+       ],
+       [
+        "Rest built in",
+        "Before you need it"
+       ]
+      ],
+      "say": "Think of your energy like a budget, or like a handful of spoons. Every task costs some. So plan the day. Pick one big thing that matters most. Put small things around it, only what fits. And build in rest before you need it, not after you crash. Spoons are also a quick way to tell a friend how much you have today."
+     },
+     {
+      "k": "big",
+      "h": "Breathe out longer than you breathe in.",
+      "sub": "Let your shoulders soften.",
+      "say": "Let's try something that helps around pain. Sit or lie however is comfortable. Breathe in gently through your nose. Now breathe out slowly, longer than you breathed in, and let your shoulders soften. Do that a few more times, at your own pace.",
+      "beats": [
+       "Let's try something that helps around pain.",
+       "Sit or lie however is comfortable.",
+       "Breathe in gently through your nose.",
+       "Now breathe out slowly, longer than you breathed in, and let your shoulders soften.",
+       {
+        "t": "Do that a few more times, at your own pace.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What else helps",
+      "items": [
+       [
+        "Gentle movement",
+        "On days it fits"
+       ],
+       [
+        "Rest without guilt",
+        "On days it does not"
+       ],
+       [
+        "A school plan",
+        "Breaks, rest, catching up"
+       ]
+      ],
+      "say": "A few more things help. Gentle movement on the days it fits, like stretching, walking, or swimming. Rest without guilt on the days it doesn't. And a school plan, like a 504 plan, for breaks, a place to rest, or catching up after missed days. Tell your doctor what the pain keeps you from doing, too."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "Rest is part of my plan.",
+       "A hard day doesn't erase my good ones.",
+       "I can do what matters, at my own pace."
+      ],
+      "say": "Here are words to keep. Rest is part of my plan, not a failure. A hard day doesn't erase my good ones. I can do what matters to me, at my own pace. If you feel low for two weeks or more, tell someone you trust, or your doctor."
+     },
+     {
+      "k": "big",
+      "h": "Your pace is a real pace.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your pace is a real pace. You know your body better than anyone, and that knowledge is a strength. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-pain-fatigue-helper",
+    "guide": "pain-fatigue",
+    "side": "helper",
+    "title": "Chronic Pain and Fatigue",
+    "sideName": "For the Grown-up",
+    "mins": 4,
+    "blurb": "For the grown-up beside a teen with pain or fatigue that keeps coming back: believe them, and plan together.",
+    "sources": [
+     "miserandino"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Chronic Pain and Fatigue",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, coach, or other grown-up of a teen whose pain or tiredness keeps coming back."
+     },
+     {
+      "k": "big",
+      "h": "Believe them first.",
+      "say": "Teens with pain or fatigue that keeps coming back are often doubted, by teachers, coaches, friends, and sometimes by themselves. The most helpful thing you can do first is simple. Believe them. Ask what it's like today, and listen."
+     },
+     {
+      "k": "card",
+      "title": "Push, crash, repeat",
+      "body": "Help them spread energy out, so good days do not turn into crash days.",
+      "say": "Many teens push hard to keep up, then crash for days. You can help them break that cycle with pacing. Plan the week like an energy budget. Put rest before big days, not just after. Some people explain energy as spoons: a set number each day, and every task costs some. It gives a teen quick words for what they have left."
+     },
+     {
+      "k": "points",
+      "h": "Practical help",
+      "items": [
+       [
+        "A simple log",
+        "Pain, energy, sleep"
+       ],
+       [
+        "A 504 plan",
+        "Breaks, rest, catching up"
+       ],
+       [
+        "Steady sleep",
+        "A calm wind-down"
+       ]
+      ],
+      "say": "Practical help makes a difference. Help them keep a simple log of pain, energy, and sleep to bring to the doctor. Work with the school on a 504 plan if pain affects class or attendance. In Minnesota, PACER Center helps families with that. And protect sleep with a steady wake time and a calm wind-down."
+     },
+     {
+      "k": "big",
+      "h": "Unclench your jaw and drop your shoulders.",
+      "sub": "Then breathe out slowly.",
+      "say": "Caring for someone in pain is tiring for you too. Notice your own body for a moment. Unclench your jaw and let your shoulders drop. Then breathe out slowly, and let one worry rest for now.",
+      "beats": [
+       "Caring for someone in pain is tiring for you too.",
+       "Notice your own body for a moment.",
+       "Unclench your jaw and let your shoulders drop.",
+       {
+        "t": "Then breathe out slowly, and let one worry rest for now.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I believe you. What's it like today?",
+       "Let's plan around your energy.",
+       "You don't have to earn rest."
+      ],
+      "say": "Words that help. I believe you. What's it like today? How much energy do you have this week? Let's plan around it. And, you don't have to earn rest."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You look fine.",
+       "Just push through it.",
+       "Then you can skip everything."
+      ],
+      "say": "Some words, meant kindly, close the door. You look fine. Just push through it. And the opposite, stopping every activity after one hard day. Ask instead what an easier version could look like. Keep medical questions with their doctor."
+     },
+     {
+      "k": "card",
+      "title": "Watch for a low that lasts.",
+      "body": "Two weeks or more: their doctor or a counselor. 988 any time.",
+      "say": "Pain, worry, and low mood can feed each other. If your teen seems down or anxious for two weeks or more, help them talk with their doctor or a counselor. If they ever talk about not wanting to live, call or text nine eight eight together. Pine keeps your teen's answers private, and if a check-in shows they're losing hope, you'll see a quiet alert to check in."
+     },
+     {
+      "k": "big",
+      "h": "Being believed is its own relief.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You may not be able to take the pain away. Being believed, and having someone plan beside them, is its own relief. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "iep-transition",
+   "ring": "life",
+   "title": "Disability, School, and Planning What's Next",
+   "you": {
+    "id": "pn-g-iep-transition-you",
+    "guide": "iep-transition",
+    "side": "you",
+    "title": "Disability, School, and Planning What's Next",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you have an IEP or a 504 plan: your plan, your voice, and your next steps.",
+    "sources": [
+     "mnr3525",
+     "ocrpse"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Disability, School, and Planning What's Next",
+      "sub": "For You",
+      "say": "If you have an IEP or a 504 plan, or you're wondering if you should, this is for you. It's about your plan, your voice, and what comes next."
+     },
+     {
+      "k": "big",
+      "h": "A plan is a tool, not a label.",
+      "say": "An IEP or a 504 plan is there so school works for you. It's a tool, not a label. Some students feel grateful for it. Some feel embarrassed using it in front of friends. Both are normal. And the person who knows best what helps you is you."
+     },
+     {
+      "k": "points",
+      "h": "Two kinds of plans",
+      "items": [
+       [
+        "A 504 plan",
+        "Changes so you can take part"
+       ],
+       [
+        "An IEP",
+        "Teaching built around you"
+       ],
+       [
+        "Both",
+        "Your voice belongs in them"
+       ]
+      ],
+      "say": "There are two common kinds of plans. A 504 plan changes how things work so you can take part, like extra time, breaks, or a seat near the door. An IEP adds teaching built around how you learn. Either way, your voice belongs in it."
+     },
+     {
+      "k": "card",
+      "title": "Planning starts in grade 9.",
+      "body": "In Minnesota, an IEP plans for school, work, and living on your own.",
+      "say": "If you have an IEP in Minnesota, it starts planning for life after high school in ninth grade. School, work, and living on your own. You don't need it all figured out. A rough idea is a great start, and the plan can change as you do."
+     },
+     {
+      "k": "big",
+      "h": "Finish this: It helps me when...",
+      "sub": "Say it out loud, or type it.",
+      "say": "Let's practice speaking up for yourself. Think about a class that went well for you. What made it work? Now finish this sentence out loud, or type it in your phone. It helps me when...",
+      "beats": [
+       "Let's practice speaking up for yourself.",
+       "Think about a class that went well for you.",
+       "What made it work?",
+       "Now finish this sentence out loud, or type it in your phone.",
+       {
+        "t": "It helps me when...",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Your meeting, your voice",
+      "steps": [
+       [
+        "Three lines",
+        "Strengths, hard parts, what helps"
+       ],
+       [
+        "Speak first",
+        "Or hand them to the team"
+       ],
+       [
+        "Ask a question",
+        "About what comes next"
+       ]
+      ],
+      "say": "Your IEP meeting is about you, so you can be in the room. Bring three lines: what you're good at, what's hard, and what helps. Share them first, or hand them to the team. Then ask one question about what comes next. Many students start by leading one small part of their meeting."
+     },
+     {
+      "k": "card",
+      "title": "After high school, you ask.",
+      "body": "No IEP in college or training. You go to the disability office.",
+      "say": "Here's something many students don't know. After high school there is no IEP. In college or job training, you go to the disability office yourself and ask for what helps, with the right papers. That's why practicing now matters. Every time you ask, it gets easier."
+     },
+     {
+      "k": "big",
+      "h": "You're the expert on what helps you.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You're the expert on what helps you. Saying it out loud is a skill you'll use in school, at work, and everywhere else. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-iep-transition-helper",
+    "guide": "iep-transition",
+    "side": "helper",
+    "title": "Disability, School, and Planning What's Next",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside a teen with an IEP or a 504 plan: hand them the microphone, and plan what comes next together.",
+    "sources": [
+     "mnr3525",
+     "ocrpse"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Disability, School, and Planning What's Next",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, teacher, or other grown-up of a teen with an IEP or a 504 plan. It's about giving them a real voice, and planning what comes next together."
+     },
+     {
+      "k": "big",
+      "h": "Hand them the microphone.",
+      "say": "Many students sit through meetings about their own lives without being asked much. In high school, that can change. The goal is a young adult who can explain what helps and ask for it. That starts with handing them the microphone, a little at a time."
+     },
+     {
+      "k": "card",
+      "title": "Transition planning",
+      "body": "In Minnesota, during grade 9. Federal law requires it by 16.",
+      "say": "In Minnesota, an IEP addresses transition during ninth grade. Federal law requires it by sixteen. Transition means planning for school or training, work, and living on their own. Ask the school how that part of the plan works, and make sure your teen's own hopes are in it."
+     },
+     {
+      "k": "flow",
+      "h": "Before the meeting",
+      "steps": [
+       [
+        "Ask what they want",
+        "The team to know"
+       ],
+       [
+        "Write three lines",
+        "Strengths, hard parts, helps"
+       ],
+       [
+        "Plan their part",
+        "Even a small one"
+       ]
+      ],
+      "say": "Before the next meeting, ask your teen what they want the team to know. Help them write three lines: what they're good at, what's hard, and what helps. Then plan their part, even a small one, like sharing those lines first. A plan they helped write is a plan they'll use."
+     },
+     {
+      "k": "big",
+      "h": "Name one strength you've seen this month.",
+      "sub": "Say it the way you would tell them.",
+      "say": "Let's start with strengths. Picture your teen at their best this month. What did you notice them doing well? Say it out loud, as if you were telling them.",
+      "beats": [
+       "Let's start with strengths.",
+       "Picture your teen at their best this month.",
+       "What did you notice them doing well?",
+       {
+        "t": "Say it out loud, as if you were telling them.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What do you want the team to know?",
+       "What helps you most?",
+       "What could you see yourself doing next?"
+      ],
+      "say": "Words that help. What do you want the team to know about you? What helps you most, and what doesn't? What could you see yourself doing after high school? Then let the silence sit. Many teens need a moment to answer."
+     },
+     {
+      "k": "points",
+      "h": "What changes after high school",
+      "items": [
+       [
+        "No IEP",
+        "In college or training"
+       ],
+       [
+        "They ask",
+        "The disability office"
+       ],
+       [
+        "At 18",
+        "Many decisions become theirs"
+       ]
+      ],
+      "say": "Learn together what changes after high school. There is no IEP in college or training. Students go to the disability office themselves and ask, with the right papers. At eighteen, many decisions become theirs. In Minnesota, PACER Center helps families with plans, transition, and what changes at eighteen. Ask early."
+     },
+     {
+      "k": "big",
+      "h": "Their future, their voice.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You've likely advocated for years. Now you get to coach someone who speaks for themselves. Their future, their voice, and you right beside them. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "deaf-hoh",
+   "ring": "life",
+   "title": "Deaf or Hard of Hearing",
+   "you": {
+    "id": "pn-g-deaf-hoh-you",
+    "guide": "deaf-hoh",
+    "side": "you",
+    "title": "Deaf or Hard of Hearing",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you are Deaf or hard of hearing: your language, your people, and a room that works.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Deaf or Hard of Hearing",
+      "sub": "For You",
+      "say": "If you're Deaf or hard of hearing, whether you sign, use hearing aids or an implant, or your hearing changed recently, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "The room can change.",
+      "sub": "The barrier is often not you.",
+      "say": "School can be loud and fast. Hallways, lunch, group work. It's easy to miss the joke or nod along when you didn't catch it. Here's something worth knowing. The barrier is often in the room, not in you. And rooms can change."
+     },
+     {
+      "k": "words",
+      "h": "Your words, your choice",
+      "items": [
+       "Deaf",
+       "deaf",
+       "Hard of hearing",
+       "Or just your name"
+      ],
+      "say": "You choose your own words. Many people use Deaf, with a capital D, for the community and its language and culture. Some say hard of hearing. Some don't use a label at all. Each person decides, and you can change your mind."
+     },
+     {
+      "k": "points",
+      "h": "Tools that make the room work",
+      "items": [
+       [
+        "Captions",
+        "On class videos and movies"
+       ],
+       [
+        "An interpreter or a remote mic",
+        "Through your school plan"
+       ],
+       [
+        "A seat with a view",
+        "Faces, not backs"
+       ]
+      ],
+      "say": "There are tools that make the room work. Captions on class videos and movies. An interpreter, or a remote mic your teacher wears, through your school plan. A seat where you can see faces. These aren't favors. You can ask for them by name."
+     },
+     {
+      "k": "big",
+      "h": "Name your hardest place.",
+      "sub": "And one thing that would help there.",
+      "say": "Let's make it concrete. Think about your day. Where is it hardest to follow what's going on? Lunch, a class, the team huddle? Picture that place, and say out loud, or sign, one thing that would help there.",
+      "beats": [
+       "Let's make it concrete.",
+       "Think about your day.",
+       "Where is it hardest to follow what's going on?",
+       "Lunch, a class, the team huddle?",
+       {
+        "t": "Picture that place, and say out loud, or sign, one thing that would help there.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Listening is work.",
+      "body": "Breaks and quiet time are part of the plan.",
+      "say": "Following a hearing world all day takes real effort. Being worn out by the end of school is common. Plan breaks during long days, and some quiet time after. That's not weakness. It's knowing your body."
+     },
+     {
+      "k": "card",
+      "title": "Find your people.",
+      "body": "Deaf friends, mentors, a club, a camp, or an online group.",
+      "say": "Many Deaf and hard of hearing teens feel most at home with people who share their language. A Deaf club, a camp, a mentor, or an online group can be a place where talking is easy. And if you ever feel like you can't go on, text nine eight eight, or reach them in sign language by videophone."
+     },
+     {
+      "k": "big",
+      "h": "Your language is yours to be proud of.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your language, your people, and your way of being in the world are yours to be proud of. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-deaf-hoh-helper",
+    "guide": "deaf-hoh",
+    "side": "helper",
+    "title": "Deaf or Hard of Hearing",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside a teen who is Deaf or hard of hearing: make the room work, and honor their language.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Deaf or Hard of Hearing",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, teacher, coach, or other grown-up of a teen who is Deaf or hard of hearing."
+     },
+     {
+      "k": "big",
+      "h": "Make the room work.",
+      "sub": "Instead of asking them to try harder.",
+      "say": "Deaf and hard of hearing teens often work harder than anyone sees, just to follow a day. Group talk, hallways, and lunch can leave them at the edge. Your best help is to make the room work, instead of asking them to try harder."
+     },
+     {
+      "k": "points",
+      "h": "How to talk so it works",
+      "items": [
+       [
+        "Get their attention first",
+        "A wave or a tap"
+       ],
+       [
+        "Face them",
+        "Mouth visible, good light"
+       ],
+       [
+        "Repeat or text",
+        "What others said"
+       ]
+      ],
+      "say": "A few habits help every day. Get their attention first, with a wave or a light tap. Face them, keep your mouth visible, and stand where the light is on your face. In a group, repeat or text what others said. And ask them directly how they want you to talk with them. They know."
+     },
+     {
+      "k": "big",
+      "h": "Face the person and say their name.",
+      "sub": "Practice with whoever is near you, or with a mirror.",
+      "say": "Let's practice the first habit. Turn and face the person nearest you, or a mirror. Make sure your face is in the light. Then say their name, or your own, clearly and at an easy pace.",
+      "beats": [
+       "Let's practice the first habit.",
+       "Turn and face the person nearest you, or a mirror.",
+       "Make sure your face is in the light.",
+       {
+        "t": "Then say their name, or your own, clearly and at an easy pace.",
+        "w": 8
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Never mind.",
+       "It's not important.",
+       "Talking to the interpreter instead"
+      ],
+      "say": "Some words close the door. Never mind. It's not important. Those tell a teen they're not worth repeating for. Talking louder or slower doesn't help much either. And if there's an interpreter, speak to your teen, not to the interpreter."
+     },
+     {
+      "k": "card",
+      "title": "Honor their language and their people.",
+      "body": "Deaf friends and mentors are a strength, not a last resort.",
+      "say": "Many Deaf teens find deep belonging in the Deaf community, with its own language and culture. Deaf friends and mentors are a strength, not a last resort. If your teen signs, learning even a little sign says I'm in your world too. Ask what words they use for themselves, and use those."
+     },
+     {
+      "k": "card",
+      "title": "Know the access to help.",
+      "body": "Text 988, or 988 in ASL by videophone.",
+      "say": "Make sure their school plan covers captions, interpreters, a remote mic, notes, and seating. In Minnesota, the state's Deaf and Hard of Hearing Services can point you to help. And make sure your teen knows they can text nine eight eight, or reach a counselor who signs by videophone, any time."
+     },
+     {
+      "k": "big",
+      "h": "Meet them in their world.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "When you meet your teen in their world, with their language, their people, and a room that works, they don't have to carry it alone. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "blind-low-vision",
+   "ring": "life",
+   "title": "Blind or Low Vision",
+   "you": {
+    "id": "pn-g-blind-low-vision-you",
+    "guide": "blind-low-vision",
+    "side": "you",
+    "title": "Blind or Low Vision",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you are blind or have low vision: your tools, your skills, and your way of doing things.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Blind or Low Vision",
+      "sub": "For You",
+      "say": "If you're blind or have low vision, whether since birth or your vision is changing now, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "Your way of doing things works.",
+      "say": "School is full of things made for eyes. Slides, handouts, the board, a crowded hallway. When something is hard to reach, the barrier is often in how it was made, not in you. Your way of doing things works. Sometimes the world just needs to catch up."
+     },
+     {
+      "k": "words",
+      "h": "Your words, your choice",
+      "items": [
+       "Blind",
+       "Low vision",
+       "Visually impaired",
+       "Or just your name"
+      ],
+      "say": "You choose your own words. Many people proudly say blind. Some say low vision or visually impaired. Some don't use a label at all. Each person decides."
+     },
+     {
+      "k": "points",
+      "h": "Tools that open doors",
+      "items": [
+       [
+        "Your format",
+        "Braille, large print, or a file"
+       ],
+       [
+        "Your tech",
+        "Screen reader, magnifier, apps"
+       ],
+       [
+        "Getting around",
+        "A cane, a guide dog, a route"
+       ]
+      ],
+      "say": "There are tools that open doors. Materials in your format, on time, whether that's braille, large print, or a file your screen reader can read. Tech that fits you. And skills for getting around, with a cane, a guide dog, or routes you've practiced. You can ask for these in your school plan."
+     },
+     {
+      "k": "big",
+      "h": "Picture one route you want to master.",
+      "sub": "Then name the first step.",
+      "say": "Let's think about independence. Picture one place you'd like to get to on your own. Maybe a new classroom, a store, or a friend's house. Now say out loud the very first step you'd take to learn that route.",
+      "beats": [
+       "Let's think about independence.",
+       "Picture one place you'd like to get to on your own.",
+       "Maybe a new classroom, a store, or a friend's house.",
+       {
+        "t": "Now say out loud the very first step you'd take to learn that route.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Skills grow with practice.",
+      "body": "Routes, tech, and tasks at home, one at a time.",
+      "say": "Skills grow with practice. A new route, a new app, a task at home like cooking or laundry. Pick one a month. High school is a great time to build them, while people are close by to help if you want it."
+     },
+     {
+      "k": "card",
+      "title": "Find people who get it.",
+      "body": "Blind friends and mentors know the tricks.",
+      "say": "Blind friends and mentors can share tricks no one else knows, and remind you that a full, independent life is normal. Look for a camp, a program, or an online group. And if things ever feel heavy for weeks, tell someone you trust. Call or text nine eight eight any time you need it."
+     },
+     {
+      "k": "big",
+      "h": "You're more than what you can see.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You're more than what you can or can't see. Your skills, your ideas, and your way of doing things are yours. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-blind-low-vision-helper",
+    "guide": "blind-low-vision",
+    "side": "helper",
+    "title": "Blind or Low Vision",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside a teen who is blind or has low vision: build confidence, tools, and independence.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Blind or Low Vision",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, teacher, coach, or other grown-up of a teen who is blind or has low vision."
+     },
+     {
+      "k": "big",
+      "h": "High expectations, real tools.",
+      "say": "Many blind and low vision teens face low expectations from adults more often than limits from their own bodies. What they need is high expectations, real tools, and lots of practice. With those, a full and independent life is the normal path."
+     },
+     {
+      "k": "points",
+      "h": "At school",
+      "items": [
+       [
+        "Materials on time",
+        "In their format"
+       ],
+       [
+        "The right tech",
+        "And training to use it"
+       ],
+       [
+        "Getting around",
+        "Orientation and mobility"
+       ]
+      ],
+      "say": "At school, make sure the plan covers materials on time, in the format your teen uses. The right tech, and training to use it. And orientation and mobility, so they can learn routes and get around on their own. Late materials are one of the most common barriers, so ask early."
+     },
+     {
+      "k": "words",
+      "h": "Small habits that help",
+      "items": [
+       "Say who you are when you come in",
+       "On your left, not over there",
+       "Ask before you guide"
+      ],
+      "say": "Small habits help every day. Say who you are when you walk in. Use words like on your left, instead of pointing and saying over there. Describe what's around when it's new. And ask before you guide, or before you move their things."
+     },
+     {
+      "k": "big",
+      "h": "Describe the room around you.",
+      "sub": "Three things, in words only.",
+      "say": "Let's practice describing. Look around the room you're in. Pick three things a newcomer would want to know, like where the door is, or where to sit. Say them out loud in words only, without pointing.",
+      "beats": [
+       "Let's practice describing.",
+       "Look around the room you're in.",
+       "Pick three things a newcomer would want to know, like where the door is, or where to sit.",
+       {
+        "t": "Say them out loud in words only, without pointing.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Let them do it.",
+      "body": "Doing it for them is faster. Teaching it lasts.",
+      "say": "It's often faster to do things for them. Teaching it lasts longer. Give your teen chances to practice routes, tech, cooking, and errands, and let them make mistakes along the way. In Minnesota, State Services for the Blind helps people who are blind or losing vision, including students planning for work."
+     },
+     {
+      "k": "card",
+      "title": "Belonging and rides",
+      "body": "Blind mentors, and a plan to get there.",
+      "say": "Help them find blind friends and mentors, who know tricks no one else does. And plan transportation together, so your teen can say yes to the things their friends do. If they seem low or alone for weeks, help them talk with a doctor or counselor."
+     },
+     {
+      "k": "big",
+      "h": "Your belief is a tool too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your belief that they can is one of the most important tools they have. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "autistic-hs",
+   "ring": "life",
+   "title": "Autistic in High School",
+   "you": {
+    "id": "pn-g-autistic-hs-you",
+    "guide": "autistic-hs",
+    "side": "you",
+    "title": "Autistic in High School",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you are autistic: your brain works its own way, and school can make room for it.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Autistic in High School",
+      "sub": "For You",
+      "say": "If you're autistic, or you think you might be, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "Your brain works its own way.",
+      "sub": "That's not something to fix.",
+      "say": "Being autistic is one way a brain can work. It comes with real strengths, like focus, honesty, and deep interests. It comes with real challenges too, especially in a loud, fast school. Your brain isn't wrong. It works its own way."
+     },
+     {
+      "k": "words",
+      "h": "Your words, your choice",
+      "items": [
+       "Autistic",
+       "On the spectrum",
+       "A person with autism"
+      ],
+      "say": "You choose your own words. Many people say autistic. Some say on the spectrum, or a person with autism. Each person decides what fits."
+     },
+     {
+      "k": "points",
+      "h": "What drains you, and what helps",
+      "items": [
+       [
+        "Noise and crowds",
+        "Headphones, a quiet spot"
+       ],
+       [
+        "Surprises",
+        "A heads-up about changes"
+       ],
+       [
+        "Social rules",
+        "Clear, direct words"
+       ]
+      ],
+      "say": "Notice what drains you most. For many autistic teens, it's noise and crowds, so headphones or a quiet spot help. It's surprises, so a heads-up about changes helps. And it's unspoken social rules, so clear, direct words help. These can go in a school plan."
+     },
+     {
+      "k": "card",
+      "title": "Masking is exhausting.",
+      "body": "You deserve places where you can just be you.",
+      "say": "Lots of autistic teens hide their stims, rehearse conversations, or copy others to fit in. That can get you through a day, but it's exhausting. If you come home completely drained, that's why. You deserve some places where you don't have to perform at all."
+     },
+     {
+      "k": "big",
+      "h": "Notice three things around you.",
+      "sub": "One you see, one you hear, one you feel.",
+      "say": "Here's a quick reset you can use anywhere. Wherever you are, pause. Notice one thing you see, one thing you hear, and one thing you can feel, like your feet or your chair. Take your time with each.",
+      "beats": [
+       "Here's a quick reset you can use anywhere.",
+       "Wherever you are, pause.",
+       "Notice one thing you see, one thing you hear, and one thing you can feel, like your feet or your chair.",
+       {
+        "t": "Take your time with each.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Find your people.",
+      "body": "Friends who share what you love, in person or online.",
+      "say": "Friendship often starts with a shared interest. A club, a team, a game, or an online group can be a place where people get you. And what you love matters. It might even become your life's work. If you ever feel low or worn out for weeks, tell someone you trust. Texting nine eight eight works too, any time."
+     },
+     {
+      "k": "big",
+      "h": "You don't have to perform all day.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You don't have to perform all day. You get to be yourself, and the people worth having around will like that person. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-autistic-hs-helper",
+    "guide": "autistic-hs",
+    "side": "helper",
+    "title": "Autistic in High School",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside an autistic teen: see the overload, honor the strengths, and make room.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Autistic in High School",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, teacher, coach, or other grown-up of an autistic teen."
+     },
+     {
+      "k": "big",
+      "h": "Look underneath the behavior.",
+      "say": "Autistic teens spend enormous energy managing a world built for other brains. What looks like defiance or rudeness is often overload, confusion, or a need for clearer words. When you look underneath the behavior, you can usually find what would help."
+     },
+     {
+      "k": "points",
+      "h": "What often helps",
+      "items": [
+       [
+        "A quiet place",
+        "To reset at school"
+       ],
+       [
+        "A heads-up",
+        "Before changes"
+       ],
+       [
+        "Written steps",
+        "Clear and direct"
+       ]
+      ],
+      "say": "Work with the school on a plan that includes what helps. A quiet place to reset. A heads-up before changes. Written steps and clear, direct instructions. And other ways to do group work. Ask your teen what belongs on that list. They know."
+     },
+     {
+      "k": "card",
+      "title": "Masking and burnout",
+      "body": "Hiding all day can lead to exhaustion, worry, and low mood.",
+      "say": "Many autistic teens hide their traits all day to fit in. That's called masking, and over time it can lead to exhaustion, anxiety, and low mood. Protect recovery time after school. Many need quiet before they can talk. If worry or low mood lasts, find a counselor who understands autism."
+     },
+     {
+      "k": "big",
+      "h": "Ask a question, then wait ten seconds.",
+      "sub": "Practice the pause now.",
+      "say": "Many autistic teens need more time to answer. Let's practice the pause. Think of a question you might ask your teen tonight. Say it out loud once. Then stay quiet, and let the silence be okay.",
+      "beats": [
+       "Many autistic teens need more time to answer.",
+       "Let's practice the pause.",
+       "Think of a question you might ask your teen tonight.",
+       "Say it out loud once.",
+       {
+        "t": "Then stay quiet, and let the silence be okay.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Look at me when I talk to you.",
+       "Stop that.",
+       "Not that topic again."
+      ],
+      "say": "Some words close the door. Look at me when I talk to you, since eye contact can be uncomfortable, and listening doesn't need it. Stop that, about a stim that's helping them cope. And not that topic again. Their interests are a way into their world."
+     },
+     {
+      "k": "card",
+      "title": "Interests are a strength.",
+      "body": "Find people who share them, and autistic mentors.",
+      "say": "Help your teen find people who share their interests, and autistic mentors or groups. In Minnesota, the Autism Society of Minnesota offers camps, classes, and support for autistic people and their families. And ask what words your teen uses for themselves. Many prefer autistic. Use what they choose."
+     },
+     {
+      "k": "big",
+      "h": "Make room, and let them lead.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "When you make room, and let your teen teach you what being autistic is like for them, they can spend less energy fitting in and more energy growing. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "serious-illness",
+   "ring": "life",
+   "title": "A Serious Illness or Long Treatment as a Teen",
+   "you": {
+    "id": "pn-g-serious-illness-you",
+    "guide": "serious-illness",
+    "side": "you",
+    "title": "A Serious Illness or Long Treatment as a Teen",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you are facing a serious illness or long treatment: you are still you, and you still get a say.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "A Serious Illness or Long Treatment as a Teen",
+      "sub": "For You",
+      "say": "If you're facing a serious illness, or months of treatment, whether it's new or you've been at it a while, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "You're still you.",
+      "say": "A serious illness can turn everything upside down. Appointments, side effects, waiting, missing school and friends. Your body might look or feel different. But you're still you. Your humor, your interests, your opinions. They're all still here."
+     },
+     {
+      "k": "words",
+      "h": "All of these make sense",
+      "items": [
+       "Scared",
+       "Angry",
+       "Numb",
+       "Strangely calm"
+      ],
+      "say": "You might feel scared, angry, numb, or strangely calm. Sometimes all in one day. You might worry about your family, or get tired of people treating you like you'll break. Every one of these feelings makes sense. You don't have to be brave all the time."
+     },
+     {
+      "k": "card",
+      "title": "You get a say.",
+      "body": "Ask your own questions. Ask them to talk with you directly.",
+      "say": "You get a say in your care. You can ask your doctors to talk with you directly, not just with your parents. You can ask how your treatment works and what to expect. And you can ask who on the team is there just for teens, like a child life specialist, a social worker, or a hospital teacher."
+     },
+     {
+      "k": "big",
+      "h": "Plan one thing to look forward to.",
+      "sub": "Small is perfect.",
+      "say": "Let's plan something good. Think about the next few days. What's one small thing you could look forward to? A show, a visit, a favorite food, a game with a friend. Picture it clearly, then say it out loud.",
+      "beats": [
+       "Let's plan something good.",
+       "Think about the next few days.",
+       "What's one small thing you could look forward to?",
+       "A show, a visit, a favorite food, a game with a friend.",
+       {
+        "t": "Picture it clearly, then say it out loud.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Staying connected",
+      "items": [
+       [
+        "Texts and video calls",
+        "Even short ones"
+       ],
+       [
+        "A short version",
+        "For people who ask"
+       ],
+       [
+        "School, your way",
+        "At your energy level"
+       ]
+      ],
+      "say": "Staying connected helps, even in small ways. A text, a video call, a game online. Decide who you want to tell, and how much. A short version for most people, and a longer one for close friends, works well. And keep up with school in a way that fits your energy."
+     },
+     {
+      "k": "card",
+      "title": "Small is enough.",
+      "body": "On treatment weeks, rest and getting through the day count.",
+      "say": "On treatment weeks, small is enough. Rest counts. Getting through the day counts. One good moment counts. And if the hard feelings stay heavy for weeks, tell your parent or someone on your care team. If you ever feel like you can't go on, call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "A hard day and a good moment can share a day.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A hard day and a good moment can live in the same day. Look for the good moments, and let people help with the hard ones. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-serious-illness-helper",
+    "guide": "serious-illness",
+    "side": "helper",
+    "title": "A Serious Illness or Long Treatment as a Teen",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside a teen facing serious illness or long treatment: include them, connect them, and look after yourself.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "A Serious Illness or Long Treatment as a Teen",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, or other grown-up walking beside a teen through a serious illness or a long treatment."
+     },
+     {
+      "k": "big",
+      "h": "More than a patient.",
+      "say": "Teens facing serious illness want to be treated as capable, included in decisions, and seen as more than a patient. Missing friends and normal teen life can hurt as much as the treatment itself. Your teen is still growing up, even now."
+     },
+     {
+      "k": "card",
+      "title": "Include them.",
+      "body": "Ask the care team to speak with your teen directly.",
+      "say": "Include them. Ask the care team to speak with your teen directly, and give them some time alone with the doctors. Teens often have questions they won't ask in front of a parent. Being included helps them feel less powerless in a situation that takes so much control away."
+     },
+     {
+      "k": "points",
+      "h": "The team for teens",
+      "items": [
+       [
+        "Child life specialists",
+        "Coping and play"
+       ],
+       [
+        "Social workers",
+        "Practical help"
+       ],
+       [
+        "Hospital teachers",
+        "Keeping up with school"
+       ]
+      ],
+      "say": "Ask who on the hospital team supports teens. Child life specialists help with coping. Social workers help with practical needs. Psychologists and chaplains are there too, and hospital teachers can help with school. You don't have to arrange everything yourself."
+     },
+     {
+      "k": "big",
+      "h": "Name one thing you can hand to someone else.",
+      "sub": "A meal, a ride, a load of laundry.",
+      "say": "You're carrying a lot. Let's lighten it a little. Think of one task this week that someone else could do. A meal, a ride, a load of laundry. Say out loud the name of the person you could ask.",
+      "beats": [
+       "You're carrying a lot.",
+       "Let's lighten it a little.",
+       "Think of one task this week that someone else could do.",
+       "A meal, a ride, a load of laundry.",
+       {
+        "t": "Say out loud the name of the person you could ask.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What questions do you have?",
+       "What would make today better?",
+       "You can tell me the scary stuff."
+      ],
+      "say": "Words that help. What questions do you have that no one has answered? What would make today a little better? And, you can tell me the scary stuff. I can handle it. Set aside forced cheer, like stay positive. Every feeling is allowed."
+     },
+     {
+      "k": "card",
+      "title": "Their news is theirs.",
+      "body": "Ask before you share updates online or with others.",
+      "say": "Their health news is theirs. Ask before you share updates online or with others. Help them stay connected with friends in the ways they want. And look after siblings too. They're carrying this in their own way."
+     },
+     {
+      "k": "big",
+      "h": "You need support too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Walking with a child through serious illness is one of the hardest things a parent can do. You need support too, from a friend, a counselor, a group, or a chaplain. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "mh-longterm",
+   "ring": "life",
+   "title": "Living With a Mental Health Condition Long-Term",
+   "you": {
+    "id": "pn-g-mh-longterm-you",
+    "guide": "mh-longterm",
+    "side": "you",
+    "title": "Living With a Mental Health Condition Long-Term",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you live with a mental health condition: recovery is a path, and you get to help steer it.",
+    "sources": [
+     "samhsarecovery"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Living With a Mental Health Condition Long-Term",
+      "sub": "For You",
+      "say": "If you live with a mental health condition, like anxiety, depression, bipolar disorder, OCD, or another one, and it's been part of your life for a while, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "It's a health condition.",
+      "sub": "Not a character flaw.",
+      "say": "A mental health condition is a health condition. It's not a weakness or a character flaw. Many people live full lives with one, with the right support. It's part of your life, not the whole of who you are."
+     },
+     {
+      "k": "card",
+      "title": "Recovery is a path.",
+      "body": "Good stretches and harder stretches can both be part of it.",
+      "say": "Recovery is a path, not a finish line. It's about your health, a steady place to live, things that give you purpose, and people around you. Good stretches and harder stretches can both be part of it. A hard stretch isn't starting over."
+     },
+     {
+      "k": "flow",
+      "h": "Know your signs, have a plan",
+      "steps": [
+       [
+        "Early signs",
+        "Small changes before a harder stretch"
+       ],
+       [
+        "What helps",
+        "Your anchors and your people"
+       ],
+       [
+        "When to call",
+        "Your counselor, 988, 911"
+       ]
+      ],
+      "say": "Here's something that gives you more say. With your counselor or doctor, write down your early warning signs. Small changes in sleep, mood, or thoughts that come before a harder stretch. Then write what helps, and who you'll tell. And when to get help fast. Keep it in your phone."
+     },
+     {
+      "k": "big",
+      "h": "Name one of your early signs.",
+      "sub": "Quietly, to yourself.",
+      "say": "Let's start your plan now. Think back to the last time things started to slide. What was one of the first small changes you noticed? Maybe sleep, or skipping things, or a certain kind of thought. Name it quietly to yourself.",
+      "beats": [
+       "Let's start your plan now.",
+       "Think back to the last time things started to slide.",
+       "What was one of the first small changes you noticed?",
+       "Maybe sleep, or skipping things, or a certain kind of thought.",
+       {
+        "t": "Name it quietly to yourself.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Daily anchors",
+      "items": [
+       [
+        "Steady sleep",
+        "A regular wake time"
+       ],
+       [
+        "Movement and outside time",
+        "Any amount"
+       ],
+       [
+        "Your treatment",
+        "Even on good days"
+       ]
+      ],
+      "say": "Daily anchors support every treatment plan. A steady wake time. Movement and time outside, in any amount. Staying with your therapy, even on good days. And bring questions about medicine to your doctor. Changes go best when you make them together."
+     },
+     {
+      "k": "card",
+      "title": "If it gets heavy",
+      "body": "Call or text 988, any time. Danger right now: 911.",
+      "say": "If your warning signs are showing, tell your parent and your counselor today. If you ever have thoughts of ending your life, call or text nine eight eight, any time, or text HOME to seven four one seven four one. If you're in danger right now, call nine one one. Reaching out is part of the plan, and it's strong."
+     },
+     {
+      "k": "big",
+      "h": "You know your signs. You have a plan.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You know yourself in a way many people your age don't. You know your signs, and you have a plan. That's real strength. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-mh-longterm-helper",
+    "guide": "mh-longterm",
+    "side": "helper",
+    "title": "Living With a Mental Health Condition Long-Term",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside a teen with a long-term mental health condition: stay steady, and help them lead their recovery.",
+    "sources": [
+     "samhsarecovery",
+     "mnconsent"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Living With a Mental Health Condition Long-Term",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, guardian, or other grown-up of a teen who lives with a long-term mental health condition."
+     },
+     {
+      "k": "big",
+      "h": "Steady, on good days and hard ones.",
+      "say": "Teens living with a mental health condition carry the condition and the stigma around it. What helps most is an adult who treats it as a health condition, stays steady on good days and hard ones, and helps them lead their own recovery."
+     },
+     {
+      "k": "flow",
+      "h": "Build the plan together",
+      "steps": [
+       [
+        "Warning signs",
+        "What comes first"
+       ],
+       [
+        "What helps",
+        "Anchors and people"
+       ],
+       [
+        "When to act fast",
+        "Who to call"
+       ]
+      ],
+      "say": "Help your teen build a plan with their counselor or doctor. What are the early warning signs? What helps when they show up? Who should they tell? And when do you get help fast? A plan made on a calm day is much easier to use on a hard one."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What helps when things start to slide?",
+       "I'm not going anywhere.",
+       "What do you want me to notice?"
+      ],
+      "say": "Words that help. What helps when things start to slide? I'm not going anywhere, on good days or hard ones. And, what do you want me to notice, and what do you want me to leave to you? That question respects their lead."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "You were doing so well.",
+       "Is this your condition again?",
+       "Just snap out of it."
+      ],
+      "say": "Some words, meant kindly, can hurt. You were doing so well, which makes a hard stretch feel like failure. Is this your condition again, about an ordinary bad mood. And just snap out of it. Keep medicine decisions with their doctor, too."
+     },
+     {
+      "k": "big",
+      "h": "Breathe in for four, out for six.",
+      "sub": "Steady yourself first.",
+      "say": "Your steadiness matters, so let's practice it. Sit back for a moment. Breathe in slowly for a count of four. Then breathe out for a count of six, and feel your body settle.",
+      "beats": [
+       "Your steadiness matters, so let's practice it.",
+       "Sit back for a moment.",
+       "Breathe in slowly for a count of four.",
+       {
+        "t": "Then breathe out for a count of six, and feel your body settle.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Know the lines.",
+      "body": "988 any time. 911 for danger. NAMI HelpLine for information.",
+      "say": "Know the lines. If your teen talks about ending their life, stay with them, and call or text nine eight eight together. For danger right now, call nine one one. The NAMI HelpLine offers information and support for families, and it's not a crisis line. In Minnesota, at sixteen, a teen can ask for counseling on their own. Pine keeps their answers private, and a quiet alert tells you when to check in."
+     },
+     {
+      "k": "big",
+      "h": "Your support matters too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Loving someone through a long-term condition can wear you down. Your own support matters too, from a friend, a counselor, or a family group. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "young-carer",
+   "ring": "life",
+   "title": "Helping Care for a Parent or Sibling",
+   "you": {
+    "id": "pn-g-young-carer-you",
+    "guide": "young-carer",
+    "side": "you",
+    "title": "Helping Care for a Parent or Sibling",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For you, if you help care for a parent or sibling: what you do matters, and so do you.",
+    "sources": [
+     "aacy"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Helping Care for a Parent or Sibling",
+      "sub": "For You",
+      "say": "If you help care for a parent, a brother or sister, or someone else at home who lives with a health condition, a disability, or a mental health condition, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "You're not the only one.",
+      "say": "Millions of teens help care for someone in their family. Meals, medicine reminders, rides, watching a sibling, keeping the house running. You might not even call it caregiving. It's just what you do. And it matters."
+     },
+     {
+      "k": "words",
+      "h": "Both can be true",
+      "items": [
+       "Proud",
+       "Close",
+       "Tired",
+       "Missing out"
+      ],
+      "say": "You might feel proud of what you do, and close to the person you help. You might also feel tired, worried, or like you're missing out. Sometimes resentful, and then guilty for it. All of these can be true at once. Loving your family and needing a break can live side by side."
+     },
+     {
+      "k": "big",
+      "h": "Count what you carry.",
+      "sub": "Three things you did for your family this week.",
+      "say": "Let's see what you carry. Think back over this week. Count, on your fingers or in your head, three things you did to help someone at home. Then say to yourself, that matters.",
+      "beats": [
+       "Let's see what you carry.",
+       "Think back over this week.",
+       "Count, on your fingers or in your head, three things you did to help someone at home.",
+       {
+        "t": "Then say to yourself, that matters.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "One adult who knows",
+        "A counselor, coach, or relative"
+       ],
+       [
+        "Time just for you",
+        "Even twenty minutes"
+       ],
+       [
+        "Others who get it",
+        "Young carer groups"
+       ]
+      ],
+      "say": "A few things help a lot. One adult outside your home who knows what your week is like, like a school counselor, a coach, or a relative. Time that's just for you, even twenty minutes. And other teens who get it. There are groups for young carers and for siblings, online and in person."
+     },
+     {
+      "k": "card",
+      "title": "Too much is too much.",
+      "body": "If school, sleep, or friends are slipping, tell an adult.",
+      "say": "If helping is taking over your school, your sleep, or your friendships, tell an adult you trust. That's not letting your family down. It's how the grown-ups can find more help, so you're not carrying it alone. And if you ever feel like you can't go on, call or text nine eight eight."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "What I do matters, and so do I.",
+       "Needing a break doesn't mean I love them less.",
+       "Asking for help is part of caring well."
+      ],
+      "say": "Here are words to keep. What I do matters, and so do I. Needing a break doesn't mean I love them less. Asking for help is part of caring well."
+     },
+     {
+      "k": "big",
+      "h": "You deserve support too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You give so much. You deserve support too, and time to just be a teen. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-young-carer-helper",
+    "guide": "young-carer",
+    "side": "helper",
+    "title": "Helping Care for a Parent or Sibling",
+    "sideName": "For the Grown-up",
+    "mins": 3,
+    "blurb": "For the grown-up beside a teen who helps care for a family member: see the load, and share it.",
+    "sources": [
+     "aacy"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Helping Care for a Parent or Sibling",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, relative, teacher, coach, or other grown-up of a teen who helps care for a parent or sibling at home."
+     },
+     {
+      "k": "big",
+      "h": "They may carry more than you see.",
+      "say": "Teens who help care for someone at home often carry more than the adults around them realize. They may seem very mature, and they may hide how tired they are to protect their family. Many never call themselves caregivers."
+     },
+     {
+      "k": "card",
+      "title": "Pride and strain",
+      "body": "Closeness and skills, alongside tiredness and missing out.",
+      "say": "Helping can bring real pride, closeness, and skills. Caregiving youth also report more isolation, worry, low mood, and missed school than their peers. Both are true. Your job is to honor what they give, and make sure it doesn't cost them their own growing up."
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "Thank you. I see what you do.",
+       "What's your week like at home?",
+       "You get time that is yours."
+      ],
+      "say": "Words that help. Thank you for everything you do. I see it. What's your week like at home? What would help you most right now? And, you get to have time that's just yours. Many young carers never hear any of these."
+     },
+     {
+      "k": "big",
+      "h": "Name one thing you could take off their list.",
+      "sub": "Or one person who could.",
+      "say": "Let's make it practical. Think about what this teen does in a typical week. Pick one task that another adult could take on. Say out loud who could do it, even if it's you.",
+      "beats": [
+       "Let's make it practical.",
+       "Think about what this teen does in a typical week.",
+       "Pick one task that another adult could take on.",
+       {
+        "t": "Say out loud who could do it, even if it's you.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Share the load",
+      "items": [
+       [
+        "Other adults",
+        "Relatives, friends, neighbors"
+       ],
+       [
+        "Services",
+        "For the person who needs help"
+       ],
+       [
+        "School",
+        "With their okay"
+       ]
+      ],
+      "say": "Share the load. Ask other adults: relatives, friends, neighbors, or community groups. Look into services for the person who needs help. And with your teen's okay, let the school counselor know, so school can be flexible on hard weeks."
+     },
+     {
+      "k": "card",
+      "title": "Others who understand",
+      "body": "Groups for young carers and for siblings.",
+      "say": "Connect them with others who understand. There are groups and programs for young carers and for brothers and sisters of people with disabilities. And protect their time for school, sleep, and friends. If you're the parent who needs help, accepting help from other adults is one of the best things you can do for them."
+     },
+     {
+      "k": "big",
+      "h": "Let them be a teen too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Their love for their family is real. So is their need to be a teen. Help them have both. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "faith-body",
+   "ring": "life",
+   "title": "Faith Questions When Your Body Hurts",
+   "you": {
+    "id": "pn-g-faith-body-you",
+    "guide": "faith-body",
+    "side": "you",
+    "title": "Faith Questions When Your Body Hurts",
+    "sideName": "For You",
+    "mins": 4,
+    "blurb": "For you, if your body hurts or works differently and it raises big questions: your questions are welcome.",
+    "sources": [
+     "reynolds14"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Faith Questions When Your Body Hurts",
+      "sub": "For You",
+      "say": "If you live with pain, an illness, or a body that works differently, and it's raised questions about God, faith, or what it all means, this is for you. Whatever your tradition, or none, you're welcome here."
+     },
+     {
+      "k": "big",
+      "h": "Your questions are welcome.",
+      "say": "Why me? Why did this happen? What does it mean for my life? These are some of the oldest questions people ask. Asking them doesn't mean you're doing faith wrong. It means you're being honest."
+     },
+     {
+      "k": "card",
+      "title": "Your body is not a punishment.",
+      "body": "Nothing you did or didn't believe caused it.",
+      "say": "Some teens hear that illness is a punishment, or that if they believed more, they'd be healed. That can really hurt. So hear this clearly. Your condition is not a punishment. Nothing you did, or didn't believe, caused it. And a faith that's real can hold pain and questions too."
+     },
+     {
+      "k": "points",
+      "h": "A help, a weight, or both",
+      "items": [
+       [
+        "A help",
+        "Strength, comfort, belonging"
+       ],
+       [
+        "A weight",
+        "Guilt, fear, pressure"
+       ],
+       [
+        "Both",
+        "Often in the same week"
+       ]
+      ],
+      "say": "Here's a question worth asking yourself. Right now, is faith a help to you, a weight, or both? For many teens with a long-term condition, finding strength in faith goes with feeling better over time. For others, it brings guilt or pressure, and that weight deserves a gentle listener. If faith isn't part of your life, ask the same thing about what grounds you."
+     },
+     {
+      "k": "big",
+      "h": "Say one honest sentence about how it feels.",
+      "sub": "As a prayer, or just to yourself.",
+      "say": "Let's try something many traditions do. Think of how your body has felt lately. Put it into one honest sentence, even an angry or tired one. Say it quietly, as a prayer if that fits you, or just to yourself.",
+      "beats": [
+       "Let's try something many traditions do.",
+       "Think of how your body has felt lately.",
+       "Put it into one honest sentence, even an angry or tired one.",
+       {
+        "t": "Say it quietly, as a prayer if that fits you, or just to yourself.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "You belong, just as you are.",
+      "body": "Ask for a ramp, a seat, a livestream, or a quieter space.",
+      "say": "If your place of worship is hard to get into, too long, or too loud, you can ask for what helps. A ramp, a seat near the door, a livestream, a quieter space. You belong there just as you are, and many communities want to know how to make room."
+     },
+     {
+      "k": "words",
+      "h": "Words to keep",
+      "items": [
+       "My body is not a punishment.",
+       "My questions are welcome.",
+       "I can belong, just as I am."
+      ],
+      "say": "Here are words to keep. My body is not a punishment. My questions are welcome. I can belong, just as I am. And if the questions ever sit on top of feeling hopeless, tell someone you trust, or call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "Questions and faith can live together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Questions and faith can live side by side, for as long as you need. You don't have to settle anything today. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "pn-g-faith-body-helper",
+    "guide": "faith-body",
+    "side": "helper",
+    "title": "Faith Questions When Your Body Hurts",
+    "sideName": "For the Grown-up",
+    "mins": 4,
+    "blurb": "For the grown-up beside a teen whose body hurts and whose faith has questions: listen first, and let the questions stay open.",
+    "sources": [
+     "reynolds14"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "pine",
+      "eyebrow": "When Life Changes",
+      "h": "Faith Questions When Your Body Hurts",
+      "sub": "For the Grown-up",
+      "say": "This is for the parent, youth leader, mentor, or other grown-up of a teen living with pain, illness, or disability who has questions about faith or meaning."
+     },
+     {
+      "k": "big",
+      "h": "Listen first. Let the questions stay open.",
+      "say": "Teens living with illness or disability often carry spiritual questions alongside the physical ones. Questions and anger about God often come from pain, not from losing faith. What helps most is an adult who listens without needing to settle every question."
+     },
+     {
+      "k": "card",
+      "title": "A help, a weight, or both",
+      "body": "Strength in faith often goes with feeling better over time.",
+      "say": "For many teens with a long-term condition, finding strength in faith goes with feeling better over time. Feeling punished or abandoned weighs more heavily. So the question isn't whether your teen believes the right things. It's whether faith feels like a help right now, a weight, or both. Ask gently, and listen."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Everything happens for a reason.",
+       "You just need more faith.",
+       "God never gives you more than you can handle."
+      ],
+      "say": "Some words close the door. Everything happens for a reason. You just need more faith. God never gives you more than you can handle. These can leave a teen feeling blamed for their own body. If someone said their condition is a punishment, name that as untrue and hurtful, and stand with your teen."
+     },
+     {
+      "k": "big",
+      "h": "Say: That is a real question.",
+      "sub": "Then stop, and let it stay open.",
+      "say": "Let's practice staying open. Picture your teen asking, why did this happen to me? Notice the urge to answer. Instead, say out loud: That's a real question. I'm glad you told me. Then stop, and let the silence be okay.",
+      "beats": [
+       "Let's practice staying open.",
+       "Picture your teen asking, why did this happen to me?",
+       "Notice the urge to answer.",
+       "Instead, say out loud: That's a real question.",
+       "I'm glad you told me.",
+       {
+        "t": "Then stop, and let the silence be okay.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Help them belong",
+      "items": [
+       [
+        "Access",
+        "Ramps, seats, quieter spaces"
+       ],
+       [
+        "A livestream",
+        "On hard days"
+       ],
+       [
+        "A role",
+        "To serve and to lead"
+       ]
+      ],
+      "say": "Help their faith community make room, if your teen wants to be there. Access, like ramps, seating, and quieter spaces. A livestream on hard days. And a real role, so your teen can serve and lead, not only be helped. Offer a faith mentor or chaplain they choose, if they want one."
+     },
+     {
+      "k": "card",
+      "title": "Watch what sits underneath.",
+      "body": "Hopelessness or low mood: their doctor, a counselor, 988.",
+      "say": "Sometimes faith questions sit on top of something heavier, like hopelessness or low mood. If that lasts, help them talk with their doctor or a counselor. If they talk about not wanting to live, call or text nine eight eight together. In Pine, their faith answers stay private to them, and a quiet alert tells you when to check in."
+     },
+     {
+      "k": "big",
+      "h": "You do not need every answer.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You may have your own questions about why your child is hurting. You don't need every answer. Staying close and curious matters more than any one conversation. The full guide has more, whenever you want it."
      }
     ]
    }

@@ -976,7 +976,8 @@ function calculateResults() {
 const LC_RINGS = (window.BIRCH_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.BIRCH_GUIDES || {}).topics || [];
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+// Health and Ability guides (GWG BLD 757) sit in ring 'life', drawn from GGLifeKit.RING (not in LC_RINGS).
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
@@ -1043,7 +1044,7 @@ function lcRenderList(mode) {
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
   let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
   LC_RINGS.concat(LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
+    const ts = (r.key === 'life' ? LC_LIFE_FIRST : LC_TOPICS).filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
@@ -1061,13 +1062,14 @@ function lcRenderList(mode) {
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
    birch/guides.js, and Picked for You at the top when the person has made a choice. */
 const LC_LIFE = window.GGLifeKit && GGLifeKit.tagged(LC_TOPICS).length ? GGLifeKit.RING : null;
+const LC_LIFE_FIRST = LC_TOPICS.filter(t => t.ring === 'life').concat(LC_TOPICS.filter(t => t.ring !== 'life'));
 function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
 function lcPickedHtml(mode) {
-  const ts = window.GGLifeKit ? GGLifeKit.picked('birch', LC_TOPICS) : [];
+  const ts = window.GGLifeKit ? GGLifeKit.picked('birch', LC_LIFE_FIRST) : [];
   return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
 function lcLifeRingHtml(mode) {
-  const ts = LC_LIFE ? GGLifeKit.tagged(LC_TOPICS) : [];
+  const ts = LC_LIFE ? GGLifeKit.tagged(LC_LIFE_FIRST) : [];
   return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
 if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) lcRenderList('client'); });
@@ -1145,7 +1147,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 743): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from birch/guide-videos.js. BR_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
-/* BR_VIDS start */const BR_VIDS = ["first-year", "not-college", "changing-plans", "pressure-burnout", "adhd", "what-now", "first-job", "job-loss", "career-change", "money-basics", "debt", "gambling", "moving-out", "roommates", "first-apartment", "moving-back", "new-city", "housing", "friends", "loneliness", "dating", "breakup", "controlling", "engaged", "parents-adult", "estrangement", "unplanned-pregnancy", "young-parent", "after-baby", "pregnancy-loss", "anxiety", "depression", "first-signs", "substances", "eating", "health-26", "suicide-thoughts", "friend-suicide", "selfharm", "sexual-assault", "images", "porn", "military", "coming-home", "grief-young", "faith-own", "faith-hurt", "purpose"];/* BR_VIDS end */
+/* BR_VIDS start */const BR_VIDS = ["first-year", "not-college", "changing-plans", "pressure-burnout", "adhd", "what-now", "first-job", "job-loss", "career-change", "money-basics", "debt", "gambling", "moving-out", "roommates", "first-apartment", "moving-back", "new-city", "housing", "friends", "loneliness", "dating", "breakup", "controlling", "engaged", "parents-adult", "estrangement", "unplanned-pregnancy", "young-parent", "after-baby", "pregnancy-loss", "anxiety", "depression", "first-signs", "substances", "eating", "health-26", "suicide-thoughts", "friend-suicide", "selfharm", "sexual-assault", "images", "porn", "military", "coming-home", "grief-young", "faith-own", "faith-hurt", "purpose", "college-disability", "work-disability", "pain-fatigue", "living-well-mi", "autistic-adult", "deaf-hoh", "blind-low-vision", "dating-disability", "young-carer", "faith-disability"];/* BR_VIDS end */
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('birch', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!BR_VIDS.includes(gid)) return '';

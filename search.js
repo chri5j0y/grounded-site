@@ -22,14 +22,14 @@
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with 60 When Life Changes guides for grown-ups', href: '/maple/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
-    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 49 When Life Changes guides for grown-ups', href: '/aspen/', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
-    { title: 'Oak', sub: 'Check-in for adults, 25 to 60, from root to fruit, with 67 When Life Changes guides for hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
+    { title: 'Maple', sub: 'Check-in for kids, grades K to 5, with 68 When Life Changes guides for grown-ups', href: '/maple/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
+    { title: 'Aspen', sub: 'Check-in for grades 6 to 8, with 58 When Life Changes guides for grown-ups', href: '/aspen/', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
+    { title: 'Oak', sub: 'Check-in for adults, 25 to 60, from root to fruit, with 77 When Life Changes guides for hard seasons', href: '/oak/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Daily practice for every tree, all ages, and whole families', href: '/grove/', keys: 'practice daily habits family grove tending tend routine' },
     { title: 'Grounded Field Guide', sub: 'For chaplains, pastors, teachers, counselors, and parents', href: '/field-guide/', keys: 'professional chaplain pastor teacher counselor school staff organization training guide caregiver practitioner nurse hospice Oak guide grove guide' },
-    { title: 'Pine', sub: 'Check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and 48 When Life Changes guides', href: '/pine/', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
-    { title: 'Birch', sub: 'Check-in for young adults, 18 to 26, with a growth plan, daily practices, Groundwork, a private notebook for building your own life, and 48 When Life Changes guides', href: '/birch/', keys: 'when life changes guides birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
-    { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and 48 When Life Changes guides', href: '/sequoia/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
+    { title: 'Pine', sub: 'Check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and 58 When Life Changes guides', href: '/pine/', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
+    { title: 'Birch', sub: 'Check-in for young adults, 18 to 26, with a growth plan, daily practices, Groundwork, a private notebook for building your own life, and 58 When Life Changes guides', href: '/birch/', keys: 'when life changes guides birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
+    { title: 'Sequoia', sub: 'Check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and 54 When Life Changes guides', href: '/sequoia/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, 22 When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' },
     { title: 'Obituary Helper', sub: 'For families: guided questions and three drafts, a Death Notice, a Newspaper Obituary, and an Online Obituary', href: '/obituary-helper.html', keys: 'obituary obituaries obit death notice newspaper online memorial write writing died death funeral family survived by preceded in death' },
     { title: 'Planning a Farewell', sub: 'For families: a checklist for the first hours, the first days, the service, and after', href: '/planning-a-farewell.html', keys: 'funeral planning plan checklist what to do after death who to call someone died death certificate certificates funeral home arrangements burial cremation memorial service hospice after a death' },
@@ -186,14 +186,14 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=pg2'), load('/birch/guides.js?v=b756'), load('/oak/guides.js?v=b756'), load('/sequoia/guides.js?v=b756'), load('/willow/guides.js?v=cn2'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=b757'), load('/birch/guides.js?v=b757'), load('/oak/guides.js?v=b757'), load('/sequoia/guides.js?v=b757'), load('/willow/guides.js?v=cn2'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
 
       var sp = window.MAPLE_GUIDES;
       if (sp) sp.topics.forEach(function (t) {
-        var ring = (sp.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        var ring = (sp.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'k5', ageLabel: 'Kids, K to 5', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.k2, t.g35].concat(t.helps || [], t.before || [], t.after || [], t.teach || []).join(' '),
           href: '/maple/#talk=' + encodeURIComponent(t.id), from: 'Maple', id: t.id, app: 'maple' });
@@ -207,7 +207,7 @@
       // Pine guides (GWG BLD 740), the same shape as Oak's and Sequoia's
       var spn = window.PINE_GUIDES;
       if (spn) spn.topics.forEach(function (t) {
-        var ring = (spn.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        var ring = (spn.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'hs', ageLabel: 'Grades 9 to 12', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/pine/#life=' + encodeURIComponent(t.id), from: 'Pine', id: t.id, app: 'pine' });
@@ -215,14 +215,14 @@
       // Birch guides (GWG BLD 743), the same shape as Pine's, for young adults, 18 to 26
       var sbr = window.BIRCH_GUIDES;
       if (sbr) sbr.topics.forEach(function (t) {
-        var ring = (sbr.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        var ring = (sbr.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'ya', ageLabel: 'Ages 18 to 26', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/birch/#life=' + encodeURIComponent(t.id), from: 'Birch', id: t.id, app: 'birch' });
       });
       var so = window.OAK_GUIDES;
       if (so) so.topics.forEach(function (t) {
-        var ring = (so.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        var ring = (so.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'ad', ageLabel: 'Adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak', id: t.id, app: 'oak' });
@@ -230,7 +230,7 @@
       // Sequoia guides (GWG BLD 734), the same shape as Oak's
       var sq = window.SEQUOIA_GUIDES;
       if (sq) sq.topics.forEach(function (t) {
-        var ring = (sq.rings.find(function (r) { return r.key === t.ring; }) || {}).name || '';
+        var ring = (sq.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'ad', ageLabel: 'Older adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
           href: '/sequoia/#life=' + encodeURIComponent(t.id), from: 'Sequoia', id: t.id, app: 'sequoia' });

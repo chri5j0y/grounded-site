@@ -1207,3 +1207,921 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
 (function () { var G = window.OAK_GUIDES; if (!G || !G.topics) return; var L = {"diagnosis": ["health", "serious"], "chronic": ["health", "pain"], "disability": ["moving", "hearing", "seeing", "health"], "caregiving": ["close", "serious"], "dementia-care": ["close", "memory"], "adhd": ["learning"], "addiction": ["mind", "health"], "accident": ["moving", "pain", "memory"], "anxiety": ["mind"], "ambiguous-loss": ["close", "memory"], "sadness": ["mind"], "own-death": ["serious"], "dying-loved": ["close", "serious"], "trauma": ["mind"], "struggling-child": ["close", "autism", "learning", "mind"], "aging-parents": ["close", "memory"], "eating": ["mind", "health"], "self-harm": ["mind"], "eol-plan": ["serious"], "suicidal-self": ["mind"], "burnout": ["close"]};
   G.topics.forEach(function (t) { if (L[t.id]) t.life = L[t.id].slice(); }); })();
 /* LIFE tags end */
+/* HA2 guides start: the Health and Ability guides (GWG BLD 757, HA 2). Generated from patches/bld757/source/O in grounded-workshop
+   by gen.py: edit the data there and rebuild. Ring 'life' is the Health and Ability ring (shared/gg-life-kit.js); life tags are
+   shared/gg-life.js ids, so Picked for You finds them. Each topic has the same shape as the guides above. */
+(function () { var G = window.OAK_GUIDES; if (!G || !G.topics) return; var T = [
+ {
+  "id": "pacing",
+  "ring": "life",
+  "title": "Fatigue, flares, and pacing your energy",
+  "keys": "fatigue tired exhausted no energy flare flare up flares pacing pace energy spoons spoon theory chronic fatigue chronic pain autoimmune lupus multiple sclerosis ms fibromyalgia long covid arthritis crohns colitis boom and bust crash rest good days bad days canceling plans invisible illness",
+  "parts": [
+   "leaves",
+   "bark",
+   "trunk"
+  ],
+  "life": [
+   "pain",
+   "health",
+   "serious"
+  ],
+  "quick": [
+   "Fatigue from a health condition is real, and it is different from ordinary tiredness. A night of sleep may not fix it.",
+   "Pacing means planning for energy, not just time: doing a little less on good days, so the hard days hit less hard.",
+   "Flares come and go. A plan made on a good day makes a flare day easier.",
+   "Rest is part of living well, never a failure. You choose the words for what you live with, and how much you share."
+  ],
+  "feel": "Tired in a way sleep doesn't touch. Guilty for canceling again. Frustrated when one good day turns into three hard ones because you did too much. Unseen, when people say you look fine. Grieving the pace you used to keep, and still hoping for the good days.",
+  "self": {
+   "first": [
+    "For one week, notice when your energy rises and falls, and what costs you the most.",
+    "Each evening, pick the three things that matter most for tomorrow, and let the rest wait.",
+    "On a good day, write a short flare plan: what can be canceled, who to tell, and what helps your body."
+   ],
+   "helps": [
+    "Breaking big tasks into small pieces, with rest in between.",
+    "Resting before you are spent, not after you crash.",
+    "A simple way to explain your energy. Many people use spoons: a day holds only so many, and every task uses some.",
+    "A self-management workshop led by people who live with a long-term condition too.",
+    "Telling your doctor about fatigue as clearly as you tell them about pain."
+   ],
+   "tell": [
+    "“Rest is part of how I live well, not a failure.”",
+    "“A good day is for enjoying, not for catching up on everything.”"
+   ],
+   "people": "Try: “I have a set amount of energy each day. I want to come, and I may need to sit, rest first, or leave early.”"
+  },
+  "helper": {
+   "feel": "They may feel guilty for canceling, worried you will stop asking, or tired of explaining an illness people can't see. Some days they won't know until morning what they can do.",
+   "say": [
+    "“I believe you.”",
+    "“No need to explain. What would make today easier?”",
+    "“Come for an hour. Leaving early is fine.”"
+   ],
+   "avoid": [
+    "“But you looked fine yesterday.”",
+    "“Just push through.”",
+    "Cures or advice they didn't ask for.",
+    "Taking a canceled plan personally."
+   ],
+   "help": [
+    "Make plans that can bend: shorter visits, a place to sit, a home option.",
+    "On flare days, offer something specific: a meal, an errand, a ride.",
+    "Keep inviting them, even after a no."
+   ],
+   "you": "Living beside someone's fatigue can be tiring and lonely for you too. Keep your own people and your own rest close, and let plans bend for both of you."
+  },
+  "faith": "If faith is part of your life, a practice that asks little of your body can still hold you: a short prayer, a few words read slowly, a moment of quiet. Many traditions honor rest as holy. If faith isn't part of your life, rest can still be a way of honoring the life you have.",
+  "practices": [
+   "leaves|Pacing Your Day",
+   "leaves|Rest Before You're Spent",
+   "bark|Micro-Rest",
+   "bark|Hard-Day Plan",
+   "branches|Say What You Need"
+  ],
+  "reach": [
+   "Fatigue that is new, getting worse, or comes with new symptoms: tell your doctor.",
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor.",
+   "Thoughts of not wanting to live: call or text 988, any time. In danger right now, call 911."
+  ],
+  "more": [
+   [
+    "Self-Management Resource Center: workshops for living with a long-term condition",
+    "https://selfmanagementresource.com/"
+   ],
+   [
+    "The Spoon Theory, by Christine Miserandino",
+    "https://butyoudontlooksick.com"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ]
+  ],
+  "kids": "family-illness"
+ },
+ {
+  "id": "work-ability",
+  "ring": "life",
+  "title": "Working with a disability or illness, or stepping away",
+  "keys": "work job career disability illness chronic illness accommodation accommodations reasonable accommodation ada americans with disabilities act telling my boss disclose disclosure hr human resources cutting hours part time leave medical leave stepping away quitting leaving work disability benefits ssdi going back to work return to work coworkers employer workplace",
+  "parts": [
+   "trunk",
+   "leaves",
+   "branches"
+  ],
+  "life": [
+   "health",
+   "pain",
+   "moving",
+   "hearing",
+   "seeing",
+   "learning",
+   "autism",
+   "mind",
+   "serious",
+   "memory"
+  ],
+  "quick": [
+   "Many workers living with a disability or health condition can ask for reasonable changes at work, called accommodations: a different schedule, a seat, a quieter space, a tool, or time for appointments.",
+   "You decide how much to share at work. Some people name their condition; some describe only what they need.",
+   "Cutting hours, taking leave, or stepping away can be a wise choice, not a defeat. Get information before you decide.",
+   "Your worth was never only your work. You choose the words for what you live with."
+  ],
+  "feel": "Worried about being seen as less capable. Tired from working hard to look fine. Afraid of losing income, insurance, or the work you love. Unsure whether to tell your boss, and what happens if you do. If you are stepping away, grief for the role, the people, and the person you were at work.",
+  "self": {
+   "first": [
+    "Write down what makes work hardest right now, and one change that would help most.",
+    "Look up accommodation ideas for your situation. The Job Accommodation Network has many.",
+    "Before any big decision about leaving or cutting back, talk with someone who knows benefits and work rules, like Disability Hub MN."
+   ],
+   "helps": [
+    "Asking for what you need in plain words, starting with what would help you do the job well.",
+    "Keeping simple notes of what you asked for, when, and what was agreed.",
+    "Your doctor or care team, who can describe what you need in writing if your employer asks.",
+    "Finding others who have worked with the same condition, or stepped away, and asking what helped.",
+    "Remembering the things you bring that have nothing to do with a job title."
+   ],
+   "tell": [
+    "“Asking for what I need is part of doing good work.”",
+    "“My worth is bigger than my job.”"
+   ],
+   "people": "Try, at work: “I'd like to talk about a change that would help me do my best work. It would help me to have...”"
+  },
+  "helper": {
+   "feel": "They may feel ashamed to need changes, afraid of being judged, or grieving work that was part of who they are. If they are stepping away, money worry and lost routine can hit hard.",
+   "say": [
+    "“What would make work easier for you?”",
+    "“You're still you, whatever your job looks like.”",
+    "“Want help thinking through your options?”"
+   ],
+   "avoid": [
+    "“Just tell them you're sick.” The choice to share is theirs.",
+    "“Must be nice to be home all day.”",
+    "Pushing them to keep working, or to quit, before they have the facts."
+   ],
+   "help": [
+    "If you are their manager, ask what would help, and keep what they tell you private.",
+    "If you are family, help gather information on benefits and options, and let them decide.",
+    "Keep inviting them to the people and places that matter to them, at work and beyond."
+   ],
+   "you": "A change in someone's work can shift money, routines, and roles for the whole household. Find support for yourself, and talk openly about the changes together."
+  },
+  "faith": "If faith is part of your life, you may find that your calling is bigger than any one job: in how you love, notice, and show up for others. Some traditions speak of every person's gifts as needed. If faith isn't part of your life, the same holds: your worth and purpose go beyond your work.",
+  "practices": [
+   "trunk|Worth Beyond Doing",
+   "trunk|Job Crafting",
+   "branches|Say What You Need",
+   "trunk|Values Sort",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "Questions about work, benefits, and services in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Ideas for accommodations at work: the Job Accommodation Network, askjan.org.",
+   "If you believe you are being treated unfairly at work because of a disability: the U.S. Equal Employment Opportunity Commission, eeoc.gov, or a lawyer.",
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "Job Accommodation Network",
+    "https://askjan.org"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ],
+   [
+    "U.S. Equal Employment Opportunity Commission",
+    "https://www.eeoc.gov"
+   ]
+  ]
+ },
+ {
+  "id": "parenting-ability",
+  "ring": "life",
+  "title": "Parenting with a disability or chronic illness",
+  "keys": "parenting parent mom dad mother father disability chronic illness pain fatigue wheelchair blind deaf mental health condition kids children telling my kids what to tell children good enough parent guilt flare days help with kids young carer kids helping too much judged as a parent adaptive parenting",
+  "parts": [
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "life": [
+   "health",
+   "pain",
+   "moving",
+   "hearing",
+   "seeing",
+   "mind",
+   "serious"
+  ],
+  "quick": [
+   "Children need love, safety, and connection. A disability or illness changes how you parent, not whether you are a good parent.",
+   "Honest, simple words about your condition, fitted to your child's age, help children feel safe.",
+   "Plan for hard days ahead of time, so children know what happens when you need to rest.",
+   "Kids can help, as long as it stays a part of family life, not the weight of a grown-up's job. You choose the words for what you live with."
+  ],
+  "feel": "Worried you are not enough for your kids. Guilty on the days you can't do what other parents do. Tired of people who judge, or who offer help that takes over. Proud of the ways you have found to parent well. Sometimes all of those in one afternoon.",
+  "self": {
+   "first": [
+    "Tell your children about your condition in a few simple, true words, and invite their questions.",
+    "Make a hard-day plan with your family: who helps, what the kids can do, what can wait.",
+    "Name two or three people you can call for a ride, a meal, or an hour with the kids."
+   ],
+   "helps": [
+    "Doing parenting your way: reading in bed together, games at the table, adapted tools, shorter outings.",
+    "Small, steady moments of connection, which matter to children more than big outings.",
+    "Letting kids help in ways that fit their age, and thanking them, while grown-ups carry the grown-up jobs.",
+    "Letting your child's teacher or coach know, if your child seems worried, with your child's say.",
+    "Other parents living with a disability or illness, who know the shortcuts and the feelings."
+   ],
+   "tell": [
+    "“My kids need my love and presence, and I have both to give.”",
+    "“Asking for help is part of good parenting.”"
+   ],
+   "people": "Try, with your kids: “My body needs rest today. That's not because of anything you did. Want to pick a game we can play on the couch?”"
+  },
+  "helper": {
+   "feel": "They may feel judged as a parent, worried about their kids, and torn between needing help and wanting to keep their place as the parent.",
+   "say": [
+    "“You're a good parent.”",
+    "“Want me to take the kids Saturday morning so you can rest?”",
+    "“What kind of help would feel like help?”"
+   ],
+   "avoid": [
+    "Taking over parenting decisions.",
+    "Asking the kids to report on their parent.",
+    "“How do you even manage?” said with pity."
+   ],
+   "help": [
+    "Offer specific, regular help: school pickup, a meal, an hour of play.",
+    "Support their parenting in front of the children.",
+    "Notice if a child seems to carry too much, and gently offer that child some fun and rest too."
+   ],
+   "you": "Helping a family can be a long, steady commitment. Keep your offers ones you can keep, and care for your own energy too."
+  },
+  "faith": "If faith is part of your life, a faith community can be a real circle of help: meals, rides, and people who love your kids. Many traditions honor the quiet, daily love of a parent as holy work. If faith isn't part of your life, the same truth holds: steady love is the heart of parenting.",
+  "practices": [
+   "branches|Ask for Help",
+   "branches|Family",
+   "bark|Hard-Day Plan",
+   "fruit|Capture the Moment",
+   "bark|Self-Compassion Break"
+  ],
+  "reach": [
+   "Help with services, equipment, and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "If your children seem worried, withdrawn, or are carrying a lot at home: talk with their school counselor or doctor.",
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ],
+   [
+    "American Association of Caregiving Youth",
+    "https://aacy.org/"
+   ],
+   [
+    "NAMI (for parents living with a mental health condition)",
+    "https://www.nami.org"
+   ]
+  ],
+  "kids": "disability"
+ },
+ {
+  "id": "child-ability",
+  "ring": "life",
+  "title": "Raising a child with a disability or serious illness",
+  "keys": "my child has a disability special needs child disabled child autism down syndrome cerebral palsy medically complex child seriously ill child childhood cancer chronic illness in my child diagnosis iep 504 plan school advocacy siblings parent burnout respite chronic sorrow grief milestones therapies appointments hospital stays",
+  "parts": [
+   "branches",
+   "trunk",
+   "leaves"
+  ],
+  "life": [
+   "close"
+  ],
+  "quick": [
+   "Love for your child and grief for the plans you had can live side by side. Waves of sadness at milestones are normal, not a problem to fix.",
+   "You know your child best. Your voice belongs in every room where decisions are made, at school and in medical care.",
+   "Brothers and sisters need their own time, words, and support.",
+   "You can't pour from an empty cup. Rest, help, and people who understand are part of raising your child well."
+  ],
+  "feel": "Fierce love. Exhaustion from appointments, therapies, forms, and phone calls. Sadness that comes in waves, sometimes at a birthday or a first day of school. Joy in moments other people may not notice. Loneliness when friends don't understand. Fear for the future, and pride in your child.",
+  "self": {
+   "first": [
+    "Keep one notebook or folder for your child: diagnoses, medicines, contacts, school plans, and questions.",
+    "Find one parent who has walked a similar road, through a parent group, your child's clinic, or PACER Center.",
+    "Plan one break for yourself this month, even an hour, and let someone you trust take a turn."
+   ],
+   "helps": [
+    "Asking about school supports, like an IEP or a 504 plan, and bringing a support person to meetings.",
+    "Finding others who understand: a parent group, a disability community, or families from your child's clinic.",
+    "Time alone with each of your other children, and simple, honest words for them.",
+    "Letting your child speak for themselves in every way they can, and teaching others to listen to them.",
+    "Counseling for you or your marriage when the strain runs high."
+   ],
+   "tell": [
+    "“My grief and my love can both be true.”",
+    "“I don't have to do this alone.”"
+   ],
+   "people": "Try: “Our child has a lot of needs right now, and so do we. Would you be willing to bring a meal on Thursdays, or sit with the kids for an hour?”"
+  },
+  "helper": {
+   "feel": "They may be exhausted, lonely, and tired of explaining. Some days hold grief; most hold love and ordinary life too.",
+   "say": [
+    "“Tell me about your kid. What do they love?”",
+    "“I'm in this with you, for the long haul.”",
+    "“Can I take something off your list this week?”"
+   ],
+   "avoid": [
+    "“Special kids are given to special parents.”",
+    "“I could never do what you do.”",
+    "Comparing their child to other children, or offering cures."
+   ],
+   "help": [
+    "Learn about their child, and include the child by name.",
+    "Offer regular, specific help: a meal, an errand, time with the siblings.",
+    "Make gatherings work for their child, and ask what that needs."
+   ],
+   "you": "Supporting a family for the long haul takes steady energy. Keep your help sustainable, and let yourself enjoy their child too."
+  },
+  "faith": "If faith is part of your life, you may find strength in a community that welcomes your whole family, or you may wrestle with hard questions, and both belong. Many traditions hold that every child carries sacred worth, exactly as they are. If faith isn't part of your life, the same truth holds: your child's worth is whole.",
+  "practices": [
+   "branches|Support Group",
+   "branches|Ask for Help",
+   "branches|A Break for the Helper",
+   "fruit|Joy List",
+   "bark|Self-Compassion Break"
+  ],
+  "reach": [
+   "For families of children and young adults with any disability, birth to 21, including school plans: PACER Center, 952-838-9000.",
+   "Help finding services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Information and peer support if your child has a mental health condition: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640. Not a crisis line.",
+   "Exhaustion, sadness, or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "PACER Center",
+    "https://www.pacer.org"
+   ],
+   [
+    "Courageous Parents Network",
+    "https://courageousparentsnetwork.org/"
+   ],
+   [
+    "Sibling Support Project",
+    "https://siblingsupport.org/"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ]
+  ],
+  "kids": "disability"
+ },
+ {
+  "id": "hearing",
+  "ring": "life",
+  "title": "Hearing loss or deafness as an adult",
+  "keys": "hearing loss hard of hearing deaf deafness going deaf losing my hearing hearing aids cochlear implant tinnitus captions asl american sign language lip reading audiologist listening fatigue noisy restaurants meetings phone calls deaf community hearing loss at work",
+  "parts": [
+   "branches",
+   "bark",
+   "leaves"
+  ],
+  "life": [
+   "hearing"
+  ],
+  "quick": [
+   "Hearing loss in adulthood is common, and it can change work, friendships, and how tired you feel at the end of a day.",
+   "Listening takes extra effort. Tiredness after conversations is real, and rest helps.",
+   "Telling people what helps opens doors: face me, one at a time, captions, a quieter place, or writing it down.",
+   "You choose your words. Some say hard of hearing; some say deaf; many in the Deaf community use a capital D for a language and culture they are proud of."
+  ],
+  "feel": "Tired from working to follow conversations. Embarrassed to ask again. Left out at dinners and meetings, nodding along. Grieving voices, music, or sounds you used to know. Or, for some, relieved to find captions, sign language, or a Deaf community that feels like home.",
+  "self": {
+   "first": [
+    "See an audiologist or your doctor about what is changing, and ask what tools could help.",
+    "Name your hardest settings, like restaurants, meetings, or phone calls, and one change for each.",
+    "Turn on captions on your phone, TV, and video calls."
+   ],
+   "helps": [
+    "Telling people plainly what helps you follow, and reminding them kindly.",
+    "Rest after long conversations, without guilt.",
+    "Accommodations at work, like captions, written follow-ups, or a quieter space.",
+    "Connecting with others who have hearing loss, or with the Deaf community, through groups and classes.",
+    "Learning some sign language, if that interests you and the people close to you."
+   ],
+   "tell": [
+    "“Asking people to face me is fair, not fussy.”",
+    "“My way of communicating is worth making room for.”"
+   ],
+   "people": "Try: “I have hearing loss. It helps a lot if you face me and speak one at a time. If I miss something, I'll ask.”"
+  },
+  "helper": {
+   "feel": "They may feel tired, left out, or embarrassed to keep asking. Some feel grief; some feel ready for a new way of communicating.",
+   "say": [
+    "“Want me to say that another way, or write it down?”",
+    "“Where would be easiest to talk?”",
+    "“Tell me what helps, and I'll remember.”"
+   ],
+   "avoid": [
+    "“Never mind, it's not important.”",
+    "Talking louder and faster, or from another room.",
+    "Speaking to someone else instead of to them."
+   ],
+   "help": [
+    "Face them, get their attention before you speak, and keep your mouth visible.",
+    "Choose quieter places and good light, and turn on captions.",
+    "Learn a little sign language, if they use it, and keep inviting them."
+   ],
+   "you": "Changing how you talk takes practice, and you will forget sometimes. Keep at it kindly, and find support if the strain runs high for you both."
+  },
+  "faith": "If faith is part of your life, you may find a faith community that offers captions, hearing loops, or worship in sign language, or you may need to ask for them. Many traditions honor the many ways people pray and listen. If faith isn't part of your life, the same truth holds: there are many ways to listen and be heard.",
+  "practices": [
+   "branches|Say What You Need",
+   "bark|Quiet the Senses",
+   "bark|Micro-Rest",
+   "branches|One Reach-Out a Day",
+   "branches|Friends"
+  ],
+  "reach": [
+   "Changes in hearing, ringing in the ears, or sudden hearing loss: see a doctor or audiologist soon. Sudden loss needs quick attention.",
+   "Help with services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "988 in ASL: tap ASL Now on the 988 website to reach a counselor who signs, by videophone, or text 988, any time.",
+   "Sadness or loneliness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "Hearing Loss Association of America",
+    "https://www.hearingloss.org"
+   ],
+   [
+    "NIDCD: hearing loss in adults",
+    "https://www.nidcd.nih.gov/health/age-related-hearing-loss"
+   ],
+   [
+    "988 Lifeline (ASL Now)",
+    "https://988lifeline.org/"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ]
+  ],
+  "kids": "disability"
+ },
+ {
+  "id": "vision",
+  "ring": "life",
+  "title": "Vision loss as an adult",
+  "keys": "vision loss losing my sight low vision blind blindness going blind visually impaired glaucoma macular degeneration diabetic retinopathy eye disease eye injury white cane guide dog screen reader magnifier braille vision rehabilitation orientation and mobility can not drive reading print",
+  "parts": [
+   "leaves",
+   "trunk",
+   "branches"
+  ],
+  "life": [
+   "seeing"
+  ],
+  "quick": [
+   "Vision loss in adulthood can change reading, driving, work, and moving around. It also opens the door to tools and skills many people never knew existed.",
+   "Vision rehabilitation teaches new ways to do daily things: moving safely, reading, cooking, and using a phone or computer.",
+   "Grief for what you used to see is real. So is the confidence that comes with each new skill.",
+   "You choose your words. Some say low vision; some say visually impaired; many blind people say blind with pride."
+  ],
+  "feel": "Scared of losing independence. Frustrated with tasks that used to be easy. Grieving faces, print, color, or the freedom of driving. Embarrassed to ask for help. And, over time, often surprised by how much you can still do in new ways.",
+  "self": {
+   "first": [
+    "Keep regular visits with your eye doctor, and ask about vision rehabilitation services.",
+    "Turn on the accessibility settings on your phone and computer: larger text, high contrast, and reading aloud.",
+    "Name one daily task that has gotten harder, and ask a rehabilitation specialist or another blind person how they do it."
+   ],
+   "helps": [
+    "Learning skills from people trained in vision rehabilitation, including moving safely with a cane or other tools.",
+    "Good lighting, contrast, and keeping things in the same place at home.",
+    "Connecting with other blind and low vision people, who know the shortcuts and the feelings.",
+    "Accommodations at work, like a screen reader, magnification, or materials in a format you can use.",
+    "Letting people help in the ways you choose, and saying no to the rest."
+   ],
+   "tell": [
+    "“I'm learning a new way, and new ways take time.”",
+    "“Asking for what I need is part of living well.”"
+   ],
+   "people": "Try: “I don't see well, especially in dim light. It helps if you tell me who you are when you walk up, and describe where things are.”"
+  },
+  "helper": {
+   "feel": "They may feel scared, frustrated, and protective of their independence. Help that takes over can feel worse than no help at all.",
+   "say": [
+    "“Hi, it's Sam.” Say your name as you greet them.",
+    "“Would you like help with that, or are you all set?”",
+    "“The chair is to your left, about two steps.”"
+   ],
+   "avoid": [
+    "Grabbing their arm or moving their things without asking.",
+    "Speaking to their companion instead of to them.",
+    "“You don't look blind.”"
+   ],
+   "help": [
+    "Offer your arm, and let them take it, rather than steering them.",
+    "Describe what matters: who is in the room, where things are, what is on the menu.",
+    "Offer rides, and keep inviting them."
+   ],
+   "you": "Learning to help well takes practice, and you will make mistakes. Ask, listen, and keep showing up."
+  },
+  "faith": "If faith is part of your life, you may find comfort in practices that don't depend on sight: prayer, song, sacred words read aloud or in braille or audio. Some faith communities offer large print and audio. If faith isn't part of your life, the same truth holds: much of what matters most is not seen with the eyes.",
+  "practices": [
+   "trunk|Keep Learning",
+   "branches|Ask for Help",
+   "branches|Support Group",
+   "bark|Self-Compassion Break",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "Sudden changes in vision, flashes, a curtain over your sight, or eye pain: get medical help right away.",
+   "Help with services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "National Eye Institute: low vision",
+    "https://www.nei.nih.gov/eye-health-information/eye-conditions-and-diseases/low-vision"
+   ],
+   [
+    "National Federation of the Blind",
+    "https://nfb.org"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ]
+  ],
+  "kids": "disability"
+ },
+ {
+  "id": "autistic",
+  "ring": "life",
+  "title": "Autistic, or diagnosed as an adult",
+  "keys": "autism autistic autistic adult late diagnosis diagnosed as an adult asperger asd spectrum neurodivergent masking burnout sensory overload meltdown shutdown routines special interests social differences evaluation am i autistic",
+  "parts": [
+   "bark",
+   "trunk",
+   "branches"
+  ],
+  "life": [
+   "autism",
+   "learning"
+  ],
+  "quick": [
+   "Many adults learn they are autistic later in life. A diagnosis can bring relief, grief, or both.",
+   "Autism is a different way of sensing, thinking, and connecting, with real strengths and real challenges.",
+   "Knowing your sensory needs, your energy, and your ways of communicating helps you build a life that fits.",
+   "You choose your words. Many people say autistic; some say person with autism. Both are yours to choose."
+  ],
+  "feel": "Relief at finally having a name for it. Grief for the years you thought something was wrong with you. Tired from working to fit in. Overwhelmed by noise, light, or crowds. Curious about yourself in a new way. Sometimes proud, sometimes unsure who to tell.",
+  "self": {
+   "first": [
+    "If you are wondering, talk with your doctor about an evaluation from someone experienced with adults.",
+    "Notice what drains you and what restores you: sounds, light, people, routines, time alone.",
+    "Read or listen to autistic adults describing their own lives, and see what fits."
+   ],
+   "helps": [
+    "Building your days around what works: quiet breaks, predictable plans, comfortable clothes, headphones.",
+    "Telling people plainly how you communicate best, like in writing or with a heads up before changes.",
+    "Making time for the interests that bring you joy.",
+    "Accommodations at work, if you choose to ask: a quieter space, written instructions, clear expectations.",
+    "Connecting with other autistic adults, who often understand without explanation."
+   ],
+   "tell": [
+    "“My brain works differently, and that is not a flaw.”",
+    "“Rest after a busy day is part of taking care of myself.”"
+   ],
+   "people": "Try: “I'm autistic. I do best with a heads up before plans change, and I may need a quiet break at gatherings. It's not about you.”"
+  },
+  "helper": {
+   "feel": "They may feel relief, grief, or both, and may be re-reading their whole life story. Busy settings can drain them quickly.",
+   "say": [
+    "“Thank you for telling me. What helps you?”",
+    "“Want a heads up before plans change?”",
+    "“Take the quiet break you need. I'll be here.”"
+   ],
+   "avoid": [
+    "“You don't seem autistic.”",
+    "“Everyone's a little autistic.”",
+    "Treating their needs as rudeness or being difficult."
+   ],
+   "help": [
+    "Say what you mean plainly, and ask what they mean rather than guessing.",
+    "Plan gatherings with a quiet space and a clear plan.",
+    "Take an interest in what they love."
+   ],
+   "you": "A late diagnosis can reshape a relationship in good ways. Learn alongside them, and find support for yourself if you need it."
+  },
+  "faith": "If faith is part of your life, you may find that quiet, routine, and deep focus are already part of how you pray or practice. Some faith communities offer sensory-friendly spaces or services. If faith isn't part of your life, the same truth holds: there are many good ways to be a person in the world.",
+  "practices": [
+   "bark|Quiet the Senses",
+   "bark|Hard-Day Plan",
+   "trunk|Write Your Story",
+   "branches|Say What You Need",
+   "fruit|Joy List"
+  ],
+  "reach": [
+   "Questions about an evaluation, or about anxiety, sleep, or mood that often come with autism: talk with your doctor.",
+   "Help with services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Sadness or exhaustion that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "Autism Society",
+    "https://autismsociety.org"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ]
+  ]
+ },
+ {
+  "id": "serious-mi",
+  "ring": "life",
+  "title": "Living with a serious mental illness",
+  "keys": "serious mental illness smi bipolar schizophrenia schizoaffective psychosis major depression ocd severe anxiety mental health condition long term living well recovery relapse warning signs hospital stay psychiatric medication side effects stigma peer support nami family to family",
+  "parts": [
+   "bark",
+   "fruit",
+   "branches"
+  ],
+  "life": [
+   "mind",
+   "close"
+  ],
+  "quick": [
+   "Many people live full lives with a serious mental illness. Recovery is a process, built on health, a place to live, purpose, and people.",
+   "Treatment works best as a partnership: you, your doctor or prescriber, a therapist, and people you trust.",
+   "Knowing your early warning signs, and having a plan for them, can keep a hard stretch shorter.",
+   "You are a whole person, not a diagnosis. You choose the words for what you live with."
+  ],
+  "feel": "Tired of explaining, or of being judged. Hopeful on good stretches, scared of the next hard one. Frustrated with side effects, appointments, and systems. Lonely when people pull away. Proud of how far you have come.",
+  "self": {
+   "first": [
+    "Keep your treatment team close, and tell them honestly what is working and what isn't, including side effects.",
+    "Write down your early warning signs, like changes in sleep, energy, or thoughts, and what helps when they show up.",
+    "Choose one or two people who know your plan and can check in with you."
+   ],
+   "helps": [
+    "Steady routines for sleep, meals, and movement.",
+    "Peer support from people who live with a mental health condition too, like NAMI's Peer-to-Peer classes.",
+    "Work, study, volunteering, or creative projects that give your days purpose.",
+    "Saying no to what drains you, and yes to what steadies you.",
+    "A crisis plan, written while you are well, that names who to call and what helps."
+   ],
+   "tell": [
+    "“I am more than my diagnosis.”",
+    "“A hard stretch is not the end of my story.”"
+   ],
+   "people": "Try: “I live with a mental health condition. Most days I do well. If you notice I'm not sleeping or pulling away, it's okay to ask how I'm doing.”"
+  },
+  "helper": {
+   "feel": "They may feel judged, tired of explaining, or worried about the next hard stretch. They want to be treated as a whole person, not a problem to manage.",
+   "say": [
+    "“I'm glad you told me. I'm not going anywhere.”",
+    "“What helps when things get hard?”",
+    "“How are you doing, really?”"
+   ],
+   "avoid": [
+    "“Did you take your meds?” as the first thing you say.",
+    "Calling them crazy, or their illness a choice.",
+    "Making every conversation about the illness."
+   ],
+   "help": [
+    "Learn about their condition, and ask about their plan for hard stretches.",
+    "Notice early signs gently, and ask rather than accuse.",
+    "Find support for yourself, like NAMI's Family-to-Family classes."
+   ],
+   "you": "Loving someone with a serious mental illness can be a long road with good stretches and hard ones. You need your own support, rest, and people too."
+  },
+  "faith": "If faith is part of your life, it may be a steady source of hope, or a place where you have felt misunderstood. Some faith communities welcome people living with mental illness and their families with open arms. If faith isn't part of your life, hope and belonging can still be found in people, purpose, and community.",
+  "practices": [
+   "bark|Hard-Day Plan",
+   "branches|Support Group",
+   "leaves|Sleep",
+   "trunk|Get Counseling",
+   "fruit|Hope Map"
+  ],
+  "reach": [
+   "Thoughts of suicide, or a mental health crisis: call or text 988, any time. Text MN to 741741. In danger right now, call 911.",
+   "Information and peer support, for you or your family: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640, weekdays 10 a.m. to 10 p.m. Eastern. Not a crisis line.",
+   "Warning signs returning, or side effects you can't live with: call your prescriber or treatment team soon. Don't stop a medicine on your own."
+  ],
+  "more": [
+   [
+    "NAMI (National Alliance on Mental Illness)",
+    "https://www.nami.org"
+   ],
+   [
+    "NAMI programs: Peer-to-Peer and Family-to-Family",
+    "https://www.nami.org/programs/"
+   ],
+   [
+    "SAMHSA: what recovery means",
+    "https://store.samhsa.gov/sites/default/files/d7/priv/pep12-recdef.pdf"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org"
+   ]
+  ],
+  "kids": "family-mental-health"
+ },
+ {
+  "id": "brain-injury",
+  "ring": "life",
+  "title": "After a brain injury or stroke",
+  "keys": "brain injury traumatic brain injury tbi concussion stroke aphasia speech memory problems attention thinking changes personality change fatigue rehab rehabilitation physical therapy occupational therapy speech therapy not the same person recovery return to work driving after stroke caregiver of stroke survivor",
+  "parts": [
+   "leaves",
+   "trunk",
+   "branches"
+  ],
+  "life": [
+   "memory",
+   "moving",
+   "health"
+  ],
+  "quick": [
+   "A brain injury or stroke can change movement, speech, memory, attention, energy, and feelings. Many changes are invisible to others.",
+   "Recovery often continues for a long time. Rehabilitation, rest, and small steps all matter.",
+   "Feeling like a different person is common. Many people slowly write a new chapter, not a copy of the old one.",
+   "Families change too. Support for everyone helps. You choose the words for what you live with."
+  ],
+  "feel": "Frustrated when words, memories, or movements won't come. Exhausted by things that used to be easy. Embarrassed in public. Grieving the person you were, the work you did, or driving. Some days hopeful at a new gain, some days discouraged.",
+  "self": {
+   "first": [
+    "Keep going to rehabilitation, and ask your team what to practice at home.",
+    "Use tools outside your head: a notebook, phone reminders, labels, one place for keys.",
+    "Plan rest into every day. A tired brain needs real breaks."
+   ],
+   "helps": [
+    "Doing one thing at a time, in a quiet place.",
+    "Celebrating small gains, and writing them down so you can see them.",
+    "Telling people what helps: speaking slowly, giving time to answer, writing things down.",
+    "A brain injury or stroke support group, where people understand without explanation.",
+    "Talking with your doctor about mood. Sadness and worry after a brain injury are common and treatable."
+   ],
+   "tell": [
+    "“My brain is healing, and healing takes time.”",
+    "“I'm still me, learning new ways.”"
+   ],
+   "people": "Try: “Since my stroke, I need more time to find words. Please give me a moment, and don't finish my sentences unless I ask.”"
+  },
+  "helper": {
+   "feel": "They may feel frustrated, embarrassed, or not like themselves. Some changes, like fatigue or memory, are hard for others to see.",
+   "say": [
+    "“Take your time. I'll wait.”",
+    "“What would help most today?”",
+    "“I can see how hard you're working.”"
+   ],
+   "avoid": [
+    "Finishing their sentences or answering for them.",
+    "“You seem fine to me.”",
+    "Talking about them as if they aren't in the room."
+   ],
+   "help": [
+    "Speak slowly, one idea at a time, and wait for answers.",
+    "Help with rides to therapy, and practice at home if they want.",
+    "Notice and name their progress."
+   ],
+   "you": "Caring for someone after a brain injury or stroke can feel like living with a loss that has no clear name. Find support for yourself, like a caregiver group, and take real breaks."
+  },
+  "faith": "If faith is part of your life, familiar prayers, songs, or sacred words can stay with a person even when other memories are hard to reach, and being present at worship can comfort without asking for words. If faith isn't part of your life, familiar music, places, and people can offer the same steadiness.",
+  "practices": [
+   "trunk|Write Your Story",
+   "leaves|Pacing Your Day",
+   "bark|Micro-Rest",
+   "leaves|Appointment Prep",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "New signs of a stroke, like sudden face drooping, arm weakness, or trouble speaking: call 911 right away.",
+   "Help with services, work, and support in Minnesota: Disability Hub MN, 1-866-333-2466, and the Brain Injury Alliance of Minnesota.",
+   "Sadness, anger, or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "Brain Injury Alliance of Minnesota",
+    "https://www.braininjurymn.org"
+   ],
+   [
+    "Brain Injury Association of America",
+    "https://www.biausa.org"
+   ],
+   [
+    "American Stroke Association",
+    "https://www.stroke.org"
+   ],
+   [
+    "Family Caregiver Alliance",
+    "https://www.caregiver.org"
+   ]
+  ],
+  "kids": "family-illness"
+ },
+ {
+  "id": "faith-access",
+  "ring": "life",
+  "title": "Faith and disability: when worship is hard to reach",
+  "keys": "faith disability worship church synagogue mosque temple congregation accessible accessibility ramp steps hearing loop captions large print sensory friendly service can not get to church homebound left out of my faith community belonging why me healing prayer for healing punishment spiritual struggle disability ministry inclusion",
+  "parts": [
+   "roots",
+   "branches",
+   "trunk"
+  ],
+  "life": [
+   "moving",
+   "hearing",
+   "seeing",
+   "autism",
+   "health",
+   "pain",
+   "serious",
+   "close"
+  ],
+  "quick": [
+   "When a disability or illness makes worship hard to reach, the loss can be spiritual as well as practical. Both deserve attention.",
+   "Many barriers can change: a ramp, a seat, a sound system, captions, large print, a quieter service, a ride, a visit at home.",
+   "Belonging means more than getting in the door: being welcomed, known, needed, and loved.",
+   "Your questions, your doubts, and your faith all belong. Faith can steady you, or it can hurt; both are worth talking about."
+  ],
+  "feel": "Missing the people, the music, the rituals, or the place itself. Hurt by steps, sound, or crowds that keep you out. Weary of being told you'd be healed if you believed enough. Wondering, “Why me?” Or quietly finding faith in new forms at home, and wanting your community to come along.",
+  "self": {
+   "first": [
+    "Name what has made worship hard: the building, the sound, the length, the crowd, the attitudes, or your energy.",
+    "Tell one leader or trusted member what would help. Many communities want to know and don't.",
+    "Keep one practice that fits your body now, at home or online."
+   ],
+   "helps": [
+    "Asking for specific changes: a ramp or seat, a hearing loop or captions, large print or audio, a quiet space, a shorter service, a ride.",
+    "Visits, recordings, or livestreams on the days you can't go.",
+    "A faith friend who sits with you, or checks in when you're away.",
+    "Offering your gifts: many communities need what you bring, in roles that fit your body.",
+    "Talking about hard questions with a chaplain, spiritual director, or faith leader who listens without rushing to answers."
+   ],
+   "tell": [
+    "“My place in my faith community is real, whether or not I can be in the building.”",
+    "“My questions are welcome.”"
+   ],
+   "people": "Try, to a faith leader: “I want to keep coming, and the steps (or the sound, or the length) make it hard. Could we talk about what might help?”"
+  },
+  "helper": {
+   "feel": "They may feel left out of a community they love, hurt by comments, or tired of asking. Some carry hard questions about why this happened.",
+   "say": [
+    "“We miss you. What would help you come, or help us come to you?”",
+    "“What would make worship work for you?”",
+    "“Your questions are welcome here.”"
+   ],
+   "avoid": [
+    "“If you had more faith, you'd be healed.”",
+    "“God gives the hardest battles to the strongest people.”",
+    "Praying over someone without asking first."
+   ],
+   "help": [
+    "Walk your building with fresh eyes: entrances, seating, restrooms, sound, lighting, print.",
+    "Offer rides, visits, recordings, and a seat saved.",
+    "Invite their gifts: reading, greeting, teaching, praying, welcoming, serving in ways that fit."
+   ],
+   "you": "Making a community more welcoming takes time and many small changes. Start with one, and keep listening to the people who need it."
+  },
+  "faith": "Many traditions hold that every person carries sacred worth, and that a community is incomplete without each of its members. Some communities have learned from disabled members to slow down and make room for everyone. If your faith has felt more like a hurt than a help, that is worth saying out loud too, to someone who will listen without rushing to answers.",
+  "practices": [
+   "roots|Breath Prayer",
+   "roots|Lament",
+   "roots|Worship",
+   "branches|Faith",
+   "branches|Say What You Need"
+  ],
+  "reach": [
+   "Help with rides, services, and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
+   "Hard questions, spiritual struggle, or feeling abandoned: a chaplain, spiritual director, or faith leader you trust.",
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "Baylor University: Disability, Faith, and Flourishing",
+    "https://bcdd.soe.baylor.edu/projects/disability-faith-flourishing-initiative"
+   ],
+   [
+    "Erik Carter on belonging (Vanderbilt Kennedy Center)",
+    "https://notables.vkcsites.org/2019/05/carter-explores-facets-of-true-belonging-inclusion-of-people-with-disabilities-in-our-communities/"
+   ],
+   [
+    "Disability Hub MN",
+    "https://disabilityhubmn.org"
+   ]
+  ]
+ }
+];
+  T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
+/* HA2 guides end */

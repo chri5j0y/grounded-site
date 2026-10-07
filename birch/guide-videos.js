@@ -2,7 +2,7 @@
    BIRCH . When Life Changes videos (GWG BLD 743)
    Two narrated videos for each Birch guide: For You (the young adult) and For the Helper (a parent, partner, friend,
    or mentor who walks with them). Played by shared/gg-learn.js (GUIDE_SRC.birch). Each video: {id, guide, side, title, sideName,
-   mins, blurb, sources, scenes}. Generated from patches/bld743/source in grounded-workshop: edit the data there and rebuild.
+   mins, blurb, sources, scenes}. Health and Ability guides added in GWG BLD 757. Generated from patches/bld743/source in grounded-workshop: edit the data there and rebuild.
    ===================================================================== */
 (function(){
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
@@ -41,6 +41,10 @@ window.GG_LEARN_GUIDES.birch = {
   [
    "br-meaning",
    "Service, Loss, Faith, and Meaning"
+  ],
+  [
+   "life",
+   "Health and Ability"
   ]
  ],
  "guides": [
@@ -10998,6 +11002,2143 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Accompany the question.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Accompany the question without rushing the answer. Your belief in them, said out loud, may be what they carry farthest. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "college-disability",
+   "ring": "life",
+   "title": "Disability at College: Accommodations and Asking",
+   "you": {
+    "id": "br-g-college-disability-you",
+    "guide": "college-disability",
+    "side": "you",
+    "title": "Disability at College: Accommodations and Asking",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the student with a disability or a health condition: how accommodations work in college, and how to ask.",
+    "sources": [
+     "ocrpse"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Disability at College: Accommodations and Asking",
+      "sub": "For You",
+      "say": "If you live with a disability or a health condition and you're starting college or training, this is for you. The supports work a little differently now. You can learn how they work, and you can ask."
+     },
+     {
+      "k": "big",
+      "h": "In college, you ask.",
+      "sub": "Your school plan ends at graduation.",
+      "say": "Here's the biggest change. An IEP or a 504 plan ends when high school does. In college, supports don't follow you automatically. You ask for them yourself, through the school's disability services office."
+     },
+     {
+      "k": "points",
+      "h": "What accommodations can look like",
+      "items": [
+       [
+        "Tests",
+        "Extra time, a quieter room"
+       ],
+       [
+        "Access",
+        "Captions, interpreters, formats"
+       ],
+       [
+        "Spaces",
+        "Rooms and housing that work"
+       ],
+       [
+        "Health",
+        "Planning for hard weeks"
+       ]
+      ],
+      "say": "Accommodations change how things are done, so you can take part fully. Extra time on tests, or a quieter room. Captions, an interpreter, or materials in a format you can use. Classrooms and housing that work for your body. And a plan ahead of time for flares or hard weeks.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "The door can change.",
+      "sub": "You still belong in the room.",
+      "say": "An accommodation doesn't lower the bar. It changes the door. Often the barrier is in the format, the building, or the schedule, not in you. And you choose your own words for your disability. Some people say a person with a disability. Some say disabled. Use what fits you."
+     },
+     {
+      "k": "flow",
+      "h": "Three steps to start",
+      "steps": [
+       [
+        "Register",
+        "With disability services"
+       ],
+       [
+        "Bring what you have",
+        "Old plans, doctor letters"
+       ],
+       [
+        "Send your letter",
+        "To each instructor, early"
+       ]
+      ],
+      "say": "Start with three steps. Register with disability services this term, even if you're not sure you'll need it. Bring what you have, like an old plan or a doctor's letter, and ask what they accept. Then send your accommodation letter to each instructor early, before the first test."
+     },
+     {
+      "k": "big",
+      "h": "Write your one sentence.",
+      "sub": "What helps you learn.",
+      "say": "Let's get your first meeting ready. Grab your phone or a piece of paper. Finish this sentence in your own words: I learn best when. Add one thing that usually gets in the way.",
+      "beats": [
+       "Let's get your first meeting ready.",
+       "Grab your phone or a piece of paper.",
+       "Finish this sentence in your own words: I learn best when.",
+       {
+        "t": "Add one thing that usually gets in the way.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "You choose what to share.",
+      "sub": "Instructors need the letter, not the diagnosis.",
+      "say": "You choose what to share, and with whom. Disability services usually needs documentation. Your instructors usually need only your accommodation letter, not your diagnosis. If something isn't working, go back to disability services. That's what they're there for."
+     },
+     {
+      "k": "big",
+      "h": "Asking is part of doing it well.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Asking for what you need is part of doing college well. You're the expert on how you learn best. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-college-disability-helper",
+    "guide": "college-disability",
+    "side": "helper",
+    "title": "Disability at College: Accommodations and Asking",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the parent, mentor, or friend of a college student with a disability: from speaking for them to cheering them on.",
+    "sources": [
+     "ocrpse"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Disability at College: Accommodations and Asking",
+      "sub": "For the Helper",
+      "say": "This is for the parent, mentor, partner, or friend of a student with a disability or a health condition. In college, the student leads. Your role is changing, and it still matters."
+     },
+     {
+      "k": "big",
+      "h": "The student leads now.",
+      "sub": "The school talks with them.",
+      "say": "In high school, you may have sat in every meeting. In college, the student asks for accommodations through disability services, and the school talks with them, not with you. That can feel strange. It's also how they become their own best advocate."
+     },
+     {
+      "k": "points",
+      "h": "Where you can help",
+      "items": [
+       [
+        "Paperwork",
+        "Find it, then hand it over"
+       ],
+       [
+        "Practice",
+        "Rehearse the first meeting"
+       ],
+       [
+        "Practical pieces",
+        "Rides, rooms, hard days"
+       ]
+      ],
+      "say": "Here's where you can help. Find old paperwork, like the school plan or a doctor's letter, and hand it over. Offer to rehearse the first meeting, and let them lead the real one. And ask about the practical pieces: a ride, a room that works, and who they'll call on a hard day.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write one question to ask.",
+      "sub": "Instead of a plan to hand them.",
+      "say": "Let's try the shift right now. Think of one thing you've been planning to handle for them. Turn it into a question you could ask instead, like: what would help you most with this?",
+      "beats": [
+       "Let's try the shift right now.",
+       "Think of one thing you've been planning to handle for them.",
+       {
+        "t": "Turn it into a question you could ask instead, like: what would help you most with this?",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What helped most in high school?",
+       "Want to practice what you will say?",
+       "I'm in your corner."
+      ],
+      "say": "Here are words that help. You know what works for you. What helped most in high school? Want to practice what you'll say at the first meeting? And, however you decide to handle it, I'm in your corner."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "Calling the professor for them",
+       "Maybe you won't need it now.",
+       "You should tell everyone."
+      ],
+      "say": "Some habits are worth setting aside. Calling the school or the professors for them, unless they ask. Maybe you won't need it in college. And pushing them to share their diagnosis with every instructor. That's their choice."
+     },
+     {
+      "k": "big",
+      "h": "A hard week is not a verdict.",
+      "sub": "Notice their strengths out loud.",
+      "say": "A hard week isn't proof they can't do college. Many students with disabilities hear far more about what's hard than what's going well. Notice their strengths, and say them out loud."
+     },
+     {
+      "k": "big",
+      "h": "Step back. Cheer them on.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Stepping back after years of advocating can feel like letting go. It's a gift, and they'll carry it for life. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "work-disability",
+   "ring": "life",
+   "title": "Disability or Illness at Work: Accommodations and Telling Your Boss",
+   "you": {
+    "id": "br-g-work-disability-you",
+    "guide": "work-disability",
+    "side": "you",
+    "title": "Disability or Illness at Work: Accommodations and Telling Your Boss",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult working with a disability or a health condition: accommodations, and choosing what to tell your boss.",
+    "sources": [
+     "eeocada",
+     "jan"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Disability or Illness at Work: Accommodations and Telling Your Boss",
+      "sub": "For You",
+      "say": "If you're working with a disability or a health condition, or about to start, this is for you. Work can fit how your body and your brain work. Asking for a change is a normal part of working."
+     },
+     {
+      "k": "big",
+      "h": "Reasonable accommodations",
+      "sub": "Employers with 15 or more employees.",
+      "say": "Here's the basic idea. Under the Americans with Disabilities Act, employers with fifteen or more employees must make reasonable accommodations for qualified workers with disabilities, unless it would cause undue hardship. Many smaller employers will work with you too."
+     },
+     {
+      "k": "points",
+      "h": "What that can look like",
+      "items": [
+       [
+        "Schedule",
+        "A later start, breaks, time for appointments"
+       ],
+       [
+        "Tools",
+        "A screen reader, a chair, captions"
+       ],
+       [
+        "Setting",
+        "A quieter space"
+       ],
+       [
+        "Instructions",
+        "Written down"
+       ]
+      ],
+      "say": "An accommodation is a change in how things are usually done that helps you do the job. A different schedule, more breaks, or time for appointments. A tool, like a screen reader, a better chair, or captions. A quieter space. Or instructions in writing.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "What you share is your choice.",
+      "sub": "Whether, when, and how much.",
+      "say": "Telling your boss is your choice: whether, when, and how much. You can say a health condition, or a disability, without naming it. To set up an accommodation, you share what you need, and your employer may ask for some medical information to support it."
+     },
+     {
+      "k": "big",
+      "h": "Write your request in one sentence.",
+      "sub": "What you need, and how it helps.",
+      "say": "Let's write your request. Think of one thing at work that's harder than it needs to be. Now finish this sentence: I'm asking for this change, so that I can do this part of my job well.",
+      "beats": [
+       "Let's write your request.",
+       "Think of one thing at work that's harder than it needs to be.",
+       {
+        "t": "Now finish this sentence: I'm asking for this change, so that I can do this part of my job well.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "How to ask",
+      "steps": [
+       [
+        "Find the process",
+        "Handbook, HR, or manager"
+       ],
+       [
+        "Ask in writing",
+        "Plain words are enough"
+       ],
+       [
+        "Keep a record",
+        "Who, when, what was agreed"
+       ]
+      ],
+      "say": "Here's how to ask. Find the process: the handbook, human resources, or your manager. Ask in writing, in plain words. You don't need special legal words. And keep a short record of who you talked with and what was agreed."
+     },
+     {
+      "k": "card",
+      "title": "Help with ideas",
+      "body": "The Job Accommodation Network: askjan.org",
+      "say": "If you're not sure what to ask for, the Job Accommodation Network gives confidential guidance on accommodations, for workers and employers. Look up what you live with, and bring two or three ideas to the conversation."
+     },
+     {
+      "k": "big",
+      "h": "Your worth is not your output.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Planning around your body is wise, not weak. Your worth isn't measured by pushing through pain. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-work-disability-helper",
+    "guide": "work-disability",
+    "side": "helper",
+    "title": "Disability or Illness at Work: Accommodations and Telling Your Boss",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the parent, partner, or friend of a young adult working with a disability or an illness: help them think it through and ask.",
+    "sources": [
+     "eeocada",
+     "jan"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Disability or Illness at Work: Accommodations and Telling Your Boss",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, friend, or mentor of a young adult working with a disability or a health condition. Your part is to help them think it through. The choices are theirs."
+     },
+     {
+      "k": "big",
+      "h": "They may be pushing through.",
+      "sub": "And paying for it later.",
+      "say": "Many young adults push through pain or exhaustion to keep a job, and pay for it at night or on the weekend. Some are afraid to say anything at work. Others are tired of hiding. Some are quietly deciding whether to leave a job they're good at. You may see it before they say it."
+     },
+     {
+      "k": "points",
+      "h": "What to know",
+      "items": [
+       [
+        "They can ask",
+        "For reasonable accommodations"
+       ],
+       [
+        "They decide",
+        "What to share, and when"
+       ],
+       [
+        "Help exists",
+        "Confidential ideas at askjan.org"
+       ]
+      ],
+      "say": "Here's what's worth knowing. They can ask for reasonable accommodations, like a schedule change, a tool, or written instructions. They decide what to share at work, and when. And help exists. The Job Accommodation Network gives confidential ideas for workers and employers.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Name two strengths they bring.",
+      "sub": "Say them out loud next time.",
+      "say": "Here's something to do right now. Think about the young adult you're helping. Name two strengths they bring to their work, like persistence, creativity, or problem solving. Plan to tell them one this week.",
+      "beats": [
+       "Here's something to do right now.",
+       "Think about the young adult you're helping.",
+       "Name two strengths they bring to their work, like persistence, creativity, or problem solving.",
+       {
+        "t": "Plan to tell them one this week.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What would make work easier?",
+       "Want to practice how to ask?",
+       "How much you share is your call."
+      ],
+      "say": "Here are words that help. What would make the work easier on your body? You're allowed to ask. Want to practice how you'd say it? And, how much you share is your call."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "Calling their boss",
+       "Just push through.",
+       "Never tell them anything."
+      ],
+      "say": "Some habits are worth setting aside. Calling their boss or telling anyone at work, without their say-so. Just push through. And, never tell them anything, ever. Every situation is different, and the choice is theirs."
+     },
+     {
+      "k": "flow",
+      "h": "If something goes wrong",
+      "steps": [
+       [
+        "Write it down",
+        "What happened, and when"
+       ],
+       [
+        "Find the right help",
+        "HR, the EEOC, Disability Hub MN"
+       ],
+       [
+        "Ask early",
+        "Deadlines apply"
+       ]
+      ],
+      "say": "If something goes wrong at work, help them write down what happened, and when. Help them find the right people, like human resources, the Equal Employment Opportunity Commission, or, in Minnesota, Disability Hub. And encourage them to ask early, because deadlines apply."
+     },
+     {
+      "k": "big",
+      "h": "Think it through together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can't fix their workplace, and you don't have to. Helping them think it through and ask is real help. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "pain-fatigue",
+   "ring": "life",
+   "title": "Chronic Pain, Fatigue, and Pacing",
+   "you": {
+    "id": "br-g-pain-fatigue-you",
+    "guide": "pain-fatigue",
+    "side": "you",
+    "title": "Chronic Pain, Fatigue, and Pacing",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult living with pain or fatigue that stays: pacing, rest without guilt, and explaining it to others.",
+    "sources": [
+     "miserandino",
+     "cdsmp"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Chronic Pain, Fatigue, and Pacing",
+      "sub": "For You",
+      "say": "If you live with pain or tiredness that stays, or keeps coming back, this is for you. It's real, even when no one can see it. And pacing is a skill you can grow."
+     },
+     {
+      "k": "big",
+      "h": "Boom and bust",
+      "sub": "Push on a good day. Crash for three.",
+      "say": "Many people know this pattern. On a good day, you catch up on everything. Then you pay for it for days. It's called boom and bust, and it makes sense. You want your life back. Pacing is a steadier way to get more of it."
+     },
+     {
+      "k": "big",
+      "h": "A handful of spoons",
+      "sub": "Every task costs a few.",
+      "say": "Some people picture a day's energy as a handful of spoons. Getting dressed costs one. A shower, one. A shift at work, several. When the spoons are gone, they're gone. Plan the day so you finish with one left."
+     },
+     {
+      "k": "big",
+      "h": "Count tomorrow's spoons.",
+      "sub": "Three must-dos. One thing to drop.",
+      "say": "Let's try it for tomorrow. Think about how much energy you usually wake up with. Name the three things that matter most tomorrow. Now choose one thing you'll let go of, or make smaller.",
+      "beats": [
+       "Let's try it for tomorrow.",
+       "Think about how much energy you usually wake up with.",
+       "Name the three things that matter most tomorrow.",
+       {
+        "t": "Now choose one thing you'll let go of, or make smaller.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Pacing that helps",
+      "items": [
+       [
+        "Small pieces",
+        "With rest between"
+       ],
+       [
+        "Rest early",
+        "Before you are spent"
+       ],
+       [
+        "A hard-day plan",
+        "The smallest version"
+       ],
+       [
+        "Track it",
+        "Patterns show up fast"
+       ]
+      ],
+      "say": "Here's what pacing can look like. Break big tasks into small pieces, with rest in between, even on good days. Rest before you're spent, not after. Keep a hard-day plan ready, with the smallest version of each must-do. And track your energy for a week. Patterns show up fast.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Rest is part of the plan.",
+      "sub": "Not a failure of it.",
+      "say": "Rest is part of the plan, not a failure of it. Your doctor is the one to help with treatment, so bring your notes and your questions. And you're the expert on your own days."
+     },
+     {
+      "k": "words",
+      "h": "Telling your people",
+      "items": [
+       "If I cancel, it's not about you.",
+       "Can we plan something that can flex?",
+       "Here's what I've tracked."
+      ],
+      "say": "You might tell a friend: if I cancel, it's not about you. Can we plan something that can flex, like a movie at my place? And at your next appointment: here's what I've tracked this month."
+     },
+     {
+      "k": "big",
+      "h": "A smaller version still counts.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Be as kind to yourself as you would be to a friend in pain. A smaller version still counts. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-pain-fatigue-helper",
+    "guide": "pain-fatigue",
+    "side": "helper",
+    "title": "Chronic Pain, Fatigue, and Pacing",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the person beside a young adult with chronic pain or fatigue: believe them, plan things that flex, and help them pace.",
+    "sources": [
+     "miserandino"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Chronic Pain, Fatigue, and Pacing",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, roommate, or friend of a young adult living with chronic pain or fatigue. What helps most is simpler than you might think."
+     },
+     {
+      "k": "big",
+      "h": "Believe them.",
+      "sub": "Even when they look fine.",
+      "say": "Start here. Believe them. Pain and fatigue are often invisible. Someone can look fine and still not make it through the day. They may be full of energy one day and in bed the next. That's how many of these conditions work. They may also be tired of explaining, and afraid of being a burden. Your belief takes some of that weight off."
+     },
+     {
+      "k": "big",
+      "h": "Spoons, not willpower.",
+      "sub": "A day has only so much.",
+      "say": "Some people describe a day's energy as a handful of spoons. Every task costs a few, and when they're gone, they're gone. Pushing harder on a good day often brings the crash. Help them pace, not push."
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Plans that flex",
+        "At home, shorter, easy to leave"
+       ],
+       [
+        "Specific help",
+        "A meal, a ride, a pickup"
+       ],
+       [
+        "Appointments",
+        "Go along, take notes"
+       ]
+      ],
+      "say": "Here are ways to help. Plan things that can flex: at home, shorter, or easy to leave. Offer specific help on hard days, like a meal, a ride, or picking up a prescription. And go with them to an appointment, if they want, and help keep notes.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Plan one thing that can flex.",
+      "sub": "Low-key, and easy to change.",
+      "say": "Let's plan something now. Think of something you'd like to do with them this week. Change it so it can flex: shorter, closer to home, or easy to leave. Write that version down.",
+      "beats": [
+       "Let's plan something now.",
+       "Think of something you'd like to do with them this week.",
+       "Change it so it can flex: shorter, closer to home, or easy to leave.",
+       {
+        "t": "Write that version down.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "I believe you.",
+       "What does today look like?",
+       "You're not letting anyone down."
+      ],
+      "say": "Words that help. I believe you. What does today look like for you? Let's plan around that. And, rest is part of it. You're not letting anyone down."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "You don't look sick.",
+       "Have you tried this cure?",
+       "You were fine yesterday."
+      ],
+      "say": "Some words close the door. You don't look sick. Have you tried this cure, or this diet? Leave treatment to their doctor. And, you were fine yesterday."
+     },
+     {
+      "k": "big",
+      "h": "Believe. Flex. Stay.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Loving someone with pain or fatigue can be tiring, especially when you can't fix it. Your belief and your steady presence matter more than solutions. Look after your own rest too. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "living-well-mi",
+   "ring": "life",
+   "title": "Living Well With a Serious Mental Illness",
+   "you": {
+    "id": "br-g-living-well-mi-you",
+    "guide": "living-well-mi",
+    "side": "you",
+    "title": "Living Well With a Serious Mental Illness",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult living with a serious mental illness: recovery as a whole life, your warning signs, and your own team.",
+    "sources": [
+     "samhsarec",
+     "namiprog"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Living Well With a Serious Mental Illness",
+      "sub": "For You",
+      "say": "If you live with a serious mental illness, like bipolar disorder, schizophrenia, or severe depression, this is for you. Many people your age are building good lives with one. You can too."
+     },
+     {
+      "k": "big",
+      "h": "A whole person, not a diagnosis.",
+      "sub": "Your own words for it.",
+      "say": "A diagnosis names something you live with. It isn't who you are. Some people say, I live with bipolar disorder. Some say, I have a mental illness. Use the words that fit you."
+     },
+     {
+      "k": "points",
+      "h": "Recovery is a whole life",
+      "items": [
+       [
+        "Health",
+        "Body and mind"
+       ],
+       [
+        "Home",
+        "A safe, steady place"
+       ],
+       [
+        "Purpose",
+        "School, work, making, giving"
+       ],
+       [
+        "People",
+        "Who know you"
+       ]
+      ],
+      "say": "Recovery is common, and it's about a whole life, not only symptoms. Your health, body and mind. A safe, steady place to live. Purpose, like school, work, making things, or helping others. And people who know you.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write your early warning signs.",
+      "sub": "The first small changes you notice.",
+      "say": "Let's make one of your strongest tools. Grab your phone or a piece of paper. Write down three early warning signs, the first small changes you notice when things start to slip. Next to them, write one person you'd tell.",
+      "beats": [
+       "Let's make one of your strongest tools.",
+       "Grab your phone or a piece of paper.",
+       "Write down three early warning signs, the first small changes you notice when things start to slip.",
+       {
+        "t": "Next to them, write one person you'd tell.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Then share the plan",
+      "steps": [
+       [
+        "One person you trust",
+        "What you would like them to do"
+       ],
+       [
+        "Your treatment team",
+        "Honest about what is working"
+       ],
+       [
+        "Peer support",
+        "People who get it"
+       ]
+      ],
+      "say": "Then share the plan. Tell one person you trust what you'd like them to do if they see those signs. Bring it to your treatment team, and be honest about what's working and what isn't, including side effects. And find peer support, people who live with a mental health condition too."
+     },
+     {
+      "k": "big",
+      "h": "Protect the steady things.",
+      "sub": "Sleep, rhythm, and going easy on substances.",
+      "say": "Protect the steady things. A regular wake time, meals, and daylight. Sleep is often the first thing to shift. And go easy on alcohol, cannabis, and other drugs, which can make symptoms harder to manage."
+     },
+     {
+      "k": "card",
+      "title": "If it feels like too much",
+      "body": "Call or text 988. In Minnesota, **CRISIS (274747) from a cell phone. Danger right now: 911.",
+      "say": "If it ever feels like too much, or you have thoughts of not wanting to be alive, call or text 988, any time. In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
+     },
+     {
+      "k": "big",
+      "h": "Recovery is a path.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Recovery is a path, and you're on it. Noticing early is a strength. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-living-well-mi-helper",
+    "guide": "living-well-mi",
+    "side": "helper",
+    "title": "Living Well With a Serious Mental Illness",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family member, partner, or friend of a young adult living with a serious mental illness: steady, respectful, and in it for the long haul.",
+    "sources": [
+     "samhsarec",
+     "namiprog"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Living Well With a Serious Mental Illness",
+      "sub": "For the Helper",
+      "say": "This is for the parent, partner, sibling, or friend of a young adult living with a serious mental illness. Your steady, respectful presence is one of the strongest supports they can have."
+     },
+     {
+      "k": "big",
+      "h": "They lead their own treatment.",
+      "sub": "You walk beside them.",
+      "say": "They're an adult, and they lead their own treatment, with their team. That can be hard if you've seen them very unwell. Your place is beside them, not in charge of them. Treating them as capable is part of what helps."
+     },
+     {
+      "k": "big",
+      "h": "Make the plan while things are calm.",
+      "sub": "Warning signs, and what they want you to do.",
+      "say": "The best time to talk about a hard week is during a good one. Ask them to share their early warning signs, and what they'd like you to do if you notice them. Ask whether they'd sign a release so their treatment team can talk with you. It's their choice."
+     },
+     {
+      "k": "big",
+      "h": "Write the question you will ask.",
+      "sub": "In a calm moment this week.",
+      "say": "Let's get your words ready. Think of a calm moment this week when you could talk. Write down this question, in your own words: what would you like me to do if I notice your warning signs?",
+      "beats": [
+       "Let's get your words ready.",
+       "Think of a calm moment this week when you could talk.",
+       {
+        "t": "Write down this question, in your own words: what would you like me to do if I notice your warning signs?",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "The diagnosis as an insult",
+       "Did you take your meds?",
+       "Arguing what is real"
+      ],
+      "say": "Some habits close the door. Using the diagnosis as an insult in an argument. Checking on their medicine as if you were in charge of it. And arguing about whether a belief or a voice is real. Talk about the feeling and the stress instead."
+     },
+     {
+      "k": "points",
+      "h": "Steady help",
+      "items": [
+       [
+        "Rides and rhythm",
+        "Appointments, meals, a calm home"
+       ],
+       [
+        "Learn about it",
+        "Classes for families"
+       ],
+       [
+        "Your own support",
+        "Rest and people"
+       ]
+      ],
+      "say": "Steady help looks ordinary. Rides to appointments, regular meals, and a calm home. Learning about the illness, through classes for families and friends, like NAMI's Family-to-Family. And your own support, rest, and people.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "If anyone is in danger",
+      "body": "Call or text 988. In Minnesota, **CRISIS (274747) from a cell phone. Danger right now: 911.",
+      "say": "If they talk about harming themselves or someone else, or seem in danger, call or text 988. In Minnesota, call star star crisis from a cell phone for a mobile crisis team. If there's danger right now, call 911."
+     },
+     {
+      "k": "big",
+      "h": "In it for the long haul.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You're still you, and I'm here for the long haul. Those may be the most helpful words you ever say to them. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "autistic-adult",
+   "ring": "life",
+   "title": "Autistic Adult Life",
+   "you": {
+    "id": "br-g-autistic-adult-you",
+    "guide": "autistic-adult",
+    "side": "you",
+    "title": "Autistic Adult Life",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the autistic young adult: your senses, your energy, your people, and asking the world to fit you better.",
+    "sources": [
+     "kenny16",
+     "socialmodel"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Autistic Adult Life",
+      "sub": "For You",
+      "say": "If you're autistic, or wondering whether you are, this is for you. Autism is a different way of sensing, thinking, and connecting. Your life can fit who you are."
+     },
+     {
+      "k": "big",
+      "h": "Your words, your choice.",
+      "sub": "Autistic, or a person with autism.",
+      "say": "Many people say autistic, or autistic person. Some prefer person with autism. Both are fine. You choose the words that fit you."
+     },
+     {
+      "k": "points",
+      "h": "What drains, what restores",
+      "items": [
+       [
+        "Senses",
+        "Noise, light, crowds"
+       ],
+       [
+        "Change",
+        "Plans that shift"
+       ],
+       [
+        "Hiding",
+        "Acting like everyone else"
+       ],
+       [
+        "Restores",
+        "Quiet, routine, your interests"
+       ]
+      ],
+      "say": "Many autistic adults know this well. Some things drain energy fast: noise, bright light, and crowds. Plans that change without warning. And the work of hiding your differences to fit in. Other things give energy back: quiet, routine, and time with what you love.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "One drains. One restores.",
+      "sub": "Name them both.",
+      "say": "Let's try it now. Think about this past week. Name one thing that drained you fast. Now name one thing that gave your energy back, and plan one time to do it this week.",
+      "beats": [
+       "Let's try it now.",
+       "Think about this past week.",
+       "Name one thing that drained you fast.",
+       {
+        "t": "Now name one thing that gave your energy back, and plan one time to do it this week.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Diagnosed later?",
+      "sub": "Relief and grief can come together.",
+      "say": "If you were diagnosed as an adult, a lot of your life may suddenly make sense. Many people feel relief, and some grief for the years they thought something was wrong with them. Both are normal. Nothing was wrong with you. You were working hard in a world built for a different kind of brain."
+     },
+     {
+      "k": "big",
+      "h": "Often the barrier is the setting.",
+      "sub": "And settings can change.",
+      "say": "Often the barrier isn't you. It's the setting: the noise, the open office, the instructions that were only said out loud. You can ask for changes at school and at work, like written instructions, a quieter space, or a heads-up before plans change."
+     },
+     {
+      "k": "points",
+      "h": "Things that help",
+      "items": [
+       [
+        "Tools ready",
+        "Headphones, a quiet spot"
+       ],
+       [
+        "Scripts",
+        "For calls and hard moments"
+       ],
+       [
+        "Your people",
+        "Who share what you love"
+       ]
+      ],
+      "say": "Here are things that help. Keep your tools ready, like headphones or a quiet spot. Plan scripts for hard moments, like calling a doctor or saying no. And find your people, who share what you love, including other autistic adults.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Watch for burnout.",
+      "sub": "More rest. Less demand.",
+      "say": "Watch for burnout, when everything gets harder for weeks at a time. More rest and fewer demands usually help. If it lasts, talk with your doctor or a counselor, ideally one who works with autistic adults."
+     },
+     {
+      "k": "big",
+      "h": "A life that fits who you are.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your focus, your honesty, and the details you notice are strengths. You can build a life that fits who you are. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-autistic-adult-helper",
+    "guide": "autistic-adult",
+    "side": "helper",
+    "title": "Autistic Adult Life",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family member, partner, or friend of an autistic young adult: believe them, plan for quiet, and follow their lead.",
+    "sources": [
+     "kenny16"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Autistic Adult Life",
+      "sub": "For the Helper",
+      "say": "This is for the parent, sibling, partner, or friend of an autistic young adult. What helps most is respect: believing what they tell you, and treating them as the expert on their own life."
+     },
+     {
+      "k": "big",
+      "h": "Believe what they tell you.",
+      "sub": "About their senses and their energy.",
+      "say": "If they say a room is too loud, it is too loud for them. If they need to leave early, they need to. Sensory needs are real needs. Believing them saves them the exhausting work of proving it."
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Clear plans",
+        "And a heads-up about changes"
+       ],
+       [
+        "Room for quiet",
+        "At home and at events"
+       ],
+       [
+        "Their interests",
+        "Ask about them"
+       ]
+      ],
+      "say": "Here are ways to help. Give clear plans, and a heads-up about changes. Make room for quiet, at home and at events, with a way to leave early. And ask about their interests. Tell me more about it can mean a lot.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Plan a quiet exit.",
+      "sub": "For the next gathering.",
+      "say": "Let's plan one thing now. Think of the next gathering you'll both be at. Decide on a simple way they can step out or leave early, with no explaining needed. Write it down so you can offer it ahead of time.",
+      "beats": [
+       "Let's plan one thing now.",
+       "Think of the next gathering you'll both be at.",
+       "Decide on a simple way they can step out or leave early, with no explaining needed.",
+       {
+        "t": "Write it down so you can offer it ahead of time.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What helps you recharge?",
+       "Tell me more about it.",
+       "Leave whenever you need to."
+      ],
+      "say": "Words that help. What helps you recharge? Let's plan for that. Tell me more about it. And, no need to explain. Leave whenever you need to."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "You don't seem autistic.",
+       "Look at me when I talk.",
+       "Speaking for them"
+      ],
+      "say": "Some words close the door. You don't seem autistic. Look at me when I'm talking to you. And speaking for them, or about them in front of them."
+     },
+     {
+      "k": "big",
+      "h": "Overload, not bad behavior.",
+      "sub": "Quiet and time help most.",
+      "say": "A meltdown or a shutdown is overload, not bad behavior. Fewer words, less light and noise, and time usually help most. Talk about what happened later, when things are calm, if they want to."
+     },
+     {
+      "k": "big",
+      "h": "Help with the many-step tasks.",
+      "sub": "Then hand them over.",
+      "say": "Some parts of adult life take a lot of steps: bills, forms, appointments, and phone calls. If they ask, help them break a task into steps, or do it together once. Then hand it over, and let them lead the next time."
+     },
+     {
+      "k": "big",
+      "h": "Respect. Quiet. Their lead.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Learn from autistic adults themselves. Their own words teach the most. And notice their strengths out loud. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "deaf-hoh",
+   "ring": "life",
+   "title": "Deaf or Hard of Hearing",
+   "you": {
+    "id": "br-g-deaf-hoh-you",
+    "guide": "deaf-hoh",
+    "side": "you",
+    "title": "Deaf or Hard of Hearing",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the Deaf or hard of hearing young adult: your words, your access, your energy, and your people.",
+    "sources": [
+     "asl988",
+     "socialmodel"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Deaf or Hard of Hearing",
+      "sub": "For You",
+      "say": "If you're Deaf or hard of hearing, this is for you. Every word in this video is on the screen, too. Let's talk about your access, your energy, and your people."
+     },
+     {
+      "k": "big",
+      "h": "Many ways to communicate.",
+      "sub": "All of them real.",
+      "say": "Deaf and hard of hearing people live full lives in many ways. Sign language, speech, hearing aids, cochlear implants, captions, or a mix. Many in the Deaf community write Deaf with a capital D, for their language and culture. You choose your own words."
+     },
+     {
+      "k": "points",
+      "h": "Access you can ask for",
+      "items": [
+       [
+        "Interpreters",
+        "At school, work, appointments"
+       ],
+       [
+        "Captions",
+        "Live and on video"
+       ],
+       [
+        "Written notes",
+        "And agendas ahead"
+       ],
+       [
+        "Seating",
+        "Where you can see faces"
+       ]
+      ],
+      "say": "You can ask for access at school and at work. An interpreter. Live captions, and captions on every video. Written notes, and the agenda ahead of time. And a seat where you can see faces clearly.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Listening takes energy.",
+      "sub": "Breaks are wise, not weak.",
+      "say": "Following a conversation all day, by listening, lip reading, or watching an interpreter, takes real energy. Many people are worn out by evening. Planning quiet breaks is wise, not weak."
+     },
+     {
+      "k": "big",
+      "h": "Write how to talk with you.",
+      "sub": "One or two plain sentences.",
+      "say": "Let's make something you can use this week. Open the notes on your phone. Write one or two sentences that tell people how to communicate with you, like: please face me, and one person at a time. Save it where you can find it fast.",
+      "beats": [
+       "Let's make something you can use this week.",
+       "Open the notes on your phone.",
+       "Write one or two sentences that tell people how to communicate with you, like: please face me, and one person at a time.",
+       {
+        "t": "Save it where you can find it fast.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Often the barrier is the room.",
+      "sub": "Rooms can change.",
+      "say": "Often the barrier isn't you. It's the loud restaurant, the dark room, the video with no captions, or the meeting where everyone talks at once. Those can change. Choose places that work, and ask for what you need."
+     },
+     {
+      "k": "card",
+      "title": "Help, your way",
+      "body": "988 in ASL by videophone, or text 988. Danger right now: 911.",
+      "say": "If you're ever in crisis, 988 has counselors who sign. Use ASL Now on the 988 website to reach them by videophone, or text 988, any time. For danger right now, call or text 911 where it's available."
+     },
+     {
+      "k": "big",
+      "h": "You belong in the conversation.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Your way of communicating is a real way of communicating, and you belong in the conversation. Find your people, wherever that is for you. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-deaf-hoh-helper",
+    "guide": "deaf-hoh",
+    "side": "helper",
+    "title": "Deaf or Hard of Hearing",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family member, partner, or friend of a Deaf or hard of hearing young adult: ask, remember, and make room in the conversation.",
+    "sources": [
+     "socialmodel"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Deaf or Hard of Hearing",
+      "sub": "For the Helper",
+      "say": "This is for the parent, sibling, partner, or friend of a young adult who is Deaf or hard of hearing. Small habits from you can open a lot of doors."
+     },
+     {
+      "k": "big",
+      "h": "Follow how they communicate.",
+      "sub": "Sign, speech, captions, or a mix.",
+      "say": "Some young adults are proud members of the Deaf community, with their own language. Others are adjusting to hearing loss, and still finding what works. Respect how they communicate, and follow their lead. Choices about hearing aids, implants, or sign language are theirs."
+     },
+     {
+      "k": "points",
+      "h": "Everyday habits that help",
+      "items": [
+       [
+        "Face them",
+        "With light on your face"
+       ],
+       [
+        "Get their attention",
+        "Before you start"
+       ],
+       [
+        "One at a time",
+        "At the table"
+       ],
+       [
+        "Captions and text",
+        "For plans and details"
+       ]
+      ],
+      "say": "Here are everyday habits that help. Face them, with light on your face. Get their attention before you start talking. At the table, one person speaks at a time. And use captions on videos, and text for plans and details.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Notice one gathering.",
+      "sub": "Where could it work better?",
+      "say": "Let's think about one place. Picture the last family meal or group hangout you shared with them. Notice one moment they may have missed, like a side joke or a fast story. Decide one change you'll make next time.",
+      "beats": [
+       "Let's think about one place.",
+       "Picture the last family meal or group hangout you shared with them.",
+       "Notice one moment they may have missed, like a side joke or a fast story.",
+       {
+        "t": "Decide one change you'll make next time.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "What works best when we talk?",
+       "Want me to fill you in?",
+       "Let's pick somewhere quieter."
+      ],
+      "say": "Words that help. What works best for you when we talk? Want me to fill you in on what you missed? And, let's pick somewhere quieter."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "Never mind.",
+       "Shouting or covering your mouth",
+       "Talking to the interpreter"
+      ],
+      "say": "Some habits close the door. Never mind, or it's not important, when they ask you to repeat. Shouting, exaggerating, or covering your mouth. And talking to the interpreter or a friend instead of to them."
+     },
+     {
+      "k": "big",
+      "h": "Learn some sign.",
+      "sub": "If they use it.",
+      "say": "If they use sign language, learning some yourself says more than you might think, especially in a family. Even a few signs, used every day, tell them they belong at your table. And when they ask for access, at a family event or a place you both go, back them up, and let them lead."
+     },
+     {
+      "k": "big",
+      "h": "Ask. Remember. Make room.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You don't have to get it perfect. Asking how they like to communicate, and remembering, says a lot. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "blind-low-vision",
+   "ring": "life",
+   "title": "Blind or Low Vision",
+   "you": {
+    "id": "br-g-blind-low-vision-you",
+    "guide": "blind-low-vision",
+    "side": "you",
+    "title": "Blind or Low Vision",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the blind or low vision young adult: your tools, your access, and the barriers that belong to the world.",
+    "sources": [
+     "socialmodel"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Blind or Low Vision",
+      "sub": "For You",
+      "say": "If you're blind or have low vision, this is for you. Everything on the screen is also said aloud. Let's talk about your tools, your access, and the barriers that aren't yours to carry."
+     },
+     {
+      "k": "big",
+      "h": "Many tools. Your words.",
+      "sub": "Blind, low vision, or your own.",
+      "say": "Blind and low vision people live full lives with many tools. A cane, a guide dog, a screen reader, magnification, braille, audio, and good planning. Many say blind. Some say low vision, or visually impaired. You choose your own words."
+     },
+     {
+      "k": "big",
+      "h": "The form is the problem.",
+      "sub": "Not you.",
+      "say": "Often the barrier is the world around you. An app that doesn't work with a screen reader. A print-only form. A bus stop with no announcements. Those are design problems, and often the fix is the builder's job, not yours."
+     },
+     {
+      "k": "points",
+      "h": "Access you can ask for",
+      "items": [
+       [
+        "Formats",
+        "Accessible digital, braille, large print"
+       ],
+       [
+        "Tools",
+        "Screen reader friendly"
+       ],
+       [
+        "Space",
+        "A described layout"
+       ],
+       [
+        "Time",
+        "To learn a new route"
+       ]
+      ],
+      "say": "You can ask for access at school and at work. Materials in a format you can use, like accessible digital files, braille, or large print. Tools that work with your screen reader. A described layout of a new room. And time to learn a new route.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Say one barrier, and who can change it.",
+      "sub": "Out loud, or in a voice note.",
+      "say": "Let's try something right now. Think of one barrier you ran into this month. Say it out loud, or record a quick voice note. Then name one person or office who could change it.",
+      "beats": [
+       "Let's try something right now.",
+       "Think of one barrier you ran into this month.",
+       "Say it out loud, or record a quick voice note.",
+       {
+        "t": "Then name one person or office who could change it.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Things that help",
+      "items": [
+       [
+        "Getting around",
+        "Transit, rides, training"
+       ],
+       [
+        "Your space",
+        "Set up your way"
+       ],
+       [
+        "Your people",
+        "Mentors who have been there"
+       ]
+      ],
+      "say": "Here are things that help. Plan getting around, with transit, rides, and training for new routes if it fits you. Set up your space your way, and ask others to keep things where you put them. And find your people, including blind mentors who've been there.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "If your vision is changing",
+      "sub": "Learning new tools takes time.",
+      "say": "If your vision is changing, this can be a season of real loss, and real learning. Keep your eye appointments, and ask about low vision services. In Minnesota, State Services for the Blind helps with work, independent living, and access to print."
+     },
+     {
+      "k": "big",
+      "h": "Your way works.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You get things done your way, and your way works. Asking for access is normal. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-blind-low-vision-helper",
+    "guide": "blind-low-vision",
+    "side": "helper",
+    "title": "Blind or Low Vision",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family member, partner, or friend of a blind or low vision young adult: ask first, say who you are, and follow their lead.",
+    "sources": [
+     "socialmodel"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Blind or Low Vision",
+      "sub": "For the Helper",
+      "say": "This is for the parent, sibling, partner, or friend of a young adult who is blind or has low vision. Most want what anyone their age wants: to do things themselves, with access that works."
+     },
+     {
+      "k": "big",
+      "h": "Ask, then follow their lead.",
+      "sub": "Want a hand, or are you good?",
+      "say": "It's natural to want to help. The most respectful help starts with a question. Want a hand, or are you good? If they say no, that's a full answer. If they say yes, ask how they like it done."
+     },
+     {
+      "k": "points",
+      "h": "Small habits that help",
+      "items": [
+       [
+        "Say who you are",
+        "And when you leave"
+       ],
+       [
+        "Be specific",
+        "Ten steps, on your left"
+       ],
+       [
+        "Offer your elbow",
+        "Let them take it"
+       ],
+       [
+        "Share accessible files",
+        "Not photos of text"
+       ]
+      ],
+      "say": "Here are small habits that help. Say who you are when you walk up, and say when you're leaving. Be specific with directions: about ten steps, on your left, not over there. If they want a guide, offer your elbow and let them take it. And send things in formats they can use, not photos of text.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Describe the room you are in.",
+      "sub": "Out loud, clearly and simply.",
+      "say": "Let's practice being specific. Look around the room you're in right now. Out loud, describe how to get from where you sit to the door: the distance, the turns, and anything in the way.",
+      "beats": [
+       "Let's practice being specific.",
+       "Look around the room you're in right now.",
+       {
+        "t": "Out loud, describe how to get from where you sit to the door: the distance, the turns, and anything in the way.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "Grabbing an arm or a cane",
+       "Petting a working guide dog",
+       "Talking to their companion"
+      ],
+      "say": "Some habits are worth setting aside. Grabbing their arm or their cane without asking. Petting or distracting a working guide dog. And talking to the person with them, instead of to them."
+     },
+     {
+      "k": "big",
+      "h": "Ordinary, not amazing.",
+      "sub": "Respect, not inspiration.",
+      "say": "Try not to act amazed when they do ordinary things, or call them an inspiration for living their life. What they want is respect, and the same expectations you'd have for anyone their age. Moving their things without telling them can also undo a lot of careful setup."
+     },
+     {
+      "k": "big",
+      "h": "Stepping back is help too.",
+      "sub": "Often the most respectful kind.",
+      "say": "Stepping back can be harder than stepping in. If they ask for a ride or a hand, help gladly, without making it a favor they owe you. And let them lead the rest."
+     },
+     {
+      "k": "big",
+      "h": "Ask. Describe. Step back.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Ask first. Be specific. Say who you are. And follow their lead. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "dating-disability",
+   "ring": "life",
+   "title": "Dating and Marriage With a Disability or Illness",
+   "you": {
+    "id": "br-g-dating-disability-you",
+    "guide": "dating-disability",
+    "side": "you",
+    "title": "Dating and Marriage With a Disability or Illness",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult dating or married with a disability or illness: your worth, your timing, and partners who treat you as an equal.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Dating and Marriage With a Disability or Illness",
+      "sub": "For You",
+      "say": "If you live with a disability or a health condition and you're dating, in a relationship, or thinking about marriage, this is for you. You deserve love and respect, and you have a lot to offer."
+     },
+     {
+      "k": "big",
+      "h": "Love is for you too.",
+      "sub": "Just as you are.",
+      "say": "People with disabilities and health conditions date, fall in love, and build good marriages every day. If you've ever wondered whether anyone would want you, that worry is common. It isn't the truth about you. You bring as much to a relationship as anyone does: your humor, your care, your honesty, and everything you've learned."
+     },
+     {
+      "k": "big",
+      "h": "When to tell is your choice.",
+      "sub": "Early, or once there is trust.",
+      "say": "When and how to tell someone is your choice. Some people share early, on a profile or before a first date, to see who stays. Others wait until there's some trust. Either way is okay."
+     },
+     {
+      "k": "big",
+      "h": "Say your first sentence.",
+      "sub": "Short, matter-of-fact, and yours.",
+      "say": "Let's find your words. Think about what you'd want a new date to know. Say your first sentence out loud, short and matter-of-fact, like: I use a wheelchair, so let's pick a place with access with no steps.",
+      "beats": [
+       "Let's find your words.",
+       "Think about what you'd want a new date to know.",
+       {
+        "t": "Say your first sentence out loud, short and matter-of-fact, like: I use a wheelchair, so let's pick a place with access with no steps.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Watch how they respond",
+      "items": [
+       [
+        "Good signs",
+        "Curiosity and respect"
+       ],
+       [
+        "Move on",
+        "Pity, pressure, or jokes"
+       ],
+       [
+        "Not love",
+        "Control or threats"
+       ]
+      ],
+      "say": "Then watch how they respond. Curiosity and respect are good signs. Pity, pressure, or jokes at your expense are good reasons to move on. And love that controls, isolates, or threatens you isn't love. Love Is Respect can talk it through with you, by call, text, or chat, any time.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Partners first.",
+      "sub": "Share the care. Keep your people.",
+      "say": "In a long relationship, stay partners first. A partner can help with some things, and outside help can carry others. Keep your own friends, interests, and care team, so your partner is one support among several."
+     },
+     {
+      "k": "card",
+      "title": "Before you marry or move in",
+      "body": "Ask about your benefits first. In Minnesota: Disability Hub MN.",
+      "say": "If you receive disability benefits, ask before you marry or move in together, because household rules can change benefits. In Minnesota, Disability Hub can help you understand your options."
+     },
+     {
+      "k": "big",
+      "h": "You decide when to share your story.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "The right person will want to know all of you. You decide when to share your story. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-dating-disability-helper",
+    "guide": "dating-disability",
+    "side": "helper",
+    "title": "Dating and Marriage With a Disability or Illness",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family member, friend, or partner of a young adult dating with a disability or illness: cheer them on, respect their choices, and share the load.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Dating and Marriage With a Disability or Illness",
+      "sub": "For the Helper",
+      "say": "This is for the parent, sibling, friend, or partner of a young adult dating with a disability or a health condition. They have the same hopes as anyone: love, respect, and a life together."
+     },
+     {
+      "k": "big",
+      "h": "Cheer them on.",
+      "sub": "Protective is natural. Trust them.",
+      "say": "Feeling protective is natural. You might worry about rejection, or about someone taking advantage. They're an adult, and they get to take the same risks anyone does. Cheer them on, and be a safe place to land."
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Treat it as ordinary",
+        "Interest and an invitation"
+       ],
+       [
+        "Practical help",
+        "Rides, accessible places"
+       ],
+       [
+        "Talk to them",
+        "Not about them"
+       ]
+      ],
+      "say": "Here's what helps. Treat their relationships the way you'd treat anyone's, with interest and an invitation to the next family dinner. Offer practical help if they ask, like a ride or an accessible place to meet. And talk to them, not about them, especially in front of their partner.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Say it to them this week.",
+      "sub": "One true, encouraging sentence.",
+      "say": "Here's something to do right now. Think of one true thing you love about the young adult you're helping. Shape it into a sentence you could say to them this week, like: anyone would be lucky to be with you.",
+      "beats": [
+       "Here's something to do right now.",
+       "Think of one true thing you love about the young adult you're helping.",
+       {
+        "t": "Shape it into a sentence you could say to them this week, like: anyone would be lucky to be with you.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "Are you sure they like you?",
+       "They might leave when it gets hard.",
+       "Telling their dates for them"
+      ],
+      "say": "Some words close the door. Are you sure they really like you? They might leave when it gets hard. And telling their dates about their condition for them. That's their story to share."
+     },
+     {
+      "k": "big",
+      "h": "If you are the partner",
+      "sub": "Partners first. Share the care.",
+      "say": "If you're the partner, stay partners first. Talk openly about which things you'll help with and where you'll get other help. Keep your own friends and rest. That protects the love between you."
+     },
+     {
+      "k": "card",
+      "title": "If you see control or threats",
+      "body": "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522.",
+      "say": "If you see signs of control, isolation, or threats, say what you notice, gently and without blame. Love Is Respect helps people thirteen to twenty six, and the people who care about them, by call, text, or chat, any time. If there's danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Trust them. Be a safe place.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Watching someone you love risk their heart is hard. Trust them, and be a safe place to land. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "young-carer",
+   "ring": "life",
+   "title": "Caring for a Parent or Sibling in Your Twenties",
+   "you": {
+    "id": "br-g-young-carer-you",
+    "guide": "young-carer",
+    "side": "you",
+    "title": "Caring for a Parent or Sibling in Your Twenties",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult helping care for a parent or a sibling: naming what you carry, sharing it, and keeping your own life.",
+    "sources": [
+     "aarpcg"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Caring for a Parent or Sibling in Your Twenties",
+      "sub": "For You",
+      "say": "If you help care for a parent, a brother or sister, or someone else in your family, this is for you. What you do matters. So do you."
+     },
+     {
+      "k": "big",
+      "h": "You are a caregiver.",
+      "sub": "Naming it helps.",
+      "say": "Rides, meds pickups, meals, appointments, watching a sibling, being the calm one. If that's your week, you're a caregiver. Nearly one in four adults in this country gives this kind of care. Naming it helps you find support, and it explains why you're tired."
+     },
+     {
+      "k": "big",
+      "h": "Love and tiredness, together.",
+      "sub": "Both are allowed.",
+      "say": "Caring can bring love, pride, and real skill. It can also bring tiredness, worry, and feeling out of step with friends. You might feel guilty for wanting time for yourself. All of that can be true at once, and none of it means you love them less."
+     },
+     {
+      "k": "big",
+      "h": "Circle one thing to share.",
+      "sub": "And who could take it.",
+      "say": "Let's look at your week. Think of everything you do to help. Pick one thing someone else could share. Name who you could ask this week, like a relative, a friend, or the care team.",
+      "beats": [
+       "Let's look at your week.",
+       "Think of everything you do to help.",
+       "Pick one thing someone else could share.",
+       {
+        "t": "Name who you could ask this week, like a relative, a friend, or the care team.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Help that exists",
+      "items": [
+       [
+        "The care team",
+        "Services, a social worker"
+       ],
+       [
+        "School or work",
+        "Flexibility for caregivers"
+       ],
+       [
+        "Other caregivers",
+        "People who get it"
+       ]
+      ],
+      "say": "Help exists. Ask the person's care team about services, like respite care, home help, or a social worker. Ask your school or job about flexibility for family caregivers. And find other young caregivers, online or in person. Being understood without explaining is a relief.",
+      "cue": {
+       "at": [
+        1,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Your own life counts.",
+      "sub": "School, work, friends, rest, plans.",
+      "say": "You're allowed to have your own life too: school, work, friends, rest, and plans for the future. Put one thing just for you on the calendar, and treat it like an appointment. Sharing the care is what makes it last."
+     },
+     {
+      "k": "words",
+      "h": "Words you might use",
+      "items": [
+       "Could you take Tuesdays?",
+       "I still want to be invited.",
+       "Can we talk about flexibility?"
+      ],
+      "say": "You might say to a relative: I've been doing most of the appointments. Could you take Tuesdays? To a friend: I can't always come out, but I still want to be invited. And to a boss: can we talk about some flexibility?"
+     },
+     {
+      "k": "big",
+      "h": "Asking for help keeps you able to help.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can love your family and still need a life of your own. Asking for help keeps you able to help. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-young-carer-helper",
+    "guide": "young-carer",
+    "side": "helper",
+    "title": "Caring for a Parent or Sibling in Your Twenties",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the parent, relative, friend, or mentor of a young adult caregiver: notice, share the load, and protect their future.",
+    "sources": [
+     "aarpcg"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Caring for a Parent or Sibling in Your Twenties",
+      "sub": "For the Helper",
+      "say": "This is for the parent, relative, friend, or mentor of a young adult who helps care for someone in their family. They're often carrying more than most people their age, and quietly."
+     },
+     {
+      "k": "big",
+      "h": "Notice what they carry.",
+      "sub": "And ask how they are.",
+      "say": "Young caregivers often don't call themselves caregivers. They just do it. Notice what they carry, and say so. Then ask how they're really doing, and listen without rushing to fix it. Many have never been asked. Being seen can matter as much as any practical help."
+     },
+     {
+      "k": "points",
+      "h": "Ways to share the load",
+      "items": [
+       [
+        "One regular task",
+        "A ride, a meal, a few hours"
+       ],
+       [
+        "Fair shares",
+        "Plan as a family"
+       ],
+       [
+        "Outside help",
+        "Respite, a social worker"
+       ]
+      ],
+      "say": "Here are ways to share the load. Take one specific task regularly, like a ride, a meal, or a few hours with the person they care for. If you're family, share the care fairly, and plan together for the long term. And help them look into outside help, like respite care or a social worker.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Pick the one thing you will take.",
+      "sub": "Specific, regular, and yours.",
+      "say": "Let's make it real. Think of the caregiver you know and the week they have. Choose one specific thing you could take on regularly. Decide when you'll offer it.",
+      "beats": [
+       "Let's make it real.",
+       "Think of the caregiver you know and the week they have.",
+       "Choose one specific thing you could take on regularly.",
+       {
+        "t": "Decide when you'll offer it.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words that help",
+      "items": [
+       "How are you doing?",
+       "What could I take off your plate?",
+       "Your own life matters too."
+      ],
+      "say": "Words that help. You do so much for your family. How are you doing? What's one thing I could take off your plate this week? And, it's okay to want your own life too."
+     },
+     {
+      "k": "words",
+      "h": "Gently set these aside",
+      "items": [
+       "You're such a good kid.",
+       "You'll always be the one.",
+       "Dropping the invitations"
+      ],
+      "say": "Some habits are worth setting aside. Only ever saying, you're such a good kid, which can make it harder to admit they're struggling. Assuming they'll always be the one who stays. And dropping the invitations because plans keep getting canceled."
+     },
+     {
+      "k": "big",
+      "h": "Protect their future.",
+      "sub": "School, work, and plans of their own.",
+      "say": "Encourage their own plans for school, work, or a move, and help make them possible. A young caregiver shouldn't have to choose between their family and their future without people helping them find a way."
+     },
+     {
+      "k": "big",
+      "h": "Notice. Share. Protect.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Caring for the caregiver is quiet, important work. If you're caring for the same person, your own rest matters too. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "faith-disability",
+   "ring": "life",
+   "title": "Faith and Disability: Finding a Community That Welcomes You",
+   "you": {
+    "id": "br-g-faith-disability-you",
+    "guide": "faith-disability",
+    "side": "you",
+    "title": "Faith and Disability: Finding a Community That Welcomes You",
+    "sideName": "For You",
+    "mins": 3,
+    "blurb": "For the young adult with a disability or an illness: faith as strength or struggle, the questions that come, and a community that welcomes you.",
+    "sources": [
+     "carter19",
+     "rcope"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Faith and Disability: Finding a Community That Welcomes You",
+      "sub": "For You",
+      "say": "If you live with a disability or an illness and faith is part of your life, or used to be, this is for you. Whatever your tradition, and wherever you are with it, you're welcome here."
+     },
+     {
+      "k": "big",
+      "h": "Strength, struggle, or both.",
+      "sub": "Both are real.",
+      "say": "For many people, faith is a deep source of strength through illness and disability. For others, it brings hard questions, or hurt. Many feel both. Wherever you are, your experience is real, and it's worth listening to."
+     },
+     {
+      "k": "points",
+      "h": "Belonging is more than the door",
+      "items": [
+       [
+        "Invited",
+        "Someone asks you to come"
+       ],
+       [
+        "Welcomed",
+        "You can get in and follow along"
+       ],
+       [
+        "Known",
+        "By name, not by need"
+       ],
+       [
+        "Needed",
+        "Your gifts are used"
+       ]
+      ],
+      "say": "Belonging is more than getting in the door. It's being invited. It's being welcomed, with a way in and a way to follow along. It's being known by name, not by your needs. And it's being needed, with your gifts put to use.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "What would welcome look like?",
+      "sub": "Three things, in your own words.",
+      "say": "Let's picture it. Think of a faith community you belong to, or one you'd like to find. Name three things that would help you feel truly welcome there, like a ramp, captions, a quiet seat, or a role that's yours.",
+      "beats": [
+       "Let's picture it.",
+       "Think of a faith community you belong to, or one you'd like to find.",
+       {
+        "t": "Name three things that would help you feel truly welcome there, like a ramp, captions, a quiet seat, or a role that's yours.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "It is fair to ask.",
+      "sub": "Access is part of welcome.",
+      "say": "It's fair to ask a community for access: entry with no steps, an interpreter, captions on the livestream, large print, a quieter seat, or a ride. And worship from home, online, by audio, or in a short quiet practice counts fully."
+     },
+     {
+      "k": "big",
+      "h": "Why me?",
+      "sub": "Your questions are welcome.",
+      "say": "Questions like why me, or is this a punishment, are common. Many traditions have long, honest words for suffering, including lament. Bring your questions to someone you trust. You don't have to settle them alone, or quickly."
+     },
+     {
+      "k": "words",
+      "h": "Words for when prayer feels like pressure",
+      "items": [
+       "Please ask me first.",
+       "Pray for my peace.",
+       "I belong as I am."
+      ],
+      "say": "If someone pushes healing, or suggests you'd be well with more faith, you can set a limit. Please ask me first. I'd love prayers for my peace and strength. And remember, you belong just as you are. Leaving a community that keeps hurting you isn't leaving your faith."
+     },
+     {
+      "k": "big",
+      "h": "You belong, just as you are.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Many communities are richer because people with disabilities teach, lead, and serve in them. You belong, just as you are. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "br-g-faith-disability-helper",
+    "guide": "faith-disability",
+    "side": "helper",
+    "title": "Faith and Disability: Finding a Community That Welcomes You",
+    "sideName": "For the Helper",
+    "mins": 3,
+    "blurb": "For the family member, friend, or faith leader of a young adult with a disability or illness: listen to their experience, and help the community make room.",
+    "sources": [
+     "carter19"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "birch",
+      "eyebrow": "When Life Changes",
+      "h": "Faith and Disability: Finding a Community That Welcomes You",
+      "sub": "For the Helper",
+      "say": "This is for the family member, friend, partner, or faith leader of a young adult with a disability or an illness, where faith is part of the picture. Your part is to listen, and to help make room."
+     },
+     {
+      "k": "big",
+      "h": "Ask about experience.",
+      "sub": "Never argue belief.",
+      "say": "Start with their experience, not with answers. You might ask: has your faith been more of a comfort or a struggle lately? Then listen. They may have deep faith, have stepped away, or be somewhere in-between. Never try to argue them into belief, or out of it."
+     },
+     {
+      "k": "words",
+      "h": "Words that wound",
+      "items": [
+       "This happened for a reason.",
+       "You'd be healed with more faith.",
+       "Praying without asking"
+      ],
+      "say": "Some words, often meant kindly, wound deeply. This happened for a reason, or it's a test. You'd be healed if you believed enough. And praying over someone, or touching them, without asking first. Set these aside."
+     },
+     {
+      "k": "big",
+      "h": "Walk your own building.",
+      "sub": "Where would they get stuck?",
+      "say": "Let's look at your own community. Picture walking in the door of your place of worship, or one you know. Notice one place someone using a wheelchair, someone who is Deaf, or someone who needs quiet would get stuck. Decide who you'll tell about it.",
+      "beats": [
+       "Let's look at your own community.",
+       "Picture walking in the door of your place of worship, or one you know.",
+       "Notice one place someone using a wheelchair, someone who is Deaf, or someone who needs quiet would get stuck.",
+       {
+        "t": "Decide who you'll tell about it.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways to help",
+      "items": [
+       [
+        "Ask ahead",
+        "About access, and go along"
+       ],
+       [
+        "Invite their gifts",
+        "To serve, lead, teach"
+       ],
+       [
+        "Help them find a fit",
+        "If theirs keeps hurting"
+       ]
+      ],
+      "say": "Here are ways to help. Ask about access ahead of time, and go with them the first time if they'd like. Invite them to serve, lead, or teach, not only to receive. And if their community keeps hurting them, help them find one that welcomes them.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Hold the hard questions.",
+      "sub": "Without rushing to answer.",
+      "say": "If they ask why, you don't have to have an answer. Listening, staying, and saying, your questions are welcome with me, often helps more than any explanation. Many traditions have honest words for lament, and they can hold both of you."
+     },
+     {
+      "k": "big",
+      "h": "Belonging has many parts.",
+      "sub": "Invited, welcomed, known, needed.",
+      "say": "Belonging has many parts: being invited, welcomed, known, and needed. Any one of those, offered by you, makes a difference. You can't fix every community, and you don't have to. Your welcome counts."
+     },
+     {
+      "k": "big",
+      "h": "Listen. Make room. Stay.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Listen to their experience. Make room in your community. Stay with the questions. The full guide has more, whenever you want it."
      }
     ]
    }
