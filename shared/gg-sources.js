@@ -33,6 +33,16 @@
   var SRC = {
     // The Kathy story's verse (1 Corinthians 13:1) in the ESV (Chris, October 7, 2026).
     esv: ["Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. ESV Text Edition: 2025. The ESV text may not be quoted in any publication made available to the public by a Creative Commons license. The ESV may not be translated in whole or in part into any other language. Used by permission. All rights reserved.", "https://www.esv.org"],
+    // BLD 751 The Grounded Marriage (Practices for Two, the session videos) and BLD 752 Premarital Guide Training.
+    kellerman89: ["Kellerman, Lewis, and Laird, looking and loving: the effects of mutual gaze on feelings of romantic love (Journal of Research in Personality, 1989)", "https://doi.org/10.1016/0092-6566(89)90020-2"],
+    helm14: ["Helm, Sbarra, and Ferrer, coregulation of respiratory sinus arrhythmia in adult romantic partners (Emotion, 2014)", "https://doi.org/10.1037/a0035960"],
+    carson04: ["Carson, Carson, Gil, and Baucom, Mindfulness-Based Relationship Enhancement (Behavior Therapy, 2004)", "https://doi.org/10.1016/S0005-7894(04)80028-5"],
+    aron00: ["Aron, Norman, Aron, McKenna, and Heyman, couples' shared participation in novel and arousing activities and experienced relationship quality (Journal of Personality and Social Psychology, 2000)", "https://doi.org/10.1037/0022-3514.78.2.273"],
+    gable04: ["Gable, Reis, Impett, and Asher, what do you do when things go right? The benefits of sharing positive events (Journal of Personality and Social Psychology, 2004)", "https://doi.org/10.1037/0022-3514.87.2.228"],
+    mn51708: ["Minnesota Statutes 517.08, application for a marriage license: the reduced fee with 12 hours of premarital education and the Educator's Statement", "https://www.revisor.mn.gov/statutes/cite/517.08"],
+    mn51704: ["Minnesota Statutes 517.04, persons authorized to solemnize civil marriages: registering as a civil marriage officiant with a county (effective July 1, 2025)", "https://www.revisor.mn.gov/statutes/cite/517.04"],
+    hcofficiant: ["Hennepin County, Marriage Officiants: the Certificate of Filing for Marriage Officiant, notarizing, the fee, and returning the marriage certificate", "https://www.hennepincounty.gov/services/licenses-certificates/marriage/marriage-officiants"],
+    prepenrich: ["PREPARE/ENRICH, the couple assessment and its facilitator certification", "https://www.prepare-enrich.com"],
     // BLD 750 Before the Vows (worker Q). Reused: stanley06, rcope.
     larson94: ["Larson and Holman, premarital predictors of marital quality and stability (Family Relations, 1994)", "https://doi.org/10.2307/585327"],
     halford03: ["Halford, Markman, Kline, and Stanley, best practices in couple relationship education (Journal of Marital and Family Therapy, 2003)", "https://scholarsarchive.byu.edu/facpub/4257"],
