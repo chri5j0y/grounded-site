@@ -396,6 +396,12 @@
     uabspirit: ["University of Alabama at Birmingham, spiritual coping a predictor of mental health in teens with chronic illness (study news)", "https://www.uab.edu/news/latest/item/2962-uab-study-spiritual-coping-a-predictor-of-mental-health"],
     /* GWG BLD 759 (HA 3): Guide Training sources. */
     bury82: ["Michael Bury, chronic illness as biographical disruption (Sociology of Health and Illness, 1982)", ""],
+    /* GWG BLD 763: Hospital Guide sources. */
+    davidson17: ["Davidson and colleagues, Guidelines for Family-Centered Care in the Neonatal, Pediatric, and Adult ICU (Critical Care Medicine, 2017)", "https://doi.org/10.1097/CCM.0000000000002169"],
+    lautrette07: ["Lautrette and colleagues, a communication strategy and brochure for relatives of patients dying in the ICU (NEJM, 2007)", "https://doi.org/10.1056/NEJMoa063446"],
+    jabre13: ["Jabre and colleagues, family presence during cardiopulmonary resuscitation (NEJM, 2013)", "https://doi.org/10.1056/NEJMoa1203366"],
+    bartels: ["Jonathan Bartels, The Pause after a patient's death (University of Virginia Health, 2009)", ""],
+    codelavender: ["Code Lavender, a rapid support response for staff (Cleveland Clinic, 2008)", ""],
 };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
