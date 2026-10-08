@@ -394,6 +394,8 @@
     sqhappc: ["Mary Tinetti and colleagues, Patient Priorities Care: focusing on what matters most for older adults with several conditions (Yale School of Medicine)", "https://medicine.yale.edu/news-article/for-older-patients-focusing-on-what-matters-most-is-often-the-best-medicine"],
     sqhapsd: ["Hackett and colleagues, frequency of depression after stroke: a systematic review of observational studies (Stroke, 2005)", "https://pubmed.ncbi.nlm.nih.gov/15879342/"],
     uabspirit: ["University of Alabama at Birmingham, spiritual coping a predictor of mental health in teens with chronic illness (study news)", "https://www.uab.edu/news/latest/item/2962-uab-study-spiritual-coping-a-predictor-of-mental-health"],
+    /* GWG BLD 759 (HA 3): Guide Training sources. */
+    bury82: ["Michael Bury, chronic illness as biographical disruption (Sociology of Health and Illness, 1982)", ""],
 };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.

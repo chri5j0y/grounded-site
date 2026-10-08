@@ -637,7 +637,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js"></script>
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=b757"></script>
+<script src="../shared/gg-sources.js?v=b759"></script>
 <script src="../shared/gg-learn.js?v=b758"></script>
 <script src="../shared/gg-print.js?v=b758"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
@@ -1296,9 +1296,12 @@ function vTraining(){
     {k: 'levels', title: 'Three Levels and My Progress', desc: 'Three levels for every service, and a place to check off each one.', n: ticks + ' of ' + tAll + ' checked'},
     {k: 'scen', title: 'Practice Scenarios', desc: 'Role-plays to practice with Chris or another practitioner.', n: T.scenarios.length + (T.scenarios.length === 1 ? ' scenario' : ' scenarios')},
     {k: 'agree', title: 'Practitioner Agreement', desc: 'Read it, agree, and save or print it to sign. Your certificate is here too.', n: DATA.training.agreed ? 'Agreed ' + nice(DATA.training.agreed) : 'Ready to read and agree'},
-    PGM() ? {title: PGM().title || 'Premarital Guide Training', desc: 'Lessons, scenarios, and the agreement for leading The Grounded Marriage. Your certificate and poster are here too.', n: trainNote(pgmState()), act: 'pg-mhome'} : null];
+    PGM() ? {title: PGM().title || 'Premarital Guide Training', desc: 'Lessons, scenarios, and the agreement for leading The Grounded Marriage. Your certificate and poster are here too.', n: trainNote(pgmState()), act: 'pg-mhome'} : null,
+    LGM() ? lgmCardInfo() : null];
   // Premarital Guide Training opens right here for Staff and Founders, with the same saved progress Field users keep (DATA.pgmod).
   if (V.pgm && PGM()) return pgTint(vPGM());
+  // Walking with Illness and Disability: Guide Training (BLD 759) opens here too, with the progress Field users keep in Learn (DATA.lgmod).
+  if (V.lgm && LGM()) return lgTint(vLGM());
   const C = secPick('training', cards), part = {welcome: wel, core, levels: lev, scen, agree: agr}[C];
   if (part) return secPage('training', 'Back to Training', part);
   return head + orH + secCards('training', cards);
@@ -1325,6 +1328,7 @@ function vFieldHome(){
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
   ${sgHomeCard()}
+  ${lgHomeCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
   ${sqOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SQG().title)}</h3><p class="muted">${esc(SQG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sequoia">${icon('sequoia')} Open</button></div></div>` : ''}
   ${spOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SPG().title)}</h3><p class="muted">${esc(SPG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="maple">${icon('maple')} Open</button></div></div>` : ''}
@@ -1597,7 +1601,7 @@ function vFounder(){
   const priceH = `  <div class="card"><h3>Private Pricing</h3><p class="muted">${esc(pr.intro)}</p>
    <div style="margin-top:8px">${pr.tiers.map(t => t.length < 2 || !t[1] ? `<h4 style="margin-top:14px">${esc(t[0])}</h4>` : `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>`;
-  const fieldH = () => `  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
+  const fieldH = () => `  <div class="card"><h3>What Field users see</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}${lgFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Field library yet.</p>'}</div>`;
   const guidesH = () => `  ${FLD ? spFounderCard() : ''}
   ${FLD ? saFounderCard() : ''}
   ${FLD ? `<div class="card"><h3>Pine Guide</h3>${pnFieldRow()}</div>` : ''}
@@ -1743,6 +1747,7 @@ function vLearn(){
   if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
   if (V.wfg) return vWFG();
   if (V.sg) return vSG();
+  if (V.lgm && lgOpen()) return lgTint(vLGM());
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
   const counted = tracks.filter(t => t.kind !== 'setup'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
@@ -1754,6 +1759,8 @@ function vLearn(){
   const back = (act, v, label) => `<button class="linkbtn" data-act="${act}"${v ? ` data-v="${esc(v)}"` : ''}>&larr; ${esc(label)}</button>`;
   const cats = [{k: 'les', eb: 'Lessons', title: 'Learn Step by Step', intro: 'How Grow With Grounded and the Field Guide work, in order. Start with Get Set Up.', n: `${fin} of ${all} lessons finished`, accent: 'var(--gold)'}];
   if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
+  // Field users take Walking with Illness and Disability: Guide Training here, once it is open to them (BLD 759).
+  if (lgOpen()){ const g = lgmCardInfo(); cats.push({k: 'lg', eb: 'Guide Training', title: g.title, intro: g.desc, n: g.n, accent: LG_C, act: 'lg-mhome'}); }
   ['willow', 'oak', 'sequoia', 'pine', 'birch', 'aspen', 'maple'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
   const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
   if (C === 'les') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow">Lessons</div><h1>Learn Step by Step</h1><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>${lessonCards()}</div>`;
@@ -1766,7 +1773,7 @@ function vLearn(){
   }
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p></div>
   ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
-  <div class="lc-cats">${cats.map(c => `<button class="card lc-cat" style="border-left-color:${c.accent}" data-act="lc-cat" data-v="${esc(c.k)}"><div class="eyebrow" style="color:${c.accent}">${esc(c.eb)}</div><h3>${esc(c.title)}</h3>${c.intro ? `<p class="muted">${esc(c.intro)}</p>` : ''}<p class="lc-n">${esc(c.n)}</p></button>`).join('')}</div>
+  <div class="lc-cats">${cats.map(c => `<button class="card lc-cat" style="border-left-color:${c.accent}" data-act="${c.act || 'lc-cat'}" data-v="${esc(c.k)}"><div class="eyebrow" style="color:${c.accent}">${esc(c.eb)}</div><h3>${esc(c.title)}</h3>${c.intro ? `<p class="muted">${esc(c.intro)}</p>` : ''}<p class="lc-n">${esc(c.n)}</p></button>`).join('')}</div>
   <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'field' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p></div>`;
 }
 // Where Learn was left (category and group), so coming back from a video lands in the same place.
@@ -7256,6 +7263,185 @@ async function pgSetField(on){
   V.upd = {lvl:'field', title: on ? 'Open Premarital Guide to Field users' : 'Close Premarital Guide to Field users', note:'', rows:[['Replaces', 'premaritalGuide.open.field']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
+// ---------------- WALKING WITH ILLNESS AND DISABILITY: GUIDE TRAINING (GWG BLD 759) ----------------
+// Training for every Guide who walks with someone living with illness or disability, at any age (Health and Ability).
+// Wording lives in the Field library (FLD.lifeGuide: title, open, version, lead, intro, module, and an optional cert
+// line); the module has Birch Guide Training's shape (six video lessons with Read It Instead, scenarios, pass mark,
+// agreement) and is played the same way. Staff and Founders open it in the Training tab. Field users open it in Learn
+// once lifeGuide.open.field is on and Orientation is done (lgOpen). Progress lives in DATA.lgmod and is kept in a
+// backup. It opens no tools and gates nothing: it adds a Certificate of Completion, renewed yearly.
+const LGG = () => (FLD && FLD.lifeGuide) || null;
+const LGM = () => { const G = LGG(), M = G && G.module; return M && Array.isArray(M.lessons) && M.lessons.length && M.quiz && Array.isArray(M.quiz.items) && M.agreement ? M : null; };
+const lgOpen = () => TIER === 'field' && !!LGM() && !!(LGG().open && LGG().open.field) && (!OR() || orState().complete);
+const lgOn = () => !!LGM() && (TIER !== 'field' || lgOpen());
+const lgmTab = () => TIER === 'field' ? 'learn' : 'training';
+const LG_C = '#3F7C9C', LG_CD = '#8CC0DB'; // the Health and Ability ring color (shared/gg-life-kit.js), and its dark-mode partner
+const lgTint = html => `<div class="pg-tint" style="--pg:${LG_C};--pgd:${LG_CD}">${html}</div>`;
+const lgHello = (eb, title, p, extra) => `<div class="hello pg-hello"${extra || ''}><div class="eyebrow" style="color:#DCEDF6">${eb}</div><h1>${esc(title)}</h1><p>${p}</p>`;
+const lgmBack = () => TIER === 'field' ? `<button class="linkbtn" data-act="lc-home">&larr; Back to Learn</button>` : `<button class="linkbtn" data-tab="training">&larr; Back to Training</button>`;
+function lgmData(){ DATA.lgmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.lgmod || {}); return DATA.lgmod; }
+const lgmFree = () => { const D = lgmData(); return lgmState().complete || !!(D.pass || D.signed); };
+const lgmOpen = i => { const M = LGM(), D = lgmData(); return i <= 0 || lgmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
+function lgmTrack(){ const M = LGM(); return {id:'lg-training', title:M.title, lessons:M.lessons.map((l, i) => ({id:l.id, n:i + 1, title:l.title, mins:l.minutes, sources:l.sources || [], scenes:(l.video && l.video.scenes) || []})).filter(l => l.scenes.length)}; }
+function lgmState(){
+  const M = LGM(), D = lgmData(), t = today();
+  if (!M) return {complete:false, total:0, done:0};
+  const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
+  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
+  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
+}
+// The Training card (Staff and Founders) and the Learn card (Field users) both open the training home.
+const lgmCardInfo = () => ({title: LGM().title || 'Walking with Illness and Disability: Guide Training', desc: LGG().lead || 'Lessons, scenarios, and the agreement for walking with people living with illness or disability.', n: trainNote(lgmState()), act: 'lg-mhome', accent: LG_C});
+// Field Home: a quiet card while the training is open and not yet complete, or due for renewal.
+function lgHomeCard(){
+  if (!lgOpen()) return '';
+  const m = lgmState();
+  if (m.complete && !m.dueSoon) return '';
+  return `<div class="card" style="margin-top:14px;border-left:4px solid ${LG_C}"><div class="spread"><div><h3>${esc(LGG().title || LGM().title)}</h3><p class="muted">${esc(m.dueSoon ? 'Renew by ' + nice(m.renewBy) + '.' : LGG().lead || '')}</p></div><button class="btn btn-gold btn-sm" data-act="lg-mhome">${m.done ? (m.dueSoon ? 'Renew' : 'Continue') : 'Start'}</button></div>${m.complete ? '' : orBar(m.done, m.total)}</div>`;
+}
+function vLGM(){
+  const M = LGM(), D = lgmData(), s = lgmState(), G = LGG();
+  if (!M) return `${lgmBack()}<div class="card" style="margin-top:14px"><p>This training arrives with the next Field library update.</p></div>`;
+  if (V.lgml !== undefined) return vLGMLesson(V.lgml);
+  if (V.lgq) return V.lgq.done ? vLGMResult() : vLGMQ();
+  if (V.lgs) return vLGMSign();
+  const step = (act, v, n, done, title, sub, off) => `<button class="or-step ${done ? 'done' : ''}" data-act="${act}"${v !== null ? ` data-v="${v}"` : ''}${off ? ' disabled aria-disabled="true"' : ''}><span class="n">${done ? icon('check') : n}</span><span><b>${esc(title)}</b><small>${sub}</small></span>${off ? '' : '<span class="arr" aria-hidden="true">&rsaquo;</span>'}</button>`;
+  const qSub = s.pass ? `Passed ${nice(D.pass.date)} with ${D.pass.score} of ${M.quiz.items.length}` : !s.lessons ? 'Opens after the lessons' : `You need ${M.quiz.pass} of ${M.quiz.items.length}. Retake as often as you like.`;
+  const intro = (G.intro && G.intro.length ? G.intro : M.intro || []);
+  return `${lgmBack()}
+  ${lgHello('Health and Ability', M.title, s.complete ? `Complete. Renew by ${nice(s.renewBy)}.` : s.renewing ? 'Time to renew: retake the scenarios and sign again.' : esc(M.intro[0] || G.lead || ''), ' style="margin-top:14px"')}${orBar(s.done, s.total)}</div>
+  ${s.complete ? '' : `<div class="card">${(M.intro.length > 1 ? M.intro.slice(1) : intro).map((t, i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`}
+  <h3 style="margin:22px 0 10px">Lessons</h3>
+  ${M.lessons.map((l, i) => { const dn = !!D.lessons[l.id], op = lgmOpen(i); return step('lg-ml', i, i + 1, dn, l.title, dn ? `About ${l.minutes} minutes, ${(D.how || {})[l.id] === 'watched' ? 'watched' : 'read'}` : op ? `About ${l.minutes} minutes${l.video ? ', video' : ''}` : `Opens after Lesson ${i}`, !op); }).join('')}
+  <h3 style="margin:22px 0 10px">Practice Scenarios</h3>
+  ${step('lg-mq', null, M.lessons.length + 1, s.pass, `${M.quiz.items.length} scenarios across the ages`, qSub, !s.lessons && !s.pass)}
+  <h3 style="margin:22px 0 10px">Agreement</h3>
+  ${step('lg-msign', null, M.lessons.length + 2, s.signed, M.agreement.title, s.signed ? `Signed ${nice(D.signed.date)} as ${esc(D.signed.name)}` : s.pass ? 'Read it and sign with your name' : 'Opens after you pass the scenarios', !s.pass)}
+  ${s.complete ? `<div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate of Completion</h3><p class="muted">Print or save your Certificate of Completion, and your signed agreement.</p>
+   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="lg-cert">${icon('print')} Certificate</button><button class="btn btn-line btn-sm" data-act="lg-mprint">${icon('print')} Save or Print Agreement</button></div></div>` : ''}`;
+}
+function vLGMLesson(i){
+  const M = LGM(), L = M.lessons[i], n = M.lessons.length;
+  if (!L) return vLGM();
+  if (!lgmOpen(i)) return `<button class="linkbtn" data-act="lg-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>This lesson opens after Lesson ${i}, ${esc(M.lessons[i - 1].title)}.</p></div>`;
+  const vid = stmVid(L), watch = vid && !V.lgread;
+  if (watch){ GGLearn.css(); setTimeout(() => lgmMount(i), 0); }
+  return `<button class="linkbtn" data-act="lg-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div>${watch ? `<h1>${esc(L.title)}</h1>` : ''}</div>
+  ${watch ? `<div class="ggl"><div id="lgm-host"></div></div>
+  <div class="row" style="margin-top:14px"><button class="btn btn-line btn-sm" data-act="lg-mreadit" data-v="1">Read It Instead</button></div>`
+  : `${vid ? `<div class="row" style="margin-bottom:12px"><button class="btn btn-line btn-sm" data-act="lg-mreadit" data-v="0">${icon('play')} Watch the Video</button></div>` : ''}${lessonBody(L)}`}
+  <div id="lgm-foot">${lgmFoot(i)}</div>`;
+}
+function lgmFoot(i){
+  const M = LGM(), L = M.lessons[i], n = M.lessons.length, D = lgmData(), done = !!D.lessons[L.id];
+  const reading = V.lgread || !stmVid(L), all = M.lessons.every(l => D.lessons[l.id]);
+  return `<div class="row" style="margin-top:18px">${done ? `<span class="pill sage">${icon('check')} ${(D.how || {})[L.id] === 'watched' ? 'Watched' : 'Read'}</span>` : reading ? `<button class="btn btn-gold" data-act="lg-mread" data-v="${i}">Mark as Read</button>` : `<span class="muted" style="font-size:15px">Watch to the closing scene, or open Read It Instead.</span>`}
+   ${i > 0 ? `<button class="btn btn-line" data-act="lg-ml" data-v="${i - 1}">Previous Lesson</button>` : ''}
+   ${done && i < n - 1 ? `<button class="btn btn-line" data-act="lg-ml" data-v="${i + 1}">Next Lesson</button>` : ''}
+   ${done && i === n - 1 ? `<button class="btn btn-line" data-act="lg-mhome">Back to training</button>` : ''}</div>
+  ${all && !lgmState().pass ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--sage)"><p><b>Every lesson is done.</b> The practice scenarios are open.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="lg-mq">Start the Scenarios</button></div></div>` : ''}`;
+}
+function lgmMount(i){
+  const host = $('#lgm-host'); if (!host || !window.GGLearn) return;
+  const M = LGM(), L = M.lessons[i], D = lgmData(), tr = lgmTrack(), l = tr.lessons.find(x => x.id === L.id);
+  if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mark: {name: 'Guide Training'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: D.lessons, at: (D.at || {})[L.id] || 0, accent: LG_C,
+    onAt: k => { lastAct = Date.now(); lgmData().at[L.id] = k; save(); }, // a playing lesson must not lock the Field Guide
+    onDone: id => { const d = lgmData(); if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'watched'; save(); } const f = $('#lgm-foot'); if (f) f.innerHTML = lgmFoot(i); },
+    open: id => { const k = M.lessons.findIndex(x => x.id === id); lnStop(); V = {tab:lgmTab(), lgm:1, lgml:k < 0 ? 0 : k}; render(); },
+    home: () => { lnStop(); V = {tab:lgmTab(), lgm:1}; render(); }});
+}
+function lgmNewQuiz(){ const items = LGM().quiz.items; return {order: orShuffle(items.map((_, i) => i)), perm: items.map(it => orShuffle(it.o.map((_, i) => i))), i:0, ans:{}, done:false}; }
+function vLGMQ(){
+  const Q = V.lgq, items = LGM().quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="lg-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card">${it.s ? `<p class="or-scen">${esc(it.s)}</p>` : ''}<p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="lg-mpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="lg-mprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'lg-mfinish' : 'lg-mnext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function lgmFinish(){
+  const M = LGM(), Q = V.lgq, items = M.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = lgmData();
+  D.last = {v:M.version, date:today(), score};
+  if (score >= M.quiz.pass) D.pass = {v:M.version, date:today(), score};
+  save(); Q.done = true; Q.score = score; render();
+}
+function vLGMResult(){
+  const M = LGM(), Q = V.lgq, items = M.quiz.items, n = items.length, ok = Q.score >= M.quiz.pass, s = lgmState();
+  return `<button class="linkbtn" data-act="lg-mhome">Back to training</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'You passed.' : `Not yet. You need ${M.quiz.pass} of ${n}.`}</h2>
+   <div class="row" style="margin-top:14px">${ok ? (s.signed ? `<button class="btn btn-gold" data-act="lg-mhome">Back to training</button>` : `<button class="btn btn-gold" data-act="lg-msign">Sign the Agreement</button>`) : `<button class="btn btn-gold" data-act="lg-mq">Try Again</button><button class="btn btn-line" data-act="lg-mhome">Review Lessons</button>`}</div></div>
+  <div class="card"><h3>Your Answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = M.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Not quite'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s || it.q)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
+}
+function vLGMSign(){
+  const A = LGM().agreement, s = lgmState(), D = lgmData();
+  if (!s.pass) return `<button class="linkbtn" data-act="lg-mhome">Back to training</button><div class="card" style="margin-top:14px"><p>Pass the practice scenarios first.</p></div>`;
+  return `<button class="linkbtn" data-act="lg-mhome">Back to training</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Last step</div><h1>${esc(A.title)}</h1></div>
+  <div class="card"><p>${esc(A.intro)}</p><ul class="checklist" style="margin-top:8px">${A.items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
+  <div class="card">${s.signed ? `<p><span class="pill sage">${icon('check')} Signed</span> ${nice(D.signed.date)} as ${esc(D.signed.name)}.</p>`
+   : `<label class="f" for="lgm-name">Your full name</label><input type="text" id="lgm-name" autocomplete="name" value="${esc(DATA.settings.name || '')}">
+   <label class="cb"><input type="checkbox" id="lgm-ok"> I have read this agreement and I agree to it.</label>
+   <button class="btn btn-gold" style="margin-top:8px" data-act="lg-msigned">Sign Agreement</button>`}</div>`;
+}
+function lgmPrint(){
+  const A = LGM().agreement, D = lgmData().signed;
+  fgSheet(ph(LGM().title + ' agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'illness-and-disability-guide-agreement'});
+}
+// The Certificate of Completion (shared/gg-print.js, with the Grow With Grounded mark). Its title and line come from
+// lifeGuide.cert (or module.cert) when the library has one.
+function lgCert(){
+  const st = lgmState(), D = lgmData().signed, C = LGG().cert || LGM().cert || {};
+  if (!st.complete || !D) return;
+  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree: 'house', name: D.name, title: C.title || LGM().title, body: C.body || C.line || 'Six lessons, practice scenarios across every age, and a signed agreement to walk with people living with illness or disability with presence and respect.', date: D.date, renew: st.renewBy, version: LGM().version, kind: 'training'}));
+}
+// ----- Founder: open or close this training to Field users (through Update a Library) -----
+function lgFieldRow(){
+  const S = LGG();
+  if (!S) return `<p class="muted" style="margin-top:8px">Walking with Illness and Disability isn't in the Field library yet. Add it with Update a Library.</p>`;
+  const on = !!(S.open && S.open.field);
+  return `<div class="list-row"><div class="lr-main"><b>${esc(S.title || 'Walking with Illness and Disability')}</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Guide Training for every tree, in Learn for Field users once Orientation is done, with a Certificate of Completion.</small></div><button class="btn btn-line btn-sm" data-act="lg-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+}
+async function lgSetField(on){
+  const cur = await pendingPlain('field'); if (!cur || !cur.lifeGuide) return;
+  const next = JSON.parse(JSON.stringify(cur)); next.lifeGuide.open = Object.assign({}, next.lifeGuide.open, {field:on});
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  const nm = cur.lifeGuide.title || 'Walking with Illness and Disability';
+  V.upd = {lvl:'field', title: on ? 'Open ' + nm + ' to Field users' : 'Close ' + nm + ' to Field users', note:'', rows:[['Replaces', 'lifeGuide.open.field']], warns:[], from:cur._rev || 0, next};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+function lgAct(a, v, t){
+  switch (a){
+    case 'lg-field': lgSetField(v === 'on'); return true;
+    case 'lg-mhome': if (lgOn()) go(lgmTab(), {lgm:1}); return true;
+    case 'lg-ml': if (lgOn() && lgmOpen(+v)) go(lgmTab(), {lgm:1, lgml:+v}); return true;
+    case 'lg-mreadit': lnStop(); V.lgread = v === '1'; render(); return true;
+    case 'lg-mread': { const L = LGM().lessons, i = +v, d = lgmData(); if (!d.lessons[L[i].id]){ d.lessons[L[i].id] = today(); d.how[L[i].id] = 'read'; } save(); const nx = L.findIndex((x, j) => j > i && !lgmData().lessons[x.id]); if (nx >= 0) go(lgmTab(), {lgm:1, lgml:nx}); else { go(lgmTab(), {lgm:1}); toast('Lesson marked as read.'); } return true; }
+    case 'lg-mq': go(lgmTab(), {lgm:1, lgq:lgmNewQuiz()}); return true;
+    case 'lg-mpick': V.lgq.ans[V.lgq.order[V.lgq.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === t)); { const nb = document.querySelector('[data-act=lg-mnext],[data-act=lg-mfinish]'); if (nb) nb.disabled = false; } return true;
+    case 'lg-mnext': if (V.lgq.ans[V.lgq.order[V.lgq.i]] !== undefined){ V.lgq.i++; render(); } return true;
+    case 'lg-mprev': if (V.lgq.i > 0){ V.lgq.i--; render(); } return true;
+    case 'lg-mfinish': lgmFinish(); return true;
+    case 'lg-msign': go(lgmTab(), {lgm:1, lgs:1}); return true;
+    case 'lg-msigned': { const nm = $('#lgm-name').value.trim(); if (!nm){ $('#lgm-name').focus(); return true; } if (!$('#lgm-ok').checked){ alert('Check the box to show you agree, then sign.'); return true; }
+      lgmData().signed = {v:LGM().version, date:today(), name:nm}; save(); go(lgmTab(), {lgm:1}); toast('Signed. Your Certificate of Completion is ready.'); return true; }
+    case 'lg-cert': lgCert(); return true;
+    case 'lg-mprint': lgmPrint(); return true;
+  }
+  return false;
+}
 // ----- Founder: Save for Everyone puts a session guide into the Staff library (through Update a Library, GWG BLD 758) -----
 // It replaces the guide with the same id, or adds a new one at the end. The Founder seals it and uploads lib-staff.js.
 async function sesSaveAll(g){
@@ -9700,6 +9886,10 @@ function mergeData(cur, inc){
   Object.entries(ipg.lessons || {}).forEach(([k,v]) => { if (v && !out.pgmod.lessons[k]) out.pgmod.lessons[k] = v; });
   out.pgmod.how = Object.assign({}, ipg.how || {}, out.pgmod.how || {});
   ['last','pass','signed'].forEach(k => { out.pgmod[k] = newer(out.pgmod[k], ipg[k]) || null; });
+  const ilg = inc.lgmod || {}; out.lgmod = Object.assign({lessons:{}, how:{}, last:null, pass:null, signed:null}, out.lgmod || {}); // Walking with Illness and Disability (BLD 759)
+  Object.entries(ilg.lessons || {}).forEach(([k,v]) => { if (v && !out.lgmod.lessons[k]) out.lgmod.lessons[k] = v; });
+  out.lgmod.how = Object.assign({}, ilg.how || {}, out.lgmod.how || {});
+  ['last','pass','signed'].forEach(k => { out.lgmod[k] = newer(out.lgmod[k], ilg[k]) || null; });
   // Founder and Staff records (Labels, Learn, and Backup build): approvals, edits, codes, checklists, Learn progress.
   const fo = inc.founder || {}; out.founder = Object.assign({saved:[], draft:null}, out.founder || {});
   (fo.saved || []).forEach(x => { if (!out.founder.saved.some(y => y.id === x.id)) { out.founder.saved.push(x); stats.added++; } });
@@ -9736,6 +9926,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('pn-') && pnAct(a, v, t)) return;
   if (a && a.startsWith('br-') && brAct(a, v, t)) return;
   if (a && a.startsWith('pg-') && pgAct(a, v, t)) return;
+  if (a && a.startsWith('lg-') && lgAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
