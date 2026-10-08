@@ -27,7 +27,7 @@ window.PAGE_VIDEOS = {
   // On a tap, read.js and the shared player (shared/gg-learn.js) load, then the video plays in the player's own
   // overlay styles (ggl ggl-app), with GGLearn.player doing all the playing, the closing scene, and Sources.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=vc3', LEARN = '/shared/gg-learn.js?v=b763';
+  var READ = '/read.js?v=vc3', LEARN = '/shared/gg-learn.js?v=b770';
   var PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }

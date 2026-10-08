@@ -15,8 +15,11 @@
        trees: [{ stage, kind, label, id, on, today: [parts], week: [parts],
                  tended (today), misty, private, remembered, g (0 to 1) }],
        scenery: forest|lake|autumn|winter|dusk, sky: dawn|day|dusk|night,
-       visitors: [ids], label, solo, mini, pick (tiles become buttons
-       with data-act="sel" data-id) }
+       visitors: [ids], fresh: [visitor ids that arrived today], label,
+       solo, mini, pick (tiles become buttons with data-act="sel" data-id) }
+     Visitor butterflies rest on the flowers with wings closed (GWG BLD 770).
+     They open their wings once, for about two seconds, when tapped, and on
+     the day they arrive (fresh). No endless flutter.
      GGGroveRow.markOf(tree)  the mark's file name for a tree
    Nothing here reads or saves anything about a person.
    ===================================================================== */
@@ -85,14 +88,15 @@
     + '.gp-ladybug{width:16px;height:16px;left:-6px;top:calc(var(--gp-base) * var(--s,1) - 14px);}'
     + '.gp-bird{width:38px;height:24px;right:-14px;top:-18px;}'
     + '.gp-bunny{width:34px;height:42px;right:4%;bottom:10px;}'
-    + '.gp-fly{width:22px;height:22px;animation:gpFly 9s ease-in-out infinite alternate;}'
-    + '.gp-fly .w{transform-box:fill-box;transform-origin:100% 50%;animation:gpFlap .35s ease-in-out infinite alternate;}'
+    // Resting butterflies (GWG BLD 770): wings closed, on the flowers. A tap (or the day one arrives) opens them once.
+    + '.gp-fly{width:26px;height:26px;pointer-events:auto;cursor:pointer;padding:9px;margin:-9px;box-sizing:content-box;}'
+    + '.gp-fly .w{transform-box:fill-box;transform-origin:100% 50%;transform:scaleX(.38);transition:transform .5s ease;}'
     + '.gp-fly .w.r{transform-origin:0% 50%;}'
-    + '@keyframes gpFlap{to{transform:scaleX(.35)}}'
-    + '@keyframes gpFly{0%{transform:translate(0,0)}33%{transform:translate(40px,-16px)}66%{transform:translate(80px,6px)}100%{transform:translate(120px,-10px)}}'
-    + '@media (prefers-reduced-motion:reduce){.gp-glow .gp-tile::before,.gp-fly,.gp-fly .w{animation:none;}.gp-tile img,.gp-tile::before,.gp-tile::after{transition:none;}}'
-    + 'html.gg-reduce-motion .gp-glow .gp-tile::before,html.gg-reduce-motion .gp-fly,html.gg-reduce-motion .gp-fly .w,html[data-motion="reduce"] .gp-glow .gp-tile::before,html[data-motion="reduce"] .gp-fly,html[data-motion="reduce"] .gp-fly .w{animation:none;}'
-    + '@media print{.gp-grove{aspect-ratio:auto;min-height:0;}.gp-glow .gp-tile::before{animation:none;}.gp-fly{animation:none;}.gp-row{overflow:visible;flex-wrap:wrap;justify-content:center;}}';
+    + '.gp-fly.gp-open .w{animation:gpOpen 2s ease-in-out 1;}'
+    + '@keyframes gpOpen{0%{transform:scaleX(.38)}18%{transform:scaleX(1)}34%{transform:scaleX(.55)}50%{transform:scaleX(1)}68%{transform:scaleX(.7)}82%{transform:scaleX(1)}100%{transform:scaleX(.38)}}'
+    + '@media (prefers-reduced-motion:reduce){.gp-glow .gp-tile::before,.gp-fly .w,.gp-fly.gp-open .w{animation:none;transition:none;}.gp-tile img,.gp-tile::before,.gp-tile::after{transition:none;}}'
+    + 'html.gg-reduce-motion .gp-glow .gp-tile::before,html.gg-reduce-motion .gp-fly.gp-open .w,html[data-motion="reduce"] .gp-glow .gp-tile::before,html[data-motion="reduce"] .gp-fly.gp-open .w{animation:none;}'
+    + '@media print{.gp-grove{aspect-ratio:auto;min-height:0;}.gp-glow .gp-tile::before{animation:none;}.gp-fly .w{animation:none;}.gp-row{overflow:visible;flex-wrap:wrap;justify-content:center;}}';
   function addCss() {
     if (document.getElementById('gp-css')) return;
     var s = document.createElement('style'); s.id = 'gp-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s);
@@ -102,9 +106,10 @@
     if (!window.GGScene || !GGScene.critterSVG) return '';
     return '<svg class="gp-critter ' + cls + '" viewBox="' + vb + '" aria-hidden="true" focusable="false">' + GGScene.critterSVG(id, x, y) + '</svg>';
   }
-  function fly(i) {
-    var pos = [[8, 18], [62, 10], [34, 30]][i % 3];
-    return '<svg class="gp-critter gp-fly" style="left:' + pos[0] + '%;top:' + pos[1] + '%;animation-delay:' + (-i * 3) + 's" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false">'
+  // Resting on the flowers along the bottom corners, clear of the trees and their name tags.
+  function fly(i, fresh) {
+    var pos = [[3, 9], [93, 13], [10, 3]][i % 3];
+    return '<svg class="gp-critter gp-fly' + (fresh ? ' gp-open' : '') + '" data-gp-fly style="left:' + pos[0] + '%;bottom:' + pos[1] + '%;transform:rotate(' + (i % 2 ? 12 : -10) + 'deg)" viewBox="-12 -12 24 24" aria-hidden="true" focusable="false">'
       + '<ellipse class="w" cx="-5" cy="-1" rx="6" ry="8" fill="#E9B949"/><ellipse class="w r" cx="5" cy="-1" rx="6" ry="8" fill="#F2C94C"/>'
       + '<ellipse class="w" cx="-4" cy="6" rx="3.5" ry="4.5" fill="#D9674C"/><ellipse class="w r" cx="4" cy="6" rx="3.5" ry="4.5" fill="#D9674C"/>'
       + '<path d="M0 -8v16" stroke="#3A2A1E" stroke-width="2" stroke-linecap="round"/></svg>';
@@ -147,7 +152,8 @@
     var sc = o.scenery || 'forest', sky = o.sky || 'day', V = o.visitors || [];
     var vis = '';
     if (V.indexOf('bunny') >= 0) vis += crit('bunny', 'gp-bunny', '-18 -48 40 50', 0, 0);
-    V.filter(function (v) { return v.indexOf('butterfly') === 0; }).forEach(function (v, k) { vis += fly(k); });
+    var F = o.fresh || [];
+    V.filter(function (v) { return v.indexOf('butterfly') === 0; }).forEach(function (v, k) { vis += fly(k, F.indexOf(v) >= 0); });
     return '<div class="gp-grove gp-sc-' + esc(sc) + ' gp-sky-' + esc(sky) + (o.solo ? ' gp-solo' : '') + (o.mini ? ' gp-mini' : '') + '" style="--gp-n:' + Math.max(1, trees.length) + ';--gp-sum:' + Math.max(1, sum).toFixed(2) + '">'
       + '<picture><source media="(max-width:600px)" srcset="' + BASE + 'heroes/grove-phone.webp"><img class="gp-back" src="' + BASE + 'heroes/grove-wide.webp" alt="" aria-hidden="true" draggable="false"></picture>'
       + '<div class="gp-veil" aria-hidden="true"></div>' + (sc === 'lake' ? '<div class="gp-lake" aria-hidden="true"></div>' : '')
@@ -155,5 +161,11 @@
       + '<ul class="gp-row" role="list" aria-label="' + esc(o.label || 'The family grove') + '">' + trees.map(function (t, i) { return treeHtml(t, i, o); }).join('') + '</ul></div>';
   }
 
+  // A tap on a resting butterfly opens its wings once, for about two seconds.
+  document.addEventListener('click', function (e) {
+    var f = e.target && e.target.closest && e.target.closest('[data-gp-fly]'); if (!f) return;
+    f.classList.remove('gp-open'); void f.getBoundingClientRect(); f.classList.add('gp-open');
+    clearTimeout(f._gpT); f._gpT = setTimeout(function () { f.classList.remove('gp-open'); }, 2100);
+  });
   window.GGGroveRow = { html: html, markOf: markOf, PARTS: PARTS };
 })();

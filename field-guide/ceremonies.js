@@ -14,6 +14,8 @@
 // Farewell order of service shows it and it can be moved into place.
 // GWG BLD 768: songs (ceremonies.music) and rituals (ceremonies.rituals) beside the readings, My Pieces (DATA.pieces),
 // and the GGCer.fw calls the Farewell Planning Session uses to place a piece at its moment in the order.
+// GWG BLD 770: GGCer.wd, the same calls for the Wedding Planning Session (wedding.js): wedding moments (prelude, processional,
+// the entrance, during, unity, recessional, postlude), the couple's names, and the session's vows and words printed under their parts.
 // =====================================================================
 (function(){
 'use strict';
@@ -116,7 +118,7 @@ const PRON = {
 };
 
 let CTX = {lib: null, data: null, save: () => {}};
-const S = {view: 'home', id: null, draft: null, pick: null, pkind: 'reading', pq: '', pk: 'all', pall: false, pmore: 0, startType: null, dragK: null, printOpen: false, me: null, mk: 'all', mq: '', fwBack: null};
+const S = {view: 'home', id: null, draft: null, pick: null, pkind: 'reading', pq: '', pk: 'all', pall: false, pmore: 0, startType: null, dragK: null, printOpen: false, me: null, mk: 'all', mq: '', fwBack: null, wdBack: null};
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -339,6 +341,9 @@ const RKINDS = ['scripture', 'poem', 'reading', 'prayer', 'blessing'];
 const PKINDS = [['scripture', 'Scripture'], ['poem', 'Poem'], ['reading', 'Reading'], ['prayer', 'Prayer'], ['blessing', 'Blessing'], ['music', 'Song or Music'], ['ritual', 'Ritual']];
 const MKINDS = [['hymn', 'Hymn'], ['sacred', 'Sacred'], ['classic', 'Classical'], ['popular', 'Popular'], ['instrumental', 'Instrumental'], ['cultural', 'Cultural']];
 const MOMENTS = [['gathering', 'Gathering'], ['during', 'During'], ['reflection', 'Reflection'], ['closing', 'Closing'], ['recessional', 'Recessional'], ['graveside', 'Graveside']];
+// Wedding moments (GWG BLD 770), and every moment for My Pieces.
+const WMOMENTS = [['prelude', 'Prelude'], ['processional', 'Processional'], ['entrance', 'Bride or Couple Entrance'], ['during', 'During'], ['unity', 'Unity'], ['recessional', 'Recessional'], ['postlude', 'Postlude']];
+const ALLMOM = MOMENTS.concat(WMOMENTS.filter(w => !MOMENTS.some(m => m[0] === w[0])));
 const FAITHW = [['faith', 'Faith'], ['plain', 'Plain'], ['either', 'Either']];
 function pstore(){ const d = D(); d.pieces = d.pieces || {list: []}; d.pieces.list = d.pieces.list || []; return d.pieces.list; }
 const lines = t => String(t || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
@@ -364,6 +369,8 @@ const pieceOf = e => e && e.piece ? PC(e.piece.kind, e.piece.id) : null;
 const pieceHead = (e) => { const x = pieceOf(e); if (!x || (e.custom && e.custom.name === x.title)) return ''; return x.title + (e.piece.kind === 'music' && x.by ? ', ' + x.by : ''); };
 // The eulogy written in the Farewell Planning Session prints under the first eulogy or life story part.
 const EULRE = /eulogy|life story/i;
+// The Wedding Planning Session's words (GWG BLD 770): {partId: {h, t}}, printed under that part of the Officiant's Script.
+const wdx = (s, e) => { const x = s && s.wdText && s.wdText[e.part]; return x && String(x.t || '').trim() ? x : null; };
 const eulogyKey = s => { if (!s || !String(s.fwEulogy || '').trim()) return null; const e = onParts(s).find(x => x.part === 'eulogy' || x.part === 'life-story' || EULRE.test(x.title || partOf(x).name)); return e ? e.k : null; };
 const fam2for = fam => fam;
 function rScore(r, s){
@@ -509,7 +516,7 @@ function navBar(s){
 function headOf(s, eyebrow){
   const bits = [typeOf(s.type).name, nice(s.date), s.place].filter(Boolean).join(', ');
   return `${backHome()}<div class="page-head cer-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(title(s))}</h1><p>${esc(bits)}</p></div>
-    <div>${chips('status', STATUS, s.status || 'session')}</div></div>${s.fwp && window.GGFw ? `<div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-fwa="open" data-fwv="${esc(s.fwp)}">Back to the Farewell Plan</button></div>` : ''}${navBar(s)}`;
+    <div>${chips('status', STATUS, s.status || 'session')}</div></div>${s.fwp && window.GGFw ? `<div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-fwa="open" data-fwv="${esc(s.fwp)}">Back to the Farewell Plan</button></div>` : ''}${s.wdp && window.GGWed ? `<div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-wda="open" data-wdv="${esc(s.wdp)}">Back to the Wedding Plan</button></div>` : ''}${navBar(s)}`;
 }
 
 function vHome(){
@@ -517,7 +524,8 @@ function vHome(){
   const fams = [['funeral', 'Funerals and Memorials'], ['wedding', 'Weddings'], ['blessing', 'Blessings']];
   return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Service Builder</h1><p>Build a service or a blessing live with the family or the couple, then dial it in and print it.</p><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-tab="premarital">Premarital Sessions</button></div></div>
   ${window.GGFw && GGFw.card ? GGFw.card() : ''}
-  <div class="card"><div class="spread"><div style="min-width:0;flex:1 1 260px"><h2 style="margin:0 0 4px">My Pieces</h2><p class="muted" style="margin:0">Your own readings, poems, prayers, blessings, songs, and rituals. They show in every picker here and in the Farewell Planning Session.${pstore().filter(m => !m.only).length ? ' ' + pstore().filter(m => !m.only).length + ' saved.' : ''}</p></div><button type="button" class="btn btn-line" data-cer="mine">Open My Pieces</button></div></div>
+  ${window.GGWed && GGWed.card ? GGWed.card() : ''}
+  <div class="card"><div class="spread"><div style="min-width:0;flex:1 1 260px"><h2 style="margin:0 0 4px">My Pieces</h2><p class="muted" style="margin:0">Your own readings, poems, prayers, blessings, songs, and rituals. They show in every picker here and in the Farewell and Wedding Planning Sessions.${pstore().filter(m => !m.only).length ? ' ' + pstore().filter(m => !m.only).length + ' saved.' : ''}</p></div><button type="button" class="btn btn-line" data-cer="mine">Open My Pieces</button></div></div>
   <div class="card"><h2 style="margin-bottom:4px">Start a Service</h2><p class="muted">Pick the kind of service. Setup takes about a minute.</p>
     ${fams.map(([f, l]) => { const ts = C.types.filter(t => t.family === f); return ts.length ? `<h3 style="margin-top:14px">${l}</h3><div class="cer-types">${ts.map(t => `<button type="button" class="cer-type" data-cer="new" data-v="${esc(t.id)}"><b>${esc(t.name)}</b>${t.lead ? `<small>${esc(t.lead)}</small>` : ''}</button>`).join('')}</div>` : ''; }).join('')}
     ${C.full ? '' : `<p class="muted" style="margin-top:12px;font-size:15px">The full set of parts, templates, and readings arrives with the next Staff library update.</p>`}</div>
@@ -757,15 +765,15 @@ function pieceForm(m){
     ${inp('source', 'Source Line', k === 'music' ? 'Composer, year, or where to find it' : 'Author, book, year, or "Source unknown"')}
     ${inp('tags', 'Tags, With Commas', 'hope, garden, veterans')}
     <label class="f">Faith or Plain</label>${chips('m-faith', FAITHW, m.faith || 'either')}
-    <label class="f">Moments</label>${chips('m-mom', MOMENTS, m.moments, true)}
+    <label class="f">Moments</label>${chips('m-mom', ALLMOM, m.moments, true)}
     <div class="row" style="margin-top:14px"><button type="button" class="btn btn-gold" data-cer="m-save">Save to My Pieces</button><button type="button" class="btn btn-line" data-cer="m-cancel">Cancel</button></div></div>`;
 }
 function vMine(){
   const q = S.mq.trim().toLowerCase(), all = pstore().filter(m => m && !m.only);
   const L = all.filter(m => (S.mk === 'all' || m.kind === S.mk) && (!q || [m.title, m.by, m.ref, m.text, m.source, m.tags].join(' ').toLowerCase().includes(q))).sort((a, b) => String(a.title).localeCompare(String(b.title)));
   const F = isFounder() && typeof API.saveAll === 'function';
-  return `${S.fwBack && window.GGFw ? `<button type="button" class="linkbtn" data-fwa="open" data-fwv="${esc(S.fwBack)}">&larr; Back to the Farewell Plan</button>` : backHome()}
-  <div class="page-head" style="margin-top:10px"><div class="eyebrow">Service Builder</div><h1>My Pieces</h1><p>Your own readings, poems, prayers, blessings, songs, and rituals, from your shelves and your notebooks. Each one shows in every picker and in the Farewell Planning Session. They stay on this device, encrypted with your records, and travel in your backups.</p></div>
+  return `${S.fwBack && window.GGFw ? `<button type="button" class="linkbtn" data-fwa="open" data-fwv="${esc(S.fwBack)}">&larr; Back to the Farewell Plan</button>` : S.wdBack && window.GGWed ? `<button type="button" class="linkbtn" data-wda="open" data-wdv="${esc(S.wdBack)}">&larr; Back to the Wedding Plan</button>` : backHome()}
+  <div class="page-head" style="margin-top:10px"><div class="eyebrow">Service Builder</div><h1>My Pieces</h1><p>Your own readings, poems, prayers, blessings, songs, and rituals, from your shelves and your notebooks. Each one shows in every picker and in the Farewell and Wedding Planning Sessions. They stay on this device, encrypted with your records, and travel in your backups.</p></div>
   ${S.me ? pieceForm(S.me) : `<div class="card"><div class="row"><button type="button" class="btn btn-gold" data-cer="m-new">Add a Piece</button></div></div>`}
   <div class="card"><h2 style="margin-bottom:6px">Saved Pieces</h2>
     <label class="f" for="cer-mq" style="margin-top:0">Search</label><input type="text" id="cer-mq" data-cermq="1" value="${esc(S.mq)}" placeholder="A word, a title, or a name" autocomplete="off">
@@ -885,13 +893,13 @@ function scriptDoc(s){
     ${onParts(s).map(e => { const p = partOf(e), o = optOf(e), w = partWords(e, s);
       const dos = doOf(e, s), EK = eulogyKey(s);
       const ph = pieceHead(e), pc = pieceOf(e);
-      return `<div class="part${e.note || dos.length ? ' n' : ''}"><div><h2>${esc(e.title || p.name)}<small>${minsOf(e)} min${byOf(e) ? ', ' + esc(byOf(e)) : ''}</small></h2>${ph ? `<p><b>${esc(ph)}</b></p>` : ''}${paras(w)}${o && o.source && e.text == null ? `<div class="src">${esc(o.source)}</div>` : ''}${pc && pc.source ? `<div class="src">${esc(pc.source)}</div>` : ''}${e.k === EK ? `<div class="rd"><h3>The Eulogy</h3>${paras(s.fwEulogy)}</div>` : ''}${(e.rd || []).map(x => rdHTML(s, x, true)).join('')}</div>${e.note || dos.length ? `<div class="note">${dos.length ? `<b>For the Officiant</b>${esc(dos.join(' '))}` : ''}${e.note ? `<b${dos.length ? ' style="margin-top:.5em"' : ''}>Notes</b>${esc(e.note)}` : ''}</div>` : ''}</div>`; }).join('')}
+      return `<div class="part${e.note || dos.length ? ' n' : ''}"><div><h2>${esc(e.title || p.name)}<small>${minsOf(e)} min${byOf(e) ? ', ' + esc(byOf(e)) : ''}</small></h2>${ph ? `<p><b>${esc(ph)}</b></p>` : ''}${paras(w)}${o && o.source && e.text == null ? `<div class="src">${esc(o.source)}</div>` : ''}${pc && pc.source ? `<div class="src">${esc(pc.source)}</div>` : ''}${e.k === EK ? `<div class="rd"><h3>The Eulogy</h3>${paras(s.fwEulogy)}</div>` : ''}${wdx(s, e) ? `<div class="rd"><h3>${esc(wdx(s, e).h || '')}</h3>${paras(wdx(s, e).t)}</div>` : ''}${(e.rd || []).map(x => rdHTML(s, x, true)).join('')}</div>${e.note || dos.length ? `<div class="note">${dos.length ? `<b>For the Officiant</b>${esc(dos.join(' '))}` : ''}${e.note ? `<b${dos.length ? ' style="margin-top:.5em"' : ''}>Notes</b>${esc(e.note)}` : ''}</div>` : ''}</div>`; }).join('')}
     ${noticeHTML(s)}</div>`;
   return {title: "Officiant's Script", css, body};
 }
 function scriptText(s){
   return ["OFFICIANT'S SCRIPT", title(s), subline(s), lifeLine(s), 'About ' + total(s) + ' minutes', ''].filter((x, i) => x || i === 5).join('\n') + '\n'
-    + onParts(s).map(e => { const p = partOf(e), o = optOf(e); return [(e.title || p.name).toUpperCase() + ' (' + minsOf(e) + ' min' + (byOf(e) ? ', ' + byOf(e) : '') + ')', pieceHead(e), partWords(e, s), o && o.source && e.text == null ? o.source : '', e.k === eulogyKey(s) ? 'THE EULOGY\n' + String(s.fwEulogy).trim() : '', ...(e.rd || []).map(x => rdText(s, x, true)), doOf(e, s).length ? 'For the officiant: ' + doOf(e, s).join(' ') : '', e.note ? 'Notes: ' + e.note : ''].filter(Boolean).join('\n\n'); }).join('\n\n') + (usedNotices(s).length ? '\n\n' + usedNotices(s).join('\n') : '');
+    + onParts(s).map(e => { const p = partOf(e), o = optOf(e); return [(e.title || p.name).toUpperCase() + ' (' + minsOf(e) + ' min' + (byOf(e) ? ', ' + byOf(e) : '') + ')', pieceHead(e), partWords(e, s), o && o.source && e.text == null ? o.source : '', e.k === eulogyKey(s) ? 'THE EULOGY\n' + String(s.fwEulogy).trim() : '', wdx(s, e) ? String(wdx(s, e).h || '').toUpperCase() + '\n' + String(wdx(s, e).t).trim() : '', ...(e.rd || []).map(x => rdText(s, x, true)), doOf(e, s).length ? 'For the officiant: ' + doOf(e, s).join(' ') : '', e.note ? 'Notes: ' + e.note : ''].filter(Boolean).join('\n\n'); }).join('\n\n') + (usedNotices(s).length ? '\n\n' + usedNotices(s).join('\n') : '');
 }
 function orderRows(s){
   return onParts(s).map(e => { const p = partOf(e), rs = [pieceHead(e)].concat((e.rd || []).map(x => { const r = RD(x.id); return r ? rHead(r, rText(r, x.ver).ver) : ''; })).filter(Boolean); return {name: e.title || p.name, by: byOf(e), rs, mins: minsOf(e)}; });
@@ -1020,7 +1028,7 @@ function dropOn(fromK, toK, after){
 function act(k, v, el){
   const s = cur();
   switch (k){
-    case 'mine': S.view = 'mine'; S.id = null; S.draft = null; S.me = null; S.fwBack = null; rerender(); return;
+    case 'mine': S.view = 'mine'; S.id = null; S.draft = null; S.me = null; S.fwBack = null; S.wdBack = null; rerender(); return;
     case 'm-new': S.me = blankPiece(S.mk !== 'all' ? S.mk : 'poem'); rerender(true); { const t = document.getElementById('cer-m-title'); if (t) t.focus({preventScroll: true}); } return;
     case 'm-edit': { const m = pstore().find(x => x.id === v); if (!m) return; S.me = Object.assign(blankPiece(m.kind), m, {how: arr(m.how).join('\n'), needs: arr(m.needs).join('\n'), tags: arr(m.tags).join(', ')}); rerender(); setTimeout(() => { const f = document.getElementById('cer-mform'); if (f && f.scrollIntoView) f.scrollIntoView({block: 'start'}); }, 0); return; }
     case 'm-cancel': S.me = null; rerender(true); return;
@@ -1083,7 +1091,7 @@ function act(k, v, el){
 document.addEventListener('click', e => {
   const g = e.target.closest && e.target.closest('[data-cer="from-guide"]'); if (g){ S.startType = g.dataset.v; return; }
   const tb = e.target.closest && e.target.closest('#tabs [data-tab="ceremonies"]');
-  if (tb && document.getElementById('cer-root') && !S.draft){ S.view = 'home'; S.id = null; S.pick = null; S.me = null; S.fwBack = null; }
+  if (tb && document.getElementById('cer-root') && !S.draft){ S.view = 'home'; S.id = null; S.pick = null; S.me = null; S.fwBack = null; S.wdBack = null; }
 }, true);
 document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('[data-cer]'); if (!t || !t.closest('#cer-root')) return;
@@ -1153,28 +1161,38 @@ const MOM_G = {gathering: 'gathering', during: 'words', reflection: 'life', clos
 const SLOT = {reading: {gathering: ['opening-words'], during: ['reading-1', 'reading-2', 'reading-3', 'poem', 'reading'], reflection: ['poem', 'reading-3', 'reading-2'], closing: ['closing-blessing', 'blessing'], recessional: ['closing-words'], graveside: ['committal']},
   music: {gathering: ['prelude'], during: ['song-1', 'song-2'], reflection: ['their-music', 'song-2', 'song-1'], closing: ['song-2', 'song-1'], recessional: ['postlude'], graveside: []}};
 const RIT_SLOT = [[/candle/i, 'candle'], [/memory table/i, 'memory-table'], [/flower|stone/i, 'flowers-stones'], [/military|flag|taps|honor guard/i, 'military'], [/fraternal|lodge/i, 'fraternal'], [/police|fire/i, 'first-responder']];
-function bestMoment(kind, x){
+// Wedding services (GWG BLD 770): each wedding moment's group and the parts that take a piece there.
+const WMOM_G = {prelude: 'gathering', processional: 'gathering', entrance: 'gathering', during: 'words', unity: 'rituals', recessional: 'sending', postlude: 'sending', closing: 'rituals', gathering: 'gathering'};
+const WSLOT = {reading: {prelude: ['w-reading-1'], processional: ['w-reading-1'], entrance: ['w-reading-1'], during: ['w-reading-1', 'w-reading-2'], unity: ['w-reading-2', 'w-reading-1'], closing: ['w-blessing'], recessional: ['w-blessing'], postlude: ['w-blessing'], gathering: ['w-reading-1']},
+  music: {prelude: ['w-prelude'], processional: ['processional'], entrance: [], during: ['w-song'], unity: [], recessional: ['recessional'], postlude: [], gathering: ['w-prelude'], closing: ['recessional']}};
+const WCUST = {entrance: ['Entrance', 'processional'], unity: ['Music During the Unity Ritual', 'unity'], postlude: ['Postlude', 'recessional']};
+const isWedS = s => famOf(s.type) === 'wedding';
+function bestMoment(kind, x, fam){
+  if (fam === 'wedding'){ const w = arr(x && x.moments).find(mm => WMOM_G[mm]); if (w) return w; if (kind === 'ritual') return 'unity'; if (kind === 'music') return /instrumental|classic/.test((x && x.kind) || '') ? 'prelude' : 'during'; return x && x.kind === 'blessing' ? 'closing' : 'during'; }
   const m = arr(x && x.moments).find(mm => MOM_G[mm]); if (m) return m;
   if (kind === 'music') return /instrumental|classic/.test((x && x.kind) || '') ? 'gathering' : 'during';
   if (kind === 'ritual') return 'during';
   return x && x.kind === 'blessing' ? 'closing' : 'during';
 }
 // The group for a moment in this kind of service: the first group whose id ends with the moment's word, else the last group.
-function momentGroup(s, mom){ const G = groupsFor(famOf(s.type)), w = MOM_G[mom] || 'words'; const g = G.find(x => x.id === w || x.id.endsWith('-' + w)) || (mom === 'during' || mom === 'reflection' ? G.find(x => /words/.test(x.id)) : null) || G[G.length - 1]; return g ? g.id : ''; }
+function momentGroup(s, mom){ const G = groupsFor(famOf(s.type)), w = (isWedS(s) ? WMOM_G[mom] : MOM_G[mom]) || 'words'; const g = G.find(x => x.id === w || x.id.endsWith('-' + w)) || (mom === 'during' || mom === 'reflection' ? G.find(x => /words/.test(x.id)) : null) || G[G.length - 1]; return g ? g.id : ''; }
 function insertAt(s, gid){ const G = groupsFor(famOf(s.type)).map(g => g.id), gi = G.indexOf(gid); let at = 0; s.parts.forEach((x, i) => { const xi = G.indexOf(partOf(x).group); if (xi >= 0 && xi <= gi) at = i + 1; }); return at; }
 function placePiece(s, o){
   const kind = o.kind === 'music' || o.kind === 'ritual' ? o.kind : 'reading', x = PC(kind, o.id); if (!x) return null;
-  const mom = MOM_G[o.moment] ? o.moment : bestMoment(kind, x);
-  let ids = kind === 'ritual' ? [((RIT_SLOT.find(([re]) => re.test(x.title + ' ' + x.id)) || [])[1])].filter(Boolean) : SLOT[kind][mom] || [];
+  const wed = isWedS(s), MG = wed ? WMOM_G : MOM_G, mom = MG[o.moment] ? o.moment : bestMoment(kind, x, wed ? 'wedding' : '');
+  let ids = kind === 'ritual' ? (wed ? (mom === 'unity' ? ['unity'] : []) : [((RIT_SLOT.find(([re]) => re.test(x.title + ' ' + x.id)) || [])[1])].filter(Boolean)) : (wed ? WSLOT : SLOT)[kind][mom] || [];
   const free = q => kind === 'reading' ? !(q.rd || []).length && !q.piece : !q.piece;
   const cands = []; ids.forEach(id => s.parts.filter(q => q.part === id).forEach(q => cands.push(q)));
+  if (wed && kind === 'music' && WCUST[mom]) s.parts.filter(q => q.custom && q.custom.name === WCUST[mom][0]).forEach(q => cands.push(q));
   if (kind === 'reading' && mom === 'during') s.parts.filter(q => partOf(q).readings && !cands.includes(q)).forEach(q => cands.push(q));
   let e = cands.find(q => q.on && free(q)) || cands.find(q => !q.on && free(q)), made = false;
   if (!e){
     const gid = momentGroup(s, mom), base = kind === 'reading' && ids.map(PART).find(Boolean);
     if (base && partsFor(s.type).includes(base)){ e = mkEntry(base, true, null, s); }
-    else e = {k: uid(), part: 'custom', custom: {name: kind === 'music' ? 'Song' : kind === 'ritual' ? x.title : (x.kind === 'scripture' ? 'Scripture' : 'Reading'), group: base ? base.group : gid}, on: true, note: '', rd: []};
-    const last = cands.filter(q => q.on).pop();
+    else e = {k: uid(), part: 'custom', custom: {name: kind === 'music' ? (wed && WCUST[mom] ? WCUST[mom][0] : 'Song') : kind === 'ritual' ? x.title : (x.kind === 'scripture' ? 'Scripture' : 'Reading'), group: base ? base.group : gid}, on: true, note: '', rd: []};
+    // A wedding's entrance music follows the processional, unity music the unity ritual, and the postlude the recessional.
+    const anchor = wed && kind === 'music' && WCUST[mom] ? s.parts.filter(q => q.on && q.part === WCUST[mom][1]).pop() : null;
+    const last = anchor || cands.filter(q => q.on).pop();
     s.parts.splice(last ? s.parts.indexOf(last) + 1 : insertAt(s, e.custom ? e.custom.group : base.group), 0, e); made = true;
   }
   if (!e.on){ e.on = true; e.fwOn = 1; if (!e.option){ const p = partOf(e); if (!p.say && (p.options || []).length) e.option = fitOpt(p, s); } }
@@ -1300,13 +1318,43 @@ const API = window.GGCer = {
     // The obituary drafts from the session fill the service's Obituary (and the Program), unless they were typed over there.
     obit(id, d){ const s = API.fw.get(id); if (!s || !d) return; s.obit = s.obit || {a: {}, d: {}}; s.obit.d = s.obit.d || {}; s.obit.e = s.obit.e || {}; let ch = false;
       ['notice', 'newspaper', 'online'].forEach(k => { if (d[k] != null && !s.obit.e[k] && s.obit.d[k] !== d[k]){ s.obit.d[k] = d[k]; ch = true; } }); if (ch) keep(s); },
-    openMine(back){ S.view = 'mine'; S.id = null; S.draft = null; S.pick = null; S.me = null; S.fwBack = back || null; },
+    openMine(back){ S.view = 'mine'; S.id = null; S.draft = null; S.pick = null; S.me = null; S.fwBack = back || null; S.wdBack = null; },
     // Add Your Own from the session: saved to My Pieces (or only for this service when keep is false).
     savePiece(m, svcId, keepIt){ const x = Object.assign(blankPiece(m.kind), m); if (!keepIt && svcId) x.only = svcId; const o = savePiece(x); return o ? o.id : null; },
     pieceOf: (kind, pid) => PC(kind, pid)
   },
+  // The Wedding Planning Session (wedding.js, GWG BLD 770): the same calls, for the wedding services (Wedding, Elopement,
+  // Vow Renewal). The plan holds the service's id; the couple's names, the day, Faith or Plain, and the session's words follow it.
+  wd: null,
   // For tests and the lead.
   state: S, data: cer, fill, draftOf, ruleOn, docs: DOCS, printer: null, last: null, lastCopy: null,
   current: cur
 };
+API.wd = Object.assign({}, API.fw, {
+  types: () => cer().types.filter(t => t.family === 'wedding').map(t => ({id: t.id, name: t.name})),
+  make(o){
+    o = o || {}; const t = cer().types.some(x => x.id === o.type && famOf(x.id) === 'wedding') ? o.type : 'wedding', s = newSvc(t);
+    s.wdp = o.wdp || null; API.wd.sync(s, o, true); build(s, false); list().push(s); keep(s); return s.id;
+  },
+  // o: {type, p1, p2 (full names), first1, first2, date, time, place, faith, length}. Only what is given changes.
+  sync(sOrId, o, fresh){
+    const s = typeof sOrId === 'string' ? API.fw.get(sOrId) : sOrId; if (!s || !o) return;
+    s.p1 = s.p1 || {}; s.p2 = s.p2 || {}; const st = s.setup = s.setup || {};
+    if (o.p1) s.p1.name = o.p1; if (o.p2) s.p2.name = o.p2; if (o.first1) s.p1.first = o.first1; if (o.first2) s.p2.first = o.first2;
+    ['date', 'time', 'place'].forEach(k => { if (o[k] != null) s[k] = o[k]; });
+    if (o.faith != null) st.faith = o.faith;
+    if (o.length && (cer().setup.lengths || []).map(Number).includes(+o.length)) st.length = +o.length;
+    if (o.type && o.type !== s.type && cer().types.some(x => x.id === o.type && famOf(x.id) === 'wedding')) s.type = o.type;
+    if (!fresh){ reapply(s); keep(s); }
+  },
+  moments: () => WMOMENTS.slice(),
+  best: (kind, x) => bestMoment(kind, x, 'wedding'),
+  // The session's words under their parts: {partId: {h, t}} (the couple's vows, the officiant's words, the welcome).
+  words2(id, map){ const s = API.fw.get(id); if (!s) return; const m = {}; Object.keys(map || {}).forEach(k => { const x = map[k]; if (x && String(x.t || '').trim()) m[k] = {h: String(x.h || ''), t: String(x.t).trim()}; });
+    if (JSON.stringify(s.wdText || {}) === JSON.stringify(m)) return; s.wdText = m; keep(s); },
+  // The License Checklist (the Staff library's ceremonies.wedding.license) and the boxes ticked, shared with the Service Builder.
+  license: () => licItems(),
+  lic(id, map){ const s = API.fw.get(id); if (!s) return; const m = Object.assign({}, map || {}); if (JSON.stringify(s.lic || {}) === JSON.stringify(m)) return; s.lic = m; keep(s); },
+  openMine(back){ S.view = 'mine'; S.id = null; S.draft = null; S.pick = null; S.me = null; S.fwBack = null; S.wdBack = back || null; }
+});
 })();

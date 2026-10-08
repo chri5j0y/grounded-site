@@ -12,6 +12,7 @@
 // below wherever a piece is missing, so the tool works before that update is applied.
 // Plans live in DATA.fwp.plans: encrypted with the rest of this device's records and
 // carried in backups (merged by GGFw.merge). Nothing is sent anywhere.
+// GWG BLD 770: wedding songs, readings, and unity rituals stay in the Wedding Planning Session's picker; opening a plan here closes that session.
 // GWG BLD 768: the Eulogy Helper and the Obituary Helper run inside Their Story (drafts saved in the plan, printed in the
 // Officiant Script, the Family Copy, and the Helpers' Checklist); Readings, Music, and Rituals in The Service; Follow My Scroll.
 // =====================================================================
@@ -786,14 +787,15 @@ function momentsOf(k, x){
   return ['during', 'reflection'].concat(ty.includes('graveside') ? ['graveside'] : []);
 }
 function tagsOf(k, x){ if (k !== 'reading') return arr(x.tags).map(String); const t = x.tags || {}; return arr(t.words).concat(arr(t.types).map(v => String(v).replace(/-/g, ' '))); }
-const isWed = x => { const f = (x.tags || {}).for; return f === 'wedding'; };
+// Wedding pieces (a reading's tags.for, or a song's or ritual's for, GWG BLD 770) stay in the Wedding Planning Session.
+const isWed = x => { const f = x.for || (x.tags || {}).for; return f === 'wedding'; };
 const rTitle = x => x.kind === 'scripture' ? (x.ref || x.title) : x.title;
 function rBody(x, ver){ if (x.versions){ const v = x.versions[ver] ? ver : x.versions.kjv ? 'kjv' : Object.keys(x.versions)[0]; return {text: x.versions[v] || '', ver: v}; } return {text: x.text || '', ver: ''}; }
 const snip = (t, n) => { t = String(t || '').replace(/\s+/g, ' ').trim(); return t.length > n ? t.slice(0, n).replace(/\s+\S*$/, '') + '...' : t; };
 function lbAll(p){
   const c = cerBind(); if (!c) return [];
   const cat = c.catalog(hasSvc(p) ? p.svc : null), t = S.lb.type, k = lbKind(t);
-  return (k === 'music' ? cat.music : k === 'ritual' ? cat.rituals : cat.readings.filter(r => (r.kind || 'reading') === t && !isWed(r))).map(x => ({k, x}));
+  return (k === 'music' ? cat.music.filter(x => !isWed(x)) : k === 'ritual' ? cat.rituals.filter(x => !isWed(x)) : cat.readings.filter(r => (r.kind || 'reading') === t && !isWed(r))).map(x => ({k, x}));
 }
 function lbList(p){
   const q = S.lb.q.trim().toLowerCase(), L = S.lb;
@@ -1620,7 +1622,7 @@ function rerender(keepScroll){
   pushFam();
 }
 function goStep(n){ S.step = n; S.other = null; S.sub = null; rerender(false); const m = document.getElementById('fw-main'); if (m && window.matchMedia && matchMedia('(max-width: 900px)').matches){ const c = document.querySelector('.fw-rail [aria-current="step"]'); if (c && c.scrollIntoView) c.scrollIntoView({block: 'nearest', inline: 'center'}); } }
-function openPlan(id, step){ S.on = true; S.id = id; S.step = step || 1; S.mode = 'chris'; S.other = null; S.qr = null; S.sub = null; S.eSec = 0; S.oSec = 0; S.lb.open = null; if (C.go) C.go('ceremonies'); }
+function openPlan(id, step){ if (window.GGWed && GGWed.state) GGWed.state.on = false; S.on = true; S.id = id; S.step = step || 1; S.mode = 'chris'; S.other = null; S.qr = null; S.sub = null; S.eSec = 0; S.oSec = 0; S.lb.open = null; if (C.go) C.go('ceremonies'); }
 
 // ---------- actions ----------
 function setPath(o, path, v){
@@ -1856,5 +1858,5 @@ const API = window.GGFw = {
   famWin: null, last: null, lastCopy: null, lastLink: null, lastFile: null, noOpen: false
 };
 // The Ceremonies card and the Home card open the plans list.
-document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-fwa="plans-open"]'); if (!t || !D()) return; S.on = true; S.id = null; if (C.go) C.go('ceremonies'); }, true);
+document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-fwa="plans-open"]'); if (!t || !D()) return; if (window.GGWed && GGWed.state) GGWed.state.on = false; S.on = true; S.id = null; if (C.go) C.go('ceremonies'); }, true);
 })();
