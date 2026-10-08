@@ -648,9 +648,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-grove-row.js?v=gr1"></script>
 <script src="qr.js"></script>
 <script src="share.js?v=b766"></script>
-<script src="ceremonies.js?v=b766"></script>
+<script src="ceremonies.js?v=b768"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b767"></script>
+<script src="farewell.js?v=b768"></script>
 <script src="premarital.js?v=b767"></script>
 <script src="clients.js?v=b767"></script>
 <script>
@@ -1075,6 +1075,8 @@ if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER
 // The Farewell Planning Session (GWG BLD 766, farewell.js): Staff and Founders, in the Ceremonies tab.
 if (window.GGFw) GGFw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
+// My Pieces (GWG BLD 768, ceremonies.js): Founders' Save for Everyone prepares a Staff library update adding the piece.
+if (window.GGCer){ GGCer.tier = () => TIER; GGCer.saveAll = (key, item) => pieceSaveAll(key, item); }
 // Clients and Intake (GWG BLD 767, clients.js): Staff and Founders, the Clients tab, the Back Up Now card on Home.
 if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
@@ -7724,6 +7726,22 @@ async function sesSaveAll(g){
   next.guides[i] = clean; next._rev = (cur._rev || 0) + 1; next._updated = today();
   V = {tab: 'founder', upd: {lvl: 'staff', title: (add ? 'Add a session for everyone: ' : 'Update a session for everyone: ') + clean.title,
     note: add ? 'A new session guide for every Staff member and Founder.' : 'This version of the guide, for every Staff member and Founder.', rows: [[add ? 'Adds' : 'Replaces', 'guides.' + i]], warns: [], from: cur._rev || 0, next}};
+  render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+// My Pieces, Save for Everyone (BLD 768): adds a reading, song, or ritual to the Staff library's ceremonies lists.
+async function pieceSaveAll(key, item){
+  if (TIER !== 'founder' || !['readings', 'music', 'rituals'].includes(key) || !item || !item.title) return;
+  const cur = await pendingPlain('staff');
+  if (!cur || !cur.ceremonies) return alert("This device can't open the Staff library, so it can't update it. See \"Finish setup.\"");
+  const next = JSON.parse(JSON.stringify(cur)), c = next.ceremonies; if (!Array.isArray(c[key])) c[key] = [];
+  const L = c[key], strip = x => { const o = Object.assign({}, x); delete o.id; return o; };
+  if (L.some(x => same(strip(x), strip(item)))){ toast('The Staff library already has this piece.'); return; }
+  const ids = new Set([].concat(c.readings || [], c.music || [], c.rituals || []).map(x => x && x.id));
+  let id = item.id || 'piece', n = 2; while (ids.has(id)) id = (item.id || 'piece') + n++;
+  const i = L.length; L.push(Object.assign({}, item, {id}));
+  next._rev = (cur._rev || 0) + 1; next._updated = today();
+  const what = key === 'music' ? 'song' : key === 'rituals' ? 'ritual' : 'reading';
+  V = {tab: 'founder', upd: {lvl: 'staff', title: 'Add a ' + what + ' for everyone: ' + item.title, note: 'A new ' + what + ' in the Service Builder and the Farewell Planning Session, for every Staff member and Founder.', rows: [['Adds', 'ceremonies.' + key + '.' + i]], warns: [], from: cur._rev || 0, next}};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 // Settings: the letterhead the Educator's Statement fills in for a Field-tier Premarital Guide.
