@@ -1,7 +1,8 @@
 // =====================================================================
 // GROUNDED FIELD GUIDE (TM): the Share Card Builder (GWG BLD 746; Painting look,
 // The Grounded Marriage, and named bios, GWG BLD 757; print sizes, QR codes, the Services, the
-// Field Guide mark, and TM on every name, GWG BLD 758).
+// Field Guide mark, and TM on every name, GWG BLD 758; every word, mark, and code held inside the safe line on
+// every print size, and Your Own Words, GWG BLD 760).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A Staff and Founder tab. Pick a subject, a message, a platform, a format,
 // and a look (Light, Dark, Tree Color, or Painting, which sets the words over the
@@ -9,6 +10,8 @@
 // saves it as a PNG. Print makes a 4 by 6 card, 5 by 7, 8.5 by 11 flyer, 11 by 17 poster, or 2 by 3.5
 // business card at 300 dpi with an eighth inch of bleed, saved as a PNG or a one page PDF, with the
 // trim and safe lines shown in the preview only. An optional QR code leads to the subject's page.
+// Your Own Words adds a headline and a short message (an event, a date, a time, a place) in place of or
+// along with the tagline, fitted to every format and size.
 // Bios for each platform sit below with a Copy button.
 // Data: the Staff library's brand.share, with a small built-in fallback so
 // the tab works before that library update is applied. Everything is drawn
@@ -102,8 +105,10 @@ let LIB = null;
 const S = {subject: 'gwg', msg: 'tag', own: '', platform: 'facebook', format: 'card', look: 'light', marks: true, bios: 'all', orient: 'tall', qr: false, head: '', note: '', with: 'place'};
 // Your Own Words, trimmed to the character guide, or null when both are empty.
 function ownWords(){
-  const cut = (t, n) => Array.from(String(t || '').replace(/\s+/g, ' ').trim()).slice(0, n).join('').trim();
-  const head = cut(S.head, HEAD_MAX), note = cut(S.note, NOTE_MAX);
+  const cut = (t, n) => Array.from(String(t || '')).slice(0, n).join('');
+  const head = cut(S.head, HEAD_MAX).replace(/\s+/g, ' ').trim();
+  // The message keeps up to four of its own line breaks (a date, a time, and a place can each have a line).
+  const note = cut(S.note, NOTE_MAX).split(/\r?\n/).map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, 5).join('\n');
   return head || note ? {head, note} : null;
 }
 
@@ -283,6 +288,12 @@ function wrap(ctx, text, font, maxW, spacing){
   const widths = lines.map(l => { const m = ctx.measureText(l); return m.width + 2 * Math.max(0, m.actualBoundingBoxLeft || 0, (m.actualBoundingBoxRight || 0) - m.width); }); ctx.letterSpacing = '0px';
   return {lines, widths, w: Math.max(0, ...widths)};
 }
+// Wrap each of the message's own lines in turn.
+function wrapP(ctx, text, font, maxW){
+  const out = {lines: [], widths: [], w: 0};
+  String(text || '').split('\n').forEach(p => { const b = wrap(ctx, p, font, maxW); out.lines.push(...b.lines); out.widths.push(...b.widths); out.w = Math.max(out.w, b.w); });
+  return out;
+}
 // Measure the whole block at unit u. Returns null when it does not fit the region.
 function measure(ctx, o, u, R, parts, lv){
   lv = lv || {h: 3, n: 6};
@@ -298,7 +309,7 @@ function measure(ctx, o, u, R, parts, lv){
   const line = parts.line && o.line ? wrap(ctx, o.line, F_LINE(u), colW, (u * 0.025) + 'px') : {lines: [], widths: [], w: 0}; if (line.lines.length > 3 || line.w > colW) return null;
   const none = {lines: [], widths: [], w: 0};
   const head = o.head ? wrap(ctx, o.head, F_HEAD(u), colW) : none; if (head.lines.length > lv.h || head.w > colW) return null;
-  const note = o.note ? wrap(ctx, o.note, F_NOTE(u), colW) : none; if (note.lines.length > lv.n || note.w > colW) return null;
+  const note = o.note ? wrapP(ctx, o.note, F_NOTE(u), colW) : none; if (note.lines.length > lv.n || note.w > colW) return null;
   const rowH = parts.marks ? u * 3 : 0, rowW = parts.marks ? 8 * rowH + 7 * u * .55 : 0; if (rowW > colW) return null;
   let h = name.lines.length * u * 4.4 * 1.08;
   if (head.lines.length) h += u * 1.1 + head.lines.length * u * 3.1 * 1.12;
@@ -317,7 +328,8 @@ function fit(ctx, o, R, cap){
   const tries = [{line: true, marks: o.marks}, {line: true, marks: false}, {line: false, marks: false}].filter((p, i) => i !== 1 || o.marks);
   // Your Own Words shrink first, then wrap: a headline on one line and the message on two while the words stay a good size,
   // then more lines only when they would get small.
-  const levels = o.head || o.note ? [{h: 1, n: 2}, {h: 2, n: 4}, {h: 3, n: 6}] : [{h: 3, n: 6}];
+  const nb = o.note ? o.note.split('\n').length : 0;
+  const levels = o.head || o.note ? [{h: 1, n: Math.max(2, nb)}, {h: 2, n: Math.max(4, nb + 1)}, {h: 3, n: Math.max(7, nb + 3)}] : [{h: 3, n: 6}];
   let got = null;
   for (const parts of tries) for (let li = 0; li < levels.length; li++){
     let lo = 0, hi = cap; got = null;
@@ -407,7 +419,8 @@ async function draw(canvas, cur, look){
   else R = {x: W * .07, y: H * .07, w: W * .86, h: bandTop - H * .05 - H * .07};
   // Print: everything stays inside the safe area (trim, then the safe margin).
   if (pr){
-    const k = pr.bleed + pr.safe, x0 = Math.max(R.x, k), y0 = Math.max(R.y, k), x1 = Math.min(R.x + R.w, W - k), y1 = Math.min(R.y + R.h, bandTop - pr.safe * .5);
+    // A sixteenth of an inch of air inside the safe line, so nothing sits right on it.
+    const k = pr.bleed + pr.safe + DPI / 16, x0 = Math.max(R.x, k), y0 = Math.max(R.y, k), x1 = Math.min(R.x + R.w, W - k), y1 = Math.min(R.y + R.h, bandTop - pr.safe * .5);
     R = {x: x0, y: y0, w: x1 - x0, h: y1 - y0};
   }
   const RS = Object.assign({}, R);
@@ -540,6 +553,9 @@ const CSS = `
 .sc-guide .tr i{color:#C0392B;} .sc-guide .sf i{color:#1F78C8;}
 .sc-guide .bl i{border:0;height:10px;width:14px;background:rgba(255,255,255,.55);outline:1px solid var(--line);}
 .sc-saves{display:flex;flex-wrap:wrap;gap:8px;}
+.sc-ownw{border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:14px;}
+.sc-ownw input[type=text],.sc-ownw textarea{width:100%;max-width:100%;box-sizing:border-box;}
+.sc-ownw .sc-count{margin-top:4px;font-weight:500;}
 `;
 function chips(key, list, val){ return `<div class="sc-chips" role="group">${list.map(([k, l]) => `<button type="button" class="chip" data-sc="${key}" data-v="${esc(k)}" aria-pressed="${val === k}">${esc(l)}</button>`).join('')}</div>`; }
 const fmtIn = n => String(n);
@@ -559,6 +575,18 @@ function biosHtml(D){
   ${plats.length ? plats.map(p => `<h3 style="margin-top:16px">${esc(platName(p))}</h3>${list.filter(([b]) => b.platform === p).map(([b, i]) => { const n = chars(b.text), lim = +b.limit || 0; const aim = +b.aim || 0, nm = subName(b.subject), head = b.label ? (String(b.label).indexOf(nm) === 0 ? b.label : nm + ', ' + b.label) : nm + ', ' + platName(b.platform) + (b.part ? ' ' + b.part : '');
       return `<div class="sc-bio"><div class="spread"><b>${esc(head)}</b><span class="sc-count${lim && n > lim ? ' over' : ''}">${n}${aim ? ' characters, aiming for ' + aim + (lim ? ' (' + platName(b.platform) + ' allows ' + lim + ')' : '') : (lim ? ' of ' + lim : '') + ' characters'}</span></div><p>${esc(b.text)}</p><button type="button" class="btn btn-line btn-sm" data-sc="copy-bio" data-v="${i}">Copy</button></div>`; }).join('')}`).join('') : `<p class="muted" style="margin-top:10px">The bios arrive with the next Staff library update.</p>`}</div>`;
 }
+const WITH = [['place', 'In Place of the Tagline'], ['along', 'Along With the Tagline']];
+const countOf = (n, max, best) => `${n} of ${max} characters${n > best ? ', shorter reads best' : ''}`;
+// Your Own Words: a headline and a short message for an event, a date, a time, or a place.
+function ownHtml(){
+  return `<div class="sc-ownw"><h3 style="margin:0 0 2px">Your Own Words</h3><p class="muted" style="margin:0;font-size:15px">Add an event, a date, a time, or a place. The words fit themselves to every format and print size.</p>
+    <label class="f" for="sc-head">Headline</label><input type="text" id="sc-head" data-sc="head" maxlength="${HEAD_MAX}" value="${esc(S.head)}" placeholder="An Evening of Remembrance" autocomplete="off">
+    <div class="sc-count" id="sc-head-n">${countOf(chars(S.head), HEAD_MAX, HEAD_BEST)}</div>
+    <label class="f" for="sc-note">Short Message</label><textarea id="sc-note" data-sc="note" rows="3" maxlength="${NOTE_MAX}" placeholder="Thursday, November 12, 7 PM&#10;The Community Room">${esc(S.note)}</textarea>
+    <div class="sc-count" id="sc-note-n">${countOf(chars(S.note), NOTE_MAX, NOTE_BEST)}, up to five lines</div>
+    <label class="f">Show Your Words</label>${chips('with', WITH, S.with)}
+    <div style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-sc="clear-own">Clear</button> <span class="muted" style="font-size:14px">Returns the card to the subject's own words.</span></div></div>`;
+}
 function inner(){
   const c = current(), {D, sub, msgs, plat, fmts, W, H} = c, pr = c.print;
   const groups = KINDS.map(([k, l]) => [l, msgs.map((m, i) => [m, i]).filter(([m]) => (m.kind || 'slogan') === k)]).filter(g => g[1].length);
@@ -572,6 +600,7 @@ function inner(){
       <select id="sc-sub" data-sc="subject">${[['Grounded', D.subjects.filter(s => !s.svc)], ['Services: Families', D.subjects.filter(s => s.svc === 'family')], ['Services: Pages', D.subjects.filter(s => s.svc === 'page')]].filter(g => g[1].length).map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</optgroup>`).join('')}</select>
       <label class="f" for="sc-msg">Message</label>${msgSel}
       ${S.msg === 'own' ? `<label class="f" for="sc-own">Your Message</label><textarea id="sc-own" data-sc="own" rows="3" placeholder="Type the words for the card.">${esc(S.own)}</textarea>` : ''}
+      ${ownHtml()}
       <label class="f">Platform</label>${chips('platform', D.platforms.map(p => [p.id, p.name]).concat([[PRINT.id, PRINT.name]]), plat.id)}
       <label class="f">${c.print ? 'Size' : 'Format'}</label>${chips('format', fmts, S.format)}
       ${c.print ? `<label class="f">Orientation</label>${chips('orient', ORIENTS, S.orient)}` : ''}
@@ -666,11 +695,13 @@ async function save(pdf){
 }
 
 document.addEventListener('click', e => {
-  const t = e.target.closest && e.target.closest('#sc-root [data-sc]'); if (!t || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' || t.type === 'checkbox') return;
+  const t = e.target.closest && e.target.closest('#sc-root [data-sc]'); if (!t || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' || t.tagName === 'INPUT') return;
   const k = t.dataset.sc, v = t.dataset.v;
   if (k === 'save'){ save(false); return; }
   if (k === 'save-pdf'){ save(true); return; }
   if (k === 'copy-bio'){ const b = data().bios[+v]; if (b) copyText(b.text); return; }
+  if (k === 'clear-own'){ S.head = ''; S.note = ''; S.with = 'place'; if (S.msg === 'own'){ S.msg = 'tag'; S.own = ''; } rerender(); return; }
+  if (k === 'with'){ S.with = v === 'along' ? 'along' : 'place'; rerender(); return; }
   if (k === 'platform' || k === 'format' || k === 'look' || k === 'orient'){
     // A business card prints wide; the other print sizes start tall.
     if (k === 'format' && S.platform === 'print' && v !== S.format) S.orient = v === 'pbiz' ? 'wide' : (S.format === 'pbiz' ? 'tall' : S.orient);
@@ -688,15 +719,20 @@ document.addEventListener('change', e => {
 });
 let ownT = null;
 document.addEventListener('input', e => {
-  const t = e.target; if (!t.closest || !t.closest('#sc-root') || t.dataset.sc !== 'own') return;
-  S.own = t.value; clearTimeout(ownT); ownT = setTimeout(paint, 180);
+  const t = e.target; if (!t.closest || !t.closest('#sc-root')) return;
+  const k = t.dataset.sc; if (k !== 'own' && k !== 'head' && k !== 'note') return;
+  S[k] = t.value;
+  if (k === 'head'){ const n = document.getElementById('sc-head-n'); if (n) n.textContent = countOf(chars(S.head), HEAD_MAX, HEAD_BEST); }
+  if (k === 'note'){ const n = document.getElementById('sc-note-n'); if (n) n.textContent = countOf(chars(S.note), NOTE_MAX, NOTE_BEST) + ', up to five lines'; }
+  clearTimeout(ownT); ownT = setTimeout(paint, 180);
 });
 
 (function(){ const s = document.createElement('style'); s.id = 'sc-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
 window.GGShare = {
   view(lib){ LIB = lib || null; setTimeout(paint, 0); return `<div id="sc-root">${inner()}</div>`; },
-  // For tests and the lead: draw any card off screen. o = {subject, msg, own, platform, format, look, marks}.
+  // For tests and the lead: draw any card off screen. o = {subject, msg, own, platform, format, look, marks, orient, qr, head, note, with}.
+  // The canvas carries boxes: every drawn word, mark, and code, for the safe line check.
   render(o){ Object.assign(S, o || {}); return draw(document.createElement('canvas'), current(), S.look); },
   // For tests: the saved files as Blobs (PNG with its dpi, and the print PDF).
   async files(o){ Object.assign(S, o || {}); const c = current(), cv = await draw(document.createElement('canvas'), c, S.look); const png = await blobOf(cv, 'image/png'); return {png: c.print ? await withDpi(png, DPI) : png, pdf: c.print ? await pdfOf(cv, c) : null, name: fileName(c, 'png'), W: c.W, H: c.H}; },
