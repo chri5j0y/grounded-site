@@ -128,7 +128,7 @@ function cfg(){
     return Object.assign({}, d, l, {lists, phoneLines: arr(l.phoneLines).length ? l.phoneLines : d.phoneLines}); });
   CF = {
     full: !!L, steps, checklist: A('checklist'), whoTags: A('whoTags'), gatheringTypes: A('gatheringTypes'), outputs: A('outputs'), followUp: A('followUp'),
-    scripts: Object.assign({}, DEF.scripts, (L && L.scripts) || {}, {sources: Object.assign({}, DEF.scripts.sources, ((L && L.scripts) || {}).sources || {})}),
+    scripts: Object.assign({}, DEF.scripts, (L && L.scripts) || {}, {sources: L && L.scripts ? (L.scripts.sources || {}) : DEF.scripts.sources}),
     shareWords: Object.assign({}, DEF.shareWords, (L && L.shareWords) || {}),
     familyCopyLead: (L && L.familyCopyLead) || DEF.familyCopyLead, crisis: (L && L.crisis) || DEF.crisis
   };
@@ -158,7 +158,8 @@ function fill(t, p, x){
   return String(t || '').replace(/\[(Person|Full|Name|Chris|Place|Link|Minutes)\]/g, (m, k) => x[k] != null ? x[k] : v[k] != null ? v[k] : m);
 }
 const faithOf = p => (p.sel.faithway || [])[0] || '';
-const plainOf = p => faithOf(p) === 'plain';
+// Faith words only when the family chose Faith or A Blend; otherwise the plain words.
+const plainOf = p => !['faith', 'blend'].includes(faithOf(p));
 
 // Lists: the library's items, then the family's own.
 function list(id){
@@ -407,6 +408,7 @@ const V = {};
 V[1] = p => sayBox(p, STEP(1).say) + loadBox(p) +
   blk(p, list('who').title || 'Who Is Here', 'who', chips(p, 'who') + addOwn('who', 'Neighbor, pastor, a dear friend...'), list('who').sub) +
   blk(p, 'Their Name', 'name', `<div class="fw-g2">${fld('person.called', 'Name as they were called', p.person.called)}${fld('person.full', 'Full name', p.person.full)}${fld('person.born', 'Born', parseDay(p.person.born) || '', 'date')}${fld('person.died', 'Died', parseDay(p.person.died) || '', 'date')}</div>
+    ${['born', 'died'].filter(k => p.person[k] && !parseDay(p.person[k])).map(k => `<p class="fw-sub">From the family, ${k}: ${esc(p.person[k])}</p>`).join('')}
     ${fld('person.say', 'How to say the name', p.person.say, 'text', 'PEG LAR-sun')}`) +
   blk(p, 'Family Contact', 'contact', `<div class="fw-g2">${fld('contact.name', 'Name', p.contact.name)}${fld('contact.rel', 'Relationship', p.contact.rel)}${fld('contact.ph', 'Phone', p.contact.ph, 'tel')}${fld('contact.em', 'Email', p.contact.em, 'email')}</div>`, 'For the family copy, the share links, and the follow-ups.') +
   `<details class="fw-custom"><summary>Send the Family Planning a Farewell</summary>${shareCard(p, 'familyStart')}</details>` +
@@ -469,8 +471,9 @@ V[8] = p => sayBox(p, STEP(8).say) +
 
 V[9] = p => {
   const T = touches(p), base = mainDate(p);
+  const nextT = (T.find(t => !(p.fu[t.id] || {}).done) || {}).id;
   return sayBox(p, STEP(9).say) + (base ? '' : '<p class="fw-sub">Add the date of the main gathering in What Gatherings, and the dates here follow it.</p>') +
-  `<div class="fw-tl">${T.map(t => { const f = t.f, st = p.fu[t.id] || {}, em = f.email || {}, cl = f.call || {}, open = S.fuOpen ? S.fuOpen === t.id : false;
+  `<div class="fw-tl">${T.map(t => { const f = t.f, st = p.fu[t.id] || {}, em = f.email || {}, cl = f.call || {}, open = S.fuOpen ? S.fuOpen === t.id : t.id === nextT;
     const body = fill(em.body || '', p), sub = fill(em.subject || t.title, p);
     return `<details class="fw-fu${st.done ? ' done' : ''}" data-fwfu="${esc(t.id)}"${open ? ' open' : ''}><summary><span class="fw-dot" aria-hidden="true"></span><b>${esc(t.title)}</b><span class="fw-when">${t.date ? esc(nice(t.date)) : f.anchor === 'birthday' ? 'Add the birth date in Welcome' : ''}${st.done ? ' &middot; Done' : ''}</span></summary><div class="fw-fu-in">
       ${t.own ? '' : `<div class="fw-box"><h4>Ready-to-Send Email</h4><div class="fw-words">${esc(body)}</div><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-fwa="fu-copy" data-fwv="${esc(t.id)}">Copy</button><a class="btn btn-line btn-sm" href="${esc(mailHref(p.contact.em, sub, body))}">Open in Mail</a></div></div>
@@ -586,11 +589,11 @@ function sheet(html, title, file){
   API.last = {title, html: body};
   if (C.sheet) C.sheet(body, title, {file});
 }
-const blkT = (p, b) => fill(b.t != null ? b.t : (plainOf(p) ? b.plain : b.faith) || b.faith || b.plain || '', p);
+const blkT = (p, b) => fill(b.t != null ? b.t : (plainOf(p) ? b.plain : b.faith) || (plainOf(p) ? '' : b.plain) || '', p);
 const headLine = p => [p.person.full || called(p), lifeLine(p)].filter(Boolean).join(', ');
 function gFor(p, id){ const g = gSel(p).find(x => x.id === id); return g ? Object.assign({}, g, p.gd[g.id] || {}) : null; }
 function committalBlocks(p){
-  const sc = cfg().scripts, faith = !plainOf(p) && faithOf(p) !== '', B = arr(faith ? sc.committalFaith : sc.committalPlain).slice();
+  const sc = cfg().scripts, faith = !plainOf(p), B = arr(faith ? sc.committalFaith : sc.committalPlain).slice();
   const hon = picked(p, 'honors'); if (hon.length && B.length) B.splice(B.length - 1, 0, {h: 'Honors', t: hon.join(', ') + '. The honor guard leads; the officiant steps back and waits.', cue: true});
   return {B, src: faith ? (sc.sources || {}).committalFaith : (sc.sources || {}).committalPlain};
 }
@@ -604,17 +607,30 @@ function outHTML(p, k){
     const cues = o.map((r, i) => `<tr><td>${i + 1}</td><td>${H(r.name)}</td><td>${H(r.by || me())}</td><td>${r.mins}</td><td>${H(o[i + 1] ? 'Next: ' + o[i + 1].name + (o[i + 1].by ? ', ' + o[i + 1].by : '') : 'The end of the service')}</td></tr>`).join('');
     const tk = id => (p.tasks.find(t => t.id === id) || {}).d || '';
     return [`<h1>Rehearsal Plan</h1><p>${H(headLine(p))}</p><p><b>${H([nice(p.reh.date), tm(p.reh.time)].filter(Boolean).join(', ') || 'Date to set')}</b>${p.reh.place ? ' · ' + H(p.reh.place) : ''}</p>` +
-      arr(cfg().scripts.rehearsal).map(b => `<h3>${H(b.h)}${b.min ? ` <small>(${b.min} min)</small>` : ''}</h3>${paras(blkT(p, b))}`).join('') +
+      `<div class="fw-2c">${arr(cfg().scripts.rehearsal).map(b => `<div class="fw-ps"><h3>${H(b.h)}${b.min ? ` <small>(${b.min} min)</small>` : ''}</h3>${paras(blkT(p, b))}</div>`).join('')}</div>` +
       (o.length ? `<h2>Cues, in Order</h2><table class="fw-pt"><tr><th>#</th><th>Part</th><th>Who</th><th>Min</th><th>Cue</th></tr>${cues}</table>` : '') +
-      (p.speakers.length ? `<h2>Speakers</h2><ul>${p.speakers.map(s => `<li>${H(s.name)}, about ${+s.min || 0} minutes</li>`).join('')}</ul>` : '') +
+      (p.speakers.length ? `<p><b>Speakers:</b> ${p.speakers.map(s => H(s.name) + ', about ' + (+s.min || 0) + ' minutes').join('; ')}</p>` : '') +
       ([['readers', 'Readers'], ['ushers', 'Ushers'], ['pallbearers', 'Pallbearers']].filter(x => tk(x[0])).map(x => `<p><b>${x[1]}:</b> ${H(tk(x[0]))}</p>`).join('')), 'Rehearsal Plan', 'rehearsal-plan'];
   }
-  if (k === 'family') return [`<h1>${H(pName(p))}'s Farewell</h1>${paras(famText(p))}`, 'Family Copy', 'family-copy'];
+  if (k === 'family'){
+    const sec = (h, x) => x ? `<div class="fw-ps"><h3>${H(h)}</h3>${x}</div>` : '', ln = a => a.filter(Boolean).map(x => `<p>${x}</p>`).join('');
+    const fw = picked(p, 'faithway').concat(picked(p, 'tradition')), nx = p.next.filter(x => !x.done);
+    return [`<h1>${H(pName(p))}'s Farewell</h1><p><i>${H(fill(cfg().familyCopyLead, p))}</i></p><div class="fw-2c">` +
+      sec('Remembering', ln([H((p.person.full || called(p)) + (called(p) && p.person.full ? ' ("' + called(p) + '")' : '')), H(lifeLine(p))])) +
+      sec('The Service Will Be', fw.length ? ln([H(fw.join(', '))]) : '') +
+      sec('Gatherings', ln(gSel(p).map(g => '<b>' + H(g.t) + '</b>' + (gLine(p, g) ? ': ' + H(gLine(p, g)) : '')))) +
+      sec('Order of Service, About ' + svcTotal(p) + ' Minutes', o.length ? `<ol>${o.map(r => `<li>${H(r.name)}${r.by ? ', ' + H(r.by) : ''}${r.rd.length ? ' <i>(' + H(r.rd.map(x => x.head).join('; ')) + ')</i>' : ''}</li>`).join('')}</ol>` : '') +
+      sec('Family Speakers', ln(p.speakers.map(x => H(x.name) + ', about ' + (+x.min || 0) + ' minutes'))) +
+      sec('Honors', ln([H(picked(p, 'honors').join(', '))])) + sec('Customs to Honor', ln([H(picked(p, 'customs').join(', '))])) +
+      sec('Rehearsal', (p.reh.date || p.reh.place) ? ln([H([nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '))]) : '') +
+      sec('Next Steps', nx.length ? `<ul>${nx.map(x => `<li>${H(x.t)}</li>`).join('')}</ul>` : '') +
+      `</div><p>With you,<br>${H(me())}</p>`, 'Family Copy', 'family-copy'];
+  }
   if (k === 'helpers'){
     const by = {}; p.tasks.forEach(t => { const w = t.who || 'Not yet assigned'; (by[w] = by[w] || []).push((t.done ? '[x] ' : '[ ] ') + t.t + (t.d ? ': ' + t.d : '')); });
     gSel(p).forEach(g => { const w = p.tags['g-' + g.id]; if (w) (by[w] = by[w] || []).push('[ ] ' + g.t + (gLine(p, g) ? ': ' + gLine(p, g) : '')); });
     [['eulogy', 'The eulogy'], ['obit', 'The obituary'], ['honors', 'Honors: ' + picked(p, 'honors').join(', ')], ['clergy', 'Other clergy']].forEach(([key, t]) => { const w = p.tags[key]; if (w) (by[w] = by[w] || []).push('[ ] ' + t); });
-    return [`<h1>Helpers' Checklist</h1><p>${H(headLine(p))}</p>` + Object.keys(by).map(w => `<h2>${H(w)}</h2><ul>${by[w].map(x => `<li>${H(x)}</li>`).join('')}</ul>`).join(''), "Helpers' Checklist", 'helpers-checklist'];
+    return [`<h1>Helpers' Checklist</h1><p>${H(headLine(p))}</p>` + `<div class="fw-2c">${Object.keys(by).map(w => `<div class="fw-ps"><h3>${H(w)}</h3><ul>${by[w].map(x => `<li>${H(x)}</li>`).join('')}</ul></div>`).join('')}</div>`, "Helpers' Checklist", 'helpers-checklist'];
   }
   if (k === 'other'){
     const sc = cfg().scripts, G = gSel(p).filter(g => g.script && g.script !== 'committal' && !g.main && sc[g.script]);
@@ -623,7 +639,9 @@ function outHTML(p, k){
   }
   return null;
 }
-function printOut(k){ const p = plan(); if (!p) return; const r = outHTML(p, k); if (r) sheet(`<style>.fw-pt{border-collapse:collapse;width:100%;font-size:9.5pt;}.fw-pt td,.fw-pt th{border-bottom:.5pt solid #DDD0B8;padding:1mm 1.5mm;text-align:left;vertical-align:top;}</style>` + r[0], r[1], r[2]); }
+const PCSS = `<style>.fw-pt{border-collapse:collapse;width:100%;font-size:9pt;}.fw-pt td,.fw-pt th{border-bottom:.5pt solid #DDD0B8;padding:.6mm 1.5mm;text-align:left;vertical-align:top;}
+.fw-2c{columns:2;column-gap:7mm;}.fw-ps{break-inside:avoid;margin:0 0 2.5mm;}.fw-ps h3{margin:0 0 .8mm !important;}.fw-ps p,.fw-ps li{margin:0 0 .6mm !important;}.fw-ps ol,.fw-ps ul{margin:0;padding-left:5mm;}</style>`;
+function printOut(k){ const p = plan(); if (!p) return; const r = outHTML(p, k); if (r) sheet(PCSS + r[0], r[1], r[2]); }
 
 // ---------- Start a Session: each gathering becomes one of your sessions (DATA.ses.list, sessions.js shape) ----------
 const DEBRIEF = 'Take five minutes for the After-Session Debrief.';
@@ -642,6 +660,8 @@ function sesGuides(p){
       const steps = W.map(r => { let say = splitSay(r.words); r.rd.forEach(x => { say = say.concat([x.head], splitSay(x.text)); });
         if (ed && /eulogy|life story|the life/i.test(r.name)) say = say.concat(splitSay(ed));
         return {t: r.name, m: r.mins, by: r.by, say, do: r.dos.concat(r.note ? ['Notes: ' + r.note] : [])}; });
+      const cw = (cfg().scripts.closingWords || {})[plainOf(p) ? 'plain' : 'faith'];
+      if (steps.length && !steps[steps.length - 1].say.length && cw) steps[steps.length - 1].say = splitSay(fill(cw, p));
       mk(g.id, g.t, g, steps, [g.t + ' for ' + (p.person.full || P), when(g)].filter(Boolean).join('. ') + '.', ['Print the Officiant Script as a backup.', 'Check in with the funeral director and the musicians.']);
     } else if (g.script === 'committal'){
       const {B} = committalBlocks(p);
@@ -874,7 +894,7 @@ function act(a, v, el){
     case 'plans': S.id = null; S.on = true; rerender(false); return;
     case 'new': case 'new-load': { const n = newPlan(); plans().push(n); const d = D(); if (d && d.deleted && d.deleted.fwp) delete d.deleted.fwp[n.id]; touch(n); S.id = n.id; S.step = 1; S.mode = 'chris'; rerender(false);
       if (a === 'new-load') setTimeout(() => { const l = document.querySelector('#fw-root .fw-load'); if (l){ l.open = true; const t = l.querySelector('textarea'); if (t) t.focus(); } }, 30); return; }
-    case 'open': openPlan(v, 1); return;
+    case 'open': openPlan(v, el.closest('#cer-root') && S.id === v ? (S.step || 5) : el.closest('#cer-root') ? 5 : 1); return;
     case 'del': { const x = plans().find(q => q.id === v); if (!x || !confirm('Delete the plan for ' + pTitle(x) + '? Its sessions in Start a Session stay until you delete them.')) return;
       const d = D(); d.fwp.plans = plans().filter(q => q.id !== v); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.fwp = d.deleted.fwp || {}; d.deleted.fwp[v] = Date.now(); C.save(); rerender(true); return; }
     case 'fu-open': { const [pid, tid] = v.split('|'); S.fuOpen = tid; openPlan(pid, 9); return; }
@@ -931,14 +951,14 @@ document.addEventListener('keydown', e => {
   const o = e.target.closest('#fw-root [data-fwown]'); if (o){ e.preventDefault(); act('own', o.dataset.fwown, o); return; }
   const g = e.target.closest('#fw-root [data-fwtag]'); if (g){ e.preventDefault(); act('tagset', g.dataset.fwtag, g); }
 });
-// Typing saves as it goes; fields that change other parts of the page redraw when they are left.
-const REDRAW = /^(person\.(called|full|born|died)|gd\.|reh\.|speakers\.\d+\.(min|name)|clergy\.\d+\.name)/;
+// Typing saves as it goes, with no redraw, so the next tap always lands; the name at the top follows along.
+function headSync(p){ const h = document.querySelector('#fw-root .fw-head h1'); if (h) h.textContent = pTitle(p); }
 document.addEventListener('input', e => {
   const t = e.target; if (!t.closest || !t.closest('#fw-root') || !D()) return;
   if (t.dataset.fwi){
     if (t.dataset.fwi.startsWith('me.')){ store().me[t.dataset.fwi.slice(3)] = t.value; C.save(); return; }
     const p = plan(); if (!p) return; let v = t.value; if (t.type === 'number') v = v === '' ? '' : +v;
-    setPath(p, t.dataset.fwi, v); touch(p); return;
+    setPath(p, t.dataset.fwi, v); touch(p); if (/^person\./.test(t.dataset.fwi)) headSync(p); return;
   }
   if (t.dataset.fwsvc){ const p = plan(); if (!p || !hasSvc(p)) return; const [k, f] = t.dataset.fwsvc.split('|'); if (f === 'option') return; CER().set(p.svc, k, f, t.value); const tot = document.getElementById('fw-tot'); if (tot) tot.textContent = CER().total(p.svc) + ' minutes'; touch(p); }
 });
@@ -948,8 +968,8 @@ document.addEventListener('change', e => {
   if (t.dataset.fwfile && t.files && t.files[0]){ const f = t.files[0]; t.value = ''; const r = new FileReader(); r.onload = () => { if (p && loadText(p, String(r.result || ''))) rerender(true); }; r.readAsText(f); return; }
   if (!p) return;
   if (t.dataset.fwc){ setPath(p, t.dataset.fwc, !!t.checked); touch(p); rerender(true); return; }
-  if (t.dataset.fwsvc){ const [k, f] = t.dataset.fwsvc.split('|'); if (f === 'option'){ CER().set(p.svc, k, 'option', t.value); touch(p); } rerender(true); return; }
-  if (t.dataset.fwi && REDRAW.test(t.dataset.fwi)) rerender(true);
+  if (t.dataset.fwsvc){ const [k, f] = t.dataset.fwsvc.split('|'); if (f === 'option'){ CER().set(p.svc, k, 'option', t.value); touch(p); rerender(true); } return; }
+  if (t.dataset.fwi && t.type === 'date' && /^(person\.|gd\.)/.test(t.dataset.fwi)){ setPath(p, t.dataset.fwi, t.value); touch(p); }
 });
 document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.fwfu && d.open) S.fuOpen = d.dataset.fwfu; }, true);
 
