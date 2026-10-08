@@ -102,6 +102,8 @@
     stinnett: ['Nick Stinnett and John DeFrain, the qualities of strong families (Michigan State University Extension summary)', 'https://www.canr.msu.edu/news/is_your_family_strong'],
     cssp: ['Center for the Study of Social Policy, the Strengthening Families Protective Factors Framework', 'https://cssp.org/wp-content/uploads/2025/03/About-Strengthening-Families.pdf'],
     woolever04: ['Woolever and Bruce, U.S. Congregational Life Survey: strong congregations show a few strengths, not all (Christian Century, 2004)', 'https://www.christiancentury.org/article/2004-04/views-pews-strong-congregations'],
+    stroebe99: ['Stroebe and Schut, The Dual Process Model of Coping with Bereavement (Death Studies, 1999)', 'https://doi.org/10.1080/074811899201046'],
+    lindemann44: ['Erich Lindemann, Symptomatology and Management of Acute Grief (American Journal of Psychiatry, 1944)', 'https://doi.org/10.1176/ajp.101.2.141'],
     lundy: ['Laura Lundy, the Lundy Model of Child Participation (summary, Queen\'s University Belfast)', 'https://www.qub.ac.uk/research-centres/cppa/policy-case-studies/childrens-participation-lundy-model.html'],
     wrz: ['Wrzesniewski and Dutton, job crafting (2001)', 'https://doi.org/10.5465/amr.2001.4378011', 'a'],
     litz: ['Litz and colleagues, moral injury and moral repair (2009)', 'https://doi.org/10.1016/j.cpr.2009.07.003'],
