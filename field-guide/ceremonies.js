@@ -441,13 +441,14 @@ function navBar(s){
 function headOf(s, eyebrow){
   const bits = [typeOf(s.type).name, nice(s.date), s.place].filter(Boolean).join(', ');
   return `${backHome()}<div class="page-head cer-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(title(s))}</h1><p>${esc(bits)}</p></div>
-    <div>${chips('status', STATUS, s.status || 'session')}</div></div>${navBar(s)}`;
+    <div>${chips('status', STATUS, s.status || 'session')}</div></div>${s.fwp && window.GGFw ? `<div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-fwa="open" data-fwv="${esc(s.fwp)}">Back to the Farewell Plan</button></div>` : ''}${navBar(s)}`;
 }
 
 function vHome(){
   const C = cer(), L = list().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
   const fams = [['funeral', 'Funerals and Memorials'], ['wedding', 'Weddings'], ['blessing', 'Blessings']];
   return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Service Builder</h1><p>Build a service or a blessing live with the family or the couple, then dial it in and print it.</p><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-tab="premarital">Premarital Sessions</button></div></div>
+  ${window.GGFw && GGFw.card ? GGFw.card() : ''}
   <div class="card"><h2 style="margin-bottom:4px">Start a Service</h2><p class="muted">Pick the kind of service. Setup takes about a minute.</p>
     ${fams.map(([f, l]) => { const ts = C.types.filter(t => t.family === f); return ts.length ? `<h3 style="margin-top:14px">${l}</h3><div class="cer-types">${ts.map(t => `<button type="button" class="cer-type" data-cer="new" data-v="${esc(t.id)}"><b>${esc(t.name)}</b>${t.lead ? `<small>${esc(t.lead)}</small>` : ''}</button>`).join('')}</div>` : ''; }).join('')}
     ${C.full ? '' : `<p class="muted" style="margin-top:12px;font-size:15px">The full set of parts, templates, and readings arrives with the next Staff library update.</p>`}</div>
@@ -987,6 +988,59 @@ const API = window.GGCer = {
     ((inc.cer || {}).services || []).forEach(x => { const i = out.cer.services.findIndex(y => y.id === x.id); if (i < 0){ out.cer.services.push(x); added++; } else if ((x.u || 0) > (out.cer.services[i].u || 0)){ out.cer.services[i] = x; updated++; } });
     out.cer.services = out.cer.services.filter(x => !(out.deleted.cer[x.id] && out.deleted.cer[x.id] >= (x.u || 0)));
     return {added, updated};
+  },
+  // The Farewell Planning Session (farewell.js, GWG BLD 766) keeps its order of service here, so the parts, readings,
+  // Bible versions, Faith or Plain, times, and printouts stay one source: the plan holds the service's id.
+  fw: {
+    bind(ctx){ if (ctx && ctx.data){ if (CTX.data && ctx.data !== CTX.data){ S.view = 'home'; S.id = null; S.draft = null; } CTX = {lib: ctx.lib || null, data: ctx.data, save: typeof ctx.save === 'function' ? ctx.save : () => {}}; } },
+    get: id => list().find(x => x.id === id) || null,
+    types: () => cer().types.filter(t => t.family === 'funeral').map(t => ({id: t.id, name: t.name})),
+    faiths: () => (cer().setup.faiths || []).map(f => ({id: f.id, name: f.name})),
+    honors: () => (cer().setup.honors || []).filter(h => !h.family || h.family === 'funeral' || h.family === 'both').map(h => ({id: h.id, name: h.name})),
+    make(o){
+      o = o || {}; const t = cer().types.some(x => x.id === o.type) ? o.type : 'funeral', s = newSvc(t);
+      s.fwp = o.fwp || null; API.fw.sync(s, o, true); build(s, false); list().push(s); keep(s); return s.id;
+    },
+    // o: {type, name, first, born, died, date, time, place, faith, honors, length}. Only what is given changes.
+    sync(sOrId, o, fresh){
+      const s = typeof sOrId === 'string' ? API.fw.get(sOrId) : sOrId; if (!s || !o) return;
+      const w = s.who = s.who || {pron: 'they'}, st = s.setup = s.setup || {};
+      ['name', 'first', 'born', 'died'].forEach(k => { if (o[k] != null && o[k] !== '') w[k] = o[k]; });
+      ['date', 'time', 'place'].forEach(k => { if (o[k] != null) s[k] = o[k]; });
+      if (o.faith != null) st.faith = o.faith;
+      if (Array.isArray(o.honors)) st.honors = o.honors.slice();
+      if (o.type && o.type !== s.type && cer().types.some(x => x.id === o.type)) s.type = o.type;
+      if (!fresh){ reapply(s); keep(s); }
+    },
+    rows(id){
+      const s = API.fw.get(id); if (!s) return [];
+      return (s.parts || []).map(e => { const p = partOf(e);
+        return {k: e.k, name: e.title || p.name, on: !!e.on, mins: minsOf(e), by: e.by || '', option: e.option || null, options: (p.options || []).map(x => [x.id, x.name]), readings: !!p.readings,
+          rd: (e.rd || []).map(x => { const r = RD(x.id); return r ? rHead(r, rText(r, x.ver).ver) : ''; }).filter(Boolean)}; });
+    },
+    set(id, k, f, v){
+      const s = API.fw.get(id), e = s && s.parts.find(x => x.k === k); if (!e) return;
+      if (f === 'on'){ e.on = !!v; e.touched = true; if (e.on && !e.option){ const p = partOf(e); if (!p.say && (p.options || []).length) e.option = fitOpt(p, s); } }
+      else if (f === 'option'){ e.option = v || null; e.touched = true; }
+      else if (f === 'mins') e.mins = v === '' ? null : Math.max(0, +v || 0);
+      else if (f === 'by') e.by = v;
+      keep(s);
+    },
+    move(id, k, dir){
+      const s = API.fw.get(id); if (!s) return; const on = onParts(s), i = on.findIndex(e => e.k === k), j = i + dir; if (i < 0 || j < 0 || j >= on.length) return;
+      s.parts.splice(s.parts.indexOf(on[i]), 1); s.parts.splice(s.parts.indexOf(on[j]) + (dir > 0 ? 1 : 0), 0, on[i]); keep(s);
+    },
+    add(id, name){ const s = API.fw.get(id); if (!s || !String(name || '').trim()) return; const gs = groupsFor(famOf(s.type)); s.parts.push({k: uid(), part: 'custom', custom: {name: String(name).trim(), group: (gs[gs.length - 1] || {}).id || ''}, on: true, note: '', rd: [], touched: true}); keep(s); },
+    total: id => { const s = API.fw.get(id); return s ? total(s) : 0; },
+    // The parts in order with their words, for the live sessions and the plan's printouts.
+    words(id){
+      const s = API.fw.get(id); if (!s) return [];
+      return onParts(s).map(e => { const p = partOf(e); return {name: e.title || p.name, mins: minsOf(e), by: e.by || '', words: partWords(e, s), note: e.note || '', dos: doOf(e, s),
+        rd: (e.rd || []).map(x => { const r = RD(x.id); if (!r) return null; const tx = rText(r, x.ver); return {head: rHead(r, tx.ver), text: tx.text || '', source: r.source || ''}; }).filter(Boolean)}; });
+    },
+    open(id, view){ if (!API.fw.get(id)) return false; S.id = id; S.draft = null; S.pick = null; S.view = view || 'check'; return true; },
+    print(id, kind){ const s = API.fw.get(id); if (!s || !DOCS[kind]) return; const was = [S.id, S.draft]; S.id = id; S.draft = null; try { printKind(kind); } finally { S.id = was[0]; S.draft = was[1]; } },
+    text(id, kind){ const s = API.fw.get(id); return s && DOCS[kind] ? DOCS[kind][1](s) : ''; }
   },
   // For tests and the lead.
   state: S, data: cer, fill, draftOf, ruleOn, docs: DOCS, printer: null, last: null, lastCopy: null,

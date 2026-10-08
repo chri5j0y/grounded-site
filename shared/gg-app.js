@@ -488,7 +488,7 @@
     get: function (id) { var all = GGStore.json(RKEY, {}); return all[id] || { on: false, time: '07:00' }; },
     set: function (id, o) {
       var all = GGStore.json(RKEY, {}), cur = all[id] || {};
-      var r = { on: !!o.on, time: /^\d\d:\d\d$/.test(o.time || '') ? o.time : (cur.time || '07:00'), title: String(o.title || cur.title || 'Grounded'), body: String(o.body || cur.body || '') };
+      var r = { on: !!o.on, time: /^\d\d:\d\d$/.test(o.time || '') ? o.time : (cur.time || '07:00'), title: String(o.title || cur.title || 'Grow With Grounded'), body: String(o.body || cur.body || '') };
       all[id] = r; GGStore.setJSON(RKEY, all);
       var LN = P('LocalNotifications'); if (!LN) return Promise.resolve(false);
       var nid = RID[id] || 1099;

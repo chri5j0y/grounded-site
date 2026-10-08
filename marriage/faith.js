@@ -220,10 +220,10 @@ window.GM_FAITH = {
     "christian-episcopal": "Ask about their rector and parish. The marriage service in the Book of Common Prayer may be familiar to them.",
     "christian-orthodox": "The Orthodox wedding (the crowning) belongs to their priest. Ask what the parish asks of couples before the wedding.",
     "christian-lds": "Ask whether they hope for a temple sealing, a civil wedding, or both, and what their bishop has shared with them.",
-    "christian-jw": "Ask before any prayer. An elder usually gives the wedding talk; ask what part, if any, they welcome from Grounded.",
+    "christian-jw": "Ask before any prayer. An elder usually gives the wedding talk; ask what part, if any, they welcome from Grow With Grounded.",
     "christian-adventist": "Many keep the Sabbath from sundown Friday to sundown Saturday; schedule sessions around it.",
     "christian-quaker": "In many meetings the couple marry each other in a meeting for worship, after a clearness committee. Shared silence may feel natural to them.",
-    "christian-anabaptist": "Ask what their church and its leaders ask of a couple before marriage, and what part they welcome from Grounded.",
+    "christian-anabaptist": "Ask what their church and its leaders ask of a couple before marriage, and what part they welcome from Grow With Grounded.",
     "christian-cs": "Ask which readings they would like, and about their branch church."
    }
   },
@@ -237,7 +237,7 @@ window.GM_FAITH = {
     "How your families hope to see your tradition carried into your marriage."
    ],
    "practiceLine": "If prayer or blessing is part of your home, close with a short prayer or blessing from your own tradition, in the words your family knows.",
-   "sessionNote": "Ask each partner how they practice, and how much it shapes their days and their families' hopes. The wedding rites belong to their own clergy and community: the rabbi for a Jewish couple, the imam for the nikah, the pandit for a Hindu wedding, the granthi for the Anand Karaj, their temple or teacher for a Buddhist couple, and the couple and their Local Spiritual Assembly for a Bahá'í couple. Grounded offers the premarital sessions beside them. Leave out Christian prayers and language unless the couple asks. Use their own words for God, prayer, and holy days, and never assume one way of practicing for a whole tradition. Couples practice their faith in their own ways. Ask.",
+   "sessionNote": "Ask each partner how they practice, and how much it shapes their days and their families' hopes. The wedding rites belong to their own clergy and community: the rabbi for a Jewish couple, the imam for the nikah, the pandit for a Hindu wedding, the granthi for the Anand Karaj, their temple or teacher for a Buddhist couple, and the couple and their Local Spiritual Assembly for a Bahá'í couple. Grow With Grounded offers the premarital sessions beside them. Leave out Christian prayers and language unless the couple asks. Use their own words for God, prayer, and holy days, and never assume one way of practicing for a whole tradition. Couples practice their faith in their own ways. Ask.",
    "readings": [
     {
      "kind": "idea",
@@ -267,7 +267,7 @@ window.GM_FAITH = {
      "kind": "reading",
      "title": "Loving-Kindness",
      "text": "May you be safe. May you be peaceful. May you be held in kindness. May you live with ease.",
-     "source": "In the spirit of the Metta Sutta (Sutta Nipata 1.8). English rendering by Grounded."
+     "source": "In the spirit of the Metta Sutta (Sutta Nipata 1.8). English rendering by Grow With Grounded."
     }
    ],
    "notes": {
@@ -276,7 +276,7 @@ window.GM_FAITH = {
     "hindu": "The wedding rites belong to their pandit. Ask which family customs matter most to each of them.",
     "buddhist": "Ask which tradition. Their temple or teacher may have their own blessing for a marriage. Silence and loving-kindness may feel natural to them.",
     "sikh": "The Anand Karaj belongs to the granthi and the gurdwara. Ask what the gurdwara asks of couples.",
-    "bahai": "A Bahá'í marriage asks for the consent of the couple's living parents, and each partner says a short vow before witnesses. Ask the couple and their Local Spiritual Assembly what part Grounded may take."
+    "bahai": "A Bahá'í marriage asks for the consent of the couple's living parents, and each partner says a short vow before witnesses. Ask the couple and their Local Spiritual Assembly what part Grow With Grounded may take."
    }
   },
   "open": {
@@ -313,7 +313,7 @@ window.GM_FAITH = {
     "Time on the land, by water, or under the sky that grounds you both."
    ],
    "practiceLine": "If it fits your ways, close with a few quiet breaths outside together, and give thanks for the land, the people who came before you, and each other.",
-   "sessionNote": "Ask first: \"Are there ways of your family or people you would like honored?\" Ceremonies, songs, and rites belong to the family's own elders and spiritual leaders; Grounded supports and never leads them. Never generalize across nations or families. Many families also follow Christian or other faiths, and some blend both. Couples practice their faith in their own ways. Ask.",
+   "sessionNote": "Ask first: \"Are there ways of your family or people you would like honored?\" Ceremonies, songs, and rites belong to the family's own elders and spiritual leaders; Grow With Grounded supports and never leads them. Never generalize across nations or families. Many families also follow Christian or other faiths, and some blend both. Couples practice their faith in their own ways. Ask.",
    "notes": {
     "hmong": "Ask whether their families follow traditional ways, Christian ways, or both. Traditional weddings are led by the families and their elders. Ask how both families hope to take part.",
     "indigenous": "Ask, \"Are there ways of your people you would like followed?\" Ceremonies belong to their elder or spiritual leader. Never generalize across nations.",

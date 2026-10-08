@@ -635,10 +635,10 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=b756"></script>
+<script src="../shared/gg-app.js?v=b766"></script>
 <script src="../shared/gg-backup.js?v=bk4"></script>
-<script src="../shared/gg-filelock.js?v=fl2"></script>
-<script src="../shared/gg-pdf.js"></script>
+<script src="../shared/gg-filelock.js?v=b766"></script>
+<script src="../shared/gg-pdf.js?v=b766"></script>
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
 <script src="../shared/gg-sources.js?v=b763"></script>
@@ -647,9 +647,10 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=gr1"></script>
 <script src="qr.js"></script>
-<script src="share.js?v=b765"></script>
-<script src="ceremonies.js?v=b758"></script>
+<script src="share.js?v=b766"></script>
+<script src="ceremonies.js?v=b766"></script>
 <script src="sessions.js?v=b758"></script>
+<script src="farewell.js?v=b766"></script>
 <script src="premarital.js?v=b760"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -992,7 +993,7 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
+  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1069,6 +1070,9 @@ const CL = id => DATA.clients.find(c => c.id === id);
 const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief & Caregiver Support', speaking:'Speaking & Training', meditation:'Meditation, Sound, and Movement', self:'For You', safety:'Safety'};
 if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m), esc, icon,
   guideHTML: (g, pv) => vGuide(g, pv), saveAll: (g, adds) => sesSaveAll(g, adds), cats: CATS, services: SERVICE_NAMES});
+// The Farewell Planning Session (GWG BLD 766, farewell.js): Staff and Founders, in the Ceremonies tab.
+if (window.GGFw) GGFw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
+  sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
 // ---------------- HOME ----------------
@@ -1083,6 +1087,7 @@ function vHome(){
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${sgHomeCard()}
   ${hpHomeCard()}
+  ${window.GGFw ? GGFw.homeCard() : ''}
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
@@ -10199,6 +10204,8 @@ function mergeData(cur, inc){
   // Saved services (Service Builder, BLD 747): newest copy wins; deleted ones stay deleted.
   if (window.GGCer){ const cm = GGCer.merge(out, inc); stats.added += cm.added; stats.updated += cm.updated; }
   // Your Sessions (your versions and your own sessions, BLD 758): newest copy wins; deleted ones stay deleted.
+  // Farewell plans (Farewell Planning Session, BLD 766): newest copy wins; deleted ones stay deleted.
+  if (window.GGFw){ const fm = GGFw.merge(out, inc); stats.added += fm.added; stats.updated += fm.updated; }
   if (window.GGSes){ const sm = GGSes.merge(out, inc); stats.added += sm.added; stats.updated += sm.updated; }
   // Premarital couples (Premarital Sessions, BLD 750): newest copy wins; deleted ones stay deleted.
   if (window.GGPm){ const pm = GGPm.merge(out, inc); stats.added += pm.added; stats.updated += pm.updated; }

@@ -195,7 +195,7 @@
 
   function escH(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function sheetBlocks(m) {
-    var b = [{ k: 'eyebrow', t: m.eyebrow || 'Grounded' }, { k: 'h1', t: m.title }];
+    var b = [{ k: 'eyebrow', t: m.eyebrow || 'Grow With Grounded' }, { k: 'h1', t: m.title }];
     if (m.sub) b.push({ k: 'sub', t: m.sub });
     (m.sec || []).forEach(function (s) { b.push({ k: 'h2', t: s.h }); (s.p || []).forEach(function (t) { b.push({ k: 'p', t: t }); }); (s.li || []).forEach(function (t) { b.push({ k: 'li', t: t }); }); });
     (m.after || []).forEach(function (t) { b.push({ k: 'b', t: t }); });

@@ -14,13 +14,13 @@ const GG_VERSIONS_ON = true;
 
 const R = [
   // ---------- Grounded blessings (all faith traditions and everything in-between) ----------
-  { id: 'gb-lastdays', title: `For the last days`, by: `Grounded`, trad: ['all'], rights: 'grounded',
+  { id: 'gb-lastdays', title: `For the last days`, by: `Grow With Grounded`, trad: ['all'], rights: 'grounded',
     lines: [`May you be warm.`, `May you be comfortable.`, `May the people you love be close,`, `and the people you've lost be closer than you think.`, `May what you gave keep going.`, `May you rest.`] },
-  { id: 'gb-watch', title: `For the one keeping watch`, by: `Grounded`, trad: ['all'], rights: 'grounded',
+  { id: 'gb-watch', title: `For the one keeping watch`, by: `Grow With Grounded`, trad: ['all'], rights: 'grounded',
     lines: [`You don't have to say the perfect thing.`, `You only have to stay.`, `Hold the hand. Wet the lips. Tell the story again.`, `Love is doing exactly what it should.`] },
-  { id: 'gb-nowords', title: `For when you can't find words`, by: `Grounded`, trad: ['all'], rights: 'grounded',
+  { id: 'gb-nowords', title: `For when you can't find words`, by: `Grow With Grounded`, trad: ['all'], rights: 'grounded',
     lines: [`We're here.`, `You are loved.`, `You can rest now.`] },
-  { id: 'gb-after', title: `For after`, by: `Grounded`, trad: ['all'], rights: 'grounded',
+  { id: 'gb-after', title: `For after`, by: `Grow With Grounded`, trad: ['all'], rights: 'grounded',
     lines: [`The breath is quiet now.`, `The work is done.`, `Thank you for every ordinary day.`, `Go in peace, and leave a little of it here with us.`] },
 
   // ---------- Christian scripture (KJV) ----------
