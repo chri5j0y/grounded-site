@@ -10,6 +10,8 @@
 // built-in fallback so the tab works before that library update is applied.
 // Saved services live in DATA.cer.services: encrypted with the rest of this
 // device's records and carried in backups (merged by GGCer.merge). Nothing is sent.
+// GWG BLD 769: GGCer.fw rows, words, and inService carry each part's song or ritual by name and its part key, so the
+// Farewell order of service shows it and it can be moved into place.
 // GWG BLD 768: songs (ceremonies.music) and rituals (ceremonies.rituals) beside the readings, My Pieces (DATA.pieces),
 // and the GGCer.fw calls the Farewell Planning Session uses to place a piece at its moment in the order.
 // =====================================================================
@@ -1198,8 +1200,8 @@ function unplacePiece(s, kind, pid){
 function piecesIn(s){
   const out = [];
   onParts(s).forEach(e => { const part = e.title || partOf(e).name;
-    (e.rd || []).forEach(r => { const x = RD(r.id); if (x) out.push({kind: 'reading', id: x.id, title: x.kind === 'scripture' ? (x.ref || x.title) : x.title, by: byOfR(x), part, lead: e.by || '', rk: x.kind}); });
-    const x = pieceOf(e); if (x) out.push({kind: e.piece.kind, id: x.id, title: x.title, by: x.by || '', part, lead: e.by || '', rk: e.piece.kind}); });
+    (e.rd || []).forEach(r => { const x = RD(r.id); if (x) out.push({kind: 'reading', id: x.id, title: x.kind === 'scripture' ? (x.ref || x.title) : x.title, by: byOfR(x), part, lead: e.by || '', rk: x.kind, k: e.k, mins: minsOf(e)}); });
+    const x = pieceOf(e); if (x) out.push({kind: e.piece.kind, id: x.id, title: x.title, by: x.by || '', part, lead: e.by || '', rk: e.piece.kind, k: e.k, mins: minsOf(e)}); });
   return out;
 }
 
@@ -1255,7 +1257,9 @@ const API = window.GGCer = {
     rows(id){
       const s = API.fw.get(id); if (!s) return [];
       return (s.parts || []).map(e => { const p = partOf(e);
+        const pc = pieceOf(e);
         return {k: e.k, name: e.title || p.name, on: !!e.on, mins: minsOf(e), by: e.by || '', option: e.option || null, options: (p.options || []).map(x => [x.id, x.name]), readings: !!p.readings,
+          piece: pc ? {kind: e.piece.kind, id: pc.id, title: pc.title, by: pc.by || ''} : null,
           rd: (e.rd || []).map(x => { const r = RD(x.id); return r ? rHead(r, rText(r, x.ver).ver) : ''; }).filter(Boolean)}; });
     },
     set(id, k, f, v){
@@ -1275,7 +1279,8 @@ const API = window.GGCer = {
     // The parts in order with their words, for the live sessions and the plan's printouts.
     words(id){
       const s = API.fw.get(id); if (!s) return [];
-      return onParts(s).map(e => { const p = partOf(e); return {name: e.title || p.name, mins: minsOf(e), by: e.by || '', words: partWords(e, s), note: e.note || '', dos: doOf(e, s),
+      return onParts(s).map(e => { const p = partOf(e), pc = pieceOf(e); return {k: e.k, name: e.title || p.name, mins: minsOf(e), by: e.by || '', words: partWords(e, s), note: e.note || '', dos: doOf(e, s),
+        piece: pc ? {kind: e.piece.kind, id: pc.id, title: pc.title, by: pc.by || '', source: pc.source || ''} : null,
         rd: (e.rd || []).map(x => { const r = RD(x.id); if (!r) return null; const tx = rText(r, x.ver); return {head: rHead(r, tx.ver), text: tx.text || '', source: r.source || ''}; }).filter(Boolean)}; });
     },
     open(id, view){ if (!API.fw.get(id)) return false; S.id = id; S.draft = null; S.pick = null; S.view = view || 'check'; return true; },
