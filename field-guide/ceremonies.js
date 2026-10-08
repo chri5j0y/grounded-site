@@ -10,6 +10,8 @@
 // built-in fallback so the tab works before that library update is applied.
 // Saved services live in DATA.cer.services: encrypted with the rest of this
 // device's records and carried in backups (merged by GGCer.merge). Nothing is sent.
+// GWG BLD 768: songs (ceremonies.music) and rituals (ceremonies.rituals) beside the readings, My Pieces (DATA.pieces),
+// and the GGCer.fw calls the Farewell Planning Session uses to place a piece at its moment in the order.
 // =====================================================================
 (function(){
 'use strict';
@@ -73,7 +75,34 @@ const FB = {
     tips: ['Leave out the home address.', 'Leave out the full birth date and the mother\'s maiden name.', 'Ask someone to stay at the home during the service.']
   },
   wedding: {license: []},
-  tokens: [['{Name}', 'full name'], ['{First}', 'first name'], ['{they}', 'he, she, or they'], ['{them}', 'him, her, or them'], ['{their}', 'his, her, or their'], ['{Partner1}', 'first partner\'s first name'], ['{Partner2}', 'second partner\'s first name']]
+  tokens: [['{Name}', 'full name'], ['{First}', 'first name'], ['{they}', 'he, she, or they'], ['{them}', 'him, her, or them'], ['{their}', 'his, her, or their'], ['{Partner1}', 'first partner\'s first name'], ['{Partner2}', 'second partner\'s first name']],
+  // GWG BLD 768: a starting set of songs and rituals (titles and plain steps only), until the Staff library's music and rituals arrive.
+  music: [
+    {id: 'amazinggrace', title: 'Amazing Grace', by: 'John Newton (words, 1779)', kind: 'hymn', moments: ['during', 'closing', 'graveside'], tags: ['hymn', 'traditional'], about: 'The most requested funeral hymn in America, sung or played on bagpipes.', faith: 'faith'},
+    {id: 'abidewithme', title: 'Abide With Me', by: 'Henry Francis Lyte (words); William Henry Monk (tune)', kind: 'hymn', moments: ['during', 'closing'], tags: ['hymn', 'evening'], about: 'A gentle evening hymn often sung near the close of a service.', faith: 'faith'},
+    {id: 'itiswell', title: 'It Is Well With My Soul', by: 'Horatio Spafford (words); Philip Bliss (tune)', kind: 'hymn', moments: ['during', 'reflection'], tags: ['hymn', 'peace'], about: 'A hymn of peace written after great loss.', faith: 'faith'},
+    {id: 'bestill', title: 'Be Still, My Soul', by: 'Katharina von Schlegel (words), translated by Jane Borthwick; Jean Sibelius (tune, Finlandia)', kind: 'hymn', moments: ['gathering', 'during'], tags: ['hymn', 'peace'], about: 'A quiet hymn of trust, sung to the tune Finlandia.', faith: 'faith'},
+    {id: 'nearermygod', title: 'Nearer, My God, to Thee', by: 'Sarah Flower Adams (words); Lowell Mason (tune)', kind: 'hymn', moments: ['during', 'closing'], tags: ['hymn'], about: 'A beloved older hymn many families remember from childhood.', faith: 'faith'},
+    {id: 'inthegarden', title: 'In the Garden', by: 'C. Austin Miles', kind: 'hymn', moments: ['during', 'reflection'], tags: ['hymn', 'garden'], about: 'A favorite of many grandparents, often chosen for someone who loved their garden.', faith: 'faith'},
+    {id: 'oldruggedcross', title: 'The Old Rugged Cross', by: 'George Bennard', kind: 'hymn', moments: ['during'], tags: ['hymn', 'traditional'], about: 'A traditional hymn many rural and small-town families ask for.', faith: 'faith'},
+    {id: 'gatherriver', title: 'Shall We Gather at the River', by: 'Robert Lowry', kind: 'hymn', moments: ['during', 'closing', 'recessional'], tags: ['hymn', 'hope'], about: 'A hopeful hymn about meeting again.', faith: 'faith'},
+    {id: 'avemaria', title: 'Ave Maria', by: 'Franz Schubert', kind: 'sacred', moments: ['during', 'reflection'], tags: ['solo', 'catholic'], about: 'Sung by a soloist or played on violin or cello.', faith: 'faith'},
+    {id: 'canond', title: 'Canon in D', by: 'Johann Pachelbel', kind: 'instrumental', moments: ['gathering', 'recessional'], tags: ['classical', 'strings'], about: 'Calm, steady music as people gather or leave.', faith: 'either'},
+    {id: 'airgstring', title: 'Air on the G String', by: 'Johann Sebastian Bach', kind: 'classic', moments: ['gathering', 'reflection'], tags: ['classical', 'strings'], about: 'Slow and quiet, good for a moment of reflection.', faith: 'either'},
+    {id: 'clairdelune', title: 'Clair de Lune', by: 'Claude Debussy', kind: 'classic', moments: ['gathering', 'reflection'], tags: ['classical', 'piano'], about: 'Soft piano music for gathering or a slideshow.', faith: 'either'},
+    {id: 'wonderfulworld', title: 'What a Wonderful World', by: 'Louis Armstrong', kind: 'popular', moments: ['reflection', 'recessional'], tags: ['popular', 'celebration'], about: 'A warm, grateful song often played with a slideshow or at the close.', faith: 'plain'},
+    {id: 'dannyboy', title: 'Danny Boy', by: 'Traditional Irish air (Londonderry Air); words by Frederic Weatherly', kind: 'cultural', moments: ['during', 'graveside'], tags: ['irish', 'solo', 'bagpipes'], about: 'Sung by a soloist or played on bagpipes.', faith: 'either'},
+    {id: 'taps', title: 'Taps', by: 'Bugle call, United States military', kind: 'instrumental', moments: ['graveside'], tags: ['military', 'honors'], about: 'Played by a bugler, or a recording, as part of military honors. The honor guard leads.', faith: 'either'},
+    {id: 'gracepipes', title: 'Amazing Grace on Bagpipes', by: 'Traditional, played by a piper', kind: 'instrumental', moments: ['graveside', 'recessional'], tags: ['bagpipes', 'military', 'first responders'], about: 'Often played for veterans, police, and firefighters, as the casket is carried out or at the graveside.', faith: 'either'}
+  ],
+  rituals: [
+    {id: 'memorycandle', title: 'Lighting a Memory Candle', kind: 'candle', about: 'One candle lit for the person, a simple sign that their light stays with us.', how: ['Set one large candle on a table near the front.', 'Invite a family member to come forward and light it.', 'Say a short line as it is lit: "We light this candle in memory of [Name]."', 'Let it burn through the service.'], needs: ['A large candle in a holder', 'A long lighter'], minutes: 2, faith: 'either', moments: ['gathering'], tags: ['candle', 'family']},
+    {id: 'sharingaloud', title: 'Sharing Memories Aloud', kind: 'memory', about: 'A time for anyone who wishes to share a short memory.', how: ['Say how it works: one or two minutes each, and it is fine to pass.', 'Have a microphone ready, or invite people to stand where they are.', 'Watch the time gently, and close with thanks to everyone who spoke.'], needs: ['A handheld microphone'], minutes: 10, faith: 'either', moments: ['during'], tags: ['memories', 'open sharing']},
+    {id: 'silence', title: 'A Moment of Silence', kind: 'memory', about: 'A quiet minute for everyone to hold the person in their own way.', how: ['Invite everyone into a moment of quiet.', 'Wait a full minute. It will feel longer than it is.', 'Close with a simple word: "Thank you."'], needs: [], minutes: 1, faith: 'either', moments: ['reflection', 'graveside'], tags: ['quiet']},
+    {id: 'placeflower', title: 'Placing a Flower', kind: 'nature', about: 'Each person places a flower on the casket, the urn table, or the grave.', how: ['Set a basket of single flowers by the door or the front.', 'Invite people to come forward, family first.', 'Play soft music while people place their flowers.'], needs: ['Single stem flowers, one for each guest', 'A basket'], minutes: 8, faith: 'either', moments: ['closing', 'graveside'], tags: ['flowers', 'graveside']},
+    {id: 'memorytable', title: 'A Memory Table', kind: 'memory', about: 'A table with photos and things that tell their story.', how: ['Ask the family to choose a few photos and objects.', 'Set the table near the entrance before guests arrive.', 'Mention it at the welcome so people know to stop and look.'], needs: ['Photos in frames', 'Objects from their life', 'A table and a cloth'], minutes: 0, faith: 'either', moments: ['gathering'], tags: ['photos', 'family']},
+    {id: 'militaryhonors', title: 'Military Honors', kind: 'military', about: 'Flag folding and presentation, and Taps, for those who served. The honor guard leads.', how: ['The funeral home arranges the honor guard with the veteran\'s papers (the DD 214).', 'At the time, step back and let the honor guard lead.', 'The flag is folded and presented to the family.', 'Taps is played. Wait in silence until the honor guard steps away.'], needs: ['The veteran\'s discharge papers (DD 214) to the funeral home'], minutes: 10, faith: 'either', moments: ['graveside', 'closing'], tags: ['military', 'flag', 'taps']}
+  ]
 };
 
 const STATUS = [['session', 'In Session'], ['draft', 'Draft'], ['final', 'Final']];
@@ -85,7 +114,7 @@ const PRON = {
 };
 
 let CTX = {lib: null, data: null, save: () => {}};
-const S = {view: 'home', id: null, draft: null, pick: null, pq: '', pk: 'all', pall: false, pmore: 0, startType: null, dragK: null, printOpen: false};
+const S = {view: 'home', id: null, draft: null, pick: null, pkind: 'reading', pq: '', pk: 'all', pall: false, pmore: 0, startType: null, dragK: null, printOpen: false, me: null, mk: 'all', mq: '', fwBack: null};
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -116,7 +145,9 @@ function cer(){
     bible: pick('bible', FB.bible),
     obituary: Object.assign({}, FB.obituary, pick('obituary', {})),
     wedding: Object.assign({license: []}, pick('wedding', {})),
-    tokens: pick('tokens', FB.tokens)
+    tokens: pick('tokens', FB.tokens),
+    music: pick('music', FB.music).filter(x => x && x.id && x.title),
+    rituals: pick('rituals', FB.rituals).filter(x => x && x.id && x.title)
   };
   CCsrc = L;
   return CC;
@@ -226,7 +257,10 @@ const brackets = t => String(t || '').match(BRX) || [];
 const markBr = t => esc(t).replace(BRX, m => `<mark class="cer-br">${m}</mark>`);
 function bracketNote(t){ const b = [...new Set(brackets(t))]; return b.length ? `<p class="cer-brn">To fill in before printing: ${b.map(x => `<mark class="cer-br">${esc(x)}</mark>`).join(' ')}</p>` : ''; }
 // Directions for the officiant (part.do and option.do): never spoken, never on the program or the family copy.
-const doOf = (e, s) => { const p = partOf(e), o = optOf(e); return [p.do, o && o.do].filter(Boolean).map(x => fill(x, s)); };
+const doOf = (e, s) => { const p = partOf(e), o = optOf(e), out = [p.do, o && o.do].filter(Boolean).map(x => fill(x, s)), x = pieceOf(e);
+  if (x && e.piece.kind === 'music') out.push('Music: ' + pieceHead(e) + '.');
+  if (x && e.piece.kind === 'ritual'){ if (arr(x.how).length) out.push('How: ' + x.how.map((h, i) => (i + 1) + '. ' + fill(h, s).replace(/\[Name\]/g, names(s).First || '[Name]')).join(' ')); if (arr(x.needs).length) out.push('Bring: ' + x.needs.join('; ') + '.'); }
+  return out; };
 const NAMEKEYS = ['Name', 'First', 'Partner1', 'Partner2', 'Partner1Full', 'Partner2Full'];
 const snap = s => { const v = names(s), o = {}; NAMEKEYS.forEach(k => { if (v[k]) o[k] = v[k]; }); return o; };
 const optOf = e => (partOf(e).options || []).find(x => x.id === e.option) || null;
@@ -296,7 +330,39 @@ function reapply(s){
 }
 
 // ---------- readings ----------
-const RD = id => cer().readings.find(r => r.id === id);
+// ---------- My Pieces (GWG BLD 768): Chris's own readings, poems, prayers, blessings, songs, and rituals ----------
+// Kept in DATA.pieces.list: encrypted with the rest of this device's records, carried in backups (merged by GGCer.merge).
+// A piece with "only" was added for one service (the family's own) and shows only there.
+const RKINDS = ['scripture', 'poem', 'reading', 'prayer', 'blessing'];
+const PKINDS = [['scripture', 'Scripture'], ['poem', 'Poem'], ['reading', 'Reading'], ['prayer', 'Prayer'], ['blessing', 'Blessing'], ['music', 'Song or Music'], ['ritual', 'Ritual']];
+const MKINDS = [['hymn', 'Hymn'], ['sacred', 'Sacred'], ['classic', 'Classical'], ['popular', 'Popular'], ['instrumental', 'Instrumental'], ['cultural', 'Cultural']];
+const MOMENTS = [['gathering', 'Gathering'], ['during', 'During'], ['reflection', 'Reflection'], ['closing', 'Closing'], ['recessional', 'Recessional'], ['graveside', 'Graveside']];
+const FAITHW = [['faith', 'Faith'], ['plain', 'Plain'], ['either', 'Either']];
+function pstore(){ const d = D(); d.pieces = d.pieces || {list: []}; d.pieces.list = d.pieces.list || []; return d.pieces.list; }
+const lines = t => String(t || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
+function asReading(m){
+  const f = m.faith === 'faith' ? ['christian', 'mixed'] : m.faith === 'plain' ? ['any', 'plain'] : ['any'];
+  const o = {id: m.id, title: m.title, kind: m.kind, by: m.by || '', source: m.source || '', tags: {types: ['funeral', 'memorial', 'graveside', 'celebration', 'infant-loss'], faith: f, tone: ['worship', 'between', 'celebration'], for: 'both', words: arr(m.tags)}, moments: arr(m.moments), mine: true, text: m.text || ''};
+  if (m.kind === 'scripture'){ o.ref = m.ref || m.title; delete o.by; }
+  return o;
+}
+const asMusic = m => ({id: m.id, title: m.title, by: m.by || '', kind: m.mkind || 'popular', moments: arr(m.moments), tags: arr(m.tags), about: m.text || '', faith: m.faith || 'either', source: m.source || '', mine: true});
+const asRitual = m => ({id: m.id, title: m.title, kind: 'other', about: m.text || '', how: arr(m.how), needs: arr(m.needs), minutes: +m.minutes || 0, faith: m.faith || 'either', moments: arr(m.moments), tags: arr(m.tags), source: m.source || '', mine: true});
+const mineFor = (s, kinds) => pstore().filter(m => m && kinds.includes(m.kind) && (!m.only || (s && m.only === s.id)));
+const allReadings = s => cer().readings.concat(mineFor(s, RKINDS).map(asReading));
+const allMusic = s => cer().music.concat(mineFor(s, ['music']).map(asMusic));
+const allRituals = s => cer().rituals.concat(mineFor(s, ['ritual']).map(asRitual));
+const RD = id => cer().readings.find(r => r.id === id) || (() => { const m = pstore().find(x => x.id === id && RKINDS.includes(x.kind)); return m ? asReading(m) : null; })();
+function PC(kind, id){
+  if (kind === 'reading') return RD(id);
+  const L = kind === 'music' ? cer().music : cer().rituals, x = L.find(r => r.id === id); if (x) return x;
+  const m = pstore().find(y => y.id === id && y.kind === kind); return m ? (kind === 'music' ? asMusic(m) : asRitual(m)) : null;
+}
+const pieceOf = e => e && e.piece ? PC(e.piece.kind, e.piece.id) : null;
+const pieceHead = (e) => { const x = pieceOf(e); if (!x || (e.custom && e.custom.name === x.title)) return ''; return x.title + (e.piece.kind === 'music' && x.by ? ', ' + x.by : ''); };
+// The eulogy written in the Farewell Planning Session prints under the first eulogy or life story part.
+const EULRE = /eulogy|life story/i;
+const eulogyKey = s => { if (!s || !String(s.fwEulogy || '').trim()) return null; const e = onParts(s).find(x => x.part === 'eulogy' || x.part === 'life-story' || EULRE.test(x.title || partOf(x).name)); return e ? e.k : null; };
 const fam2for = fam => fam;
 function rScore(r, s){
   const t = r.tags || {}, fam = famOf(s.type), st = s.setup || {}, sug = arr(typeOf(s.type).readings).includes(r.id);
@@ -449,6 +515,7 @@ function vHome(){
   const fams = [['funeral', 'Funerals and Memorials'], ['wedding', 'Weddings'], ['blessing', 'Blessings']];
   return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Service Builder</h1><p>Build a service or a blessing live with the family or the couple, then dial it in and print it.</p><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-tab="premarital">Premarital Sessions</button></div></div>
   ${window.GGFw && GGFw.card ? GGFw.card() : ''}
+  <div class="card"><div class="spread"><div style="min-width:0;flex:1 1 260px"><h2 style="margin:0 0 4px">My Pieces</h2><p class="muted" style="margin:0">Your own readings, poems, prayers, blessings, songs, and rituals. They show in every picker here and in the Farewell Planning Session.${pstore().filter(m => !m.only).length ? ' ' + pstore().filter(m => !m.only).length + ' saved.' : ''}</p></div><button type="button" class="btn btn-line" data-cer="mine">Open My Pieces</button></div></div>
   <div class="card"><h2 style="margin-bottom:4px">Start a Service</h2><p class="muted">Pick the kind of service. Setup takes about a minute.</p>
     ${fams.map(([f, l]) => { const ts = C.types.filter(t => t.family === f); return ts.length ? `<h3 style="margin-top:14px">${l}</h3><div class="cer-types">${ts.map(t => `<button type="button" class="cer-type" data-cer="new" data-v="${esc(t.id)}"><b>${esc(t.name)}</b>${t.lead ? `<small>${esc(t.lead)}</small>` : ''}</button>`).join('')}</div>` : ''; }).join('')}
     ${C.full ? '' : `<p class="muted" style="margin-top:12px;font-size:15px">The full set of parts, templates, and readings arrives with the next Staff library update.</p>`}</div>
@@ -511,9 +578,26 @@ function readingBlock(s, e){
       ${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}${rNote(r)}${tx.text ? `<details><summary class="muted" style="font-size:15px;cursor:pointer">Read it</summary><p>${esc(tx.text)}</p></details>` : ''}</div>`; }).join('');
   return chosen + (S.pick === e.k ? picker(s, e) : `<button type="button" class="btn btn-line btn-sm" data-cer="pick" data-v="${e.k}" style="margin-top:4px">Add a Reading</button>`);
 }
+// Songs and rituals for one part (GWG BLD 768): the Staff library's lists, then My Pieces.
+const pieceKindOf = e => { if (e.piece) return e.piece.kind; const p = partOf(e), g = String(p.group || ''); if (/music/.test(g) || /^(prelude|postlude|song-1|song-2|their-music|b-song)$/.test(p.id)) return 'music'; if (/rituals/.test(g)) return 'ritual'; return null; };
+function pieceBlock(s, e){
+  const k = pieceKindOf(e), x = pieceOf(e), lab = k === 'music' ? 'Song' : 'Ritual';
+  const cur = x ? `<div class="cer-rd"><div class="spread"><span class="rt">${esc(x.title)}${x.by ? ` <span class="muted">${esc(x.by)}</span>` : ''}${x.mine ? '<span class="cer-tag">Mine</span>' : ''}</span><button type="button" class="btn btn-line btn-sm" data-cer="pc-x" data-v="${e.k}" aria-label="Remove ${esc(x.title)}">Remove</button></div>${x.about ? `<div class="cer-src" style="font-style:normal">${esc(x.about)}</div>` : ''}${arr(x.how).length ? `<details><summary class="muted" style="font-size:15px;cursor:pointer">How it goes</summary><ol style="margin:6px 0 0 20px">${x.how.map(h => `<li>${esc(fill(h, s).replace(/\[Name\]/g, names(s).First || '[Name]'))}</li>`).join('')}</ol>${arr(x.needs).length ? `<p class="cer-src" style="font-style:normal">Bring: ${esc(x.needs.join('; '))}</p>` : ''}</details>` : ''}</div>` : '';
+  return cur + (S.pick === e.k ? picker(s, e) : `<button type="button" class="btn btn-line btn-sm" data-cer="pick" data-v="${e.k}" data-k="${k}" style="margin-top:4px">${x ? 'Choose Another ' + lab : 'Choose a ' + lab}</button>`);
+}
+function pieceList(s, e){
+  const q = S.pq.trim().toLowerCase(), k = S.pkind, L0 = k === 'music' ? allMusic(s) : allRituals(s);
+  const L = L0.filter(x => !q || [x.title, x.by, x.about, arr(x.tags).join(' '), x.kind].join(' ').toLowerCase().includes(q));
+  if (!L.length) return '<p class="muted">Nothing matches. Try another word, or add your own in My Pieces.</p>';
+  const n = 30 + S.pmore;
+  return L.slice(0, n).map(x => `<div class="cer-pr"><div class="m"><b>${esc(x.title)}</b>${x.mine ? '<span class="cer-tag">Mine</span>' : ''}<br><span class="pv">${esc([x.by, x.about].filter(Boolean).join('. '))}</span></div>
+    <button type="button" class="btn ${e.piece && e.piece.id === x.id ? 'btn-line' : 'btn-gold'} btn-sm" data-cer="pc-add" data-v="${e.k}|${esc(x.id)}"${e.piece && e.piece.id === x.id ? ' disabled' : ''}>${e.piece && e.piece.id === x.id ? 'Chosen' : 'Choose'}</button></div>`).join('')
+    + (L.length > n ? `<button type="button" class="btn btn-line btn-sm" data-cer="pmore" style="margin-top:8px">Show More (${L.length - n})</button>` : '');
+}
 function pickList(s, e){
+  if (S.pkind && S.pkind !== 'reading') return pieceList(s, e);
   const q = S.pq.trim().toLowerCase(), have = (e.rd || []).map(x => x.id);
-  let L = cer().readings.map(r => [r, rScore(r, s)]);
+  let L = allReadings(s).map(r => [r, rScore(r, s)]);
   if (!S.pall) L = L.filter(([, n]) => n > -5);
   if (S.pk !== 'all') L = L.filter(([r]) => (r.kind || 'reading') === S.pk);
   if (q) L = L.filter(([r]) => [r.title, r.ref, byOfR(r), r.about, r.source, r.text, r.versions && r.versions.kjv].join(' ').toLowerCase().includes(q));
@@ -521,11 +605,14 @@ function pickList(s, e){
   const n = 30 + S.pmore, shown = L.slice(0, n);
   if (!L.length) return `<p class="muted">No readings match. Try another word${S.pall ? '' : ', or show every reading'}.</p>`;
   return shown.map(([r, sc]) => { const tx = rText(r, s.bible).text || (r.bring ? 'Bring your own copy. ' + (r.about || '') : r.about || '');
-    return `<div class="cer-pr"><div class="m"><b>${esc(r.kind === 'scripture' ? (r.ref || r.title) : r.title)}</b>${sc >= 5 ? '<span class="cer-tag">Suggested</span>' : ''}<br><span class="pv">${esc((r.kind || 'reading').replace(/^./, c => c.toUpperCase()))}${r.kind === 'scripture' && r.title !== r.ref ? ', ' + esc(r.title) : ''}${byOfR(r) && r.kind !== 'scripture' ? ', ' + esc(byOfR(r)) : ''}. ${esc(tx.slice(0, 110))}${tx.length > 110 ? '...' : ''}</span>${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}</div>
+    return `<div class="cer-pr"><div class="m"><b>${esc(r.kind === 'scripture' ? (r.ref || r.title) : r.title)}</b>${r.mine ? '<span class="cer-tag">Mine</span>' : sc >= 5 ? '<span class="cer-tag">Suggested</span>' : ''}<br><span class="pv">${esc((r.kind || 'reading').replace(/^./, c => c.toUpperCase()))}${r.kind === 'scripture' && r.title !== r.ref ? ', ' + esc(r.title) : ''}${byOfR(r) && r.kind !== 'scripture' ? ', ' + esc(byOfR(r)) : ''}. ${esc(tx.slice(0, 110))}${tx.length > 110 ? '...' : ''}</span>${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}</div>
       <button type="button" class="btn ${have.includes(r.id) ? 'btn-line' : 'btn-gold'} btn-sm" data-cer="rd-add" data-v="${e.k}|${esc(r.id)}"${have.includes(r.id) ? ' disabled' : ''}>${have.includes(r.id) ? 'Added' : 'Add'}</button></div>`; }).join('')
     + (L.length > n ? `<button type="button" class="btn btn-line btn-sm" data-cer="pmore" style="margin-top:8px">Show More (${L.length - n})</button>` : '');
 }
 function picker(s, e){
+  if (S.pkind && S.pkind !== 'reading') return `<div class="cer-pick" id="cer-pick"><div class="spread"><b>${S.pkind === 'music' ? 'Choose a Song' : 'Choose a Ritual'}</b><button type="button" class="btn btn-line btn-sm" data-cer="pick" data-v="">Done</button></div>
+    <label class="f" for="cer-pq">Search</label><input type="text" id="cer-pq" data-cerq="1" value="${esc(S.pq)}" placeholder="A word, a title, or a name" autocomplete="off">
+    <div class="cer-pick-list" id="cer-pick-list">${pickList(s, e)}</div></div>`;
   return `<div class="cer-pick" id="cer-pick"><div class="spread"><b>Add a Reading</b><button type="button" class="btn btn-line btn-sm" data-cer="pick" data-v="">Done</button></div>
     <label class="f" for="cer-pq">Search</label><input type="text" id="cer-pq" data-cerq="1" value="${esc(S.pq)}" placeholder="A word, a title, or a verse" autocomplete="off">
     <label class="f">Kind</label>${chips('pk', KINDS, S.pk)}
@@ -544,7 +631,7 @@ function vCheck(s){
       ${e.on ? `<div class="cer-body">${(p.options || []).length ? chips('opt|' + e.k, p.options.map(x => [x.id, x.name]), e.option) : ''}
         ${say ? `<div class="cer-say">${markBr(say)}</div>` : ''}${o && o.source ? `<div class="cer-src">${esc(o.source)}</div>` : ''}
         ${doOf(e, s).map(d => `<p class="cer-do"><b>For You</b>${esc(d)}</p>`).join('')}
-        ${p.readings ? readingBlock(s, e) : ''}
+        ${p.readings ? readingBlock(s, e) : pieceKindOf(e) ? pieceBlock(s, e) : (e.rd || []).length ? readingBlock(s, e) : ''}
         <label class="f" for="cer-n-${e.k}">The family's words</label><textarea id="cer-n-${e.k}" data-cern="${e.k}" placeholder="Type their exact words here.">${esc(e.note || '')}</textarea></div>` : ''}</div>`; };
   return `${headOf(s, 'The Checklist')}${timeBar(s)}
   ${G.filter(g => byG[g.id]).map(g => `<div class="card cer-grp"><h2>${esc(g.name)}</h2>${byG[g.id].map(row).join('')}</div>`).join('')}
@@ -652,8 +739,78 @@ function vLicense(s){
     ${L.length ? `<ul class="cer-lic" style="margin-top:8px">${L.map(x => `<li><label><input type="checkbox" data-cerl="${esc(x.id)}"${lic[x.id] ? ' checked' : ''}><span>${x.who ? `<span class="cer-tag" style="margin:0 6px 0 0">${esc(WHO[x.who] || x.who)}</span>` : ''}<b style="font-weight:600">${esc(x.text)}</b>${x.confirmed === false ? '<span class="cer-ck">Check with the County</span>' : ''}${x.note ? `<br><small class="muted">${esc(x.note)}</small>` : ''}${x.source ? `<br><small class="muted" style="font-style:italic">Source: ${esc(x.source)}</small>` : ''}${x.link ? `<br><a href="${esc(x.link)}" target="_blank" rel="noopener noreferrer" style="font-size:15px">${esc(x.linkLabel || 'Learn more')}</a>` : ''}</span></label></li>`).join('')}</ul>` : '<p class="muted">The license checklist arrives with the next Staff library update.</p>'}</div>`;
 }
 
+// ---------- My Pieces view (GWG BLD 768) ----------
+const KLAB = Object.fromEntries(PKINDS);
+function blankPiece(kind){ return {id: '', kind: kind || 'poem', title: '', by: '', text: '', ref: '', how: '', needs: '', minutes: '', source: '', tags: '', faith: 'either', moments: [], mkind: 'hymn'}; }
+const isFounder = () => !!(API.tier && API.tier() === 'founder');
+function pieceForm(m){
+  const k = m.kind, R = RKINDS.includes(k), inp = (f, l, ph, type) => `<div><label class="f" for="cer-m-${f}">${l}</label><input type="${type || 'text'}" id="cer-m-${f}" data-cerm="${f}" value="${esc(m[f] || '')}"${ph ? ` placeholder="${esc(ph)}"` : ''} autocomplete="off"></div>`;
+  const ta = (f, l, ph, rows) => `<label class="f" for="cer-m-${f}">${l}</label><textarea id="cer-m-${f}" data-cerm="${f}" rows="${rows || 4}"${ph ? ` placeholder="${esc(ph)}"` : ''}>${esc(m[f] || '')}</textarea>`;
+  return `<div class="card" id="cer-mform" style="border-left:4px solid var(--gold)"><h3>${m.id ? 'Change This Piece' : 'Add a Piece'}</h3>
+    <label class="f">Kind</label>${chips('m-kind', PKINDS, k)}
+    <div class="cer-g2">${inp('title', 'Title', k === 'music' ? 'How Great Thou Art' : k === 'ritual' ? 'Lighting a Candle for Each Grandchild' : 'A title')}${k === 'scripture' ? inp('ref', 'Reference', 'John 14:1 to 3') : inp('by', k === 'music' ? 'Composer or Artist' : k === 'ritual' ? 'From (optional)' : 'By', k === 'ritual' ? 'A family custom' : 'Author, or Traditional')}</div>
+    ${k === 'music' ? `<label class="f">Kind of Music</label>${chips('m-mkind', MKINDS, m.mkind || 'hymn')}` : ''}
+    ${R ? ta('text', 'The Words', 'Type or paste the words. Leave this empty if the text is under copyright; it then prints as "bring your own copy."', 8) : ta('text', 'About', k === 'music' ? 'When it fits, who sings or plays it. Titles only, never the lyrics.' : 'One or two plain sentences.', 3)}
+    ${k === 'ritual' ? ta('how', 'Steps, One Per Line', 'Set one large candle near the front.', 5) + ta('needs', 'What to Bring, One Per Line', 'A large candle', 3) + `<div class="cer-g3">${inp('minutes', 'Minutes', '5', 'number')}</div>` : ''}
+    ${inp('source', 'Source Line', k === 'music' ? 'Composer, year, or where to find it' : 'Author, book, year, or "Source unknown"')}
+    ${inp('tags', 'Tags, With Commas', 'hope, garden, veterans')}
+    <label class="f">Faith or Plain</label>${chips('m-faith', FAITHW, m.faith || 'either')}
+    <label class="f">Moments</label>${chips('m-mom', MOMENTS, m.moments, true)}
+    <div class="row" style="margin-top:14px"><button type="button" class="btn btn-gold" data-cer="m-save">Save to My Pieces</button><button type="button" class="btn btn-line" data-cer="m-cancel">Cancel</button></div></div>`;
+}
+function vMine(){
+  const q = S.mq.trim().toLowerCase(), all = pstore().filter(m => m && !m.only);
+  const L = all.filter(m => (S.mk === 'all' || m.kind === S.mk) && (!q || [m.title, m.by, m.ref, m.text, m.source, m.tags].join(' ').toLowerCase().includes(q))).sort((a, b) => String(a.title).localeCompare(String(b.title)));
+  const F = isFounder() && typeof API.saveAll === 'function';
+  return `${S.fwBack && window.GGFw ? `<button type="button" class="linkbtn" data-fwa="open" data-fwv="${esc(S.fwBack)}">&larr; Back to the Farewell Plan</button>` : backHome()}
+  <div class="page-head" style="margin-top:10px"><div class="eyebrow">Service Builder</div><h1>My Pieces</h1><p>Your own readings, poems, prayers, blessings, songs, and rituals, from your shelves and your notebooks. Each one shows in every picker and in the Farewell Planning Session. They stay on this device, encrypted with your records, and travel in your backups.</p></div>
+  ${S.me ? pieceForm(S.me) : `<div class="card"><div class="row"><button type="button" class="btn btn-gold" data-cer="m-new">Add a Piece</button></div></div>`}
+  <div class="card"><h2 style="margin-bottom:6px">Saved Pieces</h2>
+    <label class="f" for="cer-mq" style="margin-top:0">Search</label><input type="text" id="cer-mq" data-cermq="1" value="${esc(S.mq)}" placeholder="A word, a title, or a name" autocomplete="off">
+    <div style="margin-top:10px">${chips('m-filter', [['all', 'All']].concat(PKINDS), S.mk)}</div>
+    <div id="cer-mlist">${mineRows(L, F)}</div>
+    ${F ? '<p class="muted" style="margin-top:10px;font-size:15px">Save for Everyone prepares a Staff library update in Update a Library, adding the piece for every Staff member and Founder. Seal it there and upload lib-staff.js.</p>' : ''}</div>`;
+}
+function mineRows(L, F){
+  return L.length ? L.map(m => `<div class="cer-row"><div class="m"><b>${esc(m.title || 'Untitled')}</b> <span class="cer-tag">${esc(KLAB[m.kind] || m.kind)}</span><br><small class="muted">${esc([m.kind === 'scripture' ? m.ref : m.by, m.source].filter(Boolean).join('. '))}</small></div>
+    <div class="row"><button type="button" class="btn btn-line btn-sm" data-cer="m-edit" data-v="${esc(m.id)}">Change</button>${F ? `<button type="button" class="btn btn-line btn-sm" data-cer="m-all" data-v="${esc(m.id)}">Save for Everyone</button>` : ''}<button type="button" class="btn btn-danger btn-sm" data-cer="m-del" data-v="${esc(m.id)}">Delete</button></div></div>`).join('')
+    : '<p class="muted">Pieces you add show here.</p>';
+}
+// A piece from the form: lines become lists, tags split on commas.
+function pieceFromForm(m){
+  const o = {id: m.id || ('my' + uid()), kind: m.kind, title: String(m.title || '').trim(), by: String(m.by || '').trim(), text: String(m.text || '').trim(), source: String(m.source || '').trim(),
+    tags: String(Array.isArray(m.tags) ? m.tags.join(',') : m.tags || '').split(',').map(x => x.trim()).filter(Boolean), faith: m.faith || 'either', moments: arr(m.moments), u: Date.now()};
+  if (m.kind === 'scripture') o.ref = String(m.ref || '').trim();
+  if (m.kind === 'music') o.mkind = m.mkind || 'hymn';
+  if (m.kind === 'ritual'){ o.how = lines(Array.isArray(m.how) ? m.how.join('\n') : m.how); o.needs = lines(Array.isArray(m.needs) ? m.needs.join('\n') : m.needs); o.minutes = +m.minutes || 0; }
+  if (m.only) o.only = m.only;
+  return o;
+}
+function savePiece(m){
+  const o = pieceFromForm(m); if (!o.title) return null;
+  const L = pstore(), i = L.findIndex(x => x.id === o.id), d = D();
+  if (i < 0){ o.made = Date.now(); L.push(o); } else L[i] = Object.assign({}, L[i], o);
+  if (d.deleted && d.deleted.pieces) delete d.deleted.pieces[o.id];
+  CTX.save(); return o;
+}
+// Save for Everyone (Founders): the piece in the Staff library's own shape, for Update a Library.
+function libItem(m){
+  const slug = String(m.title || 'piece').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 24) || 'piece';
+  const tags = arr(m.tags), faith = m.faith || 'either';
+  if (m.kind === 'music') return ['music', Object.assign({id: slug, title: m.title, by: m.by || '', kind: m.mkind || 'hymn', moments: arr(m.moments), tags, about: m.text || '', faith}, m.source ? {source: m.source} : {})];
+  if (m.kind === 'ritual') return ['rituals', Object.assign({id: slug, title: m.title, kind: 'other', about: m.text || '', how: arr(m.how), needs: arr(m.needs), minutes: +m.minutes || 0, faith, moments: arr(m.moments), tags}, m.source ? {source: m.source} : {})];
+  const f = faith === 'faith' ? ['christian', 'mixed'] : faith === 'plain' ? ['any', 'plain'] : ['any'];
+  const o = {id: slug, title: m.title, kind: m.kind};
+  if (m.kind === 'scripture'){ o.ref = m.ref || m.title; o.text = m.text || ''; o.about = m.title; }
+  else { o.by = m.by || ''; if (m.text) o.text = m.text; else { o.bring = true; o.note = 'Bring your own copy. The text is under copyright and is not stored here; print it with this credit line.'; } }
+  o.source = m.source || 'Source unknown'; o.tags = {types: ['funeral', 'memorial', 'graveside', 'celebration'], faith: f, tone: ['worship', 'between', 'celebration'], for: 'funeral'};
+  if (arr(m.moments).length) o.moments = arr(m.moments);
+  o.origin = 'Chris';
+  return ['readings', o];
+}
+
 function inner(){
-  if (S.view !== 'home' && !cur()) S.view = 'home';
+  if (S.view !== 'home' && S.view !== 'mine' && !cur()) S.view = 'home';
   const s = cur();
   switch (S.view){
     case 'setup': return vSetup(s);
@@ -662,6 +819,7 @@ function inner(){
     case 'print': return vPrint(s);
     case 'obit': return famOf(s.type) === 'funeral' ? vObit(s) : vCheck(s);
     case 'license': return famOf(s.type) === 'wedding' ? vLicense(s) : vCheck(s);
+    case 'mine': return vMine();
     default: return vHome();
   }
 }
@@ -723,17 +881,18 @@ function scriptDoc(s){
 @media(max-width:640px){.doc{padding:24px 18px;font-size:13pt;}.part.n{grid-template-columns:minmax(0,1fr);}h1{font-size:24pt;}}`;
   const body = `<div class="doc"><div class="eb">Officiant's Script</div><h1>${esc(title(s))}</h1><div class="meta">${esc(subline(s))}${lifeLine(s) ? '<br>' + esc(lifeLine(s)) : ''}<br>About ${total(s)} minutes${names(s).Officiant ? ', led by ' + esc(names(s).Officiant) : ''}</div>
     ${onParts(s).map(e => { const p = partOf(e), o = optOf(e), w = partWords(e, s);
-      const dos = doOf(e, s);
-      return `<div class="part${e.note || dos.length ? ' n' : ''}"><div><h2>${esc(e.title || p.name)}<small>${minsOf(e)} min${byOf(e) ? ', ' + esc(byOf(e)) : ''}</small></h2>${paras(w)}${o && o.source && e.text == null ? `<div class="src">${esc(o.source)}</div>` : ''}${(e.rd || []).map(x => rdHTML(s, x, true)).join('')}</div>${e.note || dos.length ? `<div class="note">${dos.length ? `<b>For the Officiant</b>${esc(dos.join(' '))}` : ''}${e.note ? `<b${dos.length ? ' style="margin-top:.5em"' : ''}>Notes</b>${esc(e.note)}` : ''}</div>` : ''}</div>`; }).join('')}
+      const dos = doOf(e, s), EK = eulogyKey(s);
+      const ph = pieceHead(e), pc = pieceOf(e);
+      return `<div class="part${e.note || dos.length ? ' n' : ''}"><div><h2>${esc(e.title || p.name)}<small>${minsOf(e)} min${byOf(e) ? ', ' + esc(byOf(e)) : ''}</small></h2>${ph ? `<p><b>${esc(ph)}</b></p>` : ''}${paras(w)}${o && o.source && e.text == null ? `<div class="src">${esc(o.source)}</div>` : ''}${pc && pc.source ? `<div class="src">${esc(pc.source)}</div>` : ''}${e.k === EK ? `<div class="rd"><h3>The Eulogy</h3>${paras(s.fwEulogy)}</div>` : ''}${(e.rd || []).map(x => rdHTML(s, x, true)).join('')}</div>${e.note || dos.length ? `<div class="note">${dos.length ? `<b>For the Officiant</b>${esc(dos.join(' '))}` : ''}${e.note ? `<b${dos.length ? ' style="margin-top:.5em"' : ''}>Notes</b>${esc(e.note)}` : ''}</div>` : ''}</div>`; }).join('')}
     ${noticeHTML(s)}</div>`;
   return {title: "Officiant's Script", css, body};
 }
 function scriptText(s){
   return ["OFFICIANT'S SCRIPT", title(s), subline(s), lifeLine(s), 'About ' + total(s) + ' minutes', ''].filter((x, i) => x || i === 5).join('\n') + '\n'
-    + onParts(s).map(e => { const p = partOf(e), o = optOf(e); return [(e.title || p.name).toUpperCase() + ' (' + minsOf(e) + ' min' + (byOf(e) ? ', ' + byOf(e) : '') + ')', partWords(e, s), o && o.source && e.text == null ? o.source : '', ...(e.rd || []).map(x => rdText(s, x, true)), doOf(e, s).length ? 'For the officiant: ' + doOf(e, s).join(' ') : '', e.note ? 'Notes: ' + e.note : ''].filter(Boolean).join('\n\n'); }).join('\n\n') + (usedNotices(s).length ? '\n\n' + usedNotices(s).join('\n') : '');
+    + onParts(s).map(e => { const p = partOf(e), o = optOf(e); return [(e.title || p.name).toUpperCase() + ' (' + minsOf(e) + ' min' + (byOf(e) ? ', ' + byOf(e) : '') + ')', pieceHead(e), partWords(e, s), o && o.source && e.text == null ? o.source : '', e.k === eulogyKey(s) ? 'THE EULOGY\n' + String(s.fwEulogy).trim() : '', ...(e.rd || []).map(x => rdText(s, x, true)), doOf(e, s).length ? 'For the officiant: ' + doOf(e, s).join(' ') : '', e.note ? 'Notes: ' + e.note : ''].filter(Boolean).join('\n\n'); }).join('\n\n') + (usedNotices(s).length ? '\n\n' + usedNotices(s).join('\n') : '');
 }
 function orderRows(s){
-  return onParts(s).map(e => { const p = partOf(e), rs = (e.rd || []).map(x => { const r = RD(x.id); return r ? rHead(r, rText(r, x.ver).ver) : ''; }).filter(Boolean); return {name: e.title || p.name, by: byOf(e), rs, mins: minsOf(e)}; });
+  return onParts(s).map(e => { const p = partOf(e), rs = [pieceHead(e)].concat((e.rd || []).map(x => { const r = RD(x.id); return r ? rHead(r, rText(r, x.ver).ver) : ''; })).filter(Boolean); return {name: e.title || p.name, by: byOf(e), rs, mins: minsOf(e)}; });
 }
 const FIT = `(function(){function flow(){var a=document.querySelector('[data-flow-from]'),b=document.querySelector('[data-flow-to]');if(!a||!b)return;a.style.fontSize='9pt';var n=0;while(a.scrollHeight>a.clientHeight+1&&a.querySelectorAll('.rd').length>1&&n<40){var r=a.querySelectorAll('.rd');b.insertBefore(r[r.length-1],b.firstChild);n++;}}function fit(){document.querySelectorAll('[data-fit]').forEach(function(b){var f=parseFloat(b.getAttribute('data-fit'));b.style.fontSize=f+'pt';var n=0;while(b.scrollHeight>b.clientHeight+1&&f>6.5&&n<80){f-=.25;n++;b.style.fontSize=f+'pt';}if(b.scrollHeight>b.clientHeight+1){b.classList.add('toolong');var t=document.querySelector('.tip');if(t&&!t.dataset.w){t.dataset.w=1;t.textContent+=' Some words do not fit on a panel: trim a reading or the obituary in the Service Builder.';}}});}var go=function(){flow();fit();};if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go);go();window.addEventListener('beforeprint',fit);})();`;
 function orderDoc(s){
@@ -859,6 +1018,18 @@ function dropOn(fromK, toK, after){
 function act(k, v, el){
   const s = cur();
   switch (k){
+    case 'mine': S.view = 'mine'; S.id = null; S.draft = null; S.me = null; S.fwBack = null; rerender(); return;
+    case 'm-new': S.me = blankPiece(S.mk !== 'all' ? S.mk : 'poem'); rerender(true); { const t = document.getElementById('cer-m-title'); if (t) t.focus({preventScroll: true}); } return;
+    case 'm-edit': { const m = pstore().find(x => x.id === v); if (!m) return; S.me = Object.assign(blankPiece(m.kind), m, {how: arr(m.how).join('\n'), needs: arr(m.needs).join('\n'), tags: arr(m.tags).join(', ')}); rerender(); setTimeout(() => { const f = document.getElementById('cer-mform'); if (f && f.scrollIntoView) f.scrollIntoView({block: 'start'}); }, 0); return; }
+    case 'm-cancel': S.me = null; rerender(true); return;
+    case 'm-save': { if (!S.me) return; if (!String(S.me.title || '').trim()){ toast('Give it a title first.'); return; } savePiece(S.me); S.me = null; rerender(true); toast('Saved to My Pieces.'); return; }
+    case 'm-del': { const m = pstore().find(x => x.id === v); if (!m || !confirm('Delete "' + m.title + '" from My Pieces? Services that use it keep its name.')) return; const d = D(); d.pieces.list = pstore().filter(x => x.id !== v); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.pieces = d.deleted.pieces || {}; d.deleted.pieces[v] = Date.now(); CTX.save(); rerender(true); toast('Deleted.'); return; }
+    case 'm-all': { const m = pstore().find(x => x.id === v); if (!m || !isFounder() || typeof API.saveAll !== 'function') return; const [key, item] = libItem(m); API.saveAll(key, item); return; }
+    case 'm-kind': if (S.me){ S.me.kind = v; rerender(true); } return;
+    case 'm-mkind': if (S.me){ S.me.mkind = v; rerender(true); } return;
+    case 'm-faith': if (S.me){ S.me.faith = v; rerender(true); } return;
+    case 'm-mom': if (S.me){ const a = arr(S.me.moments); S.me.moments = a.includes(v) ? a.filter(x => x !== v) : a.concat(v); rerender(true); } return;
+    case 'm-filter': S.mk = v; rerender(true); return;
     case 'home': if (S.draft && (S.draft.who.name || S.draft.p1.name) && !confirm('Leave this setup? It is saved once you start the checklist.')) return; S.draft = null; S.id = null; goView('home'); return;
     case 'new': { S.draft = newSvc(v); S.id = null; goView('setup'); return; }
     case 'open': { S.id = v; S.draft = null; const x = cur(); goView(x && x.parts.length ? 'check' : 'setup'); return; }
@@ -879,12 +1050,15 @@ function act(k, v, el){
       const e = {k: uid(), part: 'custom', custom: {name: nm.trim(), group: g}, on: true, touched: true, note: '', rd: [], text: ''};
       const groups = groupsFor(famOf(s.type)).map(x => x.id), gi = groups.indexOf(g); let at = s.parts.length; s.parts.forEach((x, i) => { if (groups.indexOf(partOf(x).group) <= gi) at = i + 1; });
       s.parts.splice(at, 0, e); keep(s); rerender(true); toast('Part added.'); return; }
-    case 'pick': S.pick = v || null; S.pq = ''; S.pmore = 0; S.pk = 'all'; S.pall = false; rerender(true); if (v){ const q = document.getElementById('cer-pq'); if (q) q.focus({preventScroll: true}); } return;
+    case 'pick': S.pick = v || null; S.pkind = (el && el.dataset.k) || 'reading'; S.pq = ''; S.pmore = 0; S.pk = 'all'; S.pall = false; rerender(true); if (v){ const q = document.getElementById('cer-pq'); if (q) q.focus({preventScroll: true}); } return;
     case 'pk': S.pk = v; S.pmore = 0; { const e = entry(S.pick), l = document.getElementById('cer-pick-list'); if (e && l){ l.innerHTML = pickList(s, e); document.querySelectorAll('#cer-pick [data-cer="pk"]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v))); } } return;
     case 'pmore': S.pmore += 30; { const e = entry(S.pick), l = document.getElementById('cer-pick-list'); if (e && l) l.innerHTML = pickList(s, e); } return;
     case 'rd-add': { const i = v.indexOf('|'), e = entry(v.slice(0, i)), id = v.slice(i + 1), r = RD(id); if (!e || !r) return; e.rd = e.rd || [];
       if (e.rd.some(x => x.id === id)){ toast('Already added.'); return; }
       e.rd.push({id, ver: r.versions ? (r.versions[s.bible] && !gone(s.bible) ? s.bible : 'kjv') : null}); e.touched = true; keep(s); S.pick = null; rerender(true); toast('Reading added.'); return; }
+    case 'pc-add': { const i = v.indexOf('|'), e = entry(v.slice(0, i)), id = v.slice(i + 1), k = S.pkind || pieceKindOf(e), x = PC(k, id); if (!e || !x) return;
+      e.piece = {kind: k, id}; if (k === 'ritual' && x.minutes && (e.mins == null || e.mins === '')) e.mins = +x.minutes; e.touched = true; keep(s); S.pick = null; rerender(true); toast(k === 'music' ? 'Song chosen.' : 'Ritual chosen.'); return; }
+    case 'pc-x': { const e = entry(v); if (!e) return; delete e.piece; keep(s); rerender(true); return; }
     case 'rd-x': { const [ek, i] = v.split('|'), e = entry(ek); if (!e) return; e.rd.splice(+i, 1); keep(s); rerender(true); return; }
     case 'up': move(v, -1); return;
     case 'down': move(v, 1); return;
@@ -907,7 +1081,7 @@ function act(k, v, el){
 document.addEventListener('click', e => {
   const g = e.target.closest && e.target.closest('[data-cer="from-guide"]'); if (g){ S.startType = g.dataset.v; return; }
   const tb = e.target.closest && e.target.closest('#tabs [data-tab="ceremonies"]');
-  if (tb && document.getElementById('cer-root') && !S.draft){ S.view = 'home'; S.id = null; S.pick = null; }
+  if (tb && document.getElementById('cer-root') && !S.draft){ S.view = 'home'; S.id = null; S.pick = null; S.me = null; S.fwBack = null; }
 }, true);
 document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('[data-cer]'); if (!t || !t.closest('#cer-root')) return;
@@ -925,7 +1099,10 @@ document.addEventListener('change', e => {
   if (t.dataset.cere && /^mins\|/.test(t.dataset.cere)){ rerender(true); }
 });
 document.addEventListener('input', e => {
-  const t = e.target; if (!t.closest || !t.closest('#cer-root')) return; const s = cur(); if (!s) return;
+  const t = e.target; if (!t.closest || !t.closest('#cer-root')) return;
+  if (t.dataset.cerm && S.me){ S.me[t.dataset.cerm] = t.value; return; }
+  if (t.dataset.cermq){ S.mq = t.value; const l = document.getElementById('cer-mlist'); if (l){ const q = S.mq.trim().toLowerCase(); l.innerHTML = mineRows(pstore().filter(m => m && !m.only && (S.mk === 'all' || m.kind === S.mk) && (!q || [m.title, m.by, m.ref, m.text, m.source, m.tags].join(' ').toLowerCase().includes(q))).sort((a, b) => String(a.title).localeCompare(String(b.title))), isFounder() && typeof API.saveAll === 'function'); } return; }
+  const s = cur(); if (!s) return;
   if (t.dataset.cern){ const x = entry(t.dataset.cern); if (x){ x.note = t.value; x.touched = true; keep(s); } return; }
   if (t.dataset.cerf){ setField(s, t.dataset.cerf, t.value); keep(s); return; }
   if (t.dataset.cerq){ S.pq = t.value; S.pmore = 0; const x = entry(S.pick), l = document.getElementById('cer-pick-list'); if (x && l) l.innerHTML = pickList(s, x); return; }
@@ -969,6 +1146,63 @@ function guideType(g){
   return null;
 }
 
+// ---------- placing a piece in the order (GWG BLD 768) ----------
+const MOM_G = {gathering: 'gathering', during: 'words', reflection: 'life', closing: 'committal', recessional: 'sending', graveside: 'committal'};
+const SLOT = {reading: {gathering: ['opening-words'], during: ['reading-1', 'reading-2', 'reading-3', 'poem', 'reading'], reflection: ['poem', 'reading-3', 'reading-2'], closing: ['closing-blessing', 'blessing'], recessional: ['closing-words'], graveside: ['committal']},
+  music: {gathering: ['prelude'], during: ['song-1', 'song-2'], reflection: ['their-music', 'song-2', 'song-1'], closing: ['song-2', 'song-1'], recessional: ['postlude'], graveside: []}};
+const RIT_SLOT = [[/candle/i, 'candle'], [/memory table/i, 'memory-table'], [/flower|stone/i, 'flowers-stones'], [/military|flag|taps|honor guard/i, 'military'], [/fraternal|lodge/i, 'fraternal'], [/police|fire/i, 'first-responder']];
+function bestMoment(kind, x){
+  const m = arr(x && x.moments).find(mm => MOM_G[mm]); if (m) return m;
+  if (kind === 'music') return /instrumental|classic/.test((x && x.kind) || '') ? 'gathering' : 'during';
+  if (kind === 'ritual') return 'during';
+  return x && x.kind === 'blessing' ? 'closing' : 'during';
+}
+// The group for a moment in this kind of service: the first group whose id ends with the moment's word, else the last group.
+function momentGroup(s, mom){ const G = groupsFor(famOf(s.type)), w = MOM_G[mom] || 'words'; const g = G.find(x => x.id === w || x.id.endsWith('-' + w)) || (mom === 'during' || mom === 'reflection' ? G.find(x => /words/.test(x.id)) : null) || G[G.length - 1]; return g ? g.id : ''; }
+function insertAt(s, gid){ const G = groupsFor(famOf(s.type)).map(g => g.id), gi = G.indexOf(gid); let at = 0; s.parts.forEach((x, i) => { const xi = G.indexOf(partOf(x).group); if (xi >= 0 && xi <= gi) at = i + 1; }); return at; }
+function placePiece(s, o){
+  const kind = o.kind === 'music' || o.kind === 'ritual' ? o.kind : 'reading', x = PC(kind, o.id); if (!x) return null;
+  const mom = MOM_G[o.moment] ? o.moment : bestMoment(kind, x);
+  let ids = kind === 'ritual' ? [((RIT_SLOT.find(([re]) => re.test(x.title + ' ' + x.id)) || [])[1])].filter(Boolean) : SLOT[kind][mom] || [];
+  const free = q => kind === 'reading' ? !(q.rd || []).length && !q.piece : !q.piece;
+  const cands = []; ids.forEach(id => s.parts.filter(q => q.part === id).forEach(q => cands.push(q)));
+  if (kind === 'reading' && mom === 'during') s.parts.filter(q => partOf(q).readings && !cands.includes(q)).forEach(q => cands.push(q));
+  let e = cands.find(q => q.on && free(q)) || cands.find(q => !q.on && free(q)), made = false;
+  if (!e){
+    const gid = momentGroup(s, mom), base = kind === 'reading' && ids.map(PART).find(Boolean);
+    if (base && partsFor(s.type).includes(base)){ e = mkEntry(base, true, null, s); }
+    else e = {k: uid(), part: 'custom', custom: {name: kind === 'music' ? 'Song' : kind === 'ritual' ? x.title : (x.kind === 'scripture' ? 'Scripture' : 'Reading'), group: base ? base.group : gid}, on: true, note: '', rd: []};
+    const last = cands.filter(q => q.on).pop();
+    s.parts.splice(last ? s.parts.indexOf(last) + 1 : insertAt(s, e.custom ? e.custom.group : base.group), 0, e); made = true;
+  }
+  if (!e.on){ e.on = true; e.fwOn = 1; if (!e.option){ const p = partOf(e); if (!p.say && (p.options || []).length) e.option = fitOpt(p, s); } }
+  if (made) e.fwAdd = 1;
+  e.touched = true; if (o.by) e.by = String(o.by).trim();
+  if (kind === 'reading'){ e.rd = e.rd || []; if (!e.rd.some(r => r.id === x.id)) e.rd.push({id: x.id, ver: x.versions ? (x.versions[s.bible] && !gone(s.bible) ? s.bible : 'kjv') : null}); }
+  else { e.piece = {kind, id: x.id}; if (kind === 'ritual' && x.minutes && (e.mins == null || e.mins === '')){ e.mins = +x.minutes; e.fwMins = 1; } }
+  return {k: e.k, part: e.title || partOf(e).name, moment: mom};
+}
+function unplacePiece(s, kind, pid){
+  let n = 0;
+  s.parts.slice().forEach(e => {
+    let hit = false;
+    if (kind === 'reading'){ const i = (e.rd || []).findIndex(r => r.id === pid); if (i >= 0){ e.rd.splice(i, 1); hit = true; } }
+    else if (e.piece && e.piece.kind === kind && e.piece.id === pid){ delete e.piece; if (e.fwMins){ e.mins = null; delete e.fwMins; } hit = true; }
+    if (!hit) return; n++;
+    const empty = !(e.rd || []).length && !e.piece;
+    if (empty && e.fwAdd) s.parts.splice(s.parts.indexOf(e), 1);
+    else if (empty && e.fwOn){ e.on = false; delete e.fwOn; }
+  });
+  return n;
+}
+function piecesIn(s){
+  const out = [];
+  onParts(s).forEach(e => { const part = e.title || partOf(e).name;
+    (e.rd || []).forEach(r => { const x = RD(r.id); if (x) out.push({kind: 'reading', id: x.id, title: x.kind === 'scripture' ? (x.ref || x.title) : x.title, by: byOfR(x), part, lead: e.by || '', rk: x.kind}); });
+    const x = pieceOf(e); if (x) out.push({kind: e.piece.kind, id: x.id, title: x.title, by: x.by || '', part, lead: e.by || '', rk: e.piece.kind}); });
+  return out;
+}
+
 const API = window.GGCer = {
   // ctx: {lib, data, save}. A different DATA (another unlock) starts fresh at the Ceremonies home.
   view(ctx){
@@ -987,6 +1221,12 @@ const API = window.GGCer = {
     out.cer = out.cer || {services: []}; out.cer.services = out.cer.services || []; let added = 0, updated = 0;
     ((inc.cer || {}).services || []).forEach(x => { const i = out.cer.services.findIndex(y => y.id === x.id); if (i < 0){ out.cer.services.push(x); added++; } else if ((x.u || 0) > (out.cer.services[i].u || 0)){ out.cer.services[i] = x; updated++; } });
     out.cer.services = out.cer.services.filter(x => !(out.deleted.cer[x.id] && out.deleted.cer[x.id] >= (x.u || 0)));
+    // My Pieces (BLD 768): the same rule.
+    out.deleted.pieces = out.deleted.pieces || {};
+    Object.entries((inc.deleted || {}).pieces || {}).forEach(([id, ts]) => { out.deleted.pieces[id] = Math.max(out.deleted.pieces[id] || 0, ts); });
+    out.pieces = out.pieces || {list: []}; out.pieces.list = out.pieces.list || [];
+    ((inc.pieces || {}).list || []).forEach(x => { if (!x || !x.id) return; const i = out.pieces.list.findIndex(y => y.id === x.id); if (i < 0){ out.pieces.list.push(x); added++; } else if ((x.u || 0) > (out.pieces.list[i].u || 0)){ out.pieces.list[i] = x; updated++; } });
+    out.pieces.list = out.pieces.list.filter(x => !(out.deleted.pieces[x.id] && out.deleted.pieces[x.id] >= (x.u || 0)));
     return {added, updated};
   },
   // The Farewell Planning Session (farewell.js, GWG BLD 766) keeps its order of service here, so the parts, readings,
@@ -1040,7 +1280,25 @@ const API = window.GGCer = {
     },
     open(id, view){ if (!API.fw.get(id)) return false; S.id = id; S.draft = null; S.pick = null; S.view = view || 'check'; return true; },
     print(id, kind){ const s = API.fw.get(id); if (!s || !DOCS[kind]) return; const was = [S.id, S.draft]; S.id = id; S.draft = null; try { printKind(kind); } finally { S.id = was[0]; S.draft = was[1]; } },
-    text(id, kind){ const s = API.fw.get(id); return s && DOCS[kind] ? DOCS[kind][1](s) : ''; }
+    text(id, kind){ const s = API.fw.get(id); return s && DOCS[kind] ? DOCS[kind][1](s) : ''; },
+    // GWG BLD 768: Readings, Music, and Rituals. The catalog: the Staff library's lists, then My Pieces (and the family's own for this service).
+    catalog(id){ const s = id ? API.fw.get(id) : null; return {readings: allReadings(s), music: allMusic(s), rituals: allRituals(s)}; },
+    moments: () => MOMENTS.slice(), kinds: () => PKINDS.slice(), mkinds: () => MKINDS.slice(),
+    best: (kind, x) => bestMoment(kind, x),
+    // Places a piece in the order at its moment, in the part that fits (a free reading, the prelude, Candle Lighting), else a new part there.
+    addPiece(id, o){ const s = API.fw.get(id); if (!s || !o) return null; const r = placePiece(s, o); if (r) keep(s); return r; },
+    removePiece(id, kind, pid){ const s = API.fw.get(id); if (!s) return false; const n = unplacePiece(s, kind, pid); if (n) keep(s); return n; },
+    inService(id){ const s = API.fw.get(id); return s ? piecesIn(s) : []; },
+    // The eulogy written in the session: prints under the eulogy part of the Officiant's Script (turned on if it was never taken out).
+    eulogy(id, text){ const s = API.fw.get(id); if (!s) return; const t = String(text || '').trim(); if ((s.fwEulogy || '') === t) return; s.fwEulogy = t;
+      if (t && !eulogyKey(s)){ const e = s.parts.find(x => (x.part === 'eulogy' || x.part === 'life-story') && !x.touched); if (e) e.on = true; } keep(s); },
+    // The obituary drafts from the session fill the service's Obituary (and the Program), unless they were typed over there.
+    obit(id, d){ const s = API.fw.get(id); if (!s || !d) return; s.obit = s.obit || {a: {}, d: {}}; s.obit.d = s.obit.d || {}; s.obit.e = s.obit.e || {}; let ch = false;
+      ['notice', 'newspaper', 'online'].forEach(k => { if (d[k] != null && !s.obit.e[k] && s.obit.d[k] !== d[k]){ s.obit.d[k] = d[k]; ch = true; } }); if (ch) keep(s); },
+    openMine(back){ S.view = 'mine'; S.id = null; S.draft = null; S.pick = null; S.me = null; S.fwBack = back || null; },
+    // Add Your Own from the session: saved to My Pieces (or only for this service when keep is false).
+    savePiece(m, svcId, keepIt){ const x = Object.assign(blankPiece(m.kind), m); if (!keepIt && svcId) x.only = svcId; const o = savePiece(x); return o ? o.id : null; },
+    pieceOf: (kind, pid) => PC(kind, pid)
   },
   // For tests and the lead.
   state: S, data: cer, fill, draftOf, ruleOn, docs: DOCS, printer: null, last: null, lastCopy: null,

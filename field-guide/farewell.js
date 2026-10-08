@@ -12,12 +12,15 @@
 // below wherever a piece is missing, so the tool works before that update is applied.
 // Plans live in DATA.fwp.plans: encrypted with the rest of this device's records and
 // carried in backups (merged by GGFw.merge). Nothing is sent anywhere.
+// GWG BLD 768: the Eulogy Helper and the Obituary Helper run inside Their Story (drafts saved in the plan, printed in the
+// Officiant Script, the Family Copy, and the Helpers' Checklist); Readings, Music, and Rituals in The Service; Follow My Scroll.
 // =====================================================================
 (function(){
 'use strict';
 
 let C = {}; // GGFw.init: data(), lib(), tier(), save(), render(), go(), toast(), esc(), icon(), sheet(), ph(), pf()
-const S = {on: false, id: null, step: 1, mode: 'chris', other: null, fuOpen: null, qr: null, scan: null};
+const S = {on: false, id: null, step: 1, mode: 'chris', other: null, fuOpen: null, qr: null, scan: null, sub: null, eSec: 0, oSec: 0, follow: true,
+  lb: {type: 'scripture', q: '', faith: 'all', moment: 'all', tag: '', mine: false, open: null, place: 'best', by: '', more: 0}};
 const SITE = 'https://growwithgrounded.com/';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -116,6 +119,61 @@ const DEF = {
   crisis: 'In a crisis, call or text 988 any time. In an emergency, call 911.'
 };
 
+// ---------- the Eulogy Helper and the Obituary Helper, inside the session (GWG BLD 768) ----------
+// The same prompts, steps, and drafting rules as eulogy-helper.html and obituary-helper.html, fed by the story notes.
+const PRON = {he: {they: 'he', them: 'him', their: 'his', theirs: 'his', themself: 'himself'}, she: {they: 'she', them: 'her', their: 'her', theirs: 'hers', themself: 'herself'}, they: {they: 'they', them: 'them', their: 'their', theirs: 'theirs', themself: 'themself'}};
+const EU = {
+  secs: [
+    {id: 'who', title: 'Who They Were', qs: [
+      {id: 'name', l: 'Their name', h: 'The name everyone will hear in the room.', input: 1, ph: 'Grandpa Joe'},
+      {id: 'me', l: 'Who is speaking', h: 'One line to open with, so everyone knows who is speaking.', input: 1, ph: 'I am his oldest granddaughter'},
+      {id: 'who', l: 'Who they were, in one sentence', h: 'If you had only one sentence. It can be funny, plain, or both.', ph: 'the kind of man who fixed your car and then made you stay for supper'}]},
+    {id: 'stories', title: 'Three Stories', sub: 'Small and true is better than big and general. A story that shows who they were does more than a list of good qualities. One honest, human detail helps people recognize them.', qs: [
+      {id: 's1', l: 'Story One', h: 'A story that makes you smile or laugh.', rows: 4},
+      {id: 's2', l: 'Story Two', h: 'A time they showed up for someone, or a habit everyone knew.', rows: 4},
+      {id: 's3', l: 'Story Three', h: 'A moment between the two of you, or something they always said.', rows: 4}]},
+    {id: 'gave', title: 'What They Gave Us', qs: [
+      {id: 'taught', l: 'What they taught you', h: 'A lesson, a way of doing things, a way of loving people.', ph: 'that you finish what you start, and you always leave room at the table'},
+      {id: 'carry', l: 'What we carry forward', h: 'What the people in this room will keep doing because of them.'},
+      {id: 'close', l: 'A closing line', h: 'A goodbye, a thank you, a line they loved, or what you want to say to them now.', ph: 'Thank you for everything. We will keep a seat for you.'}]}],
+  tips: ['Print it in large type, double spaced, and mark a slash where you want to stop and breathe.', 'Give a copy to someone you trust, and ask them to stand nearby. If you cannot go on, they can read the rest.', 'Keep water and tissues within reach.', 'Read it out loud a few times before the day. The hard lines get a little easier each time.', 'Slow down. A pause feels longer to you than it does to the room.', 'If tears come, stop, breathe, and wait. Everyone there is on your side.', 'At an easy pace, five minutes is about 650 words.']
+};
+const OB = {
+  secs: [
+    {id: 'basics', title: 'The Basics', qs: [
+      {id: 'name', l: 'Full name', h: 'As the family wants it printed. A nickname in quotes is welcome.', ph: 'First, middle, and last name', input: 1},
+      {id: 'first', l: 'The name {they} went by', h: 'Used all through the drafts. Leave it blank to use the first name.', ph: 'The name friends used', input: 1},
+      {id: 'age', l: 'Age', h: 'A number is enough.', ph: '82', input: 1},
+      {id: 'city', l: 'City where {they} lived', h: 'City only. Leave out the street address.', ph: 'St. Cloud', input: 1},
+      {id: 'death', l: 'Date and place of death', h: 'Cause only if the family wants it.', ph: 'October 2, 2026, at home, surrounded by family'},
+      {id: 'born', l: 'Born where, and the year', h: 'Start with "in." A year, or a month and year, is safer than the full birth date. Parents\' first names are enough.', ph: 'in Little Falls, Minnesota, in 1944'}]},
+    {id: 'life', title: 'Their Life', qs: [
+      {id: 'early', l: 'Growing up and school', h: 'Hometown, siblings, school, a childhood story. A sentence or two, in your own words.'},
+      {id: 'work', l: 'Work, service, and military', h: 'Jobs, the one {they} loved most, military branch and years. A sentence or two.'},
+      {id: 'married', l: 'Marriage and partnership', h: 'Who {they} married, where, and the year. A sentence.'},
+      {id: 'loved', l: 'What {they} loved', h: 'Hobbies, places, teams, food, music, sayings. A list is fine.', ph: 'fishing on Mille Lacs, polka music, and Sunday dinners'},
+      {id: 'remembered', l: 'What {they} will be remembered for', h: 'The family\'s own words. One honest, warm detail.'},
+      {id: 'faith', l: 'Faith community (only if the family wants it)', h: 'A church, synagogue, mosque, temple, or meeting, if they want it named. A sentence, or leave it blank.'}]},
+    {id: 'family', title: 'Family', qs: [
+      {id: 'survived', l: 'Survived by', h: 'Spouse, children and their spouses, grandchildren, siblings. Partners named as the family wishes.', ph: 'a husband of 52 years; three children and their spouses; seven grandchildren'},
+      {id: 'preceded', l: 'Preceded in death by', h: 'Parents, spouse, siblings, children.', ph: 'parents and a brother'}]},
+    {id: 'service', title: 'The Service', qs: [
+      {id: 'service', l: 'Service details', h: 'Day, date, time, and place; visitation; burial.', ph: 'Saturday, October 10, at 11 a.m. at the funeral home, with visitation one hour before'},
+      {id: 'memorials', l: 'Memorials or donations', h: 'A charity, the hospice, or a cause {they} loved.', ph: 'the hospice team that walked with the family'},
+      {id: 'thanks', l: 'Thanks', h: 'Hospice team, caregivers, a care home, neighbors.', ph: 'the hospice nurses and the neighbors who brought meals'}]}],
+  shapes: [
+    {id: 'notice', name: 'Death Notice', words: 80, about: 'Short and factual: the death, the service, and memorials. Newspapers usually charge by length.', outline: ['{Name}, {age}, of {city}, died {death}.', '{First} was born {born}.', '{First} is survived by {survived}.', 'A service will be held {service}.', 'Memorials preferred to {memorials}.']},
+    {id: 'newspaper', name: 'Newspaper Obituary', words: 200, about: 'The life in a few short paragraphs, for the paper or the funeral home\'s page.', outline: ['{Name}, {age}, of {city}, died {death}.', '{First} was born {born}. {early}', '{work}', '{married}', '{First} loved {loved}.', '{remembered}', '{First} is survived by {survived}, and was preceded in death by {preceded}.', 'A service will be held {service}.', 'Memorials preferred to {memorials}.', 'The family thanks {thanks}.']},
+    {id: 'online', name: 'Online Obituary', words: 500, about: 'Room for the whole story, for an online memorial page.', outline: ['{Name}, {age}, of {city}, died {death}.', '{First} was born {born}. {early}', '{work}', '{married}', '{First} loved {loved}.', '{remembered}', '{faith}', '{First} is survived by {survived}.', '{Their} family remembers {them} with love, along with those who went before: {preceded}.', 'A service will be held {service}.', 'Memorials preferred to {memorials}.', 'The family thanks {thanks}.']}],
+  tips: ['Leave out the home address. The city is enough.', 'Leave out the full birth date. The year, or the month and year, is enough.', 'Leave out the mother\'s maiden name; it is a common security question.', 'Ask a friend or neighbor to stay at the home during the visitation and the service.', 'Death notices are usually paid by length; the funeral home can place them and tell you the cost.', 'Read the draft out loud with the family before it goes anywhere, and check every name and date.']
+};
+const WPM = 130;
+const wordsIn = t => (String(t || '').trim().match(/\S+/g) || []).length;
+function readTime(t){
+  const w = wordsIn(String(t || '').replace(/\[[^\]]*\]/g, ' ')), halves = Math.round(w / WPM * 2), m = Math.floor(halves / 2), half = halves % 2;
+  return w + ' words, about ' + (halves < 2 ? 'under a minute' : m + (half ? ' and a half' : '') + (m === 1 && !half ? ' minute' : ' minutes')) + ' at an easy pace';
+}
+
 // The library's key over the built-in words, piece by piece.
 let CF = null, CFsrc;
 function cfg(){
@@ -142,7 +200,7 @@ const SID = n => STEP(n).id;
 function store(){ const d = D(); if (!d) return {plans: []}; d.fwp = d.fwp || {plans: []}; d.fwp.plans = d.fwp.plans || []; d.fwp.me = d.fwp.me || {}; return d.fwp; }
 const plans = () => store().plans;
 const plan = () => plans().find(p => p.id === S.id) || null;
-function touch(p){ if (p) p.u = Date.now(); C.save && C.save(); pushFam(); }
+function touch(p){ if (p) p.u = Date.now(); C.save && C.save(); pushFam(); if (p) svcPush(p); }
 function newPlan(){
   return {id: 'fw' + uid(), u: Date.now(), made: today(), person: {}, contact: {}, sel: {}, own: {}, notes: {}, tidy: {}, custom: {}, stars: {}, tags: {}, story: {}, eDraft: '',
     writings: [], speakers: [], clergy: [], gd: {}, svc: null, reh: {}, next: [], fu: {}, fuOwn: [], ses: [], famChecked: [],
@@ -227,7 +285,7 @@ function who(p, key, lab){
     ${open ? `<span class="fw-other"><input type="text" data-fwtag="${esc(key)}" aria-label="Another name" placeholder="A name" autocomplete="off"><button type="button" class="btn btn-line btn-sm" data-fwa="tagset" data-fwv="${esc(key)}">Set</button></span>` : ''}</div>`;
 }
 function blk(p, title, key, inner, sub){
-  return `<section class="fw-blk"><div class="fw-blk-h"><h3>${esc(title)}</h3>${star(p, key, title)}</div>${sub ? `<p class="fw-sub">${esc(sub)}</p>` : ''}${inner}</section>`;
+  return `<section class="fw-blk" data-fwanc="${esc(key)}"><div class="fw-blk-h"><h3>${esc(title)}</h3>${star(p, key, title)}</div>${sub ? `<p class="fw-sub">${esc(sub)}</p>` : ''}${inner}</section>`;
 }
 function fld(path, lab, val, type, ph){
   const id = 'fw-' + path.replace(/[^a-z0-9]+/gi, '-');
@@ -403,6 +461,80 @@ async function scanQR(){
   S.scan = setInterval(async () => { try { const r = await det.detect(v); for (const c of r){ if (seen.has(c.rawValue)) continue; seen.add(c.rawValue); const out = loadText(p, c.rawValue); if (out && out !== 'part') return stop(); } } catch (e) {} }, 350);
 }
 
+// ---------- the helpers' state, drafts, and what feeds the printouts (GWG BLD 768) ----------
+const pronOf = p => PRON[p.person.pron] ? p.person.pron : 'they';
+const euA = p => { p.eu = p.eu || {a: {}}; p.eu.a = p.eu.a || {}; return p.eu.a; };
+const obS = p => { p.ob = p.ob || {}; p.ob.a = p.ob.a || {}; p.ob.d = p.ob.d || {}; p.ob.e = p.ob.e || {}; return p.ob; };
+const clean = t => String(t || '').trim().replace(/[ \t]+/g, ' ');
+const sent = t => { t = clean(t); if (!t) return ''; t = t.charAt(0).toUpperCase() + t.slice(1); return /[.!?"\u201D]$/.test(t) ? t : t + '.'; };
+const low = t => clean(t).replace(/[.]+$/, '');
+// Fill only what is still empty, from the story notes and the plan.
+function euFill(p){
+  const a = euA(p), st = p.story || {}, P = called(p), n = 0;
+  const put = (k, v) => { v = clean(v); if (v && !clean(a[k])){ a[k] = v; return 1; } return 0; };
+  let c = put('name', P) + put('who', st.who) + put('s1', st.memory) + put('s2', st.loved) + put('taught', st.values);
+  if (clean(st.saying) && !clean(a.s3)){ a.s3 = (P || 'They') + ' always said, "' + low(st.saying).replace(/^["']|["']$/g, '') + '."'; c++; }
+  if (clean(st.work) && !clean(a.s2) ){ a.s2 = clean(st.work); c++; }
+  return c + n;
+}
+function euBuild(p){
+  const a = euA(p), n = clean(a.name) || '[Name]', pr = PRON[pronOf(p)];
+  const open = [a.me ? sent(a.me) : '[Who you are to them.]', a.who ? n + ' was ' + low(a.who) + '.' : n + ' was [one sentence that captures ' + pr.them + '].'];
+  const stories = ['s1', 's2', 's3'].map((k, i) => clean(a[k]) ? sent(a[k]) : '[' + ['First', 'Second', 'Third'][i] + ' story]');
+  const gave = [a.taught ? n + ' taught me ' + low(a.taught) + '.' : 'What ' + n + ' taught me was [what ' + pr.they + ' taught you].', a.carry ? 'And what we carry forward is ' + low(a.carry) + '.' : 'And what we carry forward is [what we carry].'];
+  return [open.join(' '), stories.join('\n\n'), gave.join(' '), a.close ? sent(a.close) : '[A closing line.]'].join('\n\n');
+}
+function ageOf(p){ const b = parseDay(p.person.born), d = parseDay(p.person.died); if (!b || !d) return ''; let y = +d.slice(0, 4) - +b.slice(0, 4); if (d.slice(5) < b.slice(5)) y--; return y > 0 && y < 130 ? String(y) : ''; }
+const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+function svcLine(p){
+  const g = gSel(p).find(x => x.main && (p.gd[x.id] || {}).date) || gSel(p).find(x => (p.gd[x.id] || {}).date); if (!g) return '';
+  const d = p.gd[g.id] || {}, dt = dOf(d.date);
+  return [dt ? WD[dt.getDay()] + ', ' + nice(d.date) : '', d.time ? 'at ' + tm(d.time) : '', d.place ? 'at ' + d.place : ''].filter(Boolean).join(', ').replace(/, at (\d)/, ', at $1');
+}
+function obFill(p){
+  const o = obS(p), a = o.a, st = p.story || {}, b = parseDay(p.person.born), d = parseDay(p.person.died);
+  const put = (k, v) => { v = clean(v); if (v && !clean(a[k])){ a[k] = v; return 1; } return 0; };
+  return put('name', p.person.full) + put('first', called(p) !== String(p.person.full || '').trim().split(/\s+/)[0] ? called(p) : '') + put('age', ageOf(p)) + put('death', d ? nice(d) : p.person.died)
+    + put('born', b ? 'in ' + b.slice(0, 4) : '') + put('work', st.work) + put('loved', st.loved) + put('remembered', st.who) + put('service', svcLine(p));
+}
+// The Obituary Helper's drafting rules: a sentence drops out when its answers are empty, and a clause drops out when only its own answer is empty.
+function obDraft(p, shape){
+  const a = obS(p).a, pr = PRON[pronOf(p)], name = clean(a.name), first = clean(a.first) || name.replace(/["\u201C\u201D].*?["\u201C\u201D]/g, ' ').trim().split(/\s+/)[0] || '';
+  const v = Object.assign({Name: name || '[Name]', First: first || '[Name]'}, pr);
+  const QIDS = []; OB.secs.forEach(g => g.qs.forEach(q => QIDS.push(q.id)));
+  const ans = {}; QIDS.forEach(id => { ans[id] = clean(a[id]).replace(/\s*\n+\s*/g, ' ').replace(/[.;,]\s*$/, ''); });
+  ['early', 'work', 'married', 'remembered', 'faith'].forEach(id => { if (ans[id] && !/[.!?"\u201D]$/.test(ans[id])) ans[id] += '.'; if (ans[id]) ans[id] = ans[id].charAt(0).toUpperCase() + ans[id].slice(1); });
+  const fillT = t => String(t || '').replace(/\{([A-Za-z]+)\}/g, (m, k) => { if (Object.prototype.hasOwnProperty.call(ans, k)) return ans[k] || ''; if (Object.prototype.hasOwnProperty.call(v, k)) return v[k]; const lo = k.charAt(0).toLowerCase() + k.slice(1); if (lo !== k && v[lo]) return v[lo].charAt(0).toUpperCase() + v[lo].slice(1); return m; });
+  const toks = t => (t.match(/\{([A-Za-z]+)\}/g) || []).map(x => x.slice(1, -1)).filter(k => QIDS.includes(k));
+  const tidy = t => fillT(t).replace(/\s+([.,;:])/g, '$1').replace(/([.!?]["\u201D]?)\./g, '$1').replace(/\.{2,}/g, '.').replace(/\s{2,}/g, ' ').trim();
+  const sentence = t => { const used = toks(t); if (!used.length) return tidy(t); if (used.every(k => !ans[k])) return ''; if (used.every(k => ans[k])) return tidy(t);
+    const parts = t.replace(/[.!?]\s*$/, '').split(/,\s+/).filter(c => toks(c).every(k => ans[k])); if (!parts.length) return '';
+    let out = tidy(parts.join(', ')).replace(/^and\s+/i, ''); return out.charAt(0).toUpperCase() + out.slice(1) + '.'; };
+  const item = t => t.split(/(?<=[.!?])\s+(?=[{A-Z])/).map(sentence).filter(Boolean).join(' ');
+  const paras = shape.words > 120 ? shape.outline.map(item) : [shape.outline.map(item).filter(Boolean).join(' ')];
+  return paras.filter(Boolean).join('\n\n');
+}
+const fillQ = (p, t) => String(t || '').replace(/\{(they|them|their)\}/g, (m, k) => PRON[pronOf(p)][k]);
+// What prints: the session's eulogy draft, else the family's own eulogy they sent back.
+function eulogyText(p){
+  const d = String(p.eDraft || '').trim(); if (d) return d;
+  const w = arr(p.writings).filter(x => x.kind === 'eulogy').pop(); return w ? String(w.body || '').trim() : '';
+}
+// The obituary for the family copy and the funeral home: the newspaper draft first, else the online, else the notice; else the family's own.
+function obitText(p){
+  const o = p.ob && p.ob.d || {}; for (const sh of ['newspaper', 'online', 'notice']){ if (String(o[sh] || '').trim()) return {name: OB.shapes.find(x => x.id === sh).name, text: String(o[sh]).trim()}; }
+  const w = arr(p.writings).filter(x => x.kind === 'obituary').pop(); if (!w) return null;
+  const sec = arr(w.sections).find(x => /Newspaper/.test(x.h)) || arr(w.sections).find(x => x.t) ; return sec ? {name: sec.h, text: sec.t} : (String(w.body || '').trim() ? {name: 'Obituary', text: String(w.body).trim()} : null);
+}
+function obitDrafts(p){
+  const o = p.ob && p.ob.d || {}, out = {}; ['notice', 'newspaper', 'online'].forEach(k => { if (String(o[k] || '').trim()) out[k] = String(o[k]).trim(); });
+  if (!Object.keys(out).length){ const w = arr(p.writings).filter(x => x.kind === 'obituary').pop(); if (w) arr(w.sections).forEach(x => { const k = /Death Notice/.test(x.h) ? 'notice' : /Newspaper/.test(x.h) ? 'newspaper' : /Online/.test(x.h) ? 'online' : ''; if (k && x.t) out[k] = x.t; }); }
+  return out;
+}
+// The eulogy and the obituary follow into the Service Builder's service, so its printouts carry them.
+let svcT = null;
+function svcPush(p){ clearTimeout(svcT); svcT = setTimeout(() => { if (!p || !hasSvc(p)) return; const c = CER(); c.eulogy(p.svc, eulogyText(p)); c.obit(p.svc, obitDrafts(p)); }, 300); }
+
 // ---------- Chris's View, one function per step ----------
 const V = {};
 V[1] = p => sayBox(p, STEP(1).say) + loadBox(p) +
@@ -420,13 +552,74 @@ V[2] = p => {
   return sayBox(p, STEP(2).say) +
   blk(p, S2.title || 'Their Story', 'story', `<div class="fw-prompts">${items(p, 'story').map(it => `<div class="fw-pcard"><button type="button" class="chip" data-fwa="chip" data-fwv="${esc('story|' + it.id)}" aria-pressed="${isOn(p, 'story', it.id)}"${fk('c|story|' + it.id)}>${esc(fill(it.t, p))}</button>${it.q ? `<small>${esc(fill(it.q, p))}</small>` : ''}<textarea rows="2" data-fwi="story.${esc(it.id)}" aria-label="Note for ${esc(it.t)}" placeholder="A few words">${esc(p.story[it.id] || '')}</textarea></div>`).join('')}</div>` + addOwn('story', 'Another prompt: their cooking, their hands, their laugh...'), STEP(2).sub) +
   blk(p, list('eulogy').title || 'Who Is Writing the Eulogy?', 'eulogy', chips(p, 'eulogy', true) + who(p, 'eulogy') +
-    (mine ? `<div class="fw-draft"><div class="spread"><b>Your Eulogy Draft</b><button type="button" class="btn btn-line btn-sm" data-fwa="draft">${p.eDraft ? 'Build It Again From the Notes' : 'Build a Draft From the Story Notes'}</button></div><textarea rows="6" data-fwi="eDraft" aria-label="Your eulogy draft" placeholder="Tap Build a Draft, or write here.">${esc(p.eDraft || '')}</textarea></div>` : '') +
-    (fam ? shareCard(p, 'eulogy') : '')) +
-  blk(p, 'Obituary', 'obit', who(p, 'obit') + shareCard(p, 'obituary'), 'Send the Obituary Helper to whoever is writing it.') +
+    helperCard(p, 'eulogy', mine) +
+    (fam ? `<details class="fw-custom" style="margin-top:12px"${mine ? '' : ' open'}><summary>Send the Eulogy Helper to Write at Home</summary>${shareCard(p, 'eulogy')}</details>` : '')) +
+  blk(p, 'Obituary', 'obit', who(p, 'obit') + helperCard(p, 'obit', true) + `<details class="fw-custom" style="margin-top:12px"><summary>Send the Obituary Helper to Write at Home</summary>${shareCard(p, 'obituary')}</details>`, 'Write it together now, or send the Obituary Helper to whoever is writing it.') +
   blk(p, "The Family's Writing", 'writing', (p.writings.length ? p.writings.map((w, i) => `<details class="fw-wr"><summary><b>${esc(w.kind === 'eulogy' ? 'Eulogy' : w.kind === 'obituary' ? 'Obituary' : 'Writing')}</b>${w.from ? ' from ' + esc(w.from) : ''} <small>${esc(new Date(w.at).toLocaleDateString())}</small></summary><div class="fw-words">${esc(w.sections && w.sections.length ? w.sections.map(s => s.h + '\n\n' + s.t).join('\n\n') : w.body)}</div><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-fwa="wr-copy" data-fwv="${i}">Copy</button><button type="button" class="btn btn-line btn-sm" data-fwa="wr-del" data-fwv="${i}">Remove</button></div></details>`).join('') : '<p class="fw-sub" style="margin-top:0">When the family sends their eulogy or obituary, paste it here.</p>') + loadBox(p)) +
   blk(p, 'Family Speakers', 'speakers', `<div class="fw-lines">${p.speakers.map((s, i) => `<div class="fw-line"><input type="text" data-fwi="speakers.${i}.name" value="${esc(s.name)}" aria-label="Speaker name" autocomplete="off"><input type="number" min="1" max="30" data-fwi="speakers.${i}.min" value="${esc(s.min)}" aria-label="Minutes"><button type="button" class="btn btn-line btn-sm" data-fwa="spk-del" data-fwv="${i}" aria-label="Remove ${esc(s.name)}">Remove</button></div>`).join('')}</div>${p.speakers.length ? '<p class="fw-sub">Name, then minutes.</p>' : ''}` + addOwn('speakers', "Add a speaker's name")) +
   custom(p, 'story') + note(p, 'story');
 };
+
+// The card in Their Story that opens a helper inside the session.
+function helperCard(p, k, lead){
+  if (k === 'eulogy'){ const d = String(p.eDraft || '').trim(), n = Object.values(euA(p)).filter(x => clean(x)).length;
+    return `<div class="fw-helper"><div class="spread"><div style="min-width:0;flex:1 1 240px"><b>Eulogy Helper</b><p class="fw-sub" style="margin:2px 0 0">${d ? esc(readTime(d)) + '. Change it any time.' : n ? n + ' of 9 answers so far.' : 'Write it together right here: three short sections, then a real draft you can edit. The story notes fill in first.'}</p></div>
+      <button type="button" class="btn ${lead ? 'btn-gold' : 'btn-line'} btn-sm" data-fwa="sub" data-fwv="eulogy"${fk('sb|eulogy')}>${d || n ? 'Open the Eulogy Helper' : 'Write It Together Now'}</button></div></div>`; }
+  const o = obS(p), have = OB.shapes.filter(sh => String(o.d[sh.id] || '').trim()).length, n = Object.values(o.a).filter(x => clean(x)).length;
+  return `<div class="fw-helper"><div class="spread"><div style="min-width:0;flex:1 1 240px"><b>Obituary Helper</b><p class="fw-sub" style="margin:2px 0 0">${have ? have + ' of 3 drafts ready: Death Notice, Newspaper Obituary, Online Obituary.' : n ? n + ' answers so far.' : 'A few questions, then three drafts: a Death Notice, a Newspaper Obituary, and an Online Obituary.'}</p></div>
+    <button type="button" class="btn btn-line btn-sm" data-fwa="sub" data-fwv="obit"${fk('sb|obit')}>${have || n ? 'Open the Obituary Helper' : 'Write It Together Now'}</button></div></div>`;
+}
+// The Eulogy Helper inside the session: Who They Were, Three Stories, What They Gave Us, then the draft.
+const EUSECS = () => EU.secs.map(x => x.title).concat(['The Draft']);
+const OBSECS = () => OB.secs.map(x => x.title).concat(['The Drafts']);
+function secNav(cur, L, act){ return `<div class="fw-chips fw-secnav" role="group" aria-label="Sections">${L.map((t, i) => `<button type="button" class="chip" data-fwa="${act}" data-fwv="${i}" aria-pressed="${cur === i}"${fk(act + '|' + i)}><span class="fw-n">${i + 1}</span> ${esc(t)}</button>`).join('')}</div>`; }
+function qField(p, base, q, val){
+  const id = 'fw-' + base.replace(/\./g, '-') + '-' + q.id, lab = fillQ(p, q.l), path = base + '.' + q.id;
+  return `<section class="fw-blk fw-q" data-fwanc="${esc(base.split('.')[0] + '-' + q.id)}"><label class="f" for="${id}" style="margin-top:0">${esc(lab)}</label>${q.h ? `<p class="fw-sub" style="margin:2px 0 6px">${esc(fillQ(p, q.h))}</p>` : ''}
+    ${q.input ? `<input type="text" id="${id}" data-fwi="${esc(path)}" value="${esc(val || '')}"${q.ph ? ` placeholder="${esc(q.ph)}"` : ''} autocomplete="off">` : `<textarea id="${id}" rows="${q.rows || 2}" data-fwi="${esc(path)}"${q.ph ? ` placeholder="${esc(q.ph)}"` : ''}>${esc(val || '')}</textarea>`}</section>`;
+}
+const pronChips = p => `<div class="fw-chips" role="group" aria-label="Words for them" style="margin-top:6px">${[['he', 'He, him, his'], ['she', 'She, her, hers'], ['they', 'They, them, their']].map(([k, l]) => `<button type="button" class="chip" data-fwa="pron" data-fwv="${k}" aria-pressed="${pronOf(p) === k}"${fk('pr|' + k)}>${l}</button>`).join('')}</div>`;
+function storyRef(p){
+  const its = items(p, 'story').filter(it => clean(p.story[it.id]));
+  return its.length ? `<details class="fw-custom"><summary>The Story Notes</summary><ul class="fw-ref">${its.map(it => `<li><b>${esc(fill(it.t, p))}:</b> ${esc(p.story[it.id])}</li>`).join('')}</ul></details>` : '';
+}
+function vEu(p){
+  const a = euA(p), n = S.eSec, last = EU.secs.length;
+  let body = '';
+  if (n < last){ const sec = EU.secs[n];
+    body = (n === 0 ? `<section class="fw-blk" data-fwanc="eu-pron"><span class="fw-lbl">Words for them</span>${pronChips(p)}</section>` : '') + (sec.sub ? `<p class="fw-sub">${esc(sec.sub)}</p>` : '') + sec.qs.map(q => qField(p, 'eu.a', q, a[q.id])).join('');
+  } else {
+    const d = String(p.eDraft || '');
+    body = `<section class="fw-blk" data-fwanc="eu-draft"><div class="fw-blk-h"><h3>The Eulogy</h3><span class="fw-sub" id="fw-eu-time" style="margin:0">${esc(d.trim() ? readTime(d) : 'Not built yet')}</span></div>
+      <p class="fw-sub">The outline: an opening, the stories, what ${esc(clean(a.name) || pName(p))} gave us, and a closing. Words in [brackets] are spots still waiting. Change anything; it prints in the Officiant Script under the eulogy.</p>
+      <div class="row"><button type="button" class="btn btn-gold btn-sm" data-fwa="eu-build">${d.trim() ? 'Build It Again From the Answers' : 'Build the Draft'}</button></div>
+      <textarea rows="16" class="fw-bigta" data-fwi="eDraft" aria-label="The eulogy" placeholder="Tap Build the Draft, or write here." style="margin-top:10px">${esc(d)}</textarea>
+      <div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-fwa="eu-copy">Copy</button><button type="button" class="btn btn-line btn-sm" data-fwa="eu-print">Print in Large Type</button></div></section>
+      <details class="fw-custom"><summary>Speaking Through Tears</summary><ul class="fw-ref">${EU.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></details>`;
+  }
+  return sayBox(p, n < last ? 'Let us write it together. I will ask, and you answer in your own words. Short and true is plenty.' : 'Here is the eulogy as we have it. Let us read it through together.') +
+    secNav(n, EUSECS(), 'eu-sec') + (n < last ? `<div class="row" style="margin:6px 0 12px"><button type="button" class="btn btn-line btn-sm" data-fwa="eu-fill">Fill In From the Story Notes</button></div>` : '') + body + storyRef(p) +
+    `<div class="fw-nav"><button type="button" class="btn btn-line" data-fwa="eu-sec" data-fwv="${Math.max(0, n - 1)}"${n === 0 ? ' disabled' : ''}>&larr; Back</button><button type="button" class="btn btn-line" data-fwa="sub" data-fwv="">Back to Their Story</button>${n < last ? `<button type="button" class="btn btn-gold" data-fwa="eu-sec" data-fwv="${n + 1}">${n === last - 1 ? 'Build the Draft' : 'Next'} &rarr;</button>` : ''}</div>`;
+}
+// The Obituary Helper inside the session: the four groups of questions, then the three drafts.
+function vOb(p){
+  const o = obS(p), n = S.oSec, last = OB.secs.length;
+  let body = '';
+  if (n < last){ const sec = OB.secs[n];
+    body = (n === 0 ? `<section class="fw-blk" data-fwanc="ob-pron"><span class="fw-lbl">Words for them</span>${pronChips(p)}</section>` : '') + sec.qs.map(q => qField(p, 'ob.a', q, o.a[q.id])).join('');
+  } else {
+    body = `<div class="row" style="margin-bottom:12px"><button type="button" class="btn btn-gold btn-sm" data-fwa="ob-make">${OB.shapes.some(sh => o.d[sh.id]) ? 'Make the Drafts Again' : 'Make the Drafts'}</button><button type="button" class="btn btn-line btn-sm" data-fwa="ob-print">Print All Three</button></div>` +
+      OB.shapes.map(sh => { const t = o.d[sh.id] || '', w = wordsIn(t);
+        return `<section class="fw-blk" data-fwanc="ob-${sh.id}"><div class="fw-blk-h"><h3>${esc(sh.name)}</h3><span class="fw-sub" id="fw-obn-${sh.id}" style="margin:0">${w} words, aim for about ${sh.words}</span></div><p class="fw-sub">${esc(sh.about)}</p>
+        <textarea rows="${sh.words > 300 ? 12 : sh.words > 100 ? 8 : 5}" class="fw-bigta" data-fwi="ob.d.${sh.id}" aria-label="${esc(sh.name)}" placeholder="Tap Make the Drafts.">${esc(t)}</textarea>
+        <div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-fwa="ob-copy" data-fwv="${sh.id}">Copy</button></div></section>`; }).join('') +
+      `<p class="fw-sub">The newspaper draft prints in the Family Copy and goes on the Helpers' Checklist as "to the funeral home." All three fill the Service Builder's Obituary and the Program.</p>
+      <details class="fw-custom"><summary>Before You Share It</summary><ul class="fw-ref">${OB.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></details>`;
+  }
+  return sayBox(p, n < last ? 'Let us put the obituary together. Answer what you know; we can skip anything and come back.' : 'Here are the drafts. Let us read the newspaper one out loud and check every name and date.') +
+    secNav(n, OBSECS(), 'ob-sec') + (n < last ? `<div class="row" style="margin:6px 0 12px"><button type="button" class="btn btn-line btn-sm" data-fwa="ob-fill">Fill In From the Plan</button></div>` : '') + body + storyRef(p) +
+    `<div class="fw-nav"><button type="button" class="btn btn-line" data-fwa="ob-sec" data-fwv="${Math.max(0, n - 1)}"${n === 0 ? ' disabled' : ''}>&larr; Back</button><button type="button" class="btn btn-line" data-fwa="sub" data-fwv="">Back to Their Story</button>${n < last ? `<button type="button" class="btn btn-gold" data-fwa="ob-sec" data-fwv="${n + 1}">${n === last - 1 ? 'The Drafts' : 'Next'} &rarr;</button>` : ''}</div>`;
+}
 
 V[3] = p => sayBox(p, STEP(3).say) +
   blk(p, list('faithway').title || 'Faith or Plain', 'faithway', chips(p, 'faithway', true), STEP(3).sub) +
@@ -438,11 +631,102 @@ V[3] = p => sayBox(p, STEP(3).say) +
 V[4] = p => sayBox(p, STEP(4).say) +
   blk(p, 'Gatherings', 'gatherings', chips(p, 'gatherings') + addOwn('gatherings', 'Another gathering'), STEP(4).sub) +
   gSel(p).map(g => { const d = p.gd[g.id] || {};
-    return `<div class="fw-gath"><div class="fw-blk-h"><h4>${esc(g.t)}</h4>${star(p, 'g-' + g.id, g.t + ' details')}</div><div class="fw-g3">${fld('gd.' + g.id + '.date', 'Date', d.date, 'date')}${fld('gd.' + g.id + '.time', 'Time', d.time, 'time')}${fld('gd.' + g.id + '.place', 'Place', d.place)}</div>${who(p, 'g-' + g.id)}</div>`; }).join('') +
+    return `<div class="fw-gath" data-fwanc="g-${esc(g.id)}"><div class="fw-blk-h"><h4>${esc(g.t)}</h4>${star(p, 'g-' + g.id, g.t + ' details')}</div><div class="fw-g3">${fld('gd.' + g.id + '.date', 'Date', d.date, 'date')}${fld('gd.' + g.id + '.time', 'Time', d.time, 'time')}${fld('gd.' + g.id + '.place', 'Place', d.place)}</div>${who(p, 'g-' + g.id)}</div>`; }).join('') +
   custom(p, 'gatherings') + note(p, 'gatherings');
+
+// ---------- Readings, Music, and Rituals (GWG BLD 768): browse, preview, and add to the service in one tap ----------
+const LBT = [['scripture', 'Scripture'], ['poem', 'Poems'], ['reading', 'Readings'], ['prayer', 'Prayers'], ['blessing', 'Blessings'], ['music', 'Music'], ['ritual', 'Rituals']];
+const MOMS = [['gathering', 'Gathering'], ['during', 'During'], ['reflection', 'Reflection'], ['closing', 'Closing'], ['recessional', 'Recessional'], ['graveside', 'Graveside']];
+const FAITHS = ['christian', 'jewish', 'muslim', 'hindu', 'buddhist', 'bahai', 'mixed'], PLAINS = ['plain', 'any', 'spiritual', 'nature', 'uu'];
+const lbKind = t => t === 'music' || t === 'ritual' ? t : 'reading';
+function faithKind(k, x){
+  if (k !== 'reading') return x.faith === 'faith' || x.faith === 'plain' ? x.faith : 'either';
+  const f = arr((x.tags || {}).faith), fa = x.kind === 'scripture' || f.some(v => FAITHS.includes(v)), pl = x.kind !== 'scripture' && f.some(v => PLAINS.includes(v));
+  return fa && pl ? 'either' : fa ? 'faith' : pl ? 'plain' : 'either';
+}
+function momentsOf(k, x){
+  if (arr(x.moments).length) return arr(x.moments);
+  if (k !== 'reading') return [];
+  const ty = arr((x.tags || {}).types);
+  if (x.kind === 'blessing') return ['closing', 'graveside'];
+  if (x.kind === 'prayer') return ['gathering', 'during', 'closing'];
+  return ['during', 'reflection'].concat(ty.includes('graveside') ? ['graveside'] : []);
+}
+function tagsOf(k, x){ if (k !== 'reading') return arr(x.tags).map(String); const t = x.tags || {}; return arr(t.words).concat(arr(t.types).map(v => String(v).replace(/-/g, ' '))); }
+const isWed = x => { const f = (x.tags || {}).for; return f === 'wedding'; };
+const rTitle = x => x.kind === 'scripture' ? (x.ref || x.title) : x.title;
+function rBody(x, ver){ if (x.versions){ const v = x.versions[ver] ? ver : x.versions.kjv ? 'kjv' : Object.keys(x.versions)[0]; return {text: x.versions[v] || '', ver: v}; } return {text: x.text || '', ver: ''}; }
+const snip = (t, n) => { t = String(t || '').replace(/\s+/g, ' ').trim(); return t.length > n ? t.slice(0, n).replace(/\s+\S*$/, '') + '...' : t; };
+function lbAll(p){
+  const c = cerBind(); if (!c) return [];
+  const cat = c.catalog(hasSvc(p) ? p.svc : null), t = S.lb.type, k = lbKind(t);
+  return (k === 'music' ? cat.music : k === 'ritual' ? cat.rituals : cat.readings.filter(r => (r.kind || 'reading') === t && !isWed(r))).map(x => ({k, x}));
+}
+function lbList(p){
+  const q = S.lb.q.trim().toLowerCase(), L = S.lb;
+  const pref = plainOf(p) ? (faithOf(p) ? 'plain' : '') : 'faith';
+  return lbAll(p).filter(({k, x}) => {
+    const fw = faithKind(k, x);
+    if (L.faith === 'faith' && fw === 'plain') return false;
+    if (L.faith === 'plain' && fw === 'faith') return false;
+    if (L.moment !== 'all' && !momentsOf(k, x).includes(L.moment)) return false;
+    if (L.tag && !tagsOf(k, x).includes(L.tag)) return false;
+    if (L.mine && !x.mine) return false;
+    if (q && ![x.title, x.ref, x.by, x.about, x.source, x.text, x.versions && x.versions.kjv, tagsOf(k, x).join(' ')].join(' ').toLowerCase().includes(q)) return false;
+    return true;
+  }).map(o => Object.assign(o, {fit: (pref && faithKind(o.k, o.x) === pref ? 2 : faithKind(o.k, o.x) === 'either' ? 1 : 0) + (o.x.mine ? 1 : 0)}))
+    .sort((a, b) => b.fit - a.fit || String(rTitle(a.x)).localeCompare(String(rTitle(b.x))));
+}
+const lbKey = (k, id) => k + '|' + id;
+function inSvc(p){ const c = cerBind(); return c && hasSvc(p) ? c.inService(p.svc) : []; }
+function lbPrev(p, k, x){
+  const bible = (CER() && hasSvc(p) && CER().get(p.svc) || {}).bible || 'kjv';
+  if (k === 'reading'){ const b = rBody(x, bible);
+    return `<div class="fw-prev">${x.bring ? `<p class="fw-note2"><b>Text not included.</b> Bring your own copy; it prints with this credit line.</p>` : `<div class="fw-words fw-read">${esc(b.text)}</div>`}${x.source ? `<p class="fw-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="fw-sub">${esc(x.note)}</p>` : ''}</div>`; }
+  return `<div class="fw-prev">${x.by ? `<p><b>${esc(x.by)}</b></p>` : ''}${x.about ? `<p>${esc(rfill(x.about, p))}</p>` : ''}${arr(x.how).length ? `<div class="fw-lbl">How it goes</div><ol>${x.how.map(h => `<li>${esc(rfill(h, p))}</li>`).join('')}</ol>` : ''}${arr(x.needs).length ? `<div class="fw-lbl">What to bring</div><ul>${x.needs.map(h => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
+    <p class="fw-sub">${[x.minutes ? 'About ' + x.minutes + ' minutes' : '', momentsOf(k, x).length ? 'Fits: ' + momentsOf(k, x).map(m => (MOMS.find(z => z[0] === m) || [m, m])[1]).join(', ') : '', faithKind(k, x) === 'faith' ? 'Faith' : faithKind(k, x) === 'plain' ? 'Plain' : 'Faith or plain'].filter(Boolean).join(' · ')}</p>${x.source ? `<p class="fw-src">${esc(x.source)}</p>` : ''}</div>`;
+}
+// In a song's or ritual's words, [Name] is the person being remembered.
+const rfill = (t, p) => String(t || '').replace(/\[Name\]/g, called(p) || '[Name]');
+function lbRows(p){
+  const L = lbList(p), n = 25 + S.lb.more, have = new Set(inSvc(p).map(x => lbKey(x.kind, x.id)));
+  if (!L.length) return `<p class="muted">Nothing matches. Try another word or filter, or add your own below.</p>`;
+  return L.slice(0, n).map(({k, x}) => { const key = lbKey(k, x.id), on = have.has(key), open = S.lb.open === key;
+    const sub = k === 'reading' ? [x.kind === 'scripture' && x.title !== x.ref ? x.title : x.by, x.bring ? '' : snip(rBody(x, 'kjv').text, 90)].filter(Boolean).join(' · ') : [x.by, snip(x.about, 90)].filter(Boolean).join(' · ');
+    return `<div class="fw-lbr${on ? ' on' : ''}" data-fwanc="lb-${esc(x.id)}"><div class="fw-lbm"><b>${esc(rTitle(x))}</b>${x.mine ? ' <span class="fw-tag">Mine</span>' : ''}${x.bring ? ' <span class="fw-tag">Text Not Included</span>' : ''}${on ? ' <span class="fw-tag on">In the Service</span>' : ''}<br><small>${esc(sub)}</small></div>
+      <div class="fw-lbb"><button type="button" class="btn btn-line btn-sm" data-fwa="lb-prev" data-fwv="${esc(key)}" aria-expanded="${open}"${fk('lp|' + key)}>${open ? 'Close' : 'Preview'}</button>${on ? `<button type="button" class="btn btn-line btn-sm" data-fwa="lb-rm" data-fwv="${esc(key)}"${fk('lr|' + key)}>Take Out</button>` : `<button type="button" class="btn btn-gold btn-sm" data-fwa="lb-add" data-fwv="${esc(key)}"${fk('la|' + key)}>Add to the Service</button>`}</div>
+      ${open ? lbPrev(p, k, x) : ''}</div>`; }).join('') + (L.length > n ? `<button type="button" class="btn btn-line btn-sm" data-fwa="lb-more" style="margin-top:8px">Show More (${L.length - n})</button>` : '');
+}
+function lbTags(p){ const c = {}; lbAll(p).forEach(({k, x}) => tagsOf(k, x).forEach(t => { if (t) c[t] = (c[t] || 0) + 1; })); return Object.keys(c).sort((a, b) => c[b] - c[a] || a.localeCompare(b)).slice(0, 30); }
+function lbOwnForm(p){
+  const t = S.lb.type, k = lbKind(t), R = k === 'reading';
+  return `<details class="fw-custom" id="fw-lb-own"${S.lb.own ? ' open' : ''}><summary>Add Your Own ${esc((LBT.find(x => x[0] === t) || [t, t])[1].replace(/s$/, ''))}</summary>
+    <div class="fw-g2">${`<div class="fw-fld"><label class="f" for="fw-lo-title">Title</label><input id="fw-lo-title" type="text" autocomplete="off" placeholder="${k === 'music' ? 'A song they loved' : k === 'ritual' ? 'Lighting a candle for each grandchild' : 'A title'}"></div>`}${t === 'scripture' ? `<div class="fw-fld"><label class="f" for="fw-lo-ref">Reference</label><input id="fw-lo-ref" type="text" autocomplete="off" placeholder="John 14:1 to 3"></div>` : `<div class="fw-fld"><label class="f" for="fw-lo-by">${k === 'music' ? 'Artist or Composer' : 'By'}</label><input id="fw-lo-by" type="text" autocomplete="off" placeholder="${k === 'ritual' ? 'A family custom' : 'Their name, or Traditional'}"></div>`}</div>
+    <label class="f" for="fw-lo-text">${R ? 'The Words' : 'About'}</label><textarea id="fw-lo-text" rows="${R ? 6 : 2}" placeholder="${R ? 'Type or paste the words. Leave empty if it is under copyright; it then prints as bring your own copy.' : k === 'music' ? 'When it plays and who sings or plays it. Titles only, never the lyrics.' : 'One or two plain sentences.'}"></textarea>
+    ${k === 'ritual' ? `<label class="f" for="fw-lo-how">Steps, One Per Line</label><textarea id="fw-lo-how" rows="4"></textarea><label class="f" for="fw-lo-needs">What to Bring, One Per Line</label><textarea id="fw-lo-needs" rows="2"></textarea>` : ''}
+    <label class="f" for="fw-lo-src">Source Line</label><input id="fw-lo-src" type="text" autocomplete="off" placeholder="Author, book, year, or Source unknown">
+    <label class="fw-ck" style="margin-top:8px"><input type="checkbox" id="fw-lo-keep"> Keep It in My Pieces for Other Services</label>
+    <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="lb-own">Add It to the Service</button></div></details>`;
+}
+function piecesPanel(p){
+  const L = S.lb, lead = leaders(p), chosen = inSvc(p);
+  const chip = (a, v, lab, on) => `<button type="button" class="chip fw-sm" data-fwa="${a}" data-fwv="${esc(v)}" aria-pressed="${on}"${fk(a + '|' + v)}>${esc(lab)}</button>`;
+  return `${chosen.length ? `<div class="fw-chosen" data-fwanc="pieces-in"><div class="fw-lbl">In the Service</div><ul class="fw-flist">${chosen.map(x => `<li><span><b>${esc(x.title)}</b>${x.by ? ', ' + esc(x.by) : ''}<br><small class="muted">${esc(x.part)}${x.lead ? ', led by ' + esc(x.lead) : ''}</small></span><span><button type="button" class="linkbtn" data-fwa="lb-rm" data-fwv="${esc(lbKey(x.kind, x.id))}">Take Out</button></span></li>`).join('')}</ul></div>` : ''}
+    <div class="fw-chips fw-lbt" role="group" aria-label="Type">${LBT.map(([v, l]) => `<button type="button" class="chip" data-fwa="lb-type" data-fwv="${v}" aria-pressed="${L.type === v}"${fk('lt|' + v)}>${esc(l)}</button>`).join('')}</div>
+    <div class="fw-lbf"><div class="fw-fld"><label class="f" for="fw-lbq">Search</label><input id="fw-lbq" type="search" data-fwlq="1" value="${esc(L.q)}" placeholder="A word, a title, a name, or a verse" autocomplete="off"></div>
+      <div class="fw-fld"><label class="f" for="fw-lbtag">Tag</label><select id="fw-lbtag" data-fwlt="1"><option value="">Any tag</option>${lbTags(p).map(t => `<option value="${esc(t)}"${t === L.tag ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></div></div>
+    <div class="fw-who"><span class="fw-lbl">Faith or plain</span>${[['all', 'All'], ['faith', 'Faith'], ['plain', 'Plain']].map(([v, l]) => chip('lb-faith', v, l, L.faith === v)).join('')}${chip('lb-mine', '1', 'My Pieces Only', L.mine)}</div>
+    <div class="fw-who"><span class="fw-lbl">Moment</span>${[['all', 'Any']].concat(MOMS).map(([v, l]) => chip('lb-mom', v, l, L.moment === v)).join('')}</div>
+    <div class="fw-place"><div class="fw-who" style="margin-top:0"><span class="fw-lbl">Add it at</span>${[['best', 'Best Fit']].concat(MOMS).map(([v, l]) => chip('lb-place', v, l, L.place === v)).join('')}</div>
+      <div class="fw-fld" style="max-width:340px"><label class="f" for="fw-lbby">Who leads</label><input id="fw-lbby" type="text" list="fw-lbleaders" data-fwlby="1" value="${esc(L.by)}" placeholder="${esc(me())}" autocomplete="off"><datalist id="fw-lbleaders">${lead.map(l => `<option value="${esc(l)}">`).join('')}</datalist></div></div>
+    <div class="fw-lbl-list" id="fw-lb-list">${lbRows(p)}</div>
+    ${lbOwnForm(p)}
+    <div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-fwa="lb-mypieces">Open My Pieces</button></div>`;
+}
 
 V[5] = p => sayBox(p, STEP(5).say) +
   blk(p, 'Order of Service', 'order', svcBlock(p), STEP(5).sub) +
+  blk(p, 'Readings, Music, and Rituals', 'pieces', piecesPanel(p), 'Browse together, preview the words, and add any piece to the service in one tap. It goes to the right moment in the order.') +
   blk(p, list('honors').title || 'Honors', 'honors', chips(p, 'honors') + addOwn('honors', 'Another honor') + who(p, 'honors')) +
   custom(p, 'service') + note(p, 'service');
 
@@ -499,7 +783,7 @@ function gLine(p, g){ const d = p.gd[g.id] || {}; return [short(d.date), tm(d.ti
 function order(p){ return hasSvc(p) ? CER().words(p.svc) : []; }
 function lifeLine(p){ const b = parseDay(p.person.born), d = parseDay(p.person.died); return [b ? nice(b) : p.person.born, d ? nice(d) : p.person.died].filter(Boolean).join(' to '); }
 function summary(p){
-  const fs = (h, x) => `<div class="fw-fsec"><h3>${esc(h)}</h3>${x}</div>`, ul = a => `<ul class="fw-flist">${a.join('')}</ul>`, li = (a, b) => `<li><span>${a}</span><span>${b || ''}</span></li>`;
+  const fs = (h, x) => `<div class="fw-fsec" data-fwanc="sum-${esc(h.toLowerCase().replace(/[^a-z]+/g, '-'))}"><h3>${esc(h)}</h3>${x}</div>`, ul = a => `<ul class="fw-flist">${a.join('')}</ul>`, li = (a, b) => `<li><span>${a}</span><span>${b || ''}</span></li>`;
   const o = order(p), fw = picked(p, 'faithway').concat(picked(p, 'tradition'));
   return fs('Remembering', `<p class="fw-big">${esc(p.person.full || called(p) || 'Name to come')}${called(p) && p.person.full ? `<br>"${esc(called(p))}"` : ''}${lifeLine(p) ? `<br><span class="fw-soft">${esc(lifeLine(p))}</span>` : ''}</p>`) +
     (fw.length ? fs('The Service Will Be', `<p class="fw-big">${esc(fw.join(', '))}</p>`) : '') +
@@ -510,6 +794,8 @@ function summary(p){
     (picked(p, 'customs').length ? fs('Customs to Honor', `<p class="fw-big">${esc(picked(p, 'customs').join(', '))}</p>`) : '') +
     (p.reh.date || p.reh.place ? fs('Rehearsal', `<p class="fw-big">${esc([nice(p.reh.date), tm(p.reh.time)].filter(Boolean).join(', '))}${p.reh.place ? `<br><span class="fw-soft">${esc(p.reh.place)}</span>` : ''}</p>`) : '');
 }
+// Who sends the obituary: the person tagged on the Obituary, else the one on the "Obituary to the paper" task, else the family.
+function obWho(p){ const t = p.tasks.find(x => x.id === 'obituary'); return p.tags.obit || (t && t.who) || 'Family'; }
 function famText(p){
   const o = order(p), out = [fill(cfg().familyCopyLead, p), '', 'REMEMBERING', (p.person.full || called(p)) + (called(p) && p.person.full ? ' ("' + called(p) + '")' : ''), lifeLine(p)];
   const fw = picked(p, 'faithway').concat(picked(p, 'tradition')); if (fw.length) out.push('', 'THE SERVICE WILL BE', fw.join(', '));
@@ -519,25 +805,41 @@ function famText(p){
   if (picked(p, 'honors').length) out.push('', 'HONORS', picked(p, 'honors').join(', '));
   if (p.reh.date || p.reh.place) out.push('', 'REHEARSAL', [nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '));
   const nx = p.next.filter(x => !x.done); if (nx.length) out.push('', 'NEXT STEPS', ...nx.map(x => '* ' + x.t));
+  const ob = obitText(p); if (ob) out.push('', 'THE OBITUARY: ' + ob.name.toUpperCase(), ob.text);
   out.push('', 'With you,', me());
   return out.filter((x, i, a) => !(x === '' && a[i - 1] === '')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 // ---------- Family View (its own window, or here to tilt the laptop) ----------
 const fChips = (p, id) => `<div class="fw-fchips">${items(p, id).map(o => `<span class="fw-fchip${isOn(p, id, o.id) ? ' on' : ''}">${isOn(p, id, o.id) ? '&#10003; ' : ''}${esc(fill(o.t, p))}</span>`).join('')}</div>`;
-const fsec = (h, x) => `<div class="fw-fsec"><h3>${esc(h)}</h3>${x}</div>`;
+const fsec = (h, x, k) => `<div class="fw-fsec"${k ? ` data-fwanc="${esc(k)}"` : ''}><h3>${esc(h)}</h3>${x}</div>`;
 const FV = {};
-FV[1] = p => fsec(list('who').title || 'Who Is Here', fChips(p, 'who')) + fsec('Remembering', `<p class="fw-big">${esc(p.person.full || called(p) || '')}${called(p) && p.person.full ? `<br>"${esc(called(p))}"` : ''}${lifeLine(p) ? `<br><span class="fw-soft">${esc(lifeLine(p))}</span>` : ''}</p>`);
-FV[2] = p => fsec('Their Story', fChips(p, 'story')) + fsec('The Eulogy', fChips(p, 'eulogy')) + (p.speakers.length ? fsec('Family Speakers', `<ul class="fw-flist">${p.speakers.map(s => `<li><span>${esc(s.name)}</span><span>${+s.min || 0} min</span></li>`).join('')}</ul>`) : '');
-FV[3] = p => fsec('Faith or Plain', fChips(p, 'faithway')) + fsec('Tradition', fChips(p, 'tradition')) + fsec('Customs to Honor', fChips(p, 'customs'));
-FV[4] = p => fsec('Gatherings', fChips(p, 'gatherings')) + (gSel(p).length ? fsec('When and Where', `<ul class="fw-flist">${gSel(p).map(g => `<li><span>${esc(g.t)}</span><span>${esc(gLine(p, g))}</span></li>`).join('')}</ul>`) : '');
-FV[5] = p => { const o = order(p); return (o.length ? fsec('Order of Service', `<ul class="fw-flist">${o.map(r => `<li><span>${esc(r.name)}${r.rd.length ? ': <em>' + esc(r.rd.map(x => x.head).join('; ')) + '</em>' : ''}</span><span>${r.mins} min</span></li>`).join('')}<li><span><b>About</b></span><span><b>${svcTotal(p)} min</b></span></li></ul>`) : fsec('Order of Service', '<p class="fw-big fw-soft">Coming together now.</p>')) + fsec('Honors', fChips(p, 'honors')); };
-FV[6] = p => fsec('Getting Ready', `<ul class="fw-flist">${p.tasks.map(k => `<li><span>${k.done ? '&#10003; ' : ''}${esc(k.t)}</span><span>${k.done ? 'Done' : ''}</span></li>`).join('')}</ul>`) + (p.reh.date ? fsec('Rehearsal', `<p class="fw-big">${esc([nice(p.reh.date), tm(p.reh.time)].filter(Boolean).join(', '))}</p>`) : '');
+FV[1] = p => fsec(list('who').title || 'Who Is Here', fChips(p, 'who'), 'who') + fsec('Remembering', `<p class="fw-big">${esc(p.person.full || called(p) || '')}${called(p) && p.person.full ? `<br>"${esc(called(p))}"` : ''}${lifeLine(p) ? `<br><span class="fw-soft">${esc(lifeLine(p))}</span>` : ''}</p>`, 'name');
+FV[2] = p => fsec('Their Story', fChips(p, 'story'), 'story') + fsec('The Eulogy', fChips(p, 'eulogy') + (String(p.eDraft || '').trim() ? `<p class="fw-soft" style="margin-top:8px">${esc(readTime(p.eDraft))}</p>` : ''), 'eulogy') + (obitText(p) ? fsec('The Obituary', `<p class="fw-big">${esc(obitText(p).name)}, ready to read together</p>`, 'obit') : '') + (p.speakers.length ? fsec('Family Speakers', `<ul class="fw-flist">${p.speakers.map(s => `<li><span>${esc(s.name)}</span><span>${+s.min || 0} min</span></li>`).join('')}</ul>`, 'speakers') : '');
+FV[3] = p => fsec('Faith or Plain', fChips(p, 'faithway'), 'faithway') + fsec('Tradition', fChips(p, 'tradition'), 'tradition') + fsec('Customs to Honor', fChips(p, 'customs'), 'customs');
+FV[4] = p => fsec('Gatherings', fChips(p, 'gatherings'), 'gatherings') + gSel(p).map(g => fsec(g.t, `<p class="fw-big">${esc(gLine(p, g) || 'Date and place to come')}</p>`, 'g-' + g.id)).join('');
+FV[5] = p => { const o = order(p), ch = inSvc(p), L = lbList(p).slice(0, 12), op = S.lb.open;
+  const openX = op ? lbAll(p).find(({k, x}) => lbKey(k, x.id) === op) : null;
+  return (o.length ? fsec('Order of Service', `<ul class="fw-flist">${o.map(r => `<li><span>${esc(r.name)}${r.rd.length ? ': <em>' + esc(r.rd.map(x => x.head).join('; ')) + '</em>' : ''}</span><span>${r.mins} min</span></li>`).join('')}<li><span><b>About</b></span><span><b>${svcTotal(p)} min</b></span></li></ul>`, 'order') : fsec('Order of Service', '<p class="fw-big fw-soft">Coming together now.</p>', 'order')) + fsec('Honors', fChips(p, 'honors'), 'honors') +
+    fsec('Readings, Music, and Rituals', (ch.length ? `<ul class="fw-flist">${ch.map(x => `<li><span>&#10003; <b>${esc(x.title)}</b>${x.by ? ', ' + esc(x.by) : ''}</span><span>${esc(x.part)}</span></li>`).join('')}</ul>` : '<p class="fw-big fw-soft">Nothing chosen yet.</p>') +
+      `<h3 style="margin-top:16px">${esc((LBT.find(t => t[0] === S.lb.type) || ['', ''])[1])} to Choose From</h3><ul class="fw-flist">${L.map(({k, x}) => `<li class="${S.lb.open === lbKey(k, x.id) ? 'fw-cur' : ''}"><span><b>${esc(rTitle(x))}</b>${x.by && k !== 'reading' ? '<br><span class="fw-soft">' + esc(x.by) + '</span>' : x.by ? ', ' + esc(x.by) : ''}</span><span>${ch.some(c => c.kind === k && c.id === x.id) ? '&#10003; Chosen' : ''}</span></li>`).join('')}</ul>`, 'pieces') +
+    (openX ? fsec(rTitle(openX.x), lbPrev(p, openX.k, openX.x), 'lb-' + openX.x.id) : ''); };
+FV[6] = p => fsec('Getting Ready', `<ul class="fw-flist">${p.tasks.map(k => `<li><span>${k.done ? '&#10003; ' : ''}${esc(k.t)}</span><span>${k.done ? 'Done' : ''}</span></li>`).join('')}</ul>`, 'tasks') + (p.reh.date ? fsec('Rehearsal', `<p class="fw-big">${esc([nice(p.reh.date), tm(p.reh.time)].filter(Boolean).join(', '))}</p>`, 'reh') : '');
 FV[7] = p => summary(p);
 FV[8] = p => fsec("What You'll Receive", `<ul class="fw-flist">${cfg().outputs.map(o => `<li><span>${esc(o.title)}</span><span></span></li>`).join('')}</ul>`);
 FV[9] = p => fsec('Staying in Touch This Year', `<ul class="fw-flist">${touches(p).filter(t => !t.own).map(t => `<li><span>${esc(t.title)}</span><span>${esc(short(t.date))}</span></li>`).join('')}</ul>`);
+// The helpers in the Family View: the prompts large, with what has been said so far, so the family can answer together.
+function famHelper(p, k){
+  const H = k === 'eulogy' ? EU : OB, n = k === 'eulogy' ? S.eSec : S.oSec, a = k === 'eulogy' ? euA(p) : obS(p).a, base = k === 'eulogy' ? 'eu' : 'ob';
+  if (n < H.secs.length){ const sec = H.secs[n];
+    return `<p class="fw-fsub">${esc(k === 'eulogy' ? 'The Eulogy' : 'The Obituary')} &middot; Part ${n + 1} of ${H.secs.length + 1}</p><h2>${esc(sec.title)}</h2>${sec.sub ? `<p class="fw-soft" style="font-size:.8em;margin:0 0 14px">${esc(sec.sub)}</p>` : ''}` +
+      sec.qs.map(q => fsec(fillQ(p, q.l), `${q.h ? `<p class="fw-soft" style="margin:0 0 8px">${esc(fillQ(p, q.h))}</p>` : ''}<p class="fw-big fw-ans">${clean(a[q.id]) ? esc(a[q.id]).replace(/\n/g, '<br>') : '<span class="fw-soft">&hellip;</span>'}</p>`, base + '-' + q.id)).join(''); }
+  if (k === 'eulogy') return `<p class="fw-fsub">The Eulogy</p><h2>The Draft</h2>` + fsec(String(p.eDraft || '').trim() ? readTime(p.eDraft) : 'Coming together now', `<div class="fw-read">${paras(p.eDraft || '')}</div>`, 'eu-draft');
+  const o = obS(p); return `<p class="fw-fsub">The Obituary</p><h2>The Drafts</h2>` + OB.shapes.map(sh => fsec(sh.name, String(o.d[sh.id] || '').trim() ? `<div class="fw-read">${paras(o.d[sh.id])}</div>` : '<p class="fw-big fw-soft">Coming together now.</p>', 'ob-' + sh.id)).join('');
+}
 function famBody(p){
   const n = typeof S.step === 'number' ? S.step : 7, st = STEP(n);
+  if (n === 2 && S.sub) return `<div class="fw-fam"><p class="fw-fsub">For ${esc(pName(p))}</p>${famHelper(p, S.sub)}</div>`;
   return `<div class="fw-fam"><p class="fw-fsub">For ${esc(pName(p))}</p><h2>${esc(st.title)}</h2>${FV[n](p)}</div>`;
 }
 const FCSS = `:root{--bg:#F6F0E4;--card:#FFFCF6;--ink:#2A1C12;--soft:#6B5A4D;--line:#DDD0B8;--gold:#8B5E1A;--on:#2E2118;--onink:#F4EBDA;}
@@ -554,6 +856,10 @@ main{max-width:980px;margin:0 auto;padding:36px 28px 60px;}
 .fw-flist li span:last-child{color:var(--soft);text-align:right;white-space:nowrap;}
 .fw-big{font-size:1.2em;margin:0;}.fw-soft{color:var(--soft);font-size:.8em;}
 .fw-top{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--soft);font-size:.7em;border-bottom:1px solid var(--line);padding:10px 28px;}
+.fw-fsec h3 + .fw-flist{margin-top:0;}.fw-read{white-space:pre-wrap;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.15em;line-height:1.5;}.fw-read p{margin:0 0 .7em;}
+.fw-prev p{margin:.2em 0 .5em;}.fw-prev ol,.fw-prev ul{margin:.2em 0 .6em;padding-left:1.2em;}.fw-src{font-style:italic;color:var(--soft);font-size:.75em;}.fw-lbl{font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--soft);font-size:.65em;margin-top:.6em;}
+.fw-flist li.fw-cur{background:color-mix(in srgb,var(--gold) 16%,transparent);border-radius:10px;padding-left:10px;padding-right:10px;}.fw-ans{overflow-wrap:anywhere;}.fw-words{white-space:pre-wrap;}
+.fw-top label{display:flex;gap:6px;align-items:center;}
 @media(max-width:600px){body{font-size:18px;}main{padding:20px 16px 40px;}.fw-flist li{flex-wrap:wrap;}.fw-flist li span:last-child{white-space:normal;}}`;
 let famWin = null, famT = null;
 function famPage(p){
@@ -566,18 +872,45 @@ function openFam(){
   if (!w){ toast('Your browser kept the window from opening. Showing the Family View here instead.'); S.mode = 'family'; rerender(); return; }
   famWin = w;
   try { if (!w.document.getElementById('fv')){ w.document.open(); w.document.write(famPage(p)); w.document.close(); } else pushFam(true); w.focus(); } catch (e) {}
-  API.famWin = w;
+  API.famWin = w; setTimeout(syncFam, 120);
 }
 function pushFam(now){
   clearTimeout(famT);
-  const go = () => { const p = plan(); if (!p || !famWin || famWin.closed) return; try { const el = famWin.document.getElementById('fv'); if (el) el.innerHTML = famBody(p); } catch (e) {} };
+  const go = () => { const p = plan(); if (!p || !famWin || famWin.closed) return; try { const el = famWin.document.getElementById('fv'); if (el){ el.innerHTML = famBody(p); syncFam(); } } catch (e) {} };
   if (now) go(); else famT = setTimeout(go, 200);
 }
+// Follow My Scroll (GWG BLD 768): the family window follows this window's place by section, so it lines up even though
+// the Family View is larger. The section at the top of this window is found in the family window, at the same share of the way through it.
+function syncFam(){
+  if (!S.follow || !famWin || famWin.closed || !S.on || !S.id) return;
+  let fd, fw = famWin; try { fd = fw.document; if (!fd || !fd.getElementById('fv')) return; } catch (e){ return; }
+  const main = document.getElementById('fw-main'); if (!main) return;
+  const de = document.documentElement, top = ((document.querySelector('header.bar') || {}).offsetHeight || 0) + 12;
+  const fmax = Math.max(0, fd.documentElement.scrollHeight - fw.innerHeight), myMax = Math.max(0, de.scrollHeight - window.innerHeight);
+  const F = {}; fd.querySelectorAll('[data-fwanc]').forEach(el => { if (!F[el.dataset.fwanc]) F[el.dataset.fwanc] = el; });
+  const A = [...main.querySelectorAll('[data-fwanc]')];
+  let i = -1; A.forEach((a, j) => { if (a.getBoundingClientRect().top <= top) i = j; });
+  let target = null;
+  for (let j = i; j >= 0; j--){ const a = A[j], f = F[a.dataset.fwanc]; if (!f) continue;
+    const r = a.getBoundingClientRect(), frac = Math.max(0, Math.min(1, (top - r.top) / Math.max(1, r.height)));
+    target = f.getBoundingClientRect().top + fw.scrollY + frac * f.offsetHeight - 16; break; }
+  if (target == null) target = myMax ? window.scrollY / myMax * fmax : 0;
+  if (window.scrollY <= 2) target = 0; else if (myMax && window.scrollY >= myMax - 2) target = fmax;
+  target = Math.max(0, Math.min(fmax, Math.round(target)));
+  try { fw.scrollTo(0, target); } catch (e) {}
+  API.lastSync = {target, i, key: i >= 0 ? A[i].dataset.fwanc : null};
+}
+let syncRaf = 0;
+window.addEventListener('scroll', () => { if (!famWin || famWin.closed || !S.follow) return; if (syncRaf) return; syncRaf = requestAnimationFrame(() => { syncRaf = 0; syncFam(); }); }, {passive: true});
 
 // ---------- Phone Mode ----------
 function vPhone(p){
   const n = typeof S.step === 'number' ? S.step : 1, L = arr(STEP(n).phoneLines);
+  if (n === 2 && S.sub){ const H = S.sub === 'eulogy' ? EU : OB, i = S.sub === 'eulogy' ? S.eSec : S.oSec, sec = H.secs[i];
+    return `<div class="fw-phone"><div class="fw-ph-h"><span aria-hidden="true">&#9742;</span> Read each question aloud and type what they say in ${esc(me())}'s View.</div>${sec ? `<h3>${esc(sec.title)}</h3><ol>${sec.qs.map(q => `<li><h3>${esc(fillQ(p, q.l))}</h3><p>${esc(fillQ(p, q.h || ''))}</p></li>`).join('')}</ol>` : `<p>${esc(S.sub === 'eulogy' ? 'Read the draft aloud slowly, and ask what they would change.' : 'Read the newspaper draft aloud slowly, and check every name and date.')}</p>`}</div>`; }
+  const pick = n === 5 ? lbList(p).slice(0, 8) : [];
   return `<div class="fw-phone"><div class="fw-ph-h"><span aria-hidden="true">&#9742;</span> Read aloud, one at a time. Pause after each.</div><ol>${L.map(x => `<li><h3>${esc(fill(x[0], p))}</h3><p>${esc(fill(x[1], p, {Minutes: svcTotal(p) || 'thirty to forty'}))}</p></li>`).join('')}</ol>
+    ${pick.length ? `<h3 style="margin-top:6px">${esc((LBT.find(t => t[0] === S.lb.type) || ['', ''])[1])} to Read Aloud</h3><p class="fw-sub">A few choices with a short line each. Change the list in ${esc(me())}'s View.</p><ol>${pick.map(({k, x}) => `<li><h3>${esc(rTitle(x))}${x.by && x.kind !== 'scripture' ? ', ' + esc(x.by) : ''}</h3><p>${esc(snip(k === 'reading' ? (x.about && x.kind === 'scripture' ? x.about : (x.bring ? 'Text not included; we would bring a copy.' : rBody(x, 'kjv').text)) : x.about, 140))}</p></li>`).join('')}</ol>` : ''}
     ${n === 9 ? `<div class="fw-crisis">${esc(cfg().crisis)}</div>` : ''}</div>`;
 }
 
@@ -614,7 +947,7 @@ function outHTML(p, k){
   }
   if (k === 'family'){
     const sec = (h, x) => x ? `<div class="fw-ps"><h3>${H(h)}</h3>${x}</div>` : '', ln = a => a.filter(Boolean).map(x => `<p>${x}</p>`).join('');
-    const fw = picked(p, 'faithway').concat(picked(p, 'tradition')), nx = p.next.filter(x => !x.done);
+    const fw = picked(p, 'faithway').concat(picked(p, 'tradition')), nx = p.next.filter(x => !x.done), ob = obitText(p);
     return [`<h1>${H(pName(p))}'s Farewell</h1><p><i>${H(fill(cfg().familyCopyLead, p))}</i></p><div class="fw-2c">` +
       sec('Remembering', ln([H((p.person.full || called(p)) + (called(p) && p.person.full ? ' ("' + called(p) + '")' : '')), H(lifeLine(p))])) +
       sec('The Service Will Be', fw.length ? ln([H(fw.join(', '))]) : '') +
@@ -624,12 +957,14 @@ function outHTML(p, k){
       sec('Honors', ln([H(picked(p, 'honors').join(', '))])) + sec('Customs to Honor', ln([H(picked(p, 'customs').join(', '))])) +
       sec('Rehearsal', (p.reh.date || p.reh.place) ? ln([H([nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '))]) : '') +
       sec('Next Steps', nx.length ? `<ul>${nx.map(x => `<li>${H(x.t)}</li>`).join('')}</ul>` : '') +
-      `</div><p>With you,<br>${H(me())}</p>`, 'Family Copy', 'family-copy'];
+      `</div>` + (ob ? `<div class="fw-ps" style="margin-top:3mm"><h3>The Obituary: ${H(ob.name)}</h3><p style="font-size:9pt;font-style:italic">${H(obWho(p))} sends this to the funeral home. Read it aloud together first and check every name and date.</p>${paras(ob.text)}</div>` : '') + `<p>With you,<br>${H(me())}</p>`, 'Family Copy', 'family-copy'];
   }
   if (k === 'helpers'){
     const by = {}; p.tasks.forEach(t => { const w = t.who || 'Not yet assigned'; (by[w] = by[w] || []).push((t.done ? '[x] ' : '[ ] ') + t.t + (t.d ? ': ' + t.d : '')); });
     gSel(p).forEach(g => { const w = p.tags['g-' + g.id]; if (w) (by[w] = by[w] || []).push('[ ] ' + g.t + (gLine(p, g) ? ': ' + gLine(p, g) : '')); });
-    [['eulogy', 'The eulogy'], ['obit', 'The obituary'], ['honors', 'Honors: ' + picked(p, 'honors').join(', ')], ['clergy', 'Other clergy']].forEach(([key, t]) => { const w = p.tags[key]; if (w) (by[w] = by[w] || []).push('[ ] ' + t); });
+    const ob = obitText(p);
+    [['eulogy', 'The eulogy'], ['obit', ob ? '' : 'The obituary'], ['honors', 'Honors: ' + picked(p, 'honors').join(', ')], ['clergy', 'Other clergy']].forEach(([key, t]) => { const w = p.tags[key]; if (w && t) (by[w] = by[w] || []).push('[ ] ' + t); });
+    if (ob){ const w = obWho(p); (by[w] = by[w] || []).push('[ ] The obituary to the funeral home: the ' + ob.name + ', about ' + wordsIn(ob.text) + ' words (the full text is in the Family Copy)'); }
     return [`<h1>Helpers' Checklist</h1><p>${H(headLine(p))}</p>` + `<div class="fw-2c">${Object.keys(by).map(w => `<div class="fw-ps"><h3>${H(w)}</h3><ul>${by[w].map(x => `<li>${H(x)}</li>`).join('')}</ul></div>`).join('')}</div>`, "Helpers' Checklist", 'helpers-checklist'];
   }
   if (k === 'other'){
@@ -656,7 +991,7 @@ function sesGuides(p){
   const when = g => [nice(g.date), tm(g.time), g.place].filter(Boolean).join(', ');
   gSel(p).forEach(g0 => { const g = Object.assign({}, g0, p.gd[g0.id] || {});
     if (g.main && hasSvc(p)){
-      const W = CER().words(p.svc), ed = (p.eDraft || '').trim();
+      const W = CER().words(p.svc), ed = eulogyText(p);
       const steps = W.map(r => { let say = splitSay(r.words); r.rd.forEach(x => { say = say.concat([x.head], splitSay(x.text)); });
         if (ed && /eulogy|life story|the life/i.test(r.name)) say = say.concat(splitSay(ed));
         return {t: r.name, m: r.mins, by: r.by, say, do: r.dos.concat(r.note ? ['Notes: ' + r.note] : [])}; });
@@ -808,6 +1143,32 @@ const CSS = `
 .fw-list-r{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding:12px 0;}.fw-list-r:first-child{border-top:0;}
 .fw-list-r .m{min-width:0;flex:1 1 220px;}.fw-list-r b{overflow-wrap:anywhere;}
 .fw-home .fw-list-r{padding:8px 0;}
+/* BLD 768: the helpers in the session, Readings, Music, and Rituals, Follow My Scroll */
+.fw-helper{margin-top:12px;border:1.5px solid var(--gold);border-radius:14px;padding:12px 14px;background:var(--bg);}
+.fw-secnav{margin:4px 0 10px;}.fw-secnav .chip{min-height:44px;font-size:calc(16px * var(--scale));}.fw-n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;font-size:12px;margin-right:4px;}
+.fw-q textarea{min-height:90px;font-size:calc(18px * var(--scale));}.fw-q input{font-size:calc(18px * var(--scale));}
+.fw-bigta{min-height:300px;font-size:calc(18px * var(--scale));line-height:1.5;}
+.fw-ref{margin:8px 0 0;padding-left:20px;}.fw-ref li{margin:0 0 6px;overflow-wrap:anywhere;}
+.fw-lbt{margin-bottom:6px;}.fw-lbt .chip{min-height:44px;}
+.fw-lbf{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:0 12px;}@media(max-width:700px){.fw-lbf{grid-template-columns:minmax(0,1fr);}}
+.fw-lbf select{width:100%;}
+.fw-place{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--bg-deep);}
+.fw-lbl-list{margin-top:12px;}
+.fw-lbr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:start;border-top:1px solid var(--line);padding:10px 0;}.fw-lbr:first-child{border-top:0;}
+.fw-lbr.on .fw-lbm b{color:var(--gold);}
+.fw-lbm{min-width:0;}.fw-lbm b{overflow-wrap:anywhere;font-size:calc(17px * var(--scale));}.fw-lbm small{color:var(--ink-soft);font-size:14px;overflow-wrap:anywhere;}
+.fw-lbb{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+@media(max-width:560px){.fw-lbr{grid-template-columns:minmax(0,1fr);}.fw-lbb{justify-content:flex-start;}}
+.fw-prev{grid-column:1 / -1;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0;}
+.fw-prev ol,.fw-prev ul{margin:4px 0 8px;padding-left:20px;}.fw-prev p{margin:2px 0 8px;overflow-wrap:anywhere;}
+.fw-read{white-space:pre-wrap;font-family:'Cormorant Garamond',Georgia,serif;font-size:calc(19px * var(--scale));line-height:1.5;overflow-wrap:anywhere;}
+.fw-src{font-style:italic;color:var(--ink-soft);font-size:14px;overflow-wrap:anywhere;}
+.fw-note2{background:color-mix(in srgb,var(--gold) 12%,transparent);border-radius:8px;padding:8px 10px;}
+.fw-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:12px;background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);vertical-align:middle;}
+.fw-tag.on{background:var(--gold);color:var(--card);}
+.fw-chosen{margin-bottom:12px;padding:10px 12px;border-radius:12px;background:var(--bg-deep);}.fw-chosen .fw-flist li span:first-child{min-width:0;overflow-wrap:anywhere;}.fw-chosen .fw-flist li span:last-child{white-space:nowrap;}
+.fw-flist li.fw-cur{background:color-mix(in srgb,var(--gold) 16%,transparent);border-radius:10px;padding-left:10px;padding-right:10px;}
+.fw-fam .fw-prev{background:var(--card);}.fw-ans{overflow-wrap:anywhere;}
 .fw-scan{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);display:grid;place-items:center;padding:16px;}
 .fw-scan-in{background:var(--card);border-radius:16px;padding:14px;max-width:420px;width:100%;text-align:center;}.fw-scan video{width:100%;border-radius:10px;background:#000;}
 `;
@@ -830,16 +1191,18 @@ function vPlan(p){
   if (n === 'tidy') body = vTidy(p);
   else if (mode === 'family') body = `<div class="fw-famwrap">${famBody(p)}</div>`;
   else if (mode === 'phone') body = vPhone(p);
+  else if (n === 2 && S.sub === 'eulogy') body = vEu(p);
+  else if (n === 2 && S.sub === 'obit') body = vOb(p);
   else body = V[n](p);
   return `<button type="button" class="linkbtn" data-fwa="plans">&larr; All Farewell Plans</button>
   <div class="fw-head"><div style="min-width:0"><div class="eyebrow">Farewell Planning Session</div><h1>${esc(pTitle(p))}</h1>${lifeLine(p) ? `<p class="muted">${esc(lifeLine(p))}</p>` : ''}${p.cli && window.GGCli ? GGCli.link(p.cli) : ''}</div>
-    <div class="fw-modes" role="group" aria-label="View">${[['chris', me() + "'s View"], ['family', 'Family View Here'], ['phone', 'Phone Mode']].map(([k, l]) => `<button type="button" class="chip" data-fwa="mode" data-fwv="${k}" aria-pressed="${mode === k}"${fk('md|' + k)}>${esc(l)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-fwa="famwin">Open Family View Window</button></div></div>
+    <div class="fw-modes" role="group" aria-label="View">${[['chris', me() + "'s View"], ['family', 'Family View Here'], ['phone', 'Phone Mode']].map(([k, l]) => `<button type="button" class="chip" data-fwa="mode" data-fwv="${k}" aria-pressed="${mode === k}"${fk('md|' + k)}>${esc(l)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-fwa="famwin">Open Family View Window</button><button type="button" class="chip" data-fwa="follow" aria-pressed="${!!S.follow}"${fk('fl')} title="The Family View Window follows your place on the page">Follow My Scroll</button></div></div>
   <div class="fw-lay"><nav class="fw-rail" aria-label="Steps">${rail(p)}</nav>
-  <div id="fw-main" style="min-width:0"><div class="fw-kick">${typeof n === 'number' ? 'Step ' + n + ' of ' + CNT : 'After the Meeting'}${mode === 'family' && n !== 'tidy' ? ' &middot; Family View' : mode === 'phone' && n !== 'tidy' ? ' &middot; Phone Mode' : ''}</div><h2 style="margin:2px 0 6px">${esc(st.title)}</h2>
+  <div id="fw-main" style="min-width:0"><div class="fw-kick">${typeof n === 'number' ? 'Step ' + n + ' of ' + CNT : 'After the Meeting'}${n === 2 && S.sub ? ' &middot; ' + (S.sub === 'eulogy' ? 'Eulogy Helper' : 'Obituary Helper') : ''}${mode === 'family' && n !== 'tidy' ? ' &middot; Family View' : mode === 'phone' && n !== 'tidy' ? ' &middot; Phone Mode' : ''}</div><h2 style="margin:2px 0 6px">${esc(n === 2 && S.sub ? (S.sub === 'eulogy' ? 'The Eulogy' : 'The Obituary') : st.title)}</h2>
     ${mode === 'family' && n !== 'tidy' ? '<p class="fw-sub">This is what the family sees. For a call, open the Family View Window and share that window by itself on Zoom, Teams, or FaceTime. It follows your taps.</p>' : ''}
     ${body}
     <div class="fw-cbt mob" style="margin-top:16px">${cbt(p)}</div>
-    <div class="fw-nav"><button type="button" class="btn btn-line" data-fwa="nav" data-fwv="-1"${n === 1 ? ' disabled' : ''}${fk('nb')}>&larr; Back</button><button type="button" class="btn btn-gold" data-fwa="nav" data-fwv="1"${n === 'tidy' ? ' disabled' : ''}${fk('nn')}>${n === CNT ? 'Tidy Up' : 'Next'} &rarr;</button></div></div></div>`;
+    ${n === 2 && S.sub && mode === 'chris' ? '' : `<div class="fw-nav"><button type="button" class="btn btn-line" data-fwa="nav" data-fwv="-1"${n === 1 ? ' disabled' : ''}${fk('nb')}>&larr; Back</button><button type="button" class="btn btn-gold" data-fwa="nav" data-fwv="1"${n === 'tidy' ? ' disabled' : ''}${fk('nn')}>${n === CNT ? 'Tidy Up' : 'Next'} &rarr;</button></div>`}</div></div>`;
 }
 function vList(){
   const L = plans().slice().sort((a, b) => (b.u || 0) - (a.u || 0)), due = dueSoon();
@@ -862,8 +1225,8 @@ function rerender(keepScroll){
   if (k){ const el = document.querySelector('#fw-root [data-fk="' + (window.CSS && CSS.escape ? CSS.escape(k) : k) + '"]'); if (el) try { el.focus({preventScroll: true}); } catch (e) {} }
   pushFam();
 }
-function goStep(n){ S.step = n; S.other = null; rerender(false); const m = document.getElementById('fw-main'); if (m && window.matchMedia && matchMedia('(max-width: 900px)').matches){ const c = document.querySelector('.fw-rail [aria-current="step"]'); if (c && c.scrollIntoView) c.scrollIntoView({block: 'nearest', inline: 'center'}); } }
-function openPlan(id, step){ S.on = true; S.id = id; S.step = step || 1; S.mode = 'chris'; S.other = null; S.qr = null; if (C.go) C.go('ceremonies'); }
+function goStep(n){ S.step = n; S.other = null; S.sub = null; rerender(false); const m = document.getElementById('fw-main'); if (m && window.matchMedia && matchMedia('(max-width: 900px)').matches){ const c = document.querySelector('.fw-rail [aria-current="step"]'); if (c && c.scrollIntoView) c.scrollIntoView({block: 'nearest', inline: 'center'}); } }
+function openPlan(id, step){ S.on = true; S.id = id; S.step = step || 1; S.mode = 'chris'; S.other = null; S.qr = null; S.sub = null; S.eSec = 0; S.oSec = 0; S.lb.open = null; if (C.go) C.go('ceremonies'); }
 
 // ---------- actions ----------
 function setPath(o, path, v){
@@ -871,10 +1234,15 @@ function setPath(o, path, v){
   for (let i = 0; i < ks.length - 1; i++){ const k = ks[i]; if (x[k] == null) x[k] = /^\d+$/.test(ks[i + 1]) ? [] : {}; x = x[k]; }
   x[ks[ks.length - 1]] = v;
 }
-function buildDraft(p){
-  const its = items(p, 'story'), parts = its.map(it => (p.story[it.id] || '').trim()).filter(Boolean), P = pName(p), full = (p.person.full || '').trim();
-  const say = (p.story.saying || '').trim();
-  return [`We are here to remember ${full || P}${full && called(p) ? ', ' + called(p) + ' to so many of us' : ''}.`].concat(parts).concat([say ? `${P} used to say, ${say.replace(/^["']|["']$/g, '')}. Today we carry that with us.` : `Today we carry ${P} with us.`]).join('\n\n');
+// The helpers' and the picker's actions (GWG BLD 768).
+function ensureSvc(p){ if (hasSvc(p)) return true; const c = cerBind(); if (!c) return false; const o = svcSync(p); o.type = svcType(p); o.fwp = p.id; p.svc = c.make(o); return true; }
+function findPiece(p, key){ const i = key.indexOf('|'), k = key.slice(0, i), id = key.slice(i + 1); const c = cerBind(); return c ? {k, id, x: c.pieceOf(k, id)} : {k, id, x: null}; }
+function lbRedraw(p){ const l = document.getElementById('fw-lb-list'); if (l) l.innerHTML = lbRows(p); pushFam(); }
+function helperPrint(p, k){
+  if (k === 'eulogy'){ const d = String(p.eDraft || '').trim(); if (!d) return toast('Build the draft first.');
+    return sheet(`<style>.fw-eu p{font-size:16pt;line-height:2;margin:0 0 5mm;}</style><h1>Eulogy for ${H(clean(euA(p).name) || pName(p))}</h1><p><i>${H(readTime(d))}</i></p><div class="fw-eu">${paras(d)}</div>`, 'Eulogy', 'eulogy'); }
+  const o = obS(p), sh = OB.shapes.filter(x => String(o.d[x.id] || '').trim()); if (!sh.length) return toast('Make the drafts first.');
+  sheet(sh.map(x => `<h2>${H(x.name)}</h2>${paras(o.d[x.id])}`).join(''), 'Obituary Drafts', 'obituary-drafts');
 }
 function addOwnItem(p, id, t){
   t = String(t || '').trim(); if (!t) return false;
@@ -922,7 +1290,40 @@ function act(a, v, el){
     case 'next-del': p.next.splice(+v, 1); touch(p); rerender(true); return;
     case 'wr-del': if (!confirm('Remove this writing from the plan?')) return; p.writings.splice(+v, 1); touch(p); rerender(true); return;
     case 'wr-copy': { const w = p.writings[+v]; if (w) copyText(w.sections && w.sections.length ? w.sections.map(s => s.h + '\n\n' + s.t).join('\n\n') : w.body); return; }
-    case 'draft': if (p.eDraft && !confirm('Build the draft again from the story notes? What you wrote in the draft is replaced.')) return; p.eDraft = buildDraft(p); touch(p); rerender(true); return;
+    case 'sub': S.sub = v || null; if (v === 'eulogy' && !Object.values(euA(p)).some(x => clean(x))){ euFill(p); touch(p); } if (v === 'obit' && !Object.values(obS(p).a).some(x => clean(x))){ obFill(p); touch(p); } rerender(false); return;
+    case 'eu-sec': S.eSec = Math.max(0, Math.min(EU.secs.length, +v || 0)); if (S.eSec === EU.secs.length && !String(p.eDraft || '').trim()){ p.eDraft = euBuild(p); p.eu.built = Date.now(); touch(p); } rerender(false); return;
+    case 'ob-sec': S.oSec = Math.max(0, Math.min(OB.secs.length, +v || 0)); if (S.oSec === OB.secs.length && !OB.shapes.some(sh => String(obS(p).d[sh.id] || '').trim())){ OB.shapes.forEach(sh => { obS(p).d[sh.id] = obDraft(p, sh); }); p.ob.e = {}; touch(p); } rerender(false); return;
+    case 'eu-fill': { const n = euFill(p); touch(p); rerender(true); toast(n ? 'Filled in ' + n + (n === 1 ? ' answer' : ' answers') + ' from the story notes.' : 'Every answer the notes can give is already in.'); return; }
+    case 'ob-fill': { const n = obFill(p); touch(p); rerender(true); toast(n ? 'Filled in ' + n + (n === 1 ? ' answer' : ' answers') + ' from the plan.' : 'Every answer the plan can give is already in.'); return; }
+    case 'eu-build': if (String(p.eDraft || '').trim() && p.eu && p.eu.edited && !confirm('Build the draft again from the answers? Changes you typed into the draft are replaced.')) return; p.eDraft = euBuild(p); euA(p); p.eu.edited = false; touch(p); rerender(true); toast('The draft is ready.'); return;
+    case 'eu-copy': copyText(String(p.eDraft || ''), 'The eulogy is copied.'); return;
+    case 'eu-print': helperPrint(p, 'eulogy'); return;
+    case 'ob-make': { const o = obS(p); if (OB.shapes.some(sh => o.e[sh.id] && o.d[sh.id]) && !confirm('Make new drafts? Changes you typed into the drafts are replaced.')) return; OB.shapes.forEach(sh => { o.d[sh.id] = obDraft(p, sh); }); o.e = {}; touch(p); rerender(true); toast('The drafts are ready.'); return; }
+    case 'ob-copy': copyText(String(obS(p).d[v] || ''), 'Copied.'); return;
+    case 'ob-print': helperPrint(p, 'obit'); return;
+    case 'pron': p.person.pron = v; touch(p); rerender(true); return;
+    case 'follow': S.follow = !S.follow; rerender(true); if (S.follow) syncFam(); toast(S.follow ? 'The Family View Window follows your scroll.' : 'The Family View Window stays where it is.'); return;
+    case 'lb-type': S.lb.type = v; S.lb.tag = ''; S.lb.open = null; S.lb.more = 0; rerender(true); return;
+    case 'lb-faith': S.lb.faith = v; S.lb.more = 0; rerender(true); return;
+    case 'lb-mom': S.lb.moment = v; S.lb.more = 0; rerender(true); return;
+    case 'lb-mine': S.lb.mine = !S.lb.mine; S.lb.more = 0; rerender(true); return;
+    case 'lb-place': S.lb.place = v; rerender(true); return;
+    case 'lb-more': S.lb.more += 25; lbRedraw(p); return;
+    case 'lb-prev': S.lb.open = S.lb.open === v ? null : v; lbRedraw(p); { const b = document.querySelector(`#fw-root [data-fwa="lb-prev"][data-fwv="${window.CSS && CSS.escape ? CSS.escape(v) : v}"]`); if (b) try { b.focus({preventScroll: true}); } catch (e) {} } return;
+    case 'lb-add': { const f = findPiece(p, v); if (!f.x) return; if (!ensureSvc(p)) return toast('The Service Builder did not load. Reload the Field Guide.');
+      const r = CER().addPiece(p.svc, {kind: f.k, id: f.id, moment: S.lb.place === 'best' ? null : S.lb.place, by: S.lb.by});
+      if (!r) return toast('That piece could not be added.');
+      if (f.k === 'ritual' && arr(f.x.needs).length && !p.tasks.some(t => t.id === 'rit_' + f.id)) p.tasks.push({id: 'rit_' + f.id, t: f.x.title + ': ' + f.x.needs.join('; '), who: 'Family', done: false, d: ''});
+      touch(p); rerender(true); toast('Added to ' + r.part + '.'); return; }
+    case 'lb-rm': { const f = findPiece(p, v); if (!hasSvc(p)) return; CER().removePiece(p.svc, f.k, f.id); const i = p.tasks.findIndex(t => t.id === 'rit_' + f.id && !t.done && !t.d); if (i >= 0) p.tasks.splice(i, 1); touch(p); rerender(true); toast('Taken out of the service.'); return; }
+    case 'lb-own': { const g = id => { const e = document.getElementById(id); return e ? (e.type === 'checkbox' ? e.checked : e.value) : ''; }, t = S.lb.type, k = lbKind(t);
+      const title = String(g('fw-lo-title')).trim(); if (!title) return toast('Give it a title first.');
+      if (!ensureSvc(p)) return; const c = CER();
+      const m = {kind: k === 'reading' ? t : k, title, by: g('fw-lo-by'), ref: g('fw-lo-ref'), text: g('fw-lo-text'), how: g('fw-lo-how'), needs: g('fw-lo-needs'), source: g('fw-lo-src'), faith: plainOf(p) ? 'plain' : 'faith', moments: S.lb.place !== 'best' ? [S.lb.place] : []};
+      const id = c.savePiece(m, p.svc, !!g('fw-lo-keep')); if (!id) return;
+      const r = c.addPiece(p.svc, {kind: k, id, moment: S.lb.place === 'best' ? null : S.lb.place, by: S.lb.by});
+      S.lb.own = false; touch(p); rerender(true); toast(r ? 'Added to ' + r.part + '.' : 'Saved.'); return; }
+    case 'lb-mypieces': { const c = cerBind(); if (!c) return; c.openMine(p.id); S.on = false; if (C.go) C.go('ceremonies'); return; }
     case 'share-copy': copyText(shareURL(p, v), 'Link copied.'); return;
     case 'load-paste': { const t = document.getElementById('fw-paste'); const r = loadText(p, t ? t.value : ''); if (r) rerender(true); return; }
     case 'scan': scanQR(); return;
@@ -958,8 +1359,13 @@ document.addEventListener('input', e => {
   if (t.dataset.fwi){
     if (t.dataset.fwi.startsWith('me.')){ store().me[t.dataset.fwi.slice(3)] = t.value; C.save(); return; }
     const p = plan(); if (!p) return; let v = t.value; if (t.type === 'number') v = v === '' ? '' : +v;
-    setPath(p, t.dataset.fwi, v); touch(p); if (/^person\./.test(t.dataset.fwi)) headSync(p); return;
+    setPath(p, t.dataset.fwi, v);
+    if (t.dataset.fwi === 'eDraft'){ euA(p); p.eu.edited = true; const tm2 = document.getElementById('fw-eu-time'); if (tm2) tm2.textContent = v.trim() ? readTime(v) : 'Not built yet'; }
+    const om = /^ob\.d\.(\w+)$/.exec(t.dataset.fwi); if (om){ obS(p).e[om[1]] = 1; const c = document.getElementById('fw-obn-' + om[1]), sh = OB.shapes.find(x => x.id === om[1]); if (c && sh) c.textContent = wordsIn(v) + ' words, aim for about ' + sh.words; }
+    touch(p); if (/^person\./.test(t.dataset.fwi)) headSync(p); return;
   }
+  if (t.dataset.fwlq){ const p = plan(); if (!p) return; S.lb.q = t.value; S.lb.more = 0; lbRedraw(p); return; }
+  if (t.dataset.fwlby){ S.lb.by = t.value; return; }
   if (t.dataset.fwsvc){ const p = plan(); if (!p || !hasSvc(p)) return; const [k, f] = t.dataset.fwsvc.split('|'); if (f === 'option') return; CER().set(p.svc, k, f, t.value); const tot = document.getElementById('fw-tot'); if (tot) tot.textContent = CER().total(p.svc) + ' minutes'; touch(p); }
 });
 document.addEventListener('change', e => {
@@ -968,6 +1374,7 @@ document.addEventListener('change', e => {
   if (t.dataset.fwfile && t.files && t.files[0]){ const f = t.files[0]; t.value = ''; const r = new FileReader(); r.onload = () => { if (p && loadText(p, String(r.result || ''))) rerender(true); }; r.readAsText(f); return; }
   if (!p) return;
   if (t.dataset.fwc){ setPath(p, t.dataset.fwc, !!t.checked); touch(p); rerender(true); return; }
+  if (t.dataset.fwlt){ S.lb.tag = t.value; S.lb.more = 0; lbRedraw(p); return; }
   if (t.dataset.fwsvc){ const [k, f] = t.dataset.fwsvc.split('|'); if (f === 'option'){ CER().set(p.svc, k, 'option', t.value); touch(p); rerender(true); } return; }
   if (t.dataset.fwi && t.type === 'date' && /^(person\.|gd\.)/.test(t.dataset.fwi)){ setPath(p, t.dataset.fwi, t.value); touch(p); }
 });
