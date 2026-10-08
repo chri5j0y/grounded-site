@@ -260,7 +260,7 @@ function vHome(){
 }
 function head(c, eyebrow){
   return `<button type="button" class="linkbtn" data-pm="home">&larr; All Couples</button>
-  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p></div>
+  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p>${c.cli && window.GGCli ? GGCli.link(c.cli) : ''}</div>
   <div class="pm-chips">${STATUS.map(([k, l]) => `<button type="button" class="chip" data-pm="status" data-v="${k}" aria-pressed="${(c.status || 'starting') === k}">${l}</button>`).join('')}</div></div>
   <div class="pm-nav">${NAV.map(([v, l]) => `<button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="${v}"${(S.view === v || (v === 'sessions' && S.view === 'session')) ? ' aria-current="page"' : ''}>${l}</button>`).join('')}</div>`;
 }
@@ -874,6 +874,11 @@ const API = window.GGPm = {
     out.pm.couples = out.pm.couples.filter(x => !(out.deleted.pm[x.id] && out.deleted.pm[x.id] >= (x.u || 0)));
     return {added, updated};
   },
+  // Clients and Intake (BLD 767, clients.js): a couple started from a client file carries cli, the file's id.
+  create(o){ o = o || {}; if (o.data) CTX = {lib: o.lib || CTX.lib || null, field: null, data: o.data, save: typeof o.save === 'function' ? o.save : CTX.save};
+    const x = newCouple(o.a || '', o.b || '', o.wedding || '', 'full'); x.p1.full = o.full1 || ''; x.p2.full = o.full2 || ''; if (o.cli) x.cli = o.cli;
+    list().push(x); const d = D(); if (d.deleted && d.deleted.pm) delete d.deleted.pm[x.id]; keep(x); return x.id; },
+  open(id){ S.id = id; S.view = 'sessions'; },
   // For tests and the lead.
   state: S, data: pm, program: pmc, current: cur, page: openPage, readCard, codeOf, readWeek, weekCodeOf, talkList, summaryOf, faithOf, printer: null, last: null
 };

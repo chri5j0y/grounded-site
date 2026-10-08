@@ -650,8 +650,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="share.js?v=b766"></script>
 <script src="ceremonies.js?v=b766"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b766"></script>
-<script src="premarital.js?v=b760"></script>
+<script src="farewell.js?v=b767"></script>
+<script src="premarital.js?v=b767"></script>
+<script src="clients.js?v=b767"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -966,7 +967,7 @@ function tabsFor(){
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key']);
   return t;
 }
@@ -993,7 +994,7 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
+  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1056,6 +1057,7 @@ const IC = {
  heart:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
  hospital:'<path d="M4 21V8l8-4 8 4v13"/><path d="M12 9v6M9 12h6"/><path d="M2.5 21h19"/><path d="M10 21v-3h4v3"/>',
+ file:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
  willow:'<path d="M12 21V8.5"/><path d="M12 9c-2.6 0-5 1.4-6 4.2M12 9c2.6 0 5 1.4 6 4.2"/><path d="M6 13.2v4.3M8.6 10.8v6.4M15.4 10.8v6.4M18 13.2v4.3"/><path d="M7.5 7.5C8.5 4.8 10 3.5 12 3.5s3.5 1.3 4.5 4"/><path d="M8.5 21h7"/>',
 };
@@ -1073,6 +1075,9 @@ if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER
 // The Farewell Planning Session (GWG BLD 766, farewell.js): Staff and Founders, in the Ceremonies tab.
 if (window.GGFw) GGFw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
+// Clients and Intake (GWG BLD 767, clients.js): Staff and Founders, the Clients tab, the Back Up Now card on Home.
+if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
+  sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
 // ---------------- HOME ----------------
@@ -1083,12 +1088,12 @@ function vHome(){
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
   const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !anyMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
-  const quick = [['first-conversation','Free First Conversation','30 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
+  const quick = [['first-conversation','First Conversation','10 to 15 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${sgHomeCard()}
   ${hpHomeCard()}
   ${window.GGFw ? GGFw.homeCard() : ''}
-  ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
+  ${window.GGCli ? GGCli.homeCard() : (DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
   <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
@@ -1190,7 +1195,7 @@ function drawRun(){
       <label class="f" for="rs">Summary</label><textarea id="rs" data-f="summary" placeholder="What happened, in a few lines">${esc(RUN.summary)}</textarea>
       <label class="f" for="rx">Next steps</label><textarea id="rx" data-f="next" style="min-height:70px">${esc(RUN.next)}</textarea>
       ${c ? `<div class="grid g2"><div><label class="f" for="fd">Follow-up date</label><input type="date" id="fd" data-f="fdate" value="${esc(RUN.fdate)}"></div><div><label class="f" for="ft">Follow-up note</label><input type="text" id="ft" data-f="ftext" value="${esc(RUN.ftext)}" placeholder="Call to check in"></div></div>` : ''}
-      ${g.cat !== 'self' ? `<div class="grid g2"><div><label class="f" for="fe">Fee</label><input type="text" id="fe" data-f="fee" value="${esc(RUN.fee)}" placeholder="$80, Free, or reduced rate"></div><div style="padding-top:34px"><label class="cb"><input type="checkbox" data-fb="paid" ${RUN.paid?'checked':''}> Paid</label><label class="cb"><input type="checkbox" data-fb="grace" ${RUN.grace?'checked':''}> Grace spot or reduced rate</label></div></div>` : ''}`;
+      ${g.cat !== 'self' ? `<div class="grid g2"><div><label class="f" for="fe">Fee</label><input type="text" id="fe" data-f="fee" value="${esc(RUN.fee)}" placeholder="$125, a gift, or a reduced rate"></div><div style="padding-top:34px"><label class="cb"><input type="checkbox" data-fb="paid" ${RUN.paid?'checked':''}> Paid</label><label class="cb"><input type="checkbox" data-fb="grace" ${RUN.grace?'checked':''}> Grace spot or reduced rate</label></div></div>` : ''}`;
   }
   $('#runner').innerHTML = `<div class="run-bar"><div class="run-bar-in"><div class="run-title"><b>${esc(g.title)}</b><small>${c ? esc(c.name) : 'No record attached'}</small></div><span class="timer" id="run-timer" aria-label="Elapsed time">0:00</span><button class="bar-btn" data-act="pause-runner" aria-label="Pause and close">&times;</button></div></div>
     <div class="prog"><i style="width:${pct}%"></i></div>
@@ -1224,11 +1229,12 @@ function vClients(){
 }
 function vClient(c){
   const ss = DATA.sessions.filter(s => s.clientId === c.id).sort((a,b) => (b.date||'').localeCompare(a.date||''));
-  const owed = ss.filter(s => !s.paid && s.fee && !/free/i.test(s.fee)).length;
+  const owed = ss.filter(s => !s.paid && s.fee && !/free|no charge|gift/i.test(s.fee)).length;
   const svcOpts = ['','End-of-Life Support','Officiant: Funeral or Memorial','Officiant: Wedding','Officiant: Blessing','Spiritual Guidance','Grief Support','Caregiver Support','Speaking and Training','Other'];
   return `<button class="btn btn-line btn-sm" data-act="back-clients">${icon('back')} All people</button>
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
+  ${window.GGCli ? GGCli.personCard(c) : ''}
   ${spPersonCard(c)}
   ${saPersonCard(c)}
   ${pnPersonCard(c)}
@@ -1251,7 +1257,7 @@ function vClient(c){
     <div class="grid g2" style="margin-top:10px"><input type="date" id="nfd"><input type="text" id="nft" placeholder="What to do"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>
     <h3 style="margin-top:22px">Sessions</h3>
-    ${ss.length ? ss.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sessTitle(s))}</b><br><small class="muted">${nice(s.date)} &middot; ${s.kind === 'ht' ? (HTG() ? esc(htStageNames(s.stages) || 'When Life Changes') : 'When Life Changes') : (s.minutes||0) + ' min'}${s.fee ? ' &middot; ' + esc(s.fee) : ''} ${s.paid ? '<span class="pill sage">Paid</span>' : (s.fee && !/free/i.test(s.fee) ? '<span class="pill warn">Unpaid</span>' : '')}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted">No sessions yet.</p>'}
+    ${ss.length ? ss.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sessTitle(s))}</b><br><small class="muted">${nice(s.date)} &middot; ${s.kind === 'ht' ? (HTG() ? esc(htStageNames(s.stages) || 'When Life Changes') : 'When Life Changes') : (s.minutes||0) + ' min'}${s.fee ? ' &middot; ' + esc(s.fee) : ''} ${s.paid ? '<span class="pill sage">Paid</span>' : (s.fee && !/free|no charge|gift/i.test(s.fee) ? '<span class="pill warn">Unpaid</span>' : '')}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted">No sessions yet.</p>'}
    </div></div>
   <div class="row" style="margin-top:14px"><button class="btn btn-danger btn-sm" data-act="del-client" data-v="${c.id}">Delete This Record</button></div>`;
 }
@@ -10148,7 +10154,7 @@ async function exportBackup(){
   // One Grow With Grounded Backup (shared/gg-backup.js): every Grounded record on this device in one file.
   // The Field Guide part stays sealed with this passcode, Founder and Staff data included.
   await persist(); DATA.lastBackup = Date.now(); await persist();
-  const after = () => { if (V.tab === 'home' || V.tab === 'settings') render(); };
+  const after = () => { if (V.tab === 'home' || V.tab === 'settings' || V.tab === 'cli') render(); };
   if (window.GGBackup) return GGBackup.make({after});
   const v = localStorage.getItem(VAULT_KEY);
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([v], {type:'application/json'})); a.download = `field-guide-backup-${today()}.json`;
@@ -10209,6 +10215,8 @@ function mergeData(cur, inc){
   if (window.GGSes){ const sm = GGSes.merge(out, inc); stats.added += sm.added; stats.updated += sm.updated; }
   // Premarital couples (Premarital Sessions, BLD 750): newest copy wins; deleted ones stay deleted.
   if (window.GGPm){ const pm = GGPm.merge(out, inc); stats.added += pm.added; stats.updated += pm.updated; }
+  // Client files (Clients and Intake, BLD 767): newest copy wins; deleted ones stay deleted.
+  if (window.GGCli){ const cl = GGCli.merge(out, inc); stats.added += cl.added; stats.updated += cl.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));
   const tp = inc.training && inc.training.progress || {};
