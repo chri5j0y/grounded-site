@@ -1300,7 +1300,7 @@ function vTraining(){
     LGM() ? lgmCardInfo() : null];
   // Premarital Guide Training opens right here for Staff and Founders, with the same saved progress Field users keep (DATA.pgmod).
   if (V.pgm && PGM()) return pgTint(vPGM());
-  // Walking With Illness and Disability: Guide Training (BLD 759) opens here too, with the progress Field users keep in Learn (DATA.lgmod).
+  // Walking with Illness and Disability: Guide Training (BLD 759) opens here too, with the progress Field users keep in Learn (DATA.lgmod).
   if (V.lgm && LGM()) return lgTint(vLGM());
   const C = secPick('training', cards), part = {welcome: wel, core, levels: lev, scen, agree: agr}[C];
   if (part) return secPage('training', 'Back to Training', part);
@@ -1759,7 +1759,7 @@ function vLearn(){
   const back = (act, v, label) => `<button class="linkbtn" data-act="${act}"${v ? ` data-v="${esc(v)}"` : ''}>&larr; ${esc(label)}</button>`;
   const cats = [{k: 'les', eb: 'Lessons', title: 'Learn Step by Step', intro: 'How Grow With Grounded and the Field Guide work, in order. Start with Get Set Up.', n: `${fin} of ${all} lessons finished`, accent: 'var(--gold)'}];
   if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
-  // Field users take Walking With Illness and Disability: Guide Training here, once it is open to them (BLD 759).
+  // Field users take Walking with Illness and Disability: Guide Training here, once it is open to them (BLD 759).
   if (lgOpen()){ const g = lgmCardInfo(); cats.push({k: 'lg', eb: 'Guide Training', title: g.title, intro: g.desc, n: g.n, accent: LG_C, act: 'lg-mhome'}); }
   ['willow', 'oak', 'sequoia', 'pine', 'birch', 'aspen', 'maple'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
   const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
@@ -7293,7 +7293,7 @@ function lgmState(){
   return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
 }
 // The Training card (Staff and Founders) and the Learn card (Field users) both open the training home.
-const lgmCardInfo = () => ({title: LGM().title || 'Walking With Illness and Disability: Guide Training', desc: LGG().lead || 'Lessons, scenarios, and the agreement for walking with people living with illness or disability.', n: trainNote(lgmState()), act: 'lg-mhome', accent: LG_C});
+const lgmCardInfo = () => ({title: LGM().title || 'Walking with Illness and Disability: Guide Training', desc: LGG().lead || 'Lessons, scenarios, and the agreement for walking with people living with illness or disability.', n: trainNote(lgmState()), act: 'lg-mhome', accent: LG_C});
 // Field Home: a quiet card while the training is open and not yet complete, or due for renewal.
 function lgHomeCard(){
   if (!lgOpen()) return '';
@@ -7410,15 +7410,15 @@ function lgCert(){
 // ----- Founder: open or close this training to Field users (through Update a Library) -----
 function lgFieldRow(){
   const S = LGG();
-  if (!S) return `<p class="muted" style="margin-top:8px">Walking With Illness and Disability isn't in the Field library yet. Add it with Update a Library.</p>`;
+  if (!S) return `<p class="muted" style="margin-top:8px">Walking with Illness and Disability isn't in the Field library yet. Add it with Update a Library.</p>`;
   const on = !!(S.open && S.open.field);
-  return `<div class="list-row"><div class="lr-main"><b>${esc(S.title || 'Walking With Illness and Disability')}</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Guide Training for every tree, in Learn for Field users once Orientation is done, with a Certificate of Completion.</small></div><button class="btn btn-line btn-sm" data-act="lg-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
+  return `<div class="list-row"><div class="lr-main"><b>${esc(S.title || 'Walking with Illness and Disability')}</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Field users' : 'Staff and Founders only'}</span><br><small class="muted">Guide Training for every tree, in Learn for Field users once Orientation is done, with a Certificate of Completion.</small></div><button class="btn btn-line btn-sm" data-act="lg-field" data-v="${on ? 'off' : 'on'}">${on ? 'Close to Field' : 'Open to Field'}</button></div>`;
 }
 async function lgSetField(on){
   const cur = await pendingPlain('field'); if (!cur || !cur.lifeGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.lifeGuide.open = Object.assign({}, next.lifeGuide.open, {field:on});
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  const nm = cur.lifeGuide.title || 'Walking With Illness and Disability';
+  const nm = cur.lifeGuide.title || 'Walking with Illness and Disability';
   V.upd = {lvl:'field', title: on ? 'Open ' + nm + ' to Field users' : 'Close ' + nm + ' to Field users', note:'', rows:[['Replaces', 'lifeGuide.open.field']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
@@ -9886,7 +9886,7 @@ function mergeData(cur, inc){
   Object.entries(ipg.lessons || {}).forEach(([k,v]) => { if (v && !out.pgmod.lessons[k]) out.pgmod.lessons[k] = v; });
   out.pgmod.how = Object.assign({}, ipg.how || {}, out.pgmod.how || {});
   ['last','pass','signed'].forEach(k => { out.pgmod[k] = newer(out.pgmod[k], ipg[k]) || null; });
-  const ilg = inc.lgmod || {}; out.lgmod = Object.assign({lessons:{}, how:{}, last:null, pass:null, signed:null}, out.lgmod || {}); // Walking With Illness and Disability (BLD 759)
+  const ilg = inc.lgmod || {}; out.lgmod = Object.assign({lessons:{}, how:{}, last:null, pass:null, signed:null}, out.lgmod || {}); // Walking with Illness and Disability (BLD 759)
   Object.entries(ilg.lessons || {}).forEach(([k,v]) => { if (v && !out.lgmod.lessons[k]) out.lgmod.lessons[k] = v; });
   out.lgmod.how = Object.assign({}, ilg.how || {}, out.lgmod.how || {});
   ['last','pass','signed'].forEach(k => { out.lgmod[k] = newer(out.lgmod[k], ilg[k]) || null; });
