@@ -12,6 +12,7 @@
 // missing. Rates: the Staff library's services rates. Travel: no fee in St. Cloud, Sartell, Sauk
 // Rapids, and Waite Park; beyond that, the IRS standard mileage rate, round trip from St. Cloud
 // (a rate the Founder can update).
+// GWG BLD 769: the privacy notice adds the writing-help line, and Step 1 asks the writing assistant yes (saved with how and when).
 // Privacy: nothing is saved until the client's yes to the privacy notice is recorded. Files live in
 // DATA.cli: encrypted with the rest of this device's records and carried in backups (merged by
 // GGCli.merge, deletions recorded). Card numbers, bank numbers, and Social Security numbers are
@@ -106,6 +107,9 @@ const DEF = {
     {h: 'Where', p: 'Locked (encrypted) on my device, and in my locked backup. Only my passcode opens it.'},
     {h: 'How Long', p: 'For seven years after our last service (to confirm with our attorney), for business and tax records. Then it is deleted. You can ask to see it any time.'}],
   neverKeep: 'Card numbers, bank numbers, or Social Security numbers. Health details only when a service needs them.',
+  // GWG BLD 769: the writing assistant yes, asked once and saved with how and when.
+  writingAssistant: {h: 'Writing Help', ask: 'I sometimes use a secure writing assistant to help draft words. Is that all right with you?', sub: 'Their answer is saved with how and when.',
+    p: 'With your yes, I sometimes use a secure writing assistant to help draft words, like a eulogy or an obituary. Names are replaced with placeholders, and phone numbers, emails, and addresses are left out.'},
   agreement: {title: 'Service Agreement', intro: 'This agreement puts in writing what we planned together: the services, the price, and what is included, so everyone knows what to expect.',
     promise: 'No surprises: anything new or different is agreed in writing first.',
     dueWording: 'A deposit of [Deposit] holds the date. The balance of [Balance] is due [Due].',
@@ -137,7 +141,7 @@ function cfg(){
   const lists = {}; Object.keys(DEF.intake.lists).forEach(k => { lists[k] = A(li.lists && li.lists[k], DEF.intake.lists[k]); });
   CF = {
     full: !!L, fc, steps, lists, payRules: A(li.payRules, DEF.intake.payRules), included: li.included || DEF.intake.included,
-    privacyNotice: A(L && L.privacyNotice, DEF.privacyNotice), neverKeep: (L && L.neverKeep) || DEF.neverKeep,
+    privacyNotice: A(L && L.privacyNotice, DEF.privacyNotice), neverKeep: (L && L.neverKeep) || DEF.neverKeep, writingAssistant: o(DEF.writingAssistant, L && L.writingAssistant),
     agreement: o(DEF.agreement, L && L.agreement), invoice: o(DEF.invoice, L && L.invoice), sendWords: o(DEF.sendWords, L && L.sendWords),
     backup: Object.assign(o(DEF.backup, L && L.backup), {steps: A(L && L.backup && L.backup.steps, DEF.backup.steps)}),
     irsRate: +(L && L.irsRate) > 0 ? +L.irsRate : DEF.irsRate
@@ -348,14 +352,21 @@ function remList(){
 }
 
 // ---------- Intake: Chris's View, one function per step ----------
-const NOTICE = big => `<div class="cl-notice${big ? ' big' : ''}">${cfg().privacyNotice.map(n => `<div class="cl-ni"><h4>${esc(n.h)}</h4><p>${esc(n.p)}</p></div>`).join('')}<div class="cl-ni never"><h4>What We Never Keep</h4><p>${esc(cfg().neverKeep)}</p></div></div>`;
+const noticeItems = () => { const N = arr(cfg().privacyNotice).filter(n => n && n.h); return N.some(n => /writ/i.test(n.h)) ? N : N.concat([{h: cfg().writingAssistant.h, p: cfg().writingAssistant.p}]); };
+const WA_HOW = [['aloud', 'Said Yes Aloud'], ['text', 'Replied by Text'], ['email', 'Replied by Email']];
+function waBlk(f){ const W = cfg().writingAssistant, w = (f.privacy || {}).wa || {};
+  return blk(f, W.h || 'Writing Help', 'wa', `<div class="fw-say" style="margin-top:0"><b>Ask</b><q>${esc(W.ask)}</q></div>
+    <div class="fw-chips" role="group" aria-label="Their answer">${[['yes', 'Yes'], ['no', 'No, Thank You']].map(([k, l]) => `<button type="button" class="chip" data-cla="wa" data-clv="${k}" aria-pressed="${w.ans === k}"${fk('wa|' + k)}>${l}</button>`).join('')}</div>
+    <div class="fw-who"><span class="fw-lbl">How</span>${WA_HOW.map(([k, l]) => `<button type="button" class="chip fw-sm" data-cla="wa-how" data-clv="${k}" aria-pressed="${w.how === k}"${fk('wah|' + k)}>${l}</button>`).join('')}</div>
+    ${w.ans ? `<p class="cl-ok" role="status">Writing help: ${w.ans === 'yes' ? 'yes' : 'no'}${w.how ? ', ' + esc((WA_HOW.find(x => x[0] === w.how) || ['', w.how])[1].toLowerCase()) : ''}, ${esc(nice(w.date))}. Saved with the file.</p>` : ''}`, W.sub); }
+const NOTICE = big => `<div class="cl-notice${big ? ' big' : ''}">${noticeItems().map(n => `<div class="cl-ni"><h4>${esc(n.h)}</h4><p>${esc(n.p)}</p></div>`).join('')}<div class="cl-ni never"><h4>What We Never Keep</h4><p>${esc(cfg().neverKeep)}</p></div></div>`;
 const V = {};
 V[1] = f => sayBox(STEP(1).say, '', f) +
   (saved(f) ? '' : `<div class="cl-banner" role="note">Nothing is saved yet. Record their yes below, and the file is saved, encrypted on this device.</div>`) +
   blk(f, 'Privacy Notice', 'notice', NOTICE(false), 'Read it together, eye to eye.') +
   blk(f, 'Their Yes', 'yes', chips(f, 'yesHow', true) + `<div class="fw-g2" style="margin-top:6px">${fld('privacy.date', 'Date', f.privacy.date || today(), 'date')}</div>
     ${f.privacy.how ? `<p class="cl-ok" role="status">Their yes: ${esc(label(f, 'yesHow', f.privacy.how))}, ${esc(nice(f.privacy.date))}. Saved with the file.</p>` : ''}`, 'How and when they gave it is saved with the file.') +
-  note(f, 'privacy');
+  waBlk(f) + note(f, 'privacy');
 V[2] = f => sayBox(STEP(2).say, '', f) +
   blk(f, 'Contact', 'contact', `<div class="fw-g3">${fld('c.first', 'First name', f.c.first)}${fld('c.last', 'Last name', f.c.last)}${fld('c.rel', 'Their part in this', f.c.rel, 'text', 'Husband of Peg, the couple, ...')}</div>
     <div class="fw-g2">${fld('c.partner', 'Partner (for a couple)', f.c.partner, 'text', 'Full name')}${fld('c.phone', 'Phone', f.c.phone, 'tel')}${fld('c.email', 'Email', f.c.email, 'email')}${fld('c.addr', 'Street address', f.c.addr)}${fld('c.city', 'City, state, ZIP', f.c.city)}</div>`) +
@@ -448,7 +459,8 @@ const fChips = (f, id) => `<div class="fw-fchips">${items(f, LMAP[id] || id).map
 const fsec = (h, x) => `<div class="fw-fsec"><h3>${esc(h)}</h3>${x}</div>`;
 const flist = rows => `<ul class="fw-flist">${rows.map(r => `<li><span>${r[0]}</span><span>${r[1] || ''}</span></li>`).join('')}</ul>`;
 const FV = {};
-FV[1] = f => fsec('How We Keep What You Share', NOTICE(true)) + fsec('Is That All Right With You?', fChips(f, 'yesHow'));
+FV[1] = f => fsec('How We Keep What You Share', NOTICE(true)) + fsec('Is That All Right With You?', fChips(f, 'yesHow')) +
+  fsec(cfg().writingAssistant.h || 'Writing Help', `<p class="fw-big">${esc(cfg().writingAssistant.ask)}</p>${((f.privacy || {}).wa || {}).ans ? `<p class="fw-soft">${f.privacy.wa.ans === 'yes' ? '&#10003; Yes' : 'No, thank you'}</p>` : ''}`);
 FV[2] = f => fsec("How We'll Reach You", flist([['Name', esc(fTitle(f))], ['Phone', esc(f.c.phone)], ['Email', esc(f.c.email)], ['Address', esc([f.c.addr, f.c.city].filter(Boolean).join(', '))]])) + fsec('Best Ways', fChips(f, 'reach')) + fsec('Best Times', fChips(f, 'times'));
 FV[3] = f => fsec("What We're Planning", `<p class="fw-big">${esc(picked(f, 'svc').join(', ') || 'Still choosing')}</p>`) +
   fsec('When and Where', `<p class="fw-big">${esc([f.svc.date ? nice(f.svc.date) : '', tm(f.svc.time)].filter(Boolean).join(', ') || 'To choose together')}${f.svc.place ? `<br><span class="fw-soft">${esc(f.svc.place)}</span>` : ''}</p>`) + fsec('How Faith Shows Up', fChips(f, 'faith'));
@@ -577,7 +589,7 @@ function vFile(f){
   ${lockNote('Everything in this file is encrypted on this device and in your locked backup.')}
   ${f.stage === 'intake' || !isSigned(f) ? `<div class="cl-banner" role="note">The intake is open at Step ${f.step || 1}. <button type="button" class="linkbtn" data-cla="intake-open" data-clv="${esc(f.id)}">Continue the Intake</button></div>` : ''}
   ${blk(null, 'Contact', '', kv([['Name', fTitle(f)], ['Their part', f.c.rel], ['Phone', f.c.phone], ['Email', f.c.email], ['Address', [f.c.addr, f.c.city].filter(Boolean).join(', ')], ['Best way to reach', [picked(f, 'reach').join(', '), picked(f, 'times').join(', ')].filter(Boolean).join(', ')],
-    ['Also involved', f.people.map(p => [p.name, p.role, p.phone].filter(Boolean).join(', ')).join('; ')], ['For', f.svc.forWhom], ['When and where', [f.svc.date ? nice(f.svc.date) : '', tm(f.svc.time), f.svc.place].filter(Boolean).join(', ')], ['Faith', picked(f, 'faith').join(', ')], ['Privacy notice', f.privacy.how ? 'Yes, ' + label(f, 'yesHow', f.privacy.how).toLowerCase() + ', ' + nice(f.privacy.date) : '']]) +
+    ['Also involved', f.people.map(p => [p.name, p.role, p.phone].filter(Boolean).join(', ')).join('; ')], ['For', f.svc.forWhom], ['When and where', [f.svc.date ? nice(f.svc.date) : '', tm(f.svc.time), f.svc.place].filter(Boolean).join(', ')], ['Faith', picked(f, 'faith').join(', ')], ['Privacy notice', f.privacy.how ? 'Yes, ' + label(f, 'yesHow', f.privacy.how).toLowerCase() + ', ' + nice(f.privacy.date) : ''], ['Writing help', (f.privacy.wa || {}).ans ? (f.privacy.wa.ans === 'yes' ? 'Yes' : 'No') + (f.privacy.wa.how ? ', ' + (WA_HOW.find(x => x[0] === f.privacy.wa.how) || ['', f.privacy.wa.how])[1].toLowerCase() : '') + ', ' + nice(f.privacy.wa.date) : '']]) +
     `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-cla="intake-open" data-clv="${esc(f.id)}">Edit in the Intake</button>${f.pid ? `<button type="button" class="btn btn-line btn-sm" data-act="open-client" data-v="${esc(f.pid)}">People Record</button>` : ''}</div>`)}
   ${blk(null, 'Services Agreed', '', `<div class="cl-tw"><table class="cl-tbl"><tbody>${c.rows.map(r => `<tr><td>${esc(rowName(r.it))}</td><td class="r">${esc(amtCell(r))}</td></tr>`).join('')}${c.off ? `<tr><td>${c.g === 'gift' ? 'A gift from Grow With Grounded' : 'A reduced rate'}</td><td class="r">${money(c.off)} off</td></tr>` : ''}</tbody><tfoot><tr><td>Agreed total</td><td class="r">${money(c.total)}</td></tr></tfoot></table></div>`)}
   ${blk(null, 'Signed Agreement', '', s ? kv([['Signed', nice(s.date)], ['How', HOW[s.way] + (s.sig ? ', finger signature' : s.way === 'here' ? ', typed name' : '')], [s.way === 'send' ? 'Accepted by' : 'Signed by', s.name], ['Earlier versions', f.signed.length > 1 ? String(f.signed.length - 1) : '']]) +
@@ -825,6 +837,8 @@ function act(a, v, el){
       S.dep = {}; touch(f); toast('Deposit recorded.'); rerender(true); return; }
     case 'fw-new': startFw(f); return;
     case 'pm-new': startPm(f); return;
+    case 'wa': case 'wa-how': { const w = Object.assign({}, f.privacy.wa || {}); if (a === 'wa'){ w.ans = v; if (!w.how) w.how = 'aloud'; } else { w.how = v; if (!w.ans) w.ans = 'yes'; } w.date = w.date || f.privacy.date || today(); w.at = Date.now();
+      f.privacy = Object.assign({}, f.privacy, {wa: w}); touch(f); rerender(true); return; }
     case 'finish': if (!saved(f)){ toast("Record their yes to the privacy notice in Step 1 first."); goStep(1); return; }
       ensurePerson(f); f.stage = 'active'; touch(f); S.fileId = f.id; S.sec = 'files'; S.inv = null; rerender(false); return;
   }
@@ -961,6 +975,8 @@ const API = window.GGCli = {
     return `<div class="card" style="margin-bottom:14px;border-left:4px solid var(--gold)"><div class="spread"><div><b>Client File</b> <span class="muted">${esc(fTitle(f))}: services, the signed agreement, payments, and invoices.</span></div><button type="button" class="btn btn-line btn-sm" data-cla="file" data-clv="${esc(f.id)}">Open</button></div></div>`;
   },
   // A link back to the client file, for the Farewell Plan and The Grounded Marriage headers.
+  // GWG BLD 769: the writing assistant yes from a client file, for the Farewell Planning Session.
+  wa(id){ const f = D() ? fileOf(id) : null; return f && f.privacy && f.privacy.wa && f.privacy.wa.ans ? Object.assign({}, f.privacy.wa) : null; },
   link(id){ const f = isStaff() && D() ? fileOf(id) : null; return f ? `<button type="button" class="linkbtn" data-cla="file" data-clv="${esc(f.id)}">Client File: ${esc(fTitle(f))}</button>` : ''; },
   // Backups: files and reminders combine; the newest copy of each wins and deleted files stay deleted.
   merge(out, inc){
