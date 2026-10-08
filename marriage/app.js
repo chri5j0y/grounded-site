@@ -115,7 +115,7 @@
       setTimeout(function () { var f = back.querySelector('input'); if (f) f.focus(); }, 30);
     });
   }
-  var PASS_NOTE = 'Grounded never sees it and cannot recover it. If it is ever forgotten, Clear Everything starts fresh.';
+  var PASS_NOTE = 'Grow With Grounded never sees it and cannot recover it. If it is ever forgotten, Clear Everything starts fresh.';
   function newPass(w) {
     return ask({ title: nm(w) + ', choose your passcode', lead: 'Your answers are locked with it, so only you can open them. ' + PASS_NOTE, fields: ['Passcode', 'Passcode again'], ok: 'Lock and Start',
       check: function (v) { return v[0].length < 6 ? 'Use at least 6 characters.' : v[0] !== v[1] ? 'The two passcodes are different.' : ''; } })

@@ -88,6 +88,34 @@
   #gg-print.big p{margin:0 0 6mm;}
   #gg-print.big h2{font-size:13pt;color:#8B5E1A;font-family:'Barlow Condensed',Arial,sans-serif;letter-spacing:1.5pt;text-transform:uppercase;border:0;margin:8mm 0 2mm;}
 }
+/* Send to Your Officiant (GWG BLD 766) */
+.fs-grp{border-top:1px solid var(--line);margin-top:14px;padding-top:4px;}
+.fs-grp > summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 2px;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;color:var(--ink);min-height:44px;}
+.fs-grp > summary::-webkit-details-marker{display:none;}
+.fs-grp > summary::after{content:"+";font-family:'Barlow',sans-serif;font-weight:600;font-size:24px;color:var(--gold);flex:none;}
+.fs-grp[open] > summary::after{content:"\2212";}
+.fs-grp > .ff-sub{margin:0 0 2px;}
+.fs-set{border:0;padding:0;margin:14px 0 0;min-width:0;}
+.fs-set > legend.l{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);padding:0;margin:0 0 8px;}
+.fs-chips{display:flex;flex-wrap:wrap;gap:8px 10px;}
+.fs-chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border:1.5px solid var(--line);border-radius:999px;background:var(--bg);cursor:pointer;font-size:16.5px;color:var(--ink);max-width:100%;}
+.fs-chip input{width:20px;height:20px;margin:0;accent-color:var(--plum);flex:none;cursor:pointer;}
+.fs-chip:has(input:checked){border-color:var(--plum);background:var(--card);font-weight:600;}
+.fs-chip:focus-within{outline:2px solid var(--gold);outline-offset:2px;}
+.fs-inc{display:flex;gap:10px;align-items:center;margin-top:18px;font-size:16.5px;color:var(--ink);cursor:pointer;}
+.fs-inc input{width:22px;height:22px;accent-color:var(--plum);flex:none;}
+.fs-ready{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);}
+.fs-ready h3{font-size:24px;margin:0 0 4px;}
+.fs-ready .ff-draft{font-size:15px;}
+.fs-qr:empty{display:none;}
+.fs-qr{margin-top:16px;text-align:center;}
+.fs-qr-code{display:inline-block;background:#fff;padding:10px;border-radius:12px;border:1px solid var(--line);width:min(100%,420px);}
+.fs-qr-code svg{display:block;width:100%;height:auto;}
+.fs-qr-cap{font-size:16.5px;color:var(--ink);margin:10px auto 0;max-width:460px;}
+.fs-qr .ff-row{justify-content:center;}
+.ff-send{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);}
+.ff-send[hidden]{display:none;}
+.ff-send .ff-f{margin-top:0;max-width:420px;}
 </style>
 </head>
 <body>
@@ -158,7 +186,7 @@
     <div class="ff-card">
       <h2>More for Your Family</h2>
       <div class="ff-links"><a href="obituary-helper.html">Obituary Helper</a><a href="planning-a-farewell.html">Planning a Farewell</a><a href="funerals-memorials.html">Funerals and Memorials</a><a href="celebrations-of-life.html">Celebrations of Life</a><a href="/willow/#readings">Readings for all faith traditions and everything in-between</a></div>
-      <p class="ff-sources" style="margin-top:14px">Would you like someone to listen to a draft, or to stand beside you while you speak? Grounded offers guidance and support for families. <a class="text-link" href="contact.html#plan=Funeral%20or%20memorial">Get in touch</a>.</p>
+      <p class="ff-sources" style="margin-top:14px">Would you like someone to listen to a draft, or to stand beside you while you speak? Grow With Grounded offers guidance and support for families. <a class="text-link" href="contact.html#plan=Funeral%20or%20memorial">Get in touch</a>.</p>
     </div>
 
     <div class="ff-clear"><p>Done, or using a shared computer? Clear Everything removes your words from this device.</p><button type="button" class="btn btn-secondary ff-sm" id="eu-clear">Clear Everything</button></div>
@@ -207,6 +235,43 @@ var GGF = {
     window.print();
   }
 };
+/* Send to Your Officiant (GWG BLD 766). The officiant's name, email, and phone come from the link the officiant shared
+   (#to=Chris&em=...&ph=...&for=...), stay on this device, and only fill in the Text and Email buttons. Nothing is sent by this page. */
+var GGSend = (function () {
+  var OK = 'gg_officiant_v1', o = GGF.load(OK) || {}, h = {};
+  String(window.location.hash || '').replace(/^#/, '').split('&').forEach(function (kv) {
+    if (!kv) return; var i = kv.indexOf('='), k = i < 0 ? kv : kv.slice(0, i), v = i < 0 ? '' : kv.slice(i + 1);
+    try { v = decodeURIComponent(v.replace(/\+/g, ' ')); } catch (e) {} h[k] = v;
+  });
+  var ch = false, to = String(h.to || '').replace(/[^\w .'\u00C0-\u024F]/g, '').trim().slice(0, 40), em = String(h.em || '').trim(), ph = String(h.ph || '').replace(/[^\d+]/g, '').slice(0, 16);
+  if (to) { o.to = to; ch = true; }
+  if (/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(em) && em.length < 120) { o.em = em; ch = true; }
+  if (ph.length >= 7) { o.ph = ph; ch = true; }
+  if (ch) GGF.save(OK, o);
+  var LIM = 1900;
+  function go(href) { try { window.location.href = href; } catch (e) {} }
+  function open(kind, subject, text, el) {
+    text = String(text || '');
+    if (!text.trim()) { GGF.say(el, 'Nothing to send yet.'); return; }
+    var body = function (t) { return encodeURIComponent(t); };
+    var mk = function (t) { return kind === 'sms' ? 'sms:' + (o.ph || '') + '?&body=' + body(t) : 'mailto:' + (o.em || '') + '?subject=' + body(subject) + '&body=' + body(t); };
+    var href = mk(text);
+    if (href.length > LIM) {
+      GGF.copy(text, null);
+      href = mk('The words are copied. Paste them here.');
+      GGF.say(el, 'Copied. Paste it into the ' + (kind === 'sms' ? 'text' : 'email') + ' that opens.');
+    }
+    go(href);
+  }
+  return {
+    h: h, o: function () { return o; },
+    who: function () { return o.to || 'Your Officiant'; },
+    label: function () { return 'Send to ' + (o.to || 'Your Officiant'); },
+    text: function (subject, text, el) { open('sms', subject, text, el); },
+    email: function (subject, text, el) { open('mail', subject, text, el); },
+    clear: function () { GGF.drop(OK); o = {}; }
+  };
+})();
 (function () {
   var KEY = 'gg_eulogy_helper_v1', WPM = 130;
   var PRON = { he: { they: 'he', them: 'him', their: 'his' }, she: { they: 'she', them: 'her', their: 'her' }, they: { they: 'they', them: 'them', their: 'their' } };
@@ -222,6 +287,7 @@ var GGF = {
   ];
   var FIELDS = ['name', 'me', 'who', 's1', 's2', 's3', 'taught', 'carry', 'close'];
   var st = GGF.load(KEY) || {}; st.a = st.a || {}; st.pron = PRON[st.pron] ? st.pron : 'they'; st.d = st.d || ''; st.edited = !!st.edited;
+  if (GGSend.h['for'] && !String(st.a.name || '').trim()) { st.a.name = String(GGSend.h['for']).slice(0, 120); GGF.save(KEY, st); }
   var $ = function (id) { return document.getElementById(id); }, esc = GGF.esc, keepT = null;
   function keep() { clearTimeout(keepT); keepT = setTimeout(function () { GGF.save(KEY, st); }, 250); }
   function clean(t) { return String(t || '').trim().replace(/[ \t]+/g, ' '); }
@@ -257,8 +323,16 @@ var GGF = {
       '<p class="ff-sub">The outline: ' + parts.map(function (x) { return esc(x.h); }).join(', then ') + '. Words in [brackets] are spots still waiting for you. Change anything; this is your voice, not ours.</p>' +
       '<textarea class="ff-draft" id="eu-d" aria-label="Your eulogy" rows="16">' + esc(st.d) + '</textarea>' +
       '<p class="ff-sub" style="margin-top:8px">Reading time counts about ' + WPM + ' words a minute, an easy pace for a hard day.</p>' +
-      '<div class="ff-row"><button type="button" class="btn btn-secondary ff-sm" id="eu-copy">Copy</button><button type="button" class="btn btn-secondary ff-sm" id="eu-print">Print in Large Type</button><span class="ff-status" id="eu-s2" role="status" aria-live="polite"></span></div></div>';
+      '<div class="ff-row"><button type="button" class="btn btn-secondary ff-sm" id="eu-copy">Copy</button><button type="button" class="btn btn-secondary ff-sm" id="eu-print">Print in Large Type</button><button type="button" class="btn btn-secondary ff-sm" id="eu-send-b" aria-expanded="false" aria-controls="eu-send">' + esc(GGSend.label()) + '</button><span class="ff-status" id="eu-s2" role="status" aria-live="polite"></span></div>' +
+      '<div class="ff-send" id="eu-send" hidden><p class="ff-sub">Send your eulogy to ' + esc(GGSend.o().to || 'your officiant') + ' with a short heading on top, so it arrives ready to use.</p>' +
+      '<label class="ff-f" for="eu-from"><span class="l">Your name</span><input type="text" id="eu-from" maxlength="80" value="' + esc(st.from || '') + '" placeholder="Karen (daughter)"></label>' +
+      '<div class="ff-row"><button type="button" class="btn btn-primary ff-sm" data-snd="copy">Copy for Sending</button><button type="button" class="btn btn-secondary ff-sm" data-snd="sms">Text It</button><button type="button" class="btn btn-secondary ff-sm" data-snd="mail">Email It</button><span class="ff-status" id="eu-s3" role="status" aria-live="polite"></span></div></div></div>';
     GGF.fit($('eu-d'));
+  }
+  // Send to Your Officiant (GWG BLD 766): the eulogy with a short heading, so it pastes cleanly into the officiant's plan.
+  function sendName() { return clean(st.a.name) || 'Our Loved One'; }
+  function sendText() {
+    return ['Eulogy for ' + sendName(), clean(st.from) ? 'From: ' + clean(st.from) : '', 'Length: ' + timeOf(st.d), 'Made with the Eulogy Helper at growwithgrounded.com'].filter(Boolean).join('\n') + '\n\n' + String(st.d || '').trim();
   }
   function paint() {
     FIELDS.forEach(function (k) { var el = document.querySelector('[data-q="' + k + '"]'); if (el) el.value = st.a[k] || ''; });
@@ -269,6 +343,7 @@ var GGF = {
   document.addEventListener('input', function (e) {
     var t = e.target;
     if (t.dataset && t.dataset.q) { st.a[t.dataset.q] = t.value; keep(); }
+    else if (t.id === 'eu-from') { st.from = t.value; keep(); }
     else if (t.id === 'eu-d') { st.d = t.value; st.edited = true; keep(); GGF.fit(t); $('eu-time').textContent = timeOf(t.value); }
   });
   $('eu-pron').addEventListener('change', function () { st.pron = this.value; keep(); });
@@ -281,13 +356,18 @@ var GGF = {
   document.addEventListener('click', function (e) {
     var id = e.target && e.target.id;
     if (id === 'eu-copy') GGF.copy(st.d, $('eu-s2'));
+    if (id === 'eu-send-b') { var p = $('eu-send'), o = p.hidden; p.hidden = !o; e.target.setAttribute('aria-expanded', o ? 'true' : 'false'); if (o && $('eu-from')) $('eu-from').focus(); }
+    var snd = e.target.dataset && e.target.dataset.snd;
+    if (snd === 'copy') GGF.copy(sendText(), $('eu-s3'));
+    if (snd === 'sms') GGSend.text('Eulogy for ' + sendName(), sendText(), $('eu-s3'));
+    if (snd === 'mail') GGSend.email('Eulogy for ' + sendName(), sendText(), $('eu-s3'));
     if (id === 'eu-print') { var n = clean(st.a.name); GGF.print('<p class="p-eb">Eulogy</p><h1>' + esc(n || 'In Loving Memory') + '</h1>' + GGF.paras(st.d), true); }
   });
   $('eu-clear').addEventListener('click', function () {
     if (!window.confirm('Clear your words from this device? This cannot be undone.')) return;
-    GGF.drop(KEY); st = { a: {}, pron: 'they', d: '', edited: false }; paint(); GGF.say($('eu-st'), 'Cleared from this device.'); window.scrollTo(0, 0);
+    GGF.drop(KEY); GGSend.clear(); st = { a: {}, pron: 'they', d: '', edited: false }; paint(); GGF.say($('eu-st'), 'Cleared from this device.'); window.scrollTo(0, 0);
   });
-  window.GGEulogy = { timeOf: timeOf, state: function () { return st; } };
+  window.GGEulogy = { timeOf: timeOf, sendText: sendText, state: function () { return st; } };
 })();
 </script>
 </body>

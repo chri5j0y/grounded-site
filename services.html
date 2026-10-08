@@ -692,7 +692,7 @@ const FORM_ENDPOINT = '';
     return `<header class="bro-head has-scene" style="--sc:${stl.color};--scd:${stl.deep}">
       <div class="bro-scene" aria-hidden="true">${SCENES[currentOffer] || SCENES[stl.scene] || ''}</div>
       <div class="bro-icon">${D.icons[s.icon]}</div>
-      <div class="bro-kicker">Grounded. Services</div>
+      <div class="bro-kicker">Grow With Grounded Services</div>
       <h2 id="bro-title">${esc(s.title)}</h2>
       <p class="bro-promise">${esc(s.promise)}</p>
     </header>
@@ -729,7 +729,7 @@ const FORM_ENDPOINT = '';
 
   function ratesHTML() {
     return `<header class="bro-head">
-      <div class="bro-kicker">Grounded. Services</div>
+      <div class="bro-kicker">Grow With Grounded Services</div>
       <h2 id="bro-title">Rates and Accessibility</h2>
       <p class="bro-promise">Your first conversation is always free.</p>
     </header>
@@ -898,13 +898,13 @@ const FORM_ENDPOINT = '';
   }
   function printService(id) {
     const s = SV[id]; if (!s) return;
-    doPrint(servicePage(s) + ratesPage([s], 'Investment'), s.short + ', Grounded.');
+    doPrint(servicePage(s) + ratesPage([s], 'Investment'), s.short + ', Grow With Grounded');
   }
   function printAll() {
     const L = logos();
     const cover = `<section class="p-page p-cover">${L.tree}<br>${L.word}<h1>Services</h1><p>Presence for life's hardest and holiest moments.</p>
       <p class="p-contact"><strong>Chris Joy, Chaplain</strong><br>ICU &middot; Behavioral Health &middot; COVID Care &middot; Hospice &middot; Master's in Theology<br>St. Cloud, Minnesota &middot; Available anywhere and online<br>growwithgrounded.com &middot; ${ADDRESS}</p></section>`;
-    doPrint(cover + D.services.map(servicePage).join('') + ratesPage(D.services, 'Rates and Accessibility'), 'Grounded. Services Brochure');
+    doPrint(cover + D.services.map(servicePage).join('') + ratesPage(D.services, 'Rates and Accessibility'), 'Grow With Grounded Services Brochure');
   }
   function printSheet() {
     const s = SV.speaking;
@@ -920,7 +920,7 @@ const FORM_ENDPOINT = '';
         <h2>Topics</h2>${s.offers.map(o => `<div class="p-offer"><b>${esc(o[1])}.</b> ${esc(o[2])}</div>`).join('')}
         <h2>What your group receives</h2><ul>${s.included.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
       </div></section>`;
-    doPrint(html, 'Chris Joy Speaker Sheet, Grounded.');
+    doPrint(html, 'Chris Joy Speaker Sheet, Grow With Grounded');
   }
 })();
 

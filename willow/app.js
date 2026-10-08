@@ -512,7 +512,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
-  <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays on this device, locked with a passcode. Nothing is sent to Grounded or anyone else. Willow is not medical care or a crisis service. For anything urgent, call your hospice first, day or night.</div>
+  <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays on this device, locked with a passcode. Nothing is sent to Grow With Grounded or anyone else. Willow is not medical care or a crisis service. For anything urgent, call your hospice first, day or night.</div>
   <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button><button type="button" class="btn btn-secondary" onclick="W.go('guides')">When Life Changes</button><button type="button" class="btn btn-secondary" onclick="W.go('readings')">Readings</button></div>`;
 function begin() {
   const a = me();
@@ -1139,7 +1139,7 @@ VIEWS.share = () => {
   const can = { checkins: sees('tree') && cks.length > 0, faith: sees('faith') && !!r.faith, matters: sees('matters') && Object.keys(r.matters || {}).some(k => r.matters[k] && k !== 'updated' && k !== 'by'), notes: sees('answers') && cks.some(c => c.note) };
   const row = (k, label, sub, why) => `<label class="w-switch"><input type="checkbox" ${can[k] && SHARE_PICK[k] ? 'checked' : ''} ${can[k] ? '' : 'disabled'} onchange="W.sharePick('${k}',this.checked)"><span><b>${esc(label)}</b><small>${can[k] ? esc(sub) : esc(why)}</small></span></label>`;
   return `<div class="w-head"><p class="w-eyebrow">Your chaplain or doula</p><h2>Share with my chaplain or doula</h2>
-    <p class="lead">${self ? 'Choose what goes.' : 'You can share only what ' + n + ' chose to share with helpers.'} They scan a code on this screen with their Field Guide, and you read them two words and a number, out loud. Nothing passes through Grounded.</p></div>
+    <p class="lead">${self ? 'Choose what goes.' : 'You can share only what ' + n + ' chose to share with helpers.'} They scan a code on this screen with their Field Guide, and you read them two words and a number, out loud. Nothing passes through Grow With Grounded.</p></div>
     <div class="w-card">
       ${row('checkins', 'Check-ins', `The last ${cks.length === 1 ? 'one' : cks.length}, with answers. Your chaplain or doula sees how each part is doing.`, sees('tree') ? 'No check-ins yet.' : n + ' keeps this private.')}
       ${row('faith', 'Faith answers', 'Tradition, how it\'s lived out, who to call, and anything never to do.', !sees('faith') ? n + ' keeps this private.' : 'Not answered yet.')}

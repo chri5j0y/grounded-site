@@ -63,7 +63,7 @@
   }
   function save(o) {
     if (!subtle) { alert('This browser cannot lock a file. Try another browser, or use Back Up Everything.'); return Promise.resolve(false); }
-    return ask('Lock this file', 'Choose a passcode for this file. You will need it to load the file again. Grounded never sees it and cannot recover it.',
+    return ask('Lock this file', 'Choose a passcode for this file. You will need it to load the file again. Grow With Grounded never sees it and cannot recover it.',
       [{ id: 'p1', label: 'Passcode' }, { id: 'p2', label: 'Passcode again' }], 'Save Locked File',
       function (v) { return v.p1.length < 6 ? 'Use at least 6 characters.' : v.p1 !== v.p2 ? 'The two passcodes are different.' : ''; })
       .then(function (v) {
