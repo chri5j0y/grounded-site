@@ -459,13 +459,13 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b756"></script>
+<script src="/shared/gg-profiles.js?v=b758"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-filelock.js?v=fl2"></script>
 <script src="checkin.js?v=ps1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=b756"></script>
-<script src="/shared/gg-tend.js?v=b756e"></script>
+<script src="/shared/gg-tend.js?v=b758"></script>
 <script>
 /* Aspen by Grow With Grounded content.
    The checkin questions live in checkin.js (window.ASPEN_CHECKIN), on the Grounded tree standard.
@@ -2387,19 +2387,30 @@ function pickStyle(k){ const s = me(), x = TREE_STYLES.find(y => y.key === k); i
 function pickTheme(k){ const s = me(), x = THEMES.find(y => y.key === k); if (!s || !x || !asOpenTheme(s, x)) return; s.theme = k; save(); renderDash(); toast(x.name + ' it is.'); }
 function asSeasonExtra(t){ const s = me(); return s && t ? asMilestones(t) + asSceneryHtml(s) : ''; }
 
-/* ---------- moving on: Start My Pine (Parity Sweep 1, GWG BLD 745, Decision 6) ----------
-   In grade 8 a gentle card offers two choices: stay in Aspen, or Start My Pine, which makes a
-   new High school profile with Pine, built for grades 9 to 12, as its tree. It copies Aspen's
-   rings into Pine (labeled From Aspen) and the Faith or Plain choice. Aspen's own record stays
-   whole. Never forced, and always in Settings in grade 8. */
+/* ---------- moving on: Start My Pine (Parity Sweep 1, GWG BLD 745, Decision 6; GWG BLD 758) ----------
+   MOVE-ON OFFER START. After grade 8, a gentle card offers two choices: stay in Aspen, or
+   Start My Pine: at the start of the next school year (a grade 8 ring from an earlier school
+   year, GGP.moveOn.gradeDue), or as soon as grade 8 is marked done in Settings (s.done8).
+   Stay in Aspen (s.stayAspen) means Today never asks again; Settings keeps the way back.
+   Start My Pine makes a new High school profile with Pine, built for grades 9 to 12, as its
+   tree. It copies Aspen's rings into Pine (labeled From Aspen) and the Faith or Plain choice,
+   and offers to bring the Health and Ability choices. Aspen's own record stays whole. Never forced. */
+function asMoveDue(s){ return !!(s && window.GGP && GGP.moveOn && GGP.moveOn.gradeDue('8', s.rings || [], s.done8)); }
 function movingOnHtml(onToday){
-  const s = me(); if (!s || +s.grade !== 8 || !window.GGP) return '';
-  if (onToday && s.stayAspen) return '';
+  const s = me(); if (!s || !window.GGP) return '';
+  const due = asMoveDue(s);
+  if (onToday && (!due || s.stayAspen || s.movedPine)) return '';
+  if (!onToday && !due && +s.grade !== 8 && !s.stayAspen) return '';
+  const lead = due ? (s.done8 ? 'You finished grade 8. ' : 'A new school year is here, and you finished grade 8. ') : 'You are in grade 8. ';
   return `<${onToday ? 'div class="gt-card as-moving"' : 'section id="as-set-moving"'}><h3>Heading to High School?</h3>
-    <p class="gt-small">${onToday ? 'You are in grade 8. ' : ''}You choose what comes next. Stay in Aspen as long as it fits, or start your own tree in Pine, built for grades 9 to 12. Start My Pine makes a new High school profile for you, with a grown-up agreeing, and brings your Aspen check-ins (labeled From Aspen) and your Faith or Plain wording with you. Aspen keeps its own copy.</p>
-    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyPine()">Start My Pine</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInAspen()">Stay in Aspen</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+    <p class="gt-small">${lead}You choose what comes next. Stay in Aspen as long as it fits, or start your own tree in Pine, built for grades 9 to 12. Start My Pine makes a new High school profile for you, with a grown-up agreeing, and brings your Aspen check-ins (labeled From Aspen) and your Faith or Plain wording with you. Aspen keeps its own copy.</p>
+    <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyPine()">Start My Pine</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInAspen()">Stay in Aspen</button>' : ''}${!onToday && !due ? '<button class="btn btn-secondary btn-sm" onclick="asDone8()">Grade 8 Is Done</button>' : ''}</div>
+    ${!onToday && !due ? '<p class="gt-small">Today offers Start My Pine at the start of the next school year, or as soon as you tap Grade 8 Is Done.</p>' : ''}
+    ${!onToday && s.stayAspen ? GGP.moveOn.stayNote(s.stayAspen, 'Aspen', 'Start My Pine') : ''}</${onToday ? 'div' : 'section'}>`;
 }
 function stayInAspen(){ const s = me(); if (!s) return; s.stayAspen = today(); save(); toast('Aspen stays your tree. Start My Pine is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }
+function asDone8(){ const s = me(); if (!s) return; s.done8 = today(); save(); if (window.GGTend){ GGTend.closeSettings(); GGTend.render(); } toast('Grade 8 is done. Start My Pine is ready on Today.'); }
+/* MOVE-ON OFFER END (startMyPine below carries the Health and Ability question) */
 // Aspen rings on the standard, in the shape Pine keeps its history: one entry per ring, the six
 // part scores (a part answered all "Not sure" is kept as unsure), labeled from: 'aspen'.
 function aspenCarry(s){
@@ -2413,8 +2424,9 @@ function startMyPine(){
   const s = me(); if (!s || !window.GGP) return;
   if (!confirm('Start My Pine makes a new High school profile for you, with Pine as your tree. A grown-up agrees when it is made, the same as Aspen. Your Aspen tree stays as it is. Continue?')) return;
   const pine = {history: aspenCarry(s), wording: wordingOf(s), aspenCopied: today()};
-  GGP.createDialog({ age:'pine', name:'', carry:{ pine }, reason:'Your new High school profile, ' + s.name + '. Pick a name that is different from your Aspen profile, like your name with a last initial. Your Aspen check-ins and your wording come along into Pine.',
-    onCreated: () => { setTimeout(() => { location.href = '/pine/'; }, 600); } });
+  const act = GGP.active();
+  GGP.createDialog({ age:'pine', name:'', carry:{ pine }, lifeFrom: s._pid || null, lifeWho: act && act.id !== s._pid ? s.name : null, reason:'Your new High school profile, ' + s.name + '. Pick a name that is different from your Aspen profile, like your name with a last initial. Your Aspen check-ins and your wording come along into Pine.',
+    onCreated: () => { if (s._pid && GGP.isOpen(s._pid)) { s.movedPine = today(); save(); } setTimeout(() => { location.href = '/pine/'; }, 600); } });
 }
 
 /* ---------- rings from another tree: From Maple (Parity Sweep 1, GWG BLD 745) ----------
@@ -2498,8 +2510,8 @@ lifeFromHash();
 window.addEventListener('hashchange', lifeFromHash);
 
 </script>
-<script src="/shared/gg-learn.js?v=b757" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b757';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b758" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b758';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=w5" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w5';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b758" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b758';document.head.appendChild(s)"></script>
 </body>
 </html>

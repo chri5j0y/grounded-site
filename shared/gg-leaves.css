@@ -1,0 +1,53 @@
+/* =====================================================================
+   GROUNDED . THE LEAVES (shared, GWG BLD 758)
+   One clean leaf for each tree: shared/leaves/<tree>.svg (maple, aspen,
+   pine, birch, oak, sequoia, willow, grove). Each has its own colors and a
+   deeper edge, so it reads on light and dark grounds alike.
+   gg-tend.js and gg-living.js add this file and set html[data-gg-tree] from
+   the app, so no page needs its own link.
+   Pieces
+     .gg-leaf           a leaf the size of the text, inline
+     .gg-leaf-rule      a section divider: a line, a leaf, a line
+     .gg-leaf-corner    a small leaf tucked in a card's top right corner
+     the tended leaf    beside a finished practice and on a tended part
+     list bullets       growth plan practices, The Grove's milestones
+   Never used inside crisis or safety text.
+   ===================================================================== */
+:root{--gg-leaf:url(/shared/leaves/oak.svg);}
+html[data-gg-tree="maple"]{--gg-leaf:url(/shared/leaves/maple.svg);}
+html[data-gg-tree="aspen"]{--gg-leaf:url(/shared/leaves/aspen.svg);}
+html[data-gg-tree="pine"]{--gg-leaf:url(/shared/leaves/pine.svg);}
+html[data-gg-tree="birch"]{--gg-leaf:url(/shared/leaves/birch.svg);}
+html[data-gg-tree="oak"]{--gg-leaf:url(/shared/leaves/oak.svg);}
+html[data-gg-tree="sequoia"]{--gg-leaf:url(/shared/leaves/sequoia.svg);}
+html[data-gg-tree="willow"]{--gg-leaf:url(/shared/leaves/willow.svg);}
+html[data-gg-tree="grove"]{--gg-leaf:url(/shared/leaves/grove.svg);}
+
+.gg-leaf{display:inline-block;width:1em;height:1em;vertical-align:-.14em;background:var(--gg-leaf) center/contain no-repeat;}
+
+/* a section divider */
+.gg-leaf-rule{display:flex;align-items:center;gap:12px;margin:4px 0 18px;}
+.gg-leaf-rule::before,.gg-leaf-rule::after{content:"";flex:1;height:1px;background:var(--line,#E2D8C3);}
+.gg-leaf-rule i{flex:none;width:22px;height:22px;background:var(--gg-leaf) center/contain no-repeat;}
+
+/* a card corner */
+.gg-leaf-corner{position:relative;}
+.gg-leaf-corner::after{content:"";position:absolute;top:10px;right:12px;width:26px;height:26px;background:var(--gg-leaf) center/contain no-repeat;opacity:.9;pointer-events:none;}
+
+/* the tended leaf: beside a finished practice, and on a tended part */
+.gt-item.done .gt-item-main > b::after{content:"";display:inline-block;width:1.05em;height:1.05em;margin-left:6px;vertical-align:-.16em;background:var(--gg-leaf) center/contain no-repeat;animation:ggLeafIn .5s ease-out;}
+.gt-mark-dot{position:relative;}
+.gt-mark.on .gt-mark-dot::after{content:"";position:absolute;top:-7px;right:-9px;width:18px;height:18px;background:var(--gg-leaf) center/contain no-repeat;animation:ggLeafIn .5s ease-out;}
+@keyframes ggLeafIn{from{transform:scale(.4) rotate(-30deg);opacity:0}to{transform:none;opacity:1}}
+
+/* list bullets: growth plan practices (Oak, Pine, Birch, Sequoia, Willow) */
+html[data-gg-tree] .growth-plan-practice-item{padding-left:22px;}
+html[data-gg-tree] .growth-plan-practice-item::before{content:"";top:calc(4px + .75em - 7.5px);width:15px;height:15px;background:var(--gg-leaf) center/contain no-repeat;}
+/* The Grove's Family Milestones */
+html[data-gg-tree] .gv-miles li > b{display:inline-flex;align-items:center;gap:8px;}
+html[data-gg-tree] .gv-miles li > b::before{content:"";flex:none;width:18px;height:18px;background:var(--gg-leaf) center/contain no-repeat;}
+
+@media (prefers-reduced-motion:reduce){.gt-item.done .gt-item-main > b::after,.gt-mark.on .gt-mark-dot::after{animation:none;}}
+html.gg-reduce-motion .gt-item.done .gt-item-main > b::after,html.gg-reduce-motion .gt-mark.on .gt-mark-dot::after,
+html[data-motion="reduce"] .gt-item.done .gt-item-main > b::after,html[data-motion="reduce"] .gt-mark.on .gt-mark-dot::after{animation:none;}
+@media print{.gg-leaf,.gg-leaf-rule i,.gg-leaf-corner::after{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}

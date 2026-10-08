@@ -77,7 +77,7 @@
      sees Groundwork unless the person prints or shares a chapter by choice.
    - Printed, saved as a PDF, or shared only when the person chooses, and
      only the chapters (and skills lists) the person picks.
-   - Moving to Oak (from 25, Move My Tree to Oak): Groundwork stays whole in
+   - Moving to Oak (from the 26th birthday, Move My Tree to Oak): Groundwork stays whole in
      the Birch record and prints whole.
    - Every prompt can be skipped. No streaks, reminders, or nudges.
    - Nothing assumes college, a job, a partner, a family shape, money, a

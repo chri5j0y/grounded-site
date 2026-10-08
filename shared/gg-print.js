@@ -5,6 +5,7 @@
    - GGPrint.certificate(o)     Certificate of Completion, landscape Letter.
                                 o: {tree, name, title, body, date, renew, version, id, kind}
                                 tree is maple, aspen, pine, birch, oak, sequoia, willow, grove, or house (Grow With Grounded).
+                                A tree's certificate carries its own leaf in each corner (shared/leaves/<tree>.svg).
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
                                 kind 'parts': the six parts teaching poster, in that tree's voice.
@@ -29,7 +30,7 @@
     aspen: { name: 'Aspen', color: '#1F6F74', ink: '#1F6F74', path: '/aspen/', tag: 'Rooted together.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 6 to 8.', guide: 'Aspen Guide',
       points: ['A check-in for grades 6 to 8, with questions written for each grade.', 'Every check-in adds a growth ring and leaves to their tree, and daily tending happens right in Aspen.', 'Done on their own or with a grown-up.', 'Grown-ups get When Life Changes: guides for hard talks with middle schoolers, from group chats to grief.'],
       parts: { title: 'Six Parts Make You Whole', lead: 'Every middle schooler is like an aspen: growing fast and putting down roots.', words: ['What keeps you steady: faith, family traditions, quiet, or time outside.', 'Goals, things you care about, and trying new things.', 'Naming what you feel, calming down, and asking for help.', 'Friends, family, and belonging somewhere.', 'Sleep, movement, real meals, and screen breaks.', "Hope for what's ahead, and the kindness that grows it."], close: 'Notice all six. Tend the one that needs it.' } },
-    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults, 25 to 60.', guide: 'Oak Guide',
+    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults, 26 to 60.', guide: 'Oak Guide',
       points: ['A check-in for the whole person, from root to fruit.', 'A personal growth plan with step-by-step practices.', "When Life Changes: 77 guides for life's hardest seasons."],
       parts: { title: 'Six Parts Make You Whole', lead: 'Being whole means noticing and tending all six.', words: ['Faith, the Sacred, and the practices that steady you.', 'Meaning, calling, and what your life is for.', 'Thoughts and feelings, stress and resilience.', 'Family, friends, and community.', 'Movement, rest, and nourishment.', "Hope, gratitude, and what you're growing toward."], close: 'Shelter for others. Strength for you.' } },
     // Pine (GWG BLD 739, Pine Guide posters GWG BLD 741): the flyer, "A trained Pine Guide serves here.", and the six parts poster.
@@ -49,7 +50,7 @@
     grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, side by side.',
       points: ["The family's shared ground, on one device.", 'Everyone tends their own tree in their own app, and the trees stand side by side here.', 'A family wall to cheer each other on, and practices to do together.'] }
   };
-  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '25 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
+  var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '26 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
 
   function qr(u, label) {
     try { if (window.GGQR && GGQR.svg) return GGQR.svg(u, { label: label || 'QR code', border: 2 }); } catch (e) {}
@@ -117,7 +118,10 @@
       var t = T[o.tree] || T.house, house = !T[o.tree] || o.tree === 'house', u = SITE + t.path;
       var mark = house ? '<img class="c-logo-big" src="' + A('/favicon.svg') + '" alt="">' : '<img class="c-mark" src="' + A('/shared/marks/' + o.tree + '.svg') + '" alt="">';
       var meta = [o.date ? 'Completed ' + nice(o.date) : '', o.renew ? 'Renew by ' + nice(o.renew) : '', o.version ? 'Version ' + o.version : '', o.id ? 'Certificate ' + o.id : ''].filter(Boolean);
-      var body = '<div class="c-frame" style="--c:' + t.color + '"><div class="c-in">'
+      // The tree's own leaf in each corner (GWG BLD 758), turned to point along the frame.
+      var LEAVES = { maple: 1, aspen: 1, pine: 1, birch: 1, oak: 1, sequoia: 1, willow: 1, grove: 1 };
+      var corners = !house && LEAVES[o.tree] ? ['tl', 'tr', 'bl', 'br'].map(function (k) { return '<img class="c-leaf c-' + k + '" src="' + A('/shared/leaves/' + o.tree + '.svg') + '" alt="">'; }).join('') : '';
+      var body = '<div class="c-frame" style="--c:' + t.color + '">' + corners + '<div class="c-in">'
         + (house ? '' : '<div class="c-house"><img src="' + A('/favicon.svg') + '" alt=""><span class="cond">GROW WITH GROUNDED</span></div>')
         + '<div style="flex:.5"></div>' + mark
         + '<div class="c-title serif">Certificate of Completion</div>'
@@ -145,7 +149,10 @@
         '.c-foot{margin-top:auto;width:100%;display:flex;align-items:flex-end;justify-content:space-between;gap:0.4in;}',
         '.c-signs{display:flex;gap:0.4in;}.c-signs div{display:flex;flex-direction:column;align-items:flex-start;width:2.5in;}.c-signs i{display:block;width:100%;border-bottom:0.75pt solid #2C1810;height:0.42in;}.c-signs span{font-size:9.5pt;color:#4A3B30;margin-top:4px;text-align:left;}',
         '.c-qr{display:flex;align-items:center;gap:0.1in;text-align:left;}.c-qr svg{width:0.85in;height:0.85in;}.c-qr b{display:block;font-size:9.5pt;max-width:1.4in;line-height:1.25;}.c-qr span{display:block;font-size:8.5pt;color:#6B5A4D;margin-top:2px;}',
-        '.c-tm{font-size:7.5pt;color:#7A6A5D;margin-top:0.1in;}'
+        '.c-tm{font-size:7.5pt;color:#7A6A5D;margin-top:0.1in;}',
+        '.c-leaf{position:absolute;width:0.44in;height:0.44in;z-index:1;}',
+        '.c-tl{top:0.02in;left:0.02in;transform:rotate(-90deg);}.c-tr{top:0.02in;right:0.02in;}',
+        '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}'
       ].join('\n');
       return page({ win: win, title: 'Certificate of Completion', size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.' });
     });

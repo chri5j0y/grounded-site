@@ -59,7 +59,7 @@
    Birch, the tree for young adults (GWG BLD 742)
    - The same pattern as Sequoia: the age stays "adult" and p.tree is
      'birch'. Anyone who says they are 26 or younger may choose Birch
-     (built for 18 to 26) or Oak (built for 25 to 60), and switch any
+     (built for 18 to 26) or Oak (built for 26 to 60), and switch any
      time. Saying yes opens the tree pick with Birch chosen.
    - Helpers work in Birch the Sequoia way, only when the person turns on
      Add a Helper in their own Birch settings (birch.helpersOn).
@@ -69,7 +69,8 @@
      (vault.life), shared by every tree; never in the open list or shared.
      Manage my profile has a Health and Ability row (Maple and Aspen: Their
      Health and Ability, set by a grown-up with the child). A new profile made
-     with carry (Start My Birch, Start My Oak) asks "Bring your Health and
+     with carry (Start My Birch, Start My Oak; Start My Aspen and Start My
+     Pine, GWG BLD 758, with opt.lifeFrom) asks "Bring your Health and
      Ability choices?" and copies it only on a yes. Move My Tree keeps it,
      since it is the same profile. Clear My Choices erases it.
    - Learn watched marks are kept in the vault too (vault.learn, gg-learn.js).
@@ -94,7 +95,7 @@
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
   // A grown-up's own tree (Sequoia, GWG BLD 733). The age stays "adult" either way.
   // Birch (GWG BLD 742) joins the same way: p.tree 'birch', the age still "adult".
-  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/oak/', who: 'Built for adults, 25 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/birch/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/sequoia/', who: 'Built for older adults, 60 and up' } };
+  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/oak/', who: 'Built for adults, 26 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/birch/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/sequoia/', who: 'Built for older adults, 60 and up' } };
   // Which trees each age question offers: 26 or younger (Birch first), 55 or older.
   var BAND = { young: ['birch', 'oak'], older: ['oak', 'sequoia'] };
   function treeOf(p) { return p && p.age === 'adult' && (p.tree === 'sequoia' || p.tree === 'birch') ? p.tree : 'oak'; }
@@ -533,7 +534,10 @@
         };
       }
       // Start My Birch and Start My Oak (Pine): bring the Health and Ability choice only on a yes.
-      var lifeFrom = (function () { var v = opt.carry && cur && open[cur.id] && open[cur.id].data, l = v && v.life; return l && ((l.ids || []).length || l.none || l.rather || l.gentle) ? l : null; })();
+      // Start My Aspen and Start My Pine (GWG BLD 758) name the profile it comes from (opt.lifeFrom),
+      // since a grown-up may be the one unlocked; opt.lifeWho names the child for the grown-up.
+      var lifeSrc = opt.lifeFrom && open[opt.lifeFrom] ? opt.lifeFrom : (cur && cur.id);
+      var lifeFrom = (function () { var v = opt.carry && lifeSrc && open[lifeSrc] && open[lifeSrc].data, l = v && v.life; return l && ((l.ids || []).length || l.none || l.rather || l.gentle) ? l : null; })();
       function step3(d) {
         var minor = isMinor(st.age);
         d.show('<h2 id="ggp-title">One last step</h2>' +
@@ -542,7 +546,7 @@
           (minor ? grownBlock(st.name, st.age)
             : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +
-          (lifeFrom && !minor ? '<hr class="ggp-sep"><p style="margin:0"><b>Bring your Health and Ability choices?</b></p><label class="ggp-check" style="margin-top:6px"><input type="checkbox" id="ggp-life"> <span>Yes, copy them into the new profile, locked there too. You can change them any time.</span></label>' : '') +
+          (lifeFrom && (!minor || opt.lifeFrom) ? '<hr class="ggp-sep"><p style="margin:0"><b>Bring ' + (opt.lifeWho ? esc(opt.lifeWho) + '\'s' : 'your') + ' Health and Ability choices?</b></p><label class="ggp-check" style="margin-top:6px"><input type="checkbox" id="ggp-life"> <span>Yes, copy them into the new profile, locked there too. You can change them any time.</span></label>' : '') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Create profile</button></div>');
         $(d, '[data-back]').onclick = function () { st.pass = null; step2(d); };
         $(d, '[data-go]').onclick = function () {
@@ -1065,6 +1069,70 @@
   }
 
   /* =====================================================================
+     MOVE-ON OFFERS (GWG BLD 758)
+     Each tree offers the next one when its time comes, always as an offer:
+     the person (or the grown-up, for kids) chooses, and nothing moves on its
+     own. A step that is declined is never offered on Today again; the way
+     back stays in that tree's Settings.
+       Adults, on the birthday: 18 Pine to Birch, 26 Birch to Oak, 60 Oak to
+       Sequoia. The birthday is optional, kept locked in the vault
+       (vault.birth, 'YYYY-MM-DD'), shared by every tree of the profile, and
+       carried by Start My Birch and Start My Oak.
+       Kids, by grade: after grade 5, Maple to Aspen; after grade 8, Aspen to
+       Pine. Offered at the start of the next school year (August 1), or as
+       soon as a grown-up marks the grade finished.
+     GGP.moveOn.birthday(id) / setBirthday(id, 'YYYY-MM-DD' or '')
+     GGP.moveOn.age(id, fallback)     whole years from the birthday, else the
+                                      tree's older optional age number
+     GGP.moveOn.isBirthday(id)        true on the birthday itself
+     GGP.moveOn.schoolYear(date)      the year a school year starts in
+     GGP.moveOn.gradeDue(top, list, finished)  list: [{ date, grade }]
+     GGP.moveOn.birthdayHtml(id, o)   the Settings section for the birthday
+     GGP.moveOn.stayNote(date, tree, start)  the quiet line after a decline
+     ===================================================================== */
+  var SCHOOL_MONTH = 8;
+  function ymd(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function okBirth(v) { if (!/^\d{4}-\d{2}-\d{2}$/.test(String(v || ''))) return false; var d = new Date(v + 'T12:00:00'); return !isNaN(d) && ymd(d) === v && v <= todayStr() && +v.slice(0, 4) >= 1900; }
+  function birthOf(id) { id = id || (cur && cur.id); var o = open[id], b = o && o.data && o.data.birth; return okBirth(b) ? b : null; }
+  function yearsFrom(b) { var t = todayStr(), n = +t.slice(0, 4) - +b.slice(0, 4); if (t.slice(5) < b.slice(5)) n--; return n; }
+  function schoolYear(v) { var s = String(v || '').slice(0, 10); if (!/^\d{4}-\d{2}/.test(s)) return null; var y = +s.slice(0, 4), m = +s.slice(5, 7); return m >= SCHOOL_MONTH ? y : y - 1; }
+  var MOVE = {
+    SCHOOL_MONTH: SCHOOL_MONTH,
+    birthday: birthOf,
+    setBirthday: function (id, v) {
+      id = id || (cur && cur.id); var o = open[id]; if (!o) return Promise.reject(new Error('Open the profile first.'));
+      v = String(v || '').trim();
+      if (v && !okBirth(v)) return Promise.reject(new Error('That date does not look right.'));
+      if (v) o.data.birth = v; else delete o.data.birth;
+      return save(id).then(function () { emit('data'); return v || null; });
+    },
+    age: function (id, fallback) { var b = birthOf(id); if (b) return yearsFrom(b); var a = parseInt(fallback, 10); return isNaN(a) ? null : a; },
+    isBirthday: function (id) { var b = birthOf(id); return !!b && b.slice(5) === todayStr().slice(5); },
+    schoolYear: schoolYear,
+    gradeDue: function (top, list, finished) {
+      if (finished) return true;
+      var now = schoolYear(todayStr());
+      return (list || []).some(function (e) { var y = e && String(e.grade) === String(top) ? schoolYear(e.date) : null; return y != null && y < now; });
+    },
+    // o: { section, why, cls, label }  the select class and the line of why.
+    birthdayHtml: function (id, o) {
+      o = o || {}; var b = birthOf(id), can = !!(id && open[id]);
+      return '<section id="' + esc(o.section || 'gg-set-birthday') + '"><h3>Your Birthday (Optional)</h3><p class="gt-small">' + esc(o.why || '') + ' It stays locked in your profile.</p>' +
+        '<input type="date" aria-label="Your birthday" id="' + esc(o.section || 'gg-set-birthday') + '-in" class="' + esc(o.cls || 'sq-select') + '" min="1900-01-01" max="' + todayStr() + '" value="' + (b || '') + '"' + (can ? '' : ' disabled') + ' onchange="GGP.moveOn.pick(\'' + esc(id || '') + '\', this.value)">' +
+        (b ? ' <button type="button" class="text-btn" onclick="GGP.moveOn.pick(\'' + esc(id) + '\', \'\')">Clear</button>' : '') + '</section>';
+    },
+    pick: function (id, v) {
+      MOVE.setBirthday(id, v).then(function (r) { toast(r ? 'Birthday saved.' : 'Birthday cleared.'); if (window.GGTend && GGTend.render) GGTend.render(); })
+        .catch(function (e) { toast(e.message); });
+    },
+    // whose: 'your' (the default) or a child's name for a grown-up reading.
+    stayNote: function (date, tree, start, whose) {
+      var d = String(date || '').slice(0, 10), t = /^\d{4}-\d{2}-\d{2}$/.test(d) ? new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+      return '<p class="gt-small gg-stay-note"><b>' + esc(tree) + ' stays ' + (whose ? esc(whose) + '\'s' : 'your') + ' tree' + (t ? ', chosen ' + esc(t) : '') + '.</b> Today will not ask again. ' + esc(start) + ' is right here whenever it fits.</p>';
+    }
+  };
+
+  /* =====================================================================
      PUBLIC
      ===================================================================== */
   var readyP = null;
@@ -1086,6 +1154,7 @@
     setAvatar: function (id, v) { var p = getP(id); if (!p || !open[id]) return false; p.avatar = v || ''; putP(p); paintAll(); return true; },
     setShared: function (id, obj) { var p = getP(id); if (!p || !open[id]) return false; p.shared = Object.assign(p.shared || {}, obj); putP(p); return true; },
     on: function (fn) { subs.push(fn); }, off: function (fn) { subs = subs.filter(function (x) { return x !== fn; }); },
+    moveOn: MOVE,
     lock: lock, openDialog: openDialog, createDialog: createDialog, manage: manage, backup: backup, restore: restore, toast: toast,
     require: function (opt) {
       opt = opt || {};

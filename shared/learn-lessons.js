@@ -9427,7 +9427,7 @@ window.GG_LEARN = {
           { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine.' },
           { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back. Save to a File, and the practitioner backup, save locked files too, with a passcode you choose.' },
           { k: 'points', h: 'The Grove', items: [['Your tree is yours', 'Answers always stay private'], ['The grove is ours', 'Your family’s trees, side by side'], ['You choose', 'Show my growth on The Grove, on or off']], say: 'If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings.' },
-          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose, and safety answers stay yours'], ['Your Age (Optional)', 'At 60, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. A helper never sees your safety answers. Your age is optional, and at 60, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
+          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose, and safety answers stay yours'], ['Your Birthday (Optional)', 'On your 60th birthday, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. A helper never sees your safety answers. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
           { k: 'big', h: 'You know Oak now. Go tend your tree.', say: 'That is the whole tour. You know Oak now. Go tend your tree, a little at a time.' },
           { k: 'quiz', q: 'What does Back up everything save?', opts: ['Only your answers, unlocked', 'One file with every profile, still locked', 'Nothing, it sends your data online'], right: 1, why: 'One file holds every profile on the device, each still locked.', say: 'Last question. What does Back up everything save?' }
         ] }
@@ -23291,7 +23291,7 @@ window.GG_LEARN = {
         ],
         [
          "Your own tree",
-         "Oak, for adults 25 to 60"
+         "Oak, for adults 26 to 60"
         ]
        ],
        "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same six parts as Pine."
@@ -25377,7 +25377,7 @@ window.GG_LEARN = {
      "n": 6,
      "title": "Make Birch Yours",
      "mins": 4,
-     "blurb": "My Season, Faith or Plain wording, the optional question, reading and display, and moving your tree to Oak from 25.",
+     "blurb": "My Season, Faith or Plain wording, the optional question, reading and display, and moving your tree to Oak on your 26th birthday.",
      "scenes": [
       {
        "k": "title",

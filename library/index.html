@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Grow With Grounded | Presence at life&#39;s thresholds">
 <meta name="twitter:description" content="Services that honor life&#39;s thresholds, growth tools that build spiritual and emotional resilience at every age, and real stories from the edge of life. From chaplain Chris Joy.">
 <meta name="twitter:image" content="https://growwithgrounded.com/share-thresholds.png">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="/shared/marks/library-tab.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/style.css?v=b756">
@@ -131,6 +131,15 @@
 .lib-disclose,.lib-note{font-size:14px;color:var(--ink-soft);margin:6px 0 0;}
 @media (prefers-reduced-motion:no-preference){.lib-card{transition:transform .15s;}.lib-card:hover{transform:translateY(-2px);}}
 </style>
+<style>
+/* BLD 758: the Library hero and mark, cut from the Stories book painting */
+.lib.lib-has-hero{padding-top:0;}
+.lib .lib-pghero{min-height:clamp(320px,30vw,480px);padding:56px 0 64px;--shade-c:.55;--shade-m:.36;--shade-e:.2;}
+.lib .lib-pghero h1{font-size:clamp(40px,5.6vw,70px);margin:0 auto;}
+.lib .lib-pghero .lib-mark{width:88px;height:88px;display:block;margin:0 auto 14px;border-radius:20px;box-shadow:0 4px 18px rgba(0,0,0,.5);}
+.lib .lib-pghero + .wrap .lib-intro{margin-top:24px;}
+@media (max-width:700px){.lib .lib-pghero{min-height:360px;padding:44px 0 52px;}.lib .lib-pghero .lib-mark{width:72px;height:72px;}}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -139,10 +148,16 @@
   <button class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   <nav class="site-menu" id="site-menu" aria-label="Main"><a href="/index.html">Home</a><a href="/services.html">Services</a><a href="/tools.html">Tools</a><a href="/stories.html">Stories</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav>
 </div></header>
-<main id="main" class="lib">
+<main id="main" class="lib lib-has-hero">
+<section class="pg-hero lib-pghero" style="--img:url(/shared/heroes/library-wide.webp);--img-n:url(/shared/heroes/library-phone.webp)" aria-labelledby="lib-title">
+  <div class="wrap pg-hero-in">
+    <img class="lib-mark" src="/shared/marks/library.svg" alt="" width="88" height="88">
+    <div class="eyebrow">From Chris's Shelves</div>
+    <h1 id="lib-title">The Grounded Library</h1>
+    <p class="pg-sub">Twenty years of books that shaped Grow With Grounded.</p>
+  </div>
+</section>
 <div class="wrap">
-  <figure class="lib-hero"><img src="/library/library-scene.webp" alt="Four log bookcases filled with Chris's books, with plants, candles, and a brass bell" width="1600" height="900"></figure>
-  <h1>The Grounded Library</h1>
   <p class="lib-intro">These are the books on my shelves: twenty years of study, chaplaincy, and late nights that shaped Grow With Grounded. Browse by section or by the part of the tree a book feeds, and see which When Life Changes guides and practices each one sits close to.</p>
   <p class="lib-sign">Chris Joy</p>
   <div class="lib-nerd" aria-hidden="true"><svg class="li" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5c3-1.2 5.7-1 8 .8 2.3-1.8 5-2 8-.8V19c-3-1.2-5.7-1-8 .8-2.3-1.8-5-2-8-.8z"/><path d="M12 6.3v13.5"/></svg><svg class="li" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="14" r="3.5"/><circle cx="17" cy="14" r="3.5"/><path d="M10.5 14h3M3.5 14L5 8M20.5 14L19 8"/></svg><svg class="li" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M11 3v3"/></svg><svg class="li" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C12 4 6 9 5 20c4-1 6-3 7-6 3 0 6-2 8-10z"/><path d="M5 20l7-8"/></svg><svg class="li" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v16l-5-4-5 4z"/></svg><svg class="li" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16M9 4v16M14 5l4 15M3 20h18"/></svg></div>
@@ -169,7 +184,7 @@
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="/site.js"></script>
-<script src="/nav.js?v=w5" defer></script>
+<script src="/nav.js?v=b758" defer></script>
 <script src="/shared/gg-shelf.js?v=fd4"></script>
 <script src="/library/books.js?v=l1"></script>
 <script>

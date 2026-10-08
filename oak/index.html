@@ -12,7 +12,7 @@
 <link rel="icon" type="image/svg+xml" href="/shared/marks/oak-tab.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Oak by Grow With Grounded | Shelter for others. Strength for you</title>
-<meta name="description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 25 to 60.">
+<meta name="description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 26 to 60.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://growwithgrounded.com/oak/">
 <meta property="og:image" content="https://growwithgrounded.com/oak/share-image.png">
@@ -22,7 +22,7 @@
 <link rel="canonical" href="https://growwithgrounded.com/oak/">
 <meta property="og:site_name" content="Grow With Grounded">
 <meta property="og:title" content="Oak by Grow With Grounded">
-<meta property="og:description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 25 to 60.">
+<meta property="og:description" content="Shelter for others. Strength for you. Six parts make you whole. Learn to tend them all. Built for adults, 26 to 60.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Oak by Grow With Grounded">
 <meta name="twitter:description" content="Shelter for others. Strength for you. From Grow With Grounded.">
@@ -1007,7 +1007,7 @@ html.ts-2 main{zoom:1.25;}
     <div class="gg-hero-lock"><img class="gg-hero-mark" src="/shared/marks/oak.svg" alt="" width="64" height="64"><h1 id="hero-title">Oak<sup>&trade;</sup></h1></div>
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Shelter for others. Strength for you.</p>
-    <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 25 to 60.</p>
+    <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 26 to 60.</p>
     <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');document.getElementById('client-nav').scrollIntoView({behavior:'smooth'})">How it works</button></div>
     <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Grounded Field Guide.</p>
     <div id="hero-tree-slot" hidden></div>
@@ -1126,12 +1126,12 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-pdf.js"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=fl2"></script>
-<script src="/shared/gg-profiles.js?v=b756"></script>
+<script src="/shared/gg-profiles.js?v=b758"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-life-kit.js?v=lk1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=b756"></script>
-<script src="/shared/gg-tend.js?v=b756e"></script>
+<script src="/shared/gg-tend.js?v=b758"></script>
 <script src="/oak/guides.js?v=b757"></script>
 <script src="/oak/practices.js?v=hl1"></script>
 <script>
@@ -2842,22 +2842,21 @@ async function profResume() {
 
 // =====================================================================
 // SETTINGS, behind the profile picture (GWG BLD 745): Steady or Hardy and grace
-// days, optional helpers, an optional age (only for the step into Sequoia at 60),
+// days, optional helpers, an optional birthday (only for the step into Sequoia at 60),
 // what stays private, Groundwork from Birch, and Move My Tree to Sequoia.
 // Saved in the profile under "oak".
 // =====================================================================
 const TREE_NAME = { birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia' };
 function treeNow(id) { return window.GGP && GGP.tree ? GGP.tree(id) : 'oak'; }
 function okRec() { if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'oak'); if (!Array.isArray(d.history)) d.history = []; return d; }
-function ageNow() { const r = okRec(), a = r ? parseInt(r.age, 10) : NaN; return isNaN(a) ? null : a; }
+function ageNow() { const r = okRec(); return r && GGP.moveOn ? GGP.moveOn.age(PROF.id, r.age) : null; }   // the birthday first (GWG BLD 758), else an older optional age
 function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
 const OK_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your reflections, and your safety answers stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone.</p>
   <p><b>Helpers, only if you choose</b>You can let someone you trust open your Oak with their own passcode. They see only what you share, and never your safety answers or flags. This stays off unless you turn it on.</p>
   <p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>`;
-const AGES_PICK = [['54', 'Under 55'], ['55', '55'], ['56', '56'], ['57', '57'], ['58', '58'], ['59', '59'], ['60', '60 or older']];
 function oakSettingsHtml() {
   if (HELP) return helperSettingsHtml();
-  const s = window.GGTend && GGTend.state(), open = !!okRec(), mode = pnMode(s), age = ageNow();
+  const s = window.GGTend && GGTend.state(), mode = pnMode(s);
   if (PROF && PROF.age !== 'adult') return '';
   return `${window.GGLifeKit ? GGLifeKit.settingsHtml('oak', 'ok-set-life') : ''}<section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
       <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. Missed days rest in soft mist, and nothing is ever lost.<span class="steady-fit">${steadyFits() ? ' Steady fits you best right now.' : ''}</span></span></label>
@@ -2865,23 +2864,20 @@ function oakSettingsHtml() {
       <p class="gt-small"><b>Grace days.</b> Two days a week are yours to rest. Five days tended makes a full week, and Hardy never counts grace days.</p>
       <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     ${helperSettingsHtml()}
-    <section id="ok-set-age"><h3>Your Age (Optional)</h3><p class="gt-small">Only used to offer the step into Sequoia, built for 60 and up, when you reach 60. It stays in your profile.</p>
-      <select class="sq-select" aria-label="Your age"${open ? '' : ' disabled'} onchange="setAge(this.value)"><option value="">Rather not say</option>${AGES_PICK.map(v => `<option value="${v[0]}"${String(age) === v[0] ? ' selected' : ''}>${v[1]}</option>`).join('')}</select></section>
+    ${PROF && window.GGP && GGP.moveOn ? GGP.moveOn.birthdayHtml(PROF.id, { section: 'ok-set-birthday', why: 'Only used to offer the step into Sequoia, built for 60 and up, on your 60th birthday.' }) : ''}
     <section class="asp-see" id="ok-see"><h3>What Stays Private</h3>${OK_SEE}</section>
     ${gwSettingsHtml()}
     ${moveSeqHtml(false)}`;
 }
-function setAge(v) {
-  const r = okRec(); if (!r) return;
-  if (v) r.age = v; else delete r.age;
-  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(v ? 'Saved.' : 'Age cleared.'); });
-}
 
 // =====================================================================
-// MOVING ON (Decision 6, GWG BLD 745). At 60, a gentle card on Today, and any time
-// in Settings: Move My Tree to Sequoia. The same profile switches its tree;
-// Sequoia gets a one-time copy of Oak's rings, labeled From Oak (id 'oak-' + id).
-// Oak's record stays whole. Never forced. Modeled on Birch's Move My Tree to Oak.
+// MOVING ON (Decision 6, GWG BLD 745; move-on offers, GWG BLD 758). MOVE-ON OFFER START.
+// On the 60th birthday (the optional birthday in Settings, kept in the profile and shared
+// by its trees, GGP.moveOn), a gentle card on Today, and any time in Settings: Move My Tree
+// to Sequoia. The same profile switches its tree, so the Health and Ability choices stay;
+// Sequoia gets a one-time copy of Oak's rings, labeled From Oak (id 'oak-' + id). Oak's
+// record stays whole. Never forced. Stay in Oak (staySeq) means Today never asks again;
+// Settings keeps the way back. Modeled on Birch's Move My Tree to Oak.
 // =====================================================================
 function ringCopy(e) {
   const c = JSON.parse(JSON.stringify(e));
@@ -2894,10 +2890,12 @@ function moveSeqHtml(onToday) {
   const r = okRec(), age = ageNow(); if (!r) return '';
   if (onToday && (age == null || age < 60 || r.staySeq || r.movedToSequoia || treeNow(PROF.id) !== 'oak')) return '';
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="ok-set-moving"'}><h3>Ready for Sequoia?</h3>
-    <p class="gt-small">${onToday ? 'Oak is built for adults 25 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
-    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToSequoia()">Move My Tree to Sequoia</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInOak()">Stay in Oak</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+    <p class="gt-small">${onToday ? (age === 60 && GGP.moveOn.isBirthday(PROF.id) ? 'Happy 60th birthday! ' : '') + 'Oak is built for adults 26 to 60, and Sequoia for 60 and up. ' : 'Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. '}You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToSequoia()">Move My Tree to Sequoia</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInOak()">Stay in Oak</button>' : ''}</div>
+    ${!onToday && r.staySeq ? GGP.moveOn.stayNote(r.staySeq, 'Oak', 'Move My Tree to Sequoia') : ''}</${onToday ? 'div' : 'section'}>`;
 }
 function stayInOak() { const r = okRec(); if (!r) return; r.staySeq = todayKey(); persistRec().then(() => { showToast('Oak stays your tree. Move My Tree to Sequoia is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+// MOVE-ON OFFER END
 function moveToSequoia() {
   if (!PROF || !window.GGP) return;
   if (!confirm('Move your tree to Sequoia? This same profile opens in Sequoia from now on. Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything. You can switch back any time in Picture, passcode, and more.')) return;
@@ -2919,7 +2917,7 @@ function moveToSequoia() {
 // come from /birch/groundwork.js, loaded only when the notebook opens; each saved
 // answer also keeps the words of its prompt, so it reads well either way.
 // =====================================================================
-const GW_SRC = '/birch/groundwork.js?v=bc1';
+const GW_SRC = '/birch/groundwork.js?v=b758';
 function birchRec() { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const all = GGP.data(PROF.id); return all && all.birch && typeof all.birch === 'object' ? all.birch : null; }
 function gwData() {
   const b = birchRec(), g = b && b.groundwork; if (!g || typeof g !== 'object') return null;
@@ -3505,8 +3503,8 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b757" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b757';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b758" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b758';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=w5" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=w5';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b758" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b758';document.head.appendChild(s)"></script>
 </body>
 </html>

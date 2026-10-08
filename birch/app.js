@@ -1,7 +1,7 @@
 /* =====================================================================
    BIRCH . the app (GWG BLD 742)
    The Grow With Grounded tree for young adults, 18 to 26, between Pine
-   (grades 9 to 12) and Oak (adults, 25 to 60). Built from Pine's newest
+   (grades 9 to 12) and Oak (adults, 26 to 60). Built from Pine's newest
    structures (the app, the game layer, Faith or Plain) with Oak's and
    Sequoia's adult pieces (adult privacy, adult faith rules, helpers in
    Sequoia's model, adult help lines). Where they differ, Oak and Sequoia
@@ -20,7 +20,7 @@
      profile under "birch": history (check-ins), tend (daily tending and the
      game layer, game state in tend.bc), groundwork (the notebook and skills),
      wording ('faith' or 'plain'), seasons (My Season ids), askOpt (the
-     optional question), age (optional, for the Oak card from 25), setup,
+     optional question), birthday (optional, for the Oak card at 26, GGP.moveOn), setup,
      oakBrought, pineBrought, helpersOn and share (helpers), movedToOak.
    - A Birch profile is an adult profile: age "adult" with the tree set to
      'birch' (GGP.tree). Any adult profile opened here tends a Birch tree;
@@ -399,7 +399,7 @@ function renderAboutParts() {
 
 // =====================================================================
 // THE PERSON'S SETTINGS: My Season, Faith or Plain, the optional question,
-// Steady or Hardy, and an optional age. Saved in the profile under "birch";
+// Steady or Hardy, and an optional birthday (kept in the profile, GGP.moveOn). Saved in the profile under "birch";
 // before a profile exists they live in memory for this visit only.
 // =====================================================================
 const LOCAL = { wording: null, seasons: [], askOpt: false };
@@ -410,7 +410,7 @@ function seasonsNow() { const v = rec().seasons; return Array.isArray(v) ? v.fil
 function seasonName(id) { const x = SEASONS.find(y => y.id === id); return x ? x.name : ''; }
 function seasonText() { const n = seasonsNow().map(seasonName).filter(Boolean); return n.length ? n.join(', ') : 'none chosen'; }
 function sensOn() { return !!rec().askOpt; }
-function ageNow() { const a = parseInt(rec().age, 10); return isNaN(a) ? null : a; }
+function ageNow() { const r = rec(); return PROF && window.GGP && GGP.moveOn ? GGP.moveOn.age(PROF.id, r.age) : null; }   // the birthday first (GWG BLD 758), else an older optional age
 function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
 // Groundwork's words (birch/groundwork.js), read here so the game layer can count skills.
 const GW = window.BIRCH_GROUNDWORK || { chapters: [], intro: [], skills: {} };
@@ -1680,7 +1680,7 @@ function renderProfileBar() {
   if (PROF) {
     const t = new Date(a.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
     const tree = treeNow(a.id);
-    const nudge = tree !== 'birch' && !HELP ? `<p class="pbar-kids">Your profile's tree is ${TREE_NAME[tree] || 'Oak'}${tree === 'sequoia' ? ', built for 60 and up' : ', built for adults 25 to 60'}. If you are 26 or younger, you can make Birch your tree, so My tree opens here. <button type="button" class="text-btn" onclick="makeBirchMine()">Make Birch My Tree</button></p>` : '';
+    const nudge = tree !== 'birch' && !HELP ? `<p class="pbar-kids">Your profile's tree is ${TREE_NAME[tree] || 'Oak'}${tree === 'sequoia' ? ', built for 60 and up' : ', built for adults 26 to 60'}. If you are 26 or younger, you can make Birch your tree, so My tree opens here. <button type="button" class="text-btn" onclick="makeBirchMine()">Make Birch My Tree</button></p>` : '';
     const helps = helpedWithBirch();
     const helpRow = helps.length ? `<div class="sq-helprow"><span>You help:</span>${helps.map(p => `<button type="button" class="btn ${HELP === p.id ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="helpOpen('${p.id}')">${escapeHtml(p.name)}</button>`).join('')}${HELP ? '<button type="button" class="btn btn-secondary btn-sm" onclick="helpBack()">My Own Birch</button>' : ''}</div>` : '';
     bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGTend.openSettings()" aria-label="Profile and Settings">${GGAv.html(a.avatar, a.name, 44)}</button>
@@ -1697,7 +1697,7 @@ function birchWho() { return window.GGP ? GGP.list().filter(p => p.age === 'adul
 function birchOthers() { return window.GGP ? GGP.list().filter(p => !(p.age === 'adult' && p.tree === 'birch')) : []; }
 function birchWhoHtml() {
   const mine = birchWho(), others = birchOthers(), adults = others.filter(p => p.age === 'adult').length;
-  const otherLine = others.length ? `<p class="pbar-kids">Other trees on this device: kids, middle schoolers, and high schoolers tend theirs in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, and <a href="/pine/">Pine</a>; adults in <a href="/oak/">Oak</a> (built for 25 to 60) and <a href="/sequoia/">Sequoia</a> (60 and up).${adults ? ' <button type="button" class="text-btn" onclick="GGP.openDialog()">Open another profile here</button>' : ''}</p>` : '';
+  const otherLine = others.length ? `<p class="pbar-kids">Other trees on this device: kids, middle schoolers, and high schoolers tend theirs in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, and <a href="/pine/">Pine</a>; adults in <a href="/oak/">Oak</a> (built for 26 to 60) and <a href="/sequoia/">Sequoia</a> (60 and up).${adults ? ' <button type="button" class="text-btn" onclick="GGP.openDialog()">Open another profile here</button>' : ''}</p>` : '';
   if (!mine.length) return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create your own private profile, locked with a passcode only you know. Only your passcode opens it.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${otherLine}`;
   if (mine.length === 1) { const a = mine[0];
@@ -1754,9 +1754,8 @@ function bcProfileHtml() {
     ${p && !r.pineBrought ? `<p class="gt-small">You have ${p} check-in${p === 1 ? '' : 's'} in Pine. <button type="button" class="text-btn" onclick="GGTend.closeSettings();bringPine()">Bring them into Birch</button></p>` : ''}
     <p class="gt-small">Everyone on this device can have their own tree. Switching locks yours first, so no one sees anyone else's.</p></section>`;
 }
-const AGES_PICK = ['18', '19', '20', '21', '22', '23', '24', '25', '26', '27'];
 function bcSettingsHtml() {
-  const s = window.GGTend && GGTend.state(), open = !!PROF && !HELP, plain = isPlain(), mode = pnMode(s), mine = seasonsNow(), age = ageNow();
+  const s = window.GGTend && GGTend.state(), open = !!PROF && !HELP, plain = isPlain(), mode = pnMode(s), mine = seasonsNow();
   if (HELP) return helperSettingsHtml();
   return `<section id="bc-set-season"><h3>My Season</h3><p class="gt-small">Choose any that fit your life right now, or none. My Season changes only the examples, tips, and help lines you see. The questions and your scores stay the same.</p>
       ${SEASONS.map(x => `<label class="gt-switch"><input type="checkbox"${mine.includes(x.id) ? ' checked' : ''} onchange="setSeason('${x.id}',this.checked)"> <span><b>${escapeHtml(x.name)}</b><br><small>${escapeHtml(x.line || '')}</small></span></label>`).join('')}</section>
@@ -1771,8 +1770,7 @@ function bcSettingsHtml() {
       <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b><span class="hardy-pitch">${steadyFits() ? '' : 'A little more challenge. '}</span>A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
       <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     ${helperSettingsHtml()}
-    <section id="bc-set-age"><h3>Your Age (Optional)</h3><p class="gt-small">Only used to offer the step into Oak from 25. It stays in your profile.</p>
-      <select class="sq-select" aria-label="Your age"${open ? '' : ' disabled'} onchange="setAge(this.value)"><option value="">Rather not say</option>${AGES_PICK.map(v => `<option value="${v}"${String(age) === v ? ' selected' : ''}>${v === '27' ? '27 or older' : v}</option>`).join('')}</select></section>
+    ${PROF && !HELP && window.GGP && GGP.moveOn ? GGP.moveOn.birthdayHtml(PROF.id, { section: 'bc-set-birthday', why: 'Only used to offer the step into Oak, built for adults 26 to 60, on your 26th birthday.' }) : ''}
     <section class="asp-see" id="bc-see"><h3>What Stays Private</h3>${BC_SEE}</section>
     ${moveOakHtml(false)}`;
 }
@@ -1802,11 +1800,6 @@ function setSens(on) {
   rec().askOpt = !!on;
   persistRec().then(() => showToast(on ? 'The optional question will be in your next full check-in.' : 'The optional question is off.'));
 }
-function setAge(v) {
-  if (!PROF) return;
-  const r = rec(); if (v) r.age = v; else delete r.age;
-  persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast(v ? 'Saved.' : 'Age cleared.'); });
-}
 // First open: set Birch up. My Season, the wording, and an optional age. Change any time in Settings.
 function setupCardHtml() {
   if (!PROF || HELP) return '';
@@ -1828,19 +1821,25 @@ function setupDone() {
   r.setup = todayKey();
   persistRec().then(() => { if (window.GGTend) GGTend.render(); showToast('Birch is ready. Start with a check-in.'); });
 }
-// Moving on (decision 15). From 25, a gentle card on Today, and any time in Settings:
-// Move My Tree to Oak. The same profile switches its tree; Oak gets a one-time copy of
-// Birch's rings, labeled From Birch. Birch's record and Groundwork stay whole, and
-// Groundwork prints whole. Never forced.
+// Moving on (decision 15; move-on offers, GWG BLD 758). MOVE-ON OFFER START. On the 26th
+// birthday (the optional birthday in Settings, kept in the profile and shared by its trees,
+// GGP.moveOn), a gentle card on Today, and any time in Settings: Move My Tree to Oak. The
+// same profile switches its tree, so the Health and Ability choices stay; Oak gets a
+// one-time copy of Birch's rings, labeled From Birch. Birch's record and Groundwork stay
+// whole, and Groundwork prints whole. Never forced. Stay in Birch (stayBirch) means Today
+// never asks again; Settings keeps the way back.
 function moveOakHtml(onToday) {
   if (!PROF || HELP) return '';
   const r = rec(), age = ageNow();
-  if (onToday && (age == null || age < 25 || r.stayBirch || r.movedToOak || treeNow(PROF.id) !== 'birch')) return '';
+  if (onToday && (age == null || age < 26 || r.stayBirch || r.movedToOak || treeNow(PROF.id) !== 'birch')) return '';
+  const lead = onToday ? (age === 26 && GGP.moveOn && GGP.moveOn.isBirthday(PROF.id) ? 'Happy 26th birthday! ' : '') + 'Birch is built for 18 to 26, and Oak for adults 26 to 60. ' : '';
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="bc-set-moving"'}><h3>Ready for Oak?</h3>
-    <p class="gt-small">${onToday ? 'Birch is built for 18 to 26, and Oak for adults 25 to 60. ' : ''}You choose when. Stay in Birch as long as it fits, or move your tree to Oak. Move My Tree to Oak keeps this same profile: Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can print your whole Groundwork notebook first, and come back to it here any time.</p>
-    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToOak()">Move My Tree to Oak</button><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}gwPrintAll()">Print My Groundwork</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInBirch()">Stay in Birch</button>' : ''}</div></${onToday ? 'div' : 'section'}>`;
+    <p class="gt-small">${lead}You choose when. Stay in Birch as long as it fits, or move your tree to Oak. Move My Tree to Oak keeps this same profile: Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can print your whole Groundwork notebook first, and come back to it here any time.</p>
+    <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToOak()">Move My Tree to Oak</button><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}gwPrintAll()">Print My Groundwork</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInBirch()">Stay in Birch</button>' : ''}</div>
+    ${!onToday && r.stayBirch ? GGP.moveOn.stayNote(r.stayBirch, 'Birch', 'Move My Tree to Oak') : ''}</${onToday ? 'div' : 'section'}>`;
 }
 function stayInBirch() { rec().stayBirch = todayKey(); persistRec().then(() => { showToast('Birch stays your tree. Move My Tree to Oak is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
+// MOVE-ON OFFER END
 function moveToOak() {
   if (!PROF || !window.GGP) return;
   if (!confirm('Move your tree to Oak? This same profile opens in Oak from now on. Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can switch back any time in Picture, passcode, and more.')) return;

@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b756'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b758'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -27,7 +27,7 @@
       { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
       { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', href: HOME + '/pine/', icon: ic.pine, bg: '#E2EEDB' },
       { id: 'birch', title: 'Birch', desc: 'For ages 18 to 26', href: HOME + '/birch/', icon: ic.birch, bg: '#F3EED9' },
-      { id: 'oak', title: 'Oak', desc: 'For ages 25 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
+      { id: 'oak', title: 'Oak', desc: 'For ages 26 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
       { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
@@ -313,7 +313,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b757';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b758';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
