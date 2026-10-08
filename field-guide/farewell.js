@@ -832,7 +832,7 @@ function vPlan(p){
   else if (mode === 'phone') body = vPhone(p);
   else body = V[n](p);
   return `<button type="button" class="linkbtn" data-fwa="plans">&larr; All Farewell Plans</button>
-  <div class="fw-head"><div style="min-width:0"><div class="eyebrow">Farewell Planning Session</div><h1>${esc(pTitle(p))}</h1>${lifeLine(p) ? `<p class="muted">${esc(lifeLine(p))}</p>` : ''}</div>
+  <div class="fw-head"><div style="min-width:0"><div class="eyebrow">Farewell Planning Session</div><h1>${esc(pTitle(p))}</h1>${lifeLine(p) ? `<p class="muted">${esc(lifeLine(p))}</p>` : ''}${p.cli && window.GGCli ? GGCli.link(p.cli) : ''}</div>
     <div class="fw-modes" role="group" aria-label="View">${[['chris', me() + "'s View"], ['family', 'Family View Here'], ['phone', 'Phone Mode']].map(([k, l]) => `<button type="button" class="chip" data-fwa="mode" data-fwv="${k}" aria-pressed="${mode === k}"${fk('md|' + k)}>${esc(l)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-fwa="famwin">Open Family View Window</button></div></div>
   <div class="fw-lay"><nav class="fw-rail" aria-label="Steps">${rail(p)}</nav>
   <div id="fw-main" style="min-width:0"><div class="fw-kick">${typeof n === 'number' ? 'Step ' + n + ' of ' + CNT : 'After the Meeting'}${mode === 'family' && n !== 'tidy' ? ' &middot; Family View' : mode === 'phone' && n !== 'tidy' ? ' &middot; Phone Mode' : ''}</div><h2 style="margin:2px 0 6px">${esc(st.title)}</h2>
@@ -1002,6 +1002,10 @@ const API = window.GGFw = {
     if (inc.fwp && inc.fwp.me && !(out.fwp.me && (out.fwp.me.em || out.fwp.me.ph))) out.fwp.me = Object.assign({}, inc.fwp.me);
     return {added, updated};
   },
+  // Clients and Intake (BLD 767, clients.js): a plan started from a client file carries cli, the file's id.
+  create(o){ o = o || {}; const n = newPlan(); if (o.cli) n.cli = o.cli; Object.assign(n.contact, o.contact || {}); Object.assign(n.person, o.person || {});
+    plans().push(n); const d = D(); if (d && d.deleted && d.deleted.fwp) delete d.deleted.fwp[n.id]; touch(n); return n.id; },
+  open(id){ openPlan(id, 1); },
   // For tests and the lead.
   state: S, cfg, plan, plans, touches, dueSoon, famText, famBody, outHTML, sesGuides, loadText, readStart, readWriting, fill, DEF,
   famWin: null, last: null, lastCopy: null
