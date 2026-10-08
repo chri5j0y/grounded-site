@@ -102,6 +102,8 @@
     stinnett: ['Nick Stinnett and John DeFrain, the qualities of strong families (Michigan State University Extension summary)', 'https://www.canr.msu.edu/news/is_your_family_strong'],
     cssp: ['Center for the Study of Social Policy, the Strengthening Families Protective Factors Framework', 'https://cssp.org/wp-content/uploads/2025/03/About-Strengthening-Families.pdf'],
     woolever04: ['Woolever and Bruce, U.S. Congregational Life Survey: strong congregations show a few strengths, not all (Christian Century, 2004)', 'https://www.christiancentury.org/article/2004-04/views-pews-strong-congregations'],
+    stroebe99: ['Stroebe and Schut, The Dual Process Model of Coping with Bereavement (Death Studies, 1999)', 'https://doi.org/10.1080/074811899201046'],
+    lindemann44: ['Erich Lindemann, Symptomatology and Management of Acute Grief (American Journal of Psychiatry, 1944)', 'https://doi.org/10.1176/ajp.101.2.141'],
     lundy: ['Laura Lundy, the Lundy Model of Child Participation (summary, Queen\'s University Belfast)', 'https://www.qub.ac.uk/research-centres/cppa/policy-case-studies/childrens-participation-lundy-model.html'],
     wrz: ['Wrzesniewski and Dutton, job crafting (2001)', 'https://doi.org/10.5465/amr.2001.4378011', 'a'],
     litz: ['Litz and colleagues, moral injury and moral repair (2009)', 'https://doi.org/10.1016/j.cpr.2009.07.003'],
@@ -373,7 +375,7 @@
     // end BLD 743
       /* GWG BLD 757 (HA 2, the Health and Ability guides): new sources from the six tree workers. */
     aacy: ["American Association of Caregiving Youth: more than 5.4 million US youth help care for a family member (AARP and the National Alliance for Caregiving, 2020)", "https://aacy.org/"],
-    apadisability: ["APA Style, bias-free language: disability", "https://apastyle.apa.org"],
+    apadisability: ["APA Style, disability language guidelines", "https://apastyle.apa.org"],
     asl988: ["988 Suicide and Crisis Lifeline launches American Sign Language crisis services (KBIA, 2023)", "https://www.kbia.org/missouri-news/2023-09-09/988-lifeline-launches-american-sign-language-crisis-services"],
     barnessocial: ["Barnes, Implementing the Social Model of Disability, chapter 1 (University of Leeds Disability Archive), on UPIAS (1976) and Mike Oliver", "https://disability-studies.leeds.ac.uk/wp-content/uploads/sites/40/library/Barnes-implementing-the-social-model-chapter-1.pdf"],
     brucenfl: ["Elizabeth J. Bruce and Cynthia L. Schultz, Nonfinite Loss and Grief: A Psychoeducational Approach (2001)", "https://blackwells.co.uk/bookshop/product/Nonfinite-Loss-and-Grief-by-Elizabeth-J-Bruce-Cynthia-L-Schultz/9781843100461"],
