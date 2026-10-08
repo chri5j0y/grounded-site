@@ -1,4 +1,5 @@
-/* The Grounded Marriage (GWG BLD 751; grown from Before the Vows, BLD 750): the couple's app, with two sides.
+/* Heartwood (GWG BLD 772; was The Grounded Marriage app, BLD 751, grown from Before the Vows, BLD 750): the couple's
+   private app that comes with The Grounded Marriage, with two sides.
    Before the Vows: the check-in for two (87 questions), Talk About This, Strengths and Growing Edges, each partner's
    optional faith background, The Couple Workbook, The Money Map, and the card for two devices and for sessions.
    After the Vows (opens after the wedding date, or with "We're Married"): Practices for Two, the Monthly Check-in
@@ -9,23 +10,29 @@
    who answered, and never go on a card or a printout. Names, faith backgrounds, and the wedding date are kept on
    this device unlocked, so the app knows which questions and wording to show.
    Two devices: a card carries one partner's first name, the other's, Faith or Plain, the faith background, and the
-   answers as digits, locked with a word only the two of them know, after the # in a link or QR code (marriage/core.js).
+   answers as digits, locked with a word only the two of them know, after the # in a link or QR code (heartwood/core.js).
    A check-in card carries one partner's written check-in answers the same way.
    The Week Card (GWG BLD 755): before a session, the couple can choose to share a short card with their leaders
    (videos watched, practices tried, workbook answers marked Share With Our Leaders, and one question), locked with
    their shared word the same way and carried as #gmw=w1.<code> (GMCore.week). Nothing is sent anywhere else.
-   Your Tree, Then Your Grove (GWG BLD 755): marriage/together.js (GM_TOGETHER) in the hub and After the Vows, with
+   Your Tree, Then Your Grove (GWG BLD 755): GM_TOGETHER in the hub and After the Vows, with
    invites to each partner's own Tree (Birch or Oak) and to a Grove together; the card shows without it too.
-   Data: marriage/questions.js (BTV_Q), core.js (GMCore), faith.js (GM_FAITH), results.js (GM_RESULTS),
-   workbook.js (GM_WB), money.js (GM_MONEY), practices.js (GM_PR), after.js (GM_AFTER), learn.js (GG_LEARN_GM),
-   together.js (GM_TOGETHER). */
+   Data (GWG BLD 772): heartwood/open.js opens the sealed content (heartwood/lib-heartwood.js) with the couple's invite
+   and code, or the open sample (heartwood/sample.js, window.HW_SAMPLE true), then loads this file. The globals:
+   BTV_Q (the questions), GM_FAITH, GM_RESULTS, GM_WB (The Couple Workbook), GM_MONEY, GM_PR (Practices for Two),
+   GM_AFTER, GG_LEARN_GM (Learn), GM_TOGETHER; core.js (GMCore) is code and loads first.
+   Saved on this device: gg_hw_v1 (gg_gm_v1 and the older gg_btv_v1 are read forward once, then removed); the sample
+   keeps its own gg_hw_sample_v1, so sample answers never mix with Heartwood's. Learn progress: gg-learn:hw
+   (gg-learn:gm and gg-learn:btv are read forward). A card made in the sample carries q 900 or more, and Heartwood
+   and the sample each open only their own cards, since a card's answers follow the order of the questions. */
 (function () {
   'use strict';
-  var KEY = 'gg_gm_v1', OLDKEY = 'gg_btv_v1', PEND = 'gg-gm-in', PENDM = 'gg-gm-min';
+  var SAMPLE = !!window.HW_SAMPLE;
+  var KEY = SAMPLE ? 'gg_hw_sample_v1' : 'gg_hw_v1', GMKEY = 'gg_gm_v1', OLDKEY = 'gg_btv_v1', PEND = 'gg-gm-in', PENDM = 'gg-gm-min';
   var C = window.GMCore;
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var $ = function (id) { return document.getElementById(id); };
-  if (!C) { var a0 = $('gm-app'); if (a0) a0.innerHTML = '<div class="ff-card"><p>The Grounded Marriage could not load. Check the connection and try again.</p></div>'; return; }
+  if (!C) { var a0 = $('gm-app'); if (a0) a0.innerHTML = '<div class="ff-card"><p>Heartwood could not load. Check the connection and try again.</p></div>'; return; }
 
   /* ---------- the data files ---------- */
   var Q = window.BTV_Q || { version: 0, areas: [], questions: [], scale: [], safety: {} };
@@ -50,6 +57,10 @@
   function load() {
     try {
       var t = localStorage.getItem(KEY); if (t) return JSON.parse(t);
+      if (SAMPLE) return null;
+      // The Grounded Marriage app (BLD 751 to 771) kept the same data under gg_gm_v1: carry it over once.
+      var g = localStorage.getItem(GMKEY);
+      if (g) { var gm = JSON.parse(g); if (gm && gm.v === 2) { localStorage.setItem(KEY, g); localStorage.removeItem(GMKEY); return gm; } }
       // Before the Vows (BLD 750) kept its data under another key: carry it over once, then remove the old one.
       var o = localStorage.getItem(OLDKEY); if (!o) return null;
       var old = JSON.parse(o); localStorage.removeItem(OLDKEY);
@@ -175,7 +186,7 @@
   function openCard(code) {
     var got = null;
     return ask({ title: 'Open your partner’s card', lead: 'Type the word the two of you chose for this card.', fields: ['Your shared word'], ok: 'Open the Card',
-      verify: function (v) { return C.card.read(code, v[0]).then(function (c) { if (!c) return 'This card is not one The Grounded Marriage can read.'; got = c; return true; }, function () { return 'That word does not open this card. Try again.'; }); } })
+      verify: function (v) { return C.card.read(code, v[0]).then(function (c) { if (!c) return 'This card is not one Heartwood can read.'; if ((+c.q >= 900) !== SAMPLE) return SAMPLE ? 'This card comes from Heartwood. Open it in Heartwood, with your code.' : 'This card comes from the Heartwood sample. Make a new card in Heartwood and send it again.'; got = c; return true; }, function () { return 'That word does not open this card. Try again.'; }); } })
       .then(function (v) {
         if (!v || !got) return;
         var partner = { n: got.n, fw: got.fw === 'f' ? 'faith' : 'plain', a: got.a, q: got.q, fb: got.fb || '', got: today() };
@@ -216,14 +227,14 @@
     return C.derive(word.trim().toLowerCase(), all.slice(0, 16)).then(function (k) { return unseal(k, all.slice(16, 28), all.slice(28)); }).then(mclean);
   }
   function mcodeOf(s) { s = String(s || '').trim(); var m = /(?:^|[#&?])gmm=(m1\.[A-Za-z0-9_-]{20,6000})/.exec(s); return m ? m[1] : (/^m1\.[A-Za-z0-9_-]{20,6000}$/.test(s) ? s : ''); }
-  function mlink(code) { var base = /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; return base + '/marriage/#gmm=' + code; }
+  function mlink(code) { var base = /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; return base + '/heartwood/#gmm=' + code; }
   function pendingM() { var c = ''; try { c = sessionStorage.getItem(PENDM) || ''; } catch (e) {} return c || (st && st.inM) || ''; }
   function dropM() { try { sessionStorage.removeItem(PENDM); } catch (e) {} if (st && st.inM) { delete st.inM; persist(); } }
   function openM(code) {
-    if (!setup() || st.s.mode !== 'two') { say('Set up The Grounded Marriage on two devices first, then open this check-in card.'); return Promise.resolve(); }
+    if (!setup() || st.s.mode !== 'two') { say('Set up Heartwood on two devices first, then open this check-in card.'); return Promise.resolve(); }
     var got = null, me = st.s.me;
     return ask({ title: 'Open your partner’s check-in', lead: 'Type the word the two of you chose for this check-in.', fields: ['Your shared word'], ok: 'Open',
-      verify: function (v) { return mread(code, v[0]).then(function (c) { if (!c) return 'This card is not one The Grounded Marriage can read.'; got = c; return true; }, function () { return 'That word does not open this card. Try again.'; }); } })
+      verify: function (v) { return mread(code, v[0]).then(function (c) { if (!c) return 'This card is not one Heartwood can read.'; got = c; return true; }, function () { return 'That word does not open this card. Try again.'; }); } })
       .then(function (v) {
         if (!v || !got) return;
         return unlock(me, 'Your partner’s check-in is kept with your own answers, locked with your passcode.').then(function (ok) {
@@ -254,7 +265,7 @@
   function vWelcome() {
     var pc = pendingCard();
     return '<div class="ff-card gold"><h2>Welcome</h2>' +
-      '<p>The Grounded Marriage is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, and your First-Year Check-in.</p>' +
+      '<p>Heartwood is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, and your First-Year Check-in.</p>' +
       '<p>It is a conversation tool, not a test: there is nothing to pass and nothing to score. Every answer is simply a place to start talking.</p>' +
       '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays on this device. Nothing is sent anywhere.</span></p>' +
       (pc ? '<div class="btv-note"><p><b>A card from your partner is here.</b> Open it with the word the two of you chose.</p>' + btn('open-pending', 'Open the Card', { cls: 'btn-primary ff-sm' }) + '</div>' : '') +
@@ -391,7 +402,7 @@
   function vCard(code) {
     var theirs = esc(nm(other(st.s.me)));
     return cardView(C.card.link(code), 'Your Card for ' + theirs, theirs + ' scans this with their phone’s camera, or opens the link, then types your shared word.',
-      'The card carries your first names, Faith or Plain, your faith background if you chose one, and your answers, locked with your shared word. The private questions on the last page never go on it. Bring it to your sessions, too.', 'QR code for your Grounded Marriage card');
+      'The card carries your first names, Faith or Plain, your faith background if you chose one, and your answers, locked with your shared word. The private questions on the last page never go on it. Bring it to your sessions, too.', 'QR code for your Heartwood card');
   }
   function itemHtml(it, X, Y, talk) {
     return '<li><p class="btv-it">' + esc(it.text) + '</p><p class="btv-ans"><span><b>' + esc(X.name) + ':</b> ' + esc(label(it.x)) + '</span><span><b>' + esc(Y.name) + ':</b> ' + esc(label(it.y)) + '</span></p>' +
@@ -429,7 +440,7 @@
   }
   function printPage(h) {
     var r = $('gg-print'); if (!r) return;
-    r.innerHTML = h + '<p class="p-foot">Made on this device with The Grounded Marriage, Grow With Grounded, growwithgrounded.com. Nothing was sent anywhere.</p>';
+    r.innerHTML = h + '<p class="p-foot">Made on this device with Heartwood, Grow With Grounded, growwithgrounded.com. Nothing was sent anywhere.</p>';
     window.print();
     setTimeout(function () { r.innerHTML = ''; }, 1500);
   }
@@ -437,7 +448,7 @@
   function printTalk() {
     var c = compareNow(), X = c.X, Y = c.Y, R = c.R;
     var li = function (it, talk) { return '<li><b>' + esc(it.text) + '</b><br>' + esc(X.name) + ': ' + esc(label(it.x)) + ' &middot; ' + esc(Y.name) + ': ' + esc(label(it.y)) + (talk && it.q.talk ? '<br><i>' + esc(it.q.talk) + '</i>' : '') + '</li>'; };
-    var h = '<p class="p-eb">The Grounded Marriage</p><h1>Talk About This</h1><p>' + esc(X.name) + ' and ' + esc(Y.name) + ', ' + dateLine() + '</p>';
+    var h = '<p class="p-eb">Heartwood</p><h1>Talk About This</h1><p>' + esc(X.name) + ' and ' + esc(Y.name) + ', ' + dateLine() + '</p>';
     R.forEach(function (r) {
       if (!r.diff.length && !r.grow.length) return;
       h += '<h2>' + esc(r.area.name) + '</h2><ul class="p-list">' + r.diff.map(function (it) { return li(it, true); }).join('') + r.grow.map(function (it) { return li(it, true); }).join('') + '</ul>';
@@ -448,7 +459,7 @@
   }
   function printResults() {
     var c = compareNow(), sm = C.summary(c.R), S = RS.states || {};
-    var h = '<p class="p-eb">The Grounded Marriage</p><h1>' + esc(RS.title) + '</h1><p>' + esc(c.X.name) + ' and ' + esc(c.Y.name) + ', ' + dateLine() + '</p>';
+    var h = '<p class="p-eb">Heartwood</p><h1>' + esc(RS.title) + '</h1><p>' + esc(c.X.name) + ' and ' + esc(c.Y.name) + ', ' + dateLine() + '</p>';
     ['strong', 'talk', 'grow'].forEach(function (k) {
       var rs = c.R.filter(function (r) { return sm[r.area.id] === k; }); if (!rs.length) return;
       h += '<h2>' + esc((S[k] || {}).label || k) + '</h2><ul class="p-list">' + rs.map(function (r) { var t = (RS.areas && RS.areas[r.area.id] && RS.areas[r.area.id][k]) || ''; return '<li><b>' + esc(r.area.name) + '</b>' + (t ? '<br>' + esc(t) : '') + '</li>'; }).join('') + '</ul>';
@@ -534,7 +545,7 @@
   }
   function printWorkbook(w, mine) {
     var d = mine && w && DATA[w] ? dataOf(w) : null;
-    var h = '<div class="p-wb"><p class="p-eb">The Grounded Marriage</p><h1>' + esc(WB.title) + '</h1>' + (d ? '<p>' + esc(nm(w)) + '’s workbook, ' + dateLine() + '</p>' : '<p>Names: ______________________ and ______________________</p>') + (WB.lead ? '<p>' + esc(WB.lead) + '</p>' : '');
+    var h = '<div class="p-wb"><p class="p-eb">Heartwood</p><h1>' + esc(WB.title) + '</h1>' + (d ? '<p>' + esc(nm(w)) + '’s workbook, ' + dateLine() + '</p>' : '<p>Names: ______________________ and ______________________</p>') + (WB.lead ? '<p>' + esc(WB.lead) + '</p>' : '');
     WB.chapters.forEach(function (ch, i) {
       h += '<section class="p-ch"><p class="p-eb">Chapter ' + esc(String(ch.n || i + 1)) + (ch.session ? ' &middot; Session ' + esc(String(ch.session)) : '') + '</p><h2 class="p-cht">' + esc(ch.title) + '</h2>' + (ch.teach || []).map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
       ch.exercises.forEach(function (ex) {
@@ -588,7 +599,7 @@
   }
   function printMoney() {
     var m = mm(), t = totals();
-    var h = '<p class="p-eb">The Grounded Marriage</p><h1>' + esc(MN.title) + '</h1><p>' + esc(nm('a')) + ' and ' + esc(nm('b')) + ', ' + dateLine() + '</p>';
+    var h = '<p class="p-eb">Heartwood</p><h1>' + esc(MN.title) + '</h1><p>' + esc(nm('a')) + ' and ' + esc(nm('b')) + ', ' + dateLine() + '</p>';
     MN.groups.forEach(function (g) { h += '<h2>' + esc(g.name) + ': ' + money(t.per[g.id]) + '</h2><ul class="p-list">' + g.items.map(function (it) { return '<li>' + esc(it[1]) + ': ' + (m.v[it[0]] ? money(num(m.v[it[0]])) : '') + '</li>'; }).join('') + '</ul>'; });
     if (t.hasInc) h += '<h2>Left after everything: ' + money(t.inc - t.out) + '</h2>';
     if (MN.goals) h += '<h2>Goals</h2><ul class="p-list">' + (MN.goals.prompts || []).map(function (p, k) { return '<li><b>' + esc(p) + '</b><br>' + esc(m.g[k] || '') + '</li>'; }).join('') + '</ul>';
@@ -636,7 +647,7 @@
       '<div class="btv-paste"><label class="ff-f"><span class="l">Got a check-in link from ' + theirs + '?</span><input id="gm-mpaste" autocomplete="off" placeholder="Paste the link"></label><div class="ff-row">' + btn('mpaste', 'Open This Check-in', sec()) + '</div></div>';
   }
   function vAfter() {
-    if (!AF) return '<div class="ff-card"><p>After the Vows is on its way.</p></div>';
+    if (!AF) return SAMPLE ? '<div class="ff-card gold"><h2>After the Vows</h2><p>In Heartwood, After the Vows opens on your wedding day, with Practices for Two, a Monthly Check-in for Two, and your First-Year Check-in.</p></div>' + (PR ? '<div class="ff-card sage"><h2>' + esc(PR.title) + '</h2>' + (PR.lead ? '<p class="ff-sub">' + esc(PR.lead) + '</p>' : '') + '<div class="ff-row">' + btn('pr', 'Open Practices for Two', sec()) + '</div></div>' : '') : '<div class="ff-card"><p>After the Vows is on its way.</p></div>';
     var h = '';
     if (!afterOpen()) {
       h += '<div class="ff-card gold"><h2>After the Vows</h2><p>' + esc(AF.opens) + '</p>' + (setup() && st.s.wd ? '<p class="btv-small">Your wedding date on this device: ' + esc(niceDate(st.s.wd)) + '.</p>' : '') +
@@ -680,7 +691,7 @@
       'The card carries your first names and your check-in answers, locked with your shared word.', 'QR code for your check-in card');
   }
 
-  /* ---------- Your Tree, Then Your Grove (marriage/together.js), and the invites ---------- */
+  /* ---------- Your Tree, Then Your Grove (GM_TOGETHER), and the invites ---------- */
   var APP_LINKS = { '/birch/': 'Open Birch', '/oak/': 'Open Oak', '/grove/': 'Open The Grove' };
   function siteBase() { return /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; }
   function safeLink(u) { u = String(u || ''); return /^\/[A-Za-z0-9/_#.?=&-]*$/.test(u) || /^https:\/\/growwithgrounded\.com\//.test(u) ? u : ''; }
@@ -951,7 +962,7 @@
       try { if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(t).then(ok, old); return; } } catch (er) {}
       old();
     }
-    else if (a === 'paste') { var c2 = C.card.codeOf($('btv-paste').value); if (!c2) { say('That link is not a Grounded Marriage card. Copy the whole link and try again.'); return; } openCard(c2); }
+    else if (a === 'paste') { var c2 = C.card.codeOf($('btv-paste').value); if (!c2) { say('That link is not a Heartwood card. Copy the whole link and try again.'); return; } openCard(c2); }
     else if (a === 'open-pending') { var pc = pendingCard(); if (pc) openCard(pc); }
     /* the workbook */
     else if (a === 'wb') { lockAll(); unlock(w).then(function (ok) { if (ok) { dataOf(w); go('wb', { who: w }); } }); }
@@ -992,7 +1003,7 @@
         return wordAsk(nm(other(me2)), 'check-in').then(function (v) { if (!v) return; return mmake({ v: 1, k: rk2, n: nm(me2), to: nm(other(me2)), r: e2.r }, v[0]).then(function (code) { go('mcard', { code: code }); }); });
       });
     }
-    else if (a === 'mpaste') { var c3 = mcodeOf($('gm-mpaste').value); if (!c3) { say('That link is not a Grounded Marriage check-in. Copy the whole link and try again.'); return; } openM(c3); }
+    else if (a === 'mpaste') { var c3 = mcodeOf($('gm-mpaste').value); if (!c3) { say('That link is not a Heartwood check-in. Copy the whole link and try again.'); return; } openM(c3); }
     else if (a === 'leave-after') { saveAll().then(function () { lockAll(); go('after'); say('Locked. Each passcode opens it again.'); }); }
     /* Your Tree, Then Your Grove: invites */
     else if (a === 'invite') copyInvite(b.getAttribute('data-to'));
@@ -1004,8 +1015,10 @@
     }
     else if (a === 'wk-make') makeWeek();
     else if (a === 'clear') {
-      if (!window.confirm('Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device. It cannot be undone.')) return;
-      try { localStorage.removeItem(KEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}
+      if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
+      try { localStorage.removeItem(KEY); localStorage.removeItem(GMKEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}
+      // Heartwood's key and invite leave this device too, so the code is needed to open it again (GWG BLD 772).
+      if (!SAMPLE && window.HWOpen) HWOpen.forget();
       st = null; lockAll(); PARTNER_IN = null; V.side = 'before'; go('welcome'); say('Cleared from this device.');
     }
   });
@@ -1052,11 +1065,12 @@
     tracks = tracks.filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
     return tracks.length ? { title: L.title || 'Learn', intro: L.intro || '', tracks: tracks } : null;
   }
-  var LKEY = 'gg-learn:gm', CTL = null;
+  var LKEY = 'gg-learn:hw', CTL = null;
   function lload() {
     try {
       var raw = localStorage.getItem(LKEY);
-      if (!raw) { raw = localStorage.getItem('gg-learn:btv'); if (raw) { localStorage.setItem(LKEY, raw); localStorage.removeItem('gg-learn:btv'); } }
+      // Learn progress from The Grounded Marriage app (gg-learn:gm) or Before the Vows (gg-learn:btv) carries over once.
+      ['gg-learn:gm', 'gg-learn:btv'].forEach(function (k) { if (raw) return; raw = localStorage.getItem(k); if (raw) { localStorage.setItem(LKEY, raw); localStorage.removeItem(k); } });
       var d = JSON.parse(raw || '{}'); return { done: d.done || {}, at: d.at || {} };
     } catch (e) { return { done: {}, at: {} }; }
   }
@@ -1078,7 +1092,7 @@
     var el = $('gm-learn'), D = lload();
     el.innerHTML = '<button type="button" class="btn btn-secondary ff-sm" data-lback="1">&larr; All Lessons</button><div class="btv-eb">' + esc(f.t.title) + '</div><h2 class="btv-lh">' + esc(f.l.title) + '</h2><div id="gm-player"></div><div class="btv-lsrc">' + (window.GGSources ? GGSources.lesson('', f.l) : '') + '</div>';
     CTL = GGLearn.player($('gm-player'), {
-      app: 'gm', lesson: f.l, track: f.t, tracks: L.tracks, done: D.done, at: D.at[f.l.id] || 0, accent: '#3F5F86', mark: { name: 'The Grounded Marriage' },
+      app: 'gm', lesson: f.l, track: f.t, tracks: L.tracks, done: D.done, at: D.at[f.l.id] || 0, accent: '#3F5F86', mark: { name: 'Heartwood' },
       onAt: function (i) { var d = lload(); d.at[f.l.id] = i; lkeep(d); },
       onDone: function (lid) { var d = lload(); if (!d.done[lid]) { d.done[lid] = today(); lkeep(d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { learnPlay(nid); },
@@ -1091,7 +1105,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b771', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b772', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
@@ -1126,5 +1140,5 @@
   if (wk0) setTimeout(function () { say(WEEK_HERE); }, 60);
   if (pc0) setTimeout(function () { openCard(pendingCard() || pc0); }, 200);
   else if (pm0) setTimeout(function () { openM(pendingM() || pm0); }, 200);
-  window.GGGM = { state: function () { return st; }, view: function () { return V; }, Q: Q };
+  window.GGGM = { state: function () { return st; }, view: function () { return V; }, Q: Q, sample: SAMPLE };
 })();

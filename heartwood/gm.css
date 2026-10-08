@@ -1,4 +1,4 @@
-/* The Grounded Marriage (GWG BLD 751; grown from Before the Vows, BLD 750). The ff- styles follow the Tools for Families pages (BLD 748). */
+/* Heartwood, the couple's app in The Grounded Marriage (GWG BLD 772; was The Grounded Marriage app, BLD 751, grown from Before the Vows, BLD 750). The ff- styles follow the Tools for Families pages (BLD 748). */
 .ff-body{max-width:860px;margin:0 auto;}
 .ff-lead{font-size:19px;color:var(--ink);line-height:1.6;margin:0 0 12px;}
 .ff-private{font-size:15.5px;color:var(--ink-soft);margin:6px 0 0;display:flex;gap:8px;align-items:flex-start;}
@@ -127,7 +127,7 @@
 .btv-drow{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:12px;}
 .btv-drow .btn{margin-top:0;}
 @media(max-width:700px){ .btv-who{grid-template-columns:1fr;} .btv-scale{gap:4px;} .btv-scale button{font-size:13px;padding:8px 2px;} .btv-q legend{font-size:17px;} }
-/* The Grounded Marriage (BLD 751) */
+/* Heartwood (BLD 751, renamed BLD 772) */
 .btv-tabs{flex-wrap:wrap;}
 .gm-way{margin:12px 0 0;font-size:17px;}
 .gm-way a{color:#FFF3DC;font-weight:700;text-decoration:underline;text-underline-offset:3px;}
@@ -206,7 +206,7 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
 .gm-denim .btn-primary:hover{background:var(--gold-deep);}
 /* the hero: a denim landscape, the words centered over it, the picture anchored to the bottom */
 .gm-hero{position:relative;overflow:hidden;color:#fff;text-align:center;background:var(--gm-hero);min-height:440px;display:flex;align-items:center;padding:0 !important;border-top:none !important;}
-.gm-hero{--pw:url(/marriage/hero-wide.webp);--pn:url(/marriage/hero-phone.webp);--px:50%;min-height:640px;align-items:flex-start;background:#9DB9DD;}
+.gm-hero{--pw:url(/heartwood/hero-wide.webp);--pn:url(/heartwood/hero-phone.webp);--px:50%;min-height:640px;align-items:flex-start;background:#9DB9DD;}
 .gm-hero .gmh-photo{position:absolute;inset:0;background-image:linear-gradient(180deg,rgba(22,36,58,.62) 0%,rgba(22,36,58,.38) 42%,rgba(22,36,58,0) 70%),var(--pw);background-size:cover,cover;background-position:center,center bottom;background-repeat:no-repeat;}
 .gm-hero-in{position:relative;z-index:1;width:100%;padding-top:34px;padding-bottom:96px;}
 .gm-back{display:inline-block;color:#EAF1FA;text-decoration:none;font-weight:600;font-size:15px;margin-bottom:14px;border-bottom:1px solid rgba(234,241,250,.6);}
@@ -222,7 +222,7 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
 .gm-hero .gm-way a{color:#fff;text-decoration-color:var(--pink);}
 @media(max-width:900px){ .gm-hero .gmh-photo{background-image:linear-gradient(180deg,rgba(22,36,58,.66) 0%,rgba(22,36,58,.42) 48%,rgba(22,36,58,0) 72%),var(--pn,var(--pw));background-position:center,var(--px) bottom;} }
 @media(max-width:700px){ .gm-hero{min-height:700px;} .gm-hero-in{padding-top:22px;padding-bottom:40px;} .gm-mark{width:60px;height:60px;border-radius:14px;} }
-/* Your Tree, Then Your Grove (marriage/together.js) and the invites */
+/* Your Tree, Then Your Grove (sealed content, GM_TOGETHER) and the invites */
 .gm-tg{border-top:4px solid var(--gold);}
 .gm-tg-steps{list-style:none;counter-reset:tg;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:12px;}
 .gm-tg-steps li{counter-increment:tg;position:relative;padding:12px 14px 12px 54px;border:1px solid var(--line);border-radius:14px;background:var(--bg);min-width:0;}
@@ -254,3 +254,11 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
 .gm-wk-list small{display:block;color:var(--ink-soft);font-size:14.5px;}
 .gm-wk h3{margin:18px 0 2px;font-size:21px;}
 .gm-wk .gm-check{font-weight:600;}
+
+/* Heartwood: opening with the couple's code, and the open sample (GWG BLD 772, heartwood/open.js) */
+#hw-note{margin:0 0 18px;}
+.hw-note h2{margin-top:4px;}
+.hw-note .hw-why{font-weight:600;}
+.hw-gate form{margin:12px 0 0;}
+.hw-gate #hw-code{font-size:22px;letter-spacing:.14em;text-transform:uppercase;max-width:300px;}
+.hw-err{color:var(--clay);font-weight:600;min-height:22px;margin:8px 0 0;}

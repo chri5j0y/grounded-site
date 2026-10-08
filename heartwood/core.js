@@ -1,6 +1,6 @@
-/* The Grounded Marriage: shared core (marriage/core.js), GWG BLD 751.
-   window.GMCore is shared by the couple's app (marriage/app.js) and the Field Guide.
-   It needs window.BTV_Q (marriage/questions.js) loaded first. Nothing here is ever sent anywhere.
+/* Heartwood: shared core (heartwood/core.js), GWG BLD 751; renamed from The Grounded Marriage app in GWG BLD 772.
+   window.GMCore is shared by the couple's app (heartwood/app.js) and the Field Guide.
+   It reads window.BTV_Q (the questions, from Heartwood's sealed content, or the open sample) when it runs. Nothing here is ever sent anywhere.
 
    GMCore.compare(X, Y, extra)  X, Y: {name, fw: 'faith' or 'plain', ans: {id: 1 to 5}}.
      Returns one entry per area: {area, diff: [], agree: [], grow: []}; each item {q, text, x, y}.
@@ -13,8 +13,8 @@
      (PBKDF2, 250,000 rounds, SHA-256, then AES-GCM), carried after the # in a link.
      make(dataObj, word) -> Promise of the code 'b1.<base64url of salt, iv, sealed text>'
      read(code, word) -> Promise of the card, or null when it is not a card this app can read
-     codeOf(text) -> the code inside a link (/marriage/#btv= or the older /before-the-vows/#btv=), or ''
-     link(code) -> https://growwithgrounded.com/marriage/#btv=<code> (this site's own address when served)
+     codeOf(text) -> the code inside a link (/heartwood/#btv=, or the older /marriage/#btv= and /before-the-vows/#btv=), or ''
+     link(code) -> https://growwithgrounded.com/heartwood/#btv=<code> (this site's own address when served)
      Card v2: {v: 2, q, n, to, fw: 'f' or 'p', a: '<digits>', fb: '<faith id or empty>'}. Card v1 has no fb.
      a: one digit (0 to 5, 0 is skipped) for each question in BTV_Q.questions, in order; when the app has
      faith.js, the digits for GM_FAITH.two.questions follow. Readers ignore digits past what they know.
@@ -102,7 +102,7 @@
     var m = /(?:^|[#&?])btv=(b1\.[A-Za-z0-9_-]{20,2000})/.exec(s);
     return m ? m[1] : (/^b1\.[A-Za-z0-9_-]{20,2000}$/.test(s) ? s : '');
   }
-  function link(code) { var base = /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; return base + '/marriage/#btv=' + code; }
+  function link(code) { var base = /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; return base + '/heartwood/#btv=' + code; }
   function digits(ans) {
     var all = Q().questions.concat(twoQs());
     return all.map(function (q) { var x = +(ans || {})[q.id] || 0; return x >= 1 && x <= 5 ? x : 0; }).join('');
@@ -157,7 +157,7 @@
     var m = /(?:^|[#&?])gmw=(w1\.[A-Za-z0-9_-]{20,90000})/.exec(s);
     return m ? m[1] : (/^w1\.[A-Za-z0-9_-]{20,90000}$/.test(s) ? s : '');
   }
-  function wlink(code) { var base = /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; return base + '/marriage/#gmw=' + code; }
+  function wlink(code) { var base = /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; return base + '/heartwood/#gmw=' + code; }
 
   window.GMCore = {
     compare: compare, summary: summary, differs: differs, side: side,
