@@ -13,7 +13,7 @@
   var HOME = 'https://growwithgrounded.com';
   var mk = function (k) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg" alt="" width="42" height="42">'; };
   var ic = {
-    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'),
+    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'), fieldguide: mk('fieldguide'), library: mk('library'),
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#4A5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-6 14-15 14z"/><path d="M5 19l8.5-8.5"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
@@ -35,10 +35,10 @@
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
     ] },
     { name: 'Further Reading', items: [
-      { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.shelf, bg: '#F1E6CC' }
+      { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
-      { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.book, bg: '#EDE7DA', locked: true }
+      { id: 'field', title: 'Grounded Field Guide', desc: 'Every Grounded tool and guide in one place, for chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.fieldguide, bg: '#EDE7DA', locked: true }
     ] }
   ];
 
