@@ -575,6 +575,10 @@ body.cd-noscroll{overflow:hidden;}
 #print-root .sq-sheet p,#print-root .sq-sheet li{font-size:12pt;}
 /* Willow Guide (Willow Build Session 3): dusk lilac, sage accent */
 .wl-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#7A7590 0%,#5D5A6E 50%,#3E3B4C 100%);}
+.hp-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#5E7A8E 0%,#3D5A73 50%,#283C4D 100%);}
+.hp-group{margin-top:14px;} .hp-help p{font-size:calc(16px * var(--scale));}
+.hp-card{display:grid;gap:4px 22px;margin-top:6px;} @media(min-width:720px){.hp-card{grid-template-columns:1fr 1fr;}}
+.hp-cs h4{margin-top:12px;font-size:calc(17px * var(--scale));} .hp-say li{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:calc(19px * var(--scale));line-height:1.3;}
 .sg-help{margin-top:16px;padding:10px 12px;border-left:3px solid var(--sage);background:var(--bg-deep);border-radius:6px;font-size:15px;}
 .wfg-in{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}
 .wfg-body h3{margin:18px 0 6px;font-size:19px;} .wfg-body p{margin-top:8px;} .wfg-body .wfg-lab{font-weight:600;margin-top:12px;}
@@ -942,14 +946,16 @@ function tabsFor(){
   // The Sessions tab keeps the key 'guides' so saved routes and data-tab links still open it.
   const kids = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(pnOpen() ? [['pine','Pine','pine']] : []), ...(brTab() ? [['birch','Birch','birch']] : [])];
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
+  // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Field library: after the trees, before Learn.
+  const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
   // A Field-tier Premarital Guide (GWG BLD 752) gets the Premarital tab after the trees; Staff and Founders keep theirs below.
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...(pgTab() ? [['premarital','Premarital','heart']] : []), ['learn','Learn','play'], ...(FSAFE() ? [['safety','Safety','shield']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
-  if (!LIB) return [...kids, ...grown];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...(pgTab() ? [['premarital','Premarital','heart']] : []), ...hp, ['learn','Learn','play'], ...(FSAFE() ? [['safety','Safety','shield']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
+  if (!LIB) return [...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key']);
   return t;
 }
@@ -958,7 +964,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder') return 'founder';
-  if (id === 'home' || id === 'learn' || id === 'orient' || id === 'safety' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'learn' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -976,7 +982,7 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
   $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'field' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
+  const views = {home: TIER === 'field' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'field' ? vPG() : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
 }
@@ -1038,6 +1044,7 @@ const IC = {
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  heart:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
+ hospital:'<path d="M4 21V8l8-4 8 4v13"/><path d="M12 9v6M9 12h6"/><path d="M2.5 21h19"/><path d="M10 21v-3h4v3"/>',
  key:'<circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8 20 3M16.5 6.5l2.5 2.5M14 9l2 2"/>',
  willow:'<path d="M12 21V8.5"/><path d="M12 9c-2.6 0-5 1.4-6 4.2M12 9c2.6 0 5 1.4 6 4.2"/><path d="M6 13.2v4.3M8.6 10.8v6.4M15.4 10.8v6.4M18 13.2v4.3"/><path d="M7.5 7.5C8.5 4.8 10 3.5 12 3.5s3.5 1.3 4.5 4"/><path d="M8.5 21h7"/>',
 };
@@ -1065,6 +1072,7 @@ function vHome(){
   const quick = [['first-conversation','Free First Conversation','30 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${sgHomeCard()}
+  ${hpHomeCard()}
   ${(DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
@@ -1328,6 +1336,7 @@ function vFieldHome(){
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${esc(w.title)}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${orStatusCard()}
   ${sgHomeCard()}
+  ${hpHomeCard()}
   ${lgHomeCard()}
   ${stOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(STG().title)}</h3><p class="muted">${esc(STG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="oak">${icon('tree')} Open</button></div></div>` : ''}
   ${sqOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(SQG().title)}</h3><p class="muted">${esc(SQG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="sequoia">${icon('sequoia')} Open</button></div></div>` : ''}
@@ -7762,12 +7771,13 @@ function sgLearnCard(){
   return `<div class="card ln-track sg-series" id="sg-series"><div class="eyebrow" style="color:var(--sage)">For You</div><h3>${esc(S.title)}</h3><p class="muted">${esc(S.intro || '')}</p>
    ${sgGroups().map(g => `<div class="wfg-ring"><h4>${esc(g.name)}</h4><div class="ln-list">${g.items.map(x => `<button class="ln-item" data-act="sg-open" data-v="${esc(x.id)}"><span class="ln-n">${esc(String(x.n || ''))}</span><span class="ln-t"><b>${esc(x.title)}</b><small>${esc(x.blurb || '')}${x.blurb ? '. ' : ''}About ${esc(String(x.mins || 4))} minutes, and a page to read</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}</div>`;
 }
-function sgBody(x){
+// The written page for one item. Hospital Guide (BLD 763) reuses it with its own library section (S) for the help line.
+function sgBody(x, S = SGD()){
   const li = it => Array.isArray(it) ? `<li><b>${esc(it[0])}</b> ${esc(it[1] || '')}</li>` : `<li>${esc(it)}</li>`;
   const blk = b => b[0] === 'ul' ? `<ul class="wfg-ul">${(b[1] || []).map(li).join('')}</ul>` : b[0] === 'lab' ? `<p class="wfg-lab">${esc(b[1])}</p>` : `<p>${esc(b[1])}</p>`;
   const src = window.GGSources ? GGSources.lesson('', {id:x.id, sources:x.sources || [], scenes:(x.video && x.video.scenes) || []}) : '';
   return `<div class="wfg-body sg-body"><h2 class="wfg-h1">${esc(x.title)}</h2>${(x.read || []).map(blk).join('')}
-   ${SGD().help ? `<p class="sg-help">${esc(SGD().help)}</p>` : ''}${src}</div>`;
+   ${S && S.help ? `<p class="sg-help">${hpHelpLines(S.help).map(esc).join('<br>')}</p>` : ''}${src}</div>`;
 }
 function vSG(){
   const x = sgFind(V.sg); if (!x){ delete V.sg; return vLearn(); }
@@ -7793,6 +7803,106 @@ function sgAct(a, v){
     case 'sg-back': lnStop(); go('learn'); return true;
     case 'sg-list': lnStop(); go('learn'); setTimeout(() => { const el = $('#sg-series'); if (el) el.scrollIntoView({block:'start'}); }, 60); return true;
     case 'sg-read': { const y = window.scrollY; V.sgread = !V.sgread; const p = $('#sg-page'); if (V.sgread && !p){ const x = sgFind(V.sg); const row = document.querySelector('[data-act="sg-read"]'); if (row && x){ row.textContent = 'Hide the Page'; row.parentElement.insertAdjacentHTML('afterend', `<div class="card" id="sg-page" style="margin-top:14px">${sgBody(x)}</div>`); setTimeout(() => { const el = $('#sg-page'); if (el) el.scrollIntoView({block:'start', behavior:'smooth'}); }, 30); } } else if (!V.sgread && p){ p.remove(); const row = document.querySelector('[data-act="sg-read"]'); if (row) row.textContent = 'Read It'; window.scrollTo(0, y); } return true; }
+  }
+  return false;
+}
+
+// ---------------- HOSPITAL GUIDE ----------------
+/* Hospital Guide (GWG BLD 763). Guidance for walking into every part of a hospital as a visiting guide, open to everyone
+   in the Field Guide (Guides, Staff, and Founders; Chris, October 8, 2026), sealed in the Field library under
+   FLD.hospitalGuide {title, intro, home: {h, p}, help, groups: [[key, name]], items: [{id, group, n, title, blurb, mins,
+   sources, read: [blocks, as Support for Guides], card: {know, say, avoid, team}, video: {scenes}}]}.
+   - Its own tab, Hospital, in the For Everyone group, whenever the key is in the library. A Home card opens it.
+   - The tab: the intro, the help line, a Find box (titles, blurbs, quick cards, and the written pages), and the items
+     grouped by FLD.hospitalGuide.groups. Each item page: the video (the shared player, For Guides closing scene), the
+     quick card with Print Quick Card (one page, the Field Guide mark at the top, the help line at the foot), and the
+     written page (the Support for Guides renderer: read blocks, the help line, Sources).
+   - help is one line, a list of lines, or a list of [label, text] pairs. Nothing about watching or reading is saved. */
+const HPG = () => { const S = FLD && FLD.hospitalGuide; return S && Array.isArray(S.items) && S.items.length ? S : null; };
+const hpOpen = () => !!HPG();
+const hpHelpLines = h => (Array.isArray(h) ? h : h ? [h] : []).map(x => Array.isArray(x) ? x[0] + ': ' + (x[1] || '') : String(x));
+const hpGroups = () => (HPG().groups || []).map(g => ({key: g[0], name: g[1], items: HPG().items.filter(x => x.group === g[0]).sort((a, b) => (a.n || 0) - (b.n || 0))})).filter(g => g.items.length);
+const hpFind = id => HPG() ? HPG().items.find(x => x.id === id) || null : null;
+const HP_CARD = [['know', 'What to Know'], ['say', 'Words That Help'], ['avoid', 'What to Avoid'], ['team', 'Check with the Team']];
+// Track ids start hpg- so they never meet an item id (items start hp-).
+function hpTracks(){ return hpGroups().map(g => ({id: 'hpg-' + g.key, kind: 'forguides', ring: g.name, title: (HPG().title || 'Hospital Guide') + ': ' + g.name, lessons: g.items.filter(x => x.video && (x.video.scenes || []).length).map(x => ({id: x.id, n: x.n, title: x.title, mins: x.mins, sources: x.sources || [], scenes: x.video.scenes}))})).filter(t => t.lessons.length); }
+function hpHomeCard(){
+  if (!hpOpen()) return '';
+  const H = HPG().home || {};
+  return `<div class="card hp-home" style="margin-top:14px"><div class="spread"><div><h3>${esc(H.h || HPG().title || 'Hospital Guide')}</h3><p class="muted">${esc(H.p || '')}</p></div><button class="btn btn-gold btn-sm" data-tab="hospital">${icon('hospital')} Open</button></div></div>`;
+}
+// Find: every word typed must appear in the item's title, blurb, quick card, or written page.
+const HP_HAY = new WeakMap();
+function hpHay(x){
+  if (HP_HAY.has(x)) return HP_HAY.get(x);
+  const c = x.card || {}, rd = (x.read || []).map(b => b[0] === 'ul' ? (b[1] || []).map(i => Array.isArray(i) ? i.join(' ') : i).join(' ') : b[1]).join(' ');
+  const h = ' ' + [x.title, x.blurb, ...HP_CARD.flatMap(k => c[k[0]] || []), rd].join(' ').toLowerCase().replace(/[‘’']/g, '').replace(/[^a-z0-9]+/g, ' ') + ' ';
+  HP_HAY.set(x, h); return h;
+}
+function hpMatch(x, q){
+  const w = String(q || '').toLowerCase().replace(/[‘’']/g, '').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(t => t && !HT_STOP.includes(' ' + t + ' '));
+  return !w.length || w.every(t => hpHay(x).includes(' ' + t) || (t.length > 4 && hpHay(x).includes(t.slice(0, -1))));
+}
+const hpRow = x => `<button class="ln-item" data-act="hp-open" data-v="${esc(x.id)}"><span class="ln-n">${esc(String(x.n || ''))}</span><span class="ln-t"><b>${esc(x.title)}</b><small>${esc(x.blurb || '')}${x.blurb ? ' ' : ''}About ${esc(String(x.mins || 7))} minutes of video, a quick card, and a page to read.</small></span>${icon('play')}</button>`;
+function hpListHTML(){
+  const q = (V.hpq || '').trim();
+  if (q){ const hits = HPG().items.filter(x => hpMatch(x, q)); return hits.length ? `<div class="ln-list">${hits.map(hpRow).join('')}</div>` : `<p class="muted" style="margin:6px 0 14px">Nothing matched "${esc(q)}." Try a simpler word, like ICU, family, or surgery.</p>`; }
+  return hpGroups().map(g => `<div class="card hp-group"><h3>${esc(g.name)}</h3><div class="ln-list" style="margin-top:10px">${g.items.map(hpRow).join('')}</div></div>`).join('');
+}
+const hpHelpCard = () => `<div class="card hp-help" style="border-left:4px solid var(--danger)"><div class="spread"><div>${hpHelpLines(HPG().help).map((t, i) => `<p${i ? ' style="margin-top:6px"' : ''}>${esc(t)}</p>`).join('')}</div><div class="row"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
+function vHP(){
+  const H = HPG(); if (!H) return `<div class="card"><p>The Hospital Guide arrives with the next Field library update.</p></div>`;
+  if (window.GGLearn) GGLearn.css();
+  if (V.hp){ const x = hpFind(V.hp); if (x) return vHPItem(x); delete V.hp; }
+  return `<div class="ggl"><div class="hello hp-hello"><div class="eyebrow" style="color:#E8C987">Grounded Field Guide&trade;</div><h1>${esc(H.title || 'Hospital Guide')}</h1>${H.intro ? `<p>${esc(H.intro)}</p>` : ''}</div>
+   ${hpHelpCard()}
+   <div class="card"><label class="f" for="hp-q" style="margin-top:0">Find a topic</label><input type="text" id="hp-q" value="${esc(V.hpq || '')}" placeholder="ICU, a baby, surgery, a hard shift..." autocomplete="off"></div>
+   <div id="hp-list">${hpListHTML()}</div></div>`;
+}
+function hpCardHTML(x){
+  const c = x.card || {};
+  return `<div class="hp-card">${HP_CARD.filter(k => (c[k[0]] || []).length).map(k => `<div class="hp-cs hp-${k[0]}"><h4>${esc(k[1])}</h4><ul class="wfg-ul">${c[k[0]].map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>`).join('')}</div>`;
+}
+function vHPItem(x){
+  const g = hpGroups().find(y => y.key === x.group) || {name: ''}, vid = !!(x.video && (x.video.scenes || []).length && window.GGLearn);
+  if (vid) setTimeout(hpMount, 0);
+  return `<div class="ggl"><button class="linkbtn" data-act="hp-back">&larr; Back to the ${esc(HPG().title || 'Hospital Guide')}</button><div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(HPG().title || 'Hospital Guide')} &middot; ${esc(g.name)}</div><h1>${esc(x.title)}</h1>${x.blurb ? `<p class="muted" style="margin-top:6px">${esc(x.blurb)}</p>` : ''}</div>
+   ${vid ? `<div id="hp-host"></div>` : ''}
+   ${x.card ? `<div class="card" id="hp-quick" style="margin-top:14px"><div class="spread"><h3>Quick Card</h3><button class="btn btn-line btn-sm" data-act="hp-print" data-v="${esc(x.id)}">${icon('print')} Print Quick Card</button></div>${hpCardHTML(x)}</div>` : ''}
+   <div class="card" id="hp-page" style="margin-top:14px">${sgBody(x, HPG())}</div></div>`;
+}
+function hpMount(){
+  const host = $('#hp-host'), x = hpFind(V.hp); if (!host || !x || !window.GGLearn) return;
+  const trs = hpTracks(), tr = trs.find(t => t.lessons.some(l => l.id === x.id)), l = tr && tr.lessons.find(y => y.id === x.id); if (!l) return;
+  if (LN) lnStop();
+  LN = GGLearn.player(host, {mark: {name: 'Field Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: {}, at: 0, accent: '#3D5A73',
+    onAt: () => { lastAct = Date.now(); }, // a playing video must not lock the Field Guide
+    section: () => { lnStop(); const el = $('#hp-page'); if (el) el.scrollIntoView({block: 'start', behavior: 'smooth'}); },
+    open: id => { lnStop(); V = {tab: 'hospital', hp: id}; render(); },
+    home: () => { lnStop(); V = {tab: 'hospital'}; render(); }});
+}
+// The quick card on one page: the Field Guide mark at the top, four lists in two columns, the help line at the foot.
+// Sized to fit like the When Life Changes handouts (#ht-measure).
+async function hpPrint(x){
+  if (!x) return;
+  const c = x.card || {}, H = HPG();
+  const page = `<section class="ht-page hp-print"><div class="ht-head">${logo('t').replace('<svg', '<svg class="t"')}${logo('w').replace('<svg', '<svg class="w"')}<div class="r">Grounded Field Guide&trade;<br>${esc(H.title || 'Hospital Guide')}: Quick Card</div></div>
+   <h1>${esc(x.title)}</h1>${x.blurb ? `<p class="ht-note">${esc(x.blurb)}</p>` : ''}
+   <div class="ht-cols">${HP_CARD.filter(k => (c[k[0]] || []).length).map(k => `<div class="ht-sec"><h2>${esc(k[1])}</h2><ul${k[0] === 'say' ? ' class="ht-say"' : ''}>${c[k[0]].map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>`).join('')}</div>
+   <div class="ht-foot"><div class="ht-help"><h2>Help any time</h2>${hpHelpLines(H.help).map(t => `<p>${esc(t)}</p>`).join('')}</div></div>
+   <div class="ht-tm">${esc(tmFoot('Field Guide', 'growwithgrounded.com'))}</div></section>`;
+  try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch(e){}
+  const box = document.createElement('div'); box.id = 'ht-measure'; box.innerHTML = page; document.body.appendChild(box);
+  const lim = 248 * 96 / 25.4 * .98, p = box.querySelector('.ht-page');
+  for (const s of [12, 11.5, 11, 10.5, 10, 9.6, 9.2, 8.8, 8.4, 8, 7.6]){ p.style.fontSize = s + 'pt'; if (p.scrollHeight <= lim) break; }
+  const html = box.innerHTML; box.remove();
+  fgSheet(html, x.title + ': Quick Card', {file: 'hospital-quick-card-' + x.id.replace(/^hp-/, '')});
+}
+function hpAct(a, v){
+  switch (a){
+    case 'hp-open': lnStop(); go('hospital', {hp: v}); return true;
+    case 'hp-back': lnStop(); go('hospital'); return true;
+    case 'hp-print': hpPrint(hpFind(v)); return true;
   }
   return false;
 }
@@ -9932,6 +10042,7 @@ document.addEventListener('click', async e => {
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
+  if (a && a.startsWith('hp-') && hpAct(a, v)) return;
   switch(a){
     case 'home': go('home'); break;
     case 'lock': lock(); break;
@@ -10083,6 +10194,7 @@ document.addEventListener('input', e => {
   if (pnInput(t, 'input')) return;
   if (brInput(t, 'input')) return;
   if (dkInput(t)) return;
+  if (t.id === 'hp-q'){ V.hpq = t.value; const l = $('#hp-list'); if (l) l.innerHTML = hpListHTML(); return; }
   if (t.id === 'ht-q'){ V.htq = t.value; const l = $('#ht-list'); if (l) l.innerHTML = htListHTML(); return; }
   if (t.dataset.htf && V.htf && t.tagName !== 'SELECT'){ V.htf[t.dataset.htf] = t.value; return; }
   if (t.dataset.plf === 'name' && PS){ PS.name = t.value; return; }
