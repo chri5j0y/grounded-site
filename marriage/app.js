@@ -653,7 +653,7 @@
     if (pk.length) h += '<details class="btv-more"><summary>Earlier Months (' + pk.length + ')</summary><div class="ff-row">' + pk.map(function (x) { return btn('round-read', esc(monthName(x)), { k: x, cls: 'btn-secondary ff-sm' }); }).join('') + '</div></details>';
     h += '</div>';
     h += '<div class="ff-card"><h2>' + esc(Y.title) + '</h2>' + (Y.lead ? '<p class="ff-sub">' + esc(Y.lead) + '</p>' : '') + roundStatus('fy') +
-      '<div class="btv-note"><p>' + esc(Y.invite) + '</p><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Counseling">Book Your First-Year Check-in</a></div></div>';
+      '<div class="btv-note"><p>' + esc(Y.invite) + '</p><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Sessions">Book Your First-Year Check-in</a></div></div>';
     return h + tgHtml();
   }
   function vRound() {
@@ -672,7 +672,7 @@
           var t = c[1] ? String(c[1][q.id] || '').trim() : null;
           return '<div class="btv-person"><h3>' + esc(c[0]) + '</h3><p>' + (t ? esc(t) : t === null ? '<span class="btv-small">Their check-in card is not here yet.</span>' : '<span class="btv-small">Left blank.</span>') + '</p></div>'; }).join('') + '</div></section>';
       }).join('') + (R.close ? '<div class="ff-card sage"><p>' + esc(R.close) + '</p></div>' : '') +
-      (k === 'fy' && AF.firstYear.invite ? '<div class="ff-card"><p>' + esc(AF.firstYear.invite) + '</p><div class="ff-row"><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Counseling">Book Your First-Year Check-in</a></div></div>' : '');
+      (k === 'fy' && AF.firstYear.invite ? '<div class="ff-card"><p>' + esc(AF.firstYear.invite) + '</p><div class="ff-row"><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Sessions">Book Your First-Year Check-in</a></div></div>' : '');
   }
   function vMCard(code) {
     var theirs = esc(nm(other(st.s.me)));
