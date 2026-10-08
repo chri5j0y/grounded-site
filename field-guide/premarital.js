@@ -8,7 +8,7 @@
 // an hours log toward 12; Bring In Their Card (the couple's cards from The Grounded Marriage app, v1 and v2,
 // unlocked by the word only the two of them know, shown read only with their yes recorded); Strengths and Growing
 // Edges in Session 2; each partner's faith background shaping Session 6; the Educator's Statement for the
-// Minnesota reduced license fee (with a per couple switch, Also using PREPARE/ENRICH); and the couple's
+// Minnesota reduced license fee (its inventory line names The Grounded Marriage inventory, GWG BLD 760); and the couple's
 // Certificate of Completion. Leaders' names come from Settings and the couple's record.
 // Data: the Staff library's premarital key (LIB.premarital), with a small built-in fallback so the tab works
 // before that library update is applied. A Field-tier Premarital Guide (GWG BLD 752) has no Staff library, so the
@@ -53,7 +53,6 @@ const FB = {
   results: {title: 'Reading the Results', lead: '', tips: []},
   refer: {title: 'When to Add Sessions or Refer', lead: '', items: []},
   faith: {title: 'Built to Their Faith', lead: '', none: 'No faith background is named yet. Use Plain wording until you know.', one: '', two: 'Two backgrounds in one home. Honor both.', ask: ''},
-  pe: {label: 'Also using PREPARE/ENRICH', lead: 'With this on, the Educator\'s Statement names both inventories.'},
   certificate: {title: 'Certificate of Completion', program: 'The Grounded Marriage', lead: '', presented: 'Presented to', for: 'for completing', text: '{hours} hours of premarital education in six sessions', wish: '', led: 'Led by',
     fields: [['names', 'The Couple\'s Names'], ['hours', 'Hours'], ['leaders', 'Leaders\' Names'], ['date', 'Date']]},
   hours: {target: 12, note: 'Minnesota asks for at least 12 hours of premarital education, including a premarital inventory and the teaching of communication and conflict management skills.'},
@@ -63,7 +62,6 @@ const FB = {
     text: 'I, {educator}, confirm that {names} received at least 12 hours of premarital education that included the use of a premarital inventory and the teaching of communication and conflict management skills. I am a licensed or ordained minister, a person authorized to solemnize marriages under Minnesota Statutes, section 517.18, or a person licensed to practice marriage and family therapy under Minnesota Statutes, section 148B.33.',
     fields: [['p1', 'First Partner\'s Full Name'], ['p2', 'Second Partner\'s Full Name'], ['educator', 'Educator\'s Full Name'], ['role', 'Educator\'s Title or Credential'], ['org', 'Organization (the Letterhead)'], ['address', 'Address'], ['phone', 'Phone'], ['start', 'First Session Date'], ['end', 'Last Session Date'], ['hours', 'Hours of Premarital Education'], ['inventory', 'Premarital Inventory Used'], ['signed', 'Date Signed']],
     inventory: 'The Grounded Marriage inventory (Before the Vows)',
-    inventoryPE: 'The Grounded Marriage inventory (Before the Vows) and PREPARE/ENRICH',
     seal: 'Sign and date in front of a notary, or mark the statement with the church seal. Print it on the educator\'s letterhead.',
     fee: {standard: 125, reduced: 50, confirmed: false}
   },
@@ -100,7 +98,7 @@ function pm(){
   PC = Object.assign({}, FB, has ? L : {}, {
     full: has,
     sessions: has ? L.sessions : FB.sessions,
-    app: part('app'), before: part('before'), results: part('results'), refer: part('refer'), faith: part('faith'), pe: part('pe'), certificate: part('certificate'),
+    app: part('app'), before: part('before'), results: part('results'), refer: part('refer'), faith: part('faith'), certificate: part('certificate'),
     hours: part('hours'), statement: part('statement'), card: part('card'), safety: part('safety'), weekCard: part('weekCard')
   });
   PC.statement.fee = Object.assign({}, FB.statement.fee, PC.statement.fee || {});
@@ -255,7 +253,7 @@ function vHome(){
     ${progPick('pm-p', 'full')}
     <div class="row" style="margin-top:14px"><button type="button" class="btn btn-gold" data-pm="add">Add the Couple</button></div></div>
   <div class="card"><h2 style="margin-bottom:4px">Couples</h2>
-    ${L.length ? L.map(c => `<div class="pm-row"><div class="m"><b>${esc(names(c))}</b> <span class="pill ${c.status === 'complete' ? 'sage' : 'gold'}">${esc((STATUS.find(x => x[0] === c.status) || STATUS[0])[1])}</span>${progPill(c)}${c.pe ? ' <span class="pill">PREPARE/ENRICH</span>' : ''}<br><small class="muted">${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) : 'Wedding date not set yet'}</small><div style="max-width:320px">${bar(c)}</div></div>
+    ${L.length ? L.map(c => `<div class="pm-row"><div class="m"><b>${esc(names(c))}</b> <span class="pill ${c.status === 'complete' ? 'sage' : 'gold'}">${esc((STATUS.find(x => x[0] === c.status) || STATUS[0])[1])}</span>${progPill(c)}<br><small class="muted">${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) : 'Wedding date not set yet'}</small><div style="max-width:320px">${bar(c)}</div></div>
       <div class="row"><button type="button" class="btn btn-gold btn-sm" data-pm="open" data-v="${c.id}">Open</button><button type="button" class="btn btn-danger btn-sm" data-pm="del" data-v="${c.id}">Delete</button></div></div>`).join('')
       : '<p class="muted">Couples you add show here. They stay on this device, encrypted with your records, and travel in your backups.</p>'}</div>
   ${P.full ? '' : '<p class="muted" style="margin-top:12px;font-size:15px">The full session plans arrive with the next Staff library update.</p>'}`;
@@ -549,14 +547,14 @@ async function weekIn(c){
 }
 
 // ---------- the Educator's Statement ----------
-const invLine = c => { const P = pm().statement; return c.pe ? (P.inventoryPE || FB.statement.inventoryPE) : (P.inventory || FB.statement.inventory); };
+const invLine = () => pm().statement.inventory || FB.statement.inventory;
 function stmtDefaults(c){
   const L = (c.log || []).map(x => x.date).filter(Boolean).sort();
   const df = pm().statement.defaults, st = D().settings || {};
   const lh = df ? {role: st.pmRole || df.role || '', org: st.pmOrg || df.org || '', address: st.pmAddress || df.address || '', phone: st.pmPhone || df.phone || ''}
     : {role: '', org: 'Grow With Grounded LLC', address: 'St. Cloud, Minnesota', phone: '320-291-7393'};
   return {p1: c.p1.full || c.p1.name || '', p2: c.p2.full || c.p2.name || '', educator: me(), role: lh.role, org: lh.org, address: lh.address, phone: lh.phone,
-    start: L[0] || '', end: L[L.length - 1] || '', hours: String(Math.round(logMins(c) / 60 * 100) / 100), inventory: invLine(c), signed: ''};
+    start: L[0] || '', end: L[L.length - 1] || '', hours: String(Math.round(logMins(c) / 60 * 100) / 100), inventory: invLine(), signed: ''};
 }
 function stmtVals(c){ const d = stmtDefaults(c), s = c.stmt || {}; const o = {}; Object.keys(d).forEach(k => { o[k] = (s[k] != null && s[k] !== '') ? s[k] : d[k]; }); (pm().statement.fields || []).forEach(([k]) => { if (!(k in o)) o[k] = s[k] || ''; }); return o; }
 const DATEF = ['start', 'end', 'signed', 'date'];
@@ -564,7 +562,6 @@ function fillText(v){
   const n = [v.p1, v.p2].filter(Boolean).join(' and ');
   return String(pm().statement.text || '').replace(/\{educator\}/g, v.educator || '________________').replace(/\{names\}/g, n || '________________');
 }
-const peSwitch = c => `<label class="pm-yes"><input type="checkbox" data-pmpe="1"${c.pe ? ' checked' : ''}> <span><b style="font-weight:600">${esc(pm().pe.label || 'Also using PREPARE/ENRICH')}</b><br><small class="muted">${esc(pm().pe.lead || '')}</small></span></label>`;
 function vStatement(c){
   const P = pm().statement, v = stmtVals(c), f = P.fee || {}, short = logMins(c) < STMT() * 60;
   const lock = isEss(c) ? ((ESS().statement || {}).locked || 'Essentials is six hours. The Educator\'s Statement needs at least 12 hours, so it stays locked until 12 hours are logged.')
@@ -575,7 +572,6 @@ function vStatement(c){
     ${short ? `<div class="pm-lock" id="pm-lock"><b>Locked Until ${STMT()} Hours</b><p>${esc(hrs(logMins(c)))} logged so far. ${esc(lock)}</p></div>` : ''}</div>
   ${short ? upgradeBlock(c) : ''}
   <div class="card"><h3>Details</h3><p class="muted" style="font-size:15px">Filled from the couple and the hours log. Change anything here; it prints exactly as shown.</p>
-    ${peSwitch(c)}
     <div class="pm-g2" style="margin-top:8px">${(P.fields || []).map(([k, l]) => `<div><label class="f" for="pm-s-${esc(k)}">${esc(l)}</label><input type="${DATEF.includes(k) ? 'date' : 'text'}" id="pm-s-${esc(k)}" data-pms="${esc(k)}" value="${esc(v[k] || '')}" autocomplete="off"></div>`).join('')}</div>
     <h3 style="margin-top:16px">The Statement</h3><p class="pm-quote" id="pm-quote">${esc(fillText(v))}</p>
     <p class="muted" style="font-size:15px">${esc(P.seal || '')}</p>
@@ -651,8 +647,7 @@ function vAbout(c){
     <label class="f" for="pm-c-notes">Notes</label><textarea id="pm-c-notes" data-pmc="notes">${esc(c.notes || '')}</textarea></div>
   <div class="card"><h3>${esc(pm().faith.title || 'Built to Their Faith')}</h3><p class="muted" style="font-size:15px">${esc(pm().faith.pick || 'Each partner\'s faith background comes from their card, or pick it here.')}</p>
     <div class="pm-g2">${sel('p1')}${sel('p2')}</div>${F ? '' : loadingNote('the list of faith backgrounds')}</div>
-  ${ESS() ? `<div class="card"><h3>Program</h3>${progPick('pm-c-prog', isEss(c) ? 'essentials' : 'full')}${isUpg(c) ? `<p class="muted" style="font-size:15px;margin-top:8px">Upgraded from Essentials on ${esc(nice(c.upg.on))}. Their Essentials hours stay in the log.</p>` : ''}</div>${upgradeBlock(c)}` : ''}
-  <div class="card"><h3>PREPARE/ENRICH</h3>${peSwitch(c)}</div>`;
+  ${ESS() ? `<div class="card"><h3>Program</h3>${progPick('pm-c-prog', isEss(c) ? 'essentials' : 'full')}${isUpg(c) ? `<p class="muted" style="font-size:15px;margin-top:8px">Upgraded from Essentials on ${esc(nice(c.upg.on))}. Their Essentials hours stay in the log.</p>` : ''}</div>${upgradeBlock(c)}` : ''}`;
 }
 
 function printStatement(c){
@@ -781,7 +776,6 @@ document.addEventListener('change', e => {
   const t = e.target; if (!t.closest || !t.closest('#pm-root')) return; const c = cur(); if (!c) return;
   if (t.dataset.pmck != null){ const st = sess(c, S.n); if (t.checked) st.ck[t.dataset.pmck] = Date.now(); else delete st.ck[t.dataset.pmck]; keep(c); return; }
   if (t.dataset.pmpre != null){ c.pre = c.pre || {}; if (t.checked) c.pre[t.dataset.pmpre] = Date.now(); else delete c.pre[t.dataset.pmpre]; keep(c); rerender(true); return; }
-  if (t.dataset.pmpe != null){ c.pe = !!t.checked; keep(c); rerender(true); return; }
   if (t.dataset.pmf){ c.fb = c.fb || {}; if (t.value) c.fb[t.dataset.pmf] = t.value; else delete c.fb[t.dataset.pmf]; keep(c); return; }
   if (t.dataset.pml){ setLog(c, t.dataset.pml, t.value); rerender(true); return; }
   if (t.dataset.pmc === 'wedding'){ c.wedding = t.value; keep(c); return; }
