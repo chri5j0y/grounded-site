@@ -95,7 +95,8 @@
       + '<script>(function(){var S=' + JSON.stringify(sizes) + ',sh=document.getElementById("sheet"),fit=document.getElementById("fit");'
       + 'function scale(){var w=sh.offsetWidth,h=sh.offsetHeight,k=Math.min(1,(window.innerWidth-28)/w);fit.style.width=w+"px";fit.style.height=(h*k)+"px";fit.style.transform="scale("+k+")";fit.style.marginLeft=Math.max(14,(window.innerWidth-w*k)/2)+"px";}'
       + 'document.querySelectorAll("[data-size]").forEach(function(b){b.onclick=function(){var s=S[+b.getAttribute("data-size")];document.getElementById("pg").textContent="@page{size:"+s.page+";margin:0;}";sh.style.width=s.w+"in";sh.style.height=s.h+"in";sh.className="sheet "+(s.cls||"");document.querySelectorAll("[data-size]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});scale();};});'
-      + 'document.getElementById("go").onclick=function(){window.print();};window.addEventListener("resize",scale);scale();'
+      + 'function ready(){return Promise.all(Array.prototype.map.call(document.images,function(i){return i.complete?0:new Promise(function(r){i.addEventListener("load",r);i.addEventListener("error",r);});}));}'
+      + 'document.getElementById("go").onclick=function(){ready().then(function(){window.print();});};window.addEventListener("resize",scale);scale();'
       + 'if(document.fonts&&document.fonts.ready)document.fonts.ready.then(scale);'
       + 'var n=document.querySelector("[data-fitname]");if(n){var f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth&&f>14){f-=1;n.style.fontSize=f+"px";}}'
       + '})();<\/script></body></html>';
@@ -105,7 +106,15 @@
     // A blocked pop-up: print from a hidden frame instead.
     var f = document.createElement('iframe'); f.setAttribute('aria-hidden', 'true'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
     document.body.appendChild(f); f.contentDocument.open(); f.contentDocument.write(html); f.contentDocument.close();
-    setTimeout(function () { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) {} setTimeout(function () { f.remove(); }, 60000); }, 900);
+    // Print once every image in the frame has loaded (the paintings), or after 8 seconds at most.
+    var go = function () { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) {} setTimeout(function () { f.remove(); }, 60000); };
+    setTimeout(function () {
+      var imgs = Array.prototype.slice.call(f.contentDocument.images || []), left = imgs.filter(function (i) { return !i.complete; }), done = false;
+      var once = function () { if (!done) { done = true; go(); } };
+      if (!left.length) return once();
+      var n = left.length; left.forEach(function (i) { var c = function () { if (--n <= 0) once(); }; i.addEventListener('load', c); i.addEventListener('error', c); });
+      setTimeout(once, 8000);
+    }, 900);
     return null;
   }
   var LETTER = { label: 'Letter', page: '8.5in 11in', w: 8.5, h: 11, cls: 'k1' };
@@ -171,13 +180,17 @@
     '.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(8px * var(--k)) calc(14px * var(--k));margin-top:calc(0.22in * var(--k));}',
     '.parts div{border-top:calc(4px * var(--k)) solid var(--p);padding-top:calc(5px * var(--k));}.parts b{display:block;font-size:calc(15pt * var(--k));font-family:"Cormorant Garamond",Georgia,serif;color:var(--p);}.parts span{font-size:calc(10pt * var(--k));color:#4A3B30;}',
     '.grow{flex:0;}.pad{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding-bottom:calc(0.2in * var(--k));}.pad>*{margin-top:0 !important;}',
-    '.top{flex:none;}.k1 .top img.hero{height:2.95in;object-fit:cover;object-position:center 30%;}',
+    '.top{flex:none;}.k1 .top img.hero{height:2.95in;object-fit:cover;}',
     '.k2 .top img.hero{height:6.2in;object-fit:cover;}',
     '.foot{display:flex;align-items:center;justify-content:space-between;gap:calc(0.3in * var(--k));padding:calc(0.25in * var(--k)) calc(0.6in * var(--k)) calc(0.4in * var(--k));border-top:1px solid #E3D8C4;margin-top:calc(0.2in * var(--k));}',
     '.qr{display:flex;align-items:center;gap:calc(0.14in * var(--k));}.qr svg{width:calc(1.15in * var(--k));height:calc(1.15in * var(--k));}.qr b{display:block;font-size:calc(13pt * var(--k));}.qr span{display:block;font-size:calc(10pt * var(--k));color:#6B5A4D;margin-top:2px;}',
     '.house{display:flex;align-items:center;gap:8px;text-align:right;}.house img{width:calc(0.4in * var(--k));height:auto;}.house span{font-size:calc(9pt * var(--k));color:#6B5A4D;line-height:1.35;}.house b{display:block;font-size:calc(10pt * var(--k));letter-spacing:2px;color:#8B5E1A;font-family:"Barlow Condensed","Arial Narrow",sans-serif;}',
     '.sheet{display:flex;flex-direction:column;}'
   ].join('\n');
+  // The tree's painting across the top of a poster or flyer (GWG BLD 760): shared/heroes/<tree>-wide.webp, cropped to the
+  // band with the tree kept in view (HX: where the tree sits, side to side, as a percent of the painting's width).
+  var HX = { maple: 38, aspen: 37, pine: 37, birch: 18, oak: 70, sequoia: 26, willow: 25, grove: 50 };
+  function heroImg(tr) { return '<img class="hero" src="' + A('/shared/heroes/' + tr + '-wide.webp') + '" alt="" style="object-position:' + (HX[tr] == null ? 50 : HX[tr]) + '% 58%">'; }
   function partsStrip() { return '<div class="parts">' + PARTS.map(function (p) { return '<div style="--p:' + p[2] + '"><b>' + p[0] + '</b><span>' + p[1] + '</span></div>'; }).join('') + '</div>'; }
   function footer(t, label, extra, to) {
     var u = to || SITE + t.path;
@@ -208,7 +221,7 @@
           + '.close{text-align:center;font-size:calc(22pt * var(--k));font-style:italic;font-weight:500;color:' + t.ink + ';margin:0 calc(0.6in * var(--k)) calc(0.1in * var(--k));}';
         return page({ win: win, title: t.name + ' Six Parts Poster', sizes: [LETTER, TABLOID], body: body, css: css, tip: 'Pick Letter or 11 by 17 above.' });
       }
-      body = '<div class="top"><img class="hero" src="' + A('/shared/heroes/' + tr + '-narrow.svg') + '" alt=""></div>'
+      body = '<div class="top">' + heroImg(tr) + '</div>'
         + '<div class="pad"><div>' + head(tr, t) + '<div class="tag serif">' + esc(t.tag) + '</div><div class="sub">' + esc(t.sub) + '<br>' + esc(t.who) + '</div></div>'
         + '<div class="here" style="--c:' + t.color + '"><span class="serif">A trained ' + esc(t.guide) + ' serves here.</span><small>Ask about ' + esc(t.name) + ', and how the six parts of a tree can help.</small></div>'
         + partsStrip() + '</div><div class="grow"></div>' + footer(t, 'Scan to learn about ' + t.name);
@@ -238,7 +251,7 @@
         return page({ win: win, title: 'Grow With Grounded Flyer', size: LETTER, body: body, css: css, tip: 'Letter size, ready for any bulletin board.' });
       }
       var x = T[tr];
-      body = '<div class="top"><img class="hero" src="' + A('/shared/heroes/' + tr + '-narrow.svg') + '" alt=""></div>'
+      body = '<div class="top">' + heroImg(tr) + '</div>'
         + '<div class="pad"><div>' + head(tr, x) + '<div class="tag serif">' + esc(x.tag) + '</div><div class="sub">' + esc(x.sub) + '<br>' + esc(x.who) + '</div></div>'
         + '<ul class="pts">' + x.points.map(function (p) { return '<li style="--c:' + x.color + '">' + esc(p) + '</li>'; }).join('') + '<li style="--c:' + x.color + '">Private by design: no account, and answers stay on your device.</li></ul>'
         + partsStrip() + '</div><div class="grow"></div>' + footer(x, 'Scan to begin with ' + x.name, 'In crisis? Call or text 988, any time.');

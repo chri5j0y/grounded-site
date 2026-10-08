@@ -638,15 +638,15 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
 <script src="../shared/gg-sources.js?v=b759"></script>
-<script src="../shared/gg-learn.js?v=b758"></script>
-<script src="../shared/gg-print.js?v=b758"></script>
+<script src="../shared/gg-learn.js?v=b760"></script>
+<script src="../shared/gg-print.js?v=b760"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=gr1"></script>
 <script src="qr.js"></script>
-<script src="share.js?v=b758"></script>
+<script src="share.js?v=b760"></script>
 <script src="ceremonies.js?v=b758"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="premarital.js?v=pm4"></script>
+<script src="premarital.js?v=b760"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 (function(){ var t = Date.now(); ['codes','lib-founder','lib-staff','lib-field'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
@@ -1812,7 +1812,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b758'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b760'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
