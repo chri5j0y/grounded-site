@@ -6,7 +6,7 @@
      --soft       the soft words on the band        --btn-ink    words on the cream button
      --sw / --swd the wide scene, light and dark     --sn / --snd the narrow scene
      --dot / --dot-dark  the six-part strip dots
-   Art: shared/heroes/*.svg and shared/marks/*.svg (drawn by the tree art scripts).
+   Art: the paintings in shared/heroes/*.webp and the marks in shared/marks/*.svg.
    Painted heroes (GWG BLD 755): add class gg-photo and set
      --pw the wide image   --pn the phone image   --px where the wide image sits on narrow screens
      --sky the color of the image's top edge (fills any gap above a full-width image)

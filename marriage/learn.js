@@ -32,7 +32,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "For You, Lesson 1",
        "h": "Using Before the Vows",
        "sub": "Two of you, one honest conversation.",
@@ -244,7 +244,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "For You, Lesson 2",
        "h": "Talking When You Differ",
        "sub": "Listen, reflect, ask, agree.",
@@ -428,7 +428,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "For You, Lesson 3",
        "h": "Money, Families, and Faith Without a Fight",
        "sub": "Three big talks, one at a time.",
@@ -606,7 +606,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "For You, Lesson 4",
        "h": "Keeping It Going After the Wedding",
        "sub": "The small things, every week.",
@@ -772,7 +772,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "The Six Sessions, Session 1",
        "h": "Your Story and Your Hopes",
        "sub": "Where you come from, and where you are going.",
@@ -1020,7 +1020,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "The Six Sessions, Session 2",
        "h": "Your Strengths and Growing Edges",
        "sub": "What you share, where you differ, where you will grow.",
@@ -1291,7 +1291,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "The Six Sessions, Session 3",
        "h": "Speaking and Listening",
        "sub": "Say it kindly. Listen until they feel heard.",
@@ -1552,7 +1552,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "The Six Sessions, Session 4",
        "h": "Conflict and Repair",
        "sub": "How you disagree, and how you come back.",
@@ -1836,7 +1836,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "The Six Sessions, Session 5",
        "h": "Money, Families, and Home",
        "sub": "Three everyday talks, one at a time.",
@@ -2111,7 +2111,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "The Six Sessions, Session 6",
        "h": "Meaning, Children, and the Road Ahead",
        "sub": "What matters most, and where you are going.",
@@ -2354,7 +2354,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "Skills for Two, Skill 1",
        "h": "Listening Until They Feel Heard",
        "sub": "The skill under every other skill.",
@@ -2507,7 +2507,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "Skills for Two, Skill 2",
        "h": "The Pause and Return",
        "sub": "A break that brings you back.",
@@ -2632,7 +2632,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "Skills for Two, Skill 3",
        "h": "Making a Repair",
        "sub": "Coming back to each other.",
@@ -2756,7 +2756,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "Skills for Two, Skill 4",
        "h": "The Money Map",
        "sub": "A plan you make together.",
@@ -2885,7 +2885,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "Skills for Two, Skill 5",
        "h": "Talking About Closeness",
        "sub": "A tender talk, kindly.",
@@ -3020,7 +3020,7 @@ window.GG_LEARN_GM = {
      "scenes": [
       {
        "k": "title",
-       "hero": "grove",
+       "hero": "marriage",
        "eyebrow": "Skills for Two, Skill 6",
        "h": "When Your Faith Backgrounds Differ",
        "sub": "Honoring both of your paths.",
