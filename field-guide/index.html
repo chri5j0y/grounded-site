@@ -654,7 +654,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="premarital.js?v=b760"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
-// The Guide library (GWG BLD 764): lib-guide.js once the Founder uploads it, else lib-field.js, the file from before the rename.
+// The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
 (function(){ var t = Date.now(); window.__gfgT = t; ['codes','lib-founder','lib-staff','lib-guide'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
 </script>
 <script>
