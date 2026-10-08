@@ -375,8 +375,8 @@ function fit(ctx, o, R, cap){
   for (const parts of tries) for (let li = 0; li < levels.length; li++){
     let lo = 0, hi = cap; got = null;
     for (let i = 0; i < 24; i++){ const mid = (lo + hi) / 2; const m = measure(ctx, o, mid, R, parts, levels[li]); if (m){ got = m; lo = mid; } else hi = mid; }
-    // With the list, its words stay at 9 points or larger on paper (300 dpi), and 9 pixels or larger on screen.
-    const least = parts.list ? Math.max(o.minU, 9 / 72 * DPI / 1.6) : o.minU;
+    // With the list (print only), its words stay at 9 points or larger on paper (300 dpi).
+    const least = parts.list ? 9 / 72 * DPI / 1.6 : o.minU;
     if (got && got.u >= (li < levels.length - 1 ? Math.max(least, cap * .55) : least)) return got;
   }
   return got;
@@ -458,7 +458,7 @@ async function draw(canvas, cur, look){
   // The region the words and marks stay inside.
   let R;
   if (banner){ const f = plat.safeBox || SAFE[plat.id] || [.1, .12, .9, .88]; R = {x: W * f[0], y: H * f[1], w: W * (f[2] - f[0]), h: Math.min(H * f[3], bandTop - H * .04) - H * f[1]}; }
-  else if (pnt && side !== 'center') R = side === 'right' ? {x: W * .46, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07} : {x: W * .06, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07};
+  else if (pnt && side !== 'center'){ const cw = orgList ? .56 : .48; R = side === 'right' ? {x: W * (.94 - cw), y: H * .07, w: W * cw, h: bandTop - H * .05 - H * .07} : {x: W * .06, y: H * .07, w: W * cw, h: bandTop - H * .05 - H * .07}; }
   // An audience flyer with its list keeps nearly the full height on a tall painting, under a deeper shade (GWG BLD 762).
   else if (pnt && !horiz) R = {x: W * .07, y: H * .06, w: W * .86, h: (bandTop - H * .05) * (orgList ? .97 : .62) - H * .06};
   else R = {x: W * .07, y: H * .07, w: W * .86, h: bandTop - H * .05 - H * .07};
@@ -490,6 +490,8 @@ async function draw(canvas, cur, look){
   const o ={horiz, logo, name: cardName(sub), msg: msgText, head: own ? own.head : '', note: own ? own.note : '', line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
   // An audience flyer: its headline in the name's place, the audience above it, and its list on the print sizes (not the business card).
   if (sub.svc === 'org'){ o.name = sub.headline || o.name; o.eyebrow = sub.eyebrow || ''; if (orgList) o.list = sub.lines.slice(0, 5); }
+  // On a wide painting with its tree to one side, the flyer's words stack in the open column (mark above), so the list has room.
+  if (orgList && pnt && !banner && side !== 'center') o.horiz = false;
   const cap = banner ? H * (W / H >= 3.9 ? .045 : .03) : horiz ? Math.min(H * .036, W * .022) : W * .03;
   const m = fit(ctx, o, R, pnt && side !== 'center' && !banner ? cap * .92 : cap);
   // Where the block sits: centered in the region, or toward the open side of a banner's painting.
@@ -537,7 +539,7 @@ async function draw(canvas, cur, look){
     const markImg = logo && P.logo !== GOLD ? tint(imgs[0], P.logo) : imgs[0];
     if (pnt){ ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = u * .9; ctx.shadowOffsetY = u * .08; }
     let tx, ty, align;
-    if (horiz){
+    if (o.horiz){
       pic(ctx, B, markImg, bx, by + (m.H - m.markH) / 2, m.markW, m.markH, 'mark');
       tx = bx + m.markW + m.gapM; ty = by + (m.H - m.textH) / 2; align = 'left';
     } else {
@@ -553,7 +555,7 @@ async function draw(canvas, cur, look){
     if (m.note.lines.length){ ty += u * .9; lines(m.note, F_NOTE(u), u * 1.75, 1.32, P.ink, '0px', 'note'); }
     if (m.list.length){
       // The list as one left-aligned block, centered under the words on tall cards; a small round bullet before each offer.
-      ty += u * 1.4; const lx = horiz ? tx : tx - m.listW / 2, sz = u * 1.6, r = u * .26;
+      ty += u * 1.4; const lx = o.horiz ? tx : tx - m.listW / 2, sz = u * 1.6, r = u * .26;
       ctx.textAlign = 'left'; ctx.font = F_LIST(u);
       m.list.forEach((b, i) => {
         if (i) ty += u * .55;
@@ -603,6 +605,7 @@ const CSS = `
 .sc-stage canvas{display:block;max-width:100%;max-height:66vh;width:auto;height:auto;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.16);}
 .sc-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;}
 .sc-cb{display:flex;align-items:center;gap:8px;margin-top:12px;font-weight:600;color:var(--ink-soft);}
+.sc-cb{overflow-wrap:anywhere;min-width:0;}
 .sc-bio{border-top:1px solid var(--line);padding:14px 0;}
 .sc-bio:first-of-type{border-top:0;}
 .sc-bio p{white-space:pre-wrap;margin:6px 0;overflow-wrap:anywhere;}
