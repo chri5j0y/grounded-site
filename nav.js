@@ -83,9 +83,11 @@
     '.gn-back{display:none;font-family:Barlow,system-ui,sans-serif;font-size:15px;font-weight:600;color:#8B5E1A;background:none;border:none;padding:6px 0 12px;cursor:pointer;text-align:left;}' +
     '.gn-sub-mode .gn-back{display:block;}' +
     '.gn-sub-mode.gn-panel{position:static;width:100%;box-sizing:border-box;box-shadow:none;border:none;border-radius:0;padding:6px 0 4px;background:transparent;}' +
-    '.gn-sub-mode .gn-grid{grid-template-columns:1fr;}' +
+    '.gn-sub-mode .gn-grid,.gn-sub-mode.gn-svc .gn-grid{grid-template-columns:1fr;}' +
     '.gn-menu-sub > *:not(.gn-panel){display:none !important;}' +
-    '@media (max-width:600px){.gn-grid{grid-template-columns:1fr;}}' +
+    'a.gn-tool.gn-row{padding:6px 8px !important;}' +
+    '.gn-svc .gn-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}' +
+    '@media (max-width:600px){.gn-grid,.gn-svc .gn-grid{grid-template-columns:1fr;}}' +
     '';
   var GN_DARK = ''+
 
@@ -109,47 +111,70 @@
     return '@media (prefers-color-scheme: dark){' + scope(':root:not([data-theme="light"])') + '}' + scope(':root[data-theme="dark"]');
   }
 
-  function build() {
-    var menu = document.getElementById('site-menu');
-    if (!menu) return;
-    var link = Array.prototype.slice.call(menu.querySelectorAll('a')).filter(function (a) { return /#tools$/.test(a.getAttribute('href') || '') || /^\s*tools\s*$/i.test(a.textContent); })[0];
-    if (!link) return;
-    var st = document.createElement('style'); st.textContent = css + themed(GN_DARK); document.head.appendChild(st);
+  /* The Services menu (GWG BLD 772): The Grounded Marriage one tap away, then the six families of services.
+     It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
+  var SVC_FEATURED = { title: 'The Grounded Marriage', desc: 'Premarital sessions with Chris and Kayti, with Heartwood', href: HOME + '/the-grounded-marriage.html', bg: '#E3EAF2',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3F5F86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="13" r="5"/><circle cx="15" cy="13" r="5"/><path d="M12 3.5l1 1.8M12 3.5l-1 1.8"/></svg>' };
+  var SVC_FAMILIES = [
+    ['Marriage', 'Weddings and The Grounded Marriage', 'marriage'],
+    ['Celebrations', 'Blessings and milestones', 'celebrations'],
+    ['Farewells', 'Funerals, memorials, and bedside blessings', 'farewells'],
+    ['Hard Seasons', 'End-of-life support, grief, and caregiving', 'hard-seasons'],
+    ['Growth', 'Spiritual guidance, meditation, and rest', 'growth'],
+    ['For Teams', 'Speaking and training', 'for-teams']
+  ];
+  function onPage(href) {
+    var a = (href.replace(HOME, '') || '/').replace(/\.html$/, ''), b = location.pathname.replace(/\.html$/, '');
+    return a === b;
+  }
+  function toolsBody() {
+    var cur = here();
+    return GN_GROUPS.map(function (g) {
+      return '<div class="gn-group">' + '<h4>' + g.name + '</h4>' +
+        g.items.map(function (t) {
+        var row;
+        if (t.soon) row = '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
+        else {
+          var isHere = t.id === cur;
+          row = '<a class="gn-tool' + (isHere ? ' gn-here' : '') + '" href="' + t.href + '"' + (isHere ? ' aria-current="page"' : '') + '>' +
+            '<span class="gn-ic" style="background:' + t.bg + ';color:' + (t.color || '#8B5E1A') + '">' + t.icon + '</span>' +
+            '<span><b>' + t.title + (t.locked ? ' <span class="gn-lock" title="Access code required">' + ic.lock + '</span>' : '') + (isHere ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
+        }
+        return row;
+      }).join('') + '</div>';
+    }).join('');
+  }
+  function svcBody() {
+    var f = SVC_FEATURED, fh = onPage(f.href);
+    return '<div class="gn-group"><h4>Featured Program</h4>' +
+      '<a class="gn-tool' + (fh ? ' gn-here' : '') + '" href="' + f.href + '"' + (fh ? ' aria-current="page"' : '') + '><span class="gn-ic" style="background:' + f.bg + '">' + f.icon + '</span>' +
+      '<span><b>' + f.title + (fh ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + f.desc + '</small></span></a></div>' +
+      '<div class="gn-group"><h4>Services</h4>' +
+      SVC_FAMILIES.map(function (x) { return '<a class="gn-tool gn-row" href="' + HOME + '/services.html#' + x[2] + '"><span><b>' + x[0] + '</b><small>' + x[1] + '</small></span></a>'; }).join('') +
+      '</div>';
+  }
 
+  var DROPS = [];
+  function dropdown(menu, link, o) {
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = link.className + ' gn-tools-btn';
     btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-controls', 'gn-panel');
-    btn.innerHTML = 'Tools <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    btn.setAttribute('aria-controls', o.id);
+    btn.innerHTML = o.label + ' <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     link.parentNode.replaceChild(btn, link);
     // keep the site's own menu link styling
     var ls = getComputedStyle(menu.querySelector('a') || btn);
     ['fontFamily', 'fontWeight', 'fontSize', 'letterSpacing', 'textTransform', 'color', 'padding'].forEach(function (k) { btn.style[k] = ls[k]; });
 
     var panel = document.createElement('div');
-    panel.className = 'gn-panel';
-    panel.id = 'gn-panel';
+    panel.className = 'gn-panel' + (o.cls ? ' ' + o.cls : '');
+    panel.id = o.id;
     panel.setAttribute('role', 'dialog');
-    panel.setAttribute('aria-label', 'Grounded tools');
+    panel.setAttribute('aria-label', o.aria);
     function render() {
-      var cur = here();
-      panel.innerHTML = '<button type="button" class="gn-back">&#8592; Menu</button><div class="gn-grid">' +
-        GN_GROUPS.map(function (g) {
-          return '<div class="gn-group">' + '<h4>' + g.name + '</h4>' +
-            g.items.map(function (t) {
-            var row;
-            if (t.soon) row = '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
-            else {
-              var isHere = t.id === cur;
-              row = '<a class="gn-tool' + (isHere ? ' gn-here' : '') + '" href="' + t.href + '"' + (isHere ? ' aria-current="page"' : '') + '>' +
-                '<span class="gn-ic" style="background:' + t.bg + ';color:' + (t.color || '#8B5E1A') + '">' + t.icon + '</span>' +
-                '<span><b>' + t.title + (t.locked ? ' <span class="gn-lock" title="Access code required">' + ic.lock + '</span>' : '') + (isHere ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
-            }
-            return row;
-          }).join('') + '</div>';
-        }).join('') +
-        '</div><div class="gn-foot"><a class="gn-all" href="' + HOME + '/tools.html">See all tools</a></div>';
+      panel.innerHTML = '<button type="button" class="gn-back">&#8592; Menu</button><div class="gn-grid">' + o.body() +
+        '</div><div class="gn-foot"><a class="gn-all" href="' + o.all[1] + '">' + o.all[0] + '</a></div>';
       panel.querySelector('.gn-back').onclick = function () { closePanel(); btn.focus(); };
     }
     render();
@@ -159,13 +184,14 @@
     function isMobile() { return !!menuBtn && getComputedStyle(menuBtn).display !== 'none'; }
     function place() {
       var r = btn.getBoundingClientRect();
-      var w = Math.min(760, window.innerWidth - 24);
+      var w = Math.min(o.width || 760, window.innerWidth - 24);
       var left = Math.max(12, Math.min(r.right - w, window.innerWidth - w - 12));
+      if (o.width) panel.style.width = w + 'px';
       panel.style.top = (r.bottom + window.scrollY + 10) + 'px';
       panel.style.left = (left + window.scrollX) + 'px';
     }
     // Phones: the open menu fits the screen under the top bar and scrolls inside itself,
-    // so every tool can be reached (the bar is pinned, so the page can't scroll it into view).
+    // so every item can be reached (the bar is pinned, so the page can't scroll it into view).
     function fit() {
       if (isMobile() && (menu.classList.contains('open') || menu.classList.contains('gn-menu-sub'))) {
         var top = Math.max(0, menu.getBoundingClientRect().top);
@@ -175,7 +201,9 @@
       } else { menu.style.maxHeight = ''; menu.style.overflowY = ''; menu.style.overscrollBehavior = ''; }
     }
     function openPanel() {
+      DROPS.forEach(function (d) { if (d.panel !== panel && d.isOpen()) d.close(); });
       if (isMobile()) {
+        panel.style.width = '';
         panel.classList.add('gn-sub-mode');
         if (panel.parentNode !== menu) menu.appendChild(panel);
         menu.classList.add('gn-menu-sub');
@@ -194,6 +222,7 @@
       btn.setAttribute('aria-expanded', 'false');
       fit();
     }
+    DROPS.push({ panel: panel, close: closePanel, isOpen: function () { return panel.classList.contains('gn-show'); } });
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
       if (panel.classList.contains('gn-show')) closePanel(); else openPanel();
@@ -202,6 +231,8 @@
       if (!panel.classList.contains('gn-show')) return;
       if (panel.contains(e.target) && !e.target.closest('a')) return;
       if (e.target === btn) return;
+      // a link chosen in the panel (even one on this same page) also closes the phone menu
+      if (panel.contains(e.target) && menu.classList.contains('open')) { menu.classList.remove('open'); if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false'); }
       closePanel();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('gn-show')) { closePanel(); btn.focus(); } });
@@ -209,6 +240,18 @@
     if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
     if (menuBtn) menuBtn.addEventListener('click', function () { closePanel(); setTimeout(fit, 0); });
     if (window.MutationObserver) new MutationObserver(fit).observe(menu, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  function build() {
+    var menu = document.getElementById('site-menu');
+    if (!menu) return;
+    var links = Array.prototype.slice.call(menu.querySelectorAll('a'));
+    var link = links.filter(function (a) { return /#tools$/.test(a.getAttribute('href') || '') || /^\s*tools\s*$/i.test(a.textContent); })[0];
+    var svc = links.filter(function (a) { return /^\s*services\s*$/i.test(a.textContent); })[0];
+    if (!link && !svc) return;
+    var st = document.createElement('style'); st.textContent = css + themed(GN_DARK); document.head.appendChild(st);
+    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Services', aria: 'Grounded services', body: svcBody, all: ['See all services', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
+    if (link) dropdown(menu, link, { id: 'gn-panel', label: 'Tools', aria: 'Grounded tools', body: toolsBody, all: ['See all tools', HOME + '/tools.html'] });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
