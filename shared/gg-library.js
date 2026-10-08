@@ -16,7 +16,8 @@
      GGLibrary.forPart(part, age) practices for one part that fit an age
                                   age: 'maple', 'aspen', 'pine', 'birch', or 'oak'
      GGLibrary.search(q, age)     search the whole library
-     GGLibrary.get(key)           one practice, or null
+     GGLibrary.get(key)           one practice, or null (old keys like g:spirit:0 read forward, BLD 765)
+     GGLibrary.key(key)           the current key for a saved one (g:spirit:0 to g:roots:0)
      GGLibrary.view(it, age)      {name, text, busy, why, steps, hard, life, adapt}
                                   in the words for that age (life and adapt: Health and
                                   Ability tags from grove/data.js, GWG BLD 756)
@@ -27,7 +28,7 @@
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=b756', '/grove/library.js?v=b756'];
+  var FILES = ['/grove/data.js?v=b765', '/grove/library.js?v=b765'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -56,6 +57,7 @@
   function forPart(part, age) { return LIB ? LIB.items.filter(function (it) { return it.part === part && fits(it, age); }) : []; }
   function search(q, age) { return LIB ? LIB.search(q, age) : []; }
   function get(key) { return LIB ? LIB.get(key) : null; }
+  function key(k) { return LIB && LIB.key ? LIB.key(k) : k; }
 
   function view(it, age) {
     var k = kid(age) && it.kidName, h = it.how || [];
@@ -96,5 +98,5 @@
     return { desc: v.text, guide: guideHtml(v), hard: v.busy || v.hard, life: v.life, adapt: v.adapt };
   }
 
-  window.GGLibrary = { ready: ready, forPart: forPart, search: search, get: get, view: view, info: info, guideHtml: guideHtml, fits: fits };
+  window.GGLibrary = { ready: ready, forPart: forPart, search: search, get: get, key: key, view: view, info: info, guideHtml: guideHtml, fits: fits };
 })();

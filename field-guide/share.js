@@ -97,7 +97,7 @@ const SERVICES = SVC_FAM.map(f => Object.assign({svc: 'family', mark: 'favicon.s
 // section, each a flyer subject with its own headline, a one-line promise, and short lines of what Grounded offers them.
 // The lines print on the 8.5 by 11 flyer and 11 by 17 poster (and the 4 by 6 and 5 by 7 when they read cleanly);
 // the social sizes and the business card use the headline and the promise.
-const ORG_URL = 'growwithgrounded.com/organizations.html', ORG_LINE = 'Grow With Grounded™ for organizations. Tell us about yours and we\'ll send a clear quote.';
+const ORG_URL = 'growwithgrounded.com/organizations.html#illness-disability', ORG_LINE = 'Grow With Grounded™ for organizations. Tell us about yours and we\'ll send a clear quote.';
 const ORG_AUD = [
   {id: 'org-disability-ministries', name: 'Disability Ministries', hero: 'grove', focus: .5,
     headline: 'A welcome for every member.', tagline: 'Guides that welcome every member and family, with words for the questions people bring.',

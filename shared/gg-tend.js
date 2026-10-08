@@ -601,13 +601,14 @@
   /* ---------- find more practices (the shared library, Rebrand Session 5) ---------- */
   var LIBQ = { part: '', q: '', open: '' };
   function libAge() { return (typeof C.libAge === 'function' ? C.libAge() : C.libAge) || 'oak'; }
-  function inPlan(s, it) { var x = ((s && s.plan) || {})[it.part] || {}; return (x.lib || []).some(function (l) { return l.k === it.key; }); }
+  function libK(k) { return window.GGLibrary && GGLibrary.key ? GGLibrary.key(k) : k; } // saved keys from before BLD 765 read forward
+  function inPlan(s, it) { var x = ((s && s.plan) || {})[it.part] || {}; return (x.lib || []).some(function (l) { return libK(l.k) === it.key; }); }
   function libToggle(key) {
     var s = ensure(); if (!s) { toast('Open your profile to add practices.'); return; }
     var it = GGLibrary.get(key); if (!it) return;
     if (!s.plan) s.plan = {}; if (!s.plan[it.part]) s.plan[it.part] = { selected: [] };
     var x = s.plan[it.part], L = x.lib || (x.lib = []), i = -1;
-    L.forEach(function (l, j) { if (l.k === key) i = j; });
+    L.forEach(function (l, j) { if (libK(l.k) === libK(key)) i = j; });
     if (i >= 0) { L.splice(i, 1); toast('Taken out of your practices.'); }
     else { L.push({ k: key, n: GGLibrary.view(it, libAge()).name }); toast('Added to your practices.'); }
     persist(); renderToday(); drawLib();

@@ -9,22 +9,22 @@
 // The same six parts as every Grounded check-in tool. Leaves holds three
 // strands (Move, Rest, Nourish) so The Grove can aim at the one that needs it.
 const PARTS = [
- { id:"roots", name:"Roots", sub:"What grounds you", color:"#8E5A2B", strands:["spirit"],
+ { id:"roots", name:"Roots", sub:"What grounds you", color:"#8E5A2B", strands:["roots"],
    blurb:"What's sacred to you, and what holds you up. All faith traditions and everything in-between.",
    kid:"Quiet, wonder, and feeling thankful." },
- { id:"trunk", name:"Trunk", sub:"Purpose", color:"#C27A1E", strands:["create"],
+ { id:"trunk", name:"Trunk", sub:"Purpose", color:"#C27A1E", strands:["trunk"],
    blurb:"What you live for, and the things you make along the way.",
    kid:"Making, building, and what you love to do." },
- { id:"bark", name:"Bark", sub:"Mind and feelings", color:"#6E5BB5", strands:["mind"],
+ { id:"bark", name:"Bark", sub:"Mind and feelings", color:"#6E5BB5", strands:["bark"],
    blurb:"Settling your thoughts and caring for your emotional health.",
    kid:"Big feelings, calm breaths, and kind thoughts." },
- { id:"branches", name:"Branches", sub:"Relationships", color:"#1F8A8F", strands:["connect"],
+ { id:"branches", name:"Branches", sub:"Relationships", color:"#1F8A8F", strands:["branches"],
    blurb:"Reaching toward people, and letting them reach you.",
    kid:"Family, friends, and people who care about you." },
- { id:"leaves", name:"Leaves", sub:"Body", color:"#3A9B58", strands:["body","rest","nourish"],
+ { id:"leaves", name:"Leaves", sub:"Body", color:"#3A9B58", strands:["move","rest","nourish"],
    blurb:"Moving, resting, and eating in ways that care for your body.",
    kid:"Moving, sleeping, and good food." },
- { id:"fruit", name:"Fruit", sub:"Hope", color:"#D9483F", strands:["hope"],
+ { id:"fruit", name:"Fruit", sub:"Hope", color:"#D9483F", strands:["fruit"],
    blurb:"Looking forward, noticing the good, and growing toward it.",
    kid:"Happy moments, kind acts, and looking forward." }
 ];
@@ -33,9 +33,10 @@ const partName = id => PART[id] ? PART[id].name : id;
 
 // ---------- THE EIGHT STRANDS ----------
 // Each practice list and quiz page belongs to one strand. Five parts have one
-// strand each; Leaves has three.
+// strand each, named for the part (roots, trunk, bark, branches, fruit); Leaves
+// has three: move, rest, and nourish.
 const STRANDS = [
- { id:"body", part:"leaves", name:"Move", color:"#3A9B58", slot:"morning",
+ { id:"move", part:"leaves", name:"Move", color:"#3A9B58", slot:"morning",
    blurb:"Moving the body you have, at the pace it can go.",
    kid:"Moving, playing, and taking care of your body.",
    why:"Movement is how the body tells itself it's alive and cared for. It lifts mood, steadies sleep, and gives stress somewhere to go. You don't have to be an athlete. You just have to move a little, on purpose." },
@@ -47,28 +48,33 @@ const STRANDS = [
    blurb:"Food as care, not as a test you pass or fail.",
    kid:"Good food, water, and meals together.",
    why:"How you eat shapes your energy, your mood, and how you feel in your own skin. Nourish is about real food, eaten slowly, with a little attention. No rules to break. Just care." },
- { id:"mind", part:"bark", name:"Bark", color:"#6E5BB5", slot:"morning",
+ { id:"bark", part:"bark", name:"Bark", color:"#6E5BB5", slot:"morning",
    blurb:"Settling your thoughts and tending your emotional health.",
    kid:"Big feelings, calm breaths, and kind thoughts.",
    why:"A mind that never gets quiet wears you down. A few minutes of stillness each day trains your attention and gives your nervous system a place to rest. Like a fern, it unfolds slowly." },
- { id:"connect", part:"branches", name:"Branches", color:"#1F8A8F", slot:"midday",
+ { id:"branches", part:"branches", name:"Branches", color:"#1F8A8F", slot:"midday",
    blurb:"Reaching toward people, and letting them reach you.",
    kid:"Family, friends, and people who care about you.",
    why:"We are not built to grow alone. Isolation quietly drains every other part of health. Like a sweet pea, we grow by holding onto something. Branches are about the people you hold onto." },
- { id:"spirit", part:"roots", name:"Roots", color:"#8E5A2B", slot:"morning",
+ { id:"roots", part:"roots", name:"Roots", color:"#8E5A2B", slot:"morning",
    blurb:"Meaning, gratitude, and what's sacred to you. All faith traditions and everything in-between.",
    kid:"Quiet, wonder, and feeling thankful.",
    why:"Everyone has an inner life, whether they call it faith or not. Gratitude, quiet, and holding others in mind give your days a center. You don't need the right words. You just need to show up." },
- { id:"create", part:"trunk", name:"Trunk", color:"#C27A1E", slot:"midday",
+ { id:"trunk", part:"trunk", name:"Trunk", color:"#C27A1E", slot:"midday",
    blurb:"Making things, and living toward what matters to you.",
    kid:"Making, building, and what you love to do.",
    why:"Making something, even a few lines on a page, helps you work through what you've seen and felt. And knowing what you're living for gives the rest of your days a spine. No audience required." },
- { id:"hope", part:"fruit", name:"Fruit", color:"#D9483F", slot:"evening",
+ { id:"fruit", part:"fruit", name:"Fruit", color:"#D9483F", slot:"evening",
    blurb:"Looking forward, noticing the good, and growing toward it.",
    kid:"Happy moments, kind acts, and looking forward.",
    why:"Hope isn't only a feeling you wait for. It's a practice: noticing what's good, taking the next small step, and giving to others. Like a fruit tree, it takes a few seasons, and then it feeds people." }
 ];
 const STRAND = Object.fromEntries(STRANDS.map(b => [b.id, b]));
+// Strand code names match the parts since GWG BLD 765 (Leaves keeps move, rest, and nourish).
+// The old code names read forward everywhere: saved plans, swaps, and pins may still hold them.
+const STRAND_OLD = { spirit:"roots", create:"trunk", mind:"bark", connect:"branches", body:"move", hope:"fruit" };
+const strandId = id => STRAND_OLD[id] || id;
+Object.keys(STRAND_OLD).forEach(k => { if (!STRAND[k]) Object.defineProperty(STRAND, k, { value: STRAND[STRAND_OLD[k]], enumerable: false }); });
 const partOf = id => STRAND[id] ? STRAND[id].part : id;
 // "Roots", or "Leaves: Rest" for the three strands inside Leaves.
 const strandName = id => { const b = STRAND[id]; if (!b) return id; return b.part === 'leaves' ? 'Leaves: ' + b.name : b.name; };
@@ -97,7 +103,7 @@ const QSTEM = [
 // ---------- PLANTING QUIZ: 64 questions, 8 per strand ----------
 // [adult, teen, kid, reverse]. Reverse items: "often" means more care needed.
 const QS = {
- body:[
+ move:[
   ["I moved my body on purpose, even a little.","I moved my body on purpose, like walking, sports, or dancing.","I ran, jumped, danced, or played hard."],
   ["My body had the energy my day asked of it.","I had enough energy to get through my day.","I had lots of energy to play."],
   ["I felt at home in my body.","I felt okay in my own body.","My body felt good and strong."],
@@ -127,7 +133,7 @@ const QS = {
   ["How I ate left me feeling steady, not sluggish.","Food gave me energy that lasted.","Food gave me energy to learn and play."],
   ["I felt stressed, guilty, or upset about food.","I felt stressed or upset about food or eating.","I felt worried or upset about food.",1]
  ],
- mind:[
+ bark:[
   ["I had ways to settle myself when stress climbed.","I had ways to calm down when I got stressed.","When I got upset, I knew how to calm down."],
   ["My thoughts gave me some quiet during the day.","My mind got some quiet during the day.","My mind felt calm."],
   ["Worry took up a lot of my day.","I worried a lot.","I felt worried.",1],
@@ -137,7 +143,7 @@ const QS = {
   ["I could focus on what was in front of me.","I could focus in class or on what I was doing.","I could pay attention at school."],
   ["I felt irritable or on edge.","I felt cranky or on edge.","I felt grumpy or mad.",1]
  ],
- connect:[
+ branches:[
   ["There was someone I could call when things were hard.","There was someone I could talk to when things were hard.","There was a grown-up I could talk to."],
   ["I spent real time with people I care about.","I spent real time with people I care about, not just online.","I played with friends or family."],
   ["I felt lonely.","I felt lonely or left out.","I felt left out or lonely.",1],
@@ -147,7 +153,7 @@ const QS = {
   ["Conflict with someone weighed on me.","Drama or a fight with someone weighed on me.","I had a fight with someone that made me sad.",1],
   ["I felt like I belonged somewhere.","I felt like I belonged somewhere, like a team, group, or family.","I felt like I belonged."]
  ],
- spirit:[
+ roots:[
   ["I took time for prayer, quiet, or reflection.","I took time for quiet, prayer, or reflection.","I had a quiet moment to think or pray."],
   ["I felt connected to something bigger than myself.","I felt connected to something bigger than me.","I felt part of something big and good."],
   ["I noticed things I was grateful for.","I noticed things I was thankful for.","I said thank you for good things."],
@@ -157,7 +163,7 @@ const QS = {
   ["I felt at peace.","I felt at peace.","I felt peaceful inside."],
   ["I was able to forgive, or to feel forgiven.","I was able to let go of something someone did to me.","I was able to forgive someone."]
  ],
- create:[
+ trunk:[
   ["I made or wrote something just for me.","I made, wrote, drew, or built something just for me.","I drew, built, or made something."],
   ["I had an outlet for what I carry.","I had a way to get my feelings out, like music, art, or writing.","I had a way to show my feelings, like drawing or singing."],
   ["My days felt like they mattered.","My days felt like they mattered.","I felt like I mattered."],
@@ -167,7 +173,7 @@ const QS = {
   ["I used my gifts to help someone.","I used something I'm good at to help someone.","I helped someone with something I'm good at."],
   ["I learned or tried something new.","I learned or tried something new.","I tried something new."]
  ],
- hope:[
+ fruit:[
   ["I looked forward to something.","I had something to look forward to.","I was excited about something coming up."],
   ["I believed things could get better.","I believed things could get better.","I thought tomorrow could be a good day."],
   ["I noticed good moments as they happened.","I noticed good moments when they happened.","I had a happy moment."],
@@ -184,14 +190,14 @@ const QS = {
 // everyone else with Maple, Aspen, Birch, Oak, or Sequoia.
 const WEEKLY_STEM = ["This past week, how often was this true?","This past week, how often was this true?","This week, how often?"];
 const WEEKLY = {
- body:["I moved my body on purpose.","I moved my body on purpose.","I played and moved a lot."],
+ move:["I moved my body on purpose.","I moved my body on purpose.","I played and moved a lot."],
  rest:["I woke up rested.","I got enough sleep.","I slept well."],
  nourish:["I ate in a way that left me steady.","I ate real meals.","I ate good food that gave me energy."],
- mind:["I could settle myself when stress climbed.","I could calm down when I got stressed.","I could calm down when I was upset."],
- connect:["I felt close to someone.","I felt close to someone.","I felt close to someone."],
- spirit:["I felt at peace.","I felt at peace.","I felt peaceful inside."],
- create:["My days felt like they mattered.","I made or did something that mattered to me.","I made or built something."],
- hope:["I looked forward to something.","I had something to look forward to.","I felt excited about tomorrow."]
+ bark:["I could settle myself when stress climbed.","I could calm down when I got stressed.","I could calm down when I was upset."],
+ branches:["I felt close to someone.","I felt close to someone.","I felt close to someone."],
+ roots:["I felt at peace.","I felt at peace.","I felt peaceful inside."],
+ trunk:["My days felt like they mattered.","I made or did something that mattered to me.","I made or built something."],
+ fruit:["I looked forward to something.","I had something to look forward to.","I felt excited about tomorrow."]
 };
 
 // ---------- SAFETY STEP ----------
@@ -242,7 +248,7 @@ const BODY_REST_KID = "Rest day. A slow walk or a big stretch is plenty.";
 // Names that match Oak's library count in both tools.
 // "LV" means the Body level text is used for adults and teens.
 const PRACTICES = {
- body:[
+ move:[
   ["Movement","LV","Five minutes counts. Walk while you're on the phone, take the stairs, or do ten sit to stands before you sit down.",
    "Move and Play","Run, jump, dance, or ride your bike for twenty minutes. Playing hard counts!","Do twenty jumping jacks."],
   ["Morning Daylight","Step outside within an hour of waking, even for five minutes. Morning light helps set your body clock for better sleep.","Open the blinds and stand in the light for one minute.",
@@ -320,7 +326,7 @@ const PRACTICES = {
   ["Feed Someone","Once this week, cook or bring food to someone who could use it. Feeding people is one of the oldest ways to love them.","Share a snack with someone.",
    "Share a Snack","Share a snack with a friend or someone in your family.","Offer someone a bite of your snack."]
  ],
- mind:[
+ bark:[
   ["Meditation","Sit, close your eyes, and follow your breath for ten minutes. When your mind wanders, and it will, come back. <strong>That returning is the practice.</strong>","One minute of breathing, eyes closed.",
    "Balloon Breathing","Breathe in slowly and fill your belly like a balloon. Breathe out slowly and let it go. Do it five times.","Three balloon breaths."],
   ["Name It","When a strong feeling shows up, name it quietly: \"This is worry.\" \"This is anger.\" Naming a feeling helps settle it.","Name one feeling out loud today.",
@@ -346,7 +352,7 @@ const PRACTICES = {
   ["Sound and Silence","Strike a bowl or chime, or play one long note, and listen until it fades. Then sit in the silence for two minutes.","Listen to one song with your eyes closed.",
    "Listen Until It's Gone","Ring a bell or tap a glass. Listen until the sound disappears.","Listen for the quietest sound you can hear."]
  ],
- connect:[
+ branches:[
   ["One Reach-Out a Day","A text, a call, a note. Keep it simple: \"Thinking of you today.\" Small reaches keep the vine growing.","Send one message to someone you love.",
    "Hello Heart","Draw a picture or say something nice to one person each day.","Give someone a high five."],
   ["Active Listening","In one conversation today, listen without planning your reply. Ask one follow-up question.","Ask someone, \"How are you, really?\" and wait.",
@@ -372,7 +378,7 @@ const PRACTICES = {
   ["Tell Them","Tell someone what they mean to you, in person if you can.","Send a short \"I'm glad you're in my life.\"",
    "I Love You Because","Tell someone in your family one reason you love them.","Give someone a hug, if they want one."]
  ],
- spirit:[
+ roots:[
   ["Gratitude and Intention","Each morning, name three specific things you're thankful for and one intention for the day. Not a goal. A way you want to be. In your own words, from your own tradition, or in quiet.","Before you start the car or open the door: one breath, one thank you.",
    "Three Thank Yous","Every morning, name three things you're thankful for.","Name one thing you're thankful for."],
   ["Breath Prayer","Choose a short phrase, like \"Here I am\" or \"Peace, be still,\" and pray or repeat it on the in-breath and the out-breath.","Three breaths with your phrase.",
@@ -398,7 +404,7 @@ const PRACTICES = {
   ["Wise Company","Talk with a spiritual director, chaplain, pastor, or wise friend about where you sense the sacred in your life.","Read one page from something sacred or wise.",
    "Big Questions","Ask a grown-up a big question you wonder about, like \"Why are we here?\"","Ask one big question."]
  ],
- create:[
+ trunk:[
   ["Journal Often","Ten minutes of writing. No editing. No audience. Start with a moment, not a theme: a hand, a word someone said, the light in a room.","Write one sentence about today that you don't want to forget.",
    "Draw Your Day","Draw one picture of something that happened today.","Draw one small thing."],
   ["Values Sort","Pick the five values that matter most to you right now, like honesty, family, faith, courage, or play.","Write down one value you want to live today.",
@@ -424,7 +430,7 @@ const PRACTICES = {
   ["Stand-For Card","Write what you stand for on a small card and keep it with you.","Read your card, or write one word you stand for.",
    "Superpower Card","Make a card that names your superpower, like kindness or bravery. Keep it in your pocket.","Say your superpower out loud."]
  ],
- hope:[
+ fruit:[
   ["Three Good Things","Before bed, write three good things from today and why they happened.","Name one good thing from today.",
    "Three Good Things","At bedtime, tell someone three good things from today.","Tell someone one good thing."],
   ["Something to Look Forward To","Put one small thing on the calendar you can look forward to this week.","Name one thing you're looking forward to.",

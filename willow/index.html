@@ -371,6 +371,8 @@ body.has-sticky-bar .toast{bottom:88px;}
   body{background:#fff;}
   body *{visibility:hidden;}
   .print-target,.print-target *{visibility:visible;}
+  /* Save or Print (printHtml in app.js) prints #w-print, so it stays visible too */
+  body.w-printing #w-print,body.w-printing #w-print *{visibility:visible;}
   .print-target{position:absolute;left:0;top:0;width:100%;border:none;padding:0;}
   .nav,.toast,.no-print,.sticky-bar{display:none !important;}
 }
