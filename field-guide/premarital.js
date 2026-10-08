@@ -16,6 +16,7 @@
 // statement.defaults leaves the letterhead blank for the Guide's own Settings (pmRole, pmOrg, pmAddress, pmPhone). App data (questions, GMCore, results, faith) loads from ../marriage/.
 // Couples live in DATA.pm.couples: encrypted with the rest of this device's records and carried in backups
 // (merged by GGPm.merge). Nothing is sent.
+// GWG BLD 770: a couple linked to a Wedding Plan (wedding.js) shows a Wedding Plan link in its header.
 // GWG BLD 755, the Week Card: before a session the couple can choose to share a short card from the app (videos
 // watched, practices tried, workbook answers they marked Share With Our Leaders, one question), locked with their
 // shared word like their answers card (#gmw=w1.<code>, read here with its own reader of the same format). The leader
@@ -260,7 +261,7 @@ function vHome(){
 }
 function head(c, eyebrow){
   return `<button type="button" class="linkbtn" data-pm="home">&larr; All Couples</button>
-  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p>${c.cli && window.GGCli ? GGCli.link(c.cli) : ''}</div>
+  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p>${c.cli && window.GGCli ? GGCli.link(c.cli) : ''}${window.GGWed && GGWed.plans ? GGWed.plans().filter(w => w.pm === c.id).map(w => ` <button type="button" class="linkbtn" data-wda="open" data-wdv="${esc(w.id)}">Wedding Plan</button>`).join('') : ''}</div>
   <div class="pm-chips">${STATUS.map(([k, l]) => `<button type="button" class="chip" data-pm="status" data-v="${k}" aria-pressed="${(c.status || 'starting') === k}">${l}</button>`).join('')}</div></div>
   <div class="pm-nav">${NAV.map(([v, l]) => `<button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="${v}"${(S.view === v || (v === 'sessions' && S.view === 'session')) ? ' aria-current="page"' : ''}>${l}</button>`).join('')}</div>`;
 }

@@ -7,8 +7,11 @@
    or goes bare. A few living touches drift through as the day is tended
    (Oak birds and its own oak leaves, and Birch, Maple, and Aspen each
    drift their own leaf shape (GWG BLD 758), Pine a soaring bird, Sequoia drifting seeds, Willow fireflies
-   at dusk, The Grove butterflies). Reduced motion turns the touches and
-   the rays off.
+   at dusk). The Grove plays its touches in moments (Grove 1, GWG BLD 770):
+   two or three pen-stroke birds high in the sky and a soft wind of a few
+   painted leaves, for about six seconds when the scene opens and after a
+   practice is checked off, then the scene rests still. Nothing streams.
+   Reduced motion turns the touches and the rays off.
 
    gg-tend.js loads this file for the tree apps. Willow and The Grove can
    load it on their own Today too.
@@ -16,9 +19,11 @@
    For tools
      GGLiving.html(o)   the scene's markup. o = { app, light: 0 to 1,
                         still: true holds it still (Rest Week), label }
-     GGLiving.mount()   starts the living touches on the scene showing
+     GGLiving.mount(o)  starts the living touches on the scene showing
                         (call after the markup is in the page; safe to
-                        call on every redraw, touches carry over)
+                        call on every redraw, touches carry over).
+                        o.moment: true plays a moment now (The Grove,
+                        when its scene opens)
      GGLiving.burst(n)  a few touches after a practice is tended
      GGLiving.svg(app, light, label)  a small still picture of the scene
                         (for a grown-up's view of a child's tree)
@@ -41,9 +46,10 @@
     pine:    { w: { sun: [.23, .25], tree: [.37, .55], x: .36 }, p: { sun: [.20, .25], tree: [.45, .55], x: .4, y: 1, r: 1.25 }, touch: 'soar' },
     sequoia: { w: { sun: [.875, .42], tree: [.25, .35], x: .3 }, p: { sun: [.85, .20], tree: [.5, .3], x: .5, y: 1, r: 1.25 }, touch: 'seeds' },
     willow:  { w: { sun: [.83, .72], tree: [.25, .45], x: .3 }, p: { sun: [.92, .55], tree: [.4, .45], x: .4, y: 1, r: 1.25 }, touch: 'fireflies', ray: .45 },
-    grove:   { w: { sun: [.51, .20], tree: [.5, .7], x: .5 }, p: { sun: [.51, .18], tree: [.5, .75], x: .5, y: .62, r: .5625 }, touch: 'butterflies' }
+    // The Grove (GWG BLD 770): birds and a soft wind of leaves in moments only, never a stream.
+    grove:   { w: { sun: [.51, .20], tree: [.5, .7], x: .5 }, p: { sun: [.51, .18], tree: [.5, .75], x: .5, y: .62, r: .5625 }, touch: 'birds', touch2: 'wind', moments: 1, leaf: ['#C9A43A', '#D98E3A', '#9DB84E', '#B8652E'], shapes: ['oak', 'birch', 'aspen'] }
   };
-  var CAP = { birds: 4, leaves: 8, soar: 1, seeds: 10, fireflies: 9, butterflies: 5 };
+  var CAP = { birds: 4, leaves: 8, soar: 1, seeds: 10, fireflies: 9, butterflies: 5, wind: 6 };
   // Each leafy tree drifts its own leaf (GWG BLD 758): the outlines of shared/leaves/<tree>.svg,
   // centred, in the same 64 unit box, with each leaf's deeper edge color.
   var LEAF = {
@@ -142,7 +148,12 @@
     var a = sc.getAttribute('data-app'), A = APPS[a] || APPS.oak, W = sc.clientWidth, H = sc.clientHeight, R = Math.random, t = A.touch2 && R() < .5 ? A.touch2 : A.touch;
     if (items.filter(function (o) { return o.t === t; }).length >= CAP[t]) return;
     var tree = place(sc, 'tree') || { x: W / 2, y: H / 2 };
-    if (t === 'birds') items.push({ t: t, x: -20, y: H * (.1 + R() * .22), v: .5 + R() * .4, p: R() * 6, s: .8 + R() * .4 });
+    // A moment's birds (The Grove) start inside the sky, fade in, glide slowly, and fade out by about six seconds.
+    if (t === 'birds' && A.moments) items.push({ t: t, x: W * (.06 + R() * .3), y: H * (.07 + R() * .14), v: .38 + R() * .22, p: R() * 6, s: .75 + R() * .3, life: 0, end: 330 + Math.floor(R() * 40) });
+    else if (t === 'birds') items.push({ t: t, x: -20, y: H * (.1 + R() * .22), v: .5 + R() * .4, p: R() * 6, s: .8 + R() * .4 });
+    // A soft wind (The Grove): a leaf lifts off one of the grove's trees, drifts with the gust, settles, and fades.
+    else if (t === 'wind') { var sh = A.shapes[Math.floor(R() * A.shapes.length)];
+      items.push({ t: t, x: W * (.22 + R() * .5), y: H * (.38 + R() * .2), vx: .9 + R() * .7, v: .32 + R() * .25, p: R() * 6, r: R() * 6, c: A.leaf[Math.floor(R() * A.leaf.length)], gy: H * (.84 + R() * .1), sh: sh, k: .3 + R() * .08, life: 0 }); }
     else if (t === 'soar') items.push({ t: t, x: -40, y: H * (.12 + R() * .12), v: .35, p: R() * 6, s: 1.2 });
     else if (t === 'leaves') items.push({ t: t, x: tree.x + (R() - .5) * W * .16, y: tree.y - H * .08 + R() * H * .12, v: .35 + R() * .35, p: R() * 6, r: R() * 6, c: A.leaf[Math.floor(R() * A.leaf.length)], f: A.flutter ? 1 : 0, gy: H * (.86 + R() * .1), sh: a, k: .27 + R() * .09 });
     else if (t === 'seeds') items.push({ t: t, x: R() * W, y: H * (.25 + R() * .5), v: .15 + R() * .2, p: R() * 6, life: 0 });
@@ -151,6 +162,17 @@
   }
   function draw(cx, o, W, H) {
     o.p += 0.04;
+    if (o.t === 'birds' && o.end) { o.life++; var fb = Math.min(1, o.life / 45, Math.max(0, (o.end - o.life) / 60)); o.x += o.v; o.y += Math.sin(o.p) * .18; var wb = Math.sin(o.p * 2.4) * 3.6 * o.s; cx.strokeStyle = 'rgba(40,40,45,' + (.7 * fb).toFixed(3) + ')'; cx.lineWidth = 1.5; cx.lineCap = 'round'; cx.beginPath(); cx.moveTo(o.x - 7 * o.s, o.y - wb); cx.quadraticCurveTo(o.x - 3 * o.s, o.y - 2, o.x, o.y); cx.quadraticCurveTo(o.x + 3 * o.s, o.y - 2, o.x + 7 * o.s, o.y - wb); cx.stroke(); return o.life < o.end; }
+    if (o.t === 'wind') {
+      o.life++;
+      if (o.y < o.gy) { var gust = Math.max(.15, 1 - o.life / 260); o.x += o.vx * gust + Math.sin(o.p) * .5; o.y += o.v * (o.life < 40 ? -.4 : 1); o.r += .05 * gust + .01; } else o.rest = (o.rest || 0) + 1;
+      var fw = Math.min(1, o.life / 30) * (o.rest ? Math.max(0, 1 - o.rest / 70) : 1);
+      cx.save(); cx.globalAlpha = fw; cx.translate(o.x, o.y); cx.rotate(o.r);
+      var wp = leafPath(o.sh);
+      if (wp) { cx.scale(o.k, o.k); cx.fillStyle = o.c; cx.strokeStyle = LEAF[o.sh].e; cx.lineWidth = 1.6; cx.lineJoin = 'round'; cx.fill(wp); cx.stroke(wp); }
+      else { cx.fillStyle = o.c; cx.beginPath(); cx.ellipse(0, 0, 5, 2.6, 0, 0, 7); cx.fill(); }
+      cx.restore(); return (!o.rest || o.rest < 70) && o.life < 420 && o.x < W + 30;
+    }
     if (o.t === 'birds') { o.x += o.v * 1.3; o.y += Math.sin(o.p) * .25; var w = Math.sin(o.p * 3) * 4 * o.s; cx.strokeStyle = 'rgba(40,40,45,.72)'; cx.lineWidth = 1.5; cx.beginPath(); cx.moveTo(o.x - 7 * o.s, o.y - w); cx.quadraticCurveTo(o.x - 3 * o.s, o.y - 2, o.x, o.y); cx.quadraticCurveTo(o.x + 3 * o.s, o.y - 2, o.x + 7 * o.s, o.y - w); cx.stroke(); return o.x < W + 40; }
     if (o.t === 'soar') { o.x += o.v; o.y += Math.sin(o.p * .5) * .18; var g = Math.sin(o.p * .7) * 1.6; cx.strokeStyle = 'rgba(52,44,38,.7)'; cx.lineWidth = 1.8; cx.beginPath(); cx.moveTo(o.x - 13, o.y - 2 - g); cx.quadraticCurveTo(o.x - 6, o.y - 4, o.x, o.y); cx.quadraticCurveTo(o.x + 6, o.y - 4, o.x + 13, o.y - 2 - g); cx.stroke(); return o.x < W + 60; }
     if (o.t === 'leaves') {
@@ -176,20 +198,39 @@
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     var cx = cv.getContext('2d'); cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, W, H);
     // a gentle, sparse stream while the day is tended: more often with more parts, never crowded
-    if (want > 0 && t - last > 3200 / Math.min(want, 4)) { last = t; spawn(sc); }
+    // (The Grove plays moments instead: see play below.)
+    var A0 = APPS[sc.getAttribute('data-app')] || APPS.oak;
+    if (!A0.moments && want > 0 && t - last > 3200 / Math.min(want, 4)) { last = t; spawn(sc); }
+    if (A0.moments && !items.length && !playing) { running = false; var c1 = sc.querySelector('.gl-fx'); if (c1) c1.getContext('2d').clearRect(0, 0, c1.width, c1.height); return; }
     items = items.filter(function (o) { return draw(cx, o, W, H); });
     requestAnimationFrame(frame);
   }
+  /* A moment (The Grove): two or three birds and a soft wind of four or five leaves, all begun in the first
+     two seconds, all gone by about six. Then the scene rests still until the next moment. */
+  var playing = 0;
+  function play(sc) {
+    if (reduced() || sc.classList.contains('gl-still')) return;
+    var R = Math.random, plan = [['birds', 0], ['wind', 250], ['wind', 650], ['birds', 800], ['wind', 1100], ['wind', 1600]];
+    if (R() < .5) plan.push(['birds', 1500]); if (R() < .6) plan.push(['wind', 2000]);
+    playing++; setTimeout(function () { playing = Math.max(0, playing - 1); }, 2300);
+    plan.forEach(function (x) { setTimeout(function () { var s2 = scene(); if (!s2 || reduced()) return; var A = APPS[s2.getAttribute('data-app')] || APPS.oak;
+      if (items.filter(function (o) { return o.t === x[0]; }).length >= CAP[x[0]]) return;
+      var keep = A.touch2; A.touch2 = null; var was = A.touch; A.touch = x[0]; spawn(s2); A.touch = was; A.touch2 = keep; kick(); }, x[1]); });
+  }
+  function kick() { var sc = scene(); if (sc && !running && !reduced() && !sc.classList.contains('gl-still')) { running = true; requestAnimationFrame(frame); } }
   function mount(o) {
     var sc = scene(); if (!sc) return;
     want = o && o.done != null ? +o.done : want;
     aim(sc);
+    var A = APPS[sc.getAttribute('data-app')] || APPS.oak;
+    if (A.moments) { if (o && o.moment) play(sc); if (items.length || playing) kick(); return; }
     if (!running && !reduced() && !sc.classList.contains('gl-still')) { running = true; requestAnimationFrame(frame); }
   }
   function burst(n) {
     var sc = scene(); if (!sc) return;
     sc.classList.remove('gl-perk'); void sc.offsetWidth; sc.classList.add('gl-perk');
     if (reduced() || sc.classList.contains('gl-still')) return;
+    if ((APPS[sc.getAttribute('data-app')] || {}).moments) { play(sc); return; }
     for (var i = 0; i < (n || 2); i++) setTimeout(function () { var s2 = scene(); if (s2) spawn(s2); }, i * 380);
     mount();
   }

@@ -3,7 +3,7 @@
 
    GGBackup.make(opts)   saves one file with every Grounded record kept in this browser:
                          every profile (still locked with its own passcode or picture code),
-                         The Grove, kids and students saved without a profile, settings, and
+                         The Grove (gg-grove-v2, every grove, and the earlier gg-grove-family-v1), kids and students saved without a profile, settings, and
                          the Field Guide (still locked with its passcode, Founder and Staff data included).
    GGBackup.load(opts)   opens a file, shows what is inside, lets the person choose, and merges:
                          nothing on this device is erased, and new things are added.
@@ -82,6 +82,28 @@
     m.wall.sort(function (a, b) { return String(b.at || b.d || '').localeCompare(String(a.at || a.d || '')); });
     return JSON.stringify(m);
   }
+  /* Many groves (Grove 1, GWG BLD 770): gg-grove-v2 holds up to six groves, each with its own kind and lock.
+     Groves are matched by id. The shared parts (wall, reactions, practices done) combine as mergeGrove does.
+     A grove's locked box (check-ins, plan, circle) can't be opened here, so the newer box is kept, together
+     with the lock it was made with. A cleared grove (gone) stays cleared. */
+  function mergeGroveV2(curS, incS) {
+    var c = parse(curS), n = parse(incS); if (!c || !Array.isArray(c.groves)) return incS; if (!n || !Array.isArray(n.groves)) return curS;
+    var gone = Object.assign({}, c.gone || {}, n.gone || {}), out = [], at = {};
+    c.groves.concat(n.groves).forEach(function (g) {
+      if (!g || !g.id || (gone[g.id] && gone[g.id] >= (g.u || 0))) return;
+      if (at[g.id] === undefined) { at[g.id] = out.length; out.push(g); return; }
+      var a = out[at[g.id]], m = JSON.parse(mergeGrove(JSON.stringify(a), JSON.stringify(g)));
+      var newer = (g.boxU || 0) > (a.boxU || 0) ? g : a;
+      m.box = newer.box || null; m.lock = newer.lock || null; m.boxU = newer.boxU || 0; m.plainBox = newer.plainBox || null;
+      var top = (g.u || 0) > (a.u || 0) ? g : a;
+      ['name', 'kind', 'faith', 'school', 'hard', 'line', 'children', 'kidsFirst', 'wallOn', 'lockOn', 'scenery', 'joinFirst'].forEach(function (k) { if (top[k] !== undefined) m[k] = top[k]; });
+      m.u = Math.max(a.u || 0, g.u || 0);
+      out[at[g.id]] = m;
+    });
+    var r = Object.assign({}, c, { groves: out, gone: gone });
+    if (!out.some(function (g) { return g.id === r.active; })) r.active = out.length ? out[0].id : null;
+    return JSON.stringify(r);
+  }
   function mergeJSON(curS, incS) { var c = parse(curS), n = parse(incS); if (c === undefined || n === undefined) return curS; return JSON.stringify(deep(c, n)); }
 
   /* ---------- what is inside ---------- */
@@ -97,6 +119,7 @@
       if (k === PLIST || k.indexOf(PBOX) === 0 || k === 'gg-last-backup') return;
       if (k === FG) { plan.fg = { state: !here[FG] ? 'new' : (here[FG] === keys[FG] ? 'same' : 'differs') }; return; }
       if (k === 'gg-grove-family-v1') { plan.grove = { state: !here[k] ? 'new' : (here[k] === keys[k] ? 'same' : 'differs') }; return; }
+      if (k === 'gg-grove-v2') { plan.groves = { state: !here[k] ? 'new' : (here[k] === keys[k] ? 'same' : 'differs') }; return; }
       if (LOOSE.test(k)) { if (here[k] !== keys[k]) plan.loose.push(k); return; }
       if (SETTINGS.test(k)) { if (here[k] == null) plan.settings.push(k); return; }
       if (here[k] !== keys[k]) plan.other.push(k);
@@ -142,7 +165,9 @@
       }
       if (plan.fg) rows += '<h3>Field Guide</h3>' + (plan.fg.state === 'same' ? box('fg', false, 'Field Guide records', 'Already the same on this device.', true) :
         box('fg', true, 'Field Guide records', plan.fg.state === 'new' ? 'Added, locked with the passcode it was made with.' : 'Merged: nothing on this device is lost. The Field Guide asks for this backup\'s passcode to finish.'));
-      if (plan.grove) rows += '<h3>The Grove</h3>' + (plan.grove.state === 'same' ? box('grove', false, 'Your family grove', 'Already the same on this device.', true) : box('grove', true, 'Your family grove', 'Posts, reactions, and family practices are combined.'));
+      if (plan.grove || plan.groves) rows += '<h3>The Grove</h3>';
+      if (plan.groves) rows += plan.groves.state === 'same' ? box('groves', false, 'Your groves', 'Already the same on this device.', true) : box('groves', true, 'Your groves', 'Each grove is combined with the same grove here. Locked check-ins and plans stay locked with their grove passcode.');
+      if (plan.grove) rows += plan.grove.state === 'same' ? box('grove', false, 'Your family grove (earlier)', 'Already the same on this device.', true) : box('grove', true, 'Your family grove (earlier)', 'Posts, reactions, and family practices are combined.');
       if (plan.loose.length) rows += '<h3>Saved without a profile</h3>' + box('loose', true, 'Kids, students, and sessions saved on this device without a profile', 'Combined with what is here.');
       if (plan.settings.length || plan.other.length) rows += '<h3>Settings</h3>' + box('rest', true, 'Light or dark, voice, text size, and other settings', 'Only fills in what this device doesn\'t have yet.');
       if (!any) rows += '<p>Everything in this backup is already on this device.</p>';
@@ -172,6 +197,7 @@
         if (plan.fg.state === 'new') { localStorage.setItem(FG, keys[FG]); n++; }
         else { localStorage.setItem(PENDING, keys[FG]); fgWaiting = true; n++; }
       }
+      if (plan.groves && on.groves) { localStorage.setItem('gg-grove-v2', here['gg-grove-v2'] ? mergeGroveV2(here['gg-grove-v2'], keys['gg-grove-v2']) : keys['gg-grove-v2']); n++; }
       if (plan.grove && on.grove) { localStorage.setItem('gg-grove-family-v1', here['gg-grove-family-v1'] ? mergeGrove(here['gg-grove-family-v1'], keys['gg-grove-family-v1']) : keys['gg-grove-family-v1']); n++; }
       if (on.loose) plan.loose.forEach(function (k) { localStorage.setItem(k, here[k] == null ? keys[k] : mergeJSON(here[k], keys[k])); n++; });
       if (on.rest) plan.settings.concat(plan.other).forEach(function (k) { if (here[k] == null) { localStorage.setItem(k, keys[k]); n++; } else if (!SETTINGS.test(k)) { var m = mergeJSON(here[k], keys[k]); if (m !== here[k]) { localStorage.setItem(k, m); n++; } } });
@@ -189,5 +215,5 @@
     inp.click();
   }
 
-  window.GGBackup = { make: make, load: load, pick: pick, PENDING: PENDING, deep: deep };
+  window.GGBackup = { make: make, load: load, pick: pick, PENDING: PENDING, deep: deep, mergeGrove: mergeGrove, mergeGroveV2: mergeGroveV2 };
 })();

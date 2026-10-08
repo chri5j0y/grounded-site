@@ -92,6 +92,17 @@
     metta: ['metta, the Buddhist practice of loving-kindness', '', 'a'],
     mbsr: ['Jon Kabat-Zinn, Mindfulness-Based Stress Reduction (the body scan)', '', 'a'], // W4 (BLD 717); link to come
     quaker: ['the Quaker practice of holding someone in the Light', '', 'a'],
+    // The Grove, Grove 1 (GWG BLD 770): the Group Check-in, results, Growth Plan, and practices per kind.
+    pranis: ['Kay Pranis, The Little Book of Circle Processes: A New/Old Approach to Peacemaking (Good Books, 2005)', 'https://www.goodreads.com/author/show/358467.Kay_Pranis', 'a'],
+    tuckman65: ['Tuckman, developmental sequence in small groups (Psychological Bulletin, 1965)', 'https://doi.org/10.1037/h0022100'],
+    edmondson99: ['Edmondson, psychological safety and learning behavior in work teams (Administrative Science Quarterly, 1999)', 'https://doi.org/10.2307/2666999'],
+    dweck06: ['Carol Dweck, the power of believing that you can improve ("not yet")', 'https://www.ted.com/talks/carol_dweck_the_power_of_believing_that_you_can_improve', 'a'],
+    walsh16: ['Froma Walsh, applying a family resilience framework in training, practice, and research (Family Process, 2016)', 'https://doi.org/10.1111/famp.12260'],
+    patterson02: ['Joan Patterson, integrating family resilience and family stress theory (Journal of Marriage and Family, 2002)', 'https://doi.org/10.1111/j.1741-3737.2002.00349.x'],
+    stinnett: ['Nick Stinnett and John DeFrain, the qualities of strong families (Michigan State University Extension summary)', 'https://www.canr.msu.edu/news/is_your_family_strong'],
+    cssp: ['Center for the Study of Social Policy, the Strengthening Families Protective Factors Framework', 'https://cssp.org/wp-content/uploads/2025/03/About-Strengthening-Families.pdf'],
+    woolever04: ['Woolever and Bruce, U.S. Congregational Life Survey: strong congregations show a few strengths, not all (Christian Century, 2004)', 'https://www.christiancentury.org/article/2004-04/views-pews-strong-congregations'],
+    lundy: ['Laura Lundy, the Lundy Model of Child Participation (summary, Queen\'s University Belfast)', 'https://www.qub.ac.uk/research-centres/cppa/policy-case-studies/childrens-participation-lundy-model.html'],
     wrz: ['Wrzesniewski and Dutton, job crafting (2001)', 'https://doi.org/10.5465/amr.2001.4378011', 'a'],
     litz: ['Litz and colleagues, moral injury and moral repair (2009)', 'https://doi.org/10.1016/j.cpr.2009.07.003'],
     boss: ['Pauline Boss, Ambiguous Loss', 'https://www.ambiguousloss.com', 'a'],
