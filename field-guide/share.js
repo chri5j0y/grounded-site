@@ -2,7 +2,7 @@
 // GROUNDED FIELD GUIDE (TM): the Share Card Builder (GWG BLD 746; Painting look,
 // The Grounded Marriage, and named bios, GWG BLD 757; print sizes, QR codes, the Services, the
 // Field Guide mark, and TM on every name, GWG BLD 758; every word, mark, and code held inside the safe line on
-// every print size, and Your Own Words, GWG BLD 760).
+// every print size, and Your Own Words, GWG BLD 760; flyers for the six new audiences, GWG BLD 762).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A Staff and Founder tab. Pick a subject, a message, a platform, a format,
 // and a look (Light, Dark, Tree Color, or Painting, which sets the words over the
@@ -93,6 +93,32 @@ const SVC_PAGES = [
 ];
 const SERVICES = SVC_FAM.map(f => Object.assign({svc: 'family', mark: 'favicon.svg', color: GOLD, focus: .5}, f, {hero: 'shared/heroes/' + f.hero + '-wide.webp'})).concat(
   SVC_PAGES.map(([pg, name, hero, tagline, fam]) => ({id: 'svc-' + pg, svc: 'page', name, mark: 'favicon.svg', color: GOLD, hero: 'shared/heroes/' + hero + '-wide.webp', focus: .5, tagline, line: fam + ', with Grow With Grounded\u2122.', url: 'growwithgrounded.com/' + pg + '.html'})));
+// FLYERS FOR THE NEW AUDIENCES (GWG BLD 762): the six audiences in For Organizations' "Walking with illness and disability"
+// section, each a flyer subject with its own headline, a one-line promise, and short lines of what Grounded offers them.
+// The lines print on the 8.5 by 11 flyer and 11 by 17 poster (and the 4 by 6 and 5 by 7 when they read cleanly);
+// the social sizes and the business card use the headline and the promise.
+const ORG_URL = 'growwithgrounded.com/organizations.html', ORG_LINE = 'Grow With Grounded™ for organizations. Tell us about yours and we\'ll send a clear quote.';
+const ORG_AUD = [
+  {id: 'org-disability-ministries', name: 'Disability Ministries', hero: 'grove', focus: .5,
+    headline: 'A welcome for every member.', tagline: 'Guides that welcome every member and family, with words for the questions people bring.',
+    lines: ['Health and Ability in every tree, Maple™ to Sequoia™', 'Guides, practices, and videos that fit each person, shown first', 'Words for the faith questions, when people ask them', 'Every visit starts with the person\'s own words and their own yes', 'Trained Guides with a Certificate of Completion']},
+  {id: 'org-special-education', name: 'Special Education Teams', hero: 'maple', focus: .37,
+    headline: 'Support for every student.', tagline: 'Maple™, Aspen™, and Pine™ guides for a health condition at school, used with the family\'s yes.',
+    lines: ['Maple™ for grades K to 5, Aspen™ for 6 to 8, Pine™ for 9 to 12', 'Guides for a 504 plan, an IEP, and planning what comes next', 'A private choice, kept locked on the student\'s own device', 'Guide training with scenarios and a Certificate of Completion']},
+  {id: 'org-hospitals', name: 'Pediatric and Rehabilitation Hospitals', hero: 'page-hard-seasons', focus: .5,
+    headline: 'For the long road back.', tagline: 'Guides for a serious illness or long treatment, and for the whole family beside it.',
+    lines: ['Health and Ability guides at every age, Maple\u2122 to Sequoia\u2122', 'Life after a brain injury or stroke', 'Guides for the brothers and sisters at home', 'Gentler ways of every practice for the hard days', 'Kept private on each person\'s own device']},
+  {id: 'org-independent-living', name: 'Centers for Independent Living', hero: 'oak', focus: .72,
+    headline: 'Start from what a person can do.', tagline: 'Tools that start from what a person can do and what the world around them can change.',
+    lines: ['Each person chooses their own words', 'Guides, practices, and videos that fit each person, shown first', 'A private choice, kept locked on the person\'s own device', 'Every visit starts with the person\'s own yes']},
+  {id: 'org-chronic-illness', name: 'Chronic Illness Support Groups', hero: 'page-growth', focus: .5,
+    headline: 'Rest without guilt.', tagline: 'Pacing, flare days, and rest, with gentler ways of every practice.',
+    lines: ['Pacing and flare days, in plain words', 'Gentler ways of every practice', 'A Rest Week whenever it\'s needed', 'Guides for living with several conditions at once', 'Kept private on each person\'s own device']},
+  {id: 'org-parish-nurses', name: 'Parish Nurses', hero: 'sequoia', focus: .22,
+    headline: 'Ready for every visit.', tagline: 'Sequoia™ Guide and Oak™ Guide for home visits and congregation visits.',
+    lines: ['Sequoia™ Guide for anyone who serves older adults', 'Oak™ Guide for walking with adults 26 to 60', 'Guides for living with several conditions at once', 'Crisis steps and reporting guidance in every visit', 'A Certificate of Completion for each person']}
+];
+const ORGS = ORG_AUD.map(a => Object.assign({svc: 'org', mark: 'favicon.svg', color: GOLD, line: ORG_LINE, url: ORG_URL, eyebrow: 'For ' + a.name}, a, {hero: 'shared/heroes/' + a.hero + '-wide.webp'}));
 // The Painting look: each subject's wide painting, and where its main tree stands (a fraction of the image width).
 const FOCUS = {maple: .37, aspen: .36, pine: .38, birch: .18, oak: .72, sequoia: .22, willow: .21, grove: .5, home: .74, marriage: .64};
 // People named in the bios (bios may name a person who is not a card subject).
@@ -127,6 +153,8 @@ function data(){
   });
   // The Services join after every Grounded subject (built in; a library may add more).
   SERVICES.forEach(v => { if (!subjects.some(s => s.id === v.id)) subjects.push(Object.assign({}, v)); });
+  // The new audiences' flyers join last (built in, GWG BLD 762).
+  ORGS.forEach(v => { if (!subjects.some(s => s.id === v.id)) subjects.push(Object.assign({}, v)); });
   return {
     subjects,
     messages: Array.isArray(d.messages) ? d.messages : FB.messages,
@@ -265,6 +293,9 @@ const F_HEAD = u => `600 ${u * 3.1}px "Cormorant Garamond", Georgia, serif`;
 const F_NOTE = u => `500 ${u * 1.75}px Barlow, system-ui, sans-serif`;
 // The character guide for Your Own Words.
 const HEAD_MAX = 60, HEAD_BEST = 40, NOTE_MAX = 180, NOTE_BEST = 120;
+// The audience flyers (GWG BLD 762): a small line naming the audience above the headline, and the list of what Grounded offers them.
+const F_EYE = u => `600 ${u * 1.4}px Barlow, system-ui, sans-serif`;
+const F_LIST = u => `500 ${u * 1.6}px Barlow, system-ui, sans-serif`;
 function greedy(ctx, words, maxW){
   const lines = []; let cur = '';
   // A single word longer than the line (a long address, for example) breaks into pieces that fit.
@@ -311,21 +342,31 @@ function measure(ctx, o, u, R, parts, lv){
   const head = o.head ? wrap(ctx, o.head, F_HEAD(u), colW) : none; if (head.lines.length > lv.h || head.w > colW) return null;
   const note = o.note ? wrapP(ctx, o.note, F_NOTE(u), colW) : none; if (note.lines.length > lv.n || note.w > colW) return null;
   const rowH = parts.marks ? u * 3 : 0, rowW = parts.marks ? 8 * rowH + 7 * u * .55 : 0; if (rowW > colW) return null;
+  // The audience flyers: the line above the headline, and each offer with a bullet and a hanging indent.
+  const eye = o.eyebrow ? wrap(ctx, o.eyebrow, F_EYE(u), colW, (u * .06) + 'px') : none; if (eye.lines.length > 2 || eye.w > colW) return null;
+  const bi = u * 1.7, list = parts.list && o.list ? o.list.map(t => wrap(ctx, t, F_LIST(u), colW - bi)) : [];
+  if (list.some(b => b.lines.length > 3 || b.w > colW - bi)) return null;
+  const listW = list.length ? bi + Math.max(...list.map(b => b.w)) : 0;
+  const listH = list.length ? u * 1.4 + list.reduce((a, b) => a + b.lines.length * u * 1.6 * 1.3, 0) + (list.length - 1) * u * .55 : 0;
   let h = name.lines.length * u * 4.4 * 1.08;
+  if (eye.lines.length) h += eye.lines.length * u * 1.4 * 1.3 + u * .5;
+  h += listH;
   if (head.lines.length) h += u * 1.1 + head.lines.length * u * 3.1 * 1.12;
   if (msg.lines.length) h += u * .7 + msg.lines.length * u * 2.5 * 1.22;
   if (note.lines.length) h += u * .9 + note.lines.length * u * 1.75 * 1.32;
   if (line.lines.length) h += u * .8 + line.lines.length * u * 1.25 * 1.4;
   if (rowH) h += u * 1.3 + rowH;
-  const textW = Math.max(name.w, head.w, msg.w, note.w, line.w, rowW);
+  const textW = Math.max(name.w, head.w, msg.w, note.w, line.w, rowW, eye.w, listW);
   const W = horiz ? markW + gapM + textW : Math.max(markW, textW);
   const H = horiz ? Math.max(h, markH) : markH + u * 1.6 + h;
   if (W > R.w || H > R.h) return null;
-  return {u, name, head, msg, note, line, rowH, rowW, textH: h, textW, markW, markH, gapM, W, H, parts};
+  return {u, name, head, msg, note, line, rowH, rowW, eye, list, listW, bi, textH: h, textW, markW, markH, gapM, W, H, parts};
 }
 function fit(ctx, o, R, cap){
   // Full content first; drop the tree marks row, then the small line, only when the words would get too small.
-  const tries = [{line: true, marks: o.marks}, {line: true, marks: false}, {line: false, marks: false}].filter((p, i) => i !== 1 || o.marks);
+  let tries = [{line: true, marks: o.marks}, {line: true, marks: false}, {line: false, marks: false}].filter((p, i) => i !== 1 || o.marks);
+  // An audience flyer keeps its list first (dropping the small line before it), and lets the list go only when it would print too small.
+  if (o.list) tries = [{line: true, marks: false, list: true}, {line: false, marks: false, list: true}].concat(tries);
   // Your Own Words shrink first, then wrap: a headline on one line and the message on two while the words stay a good size,
   // then more lines only when they would get small.
   const nb = o.note ? o.note.split('\n').length : 0;
@@ -334,7 +375,9 @@ function fit(ctx, o, R, cap){
   for (const parts of tries) for (let li = 0; li < levels.length; li++){
     let lo = 0, hi = cap; got = null;
     for (let i = 0; i < 24; i++){ const mid = (lo + hi) / 2; const m = measure(ctx, o, mid, R, parts, levels[li]); if (m){ got = m; lo = mid; } else hi = mid; }
-    if (got && got.u >= (li < levels.length - 1 ? Math.max(o.minU, cap * .55) : o.minU)) return got;
+    // With the list, its words stay at 9 points or larger on paper (300 dpi), and 9 pixels or larger on screen.
+    const least = parts.list ? Math.max(o.minU, 9 / 72 * DPI / 1.6) : o.minU;
+    if (got && got.u >= (li < levels.length - 1 ? Math.max(least, cap * .55) : least)) return got;
   }
   return got;
 }
@@ -407,6 +450,7 @@ async function draw(canvas, cur, look){
   const banner = S.format === 'banner', horiz = banner || W / H >= 1.3;
   // Print: the site line sits inside the safe area, so the ground band grows past the bleed to hold it.
   const site = pr ? siteLayout(ctx, siteOf(sub), W, H, pr) : null;
+  const orgList = sub.svc === 'org' && !!pr && pr.size.id !== 'pbiz' && Array.isArray(sub.lines) && sub.lines.length > 0;
   const band = pr ? Math.round(Math.max(H * .07, H - site.top + site.us * .9)) : Math.round(H * (banner ? .07 : .075)); const bandTop = H - band;
   // The Painting look: the main tree stays in view, and the words sit on the open side of the painting.
   let side = 'center', place = .5;
@@ -415,7 +459,8 @@ async function draw(canvas, cur, look){
   let R;
   if (banner){ const f = plat.safeBox || SAFE[plat.id] || [.1, .12, .9, .88]; R = {x: W * f[0], y: H * f[1], w: W * (f[2] - f[0]), h: Math.min(H * f[3], bandTop - H * .04) - H * f[1]}; }
   else if (pnt && side !== 'center') R = side === 'right' ? {x: W * .46, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07} : {x: W * .06, y: H * .07, w: W * .48, h: bandTop - H * .05 - H * .07};
-  else if (pnt && !horiz) R = {x: W * .07, y: H * .06, w: W * .86, h: (bandTop - H * .05) * .62 - H * .06};
+  // An audience flyer with its list keeps nearly the full height on a tall painting, under a deeper shade (GWG BLD 762).
+  else if (pnt && !horiz) R = {x: W * .07, y: H * .06, w: W * .86, h: (bandTop - H * .05) * (orgList ? .97 : .62) - H * .06};
   else R = {x: W * .07, y: H * .07, w: W * .86, h: bandTop - H * .05 - H * .07};
   // Print: everything stays inside the safe area (trim, then the safe margin).
   if (pr){
@@ -443,6 +488,8 @@ async function draw(canvas, cur, look){
   }
   const own = ownWords(), msgText = own && S.with === 'place' ? '' : String(text || '').trim();
   const o ={horiz, logo, name: cardName(sub), msg: msgText, head: own ? own.head : '', note: own ? own.note : '', line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
+  // An audience flyer: its headline in the name's place, the audience above it, and its list on the print sizes (not the business card).
+  if (sub.svc === 'org'){ o.name = sub.headline || o.name; o.eyebrow = sub.eyebrow || ''; if (orgList) o.list = sub.lines.slice(0, 5); }
   const cap = banner ? H * (W / H >= 3.9 ? .045 : .03) : horiz ? Math.min(H * .036, W * .022) : W * .03;
   const m = fit(ctx, o, R, pnt && side !== 'center' && !banner ? cap * .92 : cap);
   // Where the block sits: centered in the region, or toward the open side of a banner's painting.
@@ -465,7 +512,8 @@ async function draw(canvas, cur, look){
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     } else if (!horiz){
       const g = ctx.createLinearGradient(0, 0, 0, H);
-      g.addColorStop(0, 'rgba(14,10,6,.62)'); g.addColorStop(.5, 'rgba(14,10,6,.44)'); g.addColorStop(.8, 'rgba(14,10,6,.08)'); g.addColorStop(1, 'rgba(14,10,6,0)');
+      if (orgList){ g.addColorStop(0, 'rgba(14,10,6,.64)'); g.addColorStop(.6, 'rgba(14,10,6,.56)'); g.addColorStop(1, 'rgba(14,10,6,.4)'); }
+      else { g.addColorStop(0, 'rgba(14,10,6,.62)'); g.addColorStop(.5, 'rgba(14,10,6,.44)'); g.addColorStop(.8, 'rgba(14,10,6,.08)'); g.addColorStop(1, 'rgba(14,10,6,0)'); }
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
     if (m){
@@ -498,10 +546,23 @@ async function draw(canvas, cur, look){
     }
     ctx.textAlign = align; ctx.textBaseline = 'alphabetic';
     const lines = (blk, font, size, lh, color, spacing, k) => { ctx.font = font; ctx.fillStyle = color; ctx.letterSpacing = spacing || '0px'; blk.lines.forEach(l => { ty += size * lh; txt(ctx, B, l, tx, ty - size * (lh - 1) / 2 - size * .2, k); }); ctx.letterSpacing = '0px'; };
+    if (m.eye.lines.length){ lines(m.eye, F_EYE(u), u * 1.4, 1.3, P.acc, (u * .06) + 'px', 'eyebrow'); ty += u * .5; }
     nameLines(ctx, m.name, F_NAME(u), u * 4.4, tx, ty, align, P.ink, B); ty += m.name.lines.length * u * 4.4 * 1.08;
     if (m.head.lines.length){ ty += u * 1.1; lines(m.head, F_HEAD(u), u * 3.1, 1.12, P.ink, '0px', 'head'); }
     if (m.msg.lines.length){ ty += u * .7; lines(m.msg, F_MSG(u), u * 2.5, 1.22, P.acc, '0px', 'msg'); }
     if (m.note.lines.length){ ty += u * .9; lines(m.note, F_NOTE(u), u * 1.75, 1.32, P.ink, '0px', 'note'); }
+    if (m.list.length){
+      // The list as one left-aligned block, centered under the words on tall cards; a small round bullet before each offer.
+      ty += u * 1.4; const lx = horiz ? tx : tx - m.listW / 2, sz = u * 1.6, r = u * .26;
+      ctx.textAlign = 'left'; ctx.font = F_LIST(u);
+      m.list.forEach((b, i) => {
+        if (i) ty += u * .55;
+        const by0 = ty + sz * 1.3 - sz * .15 - sz * .2 - sz * .34;
+        ctx.fillStyle = P.acc; ctx.beginPath(); ctx.arc(lx + r, by0, r, 0, Math.PI * 2); ctx.fill(); B.push({k: 'bullet', x: lx, y: by0 - r, w: 2 * r, h: 2 * r});
+        ctx.fillStyle = P.ink; b.lines.forEach(l => { ty += sz * 1.3; txt(ctx, B, l, lx + m.bi, ty - sz * .15 - sz * .2, 'list'); });
+      });
+      ctx.textAlign = align;
+    }
     if (m.line.lines.length){ ty += u * .8; lines(m.line, F_LINE(u), u * 1.25, 1.4, P.soft, (u * .025) + 'px', 'line'); }
     if (m.rowH){
       ty += u * 1.3; let x = horiz ? tx : tx - m.rowW / 2;
@@ -597,7 +658,7 @@ function inner(){
   <div class="sc-wrap">
     <div class="card">
       <label class="f" for="sc-sub">Subject</label>
-      <select id="sc-sub" data-sc="subject">${[['Grounded', D.subjects.filter(s => !s.svc)], ['Services: Families', D.subjects.filter(s => s.svc === 'family')], ['Services: Pages', D.subjects.filter(s => s.svc === 'page')]].filter(g => g[1].length).map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</optgroup>`).join('')}</select>
+      <select id="sc-sub" data-sc="subject">${[['Grounded', D.subjects.filter(s => !s.svc)], ['Services: Families', D.subjects.filter(s => s.svc === 'family')], ['Services: Pages', D.subjects.filter(s => s.svc === 'page')], ['For Organizations', D.subjects.filter(s => s.svc === 'org')]].filter(g => g[1].length).map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</optgroup>`).join('')}</select>
       <label class="f" for="sc-msg">Message</label>${msgSel}
       ${S.msg === 'own' ? `<label class="f" for="sc-own">Your Message</label><textarea id="sc-own" data-sc="own" rows="3" placeholder="Type the words for the card.">${esc(S.own)}</textarea>` : ''}
       ${ownHtml()}
