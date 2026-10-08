@@ -943,13 +943,13 @@ function tabsFor(){
   const kids = [...(spOpen() ? [['maple','Maple','maple']] : []), ...(saOpen() ? [['aspen','Aspen','aspen']] : []), ...(pnOpen() ? [['pine','Pine','pine']] : []), ...(brTab() ? [['birch','Birch','birch']] : [])];
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   // A Field-tier Premarital Guide (GWG BLD 752) gets the Premarital tab after the trees; Staff and Founders keep theirs below.
-  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...(pgTab() ? [['premarital','Premarital','heart']] : []), ['learn','Learn','play'], ...(OR() ? [['orient','Orientation','cap']] : [])];
+  if (TIER === 'field') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...(pgTab() ? [['premarital','Premarital','heart']] : []), ['learn','Learn','play'], ...(FSAFE() ? [['safety','Safety','shield']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
   if (!LIB) return [...kids, ...grown];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
-  // Field yet. Staff and Founders: the paid services and the Grow With Grounded tabs, Safety last (Field users get
-  // safety on their Home and in each Guide). Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap'], ['safety','Safety','shield']];
+  // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
+  // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
+  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ['learn','Learn','play'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key']);
   return t;
 }
@@ -958,7 +958,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder') return 'founder';
-  if (id === 'home' || id === 'learn' || id === 'orient' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'learn' || id === 'orient' || id === 'safety' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -1305,8 +1305,13 @@ function vTraining(){
 }
 
 // ---------------- SAFETY ----------------
+// Safety (Chris, October 8, 2026): Guides use it too. Field users read it from the Field library (FLD.safety: steps,
+// scope, conf, in the Crisis Protocol's shape), so the tab shows for them once that library update is applied.
+const FSAFE = () => (FLD && FLD.safety && Array.isArray(FLD.safety.steps) && FLD.safety.steps.length) ? FLD.safety : null;
 function vSafety(){
-  const g = G('crisis'), scope = LIB.policies.find(p => p[0] === 'Scope of practice'), conf = LIB.policies.find(p => p[0] === 'Confidentiality');
+  const F = TIER === 'field' ? FSAFE() : null;
+  if (TIER === 'field' && !F) return `<div class="card"><p>Safety arrives with the next Field library update. If someone is in danger, call 911. For a mental health crisis, call or text 988.</p></div>`;
+  const g = F ? {steps: F.steps} : G('crisis'), scope = F ? F.scope : LIB.policies.find(p => p[0] === 'Scope of practice'), conf = F ? F.conf : LIB.policies.find(p => p[0] === 'Confidentiality');
   return `<div class="page-head"><div class="eyebrow" style="color:var(--danger)">Safety</div><h1>If someone is in danger</h1></div>
   <div class="row" style="margin-bottom:14px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line" href="sms:988">Text 988</a></div>
   ${g.steps.map((s,i) => `<div class="card step-card" style="border-left-color:var(--danger)"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)}</h4>${stepHTML(s,i)}</div>`).join('')}
