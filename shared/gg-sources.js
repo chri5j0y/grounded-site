@@ -375,7 +375,7 @@
     // end BLD 743
       /* GWG BLD 757 (HA 2, the Health and Ability guides): new sources from the six tree workers. */
     aacy: ["American Association of Caregiving Youth: more than 5.4 million US youth help care for a family member (AARP and the National Alliance for Caregiving, 2020)", "https://aacy.org/"],
-    apadisability: ["APA Style, bias-free language: disability", "https://apastyle.apa.org"],
+    apadisability: ["APA Style, disability language guidelines", "https://apastyle.apa.org"],
     asl988: ["988 Suicide and Crisis Lifeline launches American Sign Language crisis services (KBIA, 2023)", "https://www.kbia.org/missouri-news/2023-09-09/988-lifeline-launches-american-sign-language-crisis-services"],
     barnessocial: ["Barnes, Implementing the Social Model of Disability, chapter 1 (University of Leeds Disability Archive), on UPIAS (1976) and Mike Oliver", "https://disability-studies.leeds.ac.uk/wp-content/uploads/sites/40/library/Barnes-implementing-the-social-model-chapter-1.pdf"],
     brucenfl: ["Elizabeth J. Bruce and Cynthia L. Schultz, Nonfinite Loss and Grief: A Psychoeducational Approach (2001)", "https://blackwells.co.uk/bookshop/product/Nonfinite-Loss-and-Grief-by-Elizabeth-J-Bruce-Cynthia-L-Schultz/9781843100461"],

@@ -641,8 +641,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b766"></script>
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=b770"></script>
-<script src="../shared/gg-learn.js?v=b770"></script>
+<script src="../shared/gg-sources.js?v=b771"></script>
+<script src="../shared/gg-learn.js?v=b771"></script>
 <script src="../shared/gg-print.js?v=b760"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -653,8 +653,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="farewell.js?v=b770"></script>
 <script src="wedding.js?v=b770"></script>
 <script src="premarital.js?v=b770"></script>
-<script src="clients.js?v=b770"></script>
+<script src="clients.js?v=b771"></script>
 <script src="books.js?v=b770"></script>
+<script src="runner.js?v=b771"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -1089,13 +1090,17 @@ if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER
 // Books (GWG BLD 770, books.js): Founders only, the Books tab and the Set Aside for Taxes card on Home.
 if (window.GGBooks) GGBooks.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
+// GWG BLD 771 hook: the Session Runner (runner.js, GGRun): every guide with a session kit (the Staff library's sessionKits) runs in it.
+if (window.GGRun) GGRun.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
+  sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf(), guide: id => G(id), start: (id, cid) => startSession(id, cid)});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
 // ---------------- HOME ----------------
 function vHome(){
   const h = new Date().getHours(), greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   const due = [];
-  DATA.clients.filter(c => !anyMe(c)).forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f, i}); }));
+  // GWG BLD 771 hook: a session plan's follow-ups (f.rk) list once, in the Session Follow-Ups Due card (GGRun.homeCard).
+  DATA.clients.filter(c => !anyMe(c)).forEach(c => (c.followups||[]).forEach((f,i) => { if (!f.done && f.date && f.date <= addDays(today(), 7) && !(f.rk && window.GGRun)) due.push({c, f, i}); }));
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
   const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !anyMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
@@ -1105,6 +1110,7 @@ function vHome(){
   ${hpHomeCard()}
   ${window.GGFw ? GGFw.homeCard() : ''}
   ${window.GGWed ? GGWed.homeCard() : ''}
+  ${window.GGRun ? GGRun.homeCard() : ''}
   ${window.GGCli ? GGCli.homeCard() : (DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${window.GGBooks ? GGBooks.homeCard() : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
@@ -1122,6 +1128,7 @@ function addDays(s, n){ const [y,m,d] = s.split('-').map(Number); const t = new 
 
 // ---------------- GUIDES ----------------
 function vGuides(){
+  if (window.GGRun && GGRun.on()) return GGRun.view(); // GWG BLD 771 hook: the Session Runner
   if (V.guide){ const g = G(V.guide); if (window.GGSes) GGSes.state.mode = null; if (g) return vGuide(g); }
   // Your Sessions and the Session Builder (GWG BLD 758) open inside the Sessions tab.
   if (window.GGSes && GGSes.open()) return GGSes.view();
@@ -1131,6 +1138,7 @@ function vGuides(){
   const cards = CATS.map(([c,l]) => { const gs = all.filter(g => g.cat === c); if (!gs.length) return null;
     const names = gs.slice(0, 3).map(g => g.title).join(', ') + (gs.length > 3 ? ', and ' + (gs.length - 3) + ' more' : ''), mine = gs.filter(g => g._mine).length;
     return {k: c, title: l, desc: names, n: gs.length + (gs.length === 1 ? ' guide' : ' guides') + (mine ? ', ' + mine + ' of yours' : ''), accent: c === 'safety' ? 'var(--danger)' : 'var(--gold)', gs}; }).filter(Boolean);
+  { const rc = window.GGRun && GGRun.card(); if (rc) cards.push(rc); } // GWG BLD 771 hook: Session Plans
   if (window.GGSes) cards.push({k: 'builder', act: 'ses-builder', eb: 'Your Sessions', title: 'Session Builder', desc: 'Build your own session from blank or from a copy of any session. Customize any guide from its page.', n: own ? own + (own === 1 ? ' session of yours' : ' sessions of yours') : '', accent: 'var(--sage)'});
   const C = secPick('guides', cards);
   if (C){ const x = cards.find(y => y.k === C); return secPage('guides', 'Back to Sessions', `<div class="page-head"><div class="eyebrow">Session guides</div><h1>${x.title}</h1></div>${x.gs.map(item).join('')}`); }
@@ -1157,7 +1165,7 @@ function vGuide(g, pv){
   return `${pv ? '' : `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>`}
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}${sesPill(g)}</h1></div>
   <div class="card"><p class="purpose">${mark(g.purpose)}</p>${g.who ? `<p style="margin-top:8px"><b>Who It Is For:</b> ${mark(g.who)}</p>` : ''}
-    ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
+    ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGRun ? GGRun.guideBar(g) : ''}${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
   ${g.prep && g.prep.length ? `<div class="card"><h3>Before you begin</h3><ul class="checklist" style="margin-top:8px">${g.prep.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${lst('What to Bring', g.bring)}${lst('Questions to Ask', g.ask)}
   ${g.steps.map((s,i) => `<div class="card step-card"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)} ${s.m ? `<span class="min">about ${s.m} min</span>` : ''}</h4>${stepHTML(s,i)}</div>`).join('')}
@@ -1174,6 +1182,8 @@ function vGuide(g, pv){
 function startSession(guideId, clientId){
   const g = G(guideId); if (!g) return;
   if (clientId === undefined && g.cat !== 'self' && g.cat !== 'safety'){ return pickClient(guideId); }
+  // GWG BLD 771 hook: a guide with a session kit runs in the Session Runner (runner.js); the runner below stays for the rest.
+  if (window.GGRun && GGRun.has(guideId)){ $('#runner').classList.add('hide'); $('#runner').innerHTML = ''; if (GGRun.start(guideId, clientId || null)) return; }
   RUN = {id:uid(), guideId, clientId:clientId||null, started:Date.now(), step:-1, notes:{}, prep:{}, after:{}, summary:'', next:'', fee:'', paid:false, grace:false, fdate:'', ftext:''};
   openRunner();
 }
@@ -1248,6 +1258,7 @@ function vClient(c){
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
   ${window.GGCli ? GGCli.personCard(c) : ''}
+  ${window.GGRun ? GGRun.personCard(c) : ''}
   ${spPersonCard(c)}
   ${saPersonCard(c)}
   ${pnPersonCard(c)}
@@ -1279,7 +1290,7 @@ function vSession(s){
   return `<button class="btn btn-line btn-sm" data-act="${c ? 'open-client' : 'home'}" data-v="${c ? c.id : ''}">${icon('back')} Back</button>
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${nice(s.date)} &middot; ${s.minutes||0} minutes</div><h1>${esc(g.title)}</h1><p>${c ? esc(c.name) : 'No record attached'}</p></div>
   <div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary||'No summary.')}</p><h4 style="margin-top:14px">Next steps</h4><p style="white-space:pre-wrap">${esc(s.next||'None noted.')}</p></div>
-  <div class="card"><h3>Step Notes</h3>${g.steps.map((st,i) => s.notes && s.notes[i] ? `<h4 style="margin-top:12px">${esc(st.t)}</h4><p style="white-space:pre-wrap">${esc(s.notes[i])}</p>` : '').join('') || '<p class="muted">No step notes.</p>'}</div>
+  ${window.GGRun && s.rk ? GGRun.sessionCard(s) : `<div class="card"><h3>Step Notes</h3>${g.steps.map((st,i) => s.notes && s.notes[i] ? `<h4 style="margin-top:12px">${esc(st.t)}</h4><p style="white-space:pre-wrap">${esc(s.notes[i])}</p>` : '').join('') || '<p class="muted">No step notes.</p>'}</div>`}
   <div class="card"><div class="spread"><div><b>Fee:</b> ${esc(s.fee||'None')} ${s.grace ? '<span class="pill sage">Grace or reduced</span>' : ''}</div><label class="cb"><input type="checkbox" data-sp="${s.id}" ${s.paid?'checked':''}> Paid</label></div></div>
   <div class="row" style="margin-top:14px"><button class="btn btn-line" data-act="print-session" data-v="${s.id}">${icon('print')} Save or Print Session Note</button><button class="btn btn-danger btn-sm" data-act="del-session" data-v="${s.id}">Delete</button></div>`;
 }
@@ -10243,6 +10254,8 @@ function mergeData(cur, inc){
   if (window.GGFw){ const fm = GGFw.merge(out, inc); stats.added += fm.added; stats.updated += fm.updated; }
   // Wedding plans (Wedding Planning Session, BLD 770): newest copy wins; deleted ones stay deleted.
   if (window.GGWed){ const wm = GGWed.merge(out, inc); stats.added += wm.added; stats.updated += wm.updated; }
+  // Session plans (Session Runner, BLD 771): newest copy wins; deleted ones stay deleted.
+  if (window.GGRun){ const rm = GGRun.merge(out, inc); stats.added += rm.added; stats.updated += rm.updated; }
   if (window.GGSes){ const sm = GGSes.merge(out, inc); stats.added += sm.added; stats.updated += sm.updated; }
   // Premarital couples (Premarital Sessions, BLD 750): newest copy wins; deleted ones stay deleted.
   if (window.GGPm){ const pm = GGPm.merge(out, inc); stats.added += pm.added; stats.updated += pm.updated; }
