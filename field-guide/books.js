@@ -74,7 +74,7 @@ const CATS = [
 const CAR = {id: 'car', t: 'Car and Truck (From the Mileage Log)', where: 'Other Deductions (car and truck)', tt: 'Car and truck expenses (standard mileage rate)'};
 const INCK = [['ceremony', 'Ceremonies'], ['session', 'Sessions'], ['package', 'Packages'], ['speaking', 'Speaking and Training'], ['product', 'Products'], ['other', 'Other Income']];
 const METHODS = ['Check', 'Card', 'Venmo', 'Cash', 'Bank Transfer'];
-const DEF_RATE = 0.725;
+const DEF_RATE = 0.76;
 
 // ---------- the store ----------
 function store(){
@@ -485,7 +485,7 @@ function act(a, v, el){
     case 'aside-open': S.sec = 'overview'; if (C.go) C.go('books'); return;
     case 'per': S.per = v; rerender(true); return;
     case 'reimb': { const o = owed().find(x => x.m.id === v); if (!o || !o.amt) return; if (!confirm('Mark ' + money(o.amt) + ' as paid back to ' + o.m.name + ' today?')) return; markReimb(v); return; }
-    case 'rate': { const i = document.getElementById('bk-rate'), r = i ? +i.value : 0; if (!(r > 0 && r < 10)){ toast('Enter the rate a mile, for example 0.725.'); return; }
+    case 'rate': { const i = document.getElementById('bk-rate'), r = i ? +i.value : 0; if (!(r > 0 && r < 10)){ toast('Enter the rate a mile, for example 0.76.'); return; }
       const y = today().slice(0, 4), same = B().mi.filter(t => String(t.date).slice(0, 4) === y && +t.rate !== r);
       setRate(r);
       if (same.length && confirm('Use ' + perMile(r) + ' for the ' + same.length + ' trip' + (same.length === 1 ? '' : 's') + ' already logged in ' + y + ' too?')){ same.forEach(t => { t.rate = r; t.u = Date.now(); }); save(); }
