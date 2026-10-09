@@ -35,7 +35,7 @@ const FB = {
     {id: 'sequoia', name: 'Sequoia', color: '#7A2E1C', tagline: 'A long life, still growing.', line: 'Built for older adults, 60 and up.'},
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
     {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, classrooms, churches, and groups.'},
-    {id: 'marriage', name: 'The Grounded Marriage', mark: 'marriage/mark.svg', color: '#3F5F86', tagline: 'Before the Vows and After the Vows: a private place for the two of you to talk, grow, and keep growing.', line: 'For couples. Everything stays on your device.', url: 'growwithgrounded.com/marriage', always: true},
+    {id: 'marriage', name: 'Heartwood', mark: 'heartwood/mark.svg', color: '#3F5F86', tagline: 'Your private app for the two of you, with Before the Vows and After the Vows: a place to talk, grow, and keep growing.', line: 'For couples in The Grounded Marriage. Everything stays on your device.', url: 'growwithgrounded.com/heartwood', always: true},
     {id: 'field', name: 'Grounded Field Guide', mark: 'shared/marks/fieldguide.svg', color: '#2E2118', tagline: 'Every Grounded tool and guide, in one place.', line: 'For chaplains, pastors, teachers, school counselors, and parents.', url: 'growwithgrounded.com/field-guide'}
   ],
   messages: [],
@@ -181,7 +181,7 @@ function markUrl(s){
 const isLogo = s => /favicon\.svg$/.test(markUrl(s));
 const siteOf = s => s.url || (treeKey(s) ? 'growwithgrounded.com/' + treeKey(s) : 'growwithgrounded.com');
 const isGWG = s => s.id === 'gwg' || /^grow with grounded$/i.test(s.name || '');
-const isMarriage = s => !s.svc && (s.id === 'marriage' || /grounded marriage/i.test(s.name || '') || /marriage\/mark/.test(s.mark || ''));
+const isMarriage = s => !s.svc && (s.id === 'marriage' || /grounded marriage|heartwood/i.test(s.name || '') || /(marriage|heartwood)\/mark/.test(s.mark || '')); // Heartwood (GWG BLD 772) keeps the id 'marriage'
 const isField = s => !s.svc && (s.id === 'field' || s.id === 'fieldguide' || /field guide/i.test(s.name || ''));
 // The name as the card prints it, with TM on every Grounded name (Grow With Grounded, each tree, The Grove, The Grounded Marriage, Grounded Field Guide).
 function cardName(s){
@@ -197,7 +197,7 @@ function heroOf(s){
   const t = treeKey(s);
   if (t) return {url: '../shared/heroes/' + t + '-wide.webp', fx: FOCUS[t]};
   if (isField(s)) return {url: '../shared/heroes/fieldguide-wide.webp', fx: .47};
-  if (isMarriage(s)) return {url: '../marriage/hero-wide.webp', fx: FOCUS.marriage};
+  if (isMarriage(s)) return {url: '../heartwood/hero-wide.webp', fx: FOCUS.marriage};
   return {url: '../shared/heroes/home-wide.webp', fx: FOCUS.home};
 }
 

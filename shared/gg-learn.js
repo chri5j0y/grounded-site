@@ -51,7 +51,7 @@
   var today = function () { var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
 
   var MARK = function (m) { return url('/shared/marks/' + m + '.svg'); };
-  // Title scenes use the paintings (GWG BLD 760): shared/heroes/<id>-wide.webp, The Grounded Marriage's own
+  // Title scenes use the paintings (GWG BLD 760): shared/heroes/<id>-wide.webp, Heartwood's own (heartwood/hero-wide.webp, GWG BLD 772)
   // painting for 'marriage', and the home painting for any other id. FRAME places each one in the 16 by 9 stage:
   // x is the side to side crop (object-position, percent), s the side the words sit on (l, r, or t for top),
   // w the widest the words go, so the words stay clear of the tree where the painting allows.
@@ -64,7 +64,7 @@
     'page-hard-seasons': { x: 0, s: 'l', w: 520 }, 'page-marriage': { x: 100, s: 'r', w: 420 }, 'page-teams': { x: 50, s: 't', w: 640 }
   };
   var heroId = function (h) { return h === 'marriage' || HEROES.indexOf(h) >= 0 ? h : 'home'; };
-  var HERO = function (h) { h = heroId(h); return h === 'marriage' ? url('/marriage/hero-wide.webp') : url('/shared/heroes/' + h + '-wide.webp'); };
+  var HERO = function (h) { h = heroId(h); return h === 'marriage' ? url('/heartwood/hero-wide.webp') : url('/shared/heroes/' + h + '-wide.webp'); };
   var COL = { maple: '#C4501E', aspen: '#1F6F74', pine: '#3A6B35', birch: '#7F6610', oak: '#3D5A73', sequoia: '#7A2E1C', willow: '#5D5A6E', grove: '#223829', field: '#2E2118', site: '#8B5E1A' };
   var APPS = {
     maple: { name: 'Maple', color: '#C4501E', btn: '#A14219', back: 'Back to Maple' },

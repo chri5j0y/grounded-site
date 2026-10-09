@@ -5,7 +5,7 @@
 // sessions, interfaith and built to each couple's faith): a couples list; a Before Session 1 checklist; for each
 // couple the six session plans (goals, the minute by minute plan as a checklist, The Couple Workbook chapter, the
 // videos, Practices for Two, Try This Week) and notes; Reading the Results and When to Add Sessions or Refer;
-// an hours log toward 12; Bring In Their Card (the couple's cards from The Grounded Marriage app, v1 and v2,
+// an hours log toward 12; Bring In Their Card (the couple's cards from Heartwood, the couple's app, v1 and v2,
 // unlocked by the word only the two of them know, shown read only with their yes recorded); Strengths and Growing
 // Edges in Session 2; each partner's faith background shaping Session 6; the Educator's Statement for the
 // Minnesota reduced license fee (its inventory line names The Grounded Marriage inventory, GWG BLD 760); and the couple's
@@ -13,7 +13,7 @@
 // Data: the Staff library's premarital key (LIB.premarital), with a small built-in fallback so the tab works
 // before that library update is applied. A Field-tier Premarital Guide (GWG BLD 752) has no Staff library, so the
 // Field Guide passes ctx.field and the tab reads FLD.premaritalGuide.program (the same shape) instead; its
-// statement.defaults leaves the letterhead blank for the Guide's own Settings (pmRole, pmOrg, pmAddress, pmPhone). App data (questions, GMCore, results, faith) loads from ../marriage/.
+// statement.defaults leaves the letterhead blank for the Guide's own Settings (pmRole, pmOrg, pmAddress, pmPhone). Heartwood's data (the questions, the results words, the faith backgrounds) comes from its sealed content, opened with the Staff library's Heartwood key (heartwood.js, GGHw.content, GWG BLD 772); GMCore loads from ../heartwood/core.js.
 // Couples live in DATA.pm.couples: encrypted with the rest of this device's records and carried in backups
 // (merged by GGPm.merge). Nothing is sent.
 // GWG BLD 770: a couple linked to a Wedding Plan (wedding.js) shows a Wedding Plan link in its header.
@@ -37,7 +37,7 @@ const FB = {
   title: 'Premarital Sessions',
   program: 'The Grounded Marriage',
   lead: 'The Grounded Marriage: twelve hours with the two of you, in six two-hour sessions. The full session plans arrive with the next Staff library update.',
-  app: {name: 'The Grounded Marriage', link: 'https://growwithgrounded.com/marriage/'},
+  app: {name: 'Heartwood', link: 'https://growwithgrounded.com/heartwood/'},
   sessions: [
     [1, 'Your Story and Your Hopes', ['expect', 'fun', 'dreams'], {safety: true}],
     [2, 'Your Strengths and Growing Edges', ['expect', 'home', 'family'], {results: true}],
@@ -47,7 +47,7 @@ const FB = {
     [6, 'Meaning, Children, and the Road Ahead', ['faith', 'kids', 'close', 'dreams'], {faith: true, finish: true}]
   ].map(([n, title, btvAreas, x]) => Object.assign({n, title, mins: 120, goals: [], outline: [[120, 'The full plan for this session arrives with the next Staff library update.']], practice: '', bridge: '', btvAreas}, x)),
   before: {title: 'Before Session 1', lead: '', items: [
-    {id: 'link', title: 'Send the App Link', text: 'Send both partners growwithgrounded.com/marriage/.'},
+    {id: 'link', title: 'Send the Heartwood Invite', text: 'Make their Heartwood invite (Heartwood Invite, at the top of this page). Send both partners the link, then the code in a separate message.'},
     {id: 'finish', title: 'Both Finish Before the Vows', text: 'Each partner answers privately.'},
     {id: 'card', title: 'Bring In Their Cards', text: 'Each partner sends a card link; the couple types their shared word.'},
     {id: 'read', title: 'Read the Results (About 30 Minutes)', text: 'Read Strengths and Growing Edges in Session 2 and Talk About This on Their Card.'}]},
@@ -66,16 +66,16 @@ const FB = {
     seal: 'Sign and date in front of a notary, or mark the statement with the church seal. Print it on the educator\'s letterhead.',
     fee: {standard: 125, reduced: 50, confirmed: false}
   },
-  weekCard: {title: 'From the Couple This Week', lead: 'Before a session, the couple can choose to share a Week Card from The Grounded Marriage app: the videos they watched, the practices they tried, workbook answers they marked to share, and one question. Paste the link here, then let the couple type their shared word.', yes: 'The couple said yes to sharing this Week Card with us for this session.', empty: 'No Week Card for this session yet. It is always the couple\'s choice.'},
-  card: {lead: 'If the couple wants to, they can share their cards from The Grounded Marriage app with you. Paste one card link from each partner, then let the couple type the word only the two of them know.', yes: 'Both partners said yes to sharing this card with us for our sessions.'},
+  weekCard: {title: 'From the Couple This Week', lead: 'Before a session, the couple can choose to share a Week Card from Heartwood: the videos they watched, the practices they tried, workbook answers they marked to share, and one question. Paste the link here, then let the couple type their shared word.', yes: 'The couple said yes to sharing this Week Card with us for this session.', empty: 'No Week Card for this session yet. It is always the couple\'s choice.'},
+  card: {lead: 'If the couple wants to, they can share their cards from Heartwood with you. Paste one card link from each partner, then let the couple type the word only the two of them know.', yes: 'Both partners said yes to sharing this card with us for our sessions.'},
   safety: {lead: 'Meet with each partner alone for a few minutes. Whatever they share stays with them. Give each person these lines privately.', lines: [['Love Is Respect', 'Call 1-866-331-9474 or text LOVEIS to 22522'], ['National Domestic Violence Hotline', 'Call 1-800-799-7233'], ['Day One (Minnesota)', 'Call 1-866-223-1111'], ['988 Suicide and Crisis Lifeline', 'Call or text 988'], ['Emergency', 'Call 911']]},
   credits: []
 };
-// Area names, used until marriage/questions.js loads.
+// Area names, used until Heartwood's questions load.
 const AREAS = {talk: 'Talking and Listening', repair: 'Conflict and Repair', money: 'Money', family: 'Families and In-Laws', home: 'Home and Roles', expect: 'Hopes and Expectations', close: 'Affection and Closeness', kids: 'Children and Parenting', faith: 'Faith and Meaning', fun: 'Friends and Fun', health: 'Health and Stress', dreams: 'Dreams and Commitment'};
 const STATUS = [['starting', 'Getting Started'], ['sessions', 'In Sessions'], ['complete', 'Complete']];
 const NAV = [['sessions', 'Sessions'], ['hours', 'Hours Log'], ['card', 'Their Card'], ['statement', 'Educator\'s Statement'], ['cert', 'Certificate'], ['about', 'The Couple']];
-const APP_LINK = 'https://growwithgrounded.com/marriage/';
+const APP_LINK = 'https://growwithgrounded.com/heartwood/';
 
 let CTX = {lib: null, field: null, data: null, save: () => {}};
 const S = {view: 'home', id: null, n: null, cardErr: '', cardBusy: false, weekErr: '', weekBusy: false};
@@ -128,25 +128,30 @@ const progName = c => isEss(c) ? (ESS().title || 'The Grounded Marriage: Essenti
 const deeper = c => (c.upg && Array.isArray(c.upg.deeper)) ? c.upg.deeper.map(Number) : [];
 const minsFor = (c, s) => (c.log || []).filter(x => String(x.n) === skey(s)).reduce((a, x) => a + (+x.mins || 0), 0);
 
-// ---------- The Grounded Marriage app data (data only), loaded once from the public app ----------
-// questions.js (window.BTV_Q), core.js (window.GMCore), results.js (window.GM_RESULTS), faith.js (window.GM_FAITH).
-const MV = '2';
-const MFILES = [['questions.js', 'BTV_Q'], ['core.js', 'GMCore'], ['results.js', 'GM_RESULTS'], ['faith.js', 'GM_FAITH']];
-let ML = 'idle';
+// ---------- Heartwood's data (GWG BLD 772): GMCore from the site, the content from its sealed file ----------
+// ../heartwood/core.js (window.GMCore, code); the questions (window.BTV_Q), results words (window.GM_RESULTS), and
+// faith backgrounds (window.GM_FAITH) come from lib-heartwood.js, opened with the Staff library's Heartwood key
+// (GGHw.content in heartwood.js). Before Seal Heartwood, or without the key, they stay away and the tab says so.
+const MV = 'b772';
+let ML = 'idle', MLS = '';
 function needM(){
+  if (ML === 'none' && window.GGHw && GGHw.stamp() !== MLS) ML = 'idle'; // a new seal or key on this device: try again
   if (ML !== 'idle') return;
-  const want = MFILES.filter(([, g]) => !window[g]);
-  if (!want.length){ ML = 'done'; return; }
-  ML = 'loading'; let left = want.length;
-  want.forEach(([f]) => { const s = document.createElement('script'); s.async = false; s.src = new URL('../marriage/' + f + '?v=' + MV, location.href).href;
-    s.onload = s.onerror = () => { if (--left) return; ML = window.BTV_Q ? 'done' : 'none'; if (S.view !== 'home') rerender(true); }; document.head.appendChild(s); });
+  if (window.BTV_Q && window.GMCore){ ML = 'done'; return; }
+  ML = 'loading'; MLS = window.GGHw ? GGHw.stamp() : '';
+  const core = window.GMCore ? Promise.resolve() : new Promise(ok => { const s = document.createElement('script'); s.src = new URL('../heartwood/core.js?v=' + MV, location.href).href; s.onload = s.onerror = () => ok(); document.head.appendChild(s); });
+  const data = window.GGHw ? GGHw.content() : Promise.resolve(null);
+  Promise.all([core, data]).then(([, d]) => {
+    if (d && !window.BTV_Q){ window.BTV_Q = d.BTV_Q; if (d.GM_RESULTS) window.GM_RESULTS = d.GM_RESULTS; if (d.GM_FAITH) window.GM_FAITH = d.GM_FAITH; }
+    ML = window.BTV_Q && window.GMCore ? 'done' : 'none'; if (S.view !== 'home') rerender(true);
+  }, () => { ML = 'none'; if (S.view !== 'home') rerender(true); });
 }
 const Q = () => window.BTV_Q || null;
 const GC = () => window.GMCore || null;
 const FA = () => window.GM_FAITH || null;
 const RS = () => window.GM_RESULTS || null;
 const areaName = id => { const q = Q(); const a = q && (q.areas || []).find(x => x.id === id); return (a && a.name) || AREAS[id] || id; };
-const loadingNote = what => `<p class="muted" style="font-size:15px">${ML === 'none' ? 'The Grounded Marriage app data did not load, so ' + what + ' cannot show yet.' : 'Loading The Grounded Marriage app data.'}</p>`;
+const loadingNote = what => `<p class="muted" style="font-size:15px">${ML === 'none' ? (window.GGHw && !GGHw.hasKey() ? 'Heartwood is not sealed yet (Seal Heartwood, in the Founder tab), so ' + what + ' cannot show yet.' : 'Heartwood\'s content did not open, so ' + what + ' cannot show yet. Check the connection, and that lib-heartwood.js and lib-staff.js are both uploaded.') : 'Opening Heartwood\'s content.'}</p>`;
 
 // ---------- couples ----------
 function D(){ return CTX.data || {}; }
@@ -261,7 +266,7 @@ function vHome(){
 }
 function head(c, eyebrow){
   return `<button type="button" class="linkbtn" data-pm="home">&larr; All Couples</button>
-  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p>${c.cli && window.GGCli ? GGCli.link(c.cli) : ''}${window.GGWed && GGWed.plans ? GGWed.plans().filter(w => w.pm === c.id).map(w => ` <button type="button" class="linkbtn" data-wda="open" data-wdv="${esc(w.id)}">Wedding Plan</button>`).join('') : ''}</div>
+  <div class="page-head pm-head" style="margin-top:10px"><div style="min-width:0"><div class="eyebrow">${esc(eyebrow)}</div><h1>${esc(names(c))}</h1><p>${c.wedding ? 'Wedding ' + esc(nice(c.wedding)) + '. ' : ''}${hnum(logMins(c))} of ${target(c)} hours logged.${progPill(c)}</p>${c.cli && window.GGCli ? GGCli.link(c.cli) : ''}${window.GGWed && GGWed.plans ? GGWed.plans().filter(w => w.pm === c.id).map(w => ` <button type="button" class="linkbtn" data-wda="open" data-wdv="${esc(w.id)}">Wedding Plan</button>`).join('') : ''}${window.GGHw ? GGHw.headBits('pm', c.id) : '' /* GWG BLD 772 hook: Heartwood Invite */}</div>
   <div class="pm-chips">${STATUS.map(([k, l]) => `<button type="button" class="chip" data-pm="status" data-v="${k}" aria-pressed="${(c.status || 'starting') === k}">${l}</button>`).join('')}</div></div>
   <div class="pm-nav">${NAV.map(([v, l]) => `<button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="${v}"${(S.view === v || (v === 'sessions' && S.view === 'session')) ? ' aria-current="page"' : ''}>${l}</button>`).join('')}</div>`;
 }
@@ -270,7 +275,7 @@ function vBefore(c){
   if (!items.length) return '';
   return `<div class="card pm-pre"><div class="spread"><h2>${esc(B.title || 'Before Session 1')}</h2><span class="pill ${done === items.length ? 'sage' : 'gold'}">${done} of ${items.length} done</span></div>${B.lead ? `<p>${esc(B.lead)}</p>` : ''}
     <ul class="pm-ck">${items.map(x => `<li><label><input type="checkbox" data-pmpre="${esc(x.id)}"${pre[x.id] ? ' checked' : ''}><span><b style="font-weight:600">${esc(x.title)}</b><br><small class="muted">${esc(x.text || '')}</small></span></label></li>`).join('')}</ul>
-    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-pm="copylink">Copy the App Link</button><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="card">Bring In Their Cards</button></div></div>`;
+    <div class="row" style="margin-top:10px">${window.GGHw ? `<button type="button" class="btn btn-gold btn-sm" data-hwa="show" data-hwk="pm" data-hwv="${esc(c.id)}">Heartwood Invite</button>` : ''}<button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="card">Bring In Their Cards</button></div></div>`;
 }
 function tipsBlock(open){
   const R = pm().results; if (!(R.tips || []).length) return '';
@@ -352,7 +357,7 @@ function vSession(c){
     <h3 style="margin-top:14px">The Plan</h3><ul class="pm-ck">${rows}</ul>
     ${s.practice ? `<h3 style="margin-top:14px">Practice</h3><p>${esc(s.practice)}</p>` : ''}
     ${wbs.length ? `<h3 style="margin-top:14px">The Couple Workbook</h3>${wbs.map(wb => `<p>Chapter ${esc(wb.chapter)}${wb.title ? ': ' + esc(wb.title) : ''}</p>${(wb.exercises || []).length ? pills(wb.exercises) : ''}`).join('')}` : ''}
-    ${(s.videos || []).length ? `<h3 style="margin-top:14px">Videos</h3>${pills(s.videos)}<small class="muted">In The Grounded Marriage app, ${esc(APP_LINK.replace(/^https:\/\//, ''))}</small>` : ''}
+    ${(s.videos || []).length ? `<h3 style="margin-top:14px">Videos</h3>${pills(s.videos)}<small class="muted">In Heartwood, the couple's app</small>` : ''}
     ${(s.practices || []).length ? `<h3 style="margin-top:14px">Practices for Two</h3>${pills(s.practices)}` : ''}
     ${s.tryWeek ? `<h3 style="margin-top:14px">Try This Week</h3><p>${esc(s.tryWeek)}</p>` : ''}
     ${s.bridge ? `<h3 style="margin-top:14px">Before Next Time</h3><p>${esc(s.bridge)}</p>` : ''}
@@ -391,8 +396,8 @@ function vHours(c){
 }
 
 // ---------- the couple's cards ----------
-// Each partner makes a card from their own answers in The Grounded Marriage app: a link ending #btv=b1.<code>
-// (growwithgrounded.com/marriage/, or the older /before-the-vows/), read with GMCore.card. The code is base64url of
+// Each partner makes a card from their own answers in Heartwood: a link ending #btv=b1.<code>
+// (growwithgrounded.com/heartwood/, or the older /marriage/ and /before-the-vows/), read with GMCore.card. The code is base64url of
 // salt (16 bytes), iv (12), then the AES-GCM text, keyed by PBKDF2 (250,000 rounds, SHA-256) from the shared word
 // (trimmed, lowercase). Inside: {v: 1 or 2, q: questions version, n: this partner's first name, to: the other's,
 // fw: 'f' (Faith wording) or 'p' (Plain), a: one digit per question in questions.js order, 0 for skipped,
@@ -405,6 +410,7 @@ function codeOf(t){
 }
 function cardOk(o){
   if (!o || typeof o !== 'object' || Array.isArray(o) || (o.v !== 1 && o.v !== 2) || typeof o.q !== 'number') return null;
+  if (o.q >= 900) return null; // a card from Heartwood's open sample (GWG BLD 772): its answers follow the sample's ten questions
   const nm = x => typeof x === 'string' && x && x.length <= 40 && x === x.trim() && !/[<>&"`\\\u0000-\u001F\u007F]/.test(x);
   if (!nm(o.n) || !nm(o.to) || (o.fw !== 'f' && o.fw !== 'p') || typeof o.a !== 'string' || !/^[0-5]{1,300}$/.test(o.a)) return null;
   const r = {v: o.v, q: o.q, n: o.n, to: o.to, fw: o.fw, a: o.a};
@@ -461,7 +467,7 @@ function vCard(c){
         return `<div class="card"><h3>${esc(a.name)}</h3>${aq.map(q => `<div class="pm-qa${differs(A[q.id], B[q.id]) ? ' pm-dif' : ''}"><p>${esc(qText(q, k))}</p><div class="pm-two">${k.a ? `<span><b>${esc(na)}</b>: ${esc(scale(A[q.id]))}</span>` : ''}${k.b ? `<span><b>${esc(nb)}</b>: ${esc(scale(B[q.id]))}</span>` : ''}</div></div>`).join('')}</div>`; }).join('') : ''}`;
   }
   const form = have.length === 2 ? '' : `<div class="card"><h2>Bring In Their Card</h2><p>${esc(P.card.lead || '')}</p>
-    <label class="f" for="pm-cl">${have.length ? 'The Other Partner\'s Card Link' : 'Card Link'}</label><input type="text" id="pm-cl" autocomplete="off" spellcheck="false" placeholder="Paste a card link from The Grounded Marriage">
+    <label class="f" for="pm-cl">${have.length ? 'The Other Partner\'s Card Link' : 'Card Link'}</label><input type="text" id="pm-cl" autocomplete="off" spellcheck="false" placeholder="Paste a card link from Heartwood">
     ${have.length ? '' : `<label class="f" for="pm-cl2">The Other Partner's Card Link (if they have one)</label><input type="text" id="pm-cl2" autocomplete="off" spellcheck="false" placeholder="Paste the second card link">`}
     <label class="f" for="pm-cw">Their Shared Word</label><input type="password" id="pm-cw" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="The couple types it">
     ${have.length ? '' : `<label class="pm-yes"><input type="checkbox" id="pm-cy"> <span>${esc(P.card.yes || '')}</span></label>`}
@@ -474,7 +480,7 @@ function vCard(c){
 // ---------- the Week Card (GWG BLD 755) ----------
 // The same lock as the answers card: base64url of salt (16), iv (12), then AES-GCM text; PBKDF2 (250,000 rounds,
 // SHA-256) from the shared word, trimmed and lowercase. Inside: {v: 1, m: 'one' or 'two', s: '' or a session key,
-// n, to, on, vid: [titles], pr: [titles], wb: [{w, t, a}], q}. marriage/core.js (GMCore.week) makes it.
+// n, to, on, vid: [titles], pr: [titles], wb: [{w, t, a}], q}. heartwood/core.js (GMCore.week) makes it.
 function weekCodeOf(t){
   t = String(t || '').trim(); const m = /(?:^|[#&?])gmw=(w1\.[A-Za-z0-9_-]{20,90000})/.exec(t);
   return m ? m[1] : (/^w1\.[A-Za-z0-9_-]{20,90000}$/.test(t) ? t : '');
@@ -531,7 +537,7 @@ async function weekIn(c){
   const k = String(S.n), code = weekCodeOf(val('pm-wl')), word = val('pm-ww'), yes = (document.getElementById('pm-wy') || {}).checked;
   S.weekErr = '';
   if (!val('pm-wl').trim()){ S.weekErr = 'Paste the Week Card link first.'; rerender(true); return; }
-  if (!code){ S.weekErr = 'That link does not look like a Week Card from The Grounded Marriage. Copy it again from their phone.'; rerender(true); return; }
+  if (!code){ S.weekErr = 'That link does not look like a Week Card from Heartwood. Copy it again from their phone.'; rerender(true); return; }
   if (!word.trim()){ S.weekErr = 'The couple types their shared word to open the card.'; rerender(true); return; }
   if (!yes){ S.weekErr = 'Check the box once the couple says yes to sharing this Week Card.'; rerender(true); return; }
   S.weekBusy = true; rerender(true);
@@ -720,7 +726,7 @@ async function cardIn(c){
   S.cardErr = '';
   if (!links.length){ S.cardErr = 'Paste the card link first.'; rerender(true); return; }
   const codes = links.map(codeOf);
-  if (codes.some(x => !x)){ S.cardErr = 'That link does not look like a card from The Grounded Marriage. Copy it again from their phone.'; rerender(true); return; }
+  if (codes.some(x => !x)){ S.cardErr = 'That link does not look like a card from Heartwood. Copy it again from their phone.'; rerender(true); return; }
   if (!word.trim()){ S.cardErr = 'The couple types their shared word to open the card.'; rerender(true); return; }
   if (!yes){ S.cardErr = 'Check the box once both partners say yes to sharing their cards.'; rerender(true); return; }
   S.cardBusy = true; rerender(true);
