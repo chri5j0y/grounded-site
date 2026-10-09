@@ -4207,7 +4207,7 @@ const LC_TOPICS = [
    ],
    [
     "Minnesota BCA: See It, Say It, Send It app",
-    "https://dps.mn.gov/divisions/bca/Pages/bca-tip-app.aspx"
+    "https://dps.mn.gov/bca-tip-app"
    ],
    [
     "US Secret Service, Averting Targeted School Violence (research)",

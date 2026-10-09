@@ -415,8 +415,8 @@
     davidson17: ["Davidson and colleagues, Guidelines for Family-Centered Care in the Neonatal, Pediatric, and Adult ICU (Critical Care Medicine, 2017)", "https://doi.org/10.1097/CCM.0000000000002169"],
     lautrette07: ["Lautrette and colleagues, a communication strategy and brochure for relatives of patients dying in the ICU (NEJM, 2007)", "https://doi.org/10.1056/NEJMoa063446"],
     jabre13: ["Jabre and colleagues, family presence during cardiopulmonary resuscitation (NEJM, 2013)", "https://doi.org/10.1056/NEJMoa1203366"],
-    bartels: ["Jonathan Bartels, The Pause after a patient's death (University of Virginia Health, 2009)", ""],
-    codelavender: ["Code Lavender, a rapid support response for staff (Cleveland Clinic, 2008)", ""],
+    bartels: ["Jonathan Bartels, RN, The Pause: a moment of silence after a patient's death (UVA Health)", "https://www.npr.org/sections/health-shots/2015/09/27/443104073/trauma-workers-find-solace-in-a-pause-that-honors-life-after-a-death"],
+    codelavender: ["Code Lavender, a holistic rapid response for staff (Cleveland Clinic, 2009)", "https://consultqd.clevelandclinic.org/code-lavender-offering-emotional-support-holistic-rapid-response"],
     // The Grove When Life Changes Together (GWG BLD 774)
     bridges91: ["William Bridges, Managing Transitions: Making the Most of Change (1991): an ending, a neutral zone, and a new beginning", ""],
     csgs: ["Coalition to Support Grieving Students, guidance for school staff (with the National Center for School Crisis and Bereavement)", "https://grievingstudents.org/"],
