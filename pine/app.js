@@ -713,21 +713,28 @@ function scrollToViewTop(id, smooth, always) {
   if (always || window.scrollY > y) window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
 }
 // The grade is asked once, then kept in the profile. It sets the band.
+function gradeClose() {
+  const box = document.getElementById('pn-grade'); if (box) box.remove();
+  if (askGrade.key) { document.removeEventListener('keydown', askGrade.key); askGrade.key = null; }
+}
 function askGrade(change, then) {
-  const old = document.getElementById('pn-grade'); if (old) old.remove();
+  gradeClose();
   const G = CKB.grades || [['9', 'Grade 9'], ['10', 'Grade 10'], ['11', 'Grade 11'], ['12', 'Grade 12']], cur = gradeNow();
   const wrap = document.createElement('div');
   wrap.id = 'pn-grade'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box pn-box" role="dialog" aria-modal="true" aria-labelledby="pn-grade-title"><h2 id="pn-grade-title">${change ? 'Change your grade' : 'Which grade are you in?'}</h2>
     <p>Pine asks a few questions differently for grades 9 and 10 and for grades 11 and 12. ${change ? 'Your earlier check-ins stay, and compare only with check-ins from the same grades.' : 'You only need to answer this once. You can change it in Settings.'}</p>
     <div class="pn-grades">${G.map(g => `<button type="button" class="btn ${cur === g[0] ? 'btn-primary' : 'btn-secondary'}" onclick="setGrade('${g[0]}')">${escapeHtml(g[1])}</button>`).join('')}</div>
-    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="document.getElementById('pn-grade').remove()">Not now</button></div></div>`;
+    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="gradeClose()">Not now</button></div></div>`;
   document.body.appendChild(wrap);
   askGrade.then = then || null;
+  // Escape closes the dialog, just like Not now.
+  askGrade.key = e => { if (e.key === 'Escape') { e.preventDefault(); gradeClose(); } };
+  document.addEventListener('keydown', askGrade.key);
   const b = wrap.querySelector('.pn-grades button'); if (b) b.focus();
 }
 function setGrade(g) {
-  rec().grade = g; const box = document.getElementById('pn-grade'); if (box) box.remove();
+  rec().grade = g; gradeClose();
   persistRec().then(() => {
     loadBank(); CK_BAND = bandNow();
     showToast('Grade ' + g + ' saved.');
@@ -1019,8 +1026,24 @@ function showView(id) {
   if (id === 'client-growthplan') oakPlanOpen();
   if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (window.GGTend) GGTend.render(); }
   scrollToViewTop(id, false, false);
+  navPush(id);
 }
 function goHome() { showView('client-today'); }
+/* In-app history: each tab and each open guide gets its own Back step, and the hash names it.
+   navPush runs only for taps after the first load; the hash reader (fromHash) shows views quietly. */
+let NAV_READY = false, NAV_QUIET = false;
+const NAV_KEY = { 'client-today': 'today', 'client-intro': 'about', 'client-week': 'week', 'client-season': 'season', 'client-progress': 'progress', 'client-growthplan': 'plan', 'client-next': 'next' };
+function navKey(id) {
+  if (id === 'client-life') return LCS.client.open ? 'life=' + LCS.client.open : 'life';
+  return NAV_KEY[id] || null;
+}
+function navPush(id) {
+  if (!NAV_READY || NAV_QUIET) return;
+  const k = navKey(id); if (!k) return;
+  let h = location.hash || ''; try { h = decodeURIComponent(h); } catch (e) {}
+  if (h === '#' + k) return;
+  try { history.pushState(null, '', '#' + encodeURI(k)); } catch (e) {}
+}
 
 // App-ready: a real PDF for the share sheet, with Print as a backup.
 function printGrowthPlan(sheetId) {
@@ -1138,7 +1161,7 @@ function lcOpen(mode, id) {
   LCS[mode].open = id || null;
   showView(mode + '-life');
 }
-function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); navPush(mode + '-life'); }
 function lcPersp(mode, p) { mode = 'client'; LCS[mode].persp = p; renderLC(mode); }
 /* Practice links open Pine's own practice guide right under the name. */
 function lcPrac(btn) {
@@ -2116,15 +2139,30 @@ renderAboutParts();
 renderProgress();
 renderProfileBar();
 
-/* Deep links: #quick, #checkin, #nextsteps, #plan, #life (guides), #life=<id> or #talk=<id> (one guide) */
-function fromHash() {
-  const h = decodeURIComponent(location.hash || '');
-  if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null; showView('client-life'); }
-  else if (h === '#nextsteps' || h === '#next') showView('client-next');
-  else if (h === '#plan') showView('client-growthplan');
-  else if (h === '#quick') startQuick();
-  else if (h === '#checkin' || h === '#check' + 'up') startCheckin();
-  else if (h === '#about') showView('client-intro');
+/* Deep links and in-app history. Tabs: #today, #week, #season, #progress, #plan, #next (or #nextsteps), #about,
+   #life (guides), #life=<id> or #talk=<id> (one guide). Actions on first load: #quick, #checkin.
+   One-time links (#library=, visit, family, profile) are read and cleared by shared/gg-app.js and gg-bridge.js. */
+const HASH_VIEW = { '#today': 'client-today', '#week': 'client-week', '#season': 'client-season', '#progress': 'client-progress', '#plan': 'client-growthplan', '#next': 'client-next', '#nextsteps': 'client-next', '#about': 'client-intro' };
+function fromHash(pop) {
+  let h = location.hash || ''; try { h = decodeURIComponent(h); } catch (e) {}
+  let view = null;
+  NAV_QUIET = true;
+  try {
+    if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null; showView('client-life'); view = LCS.client.open ? 'client-lc-article' : 'client-life'; }
+    else if (HASH_VIEW[h]) { view = HASH_VIEW[h]; showView(view); }
+    else if (h === '#quick' || h === '#checkin' || h === '#check' + 'up') {
+      // Back or Forward onto a check-in link opens Season instead of starting over.
+      if (!pop) { if (h === '#quick') startQuick(); else startCheckin(); }
+      else if (!document.getElementById('client-assess').classList.contains('active')) { view = 'client-season'; showView(view); }
+    }
+    else if (pop && (h === '' || h === '#')) { view = 'client-today'; showView(view); }
+  } finally { NAV_QUIET = false; }
+  if (view) setTimeout(() => scrollToViewTop(view, false, true), 80);
 }
-window.addEventListener('hashchange', fromHash);
-setTimeout(fromHash, 60);
+try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+// popstate and hashchange both fire for one Back in some browsers, and older Safari fires only hashchange: handle each address once.
+let navLastH = null, navLastT = 0;
+const navEv = () => { const h = location.hash, t = Date.now(); if (h === navLastH && t - navLastT < 400) return; navLastH = h; navLastT = t; fromHash(true); };
+window.addEventListener('popstate', navEv);
+window.addEventListener('hashchange', navEv);
+setTimeout(() => { fromHash(false); NAV_READY = true; }, 60);

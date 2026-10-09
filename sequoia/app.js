@@ -982,7 +982,38 @@ function showView(id, btn) {
   if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render(); }
   renderHelpBanner();
   if (navId) scrollToViewTop(id, false, false);
+  if (navId) navSync(id);
 }
+/* Back and Forward: each tab and each open guide has its own address (#today, #week, #season, #plan, #legacy, #life,
+   #life=<id>), so the browser's Back steps through them. A tab tap or an opened guide adds a step (NAV_MODE 'push'); a
+   view opened from reading the address adds nothing ('hash'); any other view change quietly updates an address that
+   already names a tab. One-time links (#for=, #quick, #checkin, visit and family links) are left as they are. */
+var NAV_MODE = null, NAV_LAST = location.href;
+var NAV_TAB_RE = /^#(today|week|season|plan|legacy|life)(=|$)/;
+function navHashFor(id) {
+  if (id === 'client-life') return LCS.client.open ? '#life=' + LCS.client.open : '#life';
+  return VIEW_TAB[id] && VIEW_TAB[id] !== 'guides' ? '#' + VIEW_TAB[id] : '';
+}
+function navSync(id) {
+  const mode = NAV_MODE; NAV_MODE = null;
+  const want = navHashFor(id);
+  if (mode === 'hash' || !want || decodeURIComponent(location.hash) === want) return;
+  try {
+    if (mode === 'push') history.pushState(null, '', want);
+    else if (NAV_TAB_RE.test(decodeURIComponent(location.hash))) history.replaceState(null, '', want);
+  } catch (e) {}
+  NAV_LAST = location.href;
+}
+function navPush(hash) {
+  if (decodeURIComponent(location.hash) === hash) return;
+  try { history.pushState(null, '', hash); } catch (e) {}
+  NAV_LAST = location.href;
+}
+(function () {
+  const nav = document.getElementById('client-nav'); if (!nav) return;
+  nav.addEventListener('click', e => { const b = e.target.closest('.nav-btn'); NAV_MODE = b && b.getAttribute('data-tab') !== 'learn' ? 'push' : null; }, true);
+  nav.addEventListener('click', () => { NAV_MODE = null; });
+})();
 function goHome() { showView('client-today'); }
 function toggleRestore(id, btn) {
   const open = document.getElementById(id + '-restore').classList.toggle('open');
@@ -1380,9 +1411,10 @@ function lcOpen(mode, id) {
   mode = 'client';
   LCS[mode].open = id || null;
   const btn = document.querySelector('#client-nav .nav-btn[data-lc]');
+  NAV_MODE = 'push';
   showView(mode + '-life', btn);
 }
-function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); navPush('#life'); scrollToViewTop(mode + '-life', true, false); }
 function lcPersp(mode, p) { mode = 'client'; LCS[mode].persp = p; renderLC(mode); }
 /* Practice links open Sequoia's own practice guide right under the name. */
 function lcPrac(btn) {
@@ -2238,15 +2270,35 @@ mountTree('hero-tree-slot', { variant: 'color', seam: 'var(--hero-seam)', assemb
 renderAboutParts();
 renderProgress();
 
-/* Deep links: #life (guides), #life=<id> (one guide), #legacy, #plan, #quick, #checkin, #for=<id> (a helper) */
-function fromHash() {
-  const h = decodeURIComponent(location.hash || '');
-  if (h.startsWith('#life')) { const id = h.startsWith('#life=') ? h.slice(6) : null; LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null; showView('client-life', document.querySelector('#client-nav .nav-btn[data-lc]')); }
-  else if (h === '#legacy') showView('client-legacy');
-  else if (h === '#plan') showView('client-growthplan');
-  else if (h === '#quick') startQuick();
-  else if (h === '#checkin' || h === '#check' + 'up') startCheckin();
+/* Deep links: #life (guides), #life=<id> (one guide), #today, #week, #season, #plan, #legacy, #quick, #checkin,
+   #for=<id> (a helper). On Back or Forward (popstate) an address with no hash shows Today, and #quick or #checkin
+   returns to a check-in already under way instead of starting over. A tab or guide opened here is scrolled into sight. */
+function fromHash(e) {
+  if (e && location.href === NAV_LAST) return;
+  NAV_LAST = location.href;
+  const h = decodeURIComponent(location.hash || ''), back = !!(e && e.type === 'popstate');
+  let view = null, top = null;
+  if (h.startsWith('#life')) {
+    const id = h.startsWith('#life=') ? h.slice(6) : null;
+    LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null;
+    view = 'client-life'; top = LCS.client.open ? 'client-lc-article' : 'client-life';
+  }
+  else if (h === '#legacy') view = 'client-legacy';
+  else if (h === '#plan') view = 'client-growthplan';
+  else if (/^#(today|week|season)$/.test(h)) view = 'client-' + h.slice(1);
+  else if (back && (h === '' || h === '#')) view = 'client-today';
+  else if (h === '#quick' || h === '#checkin' || h === '#check' + 'up') {
+    if (back && document.querySelector('#client-assess .step-panel')) view = 'client-assess';
+    else if (h === '#quick') startQuick(); else startCheckin();
+  }
   else if (h.startsWith('#for=')) helpFromHash();
+  if (!view) return;
+  NAV_MODE = 'hash';
+  showView(view, view === 'client-life' ? document.querySelector('#client-nav .nav-btn[data-lc]') : undefined);
+  NAV_MODE = null;
+  if (h === '' || h === '#') return;
+  setTimeout(() => scrollToViewTop(document.getElementById(top || view) ? (top || view) : view, false, true), 60);
 }
 window.addEventListener('hashchange', fromHash);
+window.addEventListener('popstate', fromHash);
 setTimeout(fromHash, 60);

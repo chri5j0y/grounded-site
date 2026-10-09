@@ -892,6 +892,8 @@
     pop = document.createElement('div'); pop.className = 'ggp-pop ggp-root'; pop.hidden = true; pop.setAttribute('role', 'menu'); document.body.appendChild(pop);
     navBtn.addEventListener('click', function (e) { e.stopPropagation(); if (pop.hidden) showPop(); else hidePop(); });
     document.addEventListener('click', function (e) { if (!pop.hidden && !pop.contains(e.target)) hidePop(); });
+    // one menu at a time: the Services or Tools panel, or the phone menu, opening closes this one; this one opening closes them
+    document.addEventListener('gg:menu-open', function (e) { if (!pop.hidden && !(e.detail && e.detail.from === 'profiles')) hidePop(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) { hidePop(); navBtn.focus(); } });
     window.addEventListener('resize', hidePop);
     paintNav();
@@ -903,7 +905,7 @@
     else { navBtn.innerHTML = PERSON_SVG; navBtn.setAttribute('aria-label', 'Profiles on this device'); navBtn.title = 'Profiles'; navBtn.style.borderColor = ''; }
   }
   function hidePop() { if (pop && !pop.hidden) { pop.hidden = true; navBtn.setAttribute('aria-expanded', 'false'); } }
-  function showPop() {
+  function showPop() { try { document.dispatchEvent(new CustomEvent('gg:menu-open', { detail: { from: 'profiles' } })); } catch (e) {}
     var p = cur && getP(cur.id), html = '';
     function item(act, label, extra) { return '<button type="button" class="ggp-item" role="menuitem" data-a="' + act + '"' + (extra || '') + '>' + label + '</button>'; }
     function link(href, label) { return '<a class="ggp-item" role="menuitem" href="' + HOME + href + '">' + label + '</a>'; }
