@@ -14,6 +14,11 @@
    (some private windows), the key lives only for this visit and Heartwood asks for the code again next time.
    Clear Everything (app.js) calls HWOpen.forget(), which removes the key and the invite from this device.
    Without an invite, or before Chris seals: the open sample (heartwood/sample.js, window.HW_SAMPLE_DATA).
+   Open Heartwood (GWG BLD 773): Staff and Founders open Heartwood from the Field Guide with no code typed. The Field
+   Guide makes a throwaway invite on the spot, sealed under 'open:<code>:<time>' (a pass a couple's code can never be:
+   theirs are letters and numbers only), and opens #hw=<invite>&hc=<code>&ht=<time>. It is taken once (its salt is
+   remembered in gg_hw_once), only within 15 minutes of being made, never saved as the device's invite, and taken out
+   of the address bar right away. A link without hc asks for the code, exactly as before.
    Then app.js loads, reading the same globals (BTV_Q, GM_FAITH, GM_RESULTS, GM_WB, GM_MONEY, GM_PR, GM_AFTER,
    GG_LEARN_GM, GM_TOGETHER); window.HW_SAMPLE is true in the sample. */
 (function () {
@@ -34,15 +39,20 @@
   function normCode(s) { return String(s || '').normalize('NFKC').toUpperCase().replace(/[^A-Z0-9]/g, ''); }
   var RX = /(?:^|[#&?])hw=([A-Za-z0-9_-]{16,40}\.[A-Za-z0-9_-]{12,24}\.[A-Za-z0-9_-]{40,400})/;
   function inviteOf(s) { var m = RX.exec(String(s || '')); return m ? m[1] : ''; }
+  var RXC = /(?:^|[#&])hc=([A-Z0-9]{12,40})(?:&|$)/, RXT = /(?:^|[#&])ht=(\d{12,15})(?:&|$)/, ONCE = 'gg_hw_once', FRESH = 15 * 60 * 1000;
+  var STAFF = null; // {inv, hc, ht}: an Open Heartwood link from the Field Guide, taken once
 
   /* ---------- the invite in the link ---------- */
   function takeInvite() {
-    var h = location.hash || '', inv = inviteOf(h); if (!inv) return '';
-    try { localStorage.setItem(INV, inv); } catch (e) {}
-    // Take the invite out of the address; anything else after the # (a partner's card) stays for app.js.
-    var rest = h.replace(/^#/, '').split('&').filter(function (p) { return p && p.indexOf('hw=') !== 0; }).join('&');
+    var h = location.hash || '', inv = inviteOf(h), hc = RXC.exec(h), ht = RXT.exec(h);
+    if (!inv && !hc && !ht) return '';
+    // Open Heartwood (Staff and Founders): kept only for this visit, never as this device's invite.
+    if (inv && hc && ht) STAFF = { inv: inv, hc: hc[1], ht: ht[1] };
+    else if (inv) { try { localStorage.setItem(INV, inv); } catch (e) {} }
+    // Take the invite (and any Open Heartwood code) out of the address; anything else after the # (a partner's card) stays for app.js.
+    var rest = h.replace(/^#/, '').split('&').filter(function (p) { return p && p.indexOf('hw=') !== 0 && p.indexOf('hc=') !== 0 && p.indexOf('ht=') !== 0; }).join('&');
     try { history.replaceState(null, '', location.pathname + location.search + (rest ? '#' + rest : '')); } catch (e) {}
-    return inv;
+    return STAFF ? '' : inv;
   }
   function savedInvite() { try { return localStorage.getItem(INV) || ''; } catch (e) { return ''; } }
 
@@ -71,10 +81,10 @@
   function dropKey() { MEMKEY = null; return idb('readwrite', function (s) { return s.delete(SLOT); }); }
 
   /* ---------- opening ---------- */
-  function unwrap(inv, code) {
+  function unwrap(inv, code, pass) {
     var p = String(inv).split('.'); if (p.length !== 3) return Promise.reject(new Error('invite'));
     var salt = unb64u(p[0]), iv = unb64u(p[1]), ct = unb64u(p[2]);
-    return subtle.importKey('raw', enc.encode(normCode(code)), 'PBKDF2', false, ['deriveKey'])
+    return subtle.importKey('raw', enc.encode(pass || normCode(code)), 'PBKDF2', false, ['deriveKey'])
       .then(function (base) { return subtle.deriveKey({ name: 'PBKDF2', salt: salt, iterations: ROUNDS, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']); })
       .then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: iv }, k, ct); })
       .then(function (raw) { if (raw.byteLength !== 32) throw new Error('invite'); return subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['decrypt']); });
@@ -91,6 +101,18 @@
     return subtle.decrypt({ name: 'AES-GCM', iv: unb64(lib.iv) }, key, unb64(lib.ct)).then(function (pt) {
       var o = JSON.parse(dec.decode(pt)); if (!o || o._gfg !== 'heartwood' || !o.data || !o.data.BTV_Q) throw new Error('content'); return o.data;
     });
+  }
+
+  /* ---------- Open Heartwood (Staff and Founders, GWG BLD 773) ---------- */
+  function onceList() { try { var a = JSON.parse(localStorage.getItem(ONCE) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  // Resolves the content when the link opens Heartwood, or null (used before, too old, or not this Heartwood).
+  function staffOpen(o, lib) {
+    var age = Date.now() - (+o.ht), salt = String(o.inv).split('.')[0], used = onceList();
+    if (!(age >= -120000 && age <= FRESH) || used.indexOf(salt) >= 0) return Promise.resolve(null);
+    try { localStorage.setItem(ONCE, JSON.stringify(used.concat([salt]).slice(-30))); } catch (e) {}
+    return unwrap(o.inv, '', 'open:' + o.hc + ':' + o.ht).then(function (key) {
+      return openLib(key, lib).then(function (data) { return putKey(key).then(function () { return data; }); });
+    }).then(null, function () { return null; });
   }
 
   /* ---------- starting the app ---------- */
@@ -163,6 +185,7 @@
   // An invite link opened while Heartwood is already on screen (only the part after the # changes): start again with it.
   window.addEventListener('hashchange', function () {
     if (!inviteOf(location.hash)) return;
+    if (RXC.test(location.hash)) { location.reload(); return; } // Open Heartwood: boot takes it
     takeInvite(); try { sessionStorage.setItem('gg-hw-gate', '1'); } catch (e) {} location.reload();
   });
 
@@ -173,13 +196,18 @@
     getLib().then(function (lib) {
       LIBNOW = lib;
       if (!sealed(lib)) return sample();
-      return getKey().then(function (key) {
+      var so = STAFF; STAFF = null;
+      return (so ? staffOpen(so, lib) : Promise.resolve(null)).then(function (sd) {
+        if (sd) return start(sd, false);
+        if (so) WHY = 'That Open Heartwood link was already used or is more than 15 minutes old. Open Heartwood again from the Field Guide.';
+        return getKey().then(function (key) {
         // A new invite in the link always asks for its code, so a couple can move to a fresh Heartwood.
         if (key && !fresh) return openLib(key, lib).then(function (data) { start(data, false); }, function () {
           return dropKey().then(function () { if (savedInvite()) { WHY = 'Heartwood has a new lock. Type your code again, or ask Chris and Kayti for a new invite.'; gate(WHY); WHY = ''; } else { WHY = 'Heartwood has a new lock. Ask Chris and Kayti for a new invite link and code.'; sample(); } });
         });
-        if (savedInvite() && (fresh || wantGate || !key)) return gate('');
+        if (savedInvite() && (fresh || wantGate || !key)) return gate(WHY);
         return sample();
+        });
       });
     });
   }

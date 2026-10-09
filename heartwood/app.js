@@ -15,6 +15,10 @@
    The Week Card (GWG BLD 755): before a session, the couple can choose to share a short card with their leaders
    (videos watched, practices tried, workbook answers marked Share With Our Leaders, and one question), locked with
    their shared word the same way and carried as #gmw=w1.<code> (GMCore.week). Nothing is sent anywhere else.
+   Sending a card to Chris and Kayti (GWG BLD 773): beside each card (the partner card, the Week Card, and the
+   check-in card), Email to Chris and Kayti (hello@growwithgrounded.com) is the main button and a smaller Text to Chris
+   and Kayti ((320) 291-7393) sits beside it. Each opens the couple's own mail or messages app with the link and a
+   reminder that the shared word is told in person, never in the message; Copy the Link stays. Not in the sample.
    Your Tree, Then Your Grove (GWG BLD 755): GM_TOGETHER in the hub and After the Vows, with
    invites to each partner's own Tree (Birch or Oak) and to a Grove together; the card shows without it too.
    Data (GWG BLD 772): heartwood/open.js opens the sealed content (heartwood/lib-heartwood.js) with the couple's invite
@@ -389,12 +393,29 @@
         : '<p><b>Now hand the device to ' + esc(nm(o)) + '.</b> Their turn starts with their own passcode, and your answers stay hidden.</p><div class="ff-row">' + btn('answer', 'Start ' + esc(nm(o)) + '’s Turn', { w: o }) + btn('hub', 'Not Yet', sec()) + '</div>')
         : '<div class="ff-row">' + btn('hub', 'Continue') + '</div>') + '</div>';
   }
-  function cardView(link, title, lead, small, qrLabel) {
+  // Email and Text to Chris and Kayti (GWG BLD 773): the couple's own mail or messages app opens with the link.
+  var GG_MAIL = 'hello@growwithgrounded.com', GG_SMS = '+13202917393';
+  var SEND_WHAT = { card: 'card', week: 'Week Card', m: 'check-in card' };
+  function fromWho(kind) { return kind === 'week' && oneDevice() ? nm('a') + ' and ' + nm('b') : nm(st.s.me); }
+  function sendBits(link, kind) {
+    if (SAMPLE || !SEND_WHAT[kind]) return '';
+    var what = SEND_WHAT[kind], who = fromWho(kind) || '', our = kind === 'week' ? 'our' : 'my';
+    var sub = 'Heartwood: ' + (kind === 'week' ? 'Week Card' : kind === 'm' ? 'Check-in Card' : 'Card') + (who ? ' from ' + who : '');
+    var body = 'Hi Chris and Kayti,\n\nHere is ' + our + ' ' + what + ' from Heartwood:\n\n' + link + '\n\nOur shared word stays out of this message. We will tell you in person.' + (who ? '\n\n' + who : '');
+    var sms = 'Hi Chris and Kayti, here is ' + our + ' ' + what + ' from Heartwood: ' + link + ' We will tell you our shared word in person.';
+    var mail = 'mailto:' + GG_MAIL + '?subject=' + encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
+    var text = 'sms:' + GG_SMS + '?&body=' + encodeURIComponent(sms);
+    return '<div class="ff-row gm-send"><a class="btn btn-primary" id="gm-send-mail" href="' + esc(mail) + '">Email to Chris and Kayti</a>' +
+      '<a class="btn btn-secondary ff-sm" id="gm-send-text" href="' + esc(text) + '">Text to Chris and Kayti</a></div>' +
+      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, never in the message.</p>';
+  }
+  function cardView(link, title, lead, small, qrLabel, kind) {
     var svg = '';
     try { if (window.GGQR) svg = GGQR.svg(link, { label: qrLabel }); } catch (e) { svg = ''; }
     return '<div class="ff-card gold"><h2>' + title + '</h2><p class="ff-sub">' + lead + '</p>' +
       (svg ? '<div class="btv-qr">' + svg + '</div>' : '') +
       '<label class="ff-f"><span class="l">The link</span><input id="btv-link" readonly value="' + esc(link) + '"></label>' +
+      sendBits(link, kind) +
       '<div class="ff-row">' + btn('copy', 'Copy the Link', sec()) + '<span class="ff-status" id="btv-cst" role="status" aria-live="polite"></span></div>' +
       '<p class="btv-small">' + small + ' Share the word in person, never in the same message as the link. Nothing is uploaded: the card rides after the # in the link, the part a browser never sends to any server.</p>' +
       '<div class="ff-row">' + btn(V.side === 'after' ? 'after' : 'hub', 'Done') + '</div></div>';
@@ -402,7 +423,7 @@
   function vCard(code) {
     var theirs = esc(nm(other(st.s.me)));
     return cardView(C.card.link(code), 'Your Card for ' + theirs, theirs + ' scans this with their phone’s camera, or opens the link, then types your shared word.',
-      'The card carries your first names, Faith or Plain, your faith background if you chose one, and your answers, locked with your shared word. The private questions on the last page never go on it. Bring it to your sessions, too.', 'QR code for your Heartwood card');
+      'The card carries your first names, Faith or Plain, your faith background if you chose one, and your answers, locked with your shared word. The private questions on the last page never go on it. Bring it to your sessions, too.', 'QR code for your Heartwood card', 'card');
   }
   function itemHtml(it, X, Y, talk) {
     return '<li><p class="btv-it">' + esc(it.text) + '</p><p class="btv-ans"><span><b>' + esc(X.name) + ':</b> ' + esc(label(it.x)) + '</span><span><b>' + esc(Y.name) + ':</b> ' + esc(label(it.y)) + '</span></p>' +
@@ -688,7 +709,7 @@
   function vMCard(code) {
     var theirs = esc(nm(other(st.s.me)));
     return cardView(mlink(code), 'Your Check-in for ' + theirs, theirs + ' scans this with their phone’s camera, or opens the link, then types your shared word.',
-      'The card carries your first names and your check-in answers, locked with your shared word.', 'QR code for your check-in card');
+      'The card carries your first names and your check-in answers, locked with your shared word.', 'QR code for your check-in card', 'm');
   }
 
   /* ---------- Your Tree, Then Your Grove (GM_TOGETHER), and the invites ---------- */
@@ -820,7 +841,7 @@
   }
   function vWCard(code) {
     return cardView(C.week.link(code), 'Your Week Card', 'Send this link to your leaders, or bring it to your session. There, you type your shared word into their Field Guide to open it.',
-      'The card carries your first names, the videos, practices, and workbook answers you chose, and your question, locked with your shared word. Nothing else from the app goes on it.', 'QR code for your Week Card');
+      'The card carries your first names, the videos, practices, and workbook answers you chose, and your question, locked with your shared word. Nothing else from the app goes on it.', 'QR code for your Week Card', 'week');
   }
 
   /* ---------- render ---------- */
