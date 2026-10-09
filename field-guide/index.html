@@ -640,20 +640,21 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
 <script src="../shared/gg-sources.js?v=b774"></script>
-<script src="../shared/gg-learn.js?v=b774"></script>
-<script src="../shared/gg-print.js?v=b760"></script>
+<script src="../shared/gg-learn.js?v=b776"></script>
+<script src="../shared/gg-print.js?v=b776"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js"></script>
-<script src="share.js?v=b772"></script>
+<script src="share.js?v=b776"></script>
 <script src="ceremonies.js?v=b770"></script>
 <script src="sessions.js?v=b758"></script>
 <script src="farewell.js?v=b770"></script>
 <script src="wedding.js?v=b770"></script>
-<script src="premarital.js?v=b773"></script>
+<script src="premarital.js?v=b776"></script>
 <script src="clients.js?v=b772"></script>
 <script src="books.js?v=b770"></script>
 <script src="runner.js?v=b771"></script>
+<script src="grovevisit.js?v=b776"></script>
 <script src="heartwood.js?v=b773"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1092,6 +1093,9 @@ if (window.GGBooks) GGBooks.init({data: () => DATA, lib: () => LIB, tier: () => 
 // GWG BLD 771 hook: the Session Runner (runner.js, GGRun): every guide with a session kit (the Staff library's sessionKits) runs in it.
 if (window.GGRun) GGRun.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf(), guide: id => G(id), start: (id, cid) => startSession(id, cid)});
+// GWG BLD 776 hook: the Grove Guide's Family Check-in and Group Check-in (grovevisit.js, GGGv), Caseload, and follow-ups.
+if (window.GGGv) GGGv.init({data: () => DATA, gvg: () => GVG(), gt: () => GT, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
+  rec: id => gxRec(id), sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf(), name: () => (DATA && DATA.settings && DATA.settings.name) || '', open: () => gvOpen() && gxReady()});
 // GWG BLD 772 hook: Heartwood (heartwood.js, GGHw): Seal Heartwood in the Founder tab, and couple invites from the client file and the premarital couple.
 if (window.GGHw) GGHw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), toast: m => toast(m),
   pendingPlain: l => pendingPlain(l), updBusy: () => !!V.upd, setUpd: u => { V.upd = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
@@ -1113,6 +1117,7 @@ function vHome(){
   ${window.GGFw ? GGFw.homeCard() : ''}
   ${window.GGWed ? GGWed.homeCard() : ''}
   ${window.GGRun ? GGRun.homeCard() : ''}
+  ${window.GGGv ? GGGv.homeCard() : ''}
   ${window.GGCli ? GGCli.homeCard() : (DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${window.GGBooks ? GGBooks.homeCard() : ''}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
@@ -1167,7 +1172,7 @@ function vGuide(g, pv){
   return `${pv ? '' : `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>`}
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}${sesPill(g)}</h1></div>
   <div class="card"><p class="purpose">${mark(g.purpose)}</p>${g.who ? `<p style="margin-top:8px"><b>Who It Is For:</b> ${mark(g.who)}</p>` : ''}
-    ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGRun ? GGRun.guideBar(g) : ''}${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
+    ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGRun ? GGRun.guideBar(g) : ''}${window.GGGv ? GGGv.guideBar(g) : ''}${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
   ${g.prep && g.prep.length ? `<div class="card"><h3>Before you begin</h3><ul class="checklist" style="margin-top:8px">${g.prep.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${lst('What to Bring', g.bring)}${lst('Questions to Ask', g.ask)}
   ${g.steps.map((s,i) => `<div class="card step-card"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)} ${s.m ? `<span class="min">about ${s.m} min</span>` : ''}</h4>${stepHTML(s,i)}</div>`).join('')}
@@ -1391,6 +1396,7 @@ function vFieldHome(){
   ${wlOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(WLG().title)}</h3><p class="muted">${esc(WLG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="willow">${icon('willow')} Open</button></div></div>` : ''}
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
+  ${window.GGGv ? GGGv.homeCard() : ''}
   ${fieldDue()}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
@@ -1865,7 +1871,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b760'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b776'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -3197,6 +3203,9 @@ function sqInput(t, ev){
 //   {id, u, kind: 'family' | 'series', name, words: 'faith' | 'plain' | '', kids, created,
 //    consent {how, by, date} (a family's or a group's yes, asked first), agreed (series: the date the group agreements were shared), meets [{id, date, n (series session), practices [ids], notes}],
 //    notes, closed}
+// GWG BLD 776 (grovevisit.js): a visit's meet also keeps ck ('full' or 'quick', a check-in was held), parts (the plan's
+// parts), sent (the date Send to The Grove was made, with their yes); a family keeps next (the next visit), fu [{id, date,
+// title, done, from}] (follow-ups) and hospice (their 24/7 line); a group keeps gk (the kind of group). Never answers or levels.
 // Individual Grove trees from before (c.gv on a People record) show under "Earlier, from Grove Guide", read forward:
 // their strand codes moved to the six parts in BLD 765 (gvStrandFix). Staff and Founders always see the Grove Guide;
 // Guides once FLD.groveGuide.open.guide is on and Orientation is done.
@@ -3324,7 +3333,20 @@ const gxArr = x => Array.isArray(x) ? x : x ? [x] : [];
 // ----- Grove Guide Training (its own module, Birch Guide Training's shape; gates new family and group records) -----
 // Six video lessons with Read It Instead, practice scenarios, and an agreement. Progress lives in DATA.gvmod and is kept
 // in a backup. The Certificate of Completion carries groveGuide.certLine. Until the library has the module, nothing is gated.
-const GVM = () => { const G = GVG(), M = G && G.module; return M && Array.isArray(M.lessons) && M.lessons.length && M.quiz && Array.isArray(M.quiz.items) && M.agreement ? M : null; };
+const GVM0 = () => { const G = GVG(), M = G && G.module; return M && Array.isArray(M.lessons) && M.lessons.length && M.quiz && Array.isArray(M.quiz.items) && M.agreement ? M : null; };
+// GWG BLD 776: the seventh lesson, Leading a Family or Group Check-in (gv-checkin). Until the Guide library has it, a built-in
+// Read It lesson stands in. A lesson with "added" is not required for a Guide whose signed agreement predates it, until they
+// renew (earlier certificates stay valid; renewals cover the new lesson).
+const GV_CHECKIN = {id:'gv-checkin', title:'Leading a Family or Group Check-in', minutes:7, added:'2026-10-10',
+  lead:'The Family Check-in and the Group Check-in happen inside a visit or a group session, with your eyes on the people and not on the screen. This lesson covers how to run one, what the results are and are not, the plan built together, and what goes home.',
+  parts:[{h:'Eyes up, one shared answer', p:['Read each question aloud, or let the family read it on the Family View. Let them talk it over, then tap the one answer they settle on together: Not Yet, Sometimes, Often, or Almost Always. No one\'s own answer is ever entered.', 'We See It Differently is a good answer. It means everyone spoke, and it becomes a Thing to Talk About. Pass is always fine, with nothing lost.']},
+    {h:'Children in the circle', p:['When children take part, a parent or guardian agrees first. Kids\' Turn First lets children answer before the grown-ups, so their voices shape the answer. Follow the kids\' faith rules, and use Plain words whenever the family chose them.']},
+    {h:'Results in words, a plan built together', p:['Results are words only: Shared Strengths, Steady, and Growing Edges, with no numbers anywhere. Start with what is strong. Then let the family choose one or two parts to grow, two or three practices, a time each one fits, and one choice from the youngest.']},
+    {h:'What goes home, and what you keep', p:['The page and the plan go home with the family, and Send to The Grove sends them to their own grove in a locked code, only after their yes. Your record keeps the date, the parts they chose, the practices, their yes, and your private notes. Never an answer and never a level.', 'If anything someone shares points to harm or danger, thank them, stay calm, and talk privately as soon as you can. Then follow your safety protocol. Call or text 988 any time. In an emergency, call 911.']}],
+  remember:['One shared answer, never anyone\'s own.', 'We See It Differently and Pass are always welcome.', 'Words only: no numbers on screen or on paper.', 'The plan is theirs: they choose, you offer.', 'Send to The Grove only after their yes.', 'Your record keeps no levels.'], sources:[]};
+let GVM_C = null, GVM_SRC = null;
+const GVM = () => { const M = GVM0(); if (!M) return null; if (M.lessons.some(l => l.id === 'gv-checkin')) return M;
+  if (GVM_SRC !== M){ GVM_C = Object.assign({}, M, {lessons: M.lessons.concat([GV_CHECKIN])}); GVM_SRC = M; } return GVM_C; };
 function gvmData(){ DATA.gvmod = Object.assign({lessons:{}, how:{}, at:{}, last:null, pass:null, signed:null}, DATA.gvmod || {}); return DATA.gvmod; }
 const gvmFree = () => { const D = gvmData(); return gvmState().complete || !!(D.pass || D.signed); };
 const gvmOpen = i => { const M = GVM(), D = gvmData(); return i <= 0 || gvmFree() || !(M.lessons[i - 1] && M.lessons[i - 1].video) || !!D.lessons[M.lessons[i - 1].id]; };
@@ -3334,9 +3356,11 @@ function gvmState(){
   const M = GVM(), D = gvmData(), t = today();
   if (!M) return {complete:false, total:0, done:0};
   const fresh = x => !!(x && x.v === M.version && addYear(x.date) >= t);
-  const lessons = M.lessons.every(l => D.lessons[l.id]), pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const pass = fresh(D.pass), signed = pass && fresh(D.signed);
+  const need = M.lessons.filter(l => !(l.added && signed && String(D.signed.date) < l.added)); // BLD 776: earlier certificates stay valid
+  const lessons = need.every(l => D.lessons[l.id]);
   const complete = lessons && pass && signed, renewBy = complete ? addYear([D.pass.date, D.signed.date].sort()[0]) : null;
-  const total = M.lessons.length + 2, done = M.lessons.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
+  const total = need.length + 2, done = need.filter(l => D.lessons[l.id]).length + (pass ? 1 : 0) + (signed ? 1 : 0);
   return {lessons, pass, signed, complete, renewBy, total, done, renewing: !complete && !!(D.pass || D.signed), dueSoon: complete && addDays(t, 30) >= renewBy};
 }
 const gvmHome = () => go('grove', {gvm:1});
@@ -3452,6 +3476,8 @@ function vGV(){
   const S = GVG(); if (!S) return `<div class="card"><p>The Grove Guide isn't on this device yet.</p></div>`;
   if (V.gvm) return vGVM();
   const wait = gvNeedData(); if (wait) return wait;
+  if (V.gvv && window.GGGv && GGGv.on()) return GGGv.view(); // GWG BLD 776 hook: a visit or a group session's check-in
+  if (V.gvcl && window.GGGv) return `<button class="linkbtn" data-act="gv-home">&larr; Back to the Grove Guide</button><div style="margin-top:12px">${GGGv.caseload()}</div>`;
   if (V.gvr){ const r = gxRec(V.gvr); if (r) return vGXRec(r); }
   if (V.gvs){ const x = gxSessions()[V.gvs - 1]; if (x) return vGXSession(x, V.gvsr ? gxRec(V.gvsr) : null); }
   if (V.gvp){ const c = CL(V.gvp); if (c && c.gv) return vGVTree(c); }
@@ -3461,6 +3487,7 @@ function vGV(){
   const cards = [
     {k: 'family', eb: 'Path 1', title: F.title || 'Family Visit', desc: P.family || F.lead || 'Sit with one family and lead them through The Grove\'s Together practices.', n: nF + (nF === 1 ? ' family' : ' families')},
     {k: 'series', eb: 'Path 2', title: SS.title || 'Group Series', desc: P.series || SS.lead || 'Lead a group through The Grove\'s twelve themes over several weeks.', n: nS + (nS === 1 ? ' group' : ' groups')},
+    window.GGGv && (nF || nS) ? (() => { const d = GGGv.dueList(7).length; return {k: 'caseload', title: 'Caseload', desc: 'The families and groups you walk with, by code: last visit, plan parts, next visit, and follow-ups.', n: d ? d + (d === 1 ? ' follow-up due' : ' follow-ups due') : (nF + nS) + ((nF + nS) === 1 ? ' family or group' : ' families and groups')}; })() : null, // BLD 776
     GVM() ? {title: GVM().title || 'Grove Guide Training', desc: P.training || 'Lessons, scenarios, and the agreement for leading families and groups.', n: trainNote(m), act: 'gv-mhome'} : null,
     I.title ? {k: 'intro', title: I.title, desc: 'What to say when you introduce The Grove.'} : null,
     wfgOn('grove') ? (() => { const F = WFG('grove'), gs = wfgRings('grove').reduce((a, R) => a.concat(R.guides), []); return {title: F.title, desc: F.inGuide || F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, act: 'lc-cat', v: 'ser:grove', accent: FGSER.grove.accent}; })() : null, // BLD 774
@@ -3471,7 +3498,7 @@ function vGV(){
   const intro = `<div class="card"><h3>${esc(I.title || '')}</h3>${gxBlk('Say', I.say, 'say')}${(I.points || []).length ? `<ul class="checklist" style="margin-top:10px">${I.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>` : ''}</div>`;
   const sets = `<div class="card"><h3>By Setting</h3>${(S.settings || []).map(x => `<p style="margin-top:10px"><b>${esc(x[0])}.</b> ${esc(x[1])}</p>`).join('')}</div>`;
   const about = `<div class="card">${(S.intro || []).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`;
-  const part = {family: () => vGXFamily(), series: () => vGXSeries(), intro: () => intro, sets: () => sets, about: () => about, earlier: () => vGXEarlier(earlier, local)}[C];
+  const part = {caseload: () => window.GGGv ? GGGv.caseload() : '', family: () => vGXFamily(), series: () => vGXSeries(), intro: () => intro, sets: () => sets, about: () => about, earlier: () => vGXEarlier(earlier, local)}[C];
   if (part) return secPage('grove', 'Back to the Grove Guide', part());
   return hello + (GVM() && !m.complete ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><p>${m.done ? 'Finish' : 'Start'} Grove Guide Training before your first family visit or group. Everything here is open to read and practice.</p><button class="btn btn-gold btn-sm" data-act="gv-mhome">${m.done ? 'Continue' : 'Start'}</button></div></div>` : '') + secCards('grove', cards);
 }
@@ -3526,6 +3553,7 @@ function vGXSession(x, r){
   const back = r ? `<button class="linkbtn" data-act="gx-open" data-v="${r.id}">&larr; Back to ${esc(r.name)}</button>` : `<button class="linkbtn" data-act="gx-series">&larr; Back to ${esc((gxS() || {}).title || 'Group Series')}</button>`;
   return `${back}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Session ${x.n} of ${N}${r ? ' &middot; ' + esc(r.name) : ''}</div><h1>${esc(x.theme)}</h1></div>
+  ${r && window.GGGv ? GGGv.seriesCard(r, x.n) : ''}
   ${x.open ? `<div class="card step-card"><h3>Opening</h3>${gxBlk('Say', gxArr(x.open), 'say')}</div>` : ''}
   ${(x.talk || []).length ? `<div class="card step-card"><h3>Talk Together</h3>${gxBlk('Ask', gxArr(x.talk))}</div>` : ''}
   ${p ? `<div class="card"><h3>Practice</h3>${gxPrac(p, true, true)}</div>` : ''}
@@ -3552,8 +3580,9 @@ function vGXRec(r){
    <label class="f" for="gx-dn">${fam ? 'Code or initials' : 'Name or code'}</label><input type="text" id="gx-dn" data-gxd="name" value="${esc(r.name)}">
    <label class="f" for="gx-dw">Words the ${fam ? 'family' : 'group'} chooses</label><select id="gx-dw" data-gxd="words" style="max-width:320px"><option value="" ${!r.words ? 'selected' : ''}>Not chosen yet</option><option value="faith" ${r.words === 'faith' ? 'selected' : ''}>Faith words welcome</option><option value="plain" ${r.words === 'plain' ? 'selected' : ''}>Plain words</option></select>
    <label class="cb"><input type="checkbox" data-gxd="kids" ${r.kids ? 'checked' : ''}> Children take part</label>
+   ${fam ? '' : `<label class="f" for="gx-dk">Kind of group (sets the Group Check-in questions)</label><select id="gx-dk" data-gxd="gk" style="max-width:340px">${[['group', 'Small or Discussion Group'], ['faith', 'Faith Community'], ['classroom', 'Classroom'], ['team', 'Team or Workplace']].map(([k, l]) => `<option value="${k}" ${(r.gk || 'group') === k ? 'selected' : ''}>${l}</option>`).join('')}</select>`}
    <div class="row" style="margin-top:14px"><button class="btn btn-danger btn-sm" data-act="gx-remove" data-v="${r.id}">Remove This ${fam ? 'Family' : 'Group'}</button></div></div>`;
-  if (!gxConsented(r)) return `${back}${head}
+  if (!gxConsented(r)) return `${back}${head}${fam && window.GGGv ? GGGv.recCard(r) : ''}
   <div class="card step-card">${C.title ? `<h3>${esc(C.title)}</h3>` : ''}${C.lead ? `<p class="muted">${esc(C.lead)}</p>` : ''}${C.say ? gxBlk('Say', gxArr(C.say), 'say') : ''}</div>
   ${(C.points || []).length ? `<div class="card"><h3>Keep in Mind</h3><ul class="checklist" style="margin-top:8px">${C.points.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   <div class="card"><h3>Their Answer</h3>
@@ -3565,7 +3594,7 @@ function vGXRec(r){
     const picks = V.gxpk || (V.gxpk = []), pool = (F.practices || []).length ? F.practices : gxT().practices.map(p => p.id), others = gxT().practices.filter(p => !pool.includes(p.id));
     const chip = id => { const p = gxP(id); return p ? `<button type="button" class="chip" aria-pressed="${picks.includes(id)}" data-act="gx-pk" data-v="${esc(id)}">${esc(p.name)}</button>` : ''; };
     const visits = (r.meets || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-    return `${back}${head}
+    return `${back}${head}${window.GGGv ? GGGv.recCard(r) : ''}
     <div class="card"><h3>A Visit</h3><p class="muted" style="font-size:15px">Pick the practices you offered or did together. The family visit sheet prints the first two.</p>
      <div class="row" style="margin-top:8px">${pool.map(chip).join('')}</div>
      ${others.length ? `<details class="st-lf" style="margin-top:8px"><summary>More Together practices</summary><div class="row" style="margin-top:8px">${others.map(p => chip(p.id)).join('')}</div></details>` : ''}
@@ -3574,14 +3603,14 @@ function vGXRec(r){
      <p class="muted" style="font-size:14px;margin-top:6px">What went well, what to bring next time. No scores.</p>
      <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="gx-visit">Save the Visit</button><button class="btn btn-line" data-act="gx-print-fam" data-v="${r.id}">${icon('print')} Save or Print the Family Visit Sheet</button></div></div>
     ${picks.length ? `<div class="card"><h3>The Practices You Picked</h3>${picks.map(id => gxPrac(gxP(id), r.kids)).join('')}</div>` : ''}
-    <div class="card"><h3>Visits</h3>${visits.length ? visits.map(m => `<div class="list-row"><div class="lr-main"><b>${nice(m.date)}</b><br><small class="muted">${esc((m.practices || []).map(id => (gxP(id) || {}).name).filter(Boolean).join(', ') || 'No practices picked')}</small>${m.notes ? `<p class="muted" style="font-size:15px;margin-top:4px;white-space:pre-wrap">${esc(m.notes)}</p>` : ''}</div><div class="row"><button class="btn btn-line btn-sm" data-act="gx-print-fam" data-v="${r.id}" data-m="${m.id}">${icon('print')} Sheet</button><button class="btn btn-line btn-sm" data-act="gx-vdel" data-v="${m.id}">Remove</button></div></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div>
+    <div class="card"><h3>Visits</h3>${visits.length ? visits.map(m => `<div class="list-row"><div class="lr-main"><b>${nice(m.date)}</b><br><small class="muted">${esc((m.practices || []).map(id => (gxP(id) || (window.GGGv ? GGGv.prac(id) : null) || {}).name).filter(Boolean).join(', ') || 'No practices picked')}</small>${window.GGGv && GGGv.meetLine(m) ? `<br><small class="muted">${GGGv.meetLine(m)}</small>` : ''}${m.notes ? `<p class="muted" style="font-size:15px;margin-top:4px;white-space:pre-wrap">${esc(m.notes)}</p>` : ''}</div><div class="row"><button class="btn btn-line btn-sm" data-act="gx-print-fam" data-v="${r.id}" data-m="${m.id}">${icon('print')} Sheet</button><button class="btn btn-line btn-sm" data-act="gx-vdel" data-v="${m.id}">Remove</button></div></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div>
     ${notes}${details}`;
   }
   const met = n => (r.meets || []).find(m => m.n === n);
   return `${back}${head}
   ${r.agreed ? '' : `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><p>Share the group agreements at the first session, and again whenever someone new joins.</p><button class="btn btn-gold btn-sm" data-act="gx-agreed">Agreements Shared Today</button></div></div>`}
   <div class="card"><h3>The Twelve Sessions</h3>${X.map(x => { const m = met(x.n);
-    return `<div class="list-row"><div class="lr-main"><small class="muted">Session ${x.n}</small><br><b>${esc(x.theme)}</b>${m ? ` <span class="pill sage">Met ${nice(m.date)}</span>` : ''}${m && m.notes ? `<p class="muted" style="font-size:15px;margin-top:4px;white-space:pre-wrap">${esc(m.notes)}</p>` : ''}</div><button class="btn btn-line btn-sm" data-act="gx-rsess" data-v="${x.n}">Open</button></div>`; }).join('')}</div>
+    return `<div class="list-row"><div class="lr-main"><small class="muted">Session ${x.n}</small><br><b>${esc(x.theme)}</b>${window.GGGv ? GGGv.seriesPill(r, x.n) : ''}${m ? ` <span class="pill sage">Met ${nice(m.date)}</span>` : ''}${m && m.notes ? `<p class="muted" style="font-size:15px;margin-top:4px;white-space:pre-wrap">${esc(m.notes)}</p>` : ''}</div><button class="btn btn-line btn-sm" data-act="gx-rsess" data-v="${x.n}">Open</button></div>`; }).join('')}</div>
   ${notes}${details}`;
 }
 // Earlier, from Grove Guide: individual trees from before, and trees still waiting in the public Grove on this browser.
@@ -3750,6 +3779,7 @@ function gxInput(t){
   if (t.dataset.gxd === 'name' && t.value.trim()){ r.name = t.value.trim().slice(0, 40); touch(r); save(); return true; }
   if (t.dataset.gxd === 'words'){ r.words = t.value; touch(r); save(); return true; }
   if (t.dataset.gxd === 'kids'){ r.kids = t.checked; touch(r); save(); return true; }
+  if (t.dataset.gxd === 'gk'){ r.gk = t.value; touch(r); save(); return true; }
   return false;
 }
 function gvAct(a, v, t){

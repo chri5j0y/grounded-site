@@ -9,7 +9,10 @@
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
                                 kind 'parts': the six parts teaching poster, in that tree's voice.
-   - GGPrint.flyer(tree)        a one-page flyer for anyone to print. tree 'overview' shows every tree.
+   - GGPrint.flyer(tree, kind)  a one-page flyer for anyone to print. tree 'overview' shows every tree.
+                                The Grove by kind (GWG BLD 776): GGPrint.flyer('grove', 'faith' | 'team' | 'classroom').
+                                The Classroom flyer is kept for later: nothing links to it until the attorney answers
+                                the PPRA question about classroom check-ins (grove-plan.md Section 14).
    Every print carries a small QR code with only a page address on it, never a person's name.
    Wording rule: Certificate of Completion, never "certified." Grow With Grounded is not an accrediting body.
    ===================================================================== */
@@ -47,8 +50,19 @@
     willow: { name: 'Willow', color: '#5D5A6E', ink: '#5D5A6E', path: '/willow/', tag: 'Held gently, all the way home.', sub: 'A tree for the last part of the path.', who: 'For the person in hospice, and the people who love them.', guide: 'Willow Guide',
       points: ['Built for two: the person in hospice, and the people who love them.', 'Gentle check-ins that ask about faith first, with faith cards for 29 traditions.', 'A page for what matters most, and Cuttings for the stories and letters they want to leave.', 'Helpers open it with their own passcode and see only what the person chooses to share.'],
       parts: { title: 'Six Parts, All the Way Home', lead: 'At the end of life, every part of a person still matters.', words: ['Faith, tradition, and what gives peace.', 'Meaning, legacy, and the story of a life.', 'Feelings, fears, and finding calm.', 'The people who love them, and saying what matters.', 'Comfort, rest, and ease in the body.', 'Hope that changes shape: for comfort, for time together, for peace.'], close: 'Held gently, all the way home.' } },
-    grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, side by side.',
-      points: ["The family's shared ground, on one device.", 'Everyone tends their own tree in their own app, and the trees stand side by side here.', 'A family wall to cheer each other on, and practices to do together.'] }
+    // The Grove (GWG BLD 776): the kinds, the check-in together, the plan, and When Life Changes Together.
+    grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, faith communities, small groups, and teams.',
+      points: ['A Family Check-in with one shared answer, talked over together, and results in words only.', 'Our Growth Plan: small practices tied to the times you are already together.', 'When Life Changes Together: 33 guides, each with a video for the group and one for the leader.', 'Everyone tends their own tree in their own app, and the trees stand side by side here.'] }
+  };
+  // The Grove's flyers by kind (GWG BLD 776). Each one keeps The Grove's painting, mark, and QR code to /grove/, with a line
+  // naming who it is for. hold: kept for later, never linked from a page (the Classroom kind waits on the attorney's PPRA answer).
+  var GK = {
+    faith: { eyebrow: 'For Congregations', tag: 'Grow together as a community.', sub: 'A Faith Community grove for a congregation, a class, a youth group, or a ministry team.', who: 'Faith words first, with Plain one tap away. All faith traditions and everything in-between.',
+      points: ['A Group Check-in about belonging, worship or shared practice, and serving, with one shared answer.', 'A growth plan with practices like a Welcome Table, a Shared Meal, and Serve Together.', 'When Life Changes Together for a leader leaving, a loss, conflict, and welcoming newcomers.', 'Grove Guide Training for leaders who walk with families and groups.'] },
+    team: { eyebrow: 'For Teams', tag: 'Steady together through hard days.', sub: 'A Team grove for a hospice or hospital team, a church staff, a school staff, or a nonprofit team.', who: "Plain words first. No member list, and no one's own answer is ever saved.",
+      points: ['A Team Check-in about speaking up, workload and rest, and shared purpose.', 'Practices like Pause After a Death, an Appreciation Round, and a Debrief After a Hard Day.', 'When Life Changes Together for a hard death, change at work, and a season of burnout.', 'Twelve weeks together, with a Certificate of Completion for the team.'] },
+    classroom: { hold: true, eyebrow: 'For Classes and Youth Programs', tag: 'Grow together as a class.', sub: 'A Classroom grove for a class, a homeschool co-op, or an after-school or youth program.', who: 'Plain words, questions about class life only, and no student names.',
+      points: ['A Class Check-in in a morning circle, with one shared answer the class talks over together.', 'A class plan with practices like a Name Greeting, a Calm Corner, and Kindness Notes.', 'When Life Changes Together for a new student, a loss, and saying goodbye at the end of the year.', 'A goodbye circle and a Certificate of Completion for the class when the year ends.'] }
   };
   var ROW = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '26 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice'], ['grove', 'The Grove', 'Every age, together']];
 
@@ -231,7 +245,7 @@
     });
   }
 
-  function flyer(tr) {
+  function flyer(tr, kind) {
     var win = pre();
     return needQR().then(function () {
       var body, css;
@@ -251,15 +265,18 @@
         return page({ win: win, title: 'Grow With Grounded Flyer', size: LETTER, body: body, css: css, tip: 'Letter size, ready for any bulletin board.' });
       }
       var x = T[tr];
+      // The Grove by kind (GWG BLD 776): the kind's own words over The Grove's painting, mark, and QR code.
+      if (tr === 'grove' && kind && GK[kind]) x = Object.assign({}, T.grove, GK[kind]);
       body = '<div class="top">' + heroImg(tr) + '</div>'
-        + '<div class="pad"><div>' + head(tr, x) + '<div class="tag serif">' + esc(x.tag) + '</div><div class="sub">' + esc(x.sub) + '<br>' + esc(x.who) + '</div></div>'
+        + '<div class="pad"><div>' + head(tr, x) + (x.eyebrow ? '<div class="ey cond" style="--c:' + x.color + '">' + esc(x.eyebrow.toUpperCase()) + '</div>' : '') + '<div class="tag serif">' + esc(x.tag) + '</div><div class="sub">' + esc(x.sub) + '<br>' + esc(x.who) + '</div></div>'
         + '<ul class="pts">' + x.points.map(function (p) { return '<li style="--c:' + x.color + '">' + esc(p) + '</li>'; }).join('') + '<li style="--c:' + x.color + '">Private by design: no account, and answers stay on your device.</li></ul>'
         + partsStrip() + '</div><div class="grow"></div>' + footer(x, 'Scan to begin with ' + x.name, 'In crisis? Call or text 988, any time.');
       css = SCALE + '\n.pts{list-style:none;margin:calc(0.2in * var(--k)) 0 0;padding:0;}.pts li{position:relative;padding-left:0.24in;font-size:12.5pt;line-height:1.4;margin-bottom:6px;}'
-        + '.pts li:before{content:"";position:absolute;left:0;top:0.42em;width:9px;height:9px;border-radius:50%;background:var(--c);}';
-      return page({ win: win, title: x.name + ' Flyer', size: LETTER, body: body, css: css, tip: 'Letter size, ready for any bulletin board.' });
+        + '.pts li:before{content:"";position:absolute;left:0;top:0.42em;width:9px;height:9px;border-radius:50%;background:var(--c);}'
+        + '.ey{font-size:12pt;letter-spacing:3px;font-weight:700;color:var(--c);margin-top:0.16in;}.ey + .tag{margin-top:0.04in;}';
+      return page({ win: win, title: x.name + (x.eyebrow ? ' ' + x.eyebrow.replace(/^For /, 'for ') : '') + ' Flyer', size: LETTER, body: body, css: css, tip: 'Letter size, ready for any bulletin board.' });
     });
   }
 
-  window.GGPrint = { certificate: certificate, poster: poster, flyer: flyer, trees: T };
+  window.GGPrint = { certificate: certificate, poster: poster, flyer: flyer, trees: T, groveKinds: GK };
 })();

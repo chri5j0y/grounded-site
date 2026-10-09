@@ -143,6 +143,7 @@ function needM(){
   const data = window.GGHw ? GGHw.content() : Promise.resolve(null);
   Promise.all([core, data]).then(([, d]) => {
     if (d && !window.BTV_Q){ window.BTV_Q = d.BTV_Q; if (d.GM_RESULTS) window.GM_RESULTS = d.GM_RESULTS; if (d.GM_FAITH) window.GM_FAITH = d.GM_FAITH; }
+    if (d && d.GM_AFTER && !window.GM_AFTER) window.GM_AFTER = d.GM_AFTER; // GWG BLD 776: check-in card questions
     ML = window.BTV_Q && window.GMCore ? 'done' : 'none'; if (S.view !== 'home') rerender(true);
   }, () => { ML = 'none'; if (S.view !== 'home') rerender(true); });
 }
@@ -480,7 +481,76 @@ function vCard(c){
     ${S.cardErr ? `<p class="pm-err" role="alert">${esc(S.cardErr)}</p>` : ''}
     <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-pm="cardin"${S.cardBusy ? ' disabled' : ''}>${S.cardBusy ? 'Opening' : 'Bring In Their Card'}</button></div>
     <p class="muted" style="font-size:14px;margin-top:10px">The word is used once to open the card and is never kept. The answers stay on this device, encrypted with your records.</p></div>`;
-  return `${head(c, 'Their Card')}${form}${body}`;
+  return `${head(c, 'Their Card')}${form}${body}${mBlock(c)}`;
+}
+
+// ---------- check-in cards (GWG BLD 776): After the Vows, read like the other cards ----------
+// heartwood/app.js makes them: {v: 1, k: 'YYYY-MM' or 'fy', n, to, r: {questionId: text}}, locked with the couple's shared
+// word exactly like the answers card (PBKDF2 250,000, SHA-256, AES-GCM; salt 16, iv 12), in a link ending #gmm=m1.<code>.
+// The questions come from Heartwood's sealed content (GM_AFTER: monthly and firstYear). Kept in c.mcards [{brought, yes, card}].
+function mCodeOf(t){ return mCodeOf0(t) || mCodeOf0(loose(t)); }
+function mCodeOf0(t){ t = String(t || '').trim(); const m = /(?:^|[#&?])gmm=(m1\.[A-Za-z0-9_-]{20,6000})/.exec(t); return m ? m[1] : (/^m1\.[A-Za-z0-9_-]{20,6000}$/.test(t) ? t : ''); }
+function mOk(o){
+  if (!o || typeof o !== 'object' || Array.isArray(o) || o.v !== 1) return null;
+  if (Object.keys(o).sort().join(',') !== 'k,n,r,to,v') return null;
+  const nm = x => typeof x === 'string' && x.length <= 40 && x === x.trim() && !/[<>&"`\\\u0000-\u001F\u007F]/.test(x);
+  if (typeof o.k !== 'string' || !/^(fy|\d{4}-\d{2})$/.test(o.k) || !nm(o.n) || !o.n || !nm(o.to)) return null;
+  if (!o.r || typeof o.r !== 'object' || Array.isArray(o.r)) return null;
+  const r = {}; for (const k in o.r){ if (!/^[A-Za-z0-9_-]{1,40}$/.test(k) || typeof o.r[k] !== 'string') return null; r[k] = o.r[k].slice(0, 600); }
+  return {v: 1, k: o.k, n: o.n, to: o.to, r};
+}
+async function readM(code, word){
+  const all = unb64u(code.slice(3)), enc = new TextEncoder();
+  const base = await crypto.subtle.importKey('raw', enc.encode(String(word).trim().toLowerCase()), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name: 'PBKDF2', salt: all.slice(0, 16), iterations: 250000, hash: 'SHA-256'}, base, {name: 'AES-GCM', length: 256}, false, ['decrypt']);
+  let pt; try { pt = await crypto.subtle.decrypt({name: 'AES-GCM', iv: all.slice(16, 28)}, key, all.slice(28)); } catch (e) { throw new Error('word'); }
+  let o = null; try { o = JSON.parse(new TextDecoder().decode(pt)); } catch (e) {}
+  o = mOk(o); if (!o) throw new Error('link'); return o;
+}
+const AFT = () => window.GM_AFTER || null;
+const mRound = k => { const A = AFT(); return A ? (k === 'fy' ? A.firstYear : A.monthly) : null; };
+const mName = k => k === 'fy' ? ((mRound('fy') || {}).title || 'First-Year Check-in') : (() => { const p = k.split('-'); return new Date(+p[0], +p[1] - 1, 1).toLocaleDateString(undefined, {year: 'numeric', month: 'long'}); })();
+function mOne(x, i){
+  const w = x.card, R = mRound(w.k), qs = R && Array.isArray(R.questions) ? R.questions : [], br = t => esc(t).replace(/\n/g, '<br>');
+  const ids = qs.length ? qs.map(q => q.id) : Object.keys(w.r), qt = id => (qs.find(q => q.id === id) || {}).text || 'Question ' + id;
+  return `<div class="pm-wk1"><h3 style="margin-top:4px">${esc(mName(w.k))}${R && w.k !== 'fy' ? ' <small class="muted">' + esc(R.title || '') + '</small>' : ''}</h3>
+    <p class="muted" style="font-size:15px">From ${esc(w.n)}${w.to ? ' for ' + esc(w.to) : ''}. ${x.yes ? esc(x.yes.text) + ' (' + esc(nice(x.yes.on)) + ')' : ''}</p>
+    ${qs.length ? '' : loadingNote('the check-in questions')}
+    ${ids.map(id => { const t = String(w.r[id] || '').trim(); return `<div class="pm-qa"><p>${esc(qt(id))}</p><p class="pm-quote">${t ? br(t) : '<span class="muted">Left blank.</span>'}</p></div>`; }).join('')}
+    <div class="row" style="margin-top:8px"><button type="button" class="btn btn-danger btn-sm" data-pm="mx" data-v="${i}">Remove This Check-in Card</button></div></div>`;
+}
+function mBlock(c){
+  const L = c.mcards || [], open = !!S.mErr;
+  const form = `<p class="muted" style="font-size:15px">${esc(PASTE_TIP)}</p><label class="f" for="pm-ml">Check-in Card Link</label>${pasteBox('pm-ml', 'Paste a check-in card link from Heartwood, or the whole email or text')}
+    <label class="f" for="pm-mw">Their Shared Word</label><input type="password" id="pm-mw" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="The couple types it">
+    <label class="pm-yes"><input type="checkbox" id="pm-my"> <span>The couple said yes to sharing this check-in card with us.</span></label>
+    ${S.mErr ? `<p class="pm-err" role="alert">${esc(S.mErr)}</p>` : ''}
+    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-pm="min"${S.mBusy ? ' disabled' : ''}>${S.mBusy ? 'Opening' : 'Bring In Their Check-in Card'}</button></div>
+    <p class="muted" style="font-size:14px;margin-top:10px">The word is used once to open the card and is never kept. The card stays on this device, encrypted with your records.</p>`;
+  if (L.length) return `<div class="card pm-week"><div class="spread"><h2>Their Check-in Cards</h2><span class="pill sage">Read Only</span></div>
+    <p class="muted" style="font-size:15px">From After the Vows in Heartwood: a Monthly Check-in for Two or the First-Year Check-in, shared by the couple.</p>
+    ${L.slice().sort((a, b) => String(b.card.k).localeCompare(String(a.card.k))).map(x => mOne(x, L.indexOf(x))).join('')}
+    <details class="pm-det pm-wkadd"${open ? ' open' : ''}><summary><h3>Add Another Check-in Card</h3></summary>${form}</details></div>`;
+  return `<details class="card pm-det pm-week"${open ? ' open' : ''}><summary><h3>Their Check-in Cards</h3></summary>
+    <p>After the wedding, a partner can share a check-in card from After the Vows in Heartwood: a Monthly Check-in for Two or the First-Year Check-in. Paste the link, then let the couple type their shared word.</p>${form}</details>`;
+}
+async function mIn(c){
+  const code = mCodeOf(val('pm-ml')), word = val('pm-mw'), yes = (document.getElementById('pm-my') || {}).checked;
+  S.mErr = '';
+  if (!val('pm-ml').trim()){ S.mErr = 'Paste the check-in card link first.'; rerender(true); return; }
+  if (!code){ S.mErr = 'That link does not look like a check-in card from Heartwood. Copy it again from their phone.'; rerender(true); return; }
+  if (!word.trim()){ S.mErr = 'The couple types their shared word to open the card.'; rerender(true); return; }
+  if (!yes){ S.mErr = 'Check the box once the couple says yes to sharing this check-in card.'; rerender(true); return; }
+  S.mBusy = true; rerender(true);
+  try {
+    const w = await readM(code, word);
+    const L = (c.mcards = c.mcards || []), same = L.findIndex(x => x.card.k === w.k && x.card.n === w.n);
+    const e = {brought: today(), yes: {on: today(), text: 'The couple said yes to sharing this check-in card with us.'}, card: w};
+    if (same >= 0) L[same] = e; else L.push(e);
+    keep(c); S.mBusy = false; rerender(true); toast('Their check-in card is in.');
+  } catch (e){
+    S.mBusy = false; S.mErr = e && e.message === 'word' ? 'That word did not open the check-in card. Let the couple try again.' : 'That check-in card could not be read. The couple can make a fresh one.'; rerender(true);
+  }
 }
 
 // ---------- the Week Card (GWG BLD 755) ----------
@@ -740,8 +810,8 @@ async function pasteInto(id){
   try { if (!navigator.clipboard || !navigator.clipboard.readText) return by(); t = await navigator.clipboard.readText(); } catch (e) { return by(); }
   if (!String(t).trim()){ by(); return; }
   el.value = t;
-  const found = id === 'pm-wl' ? weekCodeOf(t) : codeOf(t);
-  toast(found ? 'Pasted. The link is in.' : (id === 'pm-wl' ? 'Pasted, but no Week Card link was found in it.' : 'Pasted, but no card link was found in it.'));
+  const found = id === 'pm-wl' ? weekCodeOf(t) : id === 'pm-ml' ? mCodeOf(t) : codeOf(t);
+  toast(found ? 'Pasted. The link is in.' : (id === 'pm-wl' ? 'Pasted, but no Week Card link was found in it.' : id === 'pm-ml' ? 'Pasted, but no check-in card link was found in it.' : 'Pasted, but no card link was found in it.'));
 }
 
 async function cardIn(c){
@@ -782,6 +852,8 @@ function act(k, v){
     case 'logadd': { const m = Math.max(0, +val('pm-lm') || 0); if (!m){ toast('Add the minutes first.'); return; } c.log = c.log || []; c.log.push({id: uid(), date: val('pm-ld') || today(), mins: m, n: nk(val('pm-ln')), notes: val('pm-lt')}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Added. ' + hrs(logMins(c)) + ' in all.'); return; }
     case 'logdel': c.log = (c.log || []).filter(x => x.id !== v); keep(c); rerender(true); return;
     case 'cardin': cardIn(c); return;
+    case 'min': mIn(c); return;
+    case 'mx': { const L = c.mcards || [], i = +v; if (!L[i] || !confirm('Remove this check-in card from this device? The couple can share it again anytime.')) return; L.splice(i, 1); keep(c); rerender(true); return; }
     case 'paste': pasteInto(v); return;
     case 'weekin': weekIn(c); return;
     case 'weekx': { const k = String(S.n), L = weeksOf(c, k), i = +v; if (!L[i] || !confirm('Remove this Week Card from this device? The couple can share it again anytime.')) return; L.splice(i, 1); if (!L.length) delete c.week[k]; keep(c); rerender(true); return; }
@@ -911,6 +983,6 @@ const API = window.GGPm = {
     list().push(x); const d = D(); if (d.deleted && d.deleted.pm) delete d.deleted.pm[x.id]; keep(x); return x.id; },
   open(id){ S.id = id; S.view = 'sessions'; },
   // For tests and the lead.
-  state: S, data: pm, program: pmc, current: cur, page: openPage, readCard, codeOf, readWeek, weekCodeOf, talkList, summaryOf, faithOf, printer: null, last: null
+  state: S, data: pm, program: pmc, current: cur, page: openPage, readCard, codeOf, readWeek, weekCodeOf, readM, mCodeOf, talkList, summaryOf, faithOf, printer: null, last: null
 };
 })();

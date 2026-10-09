@@ -482,6 +482,7 @@ function viewSetup() {
     if (st.lock) h += `<label class="lbl" for="gv-sp1">Grove passcode</label><input id="gv-sp1" class="gv-input" type="password" autocomplete="new-password"><label class="lbl" for="gv-sp2">Passcode again</label><input id="gv-sp2" class="gv-input" type="password" autocomplete="new-password"><p class="muted">At least 6 characters. Grow With Grounded never sees it and cannot recover it.</p>`;
     h += `<p class="gv-err" id="gv-serr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create-grove">Plant This Grove</button>${G ? '<button class="btn btn-line btn-sm" data-act="cancel-setup">Cancel</button>' : ''}</div></div>`;
   }
+  if (!G) h += `<div class="card"><h3>From Your Guide's Visit</h3><p>Did a Grove Guide visit your family and send your check-in and plan? Open them here with the link or message and the 8-letter code.</p><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>`;
   if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in their own app: Oak, Birch, Sequoia, Pine, Aspen, or Maple. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
   return h + helpCardHtml();
 }
@@ -1244,7 +1245,7 @@ function viewSettings() {
     + (cls ? `<button class="btn btn-line btn-sm" data-act="print" data-id="notice">${esc(W('print.noticeTitle', 'Classroom Family Notice'))}</button>` : '')
     + `<button class="btn btn-line btn-sm" data-tab="plan">Our Plan and Practice Card</button></div></div>`;
   h += moveOnHtml(true);
-  h += `<div class="card"><h3>Keep It Safe</h3><p class="muted">Save this grove to a file locked with a passcode, to keep it or move it to another device. Back Up Everything (in How it works) saves every grove and profile at once.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="savefile">Save to a File</button><button class="btn btn-line btn-sm" data-act="loadfile">Load From a File</button></div>
+  h += `<div class="card"><h3>Keep It Safe</h3><p class="muted">Save this grove to a file locked with a passcode, to keep it or move it to another device. Back Up Everything (in How it works) saves every grove and profile at once.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="savefile">Save to a File</button><button class="btn btn-line btn-sm" data-act="loadfile">Load From a File</button><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>
     <h3 style="margin-top:18px">Clear This Grove</h3><p class="muted">Removes this grove and everything in it from this device. Other groves stay.</p><button class="btn btn-line btn-sm" data-act="cleargrove">Clear This Grove</button></div>`;
   return h + helpCardHtml();
 }
@@ -1333,7 +1334,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b760').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b776').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */
@@ -1553,6 +1554,7 @@ document.addEventListener('click', e => {
   else if (act === 'lc-read') lcReadAloud();
   else if (act === 'savefile') saveFile();
   else if (act === 'loadfile') loadFile();
+  else if (act === 'gvload') gvFromGuide('');
   else if (act === 'cleargrove') clearGrove();
 });
 document.addEventListener('input', e => {
@@ -1565,10 +1567,86 @@ document.addEventListener('input', e => {
   const pos = t.selectionStart; render(); const f = $('#gv-libq'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (x) {} } });
 document.addEventListener('change', e => { const t = e.target; if (t.dataset && t.dataset.pd === 'youngest' && S.pd) S.pd.youngest = t.value; });
 
+/* ---------- From a Guide's visit: Send to The Grove (GWG BLD 776) ----------
+   A Grove Guide's visit (field-guide/grovevisit.js) can send the family's check-in and plan here, only after the family's
+   yes: a link /grove/#gv=salt.iv.ct, or the same in [GGGV1]...[/GGGV1] text, sealed with an 8-letter code (PBKDF2 250,000,
+   SHA-256, AES-GCM). The link is read once and taken out of the address bar; nothing is sent anywhere. The check-in and plan
+   go into the grove's locked part, like one made here. */
+const GVRE = /\[GGGV1\]\s*([A-Za-z0-9_\-.\s]+?)\s*\[\/GGGV1\]/, GVHASH = /#gv=([A-Za-z0-9_\-.]+)/;
+const unb64u = s => unb64(String(s).replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((String(s).length + 3) % 4));
+function gvSealedFrom(t) { t = String(t || ''); const m = GVRE.exec(t) || GVHASH.exec(t); const x = m ? m[1].replace(/\s+/g, '') : t.trim(); return /^[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+\.[A-Za-z0-9_\-]+$/.test(x) ? x : ''; }
+function gvOpenSealed(sealed, code) {
+  const [a, b, c] = sealed.split('.'), cd = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  return subtle.importKey('raw', TE.encode(cd), 'PBKDF2', false, ['deriveKey'])
+    .then(base => subtle.deriveKey({ name: 'PBKDF2', salt: unb64u(a), iterations: 250000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']))
+    .then(k => subtle.decrypt({ name: 'AES-GCM', iv: unb64u(b) }, k, unb64u(c)))
+    .then(pt => { const d = JSON.parse(TD.decode(pt)); if (!d || d.k !== 'grove-visit' || !KDEF[d.gk]) throw new Error('shape'); return d; });
+}
+function gvModal(html, wire) {
+  return new Promise(resolve => {
+    const back = document.createElement('div'); back.className = 'gv-modal-back'; back.innerHTML = `<div class="gv-modal" role="dialog" aria-modal="true" aria-labelledby="gv-gm-h">${html}</div>`;
+    document.body.appendChild(back);
+    const prev = document.activeElement, close = v => { back.remove(); try { prev && prev.focus && prev.focus(); } catch (e) {} resolve(v); };
+    back.addEventListener('click', e => { const g = e.target.closest && e.target.closest('[data-g]'); if (g) { const v = g.getAttribute('data-g'); if (v === 'no') close(null); else if (wire) wire(v, back, close); else close(v); } else if (e.target === back) close(null); });
+    back.addEventListener('keydown', e => { if (e.key === 'Escape') close(null); else if (e.key === 'Enter' && wire && e.target.tagName === 'INPUT') { e.preventDefault(); wire('ok', back, close); } });
+    setTimeout(() => { const f = back.querySelector('input,textarea,button[data-g]'); if (f) f.focus(); }, 30);
+  });
+}
+function gvFromGuide(sealed) {
+  if (!subtle) { alert('This browser cannot open a locked code. Try another browser.'); return; }
+  const html = `<h2 id="gv-gm-h">From Your Guide's Visit</h2><p>Your Guide sent your family's check-in and plan, locked with an 8-letter code. Type the code to add them to your grove on this device.</p>`
+    + (sealed ? '' : `<label class="lbl" for="gv-gm-t">The link or message from your Guide</label><textarea id="gv-gm-t" class="gv-input" rows="3" placeholder="Paste the link or the whole message"></textarea>`)
+    + `<label class="lbl" for="gv-gm-c">The 8-letter code</label><input id="gv-gm-c" class="gv-input" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCD-EFGH" maxlength="12">`
+    + `<p class="gv-err" role="alert"></p><div class="tools-row gv-modal-row"><button type="button" class="btn btn-line btn-sm" data-g="no">Cancel</button><button type="button" class="btn btn-gold btn-sm" data-g="ok">Open It</button></div>`;
+  gvModal(html, (v, back, close) => {
+    if (v !== 'ok') return;
+    const err = back.querySelector('.gv-err'), s2 = sealed || gvSealedFrom((back.querySelector('#gv-gm-t') || {}).value), code = back.querySelector('#gv-gm-c').value;
+    if (!s2) { err.textContent = 'Paste the whole link or message from your Guide.'; return; }
+    if (String(code).replace(/[^A-Za-z0-9]/g, '').length !== 8) { err.textContent = 'The code has 8 letters and numbers.'; return; }
+    err.textContent = 'Opening...';
+    gvOpenSealed(s2, code).then(d => { close(true); gvPlace(d, s2); }, () => { err.textContent = 'That code does not open this. Check the code, and try again.'; });
+  });
+}
+// Which grove gets it: one of the same kind (its questions match), or a new Family grove.
+function gvPlace(d, sealed) {
+  const same = ROOT.groves.filter(g => g.kind === d.gk), K = KW(d.gk);
+  const pickNew = () => {
+    if (ROOT.groves.length >= MAX_GROVES) { alert('This device holds up to six groves. Clear one first.'); return; }
+    const g = blankGrove(d.gk, 'Our ' + K.name + ' Grove'); g.faith = d.w === 'p' ? 'plain' : 'faith'; g.children = !!d.c && d.gk !== 'team';
+    ROOT.groves.push(g); G = g; ROOT.active = g.id; S.setup = null; save();
+    choosePass('Your new grove keeps the check-in and plan locked.').then(ok => { if (!ok) { G.lockOn = false; VAULTS[G.id] = blankVault(); } gvAdd(d, sealed); });
+  };
+  if (!same.length) { pickNew(); return; }
+  if (same.length === 1 && G && G.id === same[0].id) { gvAdd(d, sealed); return; }
+  gvModal(`<h2 id="gv-gm-h">Which Grove?</h2><p>Add your Guide's visit to one of your ${esc(K.name)} groves, or start a new one.</p><div class="tools-row" style="flex-direction:column;align-items:stretch">${same.map(g => `<button type="button" class="btn btn-line" data-g="${esc(g.id)}">${esc(g.name || K.name)}</button>`).join('')}<button type="button" class="btn btn-gold" data-g="new">Start a New ${esc(K.name)} Grove</button><button type="button" class="btn btn-line btn-sm" data-g="no">Cancel</button></div>`)
+    .then(v => { if (!v) return; if (v === 'new') { pickNew(); return; } const g = ROOT.groves.find(x => x.id === v); if (!g) return; fixGrove(g); G = g; ROOT.active = g.id; persist(); gvAdd(d, sealed); });
+}
+function gvAdd(d, sealed) {
+  withVault('To add your Guide\'s visit,', () => {
+    const v = V(), src = String(sealed).slice(-24);
+    if (v.checkins.some(c => c.src === src)) { S.tab = 'checkin'; S.view = (v.checkins.find(c => c.src === src) || {}).id || ''; render(); toast('This visit is already in your grove.'); return; }
+    const list = qList(d.gk, false), ans = {};
+    if (d.a) list.forEach((x, i) => { const a = String(d.a)[i]; if (a && ANAME[a]) ans[x.key] = a; });
+    const rec = { id: uid(), date: /^\d{4}-\d\d-\d\d$/.test(d.d || '') ? d.d : today(), at: new Date().toISOString(), quick: !!d.q, changes: Array.isArray(d.ch) ? d.ch.slice(0, 20).map(String) : [], ans, from: 'guide', src };
+    const go = () => sealVault().then(() => { S.tab = 'checkin'; S.view = rec.id; S.ci = null; render(); toast('Your Guide\'s visit is in your grove: the check-in' + (d.p ? ' and your plan.' : '.')); const a = $('#app'); if (a) a.scrollIntoView(); });
+    if (Object.keys(ans).length) { v.checkins.push(rec); v.changes = rec.changes.slice(); }
+    const p = d.p;
+    if (p && Array.isArray(p.e) && p.e.length) {
+      const plan = { edges: p.e.filter(k => PNAME[k]).slice(0, 2), items: (Array.isArray(p.i) ? p.i : []).filter(x => Array.isArray(x) && x[0]).slice(0, 3).map(x => ({ pid: String(x[0]), anchor: String(x[1] || '').slice(0, 60) })),
+        youngest: String(p.y || ''), strength: String(p.s || ''), words: String(p.w || '').slice(0, 200), own: String(p.o || '').slice(0, 120), from: Object.keys(ans).length ? rec.id : '', start: rec.date, made: today(), guide: true };
+      if (v.plan && !confirm('Use the plan from your visit? Your current plan is kept with your earlier plans.')) { go(); return; }
+      if (v.plan) v.plans.push(Object.assign({}, v.plan, { ended: today() }));
+      v.plan = plan;
+    }
+    go();
+  });
+}
 /* ---------- boot ---------- */
 function setScale() { const sc = ROOT.scale || 1; document.documentElement.style.setProperty('--scale', sc); const b = $('#size-btn'); if (b) { b.textContent = sc > 1.2 ? 'A' : 'A+'; b.setAttribute('aria-label', 'Text size, now ' + (sc === 1 ? 'normal' : sc < 1.2 ? 'larger' : 'largest')); } }
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
+  const gvm = GVHASH.exec(location.hash || ''); // GWG BLD 776: a Guide's visit, read once and taken out of the address bar
+  if (gvm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} gvFromGuide(gvm[1]); return; }
   if (/^#library(=|$)/.test(h)) { S.tab = 'library'; S.lib.q = h.startsWith('#library=') ? h.slice(9) : ''; S.open = ''; if (window.GGLibrary) GGLibrary.ready().then(render); render(); const a = $('#app'); if (a) a.scrollIntoView(); }
   else if (/^#(life|talk)(=|$)/.test(h)) { const id = /^#(life|talk)=/.test(h) ? h.slice(h.indexOf('=') + 1) : null; S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) { a.scrollIntoView(); setTimeout(() => a.scrollIntoView(), 350); } }
   else if (/^#(wall|together|how|earlier|grove|checkin|plan|settings)$/.test(h)) { S.tab = h.slice(1); render(); }
