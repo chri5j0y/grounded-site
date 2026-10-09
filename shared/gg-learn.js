@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln43';
+  var V = 'ln44';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -246,6 +246,40 @@
 
   /* ---------------- the player ---------------- */
   var CUR = null; // the player on screen
+  /* ---------------- recorded voices for every public video (BLD 778) ----------------
+     Lessons opened from an app's Learn (the eight trees) play recorded clips from Azure neural voices, stored on
+     Cloudflare R2 and served at audio.growwithgrounded.com/<round>/<voice>/<name>.mp3. Brian stands in for Chris,
+     Emma for Kayti (Chris, BLD 777); a video keeps one voice from start to finish. A clip's name comes from its voice
+     and its sentence (clipName), so a wording change asks for a new clip, and the closing lines and quiz replies are
+     shared by every video in that voice. REC.round names the recording round that plays; empty plays device voices.
+     A missing clip falls back to the device voice for that sentence. Page videos keep their own clips (audio: 'pv').
+     The Voice Setup video, the Field Guide, and every sealed video keep device voices (no app, or not opened here).
+     VOICES: each app's voice, with the tracks and the guide side (helper: For the Grown-up, For the Helper, For the
+     Leader) that take the other voice. A lesson can name its own (voice: 'brian' or 'emma'). */
+  var REC = { base: 'https://audio.growwithgrounded.com/', round: '' };
+  var VOICES = {
+    maple: { all: 'emma', helper: 'brian', tracks: { 'maple-grownups': 'brian' } },
+    aspen: { all: 'emma', helper: 'brian', tracks: { 'aspen-grownups': 'brian' } },
+    pine: { all: 'emma', helper: 'brian', tracks: { 'pine-grownup': 'brian' } },
+    birch: { all: 'brian' }, oak: { all: 'brian' }, sequoia: { all: 'brian' }, willow: { all: 'brian' },
+    grove: { all: 'emma', helper: 'brian', tracks: { 'grove-lead': 'brian' } }
+  };
+  function recVoice(cfg, any) {
+    var l = (cfg && cfg.lesson) || {}, t = (cfg && cfg.track) || {}, V = VOICES[cfg && cfg.app];
+    if ((!REC.round && !any) || !V || !l.id || t.kind === 'forguides' || t.kind === 'setup') return '';
+    if (l.voice) return l.voice;
+    if (V.helper && /-helper$/.test(l.id)) return V.helper;
+    return (V.tracks || {})[t.id] || V.all;
+  }
+  // cyrb53 (a public domain 53-bit string hash, by bryc): the same sentence always gets the same name.
+  function clipName(voice, text) {
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
+    for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return voice + '/' + (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+  }
+  function clipUrl(voice, text) { return REC.base + REC.round + '/' + clipName(voice, text) + '.mp3'; }
   function speak(t, onend) { try { if (window.GGRead && GGRead.available) { GGRead.say(t, onend ? { onend: onend } : undefined); return true; } } catch (e) {} return false; }
   /* ---------------- beats (Learn Voice build, October 2026) ----------------
      Narration is spoken one sentence at a time with a real pause between, and each bullet, step, or card
@@ -479,8 +513,9 @@
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
     // A lesson with recorded voices keeps only the Speed choice: the device voice menu, Get a Better Voice, and Voice Check step aside.
-    if (l.audio) Array.prototype.forEach.call(host.querySelectorAll('.ln-vs .gg-vhelp-btn, .ln-vs .gg-vhelp'), function (x) { x.style.display = 'none'; });
-    if (l.audio) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
+    var rec = l.audio ? '' : recVoice(cfg);
+    if (l.audio || rec) Array.prototype.forEach.call(host.querySelectorAll('.ln-vs .gg-vhelp-btn, .ln-vs .gg-vhelp'), function (x) { x.style.display = 'none'; });
+    if (l.audio || rec) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
@@ -603,28 +638,38 @@
         if (sc.k !== 'breathe' && +sc.hold >= 6 && rem >= 5000) return waitRing(Math.round(rem / 1000), t, go);
         P.nx = setTimeout(go, rem);
       }
-      // A recorded clip for this sentence, when a lesson has them (audio: true, or a folder name such as 'pv' for the page videos).
-      // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
-      // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
+      // A recorded clip for this sentence, when a lesson has them: a page video's own folder (audio: 'pv', BLD 777),
+      // or the recording round in this lesson's voice (BLD 778).
       function clip(i, fin) {
-        if (!l.audio || !window.Audio) return false;
-        var a = P.el || (P.el = new Audio()), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ok = false;
-        var est = Math.max(1400, B[i].t.split(/\s+/).length * 60000 / (165 * sp));
-        function guard(ms) { clearTimeout(P.cw); P.cw = setTimeout(function () { if (t === P.tok) fin(); }, ms); }
-        function voice() { if (ok || t !== P.tok) return; ok = true; a.onended = a.onerror = a.onloadedmetadata = null; speak(B[i].t, fin); guard(est * 2.4 + 2500); }
-        P.audio = a;
-        a.onended = function () { clearTimeout(P.cw); fin(); };
-        a.onerror = voice;
-        a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) guard(a.duration * 1000 / sp + 3000); };
-        a.src = url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3');
-        // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
-        try { a.defaultPlaybackRate = sp; a.playbackRate = sp; } catch (e) {}
-        guard(est * 2.4 + 6000);
-        var pr = a.play(); if (pr && pr.then) pr.then(function () { ok = true; }).catch(function (e) { if (!e || e.name !== 'AbortError') voice(); });
-        return true;
+        var src = l.audio ? url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3') : rec ? clipUrl(rec, B[i].t) : '';
+        return play(src, B[i].t, t, fin);
       }
       if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
       step();
+    }
+    // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
+    // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
+    function play(src, text, t, fin) {
+      if (!src || !window.Audio) return false;
+      var a = P.el || (P.el = new Audio()), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ok = false;
+      var est = Math.max(1400, text.split(/\s+/).length * 60000 / (165 * sp));
+      function guard(ms) { clearTimeout(P.cw); P.cw = setTimeout(function () { if (t === P.tok) fin(); }, ms); }
+      function voice() { if (ok || t !== P.tok) return; ok = true; a.onended = a.onerror = a.onloadedmetadata = null; speak(text, fin); guard(est * 2.4 + 2500); }
+      P.audio = a;
+      a.onended = function () { clearTimeout(P.cw); fin(); };
+      a.onerror = voice;
+      a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) guard(a.duration * 1000 / sp + 3000); };
+      a.src = src;
+      // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
+      try { a.defaultPlaybackRate = sp; a.playbackRate = sp; } catch (e) {}
+      guard(est * 2.4 + 6000);
+      var pr = a.play(); if (pr && pr.then) pr.then(function () { ok = true; }).catch(function (e) { if (!e || e.name !== 'AbortError') voice(); });
+      return true;
+    }
+    // A quiz's "That's it." and its why, sentence by sentence in the lesson's recorded voice.
+    function recSay(text, t, fin) {
+      var L = beatsOf({ say: text }), k = 0;
+      (function next() { if (t !== P.tok) return; if (k >= L.length) return fin(); var x = L[k++].t; play(clipUrl(rec, x), x, t, function () { setTimeout(next, GAP); }); })();
     }
     function answer(v) {
       var sc = l.scenes[P.i], ok = +v === sc.right, fb = $('.ggl-fb', host);
@@ -632,11 +677,11 @@
       if (!ok) { fb.innerHTML = '<p class="ln-no"><b>Not quite.</b> Try another answer.</p>'; return; }
       answered = true; finish();
       fb.innerHTML = '<p class="ln-yes"><b>That\'s it.</b> ' + esc(sc.why || '') + '</p>';
-      stopTimers(); var t = P.tok, spoke = speak("That's it. " + (sc.why || '')), start = Date.now();
+      stopTimers(); var t = P.tok, said = false, spoke = rec && window.Audio ? (recSay("That's it. " + (sc.why || ''), t, function () { said = true; }), 'rec') : speak("That's it. " + (sc.why || '')), start = Date.now();
       // Then roll on to the next scene (the closing breath, then the closing scene), so the lesson always ends with what comes next.
       P.tick = setInterval(function () {
         if (t !== P.tok) return clearInterval(P.tick);
-        var busy = spoke && window.speechSynthesis && speechSynthesis.speaking;
+        var busy = spoke === 'rec' ? !said : spoke && window.speechSynthesis && speechSynthesis.speaking;
         if (!busy && Date.now() - start > (spoke ? 1500 : 4000)) { clearInterval(P.tick); P.nx = setTimeout(function () { if (t === P.tok) show(Math.min(P.i + 1, N - 1)); }, 1100); }
       }, 200);
     }
@@ -684,7 +729,7 @@
         else {
           var go = function () { setPlay(true); if (P.i < N - 1 && P.B && (P.b > 0 || P.ph === 'wait')) { stopTimers(); run(P.tok); } else show(P.i >= N - 1 ? 0 : P.i); };
           // Recorded voices (audio) need no Voice Check first.
-          if (!l.audio && window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
+          if (!l.audio && !rec && window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
         }
       }
       else if (g === 'read') readToggle($('.ln-read', host).hidden);
@@ -942,5 +987,5 @@
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();
