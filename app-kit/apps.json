@@ -1,6 +1,6 @@
 {
   "_note": "One shared code base, nine apps. Each app bundles only the files it needs, so it works fully offline. Rebuilt in Rebrand Session 1 with the new tree names. Pine added in GWG BLD 739, Birch in GWG BLD 742, Birch's guides in GWG BLD 743.",
-  "common": ["shared/", "fonts/", "nav.js", "search.js", "read.js", "maple/guides.js", "aspen/guides.js", "pine/guides.js", "birch/guides.js", "oak/guides.js", "sequoia/guides.js", "willow/guides.js", "grove/data.js", "grove/library.js", "library/books.js", "stories.html", "privacy.html", "terms.html", "style.css", "site.js", "favicon.svg", "apple-touch-icon.png"],
+  "common": ["shared/", "fonts/", "nav.js", "search.js", "read.js", "maple/guides.js", "aspen/guides.js", "pine/guides.js", "birch/guides.js", "oak/guides.js", "sequoia/guides.js", "willow/guides.js", "grove/guides.js", "grove/data.js", "grove/library.js", "library/books.js", "stories.html", "privacy.html", "terms.html", "style.css", "site.js", "favicon.svg", "apple-touch-icon.png"],
   "apps": {
     "grove":       { "name": "The Grove",   "appId": "com.growwithgrounded.grove",      "scheme": "grounded-grove",      "start": "/grove/",       "tools": ["grove"],       "icon": "icons/grove-1024.png", "files": ["grove/"] },
     "maple":       { "name": "Maple",       "appId": "com.growwithgrounded.maple",      "scheme": "grounded-maple",      "start": "/maple/",       "tools": ["maple"],       "icon": "icons/maple-1024.png", "files": ["maple/", "grove/data.js", "grove/library.js"] },

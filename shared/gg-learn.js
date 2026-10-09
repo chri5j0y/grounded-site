@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln40';
+  var V = 'ln41';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -452,7 +452,7 @@
   function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b771'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b774'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -774,7 +774,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=b757', aspen: '/aspen/guide-videos.js?v=b757', maple: '/maple/guide-videos.js?v=b757', sequoia: '/sequoia/guide-videos.js?v=b757', pine: '/pine/guide-videos.js?v=b757', birch: '/birch/guide-videos.js?v=b757' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=b757', aspen: '/aspen/guide-videos.js?v=b757', maple: '/maple/guide-videos.js?v=b757', sequoia: '/sequoia/guide-videos.js?v=b757', pine: '/pine/guide-videos.js?v=b757', birch: '/birch/guide-videos.js?v=b757', grove: '/grove/guide-videos.js?v=b774' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -896,7 +896,7 @@
     var app = APP.app, f = find(app, id); if (!f) return list();
     var D = load(app), el = $('#ggl-in', APP.root), meta = APPS[app];
     var sup = f.t.kind === 'support', gv = f.t.kind === 'guide', pair = gv && f.l.pairId ? (find(app, f.l.pairId) || {}).l : null;
-    el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? 'When Life Changes, ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
+    el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? esc(((window.GG_LEARN_GUIDES || {})[app] || {}).title || 'When Life Changes') + ', ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
       app: app, lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,

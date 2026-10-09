@@ -14,6 +14,8 @@
    Start Here and For the People Who Love Them rebuilt at full length.
    The Grove Learn (GWG BLD 730): Using The Grove (7), The Six Parts, Together (6), and Do This Together (8 short videos
    for the whole family) join the Welcome.
+   The Grove Learn for the kinds of grove (GWG BLD 774): Choosing Your Grove's Kind, the Group Check-in, results, the Growth
+   Plan, privacy, Leading a Grove (5), and Do This Together for families, classes, groups, and teams.
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
 window.GG_LEARN = {
@@ -28358,88 +28360,106 @@ window.GG_LEARN = {
   }
  ]
 },
-  /* The Grove Learn (GWG BLD 730): Start Here, Using The Grove, The Six Parts, Together, and Do This Together.
-     Generated from patches/bld730/source in grounded-workshop. */
+  /* The Grove Learn (GWG BLD 730, kinds of grove in GWG BLD 774): Start Here, Using The Grove, Leading a Grove,
+     The Six Parts, Together, and Do This Together (For Families; For Classes, Groups, and Teams).
+     Generated from patches/bld730/source and patches/bld774/source/gl in grounded-workshop. */
   grove: {
  "title": "Learn The Grove",
- "intro": "Short lessons, narrated aloud, for the whole family to watch together.",
+ "intro": "Short lessons, narrated aloud, for a family, a class, a group, or a team to watch together.",
  "supportFirst": true,
  "support": {
   "eyebrow": "Together",
   "title": "Do This Together",
-  "intro": "Short videos for the whole family to do side by side. Pick one anytime, as often as you like. Nothing to finish."
+  "intro": "Short videos to do side by side, as a family, a class, a group, or a team. Pick one anytime, as often as you like. Nothing to finish."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
   {
    "id": "grove-start",
    "title": "Start Here",
-   "who": "For families growing side by side",
+   "who": "For every grove: a family, a class, a group, or a team",
    "lessons": [
     {
      "id": "gr-welcome",
      "n": 1,
      "title": "Welcome to The Grove",
-     "mins": 4,
-     "blurb": "Where every tree in your family grows side by side.",
+     "mins": 5,
+     "blurb": "Where a family, a class, a group, or a team grows side by side.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Start Here, Lesson 1",
        "h": "Welcome to The Grove",
-       "sub": "Where our trees grow together.",
-       "say": "Welcome to The Grove, where our trees grow together. This short lesson is for the whole family. Grab a spot on the couch, and let us start."
+       "sub": "Where we grow together.",
+       "say": "Welcome to The Grove, where we grow together. This short lesson is for everyone watching: a family on the couch, a class in a circle, or a group around a table. Let us start."
       },
       {
        "k": "big",
        "h": "Your tree is yours. The grove is ours.",
-       "sub": "All ages, all stages, side by side.",
-       "say": "Here is the big idea. Your tree is yours. The grove is ours. All ages, all stages, side by side."
-      },
-      {
-       "k": "trees",
-       "h": "A tree for every age",
-       "grove": true,
-       "say": "Everyone in the family has their own tree, in their own app. Maple is for kids. Aspen is for middle schoolers. Pine is for high schoolers. Birch is for young adults. Oak is for grown-ups. And The Grove is where all of those trees stand together."
+       "sub": "A family, a class, a group, or a team, side by side.",
+       "say": "Here is the big idea. Your tree is yours. The grove is ours. Each person can grow a tree of their own, and The Grove is the ground we share."
       },
       {
        "k": "points",
-       "h": "Every family looks different",
+       "h": "Five kinds of grove",
        "items": [
         [
-         "One grown-up or two",
-         "Or grandparents raising grandkids"
+         "Family",
+         "A household, or family across homes"
         ],
         [
-         "Blended and foster families",
-         "Everyone who lives with you"
+         "Classroom",
+         "A class or a youth program"
         ],
         [
-         "Roommates who are family",
-         "Family is who you grow with"
+         "Faith Community",
+         "A congregation or a study class"
+        ],
+        [
+         "Small or Discussion Group",
+         "A support group or a study group"
+        ],
+        [
+         "Team or Workplace",
+         "A hospice, school, or church staff"
         ]
        ],
-       "say": "Every family looks different, and every family belongs here. Maybe there is one grown-up, or two, or grandparents raising grandkids. Maybe you are a blended family, or a foster family. Maybe you are roommates who have become family. Family is the people you grow with."
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "The Grove comes in five kinds. A Family grove, for the people you call family. A Classroom grove, for a class, a homeroom, or a youth program. A Faith Community grove, for a congregation, a Sunday school, or a youth group. A Small or Discussion Group grove, for a support group or a study group. And a Team or Workplace grove, for a hospice team, a school staff, or any team that works side by side."
       },
       {
        "k": "flow",
-       "h": "How The Grove works",
+       "h": "How every grove grows",
        "steps": [
         [
-         "Tend your own tree",
-         "In your own app"
+         "Check in together",
+         "One shared answer"
         ],
         [
-         "Show my growth",
-         "A switch in your app"
+         "Make a plan",
+         "Two or three practices"
         ],
         [
-         "Grow together",
-         "Side by side in The Grove"
+         "Do them side by side",
+         "And the grove grows"
         ]
        ],
-       "say": "Here is how it works. First, each person tends their own tree, in their own app. Second, each app has a switch called Show my growth on The Grove. Third, your trees stand side by side here, and the grove grows."
+       "say": "Every kind of grove grows the same way. First, you check in together, and settle on one shared answer for each question. Next, you make a Growth Plan with two or three practices. Then you do those practices side by side, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Words only. Never scores.",
+       "sub": "No one’s own answer is ever asked for or kept.",
+       "say": "Here is something important. The Grove never asks for one person’s answer, and never keeps one. The group talks it over and chooses one answer together. Results come in words, never numbers."
       },
       {
        "k": "tabs",
@@ -28447,91 +28467,81 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
        "tap": 0,
        "note": {
         "h": "Our Grove",
-        "p": "Every tree in your household, side by side, with visitors that come as the days add up."
+        "p": "The grove painting, and everything you have done together."
        },
-       "say": "The Grove has a few tabs. Our Grove shows every tree in your household, side by side. The Wall is where you cheer each other on. Together has practices to do as a family. How it works explains it all in writing. And Learn has lessons like this one."
+       "say": "Here are the main tabs. Our Grove shows the grove painting, and everything you have done together. The Family Check-in, or the Class, Group, or Team Check-in, is where you check in. Growth Plan holds your plan. Together has practices to do side by side. When Life Changes has guides for the changes you go through together. A Family grove also has The Wall, for cheering each other on. Settings is where the leader sets things up. And Learn has lessons like this one."
       },
       {
-       "k": "points",
-       "h": "What grows the grove",
-       "items": [
-        [
-         "Each person tending their tree",
-         "In their own tree app"
-        ],
-        [
-         "Practices you do together",
-         "From the Together tab"
-        ],
-        [
-         "Growth only adds",
-         "A quiet week takes nothing away"
-        ]
-       ],
-       "say": "Two things grow the grove. Each person tending their own tree, and the practices you do together. Visitors come and new scenery opens as the days add up. And growth only adds. A quiet week never takes anything away."
+       "k": "trees",
+       "h": "A tree for every age",
+       "grove": true,
+       "say": "Anyone who wants to can also tend a tree of their own, in the app that fits their age. Maple for kids, Aspen for middle schoolers, Pine for high schoolers, Birch for young adults, Oak for grown-ups, and Sequoia for sixty and up. In a Family grove, those trees stand side by side."
       },
       {
        "k": "words",
        "h": "One word each",
        "items": [
-        "How do you feel today?",
+        "How are you arriving today?",
         "One word is enough."
        ],
        "beats": [
-        "Let us try it right now, together.",
+        "Let us try something together, right now.",
         "Look around at who is here with you.",
-        "Each person, say one word for how you feel today.",
+        "Each person, say one word for how you are arriving today.",
         {
          "t": "Go around once, and just listen.",
          "w": 10
         }
        ],
-       "say": "Let us try it right now, together. Look around at who is here with you. Each person, say one word for how you feel today. Go around once, and just listen."
+       "say": "Let us try something together, right now. Look around at who is here with you. Each person, say one word for how you are arriving today. Go around once, and just listen."
       },
       {
        "k": "points",
        "h": "Kind and safe",
        "items": [
         [
-         "Grown-ups keep it kind",
-         "A grown-up can remove any post"
+         "Anyone can pass",
+         "Any question, any time"
         ],
         [
-         "Your answers stay yours",
-         "The Grove sees the big picture only"
+         "Locked with a passcode",
+         "On this device only"
         ],
         [
          "If anyone is not safe",
-         "Tell a safe grown-up right away"
+         "Tell someone you trust"
         ]
        ],
-       "say": "A few things keep the grove kind and safe. A grown-up can remove any post on the wall. Your answers stay in your own tree. The Grove only sees the big picture. And if anyone in your family is not safe, tell a safe grown-up right away. Grown-ups can call or text nine eight eight, or call nine one one."
+       "say": "A few things keep every grove kind and safe. Anyone can pass on any question. The check-ins and the plan are locked with a grove passcode, on this device only. And if anyone is not safe, tell a grown-up or a leader you trust. Anyone can call or text nine eight eight. If someone is in danger right now, call nine one one."
       },
       {
        "k": "big",
-       "h": "A little each day, side by side.",
-       "sub": "The next lessons show each part of The Grove.",
-       "say": "That is The Grove. A little each day, side by side. The next lessons walk through each part, one at a time."
+       "h": "A little at a time, side by side.",
+       "sub": "Next: Choosing Your Grove’s Kind.",
+       "say": "That is The Grove. A little at a time, side by side. The next lessons show how to choose your kind, check in, and make a plan together."
       },
       {
        "k": "quiz",
-       "q": "Where does each person tend their own tree?",
+       "q": "How does a grove answer each check-in question?",
        "opts": [
-        "In their own app, like Maple, Aspen, or Oak",
-        "Only in The Grove",
-        "On The Wall"
+        "Everyone answers on their own",
+        "The group talks it over and chooses one answer",
+        "Only the youngest answers"
        ],
-       "right": 0,
-       "why": "Each person tends their own tree in their own app. The Grove is where the trees stand together.",
-       "say": "Quick question. Where does each person tend their own tree?"
+       "right": 1,
+       "why": "The Grove keeps one shared answer, talked over together. No one’s own answer is ever entered or kept.",
+       "say": "Quick question. How does a grove answer each check-in question?"
       }
      ]
     }
@@ -28545,16 +28555,251 @@ window.GG_LEARN = {
    "certLine": "For finishing every lesson on using The Grove together.",
    "lessons": [
     {
-     "id": "gr-u-family",
+     "id": "gr-u-kind",
      "n": 1,
-     "title": "Your Family Grove",
-     "mins": 4,
-     "blurb": "Profiles, pictures, and how everyone in the household gets a tree.",
+     "title": "Choosing Your Grove’s Kind",
+     "mins": 5,
+     "blurb": "Family, Classroom, Faith Community, Small Group, or Team: what each one is for.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Using The Grove, Lesson 1",
+       "h": "Choosing Your Grove’s Kind",
+       "sub": "Five kinds, one Grove.",
+       "say": "When you start a grove, the first thing The Grove asks is, what kind of grove is this? This lesson walks through the five kinds, so you can choose the one that fits."
+      },
+      {
+       "k": "card",
+       "title": "What kind of grove is this?",
+       "body": "Pick the kind that fits, and the words, questions, and practices follow.",
+       "tap": 0,
+       "btns": [
+        "Family",
+        "Classroom",
+        "Faith Community",
+        "Small or Discussion Group",
+        "Team or Workplace"
+       ],
+       "say": "Tap Start Our Grove, or New Grove if you already have one. You will see the five kinds. Pick the one that fits, and the words, the questions, and the practices all follow."
+      },
+      {
+       "k": "points",
+       "h": "Family",
+       "items": [
+        [
+         "For the people you call family",
+         "One home, or more than one"
+        ],
+        [
+         "Faith or Plain words",
+         "The family chooses"
+        ],
+        [
+         "Everyone’s own tree",
+         "Side by side in the grove"
+        ],
+        [
+         "Children Take Part",
+         "Kid lines under the questions"
+        ]
+       ],
+       "say": "A Family grove is for the people you call family. That might be one household, or family spread across more than one home. The family chooses Faith or Plain words. Each person’s own tree can stand in the grove. And when Children Take Part is on, a line for kids shows under each question."
+      },
+      {
+       "k": "points",
+       "h": "Classroom",
+       "items": [
+        [
+         "A class or a youth program",
+         "Homeroom, co-op, or after school"
+        ],
+        [
+         "Plain words",
+         "About class life only"
+        ],
+        [
+         "No student names",
+         "None are ever kept"
+        ],
+        [
+         "Teacher Notes",
+         "Only the teacher writes"
+        ]
+       ],
+       "say": "A Classroom grove is for a class, a homeroom, a homeschool co-op, or an after-school program. It uses Plain words, and every question is about class life together. No student names are kept. In place of The Wall, the teacher can turn on Teacher Notes, where only the teacher writes."
+      },
+      {
+       "k": "points",
+       "h": "Faith Community and Small Group",
+       "items": [
+        [
+         "Faith Community",
+         "A congregation, class, or youth group"
+        ],
+        [
+         "Faith words first",
+         "Plain words with one tap"
+        ],
+        [
+         "Small or Discussion Group",
+         "Support, study, or residents’ groups"
+        ],
+        [
+         "The group chooses its words",
+         "In its first session"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "A Faith Community grove is for a congregation, a Sunday school class, a youth group, or a ministry team. It starts with Faith words, welcomes all faith traditions and everything in-between, and switches to Plain words with one tap. A Small or Discussion Group grove is for a support group, a book or study group, or a residents’ group. The group chooses Faith or Plain words together in its first session."
+      },
+      {
+       "k": "points",
+       "h": "Team or Workplace",
+       "items": [
+        [
+         "A team that works side by side",
+         "Hospice, hospital, school, or church"
+        ],
+        [
+         "Plain words",
+         "Faith only if the team chooses"
+        ],
+        [
+         "No names kept",
+         "The team as a whole"
+        ],
+        [
+         "Speaking up and resting",
+         "And why the work matters"
+        ]
+       ],
+       "say": "A Team or Workplace grove is for a hospice or hospital team, a school staff, a church staff, or a nonprofit team. It starts with Plain words, and keeps no names. Its questions are about speaking up, sharing the load, resting after hard days, and remembering why the work matters."
+      },
+      {
+       "k": "points",
+       "h": "What changes, and what stays",
+       "items": [
+        [
+         "The kind changes",
+         "Words, questions, and practices"
+        ],
+        [
+         "The six parts stay",
+         "Roots to Fruit, in every grove"
+        ],
+        [
+         "One shared answer stays",
+         "Never anyone’s own"
+        ],
+        [
+         "The help lines stay",
+         "On every screen"
+        ]
+       ],
+       "say": "The kind changes the words, the questions, and the practices. Some things never change. Every grove has the same six parts. Every check-in keeps one shared answer, never anyone’s own. And the help lines are always close."
+      },
+      {
+       "k": "flow",
+       "h": "Planting a grove",
+       "steps": [
+        [
+         "Pick the kind",
+         "The one that fits"
+        ],
+        [
+         "Name it",
+         "Like Room 12"
+        ],
+        [
+         "Choose a passcode",
+         "Six characters or more"
+        ],
+        [
+         "Plant This Grove",
+         "And begin"
+        ]
+       ],
+       "say": "Here is how it goes. Pick the kind. Give your grove a name, like The Rivera Family, or Room 12. Choose a grove passcode, at least six characters long, to lock the check-ins and the plan. Then tap Plant This Grove."
+      },
+      {
+       "k": "points",
+       "h": "More than one grove",
+       "items": [
+        [
+         "Up to six on one device",
+         "Each with its own kind and lock"
+        ],
+        [
+         "Switch Grove",
+         "At the top of the page"
+        ],
+        [
+         "Change the kind",
+         "In Settings, any time"
+        ]
+       ],
+       "say": "One device can hold up to six groves, each with its own kind, name, and lock. A youth pastor might keep a family grove and a youth group grove on the same tablet. Tap Switch Grove at the top to move between them. And you can change a grove’s kind any time in Settings. The check-ins and plans you made stay."
+      },
+      {
+       "k": "words",
+       "h": "Which kind fits us?",
+       "items": [
+        "Family",
+        "Classroom",
+        "Faith Community",
+        "Small or Discussion Group",
+        "Team or Workplace"
+       ],
+       "beats": [
+        "Let us decide together, right now.",
+        "Look at the five kinds.",
+        "Which one fits the people watching with you?",
+        {
+         "t": "Talk it over, and say your answer out loud together.",
+         "w": 12
+        }
+       ],
+       "say": "Let us decide together, right now. Look at the five kinds. Which one fits the people watching with you? Talk it over, and say your answer out loud together."
+      },
+      {
+       "k": "big",
+       "h": "Choose the kind that fits the people who gather.",
+       "sub": "If that changes, you can change it too.",
+       "say": "Choose the kind that fits the people who gather. If that changes, you can change it too. The next lessons show how a grove grows."
+      },
+      {
+       "k": "quiz",
+       "q": "What stays the same in every kind of grove?",
+       "opts": [
+        "The questions, word for word",
+        "The six parts, and one shared answer",
+        "The Wall"
+       ],
+       "right": 1,
+       "why": "Every kind keeps the six parts and one shared answer, talked over together. The words, questions, and practices fit the kind.",
+       "say": "Quick question. What stays the same in every kind of grove?"
+      }
+     ]
+    },
+    {
+     "id": "gr-u-family",
+     "n": 2,
+     "title": "Your Family Grove",
+     "mins": 5,
+     "blurb": "Profiles, pictures, and how everyone in the household gets a tree.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Using The Grove, Lesson 2",
        "h": "Your Family Grove",
        "sub": "Everyone in the household gets a tree.",
        "say": "This lesson shows how your family grove gets started, and how everyone in your household gets a tree of their own."
@@ -28563,13 +28808,13 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Start with your own tree",
        "body": "Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.",
+       "tap": 0,
        "btns": [
         "Make my profile",
         "Oak",
         "Aspen",
         "Maple"
        ],
-       "tap": 0,
        "say": "It starts with one tree. A grown-up taps Make my profile, chooses a name, a picture, and a passcode. That profile is private, and it stays on this device."
       },
       {
@@ -28627,14 +28872,14 @@ window.GG_LEARN = {
          "With something hard"
         ]
        ],
-       "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Their grown-ups still get a quiet alert if a check-in asks for a caring conversation.",
        "cue": {
         "at": [
          0,
          1,
          0
         ]
-       }
+       },
+       "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Their grown-ups still get a quiet alert if a check-in asks for a caring conversation."
       },
       {
        "k": "trees",
@@ -28646,10 +28891,10 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Who’s here?",
        "body": "Looking around is open to everyone. To post, react, or check off a family practice, choose your picture first.",
+       "tap": 0,
        "btns": [
         "Who’s here?"
        ],
-       "tap": 0,
        "say": "When you open The Grove, anyone can look around. To post, to react, or to check off a family practice, tap Who is here, and choose your picture. Then type your passcode, or tap your picture code."
       },
       {
@@ -28712,7 +28957,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Every tree belongs here.",
        "sub": "However your family looks.",
-       "say": "However your family looks, every tree belongs here. Start with one, and add the rest when you are ready."
+       "say": "However your family looks, every tree belongs here. Start with one, and add the rest when you are ready. This is how a Family grove works. One device can also hold groves of other kinds, for a class, a group, or a team, each with its own lock."
       },
       {
        "k": "quiz",
@@ -28730,15 +28975,15 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-ours",
-     "n": 2,
+     "n": 3,
      "title": "Our Grove",
-     "mins": 5,
+     "mins": 6,
      "blurb": "Your family’s trees side by side, the visitors, and what each tree shows.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "Using The Grove, Lesson 2",
+       "eyebrow": "Using The Grove, Lesson 3",
        "h": "Our Grove",
        "sub": "Every tree in your household, side by side.",
        "say": "Our Grove is the first tab, and the heart of The Grove. This lesson shows what you see there, and what makes it grow."
@@ -28749,9 +28994,12 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
        "tap": 0,
@@ -28759,16 +29007,16 @@ window.GG_LEARN = {
         "h": "Our Grove",
         "p": "Every tree in your household, side by side. Under the grove, a picture for each person."
        },
-       "say": "Tap Our Grove. You will see every tree in your household, standing side by side. Each tree is shaped by its stage of life. A kid’s tree looks like a maple, a middle schooler’s like an aspen, and a grown-up’s like an oak. Under the grove, there is a picture for each person."
+       "say": "Tap Our Grove. You will see every tree in your household, standing side by side. Each tree is shaped by its stage of life. A kid’s tree looks like a maple, a middle schooler’s like an aspen, and a grown-up’s like an oak. Under the grove, there is a picture for each person. That is a Family grove. In a class or a team grove, Our Grove keeps no names, and grows with every practice you do together."
       },
       {
        "k": "card",
        "title": "Where our trees grow together",
        "body": "Your tree is yours. The grove is ours. Cheer each other on, do a few things together, and watch the grove grow.",
+       "tap": 0,
        "btns": [
         "Got it"
        ],
-       "tap": 0,
        "say": "The first time you visit, a welcome note sits above the grove. It says, your tree is yours, and the grove is ours. Cheer each other on, do a few things together, and watch the grove grow. Tap Got it, and the note tucks away."
       },
       {
@@ -28868,6 +29116,7 @@ window.GG_LEARN = {
        "app": "grove",
        "app_name": "The Grove",
        "title": "A tree in the grove",
+       "tap": 4,
        "rows": [
         [
          "Days Tended",
@@ -28890,7 +29139,6 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "tap": 4,
        "say": "Tap anyone’s picture to see their tree. You will see their days tended, their rings, and which parts they tended this week. That is the big picture only. Never answers, levels, or notes. And there is a button to go tend your own tree in your own app."
       },
       {
@@ -28986,16 +29234,613 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "gr-u-together",
-     "n": 3,
-     "title": "Together",
+     "id": "gr-u-checkin",
+     "n": 4,
+     "title": "The Group Check-in",
+     "mins": 5,
+     "blurb": "Read each question aloud, talk it over, and choose one shared answer.",
+     "sources": [
+      "walsh16",
+      "patterson02",
+      "lundy"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Using The Grove, Lesson 4",
+       "h": "The Group Check-in",
+       "sub": "One shared answer, talked over together.",
+       "say": "This lesson shows how a grove checks in together. In a family it is called the Family Check-in. In a class it is the Class Check-in, on a team the Team Check-in, and in other groups the Group Check-in. They all work the same way."
+      },
+      {
+       "k": "points",
+       "h": "Before you begin",
+       "items": [
+        [
+         "Gather",
+         "Everyone who wants to join"
+        ],
+        [
+         "Unlock the grove",
+         "With the grove passcode"
+        ],
+        [
+         "Full or quick",
+         "24 questions, or 6"
+        ]
+       ],
+       "say": "Gather everyone who wants to join. Open the check-in tab, and unlock the grove with your passcode if it asks. Then choose the full check-in, twenty four questions, or the quick check-in, six questions. The full one takes about ten to twenty minutes. The quick one fits a weekly huddle, or the end of a gathering."
+      },
+      {
+       "k": "card",
+       "title": "What’s Changed Lately?",
+       "body": "Tap any that fit. This helps choose practices, and never changes a result.",
+       "tap": 3,
+       "btns": [
+        "A New Baby",
+        "A Move",
+        "A New School",
+        "Nothing Big"
+       ],
+       "say": "First comes one question for the whole group. What’s changed lately? Tap any that fit, like a new baby, a move, or nothing big. Families and groups often need different things first, depending on what has changed. So this helps The Grove suggest practices that fit, and it never changes a result."
+      },
+      {
+       "k": "card",
+       "title": "We say thank you out loud for what we have.",
+       "body": "Roots, What grounds us. Question 3 of 24.",
+       "tap": 0,
+       "btns": [
+        "Read Aloud",
+        "Why this question?"
+       ],
+       "say": "Then the questions come, one at a time, in large type. Tap Read Aloud, and the question is read to the whole room. Tap Why this question? to see what it is about. Some questions also have a tip for the leader."
+      },
+      {
+       "k": "points",
+       "h": "Answers in words",
+       "items": [
+        [
+         "Not Yet",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Often",
+         ""
+        ],
+        [
+         "Almost Always",
+         ""
+        ]
+       ],
+       "say": "Answers are words, never numbers. Not Yet. Sometimes. Often. Almost Always."
+      },
+      {
+       "k": "points",
+       "h": "Two more answers",
+       "items": [
+        [
+         "We See It Differently",
+         "It becomes a Thing to Talk About"
+        ],
+        [
+         "Pass",
+         "Skip it, with nothing lost"
+        ]
+       ],
+       "say": "Two more answers keep it honest and gentle. When you do not agree, tap We See It Differently. It becomes a Thing to Talk About later, never who saw it which way. And anyone can say pass. Tap Pass, and the question is skipped with nothing lost."
+      },
+      {
+       "k": "big",
+       "h": "Talk it over. Choose one answer together.",
+       "sub": "No one’s own answer is ever entered or kept.",
+       "say": "Here is the heart of it. Read the question aloud, talk it over, and choose one answer for the whole group. In a big group, the leader can tap the answer that fits what they hear in the room. No one’s own answer is ever entered, counted, or saved."
+      },
+      {
+       "k": "points",
+       "h": "When children take part",
+       "items": [
+        [
+         "Children Take Part",
+         "A kid line under each question"
+        ],
+        [
+         "Children’s Turn First",
+         "Kids speak before the grown-ups"
+        ],
+        [
+         "Any child can pass",
+         "And that is okay"
+        ]
+       ],
+       "say": "When children take part, turn on Children Take Part in Settings. A line in simple words shows under each question. You can also turn on Children’s Turn First, so kids speak before the grown-ups. When children speak first, their voices shape the shared answer. And any child can pass."
+      },
+      {
+       "k": "words",
+       "h": "Try one together",
+       "items": [
+        "We say thank you out loud for what we have.",
+        "Not Yet, Sometimes, Often, or Almost Always?"
+       ],
+       "beats": [
+        "Let us practice one question together, right now.",
+        "Here it is.",
+        "We say thank you out loud for what we have.",
+        "Talk it over for a moment.",
+        {
+         "t": "Then choose one answer together: Not Yet, Sometimes, Often, or Almost Always.",
+         "w": 15
+        }
+       ],
+       "say": "Let us practice one question together, right now. Here it is. We say thank you out loud for what we have. Talk it over for a moment. Then choose one answer together: Not Yet, Sometimes, Often, or Almost Always."
+      },
+      {
+       "k": "points",
+       "h": "What the check-in never does",
+       "items": [
+        [
+         "Never about one person",
+         "Always about we"
+        ],
+        [
+         "No questions about harm",
+         "Those stay in each person’s own tree"
+        ],
+        [
+         "Help lines on every screen",
+         "988 and 911"
+        ]
+       ],
+       "say": "The check-in is always about we, never about one person. It never asks about harm or danger in front of the group. Those questions belong in each person’s own tree app, where they stay private. And the help lines are on every check-in screen. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Check-in saved, locked with the grove.",
+       "sub": "Next: reading your results together.",
+       "say": "When the last question is answered, the check-in is saved, locked with the grove. Next comes the best part, reading your results together."
+      },
+      {
+       "k": "quiz",
+       "q": "What do you tap when your group does not agree?",
+       "opts": [
+        "Pass",
+        "We See It Differently",
+        "Almost Always"
+       ],
+       "right": 1,
+       "why": "We See It Differently becomes a Thing to Talk About, gently, and never about who saw it which way.",
+       "say": "Quick question. What do you tap when your group does not agree?"
+      }
+     ]
+    },
+    {
+     "id": "gr-u-results",
+     "n": 5,
+     "title": "Reading Your Results Together",
      "mins": 4,
+     "blurb": "Shared Strengths first, then Steady, Growing Edges, and Things to Talk About.",
+     "sources": [
+      "woolever04"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Using The Grove, Lesson 5",
+       "h": "Reading Your Results Together",
+       "sub": "Words only, never scores.",
+       "say": "After a check-in, your results appear right away. This lesson shows how to read them together, kindly, as a group."
+      },
+      {
+       "k": "big",
+       "h": "Words only. No numbers, no bars.",
+       "sub": "On the screen, and on paper.",
+       "say": "Results come in words only. There are no numbers, no bars, and no percentages, on the screen or on paper."
+      },
+      {
+       "k": "levels",
+       "levels": [
+        [
+         "Shared Strength",
+         "Keep it growing",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Ground to grow from",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Where we grow next",
+         "#B8612F"
+        ]
+       ],
+       "say": "Each of the six parts lands in one of three places. A Shared Strength, something you already do well together. Steady, good ground to grow from. Or a Growing Edge, where your group wants to grow next."
+      },
+      {
+       "k": "screen",
+       "app": "grove",
+       "app_name": "The Grove",
+       "title": "Our Family Check-in",
+       "tap": 4,
+       "rows": [
+        [
+         "Roots",
+         "Shared Strength",
+         "#5F7D48"
+        ],
+        [
+         "Bark",
+         "Steady",
+         "#8B5E1A"
+        ],
+        [
+         "Leaves",
+         "Growing Edge",
+         "#B8612F"
+        ],
+        [
+         "Things to Talk About",
+         ""
+        ],
+        [
+         "Make Our Growth Plan",
+         ""
+        ]
+       ],
+       "say": "The grove painting lights a marker for each part. Full light for a Shared Strength, soft light for Steady, and an open ring for a Growing Edge. Under the painting, the words come in order, and at the bottom is Make Our Growth Plan."
+      },
+      {
+       "k": "points",
+       "h": "Read it in this order",
+       "items": [
+        [
+         "Our Shared Strengths",
+         "First, and out loud"
+        ],
+        [
+         "Steady",
+         "In one line"
+        ],
+        [
+         "Our Growing Edges",
+         "With a few practice ideas"
+        ],
+        [
+         "Things to Talk About",
+         "Gentle starters"
+        ]
+       ],
+       "say": "Read it in this order. Start with your Shared Strengths, and read them out loud. Then Steady, in one line. Then your Growing Edges, each with a few practice ideas. Last, Things to Talk About, from any question you saw differently."
+      },
+      {
+       "k": "big",
+       "h": "No family is strong in all six.",
+       "sub": "Every grove has its own shape.",
+       "say": "Every result ends with the same kind of line. No family, and no group, is strong in all six. Every grove has its own shape. Strong groups usually show a few clear strengths, not every one."
+      },
+      {
+       "k": "points",
+       "h": "Things to Talk About",
+       "items": [
+        [
+         "Gentle conversation starters",
+         "From We See It Differently"
+        ],
+        [
+         "Never who said what",
+         "Only the question"
+        ],
+        [
+         "Now or another day",
+         "There is no rush"
+        ]
+       ],
+       "say": "Things to Talk About are gentle conversation starters. They show only the question, never who saw it which way. You can talk them over now, or another day."
+      },
+      {
+       "k": "words",
+       "h": "Name a strength",
+       "items": [
+        "Something we do well together is ...",
+        "One time we did it was ..."
+       ],
+       "beats": [
+        "Let us practice the most important step, right now.",
+        "Think of one thing your group does well together.",
+        "Then think of one time you saw it happen.",
+        {
+         "t": "Go around, and each person say theirs out loud.",
+         "w": 15
+        }
+       ],
+       "say": "Let us practice the most important step, right now. Think of one thing your group does well together. Then think of one time you saw it happen. Go around, and each person say theirs out loud."
+      },
+      {
+       "k": "points",
+       "h": "Our Seasons",
+       "items": [
+        [
+         "A ring for each full check-in",
+         "Told in words"
+        ],
+        [
+         "What grew",
+         "Like Growing Edge to Steady"
+        ],
+        [
+         "Quick check-ins",
+         "A short weekly line"
+        ]
+       ],
+       "say": "Each full check-in becomes a ring for the grove, under Our Seasons. The ring says in words what grew, like, Branches grew from Growing Edge to Steady. Quick check-ins show as a short weekly line."
+      },
+      {
+       "k": "points",
+       "h": "Print it, or keep it locked",
+       "items": [
+        [
+         "Print Our Check-in Summary",
+         "Words only"
+        ],
+        [
+         "Locked with the grove",
+         "On this device"
+        ],
+        [
+         "Help lines",
+         "On every result"
+        ]
+       ],
+       "say": "Tap Print Our Check-in Summary for one page, in words only. Everything else stays locked with the grove, on this device. And the help lines are on every result screen."
+      },
+      {
+       "k": "big",
+       "h": "Start with what is strong.",
+       "sub": "Then choose where to grow, together.",
+       "say": "Start with what is strong. Then choose where to grow, together. That is where the Growth Plan comes in."
+      },
+      {
+       "k": "quiz",
+       "q": "What do you read first?",
+       "opts": [
+        "Our Growing Edges",
+        "Our Shared Strengths",
+        "Things to Talk About"
+       ],
+       "right": 1,
+       "why": "Start with what you already do well together. Strengths first gives the whole group steady ground.",
+       "say": "Quick question. When you read your results, what do you read first?"
+      }
+     ]
+    },
+    {
+     "id": "gr-u-plan",
+     "n": 6,
+     "title": "Your Growth Plan",
+     "mins": 4,
+     "blurb": "One or two Growing Edges, two or three practices, and twelve weeks together.",
+     "sources": [
+      "patterson02",
+      "gollwitzer",
+      "fiese02",
+      "lundy"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Using The Grove, Lesson 6",
+       "h": "Your Growth Plan",
+       "sub": "About five minutes, together.",
+       "say": "A Growth Plan turns your check-in into a few small things to do together. It takes about five minutes. This lesson walks through each step."
+      },
+      {
+       "k": "card",
+       "title": "Make Our Growth Plan",
+       "body": "Built from your check-in, together, in about five minutes.",
+       "tap": 0,
+       "btns": [
+        "Make Our Plan"
+       ],
+       "say": "Open the Growth Plan tab, or tap Make Our Growth Plan right under your results. In a class it is called Our Class Plan, and on a team, Our Team Plan."
+      },
+      {
+       "k": "points",
+       "h": "Step 1: One or two Growing Edges",
+       "items": [
+        [
+         "Suggested from your check-in",
+         "Marked Suggested"
+        ],
+        [
+         "Any part can be chosen",
+         "Your group decides"
+        ],
+        [
+         "One or two is plenty",
+         "Small and steady grows most"
+        ]
+       ],
+       "say": "Step one. Pick one or two Growing Edges. The ones from your check-in are marked Suggested, and any part can be chosen. One or two is plenty. Small and steady grows the most."
+      },
+      {
+       "k": "points",
+       "h": "Step 2: Two or three practices",
+       "items": [
+        [
+         "Lightens the load",
+         "Something to set down"
+        ],
+        [
+         "Adds support",
+         "Someone to lean on"
+        ],
+        [
+         "A new way to see it",
+         "A fresh look"
+        ]
+       ],
+       "say": "Step two. Pick two or three practices for those parts. Some carry a tag. Lightens the load, for something you can set down. Adds support, for someone or something to lean on. And a new way to see it. One of each makes a strong mix."
+      },
+      {
+       "k": "points",
+       "h": "Step 3: Anchor each practice",
+       "items": [
+        [
+         "Dinner, the car, bedtime",
+         "For a family"
+        ],
+        [
+         "Morning Meeting, End of Day",
+         "For a class"
+        ],
+        [
+         "Team Huddle, End of Shift",
+         "For a team"
+        ]
+       ],
+       "say": "Step three. Anchor each practice to a time you are already together. A family might choose dinner, the car, or bedtime. A class might choose Morning Meeting. A team might choose the team huddle, or the end of a shift. Practices stick best when they ride along with something you already do."
+      },
+      {
+       "k": "points",
+       "h": "A few more steps",
+       "items": [
+        [
+         "One choice from the youngest",
+         "In a family with children"
+        ],
+        [
+         "Keep a Shared Strength going",
+         "Grow what already works"
+        ],
+        [
+         "Our Words",
+         "Optional, in your own words"
+        ]
+       ],
+       "say": "Then a few more steps. In a family with children taking part, the youngest picks one practice, so the plan is theirs too. If you have a Shared Strength, keep one of its practices going, so the plan grows what already works. And Our Words is an optional line about what this plan means to you, with room to add your own tradition or practice."
+      },
+      {
+       "k": "words",
+       "h": "Pick an anchor",
+       "items": [
+        "Dinner",
+        "The car",
+        "Bedtime",
+        "Morning Meeting",
+        "Team Huddle"
+       ],
+       "beats": [
+        "Let us practice step three together, right now.",
+        "Think of one time your group is already together each week.",
+        {
+         "t": "Say it out loud, and agree on one together.",
+         "w": 12
+        }
+       ],
+       "say": "Let us practice step three together, right now. Think of one time your group is already together each week. Say it out loud, and agree on one together."
+      },
+      {
+       "k": "points",
+       "h": "Twelve weeks together",
+       "items": [
+        [
+         "Week 4",
+         "A quick check-in"
+        ],
+        [
+         "Week 8",
+         "Another quick check-in"
+        ],
+        [
+         "Week 12",
+         "A full check-in, and a new ring"
+        ]
+       ],
+       "say": "Tap Save Our Plan. Your plan runs for twelve weeks. At week four and week eight, a quick check-in shows how it is going. At week twelve, a full check-in adds a new ring to the grove."
+      },
+      {
+       "k": "points",
+       "h": "Living the plan",
+       "items": [
+        [
+         "Together tab",
+         "Your plan’s practices on top"
+        ],
+        [
+         "We did this today",
+         "Every check-off grows the grove"
+        ],
+        [
+         "Nothing counts against you",
+         "Ever"
+        ]
+       ],
+       "say": "Your plan’s practices sit at the top of the Together tab, with the time you chose. When you do one, tap We did this today, and the grove grows. Nothing ever counts against you."
+      },
+      {
+       "k": "points",
+       "h": "Print it, or change it",
+       "items": [
+        [
+         "Print Our Growth Plan",
+         "For the fridge or the wall"
+        ],
+        [
+         "Print Our Practice Card",
+         "A small card to keep close"
+        ],
+        [
+         "Change Our Plan",
+         "Any time"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "Tap Print Our Growth Plan for one page, for the fridge, the classroom wall, or the team room. There is a small practice card too. And you can change your plan any time."
+      },
+      {
+       "k": "big",
+       "h": "Twelve Weeks Together",
+       "sub": "A Certificate of Completion for the whole group.",
+       "say": "When twelve weeks are done, The Grove marks it with Twelve Weeks Together. You can print a Certificate of Completion, named to your family, class, group, or team, and start a new season together."
+      },
+      {
+       "k": "quiz",
+       "q": "When does a plan practice stick best?",
+       "opts": [
+        "At a brand new time",
+        "At a time you are already together",
+        "Only on weekends"
+       ],
+       "right": 1,
+       "why": "Anchoring a practice to a time you already share, like dinner or the team huddle, helps it stick.",
+       "say": "Quick question. When does a plan practice stick best?"
+      }
+     ]
+    },
+    {
+     "id": "gr-u-together",
+     "n": 7,
+     "title": "Together",
+     "mins": 5,
      "blurb": "Family practices for every part of the tree, and how they grow the grove.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "Using The Grove, Lesson 3",
+       "eyebrow": "Using The Grove, Lesson 7",
        "h": "Together",
        "sub": "Things your family does side by side.",
        "say": "Together is where your family finds things to do side by side. Small things, like a walk, a game, or a good question at dinner. This lesson shows how it works."
@@ -29006,12 +29851,15 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
-       "tap": 2,
+       "tap": 3,
        "note": {
         "h": "Together",
         "p": "Things your family does side by side. Each one grows the grove. Suggestions only."
@@ -29035,7 +29883,7 @@ window.GG_LEARN = {
          "Then the twelve begin again"
         ]
        ],
-       "say": "At the top, you will find this week’s theme, with one practice picked for it. There are twelve themes, like Start where you are, and Love between us. Each week brings the next one, and after twelve weeks, they begin again."
+       "say": "At the top, you will find this week’s theme, with one practice picked for it. There are twelve themes, like Start where you are, and Love between us. Each week brings the next one, and after twelve weeks, they begin again. Once you make a Growth Plan, your plan’s practices sit at the top instead."
       },
       {
        "k": "six",
@@ -29048,7 +29896,7 @@ window.GG_LEARN = {
         "Kitchen Dance Party",
         "Plant a Seed"
        ],
-       "say": "Below the theme, practices are grouped by the six parts of the tree. Roots, Trunk, Bark, Branches, Leaves, and Fruit. Tap a part to see just its practices, or tap All parts to see them all."
+       "say": "Below the theme, practices are grouped by the six parts of the tree. Roots, Trunk, Bark, Branches, Leaves, and Fruit. Tap a part to see just its practices, or tap All parts to see them all. Each kind of grove has its own practices, so a class, a group, or a team sees ones made for them."
       },
       {
        "k": "points",
@@ -29077,22 +29925,22 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Game Night",
        "body": "Play one game together, and let the youngest pick. For little ones: Play a game together. The youngest picks!",
+       "tap": 1,
        "btns": [
         "We did this today",
         "Show me how"
        ],
-       "tap": 1,
        "say": "Each practice has a short line about what to do, and a line for little ones in simpler words. Tap Show me how to see the steps, one at a time."
       },
       {
        "k": "card",
        "title": "Game Night",
        "body": "The youngest picks the game. Everyone plays, grown-ups included. Laugh at the mistakes, especially your own.",
+       "tap": 0,
        "btns": [
         "We did this today",
         "Hide how"
        ],
-       "tap": 0,
        "result": "Nice work. The grove grew today.",
        "say": "When your family has done it, tap We did this today. The grove grows, and a note says, nice work, the grove grew today. If you tapped it by mistake, tap it again to undo."
       },
@@ -29187,7 +30035,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-week",
-     "n": 4,
+     "n": 8,
      "title": "This Week in The Grove",
      "mins": 5,
      "blurb": "The weekly theme, this week on the wall, and where each journal lives.",
@@ -29195,7 +30043,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "Using The Grove, Lesson 4",
+       "eyebrow": "Using The Grove, Lesson 8",
        "h": "This Week in The Grove",
        "sub": "One week at a time, together.",
        "say": "The Grove moves one week at a time. This lesson shows what each new week brings, and where the past weeks go. Gather the people you live with, and watch together."
@@ -29212,17 +30060,20 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
-       "tap": 2,
+       "tap": 3,
        "note": {
         "h": "This week’s theme",
         "p": "One featured practice for the whole family, picked for this week."
        },
-       "say": "Start in Together. At the top, you will see this week’s theme, with one featured practice picked to match it. It is a simple place to begin."
+       "say": "Start in Together. At the top, you will see this week’s theme, with one featured practice picked to match it. It is a simple place to begin. When your grove has a Growth Plan, the plan’s practices take that spot."
       },
       {
        "k": "points",
@@ -29251,11 +30102,11 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Gratitude Round",
        "body": "At dinner or bedtime, everyone names one thing they’re thankful for today.",
+       "tap": 0,
        "btns": [
         "We did this today",
         "Show me how"
        ],
-       "tap": 0,
        "result": "Nice work. The grove grew today.",
        "say": "Here is the featured practice for week one, the Gratitude Round. Tap Show me how for the steps. When your family has done it, tap We did this today. The grove grows that day. Tapped it by mistake? Tap Done today, Undo."
       },
@@ -29299,12 +30150,15 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
-       "tap": 1,
+       "tap": 5,
        "note": {
         "h": "This week",
         "p": "Posts, growth, and things you did together, newest first."
@@ -29390,15 +30244,15 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-wall",
-     "n": 5,
+     "n": 9,
      "title": "The Wall",
-     "mins": 4,
+     "mins": 5,
      "blurb": "Posts, reactions, and cheering each other on, kindly.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "Using The Grove, Lesson 5",
+       "eyebrow": "Using The Grove, Lesson 9",
        "h": "The Wall",
        "sub": "Cheer each other on.",
        "say": "The Wall is where your family cheers each other on. This lesson shows how to post, how to react, and how to keep it kind."
@@ -29409,17 +30263,20 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
-       "tap": 1,
+       "tap": 5,
        "note": {
         "h": "The Wall",
         "p": "Short posts, growth from each tree, and things you did together."
        },
-       "say": "Tap The Wall. It shows this week, with the newest things at the top."
+       "say": "Tap The Wall. It shows this week, with the newest things at the top. The Wall is part of every Family grove. In a class grove, the teacher can turn on Teacher Notes instead, and other groves can turn on a wall for the leader’s notes, in Settings."
       },
       {
        "k": "points",
@@ -29444,15 +30301,16 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Who’s here?",
        "body": "To post, react, or check off a family practice, choose your picture first.",
+       "tap": 0,
        "btns": [
         "Who’s here?"
        ],
-       "tap": 0,
        "say": "Looking around is open to everyone. To post or react, tap Who’s here, and choose your picture. Type your passcode, or tap your three secret pictures if that is how you open. Then the top of the page says Here as, and your name, with Switch person and Lock."
       },
       {
        "k": "card",
        "title": "Post to the wall as Sam",
+       "tap": 0,
        "fields": [
         [
          "",
@@ -29462,7 +30320,6 @@ window.GG_LEARN = {
        "btns": [
         "Post"
        ],
-       "tap": 0,
        "result": "Posted to the wall.",
        "say": "To post, write a few words in the box, then tap Post. Keep it short and kind, like, proud of you for the walk today. A post holds up to two hundred eighty characters, room for a few short sentences."
       },
@@ -29602,7 +30459,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-library",
-     "n": 6,
+     "n": 10,
      "title": "The Practice Library",
      "mins": 4,
      "blurb": "Every Grounded practice, how to find one, and how to make it yours.",
@@ -29610,7 +30467,7 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "Using The Grove, Lesson 6",
+       "eyebrow": "Using The Grove, Lesson 10",
        "h": "The Practice Library",
        "sub": "Every Grounded practice, with how to do it.",
        "say": "The Grove holds the Practice Library, every Grounded practice in one place, with how to do it. This lesson shows how to find one, and how to make it part of your own tree."
@@ -29657,6 +30514,7 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Practice Library",
        "body": "Every Grounded practice, with how to do it.",
+       "tap": 0,
        "fields": [
         [
          "Search",
@@ -29666,7 +30524,6 @@ window.GG_LEARN = {
        "btns": [
         "Show me how"
        ],
-       "tap": 0,
        "result": "Why it helps. How to do it. If it’s hard.",
        "say": "Inside the library there is a search box too. Try sleep, calm, friends, or grief. Practices come up first. Under each one, tap Show me how."
       },
@@ -29807,18 +30664,18 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-private",
-     "n": 7,
+     "n": 11,
      "title": "Your Tree Is Yours, the Grove Is Ours",
-     "mins": 5,
+     "mins": 6,
      "blurb": "What the grove shows, what stays in your own tree, and how to keep it all safe.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "Using The Grove, Lesson 7",
+       "eyebrow": "Using The Grove, Lesson 11",
        "h": "Your Tree Is Yours, the Grove Is Ours",
        "sub": "What we share, and what stays yours.",
-       "say": "This last lesson is about what The Grove shares with your family, what stays in your own tree, and how to keep it all safe."
+       "say": "This lesson is about what The Grove shares with your family, what stays in your own tree, and how to keep it all safe."
       },
       {
        "k": "big",
@@ -29997,9 +30854,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Groves that link across phones are coming later.",
-       "sub": "For now, your grove lives on this device.",
-       "say": "Groves that link across different phones are coming later. For now, your family grove lives right here, on this device."
+       "h": "Your groves live on this device.",
+       "sub": "Up to six, each with its own kind and lock.",
+       "say": "Everything in The Grove lives right here, on this device. One device can hold up to six groves, each with its own kind and its own lock, like your family grove, and a class or group grove. Family on other phones can share their tree with you from their own tree app, with Share to Family."
       },
       {
        "k": "quiz",
@@ -30012,6 +30869,1218 @@ window.GG_LEARN = {
        "right": 1,
        "why": "Only the big picture shows: days tended, rings, and which parts you tended, and only with your switch on.",
        "say": "Last question. What does the grove show about your tree?"
+      }
+     ]
+    },
+    {
+     "id": "gr-u-lock",
+     "n": 12,
+     "title": "Keeping Your Grove Private",
+     "mins": 4,
+     "blurb": "What a grove keeps, what the passcode locks, and what is never asked.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Using The Grove, Lesson 12",
+       "h": "Keeping Your Grove Private",
+       "sub": "What is kept, what is locked, and what is never asked.",
+       "say": "This lesson is about privacy in The Grove. What a grove keeps, what is locked, and what is never asked at all."
+      },
+      {
+       "k": "big",
+       "h": "Nothing about any one person is asked or kept.",
+       "sub": "Only what the group chose together.",
+       "say": "Start with the most important thing. Nothing about any one person is ever asked or kept. A grove keeps only what the group chose together."
+      },
+      {
+       "k": "points",
+       "h": "What a grove keeps",
+       "items": [
+        [
+         "One shared answer",
+         "For each question"
+        ],
+        [
+         "The results and the plan",
+         "In words"
+        ],
+        [
+         "Two circle choices",
+         "What’s Changed Lately, Who’s in Our Circle"
+        ]
+       ],
+       "say": "Here is what a grove keeps. The one shared answer for each question. The results and the Growth Plan, in words. And the group’s choices for What’s Changed Lately, and Who’s in Our Circle."
+      },
+      {
+       "k": "points",
+       "h": "Locked with the grove passcode",
+       "items": [
+        [
+         "On from the start",
+         "As recommended"
+        ],
+        [
+         "Stays on this device",
+         "Never sent anywhere"
+        ],
+        [
+         "No one can recover it",
+         "So keep it somewhere safe"
+        ]
+       ],
+       "say": "Those are locked with the grove passcode. The lock is on when you plant a grove, as recommended. The passcode stays on this device. Grow With Grounded never sees it, and cannot recover it. So keep it somewhere safe, and share it only with the people who lead the grove."
+      },
+      {
+       "k": "card",
+       "title": "Unlock This Grove",
+       "body": "Enter your grove passcode. The check-ins, the plan, and the circle choices are locked with it.",
+       "tap": 0,
+       "fields": [
+        [
+         "Grove passcode",
+         ""
+        ]
+       ],
+       "btns": [
+        "Unlock",
+        "Forgot the passcode?"
+       ],
+       "say": "When the grove is locked, the check-in and the plan show a lock. Tap Unlock, and enter the passcode. When you are done, tap Lock at the top, so the next person who picks up the device sees only the open parts. If the passcode is ever lost, the locked part starts fresh, and the practices you did together stay."
+      },
+      {
+       "k": "points",
+       "h": "What stays open on this device",
+       "items": [
+        [
+         "The grove’s name and kind",
+         ""
+        ],
+        [
+         "Practices done together",
+         "And the grove’s growth"
+        ],
+        [
+         "The Wall",
+         "In a Family grove"
+        ]
+       ],
+       "say": "A few things stay open on this device, as before. The grove’s name and kind. The practices you did together, and the grove’s growth. And in a Family grove, The Wall."
+      },
+      {
+       "k": "points",
+       "h": "Each kind keeps only what fits",
+       "items": [
+        [
+         "Family",
+         "Trees show the big picture only"
+        ],
+        [
+         "Faith Community and Small Group",
+         "Members share trees only if they choose"
+        ],
+        [
+         "Classroom and Team",
+         "No names at all"
+        ]
+       ],
+       "say": "Each kind keeps only what fits it. In a Family grove, each person’s tree shows the big picture only, and only if their switch is on. A faith community or small group keeps no member list, and members can share their own tree from their tree app, only if they choose. A class or a team grove keeps no names at all."
+      },
+      {
+       "k": "words",
+       "h": "Our privacy promise",
+       "items": [
+        "What’s shared here stays here.",
+        "Anyone can pass, any time."
+       ],
+       "beats": [
+        "Let us say a privacy promise together, right now.",
+        "Here it is.",
+        {
+         "t": "All together: what’s shared here stays here, and anyone can pass, any time.",
+         "w": 8
+        }
+       ],
+       "say": "Let us say a privacy promise together, right now. Here it is. All together: what’s shared here stays here, and anyone can pass, any time."
+      },
+      {
+       "k": "points",
+       "h": "Keep It Safe",
+       "items": [
+        [
+         "Save to a File",
+         "Locked with a passcode"
+        ],
+        [
+         "Back Up Everything",
+         "In How it works"
+        ],
+        [
+         "Clear This Grove",
+         "Removes it from this device"
+        ]
+       ],
+       "say": "To keep a grove safe, open Settings, and find Keep It Safe. Save to a File makes one file locked with a passcode, to keep, or to move to another device. Back Up Everything, in How it works, saves every grove and profile at once. And Clear This Grove removes one grove and everything in it from this device."
+      },
+      {
+       "k": "big",
+       "h": "If someone may be in danger, get help right away.",
+       "sub": "Call or text 988. In danger now? Call 911.",
+       "say": "Privacy has one limit, and every group should know it. If someone may be in danger, get help right away. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. In Minnesota, if a vulnerable adult may be harmed, neglected, or taken advantage of, call MAARC at one eight four four, eight eight zero, one five seven four."
+      },
+      {
+       "k": "quiz",
+       "q": "Who can recover a lost grove passcode?",
+       "opts": [
+        "Grow With Grounded",
+        "No one, so keep it somewhere safe",
+        "Anyone who asks"
+       ],
+       "right": 1,
+       "why": "The passcode stays on the device. Grow With Grounded never sees it and cannot recover it.",
+       "say": "Last question. Who can recover a lost grove passcode?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "grove-lead",
+   "title": "Leading a Grove",
+   "who": "For the grown-ups, teachers, pastors, and team leads who lead a grove",
+   "certTitle": "The Grove: Leading a Grove",
+   "certLine": "For finishing every lesson on leading a family, class, faith community, group, or team grove.",
+   "lessons": [
+    {
+     "id": "gr-l-kids",
+     "n": 1,
+     "title": "Kids in the Circle",
+     "mins": 4,
+     "blurb": "Space, a voice, someone listening, and a real say, for every child in the grove.",
+     "sources": [
+      "lundy"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Leading a Grove, Lesson 1",
+       "h": "Kids in the Circle",
+       "sub": "Space, a voice, and a real say.",
+       "say": "This lesson is for the grown-ups who lead a grove with children in it. A family, a class, a Sunday school, or a youth group. It shows how to give kids a real place in the circle."
+      },
+      {
+       "k": "big",
+       "h": "Kids notice things grown-ups miss.",
+       "sub": "Their voices belong in the shared answer.",
+       "say": "Kids notice things grown-ups miss. When children help choose the shared answer, the answer is truer for everyone."
+      },
+      {
+       "k": "points",
+       "h": "Four things kids need in a circle",
+       "items": [
+        [
+         "Space",
+         "A real turn to speak"
+        ],
+        [
+         "A voice",
+         "Words that fit their age"
+        ],
+        [
+         "Someone listening",
+         "Grown-ups who truly hear it"
+        ],
+        [
+         "A real say",
+         "Their choice changes something"
+        ]
+       ],
+       "say": "Kids need four things in a circle. Space, a real turn to speak. A voice, with words that fit their age. Someone listening, grown-ups who truly hear it. And a real say, where their choice changes something."
+      },
+      {
+       "k": "points",
+       "h": "Turn these on in Settings",
+       "items": [
+        [
+         "Children Take Part",
+         "Kid lines on questions and practices"
+        ],
+        [
+         "Children’s Turn First",
+         "Kids answer before grown-ups"
+        ],
+        [
+         "Words that invite",
+         "The kid lines never assume"
+        ]
+       ],
+       "say": "In Settings, turn on Children Take Part. A line in simple words shows under each question, and under the practices too. Then turn on Children’s Turn First. A reminder on each question asks the children to answer before the grown-ups speak, so grown-ups do not set the answer for them. The kid lines invite, and never assume."
+      },
+      {
+       "k": "points",
+       "h": "A child’s no counts",
+       "items": [
+        [
+         "Any child can pass",
+         "Any question, any time"
+        ],
+        [
+         "No one has to explain",
+         "An answer or a feeling"
+        ],
+        [
+         "Invite, never push",
+         "Next time is fine"
+        ]
+       ],
+       "say": "A child can pass any question, any time, and no one has to explain. Invite, and never push. A child who passes today often joins in next time."
+      },
+      {
+       "k": "points",
+       "h": "One choice from the youngest",
+       "items": [
+        [
+         "In the Growth Plan",
+         "A step of its own"
+        ],
+        [
+         "The youngest picks",
+         "One practice"
+        ],
+        [
+         "The Youngest’s Choice",
+         "It shows on the plan"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         1
+        ]
+       },
+       "say": "In a family’s Growth Plan, there is a step called One Choice From the Youngest. Let the youngest pick one practice, and it shows on the plan as The Youngest’s Choice. Now the plan is theirs too."
+      },
+      {
+       "k": "words",
+       "h": "Kids first",
+       "items": [
+        "Kids: what is one thing we do really well together?",
+        "Grown-ups: listen first."
+       ],
+       "cue": {
+        "at": [
+         2,
+         3
+        ]
+       },
+       "beats": [
+        "Let us practice kids first, right now.",
+        "Kids, here is a question just for you.",
+        "What is one thing we do really well together?",
+        {
+         "t": "Kids answer first, and grown-ups just listen.",
+         "w": 15
+        }
+       ],
+       "say": "Let us practice kids first, right now. Kids, here is a question just for you. What is one thing we do really well together? Kids answer first, and grown-ups just listen."
+      },
+      {
+       "k": "points",
+       "h": "When a child shares something big",
+       "items": [
+        [
+         "Thank them",
+         "Thanks for telling us"
+        ],
+        [
+         "Talk later, one on one",
+         "Never in front of the group"
+        ],
+        [
+         "Not safe?",
+         "A grown-up gets help right away"
+        ]
+       ],
+       "say": "Sometimes a child shares something big in the circle. Thank them, and say you would like to talk more later, just the two of you. Never ask a child to tell more in front of the group. If a child may not be safe, a grown-up gets help right away. In a school, follow your school’s plan. Anyone can call or text nine eight eight. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "points",
+       "h": "A tree of their own",
+       "items": [
+        [
+         "Maple, Aspen, and Pine",
+         "Trees for kids and teens"
+        ],
+        [
+         "A grown-up agrees",
+         "For each child"
+        ],
+        [
+         "The grove sees the big picture",
+         "Never their answers"
+        ]
+       ],
+       "say": "In a family, kids can also tend a tree of their own. Maple for kids, Aspen for middle schoolers, and Pine for high schoolers, with a grown-up who agrees for them. Their answers stay in their own tree. The grove sees only the big picture."
+      },
+      {
+       "k": "big",
+       "h": "A circle where kids are heard grows strong.",
+       "sub": "Space, a voice, someone listening, and a real say.",
+       "say": "A circle where kids are heard grows strong. Give them space, a voice, someone listening, and a real say."
+      },
+      {
+       "k": "quiz",
+       "q": "Why turn on Children’s Turn First?",
+       "opts": [
+        "So the kids finish faster",
+        "So grown-ups do not set the answer for them",
+        "So kids can skip the question"
+       ],
+       "right": 1,
+       "why": "When children speak first, their voices shape the shared answer.",
+       "say": "Quick question. Why turn on Children’s Turn First?"
+      }
+     ]
+    },
+    {
+     "id": "gr-l-class",
+     "n": 2,
+     "title": "Leading a Class Grove",
+     "mins": 5,
+     "blurb": "Class life in a circle, about ten minutes, with no names and no student answers kept.",
+     "sources": [
+      "rcmm",
+      "pranis"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Leading a Grove, Lesson 2",
+       "h": "Leading a Class Grove",
+       "sub": "Class life, in a circle, about ten minutes.",
+       "say": "This lesson is for teachers and youth program leaders. It shows how a Classroom grove works, and how to lead it in about ten minutes."
+      },
+      {
+       "k": "points",
+       "h": "A Classroom grove is about class life",
+       "items": [
+        [
+         "How we learn, play, and get along",
+         "Together, as a class"
+        ],
+        [
+         "Plain words",
+         "Every question"
+        ],
+        [
+         "Only about the class",
+         "Never home or anyone’s own story"
+        ]
+       ],
+       "say": "A Classroom grove is about the life of your class together. How you learn, play, rest, and get along. It uses Plain words. Every question is about the class, never about home, family, faith, or anyone’s own feelings or health."
+      },
+      {
+       "k": "points",
+       "h": "No names, no student answers",
+       "items": [
+        [
+         "No student names",
+         "None are ever kept"
+        ],
+        [
+         "One shared answer",
+         "The class chooses"
+        ],
+        [
+         "Teacher Notes",
+         "Only the teacher writes"
+        ]
+       ],
+       "say": "A class grove keeps no student names, and no member list. The class chooses one shared answer for each question, and no student’s own answer is ever written down or saved. In place of The Wall, you can turn on Teacher Notes in Settings. Only the teacher writes there."
+      },
+      {
+       "k": "card",
+       "title": "Classroom Family Notice",
+       "body": "Dear families, our class is using The Grove to talk about our life together as a class.",
+       "tap": 0,
+       "btns": [
+        "Print"
+       ],
+       "say": "Before you begin, print the Classroom Family Notice from Settings. It tells families what the class grove is, what the questions are about, and that no names or answers are kept. Send it home, and follow your school’s own rules for notices like this one."
+      },
+      {
+       "k": "flow",
+       "h": "The circle shape",
+       "steps": [
+        [
+         "Greet",
+         "By name"
+        ],
+        [
+         "Share",
+         "One quick round"
+        ],
+        [
+         "Do",
+         "A short activity"
+        ],
+        [
+         "Close",
+         "One good thing"
+        ]
+       ],
+       "say": "Many teachers already know this shape. Greet each other by name. Share in one quick round. Do a short activity together. Then close."
+      },
+      {
+       "k": "points",
+       "h": "The Class Check-in, in a circle",
+       "items": [
+        [
+         "Read each question aloud",
+         "Or tap Read Aloud"
+        ],
+        [
+         "Talk it over",
+         "Then choose one answer for the class"
+        ],
+        [
+         "Students can pass",
+         "Any time"
+        ]
+       ],
+       "say": "For the Class Check-in, gather in the circle. Read each question aloud, or tap Read Aloud. Let the class talk it over, then choose the one answer that fits the room best. Students can pass any time. The quick check-in is six questions, just right for a Friday circle."
+      },
+      {
+       "k": "words",
+       "h": "Questions like these",
+       "items": [
+        "Everyone in our class gets a turn to talk.",
+        "We take movement breaks during the day.",
+        "We celebrate when our class grows or tries something new."
+       ],
+       "say": "The questions sound like these. Everyone in our class gets a turn to talk. We take movement breaks during the day. We celebrate when our class grows, or tries something new."
+      },
+      {
+       "k": "words",
+       "h": "Name Greeting",
+       "items": [
+        "Good morning, and a name.",
+        "Pass it around the circle."
+       ],
+       "beats": [
+        "Let us try the first part of the circle, right now.",
+        "Turn to the person beside you.",
+        "Say good morning, and say their name.",
+        {
+         "t": "Pass it all the way around the room.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try the first part of the circle, right now. Turn to the person beside you. Say good morning, and say their name. Pass it all the way around the room."
+      },
+      {
+       "k": "points",
+       "h": "Practices made for classes",
+       "items": [
+        [
+         "Name Greeting",
+         "Branches"
+        ],
+        [
+         "Movement Break",
+         "Leaves"
+        ],
+        [
+         "Talking Piece Round",
+         "Bark"
+        ],
+        [
+         "Goodbye Circle",
+         "Fruit"
+        ]
+       ],
+       "say": "Together has practices made for classes. A Name Greeting to start the day. A Movement Break between lessons. A Talking Piece Round, where only the person holding the piece speaks. And a Goodbye Circle at the end of the day. Your Class Plan anchors them to times like Morning Meeting, or End of Day."
+      },
+      {
+       "k": "points",
+       "h": "If something big comes up",
+       "items": [
+        [
+         "Thank the student",
+         "Talk privately later"
+        ],
+        [
+         "Follow your school’s plan",
+         "Counselor, nurse, or office"
+        ],
+        [
+         "Danger right now?",
+         "Call 911"
+        ]
+       ],
+       "say": "If a student shares something big, thank them, and talk privately later. Follow your school’s own plan, and bring in the school counselor or nurse. If someone is in danger right now, call nine one one, and use your school’s emergency plan. Anyone can call or text nine eight eight."
+      },
+      {
+       "k": "points",
+       "h": "At the end of the year",
+       "items": [
+        [
+         "Close Our Class Grove",
+         "In Settings"
+        ],
+        [
+         "A goodbye circle",
+         "And the certificate"
+        ],
+        [
+         "Then it is cleared",
+         "Ready for next year"
+        ]
+       ],
+       "say": "At the end of the year, tap Close Our Class Grove in Settings. Hold a goodbye circle, print your certificate, and then the class grove is cleared from the device, ready for next year."
+      },
+      {
+       "k": "quiz",
+       "q": "What are a Classroom grove’s questions about?",
+       "opts": [
+        "Each student’s home",
+        "The life of the class together",
+        "Each student’s feelings"
+       ],
+       "right": 1,
+       "why": "A Classroom grove asks only about class life, in Plain words, and keeps no names or student answers.",
+       "say": "Quick question. What are a Classroom grove’s questions about?"
+      }
+     ]
+    },
+    {
+     "id": "gr-l-faith",
+     "n": 3,
+     "title": "Leading a Faith Community or Small Group Grove",
+     "mins": 6,
+     "blurb": "Agreements first, honest talk in the middle, and endings marked well.",
+     "sources": [
+      "tuckman65",
+      "woolever04",
+      "pranis"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Leading a Grove, Lesson 3",
+       "h": "Leading a Faith Community or Small Group Grove",
+       "sub": "Belonging, honest talk, and ending well.",
+       "say": "This lesson is for pastors, teachers, and group leaders. It shows how to lead a grove for a faith community or a small group."
+      },
+      {
+       "k": "points",
+       "h": "Two kinds, one way of leading",
+       "items": [
+        [
+         "Faith Community",
+         "Congregation, class, or youth group"
+        ],
+        [
+         "Small or Discussion Group",
+         "Support, study, or residents’ group"
+        ],
+        [
+         "Both",
+         "One shared answer, never anyone’s own"
+        ]
+       ],
+       "say": "A Faith Community grove fits a congregation, a Sunday school or study class, a youth group, or a ministry team. A Small or Discussion Group grove fits a support group, a book or study group, a caregivers’ circle, or a residents’ group. Both work the same way: one shared answer, talked over together, never anyone’s own."
+      },
+      {
+       "k": "points",
+       "h": "Faith or Plain words",
+       "items": [
+        [
+         "Faith Community",
+         "Starts with Faith words"
+        ],
+        [
+         "Small Group",
+         "Chooses in its first session"
+        ],
+        [
+         "Either one",
+         "Switch in Settings, any time"
+        ]
+       ],
+       "say": "A Faith Community grove starts with Faith words, and welcomes all faith traditions and everything in-between. Plain words are one tap away in Settings. A small group chooses Faith or Plain together in its first session. Either way, what matters is whether faith or meaning is a help to the group, never whether everyone believes the same thing."
+      },
+      {
+       "k": "points",
+       "h": "Start with agreements",
+       "items": [
+        [
+         "Print Group Agreements",
+         "From Settings"
+        ],
+        [
+         "Read them at the start",
+         "Every time you gather"
+        ],
+        [
+         "What’s shared here stays here",
+         "And anyone can pass"
+        ]
+       ],
+       "say": "Start with Group Agreements. Print them from Settings, and read them aloud at the start of each time together. What’s shared here stays here. Anyone can pass, any time. We listen more than we fix. And if someone may be in danger, we get help right away. Groups that set agreements early find that honest talk comes more easily later."
+      },
+      {
+       "k": "points",
+       "h": "The Group Check-in in a room",
+       "items": [
+        [
+         "Pairs first",
+         "Then the whole group"
+        ],
+        [
+         "The leader reads the room",
+         "In a big group"
+        ],
+        [
+         "We See It Differently",
+         "Hold it for later"
+        ]
+       ],
+       "say": "For the Group Check-in, read each question aloud. People can talk it over in pairs first, then as a whole group. In a big group, the leader taps the answer that fits what they hear in the room. When people see it differently, tap We See It Differently, and hold it for a later conversation."
+      },
+      {
+       "k": "words",
+       "h": "Questions like these",
+       "items": [
+        "New people are welcomed here.",
+        "Everyone gets a turn to speak, and it’s okay to pass."
+       ],
+       "say": "The questions fit your kind. A faith community might talk over, new people are welcomed here. A small group might talk over, everyone gets a turn to speak, and it’s okay to pass. Strong communities usually show a few clear strengths, not all of them, so every answer is useful."
+      },
+      {
+       "k": "words",
+       "h": "A talking piece round",
+       "items": [
+        "Hold the piece, and speak.",
+        "Or pass it on."
+       ],
+       "beats": [
+        "Let us try a short round, right now.",
+        "Pick up any small object to be your talking piece.",
+        "Here is the question: what is one thing that helps you feel welcome in a group?",
+        "Pass the piece around the circle.",
+        {
+         "t": "Only the person holding it speaks, or they pass.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try a short round, right now. Pick up any small object to be your talking piece. Here is the question: what is one thing that helps you feel welcome in a group? Pass the piece around the circle. Only the person holding it speaks, or they pass."
+      },
+      {
+       "k": "points",
+       "h": "Members’ trees, only if they choose",
+       "items": [
+        [
+         "Share to Family",
+         "From their own tree app"
+        ],
+        [
+         "Never required",
+         "Ever"
+        ],
+        [
+         "The Wall",
+         "Off until a leader turns it on"
+        ]
+       ],
+       "say": "In these groves, members can share their own tree into the grove from their own tree app, with Share to Family. It is never required. A shared tree is a snapshot, and they can share again any time. The Wall is off at first, and a leader can turn it on in Settings for short notes."
+      },
+      {
+       "k": "points",
+       "h": "Ending well",
+       "items": [
+        [
+         "Mark every ending",
+         "A last circle"
+        ],
+        [
+         "Closing Thanks",
+         "One thing to take with you"
+        ],
+        [
+         "Blessing for the Road",
+         "Or Send-Off Words"
+        ]
+       ],
+       "say": "Every group has endings. Someone moves away, a leader leaves, or a series is done. Mark them. Closing Thanks lets each person name one thing they are taking with them. Blessing for the Road, or Send-Off Words in Plain wording, sends someone off with good words from everyone. And under Where to Grow Next, print the Take Home Card, so members can start a Family grove of their own at home."
+      },
+      {
+       "k": "points",
+       "h": "When someone is struggling",
+       "items": [
+        [
+         "Listen, then talk privately",
+         "Never in front of the group"
+        ],
+        [
+         "Danger right now?",
+         "Call 911"
+        ],
+        [
+         "A vulnerable adult at risk?",
+         "MAARC 1-844-880-1574"
+        ]
+       ],
+       "say": "When someone is struggling, listen, and then talk with them privately, never in front of the group. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. In Minnesota, if a vulnerable adult may be harmed, neglected, or taken advantage of, call MAARC at one eight four four, eight eight zero, one five seven four."
+      },
+      {
+       "k": "big",
+       "h": "Agreements first. Endings marked well.",
+       "sub": "Honest talk grows in between.",
+       "say": "Agreements first, and endings marked well. Honest talk grows in between."
+      },
+      {
+       "k": "quiz",
+       "q": "What do you read aloud at the start of each time together?",
+       "opts": [
+        "Last season’s results",
+        "Your Group Agreements",
+        "Everyone’s names"
+       ],
+       "right": 1,
+       "why": "Reading the Group Agreements each time helps everyone know the room is safe to speak in, and that anyone can pass.",
+       "say": "Quick question. What do you read aloud at the start of each time together?"
+      }
+     ]
+    },
+    {
+     "id": "gr-l-team",
+     "n": 4,
+     "title": "Leading a Team Grove",
+     "mins": 4,
+     "blurb": "Speaking up, sharing the load, and resting after hard days, in ten to fifteen minutes.",
+     "sources": [
+      "edmondson99"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Leading a Grove, Lesson 4",
+       "h": "Leading a Team Grove",
+       "sub": "Speaking up, sharing the load, and rest.",
+       "say": "This lesson is for team leads. A hospice or hospital team, a school staff, a church staff, or a nonprofit team. It shows how to lead a Team grove in ten to fifteen minutes."
+      },
+      {
+       "k": "points",
+       "h": "A Team grove is about the team",
+       "items": [
+        [
+         "How we work and rest together",
+         "Never one person"
+        ],
+        [
+         "Plain words",
+         "Faith only if the team chooses"
+        ],
+        [
+         "No names",
+         "No member list at all"
+        ]
+       ],
+       "say": "A Team grove is about how your team works and rests together, never about one person. It starts with Plain words, and the team can choose Faith words in Settings if it wants them. It keeps no names, and no member list."
+      },
+      {
+       "k": "words",
+       "h": "Questions like these",
+       "items": [
+        "On our team, we can speak up about a mistake or a worry.",
+        "Our workload leaves room to rest after hard days.",
+        "We know why our work matters."
+       ],
+       "say": "The Team Check-in asks about things like these. On our team, we can speak up about a mistake or a worry. Our workload leaves room to rest after hard days. And, we know why our work matters."
+      },
+      {
+       "k": "big",
+       "h": "Go first with honesty.",
+       "sub": "Thank anyone who names something hard.",
+       "say": "As the lead, your first answer sets the tone. Go first with honesty, and thank anyone who names something hard. Teams learn more when people feel safe to speak up about a worry or a mistake."
+      },
+      {
+       "k": "points",
+       "h": "When to run it",
+       "items": [
+        [
+         "The quick check-in",
+         "Six questions, at a huddle"
+        ],
+        [
+         "The full check-in",
+         "Each new season"
+        ],
+        [
+         "Our Team Plan",
+         "Two or three practices"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         2
+        ]
+       },
+       "say": "Run the quick Team Check-in at a team huddle or a weekly meeting. It is six questions. Run the full one at the start of each season, and make Our Team Plan from it, with two or three practices anchored to times like the start of a shift."
+      },
+      {
+       "k": "points",
+       "h": "Practices made for teams",
+       "items": [
+        [
+         "Speak Up Round",
+         "Bark"
+        ],
+        [
+         "Name the Load",
+         "Bark"
+        ],
+        [
+         "Pause After a Death",
+         "Roots"
+        ],
+        [
+         "Walking Meeting",
+         "Leaves"
+        ]
+       ],
+       "say": "Together has practices made for teams. A Speak Up Round, where each person names one worry or question about the work. Name the Load, where the team decides together what can wait. Pause After a Death, for hospice and hospital teams. And a Walking Meeting."
+      },
+      {
+       "k": "words",
+       "h": "Name the load",
+       "items": [
+        "One thing weighing on our work this week.",
+        "A few words, or pass."
+       ],
+       "beats": [
+        "Let us try one, right now.",
+        "Each person, think of one thing weighing on our work this week.",
+        {
+         "t": "Go around and name it in a few words, or pass.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try one, right now. Each person, think of one thing weighing on our work this week. Go around and name it in a few words, or pass."
+      },
+      {
+       "k": "points",
+       "h": "Then decide together",
+       "items": [
+        [
+         "What can wait?",
+         "Say it out loud"
+        ],
+        [
+         "What can we share?",
+         "Who can help"
+        ],
+        [
+         "Move one thing",
+         "Off someone’s plate"
+        ]
+       ],
+       "say": "Then decide together. What can wait? What can we share? And move one thing off someone’s plate, today."
+      },
+      {
+       "k": "points",
+       "h": "After a hard death",
+       "items": [
+        [
+         "Pause together",
+         "One minute of quiet"
+        ],
+        [
+         "Say their name",
+         "Anyone can add one word"
+        ],
+        [
+         "Debrief After a Hard Day",
+         "Before everyone leaves"
+        ]
+       ],
+       "say": "For hospice and hospital teams, a hard death is part of the work. Pause together for one minute of quiet, and say the person’s name. Anyone can add one word about them, or pass. Before everyone leaves, try Debrief After a Hard Day. What happened, what we felt, and what we need tonight and tomorrow."
+      },
+      {
+       "k": "points",
+       "h": "Help for the helpers",
+       "items": [
+        [
+         "988",
+         "Call or text, any time"
+        ],
+        [
+         "Your workplace’s own support",
+         "Like an employee assistance program"
+        ],
+        [
+         "A tree of their own",
+         "For anyone who wants one"
+        ]
+       ],
+       "say": "Helpers need help too. Anyone on the team can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. Point people to your workplace’s own support, like an employee assistance program. And anyone who wants their own check-in can start a tree app of their own."
+      },
+      {
+       "k": "big",
+       "h": "A team that rests together lasts.",
+       "sub": "Speak up, share the load, and remember why.",
+       "say": "A team that rests together lasts. Speak up, share the load, and remember why the work matters."
+      },
+      {
+       "k": "quiz",
+       "q": "How does a lead set the tone for a Team Check-in?",
+       "opts": [
+        "By answering for the whole team",
+        "By going first with honesty",
+        "By skipping the hard questions"
+       ],
+       "right": 1,
+       "why": "Going first with honesty, and thanking anyone who names something hard, helps the whole team speak up.",
+       "say": "Quick question. How does a lead set the tone for a Team Check-in?"
+      }
+     ]
+    },
+    {
+     "id": "gr-l-life",
+     "n": 5,
+     "title": "When Life Changes Together",
+     "mins": 5,
+     "blurb": "Guides for the changes a grove goes through together, with Picked for Us at the top.",
+     "sources": [
+      "walsh16"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Leading a Grove, Lesson 5",
+       "h": "When Life Changes Together",
+       "sub": "Guides for the changes we go through together.",
+       "say": "Families, classes, congregations, groups, and teams all go through changes together. A new baby, a move, a loss, a scary day at school, or a hard death on a team. This lesson shows the guides The Grove offers for those seasons."
+      },
+      {
+       "k": "tabs",
+       "app": "grove",
+       "app_name": "The Grove",
+       "tabs": [
+        "Our Grove",
+        "Growth Plan",
+        "Together",
+        "When Life Changes",
+        "Settings",
+        "Learn"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "When Life Changes Together",
+        "p": "Guides for the changes we go through together."
+       },
+       "say": "Open the When Life Changes tab. You will find guides for the changes a family, a class, a faith community, a group, or a team goes through together. Search for a word, like a move, or browse by topic."
+      },
+      {
+       "k": "points",
+       "h": "Seven rings of guides",
+       "items": [
+        [
+         "Family Changes",
+         "A new baby, a move, two homes"
+        ],
+        [
+         "Illness and Hard Seasons",
+         "The hospital, hospice, money"
+        ],
+        [
+         "Loss",
+         "When someone dies, hard dates"
+        ],
+        [
+         "Big World",
+         "Scary news, an emergency nearby"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "The guides come in seven rings. Family Changes. Illness and Hard Seasons. Loss. And Big World."
+      },
+      {
+       "k": "points",
+       "h": "And for classes, groups, and teams",
+       "items": [
+        [
+         "Class and School",
+         "A loss, a new student, the year’s end"
+        ],
+        [
+         "Faith Communities and Groups",
+         "A leader leaving, endings"
+        ],
+        [
+         "Teams",
+         "A hard death, change, burnout"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "Class and School. Faith Communities and Groups. And Teams. The guides that fit your kind of grove come first in each ring."
+      },
+      {
+       "k": "points",
+       "h": "Picked for Us",
+       "items": [
+        [
+         "Fits your kind",
+         "Family, class, group, or team"
+        ],
+        [
+         "What’s Changed Lately",
+         "From your check-in"
+        ],
+        [
+         "Your Growing Edges",
+         "And Who’s in Our Circle"
+        ],
+        [
+         "Nothing is hidden",
+         "Every guide stays open"
+        ]
+       ],
+       "say": "At the top, Picked for Us shows the guides that fit your grove right now. What helps first depends on what has changed. So it uses your kind, what you tapped in What’s Changed Lately, your Growing Edges, and Who’s in Our Circle. When the grove is locked, unlock it to see your picks. Nothing is hidden. Every guide stays open to everyone."
+      },
+      {
+       "k": "points",
+       "h": "Two views in every guide",
+       "items": [
+        [
+         "For the Group",
+         "To read together"
+        ],
+        [
+         "For the Leader",
+         "For whoever guides the way"
+        ],
+        [
+         "Kid-friendly words",
+         "When children take part"
+        ]
+       ],
+       "say": "Each guide has two views. For the Group is written to everyone, to read together. For the Leader is for the grown-up, teacher, pastor, group leader, or team lead guiding the way. When children take part, a guide adds kid-friendly words."
+      },
+      {
+       "k": "points",
+       "h": "Two short videos",
+       "items": [
+        [
+         "For the Group",
+         "To watch together"
+        ],
+        [
+         "For the Leader",
+         "A few minutes, narrated"
+        ],
+        [
+         "Watched",
+         "A quiet mark when you finish"
+        ]
+       ],
+       "say": "Each guide has two short videos too. Watch For the Group together, and For the Leader on your own. A quiet Watched mark shows when you finish one. You will also find them right here in Learn, under When Life Changes."
+      },
+      {
+       "k": "points",
+       "h": "Then do something together",
+       "items": [
+        [
+         "Together practices",
+         "A few in every guide"
+        ],
+        [
+         "Each person’s own tree",
+         "Links to their own guides"
+        ],
+        [
+         "Print or Read Aloud",
+         "For the fridge or the room"
+        ]
+       ],
+       "say": "Every guide lists a few Together practices that fit, so you can do something side by side. It links the matching guides in each person’s own tree app, for anyone who wants their own. And you can print a guide, or have it read aloud to the room."
+      },
+      {
+       "k": "words",
+       "h": "What has changed for us?",
+       "items": [
+        "A new baby? A move? A loss?",
+        "Someone new? Nothing big?"
+       ],
+       "beats": [
+        "Let us try it together, right now.",
+        "Think about the last few months.",
+        "What has changed for your family, class, or group?",
+        {
+         "t": "Each person, name one change, big or small, or pass.",
+         "w": 15
+        }
+       ],
+       "say": "Let us try it together, right now. Think about the last few months. What has changed for your family, class, or group? Each person, name one change, big or small, or pass."
+      },
+      {
+       "k": "points",
+       "h": "Help is close in every guide",
+       "items": [
+        [
+         "988 and 911",
+         "Any time"
+        ],
+        [
+         "The hospice line first",
+         "In hospice topics"
+        ],
+        [
+         "MAARC 1-844-880-1574",
+         "For a vulnerable adult"
+        ]
+       ],
+       "say": "Every guide keeps help close. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. In hospice topics, your hospice’s own twenty four seven line comes first. And in Minnesota, if a vulnerable adult may be at risk, call MAARC at one eight four four, eight eight zero, one five seven four."
+      },
+      {
+       "k": "big",
+       "h": "No one goes through a change alone.",
+       "sub": "A guide, two videos, and something to do together.",
+       "say": "Changes are easier when no one goes through them alone. Open a guide, watch together, and do one small thing side by side."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Picked for Us use to choose guides?",
+       "opts": [
+        "Each person’s own answers",
+        "Your kind, What’s Changed Lately, and Growing Edges",
+        "A random pick"
+       ],
+       "right": 1,
+       "why": "Picked for Us uses what the grove chose together: its kind, What’s Changed Lately, its Growing Edges, and Who’s in Our Circle. Every guide stays open.",
+       "say": "Last question. What does Picked for Us use to choose guides?"
       }
      ]
     }
@@ -30031,6 +32100,160 @@ window.GG_LEARN = {
      "mins": 5,
      "blurb": "What holds your family up, together.",
      "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "The Six Parts, Together, Lesson 1",
+       "h": "Roots",
+       "sub": "What grounds you.",
+       "say": "This lesson is about Roots, what grounds you. For a family, roots are what hold everyone up, together."
+      },
+      {
+       "k": "big",
+       "h": "Roots hold a tree up, deep where no one sees.",
+       "sub": "You can’t always see them. You always need them.",
+       "say": "Every tree stands on its roots. They grow deep, where no one can see them. You can’t always see a family’s roots either. But when the wind blows, they are what hold everyone up."
+      },
+      {
+       "k": "points",
+       "h": "Roots for a family can look like",
+       "items": [
+        [
+         "Feeling thankful",
+         "Noticing the good in today"
+        ],
+        [
+         "Quiet and wonder",
+         "A still minute, a wow outside"
+        ],
+        [
+         "Family traditions",
+         "The ways your family marks a day"
+        ],
+        [
+         "What matters most",
+         "The meaning you share"
+        ]
+       ],
+       "say": "Roots for a family can look like feeling thankful, and noticing the good in today. Quiet and wonder, like a still minute, or a wow outside. Family traditions, the ways your family marks a birthday, a holiday, or a hard day. And for every family, roots include what matters most to you, the meaning you share. Every family’s roots look a little different. The Grove is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "big",
+       "h": "Roots are about what you feel together.",
+       "sub": "When we are quiet, thankful, or outside, do we feel more peaceful inside?",
+       "say": "Roots are not a test of what anyone believes. A better question for a family is this one. When we are quiet together, or thankful, or outside, do we feel more peaceful inside? Everyone’s answer is welcome, from the youngest to the oldest."
+      },
+      {
+       "k": "points",
+       "h": "How families tend Roots",
+       "items": [
+        [
+         "Gratitude Round",
+         "One thank-you each, at dinner or bedtime"
+        ],
+        [
+         "Bedtime Blessing",
+         "A kind wish by name, in your own words"
+        ],
+        [
+         "Family Awe Walk",
+         "Find one thing that makes you say wow"
+        ],
+        [
+         "A Family Spot",
+         "A calm place for five quiet minutes"
+        ]
+       ],
+       "say": "Here are a few ways families tend their roots. A Gratitude Round, where everyone names one thing they are thankful for today. A Bedtime Blessing, a short blessing or kind wish over each person, in whatever words fit your family. A kind wish, or simply, I’m glad you’re mine. A Family Awe Walk, where everyone looks for one thing that makes them say wow. And A Family Spot, one calm place where you sit together for five quiet minutes."
+      },
+      {
+       "k": "tabs",
+       "app": "grove",
+       "app_name": "The Grove",
+       "tabs": [
+        "Our Grove",
+        "Family Check-in",
+        "Growth Plan",
+        "Together",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
+        "Learn"
+       ],
+       "tap": 3,
+       "note": {
+        "h": "Together",
+        "p": "Tap Roots to see the family practices for this part."
+       },
+       "say": "You will find all of these in The Grove, on the Together tab. Tap Roots to see just the Roots practices. Each one has a line for little ones, and Show me how opens the steps."
+      },
+      {
+       "k": "card",
+       "title": "One Quiet Minute",
+       "body": "Set a timer and sit in silence together for one minute. Then each person shares one sound they heard.",
+       "tap": 0,
+       "btns": [
+        "We did this today",
+        "Show me how"
+       ],
+       "say": "Here is one to try. It is called One Quiet Minute. When your family has done it, anyone can tap We did this today. The grove grows, and The Wall shows that the family did it together."
+      },
+      {
+       "k": "points",
+       "h": "Practice: One Quiet Minute",
+       "items": [
+        [
+         "Get still",
+         "Sit close, eyes closed or on the floor"
+        ],
+        [
+         "Listen",
+         "For every sound you can hear"
+        ],
+        [
+         "Share one sound",
+         "Each person names one"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 30,
+         "4": 20
+        },
+        "at": [
+         1,
+         3,
+         4
+        ]
+       },
+       "say": "Let us try a short one together, right now. Everyone, sit close. Close your eyes, or look at the floor. Now be very quiet, and listen for every sound you can hear. Now go around, and each person share one sound you heard."
+      },
+      {
+       "k": "big",
+       "h": "Small things, done often, grow deep roots.",
+       "sub": "At home, set a timer for the full minute.",
+       "say": "Thank you for listening together. When you try it at home, set a timer for the full minute. Small things, done often, grow deep roots."
+      },
+      {
+       "k": "big",
+       "h": "Your tree shows which parts you tended.",
+       "sub": "Tap a tree on Our Grove. Never answers, levels, or notes.",
+       "say": "One more thing. On Our Grove, tap a person to see their tree. If their switch is on, you can see which parts they tended this week, like Roots. Never their answers, levels, or notes. Your tree is yours. The grove is ours."
+      },
+      {
+       "k": "quiz",
+       "q": "What matters most in a family’s roots?",
+       "opts": [
+        "Everyone believing the same thing",
+        "What helps the family feel grounded and at peace",
+        "Doing every practice every day"
+       ],
+       "right": 1,
+       "why": "Roots are about what holds your family up, never a test of what anyone believes.",
+       "say": "Quick question. What matters most in a family’s roots?"
+      }
+     ],
+     "faithScenes": [
       {
        "k": "title",
        "hero": "grove",
@@ -30103,12 +32326,15 @@ window.GG_LEARN = {
        "app_name": "The Grove",
        "tabs": [
         "Our Grove",
-        "The Wall",
+        "Family Check-in",
+        "Growth Plan",
         "Together",
-        "How it works",
+        "When Life Changes",
+        "The Wall",
+        "Settings",
         "Learn"
        ],
-       "tap": 2,
+       "tap": 3,
        "note": {
         "h": "Together",
         "p": "Tap Roots to see the family practices for this part."
@@ -30119,11 +32345,11 @@ window.GG_LEARN = {
        "k": "card",
        "title": "One Quiet Minute",
        "body": "Set a timer and sit in silence together for one minute. Then each person shares one sound they heard.",
+       "tap": 0,
        "btns": [
         "We did this today",
         "Show me how"
        ],
-       "tap": 0,
        "say": "Here is one to try. It is called One Quiet Minute. When your family has done it, anyone can tap We did this today. The grove grows, and The Wall shows that the family did it together."
       },
       {
@@ -30258,11 +32484,11 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Our Family Words",
        "body": "Choose three words for what your family stands for, and put them where everyone sees them.",
+       "tap": 1,
        "btns": [
         "We did this today",
         "Show me how"
        ],
-       "tap": 1,
        "say": "You will find these on the Together tab, under Trunk. At the top, This week’s theme shows one practice picked for your family’s week. Tap Show me how to see the steps. For Our Family Words, everyone suggests words, you talk about why each one matters, and then you choose three together."
       },
       {
@@ -30400,11 +32626,11 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Feelings Weather Report",
        "body": "Everyone names their inside weather today: sunny, cloudy, rainy, or stormy. No fixing, just listening.",
+       "tap": 0,
        "btns": [
         "We did this today",
         "Show me how"
        ],
-       "tap": 0,
        "say": "Here is one more, called the Feelings Weather Report. Everyone names the weather inside them today. When you are done, anyone can tap We did this today."
       },
       {
@@ -30528,6 +32754,7 @@ window.GG_LEARN = {
         "The youngest tells a story so long and so silly that dinner goes cold. Nobody minds."
        ],
        "lesson": "Just people, turned toward each other.",
+       "chris": false,
        "say": "Picture a family at dinner. The phones go in a basket by the door, grown-ups first. At first, the table feels too quiet. Then someone asks, what made you laugh today? The youngest tells a story so long and so silly that dinner goes cold. Nobody minds. That is Branches. Nothing fancy. Just people, turned toward each other."
       },
       {
@@ -30558,6 +32785,7 @@ window.GG_LEARN = {
        "app": "grove",
        "app_name": "The Grove",
        "title": "Together: Branches",
+       "tap": 3,
        "rows": [
         [
          "Rose and Thorn",
@@ -30577,7 +32805,6 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "tap": 3,
        "say": "Each practice card has a Show me how button with simple steps, and words for little ones too. When you finish, one person taps We did this today. The grove grows, and a note shows up on The Wall that the family did it together."
       },
       {
@@ -30725,6 +32952,7 @@ window.GG_LEARN = {
         "When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them."
        ],
        "lesson": "Nourish is about the table, not only the food.",
+       "chris": false,
        "say": "Picture a busy night. A family decides to cook together. One person washes. One stirs. The littlest sets the table, a little crooked. The meal takes longer than usual, and it is not perfect. When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them. Nourish is about the table, not only the food."
       },
       {
@@ -30775,6 +33003,7 @@ window.GG_LEARN = {
        "app": "grove",
        "app_name": "The Grove",
        "title": "The Wall",
+       "tap": 2,
        "rows": [
         [
          "Together",
@@ -30789,7 +33018,6 @@ window.GG_LEARN = {
          "React"
         ]
        ],
-       "tap": 2,
        "say": "When you finish a practice, tap We did this today, and the grove grows. The Wall shows that the family did it together. Anyone can react with Proud of you, or a Hug."
       },
       {
@@ -30894,6 +33122,7 @@ window.GG_LEARN = {
         "Then one morning, a tiny green loop pushes up through the dirt. Everyone crowds around the window."
        ],
        "lesson": "Growth takes time. Waiting together is part of it.",
+       "chris": false,
        "say": "Picture a family planting one bean in a paper cup. They set it on the windowsill. For days, nothing. The youngest checks every morning. Still nothing. Then one morning, a tiny green loop pushes up through the dirt, and everyone crowds around the window. Growth takes time. Waiting together is part of it."
       },
       {
@@ -30989,7 +33218,7 @@ window.GG_LEARN = {
   {
    "id": "grove-together",
    "kind": "support",
-   "title": "Do This Together",
+   "title": "For Families",
    "who": "Short videos for the whole family, side by side",
    "lessons": [
     {
@@ -31270,6 +33499,12 @@ window.GG_LEARN = {
         "Rose: the best part of my day.",
         "Thorn: the hardest part of my day."
        ],
+       "cue": {
+        "at": [
+         1,
+         2
+        ]
+       },
        "say": "One family favorite is called Rose and Thorn. Your rose is the best part of your day. Your thorn is the hardest part. Everyone shares both."
       },
       {
@@ -31331,12 +33566,335 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "gr-r-bedtime",
+     "id": "gr-r-tablethanks",
      "n": 4,
+     "title": "Table Thanks",
+     "mins": 3,
+     "blurb": "Pause before eating and say thank you together, in the way that fits you.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Table Thanks",
+       "sub": "A pause before the first bite.",
+       "say": "This is Table Thanks. Before you eat, you pause and say thank you together. It takes less than a minute, and it works at any meal, for a family at home or a group at a shared supper."
+      },
+      {
+       "k": "big",
+       "h": "A pause before the first bite.",
+       "sub": "The food, the hands that made it, and each other.",
+       "say": "It is a small pause before the first bite. A moment to notice the food, the hands that made it, and the people around the table."
+      },
+      {
+       "k": "points",
+       "h": "Give thanks your way",
+       "items": [
+        [
+         "A song",
+         "One you all know"
+        ],
+        [
+         "One sentence",
+         "Thank you for this food"
+        ],
+        [
+         "A thanks each",
+         "All the way around"
+        ]
+       ],
+       "say": "Give thanks in the way that fits you. It can be a song you all know. It can be one simple sentence, like, thank you for this food, and for each other. Or each person can say one thanks, all the way around the table."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Wait",
+         "Until everyone has food"
+        ],
+        [
+         "Breathe",
+         "One slow breath"
+        ],
+        [
+         "Give thanks",
+         "One voice, or each one"
+        ],
+        [
+         "Take turns",
+         "Leading the thanks"
+        ]
+       ],
+       "say": "Here is how it goes. Wait until everyone has food in front of them. Take one slow breath together. Then give thanks. One person can speak for everyone, or each person can say one thanks. And take turns leading, so everyone gets a chance, the youngest too."
+      },
+      {
+       "k": "words",
+       "h": "Thanks to borrow",
+       "items": [
+        "Thank you for this food.",
+        "Thank you to the hands that made it.",
+        "Thank you for each other.",
+        "I am thankful for ..."
+       ],
+       "say": "Here are some words to borrow. Thank you for this food. Thank you to the hands that made it. Thank you for each other. Or, I am thankful for, and fill it in."
+      },
+      {
+       "k": "big",
+       "h": "Try it now",
+       "sub": "No food needed. One thanks each.",
+       "beats": [
+        "Let us practice right now, even with no food in front of you.",
+        "Take one slow breath together.",
+        {
+         "t": "Then go around, and each person says one thanks.",
+         "w": 15
+        }
+       ],
+       "say": "Let us practice right now, even with no food in front of you. Take one slow breath together. Then go around, and each person says one thanks."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Table Thanks",
+         "In Together, under Roots"
+        ],
+        [
+         "For families and groups",
+         "And faith communities"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Table Thanks in Together, under Roots, in Family, Faith Community, and Small Group groves. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Every meal can start with thanks.",
+       "sub": "Enjoy your food, and each other.",
+       "say": "Every meal can start with thanks. Enjoy your food, and each other."
+      }
+     ],
+     "faithScenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Table Thanks",
+       "sub": "A pause before the first bite.",
+       "say": "This is Table Thanks. Before you eat, you pause and say thank you together. It takes less than a minute, and it works at any meal, for a family at home or a group at a shared supper."
+      },
+      {
+       "k": "big",
+       "h": "A pause before the first bite.",
+       "sub": "The food, the hands that made it, and each other.",
+       "say": "It is a small pause before the first bite. A moment to notice the food, the hands that made it, and the people around the table."
+      },
+      {
+       "k": "points",
+       "h": "Give thanks your way",
+       "items": [
+        [
+         "A prayer",
+         "If you pray"
+        ],
+        [
+         "A song",
+         "One you all know"
+        ],
+        [
+         "One sentence",
+         "Thank you for this food"
+        ]
+       ],
+       "say": "Give thanks in the way that fits you. If your family or group prays, it can be a prayer. It can be a song you all know. Or it can be one simple sentence, like, thank you for this food, and for each other."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Wait",
+         "Until everyone has food"
+        ],
+        [
+         "Breathe",
+         "One slow breath"
+        ],
+        [
+         "Give thanks",
+         "One voice, or each one"
+        ],
+        [
+         "Take turns",
+         "Leading the thanks"
+        ]
+       ],
+       "say": "Here is how it goes. Wait until everyone has food in front of them. Take one slow breath together. Then give thanks. One person can speak for everyone, or each person can say one thanks. And take turns leading, so everyone gets a chance, the youngest too."
+      },
+      {
+       "k": "words",
+       "h": "Thanks to borrow",
+       "items": [
+        "Thank you for this food.",
+        "Thank you to the hands that made it.",
+        "Thank you for each other.",
+        "I am thankful for ..."
+       ],
+       "say": "Here are some words to borrow. Thank you for this food. Thank you to the hands that made it. Thank you for each other. Or, I am thankful for, and fill it in."
+      },
+      {
+       "k": "big",
+       "h": "Try it now",
+       "sub": "No food needed. One thanks each.",
+       "beats": [
+        "Let us practice right now, even with no food in front of you.",
+        "Take one slow breath together.",
+        {
+         "t": "Then go around, and each person says one thanks.",
+         "w": 15
+        }
+       ],
+       "say": "Let us practice right now, even with no food in front of you. Take one slow breath together. Then go around, and each person says one thanks."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Table Thanks",
+         "In Together, under Roots"
+        ],
+        [
+         "For families and groups",
+         "And faith communities"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Table Thanks in Together, under Roots, in Family, Faith Community, and Small Group groves. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Every meal can start with thanks.",
+       "sub": "Enjoy your food, and each other.",
+       "say": "Every meal can start with thanks. Enjoy your food, and each other."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-bedtime",
+     "n": 5,
      "title": "A Bedtime Blessing",
      "mins": 3,
      "blurb": "A few kind words over each person before sleep, in whatever words fit your family.",
      "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "A Bedtime Blessing",
+       "sub": "A few kind words before sleep.",
+       "say": "This is a bedtime blessing. It is a few kind words you say over each person before they sleep. It takes less than a minute a night, and families keep it for years. Keep the lights low and the voices soft."
+      },
+      {
+       "k": "points",
+       "h": "A blessing can be",
+       "items": [
+        [
+         "A kind wish",
+         "Sleep well. You are loved."
+        ],
+        [
+         "A family saying",
+         "Words that belong just to you"
+        ],
+        [
+         "A thank-you",
+         "For who they are"
+        ]
+       ],
+       "say": "A blessing looks different in every family. It can be a kind wish, like, sleep well, you are loved. It can be a family saying, words that belong just to you. Or it can be a thank-you for who they are. Every one of these is welcome here."
+      },
+      {
+       "k": "words",
+       "h": "Some words to borrow",
+       "items": [
+        "I’m glad you’re mine.",
+        "You are loved, today and always.",
+        "Rest well. Tomorrow is new.",
+        "May you be safe, and sleep in peace."
+       ],
+       "say": "Here are some words to borrow. I am glad you are mine. You are loved, today and always. Rest well, tomorrow is new. Or, may you be safe, and sleep in peace. Change any of them to fit your family."
+      },
+      {
+       "k": "points",
+       "h": "How to do it",
+       "items": [
+        [
+         "Say their name",
+         "Each person, one at a time"
+        ],
+        [
+         "Add a touch, if they like",
+         "A hand on the head, or a hug"
+        ],
+        [
+         "Keep it short",
+         "So it lasts for years"
+        ]
+       ],
+       "say": "Here is how. Say each person’s name, one at a time. Add a touch, if they like it, like a hand on their head, or a hug. And keep it short, so it lasts for years."
+      },
+      {
+       "k": "big",
+       "h": "Bless each other now",
+       "sub": "One name. A few kind words.",
+       "beats": [
+        "Let us try it now.",
+        "Pick the words that fit your family.",
+        "Turn to the person next to you, say their name, and say your blessing.",
+        "Little ones can bless the grown-ups too.",
+        {
+         "t": "Take turns, all the way around.",
+         "w": 12
+        }
+       ],
+       "say": "Let us try it now. Pick the words that fit your family. Turn to the person next to you, say their name, and say your blessing. Little ones can bless the grown-ups too. Take turns, all the way around."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Bedtime Blessing",
+         "In Together, under Roots"
+        ],
+        [
+         "Early Night",
+         "A calm wind-down, under Leaves"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Bedtime Blessing in the Together tab, under Roots. For an even calmer night, try Early Night, under Leaves. When your family has done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "You are loved. Sleep well.",
+       "sub": "The same words, every night, for as long as you like.",
+       "say": "Say the same words every night, for as long as you like. Little by little, they become part of your family. You are loved. Sleep well."
+      }
+     ],
+     "faithScenes": [
       {
        "k": "title",
        "hero": "grove",
@@ -31438,25 +33996,268 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "gr-r-hardday",
-     "n": 5,
-     "title": "After a Hard Day",
+     "id": "gr-r-blessing",
+     "n": 6,
+     "title": "Family Blessing",
      "mins": 3,
-     "blurb": "Land together, name your inside weather, and listen without fixing.",
+     "blurb": "A few good words for each other, at the door and on big days.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Do This Together",
-       "h": "After a Hard Day",
-       "sub": "Come home to each other.",
-       "say": "Some days are just hard. Maybe someone had a rough day at school, at work, or right here at home. This is a few minutes to land, together. Gather up wherever you are."
+       "h": "Family Blessing",
+       "sub": "Good words to carry into the day.",
+       "say": "This is a family blessing. It is a few good words you give each other, at the door in the morning, on a birthday, or before a big day. It takes less than a minute."
+      },
+      {
+       "k": "points",
+       "h": "A blessing can be",
+       "items": [
+        [
+         "A good wish",
+         "May today be kind to you"
+        ],
+        [
+         "Your own family words",
+         "Said the same way each time"
+        ],
+        [
+         "Words of thanks",
+         "For who they are"
+        ]
+       ],
+       "say": "Every family’s blessing looks different. It can be a good wish, like, may today be kind to you. It can be your own family words, said the same way each time. Or it can be a few words of thanks for who they are. Every one of these is welcome here."
+      },
+      {
+       "k": "words",
+       "h": "Words to borrow",
+       "items": [
+        "May today be kind to you.",
+        "Go with our love.",
+        "You are brave, and you are not alone.",
+        "We are so glad you are ours."
+       ],
+       "say": "Here are some words to borrow. May today be kind to you. Go with our love. You are brave, and you are not alone. Or, we are so glad you are ours. Change any of them to fit your family."
+      },
+      {
+       "k": "points",
+       "h": "When to bless",
+       "items": [
+        [
+         "At the door",
+         "Before school or work"
+        ],
+        [
+         "On big days",
+         "Birthdays, first days, a trip"
+        ],
+        [
+         "On hard days",
+         "A big test, a doctor visit"
+        ]
+       ],
+       "say": "Find the moments. At the front door, in the car, or at the bus stop. On big days, like a birthday, a first day, or a long trip. And on hard days, like a big test or a doctor visit."
+      },
+      {
+       "k": "points",
+       "h": "How to do it",
+       "items": [
+        [
+         "Say their name",
+         "One person at a time"
+        ],
+        [
+         "A hand on the shoulder",
+         "If that feels right to them"
+        ],
+        [
+         "Anyone can bless",
+         "Kids included"
+        ]
+       ],
+       "say": "Here is how. Say the person’s name. Put a hand on their shoulder, if that feels right to them. Say your few words. Anyone can give the blessing, kids included. Little ones can bless the grown-ups too."
       },
       {
        "k": "big",
-       "h": "Hard days happen in every family.",
+       "h": "Bless each other now",
+       "sub": "One name. A few good words.",
+       "beats": [
+        "Let us try it now.",
+        "Turn to the person next to you, and say their name.",
+        "Then give them a few good words for their day.",
+        {
+         "t": "Take turns, all the way around.",
+         "w": 15
+        }
+       ],
+       "say": "Let us try it now. Turn to the person next to you, and say their name. Then give them a few good words for their day. Take turns, all the way around."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Doorway Good Wish",
+         "In Together, under Roots"
+        ],
+        [
+         "At the door, or any time",
+         "A few good words"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "In The Grove, you will find this in Together, under Roots. It is called Doorway Good Wish. When your family has done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Go with our love.",
+       "sub": "A few good words, every day.",
+       "say": "A few good words, said often, become part of who your family is. Go with our love."
+      }
+     ],
+     "faithScenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Family Blessing",
+       "sub": "Good words to carry into the day.",
+       "say": "This is a family blessing. It is a few good words you give each other, at the door in the morning, on a birthday, or before a big day. It takes less than a minute."
+      },
+      {
+       "k": "points",
+       "h": "A blessing can be",
+       "items": [
+        [
+         "A prayer",
+         "If your family prays"
+        ],
+        [
+         "A good wish",
+         "May today be kind to you"
+        ],
+        [
+         "Your own family words",
+         "Words that belong to you"
+        ]
+       ],
+       "say": "Every family’s blessing looks different. If your family prays, it can be a short prayer, in words from your own tradition. It can be a good wish, like, may today be kind to you. Or it can be your own family words. Every one of these is welcome here."
+      },
+      {
+       "k": "words",
+       "h": "Words to borrow",
+       "items": [
+        "May today be kind to you.",
+        "Go with our love.",
+        "You are brave, and you are not alone.",
+        "May God go with you today."
+       ],
+       "say": "Here are some words to borrow. May today be kind to you. Go with our love. You are brave, and you are not alone. Or, if your family prays, may God go with you today. Change any of them to fit your family."
+      },
+      {
+       "k": "points",
+       "h": "When to bless",
+       "items": [
+        [
+         "At the door",
+         "Before school or work"
+        ],
+        [
+         "On big days",
+         "Birthdays, first days, a trip"
+        ],
+        [
+         "On hard days",
+         "A big test, a doctor visit"
+        ]
+       ],
+       "say": "Find the moments. At the front door, in the car, or at the bus stop. On big days, like a birthday, a first day, or a long trip. And on hard days, like a big test or a doctor visit."
+      },
+      {
+       "k": "points",
+       "h": "How to do it",
+       "items": [
+        [
+         "Say their name",
+         "One person at a time"
+        ],
+        [
+         "A hand on the shoulder",
+         "If that feels right to them"
+        ],
+        [
+         "Anyone can bless",
+         "Kids included"
+        ]
+       ],
+       "say": "Here is how. Say the person’s name. Put a hand on their shoulder, if that feels right to them. Say your few words. Anyone can give the blessing, kids included. Little ones can bless the grown-ups too."
+      },
+      {
+       "k": "big",
+       "h": "Bless each other now",
+       "sub": "One name. A few good words.",
+       "beats": [
+        "Let us try it now.",
+        "Turn to the person next to you, and say their name.",
+        "Then give them a few good words for their day.",
+        {
+         "t": "Take turns, all the way around.",
+         "w": 15
+        }
+       ],
+       "say": "Let us try it now. Turn to the person next to you, and say their name. Then give them a few good words for their day. Take turns, all the way around."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Doorway Blessing",
+         "In Together, under Roots"
+        ],
+        [
+         "Doorway Good Wish",
+         "Its name in Plain words"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "In The Grove, you will find this in Together, under Roots. It is called Doorway Blessing, or Doorway Good Wish when your grove uses Plain words. When your family has done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Go with our love.",
+       "sub": "A few good words, every day.",
+       "say": "A few good words, said often, become part of who your family is. Go with our love."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-hardday",
+     "n": 7,
+     "title": "Hard Day Huddle",
+     "mins": 3,
+     "blurb": "Five minutes on a hard day: what happened, what we need, and one small next step.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Hard Day Huddle",
+       "sub": "Five minutes, together.",
+       "say": "Some days are just hard. Maybe someone had a rough day at school, at work, or right here at home. Maybe a whole group or team had a hard day together. A Hard Day Huddle is five minutes to land, together."
+      },
+      {
+       "k": "big",
+       "h": "Hard days happen to everyone.",
        "sub": "You can carry them together.",
-       "say": "Hard days happen in every family. Little kids have them. Teenagers have them. Grown-ups have them too. You do not have to fix the day. For a few minutes, you can just carry it together."
+       "say": "Hard days happen to everyone. Little kids, teenagers, and grown-ups. Families, groups, and teams. You do not have to fix the day. For a few minutes, you can carry it together."
       },
       {
        "k": "points",
@@ -31464,7 +34265,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Sit close",
-         "The couch, the floor, anywhere"
+         "Wherever you are"
         ],
         [
          "Breathe in through your nose",
@@ -31489,50 +34290,38 @@ window.GG_LEARN = {
        "say": "First, land. Sit close, wherever you are. Breathe in through your nose, slow, for a count of four. Then breathe out slowly, like you are blowing on hot soup. One more time, all together."
       },
       {
-       "k": "points",
-       "h": "Feelings Weather Report",
-       "items": [
+       "k": "flow",
+       "h": "The huddle",
+       "steps": [
         [
-         "Sunny",
-         "Bright and okay"
+         "What happened?",
+         "A few words each"
         ],
         [
-         "Cloudy",
-         "A little gray"
+         "What do we need?",
+         "Right now"
         ],
         [
-         "Rainy",
-         "Sad or heavy"
-        ],
-        [
-         "Stormy",
-         "Mad, scared, or upset"
+         "One small next step",
+         "Chosen together"
         ]
        ],
-       "cue": {
-        "at": [
-         2,
-         3,
-         4,
-         5
-        ]
-       },
-       "say": "Now a Feelings Weather Report. What is the weather inside you right now? Sunny. Cloudy. Rainy. Or stormy. Every kind of weather is welcome here."
+       "say": "Then huddle up with three questions. What happened today? What do we need right now? And what is one small next step we can take together?"
       },
       {
        "k": "big",
-       "h": "Go around once. One word each.",
-       "sub": "If someone says rainy or stormy: Thanks for telling us.",
+       "h": "One word each for how today felt.",
+       "sub": "If someone shares something heavy: Thanks for telling us.",
        "beats": [
+        "Let us start the huddle now.",
         "Go around once.",
-        "Each person says their inside weather, just one word.",
-        "If someone says rainy or stormy, you can say, thanks for telling us.",
+        "Each person says one word for how today felt.",
         {
-         "t": "Take your turns now.",
+         "t": "If someone shares something heavy, you can say, thanks for telling us.",
          "w": 12
         }
        ],
-       "say": "Go around once. Each person says their inside weather, just one word. If someone says rainy or stormy, you can say, thanks for telling us. Take your turns now."
+       "say": "Let us start the huddle now. Go around once. Each person says one word for how today felt. If someone shares something heavy, you can say, thanks for telling us."
       },
       {
        "k": "points",
@@ -31548,7 +34337,7 @@ window.GG_LEARN = {
         ],
         [
          "Ask one thing",
-         "What would help tonight?"
+         "What do we need right now?"
         ]
        ],
        "cue": {
@@ -31558,25 +34347,44 @@ window.GG_LEARN = {
          4
         ]
        },
-       "say": "Here is the secret. No fixing, and no advice unless someone asks. Just listen. Stay close, with a hand, a hug, or a seat nearby. Then ask one gentle question. What would help tonight?"
+       "say": "Here is the secret. No fixing, and no advice unless someone asks. Just listen. Stay close, with a hand, a hug, or a seat nearby. Then ask one gentle question. What do we need right now?"
+      },
+      {
+       "k": "points",
+       "h": "One small next step",
+       "items": [
+        [
+         "An early night",
+         "Rest helps"
+        ],
+        [
+         "A walk together",
+         "Fresh air"
+        ],
+        [
+         "A call for help",
+         "Someone who can help"
+        ]
+       ],
+       "say": "Then choose one small next step together. An early night. A walk together. A call to someone who can help. Small is the point."
       },
       {
        "k": "big",
-       "h": "Too heavy to carry? Tell a grown-up you trust.",
-       "sub": "Grown-ups, you can call or text 988 any time.",
-       "say": "If a hard day feels too heavy to carry, tell a grown-up you trust. You never have to hold it by yourself. And grown-ups, you can call or text nine eight eight, any time, day or night."
+       "h": "Too heavy to carry? Tell someone you trust.",
+       "sub": "Call or text 988 any time. In danger now? Call 911.",
+       "say": "If a hard day feels too heavy to carry, tell someone you trust, like a grown-up or a leader. You never have to hold it by yourself. Anyone can call or text nine eight eight, any time, day or night. If someone is in danger right now, call nine one one."
       },
       {
        "k": "big",
        "h": "A hard day is lighter when we carry it together.",
-       "sub": "Feelings Weather Report and Breathe Together are in Together, under Bark.",
-       "say": "A hard day is still a hard day. But it is lighter when we carry it together. You can find Feelings Weather Report and Breathe Together in Together, under Bark, any time you need them."
+       "sub": "Hard Day Huddle is in Together, under Bark.",
+       "say": "A hard day is still a hard day. But it is lighter when we carry it together. You will find Hard Day Huddle in Together, under Bark. When you have done it, tap We did this today, and the grove grows."
       }
      ]
     },
     {
      "id": "gr-r-repair",
-     "n": 6,
+     "n": 8,
      "title": "Making Up After a Fight",
      "mins": 3,
      "blurb": "Pause, breathe, and make it right, with grown-ups going first.",
@@ -31691,8 +34499,151 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "gr-r-meeting",
+     "n": 9,
+     "title": "Family Meeting",
+     "mins": 3,
+     "blurb": "A short weekly meeting where everyone gets a say about plans, problems, and fun.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Family Meeting",
+       "sub": "Everyone gets a say.",
+       "say": "This is a family meeting. Once a week, for about fifteen minutes, everyone sits down together, and everyone gets a say. It is for plans, problems, and fun."
+      },
+      {
+       "k": "big",
+       "h": "Everyone gets a say.",
+       "sub": "The youngest too.",
+       "say": "The big idea is simple. Everyone gets a say, the youngest too. A family meeting is a time to listen to each other, and to decide some things together."
+      },
+      {
+       "k": "flow",
+       "h": "The meeting",
+       "steps": [
+        [
+         "Thanks",
+         "One each"
+        ],
+        [
+         "One plan or problem",
+         "Everyone speaks"
+        ],
+        [
+         "Something fun",
+         "To end"
+        ]
+       ],
+       "say": "Here is the shape. Start with one thank you each. Then talk about one plan or one problem, and let everyone speak. Then end with something fun, like a game, a treat, or a dance."
+      },
+      {
+       "k": "points",
+       "h": "Keep it kind",
+       "items": [
+        [
+         "One person talks at a time",
+         "Pass a spoon or a stone"
+        ],
+        [
+         "Speak for yourself",
+         "I feel, I need"
+        ],
+        [
+         "Problems, not people",
+         "Fix the thing together"
+        ]
+       ],
+       "say": "A few things keep it kind. One person talks at a time. Some families pass a spoon or a stone, and only the person holding it talks. Speak for yourself, with words like, I feel, or I need. And talk about problems, not people. Fix the thing together."
+      },
+      {
+       "k": "points",
+       "h": "Good things to talk about",
+       "items": [
+        [
+         "Plans",
+         "The weekend, a trip, a birthday"
+        ],
+        [
+         "Jobs at home",
+         "Who does what"
+        ],
+        [
+         "One problem",
+         "Mornings, screens, or bedtime"
+        ]
+       ],
+       "say": "Good things to talk about are plans, like the weekend or a birthday. Jobs at home, and who does what. Or one problem, like busy mornings, or screen time. One problem a week is plenty."
+      },
+      {
+       "k": "words",
+       "h": "When is our meeting?",
+       "items": [
+        "Sunday after dinner?",
+        "Saturday morning?",
+        "A time all our own?"
+       ],
+       "beats": [
+        "Let us start right now.",
+        "Every family meeting needs a time.",
+        "When could yours be?",
+        {
+         "t": "Each person, say one day and time that would work, and then choose one together.",
+         "w": 15
+        }
+       ],
+       "say": "Let us start right now. Every family meeting needs a time. When could yours be? Each person, say one day and time that would work, and then choose one together."
+      },
+      {
+       "k": "points",
+       "h": "For the big things",
+       "items": [
+        [
+         "Big feelings",
+         "Take a break, and come back"
+        ],
+        [
+         "Grown-up topics",
+         "Talk about them privately"
+        ],
+        [
+         "If anyone is not safe",
+         "Tell a safe grown-up"
+        ]
+       ],
+       "say": "Some things are too big for a family meeting. If feelings get big, take a break, and come back to it. Some topics are for grown-ups to talk about privately. And if anyone in your family is not safe, tell a safe grown-up right away. Grown-ups can call or text nine eight eight. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Family Meeting",
+         "In Together, under Branches"
+        ],
+        [
+         "Anchor it",
+         "In your Growth Plan"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Family Meeting in Together, under Branches. Put it in your Growth Plan, anchored to a time like Sunday, or Saturday morning. When you have met, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "A family that listens grows together.",
+       "sub": "See you at the meeting.",
+       "say": "A family that listens to each other grows together. See you at the meeting."
+      }
+     ]
+    },
+    {
      "id": "gr-r-celebrate",
-     "n": 7,
+     "n": 10,
      "title": "Celebrate Something",
      "mins": 2,
      "blurb": "A Good News Round, a cheer, and a turn for everyone to shine.",
@@ -31794,7 +34745,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-move",
-     "n": 8,
+     "n": 11,
      "title": "Move Together",
      "mins": 2,
      "blurb": "Stretch like a tree, a rag doll, and a star, and find more ways to move.",
@@ -31890,10 +34841,745 @@ window.GG_LEARN = {
      ]
     }
    ]
+  },
+  {
+   "id": "grove-together-groups",
+   "kind": "support",
+   "title": "For Classes, Groups, and Teams",
+   "who": "Short videos for a circle, a group, or a team",
+   "lessons": [
+    {
+     "id": "gr-r-circle",
+     "n": 1,
+     "title": "Class Circle",
+     "mins": 3,
+     "blurb": "Greet, share, do, and close, in about ten minutes.",
+     "sources": [
+      "rcmm"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Class Circle",
+       "sub": "Greet, share, do, close.",
+       "say": "This is a class circle. It takes about ten minutes, and the whole class does it together. Make a circle where everyone can see everyone."
+      },
+      {
+       "k": "flow",
+       "h": "Four parts",
+       "steps": [
+        [
+         "Greet",
+         "By name"
+        ],
+        [
+         "Share",
+         "One quick round"
+        ],
+        [
+         "Do",
+         "Something together"
+        ],
+        [
+         "Close",
+         "One good thing"
+        ]
+       ],
+       "say": "A class circle has four parts. Greet each other. Share. Do something together. And close."
+      },
+      {
+       "k": "points",
+       "h": "Greet",
+       "items": [
+        [
+         "Say good morning",
+         "To the person beside you"
+        ],
+        [
+         "Use their name",
+         "Every person, every time"
+        ],
+        [
+         "Pass it on",
+         "All the way around"
+        ]
+       ],
+       "say": "First, greet. Turn to the person beside you, say good morning, and say their name. Then they turn and greet the next person, all the way around. Everyone hears their own name."
+      },
+      {
+       "k": "big",
+       "h": "Good morning, and a name",
+       "sub": "All the way around the circle.",
+       "beats": [
+        "Let us try it now.",
+        "Turn to the person beside you, and say good morning and their name.",
+        {
+         "t": "Pass it all the way around the circle.",
+         "w": 25
+        }
+       ],
+       "say": "Let us try it now. Turn to the person beside you, and say good morning and their name. Pass it all the way around the circle."
+      },
+      {
+       "k": "points",
+       "h": "Share",
+       "items": [
+        [
+         "One quick question",
+         "Everyone gets a turn"
+        ],
+        [
+         "Something fun",
+         "A favorite animal, or a plan"
+        ],
+        [
+         "Anyone can pass",
+         "No explaining needed"
+        ]
+       ],
+       "say": "Next, share. Ask one quick question, and go around once. What is your favorite animal? What is something you are looking forward to this week? Anyone can pass. No one has to explain."
+      },
+      {
+       "k": "points",
+       "h": "Do",
+       "items": [
+        [
+         "A Movement Break",
+         "Stand and stretch"
+        ],
+        [
+         "A calm breath",
+         "In and out, together"
+        ],
+        [
+         "A quick game",
+         "One everyone can play"
+        ]
+       ],
+       "say": "Then do something together. A Movement Break, where everyone stands and stretches. A calm breath, in and out, together. Or a quick game that everyone can play."
+      },
+      {
+       "k": "points",
+       "h": "Close",
+       "items": [
+        [
+         "Goodbye Circle",
+         "One good thing each"
+        ],
+        [
+         "Small Wins Round",
+         "One small step forward"
+        ],
+        [
+         "Back to the day",
+         "Together"
+        ]
+       ],
+       "say": "Last, close. In a Goodbye Circle, each person shares one good thing. Or try a Small Wins Round, where each person names one small step forward. Then everyone heads back to the day, together."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Name Greeting",
+         "Under Branches"
+        ],
+        [
+         "Movement Break",
+         "Under Leaves"
+        ],
+        [
+         "Goodbye Circle",
+         "Under Fruit"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "In a Classroom grove, you will find these in Together. Name Greeting is under Branches. Movement Break is under Leaves. And Goodbye Circle is under Fruit. Anchor them to Morning Meeting or End of Day in your Class Plan."
+      },
+      {
+       "k": "big",
+       "h": "A circle where everyone is seen.",
+       "sub": "Ten minutes, any day.",
+       "say": "A circle is a place where everyone is seen and heard. Ten minutes a day can make a whole class feel like a team."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-openclose",
+     "n": 2,
+     "title": "Opening and Closing a Group",
+     "mins": 3,
+     "blurb": "Start with stillness and one word each. End with thanks and good words.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Opening and Closing a Group",
+       "sub": "Arrive together. Leave together.",
+       "say": "This video is for any group that meets: a small group, a class, a team, or a faith community. It shows a simple way to open your time together, and a simple way to close it."
+      },
+      {
+       "k": "big",
+       "h": "How you begin and end shapes everything in between.",
+       "say": "How a group begins and ends shapes everything in between. A good opening helps people arrive. A good closing helps them carry something home."
+      },
+      {
+       "k": "flow",
+       "h": "Opening",
+       "steps": [
+        [
+         "Stillness",
+         "Thirty seconds"
+        ],
+        [
+         "Agreements",
+         "Read aloud"
+        ],
+        [
+         "One word each",
+         "How are you arriving?"
+        ]
+       ],
+       "say": "Here is an opening. Start with thirty seconds of stillness, before anyone speaks. Then read your group agreements aloud. Then go around with one word each, for how you are arriving today."
+      },
+      {
+       "k": "big",
+       "h": "A moment of stillness",
+       "sub": "Breathe, and notice the room.",
+       "beats": [
+        "Let us try the first part now.",
+        "Settle into your seats.",
+        "Breathe, and notice the room.",
+        {
+         "t": "Let us take a short moment of stillness together.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try the first part now. Settle into your seats. Breathe, and notice the room. Let us take a short moment of stillness together."
+      },
+      {
+       "k": "points",
+       "h": "One word each",
+       "items": [
+        [
+         "Go around once",
+         "One word each"
+        ],
+        [
+         "No explaining needed",
+         "Anyone can pass"
+        ],
+        [
+         "Thank everyone",
+         "Then begin"
+        ]
+       ],
+       "say": "Now one word each. Tired, glad, rushed, or hopeful. Go around once. No one needs to explain, and anyone can pass. Then thank everyone, and begin."
+      },
+      {
+       "k": "flow",
+       "h": "Closing",
+       "steps": [
+        [
+         "Closing Thanks",
+         "One thing to take with you"
+        ],
+        [
+         "Sending Words",
+         "Good words for the week"
+        ],
+        [
+         "Head out",
+         "Together"
+        ]
+       ],
+       "say": "Here is a closing. Each person names one thing they are taking with them. Then send each other out with a few good words for the week ahead. Then head out together."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Start with Stillness",
+         "Under Roots"
+        ],
+        [
+         "One Word Check-in",
+         "Under Bark"
+        ],
+        [
+         "Closing Thanks",
+         "Under Fruit"
+        ],
+        [
+         "Group Agreements",
+         "Under Trunk"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Fruit. And Group Agreements is under Trunk. Faith communities and small groups also have Sending Words, under Roots."
+      },
+      {
+       "k": "big",
+       "h": "Arrive together. Leave together.",
+       "sub": "Every time your group meets.",
+       "say": "Arrive together, and leave together, every time your group meets."
+      }
+     ],
+     "faithScenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Opening and Closing a Group",
+       "sub": "Arrive together. Leave together.",
+       "say": "This video is for any group that meets: a small group, a class, a team, or a faith community. It shows a simple way to open your time together, and a simple way to close it."
+      },
+      {
+       "k": "big",
+       "h": "How you begin and end shapes everything in between.",
+       "say": "How a group begins and ends shapes everything in between. A good opening helps people arrive. A good closing helps them carry something home."
+      },
+      {
+       "k": "flow",
+       "h": "Opening",
+       "steps": [
+        [
+         "Stillness",
+         "Thirty seconds"
+        ],
+        [
+         "Agreements",
+         "Read aloud"
+        ],
+        [
+         "One word each",
+         "How are you arriving?"
+        ]
+       ],
+       "say": "Here is an opening. Start with thirty seconds of stillness, before anyone speaks. Then read your group agreements aloud. Then go around with one word each, for how you are arriving today."
+      },
+      {
+       "k": "big",
+       "h": "A moment of stillness",
+       "sub": "Breathe, and notice the room.",
+       "beats": [
+        "Let us try the first part now.",
+        "Settle into your seats.",
+        "Breathe, and notice the room.",
+        {
+         "t": "Let us take a short moment of stillness together.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try the first part now. Settle into your seats. Breathe, and notice the room. Let us take a short moment of stillness together."
+      },
+      {
+       "k": "points",
+       "h": "One word each",
+       "items": [
+        [
+         "Go around once",
+         "One word each"
+        ],
+        [
+         "No explaining needed",
+         "Anyone can pass"
+        ],
+        [
+         "Thank everyone",
+         "Then begin"
+        ]
+       ],
+       "say": "Now one word each. Tired, glad, rushed, or hopeful. Go around once. No one needs to explain, and anyone can pass. Then thank everyone, and begin."
+      },
+      {
+       "k": "flow",
+       "h": "Closing",
+       "steps": [
+        [
+         "Closing Thanks",
+         "One thing to take with you"
+        ],
+        [
+         "Sending Words",
+         "Good words for the week"
+        ],
+        [
+         "Head out",
+         "Together"
+        ]
+       ],
+       "say": "Here is a closing. Each person names one thing they are taking with them. Then send each other out with a few good words for the week ahead. If your group prays, that can be a short blessing. Then head out together."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Start with Stillness",
+         "Under Roots"
+        ],
+        [
+         "One Word Check-in",
+         "Under Bark"
+        ],
+        [
+         "Closing Thanks",
+         "Under Fruit"
+        ],
+        [
+         "Group Agreements",
+         "Under Trunk"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Fruit. And Group Agreements is under Trunk. Faith communities and small groups also have Sending Blessing, or Sending Words in Plain wording, under Roots."
+      },
+      {
+       "k": "big",
+       "h": "Arrive together. Leave together.",
+       "sub": "Every time your group meets.",
+       "say": "Arrive together, and leave together, every time your group meets."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-newcomer",
+     "n": 3,
+     "title": "Welcome Someone New",
+     "mins": 3,
+     "blurb": "A greeter, a name, a buddy, and a check-in after the first time.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Welcome Someone New",
+       "sub": "Make room in the circle.",
+       "say": "Being new is hard. New to a class, a group, a team, or a congregation. This video shows how your grove can welcome someone new, so they find their place quickly."
+      },
+      {
+       "k": "big",
+       "h": "Everyone was new once.",
+       "sub": "Who made you feel welcome?",
+       "say": "Everyone was new once. Think back. Who made you feel welcome? What did they do?"
+      },
+      {
+       "k": "flow",
+       "h": "Make a plan",
+       "steps": [
+        [
+         "A greeter",
+         "Ready at the door"
+        ],
+        [
+         "Names",
+         "Name tags, or say them often"
+        ],
+        [
+         "A buddy",
+         "Someone to sit with"
+        ],
+        [
+         "Check in",
+         "After the first time"
+        ]
+       ],
+       "say": "Make a plan before anyone new arrives. Choose a greeter. Have name tags ready, or say names often. Pair the new person with a buddy, someone to sit with. And check in with them after their first time."
+      },
+      {
+       "k": "points",
+       "h": "Small things that matter",
+       "items": [
+        [
+         "Learn their name",
+         "And use it"
+        ],
+        [
+         "Introduce them",
+         "To two other people"
+        ],
+        [
+         "Invite, never push",
+         "They join at their own pace"
+        ]
+       ],
+       "say": "Small things matter most. Learn their name, and use it. Introduce them to two other people. And invite, never push. Let them join in at their own pace."
+      },
+      {
+       "k": "words",
+       "h": "Practice a warm welcome",
+       "items": [
+        "Hi, I am ...",
+        "What is your name?",
+        "Want to sit with me?"
+       ],
+       "beats": [
+        "Let us practice right now.",
+        "Turn to someone near you.",
+        "Pretend they are new, and give them a warm welcome: say hi, say your name, and ask theirs.",
+        {
+         "t": "Then switch, so both of you get a turn.",
+         "w": 20
+        }
+       ],
+       "say": "Let us practice right now. Turn to someone near you. Pretend they are new, and give them a warm welcome: say hi, say your name, and ask theirs. Then switch, so both of you get a turn."
+      },
+      {
+       "k": "points",
+       "h": "In each kind of grove",
+       "items": [
+        [
+         "A class",
+         "A Name Greeting, and a buddy"
+        ],
+        [
+         "A faith community or group",
+         "A Welcome Table"
+        ],
+        [
+         "A team",
+         "A New Person Buddy"
+        ]
+       ],
+       "say": "Each kind of grove has its own ways. A class can use a Name Greeting and a buddy. A faith community or small group can try a Welcome Table, inviting new people to sit with them and stay for coffee or a meal. A team can give each new teammate a New Person Buddy for their first month."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Welcome Someone New",
+         "In Together, under Branches"
+        ],
+        [
+         "Someone New Joined",
+         "Tap it in What’s Changed Lately"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Welcome Someone New in Together, under Branches. When someone new joins, tap it in What’s Changed Lately at your next check-in, so the practices that fit come first. And when you have welcomed someone, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Make room, and the circle grows.",
+       "sub": "Everyone belongs here.",
+       "say": "Make room for someone new, and the whole circle grows."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-huddle",
+     "n": 4,
+     "title": "Team Huddle",
+     "mins": 3,
+     "blurb": "Ten minutes to pause, speak up, share the load, and say thanks.",
+     "sources": [
+      "edmondson99"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Team Huddle",
+       "sub": "Ten minutes, side by side.",
+       "say": "This is a team huddle. Ten minutes, standing or sitting, at the start of a shift or a weekly meeting. It works for a hospice team, a school staff, a church staff, or any team that works side by side."
+      },
+      {
+       "k": "flow",
+       "h": "The huddle",
+       "steps": [
+        [
+         "Pause",
+         "One slow breath"
+        ],
+        [
+         "Speak up",
+         "One worry or question"
+        ],
+        [
+         "Name the load",
+         "What can wait?"
+        ],
+        [
+         "Thanks",
+         "One appreciation"
+        ]
+       ],
+       "say": "Here is the shape. Pause for one slow breath. Speak up, with one worry or question about the work. Name the load, and decide what can wait. And close with thanks."
+      },
+      {
+       "k": "big",
+       "h": "Pause together",
+       "sub": "One slow breath.",
+       "beats": [
+        "Let us start the huddle now.",
+        "Stand or sit where you are.",
+        {
+         "t": "Take one slow breath together, and let your shoulders drop.",
+         "w": 8
+        }
+       ],
+       "say": "Let us start the huddle now. Stand or sit where you are. Take one slow breath together, and let your shoulders drop."
+      },
+      {
+       "k": "points",
+       "h": "Speak up",
+       "items": [
+        [
+         "One worry or question",
+         "About the work"
+        ],
+        [
+         "Go around",
+         "Or pass"
+        ],
+        [
+         "Thank each one",
+         "Every time"
+        ]
+       ],
+       "say": "Next, a Speak Up Round. Each person names one worry or question about the work, or passes. Thank each person, every time. People speak up more when they know it is safe to. Then choose one thing to act on."
+      },
+      {
+       "k": "points",
+       "h": "Name the load",
+       "items": [
+        [
+         "One heavy thing each",
+         "In a few words"
+        ],
+        [
+         "What can wait?",
+         "And what can we share?"
+        ],
+        [
+         "Move one thing",
+         "Off someone’s plate"
+        ]
+       ],
+       "say": "Then name the load. Each person names one thing weighing heavy. Ask together, what can wait, and what can we share? Then move one thing off someone’s plate."
+      },
+      {
+       "k": "points",
+       "h": "Close with thanks",
+       "items": [
+        [
+         "Appreciation Round",
+         "A teammate, and what they did"
+        ],
+        [
+         "Just say thank you",
+         "No speeches"
+        ],
+        [
+         "Back to work",
+         "Together"
+        ]
+       ],
+       "say": "Close with an Appreciation Round. Name a teammate, and the exact thing you appreciate. They just say thank you. Then back to work, together."
+      },
+      {
+       "k": "points",
+       "h": "After a hard death",
+       "items": [
+        [
+         "Pause After a Death",
+         "One minute of quiet"
+        ],
+        [
+         "Say their name",
+         "Out loud"
+        ],
+        [
+         "Debrief After a Hard Day",
+         "Before everyone leaves"
+        ]
+       ],
+       "say": "For hospice and hospital teams, when someone you served dies, start the huddle with Pause After a Death. Say their name aloud, and hold one minute of quiet. And on a hard day, try Debrief After a Hard Day, before everyone leaves."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Speak Up Round, Name the Load",
+         "Under Bark"
+        ],
+        [
+         "Appreciation Round",
+         "Under Branches"
+        ],
+        [
+         "Pause After a Death",
+         "Under Roots"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "In a Team grove, you will find these in Together. Speak Up Round and Name the Load are under Bark. Appreciation Round is under Branches. And Pause After a Death is under Roots. Anchor your huddle to the start of a shift in Our Team Plan. And helpers need help too. Anyone can call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "A team that pauses together goes further.",
+       "sub": "Ten minutes, side by side.",
+       "say": "A team that pauses together goes further. Ten minutes, side by side."
+      }
+     ]
+    }
+   ]
   }
  ]
 }
 };
+
+/* ---------- The Grove Learn, Faith or Plain (GWG BLD 774) ----------
+   A Grove lesson with faithScenes plays them only in a grove that chose Faith words (window.GROVE_PLAIN === false, set by
+   grove/app.js on every render and when Learn opens). Everywhere else it plays its Plain scenes, so a Plain grove is never
+   offered prayer. Same id either way, so watched marks carry. Generated by P/GL/gen.py. */
+(function () {
+  var g = (window.GG_LEARN || {}).grove; if (!g) return;
+  (g.tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) {
+    if (!l.faithScenes) return;
+    var plain = l.scenes;
+    try { Object.defineProperty(l, 'scenes', { configurable: true, enumerable: true, get: function () { return window.GROVE_PLAIN === false ? l.faithScenes : plain; } }); } catch (e) {}
+  }); });
+})();
+/* end The Grove Learn, Faith or Plain */
 
 /* ---------- Who each video is for (GWG BLD 743) ----------
    Each lesson gets a 'for' field, shown as a small label on its card and under its title in the player
