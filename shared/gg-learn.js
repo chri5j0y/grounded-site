@@ -249,20 +249,20 @@
   /* ---------------- recorded voices for every public video (BLD 778) ----------------
      Lessons opened from an app's Learn (the eight trees) play recorded clips from Azure neural voices, stored on
      Cloudflare R2 and served at audio.growwithgrounded.com/<round>/<voice>/<name>.mp3. Brian stands in for Chris,
-     Emma for Kayti (Chris, BLD 777); a video keeps one voice from start to finish. A clip's name comes from its voice
+     Jenny for Kayti (Chris, BLD 778; Emma in BLD 777); a video keeps one voice from start to finish. A clip's name comes from its voice
      and its sentence (clipName), so a wording change asks for a new clip, and the closing lines and quiz replies are
      shared by every video in that voice. REC.round names the recording round that plays; empty plays device voices.
      A missing clip falls back to the device voice for that sentence. Page videos keep their own clips (audio: 'pv').
      The Voice Setup video, the Field Guide, and every sealed video keep device voices (no app, or not opened here).
      VOICES: each app's voice, with the tracks and the guide side (helper: For the Grown-up, For the Helper, For the
-     Leader) that take the other voice. A lesson can name its own (voice: 'brian' or 'emma'). */
+     Leader) that take the other voice. A lesson can name its own (voice: 'brian' or 'jenny'). */
   var REC = { base: 'https://audio.growwithgrounded.com/', round: '' };
   var VOICES = {
-    maple: { all: 'emma', helper: 'brian', tracks: { 'maple-grownups': 'brian' } },
-    aspen: { all: 'emma', helper: 'brian', tracks: { 'aspen-grownups': 'brian' } },
-    pine: { all: 'emma', helper: 'brian', tracks: { 'pine-grownup': 'brian' } },
+    maple: { all: 'jenny', helper: 'brian', tracks: { 'maple-grownups': 'brian' } },
+    aspen: { all: 'jenny', helper: 'brian', tracks: { 'aspen-grownups': 'brian' } },
+    pine: { all: 'jenny', helper: 'brian', tracks: { 'pine-grownup': 'brian' } },
     birch: { all: 'brian' }, oak: { all: 'brian' }, sequoia: { all: 'brian' }, willow: { all: 'brian' },
-    grove: { all: 'emma', helper: 'brian', tracks: { 'grove-lead': 'brian' } }
+    grove: { all: 'jenny', helper: 'brian', tracks: { 'grove-lead': 'brian' } }
   };
   function recVoice(cfg, any) {
     var l = (cfg && cfg.lesson) || {}, t = (cfg && cfg.track) || {}, V = VOICES[cfg && cfg.app];
