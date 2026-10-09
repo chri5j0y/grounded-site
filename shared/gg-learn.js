@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln41';
+  var V = 'ln42';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -478,6 +478,9 @@
       + '<div class="ln-vs"></div></div>';
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
+    // A lesson with recorded voices keeps only the Speed choice: the device voice menu, Get a Better Voice, and Voice Check step aside.
+    if (l.audio) Array.prototype.forEach.call(host.querySelectorAll('.ln-vs .gg-vhelp-btn, .ln-vs .gg-vhelp'), function (x) { x.style.display = 'none'; });
+    if (l.audio) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
@@ -600,11 +603,13 @@
         if (sc.k !== 'breathe' && +sc.hold >= 6 && rem >= 5000) return waitRing(Math.round(rem / 1000), t, go);
         P.nx = setTimeout(go, rem);
       }
-      // A recorded clip for this sentence, when a lesson has them (audio: true). Falls back to the device voice.
+      // A recorded clip for this sentence, when a lesson has them (audio: true, or a folder name such as 'pv' for the page videos). Falls back to the device voice.
       function clip(i, fin) {
         if (!l.audio || !window.Audio) return false;
         var a = new Audio(url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3')), ok = false;
         P.audio = a;
+        // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
+        try { a.playbackRate = window.GGRead && GGRead.speed ? GGRead.speed() : 1; } catch (e) {}
         a.onended = function () { fin(); };
         a.onerror = function () { if (!ok && t === P.tok) { ok = true; speak(B[i].t, fin); } };
         a.play().then(function () { ok = true; }).catch(function () { if (!ok && t === P.tok) { ok = true; speak(B[i].t, fin); } });
@@ -670,7 +675,8 @@
         if (P.playing) setPlay(false);
         else {
           var go = function () { setPlay(true); if (P.i < N - 1 && P.B && (P.b > 0 || P.ph === 'wait')) { stopTimers(); run(P.tok); } else show(P.i >= N - 1 ? 0 : P.i); };
-          if (window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
+          // Recorded voices (audio) need no Voice Check first.
+          if (!l.audio && window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
         }
       }
       else if (g === 'read') readToggle($('.ln-read', host).hidden);
