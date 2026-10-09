@@ -252,6 +252,7 @@ function upgrade(c){
 function vHome(){
   const P = pm(), L = list().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
   return `<div class="page-head"><div class="eyebrow">${esc(P.program || 'Grow With Grounded')}</div><h1>${esc(P.title || 'Premarital Sessions')}</h1><p>${esc(P.lead || '')}</p></div>
+  ${window.GGHw && GGHw.openView ? GGHw.openView() : '' /* GWG BLD 773 hook: Open Heartwood (Staff and Founders) */}
   <div class="card"><h2 style="margin-bottom:4px">Add a Couple</h2>
     <div class="pm-g3"><div><label class="f" for="pm-a">First Partner</label><input type="text" id="pm-a" autocomplete="off" placeholder="First name"></div>
     <div><label class="f" for="pm-b">Second Partner</label><input type="text" id="pm-b" autocomplete="off" placeholder="First name"></div>
@@ -404,7 +405,11 @@ function vHours(c){
 // fb (v2 only): their faith background id or empty}. Safety answers never ride on a card. The word is used once
 // here and never kept. A small reader of the same format stays here in case core.js has not loaded.
 const unb64u = s => { s = String(s).replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; };
-function codeOf(t){
+// GWG BLD 773: a whole pasted email or text works too; the link is found inside it. Links an email app wrote with
+// %23 for # (or quoted-printable soft breaks) are read too.
+function loose(t){ return String(t || '').replace(/=\r?\n/g, '').replace(/%23/gi, '#').replace(/%3D/gi, '=').replace(/%26/gi, '&'); }
+function codeOf(t){ return codeOf0(t) || codeOf0(loose(t)); }
+function codeOf0(t){
   const G = GC(); if (G && G.card && typeof G.card.codeOf === 'function'){ try { const x = G.card.codeOf(t); if (x) return x; } catch (e) {} }
   t = String(t || '').trim(); const m = /(?:^|[#&?])btv=(b1\.[A-Za-z0-9_-]{20,2000})/.exec(t); return m ? m[1] : (/^b1\.[A-Za-z0-9_-]{20,2000}$/.test(t) ? t : '');
 }
@@ -467,8 +472,9 @@ function vCard(c){
         return `<div class="card"><h3>${esc(a.name)}</h3>${aq.map(q => `<div class="pm-qa${differs(A[q.id], B[q.id]) ? ' pm-dif' : ''}"><p>${esc(qText(q, k))}</p><div class="pm-two">${k.a ? `<span><b>${esc(na)}</b>: ${esc(scale(A[q.id]))}</span>` : ''}${k.b ? `<span><b>${esc(nb)}</b>: ${esc(scale(B[q.id]))}</span>` : ''}</div></div>`).join('')}</div>`; }).join('') : ''}`;
   }
   const form = have.length === 2 ? '' : `<div class="card"><h2>Bring In Their Card</h2><p>${esc(P.card.lead || '')}</p>
-    <label class="f" for="pm-cl">${have.length ? 'The Other Partner\'s Card Link' : 'Card Link'}</label><input type="text" id="pm-cl" autocomplete="off" spellcheck="false" placeholder="Paste a card link from Heartwood">
-    ${have.length ? '' : `<label class="f" for="pm-cl2">The Other Partner's Card Link (if they have one)</label><input type="text" id="pm-cl2" autocomplete="off" spellcheck="false" placeholder="Paste the second card link">`}
+    <p class="muted" style="font-size:15px">${esc(PASTE_TIP)}</p>
+    <label class="f" for="pm-cl">${have.length ? 'The Other Partner\'s Card Link' : 'Card Link'}</label>${pasteBox('pm-cl', 'Paste a card link from Heartwood, or the whole email or text')}
+    ${have.length ? '' : `<label class="f" for="pm-cl2">The Other Partner's Card Link (if they have one)</label>${pasteBox('pm-cl2', 'Paste the second card link, or the whole email or text')}`}
     <label class="f" for="pm-cw">Their Shared Word</label><input type="password" id="pm-cw" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="The couple types it">
     ${have.length ? '' : `<label class="pm-yes"><input type="checkbox" id="pm-cy"> <span>${esc(P.card.yes || '')}</span></label>`}
     ${S.cardErr ? `<p class="pm-err" role="alert">${esc(S.cardErr)}</p>` : ''}
@@ -481,7 +487,8 @@ function vCard(c){
 // The same lock as the answers card: base64url of salt (16), iv (12), then AES-GCM text; PBKDF2 (250,000 rounds,
 // SHA-256) from the shared word, trimmed and lowercase. Inside: {v: 1, m: 'one' or 'two', s: '' or a session key,
 // n, to, on, vid: [titles], pr: [titles], wb: [{w, t, a}], q}. heartwood/core.js (GMCore.week) makes it.
-function weekCodeOf(t){
+function weekCodeOf(t){ return weekCodeOf0(t) || weekCodeOf0(loose(t)); }
+function weekCodeOf0(t){
   t = String(t || '').trim(); const m = /(?:^|[#&?])gmw=(w1\.[A-Za-z0-9_-]{20,90000})/.exec(t);
   return m ? m[1] : (/^w1\.[A-Za-z0-9_-]{20,90000}$/.test(t) ? t : '');
 }
@@ -518,7 +525,7 @@ function weekOne(x, k, i){
 }
 function weekForm(){
   const W = pm().weekCard;
-  return `<label class="f" for="pm-wl">Week Card Link</label><input type="text" id="pm-wl" autocomplete="off" spellcheck="false" placeholder="Paste the Week Card link">
+  return `<p class="muted" style="font-size:15px">${esc(PASTE_TIP)}</p><label class="f" for="pm-wl">Week Card Link</label>${pasteBox('pm-wl', 'Paste the Week Card link, or the whole email or text')}
     <label class="f" for="pm-ww">Their Shared Word</label><input type="password" id="pm-ww" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="The couple types it">
     <label class="pm-yes"><input type="checkbox" id="pm-wy"> <span>${esc(W.yes || '')}</span></label>
     ${S.weekErr ? `<p class="pm-err" role="alert">${esc(S.weekErr)}</p>` : ''}
@@ -720,6 +727,22 @@ function rerender(keepScroll){
 }
 function goView(v){ S.view = v; S.cardErr = ''; S.weekErr = ''; rerender(); }
 const val = id => ((document.getElementById(id) || {}).value || '');
+// ---------- Paste (GWG BLD 773) ----------
+// The card and Week Card boxes take a whole email or text (a box keeps the line breaks, so the link never runs into
+// the next line). Paste reads the clipboard when the browser allows it; otherwise it says to paste with Command V.
+const PASTE_TIP = 'Paste the link, or the whole email or text it came in. The link is found inside.';
+const pasteBox = (id, ph) => `<textarea id="${id}" rows="3" autocomplete="off" spellcheck="false" placeholder="${esc(ph)}" style="width:100%;min-height:72px"></textarea>
+    <div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-pm="paste" data-v="${id}">Paste</button></div>`;
+async function pasteInto(id){
+  const el = document.getElementById(id); if (!el) return;
+  const by = () => { try { el.focus(); } catch (e) {} toast('Click in the box, then paste with Command V (Control V on Windows).'); };
+  let t = '';
+  try { if (!navigator.clipboard || !navigator.clipboard.readText) return by(); t = await navigator.clipboard.readText(); } catch (e) { return by(); }
+  if (!String(t).trim()){ by(); return; }
+  el.value = t;
+  const found = id === 'pm-wl' ? weekCodeOf(t) : codeOf(t);
+  toast(found ? 'Pasted. The link is in.' : (id === 'pm-wl' ? 'Pasted, but no Week Card link was found in it.' : 'Pasted, but no card link was found in it.'));
+}
 
 async function cardIn(c){
   const k0 = c.card, links = [val('pm-cl'), val('pm-cl2')].map(x => x.trim()).filter(Boolean), word = val('pm-cw'), yes = k0 ? true : (document.getElementById('pm-cy') || {}).checked;
@@ -759,6 +782,7 @@ function act(k, v){
     case 'logadd': { const m = Math.max(0, +val('pm-lm') || 0); if (!m){ toast('Add the minutes first.'); return; } c.log = c.log || []; c.log.push({id: uid(), date: val('pm-ld') || today(), mins: m, n: nk(val('pm-ln')), notes: val('pm-lt')}); if (c.status === 'starting') c.status = 'sessions'; keep(c); rerender(true); toast('Added. ' + hrs(logMins(c)) + ' in all.'); return; }
     case 'logdel': c.log = (c.log || []).filter(x => x.id !== v); keep(c); rerender(true); return;
     case 'cardin': cardIn(c); return;
+    case 'paste': pasteInto(v); return;
     case 'weekin': weekIn(c); return;
     case 'weekx': { const k = String(S.n), L = weeksOf(c, k), i = +v; if (!L[i] || !confirm('Remove this Week Card from this device? The couple can share it again anytime.')) return; L.splice(i, 1); if (!L.length) delete c.week[k]; keep(c); rerender(true); return; }
     case 'cardx': if (!confirm('Remove their card from this device? They can share it again anytime.')) return; c.card = null; keep(c); rerender(true); return;

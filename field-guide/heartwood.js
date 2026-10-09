@@ -21,6 +21,17 @@
 // other client record, so it can be shown again. One invite per couple; a new one replaces what is shown here,
 // and earlier ones keep working until the next new Heartwood key.
 //
+// Email and Text (GWG BLD 773): beside the Copy buttons, each partner gets Email the Link and Text the Link, then
+// (separate buttons) Email the Code and Text the Code, so the code never rides in the same message as the link. Names,
+// emails, and phones come from the client file (the first partner), the premarital couple (first names), and a linked
+// Wedding Plan (both partners); a missing email or phone opens the message with an empty address.
+//
+// Open Heartwood (GWG BLD 773, Staff and Founders): the top of the Premarital tab and the client file's Heartwood block.
+// It makes a throwaway invite on the spot, sealed under a random code bound to the moment it was made
+// (PBKDF2 pass 'open:<code>:<time>', never a couple's code: theirs are letters and numbers only), and opens
+// heartwood/#hw=<invite>&hc=<code>&ht=<time> in a new tab. heartwood/open.js takes it once, within 15 minutes, then
+// clears the address bar; a link without hc still asks for the code, as before.
+//
 // GGHw.content() opens lib-heartwood.js with the Staff library's key for the Premarital tab (the questions, the
 // results words, and the faith backgrounds). On a Founder device that just sealed, it uses that content right away.
 // =====================================================================
@@ -146,9 +157,9 @@ function newCode(){
   while (out.length < 8){ crypto.getRandomValues(buf); for (const b of buf){ if (b < 250 && out.length < 8) out.push(ALPHA[b % 25]); } }
   return out.join('');
 }
-async function makeInvite(rawKey, code){
+async function makeInvite(rawKey, code, pass){
   const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
-  const base = await crypto.subtle.importKey('raw', enc.encode(normCode(code)), 'PBKDF2', false, ['deriveKey']);
+  const base = await crypto.subtle.importKey('raw', enc.encode(pass || normCode(code)), 'PBKDF2', false, ['deriveKey']);
   const k = await crypto.subtle.deriveKey({name: 'PBKDF2', salt, iterations: ROUNDS, hash: 'SHA-256'}, base, {name: 'AES-GCM', length: 256}, false, ['encrypt']);
   const ct = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, k, unb64(rawKey));
   return b64u(salt) + '.' + b64u(iv) + '.' + b64u(new Uint8Array(ct));
@@ -162,6 +173,63 @@ function recFor(kind, id){
   return (c.cli && files().find(f => f.id === c.cli)) || c;
 }
 const OPEN = {id: '', busy: false};
+// ---------- Email and Text for each partner (GWG BLD 773) ----------
+const mailHref = (em, sub, body) => 'mailto:' + encodeURIComponent(String(em || '').trim()).replace(/%40/g, '@') + '?subject=' + encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
+const smsHref = (ph, body) => 'sms:' + String(ph || '').replace(/[^\d+]/g, '') + '?&body=' + encodeURIComponent(body);
+const first = s => String(s || '').trim().split(/\s+/)[0] || '';
+// Both partners: names, emails, and phones from the client file, the premarital couple, and a linked Wedding Plan.
+function partners(kind, id){
+  const d = D() || {}, rec = recFor(kind, id) || {};
+  const f = kind === 'cli' ? rec : (rec.c && rec.c.first !== undefined ? rec : null);
+  const cp = kind === 'pm' ? couples().find(x => x.id === id) : couples().find(x => f && x.cli === f.id);
+  const plans = d.wdp && Array.isArray(d.wdp.plans) ? d.wdp.plans : [];
+  const wd = plans.find(p => (f && (p.cli === f.id || ((f.links || {}).wd || []).includes(p.id))) || (cp && p.pm === cp.id));
+  const w = k => (wd && wd.c && wd.c[k]) || {}, fc = (f && f.c) || {};
+  const P = [
+    {name: first(fc.first) || (cp && cp.p1 && cp.p1.name) || w('p1').called || first(w('p1').full), em: fc.email || w('p1').em, ph: fc.phone || w('p1').ph},
+    {name: first(fc.partner) || (cp && cp.p2 && cp.p2.name) || w('p2').called || first(w('p2').full), em: w('p2').em, ph: w('p2').ph}];
+  return P.map((p, i) => ({name: String(p.name || '').trim() || (i ? 'Second Partner' : 'First Partner'), em: String(p.em || '').trim(), ph: String(p.ph || '').trim()}));
+}
+const SUBJ_LINK = 'Heartwood, your private app for the two of you', SUBJ_CODE = 'Your Heartwood code';
+const hi = (p, t) => 'Hi ' + p.name + ',\n\n' + t;
+function sendRows(kind, id, inv){
+  return `<div class="hw-send" style="margin-top:12px"><h4 style="margin:0">Email or Text Each of Them</h4>
+    <p class="muted" style="margin:4px 0 0;font-size:15px">Send the link first, then the code in a separate message.</p>
+    ${partners(kind, id).map((p, i) => `<div class="hw-send1" data-hwp="${i}" style="margin-top:10px"><b>${esc(p.name)}</b> <small class="muted">${esc([p.em, p.ph].filter(Boolean).join(', ') || 'No email or phone on file yet')}</small>
+      <div class="row" style="margin-top:6px"><a class="btn btn-line btn-sm" data-hws="link-mail" href="${esc(mailHref(p.em, SUBJ_LINK, hi(p, linkText(inv.link))))}">Email the Link</a><a class="btn btn-line btn-sm" data-hws="link-text" href="${esc(smsHref(p.ph, hi(p, linkText(inv.link))))}">Text the Link</a></div>
+      <div class="row" style="margin-top:6px"><a class="btn btn-line btn-sm" data-hws="code-mail" href="${esc(mailHref(p.em, SUBJ_CODE, hi(p, codeText(inv.code))))}">Email the Code</a><a class="btn btn-line btn-sm" data-hws="code-text" href="${esc(smsHref(p.ph, hi(p, codeText(inv.code))))}">Text the Code</a></div></div>`).join('')}
+    <p class="muted" style="margin-top:8px;font-size:14px">On a Mac, Text opens Messages. Missing an email or phone? The message opens with the address empty, ready to fill in.</p></div>`;
+}
+
+// ---------- Open Heartwood (GWG BLD 773, Staff and Founders) ----------
+const HWOPEN = () => new URL('../heartwood/', location.href).href;
+const OPENR = {busy: false, link: ''};
+function openBtn(){
+  return `<button type="button" class="btn btn-line btn-sm" data-hwa="open"${OPENR.busy ? ' disabled' : ''}>${OPENR.busy ? 'Opening...' : 'Open Heartwood'}</button>`;
+}
+function openLate(){ return OPENR.link ? `<p class="tipbox" style="margin-top:8px">The browser kept the new tab from opening. <a href="${esc(OPENR.link)}" target="_blank" rel="noopener" data-hwa="opened">Open Heartwood Now</a></p>` : ''; }
+// The top of the Premarital tab.
+function openView(){
+  if (!isStaff()) return '';
+  return `<div class="card hw-open" style="border-left:4px solid var(--gold)"><div class="spread" style="flex-wrap:wrap;gap:8px"><div style="min-width:0"><h3 style="margin:0">Heartwood</h3>
+    <p class="muted" style="margin:4px 0 0;font-size:15px">${hwKey() ? 'Opens Heartwood in a new tab, unlocked with the Staff key. No code needed.' : 'Seal Heartwood comes first: a Founder seals it in the Founder tab, and its key arrives with the Staff library.'}</p></div>
+    ${hwKey() ? openBtn() : ''}</div>${openLate()}</div>`;
+}
+async function openHw(){
+  if (!isStaff() || OPENR.busy) return;
+  const h = hwKey(); if (!h) return alert('Seal Heartwood comes first. A Founder seals it in the Founder tab.');
+  const w = window.open('', '_blank'); // opened right away, so the browser lets it through
+  OPENR.busy = true; OPENR.link = ''; C.render && C.render();
+  try {
+    const code = newCode() + newCode(), ht = String(Date.now());
+    const inv = await makeInvite(h.key, '', 'open:' + code + ':' + ht);
+    const url = HWOPEN() + '#hw=' + inv + '&hc=' + code + '&ht=' + ht;
+    OPENR.busy = false;
+    if (w && !w.closed){ try { w.opener = null; } catch (e) {} w.location.href = url; }
+    else OPENR.link = url;
+    C.render && C.render();
+  } catch (e) { OPENR.busy = false; if (w) try { w.close(); } catch (x) {} C.render && C.render(); alert('Heartwood could not be opened on this device. Try again.'); }
+}
 const rr = sel => { C.render && C.render(); setTimeout(() => { const el = document.querySelector(sel); if (el) el.scrollIntoView({block: 'start'}); }, 30); };
 const linkText = link => 'Here is Heartwood, the private app for the two of you that comes with The Grounded Marriage. Each of you, open this link on your own phone: ' + link + ' We will send your code separately. Everything you write in Heartwood stays on your own phone.';
 const codeText = code => 'Your Heartwood code is ' + showCode(code) + '. When Heartwood asks, type it on each of your phones. Keep it just between the two of you.';
@@ -172,7 +240,7 @@ function inviteBlock(kind, id, o = {}){
   const qr = open && window.GGQR && GGQR.svg ? GGQR.svg(inv.link, {label: 'QR code for the Heartwood invite link', border: 2}) : '';
   const body = !h ? '<p class="tipbox" style="margin-top:8px">Seal Heartwood comes first: a Founder seals it in the Founder tab, and its key arrives with the Staff library. Then invites can be made here.</p>'
     : `${inv ? `<p style="margin-top:6px"><span class="pill sage">Invite made ${esc(nice(inv.made))}</span>${inv.by ? ' <small class="muted">by ' + esc(inv.by) + '</small>' : ''}</p>` : ''}
-    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-hwa="make" data-hwk="${esc(kind)}" data-hwv="${esc(id)}"${OPEN.busy ? ' disabled' : ''}>${OPEN.busy && OPEN.id === key ? 'Making...' : inv ? 'Make a New Invite' : 'Make Heartwood Invite'}</button>${inv ? `<button type="button" class="btn btn-line btn-sm" data-hwa="show" data-hwk="${esc(kind)}" data-hwv="${esc(id)}" aria-expanded="${!!open}">${open ? 'Hide the Invite' : 'Show the Invite'}</button>` : ''}</div>
+    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-hwa="make" data-hwk="${esc(kind)}" data-hwv="${esc(id)}"${OPEN.busy ? ' disabled' : ''}>${OPEN.busy && OPEN.id === key ? 'Making...' : inv ? 'Make a New Invite' : 'Make Heartwood Invite'}</button>${inv ? `<button type="button" class="btn btn-line btn-sm" data-hwa="show" data-hwk="${esc(kind)}" data-hwv="${esc(id)}" aria-expanded="${!!open}">${open ? 'Hide the Invite' : 'Show the Invite'}</button>` : ''}${openBtn()}</div>${openLate()}
     ${open ? `<div class="hw-inv-panel" style="margin-top:12px">
       <label class="f" for="hw-link">The link, for both of them</label><input id="hw-link" readonly value="${esc(inv.link)}" style="width:100%">
       ${qr ? `<div class="hw-qr" style="max-width:200px;margin:10px 0">${qr}</div>` : ''}
@@ -181,6 +249,7 @@ function inviteBlock(kind, id, o = {}){
       <label class="f" style="margin-top:12px">The code, sent separately</label><p class="hw-code" style="font-size:26px;font-weight:700;letter-spacing:.12em;margin:4px 0">${esc(showCode(inv.code))}</p>
       <label class="f" for="hw-ct">Send with the code, in a separate message</label><textarea id="hw-ct" rows="3" readonly style="width:100%">${esc(codeText(inv.code))}</textarea>
       <div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-hwa="copy" data-hwt="hw-ct">Copy the Code Message</button></div>
+      ${sendRows(kind, id, inv)}
       <p class="muted" style="margin-top:10px;font-size:15px">Each partner opens the link on their own phone and types the code. A new invite gives a new code; earlier invites keep working until the next new Heartwood key.</p></div>` : ''}`;
   return `<div class="${o.bare ? '' : 'card '}hw-inv" style="${o.bare ? '' : 'margin-top:14px;'}border-left:4px solid var(--gold)${o.bare ? ';padding-left:12px;margin-top:12px' : ''}"><h3 style="margin:0">Heartwood</h3>
    <p class="muted" style="margin:4px 0 0">The couple's private app. An invite is a link for both of them, and a short code you give them separately.</p>${body}${o.bare ? `<div class="row" style="margin-top:8px"><button type="button" class="linkbtn" data-hwa="close">Close</button></div>` : ''}</div>`;
@@ -223,6 +292,8 @@ document.addEventListener('click', e => {
   else if (a === 'show'){ const key = k + ':' + v; OPEN.id = OPEN.id === key ? '' : key; rr('.hw-inv'); }
   else if (a === 'copy') copy(b.getAttribute('data-hwt'));
   else if (a === 'close'){ OPEN.id = ''; C.render && C.render(); }
+  else if (a === 'open'){ e.preventDefault(); openHw(); }
+  else if (a === 'opened'){ OPENR.link = ''; setTimeout(() => C.render && C.render(), 50); }
 });
 document.addEventListener('change', e => {
   const t = e.target; if (!t) return;
@@ -232,10 +303,10 @@ document.addEventListener('change', e => {
 
 window.GGHw = {
   init(ctx){ C = ctx || {}; },
-  sealView, inviteBlock, headBits, content,
+  sealView, inviteBlock, headBits, content, openView,
   hasKey: () => !!hwKey(),
   stamp: () => STAMP + ':' + ((hwKey() || {}).key || '').slice(0, 6),
   // for tests and the Premarital tab
-  _normCode: normCode, _newCode: newCode
+  _normCode: normCode, _newCode: newCode, _partners: partners
 };
 })();
