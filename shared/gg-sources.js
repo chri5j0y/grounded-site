@@ -105,6 +105,8 @@
     stroebe99: ['Stroebe and Schut, The Dual Process Model of Coping with Bereavement (Death Studies, 1999)', 'https://doi.org/10.1080/074811899201046'],
     lindemann44: ['Erich Lindemann, Symptomatology and Management of Acute Grief (American Journal of Psychiatry, 1944)', 'https://doi.org/10.1176/ajp.101.2.141'],
     lundy: ['Laura Lundy, the Lundy Model of Child Participation (summary, Queen\'s University Belfast)', 'https://www.qub.ac.uk/research-centres/cppa/policy-case-studies/childrens-participation-lundy-model.html'],
+    // The Grove Learn for the kinds of grove (GWG BLD 774, GL): the circle shape in Leading a Class Grove and Class Circle.
+    rcmm: ['Responsive Classroom, Morning Meeting: a greeting, sharing, a group activity, and a morning message (introduction)', 'https://www.responsiveclassroom.org/sites/default/files/pdf_files/mm_intro.pdf', 'a'],
     wrz: ['Wrzesniewski and Dutton, job crafting (2001)', 'https://doi.org/10.5465/amr.2001.4378011', 'a'],
     litz: ['Litz and colleagues, moral injury and moral repair (2009)', 'https://doi.org/10.1016/j.cpr.2009.07.003'],
     boss: ['Pauline Boss, Ambiguous Loss', 'https://www.ambiguousloss.com', 'a'],
@@ -415,10 +417,51 @@
     jabre13: ["Jabre and colleagues, family presence during cardiopulmonary resuscitation (NEJM, 2013)", "https://doi.org/10.1056/NEJMoa1203366"],
     bartels: ["Jonathan Bartels, The Pause after a patient's death (University of Virginia Health, 2009)", ""],
     codelavender: ["Code Lavender, a rapid support response for staff (Cleveland Clinic, 2008)", ""],
+    // The Grove When Life Changes Together (GWG BLD 774)
+    bridges91: ["William Bridges, Managing Transitions: Making the Most of Change (1991): an ending, a neutral zone, and a new beginning", ""],
+    csgs: ["Coalition to Support Grieving Students, guidance for school staff (with the National Center for School Crisis and Bereavement)", "https://grievingstudents.org/"],
+    goodenow93: ["Carol Goodenow, the psychological sense of school membership among adolescents (Psychology in the Schools, 1993)", "https://doi.org/10.1002/1520-6807(199301)30:1<79::AID-PITS2310300113>3.0.CO;2-X"],
+    hobfoll07: ["Hobfoll and colleagues, five essential elements of immediate and mid-term mass trauma intervention: safety, calming, self and community efficacy, connectedness, and hope (Psychiatry, 2007)", "https://doi.org/10.1521/psyc.2007.70.4.283"],
+    pfa06: ["Brymer and colleagues, Psychological First Aid: Field Operations Guide, second edition (National Child Traumatic Stress Network and National Center for PTSD, 2006)", "https://www.samhsa.gov/resource/dbhis/psychological-first-aid-field-operations-guide-2nd-edition"],
+    pfas: ["Brymer and colleagues, Psychological First Aid for Schools: Field Operations Guide (National Child Traumatic Stress Network and National Center for PTSD, 2012)", "https://www.samhsa.gov/resource/dbhis/psychological-first-aid-schools-pfa-s-field-operations-guide-2nd-edition"],
+    // end BLD 774
 };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
   var C = {
+    // The Grove When Life Changes Together (GWG BLD 774)
+    "grove:blended": ["papernow13"],
+    "grove:burnout": ["whoburnout19", "maslach", "figley", "edmondson99"],
+    "grove:classmate-death": ["csgs", "aftersuicide18", "dougy"],
+    "grove:classmate-ill": ["cdcschoolchc"],
+    "grove:congregation-loss": ["stroebe99", "dougy"],
+    "grove:coworker-death": ["doka", "stroebe99", "dazzi"],
+    "grove:diagnosis": ["walsh16", "patterson02"],
+    "grove:disability-together": ["carterbelong", "apadisability"],
+    "grove:disaster": ["hobfoll07", "pfa06"],
+    "grove:family-death": ["dougy", "stroebe99"],
+    "grove:first-holidays": ["dougy"],
+    "grove:grandparent-moves-in": ["aarpcg"],
+    "grove:group-conflict": ["pranis", "tuckman65"],
+    "grove:group-ends": ["tuckman65"],
+    "grove:hard-dates": ["dougy"],
+    "grove:hard-death": ["bartels", "figley", "litz", "doka"],
+    "grove:hospice": ["byock4", "blundon"],
+    "grove:leader-leaving": ["bridges91", "tuckman65"],
+    "grove:member-crisis": ["dazzi", "stanley"],
+    "grove:money-tight": ["patterson02"],
+    "grove:moving": ["fiese02"],
+    "grove:new-baby": ["prams18", "fiese02"],
+    "grove:new-student": ["cdcconnect23", "goodenow93"],
+    "grove:newcomers": ["woolever04"],
+    "grove:parent-away": ["mosteens"],
+    "grove:pet-death": ["dougy"],
+    "grove:recovery": ["sevencs", "samhsarecovery"],
+    "grove:scary-news": ["holman13", "rogers"],
+    "grove:school-emergency": ["pfas", "ntac21"],
+    "grove:team-change": ["bridges91", "edmondson99"],
+    "grove:two-homes": ["amato01"],
+    // end BLD 774
     // Birch When Life Changes (GWG BLD 743)
     "birch:adhd": ["ocrpse", "curry17"],
     "birch:after-baby": ["prams18", "paulson10"],
@@ -837,7 +880,8 @@
   function lesson(app, l, opts) {
     if (!l) return '';
     var list = Array.isArray(l.sources) ? l.sources : (C['video:' + l.id] || []);
-    var stories = (l.scenes || []).filter(function (s) { return s && s.k === 'story' && s.title; }).map(function (s) { return s.title; });
+    // A story scene marked chris: false is a typical moment in narrator voice (The Grove's A Family Moment, GWG BLD 774), never one of Chris's stories.
+    var stories = (l.scenes || []).filter(function (s) { return s && s.k === 'story' && s.title && s.chris !== false; }).map(function (s) { return s.title; });
     return line(list, Object.assign({ stories: stories }, opts || {}));
   }
   var done = false;

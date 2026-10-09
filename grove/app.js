@@ -183,7 +183,9 @@ const fill = (s, o) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => o[k] != n
 /* ---------- practices: the household practices (grove/together.js) and each kind's (grove/kinds.js) ---------- */
 const EXK = GK.existingKinds || {};
 const ALLP = T.practices.map(p => Object.assign({}, p, { kinds: (EXK[p.id] || p.kinds || ['family']).slice() }))
-  .concat((GK.practices || []).filter(p => p && p.id && PNAME[p.part] && !T.practices.some(x => x.id === p.id)).map(p => Object.assign({ kinds: ['family'] }, p)));
+  .concat((GK.practices || []).filter(p => p && p.id && PNAME[p.part] && !T.practices.some(x => x.id === p.id)).map(p => Object.assign({ kinds: ['family'] }, p)))
+  // Together practices new with When Life Changes Together (grove/guides.js, GWG BLD 774)
+  .concat(((window.GROVE_GUIDES || {}).practices || []).filter(p => p && p.id && PNAME[p.part] && !T.practices.some(x => x.id === p.id) && !(GK.practices || []).some(x => x.id === p.id)).map(p => Object.assign({ kinds: ['family'] }, p)));
 const TP = Object.fromEntries(ALLP.map(p => [p.id, p]));
 
 /* ---------- dates ---------- */
@@ -427,8 +429,8 @@ function famIntake() {
 /* ---------- view state ---------- */
 const S = { tab: 'grove', sel: null, wk: 0, part: '', open: '', lib: { q: '' }, setup: null, pick: false, ci: null, view: '', pd: null, fresh: null };
 function tabs() {
-  if (!G || S.setup) return [['grove', G ? 'New Grove' : 'Start Our Grove', 'grove'], ['how', 'How it works', 'how'], ['learn', 'Learn', 'play']];
-  const K = KW(), t = [['grove', 'Our Grove', 'grove'], ['checkin', K.checkin, 'week'], ['plan', 'Growth Plan', 'plan'], ['together', 'Together', 'heart']];
+  if (!G || S.setup) return [['grove', G ? 'New Grove' : 'Start Our Grove', 'grove'], ['life', 'When Life Changes', 'guide'], ['how', 'How it works', 'how'], ['learn', 'Learn', 'play']];
+  const K = KW(), t = [['grove', 'Our Grove', 'grove'], ['checkin', K.checkin, 'week'], ['plan', 'Growth Plan', 'plan'], ['together', 'Together', 'heart'], ['life', 'When Life Changes', 'guide']];
   if (isFamily() || G.wallOn) t.push(['wall', G.kind === 'classroom' ? 'Teacher Notes' : 'The Wall', 'people']);
   if (isFamily() && hasEarlier()) t.push(['earlier', 'Earlier', 'journal']);
   t.push(['how', 'How it works', 'how'], ['settings', 'Settings', 'gear'], ['learn', 'Learn', 'play']);
@@ -442,8 +444,9 @@ let LAST_SCENE = '';
 function render() {
   renderTabs();
   const v = $('#view');
-  const body = !G || S.setup ? ({ how: viewHow, library: viewLibrary }[S.tab] || viewSetup)()
-    : ({ grove: viewGrove, checkin: viewCheckin, plan: viewPlan, together: viewTogether, wall: viewWall, earlier: viewEarlier, how: viewHow, settings: viewSettings, library: viewLibrary }[S.tab] || viewGrove)();
+  window.GROVE_PLAIN = plainMode();
+  const body = !G || S.setup ? ({ how: viewHow, library: viewLibrary, life: viewLife }[S.tab] || viewSetup)()
+    : ({ grove: viewGrove, checkin: viewCheckin, plan: viewPlan, together: viewTogether, life: viewLife, wall: viewWall, earlier: viewEarlier, how: viewHow, settings: viewSettings, library: viewLibrary }[S.tab] || viewGrove)();
   v.innerHTML = (G && !S.setup ? groveBar() : '') + (isFamily() && !S.setup ? hereBar() + alertsHtml() : '') + body;
   // The Today scene plays a short moment (birds and a soft wind) when it opens, then rests still.
   const key = G && S.tab === 'grove' && !S.setup ? G.id : '';
@@ -574,6 +577,7 @@ function viewGrove() {
     : `<b>This grove belongs to ${esc(K.we)}.</b> Check in together with one shared answer for each question, make a Growth Plan together, and do a few practices side by side. Nothing about any one person is ever asked or kept.`}</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += groveTodayHtml();
   h += nextStepHtml();
+  h += lcHomeHtml();
   if (hasTrees()) {
     const lead = isFamily() ? (ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.')
       : (fam.length ? 'Trees shared by members from their own tree apps, side by side.' : 'Members can share their own tree here from their tree app, if they choose. It is never required.');
@@ -698,9 +702,9 @@ function togetherHtml(days) {
 }
 
 /* ---------- help, any time ---------- */
-function helpCardHtml(more) {
+function helpCardHtml(more, hospice) {
   let first = '';
-  if (isFamily() && G.hard) first = G.line && G.line.phone
+  if ((isFamily() && G.hard) || hospice) first = G && G.line && G.line.phone
     ? `<p><b>${esc(G.line.name || 'Our hospice 24/7 line')}</b>: <a class="text-link" href="tel:${esc(String(G.line.phone).replace(/[^0-9+]/g, ''))}">${esc(G.line.phone)}</a>. Call first, day or night, for anything hospice can help with.</p>`
     : `<p><b>In a hard season with hospice?</b> Call your hospice's 24/7 line first, day or night, for anything hospice can help with. It is on the admission papers.</p>`;
   return `<div class="card gv-help" role="note"><h3>If Someone Needs Help Now</h3>${first}<p>If someone is thinking about ending their life, or is in crisis, call or text <a class="text-link" href="tel:988">988</a>, any time, day or night.</p><p>If anyone is in danger right now, call <a class="text-link" href="tel:911">911</a>.</p>${more ? `<p>If a vulnerable adult in Minnesota may be harmed, neglected, or taken advantage of, call MAARC at <a class="text-link" href="tel:18448801574">1-844-880-1574</a>, any time.</p>` : ''}</div>`;
@@ -794,6 +798,201 @@ function viewTogether() {
   return h;
 }
 
+/* ---------- When Life Changes Together (GWG BLD 774) ----------
+   Guides for the changes a family, class, faith community, group, or team goes through together (grove/guides.js,
+   window.GROVE_GUIDES), each with two views (For the Group, For the Leader), two videos (grove/guide-videos.js, played
+   by shared/gg-learn.js; a Plain grove hears the Plain scenes), Together practices, and links to the matching tree guides.
+   Picked for Us puts first the guides that fit this grove: its kind, What's Changed Lately, its Growing Edges, Who's in
+   Our Circle, and a Hard Season. Nothing is hidden. Deep links: #life, #life=<id>. */
+const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
+const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
+const GV_SRC = '/grove/guide-videos.js?v=b774';
+const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
+const TREE_LINK = { maple: ['Maple', '/maple/#talk=', 'for grown-ups of kids, K to 5'], aspen: ['Aspen', '/aspen/#talk=', 'for grown-ups of middle schoolers'], pine: ['Pine', '/pine/#life=', 'for grades 9 to 12'], birch: ['Birch', '/birch/#life=', 'for ages 18 to 26'], oak: ['Oak', '/oak/#life=', 'for grown-ups'], sequoia: ['Sequoia', '/sequoia/#life=', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
+const HOSPICE_FIRST = ['hospice', 'hard-death'];
+S.lc = { q: '', ring: 'all', open: null, persp: 'group' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcFits = t => !G || (t.kinds || []).includes(G.kind);
+// A guide in this grove's words: Plain wording replaces any field the guide gives a Plain version of.
+function lcT(t) { const o = Object.assign({}, t); if (plainMode() && t.plain) Object.assign(o, t.plain); return o; }
+function lcMatches(t, q) {
+  if (!q) return true;
+  const words = (t.title + ' ' + (t.keys || '') + ' ' + (t.short || '') + ' ' + (t.quick || []).join(' ')).toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/);
+  return q.toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/).filter(Boolean).every(w => words.some(x => x.startsWith(w)));
+}
+const lcUl = a => (a || []).length ? '<ul>' + a.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '';
+const lcKinds = t => (t.kinds || []).map(k => KIND_NAME[k] || k);
+// What this grove has told us, from the locked part (only while it is open): changes, Growing Edges, the circle.
+function lcSignals(ci) {
+  if (G && !G.lockOn && !VAULTS[G.id]) VAULTS[G.id] = Object.assign(blankVault(), G.plainBox || {}); // no lock: nothing to ask
+  const v = vaultOpen() ? V() : null;
+  const c = ci || (v ? latestCheckin(false) : null), L = c ? levelsOf(c) : {};
+  const ch = (ci ? ci.changes : (v && v.changes) || []).filter(x => x !== 'none').map(x => G.kind + ':' + x);
+  return { ch, edges: PARTS6.filter(p => L[p.key] === 'edge').map(p => p.key), circ: (v && v.circle) || [] };
+}
+function lcPicks(max, ci) {
+  if (!G || !LC.length) return [];
+  const sg = lcSignals(ci);
+  const score = t => {
+    if (!lcFits(t)) return 0;
+    let s = 0;
+    if ((t.changes || []).some(c => sg.ch.includes(c))) s += 10;
+    s += (t.parts || []).filter(p => sg.edges.includes(p)).length * 2;
+    if (sg.circ.includes('close') && t.ring === 'gw-loss') s += 3;
+    if (sg.circ.includes('serious') && t.ring === 'gw-illness') s += 3;
+    if (isFamily() && G.hard && ['hospice', 'diagnosis', 'hospital', 'family-death'].includes(t.id)) s += 6;
+    return s;
+  };
+  return LC.map(t => [t, score(t)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, max).map(x => x[0]);
+}
+function lcPickPractices(picks, max) {
+  const seen = new Set(), out = [];
+  picks.forEach(t => (t.practices || []).forEach(id => { const p = TP[id]; if (p && !seen.has(id) && (p.kinds || []).includes(G.kind)) { seen.add(id); out.push(p); } }));
+  return joinOrder(out).slice(0, max);
+}
+function lcCard(t) {
+  const r = lcRing(t.ring), fit = lcFits(t), tt = lcT(t);
+  return `<article class="gv-lc-card" style="--rc:${r.color}"><span class="gv-lc-label">${esc(r.name)}</span><h4>${esc(t.title)}</h4><p>${esc(tt.short || '')}</p>
+    <p class="gv-lc-for">${fit && G ? 'Fits our grove' : 'For ' + esc(list3(lcKinds(t)))}${lcWatchedBoth(t.id) ? ' · Both videos watched' : ''}</p>
+    <button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">Open This Guide</button></article>`;
+}
+// The guides list: Picked for Us first, then each ring with the guides that fit this grove's kind first.
+function lcListHtml() {
+  const st = S.lc; let h = '', n = 0;
+  if (G && st.ring === 'all' && !st.q) {
+    const picks = lcPicks(6);
+    if (picks.length) h += `<div class="gv-lc-ring gv-lc-picked" style="--rc:var(--gold)"><h3><i></i>Picked for Us</h3><p>Guides that fit ${esc(KW().we)} right now, from What's Changed Lately, our Growing Edges, and Who's in Our Circle. Every guide stays open.</p><div class="gv-lc-grid">${picks.map(lcCard).join('')}</div></div>`;
+  }
+  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC.filter(t => t.ring === r.key && lcMatches(t, st.q)); if (!ts.length) return;
+    const ord = ts.filter(lcFits).concat(ts.filter(t => !lcFits(t)));
+    n += ts.length;
+    h += `<div class="gv-lc-ring" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="gv-lc-grid">${ord.map(lcCard).join('')}</div></div>`;
+  });
+  return n ? h : `<div class="card"><p>No guides match “${esc(st.q)}.” Try another word, or browse every topic.</p></div>`;
+}
+function viewLife() {
+  const st = S.lc;
+  if (st.open) { const t = LC.find(x => x.id === st.open); if (t) return lcDetail(t); st.open = null; }
+  const filled = LC_RINGS.filter(r => LC.some(t => t.ring === r.key));
+  if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  let h = `<div class="section-head"><p class="gv-kicker">When Life Changes Together</p><h2>Guides for the changes we go through together</h2>
+    <p>For a family, a class, a faith community, a group, or a team. Each guide has two views: For the Group, to read together, and For the Leader, for the grown-up, teacher, pastor, group leader, or team lead guiding the way. Each has two short videos, a few Together practices, and links to the guides in each person's own tree app.</p></div>`;
+  if (!LC.length) return h + `<div class="card"><p>The guides are on the way.</p></div>` + helpCardHtml(true);
+  h += `<input class="gv-input gv-lc-search" id="gv-lcq" type="search" placeholder="Search: a move, a new baby, hospice, a team..." aria-label="Search the guides" value="${esc(st.q)}" enterkeyhint="search">
+    <div class="gv-chips" role="group" aria-label="Filter by topic"><button type="button" class="chip${st.ring === 'all' ? ' on' : ''}" aria-pressed="${st.ring === 'all'}" data-act="lc-ring" data-id="all">All Topics</button>${filled.map(r => `<button type="button" class="chip${st.ring === r.key ? ' on' : ''}" aria-pressed="${st.ring === r.key}" data-act="lc-ring" data-id="${r.key}" style="--rc:${r.color}">${esc(r.name)}</button>`).join('')}</div>`;
+  if (G && G.lockOn && !vaultOpen()) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} Unlock the grove to see Picked for Us, from your check-in and What's Changed Lately. <button class="text-btn" data-act="unlock">Unlock</button></p>`;
+  h += `<div id="gv-lclist">${lcListHtml()}</div>`;
+  return h + helpCardHtml(true) + `<p class="muted gv-lc-note">These guides offer spiritual guidance and emotional support for groups going through change, drawn from chaplaincy and trusted family, school, faith, and workplace organizations. For therapy, medical care, or legal advice, they point you to the right people. In danger right now, call 911. For a crisis, call or text 988.</p>`;
+}
+function lcWatchedOne(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('grove', id)); } catch (e) { return false; } }
+function lcWatchedBoth(gid) { return lcWatchedOne('gr-g-' + gid + '-you') && lcWatchedOne('gr-g-' + gid + '-helper'); }
+function lcVids(t, lead) {
+  const b = (side, name, pri) => { const id = 'gr-g-' + t.id + '-' + side, w = lcWatchedOne(id);
+    return `<button type="button" class="btn ${pri ? 'btn-gold' : 'btn-line'} btn-sm" data-act="lc-watch" data-id="${esc(t.id)}" data-side="${side}">${w ? icon('check') : icon('play')} Watch: ${name}${w ? ' <span class="gv-lc-w">Watched</span>' : ''}</button>`; };
+  return `<div class="gv-lc-vids no-print"><div class="tools-row" style="justify-content:flex-start">${b('you', 'For the Group', !lead)}${b('helper', 'For the Leader', lead)}</div>
+    <p class="muted">For the Group, to watch together. For the Leader, for whoever is guiding the way. A few minutes each, narrated aloud.</p></div>`;
+}
+function lcWatch(gid, side) {
+  window.GROVE_PLAIN = plainMode();
+  const go = () => { if (window.GROVE_VIDS_WORDING) GROVE_VIDS_WORDING(plainMode()); if (window.GGLearn) GGLearn.open('grove', 'gr-g-' + gid + '-' + side, { from: 'guide' }); };
+  if (window.GG_LEARN_GUIDES && GG_LEARN_GUIDES.grove) go(); else loadScript(GV_SRC).then(go);
+}
+const lcKidsOn = () => !G || (G.kind !== 'team' && (kidsOn() || isFamily()));
+function lcFaith(t) { return plainMode() ? ((t.plain || {}).faith || '') : (t.faith || ''); }
+function lcTreeLinks(t) {
+  const L = (t.trees || []).filter(x => TREE_LINK[x[0]]); if (!L.length) return '';
+  return `<h3>A guide of your own</h3><p>For anyone who wants their own guide, in the tree app for their age:</p><ul class="gv-lc-trees">${L.map(([tr, id, title]) => { const T0 = TREE_LINK[tr]; return `<li><a class="text-link" href="${T0[1]}${encodeURIComponent(id)}">${esc(title || id)}</a> <span class="muted">in ${T0[0]}, ${esc(T0[2])}</span></li>`; }).join('')}</ul>`;
+}
+function lcSources(t) { return window.GGSources ? GGSources.html('grove:' + t.id, { stories: t.stories || [] }) : ''; }
+function lcPracHtml(t) {
+  const ps = (t.practices || []).map(id => TP[id]).filter(Boolean);
+  if (!ps.length) return '';
+  const ord = G ? joinOrder(ps.filter(p => (p.kinds || []).includes(G.kind)).concat(ps.filter(p => !(p.kinds || []).includes(G.kind)))) : ps;
+  return `<h3>Together practices for this season</h3><p class="muted">Small things to do side by side. Each one grows the grove.</p>${G ? ord.map(p => practiceCard(p, false)).join('') : ord.map(p0 => { const p = pv(p0); return `<div class="gv-prac" style="--pc:${(PARTS6.find(x => x.key === p.part) || {}).color}"><div class="gv-prac-top"><b>${esc(p.name)}</b><small>${esc(PNAME[p.part] || '')}</small></div><p>${esc(p.text)}</p></div>`; }).join('')}`;
+}
+function lcDetail(t0) {
+  const t = lcT(t0), r = lcRing(t.ring), lead = S.lc.persp === 'leader', tg = t.together || {}, ld = t.leader || {};
+  const kid = lcKidsOn() && (t.kids || []).length ? `<h3>With children</h3><p class="muted">Words for children, honest and simple.</p>${lcUl(t.kids)}` : '';
+  const bk = t.byKind || {}, bkLines = G ? (bk[G.kind] ? [[G.kind, bk[G.kind]]] : []) : Object.entries(bk);
+  const view = !lead ? `
+      <h3>What this season can feel like</h3><p>${esc(t.feel)}</p>
+      <h3>First steps together</h3>${lcUl(tg.first)}
+      <h3>What helps</h3>${lcUl(tg.helps)}
+      ${(tg.say || []).length ? `<h3>Words we can say together</h3><div class="gv-lc-say">${tg.say.map(x => `<p>${esc(x)}</p>`).join('')}</div>` : ''}
+      ${kid}
+      ${tg.people ? `<h3>Talking it over</h3><p>${esc(tg.people)}</p>` : ''}`
+    : `
+      <h3>What they may be carrying</h3><p>${esc(t.feel)} ${esc(ld.feel || '')}</p>
+      <h3>What to say</h3><div class="gv-lc-say">${(ld.say || []).map(x => `<p>${esc(x)}</p>`).join('')}</div>
+      <div class="gv-lc-two"><div><b>What not to say or do</b>${lcUl(ld.avoid)}</div><div><b>Practical ways to lead</b>${lcUl(ld.help)}</div></div>
+      ${kid}
+      <h3>Looking after yourself as the leader</h3><p>${esc(ld.you || '')}</p>`;
+  const faith = lcFaith(t0);
+  return `<article class="gv-lc-article" id="gv-lc-article" style="--rc:${r.color}">
+    <div class="tools-row no-print" style="justify-content:space-between;margin:0 0 12px"><button type="button" class="text-btn" data-act="lc-back">${icon('back', 'gv-ic-inline')} All guides</button>
+      <span class="gv-lc-tools"><button type="button" class="btn btn-line btn-sm" data-act="lc-read">${icon('how', 'gv-ic-inline')} Read Aloud</button><button type="button" class="btn btn-line btn-sm" data-act="lc-print" data-id="${esc(t.id)}">${icon('print', 'gv-ic-inline')} Save or Print This Guide</button></span></div>
+    <span class="gv-lc-label">${esc(r.name)}</span>
+    <h2>${esc(t.title)}</h2>
+    <p class="gv-lc-for">For ${esc(list3(lcKinds(t)))}${G && !lcFits(t) ? `. Written for other kinds of groves, and open to ${esc(KW().we)} too.` : ''}</p>
+    <div class="gv-lc-quick"><b>Quick Reference</b>${lcUl(t.quick)}</div>
+    ${lcVids(t0, lead)}
+    <div class="seg gv-lc-toggle no-print" role="group" aria-label="Choose a view"><button type="button" aria-pressed="${!lead}" data-act="lc-persp" data-id="group">For the Group</button><button type="button" aria-pressed="${lead}" data-act="lc-persp" data-id="leader">For the Leader</button></div>
+    ${view}
+    ${bkLines.map(([k, x]) => `<p class="gv-tip"><b>In a ${esc(KIND_NAME[k] || k)} grove.</b> ${esc(x)}</p>`).join('')}
+    ${faith ? `<h3>${plainMode() ? 'What matters most' : 'Faith and meaning'}</h3><p>${esc(faith)}</p>` : ''}
+    ${lcPracHtml(t0)}
+    ${lcTreeLinks(t0)}
+    <h3>When to reach out for more help</h3>${lcUl(t.reach)}
+    ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}</ul>` : ''}
+    <div class="gv-srcs">${lcSources(t0)}</div>
+    ${helpCardHtml(true, HOSPICE_FIRST.includes(t0.id))}
+    <p class="muted gv-lc-note">From When Life Changes Together in The Grove&trade; by Grow With Grounded. Spiritual guidance and emotional support; for therapy, medical care, or legal advice, it points you to the right people. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for your family or group.</p>
+  </article>`;
+}
+// Print: both views, the practices, the tree guides, the help lines, and the Sources line.
+function lcPrint(id) {
+  const t0 = LC.find(x => x.id === id); if (!t0) return;
+  const t = lcT(t0), tg = t.together || {}, ld = t.leader || {}, faith = lcFaith(t0), win = window.open('', '_blank');
+  const ul = a => (a || []).length ? '<ul>' + a.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '';
+  const ps = (t.practices || []).map(x => TP[x]).filter(Boolean).map(pv);
+  const trees = (t.trees || []).filter(x => TREE_LINK[x[0]]);
+  const inner = `<p class="muted">${esc(lcRing(t.ring).name)} · For ${esc(list3(lcKinds(t)))}</p><div class="card"><b>Quick Reference</b>${ul(t.quick)}</div>
+    <h2>For the Group</h2><p>${esc(t.feel)}</p><p><b>First steps together</b></p>${ul(tg.first)}<p><b>What helps</b></p>${ul(tg.helps)}${(tg.say || []).length ? `<p><b>Words we can say together</b></p>${ul(tg.say)}` : ''}${lcKidsOn() && (t.kids || []).length ? `<p><b>With children</b></p>${ul(t.kids)}` : ''}${tg.people ? `<p>${esc(tg.people)}</p>` : ''}
+    <h2>For the Leader</h2><p>${esc(ld.feel || '')}</p><p><b>What to say</b></p>${ul(ld.say)}<p><b>What not to say or do</b></p>${ul(ld.avoid)}<p><b>Practical ways to lead</b></p>${ul(ld.help)}<p>${esc(ld.you || '')}</p>
+    ${faith ? `<h2>${plainMode() ? 'What Matters Most' : 'Faith and Meaning'}</h2><p>${esc(faith)}</p>` : ''}
+    ${ps.length ? `<h2>Together Practices</h2>${ps.map(p => `<div class="card"><b>${esc(p.name)}</b><p>${esc(p.text)}</p><ol>${String(p.steps || '').split('|').filter(Boolean).map(s => `<li>${esc(s)}</li>`).join('')}</ol></div>`).join('')}` : ''}
+    ${trees.length ? `<h2>A Guide of Your Own</h2><ul>${trees.map(([tr, gid, title]) => `<li>${esc(title || gid)}, in ${TREE_LINK[tr][0]} (growwithgrounded.com/${tr}/)</li>`).join('')}</ul>` : ''}
+    <h2>When to Reach Out for More Help</h2>${ul(t.reach)}
+    ${HOSPICE_FIRST.includes(t0.id) ? '<p><b>In hospice, call your hospice 24/7 line first, day or night.</b></p>' : ''}<p>If a vulnerable adult in Minnesota may be harmed, neglected, or taken advantage of, call MAARC at 1-844-880-1574, any time.</p>
+    <div class="muted" style="font-size:13px">${lcSources(t0)}</div>`;
+  printDoc(t.title, inner, win);
+}
+function lcReadAloud() {
+  const a = $('#gv-lc-article'); if (!a) return;
+  if (window.GGRead && GGRead.read) { GGRead.read(a); return; }
+  if (!window.speechSynthesis) { toast('Read Aloud is not available in this browser.'); return; }
+  speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(a.textContent.replace(/\s+/g, ' ')); u.rate = .92; speechSynthesis.speak(u);
+}
+function lcOpen(id) { S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) a.scrollIntoView(); }
+// Picked for Us on the home view: up to three guides and three practices, when the grove has told us something.
+function lcHomeHtml() {
+  if (!G || !LC.length) return '';
+  const picks = lcPicks(3); if (!picks.length) return '';
+  const ps = lcPickPractices(picks, 3);
+  return `<div class="card gv-lc-home"><h3>Picked for Us</h3><p class="muted">From What's Changed Lately, our Growing Edges, and Who's in Our Circle. Every guide and practice stays open.</p>
+    <div class="gv-lc-links">${picks.map(t => `<button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">${esc(t.title)}</button>`).join('')}</div>
+    ${ps.length ? `<p class="gv-lc-pp">Practices: ${ps.map(p => esc(pv(p).name)).join(', ')}. <button type="button" class="text-btn" data-tab="together">Open Together</button></p>` : ''}</div>`;
+}
+// After a check-in: the guides that fit what changed and where the grove wants to grow.
+function lcAfterCheckin(ci) {
+  const picks = lcPicks(4, ci); if (!picks.length) return '';
+  return `<h4>When Life Changes Together</h4><p class="muted">Guides that may help, from what changed and our Growing Edges.</p><div class="gv-lc-links">${picks.map(t => `<button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">${esc(t.title)}</button>`).join('')}</div>`;
+}
+window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
+window.GG_GUIDE_OPEN.grove = id => { if (LC.some(t => t.id === id)) lcOpen(id); };
+['gg-learn-marks', 'gg-learn-close'].forEach(ev => window.addEventListener(ev, () => { if (S.tab === 'life') { const y = window.scrollY; render(); window.scrollTo(0, y); } }));
+
 /* ---------- the Group Check-in ---------- */
 const SCORE = { n: 1, s: 2, o: 3, a: 4 };
 // The internal level for a part (1 to 10, this grove only). Never shown, printed, or exported: only the words come out.
@@ -879,6 +1078,7 @@ function resultsHtml(ci) {
   if (talk.length) h += `<h4>Things to Talk About</h4><p class="muted">${esc(Wk(W('results.talkIntro'), G.kind) || 'You saw these differently. That is good to know. Talk them over gently, never about who saw it which way.')}</p><ul>${talk.map(t => `<li>${esc(Wk(W('results.talkLead'), G.kind) || '')}${esc(t)}</li>`).join('')}</ul>`;
   h += `<p class="gv-shape">${esc(Wk(W('results.oneShape'), G.kind) || (isFamily() ? 'No family is strong in all six. Every grove has its own shape.' : 'No group is strong in all six. Every grove has its own shape.'))}</p>`;
   if (ci.quick) h += `<p class="muted">${esc(Wk(W('results.quickLine'), G.kind) || 'A quick check-in is a snapshot of this week. The full check-in adds a ring to the grove.')}</p>`;
+  h += lcAfterCheckin(ci);
   const v = V();
   h += `<div class="tools-row" style="justify-content:flex-start">${!v.plan ? '<button class="btn btn-gold btn-sm" data-act="startplan">Make Our Growth Plan</button>' : ''}<button class="btn btn-line btn-sm" data-act="print" data-id="summary" data-ci="${esc(ci.id)}">${icon('print')} Print Our Check-in Summary</button></div>${srcFor('results')}</div>`;
   return h;
@@ -1080,7 +1280,7 @@ function printDoc(title, inner, win) {
     .help{margin-top:26px;border-top:1px solid #E3D8C4;padding-top:10px;font-size:13px;color:#4A3B30}.co{margin-top:8px;font-size:12px;color:#6B5A4D;letter-spacing:2px;text-transform:uppercase;font-family:"Barlow Condensed",Arial,sans-serif}
     .qr{display:flex;gap:16px;align-items:center}.qr svg{width:1.4in;height:1.4in}
     @media print{.bar{display:none}body{background:none}.sheet{box-shadow:none;margin:0;max-width:none;padding:.5in .6in}}
-    </style></head><body><div class="bar"><b>${esc(title)}</b><button onclick="window.print()">Print or Save as PDF</button></div><div class="sheet"><h1>${esc(title)}</h1><p class="who">${esc(G.name || K.name)} · ${esc(longDate(today()))}</p>${inner}${help}<div class="co">Grow With Grounded · The Grove · growwithgrounded.com/grove</div>${W('print.footer') ? `<div class="help">${esc(W('print.footer'))}</div>` : ''}</div></body></html>`;
+    </style></head><body><div class="bar"><b>${esc(title)}</b><button onclick="window.print()">Print or Save as PDF</button></div><div class="sheet"><h1>${esc(title)}</h1><p class="who">${esc((G && G.name) || (G ? K.name : 'The Grove'))} · ${esc(longDate(today()))}</p>${inner}${help}<div class="co">Grow With Grounded · The Grove · growwithgrounded.com/grove</div>${W('print.footer') ? `<div class="help">${esc(W('print.footer'))}</div>` : ''}</div></body></html>`;
   const w = win || window.open('', '_blank');
   if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); return; }
   toast('Allow pop-ups for this page to print.');
@@ -1179,8 +1379,10 @@ function viewHow() {
     <h3>Keeping it safe</h3>
     <p>One backup file holds every grove, every profile on this device (each still locked), and settings. Load it on another device to bring everything back, or to combine two devices. Each grove can also be saved to its own locked file in Settings.</p>
     <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('pick')">Load a backup</button></div>
+    <h3>When Life Changes Together</h3>
+    <p>Guides for the changes a family, class, faith community, group, or team goes through together: a new baby or a move, illness and hospice, a loss, scary news, a hard day at school, a leader leaving, a hard season at work. Each has a view For the Group and a view For the Leader, two short videos, Together practices, and links to the guides in each person's own tree app. Picked for Us puts first the guides that fit what your grove shared in its check-in and What's Changed Lately.</p>
     <h3>Coming later</h3>
-    <p>When Life Changes Together: guides for groups in hard seasons, and groves that stay in step across phones on their own, after careful review.</p>
+    <p>Groves that stay in step across phones on their own, after careful review.</p>
   </div>`;
 }
 
@@ -1270,7 +1472,7 @@ function readAloud() {
 }
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab]');
-  if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); if (t.dataset.tab === 'learn') { if (window.GGLearn) GGLearn.open('grove'); return; } const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; S.view = ''; render(); if (t.closest('.gg-hero') || t.closest('#view')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
+  if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); if (t.dataset.tab === 'learn') { window.GROVE_PLAIN = plainMode(); if (window.GROVE_VIDS_WORDING) GROVE_VIDS_WORDING(plainMode()); if (window.GGLearn) GGLearn.open('grove'); return; } const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; S.view = ''; if (k === 'life') S.lc.open = null; render(); if (t.closest('.gg-hero') || t.closest('#view')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
   const b = e.target.closest('[data-act]'); if (!b || !b.closest('#view')) return;
   const id = b.dataset.id, act = b.dataset.act;
   if (act === 'here' || act === 'switch') { if (window.GGP) GGP.openDialog({ reason: "Who's here? Choose your picture." }).then(render); }
@@ -1342,6 +1544,13 @@ document.addEventListener('click', e => {
   else if (act === 'gpass') choosePass('').then(render);
   else if (act === 'glockoff') { if (!confirm('Turn the lock off? Anyone using this device could open the check-ins and plan.')) return; G.lockOn = false; G.lock = null; delete KEYS[G.id]; sealVault().then(render); }
   else if (act === 'glockon') { const data = VAULTS[G.id] || Object.assign(blankVault(), G.plainBox || {}); VAULTS[G.id] = data; G.lockOn = true; choosePass('').then(ok => { if (!ok) { G.lockOn = false; } else G.plainBox = null; save(); render(); }); }
+  else if (act === 'lc-open') lcOpen(id);
+  else if (act === 'lc-back') { S.lc.open = null; render(); const a = $('#app'); if (a) a.scrollIntoView(); }
+  else if (act === 'lc-ring') { S.lc.ring = id || 'all'; render(); }
+  else if (act === 'lc-persp') { S.lc.persp = id === 'leader' ? 'leader' : 'group'; const y = window.scrollY; render(); window.scrollTo(0, y); }
+  else if (act === 'lc-watch') lcWatch(id, b.dataset.side === 'helper' ? 'helper' : 'you');
+  else if (act === 'lc-print') lcPrint(id);
+  else if (act === 'lc-read') lcReadAloud();
   else if (act === 'savefile') saveFile();
   else if (act === 'loadfile') loadFile();
   else if (act === 'cleargrove') clearGrove();
@@ -1350,6 +1559,7 @@ document.addEventListener('input', e => {
   const t = e.target;
   if (t.dataset && t.dataset.setup && S.setup) { S.setup[t.dataset.setup] = t.value; return; }
   if (t.dataset && t.dataset.pd && S.pd) { if (t.dataset.pd === 'anchor') { const it = S.pd.items[+t.dataset.n]; if (it) it.anchor = t.value.slice(0, 60); } else S.pd[t.dataset.pd] = t.value; return; }
+  if (t.id === 'gv-lcq') { S.lc.q = t.value; const box = $('#gv-lclist'); if (box) box.innerHTML = lcListHtml(); return; }
   if (t.id !== 'gv-libq') return; S.lib.q = t.value;
   if (window.GGFind && window.GGLibrary) { libFind(); return; }
   const pos = t.selectionStart; render(); const f = $('#gv-libq'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (x) {} } });
@@ -1360,6 +1570,7 @@ function setScale() { const sc = ROOT.scale || 1; document.documentElement.style
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
   if (/^#library(=|$)/.test(h)) { S.tab = 'library'; S.lib.q = h.startsWith('#library=') ? h.slice(9) : ''; S.open = ''; if (window.GGLibrary) GGLibrary.ready().then(render); render(); const a = $('#app'); if (a) a.scrollIntoView(); }
+  else if (/^#(life|talk)(=|$)/.test(h)) { const id = /^#(life|talk)=/.test(h) ? h.slice(h.indexOf('=') + 1) : null; S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) { a.scrollIntoView(); setTimeout(() => a.scrollIntoView(), 350); } }
   else if (/^#(wall|together|how|earlier|grove|checkin|plan|settings)$/.test(h)) { S.tab = h.slice(1); render(); }
 }
 load();

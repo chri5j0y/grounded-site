@@ -639,8 +639,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b766"></script>
 <script src="../shared/gg-bridge.js?v=b756"></script>
 <script src="../read.js?v=vc3"></script>
-<script src="../shared/gg-sources.js?v=b771"></script>
-<script src="../shared/gg-learn.js?v=b772"></script>
+<script src="../shared/gg-sources.js?v=b774"></script>
+<script src="../shared/gg-learn.js?v=b774"></script>
 <script src="../shared/gg-print.js?v=b760"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -1814,7 +1814,7 @@ function vLearn(){
   if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
   // Guides take Walking with Illness and Disability: Guide Training here, once it is open to them (BLD 759).
   if (lgOpen()){ const g = lgmCardInfo(); cats.push({k: 'lg', eb: 'Guide Training', title: g.title, intro: g.desc, n: g.n, accent: LG_C, act: 'lg-mhome'}); }
-  ['willow', 'oak', 'sequoia', 'pine', 'birch', 'aspen', 'maple'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
+  ['willow', 'oak', 'sequoia', 'pine', 'birch', 'aspen', 'maple', 'grove'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
   const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
   if (C === 'les') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow">Lessons</div><h1>Learn Step by Step</h1><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>${lessonCards()}</div>`;
   if (C === 'sg') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${sgLearnCard()}</div></div>`;
@@ -3463,6 +3463,7 @@ function vGV(){
     {k: 'series', eb: 'Path 2', title: SS.title || 'Group Series', desc: P.series || SS.lead || 'Lead a group through The Grove\'s twelve themes over several weeks.', n: nS + (nS === 1 ? ' group' : ' groups')},
     GVM() ? {title: GVM().title || 'Grove Guide Training', desc: P.training || 'Lessons, scenarios, and the agreement for leading families and groups.', n: trainNote(m), act: 'gv-mhome'} : null,
     I.title ? {k: 'intro', title: I.title, desc: 'What to say when you introduce The Grove.'} : null,
+    wfgOn('grove') ? (() => { const F = WFG('grove'), gs = wfgRings('grove').reduce((a, R) => a.concat(R.guides), []); return {title: F.title, desc: F.inGuide || F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, act: 'lc-cat', v: 'ser:grove', accent: FGSER.grove.accent}; })() : null, // BLD 774
     (S.settings || []).length ? {k: 'sets', title: 'By Setting', desc: 'How the Grove Guide fits each setting.', n: S.settings.length + (S.settings.length === 1 ? ' setting' : ' settings')} : null,
     {k: 'about', title: 'About the Grove Guide', desc: 'How the Grove Guide works.'},
     earlier.length || local ? {k: 'earlier', title: 'Earlier, from Grove Guide', desc: 'Individual Grove trees from before the Grove Guide became a family and group guide.', n: earlier.length + (earlier.length === 1 ? ' tree' : ' trees')} : null];
@@ -7994,6 +7995,9 @@ function hpAct(a, v){
    (loss, family) match Oak's, so a ring is always looked up inside its own series (wfgCert takes 'series|ring').
    Pine For Guides (GWG BLD 741) is the same again: FLD.pineGuide.forGuides, ids 'pfg-<pine guide>', ring keys pn-*, open
    where Pine Guide is open (pnOpen), shown inside each Pine guide in When Life Changes and grouped by ring in Learn.
+   Grove For Guides (GWG BLD 774) is the same again: FLD.groveGuide.forGuides, ids 'gvfg-<grove guide>', ring keys gw-*,
+   one section for each When Life Changes Together guide in The Grove, open where the Grove Guide is open (gvOpen), shown in
+   Learn and as a card in the Grove Guide.
    Birch For Guides (GWG BLD 743) is the same again: FLD.birchGuide.forGuides, ids 'bfg-<birch guide>', ring keys br-*,
    shown in Learn and, since Birch 3 (BLD 744), inside each Birch guide in When Life Changes. BRG and brOpen live in the
    Birch Guide section. Staff and Founders see it as soon as it is in the library. Guides see it once
@@ -8005,9 +8009,10 @@ const FGSER = {
   pine: {lib: () => PNG(), on: () => pnOpen(), label: 'Pine Guide', accent: '#3A6B35', tree: 'pine', who: 'school counselors, youth leaders, chaplains, coaches, mentors, and anyone using Pine Guide with high schoolers'}, // BLD 741; ids pfg-, ring keys start pn-
   birch: {lib: () => BRG(), on: () => brOpen(), label: 'Birch Guide', accent: '#7F6610', tree: 'birch', who: 'campus ministers, chaplains, mentors, coaches, and anyone using Birch Guide with young adults'}, // BLD 743; ids bfg-, ring keys start br-
   aspen: {lib: () => SAG(), on: () => saOpen(), label: 'Aspen Guide', accent: '#1F6F74', tree: 'aspen', who: 'school counselors, youth pastors, chaplains, mentors, and anyone in that role'}, // BLD 724; ring keys start as-
-  maple: {lib: () => SPG(), on: () => spOpen(), label: 'Maple Guide', accent: '#C4501E', tree: 'maple', who: 'school counselors, children\'s ministry leaders, chaplains, teachers, mentors, and anyone in that role'} // BLD 727; ids mfg-, ring keys start mp-
+  maple: {lib: () => SPG(), on: () => spOpen(), label: 'Maple Guide', accent: '#C4501E', tree: 'maple', who: 'school counselors, children\'s ministry leaders, chaplains, teachers, mentors, and anyone in that role'}, // BLD 727; ids mfg-, ring keys start mp-
+  grove: {lib: () => GVG(), on: () => gvOpen(), label: 'Grove Guide', accent: '#2F5A3F', tree: 'grove', who: 'chaplains, pastors, youth leaders, teachers, school counselors, hospice and hospital staff, and anyone leading a family or group'} // BLD 774; ids gvfg-, ring keys start gw-
 };
-const fgSer = id => String(id || '').startsWith('sqfg-') ? 'sequoia' : String(id || '').startsWith('ofg-') ? 'oak' : String(id || '').startsWith('afg-') ? 'aspen' : String(id || '').startsWith('mfg-') ? 'maple' : String(id || '').startsWith('pfg-') ? 'pine' : String(id || '').startsWith('bfg-') ? 'birch' : 'willow';
+const fgSer = id => String(id || '').startsWith('sqfg-') ? 'sequoia' : String(id || '').startsWith('ofg-') ? 'oak' : String(id || '').startsWith('afg-') ? 'aspen' : String(id || '').startsWith('mfg-') ? 'maple' : String(id || '').startsWith('pfg-') ? 'pine' : String(id || '').startsWith('bfg-') ? 'birch' : String(id || '').startsWith('gvfg-') ? 'grove' : 'willow';
 const fgSerRing = ring => Object.keys(FGSER).find(k => WFG(k) && (WFG(k).rings || []).some(r => r[0] === ring)) || 'willow';
 const WFG = (s = 'willow') => { const W = FGSER[s].lib(); return W && W.forGuides && Array.isArray(W.forGuides.guides) && W.forGuides.guides.length ? W.forGuides : null; };
 const wfgOn = (s = 'willow') => !!WFG(s) && FGSER[s].on();
@@ -8018,7 +8023,7 @@ const wfgDone = id => !!lnData().done[id];
 function wfgCount(id, how){ const D = lnData(); D.how = D.how || {}; if (!D.done[id]){ D.done[id] = today(); D.how[id] = how; save(); } }
 // The series as a player track: one ring at a time, closing scene with the For Guides buttons.
 function wfgTrack(ring, s){ s = s || fgSerRing(ring); const R = wfgRings(s).find(r => r.key === ring); if (!R) return null;
-  return {id:(s === 'sequoia' ? 'sqfg-' : s === 'oak' ? 'ofg-' : s === 'aspen' ? 'afg-' : s === 'maple' ? 'mfg-' : s === 'pine' ? 'pfg-' : s === 'birch' ? 'bfg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
+  return {id:(s === 'sequoia' ? 'sqfg-' : s === 'oak' ? 'ofg-' : s === 'aspen' ? 'afg-' : s === 'maple' ? 'mfg-' : s === 'pine' ? 'pfg-' : s === 'birch' ? 'bfg-' : s === 'grove' ? 'gvfg-' : 'wfg-') + R.key, kind:'forguides', title:WFG(s).title + ', ' + R.name, ring:R.name, lessons:R.guides.map(g => ({id:g.id, n:g.n, title:g.title, mins:g.mins, guide:g.guide, sources:g.sources || [], crisis:g.crisis, music:g.music, scenes:(g.video && g.video.scenes) || []}))}; }
 function wfgMark(id){ return wfgDone(id) ? `<span class="pill sage">${icon('check')} ${wfgHow(id) === 'read' ? 'Read' : 'Watched'}</span>` : ''; }
 // The written section, eight parts (the eighth, Sources, is drawn from the credits).
 function wfgBody(g, head){

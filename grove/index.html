@@ -4,15 +4,15 @@
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b766"></script>
 <script src="/shared/gg-shelf.js?v=fd4"></script>
-<script src="/shared/gg-sources.js?v=b771"></script>
+<script src="/shared/gg-sources.js?v=b774"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#223829">
 <title>The Grove by Grow With Grounded | All ages. All stages. Growing together</title>
-<meta name="description" content="All ages. All stages. Growing together. A shared space to grow side by side. Built for families, classrooms, churches, and groups.">
+<meta name="description" content="All ages. All stages. Growing together. Check in together, make a Growth Plan, and find guides for the changes you go through together. For families, faith communities, small groups, and teams.">
 <meta property="og:title" content="The Grove by Grow With Grounded">
-<meta property="og:description" content="All ages. All stages. Growing together. A shared space to grow side by side. Built for families, classrooms, churches, and groups.">
+<meta property="og:description" content="All ages. All stages. Growing together. Check in together, make a Growth Plan, and find guides for the changes you go through together. For families, faith communities, small groups, and teams.">
 <meta property="og:url" content="https://growwithgrounded.com/grove/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grow With Grounded">
@@ -631,6 +631,44 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .gv-srcs a{color:inherit;}
 .gv-ideas{margin:4px 0 0;}
 select.gv-input{min-height:44px;}
+/* When Life Changes Together and Picked for Us (GWG BLD 774) */
+.gv-kicker{font-family:'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 4px;}
+.gv-lc-search{width:100%;max-width:560px;min-height:48px;margin:0 0 12px;}
+.gv-lc-ring{margin:26px 0 8px;}
+.gv-lc-ring h3{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:calc(26px * var(--scale));margin:0;}
+.gv-lc-ring h3 i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--rc);}
+.gv-lc-ring > p{color:var(--ink-soft);margin:4px 0 12px;}
+.gv-lc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.gv-lc-card{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--rc);border-radius:14px;padding:14px 16px;min-width:0;}
+.gv-lc-card h4{font-family:'Cormorant Garamond',serif;font-size:calc(22px * var(--scale));line-height:1.15;margin:0;overflow-wrap:anywhere;}
+.gv-lc-card p{margin:0;font-size:calc(15px * var(--scale));line-height:1.45;}
+.gv-lc-card .btn{align-self:flex-start;margin-top:auto;}
+.gv-lc-label{font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;font-size:calc(13px * var(--scale));font-weight:700;color:var(--rc,var(--accent));}
+.gv-lc-for{color:var(--ink-soft);font-size:calc(14px * var(--scale));}
+.gv-lc-picked{background:var(--bg-deep);border-radius:16px;padding:14px 16px;}
+.gv-lc-article{background:var(--card);border:1px solid var(--line);border-top:6px solid var(--rc);border-radius:16px;padding:22px;box-shadow:var(--shadow);min-width:0;overflow-wrap:anywhere;}
+.gv-lc-article h2{font-family:'Cormorant Garamond',serif;font-size:calc(34px * var(--scale));line-height:1.1;margin:4px 0 4px;}
+.gv-lc-article h3{font-family:'Cormorant Garamond',serif;font-size:calc(24px * var(--scale));margin:22px 0 6px;}
+.gv-lc-article ul{padding-left:22px;margin:6px 0;}
+.gv-lc-article li{margin:6px 0;line-height:1.5;}
+.gv-lc-tools{display:flex;gap:8px;flex-wrap:wrap;}
+.gv-lc-quick{background:var(--bg);border-left:4px solid var(--rc);border-radius:10px;padding:12px 16px;margin:14px 0;}
+.gv-lc-vids{margin:12px 0;}
+.gv-lc-vids .btn svg{width:18px;height:18px;vertical-align:-4px;}
+.gv-lc-w{font-size:calc(13px * var(--scale));opacity:.85;margin-left:4px;}
+.gv-lc-toggle{margin:16px 0 4px;display:inline-flex;flex-wrap:wrap;}
+.gv-lc-say p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:calc(21px * var(--scale));border-left:3px solid var(--rc);padding-left:12px;margin:8px 0;}
+.gv-lc-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px;}
+.gv-lc-trees li span{font-size:calc(15px * var(--scale));}
+.gv-lc-article .gv-prac{margin-top:10px;}
+.gv-lc-article .gv-tip{margin-top:14px;}
+.gv-lc-links{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}
+.gv-lc-home{border-left:6px solid var(--accent);margin-bottom:18px;}
+.gv-lc-pp{margin-top:6px;}
+.gv-lc-note{font-size:calc(14px * var(--scale));margin-top:14px;}
+@media (max-width:560px){.gv-lc-article{padding:16px;}.gv-lc-article h2{font-size:calc(29px * var(--scale));}.gv-lc-toggle button{padding:10px 14px;}}
+@media print{.no-print{display:none!important;}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gv-lc-label{color:color-mix(in srgb,var(--rc) 45%,#F2EEE4);}}:root[data-theme="dark"] .gv-lc-label{color:color-mix(in srgb,var(--rc) 45%,#F2EEE4);}
 /* More tabs since Grove 1: on wider screens they wrap to a second row, never cut off at the sides */
 @media (min-width:641px){.tabs{flex-wrap:wrap;row-gap:0;}}
 </style>
@@ -658,7 +696,7 @@ select.gv-input{min-height:44px;}
     <div class="gg-hero-lock"><img class="gg-hero-mark" src="/shared/marks/grove.svg" alt="" width="64" height="64"><h1 id="hero-title">The Grove<sup>&trade;</sup></h1></div>
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Where our trees grow together.</p>
-    <p class="gg-hero-sub">Your tree is yours. The grove is ours.<br>All ages, all stages, side by side.</p>
+    <p class="gg-hero-sub">Your tree is yours. The grove is ours.<br>For families, faith communities, small groups, and teams.</p>
     <div class="gg-hero-actions"><button class="gg-hero-btn main" id="hero-cta" type="button">Visit our grove</button><a class="gg-hero-btn line" href="#app" data-tab="guide">How it works</a></div>
   </div>
   <div class="gg-hero-scene" aria-hidden="true"></div>
@@ -691,8 +729,9 @@ select.gv-input{min-height:44px;}
 <script src="/shared/gg-profiles.js?v=b770"></script>
 <script src="/grove/together.js?v=b756"></script>
 <script src="/grove/kinds.js?v=b770"></script>
+<script src="/grove/guides.js?v=b774"></script>
 <script src="/shared/gg-library.js?v=b765"></script>
-<script src="/grove/app.js?v=b770"></script>
+<script src="/grove/app.js?v=b774"></script>
 <script>
 /* Read aloud, built in like Maple */
 (function () {
@@ -716,8 +755,8 @@ select.gv-input{min-height:44px;}
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b772" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b772';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b774" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b774';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b772" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b772';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b774" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b774';document.head.appendChild(s)"></script>
 </body>
 </html>
