@@ -19,6 +19,8 @@
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
     shelf: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16M9 4v16M14 5l4 15M3 20h18"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
+    candle: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1.6 1.8 2.4 3.2 2.4 4.4a2.4 2.4 0 0 1-4.8 0c0-1.2.8-2.6 2.4-4.4z"/><path d="M9 11h6v10H9z"/><path d="M6 21h12"/></svg>',
+    speak: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
@@ -33,6 +35,11 @@
     ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+    ] },
+    { name: 'For Families', items: [
+      { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.candle, bg: '#F1E6CC' },
+      { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.book, bg: '#F1E6CC' },
+      { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.speak, bg: '#F1E6CC' }
     ] },
     { name: 'Further Reading', items: [
       { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' }
@@ -55,6 +62,9 @@
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     if (p.indexOf('/library') === 0) return 'library';
+    if (p.indexOf('/planning-a-farewell') === 0) return 'farewell';
+    if (p.indexOf('/obituary-helper') === 0) return 'obituary';
+    if (p.indexOf('/eulogy-helper') === 0) return 'eulogy';
     return '';
   }
 
