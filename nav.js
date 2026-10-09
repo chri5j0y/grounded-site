@@ -62,7 +62,7 @@
     '.gn-tools-btn{font:inherit;background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;}' +
     '.gn-tools-btn svg{width:12px;height:12px;transition:transform .2s ease;}' +
     '.gn-tools-btn[aria-expanded="true"] svg{transform:rotate(180deg);}' +
-    '.gn-panel{position:absolute;z-index:9999;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
+    '.gn-panel{position:fixed;z-index:9999;max-height:calc(100vh - 90px);overflow-y:auto;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
     '.gn-panel.gn-show{display:block;}' +
     '.gn-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;}' +
     '.gn-group h4{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8B5E1A;margin:0 0 6px;}' +
@@ -165,7 +165,20 @@
     link.parentNode.replaceChild(btn, link);
     // keep the site's own menu link styling
     var ls = getComputedStyle(menu.querySelector('a') || btn);
-    ['fontFamily', 'fontWeight', 'fontSize', 'letterSpacing', 'textTransform', 'color', 'padding'].forEach(function (k) { btn.style[k] = ls[k]; });
+    ['fontFamily', 'fontWeight', 'fontSize', 'letterSpacing', 'textTransform', 'padding'].forEach(function (k) { btn.style[k] = ls[k]; });
+    if (link.getAttribute('aria-current')) btn.setAttribute('aria-current', link.getAttribute('aria-current'));
+    // Color: match a plain menu link (or a current one when this button marks the current section), and repaint when the theme changes.
+    var isCur = /(^|\s)current(\s|$)/.test(link.className) || !!link.getAttribute('aria-current');
+    function paint() {
+      btn.style.color = '';
+      var as = Array.prototype.slice.call(menu.querySelectorAll('a'));
+      var ref = isCur ? as.filter(function (a) { return /(^|\s)current(\s|$)/.test(a.className) || a.getAttribute('aria-current'); })[0] : as.filter(function (a) { return !/(^|\s)current(\s|$)/.test(a.className) && !a.getAttribute('aria-current'); })[0];
+      if (ref) btn.style.color = getComputedStyle(ref).color;
+    }
+    paint();
+    new MutationObserver(function () { setTimeout(paint, 0); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+    if (document.body) new MutationObserver(function () { setTimeout(paint, 0); }).observe(document.body, { attributes: true, attributeFilter: ['class', 'data-theme'] });
+    try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { setTimeout(paint, 0); }); } catch (e) {}
 
     var panel = document.createElement('div');
     panel.className = 'gn-panel' + (o.cls ? ' ' + o.cls : '');
@@ -187,8 +200,8 @@
       var w = Math.min(o.width || 760, window.innerWidth - 24);
       var left = Math.max(12, Math.min(r.right - w, window.innerWidth - w - 12));
       if (o.width) panel.style.width = w + 'px';
-      panel.style.top = (r.bottom + window.scrollY + 10) + 'px';
-      panel.style.left = (left + window.scrollX) + 'px';
+      panel.style.top = (r.bottom + 10) + 'px';
+      panel.style.left = left + 'px';
     }
     // Phones: the open menu fits the screen under the top bar and scrolls inside itself,
     // so every item can be reached (the bar is pinned, so the page can't scroll it into view).
@@ -215,6 +228,7 @@
       }
       panel.classList.add('gn-show');
       btn.setAttribute('aria-expanded', 'true');
+      try { document.dispatchEvent(new CustomEvent('gg:menu-open', { detail: { from: o.id } })); } catch (e) {}
     }
     function closePanel() {
       panel.classList.remove('gn-show');
@@ -225,8 +239,20 @@
     DROPS.push({ panel: panel, close: closePanel, isOpen: function () { return panel.classList.contains('gn-show'); } });
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (panel.classList.contains('gn-show')) closePanel(); else openPanel();
+      if (panel.classList.contains('gn-show')) closePanel(); else {
+        openPanel();
+        // opened from the keyboard (Enter or Space): move focus into the panel so Tab walks its links
+        if (e.detail === 0) { var f = panel.querySelector('a.gn-tool, a'); if (f) setTimeout(function () { f.focus(); }, 0); }
+      }
     });
+    // another menu opened (the profile menu, the other panel): close this one
+    document.addEventListener('gg:menu-open', function (e) { if (e.detail && e.detail.from !== o.id && panel.classList.contains('gn-show') && !isMobile()) closePanel(); });
+    // keyboard focus leaving the panel and its button closes it (desktop)
+    panel.addEventListener('focusout', function (e) {
+      if (isMobile() || !panel.classList.contains('gn-show')) return;
+      var t = e.relatedTarget; if (t && !panel.contains(t) && t !== btn) closePanel();
+    });
+    window.addEventListener('scroll', function () { if (panel.classList.contains('gn-show') && !isMobile()) place(); }, { passive: true });
     document.addEventListener('click', function (e) {
       if (!panel.classList.contains('gn-show')) return;
       if (panel.contains(e.target) && !e.target.closest('a')) return;

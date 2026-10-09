@@ -124,7 +124,7 @@
   function fromHash() {
     var h = decodeURIComponent(location.hash || '');
     if (h === '#urgent') { var u = form.querySelector('[name=urgent]'); if (u) u.checked = true; if (sel) sel.value = 'Funeral or memorial'; }
-    else if (h.indexOf('#plan=') === 0 && sel) { var want = h.slice(6); for (var i = 0; i < sel.options.length; i++) if (sel.options[i].text === want) { sel.selectedIndex = i; break; } }
+    else if (h.indexOf('#plan=') === 0 && sel) { var want = h.slice(6); for (var i = 0; i < sel.options.length; i++) if (sel.options[i].text.toLowerCase() === want.toLowerCase()) { sel.selectedIndex = i; break; } }
     else return;
     setTimeout(function () { form.scrollIntoView({ behavior: 'smooth', block: 'start' }); var n = form.querySelector('[name=name]'); if (n) n.focus({ preventScroll: true }); }, 300);
   }

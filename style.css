@@ -47,6 +47,7 @@ a{color:inherit;}
   .site-menu.open{display:flex;}
   .site-menu a{font-size:18px;padding:14px 10px;border-bottom:1px solid var(--line);}
   .site-menu a:last-child{border-bottom:none;}
+  .site-menu .gn-tools-btn{font-size:18px !important;padding:14px 10px !important;border-bottom:1px solid var(--line);width:100%;justify-content:space-between;text-align:left;}
   .brand-icon{height:40px;}
   .brand-word{height:18px;}
 }
@@ -611,3 +612,4 @@ section.about-lead{padding-bottom:36px;}
 .text-link{color:var(--eb-gold,var(--gold));}
 /* Accessibility pass (BLD 756): on the smallest phones (and at high zoom) the header keeps every button on screen; the tree still links home. */
 @media (max-width:360px){.brand .brand-name{display:none;}}
+.org-more{margin-top:14px;font-size:17px;}
