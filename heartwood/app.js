@@ -407,7 +407,11 @@
     var text = 'sms:' + GG_SMS + '?&body=' + encodeURIComponent(sms);
     return '<div class="ff-row gm-send"><a class="btn btn-primary" id="gm-send-mail" href="' + esc(mail) + '">Email to Chris and Kayti</a>' +
       '<a class="btn btn-secondary ff-sm" id="gm-send-text" href="' + esc(text) + '">Text to Chris and Kayti</a></div>' +
-      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, never in the message.</p>';
+      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, never in the message.</p>' +
+      '<details class="btv-more gm-mailcopy"><summary>Email did not open? Copy the message</summary>' +
+      '<p class="btv-small">Send it to <b>' + esc(GG_MAIL) + '</b> from any email you use.</p>' +
+      '<textarea readonly rows="7" aria-label="The message to copy">' + esc('To: ' + GG_MAIL + '\nSubject: ' + sub + '\n\n' + body) + '</textarea>' +
+      '<div class="ff-row"><button type="button" class="btn btn-secondary ff-sm" data-act="copy-mail">Copy the Message</button></div><p class="btv-small gm-cpst" aria-live="polite"></p></details>';
   }
   function cardView(link, title, lead, small, qrLabel, kind) {
     var svg = '';
@@ -924,6 +928,7 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-act]'); if (!b || !$('gm-app') || !$('gm-app').contains(b) && !b.closest('.btv-clear')) return;
     var a = b.getAttribute('data-act'), w = b.getAttribute('data-w'), k = b.getAttribute('data-k');
+    if (a === 'copy-mail') { var box = b.closest('.gm-mailcopy'), ta = box && box.querySelector('textarea'), cs = box && box.querySelector('.gm-cpst'); if (ta) copyText(ta.value, function (ok) { if (cs) cs.textContent = ok ? 'Copied. Paste it into a new email to ' + GG_MAIL + '.' : 'Select the text above and copy it.'; if (!ok) { ta.focus(); ta.select(); } }); return; }
     if (a === 'start') go(setup() ? 'hub' : 'setup');
     else if (a === 'welcome') go(setup() ? home() : 'welcome');
     else if (a === 'setup') go('setup');

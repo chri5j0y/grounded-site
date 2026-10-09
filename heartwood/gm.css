@@ -262,3 +262,6 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
 .hw-gate form{margin:12px 0 0;}
 .hw-gate #hw-code{font-size:22px;letter-spacing:.14em;text-transform:uppercase;max-width:300px;}
 .hw-err{color:var(--clay);font-weight:600;min-height:22px;margin:8px 0 0;}
+/* Email did not open? Copy the message (GWG BLD 775) */
+.gm-mailcopy textarea{display:block;width:100%;max-width:100%;box-sizing:border-box;margin-top:8px;font-family:'Barlow',sans-serif;font-size:15px;line-height:1.45;color:var(--ink);background:var(--card,var(--bg));border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;}
+.gm-mailcopy .ff-row{margin-top:8px;}
