@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln42';
+  var V = 'ln43';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -484,7 +484,7 @@
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
-    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); if (P.audio) { try { P.audio.onended = P.audio.onerror = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
+    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
     function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(cfg); }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
@@ -603,16 +603,24 @@
         if (sc.k !== 'breathe' && +sc.hold >= 6 && rem >= 5000) return waitRing(Math.round(rem / 1000), t, go);
         P.nx = setTimeout(go, rem);
       }
-      // A recorded clip for this sentence, when a lesson has them (audio: true, or a folder name such as 'pv' for the page videos). Falls back to the device voice.
+      // A recorded clip for this sentence, when a lesson has them (audio: true, or a folder name such as 'pv' for the page videos).
+      // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
+      // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
       function clip(i, fin) {
         if (!l.audio || !window.Audio) return false;
-        var a = new Audio(url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3')), ok = false;
+        var a = P.el || (P.el = new Audio()), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ok = false;
+        var est = Math.max(1400, B[i].t.split(/\s+/).length * 60000 / (165 * sp));
+        function guard(ms) { clearTimeout(P.cw); P.cw = setTimeout(function () { if (t === P.tok) fin(); }, ms); }
+        function voice() { if (ok || t !== P.tok) return; ok = true; a.onended = a.onerror = a.onloadedmetadata = null; speak(B[i].t, fin); guard(est * 2.4 + 2500); }
         P.audio = a;
+        a.onended = function () { clearTimeout(P.cw); fin(); };
+        a.onerror = voice;
+        a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) guard(a.duration * 1000 / sp + 3000); };
+        a.src = url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3');
         // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
-        try { a.playbackRate = window.GGRead && GGRead.speed ? GGRead.speed() : 1; } catch (e) {}
-        a.onended = function () { fin(); };
-        a.onerror = function () { if (!ok && t === P.tok) { ok = true; speak(B[i].t, fin); } };
-        a.play().then(function () { ok = true; }).catch(function () { if (!ok && t === P.tok) { ok = true; speak(B[i].t, fin); } });
+        try { a.defaultPlaybackRate = sp; a.playbackRate = sp; } catch (e) {}
+        guard(est * 2.4 + 6000);
+        var pr = a.play(); if (pr && pr.then) pr.then(function () { ok = true; }).catch(function (e) { if (!e || e.name !== 'AbortError') voice(); });
         return true;
       }
       if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
