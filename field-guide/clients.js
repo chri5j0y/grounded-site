@@ -51,7 +51,7 @@ const money = n => { n = r2(n); const whole = Math.abs(n % 1) < 0.001; return '$
 const L2 = (...a) => a.map(([id, t, svc, link]) => Object.assign({id, t}, svc ? {svc} : {}, link ? {link} : {}));
 const DEF = {
   v: 0,
-  irsRate: 0.725,
+  irsRate: 0.76,
   firstConversation: {
     title: 'First Conversation',
     policy: ['At no charge, 10 to 15 minutes at most: for their questions, and for them to see who we are and decide.',
@@ -763,7 +763,7 @@ function act(a, v, el){
     case 'new-intake': startIntake(false); return;
     case 'intake-open': S.intakeId = v; S.draft = null; S.sec = 'intake'; S.mode = 'chris'; S.sig = []; S.dep = {}; { const f = fileOf(v); S.step = Math.min(CNT, Math.max(1, (f && +f.step) || 1)); } if (C.go && !document.getElementById('cl-root')) C.go('cli'); else rerender(false); return;
     case 'file': S.fileId = v || null; S.inv = null; S.payOpen = false; S.pay = {}; S.agView = null; S.sec = 'files'; if (C.go && !document.getElementById('cl-root')) C.go('cli'); else rerender(false); return;
-    case 'irs': { const i = document.getElementById('cl-irs'), r = i ? +i.value : 0; if (!isFounder()) return; if (!(r > 0 && r < 10)){ toast('Enter the rate a mile, for example 0.725.'); return; } store().irs = {rate: r, u: Date.now()}; C.save(); toast('Travel rate updated.'); rerender(true); return; }
+    case 'irs': { const i = document.getElementById('cl-irs'), r = i ? +i.value : 0; if (!isFounder()) return; if (!(r > 0 && r < 10)){ toast('Enter the rate a mile, for example 0.76.'); return; } store().irs = {rate: r, u: Date.now()}; C.save(); toast('Travel rate updated.'); rerender(true); return; }
     case 'cloud': store().cloud = store().cloud === v ? '' : v; C.save(); rerender(true); return;
     case 'usb-done': store().usb.last = today(); store().usb.u = Date.now(); C.save(); toast('Marked. The next reminder comes in a month.'); if (document.getElementById('cl-root')) rerender(true); else if (C.render) C.render(); return;
     case 'link': { const f = fileOf(S.fileId), s = document.getElementById('cl-linkpick'); if (!f || !s || !s.value) return; const [k, id] = s.value.split('|'); f.links[k] = arr(f.links[k]).concat(id);
