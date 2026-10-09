@@ -2,7 +2,8 @@
 // GROUNDED FIELD GUIDE (TM): the Share Card Builder (GWG BLD 746; Painting look,
 // The Grounded Marriage, and named bios, GWG BLD 757; print sizes, QR codes, the Services, the
 // Field Guide mark, and TM on every name, GWG BLD 758; every word, mark, and code held inside the safe line on
-// every print size, and Your Own Words, GWG BLD 760; flyers for the six new audiences, GWG BLD 762).
+// every print size, and Your Own Words, GWG BLD 760; flyers for the six new audiences, GWG BLD 762; The Grove's flyers
+// by kind, GWG BLD 776).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A Staff and Founder tab. Pick a subject, a message, a platform, a format,
 // and a look (Light, Dark, Tree Color, or Painting, which sets the words over the
@@ -34,7 +35,7 @@ const FB = {
     {id: 'oak', name: 'Oak', color: '#3D5A73', tagline: 'Shelter for others. Strength for you.', line: 'Built for adults, 26 to 60.'},
     {id: 'sequoia', name: 'Sequoia', color: '#7A2E1C', tagline: 'A long life, still growing.', line: 'Built for older adults, 60 and up.'},
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
-    {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, classrooms, churches, and groups.'},
+    {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, faith communities, small groups, and teams.'},
     {id: 'marriage', name: 'Heartwood', mark: 'heartwood/mark.svg', color: '#3F5F86', tagline: 'Your private app for the two of you, with Before the Vows and After the Vows: a place to talk, grow, and keep growing.', line: 'For couples in The Grounded Marriage. Everything stays on your device.', url: 'growwithgrounded.com/heartwood', always: true},
     {id: 'field', name: 'Grounded Field Guide', mark: 'shared/marks/fieldguide.svg', color: '#2E2118', tagline: 'Every Grounded tool and guide, in one place.', line: 'For chaplains, pastors, teachers, school counselors, and parents.', url: 'growwithgrounded.com/field-guide'}
   ],
@@ -119,6 +120,25 @@ const ORG_AUD = [
     lines: ['Sequoia™ Guide for anyone who serves older adults', 'Oak™ Guide for walking with adults 26 to 60', 'Guides for living with several conditions at once', 'Crisis steps and reporting guidance in every visit', 'A Certificate of Completion for each person']}
 ];
 const ORGS = ORG_AUD.map(a => Object.assign({svc: 'org', mark: 'favicon.svg', color: GOLD, line: ORG_LINE, url: ORG_URL, eyebrow: 'For ' + a.name}, a, {hero: 'shared/heroes/' + a.hero + '-wide.webp'}));
+// THE GROVE BY KIND (GWG BLD 776): flyers for congregations, teams, and classrooms, drawn like the audience flyers (a line
+// naming who it is for, a headline, a promise, and short lines) over The Grove's own mark, color, and painting, with the
+// QR code to growwithgrounded.com/grove. hold: kept for later. The Classroom kind waits on the attorney's answer about
+// classroom check-ins (PPRA) before it is offered to schools, so its words stay general (classes, co-ops, youth programs)
+// and the builder shows a hold note whenever it is chosen.
+const GROVE_URL = 'growwithgrounded.com/grove', GROVE_LINE = 'The Grove\u2122 by Grow With Grounded\u2122. It opens in any browser, with no account.';
+const GROVE_AUD = [
+  {id: 'grove-congregations', name: 'Congregations',
+    headline: 'Grow together as a community.', tagline: 'A Faith Community grove for a congregation, a class, a youth group, or a ministry team.',
+    lines: ['A Group Check-in with one shared answer, talked over together', 'Results in words only, and a growth plan made together', 'When Life Changes Together, with videos for the group and the leader', 'Faith words first, with Plain one tap away', 'Kept private on your own device, locked with a passcode']},
+  {id: 'grove-teams', name: 'Teams',
+    headline: 'Steady together through hard days.', tagline: 'A Team grove for hospice, hospital, church, school, and nonprofit teams.',
+    lines: ['A Team Check-in about speaking up, workload, and rest', 'No member list, and no one\'s own answer is ever saved', 'Practices like Pause After a Death and an Appreciation Round', 'When Life Changes Together for the hard days at work', 'Kept private on your own device, locked with a passcode']},
+  {id: 'grove-classrooms', name: 'Classrooms', hold: true,
+    headline: 'Grow together as a class.', tagline: 'A Classroom grove for a class, a homeschool co-op, or an after-school or youth program.',
+    lines: ['A Class Check-in in a morning circle, with one shared answer', 'Plain words, and questions about class life only', 'No student names, ever', 'Practices like a Name Greeting and Kindness Notes', 'Kept private on the leader\'s device, locked with a passcode']}
+];
+const GROVE_HOLD = 'Hold this flyer for now. The Classroom kind waits on the attorney\'s answer about classroom check-ins (PPRA) before it is offered to schools. Its words stay general: classes, co-ops, and youth programs.';
+const GROVES = GROVE_AUD.map(a => Object.assign({svc: 'org', grp: 'grove', mark: 'shared/marks/grove.svg', color: '#223829', line: GROVE_LINE, url: GROVE_URL, eyebrow: 'The Grove\u2122 for ' + a.name}, a, {hero: 'shared/heroes/grove-wide.webp', focus: .5}));
 // The Painting look: each subject's wide painting, and where its main tree stands (a fraction of the image width).
 const FOCUS = {maple: .37, aspen: .36, pine: .38, birch: .18, oak: .72, sequoia: .22, willow: .21, grove: .5, home: .74, marriage: .64};
 // People named in the bios (bios may name a person who is not a card subject).
@@ -155,6 +175,8 @@ function data(){
   SERVICES.forEach(v => { if (!subjects.some(s => s.id === v.id)) subjects.push(Object.assign({}, v)); });
   // The new audiences' flyers join last (built in, GWG BLD 762).
   ORGS.forEach(v => { if (!subjects.some(s => s.id === v.id)) subjects.push(Object.assign({}, v)); });
+  // The Grove's flyers by kind join after them (built in, GWG BLD 776).
+  GROVES.forEach(v => { if (!subjects.some(s => s.id === v.id)) subjects.push(Object.assign({}, v)); });
   return {
     subjects,
     messages: Array.isArray(d.messages) ? d.messages : FB.messages,
@@ -202,7 +224,7 @@ function heroOf(s){
 }
 
 function messagesFor(D, sub){
-  const list = D.messages.filter(m => m && m.text && (m.subject === 'all' || m.subject === sub.id || (treeKey(sub) && m.subject === treeKey(sub))));
+  const list = D.messages.filter(m => m && m.text && (m.subject === 'all' || m.subject === sub.id || (treeKey(sub) && !sub.grp && m.subject === treeKey(sub))));
   return list.filter(m => String(m.text).trim() !== String(sub.tagline || '').trim());
 }
 function current(){
@@ -661,7 +683,8 @@ function inner(){
   <div class="sc-wrap">
     <div class="card">
       <label class="f" for="sc-sub">Subject</label>
-      <select id="sc-sub" data-sc="subject">${[['Grow With Grounded', D.subjects.filter(s => !s.svc)], ['Services: Families', D.subjects.filter(s => s.svc === 'family')], ['Services: Pages', D.subjects.filter(s => s.svc === 'page')], ['For Organizations', D.subjects.filter(s => s.svc === 'org')]].filter(g => g[1].length).map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}</option>`).join('')}</optgroup>`).join('')}</select>
+      <select id="sc-sub" data-sc="subject">${[['Grow With Grounded', D.subjects.filter(s => !s.svc)], ['Services: Families', D.subjects.filter(s => s.svc === 'family')], ['Services: Pages', D.subjects.filter(s => s.svc === 'page')], ['For Organizations', D.subjects.filter(s => s.svc === 'org' && !s.grp)], ['The Grove by Kind', D.subjects.filter(s => s.grp === 'grove')]].filter(g => g[1].length).map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(s => `<option value="${esc(s.id)}"${s.id === sub.id ? ' selected' : ''}>${esc(s.name)}${s.hold ? ' (Hold for Now)' : ''}</option>`).join('')}</optgroup>`).join('')}</select>
+      ${sub.hold ? `<p class="tipbox" id="sc-hold" style="margin-top:8px;border-left:3px solid var(--gold)">${esc(GROVE_HOLD)}</p>` : ''}
       <label class="f" for="sc-msg">Message</label>${msgSel}
       ${S.msg === 'own' ? `<label class="f" for="sc-own">Your Message</label><textarea id="sc-own" data-sc="own" rows="3" placeholder="Type the words for the card.">${esc(S.own)}</textarea>` : ''}
       ${ownHtml()}
