@@ -11,7 +11,7 @@ window.GGJourney = {
  "WEEKS": [
   {
    "theme": "Start where you are",
-   "intro": "Nothing has to be ready. Not you, not your schedule, not your kitchen. This week you plant, and planting is small. Tend your tree once a day and let that be enough.",
+   "intro": "Start right where you are, with your schedule and your kitchen just as they are. This week you plant, and planting is small. Tend your tree once a day and let that be enough.",
    "q": "What made you want to start, and what are you hoping grows?",
    "story": {
     "title": "Grounded in Coffee",
@@ -21,7 +21,7 @@ window.GGJourney = {
   },
   {
    "theme": "Rest and limits",
-   "intro": "You can't pour from a dry well, and you already know it. This week, notice where your day leaks. Protect one small boundary like it matters, because it does.",
+   "intro": "A full well is what lets you pour, and you already know it. This week, notice where your day leaks. Protect one small boundary like it matters, because it does.",
    "q": "Where did you say yes this week when you needed to say no?",
    "story": {
     "title": "My Boundaries Have Gates",
@@ -41,7 +41,7 @@ window.GGJourney = {
   },
   {
    "theme": "When you miss a day",
-   "intro": "Somewhere around now, most people miss a day. Then two. That isn't the end of the practice. Coming back is the practice.",
+   "intro": "Somewhere around now, most people miss a day. Then two. Coming back is the practice.",
    "q": "What helped you come back when you drifted?",
    "story": {
     "title": "The Recovery",
@@ -51,7 +51,7 @@ window.GGJourney = {
   },
   {
    "theme": "What you carry",
-   "intro": "Rooting is quiet work. Above ground, it can look like nothing is happening. Below, everything is. This week, notice what you've been carrying and haven't named.",
+   "intro": "Rooting is quiet work. Above ground, it can look like nothing is happening. Below, everything is. This week, notice what you've been carrying, and give it a name.",
    "q": "What are you carrying that you haven't said out loud?",
    "story": {
     "title": "Grief Debt",
@@ -71,7 +71,7 @@ window.GGJourney = {
   },
   {
    "theme": "Spirit, any way you come",
-   "intro": "You don't need a church or the right words. You need a little quiet and a willingness to notice what's bigger than you.",
+   "intro": "All you need is a little quiet and a willingness to notice what's bigger than you.",
    "q": "Where did you feel something bigger than yourself this week?",
    "story": {
     "title": "The Atypical Atheist",
@@ -91,7 +91,7 @@ window.GGJourney = {
   },
   {
    "theme": "You get a say",
-   "intro": "Blooming begins with a choice. You don't control everything, but you get a say in how your life goes. Use it this week.",
+   "intro": "Blooming begins with a choice. You get a say in how your life goes. Use it this week.",
    "q": "What do you want more of in the life you're growing?",
    "story": {
     "title": "Birth Plan",
@@ -111,7 +111,7 @@ window.GGJourney = {
   },
   {
    "theme": "Hope that shows up",
-   "intro": "Hope isn't a feeling you wait for. Sometimes it's something you do, and the feeling catches up with you.",
+   "intro": "Hope can be something you do, and the feeling catches up with you.",
    "q": "What gives you hope right now?",
    "story": {
     "title": "He Was Praying Too",
@@ -134,12 +134,12 @@ window.GGJourney = {
   "planting": {
    "name": "Planting",
    "weeks": "Weeks 1 to 4",
-   "line": "Breaking ground. Small practices, every day, nothing forced."
+   "line": "Breaking ground. Small practices, every day, all of them gentle."
   },
   "rooting": {
    "name": "Rooting",
    "weeks": "Weeks 5 to 8",
-   "line": "Going deeper. The roots grow where no one can see them."
+   "line": "Going deeper. The roots grow deep and quiet, out of sight."
   },
   "blooming": {
    "name": "Blooming",
@@ -160,7 +160,7 @@ window.GGJourney = {
   },
   "evening": {
    "t": "Close the day",
-   "b": "Three specific graces from today. One thing you won't carry into sleep. One word for tomorrow.",
+   "b": "Three specific graces from today. One thing you'll set down before sleep. One word for tomorrow.",
    "s": "One thing you're grateful for. One thing you're setting down."
   }
  },
@@ -185,7 +185,7 @@ window.GGJourney = {
   "gentle": {
    "planting": {
     "t": "Ten minutes of gentle movement",
-    "b": "A slow walk, or seated stretches if walking isn't possible today. Roll your shoulders, lift your arms overhead, circle your ankles, march in place from a chair. <strong>Moving at all is the win.</strong>"
+    "b": "A slow walk, or seated stretches on days when walking is hard. Roll your shoulders, lift your arms overhead, circle your ankles, march in place from a chair. <strong>Moving at all is the win.</strong>"
    },
    "rooting": {
     "t": "Fifteen to twenty minutes",
@@ -221,7 +221,7 @@ window.GGJourney = {
    },
    "blooming": {
     "t": "Heavier circuits, peak long run",
-    "b": "Heavier compound circuits, one interval run a week, and a long run that peaks at 55 to 65 minutes. Keep one full rest day. No more than 10 percent more each week."
+    "b": "Heavier compound circuits, one interval run a week, and a long run that peaks at 55 to 65 minutes. Keep one full rest day. Add 10 percent or less each week."
    }
   }
  }
@@ -236,18 +236,18 @@ window.GGJourney = {
 window.GGJourney.AGES = window.GGJourney.AGES || {};
 window.GGJourney.AGES.aspen = {
  "WEEKS": [
-  { "intro": "You don't have to be ready. This week you plant, and planting is small. Tend your tree once a day, and that's enough.", "q": "What do you hope grows in you this season?" },
+  { "intro": "Start right where you are. This week you plant, and planting is small. Tend your tree once a day, and that's enough.", "q": "What do you hope grows in you this season?" },
   { "intro": "Phones need charging, and so do you. This week, notice what wears you out. Pick one small way to protect your rest, like keeping your phone out of your room at night.", "q": "When did you need a break this week, and did you take one?" },
   { "intro": "Your body notices things before your brain does: a tight stomach, tired eyes, a racing heart. This week, listen to it the way you'd listen to a friend.", "q": "What did your body tell you this week?" },
-  { "intro": "Almost everyone misses a day. Then two. That isn't failing. Coming back is the whole practice, and your tree is always glad to see you.", "q": "What helped you come back when you forgot?" },
-  { "intro": "Sometimes we carry worries nobody can see, like a heavy backpack under a coat. This week, notice what you've been carrying. You don't have to fix it. Just name it.", "q": "What's been heavy for you lately?" },
-  { "intro": "The text you keep meaning to send. The thank you you never said. This week, reach out to someone first.", "q": "Who did you reach out to this week, and how did it feel?" },
-  { "intro": "You don't need the right words. Quiet, wonder, prayer, music, a sky full of stars. This week, notice the moments that feel bigger than you.", "q": "When did you feel part of something bigger than yourself this week?",
-    "plain": { "intro": "You don't need the right words. Quiet, wonder, music, a sky full of stars. This week, notice the moments that feel bigger than you." } },
+  { "intro": "Almost everyone misses a day. Then two. Coming back is the whole practice, and your tree is always glad to see you.", "q": "What helped you come back when you forgot?" },
+  { "intro": "Sometimes we carry worries nobody can see, like a heavy backpack under a coat. This week, notice what you've been carrying. Just name it.", "q": "What's been heavy for you lately?" },
+  { "intro": "The text you keep meaning to send. The thank you still waiting to be said. This week, reach out to someone first.", "q": "Who did you reach out to this week, and how did it feel?" },
+  { "intro": "Any words will do. Quiet, wonder, prayer, music, a sky full of stars. This week, notice the moments that feel bigger than you.", "q": "When did you feel part of something bigger than yourself this week?",
+    "plain": { "intro": "Any words will do. Quiet, wonder, music, a sky full of stars. This week, notice the moments that feel bigger than you." } },
   { "intro": "Eight weeks in, some practices are becoming yours. The ones you still do on tired days are like roots. They hold you up.", "q": "Which practice has started to feel like yours?" },
-  { "intro": "You don't control everything, but you get a say in a lot: how you treat people, what you practice, and who you're becoming. Use your say this week.", "q": "What do you want more of in your life?" },
+  { "intro": "You get a say in a lot: how you treat people, what you practice, and who you're becoming. Use your say this week.", "q": "What do you want more of in your life?" },
   { "intro": "Trees in a grove grow toward each other. This week, grow toward the people you love: family, friends, anyone who is good to you.", "q": "Where did you give or get love this week?" },
-  { "intro": "Hope isn't only a feeling you wait for. Sometimes it's something you do, and the feeling catches up with you.", "q": "What gives you hope right now?" },
+  { "intro": "Hope is more than a feeling you wait for. Sometimes it's something you do, and the feeling catches up with you.", "q": "What gives you hope right now?" },
   { "intro": "Look at what grew. Some of it you'll keep. Some of it was only for this season. Both are good.", "q": "What grew in these twelve weeks, and what are you ready to let go of?" }
  ],
  "ANCHORS": {
@@ -309,9 +309,9 @@ window.GGJourney.AGES.maple_k2 = {
    "q": "Who did you say hi to first this week?"
   },
   {
-   "intro": "Quiet, wonder, prayer, a song, a starry sky. This week, we look for the big, beautiful things that remind us we are not alone.",
+   "intro": "Quiet, wonder, prayer, a song, a starry sky. This week, we look for the big, beautiful things that remind us we belong.",
    "q": "What made you say wow this week?",
-   "plain": { "intro": "Quiet, wonder, a song, a starry sky. This week, we look for the big, beautiful things that remind us we are not alone." }
+   "plain": { "intro": "Quiet, wonder, a song, a starry sky. This week, we look for the big, beautiful things that remind us we belong." }
   },
   {
    "intro": "You have been tending your tree for weeks now! Which little things feel easy now? Keep those.",
@@ -330,7 +330,7 @@ window.GGJourney.AGES.maple_k2 = {
    "q": "What good thing are you hoping for?"
   },
   {
-   "intro": "Look how much your tree grew! This week, we remember what helped and say goodbye to what we don't need anymore.",
+   "intro": "Look how much your tree grew! This week, we remember what helped and say goodbye to what we have outgrown.",
    "q": "What helped your tree grow the most?"
   }
  ],
@@ -423,7 +423,7 @@ window.GGJourney.AGES.maple_35 = {
    "q": "What did your body tell you this week?"
   },
   {
-   "intro": "Everyone forgets sometimes. Missing a day isn't failing. Coming back is the real practice, and your tree is always glad to see you.",
+   "intro": "Everyone forgets sometimes. Coming back is the real practice, and your tree is always glad to see you.",
    "q": "What helped you come back when you forgot?"
   },
   {
@@ -435,9 +435,9 @@ window.GGJourney.AGES.maple_35 = {
    "q": "Who did you reach out to this week, and how did it feel?"
   },
   {
-   "intro": "You don't need fancy words. Quiet, wonder, prayer, music, nature, or your family's traditions can help you feel part of something bigger.",
+   "intro": "Simple words are enough. Quiet, wonder, prayer, music, nature, or your family's traditions can help you feel part of something bigger.",
    "q": "When did you feel part of something bigger than yourself this week?",
-   "plain": { "intro": "You don't need fancy words. Quiet, wonder, music, nature, or your family's traditions can help you feel part of something bigger." }
+   "plain": { "intro": "Simple words are enough. Quiet, wonder, music, nature, or your family's traditions can help you feel part of something bigger." }
   },
   {
    "intro": "By now, some practices are starting to feel like yours. This week, notice which ones help most, and keep them.",
@@ -448,7 +448,7 @@ window.GGJourney.AGES.maple_35 = {
    "q": "What do you want more of in your life?"
   },
   {
-   "intro": "Love isn't just a feeling. It's what we do: listening, helping, saying sorry, saying thank you. Notice the love around you this week.",
+   "intro": "Love is a feeling, and it's also what we do: listening, helping, saying sorry, saying thank you. Notice the love around you this week.",
    "q": "Where did you give or get love this week?"
   },
   {
@@ -456,7 +456,7 @@ window.GGJourney.AGES.maple_35 = {
    "q": "What gives you hope right now?"
   },
   {
-   "intro": "Twelve weeks of tending! Look back at how your tree has grown. Keep what helped, and let go of what you don't need anymore.",
+   "intro": "Twelve weeks of tending! Look back at how your tree has grown. Keep what helped, and let go of what you have outgrown.",
    "q": "What grew in these twelve weeks, and what are you ready to let go of?"
   }
  ],
@@ -543,15 +543,15 @@ window.GGJourney.AGES.maple_35 = {
 window.GGJourney.AGES.sequoia = {
  "WEEKS": [
   { "intro": "Nothing has to be ready. This week you plant, and planting is small. Tend your tree once a day, in whatever way your day allows, and let that be enough.", "q": "What made you want to start, and what are you hoping grows?" },
-  { "intro": "A long life teaches you where your energy goes. This week, notice what tires you and what restores you. Rest is part of the work, not a break from it.", "q": "What tired you this week, and what gave you back some energy?" },
-  { "intro": "Your body has carried you a long way, and it keeps its own record. This week, listen to it the way you would listen to an old friend: kindly, and without arguing.", "q": "What did your body tell you this week, and how did you answer it?" },
-  { "intro": "Everyone misses a day. Appointments, aches, and visitors fill a week. Coming back is the whole practice, and your tree waits for you without losing anything.", "q": "What helped you come back when a day slipped by?" },
-  { "intro": "By now you have carried a great deal: losses, worries, and memories that still ache. This week, notice one thing you carry quietly. You do not have to fix it. Naming it is enough.", "q": "What are you carrying that you haven't said out loud?" },
-  { "intro": "Friendships fade when no one reaches first. This week, be the one who calls, writes, or knocks. One short call can change two people's day.", "q": "Who did you reach toward this week, and how did it feel?" },
+  { "intro": "A long life teaches you where your energy goes. This week, notice what tires you and what restores you. Rest is part of the work.", "q": "What tired you this week, and what gave you back some energy?" },
+  { "intro": "Your body has carried you a long way, and it keeps its own record. This week, listen to it the way you would listen to an old friend: kindly, and with patience.", "q": "What did your body tell you this week, and how did you answer it?" },
+  { "intro": "Everyone misses a day. Appointments, aches, and visitors fill a week. Coming back is the whole practice, and your tree waits for you, keeping everything.", "q": "What helped you come back when a day slipped by?" },
+  { "intro": "By now you have carried a great deal: losses, worries, and memories that still ache. This week, notice one thing you carry quietly. Naming it is enough.", "q": "What are you carrying that you haven't said out loud?" },
+  { "intro": "Friendships grow when someone reaches first. This week, be the one who calls, writes, or knocks. One short call can change two people's day.", "q": "Who did you reach toward this week, and how did it feel?" },
   { "intro": "Prayer, quiet, music, a window full of sky, or the faith you have kept for decades. However you come, this week notice the moments that feel bigger than you.", "q": "Where did you feel something bigger than yourself this week?" },
   { "intro": "Eight weeks in, some practices are becoming yours. The ones you keep on tired or sore days are roots. They hold you when the weather turns.", "q": "Which practice has started to hold you?" },
-  { "intro": "Later life brings changes you did not choose. You still get a say in a great deal: how you spend your mornings, who you see, and what you pass on. Use your say this week.", "q": "What do you want more of in the years ahead?" },
-  { "intro": "Love does not shrink with age. It often deepens. This week, notice where love moves between you and the people around you, and say it out loud once.", "q": "Where did you give or receive love this week?" },
+  { "intro": "Later life brings changes of its own. You still get a say in a great deal: how you spend your mornings, who you see, and what you pass on. Use your say this week.", "q": "What do you want more of in the years ahead?" },
+  { "intro": "Love often deepens with age. This week, notice where love moves between you and the people around you, and say it out loud once.", "q": "Where did you give or receive love this week?" },
   { "intro": "Hope in later life is often quieter and steadier. It can be a grandchild's visit, a garden in spring, or a good morning. This week, look for what you are still looking forward to.", "q": "What are you still looking forward to?" },
   { "intro": "Look at what grew this season. Some of it you will keep for good. Some of it was only for now. Both belong to a long life, still growing.", "q": "What grew in these twelve weeks, and what are you ready to let go?" }
  ],
@@ -578,7 +578,7 @@ window.GGJourney.AGES.sequoia = {
   "athletic": {
    "planting": { "t": "Your usual, plus balance", "b": "Keep your walks, swims, or workouts, and add five minutes of balance work after each: heel-to-toe steps along the counter and standing on one foot with a hand ready. <strong>Warm up every time.</strong>" },
    "rooting": { "t": "Strength two or three days", "b": "Add light weights or bands for legs, back, and arms, two or three sets of ten. Strength protects your bones and your independence." },
-   "blooming": { "t": "A steady, safe build", "b": "One longer walk or swim each week, strength and balance on other days, and one full rest day. Notice what your body can do now that it could not in Week 1." }
+   "blooming": { "t": "A steady, safe build", "b": "One longer walk or swim each week, strength and balance on other days, and one full rest day. Notice what your body can do now that is new since Week 1." }
   }
  }
 };
@@ -596,15 +596,15 @@ window.GGJourney.AGES.pine = {
   { "intro": "Nothing has to be ready. This week you plant, and planting is small. Tend your tree once a day, even for a minute, and let that count.", "q": "What made you want to start, and what are you hoping grows?" },
   { "intro": "School, practice, a job, your phone, people who need you. This week, notice where your energy leaks, and protect one limit, like a set bedtime or your phone out of reach at night.", "q": "Where did you say yes this week when you needed to say no?" },
   { "intro": "Your body knows before your brain admits it: a tight jaw, a headache, running on four hours of sleep. This week, listen to it the way you would listen to a good coach.", "q": "What did your body tell you this week, and what did you do about it?" },
-  { "intro": "Somewhere around now, most people miss a day. Then two. That is normal, not failure. Coming back is the practice, and your tree keeps everything you have grown.", "q": "What helped you come back when you drifted?" },
-  { "intro": "Some weight doesn't show: pressure about grades, the future, home, or friends. This week, notice one thing you have been carrying and name it, to yourself or to someone you trust. You don't have to fix it yet.", "q": "What are you carrying that you haven't said out loud?" },
+  { "intro": "Somewhere around now, most people miss a day. Then two. That is normal. Coming back is the practice, and your tree keeps everything you have grown.", "q": "What helped you come back when you drifted?" },
+  { "intro": "Some weight doesn't show: pressure about grades, the future, home, or friends. This week, notice one thing you have been carrying and name it, to yourself or to someone you trust. Naming it is a strong first step.", "q": "What are you carrying that you haven't said out loud?" },
   { "intro": "The text you keep meaning to send. The person you keep meaning to thank. This week, reach out first. Most people are glad someone did.", "q": "Who did you reach toward this week, and how did it feel?" },
   { "intro": "Prayer, worship, quiet, music, a night sky, a long run, your family's traditions. However you come, this week notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?",
     "plain": { "intro": "Quiet, music, a night sky, a long run, your family's traditions. This week, notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?" } },
   { "intro": "Eight weeks in, some of this is becoming yours. The practices you keep on busy or rough days are your roots. They hold when the season gets hard.", "q": "Which practice has started to hold you?" },
-  { "intro": "You don't control everything: schedules, rules, what other people choose. You still get a say in a lot: how you treat people, what you practice, and who you are becoming. Use your say this week.", "q": "What do you want more of in the life you are building?" },
+  { "intro": "Some things are set: schedules, rules, what other people choose. You still get a say in a lot: how you treat people, what you practice, and who you are becoming. Use your say this week.", "q": "What do you want more of in the life you are building?" },
   { "intro": "Friends, family by blood or by choice, teammates, the people who show up. This week, notice where kindness moves between you and others, and say thanks out loud once.", "q": "Where did you give or receive love this week?" },
-  { "intro": "Hope isn't only a feeling you wait for. It is a goal, a way to get there, and the next step you take. Take one small step this week and let the feeling catch up.", "q": "What are you looking forward to, and what is one step toward it?" },
+  { "intro": "Hope is more than a feeling you wait for. It is a goal, a way to get there, and the next step you take. Take one small step this week and let the feeling catch up.", "q": "What are you looking forward to, and what is one step toward it?" },
   { "intro": "Look at what grew this season. Some of it you will keep for good. Some of it was only for now. Both count, and both are part of who you are becoming.", "q": "What grew in these twelve weeks, and what are you ready to let go of?" }
  ],
  "ANCHORS": {
@@ -646,18 +646,18 @@ window.GGJourney.AGES.pine = {
    a health limit, a new baby, or a packed week. */
 window.GGJourney.AGES.birch = {
  "WEEKS": [
-  { "intro": "Nothing has to be ready. Not your schedule, not your place, not your plans. This week you plant, and planting is small. Tend your tree once a day, even for a minute, and let that count.", "q": "What made you want to start, and what are you hoping grows?" },
+  { "intro": "Start right where you are, with your schedule, your place, and your plans just as they are. This week you plant, and planting is small. Tend your tree once a day, even for a minute, and let that count.", "q": "What made you want to start, and what are you hoping grows?" },
   { "intro": "Work, school, a shift that runs long, people who need you, a phone that never goes quiet. This week, notice where your energy leaks, and protect one limit like it matters.", "q": "Where did you say yes this week when you needed to say no?" },
   { "intro": "Your body keeps its own record: a tight jaw, a skipped meal, sleep that came at the wrong hours. This week, listen to it the way you would listen to a good friend.", "q": "What did your body tell you this week, and what did you do about it?" },
   { "intro": "Somewhere around now, most people miss a day. Then two. A move, a new schedule, or a hard week will do that. Coming back is the practice, and your tree keeps everything you have grown.", "q": "What helped you come back when you drifted?" },
-  { "intro": "Some weight doesn't show: money, the future, family, a relationship, the feeling of being behind. This week, notice one thing you have been carrying and name it, to yourself or to someone you trust. You don't have to fix it yet.", "q": "What are you carrying that you haven't said out loud?" },
+  { "intro": "Some weight doesn't show: money, the future, family, a relationship, the feeling of being behind. This week, notice one thing you have been carrying and name it, to yourself or to someone you trust. Naming it is a strong first step.", "q": "What are you carrying that you haven't said out loud?" },
   { "intro": "Friendships after school take effort, and someone has to go first. This week, be the one who texts, calls, or makes the plan. Most people are glad someone did.", "q": "Who did you reach toward this week, and how did it feel?" },
   { "intro": "Prayer, worship, quiet, music, a night sky, a long run, a tradition you are making your own. However you come, this week notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?",
     "plain": { "intro": "Quiet, music, a night sky, a long run, a tradition you are making your own. This week, notice the moments that feel bigger than you.", "q": "Where did you feel part of something bigger than yourself this week?" } },
   { "intro": "Eight weeks in, some of this is becoming yours. The practices you keep on long shifts and rough days are your roots. They hold when the season gets hard.", "q": "Which practice has started to hold you?" },
-  { "intro": "You don't control everything: the rent, the job market, other people's choices. You still get a say in a lot: how you spend your days, how you treat people, and who you are becoming. Use your say this week.", "q": "What do you want more of in the life you are building?" },
+  { "intro": "Some things are set: the rent, the job market, other people's choices. You still get a say in a lot: how you spend your days, how you treat people, and who you are becoming. Use your say this week.", "q": "What do you want more of in the life you are building?" },
   { "intro": "Family by birth or by choice, friends, coworkers, the people who show up. This week, notice where kindness moves between you and others, and say thanks out loud once.", "q": "Where did you give or receive love this week?" },
-  { "intro": "Hope isn't only a feeling you wait for. It is a goal, a way to get there, and the next step you take. Take one small step this week and let the feeling catch up.", "q": "What are you looking forward to, and what is one step toward it?" },
+  { "intro": "Hope is more than a feeling you wait for. It is a goal, a way to get there, and the next step you take. Take one small step this week and let the feeling catch up.", "q": "What are you looking forward to, and what is one step toward it?" },
   { "intro": "Look at what grew this season. Some of it you will keep for good. Some of it was only for now. Both count, and both are part of who you are becoming.", "q": "What grew in these twelve weeks, and what are you ready to let go of?" }
  ],
  "ANCHORS": {

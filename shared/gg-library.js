@@ -28,7 +28,7 @@
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=b780', '/grove/library.js?v=b780'];
+  var FILES = ['/grove/data.js?v=b782', '/grove/library.js?v=b782'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 

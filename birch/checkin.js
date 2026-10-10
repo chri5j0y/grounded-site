@@ -432,7 +432,7 @@ const FLAGS = {
     lines: ['988', 'ctl'],
     guide: 'They named loneliness. Talk together about one person they could reach toward, and one group, class, or team to try. Listen for hopelessness.' },
   hope: { on: ['often', 'always'], calm: ['always'], alert: false, title: 'Losing hope',
-    note: 'You said it\'s felt like there\'s no point in trying. You don\'t have to carry that alone, and it can get better with help. Call or text 988, or text HOME to 741741, any time, day or night. Veterans and service members, call 988 and press 1.',
+    note: 'You said it\'s felt like there\'s no point in trying. You can share that weight, and it can get better with help. Call or text 988, or text HOME to 741741, any time, day or night. Veterans and service members, call 988 and press 1.',
     lines: ['988', 'veterans', 'ctl', '911'],
     guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive.' },
   hurt: { on: ['sometimes', 'often', 'always'], calm: ['often', 'always'], from: 'safety', alert: false, title: 'Someone hurting me',
@@ -461,7 +461,7 @@ const NEVER_SHARE = ['safety', 'flags', 'help', 'optional'];
 // with 988 and 911 at the top. Nothing here is ever sent to anyone or
 // shown to a helper.
 const SAFETY = {
-  intro: 'These years can bring some heavy stretches. These two questions help make sure you\'re okay. There\'s no wrong answer, and you can skip.',
+  intro: 'These years can bring some heavy stretches. These two questions help make sure you\'re okay. Every answer is welcome, and you can skip.',
   questions: [
     ['Is anyone hurting you, threatening you, or making you feel unsafe, at home, at work, online, or in a relationship?', 'safe'],
     ['In the past two weeks, have you had thoughts of ending your life, or of not wanting to be alive?', 'self']
@@ -475,7 +475,7 @@ const SAFETY = {
   yes: 'Thank you for telling me. You matter, and this can get better with help. Please reach out now. Someone will listen, any time.',
   means: 'If there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.',
   burden: 'You matter to people, even when it is hard to see. Feeling like a burden is a sign to reach out, not a fact about you.',
-  title: 'You matter, and you don\'t have to carry this alone.',
+  title: 'You matter, and others can help you carry this.',
   calmIntro: 'These people want to help, any time. You can also tell someone you trust, like a friend, someone in your family, a doctor, or a counselor.',
   hurtTitle: 'No one has the right to hurt you.',
   hurtIntro: 'These people can help any time, and you can talk it through privately. You are not in trouble for telling.',

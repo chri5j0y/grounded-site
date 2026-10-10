@@ -119,7 +119,7 @@ const LC_TOPICS = [
    ],
    "you": "Your job shifts this year from managing to coaching. Stay curious, keep the door open, and let them tell you about their life in their own time. If they use Pine, you will never see their answers; if they ever seem unsafe, you'll get only a quiet “Please check in” alert. What you know about their life will mostly come from what they choose to tell you, and they tell more when it feels safe to."
   },
-  "faith": "Some students find belonging in a youth group, a faith community, or a quiet minute of prayer before a hard day. Others find it in a walk, music, or a few slow breaths. If faith is part of your life, it can be one steady place while everything else is new. If it isn't, the same need points to whatever helps you feel grounded and not alone.",
+  "faith": "Some students find belonging in a youth group, a faith community, or a quiet minute of prayer before a hard day. Others find it in a walk, music, or a few slow breaths. If faith is part of your life, it can be one steady place while everything else is new. If it isn't, the same need points to whatever helps you feel grounded and connected.",
   "practices": [
    "branches|Clubs",
    "branches|Name Your Trusted Adult",
@@ -448,7 +448,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "There's more than one good path: college, community college, a trade or apprenticeship, work, the military, service, a gap year, or staying close to home.",
-   "You don't need your whole life figured out. You need a next step that fits who you are right now.",
+   "You need a next step that fits who you are right now. The whole map comes later.",
    "Purpose grows through the high school years. It has three parts: what matters to you, what you're working toward, and who it helps.",
    "Paths can change. Many people try one road, learn from it, and turn."
   ],
@@ -835,7 +835,7 @@ const LC_TOPICS = [
   "quick": [
    "Bullying is repeated meanness with a power imbalance: someone using size, status, numbers, or a screen to hurt you on purpose.",
    "It's common. About 1 in 5 high schoolers is bullied at school in a year, and much of it now happens online too.",
-   "It is never your fault, and you don't have to handle it alone.",
+   "It is never your fault, and others can help you handle it.",
    "Save the proof, block and report, and tell an adult who can act. Threats of violence go to 911."
   ],
   "feel": "Maybe it's a group chat where you're the joke. A fake account. A rumor that spread before lunch. Someone shoving you in the hall, or a group that goes quiet when you walk up. Maybe a picture or video of you got passed around. Bullying can make school feel like a place you have to survive. You might dread opening your phone, stop going to things you love, or replay every word at night. Many teens feel ashamed, as if they somehow earned it, or they worry telling will make it worse or cost them their phone. Some feel angry enough to want to hit back. All of that is a normal response to being treated badly. None of it means you deserve it.",
@@ -857,7 +857,7 @@ const LC_TOPICS = [
    "tell": [
     "“This is about their choices, not my worth.”",
     "“Telling isn't snitching. It's getting help for something wrong.”",
-    "“I don't have to handle this alone.”",
+    "“Others can help me handle this.”",
     "“I'm more than what they say about me.”"
    ],
    "people": "To an adult: “Something's been happening at school and online, and I need help with it. Here's what I've saved.” If you're worried about your phone: “I'm telling you because I need help, not so I'll lose my phone.” If a private picture of you was shared, you are not in trouble: tell a trusted adult, and use Take It Down to help get it removed. If you're answering your Pine check-in and say someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family."
@@ -982,7 +982,7 @@ const LC_TOPICS = [
     "Lecturing. Share your family's values in a sentence or two, then ask what they think."
    ],
    "help": [
-    "Talk about healthy relationships before there's a specific person: in the car, about a show, about friends.",
+    "Talk about healthy relationships before there's a specific person: in the car, about a song, about friends.",
     "Name the green flags and the red flags plainly. Love Is Respect has clear lists for teens and for parents.",
     "Make a ride plan: they can text you a code word anytime and you'll come, no lecture that night.",
     "Be clear that any adult or much older person pursuing a teen romantically, or asking for pictures, is never okay, and they should tell you right away.",
@@ -1063,7 +1063,7 @@ const LC_TOPICS = [
     "“This hurts because it mattered. That's okay.”",
     "“I can miss them and still know it's over.”",
     "“I was me before this relationship, and I'm still me.”",
-    "“It won't always feel this heavy.”"
+    "“This heaviness will ease.”"
    ],
    "people": "To a friend: “I'm having a rough day about the breakup. Can we just hang out?” To a parent or trusted adult: “I don't need advice right now. I just need you to know it's been hard.” To your ex, if you need to: “I need some space for a while. Please don't text me for now.” If an ex threatens to hurt themselves if you don't come back, take it seriously and tell a trusted adult right away, but it is not your job to stay. Call or text 988 for them, or for you."
   },
@@ -1083,7 +1083,7 @@ const LC_TOPICS = [
    ],
    "help": [
     "Take the pain seriously. Research links a recent breakup with a higher chance of a first depression in the teen years.",
-    "Offer company without pressure: a drive, a favorite meal, a walk, a show together.",
+    "Offer company without pressure: a drive, a favorite meal, a walk, music together.",
     "Keep routines gently going: sleep, meals, school, practice. Allow a few soft days, then lean back toward normal.",
     "Watch for two weeks or more of low mood, pulling away from everyone, sleep or eating changes, or talk of hopelessness. If you see that, bring in a counselor or doctor.",
     "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the dating abuse guide.",
@@ -1141,7 +1141,7 @@ const LC_TOPICS = [
    "Dating abuse is a pattern of control: someone using fear, guilt, pressure, or force to have power over you.",
    "It's more common than people think. About 1 in 10 high schoolers who date were physically hurt on purpose by a partner in the past year.",
    "It is never your fault, and you never have to earn kindness. Love doesn't come with fear.",
-   "You don't have to figure it out alone. Love Is Respect is there by call, text, or chat, any time. Danger right now: 911."
+   "Others can help you figure it out. Love Is Respect is there by call, text, or chat, any time. Danger right now: 911."
   ],
   "feel": "It might not have started out this way. At first the attention felt amazing: the constant texts, wanting to be with you all the time. Then it shifted. Now they check your phone, want your passwords, or track your location. They get angry if you see certain friends, tell you what to wear, or put you down and call it a joke. Maybe they've pushed or grabbed you, pressured you into things you didn't want, or threatened to hurt themselves if you leave. You might feel confused, because they can also be sweet and say they're sorry. You might feel embarrassed, or protective of them, or scared of what happens if you tell. Many people in your place wonder if it's really “that bad.” If you feel afraid, or like you're walking on eggshells, that feeling is worth listening to.",
   "self": {
@@ -1359,7 +1359,7 @@ const LC_TOPICS = [
     "Starting with respect and small kindness, and letting closeness grow on its own schedule.",
     "Keeping a few old traditions with your parent, and trying one new one with the whole household.",
     "Bringing rules questions to your own parent first, especially early on.",
-    "Finding one easy thing to share with a stepparent or stepsibling: a show, a sport, a game, a recipe.",
+    "Finding one easy thing to share with a stepparent or stepsibling: a song, a sport, a game, a recipe.",
     "Saying what you need calmly, at a calm time, instead of letting it build until it explodes.",
     "Keeping your friends, your activities, and your own plans going. You're allowed a life outside the new household."
    ],
@@ -1627,7 +1627,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "You didn't cause it, you can't control it, and you can't cure it. You can look after yourself.",
-   "You are far from alone. About 1 in 4 kids in the US lives with a parent who has a drinking or drug problem.",
+   "Many others share this. About 1 in 4 kids in the US lives with a parent who has a drinking or drug problem.",
    "Keeping the family secret isn't your job. Talking with one safe adult is allowed, and it helps.",
    "Have a safety plan: who you'll call, where you'll go, and never riding with someone who has been drinking or using."
   ],
@@ -1727,7 +1727,7 @@ const LC_TOPICS = [
    "Your parent's choices are not your choices. You are not what happened.",
    "You can love your parent and be angry at them. Both can be true.",
    "You decide who you tell, and how much. Your story is yours.",
-   "More than 5 million kids in the US have had a parent in jail or prison. You are not the only one."
+   "More than 5 million kids in the US have had a parent in jail or prison. Others have been here too."
   ],
   "feel": "Maybe you saw the arrest. Maybe you found out from someone else, or online, before anyone told you. You might feel embarrassed, angry, worried about your parent's safety, or relieved if home had been scary. You might miss them so much it hurts, and then be furious that they put you here. Visits can be long drives, metal detectors, and an hour that goes too fast. Calls can be short and expensive. You might have moved, changed schools, or be living with a grandparent or relative now. People at school or church might whisper, or just not know what to say. And when a release date comes, that brings its own mix of hope and worry. Whatever you feel is allowed. You didn't do anything wrong.",
   "self": {
@@ -2019,10 +2019,10 @@ const LC_TOPICS = [
    "fruit"
   ],
   "quick": [
-   "When a parent or sibling dies, your whole world shifts. There's no right way to grieve, and no deadline.",
+   "When a parent or sibling dies, your whole world shifts. Everyone grieves in their own way and their own time.",
    "Grief in the teen years often comes in waves: fine one hour, flattened the next. Both are normal.",
    "You can still laugh, hang out, and make plans. That's not forgetting. It's living, and they'd want that for you.",
-   "You don't have to carry this alone. A grief group, a counselor, or one trusted adult can make a real difference."
+   "Others can help you carry this. A grief group, a counselor, or one trusted adult can make a real difference."
   ],
   "feel": "Everything changed, and yet the bell still rings and the homework still comes. You might feel crushed, numb, angry, guilty, or strangely okay, sometimes all in one day. Maybe you replay the last thing you said to them, or the things you never got to say. Friends might not know what to say, so they say nothing, or the wrong thing. You may be taking on more at home, or trying to stay strong for the parent who's still here. If the death was sudden, it may not feel real yet. If it came after a long illness, you may feel relief too, and that's normal. All of it is part of grief.",
   "self": {
@@ -2041,7 +2041,7 @@ const LC_TOPICS = [
     "Letting someone know if you're taking on too much at home."
    ],
    "tell": [
-    "“There's no right way to grieve.”",
+    "“Everyone grieves in their own way.”",
     "“I can miss them and still have a good day.”",
     "“My love for them keeps going.”"
    ],
@@ -2051,7 +2051,7 @@ const LC_TOPICS = [
    "feel": "A teen who has lost a parent or sibling may look fine one minute and fall apart the next. Many hide their grief to protect the parent who's still here, or because they don't want to stand out at school. Some feel guilt, some anger, some numbness. After a sibling dies, teens often feel forgotten while the adults grieve. Grief can come back in new ways at each milestone, years later.",
    "say": [
     "“I'm so sorry. Tell me about her, if you want to.”",
-    "“There's no right way to feel. Whatever you're feeling is okay with me.”",
+    "“Every feeling is welcome. Whatever you're feeling is okay with me.”",
     "“What's the hardest time of day right now?”",
     "“I'm here, and I'm not going anywhere.”"
    ],
@@ -2214,7 +2214,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "Losing a grandparent can be a big loss, especially if they helped raise you, lived with you, or were your person.",
-   "It may be the first time you've grieved someone close. There's no right way to do it.",
+   "It may be the first time you've grieved someone close. Everyone does it in their own way.",
    "Your parent may be grieving their own mom or dad. You can look out for each other.",
    "Their stories, traditions, and love keep going through you."
   ],
@@ -2234,7 +2234,7 @@ const LC_TOPICS = [
     "If you wish you'd done more, writing them a letter that says what you wanted to say. Regret is a form of love."
    ],
    "tell": [
-    "“There's no right amount of sad.”",
+    "“Any amount of sad is okay.”",
     "“They're part of who I am.”",
     "“I can carry their stories forward.”"
    ],
@@ -2244,7 +2244,7 @@ const LC_TOPICS = [
    "feel": "For many teens, a grandparent's death is the first close loss. Some feel it deeply, especially if the grandparent raised them, lived with them, or was a steady adult in their life. Others feel less than they expected and quietly worry about that. Teens often notice a parent's grief and may hide their own so they won't add to it. If they missed visits or felt awkward during a long illness, guilt may come later.",
    "say": [
     "“I'm so sorry about Grandma. What do you remember most about her?”",
-    "“There's no right way to feel. Whatever you feel is okay.”",
+    "“Every feeling is welcome. Whatever you feel is okay.”",
     "“Would you like to have a part in the service? It's okay if you don't.”",
     "“I miss him too. Can we talk about him sometimes?”"
    ],
@@ -2264,7 +2264,7 @@ const LC_TOPICS = [
    ],
    "you": "If the one who died was your own parent, you're grieving while you parent. You don't have to hide it or hold it all together. Lean on your own people, let other adults help your teen too, and give yourself the same patience you're giving them."
   },
-  "faith": "For many families, a grandparent's faith is part of their legacy: the hymns they sang, the prayers they said, the place they worshiped. A teen may find comfort in those traditions, or simply in a quiet place outside, music, or family stories. A death can also bring up questions about God and what happens after, and those belong here too. A faith leader, youth leader, or trusted relative can explore them with your teen, with no pressure for answers.",
+  "faith": "For many families, a grandparent's faith is part of their legacy: the hymns they sang, the prayers they said, the place they worshiped. A teen may find comfort in those traditions, or simply in a quiet place outside, music, or family stories. A death can also bring up questions about God and what happens after, and those belong here too. A faith leader, youth leader, or trusted relative can explore them with your teen, with room for open questions.",
   "practices": [
    "branches|Ask an Elder",
    "fruit|Capture the Moment",
@@ -2305,7 +2305,7 @@ const LC_TOPICS = [
    "After any crash, get checked by a doctor, even if you feel fine. Some injuries, like concussions, show up later.",
    "Feeling shaky, jumpy, or replaying it for days or weeks afterward is a common reaction, and it usually eases with time and support.",
    "If you were driving, the first thing that matters is that you're alive. Insurance, tickets, and what comes next can be sorted out later, with help.",
-   "Getting back in the car in small, planned steps helps fear shrink. If a friend was hurt or killed, lean on people; you don't have to carry it alone."
+   "Getting back in the car in small, planned steps helps fear shrink. If a friend was hurt or killed, lean on people; others can help you carry it."
   ],
   "feel": "It happened in seconds, and now it replays in slow motion. Maybe it was a fender bender, maybe the car was totaled, maybe someone got hurt. You might feel shaky, jumpy at every brake light, or not feel much at all yet. If you were driving, you may be scared of what your parents will say, or flooded with guilt, even if it wasn't your fault. If you were a passenger, you might feel nervous getting into any car. If a friend was badly hurt or died, you might feel guilt for being okay, anger, or a heaviness that won't lift. Some people can't stop thinking about it; others can't remember parts of it. All of these are common reactions to something scary.",
   "self": {
@@ -2411,13 +2411,13 @@ const LC_TOPICS = [
   "self": {
    "first": [
     "Ask one adult you trust for the plain truth: what the illness is, what the next few weeks look like, and what might change for you.",
-    "Pick one friend who gets to know what's going on, so you aren't carrying it alone at school.",
-    "Keep one thing that is just yours this week: a practice, a game, a show, a walk, time with friends."
+    "Pick one friend who gets to know what's going on, so someone at school helps you carry it.",
+    "Keep one thing that is just yours this week: a practice, a game, music, a walk, time with friends."
    ],
    "helps": [
     "Writing your questions down and asking them, even the scary ones. Not knowing is often harder than knowing.",
     "Letting a teacher or counselor know. They can give you extra time or a quiet place when a day is too heavy.",
-    "Finding small ways to connect with the person who is sick: a playlist, a show you watch together, a text, sitting nearby while they rest.",
+    "Finding small ways to connect with the person who is sick: a playlist, a book you read together, a text, sitting nearby while they rest.",
     "Saying yes when someone offers a ride, a meal, or a night out. Help for your family includes help for you.",
     "Moving your body and sleeping when you can. Stress lives in the body too."
    ],
@@ -2708,7 +2708,7 @@ const LC_TOPICS = [
     "Moving for fun and strength, not to earn or burn food."
    ],
    "tell": [
-    "“This is an illness. It's not my fault, and I don't have to fight it alone.”",
+    "“This is an illness. It's not my fault, and others can help me fight it.”",
     "“The rules feel safe, but they aren't keeping me safe.”",
     "“My body needs fuel to do the things I love.”"
    ],
@@ -2719,7 +2719,7 @@ const LC_TOPICS = [
    "say": [
     "“I love you, and I'm worried about how stressful eating has gotten.”",
     "“We're going to the doctor to check how your body is doing.”",
-    "“This isn't your fault, and you don't have to fight it alone.”",
+    "“This isn't your fault, and others can help you fight it.”",
     "“I'm on your side, even when it doesn't feel like it.”"
    ],
    "avoid": [
@@ -2882,7 +2882,7 @@ const LC_TOPICS = [
    "High school is the time to start running more of your own health, one skill at a time.",
    "School supports like a 504 plan or an IEP are your right, not a favor."
   ],
-  "feel": "Maybe you were born with it, or maybe the diagnosis came recently and changed everything. Either way, you're doing things your friends never think about: counting, checking, taking medicine, skipping things, explaining. Some days you're tired of being the one who's different, or tired of people asking. Some days your body doesn't cooperate and you miss school, practice, or plans. You might feel angry, sad, or invisible, and also proud of how much you handle. You might want more independence and also want someone to just take care of it for a day. All of that is real, and you're not alone in it.",
+  "feel": "Maybe you were born with it, or maybe the diagnosis came recently and changed everything. Either way, you're doing things your friends never think about: counting, checking, taking medicine, skipping things, explaining. Some days you're tired of being the one who's different, or tired of people asking. Some days your body doesn't cooperate and you miss school, practice, or plans. You might feel angry, sad, or invisible, and also proud of how much you handle. You might want more independence and also want someone to just take care of it for a day. All of that is real, and you have people with you in it.",
   "self": {
    "first": [
     "Pick one health task you could take over this month: ordering a refill, booking an appointment, or talking first at your next visit.",
@@ -2990,7 +2990,7 @@ const LC_TOPICS = [
    ],
    "helps": [
     "Going places with a friend who has your back, and agreeing to leave together.",
-    "Keeping a drink of your own in your hand. Fewer people offer.",
+    "Keeping a water bottle of your own in your hand. Fewer people offer.",
     "Noticing when you want something to change how you feel, and trying another way first: a walk, music, a shower, a text to a friend.",
     "Sleep, food, and movement. Being tired and hungry makes pressure louder.",
     "Talking with a doctor or counselor if vaping or anything else has started to feel hard to stop. Quitting nicotine is easier with help."
@@ -3023,7 +3023,7 @@ const LC_TOPICS = [
     "Ask their doctor to talk with them privately at their yearly visit. Teens often tell a doctor more.",
     "If you're worried about regular use, call the SAMHSA National Helpline for next steps, or ask their doctor."
    ],
-   "you": "What you do with alcohol, nicotine, and medicine teaches more than any talk. Be honest with yourself about that, without shame. If someone in your family struggles with drinking or drugs, support is there for you too."
+   "you": "What you do with alcohol, nicotine, and medicine teaches more than any talk. Be honest and gentle with yourself about that. If someone in your family struggles with drinking or drugs, support is there for you too."
   },
   "faith": "If faith is part of your life, it can be one place to find people who've got your back, and a reason to choose what you believe is right when it's hard. Some people pray for courage before a party, or ask a youth leader to be one of their code word adults. If faith isn't part of your life, your values and the people who care about you can do the same work.",
   "practices": [
@@ -3269,7 +3269,7 @@ const LC_TOPICS = [
    "roots"
   ],
   "quick": [
-   "If you're hurting yourself to get through feelings that feel too big, you're not alone, you're not bad, and you deserve help.",
+   "If you're hurting yourself to get through feelings that feel too big, you have people with you, you're not bad, and you deserve help.",
    "Help is here any time: call or text 988, or text HOME to 741741. Badly hurt or in danger: call 911.",
    "Self-harm is usually a way to cope, not a wish to die. It still deserves real help, and it can turn into more danger over time.",
    "Many people learn other ways through hard feelings and stop. Setbacks are part of it, not a reason to give up."
@@ -3301,7 +3301,7 @@ const LC_TOPICS = [
    "say": [
     "“I'm not mad. I'm here, and I want to understand.”",
     "“What was happening right before?”",
-    "“You don't have to stop alone. We'll get help together.”",
+    "“I'll help you stop. We'll get help together.”",
     "“Are you thinking about killing yourself?” Asking plainly is safe, and it doesn't put the idea in their head."
    ],
    "avoid": [
@@ -3416,7 +3416,7 @@ const LC_TOPICS = [
     "Help them write a safety plan, in their words, and keep a copy where you can both find it.",
     "Check in often, warmly and briefly. Watch for warning signs: talk of being a burden, giving things away, saying goodbye, or a sudden calm after a hard stretch."
    ],
-   "you": "Hearing that someone you love has thought about suicide is terrifying. You don't have to carry it alone. Call or text 988 for guidance any time, for them or for yourself, and lean on your own people. You are a lifeline, not a therapist, and getting them to help is the work."
+   "you": "Hearing that someone you love has thought about suicide is terrifying. Others can help you carry it. Call or text 988 for guidance any time, for them or for yourself, and lean on your own people. You are a lifeline, not a therapist, and getting them to help is the work."
   },
   "faith": "If faith is part of your life, it may hold comfort, or hard questions, or both. God, if you speak with God, is not a judge waiting for you to be stronger. Many people have prayed honest words from the bottom of a pit, and you can too. A faith leader you trust can be one of the people on your plan. If faith isn't part of your life, your reasons and your people are what you hold on to.",
   "practices": [
@@ -3518,7 +3518,7 @@ const LC_TOPICS = [
     "Respect their privacy. Counselors share with parents when safety is at stake, and Minnesota law lets them tell a parent when keeping it back would seriously risk your teen's health.",
     "Know the Minnesota rule: at 16 and older, your teen can agree to outpatient mental health care on their own. Your support still matters a great deal.",
     "Ask how billing and statements work, so there are no surprises for anyone.",
-    "Keep life steady: meals, sleep, rides to appointments, and no pressure to report back."
+    "Keep life steady: meals, sleep, rides to appointments, and room to share when they're ready."
    ],
    "you": "It can sting when your teen wants to talk to someone else. That's not a verdict on you. Teens who have more than one trusted adult are better off, and you are still one of them. If you're carrying a lot, counseling for yourself is a good step too."
   },
@@ -3573,7 +3573,7 @@ const LC_TOPICS = [
    "If someone is threatening to share a picture of you, real or fake, you are not in trouble. The person threatening you is the one doing wrong.",
    "Stop replying. Don't pay, and don't send anything more. Paying almost never makes it stop.",
    "Save the messages and the username, then block and report the account.",
-   "Tell one trusted adult today, and use Take It Down to help get pictures removed. This can be fixed, and you don't have to fix it alone."
+   "Tell one trusted adult today, and use Take It Down to help get pictures removed. This can be fixed, and others can help you fix it."
   ],
   "feel": "It can start with a friendly stranger, often someone who seems your age, who flirts, compliments you, and moves fast. Then it flips: pay, or send more, or everyone you know sees this. Sometimes there was never a real picture at all, only a fake made with AI. Your heart may be pounding. You may feel trapped, stupid, ashamed, or sure your life is over. Those feelings are exactly what the person threatening you is counting on, so you'll keep quiet and pay. Thousands of teens go through this every year, many of them boys. It is a crime done to you, and there is a way through it.",
   "self": {
@@ -3802,14 +3802,14 @@ const LC_TOPICS = [
     "Reading their messages in secret. It costs trust, and teens tell more when they feel safe to."
    ],
    "help": [
-    "Make a family plan together: phone-free meals, phones charging outside bedrooms overnight, and an off time for everyone.",
+    "Make a family plan together: unplugged meals, phones charging outside bedrooms overnight, and an off time for everyone.",
     "Ask about their online life the way you'd ask about school: with interest, not suspicion.",
     "Watch for sleep loss, pulling away from people in person, or mood dropping after time online. Talk about it calmly.",
     "Notice and talk about body comparison. Keep your own comments about bodies on strength, energy, and health, never weight or looks."
    ],
    "you": "Most adults struggle with their phones too. Your own habits teach more than your rules do. Try the plan yourself first, and say out loud when it's hard for you."
   },
-  "faith": "Many faith traditions practice a rhythm of rest, like a sabbath or a quiet hour, and a phone-free time can be one way to live it. If faith is part of your life, setting the phone down to pray, reflect, or simply be present can be a real way to rest. In Plain terms: a regular unplugged hour, outside or with people you love, is a gift to yourself.",
+  "faith": "Many faith traditions practice a rhythm of rest, like a sabbath or a quiet hour, and an unplugged time can be one way to live it. If faith is part of your life, setting the phone down to pray, reflect, or simply be present can be a real way to rest. In Plain terms: a regular unplugged hour, outside or with people you love, is a gift to yourself.",
   "practices": [
    "bark|Phone Check",
    "leaves|Phone Outside the Bedroom",
@@ -4427,7 +4427,7 @@ const LC_TOPICS = [
   "self": {
    "first": [
     "Write down one question you carry. You don't have to answer it today.",
-    "Notice, without judging yourself, whether faith feels like a help to you right now, a weight, or both.",
+    "Notice, gently, whether faith feels like a help to you right now, a weight, or both.",
     "Keep the practices that still feel real to you, and give yourself room with the ones that don't, for now.",
     "Tell one person you trust what you're wondering about."
    ],
@@ -4761,7 +4761,7 @@ const LC_TOPICS = [
    ],
    "you": "Stepping back from something you have carried for years can feel strange, even sad. Your role is changing, not ending: from manager to coach, and then to someone they call for advice. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
   },
-  "faith": "Growing up includes learning to look after the body and life you've been given. Some teens find that prayer, a faith community, or a sense of being held helps them carry the routine on hard days. Others find that steadiness in family, friends, music, or quiet time. If faith is part of your life, it can be one steady place in the middle of appointments and refills. If it isn't, the same need points to whatever helps you feel grounded and not alone.",
+  "faith": "Growing up includes learning to look after the body and life you've been given. Some teens find that prayer, a faith community, or a sense of being held helps them carry the routine on hard days. Others find that steadiness in family, friends, music, or quiet time. If faith is part of your life, it can be one steady place in the middle of appointments and refills. If it isn't, the same need points to whatever helps you feel grounded and connected.",
   "practices": [
    "trunk|My Own Appointment",
    "trunk|Life Skill of the Month",
@@ -5315,7 +5315,7 @@ const LC_TOPICS = [
     "The hospital team that helps teens cope: child life specialists, social workers, psychologists, chaplains, and hospital teachers. Ask who is there for you.",
     "Staying connected in small ways: texts, video calls, a game online, a friend who visits.",
     "Keeping up with school in a way that fits your energy. Ask your school and your hospital what's possible.",
-    "Something that is yours: music, art, a show, a project, or a goal for after treatment.",
+    "Something that is yours: music, art, a book, a project, or a goal for after treatment.",
     "Rest without guilt. Healing takes energy."
    ],
    "tell": [
@@ -5507,7 +5507,7 @@ const LC_TOPICS = [
    ],
    "helps": [
     "A school counselor who knows your situation and can help with deadlines and stress.",
-    "Time that is yours: a club, a sport, a friend, a show, or rest.",
+    "Time that is yours: a club, a sport, a friend, a book, or rest.",
     "Other teens who get it. Young carer programs and sibling groups exist, online and in person.",
     "Knowing what to do in an emergency, and having adults you can call.",
     "Talking with your family about sharing the load, if that's possible."
@@ -5604,7 +5604,7 @@ const LC_TOPICS = [
    "first": [
     "Write down one question you carry about your body and your life, or about God, if that fits you. You don't have to answer it.",
     "Notice whether faith, or whatever grounds you, feels like a help right now, a weight, or both.",
-    "If someone's words about faith and your condition hurt you, tell an adult you trust. You don't have to carry that alone."
+    "If someone's words about faith and your condition hurt you, tell an adult you trust. Others can help you carry that."
    ],
    "helps": [
     "Saying what hurts in honest words. Many traditions have prayers of lament for exactly this, and plain honest words work too.",

@@ -458,7 +458,7 @@
       title: 'Send to The Grove',
       html: (why ? '<p>' + esc(why) + '</p>' : '') +
         (svg ? '<div class="ggx-qr" aria-label="QR code for The Grove">' + svg + '</div><p>Scan this with the phone or tablet that has The Grove. ' + who + ' answers travel inside the code, phone to phone.</p>' : '<p>Copy the link and open it on the phone or tablet that has The Grove.</p>') +
-        '<p class="ggx-small">Nothing is uploaded. The answers ride after the # in the link, the part a browser never sends to any server, and The Grove asks before adding them to anyone\'s tree.</p>',
+        '<p class="ggx-small">Everything stays private: the answers ride after the # in the link, the part a browser keeps to itself, and The Grove asks before adding them to anyone\'s tree.</p>',
       buttons: [{ t: 'Copy the Link', kind: svg ? 'line' : 'main', fn: function () {
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(function () { toast('Link copied.'); }, function () { toast('Copy did not work on this device.'); });
         else toast('Copy did not work on this device.');

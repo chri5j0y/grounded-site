@@ -17,7 +17,7 @@ const P = [
 { id:"gratitude-round", part:"roots", name:"Gratitude Round",
   text:"At dinner or bedtime, everyone names one thing they're thankful for today.",
   kid:"Everyone says one thing they're thankful for.",
-  steps:"Pick a time you're already together, like dinner or bedtime.|Go around once. Each person names one thing from today.|Small counts: a warm sock, a funny moment, a good sandwich.|No one has to explain. Just listen." },
+  steps:"Pick a time you're already together, like dinner or bedtime.|Go around once. Each person names one thing from today.|Small counts: a warm sock, a funny moment, a good sandwich.|Everyone is welcome as they are. Just listen." },
 { id:"quiet-minute", part:"roots", name:"One Quiet Minute",
   text:"Set a timer and sit in silence together for one minute. Then each person shares one sound they heard.",
   kid:"Be very quiet for one minute, then share a sound you heard.",
@@ -59,9 +59,9 @@ const P = [
 
 // ---------- Bark (Mind and feelings) ----------
 { id:"feelings-weather", part:"bark", name:"Feelings Weather Report",
-  text:"Everyone names their inside weather today: sunny, cloudy, rainy, or stormy. No fixing, just listening.",
+  text:"Everyone names their inside weather today: sunny, cloudy, rainy, or stormy. Just listening.",
   kid:"Say your inside weather: sunny, cloudy, rainy, or stormy.",
-  steps:"Go around once. Each person names their weather.|If someone says rainy or stormy, just say \"Thanks for telling us.\"|No fixing and no advice unless they ask." },
+  steps:"Go around once. Each person names their weather.|If someone says rainy or stormy, just say \"Thanks for telling us.\"|Just listen, and save advice for when they ask." },
 { id:"breathe-together", part:"bark", name:"Breathe Together",
   text:"Five slow breaths together, in through the nose and out like blowing on soup.",
   kid:"Take five slow breaths together, like blowing on hot soup.",
@@ -71,7 +71,7 @@ const P = [
   kid:"Draw a worry, put it in the jar, and talk about it.",
   steps:"Find a jar or box.|Everyone writes or draws a worry and drops it in.|Pull one out and talk about it together.|Close the lid. The rest can wait." },
 { id:"family-reset", part:"bark", name:"Family Reset",
-  text:"When things get loud, everyone pauses, takes three breaths, and starts again. No blame.",
+  text:"When things get loud, everyone pauses, takes three breaths, and starts again. Fresh start.",
   kid:"When it gets loud, stop, breathe three times, and start again.",
   steps:"Agree on a reset word together, like \"pause.\"|When anyone says it, everyone stops.|Three slow breaths.|Start again, kinder." },
 { id:"unplugged-hour", part:"bark", name:"Unplugged Hour",
@@ -82,7 +82,7 @@ const P = [
 // ---------- Branches (Relationships) ----------
 { id:"phones-down-dinner", part:"branches", name:"Phones-Down Dinner",
   text:"Eat one meal together with phones in another room.",
-  kid:"Eat together with no phones at the table.",
+  kid:"Eat together, with phones away from the table.",
   steps:"Choose the meal.|Phones go in another room, grown-ups too.|Ask one good question, like \"What made you laugh today?\"" },
 { id:"rose-and-thorn", part:"branches", name:"Rose and Thorn",
   text:"Each person shares the best part (rose) and the hardest part (thorn) of their day.",
@@ -127,7 +127,7 @@ const P = [
 { id:"look-forward", part:"fruit", name:"Something to Look Forward To",
   text:"Plan one small thing to look forward to this week, together.",
   kid:"Plan something fun to look forward to.",
-  steps:"Everyone suggests one small thing: a picnic, a movie, pancakes.|Choose one together.|Put it on the calendar where everyone can see it." },
+  steps:"Everyone suggests one small thing: a picnic, a board game, pancakes.|Choose one together.|Put it on the calendar where everyone can see it." },
 { id:"good-news-round", part:"fruit", name:"Good News Round",
   text:"Each person shares one good thing that happened this week.",
   kid:"Tell one good thing that happened this week.",
@@ -135,7 +135,7 @@ const P = [
 { id:"secret-kindness", part:"fruit", name:"Secret Kindness",
   text:"Each person does one secret kind thing for someone in the family.",
   kid:"Do a secret kind thing for someone in your family.",
-  steps:"Everyone picks someone.|Do one kind thing without telling: make their bed, leave a note, share a treat.|At the end of the week, guess who did what." },
+  steps:"Everyone picks someone.|Do one kind thing without telling: make their bed, leave a note, pick them a flower.|At the end of the week, guess who did what." },
 { id:"remember-together", part:"fruit", name:"Remember Together",
   text:"Look at old photos and tell the story of a good day.",
   kid:"Look at old pictures and tell a happy story.",
@@ -153,7 +153,7 @@ P.forEach(p => { const b = LIFE_T[p.id]; if (b) { p.life = b[0].slice(); if (b[1
 /* LIFE end */
 const FEATURED = ["gratitude-round", "early-night", "family-walk", "family-reset", "feelings-weather", "reach-out-together",
   "quiet-minute", "phones-down-dinner", "family-words", "rose-and-thorn", "look-forward", "remember-together"];
-const THEMES = ["Start where you are", "Rest and limits", "The body knows", "When you miss a day", "What you carry", "Don't wait on people",
+const THEMES = ["Start where you are", "Rest and limits", "The body knows", "When you miss a day", "What you carry", "Reach toward people",
   "Spirit, any way you come", "Practices that hold", "You get a say", "Love between us", "Hope that shows up", "Holding on and letting go"];
 return { practices: P, featured: FEATURED, themes: THEMES };
 })();

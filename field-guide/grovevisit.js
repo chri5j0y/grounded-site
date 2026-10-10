@@ -346,8 +346,9 @@ function vPlan(){
 const planPids = pd => pd.items.map(i => i.pid).concat(pd.youngest ? [pd.youngest] : [], pd.strength ? [pd.strength] : []).filter((x, i, a) => x && a.indexOf(x) === i);
 function vHome(){
   const w = stepW('home'), c = S.cur, CS = WW().visit.consentSend, SD = WW().visit.send;
-  let h = sayBlk(pick(w, 'say')) + `<div class="fw-blk"><h3>${esc(fill(WW().visit.print.title))}</h3><p class="fw-sub">What they saw together, in words, and their plan. No numbers anywhere.</p>
-    <div class="row"><button type="button" class="btn btn-gold" data-gva="print">Save or Print Their Page</button></div></div>`;
+  let h = sayBlk(pick(w, 'say')) + `<div class="fw-blk"><h3>${esc(fill(WW().visit.print.title))}</h3><p class="fw-sub">What they saw together, in words and light, their plan, and a code to bring it home to The Grove. Words only, every time.</p>
+    <div class="row"><button type="button" class="btn btn-gold" data-gva="print">Take-Home Sheet</button><button type="button" class="btn btn-line" data-gva="th" data-gvv="save">Save as PDF</button><button type="button" class="btn btn-line" data-gva="th" data-gvv="email">Send by Email</button><button type="button" class="btn btn-line" data-gva="th" data-gvv="text">Send by Text</button></div></div>`;
+  setTimeout(thWarm, 0);
   h += `<div class="fw-blk"><h3>${esc(SD.title)}</h3>${sayBlk([CS.say], 'Ask first')}
     <div class="fw-chips">${chip('send', 'yes', c.send === 'yes', CS.yes)}${chip('send', 'no', c.send === 'no', CS.no)}</div>`;
   if (c.send === 'yes'){
@@ -534,35 +535,71 @@ function vOpen(){
 }
 
 // ---------- printing (their page: words only, never a number) ----------
-function helpHtml(){
-  const h = S.cur && S.cur.hospice;
-  return `<h2>Help any time</h2>${h ? `<p><b>Your hospice, 24/7:</b> ${esc(h)}</p>` : ''}<p><b>Crisis:</b> Call or text 988, any time (US). In an emergency, call 911.</p><p><b>A vulnerable adult at risk:</b> MAARC 1-844-880-1574.</p>`;
+// The Take-Home Sheet (GWG BLD 782): the shared one-page sheet (GGPrint.takeHome), in words and light, the plan, Bring
+// It Home (the Send to The Grove link as a QR code with its code beside it), Meet The Grove, help, and Who We Are. When
+// the family said yes or was never asked, a code is made for the printed page the same way Send makes one (c.pcode),
+// sealed with only today's check-in and plan; it is never marked as sent. When they said "Not today," the page carries
+// no code.
+function thHelp(){
+  const h = S.cur && S.cur.hospice, li = [];
+  if (h) li.push('Your hospice, 24/7: ' + h);
+  li.push('Crisis: call or text 988, any time (US). In an emergency, call 911.', 'A vulnerable adult at risk: MAARC 1-844-880-1574.');
+  return {h: 'Help Any Time', li};
 }
-function printPage(){
-  const c = S.cur, r = rec(), PR = WW().visit.print, k = K(), pd = c.plan, fam = isFam();
+async function thCode(){
+  const c = S.cur; if (!c || !isFam() || c.send === 'no') return null;
+  if (c.code) return c.code;
+  if (!answered() && !c.plan.edges.length && !c.plan.items.length) return null;
+  if (!(window.crypto && crypto.subtle)) return null;
+  const sig = JSON.stringify(payload());
+  if (c.pcode && c.pcode.sig === sig) return c.pcode;
+  if (c.pcodeP && c.pcodeP.sig === sig) return c.pcodeP.p;
+  const p = (async () => { const code = newCode(), sealed = await seal(payload(), code); const k = {code, show: code.slice(0, 4) + '-' + code.slice(4), link: groveLink(sealed), sig}; if (S.cur === c) c.pcode = k; return k; })();
+  c.pcodeP = {sig, p};
+  return p;
+}
+function thWarm(){ try { if (window.GGPrint && GGPrint.warmTakeHome) GGPrint.warmTakeHome('grove'); thCode(); } catch (e) {} }
+async function thModel(){
+  const c = S.cur, r = rec(), PR = WW().visit.print, k = K(), pd = c.plan, fam = isFam(), SD = WW().visit.send;
   const L = levels(), by = lv => PARTS6.filter(p => L[p.key] === lv);
   const line = (lv, part) => Wk(GW('results.' + lv + '.' + part), gk());
-  let h = C.ph(fam ? 'For Your Family' : 'For Our Group') + `<p>${esc(r ? r.name : '')}, ${esc(nice(c.date))}</p><h1>${esc(fam ? fill(PR.title) : 'Our Group Check-in')}</h1><p>${esc(fill(PR.lead))}</p>`;
+  const m = {tree: 'grove', title: fam ? fill(PR.title) : 'Our Group Check-in', sub: [r ? r.name : '', nice(c.date)].filter(Boolean).join(', '), lead: fill(PR.lead), sec: [],
+    eyebrow: fam ? 'For Your Family' : 'For Our Group', foot: fill(PR.foot), file: (fam ? 'grove-family-take-home-' : 'grove-group-take-home-') + c.date + '.pdf', help: thHelp()};
   if (answered()){
-    const st = by('strength'), sd = by('steady'), ed = by('edge');
-    if (st.length) h += `<h2>Our Shared Strengths</h2>${st.map(p => `<p><b>${p.name}.</b> ${esc(line('strength', p.key) || p.name + ' is a Shared Strength.')}</p>`).join('')}`;
-    if (sd.length) h += `<h2>Steady</h2><p>${esc(list3(sd.map(p => p.name)))}.</p>`;
-    if (ed.length) h += `<h2>Our Growing Edges</h2>${ed.map(p => `<p><b>${p.name}.</b> ${esc(line('edge', p.key) || p.name + ' is where ' + k.we + ' wants to grow next.')}</p>`).join('')}`;
-    const t = talkList(); if (t.length) h += `<h2>Things to Talk About</h2><ul>${t.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
-    h += `<p><i>${esc(Wk(GW('results.oneShape'), gk()) || 'Every grove has its own shape.')}</i></p>`;
-  }
+    m.mode = 'words'; m.treeTitle = fam ? 'Our Grove Today' : 'Our Group Today';
+    m.words = {strong: 'Shared Strength', steady: 'Steady', edge: 'Growing Edge'};
+    m.treeKey = 'A Shared Strength glows full and warm. Steady glows softly. A Growing Edge is new green light, where ' + k.we + ' grows next.';
+    m.parts = PARTS6.map(p => ({key: p.key, part: p.name, name: p.sub, color: p.color, lv: L[p.key] === 'strength' ? 'strong' : L[p.key]}));
+    const st = by('strength'), ed = by('edge');
+    if (st.length) m.sec.push({h: 'Our Shared Strengths', p: st.map(p => p.name + '. ' + (line('strength', p.key) || p.name + ' is a Shared Strength.'))});
+    if (ed.length) m.sec.push({h: 'Our Growing Edges', p: ed.map(p => p.name + '. ' + (line('edge', p.key) || p.name + ' is where ' + k.we + ' wants to grow next.'))});
+    const t = talkList(); if (t.length) m.sec.push({h: 'Things to Talk About', li: t});
+  } else m.mode = 'none';
   if (fam && (pd.edges.length || pd.items.length)){
-    h += `<h2>${esc(k.plan)}</h2><p><b>Growing:</b> ${esc(pd.edges.map(e => PART[e].name).join(', '))}</p>`;
     const rows = pd.items.map(i => [prac(i.pid), i.anchor, '']).concat(pd.youngest ? [[prac(pd.youngest), '', "The Youngest's Choice"]] : [], pd.strength ? [[prac(pd.strength), '', 'Keeping a Shared Strength Going']] : []).filter(x => x[0]);
-    h += rows.map(([x, a, tag]) => { const y = pv(x); return `<div class="pr-step" style="border-left-color:${PART[x.part].color}"><h3>${esc(y.name)}${tag ? ' (' + esc(tag) + ')' : ''}</h3><p>${esc(y.text)}</p>${a ? `<p><b>When:</b> ${esc(a)}</p>` : ''}${kidsOn() && y.kid ? `<p><i>For children: ${esc(y.kid)}</i></p>` : ''}</div>`; }).join('');
-    if (pd.own) h += `<p><b>Our own practice:</b> ${esc(pd.own)}</p>`;
-    if (pd.words) h += `<p><i>${esc(pd.words)}</i></p>`;
-    h += `<p>${esc(GW('plan.rhythm', 'Twelve weeks together: a quick check-in at weeks 4 and 8, and a full check-in at week 12.'))}</p>`;
+    m.sec.push({h: k.plan, p: pd.edges.length ? ['Growing: ' + pd.edges.map(e => PART[e].name).join(', ') + '.'] : [],
+      items: rows.map(([x, a, tag]) => { const y = pv(x); return {t: y.name, tag: tag || PART[x.part].name, color: PART[x.part].color, how: y.text + (kidsOn() && y.kid ? ' For children: ' + y.kid : ''), when: a ? 'When: ' + a : ''}; })});
+    const more = [];
+    if (pd.own) more.push('Our own practice: ' + pd.own);
+    if (pd.words) more.push(pd.words);
+    more.push(GW('plan.rhythm', 'Twelve weeks together: a quick check-in at weeks 4 and 8, and a full check-in at week 12.'));
+    m.sec.push({h: '', p: more});
   }
-  if (c.code){ const SD = WW().visit.send; h += `<h2>${esc(SD.title)}</h2><div class="ht-qr" data-url="${esc(c.code.link)}" data-label="Scan to open The Grove">${qrSvg(c.code.link)}</div><p><b>Your code:</b> ${esc(c.code.show)}</p><ol>${SD.steps.map(x => `<li>${esc(fill(x))}</li>`).join('')}</ol>`; }
-  if (c.next) h += `<p><b>Next visit:</b> ${esc(nice(c.next))}</p>`;
-  h += helpHtml() + `<div class="pr-foot">${esc(fill(PR.foot))}</div>`;
-  C.sheet(h, fam ? fill(PR.title) : 'Our Group Check-in', {file: fam ? 'grove-family-checkin' : 'grove-group-checkin', date: c.date});
+  if (c.next) m.after = ['Next visit: ' + nice(c.next)];
+  m.close = answered() ? Wk(GW('results.oneShape'), gk()) || 'Every grove has its own shape.' : '';
+  const code = await thCode();
+  if (code) m.home = {url: code.link, code: code.show, how: SD.steps.map(x => fill(x)), note: 'The code opens only on your own device. It carries today\'s check-in and plan, in words.'};
+  return m;
+}
+function printPage(){
+  if (!window.GGPrint || !GGPrint.takeHome) return toast('The take-home sheet could not load. Check the connection.');
+  GGPrint.takeHome(thModel());
+}
+async function thSend(how){
+  if (!window.GGPrint || !GGPrint.sendTakeHome) return toast('The take-home sheet could not load. Check the connection.');
+  const m = await thModel(), f = m.file, r = await GGPrint.sendTakeHome(m, how);
+  API.lastSend = r;
+  if (r === 'saved') toast('Saved as ' + f + '.'); else if (r === 'opened') toast('Saved as ' + f + '. Attach it to the ' + (how === 'email' ? 'email' : 'text') + ' that just opened.');
 }
 const qrSvg = t => window.GGQR && GGQR.svg ? GGQR.svg(t, {label: 'QR code for The Grove'}) : '';
 
@@ -585,12 +622,13 @@ async function seal(obj, code){
   const ct = new Uint8Array(await crypto.subtle.encrypt({name: 'AES-GCM', iv}, key, TE.encode(JSON.stringify(obj))));
   return b64u(salt) + '.' + b64u(iv) + '.' + b64u(ct);
 }
+function newCode(){ const r = crypto.getRandomValues(new Uint8Array(8)); let code = ''; for (let i = 0; i < 8; i++) code += ALPHA[r[i] % ALPHA.length]; return code; }
+const groveLink = sealed => new URL('../grove/', location.href).href.replace(/[?#].*$/, '') + '#gv=' + sealed;
 async function makeCode(){
   const c = S.cur; if (!c || c.send !== 'yes') return;
   if (!(window.crypto && crypto.subtle)){ toast('This browser cannot lock the code. Print their page instead.'); return; }
-  const r = crypto.getRandomValues(new Uint8Array(8)); let code = ''; for (let i = 0; i < 8; i++) code += ALPHA[r[i] % ALPHA.length];
-  const sealed = await seal(payload(), code);
-  const link = new URL('../grove/', location.href).href.replace(/[?#].*$/, '') + '#gv=' + sealed;
+  const code = newCode(), sealed = await seal(payload(), code);
+  const link = groveLink(sealed);
   c.code = {code, show: code.slice(0, 4) + '-' + code.slice(4), link, text: '[GGGV1]' + sealed + '[/GGGV1]'};
   API.lastCode = c.code; rerender(true); toast('The code is ready.');
 }
@@ -727,6 +765,7 @@ function act(a, v, el){
     case 'youngest': c.plan.youngest = c.plan.youngest === v ? '' : v; rerender(true); return;
     case 'strength': c.plan.strength = c.plan.strength === v ? '' : v; rerender(true); return;
     case 'print': printPage(); return;
+    case 'th': thSend(v); return;
     case 'send': c.send = v; if (v !== 'yes') c.code = null; rerender(true); return;
     case 'mkcode': makeCode(); return;
     case 'copylink': if (c.code) copyText(c.code.link); return;

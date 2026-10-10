@@ -19,6 +19,13 @@
    theirs are letters and numbers only), and opens #hw=<invite>&hc=<code>&ht=<time>. It is taken once (its salt is
    remembered in gg_hw_once), only within 15 minutes of being made, never saved as the device's invite, and taken out
    of the address bar right away. A link without hc asks for the code, exactly as before.
+   After the Vows (GWG BLD 782): a lighter Heartwood for couples Chris and Kayti marry (weddings, elopements, vow
+   renewals) and married couples. Its invite seals 33 bytes instead of 32: a first byte of 1 (After the Vows), then the
+   same Heartwood key, so the mode rides inside the lock and a changed link no longer opens. The link also ends with
+   &atv=1, a plain hint so the code page can say After the Vows before the code is typed; the mode itself always comes
+   from inside the lock. The mode is kept beside the key (IndexedDB slot 'mode'), and app.js reads window.HW_MODE
+   ('atv' or 'full'; '' in the sample). An invite from before (32 bytes) is the full Heartwood, as always, and a new
+   invite in a link always asks for its code, so a couple can move between the two.
    Then app.js loads, reading the same globals (BTV_Q, GM_FAITH, GM_RESULTS, GM_WB, GM_MONEY, GM_PR, GM_AFTER,
    GG_LEARN_GM, GM_TOGETHER); window.HW_SAMPLE is true in the sample. */
 (function () {
@@ -41,6 +48,7 @@
   function inviteOf(s) { var m = RX.exec(String(s || '')); return m ? m[1] : ''; }
   var RXC = /(?:^|[#&])hc=([A-Z0-9]{12,40})(?:&|$)/, RXT = /(?:^|[#&])ht=(\d{12,15})(?:&|$)/, ONCE = 'gg_hw_once', FRESH = 15 * 60 * 1000;
   var STAFF = null; // {inv, hc, ht}: an Open Heartwood link from the Field Guide, taken once
+  var INVM = 'gg_hw_invm', RXA = /(?:^|[#&])atv=1(?:&|$)/; // the After the Vows hint in an invite link (wording only)
 
   /* ---------- the invite in the link ---------- */
   function takeInvite() {
@@ -48,13 +56,14 @@
     if (!inv && !hc && !ht) return '';
     // Open Heartwood (Staff and Founders): kept only for this visit, never as this device's invite.
     if (inv && hc && ht) STAFF = { inv: inv, hc: hc[1], ht: ht[1] };
-    else if (inv) { try { localStorage.setItem(INV, inv); } catch (e) {} }
+    else if (inv) { try { localStorage.setItem(INV, inv); if (RXA.test(h)) localStorage.setItem(INVM, 'atv'); else localStorage.removeItem(INVM); } catch (e) {} }
     // Take the invite (and any Open Heartwood code) out of the address; anything else after the # (a partner's card) stays for app.js.
-    var rest = h.replace(/^#/, '').split('&').filter(function (p) { return p && p.indexOf('hw=') !== 0 && p.indexOf('hc=') !== 0 && p.indexOf('ht=') !== 0; }).join('&');
+    var rest = h.replace(/^#/, '').split('&').filter(function (p) { return p && p.indexOf('hw=') !== 0 && p.indexOf('hc=') !== 0 && p.indexOf('ht=') !== 0 && p !== 'atv=1'; }).join('&');
     try { history.replaceState(null, '', location.pathname + location.search + (rest ? '#' + rest : '')); } catch (e) {}
     return STAFF ? '' : inv;
   }
   function savedInvite() { try { return localStorage.getItem(INV) || ''; } catch (e) { return ''; } }
+  function hintAtv() { try { return localStorage.getItem(INVM) === 'atv'; } catch (e) { return false; } }
 
   /* ---------- the key on this device (IndexedDB, non-extractable) ---------- */
   function db() {
@@ -75,10 +84,12 @@
       });
     });
   }
-  var MEMKEY = null;
+  var MEMKEY = null, MEMMODE = '';
   function getKey() { if (MEMKEY) return Promise.resolve(MEMKEY); return idb('readonly', function (s) { return s.get(SLOT); }).then(function (k) { return k && k.type === 'secret' ? k : null; }); }
-  function putKey(k) { MEMKEY = k; return idb('readwrite', function (s) { return s.put(k, SLOT); }); }
-  function dropKey() { MEMKEY = null; return idb('readwrite', function (s) { return s.delete(SLOT); }); }
+  // The mode kept with the key: 'atv' for After the Vows, anything else is the full Heartwood.
+  function getMode() { if (MEMKEY) return Promise.resolve(MEMMODE); return idb('readonly', function (s) { return s.get('mode'); }).then(function (m) { return m === 'atv' ? 'atv' : 'full'; }); }
+  function putKey(k, mode) { MEMKEY = k; MEMMODE = mode === 'atv' ? 'atv' : 'full'; return idb('readwrite', function (s) { s.put(MEMMODE, 'mode'); return s.put(k, SLOT); }); }
+  function dropKey() { MEMKEY = null; MEMMODE = ''; return idb('readwrite', function (s) { s.delete('mode'); return s.delete(SLOT); }); }
 
   /* ---------- opening ---------- */
   function unwrap(inv, code, pass) {
@@ -87,7 +98,12 @@
     return subtle.importKey('raw', enc.encode(pass || normCode(code)), 'PBKDF2', false, ['deriveKey'])
       .then(function (base) { return subtle.deriveKey({ name: 'PBKDF2', salt: salt, iterations: ROUNDS, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']); })
       .then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: iv }, k, ct); })
-      .then(function (raw) { if (raw.byteLength !== 32) throw new Error('invite'); return subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['decrypt']); });
+      .then(function (raw) {
+        // 32 bytes: the full Heartwood key. 33 bytes with a first byte of 1: After the Vows, then the key (GWG BLD 782).
+        var u = new Uint8Array(raw), mode = 'full';
+        if (u.length === 33 && u[0] === 1) { mode = 'atv'; u = u.slice(1); } else if (u.length !== 32) throw new Error('invite');
+        return subtle.importKey('raw', u, { name: 'AES-GCM' }, false, ['decrypt']).then(function (k) { return { key: k, mode: mode }; });
+      });
   }
   // lib-heartwood.js is read as data (never run), fresh from the site each time so a new upload shows right away.
   function getLib() {
@@ -110,15 +126,17 @@
     var age = Date.now() - (+o.ht), salt = String(o.inv).split('.')[0], used = onceList();
     if (!(age >= -120000 && age <= FRESH) || used.indexOf(salt) >= 0) return Promise.resolve(null);
     try { localStorage.setItem(ONCE, JSON.stringify(used.concat([salt]).slice(-30))); } catch (e) {}
-    return unwrap(o.inv, '', 'open:' + o.hc + ':' + o.ht).then(function (key) {
-      return openLib(key, lib).then(function (data) { return putKey(key).then(function () { return data; }); });
+    return unwrap(o.inv, '', 'open:' + o.hc + ':' + o.ht).then(function (u) {
+      return openLib(u.key, lib).then(function (data) { return putKey(u.key, u.mode).then(function () { return { data: data, mode: u.mode }; }); });
     }).then(null, function () { return null; });
   }
 
   /* ---------- starting the app ---------- */
   var started = false;
-  function start(data, sample) {
+  function start(data, sample, mode) {
     if (started) return; started = true;
+    // After the Vows (GWG BLD 782): 'atv' shows only the After the Vows parts; 'full' is everything; '' in the sample.
+    window.HW_MODE = sample ? '' : (mode === 'atv' ? 'atv' : 'full');
     GLOBALS.forEach(function (g) { window[g] = data && data[g] ? data[g] : undefined; });
     // Locked clips (GWG BLD 781): the audio key sealed at data.audio, for Heartwood's Learn videos (app.js). Never in the sample.
     window.HW_AUDIO = !sample && data && data.audio && typeof data.audio === 'object' ? data.audio : undefined;
@@ -149,12 +167,14 @@
   function gate(err) {
     note('');
     var el = $('gm-app'); if (!el) return;
-    el.innerHTML = '<div class="ff-card gold hw-gate"><h2>Open Heartwood</h2>' +
+    var atv = hintAtv(), name = atv ? 'After the Vows' : 'Heartwood';
+    if (atv && window.HWChrome) window.HWChrome('atv');
+    el.innerHTML = '<div class="ff-card gold hw-gate"><h2>Open ' + name + '</h2>' +
       '<p>Type the code Chris and Kayti gave you. Each of you opens this same link on your own phone, and types the same code.</p>' +
-      '<form id="hw-form" novalidate><label class="ff-f"><span class="l">Your Heartwood code</span><input id="hw-code" name="hw-code" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="24" aria-describedby="hw-err"></label>' +
+      '<form id="hw-form" novalidate><label class="ff-f"><span class="l">Your ' + name + ' code</span><input id="hw-code" name="hw-code" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="24" aria-describedby="hw-err"></label>' +
       '<p class="hw-err" id="hw-err" role="alert">' + esc(err || '') + '</p>' +
-      '<div class="ff-row"><button type="submit" class="btn btn-primary" id="hw-go">Open Heartwood</button><button type="button" class="btn btn-secondary ff-sm" data-hw="sample">See the Sample</button></div></form>' +
-      '<p class="ff-private">' + LOCK + '<span>Your code opens Heartwood on this device only. Grow With Grounded never sees your answers, and nothing is sent anywhere.</span></p></div>';
+      '<div class="ff-row"><button type="submit" class="btn btn-primary" id="hw-go">Open ' + name + '</button><button type="button" class="btn btn-secondary ff-sm" data-hw="sample">See the Sample</button></div></form>' +
+      '<p class="ff-private">' + LOCK + '<span>Your code opens ' + name + ' on this device only. Your answers stay with the two of you, right here on this device.</span></p></div>';
     var f = $('hw-code'); if (f) setTimeout(function () { try { f.focus(); } catch (e) {} }, 30);
   }
   var busy = false;
@@ -162,9 +182,9 @@
     if (busy) return; var f = $('hw-code'), err = $('hw-err'), go = $('hw-go'), code = f ? f.value : '';
     if (normCode(code).length < 6) { if (err) err.textContent = 'Type the whole code, letters and numbers. Spaces and dashes do not matter.'; return; }
     busy = true; if (go) { go.disabled = true; go.textContent = 'Opening...'; } if (err) err.textContent = '';
-    var done = function (m) { busy = false; if (go) { go.disabled = false; go.textContent = 'Open Heartwood'; } if (m && err) err.textContent = m; if (m && f) { f.focus(); f.select(); } };
-    unwrap(savedInvite(), code).then(function (key) {
-      return openLib(key, LIBNOW).then(function (data) { return putKey(key).then(function () { done(''); start(data, false); }); },
+    var done = function (m) { busy = false; if (go) { go.disabled = false; go.textContent = 'Open ' + (hintAtv() ? 'After the Vows' : 'Heartwood'); } if (m && err) err.textContent = m; if (m && f) { f.focus(); f.select(); } };
+    unwrap(savedInvite(), code).then(function (u) {
+      return openLib(u.key, LIBNOW).then(function (data) { return putKey(u.key, u.mode).then(function () { done(''); start(data, false, u.mode); }); },
         function () { done('This invite is from an earlier Heartwood. Ask Chris and Kayti for a new invite link and code.'); });
     }, function () { done('That code does not open this invite. Check the code from Chris and Kayti, and try again.'); });
   }
@@ -177,9 +197,30 @@
     else if (a === 'gate' && started) { try { sessionStorage.setItem('gg-hw-gate', '1'); } catch (er) {} location.reload(); }
   });
 
+  /* ---------- After the Vows on screen (GWG BLD 782) ----------
+     The page title, the hero, the tabs (Before the Vows hides), and the cards below the app, for an After the Vows
+     invite. Called by the code page (from the link's hint) and by app.js (from the mode inside the lock), with the
+     wording from GM_AFTER.atv when the content is open. */
+  window.HWChrome = function (mode, av) {
+    if (mode !== 'atv') return;
+    av = av && typeof av === 'object' ? av : {};
+    var t = function (k, d) { return typeof av[k] === 'string' && av[k] ? av[k] : d; };
+    var title = t('title', 'After the Vows'), q = function (s) { return document.querySelector(s); };
+    document.title = title + ' | Grow With Grounded';
+    var h = $('gm-title'); if (h) h.textContent = title;
+    var eb = q('.gm-eb'); if (eb) eb.textContent = t('eyebrow', 'Heartwood');
+    var sub = q('.gm-sub'); if (sub) sub.textContent = t('sub', 'Your private app for your first year together: Practices for Two, check-ins for two, and short videos to watch side by side.');
+    var way = q('.gm-way'); if (way) way.innerHTML = '<a href="/weddings.html">' + esc(t('way', 'After the Vows comes with every wedding, elopement, and vow renewal with Chris and Kayti.')) + '</a>';
+    var tabs = $('gm-tabs');
+    if (tabs) { tabs.setAttribute('aria-label', title); var bv = tabs.querySelector('[data-tab="before"]'); if (bv) bv.hidden = true; }
+    var app = $('gm-app'); if (app) app.setAttribute('aria-label', title);
+    var more = $('hw-more'); if (more) more.innerHTML = 'Chris and Kayti offer ceremonies and The Grounded Marriage for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello to Chris and Kayti</a>.';
+    var cl = $('hw-clear-p'); if (cl) cl.textContent = 'Done, or using a shared device? Clear Everything removes both partners’ check-ins, any card, and the key to After the Vows from this device.';
+  };
+
   window.HWOpen = {
     // Clear Everything: the key and the invite leave this device.
-    forget: function () { try { localStorage.removeItem(INV); } catch (e) {} return dropKey(); },
+    forget: function () { try { localStorage.removeItem(INV); localStorage.removeItem(INVM); } catch (e) {} return dropKey(); },
     sample: function () { return !!window.HW_SAMPLE; },
     normCode: normCode, inviteOf: inviteOf
   };
@@ -200,11 +241,11 @@
       if (!sealed(lib)) return sample();
       var so = STAFF; STAFF = null;
       return (so ? staffOpen(so, lib) : Promise.resolve(null)).then(function (sd) {
-        if (sd) return start(sd, false);
+        if (sd) return start(sd.data, false, sd.mode);
         if (so) WHY = 'That Open Heartwood link was already used or is more than 15 minutes old. Open Heartwood again from the Field Guide.';
         return getKey().then(function (key) {
         // A new invite in the link always asks for its code, so a couple can move to a fresh Heartwood.
-        if (key && !fresh) return openLib(key, lib).then(function (data) { start(data, false); }, function () {
+        if (key && !fresh) return openLib(key, lib).then(function (data) { return getMode().then(function (m) { start(data, false, m); }); }, function () {
           return dropKey().then(function () { if (savedInvite()) { WHY = 'Heartwood has a new lock. Type your code again, or ask Chris and Kayti for a new invite.'; gate(WHY); WHY = ''; } else { WHY = 'Heartwood has a new lock. Ask Chris and Kayti for a new invite link and code.'; sample(); } });
         });
         if (savedInvite() && (fresh || wantGate || !key)) return gate(WHY);

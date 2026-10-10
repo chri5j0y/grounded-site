@@ -1438,7 +1438,7 @@
 "NA-004",
 "NA-005"
 ],
-"practice:Quiet With No Agenda": [
+"practice:Open Quiet": [
 "CM-005",
 "CM-008",
 "CM-009"
@@ -1483,7 +1483,7 @@
 "CM-008",
 "CM-009"
 ],
-"practice:True No Matter What": [
+"practice:Always True": [
 "CM-005",
 "CM-008",
 "CM-009"
@@ -1715,7 +1715,7 @@
 "CP-003",
 "CP-011"
 ],
-"practice:Phone-Free Time": [
+"practice:Unplugged Time": [
 "CP-005",
 "CP-009",
 "PS-018"
@@ -1946,7 +1946,7 @@
 "practice:My Body Tree": [
 "PS-009"
 ],
-"practice:My No Plan": [
+"practice:My Ready Answer": [
 "PS-009"
 ],
 "practice:Three Good Things": [
@@ -2797,7 +2797,7 @@
 "practice:Breath Prayer": "Breath Prayer",
 "practice:Sit Spot": "Sit Spot",
 "practice:Prayer": "Prayer",
-"practice:Quiet With No Agenda": "Quiet With No Agenda",
+"practice:Open Quiet": "Open Quiet",
 "practice:Examen": "Examen",
 "practice:Awe Walk": "Awe Walk",
 "practice:Lament": "Lament",
@@ -2806,7 +2806,7 @@
 "practice:Forgiveness Reflection": "Forgiveness Reflection",
 "practice:Wise Company": "Wise Company",
 "practice:Peaceful Place": "Peaceful Place",
-"practice:True No Matter What": "True No Matter What",
+"practice:Always True": "Always True",
 "practice:Write a Blessing": "Write a Blessing",
 "practice:Carry a Question": "Carry a Question",
 "practice:Sunrise or Sunset": "Sunrise or Sunset",
@@ -2854,7 +2854,7 @@
 "practice:Peaceful Music": "Peaceful Music",
 "practice:One Reach-Out a Day": "One Reach-Out a Day",
 "practice:Active Listening": "Active Listening",
-"practice:Phone-Free Time": "Phone-Free Time",
+"practice:Unplugged Time": "Unplugged Time",
 "practice:Ask for Help": "Ask for Help",
 "practice:Real Time Together": "Real Time Together",
 "practice:Gratitude Letter": "Gratitude Letter",
@@ -2901,7 +2901,7 @@
 "practice:Grow or Gather": "Grow or Gather",
 "practice:Feed Someone": "Feed Someone",
 "practice:My Body Tree": "My Body Tree",
-"practice:My No Plan": "My No Plan",
+"practice:My Ready Answer": "My Ready Answer",
 "practice:Three Good Things": "Three Good Things",
 "practice:Something to Look Forward To": "Something to Look Forward To",
 "practice:Capture the Moment": "Capture the Moment",

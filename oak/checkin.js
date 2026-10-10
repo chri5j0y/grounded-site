@@ -81,7 +81,7 @@ const Q = {
       tip: 'Take the wound seriously and do not explain it away. If a person or group is still causing harm, help them get safe.',
       why: 'Religious hurt is common and painful. It matters here, whatever you believe now.' },
     { t: 'Carried guilt or shame that felt heavy on your spirit?', r: 1,
-      tip: 'Do not rush to reassure. Ask what it is about, if they want to say. Offer their own tradition\'s ways of release, or a faith leader they trust.',
+      tip: 'Listen first, and reassure later. Ask what it is about, if they want to say. Offer their own tradition\'s ways of release, or a faith leader they trust.',
       why: 'Guilt and shame can choke the roots. They can also be set down, with help.' }
   ],
   trunk: [
@@ -104,7 +104,7 @@ const Q = {
       tip: 'Invite a little life review if there is time. Ask which chapter they are in now.',
       why: 'When the story hangs together, hard chapters become part of a whole.' },
     { t: 'Felt empty or adrift, without a sense of purpose?', r: 1,
-      tip: 'Do not hurry to hand them a purpose. Ask when they last felt it, and what has changed.',
+      tip: 'Let them find their own purpose, at their own pace. Ask when they last felt it, and what has changed.',
       why: 'Feeling adrift is a sign the trunk needs tending. It is often a season, not forever.' },
     { t: 'Carried something you did, saw, or couldn\'t prevent that goes against your values?', r: 1,
       tip: 'This can be moral injury. Listen without judging. Their own faith leader, a chaplain, or a counselor can help them carry it.',
@@ -114,7 +114,7 @@ const Q = {
     { t: 'Been kind to yourself when you struggled?',
       tip: 'Ask how they would talk to a friend in the same spot. Then how they talk to themselves.',
       why: 'Self-kindness helps you bounce back. It is a skill, and it can grow.' },
-    { t: 'Remembered that others struggle too, and you\'re not alone in it?',
+    { t: 'Remembered that others struggle too, and that you\'re in good company?',
       tip: 'Normalize gently, without shrinking their pain.',
       why: 'Knowing others struggle too softens shame and isolation.' },
     { t: 'Been able to name a strong feeling and ride it out?',
@@ -127,7 +127,7 @@ const Q = {
       tip: 'Ask when they last felt fully there. It is often a clue to what restores them.',
       why: 'Presence gives the mind a rest from replaying and worrying.' },
     { t: 'Been hard on yourself, with a harsh inner voice?', r: 1,
-      tip: 'Ask what the voice says. Do not argue with it. Ask whose voice it sounds like.',
+      tip: 'Ask what the voice says, and listen calmly. Ask whose voice it sounds like.',
       why: 'A harsh inner voice wears down the bark that protects you.' },
     { t: 'Gotten stuck replaying problems over and over?', r: 1,
       tip: 'Ask what they replay most. Offer one small way to step out of the loop, like a walk or a written list.',
@@ -209,7 +209,7 @@ const Q = {
       why: 'Joy is fruit. Even small moments of it feed the whole tree.' },
     { t: 'Felt that things will never get better?', r: 1, flag: 'hope',
       tip: 'Take this seriously. Ask gently how long they have felt this way, and listen for thoughts of not wanting to be alive. The safety step comes next.',
-      why: 'When hope runs low, you deserve support. You don\'t have to carry it alone.' },
+      why: 'When hope runs low, you deserve support. Others can help you carry it.' },
     { t: 'Felt like you had nothing to look forward to?', r: 1,
       tip: 'Help them find one small thing in the next few days, together.',
       why: 'Having nothing to look forward to drains hope. Small things count.' }
@@ -241,7 +241,7 @@ const STAFF = {
       tip: 'Listen. Dryness is common in helping work and is not a failure.',
       why: 'Spiritual dryness is a sign your roots need water, not that you are failing.' },
     { t: 'Felt your faith or spirit strained by what you have seen at work?', r: 1,
-      tip: 'Do not defend or explain. Ask what they saw that stays with them.',
+      tip: 'Listen, and let it stand. Ask what they saw that stays with them.',
       why: 'What you witness can shake your spirit. It deserves attention.' }
   ],
   trunk: [
@@ -372,7 +372,7 @@ const STAFF = {
       why: 'Wanting to leave because it is too much is a sign you need more support.' },
     { t: 'Felt that things will never get better at work?', r: 1, flag: 'hope',
       tip: 'Take this seriously. Ask how it spills into the rest of life, and listen for hopelessness beyond work.',
-      why: 'When hope runs low, you deserve support. You don\'t have to carry it alone.' }
+      why: 'When hope runs low, you deserve support. Others can help you carry it.' }
   ]
 };
 
@@ -384,7 +384,7 @@ const FLAGS = {
     note: 'You said you have felt lonely often. That is worth tending. Reaching out to one person this week, or calling 988 if it feels heavy, can help.',
     guide: 'They named loneliness. Talk together about one person they could reach toward, and consider a referral to grief or community support.' },
   hope: { on: ['often', 'always'], calm: ['always'], title: 'Losing hope',
-    note: 'You said things have felt like they will never get better. You don\'t have to carry that alone. Call or text 988 any time to talk with someone.',
+    note: 'You said things have felt like they will never get better. You can share that weight. Call or text 988 any time to talk with someone.',
     guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive.' },
   home: { on: ['rarely', 'sometimes', 'unsure'], calm: ['rarely'], title: 'Safety at home',
     note: 'You said you haven\'t always felt safe with the people you live with. You deserve to be safe. The National Domestic Violence Hotline is free and private: 1-800-799-7233, or text START to 88788. In danger now, call 911.',
@@ -413,7 +413,7 @@ const SAFETY = {
   yes: 'Thank you for telling me. You matter, and this can get better with help. Please reach out now. Someone will listen, any time.',
   burden: 'You matter to people, even when it is hard to see. Feeling like a burden is a sign to reach out, not a fact about you.',
   means: 'If there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.',
-  title: 'You matter, and you don\'t have to carry this alone.',
+  title: 'You matter, and others can help you carry this.',
   intro: 'If you\'re thinking about suicide or feel unsafe, reach out now. Someone will listen.',
   // Oak's help lines, in the order shown. tel and sms are dialable; smsBody is the
   // word to text. first: 'home' moves a line to the top when the home flag shows.

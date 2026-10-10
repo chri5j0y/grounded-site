@@ -236,8 +236,8 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "Prayer doesn't have to be polite.",
-"say": "Prayer doesn't have to be polite. Psalm 13 asks God, how long will you forget me? Psalm 22 cries out, why have you forsaken me? These are prayers too. They are called lament, and they were kept for people who feel exactly like you.",
+"h": "Prayer can be honest, even raw.",
+"say": "Prayer can be honest, even raw. Psalm 13 asks God, how long will you forget me? Psalm 22 cries out, why have you forsaken me? These are prayers too. They are called lament, and they were kept for people who feel exactly like you.",
 "sub": "Psalm 13. Psalm 22."
 },
 {
@@ -436,7 +436,7 @@ window.GG_LEARN_GUIDES.willow = {
 {
 "k": "big",
 "h": "What would coming back look like for you?",
-"say": "Take a moment with this question. What would coming back look like for you? A prayer, a priest, a hymn, a quiet word with God? There is no wrong answer.",
+"say": "Take a moment with this question. What would coming back look like for you? A prayer, a priest, a hymn, a quiet word with God? Every answer is welcome.",
 "beats": [
 "Take a moment with this question.",
 "What would coming back look like for you?",
@@ -444,7 +444,7 @@ window.GG_LEARN_GUIDES.willow = {
 "t": "A prayer, a priest, a hymn, a quiet word with God?",
 "w": 12
 },
-"There is no wrong answer."
+"Every answer is welcome."
 ]
 },
 {
@@ -523,7 +523,7 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "big",
 "h": "Make the return easy.",
 "say": "Make the return easy. Coming back isn't a test to pass, and even a gentle I told you so can close a door that took years to open. Welcome them the way you would want to be welcomed.",
-"sub": "Open arms, no tests."
+"sub": "Open arms, easy welcome."
 },
 {
 "k": "story",
@@ -584,7 +584,7 @@ window.GG_LEARN_GUIDES.willow = {
 "eyebrow": "When Life Changes",
 "h": "Afraid of What Comes After",
 "sub": "For You",
-"say": "If you are afraid of what comes after death, of judgment, or of nothing at all, this is for you. These are some of the oldest fears people carry, and you don't have to carry them alone."
+"say": "If you are afraid of what comes after death, of judgment, or of nothing at all, this is for you. These are some of the oldest fears people carry, and others can help you carry them."
 },
 {
 "k": "big",
@@ -655,9 +655,9 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "You don't have to face this alone.",
+"h": "Others can face this with you.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Tell someone what you are afraid of, a chaplain, your faith leader, or someone you love. You don't have to face this alone. The full guide has more."
+"say": "Tell someone what you are afraid of, a chaplain, your faith leader, or someone you love. Others can face this with you. The full guide has more."
 }
 ]
 },
@@ -1749,9 +1749,9 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "You don't have to solve it alone.",
+"h": "Others can help you solve it.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to solve it alone. Ask the hospice social worker or chaplain for a family meeting. The full guide has more."
+"say": "Others can help you solve it. Ask the hospice social worker or chaplain for a family meeting. The full guide has more."
 }
 ]
 }
@@ -1839,7 +1839,7 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "It's not too late to say it.",
+"h": "There's still time to say it.",
 "sub": "The full guide has more, whenever you want it.",
 "say": "A letter, a call, a recorded message. It is not too late to say it. A chaplain can help you find the words. The full guide has more."
 }
@@ -2490,7 +2490,7 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "words",
-"h": "Ask. Don't correct.",
+"h": "Ask, and go gently.",
 "items": [
 "Who's here?",
 "What are they saying?",
@@ -2977,11 +2977,11 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "words",
 "h": "Words for the grown-up",
 "items": [
-"You don't have to have all the answers.",
+"Your presence matters more than answers.",
 "Short and honest is enough.",
 "You can say, I don't know."
 ],
-"say": "Here are words for the grown-up. You don't have to have all the answers. Short and honest is enough. You can say, I don't know."
+"say": "Here are words for the grown-up. Your presence matters more than answers. Short and honest is enough. You can say, I don't know."
 },
 {
 "k": "points",
@@ -3180,9 +3180,9 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "There is no rush.",
-"say": "There is no rush. Nothing has to happen right away. You can take all the time you need.",
-"sub": "Nothing has to happen right away."
+"h": "Take your time.",
+"say": "Take your time. Nothing has to happen right away. You can take all the time you need.",
+"sub": "Everything can wait a little while."
 },
 {
 "k": "breathe",
@@ -3260,18 +3260,18 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "There is no rush.",
-"say": "Help the family know there is no rush. Nothing has to happen right away. The hour is theirs."
+"h": "Take your time.",
+"say": "Help the family know they can take their time. Nothing has to happen right away. The hour is theirs."
 },
 {
 "k": "words",
 "h": "Words for the hour",
 "items": [
 "Take all the time you need.",
-"There's no rush.",
+"Take your time.",
 "Would you like to sit with her?"
 ],
-"say": "Here are words for the hour. Take all the time you need. There's no rush. Would you like to sit with her?"
+"say": "Here are words for the hour. Take all the time you need. Take your time. Would you like to sit with her?"
 },
 {
 "k": "points",

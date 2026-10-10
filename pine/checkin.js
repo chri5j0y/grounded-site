@@ -163,7 +163,7 @@ const Q = {
       why: 'Peace deep down helps you stay steady when school, people, and plans get loud.',
       plain: { t: 'Felt peace deep down, even when life was busy or hard?' } },
     { t: 'Felt connected to God, the Sacred, or something larger than yourself, in your own way, like when you pray, worship, sit quietly, or spend time outside?',
-      tip: 'Ask what "in your own way" looks like for them, and let them use their own words. Share a moment of your own if it fits. Never push.',
+      tip: 'Ask what "in your own way" looks like for them, and let them use their own words. Share a moment of your own if it fits. Go at their pace.',
       why: 'For many teens, feeling a personal connection to the sacred goes with lighter moods, more than just showing up does.',
       src: ['desrosiers'],
       plain: { t: 'Felt connected to something bigger than yourself, like nature, music, or the people you love?',
@@ -310,7 +310,7 @@ const Q = {
       tip: 'Keep it about energy, never weight or looks. Make breakfast and snacks easy to grab. If food starts to feel like rules they can\'t break, talk with their doctor.',
       why: 'Regular meals keep your energy, mood, and focus steady through the day.' },
     { t: 'Felt okay in your own body?',
-      tip: 'Keep the talk about strength, energy, and health, never weight or looks. Listen without judging.',
+      tip: 'Keep the talk about strength, energy, and health, never weight or looks. Listen with an open heart.',
       why: 'Lots of teens say social media makes them feel worse about their bodies. How your body feels and what it can do matter more than how it looks online.',
       src: ['sgsocial23'] },
     { t: 'Felt ready to say no, with an easy way out, if someone offered you a vape, a drink, or drugs?',
@@ -336,7 +336,7 @@ const Q = {
       tip: 'A game, a trip, a friend, a season, or a plan all count. If nothing comes to mind, plan one small good thing together.',
       why: 'Something to look forward to gives each week a little more light.' },
     { t: 'Believed your life can turn out good, even when things are hard right now?',
-      tip: 'Share a time you got through something hard. Don\'t argue with the feeling; add your own belief in them.',
+      tip: 'Share a time you got through something hard. Accept the feeling, then add your own belief in them.',
       why: 'Believing your life can turn out good helps you keep going through hard stretches.' },
     { t: 'Found a way forward when something got in the way?',
       tip: 'Ask about a time they found another way. Name that strength back to them.',
@@ -413,7 +413,7 @@ const ALERT_TOLD = 'A grown-up you chose will get a quiet note to check in with 
 // now is asked only after a yes or not sure to the self question; a yes
 // to it opens the calm card at the top.
 const SAFETY = {
-  intro: 'A lot of people your age go through really heavy stretches. These two questions help make sure you\'re okay. There\'s no wrong answer, and you can skip.',
+  intro: 'A lot of people your age go through really heavy stretches. These two questions help make sure you\'re okay. Every answer is welcome, and you can skip.',
   questions: [
     ['Is anyone hurting you, threatening you, or making you feel unsafe, at home, at school, online, or in a relationship?', 'safe'],
     ['Over the past few weeks, have you had thoughts of ending your life, or of not wanting to be alive?', 'self']
@@ -471,7 +471,7 @@ const SENSITIVE = [
     lines: ['988', 'ctl'] },
   { id: 'dating', part: 'branches', r: 1,
     t: 'Felt pressured, checked up on, or controlled by someone you\'re close to or going out with, like them checking your phone or telling you who you can see?',
-    tip: 'If yes, thank them for telling you and stay calm. Don\'t criticize the other person; ask how it feels to them. Love Is Respect can help them think it through.',
+    tip: 'If yes, thank them for telling you and stay calm. Ask how it feels to them, and stay kind about the other person. Love Is Respect can help them think it through.',
     why: 'This one is optional, and only you can turn it on. It never counts toward your score, and it\'s never shared. Checking your phone or deciding who you see are signs worth noticing.',
     on: ['sometimes', 'often', 'always'],
     note: 'You deserve to be trusted and respected. Checking your phone, or telling you who you can see, is not okay. You can talk it through any time, privately.',

@@ -46,7 +46,7 @@
          {
           "k": "big",
           "h": "Maple can fit your child’s body and health.",
-          "sub": "It adds and reorders. Nothing is taken away.",
+          "sub": "It adds and reorders, and keeps everything.",
           "say": "Some children live with a health condition, move or hear or see differently, or learn in their own way. Some have a brother or sister who does. Health and Ability lets Maple fit them. It only adds and reorders, and every guide and activity stays one tap away for everyone."
          },
          {
@@ -126,7 +126,7 @@
          {
           "k": "points",
           "h": "Good to know",
-          "say": "Your child’s choice stays locked inside their profile, on this device. The check-in questions and scores stay exactly the same, and so do the safety questions. Your child sees only what it adds, never a label. And Clear My Choices erases it, any time.",
+          "say": "Your child’s choice stays locked inside their profile, on this device. The check-in questions and scores stay exactly the same, and so do the safety questions. Your child sees only the help it adds. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -138,7 +138,7 @@
            ],
            [
             "Only the effects show",
-            "Your child never sees a label"
+            "Your child sees only the help"
            ],
            [
             "Clear My Choices",
@@ -968,13 +968,13 @@
          {
           "k": "big",
           "h": "Make a little room around it.",
-          "sub": "You do not have to fight it.",
-          "say": "You do not have to fight the pain. Instead, you can make a little room around it."
+          "sub": "You can soften around it.",
+          "say": "You can set down the fight, and make a little room around the pain."
          },
          {
           "k": "points",
           "h": "How to do it",
-          "say": "Get comfy, sitting or lying down. Notice where the pain is, without judging it. Then breathe out long, and let the muscles around it soften.",
+          "say": "Get comfy, sitting or lying down. Notice where the pain is, with kindness. Then breathe out long, and let the muscles around it soften.",
           "items": [
            [
             "Get comfy",
@@ -1200,8 +1200,8 @@
          {
           "k": "big",
           "h": "You choose how much to share.",
-          "sub": "You never have to explain everything.",
-          "say": "You choose how much to share. You never have to explain everything to everyone."
+          "sub": "You choose how much to explain.",
+          "say": "You choose how much to share. You choose how much to explain, and to whom."
          },
          {
           "k": "big",
@@ -1238,8 +1238,8 @@
          {
           "k": "big",
           "h": "Skipping is always okay.",
-          "sub": "There is no wrong way to do this.",
-          "say": "If a part hurts, or feels hard to think about, just skip it. There is no wrong way to do this."
+          "sub": "Every way of doing this is welcome.",
+          "say": "If a part hurts, or feels hard to think about, just skip it. Every way of doing this is welcome."
          },
          {
           "k": "points",
@@ -1331,7 +1331,7 @@
           "k": "big",
           "h": "Rest is part of the plan.",
           "sub": "It is how bodies heal and recharge.",
-          "say": "Rest is not falling behind. It is how bodies heal and recharge."
+          "say": "Rest is part of moving forward. It is how bodies heal and recharge."
          },
          {
           "k": "words",
@@ -1514,15 +1514,15 @@
          {
           "k": "points",
           "h": "Yours alone",
-          "say": "Only you set it, and only your passcode opens it. Your grown-up never sees it, and alerts never mention it. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
+          "say": "Only you set it, and only your passcode opens it. It stays yours alone, and alerts leave it out. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Only you set it",
             "Only your passcode opens it"
            ],
            [
-            "Your grown-up never sees it",
-            "Alerts never mention it"
+            "It stays yours alone",
+            "Alerts leave it out"
            ],
            [
             "Questions and scores stay the same",
@@ -1557,7 +1557,7 @@
           "k": "big",
           "h": "For anyone: gentler ways and rest.",
           "sub": "Show Gentler Ways First, in Settings. Rest Week, on Today.",
-          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with nothing lost."
+          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with everything kept."
          },
          {
           "k": "big",
@@ -1687,14 +1687,14 @@
          },
          {
           "k": "big",
-          "h": "You do not have to fight it.",
+          "h": "You can soften around it.",
           "sub": "Make a little room around it instead.",
-          "say": "You do not have to fight the pain or push through it. Instead, you can make a little room around it."
+          "say": "You can set down the fight and the push, and make a little room around the pain."
          },
          {
           "k": "points",
           "h": "How to do it",
-          "say": "Find a position that is a little easier, sitting, lying down, or even in a classroom chair. Notice where the pain is, without judging it. Then breathe out long, and let the muscles around it soften.",
+          "say": "Find a position that is a little easier, sitting, lying down, or even in a classroom chair. Notice where the pain is, with kindness. Then breathe out long, and let the muscles around it soften.",
           "items": [
            [
             "Find an easier position",
@@ -1876,7 +1876,7 @@
           "k": "big",
           "h": "Rest is part of the plan.",
           "sub": "It is how bodies heal and recharge.",
-          "say": "Rest is not falling behind. It is how bodies heal, recharge, and get ready for the next good day."
+          "say": "Rest is part of moving forward. It is how bodies heal, recharge, and get ready for the next good day."
          },
          {
           "k": "words",
@@ -2018,8 +2018,8 @@
          {
           "k": "big",
           "h": "You choose how much to share.",
-          "sub": "You never owe anyone the whole story.",
-          "say": "You choose how much to share. You never owe anyone the whole story to ask for what helps."
+          "sub": "You choose how much of your story to share.",
+          "say": "You choose how much to share. You can ask for what helps and share only as much of your story as you choose."
          },
          {
           "k": "big",
@@ -2057,8 +2057,8 @@
          {
           "k": "big",
           "h": "Skipping is always okay.",
-          "sub": "There is no wrong way to do this.",
-          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. There is no wrong way to do this."
+          "sub": "Every way of doing this is welcome.",
+          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. Every way of doing this is welcome."
          },
          {
           "k": "points",
@@ -2240,7 +2240,7 @@
          },
          {
           "k": "points",
-          "h": "Yours to share, or not",
+          "h": "Yours to share, if you choose",
           "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
           "items": [
            [
@@ -2284,7 +2284,7 @@
           "k": "big",
           "h": "For anyone: gentler ways and rest.",
           "sub": "Show Gentler Ways First, in Settings. Rest Week, on Today.",
-          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with nothing lost."
+          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with everything kept."
          },
          {
           "k": "big",
@@ -2386,7 +2386,7 @@
           "k": "big",
           "h": "Your tree can rest too.",
           "sub": "Rest Week, on Today, holds it still.",
-          "say": "In Birch, Rest Week on Today holds your tree still for a hard week, with nothing lost. And if a flare feels different or scary, call your doctor or clinic."
+          "say": "In Birch, Rest Week on Today holds your tree still for a hard week, with everything kept. And if a flare feels different or scary, call your doctor or clinic."
          }
         ]
        },
@@ -2414,14 +2414,14 @@
          },
          {
           "k": "big",
-          "h": "You do not have to fight it.",
+          "h": "You can soften around it.",
           "sub": "Make a little room around it instead.",
-          "say": "You do not have to fight the pain or push through it. Instead, you can make a little room around it."
+          "say": "You can set down the fight and the push, and make a little room around the pain."
          },
          {
           "k": "points",
           "h": "How to do it",
-          "say": "Find a position that is a little easier, sitting, lying down, or on a break. Notice where the pain is, without judging it. Then breathe out long, and let the muscles around it soften.",
+          "say": "Find a position that is a little easier, sitting, lying down, or on a break. Notice where the pain is, with kindness. Then breathe out long, and let the muscles around it soften.",
           "items": [
            [
             "Find an easier position",
@@ -2603,7 +2603,7 @@
           "k": "big",
           "h": "Rest is part of the plan.",
           "sub": "It is how bodies heal and recharge.",
-          "say": "Rest is not falling behind. It is how bodies heal, recharge, and get ready for the next good day."
+          "say": "Rest is part of moving forward. It is how bodies heal, recharge, and get ready for the next good day."
          },
          {
           "k": "words",
@@ -2745,8 +2745,8 @@
          {
           "k": "big",
           "h": "You choose how much to share.",
-          "sub": "You never owe anyone the whole story.",
-          "say": "You choose how much to share. You never owe anyone the whole story to ask for what helps."
+          "sub": "You choose how much of your story to share.",
+          "say": "You choose how much to share. You can ask for what helps and share only as much of your story as you choose."
          },
          {
           "k": "big",
@@ -2784,8 +2784,8 @@
          {
           "k": "big",
           "h": "Skipping is always okay.",
-          "sub": "There is no wrong way to do this.",
-          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. There is no wrong way to do this."
+          "sub": "Every way of doing this is welcome.",
+          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. Every way of doing this is welcome."
          },
          {
           "k": "points",
@@ -2972,11 +2972,11 @@
           "items": [
            [
             "Locked on this device",
-            "It never leaves"
+            "It stays here"
            ],
            [
-            "Never shared",
-            "Not in Visit cards, The Grove, or a printed plan"
+            "Kept private",
+            "Left out of Visit cards, The Grove, and printed plans"
            ],
            [
             "Questions and scores stay the same",
@@ -3011,7 +3011,7 @@
           "k": "big",
           "h": "For anyone: gentler ways and rest.",
           "sub": "Show Gentler Ways First, in Settings. Rest Week, on Today.",
-          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with nothing lost."
+          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with everything kept."
          },
          {
           "k": "big",
@@ -3113,7 +3113,7 @@
           "k": "big",
           "h": "Your tree can rest too.",
           "sub": "Rest Week, on Today, holds it still.",
-          "say": "In Oak, Rest Week on Today holds your tree still for a hard week, with nothing lost. And if a flare feels different or scary, call your doctor or clinic."
+          "say": "In Oak, Rest Week on Today holds your tree still for a hard week, with everything kept. And if a flare feels different or scary, call your doctor or clinic."
          }
         ]
        },
@@ -3141,14 +3141,14 @@
          },
          {
           "k": "big",
-          "h": "You do not have to fight it.",
+          "h": "You can soften around it.",
           "sub": "Make a little room around it instead.",
-          "say": "You do not have to fight the pain or push through it. Instead, you can make a little room around it."
+          "say": "You can set down the fight and the push, and make a little room around the pain."
          },
          {
           "k": "points",
           "h": "How to do it",
-          "say": "Find a position that is a little easier, sitting, lying down, or in the car before you go in. Notice where the pain is, without judging it. Then breathe out long, and let the muscles around it soften.",
+          "say": "Find a position that is a little easier, sitting, lying down, or in the car before you go in. Notice where the pain is, with kindness. Then breathe out long, and let the muscles around it soften.",
           "items": [
            [
             "Find an easier position",
@@ -3330,7 +3330,7 @@
           "k": "big",
           "h": "Rest is part of the plan.",
           "sub": "It is how bodies heal and recharge.",
-          "say": "Rest is not falling behind. It is how bodies heal, recharge, and get ready for the next good day."
+          "say": "Rest is part of moving forward. It is how bodies heal, recharge, and get ready for the next good day."
          },
          {
           "k": "words",
@@ -3472,8 +3472,8 @@
          {
           "k": "big",
           "h": "You choose how much to share.",
-          "sub": "You never owe anyone the whole story.",
-          "say": "You choose how much to share. You never owe anyone the whole story to ask for what helps."
+          "sub": "You choose how much of your story to share.",
+          "say": "You choose how much to share. You can ask for what helps and share only as much of your story as you choose."
          },
          {
           "k": "big",
@@ -3511,8 +3511,8 @@
          {
           "k": "big",
           "h": "Skipping is always okay.",
-          "sub": "There is no wrong way to do this.",
-          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. There is no wrong way to do this."
+          "sub": "Every way of doing this is welcome.",
+          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. Every way of doing this is welcome."
          },
          {
           "k": "points",
@@ -3694,7 +3694,7 @@
          },
          {
           "k": "points",
-          "h": "Yours to share, or not",
+          "h": "Yours to share, if you choose",
           "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
           "items": [
            [
@@ -3738,7 +3738,7 @@
           "k": "big",
           "h": "For anyone: gentler ways and rest.",
           "sub": "Show Gentler Ways First, in Settings. Rest Week, on Today.",
-          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with nothing lost."
+          "say": "Show Gentler Ways First, in Settings, puts seated, short, and gentle ways first, for anyone. Rest Week, on Today, holds your tree still for a hard week, with everything kept."
          },
          {
           "k": "big",
@@ -3840,7 +3840,7 @@
           "k": "big",
           "h": "Easier today, and Rest Week.",
           "sub": "Smaller ways, and a tree that waits for you.",
-          "say": "In Sequoia, Easier today shows a smaller way to do a practice, often seated or in bed. Rest Week on Today holds your tree still for a hard week, with nothing lost. And if a flare feels different or scary, call your doctor or clinic."
+          "say": "In Sequoia, Easier today shows a smaller way to do a practice, often seated or in bed. Rest Week on Today holds your tree still for a hard week, with everything kept. And if a flare feels different or scary, call your doctor or clinic."
          }
         ]
        },
@@ -3868,14 +3868,14 @@
          },
          {
           "k": "big",
-          "h": "You do not have to fight it.",
+          "h": "You can soften around it.",
           "sub": "Make a little room around it instead.",
-          "say": "You do not have to fight the pain or push through it. Instead, you can make a little room around it."
+          "say": "You can set down the fight and the push, and make a little room around the pain."
          },
          {
           "k": "points",
           "h": "How to do it",
-          "say": "Find a position that is a little easier, sitting in a chair, or lying in bed. Notice where the pain is, without judging it. Then breathe out long, and let the muscles around it soften.",
+          "say": "Find a position that is a little easier, sitting in a chair, or lying in bed. Notice where the pain is, with kindness. Then breathe out long, and let the muscles around it soften.",
           "items": [
            [
             "Find an easier position",
@@ -4057,7 +4057,7 @@
           "k": "big",
           "h": "Rest is part of the plan.",
           "sub": "It is how bodies heal and recharge.",
-          "say": "Rest is not falling behind. It is how bodies heal, recharge, and get ready for the next good day."
+          "say": "Rest is part of moving forward. It is how bodies heal, recharge, and get ready for the next good day."
          },
          {
           "k": "words",
@@ -4199,8 +4199,8 @@
          {
           "k": "big",
           "h": "You choose how much to share.",
-          "sub": "You never owe anyone the whole story.",
-          "say": "You choose how much to share. You never owe anyone the whole story to ask for what helps."
+          "sub": "You choose how much of your story to share.",
+          "say": "You choose how much to share. You can ask for what helps and share only as much of your story as you choose."
          },
          {
           "k": "big",
@@ -4238,8 +4238,8 @@
          {
           "k": "big",
           "h": "Skipping is always okay.",
-          "sub": "There is no wrong way to do this.",
-          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. There is no wrong way to do this."
+          "sub": "Every way of doing this is welcome.",
+          "say": "If a part hurts, is missing, or is hard to think about, simply skip it. Every way of doing this is welcome."
          },
          {
           "k": "points",
@@ -4458,11 +4458,11 @@
          {
           "k": "points",
           "h": "Ideas for a rest day",
-          "say": "Build a blanket pile with books, pictures, or a movie. Share a slow snack, and really taste it together. Play quiet sounds, like music, rain, or a story read aloud. And let bigger kids be helping hands, bringing water or a pillow.",
+          "say": "Build a blanket pile with books, pictures, or a puzzle. Share a slow snack, and really taste it together. Play quiet sounds, like music, rain, or a story read aloud. And let bigger kids be helping hands, bringing water or a pillow.",
           "items": [
            [
             "A blanket pile",
-            "Books, pictures, or a movie"
+            "Books, pictures, or a puzzle"
            ],
            [
             "A slow snack",

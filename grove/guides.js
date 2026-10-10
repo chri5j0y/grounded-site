@@ -205,7 +205,7 @@ const TOPICS = [
   "quick": [
    "A move is a big change, even a happy one. Saying goodbye to a place is a real loss.",
    "Children do best when they know early, get a say in small things, and can say goodbye on purpose.",
-   "Routines that travel with you, like bedtime, Friday pizza, or a family blessing, make a new place feel like home faster.",
+   "Routines that travel with you, like bedtime, Friday soup night, or a family blessing, make a new place feel like home faster.",
    "Feeling at home usually takes months, not weeks. Slow is normal."
   ],
   "feel": "Boxes in every room, a calendar full of lasts, and a lot of unknowns. Some family members may be excited and some may be sad or angry about the same move. Kids may worry about a new school, leaving friends, or whether their room will feel like theirs. Grown-ups juggle money, paperwork, and a hundred decisions while trying to stay patient. A move for a new job, a military order, a divorce, a lost home, or to live near family each brings its own mix of hope and grief. After the move, the first weeks can be lonely and tiring, even when the new place is good. All of this is part of carrying a family from one home to the next.",
@@ -746,7 +746,7 @@ const TOPICS = [
   "together": {
    "first": [
     "Before the parent leaves, talk together about how you'll stay in touch: calls, messages, videos, letters, or a shared journal.",
-    "Make a countdown everyone can see, like a paper chain, a jar of treats, or a map with pins.",
+    "Make a countdown everyone can see, like a paper chain, a jar of notes, or a map with pins.",
     "Keep routines steady: bedtime, meals, school, chores, and family traditions.",
     "Let the school know, with the family's okay, so teachers understand a hard day."
    ],
@@ -1748,7 +1748,7 @@ const TOPICS = [
    "group:loss"
   ],
   "quick": [
-   "When someone in the family dies, everyone grieves, and everyone grieves differently. There is no right way and no deadline.",
+   "When someone in the family dies, everyone grieves, and everyone grieves differently. Grief has its own shape and its own time.",
    "Use real words: died and dead. Gentle phrases like went to sleep or we lost him can confuse and frighten children.",
    "Grieving together helps: saying their name, telling the stories, and keeping a few small routines.",
    "Children grieve in bursts, sad one minute and playing the next. Grown-ups need support of their own, too."
@@ -1787,7 +1787,7 @@ const TOPICS = [
    "feel": "You may be leading your family through this while grieving yourself. Children watch the grown-ups to learn whether it is safe to grieve here. Young children may not understand that death is permanent and may ask when the person is coming back. Older children often worry about who else might die, and some hide their feelings to protect you. Teens may grieve with friends more than at home. Grief often comes back at birthdays, holidays, and milestones, sometimes years later.",
    "say": [
     "“I'm sad too. It's okay to cry together.”",
-    "“What questions do you have? There's no wrong question.”",
+    "“What questions do you have? Every question is welcome.”",
     "“What do you remember about her? Tell me.”",
     "“What would help you today?”"
    ],
@@ -1905,7 +1905,7 @@ const TOPICS = [
   "quick": [
    "The first holidays after a death are often hard, and the days before can be harder than the day itself. Planning ahead together helps.",
    "Keep some traditions, change some, and add one that honors the person who died.",
-   "Let everyone, kids included, help decide. There is no right way to do this year.",
+   "Let everyone, kids included, help decide. You can do this year in your own way.",
    "Joy and sadness can sit at the same table. Both are welcome."
   ],
   "feel": "The decorations come out and someone's ornament is in the box. The recipe is in their handwriting. The music in every store is cheerful, and the calendar fills with parties. Some of us want everything exactly the same; some want to skip the whole season; some want to go away. Children may be excited and then feel guilty for being excited. Grown-ups may dread the day for weeks, then find the day itself gentler than they feared, or harder. Families often argue about the plan, because each person is protecting something they love.",
@@ -1917,7 +1917,7 @@ const TOPICS = [
     "Tell extended family and hosts what you've decided, so no one is surprised."
    ],
    "helps": [
-    "One new ritual that honors the person: a lit candle, their favorite dish, a toast, an ornament, or a gift to a cause they loved.",
+    "One new ritual that honors the person: a lit candle, their favorite dish, a moment of thanks, an ornament, or a gift to a cause they loved.",
     "Saying their name at the table, and telling one story about them.",
     "A smaller, simpler holiday this year: fewer events, more rest.",
     "A plan for the day after, which is often harder than people expect.",
@@ -1934,7 +1934,7 @@ const TOPICS = [
   "kids": [
    "“This holiday might feel different without Grandma. It's okay to feel sad and happy on the same day.”",
    "“What's one thing you want to keep doing, like we always did?”",
-   "“Let's make something for her: a drawing, a card, or a cookie she liked.”",
+   "“Let's make something for her: a drawing, a card, or a recipe she liked.”",
    "“If you need a quiet break, tell me, and we'll find a cozy spot.”"
   ],
   "leader": {
@@ -2823,7 +2823,7 @@ const TOPICS = [
     "Tell the school counselors right away about students who seem shaken, who were closest to the event, or who don't want to come back.",
     "Make sure families get the school's letter the same day. If a student tells you about a threat, report it at once through your school's plan."
    ],
-   "you": "Emergencies shake adults too. Find a colleague to talk with after school, and use your employee assistance program if your school has one. You don't need perfect words. A calm voice, a steady routine, and a path to the counselors is enough."
+   "you": "Emergencies shake adults too. Find a colleague to talk with after school, and use your employee assistance program if your school has one. Simple words are enough. A calm voice, a steady routine, and a path to the counselors is enough."
   },
   "byKind": {
    "classroom": "911 and your school's crisis plan come first. Use only the words the school has shared, and let the school counselors lead on any student who needs more."
@@ -3372,7 +3372,7 @@ const TOPICS = [
     "Use the time between leaders to remember the community's own story and purpose.",
     "Welcome the next or interim leader with a real welcome, and give them time."
    ],
-   "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor, a peer leader, or your faith body's support for leaders. You don't have to have answers. Steady and honest is enough."
+   "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor, a peer leader, or your faith body's support for leaders. Your presence matters more than answers. Steady and honest is enough."
   },
   "byKind": {
    "group": "For a support group or study group, plan the last meeting with the leader, and decide together whether the group continues, pauses, or chooses a new facilitator."
@@ -3439,7 +3439,7 @@ const TOPICS = [
      "Use the time between leaders to remember the group's own story and purpose.",
      "Welcome the next or interim leader with a real welcome, and give them time."
     ],
-    "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor or a peer leader. You don't have to have answers. Steady and honest is enough."
+    "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor or a peer leader. Your presence matters more than answers. Steady and honest is enough."
    }
   },
   "practices": [
@@ -3552,7 +3552,7 @@ const TOPICS = [
    "feel": "You may be grieving and leading at the same time. People will look to you for words, the family will need you, and the community will need ways to grieve together. You may also be the one who hears hard questions: why this happened, whether God was in it, what to say to the kids.",
    "say": [
     "“We're going to take time to grieve together.”",
-    "“There's no right way to feel about this.”",
+    "“Every feeling about this is okay.”",
     "“Here's what the family has asked for.”",
     "“If this brings up other losses for you, that's okay. Come talk to me.”"
    ],
@@ -3618,7 +3618,7 @@ const TOPICS = [
     "feel": "You may be grieving and leading at the same time. People will look to you for words, the family will need you, and the group will need ways to grieve together. You may also hear hard questions: why this happened, what it means, what to say to the kids.",
     "say": [
      "“We're going to take time to grieve together.”",
-     "“There's no right way to feel about this.”",
+     "“Every feeling about this is okay.”",
      "“Here's what the family has asked for.”",
      "“If this brings up other losses for you, that's okay. Come talk to me.”"
     ],
@@ -4288,10 +4288,10 @@ const TOPICS = [
    "If a child tells you about danger at home, stay calm, thank them, and get help the same day."
   ],
   "leader": {
-   "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. You don't have to be a crisis expert. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
+   "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
    "say": [
     "“Are you thinking about suicide?”",
-    "“I'm glad you told me. You don't have to go through this alone.”",
+    "“I'm glad you told me. Others can walk through this with you.”",
     "“Let's call 988 together right now.”",
     "“What can our community do that would actually help?”",
     "“What would you like people here to know, and not know?”"
@@ -4311,7 +4311,7 @@ const TOPICS = [
     "Ask the person what they want shared, and protect their privacy in every announcement.",
     "Plan their return to the group: a quiet welcome, no questions, and an easy way to step out."
    ],
-   "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. You don't have to carry this alone, and you shouldn't."
+   "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. Let others help you carry this."
   },
   "byKind": {
    "group": "In a support group, if a member speaks of danger during a meeting, thank them, keep the group calm, and speak with that person privately right away while a co-leader holds the room."
@@ -4333,10 +4333,10 @@ const TOPICS = [
     "If a child tells you about danger at home, stay calm, thank them, and get help the same day."
    ],
    "leader": {
-    "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. You don't have to be a crisis expert. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
+    "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
     "say": [
      "“Are you thinking about suicide?”",
-     "“I'm glad you told me. You don't have to go through this alone.”",
+     "“I'm glad you told me. Others can walk through this with you.”",
      "“Let's call 988 together right now.”",
      "“What can our community do that would actually help?”",
      "“What would you like people here to know, and not know?”"
@@ -4356,7 +4356,7 @@ const TOPICS = [
      "Ask the person what they want shared, and protect their privacy in every announcement.",
      "Plan their return to the group: a quiet welcome, no questions, and an easy way to step out."
     ],
-    "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. You don't have to carry this alone, and you shouldn't."
+    "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. Let others help you carry this."
    }
   },
   "practices": [
@@ -4481,7 +4481,7 @@ const TOPICS = [
     "“That was a hard death. How is everyone doing with it?”",
     "“Who needs to step away? I'll cover.”",
     "“What do we need tonight, and what do we need this week?”",
-    "“There's no wrong way to react to this.”"
+    "“Every way you react to this is okay.”"
    ],
    "avoid": [
     "Moving straight to the next task with no pause at all.",
@@ -4741,7 +4741,7 @@ const TOPICS = [
    ],
    "say": [
     "“We miss them. They were one of us.”",
-    "“There's no right way to grieve this.”",
+    "“Each of us grieves this in our own way.”",
     "“We'll remember them together.”"
    ],
    "people": "Try, to a close work friend: “I know you two were close. How are you holding up?” To the team: “Want to share a story about her at lunch?” To the family, in a card: “He made our team better. Here's one thing I'll always remember about him.”"

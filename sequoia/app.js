@@ -427,7 +427,7 @@ function showCalm(why) {
   const wrap = document.createElement('div');
   wrap.id = 'calm-card'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
-    <h2 id="calm-title">${escapeHtml(SAFETY.title || 'You matter, and you don\'t have to carry this alone.')}</h2>
+    <h2 id="calm-title">${escapeHtml(SAFETY.title || 'You matter, and others can help you carry this.')}</h2>
     ${lead}
     ${linesHtml(home)}
     ${why !== 'direct' && why !== 'home' && !home && window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}
@@ -692,7 +692,7 @@ function interpretResults(scores) {
   else if (inner > outer) balance = 'Your inner tree (roots, trunk, and bark) is stronger than your outer tree (branches, leaves, and fruit). You have real depth, but it may not be reaching the visible parts of your life yet.';
   else balance = 'Your outer tree (branches, leaves, and fruit) is stronger than your inner tree (roots, trunk, and bark). Life above ground looks full, but what holds and carries you may need tending.';
   let overall;
-  if (!care && strong >= 4) overall = 'Your tree is strong and healthy across most parts. The work now is maintenance and depth, not rescue.';
+  if (!care && strong >= 4) overall = 'Your tree is strong and healthy across most parts. The work now is maintenance and depth.';
   else if (care < 3) overall = 'Some parts of your tree are carrying more weight than others right now. This is common and workable. Tending your growing edges will relieve pressure on the parts holding the most.';
   else overall = 'Several parts of your tree are depleted right now, which means the healthy parts have less to draw on when one gets injured. This is a meaningful moment to be honest about where you need support, and to consider working with a counselor, chaplain, or trusted guide alongside this tool.';
   return `Your <strong>${strongest.part.toLowerCase()}</strong> (${strongest.name}) are the healthiest part of your tree right now, a real resource to draw on. Your biggest growing edge right now is your <strong>${weakest.part.toLowerCase()}</strong> (${weakest.name}), where your next growth begins. ${balance} ${overall}`
@@ -902,7 +902,7 @@ function sqCheer(text) {
   clearTimeout(sqCheer.t); sqCheer.t = setTimeout(() => el.classList.remove('show'), 3600);
 }
 // The pause: while a check-in in the last two weeks flagged losing hope or feeling alone
-// (or the safety step asked for care), the tree holds as it is. Nothing is lost.
+// (or the safety step asked for care), the tree holds as it is. Everything is kept.
 function sqPause() {
   const cut = new Date(Date.now() - 14 * 86400000).toISOString().slice(0, 10);
   return (personalHistory || []).some(e => e && !e.from && e.date >= cut && e.kind !== 'observed' && (
@@ -911,7 +911,7 @@ function sqPause() {
 }
 function todayKindHtml(s) {
   const n = window.GGTend ? GGTend.partsOn(sgToday()) : 0;
-  const lineA = sqPause() ? 'Your tree is holding still with you this season. Tend it when you can. Nothing will be lost.' : n ? kindWord(n) : 'One practice is enough to start. A big checkmark is waiting.';
+  const lineA = sqPause() ? 'Your tree is holding still with you this season. Tend it when you can. Everything you\'ve grown stays safe.' : n ? kindWord(n) : 'One practice is enough to start. A big checkmark is waiting.';
   return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>` + (s ? sgLevelHtml(s) : '') + bringOakHtml();
 }
 
@@ -1044,7 +1044,7 @@ function bringOakHtml() {
   const have = new Set(personalHistory.map(e => e.id));
   const n = ((oak && oak.history) || []).filter(e => e && e.scores && !e.from && e.by !== 'tapped' && !have.has(e.id) && !have.has('oak-' + e.id)).length;
   if (!n || sq.oakBrought) return '';
-  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here, labeled From Oak, so your Sequoia tree shows your whole story. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
+  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here, labeled From Oak, so your Sequoia tree shows your whole story. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Maybe Later</button></div></div>`;
 }
 function bringOak(skip) {
   if (!PROF || !window.GGP) return;
@@ -1458,7 +1458,7 @@ function vcRemove(i) {
   const r = vcRec(); if (!r || !Array.isArray(r.visitCards) || !r.visitCards[i]) return;
   if (!confirm('Remove this card from your tree? Any practices you added stay in your growth plan.')) return;
   r.visitCards.splice(i, 1); if (!r.visitCards.length) delete r.visitCards;
-  GGP.save(PROF.id).then(() => showToast('Card removed.'), () => showToast('That did not save. Open your profile and try again.'));
+  GGP.save(PROF.id).then(() => showToast('Card removed.'), () => showToast('Let\'s try that again: open your profile and save once more.'));
   if (window.GGTend) GGTend.render();
 }
 function vcAdd() {
@@ -1470,7 +1470,7 @@ function vcAdd() {
   if (!r.visitCards.some(x => JSON.stringify({ d: x.d, s: x.s, t: x.t }) === same)) r.visitCards.push(Object.assign({ added: sgToday() }, card));
   if (r.visitCards.length > 12) r.visitCards = r.visitCards.slice(-12);
   GGApp.visit.clear();
-  GGP.save(PROF.id).then(() => showToast('Added to your tree. You will find it on Today.'), () => showToast('That did not save. Open your profile and try again.'));
+  GGP.save(PROF.id).then(() => showToast('Added to your tree. You will find it on Today.'), () => showToast('Let\'s try that again: open your profile and save once more.'));
   goHome(); if (window.GGTend) GGTend.render();
 }
 function vcCheck(force) {
@@ -1481,8 +1481,8 @@ function vcCheck(force) {
   VC_ASKED = who;
   const intro = `<p>${v.n ? escapeHtml(v.n) + ', here' : 'Here'} is a card from your Sequoia Guide visit on ${escapeHtml(formatDate(v.d))}: your strong parts and what you chose to try. It goes on your own tree, kept in your own locked profile.</p>
     <p class="ggx-small">You can remove it any time.</p>`;
-  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was not added.'); } };
-  const later = { t: 'Not Now', kind: 'line', fn: () => {} };
+  const drop = { t: 'Leave It Off', kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('Your tree stays as it was.'); } };
+  const later = { t: 'Maybe Later', kind: 'line', fn: () => {} };
   if (!PROF) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your profile first, and this card will ask again.</p>',
       buttons: [{ t: 'Open My Profile', kind: 'main', fn: () => { if (window.GGP) oakOpenAny(); } }, later, drop] });
@@ -1517,11 +1517,11 @@ const TEND_CFG = {
   toast: m => showToast(m),
   profileHtml: () => oakProfileHtml(),
   extraSettings: () => (!HELP && window.GGLifeKit ? GGLifeKit.settingsHtml('sequoia', 'sq-set-life') : '') + helperSettingsHtml(),
-  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
+  lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. It all stays private, right here.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => artGrowthHtml(s) + graphCardHtml() + (s ? sgMilesHtml(s) : ''),
   pause: () => sqPause(),
-  pauseLine: 'Your tree is holding still with you while you get support. Nothing is lost.',
+  pauseLine: 'Your tree is holding still with you while you get support. Everything is kept.',
   onCheck: (done, key, s, parts, before) => sgOnCheck(done, s, parts),
   store: {
     get: () => { if (!PROF || !window.GGP) return null; const d = sqNamesForward(GGP.data(PROF.id, 'sequoia')); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1723,7 +1723,7 @@ async function profResume() {
 // =====================================================================
 const SHARE_DEF = { tree: true, plan: true, legacy: false, faith: false, notes: false };
 const SHARE_ROWS = [
-  ['tree', 'How my tree is doing', 'The level of each part and the dates of check-ins. Never your answers.'],
+  ['tree', 'How my tree is doing', 'The level of each part and the dates of check-ins. Your answers stay yours.'],
   ['plan', 'My growth plan', 'The practices you chose, so a helper can do them with you.'],
   ['legacy', 'My Legacy Book', 'Your stories and letters. A helper can also write while you tell.'],
   ['faith', 'My Roots part', 'Your Roots level, and Roots practices in your plan. Off unless you turn it on.'],
@@ -1763,7 +1763,7 @@ function sqShare(k, v) { if (!PROF) return; const d = GGP.data(PROF.id, 'sequoia
 function addHelperNow() {
   const hid = (document.getElementById('sq-hid') || {}).value, pass = (document.getElementById('sq-hpass') || {}).value;
   if (!pass) { showToast('Your helper types their own passcode.'); return; }
-  GGP.addHelper(PROF.id, hid, pass).then(() => { showToast(((GGP.get(hid) || {}).name || 'They') + ' is now a helper.'); reopenSettings(); }).catch(e => showToast(e && e.message ? e.message : 'That did not work. Try again.'));
+  GGP.addHelper(PROF.id, hid, pass).then(() => { showToast(((GGP.get(hid) || {}).name || 'They') + ' is now a helper.'); reopenSettings(); }).catch(e => showToast(e && e.message ? e.message : 'Let\'s try that again.'));
 }
 function dropHelper(id) {
   const n = (GGP.get(id) || {}).name || 'this helper';
@@ -1798,7 +1798,7 @@ function renderHelpTabs() {
   const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give, or answer from what you see if they can no longer say. Every check-in is marked with who answered.</p>
     <div class="btn-row"><button class="btn btn-primary" onclick="startCheckin('tapped','${HELP}')">${n} Answers, I Tap</button><button class="btn btn-secondary" onclick="startQuick('tapped','${HELP}')">Quick Check-in Together</button><button class="btn btn-secondary" onclick="startCheckin('observed','${HELP}')">I'm Answering From What I See</button></div></div>
     <div class="gt-card"><h3>A Check-in for You</h3><p>Helping someone you love is a lot to carry. This one is about you, and it stays in your own profile.</p><div class="btn-row"><button class="btn btn-secondary" onclick="startCheckin('helper','${HELP}')">My Own Check-in as a Helper</button></div></div>`;
-  const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(formatDate(last.date))}${last.by && last.by !== 'self' ? ', ' + escapeHtml((BY_LABEL[last.by] || '').toLowerCase()) : ''}.</p>${helpLevels(last, sh)}` : '<p>No check-ins yet.</p>'}
+  const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(formatDate(last.date))}${last.by && last.by !== 'self' ? ', ' + escapeHtml((BY_LABEL[last.by] || '').toLowerCase()) : ''}.</p>${helpLevels(last, sh)}` : '<p>Your first check-in will show here.</p>'}
     ${own.length ? `<h4 class="sq-h4">Check-ins</h4><ul class="gt-hist">${own.slice().reverse().slice(0, 8).map(e => `<li><b>${escapeHtml(formatDate(e.date))}</b><span>${e.type === 'quick' ? 'Quick' : 'Full'}${e.by && e.by !== 'self' ? ', ' + escapeHtml(BY_LABEL[e.by] || '') + (e.helper ? ' (' + escapeHtml(e.helper) + ')' : '') : ''}</span></li>`).join('')}</ul>` : ''}
     ${sh.notes && last && last.reflections ? ALL_DOMAINS.filter(dd => (dd.key !== 'roots' || sh.faith) && String(last.reflections[dd.key] || '').trim()).map(dd => `<p class="gt-small"><b>${dd.part}:</b> ${escapeHtml(last.reflections[dd.key])}</p>`).join('') : ''}
     ${seen.length ? `<p class="gt-small">${seen.length} check-in${seen.length === 1 ? '' : 's'} answered from what a helper sees, kept apart.</p>` : ''}</div>` : `<div class="gt-card"><p>${n} keeps their tree private. You can still check in together.</p></div>`;
@@ -1851,7 +1851,7 @@ function renderLegacy() {
   if (HELP && !shareOf(HELP).legacy) { el.innerHTML = `<div class="section-title">Legacy Book</div><p class="lead">${who} keeps their Legacy Book private.</p>`; return; }
   if (!L) {
     el.innerHTML = `<div class="section-title">Your Legacy Book</div>${(LEG.intro || []).slice(0, 2).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h2>Your book is kept in your profile</h2><p>The Legacy Book is saved inside a private Grounded profile on this device, locked with a passcode only you know, so no one else can read it. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="${oakAdults().length ? 'oakOpenAny()' : 'profCreateDialog()'}">${oakAdults().length ? 'Open my profile' : 'Create a profile'}</button></div></div>`;
+      <div class="gt-card gt-empty"><h2>Your book is kept in your profile</h2><p>The Legacy Book is saved inside a private Grounded profile on this device, locked with a passcode only you know, so no one else can read it. It all stays private, right here.</p><div class="btn-row"><button class="btn btn-primary" onclick="${oakAdults().length ? 'oakOpenAny()' : 'profCreateDialog()'}">${oakAdults().length ? 'Open my profile' : 'Create a profile'}</button></div></div>`;
     return;
   }
   const c = LG.ch && legChapter(LG.ch);
@@ -1859,7 +1859,7 @@ function renderLegacy() {
   const total = (LEG.chapters || []).reduce((t, ch) => t + legWritten(ch, L), 0);
   el.innerHTML = `<div class="section-title">${HELP ? who + '\'s Legacy Book' : 'Your Legacy Book'}</div>
     ${HELP ? `<p class="lead">Write while ${who} tells. Use their words, not yours. What you write is marked as told to you.</p>` : (LEG.intro || []).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-    <p class="sq-legcount">${total ? `${total} ${total === 1 ? 'page' : 'pages'} written so far.` : 'Nothing written yet. One story is enough to start.'}</p>
+    <p class="sq-legcount">${total ? `${total} ${total === 1 ? 'page' : 'pages'} written so far.` : 'Ready when you are. One story is enough to start.'}</p>
     <div class="sq-chapters">${(LEG.chapters || []).map(ch => { const n = legWritten(ch, L), closed = ch.optIn && !L.opened[ch.id];
       return `<button type="button" class="sq-chapter${closed ? ' closed' : ''}" onclick="legOpen('${ch.id}')"><b>${escapeHtml(ch.title)}</b><span>${closed ? 'Opens only when you choose' : n ? n + ' of ' + (ch.prompts || []).length + ' written' : (ch.prompts || []).length + ' prompts'}</span></button>`; }).join('')}</div>
     <div class="btn-row"><button class="btn btn-primary" onclick="legPickBook()">Save or Print My Book</button></div>
@@ -1874,7 +1874,7 @@ function legChapterHtml(c, L, who) {
     <h2 class="section-title" style="margin-top:10px">${escapeHtml(c.title)}</h2>${c.lead ? `<p class="lead">${escapeHtml(c.lead)}</p>` : ''}`;
   if (closed) return h + `<div class="sq-optin"><p>${escapeHtml(c.note || LEG.careLine || '')}</p>
       <ul class="calm-list sq-lines"><li><b>988 Suicide and Crisis Lifeline</b><a href="tel:988">Call 988</a> or <a href="sms:988">text 988</a>, any time. Veterans, call 988 and press 1.</li></ul>
-      <div class="btn-row"><button class="btn btn-primary" onclick="legOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="legOpen(null)">Not Now</button></div></div>`;
+      <div class="btn-row"><button class="btn btn-primary" onclick="legOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="legOpen(null)">Maybe Later</button></div></div>`;
   h += `<p class="gt-small">Skip any prompt. Write a little or a lot. The microphone key on your phone's keyboard lets you speak instead of type.</p>`;
   h += (c.prompts || []).map(p => {
     const a = L.answers[p.id] || null, editing = LG.edit === p.id, has = a && String(a.text || '').trim();
@@ -1910,7 +1910,7 @@ function legDelete(pid) {
 function legOptIn(id, on) {
   const L = legRec(); if (!L) return;
   if (on) L.opened[id] = new Date().toISOString().slice(0, 10); else delete L.opened[id];
-  legPersist().then(() => { if (!on) LG.ch = null; renderLegacy(); showToast(on ? 'Open. Stop any time.' : 'Closed. What you wrote stays in your book.'); });
+  legPersist().then(() => { if (!on) LG.ch = null; renderLegacy(); showToast(on ? 'Open. Pause any time.' : 'Closed. What you wrote stays in your book.'); });
 }
 function legPickBook() { LG.pick = !LG.pick; renderLegacy(); }
 function legPickHtml(L) {
@@ -2043,7 +2043,7 @@ const SQ_FROM = { oak: 'From Oak', birch: 'From Birch', pine: 'From Pine' };
 function earlierLabel(e) { return e.from ? (SQ_FROM[e.from] || 'Earlier') : !e.std ? 'Earlier' : ''; }
 function renderHistoryChartAndTable(container, history, personal) {
   if (history.length === 0) {
-    container.innerHTML = '<p style="font-size:13px;color:var(--ink-soft);">No results saved yet.</p>';
+    container.innerHTML = '<p style="font-size:13px;color:var(--ink-soft);">Saved results will show here.</p>';
     return;
   }
   const own = history.filter(e => !e.from);

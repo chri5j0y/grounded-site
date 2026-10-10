@@ -14,7 +14,7 @@
 
    The word list: adapted from the BIP39 English word list (Bitcoin Improvement Proposal 39, by Marek
    Palatinus, Pavol Rusnak, Aaron Voisine, and Sean Bowe; github.com/bitcoin/bips, bip-0039/english.txt),
-   used under the MIT License. 142 of its words were swapped for gentler everyday words (acorn, daisy,
+   used under the MIT License. 164 of its words were swapped for gentler everyday words (acorn, daisy,
    lantern, and others), keeping 2,048 words that each differ in their first four letters.
 
    GGRoot.make()                 12 new words (an array)
@@ -36,14 +36,14 @@
     'announce annual another answer antenna anthem antique any apart apology appear apple approve april arch arctic ' +
     'area arena argue arm around arrange arrive arrow art artefact artist artwork ask aspect asset assist assume ' +
     'athlete atom attend attitude attract auction audit august aunt author auto autumn average avocado avoid awake ' +
-    'aware away awesome awkward axis baby backpack bacon badge bag bagel bakery balance balcony ball bamboo banana ' +
+    'aware away awesome awkward axis baby backpack lentil badge bag bagel bakery balance balcony ball bamboo banana ' +
     'banjo banner banquet bar barely bargain barrel base basic basket battle bay beach bean beauty because become ' +
     'beef before begin behave behind believe below belt bench benefit best better between beyond bicycle bid bike ' +
     'bind biology bird birth biscuit black blade blanket blossom blouse blue bluff blur blush board boat bobcat ' +
     'body boil bone bonfire bonnet bonus book boost border boring borrow boss bottom bounce bouquet box boy bracket ' +
     'brain brand brass brave bread breeze brick bridge brief bright bring brisk broccoli broken bronze broom ' +
-    'brother brown brush bubble buddy budget buffalo build bulb bulk bundle bungalow burger burst bus business busy ' +
-    'butter buyer buzz cabbage cabin cable cactus cake call calm camera camp can canal cancel candy cannon canoe ' +
+    'brother brown brush bubble buddy budget buffalo build bulb bulk bundle bungalow barley burst bus business busy ' +
+    'butter buyer buzz cabbage cabin cable cactus berry call calm camera camp can canal cancel candle cannon canoe ' +
     'canvas canyon capable capital captain car caramel carbon card cargo carpet carry cart case cash castle casual ' +
     'cat catalog catch category cattle caught cause caution cave cedar ceiling celery cello cement census century ' +
     'cereal certain chair chalk champion change chapter charge chase chat cheap check cheese chef cherry chest ' +
@@ -51,15 +51,15 @@
     'claim clap clarify claw clay clean clerk clever click client cliff climb clinic clip clock clog close cloth ' +
     'cloud clover clown club clump cluster clutch coach coast cobalt cobble coconut code coffee coil coin collect ' +
     'color column combine come comfort comic common company concert conduct confirm congress connect consider ' +
-    'control convince cook cool copper copy coral core corn correct cost cotton couch country couple course cousin ' +
+    'control convince cook cool copper copy coral core corn correct cost cotton hike country couple course cousin ' +
     'cover coyote cozy crack cradle craft cram crane crater crawl cream credit creek crew cricket crisp critic crop ' +
-    'cross crouch crowd crucial cruise crumble crunch crush crystal cube culture cup cupboard cupcake curious ' +
+    'cross crouch crowd crucial cruise crumble crunch crush crystal cube culture cup cupboard plum curious ' +
     'current curtain curve cushion custom cute cycle dad daisy damp dance daring dash daughter dawn day deal debate ' +
     'debris decade december decide decline decorate decrease deer defense define defy degree delay deliver demand ' +
     'dentist deny depart depend deposit depth deputy derive describe desert design desk detail detect develop ' +
     'device devote dew diagram dial diamond diary dice diesel diet differ digital dignity dilemma dimple dinner ' +
     'dinosaur direct dirt discover dish dismiss display distance divert divide doctor document dog doll dolphin ' +
-    'domain donate donkey donor doodle door double dove draft dragon drama draw dream dress drift drill drink drip ' +
+    'domain donate donkey donor doodle door double dove draft dragon drama draw dream dress drift drill birch drip ' +
     'drive drop drum dry duck dumpling dune during dust dutch duty dynamic eager eagle early earn earth easel ' +
     'easily east easy echo ecology economy edge edit educate effort egg eight either elbow elder electric elegant ' +
     'element elephant elevator elite elm else embark ember embody embrace emerge emotion employ empower empty ' +
@@ -85,7 +85,7 @@
     'improve impulse inch include income increase index indicate indoor industry infant inform inhale inherit ' +
     'initial inlet inner innocent input inquiry insect inside inspire install intact interest into invest invite ' +
     'involve iris iron island isolate issue item ivory jacket jaguar jar jasmine jazz jeans jelly jewel jigsaw job ' +
-    'join joke journey joy judge juice jump jungle junior junk just kangaroo kayak kazoo keen keep kestrel ketchup ' +
+    'join joke journey joy judge juice jump jungle junior knit just kangaroo kayak kazoo keen keep kestrel kale ' +
     'kettle key kick kid kind kingdom kiss kit kitchen kite kitten kiwi knee knife knock know lab label labor ' +
     'ladder ladle lady lagoon lake lamp language lantern laptop large later latin laugh laundry lava lavender law ' +
     'lawn layer leader leaf learn leave lecture left leg legal legend leisure lemon lend length lens leopard lesson ' +
@@ -97,17 +97,17 @@
     'memory mention menu mercy merge merit merry mesh message metal method middle midnight milk million mimic mind ' +
     'minimum minnow minor mint minute mirror miss mistake mix mixed mixture mobile model modify mom moment monitor ' +
     'monkey monster month moon moral more morning mosaic mosquito moss mother motion motor mountain mouse move ' +
-    'movie much muffin mulberry mule multiply muscle museum mushroom music must mutual myself mystery myth naive ' +
+    'moose much muffin mulberry mule multiply muscle museum mushroom music must mutual myself mystery myth naive ' +
     'name napkin narrow nation nature near neck nectar need negative neither nephew nerve nest net network neutral ' +
     'never news next nice night noble noise nominee noodle nook normal north nose notable note nothing notice novel ' +
     'now nugget number nurse nut nutmeg oak oatmeal obey object oblige oboe obscure observe obtain obvious occur ' +
     'ocean october odor off offer office often oil okay old olive olympic omit once one onion online only open ' +
     'opera opinion oppose option orange orbit orchard order ordinary organ orient original ostrich other otter ' +
     'outdoor outer output outside oval oven over own owner oxygen oyster ozone pact paddle page pair pajamas palace ' +
-    'palm pancake panda panel panther papaya paper paprika parade parent park parrot parsley party pass patch path ' +
+    'palm porridge panda panel panther papaya paper paprika parade parent park parrot parsley party pass patch path ' +
     'patient patrol pattern pause pave payment peace peanut pear peasant pebble pecan pelican pen penalty pencil ' +
     'people pepper perfect permit person pet petal phone photo phrase physical piano picnic picture piece pig ' +
-    'pigeon pilot pinecone pink pinwheel pioneer pipe pitch pizza place planet plastic plate play plaza please ' +
+    'pigeon pilot pinecone pink pinwheel pioneer pipe pitch beet place planet plastic plate play plaza please ' +
     'pledge pluck plug plunge poem poet point polar pole police pond pony pool poppy popular porch portion position ' +
     'possible post potato pottery powder power practice praise predict prefer prepare present pretty prevent price ' +
     'primary print priority private prize problem process produce profit program project promote proof property ' +
@@ -120,31 +120,31 @@
     'retreat return reunion reveal review reward rhythm rib ribbon rice rich riddle ride ridge right rigid ring ' +
     'ripple risk ritual rival river road roast robin robot robust rocket romance roof rookie room rose rotate rough ' +
     'round route rowboat royal rubber rug rule run runway rural saddle safe saffron sage sail salad salmon salon ' +
-    'salsa salt salute same sample sand sapling sapphire sardine satisfy sauce sausage save say scale scan scarf ' +
-    'scatter scene scheme school science scissors scone scorpion scout scrap screen script scrub sea search season ' +
+    'salsa salt salute same sample sand sapling sapphire sardine satisfy sauce grove save say scale scan scarf ' +
+    'scatter scene scheme school science scissors scone scorpion scout scrap beaver script scrub sea search season ' +
     'seat second secret section security seed seek segment select sell seminar senior sense sentence series service ' +
     'session settle setup seven shadow shaft shallow shamrock share shed shell sheriff shield shift shine ship ' +
     'shiver shoe shop short shoulder shove shrimp shrug shuffle shy sibling side sight sign silent silk silly ' +
     'silver similar simple since sing siren sister situate six size skate sketch ski skill skin skirt skylark slab ' +
-    'slam sleep slender slice slide slight slim slogan slot slow slush small smart smile smoke smooth snack snake ' +
-    'snap sniff snow soap soccer social sock soda soft solar solid solution solve someone song soon sorry sort ' +
+    'slam sleep slender slice slide slight slim slogan slot slow loom small smart smile crayon smooth snack snake ' +
+    'snap sniff snow soap soccer social sock oriole soft solar solid solution solve someone song soon sorry sort ' +
     'sound soup source south space spare spatial spawn speak special speed spell spend sphere spice spider spike ' +
     'spin split spoil sponsor spoon sport spot spray spread spring sprout square squeeze squirrel stable stadium ' +
     'staff stage stairs stamp stand start state stay steak steel stem step stereo stick still sting stock stomach ' +
     'stone stool story stove strategy street strike strong struggle student stuff stumble style subject submit ' +
-    'subway success such sudden sugar suggest suit summer sun sunbeam sundial sunny sunrise sunset super supply ' +
+    'subway success such sudden finch suggest suit summer sun sunbeam sundial sunny sunrise sunset super supply ' +
     'supreme sure surface surge surprise surround survey sustain swallow swamp swap swarm sweet swift swim swing ' +
-    'switch symbol syrup system table tackle tag tail talent talk tank tape target task taste tattoo taxi teach ' +
+    'switch symbol lark system table tackle tag tail talent talk tank tape target task taste tattoo taxi teach ' +
     'team teapot tell ten tenant tennis tent term test text thank that theme then theory there they thimble thing ' +
     'this thought three thrive throw thumb thunder thyme ticket tide tiger tilt timber time tinsel tiny tip tired ' +
-    'tissue title toast today toddler toe together token tomato tomorrow tone tongue tonight tool tooth top topic ' +
+    'tissue title treasure today toddler toe together token tomato tomorrow tone tongue tonight tool tooth top topic ' +
     'topple torch tornado tortoise toss total tourist toward tower town toy track trade traffic train transfer trap ' +
-    'trash travel tray treat tree trellis trend trial tribe trick trim trip trophy trouble truck true truly trumpet ' +
+    'trash travel tray owl tree trellis trend trial tribe trick trim trip trophy trouble truck true truly trumpet ' +
     'trust truth try tuba tube tugboat tuition tulip tumble tuna tundra tunnel turkey turn turtle twelve twenty ' +
     'twice twin twist two type typical ukulele umbrella umpire unable unaware uncle uncover under undo unfair ' +
     'unfold uniform unique unit universe unknown unlock until unusual unveil update upgrade uphold upon upper urban ' +
     'urge usage use used useful usual utility vacant vacuum vague valid valley valve van vanish vapor various vast ' +
-    'vault vehicle velvet vendor venture venue verb verify version very vessel veteran viable vibrant victory video ' +
+    'vault vehicle velvet vendor venture venue verb verify version very vessel veteran viable vibrant victory hare ' +
     'view village vintage violin virtual visa visit vista visual vital vivid vocal voice void volcano volume vote ' +
     'voyage waffle wage wagon wait walk wall walnut walrus waltz want warm wash wasp waste water wave way wealth ' +
     'wear weasel weather web wedding weekend weird welcome west wet whale what wheat wheel when where whip whisper ' +
