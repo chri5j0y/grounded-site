@@ -3327,7 +3327,7 @@ function lcFromHash(e) {
   setTimeout(() => scrollToViewTop(document.getElementById(top || view) ? (top || view) : view, false, true), 60);
 }
 window.addEventListener('hashchange', lcFromHash);
-window.addEventListener('popstate', lcFromHash);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; lcFromHash(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 /* Deep links: #quick starts the quick check-in, #checkin the full one */
 function checkinFromHash() { const h = location.hash; if (h === '#quick' && typeof startQuick === 'function') startQuick(); else if ((h === '#checkin' || h === '#check' + 'up') && typeof startCheckin === 'function') startCheckin(); }
 setTimeout(checkinFromHash, 60);

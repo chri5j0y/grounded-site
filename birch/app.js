@@ -2212,6 +2212,6 @@ try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; 
 // popstate and hashchange both fire for one Back in some browsers, and older Safari fires only hashchange: handle each address once.
 let navLastH = null, navLastT = 0;
 const navEv = () => { const h = location.hash, t = Date.now(); if (h === navLastH && t - navLastT < 400) return; navLastH = h; navLastT = t; fromHash(true); };
-window.addEventListener('popstate', navEv);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; navEv(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', navEv);
 setTimeout(() => { fromHash(false); NAV_READY = true; }, 60);

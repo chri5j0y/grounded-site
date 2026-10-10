@@ -873,16 +873,19 @@
   // routing never sees a change) and opening a video from the Learn list adds a second. Back steps from the video to
   // the list, then closes Learn. Each entry's state says what it shows: {ggLearn: 1 or 2, ggLesson: id or null}.
   // Closing with the X (or Escape, or a guide link) goes back over these entries, so none is left behind.
-  // A popstate that belongs to Learn stops here (capture), so the apps' own popstate routing never sees it.
+  // A popstate that belongs to Learn or a page video stops here when this listener runs first; the apps' own popstate
+  // handlers also ask GGHistOwn(e) first and step aside (a browser may run their listener before this one).
   var HIST = { skip: false, after: null, t: 0 };
+  window.GGHistOwn = window.GGHistOwn || function (e) { if (!e || e.type !== 'popstate') return false; var st = e.state; return !!(window.GG_HIST_SKIP || (st && (st.ggLearn || st.ggPageVideo)) || document.querySelector('.ggl-app')); };
+  function hSkip() { HIST.skip = true; window.GG_HIST_SKIP = true; clearTimeout(HIST.t); HIST.t = setTimeout(hDone, 800); }
   function hState(level, id) { var s = {}, h = history.state; if (h && typeof h === 'object') for (var k in h) if (k !== 'ggPageVideo') s[k] = h[k]; s.ggLearn = level; s.ggLesson = id || null; return s; }
   function hPush(level, id) { try { history.pushState(hState(level, id), '', location.href); if (APP) APP.depth = level; } catch (e) {} }
   function hSet(id) { if (!APP || !APP.depth) return; try { history.replaceState(hState(APP.depth, id), '', location.href); } catch (e) {} }
-  function hDone() { clearTimeout(HIST.t); HIST.skip = false; var f = HIST.after; HIST.after = null; if (f) f(); }
+  function hDone() { clearTimeout(HIST.t); HIST.skip = false; window.GG_HIST_SKIP = false; var f = HIST.after; HIST.after = null; if (f) f(); }
   function onPop(e) {
     var st = e.state || {}, lv = st.ggLearn || 0;
     if (HIST.skip) { e.stopImmediatePropagation(); hDone(); return; }
-    if (!APP) { if (lv) { e.stopImmediatePropagation(); try { history.back(); } catch (x) {} } return; } // Forward onto an old Learn entry: step off it
+    if (!APP) { if (lv) { e.stopImmediatePropagation(); hSkip(); try { history.back(); } catch (x) { hDone(); } } return; } // Forward onto an old Learn entry: step off it
     e.stopImmediatePropagation();
     APP.depth = lv;
     if (!lv) { close(false, true); return; }
@@ -925,7 +928,7 @@
     document.removeEventListener('keydown', appKey);
     APP.root.remove(); document.body.style.overflow = APP.overflow || '';
     var f = APP.prevFocus, d = APP.depth; APP = null;
-    if (!keepHistory && d) { HIST.skip = true; clearTimeout(HIST.t); HIST.t = setTimeout(hDone, 800); try { history.go(-d); } catch (e) { hDone(); } }
+    if (!keepHistory && d) { hSkip(); try { history.go(-d); } catch (e) { hDone(); } }
     if (!quiet && f && f.focus) try { f.focus(); } catch (e) {}
     try { window.dispatchEvent(new CustomEvent('gg-learn-close')); } catch (e) {} // pages can refresh watched marks
   }

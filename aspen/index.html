@@ -2537,7 +2537,7 @@ aspNavRead(null);
 // popstate and hashchange can both fire for one Back, and older Safari fires only hashchange: read each address once.
 var aspNavRead_h = null, aspNavRead_t = 0;
 function aspNavReadOnce(e) { var h = location.hash, t = Date.now(); if (h === aspNavRead_h && t - aspNavRead_t < 400) return; aspNavRead_h = h; aspNavRead_t = t; aspNavRead(e && e.type === 'popstate' ? e : { state: history.state }); }
-window.addEventListener('popstate', aspNavReadOnce);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; aspNavReadOnce(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>

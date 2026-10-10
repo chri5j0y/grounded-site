@@ -1707,88 +1707,38 @@ function startCheckin() {
   renderStep(true);
 }
 
-/* ---------- the tree ---------- */
-const LEAF_COLORS = ['#6CCB3A', '#A5E072', '#8BD65A'];
-const CLUSTERS = [[104, 132, 5], [90, 156, 4], [214, 106, 5], [234, 140, 4], [162, 76, 6], [134, 104, 4], [192, 88, 4]];
-function leavesMarkup() {
-  let out = '', n = 0;
-  CLUSTERS.forEach(([cx, cy, count]) => {
-    for (let i = 0; i < count; i++) {
-      const rot = -150 + (300 / (count - 1 || 1)) * i + (n % 2 ? 8 : -6);
-      const s = 0.9 + (n % 3) * 0.12;
-      out += `<path d="M0 0 C-7 -6 -7 -19 0 -25 C7 -19 7 -6 0 0Z" transform="translate(${cx} ${cy}) rotate(${rot}) scale(${s})" fill="${LEAF_COLORS[n % 3]}" stroke="#2B6B10" stroke-width="1.3"/>`;
-      n++;
-    }
-  });
-  return out;
+/* ---------- the tree art (GWG BLD 780) ----------
+   Maple's own painting with six glowing markers (shared/gg-treeart.js, with the spots in
+   shared/gg-treeart-kids.js). It replaced the drawn tree in the check-in panel, Results,
+   Season (My check-ins, How I've grown), and the printed growth plan. The weather becomes
+   light: sunny a full warm glow (Strong), partly cloudy a soft glow (Steady), rainy a new
+   green light (Growing Edge). Never wilted, never bare. Earned critters ride along as a
+   small sticker row in a corner of the painting. */
+const ART_APP = 'maple';
+const ART_WX = { sun: 's', cloud: 't', rain: 'g' };
+const ART_WORDS = { s: 'Strong', t: 'Steady', g: 'Growing Edge', u: 'Skipped' };
+const MP_BLURB = { roots: 'Feeling safe and loved', trunk: 'What makes you you', bark: 'Big feelings', branches: 'Your people', leaves: 'Sleep, food, and play', fruit: 'Looking forward' };
+function artParts(withText) { return PARTS.map(p => ({ key: p.key, name: p.name, tag: MP_BLURB[p.key], text: withText ? p.g35.tree : '' })); }
+function artLevels(answers) { const o = {}; PARTS.forEach(p => { const a = (answers || {})[p.key]; o[p.key] = a ? (ART_WX[a.w] || 'u') : 'u'; }); return o; }
+function artStickers(kid) {
+  const cr = kid ? critterState(kid) : {};
+  return CRITTERS.filter(c => cr[c.key]).map(c => `<svg viewBox="-20 -30 40 44" aria-hidden="true">${CRITTER_ART[c.key]}</svg>`).join('');
 }
-const LEAVES = leavesMarkup();
-const PIECES = {
-  roots: `<g stroke="#8A5A3B" stroke-linecap="round" fill="none"><path stroke-width="7" d="M160 238 C156 262 138 276 110 290"/><path stroke-width="7" d="M160 238 C166 264 186 278 214 292"/><path stroke-width="6" d="M160 240 C160 268 158 290 160 316"/><path stroke-width="4" d="M126 283 C116 290 104 300 96 312"/><path stroke-width="4" d="M199 285 C211 292 221 302 227 314"/><path stroke-width="3.5" d="M160 300 C150 306 144 312 140 321"/><path stroke-width="3.5" d="M110 290 C98 292 88 290 78 294"/><path stroke-width="3.5" d="M214 292 C226 294 236 292 246 297"/></g>`,
-  trunk: `<path d="M147 244 C151 205 153 168 155 116 L166 116 C168 168 170 205 175 244 Z" fill="#B98A5E" stroke="#8A6A4E" stroke-width="2"/>`,
-  bark: `<g stroke="#7A5236" stroke-linecap="round" fill="none" stroke-width="3"><path d="M155 230 C153 217 155 205 153 194"/><path d="M165 222 C167 210 165 200 166 188"/><path d="M158 172 C156 162 158 152 157 142"/><path d="M163 158 C164 150 163 140 164 130"/><ellipse cx="162" cy="206" rx="3" ry="4.5" stroke-width="2.5"/></g>`,
-  branches: `<g stroke="#9A6E47" stroke-linecap="round" fill="none"><path stroke-width="8" d="M156 180 C140 168 124 156 104 136"/><path stroke-width="8" d="M165 162 C180 148 196 134 214 110"/><path stroke-width="6.5" d="M160 120 C160 106 161 94 162 80"/><path stroke-width="4.5" d="M122 154 C112 150 100 150 90 154"/><path stroke-width="4.5" d="M200 130 C210 131 222 134 234 140"/><path stroke-width="4" d="M150 160 C144 146 138 124 134 104"/><path stroke-width="4" d="M170 142 C176 126 184 104 192 88"/></g>`,
-  leaves: `<g>${LEAVES}</g>`,
-  fruit: `<g>${[[112, 142], [206, 120], [170, 90], [140, 116], [228, 150], [92, 164], [186, 96]].map(([x, y]) => `<path d="M${x} ${y - 7} q2 -6 6 -7" stroke="#2B6B10" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="7.5" fill="#FF6B6B" stroke="#C0392B" stroke-width="1.2"/><circle cx="${x - 2.5}" cy="${y - 2.5}" r="2.2" fill="#FFFFFF" opacity="0.75"/>`).join('')}</g>`
-};
-const ANCHOR = { roots: [262, 290], trunk: [202, 206], bark: [96, 214], branches: [42, 120], leaves: [252, 62], fruit: [58, 60] };
-const DRAW_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
-
-function decorMarkup(key, w) {
-  const [x, y] = ANCHOR[key];
-  if (!w) return '';
-  const inner = wxIcon(w).replace('<svg viewBox="0 0 64 64" aria-hidden="true">', '').replace(/<\/svg>$/, '');
-  const glow = w === 'sun' ? `<circle cx="${x}" cy="${y}" r="26" fill="#F2B84B" opacity="0.2"/>` : '';
-  return `${glow}<svg x="${x - 20}" y="${y - 20}" width="40" height="40" viewBox="0 0 64 64">${inner}</svg>`;
+function artResultsHtml(answers, o) {
+  if (!window.GGTreeArt) return '';
+  return GGTreeArt.results(null, Object.assign({ app: ART_APP, gentle: true, parts: artParts(), levels: artLevels(answers), words: ART_WORDS }, o || {}));
 }
-
-/* opts: { live: bool, hideKey: key to start hidden for maple animation, id } */
-function treeSVG(answers, opts) {
-  opts = opts || {};
-  const id = opts.id || 't' + Math.random().toString(36).slice(2, 7);
-  let body = '';
-  DRAW_ORDER.forEach(key => {
-    const a = answers[key];
-    const answered = !!a;
-    const skipped = a && a.w === 'skip';
-    let cls = 'piece ' + (key === 'roots' ? 'roots' : '');
-    let style = '';
-    if (!answered) { cls += ' off'; }
-    else if (skipped) { style = 'opacity:0.2'; }
-    if (opts.hideKey === key) cls += ' off';
-    body += `<g class="${cls}" data-piece="${key}" style="${style}">${PIECES[key]}</g>`;
-  });
-  let decor = '';
-  if (!opts.noDecor) DRAW_ORDER.forEach(key => {
-    const a = answers[key];
-    if (!a) return;
-    decor += `<g class="decor${opts.hideKey === key ? ' off' : ''}" data-decor="${key}">${decorMarkup(key, a.w)}</g>`;
-  });
-  let rings = '';
-  const cr = opts.critters || {};
-  for (let i = 0; i < Math.min(cr.rings || 0, 6); i++) {
-    const y = 232 - i * 15;
-    rings += `<path d="M${150 + i * 0.6} ${y} Q161 ${y + 5} ${172 - i * 0.6} ${y}" stroke="#8A5A3B" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
-  }
-  let critters = '';
-  ['bird', 'lady', 'butterfly', 'bunny'].forEach(k => {
-    if (!cr[k]) return;
-    const [x, y] = CRITTER_SPOT[k];
-    critters += `<g transform="translate(${x} ${y}) scale(1.3)"><g class="critter${opts.land === k ? ' land' : ''}" data-critter="${k}">${CRITTER_ART[k]}</g></g>`;
-  });
-  const label = opts.label || 'A tree';
-  return `<svg class="tree-svg" id="${id}" viewBox="0 0 320 336" role="img" aria-label="${esc(label)}" xmlns="http://www.w3.org/2000/svg">
-    <rect x="8" y="236" width="304" height="94" rx="24" fill="#F3DDB3"/>
-    <path d="M8 250 C60 228 120 232 160 236 C210 240 260 226 312 246 L312 262 L8 262 Z" fill="#8EDB5E"/>
-    <g fill="#D8C39C"><circle cx="60" cy="300" r="3"/><circle cx="252" cy="318" r="2.5"/><circle cx="118" cy="322" r="2"/><circle cx="198" cy="306" r="2"/></g>
-    <g class="sway-g">${body}${rings}${critters}</g>${decor}</svg>`;
-}
-function maple(containerId, key) {
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    const c = $(containerId);
-    if (!c) return;
-    c.querySelectorAll(`[data-piece="${key}"],[data-decor="${key}"]`).forEach(el => el.classList.remove('off'));
-  }));
+// Lays the critter sticker row on the paintings inside el (after the markup is in the page).
+function artStick(el, kid) { const h = artStickers(kid); if (el && h && window.GGTreeArtKids) GGTreeArtKids.stickers(el, h); }
+// Then and Now, rings, and the level badge, from this child's own full check-ins on the same questions.
+function artGrowthHtml(kid) {
+  if (!window.GGTreeArt || !kid) return '';
+  const cs = kid.checkins || [], std = cs.length ? cs[cs.length - 1].std : null;
+  const hist = cs.filter(c => c.std === std).map(c => ({ date: dkey(new Date(c.date)), levels: artLevels(c.answers) }));
+  return GGTreeArt.growth(null, { app: ART_APP, gentle: true, parts: artParts(), words: ART_WORDS, history: hist,
+    levelName: mpLevel(mpDays(kid.tend || {})).name, ladder: MP_LEVELS.map(L => L[1]),
+    ladderLine: 'Your level grows with the days you tend your tree, shown as a small badge on your painting.',
+    oneLine: 'Your first ring is here. After your next check-in, you will see Then and Now.' });
 }
 
 /* ---------- checkin ---------- */
@@ -3351,7 +3301,7 @@ function mpNavRead(e) {
 // popstate and hashchange can both fire for one Back, and older Safari fires only hashchange: read each address once.
 var mpNavRead_h = null, mpNavRead_t = 0;
 function mpNavReadOnce(e) { var h = location.hash, t = Date.now(); if (h === mpNavRead_h && t - mpNavRead_t < 400) return; mpNavRead_h = h; mpNavRead_t = t; mpNavRead(e && e.type === 'popstate' ? e : { state: history.state }); }
-window.addEventListener('popstate', mpNavReadOnce);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; mpNavReadOnce(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 

@@ -1764,7 +1764,7 @@ $('#size-btn').addEventListener('click', () => { const sc = ROOT.scale || 1; ROO
 $('#menu-btn').addEventListener('click', () => { const open = $('#site-menu').classList.toggle('open'); $('#menu-btn').setAttribute('aria-expanded', open); });
 $('#hero-cta').addEventListener('click', () => { S.tab = 'grove'; render(); pushHash(); $('#app').scrollIntoView({ behavior: 'smooth' }); });
 setScale(); render(); fromHash(); HASH_SEEN = location.hash;
-window.addEventListener('popstate', onPop);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; onPop(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', () => { if (!location.hash || location.hash === HASH_SEEN) return; HASH_SEEN = location.hash; fromHash(); });
 window.addEventListener('gg-fam', famIntake);
 famIntake();

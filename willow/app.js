@@ -1299,7 +1299,7 @@ function onPop() {
   S.ck = null; S.tab = 'today'; S.guide.open = null; S.read.open = null;
   render(); setTimeout(() => scrollTop(true), 80);
 }
-window.addEventListener('popstate', onPop);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; onPop(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', () => { if (!location.hash || location.hash === HASH_SEEN) return; HASH_SEEN = location.hash; fromHash(); });
 window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'willow') { S.tab = 'today'; render(); } });
 

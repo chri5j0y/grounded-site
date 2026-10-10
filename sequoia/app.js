@@ -2154,5 +2154,5 @@ function fromHash(e) {
   setTimeout(() => scrollToViewTop(document.getElementById(top || view) ? (top || view) : view, false, true), 60);
 }
 window.addEventListener('hashchange', fromHash);
-window.addEventListener('popstate', fromHash);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; fromHash(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 setTimeout(fromHash, 60);
