@@ -302,7 +302,8 @@
       var t = typeof o.then === 'number' && o.then >= 0 && o.then < nowI ? o.then : 0; o.then = t;
       var then = H[t];
       var grew = ps.filter(function (p) { var a = then.levels[p.key], b = now.levels[p.key]; return RANK[a] != null && RANK[b] != null && RANK[b] > RANK[a]; }).map(function (p) { return p.name; });
-      var line = grew.length ? 'Your ' + joinAnd(grew) + ' grew since ' + nice(then.date) + '.' : 'Your tree is holding steady since ' + nice(then.date) + '.';
+      // grewLine and steadyLine (optional) change the kind line: {parts} and {date} are filled in (Willow, BLD 780).
+      var line = grew.length ? (o.grewLine || 'Your {parts} grew since {date}.').replace('{parts}', joinAnd(grew)).replace('{date}', nice(then.date)) : (o.steadyLine || 'Your tree is holding steady since {date}.').replace('{date}', nice(then.date));
       var thenPic = art(o, ps.map(function (p) { return marker(o, id, p, 'gta-lv-' + lvOf(then.levels, p.key), '', false); }).join('') + '<div class="gta-mist" aria-hidden="true"></div>', 'gta-then', 'Your tree then, ' + nice(then.date) + ': ' + describe(ps, then.levels, w));
       body = '<h3 class="gta-line" aria-live="polite">' + esc(line) + '</h3>'
         + '<div class="gta-tn two"><div class="gta-col"><p class="gta-k">Then, ' + esc(nice(then.date)) + '</p>' + thenPic + '</div>'

@@ -361,7 +361,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 @media (prefers-reduced-motion: reduce){ .piece,.decor,.weather{transition:none;} }
 
 /* Results */
-.results{display:grid;grid-template-columns:320px minmax(0,1fr);gap:28px;align-items:start;}
+.results{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:28px;align-items:start;}
 @media(max-width:820px){ .results{grid-template-columns:1fr;} }
 .results-tree{background:var(--card);border:3px solid var(--outline);border-radius:26px;padding:14px;text-align:center;}
 .results-tree .tree-svg{max-width:300px;}
@@ -568,6 +568,18 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .cu[aria-pressed="true"]{border-color:var(--sky-bright);background:var(--sky-soft);}
 .cu .tree-svg{max-width:130px;}
 .cu-detail{margin-top:16px;}
+.cu-ring{display:block;width:56px;height:56px;margin:4px auto 6px;border-radius:50%;background:radial-gradient(circle,#8B5E1A 0 3px,transparent 4px),repeating-radial-gradient(circle,#C9A877 0 3px,#F1E6CC 3px 6px);border:2px solid #C9A877;}
+/* The tree art (GWG BLD 780): Maple's painting with six glowing markers (shared/gg-treeart.js). */
+.tree-panel .gta-list,.tree-panel .gta-legend{display:none;}
+.tree-panel .gta-grid{gap:0;}
+.results-tree .gta{text-align:left;}
+.parts-peek .gta-name{font-family:var(--kid);font-weight:500;}
+.mp-art{margin-top:8px;}
+.mp-grow{margin-top:22px;}
+@media (prefers-reduced-motion:no-preference){ .mp-pop::before{animation:mpPop .9s cubic-bezier(.3,1.5,.5,1);} }
+@keyframes mpPop{0%{transform:scale(.3);opacity:0;}100%{transform:scale(1);opacity:1;}}
+html.gg-reduce-motion .mp-pop::before,html[data-motion="reduce"] .mp-pop::before{animation:none;}
+.sheet-top .sheet-art{width:130px;height:auto;flex:none;border-radius:16px;}
 .grow-table{border-collapse:separate;border-spacing:0 6px;width:auto;}
 .grow-wrap{overflow-x:auto;}
 .grow-table th{font-family:var(--kid);font-weight:500;font-size:15px;color:var(--ink-soft);text-align:center;padding:0 6px;white-space:nowrap;}
@@ -850,7 +862,7 @@ a.big-btn{text-decoration:none;}
     <div class="welcome-side">
       <div class="parts-peek">
         <h3>The six parts of your tree</h3>
-        <ul class="peek-list" id="peek-list"></ul>
+        <div id="peek-list"></div>
       </div>
       <div class="life-promo">
         <b>When Life Changes</b>
@@ -1375,7 +1387,6 @@ const CRITTER_ART = {
   bird: '<ellipse cx="0" cy="4" rx="16" ry="6" fill="#A0703F"/><path d="M-14 3Q0 9 14 3M-12 6Q0 11 12 6" stroke="#6E4A26" stroke-width="1.4" fill="none"/><circle cx="1" cy="-7" r="9" fill="#00B4D8"/><ellipse cx="-2" cy="-5" rx="5" ry="3.5" fill="#0096C7"/><path d="M-8 -9L-15 -13L-9 -5Z" fill="#0096C7"/><circle cx="5" cy="-10" r="1.8" fill="#243746"/><path d="M10 -8L16 -6L10 -4Z" fill="#FF9F1C"/>',
   bunny: '<ellipse cx="0" cy="0" rx="12" ry="9" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.5"/><circle cx="-11" cy="-1" r="3" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.2"/><circle cx="9" cy="-9" r="7" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.5"/><ellipse cx="6" cy="-21" rx="2.6" ry="7" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.4"/><ellipse cx="12" cy="-21" rx="2.6" ry="7" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.4"/><ellipse cx="12" cy="-21" rx="1.1" ry="4.5" fill="#FFB3C1"/><circle cx="11" cy="-10" r="1.4" fill="#243746"/><circle cx="15.5" cy="-8" r="1.2" fill="#FF6B8B"/>'
 };
-const CRITTER_SPOT = { lady: [224, 98], butterfly: [66, 88], bird: [110, 126], bunny: [262, 236] };
 
 /* When Life Changes guides live in guides.js (loaded above). */
 const RINGS = (window.MAPLE_GUIDES || {}).rings || [];
@@ -1687,9 +1698,10 @@ function setGrade(g) {
   document.querySelectorAll('[data-grade]').forEach(b => b.setAttribute('aria-pressed', b.dataset.grade === g ? 'true' : 'false'));
   clearErr('start-error');
 }
+// The six parts on Maple's own painting: tap a glowing part to see what it holds (GWG BLD 780).
 function renderPeek() {
-  const blurbs = { roots: 'Feeling safe and loved', trunk: 'What makes you you', bark: 'Big feelings', branches: 'Your people', leaves: 'Sleep, food, and play', fruit: 'Looking forward' };
-  $('peek-list').innerHTML = PARTS.map(p => `<li>${dot(p)}<span><b>${p.name}</b>${blurbs[p.key]}</span></li>`).join('');
+  const el = $('peek-list'); if (!el || !window.GGTreeArt) return;
+  GGTreeArt.howItWorks(el, { app: ART_APP, gentle: true, maxH: 340, parts: artParts(true), label: 'The Maple painting with six glowing parts to tap', hint: 'Tap a glowing part of the tree to see what it holds.' });
 }
 function startCheckin() {
   const name = $('kid-name').value.trim();
@@ -2263,6 +2275,7 @@ function renderTree() {
         <button class="danger-link" onclick="removeKid('${esc(S.kid)}')">Remove ${esc(kid.name)}</button>
       </div></div></details></div>`;
   if (window.GGTend) GGTend.render();
+  artStick($('tree-body'), kid);
   if (tab === 'plan') mpRenderPlan();
   if (tab === 'guides') mpRenderGuides();
 }
@@ -2823,8 +2836,10 @@ function checkinsTabHTML(kid) {
   if (!S.cuSel || !kid.checkins.find(c => c.id === S.cuSel)) S.cuSel = cs[0].id;
   const sel = kid.checkins.find(c => c.id === S.cuSel);
   const planActs = sel.plan && sel.plan.acts ? sel.plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(shownTitle) : [];
-  return `<div class="cu-grid">${cs.map(c => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()">${treeSVG(c.answers, { label: 'Tree from ' + fmtDate(c.date) })}${fmtDate(c.date)}</button>`).join('')}</div>
+  // One growth ring for each check-in. Tap a ring to see that day's painting and words.
+  return `<div class="cu-grid">${cs.map((c, i) => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()"><span class="cu-ring" aria-hidden="true" style="--n:${Math.min(cs.length - i, 6)}"></span>${fmtDate(c.date)}</button>`).join('')}</div>
     <div class="cu-detail"><h3 class="kid" style="font-family:var(--kid);font-weight:500;font-size:24px;color:var(--sky);margin:0">${fmtDate(sel.date)}</h3>${sel.std ? '' : '<p class="kid-text" style="font-size:16px;margin:4px 0 0">An earlier check-in, from before the new questions.</p>'}
+      <div class="mp-art" style="margin-top:12px">${artResultsHtml(sel.answers, { legend: false, label: kid.name + "'s tree from " + fmtDate(sel.date) })}</div>
       <ul class="kind-list">${PARTS.map(p => { const a = sel.answers[p.key] || { w: 'skip' }; return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(kindLine(p, a.w))}</span></li>`; }).join('')}</ul>
       ${planActs.length ? `<p class="kid-text" style="font-size:18px;margin-top:14px">Growth plan from this check-in: ${planActs.map(esc).join(', ')}.</p>` : ''}
     </div>`;
@@ -2837,7 +2852,6 @@ function grownTabHTML(kid) {
   const crCount = CRITTERS.filter(c => critterState(kid)[c.key]).length;
   const table = `<div class="grow-wrap"><table class="grow-table"><thead><tr><th></th>${shown.map(c => `<th>${fmtShort(c.date)}</th>`).join('')}</tr></thead>
     <tbody>${PARTS.map(p => `<tr><th class="part"><span>${dot(p)}${p.name}</span></th>${shown.map(c => { const w = (c.answers[p.key] || { w: 'skip' }).w; return `<td title="${WX_LABEL[w]}">${wxIcon(w)}<span class="sr-only">${WX_LABEL[w]}</span></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
-  const prev = cs.length > 1 && cs[cs.length - 2].std === cs[cs.length - 1].std ? cs[cs.length - 2] : null;
   return `<div class="stat-row">
       <div class="stat"><b>${cs.length}</b><span>check-in${cs.length === 1 ? '' : 's'}</span></div>
       <div class="stat"><b>${practiced}</b><span>day${practiced === 1 ? '' : 's'} tended</span></div>
@@ -2845,7 +2859,7 @@ function grownTabHTML(kid) {
     </div>
     <p class="kid-text" style="font-size:19px;margin:0 0 6px">Here's the weather for each part of your tree, from your first check-in to your newest.</p>
     ${table}
-    ${prev ? thenNowHTML(prev, cs[cs.length - 1], kid.name) : '<p class="kid-text" style="font-size:18px">After your next check-in, you will see your old and new trees side by side.</p>'}`;
+    <div class="mp-art mp-grow" id="mp-grow">${artGrowthHtml(kid)}</div>`;
 }
 function newCheckinFor(id) {
   const k = loadKids()[id];
@@ -2884,7 +2898,7 @@ function renderPrint(kid) {
       <button class="soft-btn" onclick="openTree('${esc(S.kid)}','tree')">Back to my tree</button>
     </div>
     <article class="sheet" aria-label="Growth Plan">
-      <div class="sheet-top">${last ? treeSVG(last.answers, { noDecor: true, critters: critterState(kid), label: kid.name + "'s tree" }) : ''}
+      <div class="sheet-top"><img class="sheet-art" src="/shared/heroes/maple-phone.webp" alt="" width="130" height="104">
         <div><h2 class="sheet-title">${esc(kid.name)}'s growth plan</h2>
         <p class="sheet-sub">${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Color a box each day I do it!</p></div></div>
       ${days > 14 ? chunk(1, 14) + chunk(15, 28) : chunk(1, 14)}

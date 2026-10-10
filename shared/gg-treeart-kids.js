@@ -17,15 +17,15 @@
   var W = [2000, 800], P = [900, 720], PT = [900, 1600];
   GGTreeArt.add('maple', {
     wide: { size: W, crop: [20, 22, 34, 74], at: { roots: [36.5, 89], trunk: [36.6, 81], bark: [36.9, 73.5], branches: [40.5, 61], leaves: [33, 50], fruit: [37.5, 34] } },
-    phone: { size: P, crop: [16, 22, 62, 74], at: { roots: [45, 90], trunk: [45, 83], bark: [45.3, 76], branches: [52, 64], leaves: [35, 53], fruit: [46, 34] } }
+    phone: { size: P, crop: [16, 22, 62, 74], at: { roots: [45, 90.5], trunk: [45, 81.5], bark: [45.3, 72.5], branches: [52, 64], leaves: [35, 53], fruit: [46, 34] } }
   });
   GGTreeArt.add('aspen', {
     wide: { size: W, crop: [20, 18, 34, 78], at: { roots: [36, 89], trunk: [36, 81], bark: [36.2, 73], branches: [41, 58], leaves: [30, 45], fruit: [36, 29] } },
-    phone: { size: P, crop: [14, 18, 62, 78], at: { roots: [43.5, 90], trunk: [43.5, 82.5], bark: [43.6, 75], branches: [51, 62], leaves: [31, 47], fruit: [44, 28] } }
+    phone: { size: P, crop: [14, 18, 62, 78], at: { roots: [43.5, 90.5], trunk: [43.5, 80.5], bark: [43.6, 70.5], branches: [51, 62], leaves: [31, 47], fruit: [44, 28] } }
   });
   GGTreeArt.add('willow', {
     wide: { size: W, crop: [4, 16, 42, 70], at: { roots: [21, 75.5], trunk: [21.8, 68.5], bark: [23.2, 61.5], branches: [28, 48], leaves: [15, 42], fruit: [31, 30] } },
-    phone: { size: P, crop: [6, 18, 70, 66], at: { roots: [33, 76], trunk: [34.3, 69.5], bark: [37.5, 58], branches: [47, 49], leaves: [19, 47], fruit: [52, 29] } }
+    phone: { size: P, crop: [6, 18, 70, 66], at: { roots: [33, 77], trunk: [34.6, 68.5], bark: [37.5, 58], branches: [47, 49], leaves: [19, 47], fruit: [52, 29] } }
   });
   GGTreeArt.add('grove', {
     wide: { size: W, crop: [30, 24, 44, 66], at: { roots: [52, 83.5], trunk: [51.6, 77], bark: [53.6, 70.5], branches: [59, 57], leaves: [44, 50], fruit: [55, 39] } },
