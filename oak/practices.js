@@ -27,10 +27,10 @@
       prompt: "What or who is set apart, or set above, anything else in your life? Where do you put your faith? What faith practices, if any, do you keep? What is your sacred text, whether scripture, poetry, or philosophy?",
       restore: [
         ['Prayer', 'Talk to the sacred as you would the most loving, understanding presence you can imagine. Speak it or write it.'],
-        ['Ritual', 'Create a sacred experience with water, breath, fire, or scent. You do not need to be a professional, only intentional.'],
+        ['Ritual', 'Create a sacred experience with water, breath, fire, or scent. Intention is all it takes.'],
         ['Teach', 'Pass on what you have learned, one on one or in a group. Mentorship deepens your own connection to what is sacred.'],
         ['Tithe', 'Give a portion of what you have toward something larger than yourself.'],
-        ['Worship', 'Build personal worship, not only corporate. At home, at the beach, in a hotel room. Invite the sacred into ordinary life.'],
+        ['Worship', 'Build personal worship alongside corporate worship. At home, at the beach, in a hotel room. Invite the sacred into ordinary life.'],
         ['Scripture', 'Study your sacred text deeply enough to teach it. Studying to learn and to share is where the power lives.']
       ],
       strength_msg: "When your roots are strong, you have a real anchor outside yourself, something steady to return to when life is not. That anchor is worth tending deliberately, not just relying on by default.",
@@ -46,10 +46,10 @@
       restore: [
         ['Music', 'Use sound deliberately to shift your nervous system state, energizing or calming as needed.'],
         ['Meditation', 'Begin with short, nonjudgmental awareness of the breath. You can calm your heart rate within 30 seconds once you have the tool.'],
-        ['Playing', 'Do something with no purpose but joy. Play like a child, not just with one.'],
+        ['Playing', 'Do something purely for joy. Play like a child, as well as with one.'],
         ['Mindfulness', 'Bring full attention to one ordinary task today. Notice without narrating.'],
         ['Reading', 'Let a book occupy your mind fully enough to rest it from its usual loops.'],
-        ['Thinking', 'Give yourself unstructured time to think without a screen or a task pulling your attention.']
+        ['Thinking', 'Give yourself open, unplugged time to think, with your attention all your own.']
       ],
       strength_msg: "Strong bark means you already have real tools to self-regulate. That is a genuine skill, not luck, and it is worth naming clearly so you keep reaching for it on purpose.",
       growth_steps: [
@@ -62,7 +62,7 @@
       key: 'trunk', name: 'Purpose', color: 'var(--p-trunk)', group: 'root',
       prompt: "What gives your life purpose and direction? Where do you find significance, the sense that your existence matters and is going somewhere? This is different from hope, which looks for light in dark moments. Purpose is the larger story you are living inside of.",
       restore: [
-        ['Journal Often', 'Write regularly, not to produce something polished, but to discover what you actually believe and feel as you go.'],
+        ['Journal Often', 'Write regularly to discover what you actually believe and feel as you go, rough edges and all.'],
         ['Create Stuff', 'Make something with your hands or your imagination. Creation is one of the most direct ways humans generate meaning.'],
         ['Plan the Future', 'Give yourself something real to move toward. Meaning often lives in anticipation as much as memory.'],
         ['Get Counseling', 'Work with a therapist or counselor to examine the stories you are telling yourself about your life.'],
@@ -80,7 +80,7 @@
       key: 'fruit', name: 'Hope', color: 'var(--p-fruit)', group: 'branch',
       prompt: "How do you define hope? Where do you find it outside of your faith, your mind, your body, your sense of meaning, or your community? Most people's hope lives in only a few places, often out of their grasp. Name what is actually yours.",
       restore: [
-        ['Volunteer', 'Serve where you can witness change. Hope grows from experience, not theory.'],
+        ['Volunteer', 'Serve where you can witness change. Hope grows from lived experience.'],
         ['Pay It Forward', 'A small unearned kindness, given without expectation of return.'],
         ['Be Generous', 'Give something, time, money, attention, before you feel ready to.'],
         ['Provide Care', 'Tend to someone or something. Caregiving is a hope practice.'],
@@ -101,8 +101,8 @@
       restore: [
         ['Breathe', 'Practice slow, intentional breathing daily. It is the fastest lever you have on your nervous system.'],
         ['Food', 'Eat real, whole foods that nourish rather than numb.'],
-        ['Sleep', 'Protect 8 hours. Make your bedroom for sleep only: no screens, no late eating, a real nightly routine.'],
-        ['Medicine', 'Use medical care, prescriptions, and supplements as real tools, not last resorts or sources of shame.'],
+        ['Sleep', 'Protect 8 hours. Make your bedroom for sleep only: unplugged, an early last meal, a real nightly routine.'],
+        ['Medicine', 'Use medical care, prescriptions, and supplements as real tools, worth reaching for early and with self-respect.'],
         ['Movement', 'Move your body daily, even imperfectly. Walking counts.'],
         ['Chakras', 'If energy work resonates with you, explore practices that address the body as an energetic system.']
       ],
@@ -118,10 +118,10 @@
       prompt: "Who shows up for you? Who do you show up for? Name the actual people and groups who form your support system. Remember the one rule: if someone already appears on another domain, like a spouse who is also your source of hope, they belong here under Branches, not duplicated elsewhere.",
       restore: [
         ['Family', 'Invest deliberately in the family relationships that are healthy and life-giving, even if imperfect.'],
-        ['Friends', 'Make and keep friendships that do not depend on convenience. Reach out first sometimes.'],
+        ['Friends', 'Make and keep friendships that last beyond convenience. Reach out first sometimes.'],
         ['Neighbors', 'Know the people who live near you. Proximity is an underused form of community.'],
         ['Clubs', 'Join something organized around a shared interest. Structure makes belonging easier to access.'],
-        ['Colleagues', 'Build real, human relationships at work, not only transactional ones.'],
+        ['Colleagues', 'Build real, human relationships at work, beyond the transactional.'],
         ['Faith', 'If you have a faith community, treat it as a support system. It is conditional and can end abruptly, unlike your personal connection to the Holy, so build both.']
       ],
       strength_msg: "Strong branches mean you are not carrying life alone, and that other people can count on you too. This is one of the most protective resources a person can have.",

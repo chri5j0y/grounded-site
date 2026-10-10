@@ -3955,7 +3955,7 @@ window.GG_LEARN = {
     {
      "id": "mp-r-sleep",
      "n": 4,
-     "title": "When Sleep Is Hard",
+     "title": "When I Can’t Sleep",
      "mins": 3,
      "blurb": "A sleepy turtle, a heavy body, and slow breaths for bedtime.",
      "scenes": [
@@ -3963,7 +3963,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "maple",
        "eyebrow": "Support for Right Now",
-       "h": "When Sleep Is Hard",
+       "h": "When I Can’t Sleep",
        "sub": "Slow and sleepy, like a turtle.",
        "say": "Is it bedtime, and your eyes just will not close? Let us get slow and sleepy together. Snuggle in, and keep the sound soft."
       },
@@ -8738,7 +8738,7 @@ window.GG_LEARN = {
     {
      "id": "as-r-sleep",
      "n": 5,
-     "title": "When Sleep Is Hard",
+     "title": "When You Can’t Sleep",
      "mins": 3,
      "blurb": "Set your thoughts down and let your body rest.",
      "scenes": [
@@ -8746,7 +8746,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "aspen",
        "eyebrow": "Support for Right Now",
-       "h": "When Sleep Is Hard",
+       "h": "When You Can’t Sleep",
        "sub": "Set it down for tonight.",
        "say": "If it is late, and your mind will not slow down, this is for you. Keep the lights low and the volume soft."
       },
@@ -9523,7 +9523,7 @@ window.GG_LEARN = {
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 1', h: 'Being There Is the Gift', sub: 'Shelter for others. Strength for you.', say: 'This series is for anyone walking with someone through a hard time. A parent, a partner, a friend, a coworker, a caregiver. Let us start with the most important thing.' },
           { k: 'big', h: 'Hospice taught me this: hold space.', sub: 'Being there matters more than the perfect words.', say: 'When I think about hospice and what it means, it often comes down to two words. Hold space. Your being there matters more than finding the perfect words.' },
           { k: 'points', h: 'Holding space looks like', items: [['Showing up', 'In person, by phone, or by text'], ['Listening more than fixing', 'Let them finish'], ['Letting silence be', 'Quiet together is still company'], ['Following their lead', 'Their topic, their pace']], say: 'Holding space looks like showing up, in person, by phone, or even by text. Listening more than fixing. Let them finish. Letting silence be. Quiet together is still company. And following their lead, on their topic, at their pace.' },
-          { k: 'story', title: 'Your Presence Is Enough', lines: ['A husband sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail.', 'After he told me about their life, he reached over and adjusted her blanket. It had not slipped.', 'He kept holding her hand, like it was the only job left for him to do.'], lesson: 'Small, steady presence speaks beyond words.', note: 'From a Grounded story by Chris Joy', say: 'I once visited a woman in her final hours. Her husband sat beside her, his chair so close his knee nearly touched the bed rail. After he told me about their life, he reached over and adjusted her blanket. It had not slipped. He kept holding her hand, like it was the only job left for him to do. Small, steady presence says what words cannot.' },
+          { k: 'story', title: 'You Don’t Have to Know What to Say', lines: ['A husband sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail.', 'After he told me about their life, he reached over and adjusted her blanket. It had not slipped.', 'He kept holding her hand, like it was the only job left for him to do.'], lesson: 'Small, steady presence speaks beyond words.', note: 'From a Grounded story by Chris Joy', say: 'I once visited a woman in her final hours. Her husband sat beside her, his chair so close his knee nearly touched the bed rail. After he told me about their life, he reached over and adjusted her blanket. It had not slipped. He kept holding her hand, like it was the only job left for him to do. Small, steady presence says what words cannot.' },
           { k: 'points', h: 'Small things that say I am here', items: [['A text with no question', 'Thinking of you today, with love.'], ['A specific offer', 'Can I bring dinner Thursday?'], ['Coming back', 'The second week matters as much as the first']], say: 'Small things say, I am here. A text with no question to answer. Thinking of you today, with love. A specific offer, like, can I bring dinner Thursday? And coming back. The second week, and the second month, matter as much as the first day.' },
           { k: 'big', h: 'Your job is to be with them in it.', say: 'Your job is to be with them in it.' },
           { k: 'points', h: 'Practice: Sit and Listen', items: [['Pick one person', 'Someone going through something'], ['Reach out once this week', 'Ask how they are, really'], ['Listen to the end', 'Then say: Thank you for telling me.']], cue: { w: { 1: 12, 3: 6 }, at: [1, 2, 3] }, say: 'Let us practice. Think of one person going through something right now. Take a moment. This week, reach out once, and ask how they are, really. Then just listen, all the way to the end. And say, thank you for telling me.' },
@@ -9618,8 +9618,8 @@ window.GG_LEARN = {
           { k: 'big', h: 'If this is new, or you have chest pain, call 911 to be safe.', sub: 'Need to talk? Call or text 988, any time.', say: 'If this is the first time this has happened, or you have chest pain, call 911 to be safe. And if you need to talk to someone right now, call or text nine eight eight, any time.' }
         ] },
 
-        { id: 'ok-r-sleep', n: 5, title: 'When Sleep Is Hard', mins: 4, blurb: 'Set the worries down and let your body rest.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'When Sleep Is Hard', sub: 'Set it down for tonight.', say: 'If it is late, and your mind will not stop, this is for you. Keep the lights low, and the volume soft.' },
+        { id: 'ok-r-sleep', n: 5, title: 'When You Can’t Sleep', mins: 4, blurb: 'Set the worries down and let your body rest.', scenes: [
+          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'When You Can’t Sleep', sub: 'Set it down for tonight.', say: 'If it is late, and your mind will not stop, this is for you. Keep the lights low, and the volume soft.' },
           { k: 'points', h: 'Put it on paper', items: [['Write down what is spinning', 'Just a few words each'], ['Add one next step', 'Saved for tomorrow'], ['Close the notebook', 'It will keep until morning']], cue: { w: { 2: 30 }, p: { 3: 3 }, at: [1, 3, 4] }, say: 'First, put it on paper. Write down what is spinning in your mind, just a few words each. Take your time. Next to anything that needs doing, write one small step for tomorrow. Then close the notebook. It will keep until morning.' },
           { k: 'points', h: 'Soften, from your feet up', items: [['Your feet and legs', 'Let them get heavy'], ['Your belly and chest', 'Let them rise and fall'], ['Your shoulders and hands', 'Let them drop'], ['Your jaw and forehead', 'Let them go soft']], cue: { w: { 1: 8, 2: 8, 3: 8, 4: 8 }, at: [1, 2, 3, 4] }, say: 'Now lie back. Let your feet and legs get heavy. Let your belly and chest rise and fall on their own. Let your shoulders and hands drop. And let your jaw and forehead go soft.' },
           { k: 'breathe', h: 'Slow breaths', hold: 40, say: 'Now just breathe. In for four, and out for six. If your mind wanders, that is okay. Come back to the next breath.' },
@@ -9698,8 +9698,8 @@ window.GG_LEARN = {
           { k: 'big', h: 'You can come back to this anytime.', sub: 'Day or night.', say: 'That is all it takes. Come back to this anytime, day or night. And if anything about their breathing worries you, call your hospice. They are there around the clock.' }
         ] },
 
-        { id: 'wl-s-say', n: 2, title: "When Words Are Hard to Find", mins: 2, blurb: 'Simple words that are always enough.', scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: "When Words Are Hard to Find", sub: 'Simple words are enough.', say: "If you are standing at the bedside and the words won't come, this is for you. Simple words are enough." },
+        { id: 'wl-s-say', n: 2, title: "When You Don't Know What to Say", mins: 2, blurb: 'Simple words that are always enough.', scenes: [
+          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: "When You Don't Know What to Say", sub: 'Simple words are enough.', say: "If you are standing at the bedside and the words won't come, this is for you. Simple words are enough." },
           { k: 'big', h: 'Your being there says the most.', say: 'First, the most important thing. Your being there already says the most. Holding a hand says, I am here, without a single word.' },
           { k: 'words', h: 'Words that are always enough', items: ["I'm here.", 'I love you.', 'Thank you.', "You don't have to talk. I'll sit with you."], say: "If you want words, these are always enough. I'm here. I love you. Thank you. You don't have to talk. I'll just sit with you." },
           { k: 'words', h: 'Four things many people want to say', items: ['Please forgive me.', 'I forgive you.', 'Thank you.', 'I love you.'], sub: 'Then, when it feels right: goodbye.', say: 'Many hospice teams teach four things people often want to say before a goodbye. Please forgive me. I forgive you. Thank you. I love you. And then, when it feels right, goodbye. Say the ones that are true for you.' },
@@ -11181,7 +11181,7 @@ window.GG_LEARN = {
         "Written for Willow"
        ],
        [
-        "For when words are hard to find",
+        "For when you can't find words",
         "Written for Willow"
        ],
        [
@@ -11243,7 +11243,7 @@ window.GG_LEARN = {
      },
      {
       "k": "words",
-      "h": "For when words are hard to find",
+      "h": "For when you can't find words",
       "items": [
        "We're here.",
        "You are loved.",
@@ -14008,7 +14008,7 @@ window.GG_LEARN = {
    {
     "id": "wl-h-present",
     "n": 1,
-    "title": "Your Presence Is Enough",
+    "title": "You Don't Have to Know What to Say",
     "mins": 7,
     "blurb": "Presence comes first: how to sit with someone you love near the end of life.",
     "scenes": [
@@ -14016,7 +14016,7 @@ window.GG_LEARN = {
       "k": "title",
       "hero": "willow",
       "eyebrow": "For the People Who Love Them, Lesson 1",
-      "h": "Your Presence Is Enough",
+      "h": "You Don't Have to Know What to Say",
       "sub": "Presence comes first.",
       "say": "Welcome. This series is for the people who love someone in hospice. A spouse, a daughter or son, a friend, a neighbor who keeps showing up. Let's start with the worry almost everyone carries into the room. I don't know what to say."
      },
@@ -14880,7 +14880,7 @@ window.GG_LEARN = {
    {
     "id": "wl-h-ready",
     "n": 5,
-    "title": "When They're Ready Before You Are",
+    "title": "When They're Ready and You're Not",
     "mins": 7,
     "blurb": "Holding on, letting go, and the hard space in between.",
     "scenes": [
@@ -14888,7 +14888,7 @@ window.GG_LEARN = {
       "k": "title",
       "hero": "willow",
       "eyebrow": "For the People Who Love Them, Lesson 5",
-      "h": "When They're Ready Before You Are",
+      "h": "When They're Ready and You're Not",
       "sub": "Holding on, and letting go.",
       "say": "Sometimes the person you love finds peace with dying before you do. They are ready, and you are not. Sometimes it is the other way around. This lesson is about that hard space in between."
      },
@@ -19337,7 +19337,7 @@ window.GG_LEARN = {
     {
      "id": "sq-r-night",
      "n": 3,
-     "title": "When Sleep Is Hard",
+     "title": "When You Can’t Sleep",
      "mins": 4,
      "blurb": "Set the day down, soften from your feet up, and let rest come.",
      "sources": [
@@ -19350,7 +19350,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When Sleep Is Hard",
+       "h": "When You Can’t Sleep",
        "sub": "Set the day down for tonight.",
        "say": "If it is late, and sleep will not come, this is for you. Keep the lights low and the volume soft. You can listen lying down."
       },
@@ -19454,7 +19454,7 @@ window.GG_LEARN = {
     {
      "id": "sq-r-worry",
      "n": 4,
-     "title": "When Worry Holds On",
+     "title": "When Worry Won’t Let Go",
      "mins": 3,
      "blurb": "Step back from a circling worry, and give it its own time.",
      "sources": [
@@ -19467,7 +19467,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When Worry Holds On",
+       "h": "When Worry Won’t Let Go",
        "sub": "Let the thoughts float by.",
        "say": "If the same worry keeps circling, about your health, your money, or someone you love, this is for you. Settle in, and stay with me for a few minutes."
       },
@@ -19640,7 +19640,7 @@ window.GG_LEARN = {
     {
      "id": "sq-r-body",
      "n": 6,
-     "title": "When Your Body Changes",
+     "title": "When Your Body Won’t Do What It Used to",
      "mins": 3,
      "blurb": "Kindness for the body you have today, and small ways to honor it.",
      "sources": [
@@ -19651,7 +19651,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When Your Body Changes",
+       "h": "When Your Body Won’t Do What It Used to",
        "sub": "Kindness for the body you have today.",
        "say": "Maybe the stairs are harder now, or your hands, or your balance. Maybe today you noticed a change you did not ask for. If that is where you are, stay with me for a few minutes."
       },
@@ -23612,7 +23612,7 @@ window.GG_LEARN = {
     {
      "id": "pn-r-night",
      "n": 4,
-     "title": "When Sleep Is Hard",
+     "title": "When You Can't Sleep",
      "mins": 4,
      "blurb": "Set the day down, soften from your feet up, and let rest come.",
      "sources": [
@@ -23624,7 +23624,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "pine",
        "eyebrow": "Support for Right Now",
-       "h": "When Sleep Is Hard",
+       "h": "When You Can't Sleep",
        "sub": "Set the day down for tonight.",
        "say": "If it's late, and sleep won't come, this is for you. Turn your screen brightness down and the volume low. You can listen lying down."
       },
@@ -27596,7 +27596,7 @@ window.GG_LEARN = {
     {
      "id": "br-r-night",
      "n": 3,
-     "title": "When Sleep Is Hard",
+     "title": "When You Can't Sleep",
      "mins": 4,
      "blurb": "Set the day down, soften from your feet up, and let rest come.",
      "sources": [
@@ -27607,7 +27607,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "birch",
        "eyebrow": "Support for Right Now",
-       "h": "When Sleep Is Hard",
+       "h": "When You Can't Sleep",
        "sub": "Set the day down for tonight.",
        "say": "If it's late, or you just got off a shift, and sleep won't come, this is for you. Turn your screen brightness down and the volume low. You can listen lying down."
       },

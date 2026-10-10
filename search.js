@@ -187,7 +187,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=b782'), load('/birch/guides.js?v=b772'), load('/oak/guides.js?v=b772'), load('/sequoia/guides.js?v=b757'), load('/willow/guides.js?v=cn2'), load('/grove/guides.js?v=b777'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=b782'), load('/birch/guides.js?v=b782'), load('/oak/guides.js?v=b782'), load('/sequoia/guides.js?v=b782'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b782'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });

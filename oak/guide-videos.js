@@ -10361,7 +10361,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "A threshold, not a finish line.",
+"h": "A threshold, and a new beginning.",
 "sub": "Freedom and loss can come together.",
 "say": "Retirement is a threshold, not a finish line. It can bring freedom and loss in the same week. No alarm clock, and no one waiting on you at work. More time, and fewer reasons to get out of the house. Both can be true at once."
 },

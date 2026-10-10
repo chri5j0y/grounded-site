@@ -325,7 +325,7 @@
       homeNote: m.homeNote || null,
       watch: { title: 'Meet ' + app, url: thWatchUrl(tr), line: 'Scan to watch a short video about ' + app + '.', short: short(SITE + t.path) },
       help: m.help && (m.help.li || []).length ? { h: m.help.h || 'Help Any Time', li: m.help.li } : null,
-      who: TH_WHO, foot: m.foot || ('Grow With Grounded ' + (tr === 'grove' ? 'The Grove' : app) + '™, a whole-person practice from Grow With Grounded LLC. growwithgrounded.com'),
+      who: TH_WHO, foot: m.foot || ('Grow With Grounded ' + app + '. Grow With Grounded\u2122 is a trademark of Grow With Grounded LLC. growwithgrounded.com'),
       file: m.file || (tr + '-take-home.pdf'),
       subject: m.subject || ('Your take-home sheet from today\'s ' + app + ' visit'),
       body: m.body || ('Hello,\n\nHere is your take-home sheet from today\'s ' + app + ' visit: what we saw together, your growth plan, and a code to bring it home to ' + app + '.\n\nWith warmth,\nGrow With Grounded'),
@@ -494,8 +494,10 @@
   }
   function warmTakeHome(tr) { return warm(tr).then(function (art) { if (ART[T[tr] ? tr : 'oak']) ART[T[tr] ? tr : 'oak'].done = art; return art; }); }
   function takeHome(m) {
-    var win = pre(), n = thModel(m);
-    return needQR().then(function () {
+    var win = pre();
+    return Promise.all([Promise.resolve(m), needQR()]).then(function (r) {
+      if (!r[0]) { try { if (win) win.close(); } catch (e) {} return null; }
+      var n = thModel(r[0]);
       var w = page({ win: win, title: n.title, size: LETTER, body: thBody(n), css: TH_CSS, printLabel: 'Print',
         acts: [['th-pdf', 'Save as PDF'], ['th-mail', 'Send by Email'], ['th-text', 'Send by Text']],
         tipFull: 'One page, ready to print or send. Save as PDF keeps a copy; Send by Email or Text attaches the PDF.', js: thPageJs() });

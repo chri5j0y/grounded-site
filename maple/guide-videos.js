@@ -58,12 +58,12 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "id": "worry",
 "ring": "mp-inside",
-"title": "Worry That Keeps Coming Back",
+"title": "Worry That Won't Let Go",
 "you": {
 "id": "mp-g-worry-you",
 "guide": "worry",
 "side": "you",
-"title": "Worry That Keeps Coming Back",
+"title": "Worry That Won't Let Go",
 "sideName": "For You",
 "mins": 2,
 "sources": [
@@ -82,7 +82,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "title",
 "hero": "maple",
 "eyebrow": "When Life Changes",
-"h": "Worry That Keeps Coming Back",
+"h": "Worry That Won't Let Go",
 "sub": "For You",
 "say": "If you have a worry that keeps coming back, this is for you. Lots of kids have worries. You can learn to help yours get smaller."
 },
@@ -162,7 +162,7 @@ window.GG_LEARN_GUIDES.maple = {
 "id": "mp-g-worry-helper",
 "guide": "worry",
 "side": "helper",
-"title": "Worry That Keeps Coming Back",
+"title": "Worry That Won't Let Go",
 "sideName": "For the Grown-up",
 "mins": 4,
 "sources": [
@@ -182,9 +182,9 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "title",
 "hero": "maple",
 "eyebrow": "When Life Changes",
-"h": "Worry That Keeps Coming Back",
+"h": "Worry That Won't Let Go",
 "sub": "For the Grown-up",
-"say": "When a child you love has a worry that keeps coming back, this is for you. Worry is a feeling, not a fact, and you can help it shrink."
+"say": "When a child you love has a worry that won't let go, this is for you. Worry is a feeling, not a fact, and you can help it shrink."
 },
 {
 "k": "points",

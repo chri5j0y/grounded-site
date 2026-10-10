@@ -636,15 +636,15 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-app.js?v=b782"></script>
 <script src="../shared/gg-backup.js?v=b782"></script>
 <script src="../shared/gg-filelock.js?v=b766"></script>
-<script src="../shared/gg-pdf.js?v=b766"></script>
+<script src="../shared/gg-pdf.js?v=b782"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b782"></script>
 <script src="../shared/gg-sources.js?v=b777"></script>
 <script src="../shared/gg-learn.js?v=b782"></script>
-<script src="../shared/gg-print.js?v=b776"></script>
+<script src="../shared/gg-print.js?v=b782"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
-<script src="qr.js"></script>
+<script src="qr.js?v=b782"></script>
 <script src="share.js?v=b776"></script>
 <script src="ceremonies.js?v=b770"></script>
 <script src="sessions.js?v=b758"></script>
@@ -654,7 +654,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="clients.js?v=b782"></script>
 <script src="books.js?v=b777"></script>
 <script src="runner.js?v=b771"></script>
-<script src="grovevisit.js?v=b776"></script>
+<script src="grovevisit.js?v=b782"></script>
 <script src="heartwood.js?v=b782"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1877,7 +1877,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b776'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b782'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -2296,7 +2296,7 @@ function vSTVisit(){
   ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
   ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
   <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="st-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="st-print-note">${icon('print')} Save or Print Visit Note</button>`}
-   <button class="btn btn-line" data-act="st-print-hand">${icon('print')} Save or Print Handout</button>${s.notToday || s.imported ? '' : fgSendBtn('st-send', 'oak')}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="st-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+   ${fgTHBtns('oak')}${fgTHWarm('oak')}${s.notToday || s.imported ? '' : fgSendBtn('st-send', 'oak')}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="st-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 function stSafetyText(sf){
   if (!sf || (!sf.direct && !sf.notAsked)) return 'Not recorded.';
@@ -2326,15 +2326,6 @@ function stNote(s, c){
 }
 function stPrintNote(s, c){
   fgSheet(ph('Confidential visit note') + `<h1>Oak visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(stNote(s, c))}</p>` + pf(), 'Oak visit note', {file:'oak-visit-note', date:s.date, confidential:true});
-}
-function stPrintHandout(s){
-  const S = STG(), H = S.handout;
-  const parts = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; if (!a.length) return ''; return `<div class="pr-step" style="border-left-color:${p.color}"><h3>${esc(p.part)}: ${esc(p.hand)}</h3><ul>${a.map(n => { const pr = p.practices.find(x => x.name === n); return `<li><b>${esc(n)}.</b> ${esc(pr ? pr.how : '')}</li>`; }).join('')}</ul></div>`; }).join('');
-  fgSheet(ph('For You') + `<h1>${esc(H.title)}</h1><p><i>${esc(H.lead)}</i></p>
-    <h2>Six parts of your tree</h2><ul>${S.parts.map(p => `<li><b>${esc(p.part)}:</b> ${esc(p.hand)}</li>`).join('')}</ul>
-    <h2>Ways to tend it</h2>${parts || '<p>Pick one part of your tree, and do one small thing for it this week.</p>'}${s.custom ? `<p><b>Also:</b> ${esc(s.custom)}</p>` : ''}
-    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>
-    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}` + `<div class="pr-foot">${esc(tmFoot('Oak', 'growwithgrounded.com'))}</div>`, H.title, {file:'oak-handout', date:s.date});
 }
 
 // ----- the visit runner -----
@@ -2904,7 +2895,7 @@ function vSQVisit(){
   ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
   ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
   <div class="row" style="margin-top:14px">${me ? '' : `<button class="btn btn-gold" data-act="sq-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="sq-print-note">${icon('print')} Save or Print Visit Note</button>`}
-   <button class="btn btn-line" data-act="sq-print-hand">${icon('print')} Save or Print Take-Home Sheet</button>${s.notToday ? '' : fgSendBtn('sq-send', 'sequoia')}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sq-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+   ${fgTHBtns('sequoia')}${fgTHWarm('sequoia')}${s.notToday ? '' : fgSendBtn('sq-send', 'sequoia')}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sq-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 // Safety. mode: 'standard' (their own two questions), 'helper' (a family caregiver about themselves), or
 // 'observed' (someone answering from what they see). other holds the helper or observed answer.
@@ -2941,21 +2932,6 @@ function sqNote(s, c){
 }
 function sqPrintNote(s, c){
   fgSheet(ph('Confidential visit note') + `<h1>Sequoia visit note</h1><p style="white-space:pre-wrap;font-size:10.5pt">${esc(sqNote(s, c))}</p>` + pf(), 'Sequoia visit note', {file:'sequoia-visit-note', date:s.date, confidential:true});
-}
-// The take-home sheet: large print, their growth plan, help lines, and a QR code to their own Sequoia.
-const SQ_HOME = 'https://growwithgrounded.com/sequoia/';
-function sqPrintHandout(s){
-  const S = SQG(), H = S.handout, short = SQ_HOME.replace(/^https?:\/\//, '');
-  const parts = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; if (!a.length) return ''; return `<div class="pr-step" style="border-left-color:${p.color}"><h3>${esc(p.part)}: ${esc(p.hand)}</h3><ul>${a.map(n => { const pr = p.practices.find(x => x.name === n); return `<li><b>${esc(n)}.</b> ${esc(pr ? pr.how : '')}</li>`; }).join('')}</ul></div>`; }).join('');
-  const scan = 'Scan to open Sequoia on your own phone or tablet';
-  const qr = window.GGQR ? GGQR.svg(SQ_HOME, {label: 'QR code for ' + short}) : '';
-  fgSheet(ph('For You') + `<div class="sq-sheet"><h1>${esc(H.title)}</h1><p><i>${esc(H.lead)}</i></p>
-    <h2>Six parts of your tree</h2><ul>${S.parts.map(p => `<li><b>${esc(p.part)}:</b> ${esc(p.hand)}</li>`).join('')}</ul>
-    <h2>Ways to tend it</h2>${parts || '<p>Pick one part of your tree, and do one small thing for it this week.</p>'}${s.custom ? `<p><b>Also:</b> ${esc(s.custom)}</p>` : ''}
-    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>
-    <h2>Help any time</h2>${H.help.map(x => `<p><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}
-    <div class="ht-qr sq-qr" data-url="${esc(SQ_HOME)}" data-label="${esc(scan)}">${qr}<p><b>${esc(scan)}</b><br>${esc(short)}</p></div></div>`
-    + `<div class="pr-foot">${esc(tmFoot('Sequoia', 'growwithgrounded.com'))}</div>`, H.title, {file:'sequoia-take-home', date:s.date});
 }
 
 // ----- the visit runner -----
@@ -3176,7 +3152,6 @@ function sqAct(a, v, t){
     case 'sq-visit': go('sequoia', {sqv:v}); return true;
     case 'sq-copy-note': { const s = sqFindVisit(); if (s) copy(sqNote(s, V.sqv === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'sq-print-note': { const s = sqFindVisit(); if (s) sqPrintNote(s, V.sqv === 'demo' ? s.person : CL(s.clientId)); return true; }
-    case 'sq-print-hand': { const s = sqFindVisit(); if (s) sqPrintHandout(s); return true; }
     case 'sq-send': { const s = sqFindVisit(); if (s) fgVisitSend(fgPlanCard(SQG(), s, V.sqv === 'demo' ? s.person : CL(s.clientId)), 'sequoia'); return true; }
     case 'sq-del-visit': if (confirm('Delete this visit?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('sequoia', {sqp:s.clientId}); else go('sequoia'); } return true;
     case 'sq-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('sequoia'); } return true;
@@ -3842,6 +3817,137 @@ function fgVisitSend(card, tree){
     buttons:[{t:'Copy Link', fn:() => copy(u)}, {t:'Done', kind:'main'}]});
 }
 
+// ---------------- THE TAKE-HOME SHEET (GWG BLD 782) ----------------
+// One shared, one-page sheet for every Guide (shared/gg-print.js, GGPrint.takeHome): the app's painting, the visit in
+// words and light, the plan and practices, Bring It Home (the visit's own Send link as a QR code, made at print time the
+// same way Send makes it, so it works when Send was never pressed), Meet the app (a QR code to /<app>/#watch, the app's
+// promo video), help lines, and Who We Are. Save as PDF, Send by Email, and Send by Text hand the one-page PDF to the
+// device's share sheet where it has one (iPhone, iPad, Mac Safari); elsewhere it downloads and a ready email or text
+// opens. FG_TH[key]() returns the sheet's model, or a Promise of it when a sealed code is made (Willow).
+// What each sheet shows stays each Guide's rule: Oak and Sequoia show all six parts in words and light; Maple, Aspen,
+// Pine, and Birch light only what's growing strong (never levels); Willow shows no levels at all. Aspen and Pine: the
+// grown-up's sheet carries no visit code (the card goes only to the student, on the student's own copy).
+const FG_TH = {};
+const fgTHLv = sc => sc == null ? null : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge';
+const fgFirst = c => String((c && c.name) || '').trim().split(/\s+/)[0] || '';
+const fgTHSub = (c, s) => [fgFirst(c), nice(s.date)].filter(Boolean).join(', ');
+const fgTHFile = (tree, kind, s) => tree + '-' + kind + '-' + ((s && s.date) || today()) + '.pdf';
+const fgTHPlan = (S, s, wording) => S.parts.flatMap(p => { const P = wording ? brPartW(p, wording) : p; return ((s.plan || {})[p.key] || []).map(n => { const pr = (P.practices || []).find(x => x.name === n) || (p.practices || []).find(x => x.name === n); return {t:n, tag:p.part, color:p.color, how:pr ? pr.how : ''}; }); });
+const fgTHTries = (tries, how) => tries.map(([p, it]) => ({t:it[0], tag:p.part, color:p.color, how:how ? how(it) : it[1]}));
+const fgTHHow = (app, who, kids) => [`Scan this with the phone or tablet where ${who ? who + "'s" : 'your'} ${app} lives, or will.`, `${app} opens and asks whose tree it is.`,
+  kids ? `${who ? who + "'s" : 'Their'} strengths and what to try at home are there, ready to tend together. Brothers and sisters can start their own tree too.` : `${who ? who + "'s" : 'Your'} strengths and growth plan are there, ready for tending. Others in the family can start their own tree too.`];
+const fgTHGrown = (app, first) => ({h:'Bring It Home', p:`${first || 'Your student'} has a code just for them, so today's visit can grow on their own ${app} tree. Scan Meet ${app} to watch how it works together.`});
+// An existing sheet model ({title, sub, sec, after, close, foot}) into the take-home model: the try list becomes practice
+// steps, help lines move to the side, and "what's growing strong" moves into the lights when the sheet has them.
+function fgTHFrom(tree, M, o){
+  o = o || {};
+  const sec = [], help = {h:'Help Any Time', li:[]};
+  (M.sec || []).forEach(x => {
+    if (o.help && x.h === o.help){ help.h = x.h; help.li = (x.li || []).concat(x.p || []); return; }
+    if (o.strong && x.h === o.strong) return;
+    if (o.tryH && x.h === o.tryH && o.tries) return sec.push({h:x.h, items:o.tries});
+    if (o.planH && x.h === o.planH && o.plan) return sec.push({h:x.h, items:o.plan, p:(x.p || []).filter(t => /^Also: /.test(t))});
+    sec.push(x);
+  });
+  return Object.assign({tree, title:M.title, sub:M.sub, sec, after:M.after || [], close:M.close || '', foot:M.foot || tmFoot(FG_VTREE[tree] || 'Willow', 'growwithgrounded.com'), help:help.li.length ? help : null}, o.m || {});
+}
+function fgTHAdult(tree, S, s, c){
+  const H = S.handout || {}, app = FG_VTREE[tree], plan = fgTHPlan(S, s), p = [];
+  if (!plan.length && !s.custom) p.push('Pick one part of your tree, and do one small thing for it this week.');
+  if (s.custom) p.push('Also: ' + s.custom);
+  const url = s.notToday || s.imported ? '' : fgVisitUrl(fgPlanCard(S, s, c), tree), seen = s.by === 'observed';
+  return {tree, title:H.title || 'Your ' + app, sub:fgTHSub(c, s), lead:H.lead || '', mode:s.notToday ? 'none' : 'words',
+    parts:S.parts.map(x => ({key:x.key, part:x.part, name:x.name, color:x.color, lv:fgTHLv((s.scores || {})[x.key])})),
+    treeKey:seen ? 'From what family sees today. A Strength glows full and warm. Steady glows softly. A Growing Edge is new green light, where growth comes next.' : '',
+    sec:[{h:'Your Growth Plan', items:plan, p}], close:H.close || '', help:{h:'Help Any Time', li:(H.help || []).map(x => x[0] + ': ' + x[1])},
+    home:url ? {url, how:fgTHHow(app)} : null, foot:tmFoot(app, 'growwithgrounded.com'), file:fgTHFile(tree, 'take-home', s)};
+}
+FG_TH.oak = () => { const s = stFindVisit(); if (!s) return null; return fgTHAdult('oak', STG(), s, V.stv === 'demo' ? s.person : CL(s.clientId)); };
+FG_TH.sequoia = () => { const s = sqFindVisit(); if (!s) return null; return fgTHAdult('sequoia', SQG(), s, V.sqv === 'demo' ? s.person : CL(s.clientId)); };
+FG_TH.maple = () => {
+  const s = spFindVisit(); if (!s) return null;
+  const c = V.spv === 'demo' ? s.person : CL(s.clientId), S = SPG(), H = S.takeHome, band = spBand(s.grade), name = c ? c.name : '', first = fgFirst(c);
+  const talk = s.told === 'concern' || !s.talkHome ? [] : (s.flags || []), sec = [];
+  sec.push({h:H.did, p:[spVisitName(s.visit) + (s.topic && s.topic.deck ? ' about ' + cdDeckName(s.topic.deck).toLowerCase() : '') + '. We looked at the six parts of ' + (name || 'your child') + "'s tree: " + S.parts.map(p => p.part.toLowerCase()).join(', ') + '.' + (s.stopped ? ' We stopped when they wanted to, and that was the right thing to do.' : '')]});
+  if (s.share) sec.push({h:H.share, p:[s.share]});
+  if (talk.length) sec.push({h:H.talk, p:talk.map(f => 'When asked "' + f.q + '" ' + (name || 'your child') + ' said "' + (((spAns(f.a) || [])[1]) || '').toLowerCase() + '." ' + (f.flag === 'hope' ? 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away.' : 'Ask gently about it, and listen.'))});
+  sec.push({h:H.try, items:fgTHTries(spTries(s), it => band === 'k2' ? it[1] : (it[2] || it[1]))});
+  const url = fgVisitUrl(spVisitCard(s, c), 'maple');
+  return {tree:'maple', eyebrow:'For Your Family', title:H.title, sub:fgTHSub(c, s), mode:'strong', strongWord:'Growing strong',
+    kid:first ? first + ', thank you for sharing your tree today. Every part of you keeps growing, a little at a time.' : '',
+    parts:S.parts.map(p => ({key:p.key, part:p.part, name:p.name, color:p.color, lv:lvKey(((s.levels || {})[p.key] || {}).pick)})),
+    sec, after:['If someone is in danger, call 911. For a mental health crisis, call or text 988.'], close:H.close || '', help:{h:H.help, li:H.helpLines || []},
+    home:url ? {url, how:fgTHHow('Maple', first, true)} : null, foot:tmFoot('Maple', 'growwithgrounded.com'), file:fgTHFile('maple', 'take-home', s)};
+};
+FG_TH.aspen = () => {
+  const s = saFindVisit(); if (!s) return null;
+  const c = V.sav === 'demo' ? s.person : CL(s.clientId), S = SAG(), H = S.takeHome, first = fgFirst(c);
+  return fgTHFrom('aspen', saHomeModel(s, c), {strong:H.strong, help:H.help, tryH:H.try, tries:fgTHTries(saTries(s)), m:{eyebrow:'For Your Family', mode:'strong',
+    kid:first ? first + ', thank you for sharing today. Every part of your tree keeps growing.' : '',
+    parts:S.parts.map(p => ({key:p.key, part:p.part, name:p.name, color:p.color, lv:lvKey(((s.levels || {})[p.key] || {}).pick)})), homeNote:fgTHGrown('Aspen', first), file:saFile('take-home', s)}});
+};
+FG_TH['aspen-copy'] = () => {
+  const s = saFindVisit(); if (!s) return null;
+  const c = V.sav === 'demo' ? s.person : CL(s.clientId), S = SAG(), K = S.studentCopy, u = saVisitUrl(s, c);
+  return fgTHFrom('aspen', saCopyModel(s, c), {strong:K.strong, help:K.help, tryH:K.try, tries:fgTHTries(saTries(s)), m:{eyebrow:'Just for You', mode:'strong',
+    parts:S.parts.map(p => ({key:p.key, part:p.part, name:p.name, color:p.color, lv:lvKey(((s.levels || {})[p.key] || {}).pick)})),
+    home:u ? {url:u, how:['Scan this with your own phone or tablet.', 'Aspen opens and asks whose tree it is.', "What's growing strong and what you want to try are there, ready for tending."], note:"It carries only your first name, the date, what's growing strong, and what you want to try."} : null, file:saFile('my-copy', s)}});
+};
+FG_TH.pine = () => {
+  const s = pnFindVisit(); if (!s) return null;
+  const c = V.pnv === 'demo' ? s.person : CL(s.clientId), S = PNG(), H = S.takeHome, first = fgFirst(c);
+  return fgTHFrom('pine', pnHomeModel(s, c), {strong:H.strong, help:H.help, tryH:H.try, tries:fgTHTries(pnTries(s)), m:{eyebrow:'For Your Family', mode:'strong',
+    parts:S.parts.map(p => ({key:p.key, part:p.part, name:p.name, color:p.color, lv:lvKey(((s.levels || {})[p.key] || {}).pick)})), homeNote:fgTHGrown('Pine', first), file:pnFile('take-home', s)}});
+};
+FG_TH['pine-copy'] = () => {
+  const s = pnFindVisit(); if (!s) return null;
+  const c = V.pnv === 'demo' ? s.person : CL(s.clientId), S = PNG(), K = S.studentCopy, u = pnVisitUrl(s, c);
+  return fgTHFrom('pine', pnCopyModel(s, c), {strong:K.strong, help:K.help, tryH:K.try, tries:fgTHTries(pnTries(s)), m:{eyebrow:'Just for You', mode:'strong',
+    parts:S.parts.map(p => ({key:p.key, part:p.part, name:p.name, color:p.color, lv:lvKey(((s.levels || {})[p.key] || {}).pick)})),
+    home:u ? {url:u, how:[PN_QR_SAY, 'Pine opens and asks whose tree it is.', "What's growing strong and what you want to try are there, ready for tending."], note:"It carries only your first name, the date, what's growing strong, and what you want to try."} : null, file:pnFile('my-copy', s)}});
+};
+FG_TH.birch = () => {
+  const s = brFindVisit(); if (!s) return null;
+  const c = V.brv === 'demo' ? s.person : CL(s.clientId), S = BRG(), H = Object.assign({strong:"What's growing strong", try:'Try this week', help:'When to get more help'}, S.takeHome || {}), u = fgVisitUrl(brVisitCard(s, c), 'birch');
+  return fgTHFrom('birch', brHomeModel(s, c), {strong:H.strong, help:H.help, tryH:H.try, tries:fgTHTries(brTries(s)), planH:'Your growth plan', plan:fgTHPlan(S, s, s.wording), m:{eyebrow:'Just for You', mode:'strong',
+    lead:(S.handout || {}).lead || '', parts:S.parts.map(p => ({key:p.key, part:p.part, name:p.name, color:p.color, lv:((s.scores || {})[p.key] || 0) >= 8 ? 'strong' : null})),
+    home:u ? {url:u, how:fgTHHow('Birch')} : null, file:brFile('take-home', s)}});
+};
+// Willow: the same sealed card Send to Their Willow makes (GGBridge), with only what this sheet shows: what to try, and
+// the vigil plan on a vigil visit. Made once per visit and kept for this session, so the print and the PDF match.
+async function wlTHCode(s, c){
+  if (!window.GGBridge || !c) return null;
+  const w = c.wl || {}, tries = wlTries(s), card = {n:wlFirst(c.name), d:s.date || today(), g:wlFirst(DATA.settings.name), r:wlRole() === 'other' ? 'chaplain' : wlRole(), who:w.type === 'family' ? 'helper' : 'person'};
+  if (tries.length) card.t = tries.map(([k, it]) => [k, it[0], it[1], it[2]]).slice(0, 3);
+  if (s.visit === 'vigil' && w.type !== 'family' && wlVigilLines(w.vigil || {}).length){ card.v = {}; Object.entries(w.vigil || {}).forEach(([k, v]) => { if (v && k !== 'date') card.v[k] = String(v).slice(0, 400); }); card.vl = WLG().vigil.extra.map(x => [x[0], x[1]]); }
+  if (!card.t && !card.v) return null;
+  const sig = JSON.stringify(card), key = s.id || 'demo', TH = V.wlTH || (V.wlTH = {});
+  if (TH[key] && TH[key].sig === sig) return TH[key].p;
+  const p = (async () => { try { const code = GGBridge.code(), tok = await GGBridge.seal('wl-visit', card, code); return {link:GGBridge.url('willow', tok), code}; } catch (e) { return null; } })();
+  TH[key] = {sig, p};
+  return p;
+}
+FG_TH.willow = async () => {
+  const s = wlFindVisit(); if (!s) return null;
+  const c = V.wlv === 'demo' ? s.person : CL(s.clientId), H = WLG().takeHome, M = wlHomeModel(s, c);
+  const k = await wlTHCode(s, c);
+  return fgTHFrom('willow', M, {help:H.help, tryH:H.try, tries:wlTries(s).map(([k2, it]) => ({t:it[1], tag:k2 === 'self' ? 'For you' : wlPart(k2).part, color:k2 === 'self' ? '#5D5A6E' : wlPart(k2).color, how:it[2]})), m:{eyebrow:'For You and Your Family', mode:'none',
+    home:k ? {url:k.link, code:k.code, codeLabel:'Code words', how:['Scan this with the phone or tablet that holds Willow.', 'Type the code words when Willow asks.', 'What we chose together today is waiting in Willow, to keep close.'], note:'The code opens only with these words, on your own device.'} : null, file:wlFile('take-home', s)}});
+};
+const fgTHBtns = k => `<button class="btn btn-gold" data-act="th" data-k="${k}" data-v="open">${icon('print')} Take-Home Sheet</button><button class="btn btn-line" data-act="th" data-k="${k}" data-v="save">${icon('copy')} Save as PDF</button><button class="btn btn-line" data-act="th" data-k="${k}" data-v="email">${icon('link')} Send by Email</button><button class="btn btn-line" data-act="th" data-k="${k}" data-v="text">${icon('phone')} Send by Text</button>`;
+// Loads the painting ahead (and Willow's code), so a tap on Send opens the share sheet right away.
+function fgTHWarm(k){ setTimeout(() => { try { if (window.GGPrint && GGPrint.warmTakeHome) GGPrint.warmTakeHome(String(k).split('-')[0]); if (k === 'willow') FG_TH.willow(); } catch (e) {} }, 0); return ''; }
+async function fgTHGo(k, how){
+  const f = FG_TH[k];
+  if (!f || !window.GGPrint || !GGPrint.takeHome) return toast('The take-home sheet could not load. Check the connection.');
+  if (how === 'open') return GGPrint.takeHome(Promise.resolve(f()));
+  const m = await f(); if (!m) return;
+  const r = await GGPrint.sendTakeHome(m, how);
+  V.thLast = r;
+  if (r === 'saved') toast('Saved as ' + m.file + '.');
+  else if (r === 'opened') toast('Saved as ' + m.file + '. Attach it to the ' + (how === 'email' ? 'email' : 'text') + ' that just opened.');
+}
+
 // ----- Maple Guide and Aspen Guide to the newest standard (GWG BLD 746), in Pine Guide's shape -----
 // Each visit records how each part seemed (impressions), tags, what you offered (did), and referrals, and asks Faith or
 // Plain. The person record can lock Plain ("My organization needs Plain wording"): every visit then uses Plain, and the
@@ -4367,7 +4473,7 @@ function vSPVisit(){
   ${fgNoticedCard(SPK(), s, S.parts)}
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}</div>` : ''}
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sp-print-home">${icon('print')} Take-Home Sheet</button>${fgSendBtn('sp-send', 'maple')}<button class="btn btn-line" data-act="sp-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px">${fgTHBtns('maple')}${fgTHWarm('maple')}${fgSendBtn('sp-send', 'maple')}<button class="btn btn-line" data-act="sp-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 function spNote(s, c){
   const S = SPG(), L = [];
@@ -4383,21 +4489,6 @@ function spNote(s, c){
   fgNoticedNote(SPK(), s, S.parts, L);
   if ((s.tryh || []).length) L.push('Try at home: ' + s.tryh.join(', ') + '.');
   return L.join('\n');
-}
-function spPrintHome(s, c){
-  const S = SPG(), H = S.takeHome, band = spBand(s.grade), name = c ? c.name : '';
-  const strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong');
-  const tries = spTries(s);
-  const talk = s.told === 'concern' || !s.talkHome ? [] : (s.flags || []);
-  fgSheet(ph('For your family') + `<h1>${esc(H.title)}</h1><p>${esc(name)}${name ? ', ' : ''}${nice(s.date)}</p>
-    <h2>${esc(H.did)}</h2><p>${esc(spVisitName(s.visit))}${s.topic && s.topic.deck ? ' about ' + esc(cdDeckName(s.topic.deck).toLowerCase()) : ''}. We looked at the six parts of ${esc(name || 'your child')}'s tree: ${S.parts.map(p => p.part.toLowerCase()).join(', ')}.${s.stopped ? ' We stopped when they wanted to, and that was the right thing to do.' : ''}</p>
-    ${s.share ? `<h2>${esc(H.share)}</h2><p>${esc(s.share)}</p>` : ''}
-    ${strong.length ? `<h2>${esc(H.strong)}</h2><p>${strong.map(p => `<b>${esc(p.part)}</b> (${esc(p.name.toLowerCase())})`).join(', ')}</p>` : ''}
-    ${talk.length ? `<h2>${esc(H.talk)}</h2>${talk.map(f => `<p>When asked "${esc(f.q)}" ${esc(name || 'your child')} said "${esc(((spAns(f.a) || [])[1] || '').toLowerCase())}." ${f.flag === 'hope' ? 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away.' : 'Ask gently about it, and listen.'}</p>`).join('')}` : ''}
-    ${tries.length ? `<h2>${esc(H.try)}</h2>${tries.map(([p, it]) => `<p><b>${esc(it[0])}</b> (${esc(p.part)}): ${esc(band === 'k2' ? it[1] : it[2])}</p>`).join('')}` : ''}
-    <h2>${esc(H.help)}</h2><ul>${H.helpLines.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <p><b>If someone is in danger, call 911. For a mental health crisis, call or text 988.</b></p>
-    <p style="margin-top:4mm"><i>${esc(H.close)}</i></p>` + `<div class="pr-foot">${esc(tmFoot('Maple', 'growwithgrounded.com'))}</div>`, H.title, {file:'maple-take-home', date:s.date});
 }
 
 // ----- the visit runner -----
@@ -4718,7 +4809,6 @@ function spAct(a, v, t){
       const c = CL(s.clientId); if (c && s.written) (c.followups || []).forEach(f => { if (!f.done && /Written report due/.test(f.text || '')) { f.done = true; touch(c); } });
       save(); render(); toast('Saved.'); return true; }
     case 'sp-rec-del': if (confirm('Delete this report record? It cannot be undone.')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.tool === 'sa') go('aspen', s.clientId ? {sap:s.clientId} : {}); else go('maple', s && s.clientId ? {spp:s.clientId} : {}); } return true;
-    case 'sp-print-home': { const s = spFindVisit(); if (s) spPrintHome(s, V.spv === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'sp-send': { const s = spFindVisit(); if (s) fgVisitSend(spVisitCard(s, V.spv === 'demo' ? s.person : CL(s.clientId)), 'maple'); return true; }
     case 'sp-copy-note': { const s = spFindVisit(); if (s) copy(spNote(s, V.spv === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'sp-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('maple', s ? {spp:s.clientId} : {}); } return true;
@@ -5137,7 +5227,7 @@ function vSAVisit(){
   ${fgNoticedCard(SAK(), s, S.parts)}
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${s.seenSheet ? 'The student saw the take-home sheet.' : 'Not marked as seen by the student.'}${Object.values(s.hide || {}).some(Boolean) ? ' They left some things out.' : ''}</p></div>` : ''}
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="sa-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="sa-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="sa-copy-pdf">${icon('copy')} Student Copy PDF</button>` : ''}${fgSendBtn('sa-copy-qr', 'aspen')}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px">${fgTHBtns('aspen')}${fgTHWarm('aspen')}${s.copy ? `<button class="btn btn-line" data-act="th" data-k="aspen-copy" data-v="open">${icon('print')} Student Copy</button><button class="btn btn-line" data-act="th" data-k="aspen-copy" data-v="save">${icon('copy')} Student Copy PDF</button>` : ''}${fgSendBtn('sa-copy-qr', 'aspen')}<button class="btn btn-line" data-act="sa-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 // The visit note: levels, flag count, safety summary. Never answer words, the grown-up's name, or the optional question.
 function saNote(s, c){
@@ -5193,11 +5283,6 @@ function saVisitCard(s, c){
 }
 const saVisitUrl = (s, c) => fgVisitUrl(saVisitCard(s, c), 'aspen');
 const SA_QR_SAY = 'Scan this with your own phone to put this card on your Aspen tree.';
-function saCopyBlocks(s, c){
-  const b = ggSheetBlocks(saCopyModel(s, c)), u = saVisitUrl(s, c);
-  if (u){ const f = b.findIndex(x => x.k === 'foot'); b.splice(f < 0 ? b.length : f, 0, {k:'h2', t:'Keep it on your tree'}, {k:'qr', url:u, t:SA_QR_SAY + ' It carries only your first name, the date, what\'s growing strong, and what you want to try.'}); }
-  return b;
-}
 function saCopyQR(s, c){ fgVisitSend(saVisitCard(s, c), 'aspen'); }
 
 // ----- the visit runner -----
@@ -5531,9 +5616,6 @@ function saAct(a, v, t){
     case 'sa-rep-new': spRepOpen(null, null, '', 'sa'); return true;
     case 'sa-visit': go('aspen', {sav:v}); return true;
     case 'sa-rec': go('aspen', {sarec:v}); return true;
-    case 'sa-home-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)))), saFile('take-home', s), SAG().takeHome.title); return true; }
-    case 'sa-home-print': { const s = saFindVisit(); if (s){ const m = saHomeModel(s, V.sav === 'demo' ? s.person : CL(s.clientId)); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
-    case 'sa-copy-pdf': { const s = saFindVisit(); if (s) ggShare(ggPdf(saCopyBlocks(s, V.sav === 'demo' ? s.person : CL(s.clientId))), saFile('my-copy', s), SAG().studentCopy.title); return true; }
     case 'sa-copy-qr': { const s = saFindVisit(); if (s) saCopyQR(s, V.sav === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'sa-copy-note': { const s = saFindVisit(); if (s) copy(saNote(s, V.sav === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'sa-del-visit': if (confirm('Delete this visit?')){ const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); go('aspen', s ? {sap:s.clientId} : {}); } return true;
@@ -5625,7 +5707,6 @@ const pnGradeName = g => g ? 'Grade ' + g : '';
 const PN_GRADES = ['9','10','11','12'];
 const pnWordName = w => w === 'plain' ? 'Plain wording' : 'Faith wording';
 const pnTM = tmFoot('Pine', 'growwithgrounded.com');
-const PN_HOME = 'https://growwithgrounded.com/pine/';
 
 // ----- the question bank, read from the public pine/checkin.js -----
 let PNC = null, PNC_WAIT = null, PNC_FAIL = false;
@@ -6039,7 +6120,7 @@ function vPNVisit(){
   ${s.summary || s.fdate ? `<div class="card">${s.summary ? `<h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p>` : ''}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>` : ''}
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${s.seenSheet ? 'The student saw the take-home sheet.' : 'Not marked as seen by the student.'}${Object.values(s.hide || {}).some(Boolean) ? ' They left some things out.' : ''}</p></div>` : ''}
   ${s.priv || Object.values(s.pnote || {}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pnote || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pnote[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="pn-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="pn-home-print">${icon('print')} Print Take-Home</button>${s.copy ? `<button class="btn btn-line" data-act="pn-copy-pdf">${icon('copy')} Student Copy PDF</button>` : ''}${fgSendBtn('pn-copy-qr', 'pine')}<button class="btn btn-line" data-act="pn-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="pn-print-note">${icon('print')} Save or Print Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="pn-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px">${fgTHBtns('pine')}${fgTHWarm('pine')}${s.copy ? `<button class="btn btn-line" data-act="th" data-k="pine-copy" data-v="open">${icon('print')} Student Copy</button><button class="btn btn-line" data-act="th" data-k="pine-copy" data-v="save">${icon('copy')} Student Copy PDF</button>` : ''}${fgSendBtn('pn-copy-qr', 'pine')}<button class="btn btn-line" data-act="pn-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="pn-print-note">${icon('print')} Save or Print Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="pn-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 // The visit note: levels, what was shared, safety summary, what you noticed and offered, referrals. Never answer words,
 // the grown-up's name, the optional questions, or private notes.
@@ -6107,22 +6188,6 @@ function pnVisitCard(s, c){
 }
 const pnVisitUrl = (s, c) => fgVisitUrl(pnVisitCard(s, c), 'pine');
 const PN_QR_SAY = 'Scan this with your own phone to put this card on your Pine tree.';
-const pnQR = q => Object.assign({url:PN_HOME, label:'Scan to open Pine'}, q || {});
-function pnHomeBlocks(s, c){
-  const b = ggSheetBlocks(pnHomeModel(s, c)), q = pnQR(PNG().takeHome.qr), f = b.findIndex(x => x.k === 'foot');
-  b.splice(f < 0 ? b.length : f, 0, {k:'qr', url:q.url, t:q.label});
-  return b;
-}
-function pnCopyBlocks(s, c){
-  const b = ggSheetBlocks(pnCopyModel(s, c)), u = pnVisitUrl(s, c), q = pnQR(PNG().studentCopy.qr), f = b.findIndex(x => x.k === 'foot');
-  const add = u ? [{k:'h2', t:'Keep it on your tree'}, {k:'qr', url:u, t:PN_QR_SAY + ' It carries only your first name, the date, what\'s growing strong, and what you want to try.'}] : [{k:'qr', url:q.url, t:q.label}];
-  b.splice(f < 0 ? b.length : f, 0, ...add);
-  return b;
-}
-function pnHomePrint(s, c){
-  const m = pnHomeModel(s, c), q = pnQR(PNG().takeHome.qr), svg = window.GGQR ? GGQR.svg(q.url, {label:'QR code for ' + q.url.replace(/^https?:\/\//, '')}) : '';
-  printNow(ph(m.eyebrow) + ggSheetHTML(m) + (svg ? `<div class="ht-qr" style="display:flex;align-items:center;gap:4mm;margin-top:4mm"><div style="width:26mm">${svg}</div><p><b>${esc(q.label)}</b><br>${esc(q.url.replace(/^https?:\/\//, ''))}</p></div>` : ''), m.title);
-}
 function pnCopyQR(s, c){ fgVisitSend(pnVisitCard(s, c), 'pine'); }
 
 // ----- the visit runner -----
@@ -6498,9 +6563,6 @@ function pnAct(a, v, t){
       if (due) (c.followups = c.followups || []).push({date:spDKey(due), text:'Written report due (Pine report record)', done:false});
       touch(c); save(); render(); toast('Report record saved, encrypted on this device.'); return true; }
     case 'pn-visit': go('pine', {pnv:v}); return true;
-    case 'pn-home-pdf': { const s = pnFindVisit(); if (s) ggShare(ggPdf(pnHomeBlocks(s, V.pnv === 'demo' ? s.person : CL(s.clientId))), pnFile('take-home', s), PNG().takeHome.title); return true; }
-    case 'pn-home-print': { const s = pnFindVisit(); if (s) pnHomePrint(s, V.pnv === 'demo' ? s.person : CL(s.clientId)); return true; }
-    case 'pn-copy-pdf': { const s = pnFindVisit(); if (s) ggShare(ggPdf(pnCopyBlocks(s, V.pnv === 'demo' ? s.person : CL(s.clientId))), pnFile('my-copy', s), PNG().studentCopy.title); return true; }
     case 'pn-copy-qr': { const s = pnFindVisit(); if (s) pnCopyQR(s, V.pnv === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'pn-copy-note': { const s = pnFindVisit(); if (s) copy(pnNote(s, V.pnv === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'pn-print-note': { const s = pnFindVisit(); if (s) pnPrintNote(s, V.pnv === 'demo' ? s.person : CL(s.clientId)); return true; }
@@ -6589,7 +6651,6 @@ const brForm = () => (BRG().consent || {}).form || null;
 function brConsentCurrent(con){ const F = brForm(); return !(con && con.how === 'form' && F && con.v !== F.version); }
 const brHasConsent = c => brIsMe(c) || !!(c.br.consent && c.br.consent.how && c.br.consent.how !== 'declined' && brConsentCurrent(c.br.consent));
 const brWordName = w => w === 'plain' ? 'Plain wording' : 'Faith wording';
-const BR_HOME = 'https://growwithgrounded.com/birch/';
 const brTM = tmFoot('Birch', 'growwithgrounded.com');
 const brHello = (eb, title, p, extra) => `<div class="hello br-hello"${extra || ''}><div class="eyebrow" style="color:#F2DC8A">${eb}</div><h1>${esc(title)}</h1><p>${p}</p>`;
 
@@ -6970,7 +7031,7 @@ function vBRVisit(){
   <div class="card"><h3>Growth Plan</h3>${brPlanList(s)}${(s.tryh || []).length ? `<p style="margin-top:8px"><b>${esc(((S.takeHome || {}).try) || 'Try this week')}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}${s.fdate ? `<p style="margin-top:8px"><b>Follow-up:</b> ${nice(s.fdate)}${s.ftext ? ', ' + esc(s.ftext) : ''}</p>` : ''}</div>
   ${s.summary ? `<div class="card"><h3>Summary</h3><p style="white-space:pre-wrap;margin-top:6px">${esc(s.summary)}</p></div>` : ''}
   ${s.priv || Object.values(s.pn||{}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed, copied, or put in the visit note.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn||{})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
-  <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="br-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="br-home-print">${icon('print')} Print Take-Home Sheet</button>${fgSendBtn('br-send', 'birch')}${me ? '' : `<button class="btn btn-line" data-act="br-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="br-print-note">${icon('print')} Save or Print Visit Note</button>`}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="br-del-visit" data-v="${s.id}">Delete</button>`}</div>`}`;
+  <div class="row" style="margin-top:14px">${fgTHBtns('birch')}${fgTHWarm('birch')}${fgSendBtn('br-send', 'birch')}${me ? '' : `<button class="btn btn-line" data-act="br-copy-note">${icon('copy')} Copy Visit Note</button><button class="btn btn-line" data-act="br-print-note">${icon('print')} Save or Print Visit Note</button>`}${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="br-del-visit" data-v="${s.id}">Delete</button>`}</div>`}`;
 }
 // The visit note: levels, the youth setting and room, what you noticed and offered, referrals, the safety summary.
 // Never answer words, private notes, or the optional question unless the person asked for it.
@@ -7032,17 +7093,7 @@ function brVisitCard(s, c){
   const plan = S.parts.flatMap(p => { const P = brPartW(p, s.wording); return ((s.plan || {})[p.key] || []).map(n => { const pr = (P.practices || []).find(x => x.name === n) || (p.practices || []).find(x => x.name === n); return [p.key, n, pr ? pr.how : '']; }); });
   return fgVisitCard(c, s, strong, plan.concat(brTries(s).map(([p, it]) => [p.key, it[0], it[1]])));
 }
-const brQR = () => { const S = BRG(), q = ((S.takeHome || {}).qr) || ((S.handout || {}).qr); return Object.assign({url:BR_HOME, label:'Scan to open Birch'}, typeof q === 'string' ? {label:q} : (q || {})); };
 const brFile = (kind, s) => 'birch-' + kind + '-' + (s.date || today()) + '.pdf';
-function brHomeBlocks(s, c){
-  const b = ggSheetBlocks(brHomeModel(s, c)), q = brQR(), f = b.findIndex(x => x.k === 'foot');
-  b.splice(f < 0 ? b.length : f, 0, {k:'qr', url:q.url, t:q.label});
-  return b;
-}
-function brHomePrint(s, c){
-  const m = brHomeModel(s, c), q = brQR(), svg = window.GGQR ? GGQR.svg(q.url, {label:'QR code for ' + q.url.replace(/^https?:\/\//, '')}) : '';
-  printNow(ph(m.eyebrow) + ggSheetHTML(m) + (svg ? `<div class="ht-qr" style="display:flex;align-items:center;gap:4mm;margin-top:4mm"><div style="width:26mm">${svg}</div><p><b>${esc(q.label)}</b><br>${esc(q.url.replace(/^https?:\/\//, ''))}</p></div>` : ''), m.title);
-}
 
 // ----- the visit runner -----
 function brStart(visit, cid, demo){
@@ -7340,8 +7391,6 @@ function brAct(a, v, t){
       DATA.sessions.push({id:uid(), u:Date.now(), kind:'spr', tool:'br', clientId:c.id, date:today(), what, how:$('#brr-how').value, at:$('#brr-at').value || '', where:V.brwhere || 'mn', ref:$('#brr-ref').value.trim()});
       touch(c); save(); render(); toast('Report record saved, encrypted on this device.'); return true; }
     case 'br-visit': go('birch', {brv:v}); return true;
-    case 'br-home-pdf': { const s = brFindVisit(); if (s) ggShare(ggPdf(brHomeBlocks(s, V.brv === 'demo' ? s.person : CL(s.clientId))), brFile('take-home', s), ((BRG().takeHome || {}).title) || 'Take-home sheet'); return true; }
-    case 'br-home-print': { const s = brFindVisit(); if (s) brHomePrint(s, V.brv === 'demo' ? s.person : CL(s.clientId)); return true; }
     case 'br-send': { const s = brFindVisit(); if (s) fgVisitSend(brVisitCard(s, V.brv === 'demo' ? s.person : CL(s.clientId)), 'birch'); return true; }
     case 'br-copy-note': { const s = brFindVisit(); if (s) copy(brNote(s, V.brv === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'br-print-note': { const s = brFindVisit(); if (s) brPrintNote(s, V.brv === 'demo' ? s.person : CL(s.clientId)); return true; }
@@ -8357,7 +8406,7 @@ function vWLVisit(){
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${WL_PARTS.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
   ${s.ans && Object.keys(s.ans).length ? `<details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
    ${WL_PARTS.map(p => { const qs = bank[p.key] || [], qa = (s.ans || {})[p.key] || []; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${idx.map(i => qs[i] ? `<p style="margin-top:4px">${esc(s.by === 'observed' ? wlTheyify(qs[i].t) : qs[i].t)} ${qa[i] ? (wlHard(qs[i], qa[i]) ? `<b>${esc((wlAnsRow(qa[i]) || [])[1])}</b>` : esc((wlAnsRow(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}`; }).join('')}</details>` : ''}
-  <div class="row" style="margin-top:14px">${shared ? '' : `<button class="btn btn-gold" data-act="wl-home-pdf">${icon('copy')} Take-Home Sheet PDF</button><button class="btn btn-line" data-act="wl-home-print">${icon('print')} Print Take-Home</button><button class="btn btn-line" data-act="wl-send" data-v="${demo ? 'demo' : s.id}">${icon('willow')} Send to Their Willow</button>`}<button class="btn btn-line" data-act="wl-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="wl-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
+  <div class="row" style="margin-top:14px">${shared ? '' : `${fgTHBtns('willow')}${fgTHWarm('willow')}<button class="btn btn-line" data-act="wl-send" data-v="${demo ? 'demo' : s.id}">${icon('willow')} Send to Their Willow</button>`}<button class="btn btn-line" data-act="wl-copy-note">${icon('copy')} Copy Visit Note</button>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="wl-del-visit" data-v="${s.id}">Delete</button>`}</div>`;
 }
 const wlByNote = by => by === 'observed' ? 'by family, from what they see' : by === 'tapped' ? 'by the person, out loud, with a helper tapping' : 'by the person';
 function wlVisitPlans(s, c){ return s.planList ? s.planList : c && c.wl ? (c.wl.plans || []).filter(p => (s.plans || []).includes(p.id)) : []; }
@@ -8830,8 +8879,6 @@ function wlAct(a, v, t){
     case 'wl-plan-del': { const c = CL(v), e = V.wlpe; if (c && e && e.id && confirm('Delete this plan?')){ c.wl.plans = (c.wl.plans || []).filter(x => x.id !== e.id); touch(c); save(); V.wlpe = null; render(); } return true; }
     case 'wl-vigil-pdf': { const c = CL(v); if (c) ggShare(ggPdf(ggSheetBlocks(wlVigilModel(c))), 'willow-vigil-plan-' + today() + '.pdf', WLG().vigil.title); return true; }
     case 'wl-vigil-print': { const c = CL(v); if (c){ const m = wlVigilModel(c); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
-    case 'wl-home-pdf': { const s = wlFindVisit(); if (s) ggShare(ggPdf(ggSheetBlocks(wlHomeModel(s, V.wlv === 'demo' ? s.person : CL(s.clientId)))), wlFile('after-our-visit', s), WLG().takeHome.title); return true; }
-    case 'wl-home-print': { const s = wlFindVisit(); if (s){ const m = wlHomeModel(s, V.wlv === 'demo' ? s.person : CL(s.clientId)); printNow(ph(m.eyebrow) + ggSheetHTML(m), m.title); } return true; }
     case 'wl-copy-note': { const s = wlFindVisit(); if (s) copy(wlNote(s, V.wlv === 'demo' ? s.person : CL(s.clientId))); return true; }
     case 'wl-send': V.wlsf = null; go('willow', {wlsend:v, wlDemo:V.wlDemo}); return true;
     case 'wl-report': go('willow', {wlrep:v || ''}); return true;
@@ -10152,6 +10199,7 @@ document.addEventListener('click', async e => {
   if (t.dataset.menu){ const open = $('#menu'); if (open) closeMenu(); else openMenu(t.dataset.menu); return; }
   if (t.dataset.tab && !t.dataset.act){ closeMenu(); if (t.closest('#tabs')) SEC[t.dataset.tab] = null; if (t.dataset.sec) SEC[t.dataset.tab] = t.dataset.sec; go(t.dataset.tab); return; }
   const a = t.dataset.act, v = t.dataset.v;
+  if (a === 'th'){ fgTHGo(t.dataset.k, v); return; }
   if (a && a.startsWith('sec-') && secAct(a, v)) return;
   if (a && a.startsWith('gv-') && gvAct(a, v, t)) return;
   if (a && a.startsWith('gx-') && gxAct(a, v, t)) return;
@@ -10293,7 +10341,6 @@ document.addEventListener('click', async e => {
     case 'st-visit': go('oak', {stv:v}); break;
     case 'st-copy-note': { const s = stFindVisit(); if (s) copy(stNote(s, V.stv === 'demo' ? s.person : CL(s.clientId))); break; }
     case 'st-print-note': { const s = stFindVisit(); if (s) stPrintNote(s, V.stv === 'demo' ? s.person : CL(s.clientId)); break; }
-    case 'st-print-hand': { const s = stFindVisit(); if (s) stPrintHandout(s); break; }
     case 'st-send': { const s = stFindVisit(); if (s) fgVisitSend(fgPlanCard(STG(), s, V.stv === 'demo' ? s.person : CL(s.clientId)), 'oak'); break; }
     case 'st-del-visit': if (confirm('Delete this visit?')) { const s = DATA.sessions.find(x => x.id === v); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.sessions[v] = Date.now(); DATA.sessions = DATA.sessions.filter(x => x.id !== v); save(); if (s && s.clientId) go('oak', {stp:s.clientId}); else go('oak'); } break;
     case 'st-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('oak'); } break;

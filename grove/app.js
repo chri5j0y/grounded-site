@@ -887,7 +887,7 @@ function viewTogether() {
    Our Circle, and a Hard Season. Nothing is hidden. Deep links: #life, #life=<id>. */
 const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
 const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
-const GV_SRC = '/grove/guide-videos.js?v=b774';
+const GV_SRC = '/grove/guide-videos.js?v=b782';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
 const TREE_LINK = { maple: ['Maple', '/maple/#talk=', 'for grown-ups of kids, K to 5'], aspen: ['Aspen', '/aspen/#talk=', 'for grown-ups of middle schoolers'], pine: ['Pine', '/pine/#life=', 'for grades 9 to 12'], birch: ['Birch', '/birch/#life=', 'for ages 18 to 26'], oak: ['Oak', '/oak/#life=', 'for grown-ups'], sequoia: ['Sequoia', '/sequoia/#life=', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
 const HOSPICE_FIRST = ['hospice', 'hard-death'];

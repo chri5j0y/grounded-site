@@ -1117,7 +1117,7 @@ html.ts-2 main{zoom:1.25;}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js?v=b782"></script>
-<script src="/oak/checkin.js?v=b780"></script>
+<script src="/oak/checkin.js?v=b782"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
@@ -1129,8 +1129,8 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-library.js?v=b780"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
-<script src="/oak/guides.js?v=b772"></script>
-<script src="/oak/practices.js?v=b780"></script>
+<script src="/oak/guides.js?v=b782"></script>
+<script src="/oak/practices.js?v=b782"></script>
 <script>
 // The six parts and the practice library live in oak/practices.js (moved there in GWG BLD 756,
 // every name and line unchanged, so saved plans keep working). Health and Ability tags are in its FLAGS.
@@ -2774,7 +2774,7 @@ function moveToSequoia() {
 // come from /birch/groundwork.js, loaded only when the notebook opens; each saved
 // answer also keeps the words of its prompt, so it reads well either way.
 // =====================================================================
-const GW_SRC = '/birch/groundwork.js?v=b758';
+const GW_SRC = '/birch/groundwork.js?v=b782';
 function birchRec() { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const all = GGP.data(PROF.id); return all && all.birch && typeof all.birch === 'object' ? all.birch : null; }
 function gwData() {
   const b = birchRec(), g = b && b.groundwork; if (!g || typeof g !== 'object') return null;

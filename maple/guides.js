@@ -57,7 +57,7 @@ const M = {
 
 const TOPICS = [
 /* ---------------- INSIDE ME ---------------- */
-{ id: 'worry', ring: 'inside', title: "Worry that keeps coming back", keys: 'anxiety anxious nervous fear scared stomachaches worry',
+{ id: 'worry', ring: 'inside', title: "Worry that won't let go", keys: 'anxiety anxious nervous fear scared stomachaches worry',
   quick: ['Worry is a feeling, not a fact. Name it together and help it shrink.', 'Stay calm and brief. Long reassurance can feed worry.', 'Help them face small fears in small steps instead of avoiding them.', 'Tummy aches and trouble sleeping can be worry in disguise.'],
   rainy: 'Bark and Fruit', acts: ['name-it', 'balloon-breaths', 'feelings-weather'],
   k2: 'Younger kids often show worry in their bodies: tummy aches, clinging, tears at drop-off, or lots of "what if" questions at bedtime.',
