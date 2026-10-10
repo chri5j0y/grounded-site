@@ -1339,7 +1339,7 @@ window.GROVE_KINDS = {
   "family-reset": [
    "family"
   ],
-  "screen-free-hour": [
+  "unplugged-hour": [
    "family"
   ],
   "phones-down-dinner": [

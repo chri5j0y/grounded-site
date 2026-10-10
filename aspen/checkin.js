@@ -171,7 +171,7 @@ const Q = {
       ['Do you feel stressed or upset about food, eating, or how your body looks?', 'If yes, listen without judging. Keep it about energy and strength, not weight. Watch for skipped meals or big changes, and talk with their doctor if you\'re concerned.', 'r'],
       ['If someone offered you a vape or something to drink, do you know how you\'d get out of it?', 'Practice a few easy ways out together. Let them use you as the excuse, and promise a no-questions ride home if they ever need one.'],
       ['Do you eat regular meals that keep your energy up during the day?', 'Keep it about energy, not weight. Make breakfast and snacks easy to grab.'],
-      ['Do you scroll or watch screens for hours without meaning to?', 'Ask how they feel after a long scroll. Agree on screen-free times together, and keep them yourself.', 'r']
+      ['Do you scroll or watch screens for hours without meaning to?', 'Ask how they feel after a long scroll. Agree on unplugged times together, and keep them yourself.', 'r']
     ],
     fruit: [
       ['Do you have something coming up that you\'re excited about?', 'If not, plan one good thing together this month.'],

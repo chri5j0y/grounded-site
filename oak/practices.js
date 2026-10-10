@@ -252,7 +252,7 @@
    "bark|Thinking": {
     "why": "Unhurried thinking time, without a screen or task pulling at you, lets your mind sort itself out. Many problems loosen when you give them room.",
     "today": "Take a fifteen minute walk or sit on the porch with no phone, no podcast, no task. Let your thoughts go wherever they want.",
-    "build": "Schedule one screen-free block a week. Keep a small notebook handy for the ideas that show up.",
+    "build": "Schedule one unplugged block a week. Keep a small notebook handy for the ideas that show up.",
     "hard": "If silence fills with worry, give your mind a gentle question to hold, like \"What do I need this week?\", and come back to it when you drift."
    },
    "branches|Family": {
@@ -439,7 +439,7 @@
       'Medicine': ['B', 'Varies', 'W', ''], 'Movement': ['B', '20+ min', 'W', SRC.ex], 'Chakras': ['C', '10 min', 'T', ''],
       'Walk or Jog': ['B', '20+ min', 'W', SRC.ex], 'Yoga': ['B', '20+ min', 'W', SRC.ex], 'Strength Training': ['B', '20+ min', 'W', SRC.ex],
       'Two Hours Outdoors': ['N', 'Weekly', 'S', SRC.nat], 'Stretch Break': ['B', '5 min', 'E', ''], 'Tai Chi': ['B', '20+ min', 'S', ''],
-      'Screen-Free Evening': ['Z', 'Evening', 'E', ''], 'Alcohol-Free Week': ['B', '1 week', 'E', ''], 'Morning Daylight': ['N', '10 min', 'E', '']
+      'Unplugged Evening': ['Z', 'Evening', 'E', ''], 'Alcohol-Free Week': ['B', '1 week', 'E', ''], 'Morning Daylight': ['N', '10 min', 'E', '']
     },
     fruit: {
       'Volunteer': ['S', 'Varies', 'S', ''], 'Pay It Forward': ['S', '5 min', 'E', ''], 'Be Generous': ['S', 'Varies', 'S', ''],
@@ -501,7 +501,7 @@
       ['Two Hours Outdoors', 'About two hours a week outside, in one visit or many short ones.'],
       ['Stretch Break', 'Five minutes of gentle stretching, anywhere.'],
       ['Tai Chi', 'Slow, flowing movements that calm the body and steady balance.'],
-      ['Screen-Free Evening', 'Put screens away an hour before bed.'],
+      ['Unplugged Evening', 'Put screens away an hour before bed.'],
       ['Alcohol-Free Week', 'Try one week without alcohol, and notice how you feel.'],
       ['Morning Daylight', 'Ten minutes of morning daylight to steady your body\'s clock.']
     ],
@@ -559,7 +559,7 @@
     'leaves|Two Hours Outdoors': { why: 'People who spent about two hours a week in nature reported better health and well-being in a large study.', today: 'Spend 20 minutes outside today, at a park, trail, or even your yard.', build: 'Add it up across the week toward two hours, in whatever pieces work.', hard: 'In bad weather or with limited mobility, a porch, a window, or a garden bed can help.' },
     'leaves|Stretch Break': { why: 'Gentle stretching eases tension and reminds your body it\'s cared for.', today: 'Stand up and stretch for five minutes: arms, neck, back, legs.', build: 'Set a reminder to stretch every few hours.', hard: 'Stretch gently. It should never hurt.' },
     'leaves|Tai Chi': { why: 'Tai chi\'s slow movements calm the mind and help with balance, especially as we age.', today: 'Try a beginner tai chi video for 15 minutes.', build: 'Practice a few times a week, or find a local class.', hard: 'Tai chi can be done seated if balance is a concern.' },
-    'leaves|Screen-Free Evening': { why: 'Screens before bed make it harder to fall asleep, and a calmer evening supports rest.', today: 'Put screens away an hour before bed. Read, talk, or stretch instead.', build: 'Charge your phone outside the bedroom.', hard: 'If an hour feels impossible, start with 20 minutes.' },
+    'leaves|Unplugged Evening': { why: 'Screens before bed make it harder to fall asleep, and a calmer evening supports rest.', today: 'Put screens away an hour before bed. Read, talk, or stretch instead.', build: 'Charge your phone outside the bedroom.', hard: 'If an hour feels impossible, start with 20 minutes.' },
     'leaves|Alcohol-Free Week': { why: 'Taking a break from alcohol lets you notice its effect on your sleep, mood, and stress.', today: 'Choose a week to go alcohol-free, and plan something else for the times you usually drink.', build: 'Notice how you sleep and feel. Let that guide your next choice.', hard: 'If stopping is harder than expected, that\'s important to know. The SAMHSA Helpline, 1-800-662-4357, is free and confidential.' },
     'leaves|Morning Daylight': { why: 'Morning light helps set your body\'s clock, which supports sleep and energy.', today: 'Spend ten minutes in morning daylight, outside or by a bright window.', build: 'Make it part of your morning routine.', hard: 'In dark Minnesota winters, the brightest window you have still helps.' },
     'fruit|Three Good Things': { why: 'Writing down three good things and why they happened is one of the most tested gratitude practices.', today: 'Tonight, write three things that went well today and why.', build: 'Keep it up for a week, then see how you feel.', hard: 'On hard days, the good things can be tiny: a warm drink, a kind word.' },

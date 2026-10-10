@@ -277,7 +277,7 @@ const PRACTICES = {
  rest:[
   ["Sleep","Pick a bedtime and treat it like an appointment. Dim the lights and wind down before it. Wake at the same time every day, even weekends.","Tonight, go to bed fifteen minutes earlier.",
    "Bedtime on Time","Go to bed at the same time every night. Pick your pajamas and a book.","Get in bed on time tonight."],
-  ["Screen-Free Evening","Screens off thirty to sixty minutes before bed. Charge your phone outside the bedroom.","Put your phone across the room at bedtime.",
+  ["Unplugged Evening","Screens off thirty to sixty minutes before bed. Charge your phone outside the bedroom.","Put your phone across the room at bedtime.",
    "Screens Sleep First","Turn off screens before bath and books. Tuck the tablet in its own bed to charge.","Turn off screens before bedtime."],
   ["Micro-Rest","Three times today, stop for two minutes. Close your eyes, drop your shoulders, and let the breath slow.","One two minute pause with your eyes closed.",
    "Turtle Time","Pull into your shell like a turtle. Close your eyes and rest for two minutes.","Be a quiet turtle for ten breaths."],
@@ -358,7 +358,7 @@ const PRACTICES = {
   ["Active Listening","In one conversation today, listen without planning your reply. Ask one follow-up question.","Ask someone, \"How are you, really?\" and wait.",
    "Listening Ears","When someone talks, look at them and listen all the way to the end.","Listen to one whole story."],
   ["Phone-Free Time","Spend twenty minutes with someone with phones out of sight.","Put your phone face down during one conversation.",
-   "Screen-Free Play","Play a game with someone with no screens at all.","Play one quick game with someone."],
+   "Unplugged Play","Play a game with someone with no screens at all.","Play one quick game with someone."],
   ["Ask for Help","Ask someone for help with one thing this week, even something small. Letting people in is part of connection.","Say yes to one offer of help.",
    "Ask for Help","When something is hard, ask a grown-up or friend, \"Can you help me?\"","Ask for help with one thing."],
   ["Real Time Together","Once this week, spend unhurried time with someone, in person or on a call. Put the phone away. Ask one question you actually want the answer to.","Ten minutes of real attention for someone.",

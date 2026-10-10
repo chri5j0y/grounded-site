@@ -7480,7 +7480,7 @@ window.GG_LEARN = {
        "h": "Make a phone agreement together",
        "items": [
         [
-         "Screen-free times",
+         "Unplugged times",
          "Dinner, homework, and bedtime"
         ],
         [
@@ -7496,7 +7496,7 @@ window.GG_LEARN = {
          "Made together, kept together"
         ]
        ],
-       "say": "Next, write a phone agreement together. Choose screen-free times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night, yours included. Turn off autoplay and notifications. A plan made together works better than rules handed down. So invite them in, and include a few rules for yourself."
+       "say": "Next, write a phone agreement together. Choose unplugged times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night, yours included. Turn off autoplay and notifications. A plan made together works better than rules handed down. So invite them in, and include a few rules for yourself."
       },
       {
        "k": "points",
@@ -7565,7 +7565,7 @@ window.GG_LEARN = {
          "Charge your phone outside your bedroom"
         ]
        ],
-       "say": "Aspen has help ready. In When Life Changes, the guide called First phone and group chats has a quick card, words to use, and trusted links. Nearby are guides for friendship breakups and drama, being left out, and bullying, in person and online. And your student will find Leaves practices like charging the phone outside the bedroom, or asking a grown-up to help set up a screen-free time each day."
+       "say": "Aspen has help ready. In When Life Changes, the guide called First phone and group chats has a quick card, words to use, and trusted links. Nearby are guides for friendship breakups and drama, being left out, and bullying, in person and online. And your student will find Leaves practices like charging the phone outside the bedroom, or asking a grown-up to help set up an unplugged time each day."
       },
       {
        "k": "points",
@@ -32621,11 +32621,11 @@ window.GG_LEARN = {
          "Pause, three breaths, start again"
         ],
         [
-         "Screen-Free Hour",
+         "Unplugged Hour",
          "Every screen away, grown-ups too"
         ]
        ],
-       "say": "Here are a few ways families tend their bark. Breathe Together, five slow breaths, in through the nose and out like blowing on hot soup. A Worry Jar, where everyone writes or draws a worry, and you talk about one together. Family Reset. When things get loud, anyone says your reset word, everyone takes three breaths, and you start again. And a Screen-Free Hour, with every screen put away, grown-ups too. You will find them all on the Together tab, under Bark."
+       "say": "Here are a few ways families tend their bark. Breathe Together, five slow breaths, in through the nose and out like blowing on hot soup. A Worry Jar, where everyone writes or draws a worry, and you talk about one together. Family Reset. When things get loud, anyone says your reset word, everyone takes three breaths, and you start again. And an Unplugged Hour, with every screen put away, grown-ups too. You will find them all on the Together tab, under Bark."
       },
       {
        "k": "card",

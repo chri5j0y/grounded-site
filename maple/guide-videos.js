@@ -1250,7 +1250,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Look at the hour before bed.",
 "body": "Shows, news, games, and grown-up talk.",
-"say": "Before you talk, look at what they watched, heard, or played before bed. Scary shows and the news can follow a child into the dark. Keep bedtime calm, predictable, and screen-free, and at about the same time every night."
+"say": "Before you talk, look at what they watched, heard, or played before bed. Scary shows and the news can follow a child into the dark. Keep bedtime calm, predictable, and unplugged, and at about the same time every night."
 },
 {
 "k": "words",

@@ -167,7 +167,7 @@ const Q = {
       ['Do you go to bed at about the same time each night?', 'A steady bedtime helps sleep more than almost anything else.'],
       ['Do you get to play and move for a good part of the day?', 'Aim for about an hour of active play, in little bits.'],
       ['Does your body feel strong and healthy?', 'Ask what makes their body feel good.'],
-      ['Do you spend a lot of time on screens?', 'If yes, plan a screen-free time each day together.', 'r']
+      ['Do you spend a lot of time on screens?', 'If yes, plan an unplugged time each day together.', 'r']
     ],
     fruit: [
       ['Do you have something fun to look forward to this week?', 'Plan something small and good together.'],
