@@ -337,7 +337,7 @@
     }
     function lay(z) {
       var ops = [], fits = true;
-      function T(t, x, yy, f, size, col, tc) { t = text(t); if (!t) return; ops.push('BT ' + col.join(' ') + ' rg /' + f + ' ' + size.toFixed(2) + ' Tf ' + (tc ? tc + ' Tc ' : '') + x.toFixed(1) + ' ' + yy.toFixed(1) + ' Td (' + escp(t) + ') Tj ET'); }
+      function T(t, x, yy, f, size, col, tc) { t = text(t); if (!t) return; ops.push('BT ' + col.join(' ') + ' rg /' + f + ' ' + size.toFixed(2) + ' Tf ' + (tc || 0) + ' Tc ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' Td (' + escp(t) + ') Tj ET'); }
       function R(x, yy, w, h, fill) { ops.push(fill.join(' ') + ' rg ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' ' + w.toFixed(1) + ' ' + h.toFixed(1) + ' re f'); }
       function para(t, x, yy, w, f, size, col, lh, bold) { var ls = wrap(text(t), size, bold, w); ls.forEach(function (l, i) { T(l, x, yy - i * size * lh, f, size, col); }); return ls.length * size * lh; }
       function qrAt(url, x, top, size) {
@@ -348,10 +348,11 @@
         for (var r = 0; r < cnt; r++) { var run = -1; for (var c = 0; c <= cnt; c++) { var on = c < cnt && mx[r][c]; if (on && run < 0) run = c; if (!on && run >= 0) { ops.push('0 0 0 rg ' + (x + run * cell).toFixed(2) + ' ' + (top - (r + 1) * cell).toFixed(2) + ' ' + ((c - run) * cell + 0.04).toFixed(2) + ' ' + (cell + 0.04).toFixed(2) + ' re f'); run = -1; } } }
         return size;
       }
+      R(0, 0, PW, PH, [1, 0.988, 0.965]);
       // the painting, with its mark and shade baked in
       if (art.hero) ops.push('q ' + PW + ' 0 0 ' + HERO + ' 0 ' + (PH - HERO) + ' cm /Im1 Do Q'); else R(0, PH - HERO, PW, HERO, C);
       var hx = art.hero ? 118 : X0;
-      T(n.eyebrow.toUpperCase(), hx, PH - 58, 'F2', 8.5, [1, 0.94, 0.82], 1.6);
+      T(fit(text(n.eyebrow.toUpperCase() + ' \u00B7 ' + String(n.app).toUpperCase() + ' BY GROW WITH GROUNDED'), 8.5, true, PW - hx - 60), hx, PH - 58, 'F2', 8.5, [1, 0.94, 0.82], 1.2);
       var ts = 30; while (ts > 18 && width(text(n.title), ts, true) > PW - hx - 40) ts -= 1;
       T(n.title, hx, PH - 90, 'F4', ts, WHITE);
       if (n.sub) T(fit(text(n.sub), 11.5, false, PW - hx - 40), hx, PH - 110, 'F1', 11.5, [1, 0.97, 0.9]);
@@ -395,17 +396,17 @@
       var sy = TOP;
       function card(h) { R(SX, sy - h, SIDE, h, CREAM); R(SX, sy - 3, SIDE, 3, C); }
       if (n.home) {
-        var H = n.home, qs = Math.min(SIDE - 36, Math.max(118, 132)), lines = [];
+        var H = n.home, qs = H.url.length > 300 ? SIDE - 24 : 132, lines = [];
         var hh = 16 + 16 + 8 + qs + 10 + (H.code ? 26 : 0) + 6;
-        (H.how || []).forEach(function (t, i) { var ls = wrap(text((i + 1) + '. ' + t), 8.5, false, SIDE - 24); lines = lines.concat(ls); });
-        var nl = H.note ? wrap(text(H.note), 7.5, false, SIDE - 24) : [];
-        hh += lines.length * 11 + (nl.length ? nl.length * 9.5 + 6 : 0) + 8;
+        (H.how || []).forEach(function (t, i) { var ls = wrap(text((i + 1) + '. ' + t), s(8.5), false, SIDE - 24); lines = lines.concat(ls); });
+        var nl = H.note ? wrap(text(H.note), s(7.5), false, SIDE - 24) : [];
+        hh += lines.length * s(11) + (nl.length ? nl.length * s(9.5) + 6 : 0) + 8;
         card(hh); var cy0 = sy - 22;
         T(H.title, SX + 12, cy0, 'F4', 14, C); cy0 -= 8;
         qrAt(H.url, SX + (SIDE - qs) / 2, cy0 - 6, qs); cy0 -= qs + 20;
         if (H.code) { var cl = text(H.codeLabel || 'Your code'); T(cl, SX + 12, cy0, 'F1', 8.5, SOFT); T(H.code, SX + 14 + width(cl, 8.5, false), cy0 - 1, 'F2', 15, INK, 1.5); cy0 -= 22; }
-        lines.forEach(function (l) { T(l, SX + 12, cy0, 'F1', 8.5, INK); cy0 -= 11; });
-        if (nl.length) { cy0 -= 3; nl.forEach(function (l) { T(l, SX + 12, cy0, 'F3', 7.5, SOFT); cy0 -= 9.5; }); }
+        lines.forEach(function (l) { T(l, SX + 12, cy0, 'F1', s(8.5), INK); cy0 -= s(11); });
+        if (nl.length) { cy0 -= 3; nl.forEach(function (l) { T(l, SX + 12, cy0, 'F3', s(7.5), SOFT); cy0 -= s(9.5); }); }
         sy -= hh + 12;
       } else if (n.homeNote) {
         var hn = wrap(text(n.homeNote.p), 8.5, false, SIDE - 24), hnh = 34 + hn.length * 11 + 6;
@@ -417,7 +418,7 @@
         card(wh); qrAt(W.url, SX + 14, sy - 14, wq);
         T(W.title, SX + wq + 28, sy - 24, 'F4', 13, C);
         wl.forEach(function (l, i) { T(l, SX + wq + 28, sy - 38 - i * 11, 'F1', 8.5, INK); });
-        T(fit(text(W.short), 7.5, false, SIDE - wq - 34), SX + wq + 28, sy - 42 - wl.length * 11, 'F1', 7.5, SOFT);
+        T(fit(text(W.short), 6.8, false, SIDE - wq - 36), SX + wq + 28, sy - 42 - wl.length * 11, 'F1', 6.8, SOFT);
         sy -= wh + 12;
       }
       if (n.help) {

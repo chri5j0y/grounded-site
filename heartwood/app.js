@@ -1106,7 +1106,7 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-act]'); if (!b || !$('gm-app') || !$('gm-app').contains(b) && !b.closest('.btv-clear')) return;
     var a = b.getAttribute('data-act'), w = b.getAttribute('data-w'), k = b.getAttribute('data-k');
-    if (a === 'copy-mail') { var box = b.closest('.gm-mailcopy'), ta = box && box.querySelector('textarea'), cs = box && box.querySelector('.gm-cpst'); if (ta) copyText(ta.value, function (ok) { if (cs) cs.textContent = ok ? 'Copied. Paste it into a new email to ' + GG_MAIL + '.' : 'Select the text above and copy it.'; if (!ok) { ta.focus(); ta.select(); } }); return; }
+    if (a === 'copy-mail') { var mbox = b.closest('.gm-mailcopy'), ta = mbox && mbox.querySelector('textarea'), cs = mbox && mbox.querySelector('.gm-cpst'); if (ta) copyText(ta.value, function (ok) { if (cs) cs.textContent = ok ? 'Copied. Paste it into a new email to ' + GG_MAIL + '.' : 'Select the text above and copy it.'; if (!ok) { ta.focus(); ta.select(); } }); return; }
     if (a === 'start') go(setup() ? (ATV ? 'after' : 'hub') : 'setup');
     else if (a === 'welcome') go(setup() ? home() : 'welcome');
     else if (a === 'setup') go('setup');
