@@ -79,7 +79,7 @@
   var POS = {
     oak: {
       wide: { size: W, crop: [54, 30, 35, 56], at: { fruit: [74.5, 41.5], leaves: [62.5, 53], branches: [77, 61], trunk: [71, 66], bark: [72.7, 72], roots: [71.3, 77.5] } },
-      phone: { size: P, crop: [33, 31, 52, 51], at: { fruit: [68, 40.5], leaves: [42, 54], branches: [68, 59], trunk: [60, 65], bark: [58.6, 71.5], roots: [63.5, 76.5] } }
+      phone: { size: P, crop: [33, 30, 52, 55], at: { fruit: [68, 40.5], leaves: [42, 54], branches: [68, 59], trunk: [60, 65], bark: [58.6, 71.5], roots: [63.5, 76.5] } }
     },
     pine: {
       wide: { size: W, crop: [22, 16, 30, 72], at: { fruit: [39.8, 56.5], leaves: [32, 58], branches: [44, 46], trunk: [37.4, 70], bark: [37.4, 77], roots: [37.6, 84] } },

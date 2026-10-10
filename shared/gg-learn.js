@@ -833,7 +833,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=b757', aspen: '/aspen/guide-videos.js?v=b757', maple: '/maple/guide-videos.js?v=b757', sequoia: '/sequoia/guide-videos.js?v=b757', pine: '/pine/guide-videos.js?v=b757', birch: '/birch/guide-videos.js?v=b757', grove: '/grove/guide-videos.js?v=b774' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=b757', aspen: '/aspen/guide-videos.js?v=b757', maple: '/maple/guide-videos.js?v=b780', sequoia: '/sequoia/guide-videos.js?v=b757', pine: '/pine/guide-videos.js?v=b757', birch: '/birch/guide-videos.js?v=b757', grove: '/grove/guide-videos.js?v=b774' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
