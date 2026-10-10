@@ -402,7 +402,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
   <a class="brand-sub" href="#" onclick="go('home');return false;">Aspen</a>
   <button class="size-btn" id="size-btn" aria-label="Text Size" onclick="cycleTextSize()">A+</button>
   <button class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Grow With Grounded menu" onclick="toggleSiteMenu(this)"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <nav class="site-menu" id="site-menu" aria-label="Grow With Grounded"><a href="https://growwithgrounded.com/">Home</a><a href="https://growwithgrounded.com/services">Services</a><a href="https://growwithgrounded.com/#tools">Tools</a><a href="https://growwithgrounded.com/stories">Stories</a><a href="https://growwithgrounded.com/about">About</a><a href="https://growwithgrounded.com/contact.html">Contact</a></nav>
+  <nav class="site-menu" id="site-menu" aria-label="Grow With Grounded"><a href="https://growwithgrounded.com/">Home</a><a href="https://growwithgrounded.com/services.html">Services</a><a href="https://growwithgrounded.com/tools.html">Tools</a><a href="https://growwithgrounded.com/stories.html">Stories</a><a href="https://growwithgrounded.com/about.html">About</a><a href="https://growwithgrounded.com/contact.html">Contact</a></nav>
 </div></header>
 
 <section class="gg-hero gg-photo" id="top" aria-labelledby="hero-title" style="--band:#1F6F74;--band-dark:#19595D;--soft:#D6ECE9;--btn-ink:#1F6F74;--sky:#A3C8CA;--pw:url('/shared/heroes/aspen-wide.webp');--pn:url('/shared/heroes/aspen-phone.webp');--px:36%">
@@ -459,7 +459,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b770"></script>
+<script src="/shared/gg-profiles.js?v=b779n"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="checkin.js?v=ps1"></script>
@@ -1170,6 +1170,8 @@ function hush(){ try { if (window.GGRead) GGRead.stop(); if ('speechSynthesis' i
 /* ---------- navigation ---------- */
 const TAB_OF = {home:'home',students:'students',dash:'students',checkin:'students',plan:'students',practice:'students',helpplan:'students',rings:'students',grown:'grown',gstudent:'grown',life:'life',guide:'life'};
 function go(view, opts){
+  if (ASP_NAV_TABS.includes(view)) aspNavPush('#'+view, {ggView:view});
+  else if (view === 'guide'){ const gid = (opts && opts.id) || renderGuide.last; if (gid && aspGuideId(gid)) aspNavPush('#talk='+gid, {ggView:'guide'}); }
   hush();
   // Daily practice lives in each student's own app again (Rebrand Session 4): the five tabs on their tree.
   if (view === 'plan'){ ASP_TAB = 'plan'; view = 'dash'; }
@@ -1183,6 +1185,24 @@ function go(view, opts){
   toTop(true);
 }
 ['pointerdown','keydown'].forEach(ev => addEventListener(ev, () => { window.ggTouched = true; }, {capture:true, once:true}));
+/* Browser history: each tab and each When Life Changes guide gets its own entry, so Back and Forward
+   step through them and a reload keeps the place. Nothing is added on first load, before anyone taps,
+   or while the page is following the address itself (aspNavRead). One-time links (#for=, visits,
+   families) stay with shared/gg-app.js and shared/gg-bridge.js. */
+const ASP_NAV_TABS = ['home','students','grown','life'];
+let ASP_NAV_READING = false;
+function aspGuideId(id){ return guidesData().groups.some(g => g.topics.some(t => t.id === id)); }
+function aspNavPush(hash, state){
+  if (ASP_NAV_READING || !window.ggTouched) return;
+  const now = decodeURIComponent(location.hash || '');
+  if (now === hash) return;
+  if (!now && hash === '#home' && $('view-home').classList.contains('active')) return;
+  try {
+    const cur = document.querySelector('.view.active');
+    history.replaceState(Object.assign({}, history.state || {}, {ggView: cur ? cur.id.slice(5) : 'home'}), '', location.href);
+    history.pushState(state, '', hash);
+  } catch(e){}
+}
 function toTop(focus){
   // Opening on the home view, before anyone taps anything, stays at the top so the hero shows.
   if (!window.ggTouched && $('view-home').classList.contains('active')) return;
@@ -2499,19 +2519,30 @@ if (window.GGTend) GGTend.init({
 const yr = $('copyright-year'); if (yr) yr.textContent = new Date().getFullYear();
 renderHome();
 if (window.GGP){ GGP.on(() => { aspenRefresh(); VISIT_SHOWN = false; visitCheck(); }); GGP.ready.then(() => { aspenRefresh(); visitCheck(); }, () => visitCheck()); } else setTimeout(visitCheck, 0);
-/* Deep links: #life opens the guides, #talk=topic opens one guide */
-function lifeFromHash(){
-  const h = decodeURIComponent(location.hash || '');
-  if (!/^#(life|talk)/.test(h)) return;
-  const id = h.startsWith('#talk=') ? h.slice(6) : null;
-  if (id && guidesData().groups.some(g => g.topics.some(t => t.id === id))) go('guide', {id}); else go('life');
+/* Deep links and Back/Forward: #home, #students, #grown, #life open a tab, #talk=topic opens one guide.
+   With no hash, Back lands on Home (or the student view that entry was showing). Any other hash
+   belongs to someone else (one-time links, the skip link) and is left alone. */
+function aspNavRead(e){
+  if (e && /#$/.test(location.href)) return;
+  const h = decodeURIComponent(location.hash || ''), st = (e && e.state) || {};
+  ASP_NAV_READING = true;
+  try {
+    if (e && (st.ggView === 'dash' || st.ggView === 'gstudent') && me()) go(st.ggView);
+    else if (h.startsWith('#talk=')){ const id = h.slice(6); if (aspGuideId(id)) go('guide', {id}); else go('life'); }
+    else if (h.charAt(0) === '#' && ASP_NAV_TABS.includes(h.slice(1))) go(h.slice(1));
+    else if (!h && e) go('home');
+  } finally { ASP_NAV_READING = false; }
 }
-lifeFromHash();
-window.addEventListener('hashchange', lifeFromHash);
+aspNavRead(null);
+// popstate and hashchange can both fire for one Back, and older Safari fires only hashchange: read each address once.
+var aspNavRead_h = null, aspNavRead_t = 0;
+function aspNavReadOnce(e) { var h = location.hash, t = Date.now(); if (h === aspNavRead_h && t - aspNavRead_t < 400) return; aspNavRead_h = h; aspNavRead_t = t; aspNavRead(e && e.type === 'popstate' ? e : { state: history.state }); }
+window.addEventListener('popstate', aspNavReadOnce);
+window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
 <script src="/shared/gg-learn.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b777" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b777';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b779t" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b779t';document.head.appendChild(s)"></script>
 </body>
 </html>

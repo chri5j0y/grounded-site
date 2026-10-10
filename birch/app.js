@@ -1086,7 +1086,7 @@ function lcOpen(mode, id) {
   LCS[mode].open = id || null;
   showView(mode + '-life');
 }
-function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcClose(mode) { mode = 'client'; LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); navPush(mode + '-life'); }
 function lcPersp(mode, p) { mode = 'client'; LCS[mode].persp = p; renderLC(mode); }
 /* Practice links open Birch's own practice guide right under the name. */
 function lcPrac(btn) {
@@ -1195,8 +1195,25 @@ function showView(id) {
   if (id === 'client-growthplan') { if (HELP) renderHelpPlan(); else oakPlanOpen(); }
   if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render(); }
   scrollToViewTop(id, false, false);
+  navPush(id);
 }
 function goHome() { showView('client-today'); }
+/* In-app history: each tab and each open guide gets its own Back step, and the hash names it.
+   navPush runs only for taps after the first load; the hash reader (fromHash) shows views quietly. */
+let NAV_READY = false, NAV_QUIET = false;
+const NAV_KEY = { 'client-today': 'today', 'client-intro': 'about', 'client-week': 'week', 'client-season': 'season', 'client-progress': 'progress', 'client-growthplan': 'plan' };
+function navKey(id) {
+  if (id === 'client-life') return LCS.client.open ? 'life=' + LCS.client.open : 'life';
+  if (id === 'client-ground') return GX.ch === 'skills' ? 'skills' : 'groundwork';
+  return NAV_KEY[id] || null;
+}
+function navPush(id) {
+  if (!NAV_READY || NAV_QUIET) return;
+  const k = navKey(id); if (!k) return;
+  let h = location.hash || ''; try { h = decodeURIComponent(h); } catch (e) {}
+  if (h === '#' + k) return;
+  try { history.pushState(null, '', '#' + encodeURI(k)); } catch (e) {}
+}
 
 // App-ready: a real PDF for the share sheet, with Print as a backup.
 function printGrowthPlan(sheetId) {
@@ -2074,7 +2091,7 @@ function gwChapterHtml(c, L) {
     <div id="bc-gwsheet" class="sq-legsheet" aria-hidden="true"></div>`;
   return h;
 }
-function gwOpen(id) { GX.ch = id; GX.edit = null; GX.pick = false; GX.how = null; renderGround(); scrollToViewTop('client-ground', true, false); }
+function gwOpen(id) { GX.ch = id; GX.edit = null; GX.pick = false; GX.how = null; renderGround(); scrollToViewTop('client-ground', true, false); navPush('client-ground'); }
 function gwEdit(pid) { GX.edit = pid; renderGround(); const t = document.getElementById('gt-' + pid); if (t) { t.focus(); t.scrollIntoView({ block: 'center' }); } }
 function gwSave(pid) {
   const L = gwRec(); if (!L) return;
@@ -2280,17 +2297,34 @@ renderAboutParts();
 renderProgress();
 renderProfileBar();
 
-/* Deep links: #quick, #checkin, #groundwork, #skills, #plan, #about, #life (guides), #life=<id> or #talk=<id> (one guide), #for=<id> (a helper) */
-function fromHash() {
-  const h = decodeURIComponent(location.hash || '');
-  if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && lcHas(id) ? id : null; showView('client-life'); }
-  else if (h === '#groundwork' || h === '#ground') { GX.ch = null; showView('client-ground'); }
-  else if (h === '#skills') { GX.ch = 'skills'; showView('client-ground'); }
-  else if (h === '#plan') showView('client-growthplan');
-  else if (h === '#quick') startQuick();
-  else if (h === '#checkin' || h === '#check' + 'up') startCheckin();
-  else if (h === '#about') showView('client-intro');
-  else if (h.startsWith('#for=')) helpFromHash();
+/* Deep links and in-app history. Tabs: #today, #week, #season, #progress, #plan, #groundwork (or #ground), #skills,
+   #about, #life (guides), #life=<id> or #talk=<id> (one guide). Actions on first load: #quick, #checkin.
+   #for=<id> opens a helper view and is cleared with replaceState. Other one-time links (#library=, visit, family,
+   profile) are read and cleared by shared/gg-app.js and gg-bridge.js. */
+const HASH_VIEW = { '#today': 'client-today', '#week': 'client-week', '#season': 'client-season', '#progress': 'client-progress', '#plan': 'client-growthplan', '#about': 'client-intro' };
+function fromHash(pop) {
+  let h = location.hash || ''; try { h = decodeURIComponent(h); } catch (e) {}
+  let view = null;
+  NAV_QUIET = true;
+  try {
+    if (h.startsWith('#life') || h.startsWith('#talk=')) { const id = h.startsWith('#life=') ? h.slice(6) : h.startsWith('#talk=') ? h.slice(6) : null; LCS.client.open = id && lcHas(id) ? id : null; showView('client-life'); view = LCS.client.open ? 'client-lc-article' : 'client-life'; }
+    else if (h === '#groundwork' || h === '#ground') { GX.ch = null; view = 'client-ground'; showView(view); }
+    else if (h === '#skills') { GX.ch = 'skills'; view = 'client-ground'; showView(view); }
+    else if (HASH_VIEW[h]) { view = HASH_VIEW[h]; showView(view); }
+    else if (h === '#quick' || h === '#checkin' || h === '#check' + 'up') {
+      // Back or Forward onto a check-in link opens Season instead of starting over.
+      if (!pop) { if (h === '#quick') startQuick(); else startCheckin(); }
+      else if (!document.getElementById('client-assess').classList.contains('active')) { view = 'client-season'; showView(view); }
+    }
+    else if (h.startsWith('#for=')) helpFromHash();
+    else if (pop && (h === '' || h === '#')) { view = 'client-today'; showView(view); }
+  } finally { NAV_QUIET = false; }
+  if (view) setTimeout(() => scrollToViewTop(view, false, true), 80);
 }
-window.addEventListener('hashchange', fromHash);
-setTimeout(fromHash, 60);
+try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+// popstate and hashchange both fire for one Back in some browsers, and older Safari fires only hashchange: handle each address once.
+let navLastH = null, navLastT = 0;
+const navEv = () => { const h = location.hash, t = Date.now(); if (h === navLastH && t - navLastT < 400) return; navLastH = h; navLastT = t; fromHash(true); };
+window.addEventListener('popstate', navEv);
+window.addEventListener('hashchange', navEv);
+setTimeout(() => { fromHash(false); NAV_READY = true; }, 60);

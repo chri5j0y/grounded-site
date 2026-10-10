@@ -1008,7 +1008,7 @@ html.ts-2 main{zoom:1.25;}
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Shelter for others. Strength for you.</p>
     <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 26 to 60.</p>
-    <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');document.getElementById('client-nav').scrollIntoView({behavior:'smooth'})">How it works</button></div>
+    <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');scrollToViewTop('client-intro',true,true)">How it works</button></div>
     <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Grounded Field Guide.</p>
     <div id="hero-tree-slot" hidden></div>
   </div>
@@ -1126,7 +1126,7 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/shared/gg-profiles.js?v=b770"></script>
+<script src="/shared/gg-profiles.js?v=b779n"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-life-kit.js?v=lk1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
@@ -2158,7 +2158,39 @@ function showView(id, btn) {
   if (id === 'client-growthplan') oakPlanOpen();
   if (id === 'client-today' || id === 'client-week' || id === 'client-season') { if (HELP) renderHelpTabs(); else if (window.GGTend) GGTend.render(); }
   if (navId) scrollToViewTop(id, false, false);
+  if (navId) navSync(id);
 }
+
+/* Back and Forward: each tab and each open guide has its own address (#today, #week, #season, #plan, #life, #life=<id>),
+   so the browser's Back steps through them. A tab tap or an opened guide adds a step (NAV_MODE 'push'); a view opened
+   from reading the address adds nothing ('hash'); any other view change quietly updates an address that already names
+   a tab. One-time links (#for=, #quick, #checkin, visit and family links) are left as they are. */
+var NAV_MODE = null, NAV_LAST = location.href;
+var NAV_TAB_RE = /^#(today|week|season|plan|life)(=|$)/;
+function navHashFor(id) {
+  if (id === 'client-life') return LCS.client.open ? '#life=' + LCS.client.open : '#life';
+  return VIEW_TAB[id] && VIEW_TAB[id] !== 'guides' ? '#' + VIEW_TAB[id] : '';
+}
+function navSync(id) {
+  const mode = NAV_MODE; NAV_MODE = null;
+  const want = navHashFor(id);
+  if (mode === 'hash' || !want || decodeURIComponent(location.hash) === want) return;
+  try {
+    if (mode === 'push') history.pushState(null, '', want);
+    else if (NAV_TAB_RE.test(decodeURIComponent(location.hash))) history.replaceState(null, '', want);
+  } catch (e) {}
+  NAV_LAST = location.href;
+}
+function navPush(hash) {
+  if (decodeURIComponent(location.hash) === hash) return;
+  try { history.pushState(null, '', hash); } catch (e) {}
+  NAV_LAST = location.href;
+}
+(function () {
+  const nav = document.getElementById('client-nav'); if (!nav) return;
+  nav.addEventListener('click', e => { const b = e.target.closest('.nav-btn'); NAV_MODE = b && b.getAttribute('data-tab') !== 'learn' ? 'push' : null; }, true);
+  nav.addEventListener('click', () => { NAV_MODE = null; });
+})();
 
 function goHome() { showView('client-today'); }
 
@@ -3373,9 +3405,10 @@ function lcOpen(mode, id) {
   LCS[mode].open = id;
   const navId = mode === 'client' ? 'client-nav' : 'practitioner-nav';
   const btn = document.querySelector('#' + navId + ' .nav-btn[data-lc]');
+  if (mode === 'client') NAV_MODE = 'push';
   showView(mode + '-life', btn);
 }
-function lcClose(mode) { LCS[mode].open = null; renderLC(mode); scrollToViewTop(mode + '-life', true, false); }
+function lcClose(mode) { LCS[mode].open = null; renderLC(mode); if (mode === 'client') navPush('#life'); scrollToViewTop(mode + '-life', true, false); }
 function lcPersp(mode, p) { LCS[mode].persp = p; renderLC(mode); }
 function lcDetail(mode, t) {
   if (!t) { LCS[mode].open = null; return ''; }
@@ -3447,16 +3480,30 @@ function lcSuggestHtml(scores, mode) {
     ${crisis}<div class="lc-links">${picks.map(t => `<button onclick="lcOpen('${m}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button onclick="LCS['${m}'].open=null;lcOpen('${m}',null)">Browse all guides</button></div></div>`;
 }
 
-/* Deep links: #life opens the guides, #life=topic opens one guide */
-function lcFromHash() {
-  const h = decodeURIComponent(location.hash || '');
-  if (!h.startsWith('#life')) return;
-  const id = h.startsWith('#life=') ? h.slice(6) : null;
-  const btn = document.querySelector('#client-nav .nav-btn[data-lc]');
-  LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null;
-  showView('client-life', btn);
+/* Deep links and Back/Forward: #life opens the guides, #life=topic opens one guide, #today, #week, #season and #plan open
+   that tab. On Back or Forward (popstate) an address with no hash shows Today, and #quick or #checkin returns to a
+   check-in already under way. The view is scrolled into sight below the hero. */
+function lcFromHash(e) {
+  if (e && location.href === NAV_LAST) return;
+  NAV_LAST = location.href;
+  const h = decodeURIComponent(location.hash || ''), back = !!(e && e.type === 'popstate');
+  let view = null, top = null;
+  if (h.startsWith('#life')) {
+    const id = h.startsWith('#life=') ? h.slice(6) : null;
+    LCS.client.open = id && LC_TOPICS.some(t => t.id === id) ? id : null;
+    view = 'client-life'; top = LCS.client.open ? 'client-lc-article' : 'client-life';
+  } else if (/^#(today|week|season|plan)$/.test(h)) view = h === '#plan' ? 'client-growthplan' : 'client-' + h.slice(1);
+  else if (back && (h === '' || h === '#')) view = 'client-today';
+  else if (back && (h === '#quick' || h === '#checkin' || h === '#check' + 'up') && document.getElementById('step-0')) view = 'client-assess';
+  if (!view) return;
+  NAV_MODE = 'hash';
+  showView(view, view === 'client-life' ? document.querySelector('#client-nav .nav-btn[data-lc]') : undefined);
+  NAV_MODE = null;
+  if (h === '' || h === '#') return;
+  setTimeout(() => scrollToViewTop(document.getElementById(top || view) ? (top || view) : view, false, true), 60);
 }
 window.addEventListener('hashchange', lcFromHash);
+window.addEventListener('popstate', lcFromHash);
 /* Deep links: #quick starts the quick check-in, #checkin the full one */
 function checkinFromHash() { const h = location.hash; if (h === '#quick' && typeof startQuick === 'function') startQuick(); else if ((h === '#checkin' || h === '#check' + 'up') && typeof startCheckin === 'function') startCheckin(); }
 setTimeout(checkinFromHash, 60);
@@ -3505,6 +3552,6 @@ setTimeout(lcFromHash, 0);
 </script>
 <script src="/shared/gg-learn.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b777" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b777';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b779t" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b779t';document.head.appendChild(s)"></script>
 </body>
 </html>

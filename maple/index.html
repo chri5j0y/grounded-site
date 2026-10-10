@@ -790,7 +790,7 @@ a.big-btn{text-decoration:none;}
   <a class="brand-sub" href="#" onclick="go('home');return false;">Maple</a>
   <button class="size-btn" id="size-btn" aria-label="Text Size" onclick="cycleTextSize()">A+</button>
   <button class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Grow With Grounded menu" onclick="toggleSiteMenu(this)"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <nav class="site-menu" id="site-menu" aria-label="Grow With Grounded"><a href="https://growwithgrounded.com/">Home</a><a href="https://growwithgrounded.com/services">Services</a><a href="https://growwithgrounded.com/#tools">Tools</a><a href="https://growwithgrounded.com/stories">Stories</a><a href="https://growwithgrounded.com/about">About</a><a href="https://growwithgrounded.com/contact.html">Contact</a></nav>
+  <nav class="site-menu" id="site-menu" aria-label="Grow With Grounded"><a href="https://growwithgrounded.com/">Home</a><a href="https://growwithgrounded.com/services.html">Services</a><a href="https://growwithgrounded.com/tools.html">Tools</a><a href="https://growwithgrounded.com/stories.html">Stories</a><a href="https://growwithgrounded.com/about.html">About</a><a href="https://growwithgrounded.com/contact.html">Contact</a></nav>
 </div></header>
 
 <section class="gg-hero gg-photo" id="top" aria-labelledby="hero-title" style="--band:#C4501E;--band-dark:#9D4018;--soft:#FFFFFF;--btn-ink:#A14219;--sky:#F4E6CA;--pw:url('/shared/heroes/maple-wide.webp');--pn:url('/shared/heroes/maple-phone.webp');--px:36%">
@@ -909,7 +909,7 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b770"></script>
+<script src="/shared/gg-profiles.js?v=b779n"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/maple/guides.js?v=b757"></script>
@@ -1617,6 +1617,7 @@ function hush() { try { if (window.GGRead) GGRead.stop(); if ('speechSynthesis' 
 
 /* ---------- navigation ---------- */
 function go(view) {
+  if (MP_NAV_TABS.includes(view)) mpNavPush('#' + view, { ggView: view });
   hush();
   document.body.classList.toggle('mp-on', view === 'tree');
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1629,6 +1630,30 @@ function go(view) {
   if (view === 'guide' && !$('view-guide').innerHTML.trim()) renderGuide();
   const top = document.querySelector('.tabs').getBoundingClientRect().top + window.scrollY - 8;
   if (window.scrollY > top) window.scrollTo({ top, behavior: 'smooth' });
+}
+/* Browser history: each tab and each When Life Changes guide gets its own entry, so Back and Forward
+   step through them and a reload keeps the place. Nothing is added on first load, before anyone taps,
+   or while the page is following the address itself (mpNavRead). One-time links (#for=, visits,
+   families) stay with shared/gg-app.js and shared/gg-bridge.js. */
+const MP_NAV_TABS = ['home', 'kids', 'life', 'guide'];
+let MP_NAV_READING = false;
+['pointerdown', 'keydown'].forEach(ev => addEventListener(ev, () => { window.ggTouched = true; }, { capture: true, once: true }));
+function mpNavPush(hash, state) {
+  if (MP_NAV_READING || !window.ggTouched) return;
+  const now = decodeURIComponent(location.hash || '');
+  if (now === hash) return;
+  if (!now && hash === '#home' && $('view-home').classList.contains('active')) return;
+  try {
+    const cur = document.querySelector('.view.active');
+    history.replaceState(Object.assign({}, history.state || {}, { ggView: cur ? cur.id.slice(5) : 'home' }), '', location.href);
+    history.pushState(state, '', hash);
+  } catch (e) {}
+}
+// Bring the tab bar to the top of the screen (or the very top when the tree hides it).
+function mpShowTabs() {
+  const t = document.querySelector('.tabs');
+  if (!t || !t.offsetParent) { window.scrollTo(0, 0); return; }
+  window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + window.scrollY - 8), behavior: 'auto' });
 }
 function toggleSiteMenu(btn) {
   const open = $('site-menu').classList.toggle('open');
@@ -3434,6 +3459,7 @@ function openTalk(id, from) {
     ${MP_KID ? mpLifeLinesHtml() : ''}
   </article>`;
   openTalk.last = id;
+  mpNavPush('#talk=' + id, { ggView: 'talk', ggFrom: LIFE.from });
   go('talk');
 }
 function printTalk() {
@@ -3474,18 +3500,32 @@ window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.maple = id => { if (TOPICS.some(t => t.id === id)) openTalk(id); };
 window.addEventListener('gg-learn-close', () => { const v = document.getElementById('view-talk'); if (v && v.offsetParent !== null && openTalk.last) { const y = window.scrollY; openTalk(openTalk.last, LIFE.from); window.scrollTo(0, y); } });
 
-/* Deep links: #life opens the guides, #talk=topic opens one guide */
-function lifeFromHash() {
-  const h = decodeURIComponent(location.hash || '');
-  if (h === '#life') { go('life'); return; }
-  if (h.startsWith('#talk=')) { const id = h.slice(6); if (TOPICS.some(t => t.id === id)) openTalk(id); }
+/* Deep links and Back/Forward: #home, #kids, #life, #guide open a tab, #talk=topic opens one guide.
+   With no hash, Back lands on the Check-in tab (or the tree that entry was showing). Any other hash
+   belongs to someone else (one-time links, the skip link) and is left alone. */
+function mpNavRead(e) {
+  if (e && /#$/.test(location.href)) return;
+  const h = decodeURIComponent(location.hash || ''), st = (e && e.state) || {};
+  let shown = false;
+  MP_NAV_READING = true;
+  try {
+    if (e && st.ggView === 'tree' && S.kid && loadKids()[S.kid]) { renderTree(); go('tree'); shown = true; }
+    else if (h.startsWith('#talk=')) { const id = h.slice(6); if (TOPICS.some(t => t.id === id)) { openTalk(id, st.ggFrom || null); shown = true; } }
+    else if (MP_NAV_TABS.includes(h.slice(1)) && h.charAt(0) === '#') { go(h.slice(1)); shown = true; }
+    else if (!h && e) { go('home'); shown = true; }
+  } finally { MP_NAV_READING = false; }
+  if (shown && (e || h !== '#home')) setTimeout(mpShowTabs, 60);
 }
-window.addEventListener('hashchange', lifeFromHash);
-setTimeout(lifeFromHash, 0);
+// popstate and hashchange can both fire for one Back, and older Safari fires only hashchange: read each address once.
+var mpNavRead_h = null, mpNavRead_t = 0;
+function mpNavReadOnce(e) { var h = location.hash, t = Date.now(); if (h === mpNavRead_h && t - mpNavRead_t < 400) return; mpNavRead_h = h; mpNavRead_t = t; mpNavRead(e && e.type === 'popstate' ? e : { state: history.state }); }
+window.addEventListener('popstate', mpNavReadOnce);
+window.addEventListener('hashchange', mpNavReadOnce);
+setTimeout(() => mpNavRead(null), 0);
 
 </script>
 <script src="/shared/gg-learn.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b777" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b777';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b779t" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b779t';document.head.appendChild(s)"></script>
 </body>
 </html>

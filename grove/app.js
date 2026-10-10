@@ -427,7 +427,7 @@ function famIntake() {
 }
 
 /* ---------- view state ---------- */
-const S = { tab: 'grove', sel: null, wk: 0, part: '', open: '', lib: { q: '' }, setup: null, pick: false, ci: null, view: '', pd: null, fresh: null };
+const S = { tab: 'grove', sel: null, wk: 0, part: '', open: '', lib: { q: '', hit: '' }, setup: null, pick: false, ci: null, view: '', pd: null, fresh: null };
 function tabs() {
   if (!G || S.setup) return [['grove', G ? 'New Grove' : 'Start Our Grove', 'grove'], ['life', 'When Life Changes', 'guide'], ['how', 'How it works', 'how'], ['learn', 'Learn', 'play']];
   const K = KW(), t = [['grove', 'Our Grove', 'grove'], ['checkin', K.checkin, 'week'], ['plan', 'Growth Plan', 'plan'], ['together', 'Together', 'heart'], ['life', 'When Life Changes', 'guide']];
@@ -975,7 +975,7 @@ function lcReadAloud() {
   if (!window.speechSynthesis) { toast('Read Aloud is not available in this browser.'); return; }
   speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(a.textContent.replace(/\s+/g, ' ')); u.rate = .92; speechSynthesis.speak(u);
 }
-function lcOpen(id) { S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) a.scrollIntoView(); }
+function lcOpen(id) { const fromList = S.tab === 'life' && !S.lc.open; S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) a.scrollIntoView(); pushHash(fromList ? { gList: 1 } : null); }
 // Picked for Us on the home view: up to three guides and three practices, when the grove has told us something.
 function lcHomeHtml() {
   if (!G || !LC.length) return '';
@@ -1393,16 +1393,23 @@ function libItemHtml(it) {
   return `<li class="gv-prac" style="--pc:${(PARTS6.find(p => p.key === it.part) || {}).color}"><div class="gv-prac-top"><b>${esc(v.name)}</b><small>${esc(PNAME[it.part] || '')}</small></div><p>${esc(v.text)}</p><button type="button" class="text-btn" data-act="libhow" data-id="${esc(it.key)}" aria-expanded="${open}">${open ? 'Hide how' : 'Show me how'}</button>${open ? `<div class="gv-steps">${L.guideHtml(v)}</div>` : ''}</li>`;
 }
 function viewLibrary() {
-  const L = window.GGLibrary, q = S.lib.q;
+  const L = window.GGLibrary, q = S.lib.q, hit = !q && S.lib.hit ? libGet(S.lib.hit) : null;
   let h = `<div class="section-head"><h2>Practice Library</h2><p>Every Grounded practice, with how to do it. To add one to your own practices, open your tree app and tap Find more practices. Searching here also finds When Life Changes guides, books, and more.</p></div>
     <label class="lbl" for="gv-libq">Search</label><input id="gv-libq" class="gv-input" type="search" value="${esc(q)}" placeholder="Try sleep, calm, friends, or grief" enterkeyhint="search">
     <div id="gv-libres"></div>`;
   if (!L) return h;
   if (!window.GGFind) {
     const list = (q ? L.search(q) : []).slice(0, 40);
-    h += list.length ? `<ul class="gv-libl">${list.map(libItemHtml).join('')}</ul>` : `<p class="muted">${q ? 'Nothing found. Try a simpler word.' : 'Type a word to search.'}</p>`;
-  } else if (!q) h += '<p class="muted" id="gv-libhint">Type a word to search.</p>';
+    if (!hit) h += list.length ? `<ul class="gv-libl">${list.map(libItemHtml).join('')}</ul>` : `<p class="muted">${q ? 'Nothing found. Try a simpler word.' : 'Type a word to search.'}</p>`;
+  } else if (!q && !hit) h += '<p class="muted" id="gv-libhint">Type a word to search.</p>';
+  if (hit) h += `<div id="gv-libhit"><ul class="gv-libl">${libItemHtml(hit)}</ul></div>`;
   return h + `<p><button class="btn btn-line btn-sm" data-tab="grove">Back to our grove</button></p>`;
+}
+// A Library link (#library=Tell Them) names one practice: open that practice first, and search by words only when no name matches.
+function libGet(key) { const L = window.GGLibrary, it = L && L.get(key); return it || (window.GroveLibrary ? GroveLibrary.get(key) : null); }
+function libExact(name) {
+  const items = (window.GroveLibrary && GroveLibrary.items) || [], n = String(name || '').trim().toLowerCase(); if (!n) return null;
+  return items.find(it => String(it.name || '').toLowerCase() === n) || items.find(it => String(it.kidName || '').toLowerCase() === n) || null;
 }
 function libFind() {
   const i = $('#gv-libq'); if (!i || !window.GGFind || !window.GGLibrary) return;
@@ -1473,7 +1480,7 @@ function readAloud() {
 }
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-tab]');
-  if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); if (t.dataset.tab === 'learn') { window.GROVE_PLAIN = plainMode(); if (window.GROVE_VIDS_WORDING) GROVE_VIDS_WORDING(plainMode()); if (window.GGLearn) GGLearn.open('grove'); return; } const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; S.view = ''; if (k === 'life') S.lc.open = null; render(); if (t.closest('.gg-hero') || t.closest('#view')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
+  if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); if (t.dataset.tab === 'learn') { window.GROVE_PLAIN = plainMode(); if (window.GROVE_VIDS_WORDING) GROVE_VIDS_WORDING(plainMode()); if (window.GGLearn) GGLearn.open('grove'); return; } const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; S.view = ''; if (k === 'life') S.lc.open = null; render(); pushHash(); if (t.closest('.gg-hero') || t.closest('#view')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
   const b = e.target.closest('[data-act]'); if (!b || !b.closest('#view')) return;
   const id = b.dataset.id, act = b.dataset.act;
   if (act === 'here' || act === 'switch') { if (window.GGP) GGP.openDialog({ reason: "Who's here? Choose your picture." }).then(render); }
@@ -1546,7 +1553,7 @@ document.addEventListener('click', e => {
   else if (act === 'glockoff') { if (!confirm('Turn the lock off? Anyone using this device could open the check-ins and plan.')) return; G.lockOn = false; G.lock = null; delete KEYS[G.id]; sealVault().then(render); }
   else if (act === 'glockon') { const data = VAULTS[G.id] || Object.assign(blankVault(), G.plainBox || {}); VAULTS[G.id] = data; G.lockOn = true; choosePass('').then(ok => { if (!ok) { G.lockOn = false; } else G.plainBox = null; save(); render(); }); }
   else if (act === 'lc-open') lcOpen(id);
-  else if (act === 'lc-back') { S.lc.open = null; render(); const a = $('#app'); if (a) a.scrollIntoView(); }
+  else if (act === 'lc-back') { if (history.state && history.state.gList && S.lc.open) { history.back(); return; } S.lc.open = null; render(); const a = $('#app'); if (a) a.scrollIntoView(); pushHash(); }
   else if (act === 'lc-ring') { S.lc.ring = id || 'all'; render(); }
   else if (act === 'lc-persp') { S.lc.persp = id === 'leader' ? 'leader' : 'group'; const y = window.scrollY; render(); window.scrollTo(0, y); }
   else if (act === 'lc-watch') lcWatch(id, b.dataset.side === 'helper' ? 'helper' : 'you');
@@ -1563,6 +1570,7 @@ document.addEventListener('input', e => {
   if (t.dataset && t.dataset.pd && S.pd) { if (t.dataset.pd === 'anchor') { const it = S.pd.items[+t.dataset.n]; if (it) it.anchor = t.value.slice(0, 60); } else S.pd[t.dataset.pd] = t.value; return; }
   if (t.id === 'gv-lcq') { S.lc.q = t.value; const box = $('#gv-lclist'); if (box) box.innerHTML = lcListHtml(); return; }
   if (t.id !== 'gv-libq') return; S.lib.q = t.value;
+  if (S.lib.hit) { S.lib.hit = ''; const hb = $('#gv-libhit'); if (hb) hb.remove(); }
   if (window.GGFind && window.GGLibrary) { libFind(); return; }
   const pos = t.selectionStart; render(); const f = $('#gv-libq'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (x) {} } });
 document.addEventListener('change', e => { const t = e.target; if (t.dataset && t.dataset.pd === 'youngest' && S.pd) S.pd.youngest = t.value; });
@@ -1646,18 +1654,35 @@ function setScale() { const sc = ROOT.scale || 1; document.documentElement.style
 function fromHash() {
   const h = decodeURIComponent(location.hash || '');
   const gvm = GVHASH.exec(location.hash || ''); // GWG BLD 776: a Guide's visit, read once and taken out of the address bar
-  if (gvm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} gvFromGuide(gvm[1]); return; }
-  if (/^#library(=|$)/.test(h)) { S.tab = 'library'; S.lib.q = h.startsWith('#library=') ? h.slice(9) : ''; S.open = ''; if (window.GGLibrary) GGLibrary.ready().then(render); render(); const a = $('#app'); if (a) a.scrollIntoView(); }
+  if (gvm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} HASH_SEEN = location.hash; gvFromGuide(gvm[1]); return; }
+  if (/^#library(=|$)/.test(h)) { const q = h.startsWith('#library=') ? h.slice(9) : '', hit = libExact(q); S.tab = 'library'; S.lib.q = hit ? '' : q; S.lib.hit = hit ? hit.key : ''; S.open = hit ? hit.key : ''; if (window.GGLibrary) GGLibrary.ready().then(render); render(); const a = $('#app'); if (a) a.scrollIntoView(); }
   else if (/^#(life|talk)(=|$)/.test(h)) { const id = /^#(life|talk)=/.test(h) ? h.slice(h.indexOf('=') + 1) : null; S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) { a.scrollIntoView(); setTimeout(() => a.scrollIntoView(), 350); } }
-  else if (/^#(wall|together|how|earlier|grove|checkin|plan|settings)$/.test(h)) { S.tab = h.slice(1); render(); }
+  else if (/^#(wall|together|how|earlier|grove|checkin|plan|settings)$/.test(h)) { S.tab = h.slice(1); S.open = ''; S.view = ''; render(); }
+}
+/* Back and Forward (GWG nav fix): tapping a tab or opening a When Life Changes guide adds a history entry (#plan,
+   #life=id), so Back steps through The Grove before it leaves. Reading the hash never adds one. One-time links
+   (#gv=, #gg-fam= and the other links read in shared/gg-app.js and gg-bridge.js) are read and wiped as before. */
+let HASH_SEEN = location.hash;
+const canonHash = h => (!h || h === '#') ? '#grove' : h;
+function pushHash(st) {
+  const h = S.tab === 'life' && S.lc.open ? '#life=' + encodeURIComponent(S.lc.open) : S.tab === 'learn' ? '' : '#' + S.tab;
+  if (!h || canonHash(h) === canonHash(location.hash)) return;
+  try { history.pushState(st || null, '', h); } catch (e) { return; }
+  HASH_SEEN = location.hash;
+}
+function onPop() {
+  HASH_SEEN = location.hash;
+  if (location.hash && location.hash !== '#') { fromHash(); return; }
+  S.tab = 'grove'; S.open = ''; S.view = ''; S.lc.open = null; render();
 }
 load();
 $('#year').textContent = new Date().getFullYear();
 $('#size-btn').addEventListener('click', () => { const sc = ROOT.scale || 1; ROOT.scale = sc === 1 ? 1.12 : sc < 1.2 ? 1.25 : 1; setScale(); persist(); });
 $('#menu-btn').addEventListener('click', () => { const open = $('#site-menu').classList.toggle('open'); $('#menu-btn').setAttribute('aria-expanded', open); });
-$('#hero-cta').addEventListener('click', () => { S.tab = 'grove'; render(); $('#app').scrollIntoView({ behavior: 'smooth' }); });
-setScale(); render(); fromHash();
-window.addEventListener('hashchange', fromHash);
+$('#hero-cta').addEventListener('click', () => { S.tab = 'grove'; render(); pushHash(); $('#app').scrollIntoView({ behavior: 'smooth' }); });
+setScale(); render(); fromHash(); HASH_SEEN = location.hash;
+window.addEventListener('popstate', onPop);
+window.addEventListener('hashchange', () => { if (!location.hash || location.hash === HASH_SEEN) return; HASH_SEEN = location.hash; fromHash(); });
 window.addEventListener('gg-fam', famIntake);
 famIntake();
 if (window.GGP) { GGP.on(() => render()); GGP.ready.then(() => { render(); fromHash(); }); }

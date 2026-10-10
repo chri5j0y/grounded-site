@@ -7,14 +7,45 @@
   const btn = document.querySelector('.menu-btn');
   const menu = document.getElementById('site-menu');
   if (!btn || !menu) return;
+  const shut = () => { menu.classList.remove('open'); menu.classList.remove('gn-menu-sub'); btn.setAttribute('aria-expanded', 'false'); };
   btn.addEventListener('click', () => {
     const open = menu.classList.toggle('open');
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) { try { document.dispatchEvent(new CustomEvent('gg:menu-open', { detail: { from: 'site-menu' } })); } catch (e) {} }
   });
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    menu.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-  }));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', shut));
+  // Escape closes the phone menu and returns focus to the Menu button; so does a tap outside it
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menu.classList.contains('open') && !document.querySelector('.gn-panel.gn-show:not(.gn-sub-mode)')) { shut(); btn.focus(); }
+  });
+  document.addEventListener('click', e => {
+    if (!menu.classList.contains('open')) return;
+    if (menu.contains(e.target) || btn.contains(e.target)) return;
+    shut();
+  });
+  // another menu (the profile menu) opening closes this one
+  document.addEventListener('gg:menu-open', e => { if (e.detail && e.detail.from !== 'site-menu' && e.detail.from && !/^gn-/.test(e.detail.from) && menu.classList.contains('open')) shut(); });
+})();
+
+// #anchor links land below the sticky header: once the fonts and images have settled,
+// scroll the target into place again with no animation (unless the visitor has already scrolled).
+(function () {
+  const id = decodeURIComponent((location.hash || '').slice(1));
+  if (!id || /[=\/]/.test(id)) return;
+  let moved = false;
+  const mark = () => { moved = true; };
+  ['wheel', 'touchstart', 'keydown'].forEach(t => window.addEventListener(t, mark, { once: true, passive: true }));
+  const land = () => {
+    if (moved) return;
+    const el = document.getElementById(id); if (!el) return;
+    const html = document.documentElement, was = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    el.scrollIntoView({ block: 'start' });
+    html.style.scrollBehavior = was;
+  };
+  const ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise(r => window.addEventListener('load', r, { once: true }));
+  Promise.all([ready, loaded]).then(() => { land(); setTimeout(land, 350); });
 })();
 
 // Email links, assembled here so spam bots can't easily read the address

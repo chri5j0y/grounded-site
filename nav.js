@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b770'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b779n'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -13,12 +13,14 @@
   var HOME = 'https://growwithgrounded.com';
   var mk = function (k) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg" alt="" width="42" height="42">'; };
   var ic = {
-    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'), fieldguide: mk('fieldguide'), library: mk('library'),
+    maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'), fieldguide: mk('fieldguide'), library: mk('library'), marriage: mk('marriage'), farewell: mk('farewell'), obituary: mk('obituary'), eulogy: mk('eulogy'),
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="#4A5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 5.5-14 15-14 0 9.5-6 14-15 14z"/><path d="M5 19l8.5-8.5"/></svg>',
     door: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg>',
     shelf: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16M9 4v16M14 5l4 15M3 20h18"/></svg>',
     book: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>',
+    candle: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1.6 1.8 2.4 3.2 2.4 4.4a2.4 2.4 0 0 1-4.8 0c0-1.2.8-2.6 2.4-4.4z"/><path d="M9 11h6v10H9z"/><path d="M6 21h12"/></svg>',
+    speak: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
   var GN_GROUPS = [
@@ -33,6 +35,11 @@
     ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+    ] },
+    { name: 'For Families', items: [
+      { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
+      { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.obituary, bg: '#F1E6CC' },
+      { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.eulogy, bg: '#F1E6CC' }
     ] },
     { name: 'Further Reading', items: [
       { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' }
@@ -55,6 +62,9 @@
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
     if (p.indexOf('/library') === 0) return 'library';
+    if (p.indexOf('/planning-a-farewell') === 0) return 'farewell';
+    if (p.indexOf('/obituary-helper') === 0) return 'obituary';
+    if (p.indexOf('/eulogy-helper') === 0) return 'eulogy';
     return '';
   }
 
@@ -62,7 +72,7 @@
     '.gn-tools-btn{font:inherit;background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;}' +
     '.gn-tools-btn svg{width:12px;height:12px;transition:transform .2s ease;}' +
     '.gn-tools-btn[aria-expanded="true"] svg{transform:rotate(180deg);}' +
-    '.gn-panel{position:absolute;z-index:9999;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
+    '.gn-panel{position:fixed;z-index:9999;max-height:calc(100vh - 90px);overflow-y:auto;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
     '.gn-panel.gn-show{display:block;}' +
     '.gn-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;}' +
     '.gn-group h4{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8B5E1A;margin:0 0 6px;}' +
@@ -114,7 +124,7 @@
   /* The Services menu (GWG BLD 772): The Grounded Marriage one tap away, then the six families of services.
      It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_FEATURED = { title: 'The Grounded Marriage', desc: 'Premarital sessions with Chris and Kayti, with Heartwood', href: HOME + '/the-grounded-marriage.html', bg: '#E3EAF2',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3F5F86" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="13" r="5"/><circle cx="15" cy="13" r="5"/><path d="M12 3.5l1 1.8M12 3.5l-1 1.8"/></svg>' };
+    icon: ic.marriage };
   var SVC_FAMILIES = [
     ['Marriage', 'Weddings and The Grounded Marriage', 'marriage'],
     ['Celebrations', 'Blessings and milestones', 'celebrations'],
@@ -165,7 +175,20 @@
     link.parentNode.replaceChild(btn, link);
     // keep the site's own menu link styling
     var ls = getComputedStyle(menu.querySelector('a') || btn);
-    ['fontFamily', 'fontWeight', 'fontSize', 'letterSpacing', 'textTransform', 'color', 'padding'].forEach(function (k) { btn.style[k] = ls[k]; });
+    ['fontFamily', 'fontWeight', 'fontSize', 'letterSpacing', 'textTransform', 'padding'].forEach(function (k) { btn.style[k] = ls[k]; });
+    if (link.getAttribute('aria-current')) btn.setAttribute('aria-current', link.getAttribute('aria-current'));
+    // Color: match a plain menu link (or a current one when this button marks the current section), and repaint when the theme changes.
+    var isCur = /(^|\s)current(\s|$)/.test(link.className) || !!link.getAttribute('aria-current');
+    function paint() {
+      btn.style.color = '';
+      var as = Array.prototype.slice.call(menu.querySelectorAll('a'));
+      var ref = isCur ? as.filter(function (a) { return /(^|\s)current(\s|$)/.test(a.className) || a.getAttribute('aria-current'); })[0] : as.filter(function (a) { return !/(^|\s)current(\s|$)/.test(a.className) && !a.getAttribute('aria-current'); })[0];
+      if (ref) btn.style.color = getComputedStyle(ref).color;
+    }
+    paint();
+    new MutationObserver(function () { setTimeout(paint, 0); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+    if (document.body) new MutationObserver(function () { setTimeout(paint, 0); }).observe(document.body, { attributes: true, attributeFilter: ['class', 'data-theme'] });
+    try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { setTimeout(paint, 0); }); } catch (e) {}
 
     var panel = document.createElement('div');
     panel.className = 'gn-panel' + (o.cls ? ' ' + o.cls : '');
@@ -187,8 +210,8 @@
       var w = Math.min(o.width || 760, window.innerWidth - 24);
       var left = Math.max(12, Math.min(r.right - w, window.innerWidth - w - 12));
       if (o.width) panel.style.width = w + 'px';
-      panel.style.top = (r.bottom + window.scrollY + 10) + 'px';
-      panel.style.left = (left + window.scrollX) + 'px';
+      panel.style.top = (r.bottom + 10) + 'px';
+      panel.style.left = left + 'px';
     }
     // Phones: the open menu fits the screen under the top bar and scrolls inside itself,
     // so every item can be reached (the bar is pinned, so the page can't scroll it into view).
@@ -215,6 +238,7 @@
       }
       panel.classList.add('gn-show');
       btn.setAttribute('aria-expanded', 'true');
+      try { document.dispatchEvent(new CustomEvent('gg:menu-open', { detail: { from: o.id } })); } catch (e) {}
     }
     function closePanel() {
       panel.classList.remove('gn-show');
@@ -225,8 +249,20 @@
     DROPS.push({ panel: panel, close: closePanel, isOpen: function () { return panel.classList.contains('gn-show'); } });
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (panel.classList.contains('gn-show')) closePanel(); else openPanel();
+      if (panel.classList.contains('gn-show')) closePanel(); else {
+        openPanel();
+        // opened from the keyboard (Enter or Space): move focus into the panel so Tab walks its links
+        if (e.detail === 0) { var f = panel.querySelector('a.gn-tool, a'); if (f) setTimeout(function () { f.focus(); }, 0); }
+      }
     });
+    // another menu opened (the profile menu, the other panel): close this one
+    document.addEventListener('gg:menu-open', function (e) { if (e.detail && e.detail.from !== o.id && panel.classList.contains('gn-show') && !isMobile()) closePanel(); });
+    // keyboard focus leaving the panel and its button closes it (desktop)
+    panel.addEventListener('focusout', function (e) {
+      if (isMobile() || !panel.classList.contains('gn-show')) return;
+      var t = e.relatedTarget; if (t && !panel.contains(t) && t !== btn) closePanel();
+    });
+    window.addEventListener('scroll', function () { if (panel.classList.contains('gn-show') && !isMobile()) place(); }, { passive: true });
     document.addEventListener('click', function (e) {
       if (!panel.classList.contains('gn-show')) return;
       if (panel.contains(e.target) && !e.target.closest('a')) return;

@@ -242,7 +242,7 @@ function go(v, force) {
   if (window.GGRead && GGRead.stop) GGRead.stop();
   if (v !== 'checkin' && S.ck && !S.ck.done && S.tab === 'checkin' && !confirm('Leave this check-in? Answers so far will not be saved.')) return;
   if (v !== 'checkin') S.ck = v === 'results' ? S.ck : null;
-  S.tab = v; render(); scrollTop(force !== false);
+  S.tab = v; render(); scrollTop(force !== false); pushHash();
 }
 // Read aloud: a button on anything marked data-read (read.js, shared)
 function addRead(el) {
@@ -957,7 +957,7 @@ function guideHtml(g) {
   const body = g.parts.filter(p => p[0] !== 'pro').map(p => p[0] === 'say' ? `<h3>${esc(G.labels[p[0]])}</h3><div class="lc-say"><p>${esc(p[1])}</p></div>` : p[0] === 'dont' ? `<h3>${esc(G.labels[p[0]])}</h3><div class="lc-reach"><p>${esc(p[1])}</p></div>` : `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('');
   const pro = g.parts.find(p => p[0] === 'pro');
   return `<article class="lc-article" id="w-guide" style="--rc:${rc}">
-    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.guide.open=null;W.render();W.top()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or print this guide</button></div>
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeGuide()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or print this guide</button></div>
     <span class="lc-tag">${esc(ring ? ring[1] : '')}</span><h2>${esc(g.title)}</h2>
     ${guideVids(g.id)}
     <div data-read="Read this guide aloud">${body}</div>
@@ -968,7 +968,9 @@ function guideHtml(g) {
     <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support, not medical care, therapy, or legal advice. &copy; ${new Date().getFullYear()} Grow With Grounded LLC.</p>
   </article>`;
 }
-function openGuide(id) { S.guide.open = id; S.tab = 'guides'; render(); scrollTop(true); }
+function openGuide(id) { const fromList = S.tab === 'guides' && !S.guide.open; S.guide.open = id; S.tab = 'guides'; render(); scrollTop(true); pushHash(fromList ? { wList: 1 } : null); }
+// Back to all guides: when the guide was opened from the list, step back in history so Back and this button agree.
+function closeGuide() { if (history.state && history.state.wList && S.guide.open) { history.back(); return; } S.guide.open = null; render(); scrollTop(true); pushHash(); }
 /* When Life Changes videos (Build B1, October 2026): two per guide, played by shared/gg-learn.js from willow/guide-videos.js.
    A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
 function vidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('willow', id)); } catch (e) { return false; } }
@@ -1029,13 +1031,14 @@ function readingHtml(x) {
   const vs = RD.versionsOn && RD.versions && RD.versions[x.id], v = verOf(x), note = noticeOf(x);
   const sw = vs ? `<div class="btn-row no-print" role="group" aria-label="Bible version" style="margin:4px 0 12px">${Object.keys(RD.bible).filter(k => k === 'kjv' || vs[k]).map(k => [k, RD.bible[k].short || k.toUpperCase()]).map(o => `<button type="button" class="lc-chip" style="--rc:var(--gold)" aria-pressed="${v === o[0]}" title="${esc(o[0] === 'kjv' ? 'King James Version' : (RD.bible[o[0]] || {}).name || '')}" onclick="W.bibleVer('${o[0]}')">${o[1]}</button>`).join('')}</div>` : '';
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
-    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.S.read.open=null;W.render();W.top()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeReading()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
     <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}
     <div class="w-readtext" data-read="Read this aloud">${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
     ${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}
   </article>`;
 }
-function openReading(id) { S.read.open = id; S.tab = 'readings'; render(); scrollTop(true); }
+function openReading(id) { const fromList = S.tab === 'readings' && !S.read.open; S.read.open = id; S.tab = 'readings'; render(); scrollTop(true); pushHash(fromList ? { wList: 1 } : null); }
+function closeReading() { if (history.state && history.state.wList && S.read.open) { history.back(); return; } S.read.open = null; render(); scrollTop(true); pushHash(); }
 function printReading(id) {
   const x = RD.readings.find(y => y.id === id); if (!x) return;
   const note = noticeOf(x);
@@ -1255,13 +1258,47 @@ function fromHash() {
   if (k === 'for' && v) { S.pid = v; S.tab = 'today'; }
   else if (k === 'checkin' || k === 'quick') { setTimeout(() => startCheckin(k === 'quick'), 50); return true; }
   else if ((k === 'guide' || k === 'life') && v) { S.guide.open = v; S.tab = 'guides'; }
-  else if (k === 'guides' || k === 'life' || k === 'talk') S.tab = 'guides';
+  else if (k === 'guides' || k === 'life' || k === 'talk') { S.guide.open = null; S.tab = 'guides'; }
   else if (k === 'reading' && v) { S.read.open = v; S.tab = 'readings'; }
-  else if (['readings', 'bedside', 'matters', 'cuttings', 'about', 'today'].includes(k)) S.tab = k;
+  else if (k === 'readings') { S.read.open = null; S.tab = 'readings'; }
+  else if (HASH_TABS.includes(k)) S.tab = k;
   else return false;
   render(); setTimeout(() => scrollTop(true), 80); return true;
 }
-window.addEventListener('hashchange', fromHash);
+/* Back and Forward (GWG nav fix): tapping a tab or opening a guide or reading adds a history entry (#matters,
+   #guide=id, #reading=id), so Back steps through Willow before it leaves. Reading the hash never adds one, and
+   one-time links (#for=, cards from gg-bridge.js) are left exactly as they were. */
+const HASH_TABS = ['today', 'matters', 'cuttings', 'bedside', 'guides', 'readings', 'about'];
+let HASH_SEEN = location.hash;
+const canonHash = h => (!h || h === '#') ? '#today' : h;
+function hashOf() {
+  if (S.tab === 'guides' && S.guide.open) return '#guide=' + encodeURIComponent(S.guide.open);
+  if (S.tab === 'readings' && S.read.open) return '#reading=' + encodeURIComponent(S.read.open);
+  return HASH_TABS.includes(S.tab) ? '#' + S.tab : '';
+}
+function pushHash(st) {
+  const h = hashOf(); if (!h || canonHash(h) === canonHash(location.hash)) return;
+  try { history.pushState(st || null, '', h); } catch (e) { return; }
+  HASH_SEEN = location.hash;
+}
+function onPop() {
+  if (S.tab === 'checkin' && S.ck && !S.ck.done && !confirm('Leave this check-in? Answers so far will not be saved.')) {
+    try { history.pushState(null, '', HASH_SEEN || location.pathname + location.search); } catch (x) {} return;
+  }
+  HASH_SEEN = location.hash;
+  const h = location.hash;
+  if (h && h !== '#') {
+    // Only the hashes Willow reads; an anchor (#main) or a one-time link (a card from gg-bridge.js) is left to its own reader.
+    const k = decodeURIComponent(h).slice(1).split('=')[0];
+    if (!['checkin', 'quick', 'for', 'guide', 'life', 'talk', 'reading'].concat(HASH_TABS).includes(k)) return;
+    if (window.GGRead && GGRead.stop) GGRead.stop(); S.ck = null; fromHash(); return;
+  }
+  if (window.GGRead && GGRead.stop) GGRead.stop();
+  S.ck = null; S.tab = 'today'; S.guide.open = null; S.read.open = null;
+  render(); setTimeout(() => scrollTop(true), 80);
+}
+window.addEventListener('popstate', onPop);
+window.addEventListener('hashchange', () => { if (!location.hash || location.hash === HASH_SEEN) return; HASH_SEEN = location.hash; fromHash(); });
 window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'willow') { S.tab = 'today'; render(); } });
 
 /* ---------- start ---------- */
@@ -1270,7 +1307,7 @@ Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
   checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
-  guide: openGuide, watch: watchGuide, gList, gFind, printGuide, reading: openReading, printReading, bibleVer: setVer,
+  guide: openGuide, closeGuide, closeReading, watch: watchGuide, gList, gFind, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify
@@ -1279,6 +1316,7 @@ const yr = $('#copyright-year'); if (yr) yr.textContent = new Date().getFullYear
 document.querySelectorAll('#client-nav .nav-btn[data-icon]').forEach(b => { if (!b.querySelector('.nav-ico')) b.insertAdjacentHTML('afterbegin', `<span class="nav-ico">${icon(b.dataset.icon, 22)}</span>`); });
 applyTS();
 if (!fromHash()) render();
+HASH_SEEN = location.hash;
 if (GP()) {
   GGP.on(type => { if (type === 'change' || type === 'data' || type === 'ready') { if (S.tab !== 'checkin') render(); else renderBar(); } });
   GGP.ready.then(() => { if (S.tab !== 'checkin') render(); });
