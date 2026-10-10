@@ -76,6 +76,13 @@ Object.assign(ICON, {
 // the grove passcode (on by default): PBKDF2 (250,000 rounds, SHA-256) and AES-GCM, the passcode
 // never stored. The Wall, practices done together, and the grove's name and kind stay readable on
 // this device, as before.
+// Root Words (GWG BLD 780, shared/gg-rootwords.js): a grove's locked part has its own random key,
+// locked twice: with the grove passcode (lock.wrap, PBKDF2 with lock.salt, then AES-GCM) and with the
+// grove's 12 Root Words (lock.rw). Either one opens it. The words are kept only inside the locked part
+// (rootWords), shown once when the passcode is chosen, and again in Settings after the passcode.
+// A grove locked before has only lock.salt; it opens with its passcode and moves to the two-lock way.
+// Forgot the passcode: Use Our Root Words sets a new passcode and keeps everything. A gentle note, once
+// per grove (ks.first), after the first check-in: Save a Backup and keep the Root Words safe.
 //
 // What The Grove can see of a person (Family groves): each person's name, picture, age, and, if
 // their "Show my growth on The Grove" switch is on, the big picture of their growth. Never answers,
@@ -263,6 +270,7 @@ function deriveKey(pass, salt) {
     subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']));
 }
 const KEYS = {};            // grove id: key, while open (memory only)
+const RAWS = {};            // grove id: the locked part's own key bytes, while open (memory only, GWG BLD 780)
 const VAULTS = {};          // grove id: the open locked data (memory only)
 const blankVault = () => ({ checkins: [], plan: null, plans: [], circle: [], changes: [], notes: '' });
 function vaultOpen() { return !!(G && VAULTS[G.id]); }
@@ -278,7 +286,7 @@ function sealVault() {
     g.box = { iv: b64(iv), ct: b64(new Uint8Array(ct)) }; g.boxU = Date.now(); g.plainBox = null; save();
   });
 }
-function lockNow() { if (G) { delete KEYS[G.id]; delete VAULTS[G.id]; } S.ci = null; S.pd = null; }
+function lockNow() { if (G) { delete KEYS[G.id]; delete VAULTS[G.id]; delete RAWS[G.id]; } S.ci = null; S.pd = null; }
 // Opens the locked part of this grove: asks for the passcode, or to choose one the first time.
 function unlock(reason) {
   if (!G) return Promise.resolve(false);
@@ -291,32 +299,104 @@ function unlock(reason) {
     return passDialog({ title: 'Unlock ' + (G.name || 'This Grove'), lead: (reason ? reason + ' ' : '') + 'Enter your grove passcode. The check-ins, the plan, and the circle choices are locked with it.', fields: [['p', 'Grove passcode']], ok: 'Unlock', err: msg, forgot: true })
       .then(v => {
         if (!v) return false;
-        if (v === 'forgot') { forgotPass(); return false; }
-        const g = ROOT.groves.find(x => x.id === gid);
-        return deriveKey(v.p, unb64(g.lock.salt)).then(k => subtle.decrypt({ name: 'AES-GCM', iv: unb64(g.box.iv) }, k, unb64(g.box.ct)).then(pt => {
-          KEYS[gid] = k; VAULTS[gid] = Object.assign(blankVault(), JSON.parse(TD.decode(pt))); return true;
-        }, () => attempt('That passcode does not open this grove. Try again.')));
+        if (v === 'forgot') return forgotPass();
+        return openWithPass(gid, v.p).then(() => true, () => attempt('That passcode does not open this grove. Try again.'));
       });
   }
   return attempt('');
 }
-function choosePass(reason) {
-  const gid = G.id;
-  return passDialog({ title: 'Choose a Grove Passcode', lead: (reason ? reason + ' ' : '') + 'The check-ins, the plan, and the circle choices are locked with this passcode, on this device only. Grow With Grounded never sees it and cannot recover it. Share it only with the people who lead this grove.',
-    fields: [['p1', 'Grove passcode'], ['p2', 'Passcode again']], ok: 'Lock This Grove', check: v => v.p1.length < 6 ? 'Use at least 6 characters.' : v.p1 !== v.p2 ? 'The two passcodes are different.' : '' })
-    .then(v => { if (!v) return false; return setPass(gid, v.p1).then(() => true); });
-}
-function setPass(gid, pass, data) {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  return deriveKey(pass, salt).then(k => {
-    const g = ROOT.groves.find(x => x.id === gid); if (!g) return;
-    KEYS[gid] = k; VAULTS[gid] = Object.assign(blankVault(), data || VAULTS[gid] || g.plainBox || {});
-    g.lock = { salt: b64(salt) }; g.lockOn = true; const was = G; G = g; return sealVault().then(() => { G = was; });
+const rawKey = raw => subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+function openBox(gid, k) { const g = ROOT.groves.find(x => x.id === gid); return subtle.decrypt({ name: 'AES-GCM', iv: unb64(g.box.iv) }, k, unb64(g.box.ct)).then(pt => Object.assign(blankVault(), JSON.parse(TD.decode(pt)))); }
+// The passcode opens the grove's own key (lock.wrap). A grove locked before Root Words is opened the old way, then moved over.
+function openWithPass(gid, pass) {
+  const g = ROOT.groves.find(x => x.id === gid);
+  return deriveKey(pass, unb64(g.lock.salt)).then(pk => {
+    if (g.lock.wrap) return subtle.decrypt({ name: 'AES-GCM', iv: unb64(g.lock.wrap.iv) }, pk, unb64(g.lock.wrap.ct)).then(r => {
+      const raw = new Uint8Array(r); return rawKey(raw).then(k => openBox(gid, k).then(d => { KEYS[gid] = k; RAWS[gid] = raw; VAULTS[gid] = d; }));
+    });
+    return openBox(gid, pk).then(d => {
+      const raw = crypto.getRandomValues(new Uint8Array(32)), iv = crypto.getRandomValues(new Uint8Array(12));
+      return subtle.encrypt({ name: 'AES-GCM', iv }, pk, raw).then(ct => rawKey(raw).then(k => {
+        g.lock = { salt: g.lock.salt, wrap: { iv: b64(iv), ct: b64(new Uint8Array(ct)) } };
+        KEYS[gid] = k; RAWS[gid] = raw; VAULTS[gid] = d;
+        const was = G; G = g; return sealVault().then(() => { G = was; });
+      }));
+    });
   });
 }
+function choosePass(reason, keep) {
+  const gid = G.id;
+  return passDialog({ title: keep ? 'Choose a New Grove Passcode' : 'Choose a Grove Passcode', lead: (reason ? reason + ' ' : '') + 'The check-ins, the plan, and the circle choices are locked with this passcode, on this device only. Grow With Grounded never sees it and cannot recover it. Share it only with the people who lead this grove.' + (keep ? '' : ' Next you get 12 Root Words that open the grove if the passcode is ever forgotten.'),
+    fields: [['p1', 'Grove passcode'], ['p2', 'Passcode again']], ok: 'Lock This Grove', check: v => v.p1.length < 6 ? 'Use at least 6 characters.' : v.p1 !== v.p2 ? 'The two passcodes are different.' : '' })
+    .then(v => { if (!v) return false; return setPass(gid, v.p1, null, keep).then(() => true); });
+}
+/* ---------- Root Words for a grove (GWG BLD 780) ---------- */
+let rootP = null;
+function needRoot() {
+  if (window.GGRoot) return Promise.resolve(window.GGRoot);
+  if (!rootP) rootP = new Promise((ok, no) => { const s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b780'; s.onload = () => window.GGRoot ? ok(window.GGRoot) : (rootP = null, no(new Error('load'))); s.onerror = () => { rootP = null; s.remove(); no(new Error('load')); }; document.head.appendChild(s); });
+  return rootP;
+}
+function rootShowG(g, words, again) {
+  return needRoot().then(R => R.show({ words, who: g.name || 'Our Grove', again, title: 'Root Words for ' + (g.name || 'This Grove'),
+    lead: 'If the grove passcode is ever forgotten, these 12 words open the check-ins and the plan again, so a new passcode can be chosen. Keep them with the grove passcode, and share them only with the people who lead this grove.' }), () => {});
+}
+// keep: the grove's key and Root Words stay (Change the Passcode, or after Use Our Root Words); otherwise a new key and new Root Words.
+function setPass(gid, pass, data, keep) {
+  const g = ROOT.groves.find(x => x.id === gid); if (!g) return Promise.resolve();
+  const same = keep && RAWS[gid] && g.lock && g.lock.rw;
+  const raw = same ? RAWS[gid] : crypto.getRandomValues(new Uint8Array(32));
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  let words = null;
+  return deriveKey(pass, salt).then(pk => subtle.encrypt({ name: 'AES-GCM', iv }, pk, raw)).then(ct => rawKey(raw).then(k => {
+    const vault = Object.assign(blankVault(), data || VAULTS[gid] || g.plainBox || {});
+    const lock = { salt: b64(salt), wrap: { iv: b64(iv), ct: b64(new Uint8Array(ct)) } };
+    if (same) lock.rw = g.lock.rw;
+    KEYS[gid] = k; RAWS[gid] = raw; VAULTS[gid] = vault;
+    if (same) return lock;
+    return needRoot().then(R => { words = R.make(); return R.wrap(raw, words).then(rw => { lock.rw = rw; vault.rootWords = words.join(' '); return lock; }); }, () => { delete vault.rootWords; return lock; });
+  })).then(lock => {
+    g.lock = lock; g.lockOn = true; const was = G; G = g; return sealVault().then(() => { G = was; });
+  }).then(() => words ? rootShowG(g, words, false) : null);
+}
+// Forgot the passcode: Use Our Root Words first; or start the locked part fresh, as before.
 function forgotPass() {
-  if (!confirm('Without the passcode, the locked check-ins and plan of this grove cannot be opened by anyone. Start this grove\'s locked part fresh with a new passcode? The Wall and practices stay.')) return;
-  G.box = null; G.lock = null; G.boxU = Date.now(); delete VAULTS[G.id]; delete KEYS[G.id]; save(); choosePass('').then(render);
+  const g = G, gid = G.id, has = !!(g.lock && g.lock.wrap && g.lock.rw);
+  const fresh = () => {
+    if (!confirm('Without the passcode or the Root Words, the locked check-ins and plan of this grove cannot be opened by anyone. Start this grove\'s locked part fresh with a new passcode? The Wall and practices stay.')) return false;
+    g.box = null; g.lock = null; g.boxU = Date.now(); delete VAULTS[gid]; delete KEYS[gid]; delete RAWS[gid]; save(); return choosePass('').then(ok => { render(); return ok; });
+  };
+  if (!has) return Promise.resolve(fresh());
+  let raw = null;
+  return needRoot().then(R => R.ask({ title: 'Use Our Root Words', lead: 'Type the grove\'s 12 Root Words in order. Capital letters and extra spaces do not matter, and the first four letters of each word are enough. No Root Words? Choose Cancel, then start the locked part fresh.',
+    verify: words => R.unwrap(g.lock.rw, words).then(r => { raw = r; return true; }, () => 'Those Root Words do not open this grove. Check the order and try again.') }), () => null)
+    .then(words => {
+      if (!words || !raw) return fresh();
+      return rawKey(raw).then(k => openBox(gid, k).then(d => { KEYS[gid] = k; RAWS[gid] = raw; VAULTS[gid] = d; }))
+        .then(() => choosePass('The Root Words opened the grove. Everything stays, the Root Words still work, and the old passcode stops working.', true))
+        .then(ok => { if (!ok) { delete KEYS[gid]; delete VAULTS[gid]; delete RAWS[gid]; return false; } toast('New grove passcode saved. The Root Words still work.'); render(); return true; });
+    });
+}
+// Settings: the grove passcode first, then the Root Words (made now for a grove locked before).
+function seeRoot() {
+  const g = G, gid = G.id; if (!g || !g.lockOn || !g.lock) return;
+  function attempt(msg) {
+    return passDialog({ title: 'Root Words for ' + (g.name || 'This Grove'), lead: 'Enter the grove passcode first, so only the people who lead this grove see them.', fields: [['p', 'Grove passcode']], ok: 'Continue', err: msg })
+      .then(v => {
+        if (!v) return;
+        return openWithPass(gid, v.p).then(() => {
+          const vault = VAULTS[gid];
+          if (vault.rootWords && g.lock.rw) return rootShowG(g, vault.rootWords.split(' '), true);
+          return needRoot().then(R => { const words = R.make(); return R.wrap(RAWS[gid], words).then(rw => { g.lock.rw = rw; vault.rootWords = words.join(' '); const was = G; G = g; return sealVault().then(() => { G = was; return rootShowG(g, words, false); }); }); }, () => toast('Root Words could not load. Check the connection.'));
+        }, () => attempt('That passcode does not open this grove. Try again.'));
+      });
+  }
+  return attempt('').then(() => render());
+}
+function keepSafeNote(g) {
+  if (!g || (g.ks && g.ks.first)) return;
+  g.ks = Object.assign({}, g.ks, { first: today() }); save();
+  setTimeout(() => needRoot().then(R => R.remind({ lead: 'Your first check-in together is saved.', wordsLabel: g.lockOn ? 'See Our Root Words' : 'Turn the Lock On', onBackup: () => { if (window.GGBackupGo) GGBackupGo('make'); }, onWords: () => { if (g.lockOn) seeRoot(); else { S.tab = 'settings'; render(); } } }), () => {}), 700);
 }
 function passDialog(o) {
   return new Promise(resolve => {
@@ -1058,7 +1138,8 @@ function ciAnswer(k) {
   const rec = { id: uid(), date: today(), at: new Date().toISOString(), quick: !!ci.quick, changes: ci.changes.slice(), ans: Object.assign({}, ci.ans) };
   const v = V(); v.checkins.push(rec); v.changes = rec.changes.slice();
   S.ci = null; S.view = rec.id;
-  sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); });
+  const gNow = G;
+  sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); });
 }
 function focusQ() { const t = $('#gv-qtext'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
 function resultsHtml(ci) {
@@ -1239,13 +1320,13 @@ function viewSettings() {
     h += `<p class="muted">${esc(W('circle.intro', 'Pick any that are part of our circle. Practices that fit come first, with a way for everyone to join.'))} ${esc(W('circle.note', 'It never changes a question, a result, or a help line.'))}</p><div class="gv-chips">${CIRCLE.map(([id, l]) => `<button type="button" class="chip${c.includes(id) ? ' on' : ''}" aria-pressed="${c.includes(id)}" data-act="circle" data-id="${id}">${esc(l)}</button>`).join('')}</div>`; }
   h += `</div>`;
   h += `<div class="card"><h3>${icon('lock', 'gv-ic-inline')} The Grove Lock</h3><p class="muted">${G.lockOn ? 'On. The check-ins, the plan, and the circle choices are locked with the grove passcode. The Wall and practices done together stay readable on this device.' : 'Off. Anyone using this device can open the check-ins and the plan.'}</p><div class="tools-row" style="justify-content:flex-start">`
-    + (G.lockOn ? (vaultOpen() ? `<button class="btn btn-line btn-sm" data-act="glock">Lock Now</button><button class="btn btn-line btn-sm" data-act="gpass">Change the Passcode</button><button class="btn btn-line btn-sm" data-act="glockoff">Turn the Lock Off</button>` : `<button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button>`) : `<button class="btn btn-gold btn-sm" data-act="glockon">Turn the Lock On</button>`) + `</div></div>`;
+    + (G.lockOn ? (vaultOpen() ? `<button class="btn btn-line btn-sm" data-act="glock">Lock Now</button><button class="btn btn-line btn-sm" data-act="gpass">Change the Passcode</button><button class="btn btn-line btn-sm" data-act="groot">${G.lock && G.lock.rw ? 'See Our Root Words' : 'Make Our Root Words'}</button><button class="btn btn-line btn-sm" data-act="glockoff">Turn the Lock Off</button>` : `<button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button>`) : `<button class="btn btn-gold btn-sm" data-act="glockon">Turn the Lock On</button>`) + `</div></div>`;
   h += `<div class="card"><h3>${icon('print', 'gv-ic-inline')} Printouts</h3><div class="tools-row" style="justify-content:flex-start">`
     + (!isFamily() ? `<button class="btn btn-line btn-sm" data-act="print" data-id="agree">${esc(W('print.agreementsTitle', 'Group Agreements'))}</button>` : '')
     + (cls ? `<button class="btn btn-line btn-sm" data-act="print" data-id="notice">${esc(W('print.noticeTitle', 'Classroom Family Notice'))}</button>` : '')
     + `<button class="btn btn-line btn-sm" data-tab="plan">Our Plan and Practice Card</button></div></div>`;
   h += moveOnHtml(true);
-  h += `<div class="card"><h3>Keep It Safe</h3><p class="muted">Save this grove to a file locked with a passcode, to keep it or move it to another device. Back Up Everything (in How it works) saves every grove and profile at once.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-line btn-sm" data-act="savefile">Save to a File</button><button class="btn btn-line btn-sm" data-act="loadfile">Load From a File</button><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>
+  h += `<div class="card"><h3>Keep It Safe</h3><p class="muted">Back Up Everything saves one locked file with every grove and profile on this device, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Save to a File keeps just this grove, locked with a passcode, to keep it or move it to another device.${G.lockOn ? ' The grove\'s Root Words open its locked part if the passcode is ever forgotten.' : ''}</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="gbackup">Back Up Everything</button><button class="btn btn-line btn-sm" data-act="savefile">Save to a File</button><button class="btn btn-line btn-sm" data-act="loadfile">Load From a File</button><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>
     <h3 style="margin-top:18px">Clear This Grove</h3><p class="muted">Removes this grove and everything in it from this device. Other groves stay.</p><button class="btn btn-line btn-sm" data-act="cleargrove">Clear This Grove</button></div>`;
   return h + helpCardHtml();
 }
@@ -1454,7 +1535,7 @@ function loadFile() {
       const have = ROOT.groves.findIndex(x => x.id === g.id);
       if (have >= 0) { if (!confirm('This grove is already on this device. Use the file\'s copy instead?')) return; ROOT.groves[have] = g; }
       else { if (ROOT.groves.length >= MAX_GROVES) { alert('This device holds up to six groves. Clear one first.'); return; } ROOT.groves.push(g); }
-      delete ROOT.gone[g.id]; delete VAULTS[g.id]; delete KEYS[g.id]; fixGrove(g); G = g; ROOT.active = g.id; persist(); S.tab = 'grove'; render(); toast((g.name || 'The grove') + ' is loaded.');
+      delete ROOT.gone[g.id]; delete VAULTS[g.id]; delete KEYS[g.id]; delete RAWS[g.id]; fixGrove(g); G = g; ROOT.active = g.id; persist(); S.tab = 'grove'; render(); toast((g.name || 'The grove') + ' is loaded.');
     }, e => { if (e && e.message !== 'cancel') alert('That file could not be read.'); }); };
     inp.click(); };
   if (window.GGFileLock) pick(); else loadScript('/shared/gg-filelock.js?v=b766').then(() => window.GGFileLock ? pick() : toast('Loading could not start. Check the connection.'));
@@ -1549,8 +1630,10 @@ document.addEventListener('click', e => {
   else if (act === 'ghard') { G.hard = !G.hard; save(); render(); }
   else if (act === 'setline') { const n = ($('#gv-lname') || {}).value || '', p = ($('#gv-lphone') || {}).value || ''; G.line = p.trim() ? { name: n.trim().slice(0, 60), phone: p.trim().slice(0, 30) } : null; save(); render(); toast('Saved.'); }
   else if (act === 'circle') { const c = V().circle || (V().circle = []), i = c.indexOf(id); if (i >= 0) c.splice(i, 1); else c.push(id); sealVault().then(render); }
-  else if (act === 'gpass') choosePass('').then(render);
-  else if (act === 'glockoff') { if (!confirm('Turn the lock off? Anyone using this device could open the check-ins and plan.')) return; G.lockOn = false; G.lock = null; delete KEYS[G.id]; sealVault().then(render); }
+  else if (act === 'gpass') choosePass('', true).then(render);
+  else if (act === 'groot') seeRoot();
+  else if (act === 'gbackup') { if (window.GGBackupGo) GGBackupGo('make'); }
+  else if (act === 'glockoff') { if (!confirm('Turn the lock off? Anyone using this device could open the check-ins and plan.')) return; G.lockOn = false; G.lock = null; delete KEYS[G.id]; delete RAWS[G.id]; if (VAULTS[G.id]) delete VAULTS[G.id].rootWords; sealVault().then(render); }
   else if (act === 'glockon') { const data = VAULTS[G.id] || Object.assign(blankVault(), G.plainBox || {}); VAULTS[G.id] = data; G.lockOn = true; choosePass('').then(ok => { if (!ok) { G.lockOn = false; } else G.plainBox = null; save(); render(); }); }
   else if (act === 'lc-open') lcOpen(id);
   else if (act === 'lc-back') { if (history.state && history.state.gList && S.lc.open) { history.back(); return; } S.lc.open = null; render(); const a = $('#app'); if (a) a.scrollIntoView(); pushHash(); }

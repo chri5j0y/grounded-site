@@ -395,7 +395,18 @@
       '<p>It is a conversation tool, not a test: there is nothing to pass and nothing to score. Every answer is simply a place to start talking.</p>' +
       '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays on this device. Nothing is sent anywhere.</span></p>' +
       (pc ? '<div class="btv-note"><p><b>A card from your partner is here.</b> Open it with the word the two of you chose.</p>' + btn('open-pending', 'Open the Card', { cls: 'btn-primary ff-sm' }) + '</div>' : '') +
-      '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div></div>';
+      '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div>' +
+      (setup() ? '' : '<p class="btv-small gm-newphone">New phone, or setting up again? ' + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</p>') + '</div>';
+  }
+  // Keep It Safe (GWG BLD 780): Save a Backup, Load a Backup, and each partner's Root Words.
+  function keepSafeHtml() {
+    var s = setup(); if (!s) return '';
+    var who = oneDevice() ? ['a', 'b'] : [s.me];
+    var rw = who.filter(function (w) { return box(w); }).map(function (w) { return btn('rw-see', esc(nm(w)) + '’s Root Words', { w: w, cls: 'btn-secondary ff-sm' }); }).join('');
+    return '<div class="gm-set" id="gm-keepsafe"><h3>Keep It Safe</h3><p class="btv-small">Save a Backup keeps a locked file of Heartwood, for a lost or broken phone: save it to this device, iCloud Drive, or another drive. Each partner’s answers stay locked inside it with their own passcode. Load it on a new phone, then type your code from Chris and Kayti.</p>' +
+      '<div class="ff-row">' + btn('hw-backup', 'Save a Backup', { cls: 'btn-primary ff-sm' }) + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</div>' +
+      '<p class="btv-small">Root Words are 12 plain words for each of you, made with your passcode. If a passcode is ever forgotten, they open those answers again. Only the person who knows the passcode sees them.</p>' +
+      (rw ? '<div class="ff-row">' + rw + '</div>' : '<p class="btv-small">Root Words come with each passcode, when you start your answers.</p>') + '</div>';
   }
   function faithSelect(w, val) {
     if (!F || !Array.isArray(F.list)) return '';
@@ -417,6 +428,7 @@
       (F ? '<div class="gm-set"><h3>Faith Backgrounds</h3><p class="btv-small">' + esc(F.lead || 'Optional, and you can change it any time.') + ' When your two backgrounds differ, a short set of questions for a home that honors both is added for each of you.</p><div class="ff-grid">' + faithSelect('a', s.fb.a) + faithSelect('b', s.fb.b) + '</div></div>' : '') +
       '<div class="gm-set"><h3>Your Wedding Day</h3><p class="btv-small">After the Vows opens on this date. Optional, and kept only on this device.</p><div class="ff-grid"><label class="ff-f"><span class="l">Wedding date</span><input type="date" id="gm-wd" value="' + esc(s.wd || '') + '"></label></div>' +
       '<label class="gm-check"><input type="checkbox" id="gm-wed"' + (s.wed ? ' checked' : '') + '><span>We’re married. Open After the Vows now.</span></label></div>' +
+      keepSafeHtml() +
       '<div class="ff-row">' + btn('setup-save', 'Save and Continue') + btn('welcome', 'Back', sec()) + '<span class="ff-status" id="btv-st" role="status" aria-live="polite"></span></div></div>';
   }
   function status(w) { var b = box(w); return !b ? 'Not started yet' : b.done ? 'Finished' : 'Started'; }
@@ -1013,7 +1025,7 @@
   function finish() {
     var w = V.who; SAFE = {};
     st.p[w].done = true;
-    return save(w).then(function () { delete KEYS[w]; delete DATA[w]; go('handoff'); });
+    return save(w).then(function () { delete KEYS[w]; delete DATA[w]; delete RAWS[w]; go('handoff'); remindOnce('bv', w, 'Thank you, ' + nm(w) + '. Your Before the Vows answers are saved.'); });
   }
   // Talk About This and Strengths and Growing Edges both need both sets of answers open.
   function startTalk(view) {
@@ -1136,7 +1148,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('[data-mo]'), function (x) { rr[x.getAttribute('data-mo')] = x.value.slice(0, 600); });
       dd.mo[V.rk] = { r: rr, done: 1 }; markDone(V.who, V.rk);
       var wasK = V.rk, ww = V.who;
-      save(ww).then(function () { lockAll(); go('after'); say('Thank you, ' + nm(ww) + '. Your answers are locked.'); if (oneDevice() && rdone(other(ww), wasK)) say('You have both answered. Sit together and read them side by side.'); });
+      save(ww).then(function () { lockAll(); go('after'); say('Thank you, ' + nm(ww) + '. Your answers are locked.'); if (oneDevice() && rdone(other(ww), wasK)) say('You have both answered. Sit together and read them side by side.'); if (Object.keys(box(ww).r || {}).length === 1) remindOnce('first', ww, 'Your first check-in for two is saved.'); });
     }
     else if (a === 'round-away') { save(V.who).then(function () { lockAll(); go('after'); }); }
     else if (a === 'round-read') {
@@ -1162,6 +1174,9 @@
       wkOpen.then(function (ok) { if (ok) { V.wk = null; go('week'); } else { lockAll(); render(); } });
     }
     else if (a === 'wk-make') makeWeek();
+    else if (a === 'hw-backup') backupGo('make');
+    else if (a === 'hw-load') backupGo('pick');
+    else if (a === 'rw-see' && w) rootSee(w);
     else if (a === 'clear') {
       if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
       try { localStorage.removeItem(KEY); localStorage.removeItem(GMKEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}

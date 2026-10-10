@@ -167,7 +167,7 @@
     + '.gta-list li{border-bottom:1px solid var(--line,#E6DAC3);}.gta-list li:last-child{border-bottom:0;}'
     + '.gta-row{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;background:none;border:0;color:inherit;font:inherit;text-align:left;}'
     + 'button.gta-row{cursor:pointer;}'
-    + '.gta-row b{min-width:76px;}.gta-row .gta-mean{flex:1 1 auto;color:var(--ink-soft,#6B5A4D);font-size:14px;min-width:0;}.gta-row .gta-word{font-weight:600;white-space:nowrap;}'
+    + '.gta-nm{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 10px;line-height:1.3;}.gta-nm b{min-width:76px;}.gta-mean{color:var(--ink-soft,#6B5A4D);font-size:14px;}.gta-row .gta-word{font-weight:600;white-space:nowrap;line-height:1.3;}'
     + '.gta-dot{flex:none;border-radius:50%;width:11px;height:11px;}'
     + '.gta-dot-s{width:16px;height:16px;background:#F4C35A;box-shadow:0 0 10px 3px rgba(255,214,120,.8);}'
     + '.gta-dot-t{width:13px;height:13px;background:rgba(244,195,90,.72);}'
@@ -271,7 +271,7 @@
     var pic = art(o, mk, '', live ? null : (o.label || 'Your tree: ' + describe(ps, o.levels, w)));
     if (live) pic = pic.replace('class="gta-art"', 'class="gta-art" role="group" aria-label="' + esc(o.label || 'Your tree: ' + describe(ps, o.levels, w)) + '"');
     var rows = ps.map(function (p) {
-      var L = lvOf(o.levels, p.key), inner = '<span class="gta-dot gta-dot-' + L + '" aria-hidden="true"></span><b>' + esc(p.name) + '</b><span class="gta-mean">' + esc(p.tag) + '</span><span class="gta-word">' + esc(w[L]) + '</span>';
+      var L = lvOf(o.levels, p.key), inner = '<span class="gta-dot gta-dot-' + L + '" aria-hidden="true"></span><span class="gta-nm"><b>' + esc(p.name) + '</b><span class="gta-mean">' + esc(p.tag) + '</span></span><span class="gta-word">' + esc(w[L]) + '</span>';
       return '<li>' + (live ? '<button type="button" class="gta-row" data-gta="' + id + '" data-pick="' + p.key + '">' + inner + '</button>' : '<div class="gta-row">' + inner + '</div>') + '</li>';
     }).join('');
     var legend = o.legend === false ? '' : '<p class="gta-legend"><span><b>' + esc(w.s) + '</b>: a full warm glow.</span><span><b>' + esc(w.t) + '</b>: a soft glow.</span><span><b>' + esc(w.g) + '</b>: a new green light, where growth is starting.</span></p>';
