@@ -74,7 +74,7 @@ const P = [
   text:"When things get loud, everyone pauses, takes three breaths, and starts again. No blame.",
   kid:"When it gets loud, stop, breathe three times, and start again.",
   steps:"Agree on a reset word together, like \"pause.\"|When anyone says it, everyone stops.|Three slow breaths.|Start again, kinder." },
-{ id:"screen-free-hour", part:"bark", name:"Screen-Free Hour",
+{ id:"unplugged-hour", part:"bark", name:"Unplugged Hour",
   text:"One hour with every screen put away, together.",
   kid:"Put all screens away for one hour and do something together.",
   steps:"Pick the hour.|Put every screen in one basket, grown-ups too.|Do anything together: read, play, cook, talk.|Notice how the hour felt." },

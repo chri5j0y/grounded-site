@@ -13,20 +13,31 @@
    Guide backups (grounded-field-guide). Older Maple, Aspen, and Oak practitioner files still load
    through those tools' own buttons.
 
+   Heartwood (GWG BLD 780): the couple's answers (gg_hw_v1, each partner still locked with their own passcode and
+   Root Words) come back as one choice. On a device with no Heartwood yet they are put in place, with the invite
+   (gg_hw_inv), so the code from Chris and Kayti opens it. On a device that has its own, the backup's copy replaces it
+   only when the person checks it, since two couples' answers cannot be combined.
+
    The Field Guide is never opened here. If this device has no Field Guide yet, the backup's locked
    Field Guide is put in place. If it already has one, the backup's copy waits (gg-fg-import) and the
    Field Guide asks for that backup's passcode to merge it, the next time it is unlocked. */
 (function () {
   if (window.GGBackup) return;
   var APP = 'grow-with-grounded-backup', PENDING = 'gg-fg-import', FG = 'gfg-vault-v1';
-  var PLIST = 'gg-profiles-v1', PBOX = 'gg-p:';
-  var SKIP = /^(gg-lock-ping|gg-open-ping)$/;
+  var PLIST = 'gg-profiles-v1', PBOX = 'gg-p:', HW = 'gg_hw_v1', HWINV = 'gg_hw_inv';
+  var SKIP = /^(gg-lock-ping|gg-open-ping|gg_hw_once)$/;
   var SETTINGS = /^(gg_theme|gg_voice.*|gg_read_.*|oak:text-size|pine:text-size|birch:text-size|sequoia:text-size|willow:text-size|gg-text-size.*)$/;
   var LOOSE = /^(maple:kids|aspen_v1|oak:client.*|oak:profiles|oak:p:.*)$/;
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function today() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-  function toast(t) { try { if (window.GGP && GGP.toast) return GGP.toast(t); if (window.GGApp && GGApp.toast) return GGApp.toast(t); } catch (e) {} alert(t); }
+  function toast(t) {
+    try { if (window.GGP && GGP.toast) return GGP.toast(t); if (window.GGApp && GGApp.toast) return GGApp.toast(t); } catch (e) {}
+    // Pages without profiles (Heartwood, GWG BLD 780): a quiet note of their own.
+    var el = document.createElement('div'); el.setAttribute('role', 'status'); el.textContent = t;
+    el.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100002;background:#2C1810;color:#FAF7F2;padding:11px 18px;border-radius:16px;font:15px Barlow,system-ui,sans-serif;box-shadow:0 10px 26px rgba(0,0,0,.25);max-width:calc(100vw - 30px);text-align:center;';
+    document.body.appendChild(el); setTimeout(function () { el.remove(); }, 4200);
+  }
   function allKeys() { var o = {}; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (!SKIP.test(k)) o[k] = localStorage.getItem(k); } } catch (e) {} return o; }
   function parse(v) { try { return JSON.parse(v); } catch (e) { return undefined; } }
 
@@ -37,7 +48,7 @@
       var keys = allKeys();
       var file = { app: APP, v: 1, saved: new Date().toISOString(), keys: keys };
       var blob = new Blob([JSON.stringify(file)], { type: 'application/json' }), name = 'grow-with-grounded-backup-' + today() + '.json';
-      var done = function () { toast('Backup saved. Profiles and the Field Guide stay locked inside it. Keep the file somewhere private.'); try { localStorage.setItem('gg-last-backup', String(Date.now())); } catch (e) {} if (opts.after) opts.after(); };
+      var done = function () { toast('Backup saved. Everything locked stays locked inside it. Keep the file somewhere private, like your Files, iCloud Drive, or another drive.'); try { localStorage.setItem('gg-last-backup', String(Date.now())); } catch (e) {} if (opts.after) opts.after(); };
       if (window.GGApp && GGApp.share) { return Promise.resolve(GGApp.share(blob, name, 'Grow With Grounded Backup')).then(done, done); }
       var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
       setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 800); done();
@@ -117,6 +128,8 @@
     });
     Object.keys(keys).forEach(function (k) {
       if (k === PLIST || k.indexOf(PBOX) === 0 || k === 'gg-last-backup') return;
+      if (k === HW) { plan.hw = { state: !here[HW] ? 'new' : (here[HW] === keys[HW] ? 'same' : 'differs') }; return; }
+      if (k === HWINV) { if (!here[HWINV]) plan.hwinv = true; return; }
       if (k === FG) { plan.fg = { state: !here[FG] ? 'new' : (here[FG] === keys[FG] ? 'same' : 'differs') }; return; }
       if (k === 'gg-grove-family-v1') { plan.grove = { state: !here[k] ? 'new' : (here[k] === keys[k] ? 'same' : 'differs') }; return; }
       if (k === 'gg-grove-v2') { plan.groves = { state: !here[k] ? 'new' : (here[k] === keys[k] ? 'same' : 'differs') }; return; }
@@ -165,6 +178,9 @@
       }
       if (plan.fg) rows += '<h3>Field Guide</h3>' + (plan.fg.state === 'same' ? box('fg', false, 'Field Guide records', 'Already the same on this device.', true) :
         box('fg', true, 'Field Guide records', plan.fg.state === 'new' ? 'Added, locked with the passcode it was made with.' : 'Merged: nothing on this device is lost. The Field Guide asks for this backup\'s passcode to finish.'));
+      if (plan.hw) rows += '<h3>Heartwood</h3>' + (plan.hw.state === 'same' ? box('hw', false, 'Your Heartwood answers', 'Already the same on this device.', true)
+        : plan.hw.state === 'new' ? box('hw', true, 'Your Heartwood answers', 'Added, each partner still locked with their own passcode and Root Words.')
+        : box('hw', false, 'Your Heartwood answers', 'This device has its own Heartwood answers. Check this to use the backup\'s copy instead of this device\'s.'));
       if (plan.grove || plan.groves) rows += '<h3>The Grove</h3>';
       if (plan.groves) rows += plan.groves.state === 'same' ? box('groves', false, 'Your groves', 'Already the same on this device.', true) : box('groves', true, 'Your groves', 'Each grove is combined with the same grove here. Locked check-ins and plans stay locked with their grove passcode.');
       if (plan.grove) rows += plan.grove.state === 'same' ? box('grove', false, 'Your family grove (earlier)', 'Already the same on this device.', true) : box('grove', true, 'Your family grove (earlier)', 'Posts, reactions, and family practices are combined.');
@@ -197,6 +213,8 @@
         if (plan.fg.state === 'new') { localStorage.setItem(FG, keys[FG]); n++; }
         else { localStorage.setItem(PENDING, keys[FG]); fgWaiting = true; n++; }
       }
+      if (plan.hw && on.hw) { localStorage.setItem(HW, keys[HW]); if (plan.hwinv) localStorage.setItem(HWINV, keys[HWINV]); n++; }
+      else if (plan.hwinv && !here[HW]) { localStorage.setItem(HWINV, keys[HWINV]); }
       if (plan.groves && on.groves) { localStorage.setItem('gg-grove-v2', here['gg-grove-v2'] ? mergeGroveV2(here['gg-grove-v2'], keys['gg-grove-v2']) : keys['gg-grove-v2']); n++; }
       if (plan.grove && on.grove) { localStorage.setItem('gg-grove-family-v1', here['gg-grove-family-v1'] ? mergeGrove(here['gg-grove-family-v1'], keys['gg-grove-family-v1']) : keys['gg-grove-family-v1']); n++; }
       if (on.loose) plan.loose.forEach(function (k) { localStorage.setItem(k, here[k] == null ? keys[k] : mergeJSON(here[k], keys[k])); n++; });

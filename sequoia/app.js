@@ -276,177 +276,35 @@ function icon(name, size) {
 function partIcon(d, size) { return icon(d.icon, size); }
 
 // =====================================================================
-// THE SIX-PIECE PUZZLE TREE
-// variant: 'hero' (cream, on gold), 'color' (part colors), 'score' (shaded by score)
+// THE TREE ART (GWG BLD 780): the Sequoia painting with six glowing markers,
+// from shared/gg-treeart.js. It replaced the drawn puzzle tree in How it works,
+// Results, the progress view, and Season (Then and Now, growth rings, the level badge).
 // =====================================================================
-const TREE_SHAPES = {
-  roots: {
-    kind: 'taper', dx: 0, dy: 16, delay: 0,
-    paths: [
-      // Sequoia roots run shallow and very wide
-      ['M200 299 C199 318 201 334 198 352', 10, 2],
-      ['M194 298 C170 312 130 320 74 326', 11, 2],
-      ['M206 298 C230 312 270 320 326 326', 11, 2],
-      ['M190 297 C160 300 110 302 52 306', 8, 1.6],
-      ['M210 297 C240 300 290 302 348 306', 8, 1.6],
-      ['M150 316 C140 328 130 334 116 344', 4.4, 1.2],
-      ['M250 316 C260 328 270 334 284 344', 4.4, 1.2],
-      ['M112 322 C98 330 88 334 72 340', 3.2, 1],
-      ['M288 322 C302 330 312 334 328 340', 3.2, 1],
-      ['M198 340 C190 348 184 354 176 360', 3.6, 1],
-      ['M199 344 C207 352 214 358 222 362', 3.6, 1],
-      ['M90 304 C78 310 66 312 54 318', 2.4, .6],
-      ['M310 304 C322 310 334 312 346 318', 2.4, .6],
-      ['M118 344 C112 350 108 356 104 362', 1.6, .5],
-      ['M282 344 C288 350 292 356 296 362', 1.6, .5],
-      ['M74 326 C64 330 58 334 50 340', 1.6, .5],
-      ['M326 326 C336 330 342 334 350 340', 1.6, .5]
-    ]
-  },
-  // a massive trunk that flares wide at the ground
-  trunk: { kind: 'fill', dx: 0, dy: 12, delay: 0.25, paths: ['M168 292 C184 286 188 268 189 244 L191 150 L209 150 L211 244 C212 268 216 286 232 292 Z'] },
-  bark: {
-    kind: 'fill', dx: 0, dy: 0, delay: 0.45,
-    paths: ['M146 292 C164 286 174 270 178 244 L182 168 L188 168 L187 244 C186 268 180 284 166 292 Z', 'M254 292 C236 286 226 270 222 244 L218 168 L212 168 L213 244 C214 268 220 284 234 292 Z'],
-    grain: ['M158 288 C170 280 177 262 180 236', 'M242 288 C230 280 223 262 220 236', 'M181 220 C182 205 183 190 184 176', 'M219 220 C218 205 217 190 216 176']
-  },
-  branches: {
-    kind: 'taper', dx: 0, dy: -8, delay: 0.65, seam: true, joints: true,
-    paths: [
-      ['M200 176 C201 140 199 100 200 34', 11, 3],
-      ['M197 168 C186 162 174 160 160 156', 6, 2.2],
-      ['M203 150 C214 144 226 142 240 138', 6, 2.2],
-      ['M197 128 C188 122 178 120 166 118', 5, 1.8],
-      ['M203 108 C212 102 222 100 234 98', 5, 1.8],
-      ['M198 86 C191 82 184 80 176 79', 4, 1.4],
-      ['M202 68 C208 64 214 62 222 61', 4, 1.4]
-    ]
-  },
-  // a narrow, high crown
-  leaves: { kind: 'canopy', dx: 0, dy: -12, delay: 0.85, circles: [[200,40,22],[188,62,22],[212,64,22],[200,84,28],[178,100,24],[222,100,24],[200,120,30],[172,136,26],[228,136,26],[200,156,30],[176,170,24],[224,170,24],[200,186,22]] },
-  fruit: { kind: 'fruit', dx: 0, dy: -18, delay: 1.1, circles: [[186,70],[216,96],[178,124],[222,148],[196,172],[206,44],[180,154]] }
-};
-const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
-const DRAW_ORDER = ['leaves', 'branches', 'fruit', 'bark', 'trunk', 'roots'];
-const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
-
-// Turns a single curve into a filled shape that tapers from w0 to w1
-function taperPath(d, w0, w1) {
-  const n = d.match(/-?\d+(\.\d+)?/g).map(Number);
-  const [x0, y0, x1, y1, x2, y2, x3, y3] = n;
-  const pt = t => { const u = 1 - t; return [u*u*u*x0 + 3*u*u*t*x1 + 3*u*t*t*x2 + t*t*t*x3, u*u*u*y0 + 3*u*u*t*y1 + 3*u*t*t*y2 + t*t*t*y3]; };
-  const der = t => { const u = 1 - t; return [3*u*u*(x1-x0) + 6*u*t*(x2-x1) + 3*t*t*(x3-x2), 3*u*u*(y1-y0) + 6*u*t*(y2-y1) + 3*t*t*(y3-y2)]; };
-  const N = 18, left = [], right = [];
-  for (let i = 0; i <= N; i++) {
-    const t = i / N, [px, py] = pt(t);
-    const [dx, dy] = der(t), L = Math.hypot(dx, dy) || 1;
-    const w = (w0 + (w1 - w0) * t) / 2;
-    left.push([px - dy / L * w, py + dx / L * w]);
-    right.push([px + dy / L * w, py - dx / L * w]);
-  }
-  const f = p => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
-  return 'M' + left.map(f).join(' L') + ' L' + f(pt(1)) + ' L' + right.reverse().map(f).join(' L') + ' Z';
+const ART_APP = 'sequoia';
+const ART_TEXT = k => ABOUT_TEXT[k];
+const ART_LEVEL = s => sgLevel(sgDays(s)).name;
+function artParts(withText) { return ALL_DOMAINS.map(d => ({ key: d.key, name: d.part, tag: d.name, text: withText ? ART_TEXT(d.key) : '' })); }
+// Scores to light: 8 and up Strong, 5 and up Steady, below 5 Growing Edge, unsure Not sure yet.
+function artLevels(scores, unsure) { const o = {}; ALL_DOMAINS.forEach(d => { o[d.key] = window.GGTreeArt ? GGTreeArt.level((scores || {})[d.key], (unsure || []).includes(d.key)) : 'u'; }); return o; }
+// Results: each part's marker by level, and the list in words. onPick makes the parts buttons.
+function artResults(id, scores, unsure, onPick) {
+  const el = document.getElementById(id); if (!el || !window.GGTreeArt) return;
+  GGTreeArt.results(el, { app: ART_APP, parts: artParts(), levels: artLevels(scores, unsure), onPick: onPick || null, pickLabel: onPick ? 'Open it in the growth plan' : '' });
 }
-
-// Leafy, scalloped canopy edge built around the outer circles
-function canopyCircles(circles) {
-  const out = circles.map(c => [c[0], c[1], c[2]]);
-  circles.forEach(([cx, cy, r]) => {
-    for (let a = 0; a < 360; a += 20) {
-      const rad = a * Math.PI / 180, px = cx + Math.cos(rad) * (r - 3), py = cy + Math.sin(rad) * (r - 3);
-      const covered = circles.some(o => o !== undefined && !(o[0] === cx && o[1] === cy) && Math.hypot(px - o[0], py - o[1]) < o[2] - 4);
-      if (!covered) out.push([px, py, 7 + r * 0.1]);
-    }
-  });
-  return out;
-}
-
-let TREE_UID = 0;
-function puzzleTreeSvg(opts) {
-  const o = Object.assign({ variant: 'color', scores: null, interactive: false, seam: '#2C1810', assemble: false, cls: '' }, opts);
-  const ground = o.variant === 'hero'
-    ? `<path d="M26 293.5 Q200 289 374 293.5 Q200 298 26 293.5 Z" fill="#FAF7F2" opacity="0.75"/>`
-    : `<path d="M26 293.5 Q200 290 374 293.5 Q200 297 26 293.5 Z" style="fill:var(--ink-soft);" opacity="0.35"/>`;
-  let pieces = '';
-  DRAW_ORDER.forEach(key => {
-    const d = DOMAIN_BY_KEY[key];
-    const shape = TREE_SHAPES[PIECE_FOR[key]];
-    const hero = o.variant === 'hero';
-    const color = hero ? HERO_COLORS[key] : d.color;
-    let pieceOpacity = 1;
-    if (o.variant === 'score' && o.scores) pieceOpacity = 0.2 + 0.8 * ((o.scores[key] || 5) / 10);
-    let inner = '';
-    if (shape.kind === 'taper') {
-      const ends = p => { const n = p[0].match(/-?\d+(\.\d+)?/g).map(Number); return [n[0], n[1], n[6], n[7]]; };
-      const caps = (p, add0, add1, fill) => { const e = ends(p); return `<circle cx="${e[0]}" cy="${e[1]}" r="${((p[1] + add0) / 2).toFixed(2)}" style="fill:${fill};"/><circle cx="${e[2]}" cy="${e[3]}" r="${((p[2] + add1) / 2).toFixed(2)}" style="fill:${fill};"/>`; };
-      if (shape.seam) inner += shape.paths.map(p => `<path d="${taperPath(p[0], p[1] + 3, p[2] + 2)}" style="fill:${o.seam};"/>` + (shape.joints ? caps(p, 3, 2, o.seam) : '')).join('');
-      inner += shape.paths.map(p => `<path d="${taperPath(p[0], p[1], p[2])}" style="fill:${color};"/>` + caps(p, 0, 0, color)).join('');
-    } else if (shape.kind === 'fill') {
-      inner += shape.paths.map(p => `<path d="${p}" style="fill:${color};stroke:${o.seam};paint-order:stroke;" stroke-width="2.5" stroke-linejoin="round"/>`).join('');
-      if (shape.grain) inner += shape.grain.map(p => `<path d="${p}" style="stroke:${o.seam};" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>`).join('');
-      if (!hero && key === 'bark') inner += `<path d="M164 284 C170 276 175 262 177 248M236 284 C230 276 225 262 223 248" stroke="#000" stroke-opacity="0.22" stroke-width="1.1" stroke-linecap="round" fill="none"/>`;
-      if (!hero && key === 'trunk') inner += `<g stroke="#000" stroke-opacity="0.25" stroke-width="1.2" stroke-linecap="round" fill="none"><path d="M194 286 C196 260 197 220 197 160M206 286 C204 260 203 220 203 160M200 288 V170"/></g>`;
-    } else if (shape.kind === 'canopy') {
-      const cc = canopyCircles(shape.circles);
-      inner += cc.map(c => `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${(c[2] + 1.8).toFixed(1)}" style="fill:${o.seam};"/>`).join('');
-      inner += cc.map(c => `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${c[2].toFixed(1)}" style="fill:${color};"/>`).join('');
-      if (!hero && o.variant !== 'score') inner += `<circle cx="192" cy="80" r="14" fill="#8FB070" opacity="0.35"/><circle cx="184" cy="132" r="12" fill="#8FB070" opacity="0.3"/><circle cx="212" cy="58" r="9" fill="#8FB070" opacity="0.22"/>`;
-    } else if (shape.kind === 'fruit') {
-      const gid = 'stf' + (++TREE_UID);
-      inner += `<defs><radialGradient id="${gid}" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FFF3D6" stop-opacity="0.55"/><stop offset="0.5" stop-color="${color}" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.3"/></radialGradient></defs>`;
-      inner += shape.circles.map(([x, y]) => `
-        <path d="M${x} ${y - 7} C${x + 1} ${y - 11} ${x + 3} ${y - 13} ${x + 6} ${y - 14}" style="stroke:${o.seam};" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <path d="M${x} ${y - 7} C${x + 1} ${y - 11} ${x + 3} ${y - 13} ${x + 6} ${y - 14}" style="stroke:${hero ? color : '#6B4226'};" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        ${hero ? '' : `<path d="M${x + 5} ${y - 13.5} C${x + 8} ${y - 18} ${x + 13} ${y - 18} ${x + 15} ${y - 15} C${x + 12} ${y - 12} ${x + 8} ${y - 12} ${x + 5} ${y - 13.5} Z" style="fill:var(--leaf-accent, #4E6A3B);stroke:${o.seam};" stroke-width="1"/>`}
-        <circle cx="${x}" cy="${y}" r="8" style="fill:${color};stroke:${o.seam};" stroke-width="3.5"/>
-        ${hero ? '' : `<circle cx="${x}" cy="${y}" r="8" fill="url(#${gid})"/><circle cx="${x - 2.6}" cy="${y - 2.6}" r="2" fill="#FFF3DD" opacity="0.85"/>`}`).join('');
-    }
-    const label = `${d.part}, ${d.name}${o.scores ? ', ' + o.scores[key] + ' of 10' : ''}`;
-    const attrs = o.interactive ? `tabindex="0" role="button" aria-label="${label}"` : '';
-    const anim = o.assemble ? `style="--dx:${shape.dx}px;--dy:${shape.dy}px;--delay:${shape.delay}s;"` : '';
-    const sway = (o.assemble && (key === 'leaves' || key === 'fruit')) ? ' sway' : '';
-    pieces += `<g class="piece-wrap${sway}" ${anim}><g class="piece${o.interactive ? ' interactive' : ''}" data-key="${key}" ${attrs} opacity="${pieceOpacity.toFixed(2)}"><title>${label}</title>${inner}</g></g>`;
-  });
-  return `<svg class="${o.cls}${o.assemble ? ' assemble' : ''}" viewBox="40 2 320 424" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequoia with six parts">${ground}${pieces}</svg>`;
-}
-
-function mountTree(slotId, opts, onPiece) {
-  const slot = document.getElementById(slotId);
-  if (!slot) return;
-  slot.innerHTML = puzzleTreeSvg(opts);
-  if (onPiece) {
-    slot.querySelectorAll('.piece.interactive').forEach(el => {
-      const key = el.getAttribute('data-key');
-      el.addEventListener('click', () => onPiece(key));
-      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPiece(key); } });
-    });
-  }
-}
-
-// Kept for the history chart and older code paths
-function treeSvgMarkup(scores) {
-  return puzzleTreeSvg({ variant: 'score', scores, seam: '#2C1810' }).replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
+function artResultsHtml(entry) { return entry && window.GGTreeArt ? GGTreeArt.results(null, { app: ART_APP, parts: artParts(), levels: artLevels(entry.scores, entry.unsure), legend: false }) : ''; }
+// Season: Then and Now from this person's own full check-ins (never anyone else's), the rings, the level badge.
+function artGrowthHtml(s) {
+  if (!window.GGTreeArt) return '';
+  const hist = (personalHistory || []).filter(e => e && e.kind !== 'observed' && !e.from).filter(e => e.type !== 'quick' && e.scores).map(e => ({ date: e.date, levels: artLevels(e.scores, e.unsure) }));
+  return `<div class="gt-card gta-season"><p class="gt-kicker">Then and Now</p>${GGTreeArt.growth(null, { app: ART_APP, parts: artParts(), history: hist, levelName: s ? ART_LEVEL(s) : '', ladder: SG_LEVELS.map(x => x[1]) })}</div>`;
 }
 
 // =====================================================================
 // ABOUT PAGE
 // =====================================================================
 function renderAboutParts() {
-  document.getElementById('about-part-cards').innerHTML = ALL_DOMAINS.map(d => `
-    <div class="part-card" id="about-part-${d.key}" style="--domain-color:${d.color};">
-      <div class="part-card-icon">${partIcon(d, 34)}</div>
-      <div>
-        <div class="part-card-name">${d.part}</div>
-        <div class="part-card-domain">${d.name}</div>
-        <p>${ABOUT_TEXT[d.key]}</p>
-      </div>
-    </div>`).join('');
-  mountTree('about-tree-slot', { variant: 'color', interactive: true, seam: 'var(--bg)' }, key => {
-    const card = document.getElementById('about-part-' + key);
-    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    card.classList.add('flash');
-    setTimeout(() => card.classList.remove('flash'), 1400);
-  });
+  const el = document.getElementById('about-tree-slot'); if (!el || !window.GGTreeArt) return;
+  GGTreeArt.howItWorks(el, { app: ART_APP, parts: artParts(true), label: 'The Sequoia painting with six glowing parts to tap' });
 }
 
 // =====================================================================
@@ -913,11 +771,8 @@ function calculateResults(mode) {
   const html = `
     <div class="results-summary">
       ${whoNote}
-      <div class="tree-result-wrap"><div id="${prefix}-results-tree" style="width:100%;max-width:320px;"></div></div>
-      <p class="tree-caption">Each part of the tree is shaded by its score. The fuller the color, the healthier that part.${self ? ' Tap a part to work on it in your growth plan.' : ''}</p>
-      <div class="lvl-list">
-        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">This growing edge is where the next growth begins.</p>' : ''}</div>`).join('')}
-      </div>
+      <div id="${prefix}-results-tree" class="results-art" style="margin:16px 0 6px;"></div>
+      <p class="tree-caption">Each part of the tree shines with how it is doing.${self ? ' Tap a part to work on it in your growth plan.' : ''}</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       ${by === 'observed' ? '' : `<div class="interpretation">${interpretResults(scores)}</div>`}
       ${flagBoxHtml(flags, by === 'helper')}
@@ -960,7 +815,7 @@ function calculateResults(mode) {
     showView('client-results');
     if (CK.forId && window.GGP && GGP.isOpen(CK.forId)) { const d = GGP.data(CK.forId, 'sequoia'); if (!Array.isArray(d.history)) d.history = []; d.history.push(entry); sortEntries(d.history); GGP.save(CK.forId).then(() => showToast(by === 'observed' ? 'Saved, kept apart from their own check-ins.' : 'Saved to ' + CK.name + '\'s tree.')); }
   }
-  mountTree(`${prefix}-results-tree`, { variant: 'score', scores, interactive: self, seam: '#2C1810', assemble: true }, self ? goToGrowthPlanPart : null);
+  artResults(`${prefix}-results-tree`, scores, unsure, self ? goToGrowthPlanPart : null);
 }
 
 
@@ -1664,7 +1519,7 @@ const TEND_CFG = {
   extraSettings: () => (!HELP && window.GGLifeKit ? GGLifeKit.settingsHtml('sequoia', 'sq-set-life') : '') + helperSettingsHtml(),
   lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
-  seasonExtra: s => graphCardHtml() + (s ? sgMilesHtml(s) : ''),
+  seasonExtra: s => artGrowthHtml(s) + graphCardHtml() + (s ? sgMilesHtml(s) : ''),
   pause: () => sqPause(),
   pauseLine: 'Your tree is holding still with you while you get support. Nothing is lost.',
   onCheck: (done, key, s, parts, before) => sgOnCheck(done, s, parts),
@@ -2193,7 +2048,7 @@ function renderHistoryChartAndTable(container, history, personal) {
   }
   const own = history.filter(e => !e.from);
   const last = own[own.length - 1] || null;
-  const treeSvg = last ? `<div style="max-width:260px;margin:0 auto;">${puzzleTreeSvg({ variant: 'score', scores: last.scores, seam: '#2C1810' })}</div>` : '';
+  const treeSvg = last ? `${artResultsHtml(last)}` : '';
   const kind = e => e.type === 'quick' ? 'quick' : 'full';
   const prev = last && last.std ? own.slice(0, -1).reverse().find(e => e.std === last.std && kind(e) === kind(last)) : null;
 
@@ -2266,7 +2121,6 @@ function cycleTextSize() {
   applyTextSize();
 }
 applyTextSize();
-mountTree('hero-tree-slot', { variant: 'color', seam: 'var(--hero-seam)', assemble: true, cls: 'hero-tree' });
 renderAboutParts();
 renderProgress();
 
@@ -2300,5 +2154,5 @@ function fromHash(e) {
   setTimeout(() => scrollToViewTop(document.getElementById(top || view) ? (top || view) : view, false, true), 60);
 }
 window.addEventListener('hashchange', fromHash);
-window.addEventListener('popstate', fromHash);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; fromHash(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 setTimeout(fromHash, 60);

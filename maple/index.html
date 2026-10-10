@@ -3,7 +3,7 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b766"></script>
-<script src="/shared/gg-shelf.js?v=fd4"></script>
+<script src="/shared/gg-shelf.js?v=b780"></script>
 <script src="/shared/gg-sources.js?v=b777"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -361,7 +361,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 @media (prefers-reduced-motion: reduce){ .piece,.decor,.weather{transition:none;} }
 
 /* Results */
-.results{display:grid;grid-template-columns:320px minmax(0,1fr);gap:28px;align-items:start;}
+.results{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:28px;align-items:start;}
 @media(max-width:820px){ .results{grid-template-columns:1fr;} }
 .results-tree{background:var(--card);border:3px solid var(--outline);border-radius:26px;padding:14px;text-align:center;}
 .results-tree .tree-svg{max-width:300px;}
@@ -568,6 +568,18 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .cu[aria-pressed="true"]{border-color:var(--sky-bright);background:var(--sky-soft);}
 .cu .tree-svg{max-width:130px;}
 .cu-detail{margin-top:16px;}
+.cu-ring{display:block;width:56px;height:56px;margin:4px auto 6px;border-radius:50%;background:radial-gradient(circle,#8B5E1A 0 3px,transparent 4px),repeating-radial-gradient(circle,#C9A877 0 3px,#F1E6CC 3px 6px);border:2px solid #C9A877;}
+/* The tree art (GWG BLD 780): Maple's painting with six glowing markers (shared/gg-treeart.js). */
+.tree-panel .gta-list,.tree-panel .gta-legend{display:none;}
+.tree-panel .gta-grid{gap:0;}
+.results-tree .gta{text-align:left;}
+.parts-peek .gta-name{font-family:var(--kid);font-weight:500;}
+.mp-art{margin-top:8px;}
+.mp-grow{margin-top:22px;}
+@media (prefers-reduced-motion:no-preference){ .mp-pop::before{animation:mpPop .9s cubic-bezier(.3,1.5,.5,1);} }
+@keyframes mpPop{0%{transform:scale(.3);opacity:0;}100%{transform:scale(1);opacity:1;}}
+html.gg-reduce-motion .mp-pop::before,html[data-motion="reduce"] .mp-pop::before{animation:none;}
+.sheet-top .sheet-art{width:130px;height:auto;flex:none;border-radius:16px;}
 .grow-table{border-collapse:separate;border-spacing:0 6px;width:auto;}
 .grow-wrap{overflow-x:auto;}
 .grow-table th{font-family:var(--kid);font-weight:500;font-size:15px;color:var(--ink-soft);text-align:center;padding:0 6px;white-space:nowrap;}
@@ -799,7 +811,7 @@ a.big-btn{text-decoration:none;}
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Bright leaves, strong roots.</p>
     <p class="gg-hero-sub">Six parts make a kid whole. Learn to tend them together.<br>Built for grades K to 5.</p>
-    <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="go(&#x27;home&#x27;);document.getElementById(&#x27;main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;})">I&#x27;m a kid</button><button class="gg-hero-btn line" type="button" onclick="go(&#x27;guide&#x27;);document.getElementById(&#x27;main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;})">I&#x27;m a grown-up</button></div>
+    <div class="gg-hero-actions"><!-- PAGE VIDEO (BLD 780) --><button type="button" class="gg-hero-btn gg-watch gg-watch-app" data-gg-watch="app-maple" hidden>Watch: Meet Maple</button><!-- /PAGE VIDEO --><button class="gg-hero-btn main" type="button" onclick="go(&#x27;home&#x27;);document.getElementById(&#x27;main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;})">I&#x27;m a kid</button><button class="gg-hero-btn line" type="button" onclick="go(&#x27;guide&#x27;);document.getElementById(&#x27;main&#x27;).scrollIntoView({behavior:&#x27;smooth&#x27;})">I&#x27;m a grown-up</button></div>
   </div>
   <div class="gg-hero-scene" aria-hidden="true"></div>
 </section>
@@ -850,7 +862,7 @@ a.big-btn{text-decoration:none;}
     <div class="welcome-side">
       <div class="parts-peek">
         <h3>The six parts of your tree</h3>
-        <ul class="peek-list" id="peek-list"></ul>
+        <div id="peek-list"></div>
       </div>
       <div class="life-promo">
         <b>When Life Changes</b>
@@ -909,15 +921,17 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b779n"></script>
+<script src="/shared/gg-profiles.js?v=b780"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/maple/guides.js?v=b757"></script>
-<script src="/maple/checkin.js?v=ps1"></script>
+<script src="/maple/guides.js?v=b780"></script>
+<script src="/maple/checkin.js?v=b780"></script>
 <script src="/maple/life.js?v=hl1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
-<script src="/shared/gg-library.js?v=b765"></script>
-<script src="/shared/gg-tend.js?v=b770"></script>
+<script src="/shared/gg-library.js?v=b780"></script>
+<script src="/shared/gg-tend.js?v=b780"></script>
+<script src="/shared/gg-treeart.js?v=b780"></script>
+<script src="/shared/gg-treeart-kids.js?v=b780"></script>
 <script>
 const ICONS = {
   roots: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18"/><path d="M12 11V5"/><path d="M12 7c-1.5-2-3.5-2.5-5-1.5 1 2 3 2.5 5 1.5z"/><path d="M12 11c0 4-2.5 7-5.5 9.5"/><path d="M12 11c0 4 2.5 7 5.5 9.5"/><path d="M12 11v9"/></svg>',
@@ -1373,7 +1387,6 @@ const CRITTER_ART = {
   bird: '<ellipse cx="0" cy="4" rx="16" ry="6" fill="#A0703F"/><path d="M-14 3Q0 9 14 3M-12 6Q0 11 12 6" stroke="#6E4A26" stroke-width="1.4" fill="none"/><circle cx="1" cy="-7" r="9" fill="#00B4D8"/><ellipse cx="-2" cy="-5" rx="5" ry="3.5" fill="#0096C7"/><path d="M-8 -9L-15 -13L-9 -5Z" fill="#0096C7"/><circle cx="5" cy="-10" r="1.8" fill="#243746"/><path d="M10 -8L16 -6L10 -4Z" fill="#FF9F1C"/>',
   bunny: '<ellipse cx="0" cy="0" rx="12" ry="9" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.5"/><circle cx="-11" cy="-1" r="3" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.2"/><circle cx="9" cy="-9" r="7" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.5"/><ellipse cx="6" cy="-21" rx="2.6" ry="7" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.4"/><ellipse cx="12" cy="-21" rx="2.6" ry="7" fill="#FFFFFF" stroke="#B9C7D6" stroke-width="1.4"/><ellipse cx="12" cy="-21" rx="1.1" ry="4.5" fill="#FFB3C1"/><circle cx="11" cy="-10" r="1.4" fill="#243746"/><circle cx="15.5" cy="-8" r="1.2" fill="#FF6B8B"/>'
 };
-const CRITTER_SPOT = { lady: [224, 98], butterfly: [66, 88], bird: [110, 126], bunny: [262, 236] };
 
 /* When Life Changes guides live in guides.js (loaded above). */
 const RINGS = (window.MAPLE_GUIDES || {}).rings || [];
@@ -1685,9 +1698,10 @@ function setGrade(g) {
   document.querySelectorAll('[data-grade]').forEach(b => b.setAttribute('aria-pressed', b.dataset.grade === g ? 'true' : 'false'));
   clearErr('start-error');
 }
+// The six parts on Maple's own painting: tap a glowing part to see what it holds (GWG BLD 780).
 function renderPeek() {
-  const blurbs = { roots: 'Feeling safe and loved', trunk: 'What makes you you', bark: 'Big feelings', branches: 'Your people', leaves: 'Sleep, food, and play', fruit: 'Looking forward' };
-  $('peek-list').innerHTML = PARTS.map(p => `<li>${dot(p)}<span><b>${p.name}</b>${blurbs[p.key]}</span></li>`).join('');
+  const el = $('peek-list'); if (!el || !window.GGTreeArt) return;
+  GGTreeArt.howItWorks(el, { app: ART_APP, gentle: true, maxH: 340, parts: artParts(true), label: 'The Maple painting with six glowing parts to tap', hint: 'Tap a glowing part of the tree to see what it holds.' });
 }
 function startCheckin() {
   const name = $('kid-name').value.trim();
@@ -1705,88 +1719,38 @@ function startCheckin() {
   renderStep(true);
 }
 
-/* ---------- the tree ---------- */
-const LEAF_COLORS = ['#6CCB3A', '#A5E072', '#8BD65A'];
-const CLUSTERS = [[104, 132, 5], [90, 156, 4], [214, 106, 5], [234, 140, 4], [162, 76, 6], [134, 104, 4], [192, 88, 4]];
-function leavesMarkup() {
-  let out = '', n = 0;
-  CLUSTERS.forEach(([cx, cy, count]) => {
-    for (let i = 0; i < count; i++) {
-      const rot = -150 + (300 / (count - 1 || 1)) * i + (n % 2 ? 8 : -6);
-      const s = 0.9 + (n % 3) * 0.12;
-      out += `<path d="M0 0 C-7 -6 -7 -19 0 -25 C7 -19 7 -6 0 0Z" transform="translate(${cx} ${cy}) rotate(${rot}) scale(${s})" fill="${LEAF_COLORS[n % 3]}" stroke="#2B6B10" stroke-width="1.3"/>`;
-      n++;
-    }
-  });
-  return out;
+/* ---------- the tree art (GWG BLD 780) ----------
+   Maple's own painting with six glowing markers (shared/gg-treeart.js, with the spots in
+   shared/gg-treeart-kids.js). It replaced the drawn tree in the check-in panel, Results,
+   Season (My check-ins, How I've grown), and the printed growth plan. The weather becomes
+   light: sunny a full warm glow (Strong), partly cloudy a soft glow (Steady), rainy a new
+   green light (Growing Edge). Never wilted, never bare. Earned critters ride along as a
+   small sticker row in a corner of the painting. */
+const ART_APP = 'maple';
+const ART_WX = { sun: 's', cloud: 't', rain: 'g' };
+const ART_WORDS = { s: 'Strong', t: 'Steady', g: 'Growing Edge', u: 'Skipped' };
+const MP_BLURB = { roots: 'Feeling safe and loved', trunk: 'What makes you you', bark: 'Big feelings', branches: 'Your people', leaves: 'Sleep, food, and play', fruit: 'Looking forward' };
+function artParts(withText) { return PARTS.map(p => ({ key: p.key, name: p.name, tag: MP_BLURB[p.key], text: withText ? p.g35.tree : '' })); }
+function artLevels(answers) { const o = {}; PARTS.forEach(p => { const a = (answers || {})[p.key]; o[p.key] = a ? (ART_WX[a.w] || 'u') : 'u'; }); return o; }
+function artStickers(kid) {
+  const cr = kid ? critterState(kid) : {};
+  return CRITTERS.filter(c => cr[c.key]).map(c => `<svg viewBox="-20 -30 40 44" aria-hidden="true">${CRITTER_ART[c.key]}</svg>`).join('');
 }
-const LEAVES = leavesMarkup();
-const PIECES = {
-  roots: `<g stroke="#8A5A3B" stroke-linecap="round" fill="none"><path stroke-width="7" d="M160 238 C156 262 138 276 110 290"/><path stroke-width="7" d="M160 238 C166 264 186 278 214 292"/><path stroke-width="6" d="M160 240 C160 268 158 290 160 316"/><path stroke-width="4" d="M126 283 C116 290 104 300 96 312"/><path stroke-width="4" d="M199 285 C211 292 221 302 227 314"/><path stroke-width="3.5" d="M160 300 C150 306 144 312 140 321"/><path stroke-width="3.5" d="M110 290 C98 292 88 290 78 294"/><path stroke-width="3.5" d="M214 292 C226 294 236 292 246 297"/></g>`,
-  trunk: `<path d="M147 244 C151 205 153 168 155 116 L166 116 C168 168 170 205 175 244 Z" fill="#B98A5E" stroke="#8A6A4E" stroke-width="2"/>`,
-  bark: `<g stroke="#7A5236" stroke-linecap="round" fill="none" stroke-width="3"><path d="M155 230 C153 217 155 205 153 194"/><path d="M165 222 C167 210 165 200 166 188"/><path d="M158 172 C156 162 158 152 157 142"/><path d="M163 158 C164 150 163 140 164 130"/><ellipse cx="162" cy="206" rx="3" ry="4.5" stroke-width="2.5"/></g>`,
-  branches: `<g stroke="#9A6E47" stroke-linecap="round" fill="none"><path stroke-width="8" d="M156 180 C140 168 124 156 104 136"/><path stroke-width="8" d="M165 162 C180 148 196 134 214 110"/><path stroke-width="6.5" d="M160 120 C160 106 161 94 162 80"/><path stroke-width="4.5" d="M122 154 C112 150 100 150 90 154"/><path stroke-width="4.5" d="M200 130 C210 131 222 134 234 140"/><path stroke-width="4" d="M150 160 C144 146 138 124 134 104"/><path stroke-width="4" d="M170 142 C176 126 184 104 192 88"/></g>`,
-  leaves: `<g>${LEAVES}</g>`,
-  fruit: `<g>${[[112, 142], [206, 120], [170, 90], [140, 116], [228, 150], [92, 164], [186, 96]].map(([x, y]) => `<path d="M${x} ${y - 7} q2 -6 6 -7" stroke="#2B6B10" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="7.5" fill="#FF6B6B" stroke="#C0392B" stroke-width="1.2"/><circle cx="${x - 2.5}" cy="${y - 2.5}" r="2.2" fill="#FFFFFF" opacity="0.75"/>`).join('')}</g>`
-};
-const ANCHOR = { roots: [262, 290], trunk: [202, 206], bark: [96, 214], branches: [42, 120], leaves: [252, 62], fruit: [58, 60] };
-const DRAW_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
-
-function decorMarkup(key, w) {
-  const [x, y] = ANCHOR[key];
-  if (!w) return '';
-  const inner = wxIcon(w).replace('<svg viewBox="0 0 64 64" aria-hidden="true">', '').replace(/<\/svg>$/, '');
-  const glow = w === 'sun' ? `<circle cx="${x}" cy="${y}" r="26" fill="#F2B84B" opacity="0.2"/>` : '';
-  return `${glow}<svg x="${x - 20}" y="${y - 20}" width="40" height="40" viewBox="0 0 64 64">${inner}</svg>`;
+function artResultsHtml(answers, o) {
+  if (!window.GGTreeArt) return '';
+  return GGTreeArt.results(null, Object.assign({ app: ART_APP, gentle: true, parts: artParts(), levels: artLevels(answers), words: ART_WORDS }, o || {}));
 }
-
-/* opts: { live: bool, hideKey: key to start hidden for maple animation, id } */
-function treeSVG(answers, opts) {
-  opts = opts || {};
-  const id = opts.id || 't' + Math.random().toString(36).slice(2, 7);
-  let body = '';
-  DRAW_ORDER.forEach(key => {
-    const a = answers[key];
-    const answered = !!a;
-    const skipped = a && a.w === 'skip';
-    let cls = 'piece ' + (key === 'roots' ? 'roots' : '');
-    let style = '';
-    if (!answered) { cls += ' off'; }
-    else if (skipped) { style = 'opacity:0.2'; }
-    if (opts.hideKey === key) cls += ' off';
-    body += `<g class="${cls}" data-piece="${key}" style="${style}">${PIECES[key]}</g>`;
-  });
-  let decor = '';
-  if (!opts.noDecor) DRAW_ORDER.forEach(key => {
-    const a = answers[key];
-    if (!a) return;
-    decor += `<g class="decor${opts.hideKey === key ? ' off' : ''}" data-decor="${key}">${decorMarkup(key, a.w)}</g>`;
-  });
-  let rings = '';
-  const cr = opts.critters || {};
-  for (let i = 0; i < Math.min(cr.rings || 0, 6); i++) {
-    const y = 232 - i * 15;
-    rings += `<path d="M${150 + i * 0.6} ${y} Q161 ${y + 5} ${172 - i * 0.6} ${y}" stroke="#8A5A3B" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
-  }
-  let critters = '';
-  ['bird', 'lady', 'butterfly', 'bunny'].forEach(k => {
-    if (!cr[k]) return;
-    const [x, y] = CRITTER_SPOT[k];
-    critters += `<g transform="translate(${x} ${y}) scale(1.3)"><g class="critter${opts.land === k ? ' land' : ''}" data-critter="${k}">${CRITTER_ART[k]}</g></g>`;
-  });
-  const label = opts.label || 'A tree';
-  return `<svg class="tree-svg" id="${id}" viewBox="0 0 320 336" role="img" aria-label="${esc(label)}" xmlns="http://www.w3.org/2000/svg">
-    <rect x="8" y="236" width="304" height="94" rx="24" fill="#F3DDB3"/>
-    <path d="M8 250 C60 228 120 232 160 236 C210 240 260 226 312 246 L312 262 L8 262 Z" fill="#8EDB5E"/>
-    <g fill="#D8C39C"><circle cx="60" cy="300" r="3"/><circle cx="252" cy="318" r="2.5"/><circle cx="118" cy="322" r="2"/><circle cx="198" cy="306" r="2"/></g>
-    <g class="sway-g">${body}${rings}${critters}</g>${decor}</svg>`;
-}
-function maple(containerId, key) {
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    const c = $(containerId);
-    if (!c) return;
-    c.querySelectorAll(`[data-piece="${key}"],[data-decor="${key}"]`).forEach(el => el.classList.remove('off'));
-  }));
+// Lays the critter sticker row on the paintings inside el (after the markup is in the page).
+function artStick(el, kid) { const h = artStickers(kid); if (el && h && window.GGTreeArtKids) GGTreeArtKids.stickers(el, h); }
+// Then and Now, rings, and the level badge, from this child's own full check-ins on the same questions.
+function artGrowthHtml(kid) {
+  if (!window.GGTreeArt || !kid) return '';
+  const cs = kid.checkins || [], std = cs.length ? cs[cs.length - 1].std : null;
+  const hist = cs.filter(c => c.std === std).map(c => ({ date: dkey(new Date(c.date)), levels: artLevels(c.answers) }));
+  return GGTreeArt.growth(null, { app: ART_APP, gentle: true, parts: artParts(), words: ART_WORDS, history: hist,
+    levelName: mpLevel(mpDays(kid.tend || {})).name, ladder: MP_LEVELS.map(L => L[1]),
+    ladderLine: 'Your level grows with the days you tend your tree, shown as a small badge on your painting.',
+    oneLine: 'Your first ring is here. After your next check-in, you will see Then and Now.' });
 }
 
 /* ---------- checkin ---------- */
@@ -1797,9 +1761,11 @@ function treeLive(mapleKey) {
   }).join('');
   const grown = {};
   S.done.forEach(k => { if (S.answers[k]) grown[k] = S.answers[k]; });
-  $('tree-live').innerHTML = treeSVG(grown, { hideKey: mapleKey, id: 'live-tree', label: S.name + "'s tree, growing" });
+  // The painting: each part lights up as it is answered (a part not reached yet rests as a faint light).
+  $('tree-live').innerHTML = artResultsHtml(grown, { legend: false, maxH: 300, words: Object.assign({}, ART_WORDS, { u: 'Not yet' }), label: S.name + "'s tree, growing" });
   $('tree-name').textContent = S.name + "'s tree";
-  if (mapleKey) maple('tree-live', mapleKey);
+  const i = PARTS.findIndex(p => p.key === mapleKey), mk = i >= 0 ? $('tree-live').querySelectorAll('.gta-mk')[i] : null;
+  if (mk) mk.classList.add('mp-pop');
 }
 function toStepTop(first) {
   const top = document.querySelector('.tabs').getBoundingClientRect().top + window.scrollY - 8;
@@ -2002,24 +1968,13 @@ function grownNoteHTML(info, name, rec) {
   if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the growth plan going.</p>`;
   return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 68 hard talks.</p>`;
 }
+// One kind line naming what grew since the last check-in (the paintings live in Season, How I've grown).
 function thenNowHTML(prev, cur, name) {
   if (!prev || prev.std !== cur.std) return '';
-  const lines = [];
-  PARTS.forEach(p => {
-    const a = prev.answers[p.key], b = cur.answers[p.key];
-    if (!a || !b || !(a.w in WX_SCORE) || !(b.w in WX_SCORE)) return;
-    const d = WX_SCORE[b.w] - WX_SCORE[a.w];
-    const lower = p.name.toLowerCase();
-    if (d > 0) lines.push(`Look how your ${lower} grew!`);
-    if (d < 0) lines.push(`Your ${lower} could use some extra care this time.`);
-  });
-  if (!lines.length) lines.push('Your tree held steady. Keep on growing!');
-  return `<div class="then-now"><h3>Then and now</h3>
-    <div class="tn-grid">
-      <figure>${treeSVG(prev.answers, { label: 'Tree from ' + fmtDate(prev.date) })}<figcaption>${fmtDate(prev.date)}</figcaption></figure>
-      <figure>${treeSVG(cur.answers, { label: 'Tree from ' + fmtDate(cur.date) })}<figcaption>${fmtDate(cur.date)}</figcaption></figure>
-    </div>
-    <ul class="tn-lines">${lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`;
+  const grew = PARTS.filter(p => { const a = prev.answers[p.key], b = cur.answers[p.key]; return a && b && (a.w in WX_SCORE) && (b.w in WX_SCORE) && WX_SCORE[b.w] > WX_SCORE[a.w]; }).map(p => p.name.toLowerCase());
+  const line = grew.length ? `Look how your ${grew.length === 1 ? grew[0] : grew.slice(0, -1).join(', ') + ' and ' + grew[grew.length - 1]} grew!` : 'Your tree held steady. Keep on growing!';
+  return `<div class="then-now"><h3>Then and now</h3><p class="kid-text" style="font-size:19px;margin:0 0 8px">${esc(line)}</p>
+    <button class="soft-btn" onclick="S.seasonSub='grown';openTree(kidId(S.name),'grown')">See how I've grown</button></div>`;
 }
 function renderResults(rec, lastKey) {
   const info = concernInfo(rec.answers, rec.grade, rec.safety, rec.wording);
@@ -2042,7 +1997,7 @@ function renderResults(rec, lastKey) {
   }
   $('view-results').innerHTML = `
     <div class="results">
-      <div class="results-tree"><div id="results-tree">${treeSVG(rec.answers, { hideKey: lastKey, label: name + "'s whole tree" })}</div>
+      <div class="results-tree"><div id="results-tree">${artResultsHtml(rec.answers, { label: name + "'s whole tree" })}</div>
         <p class="tree-panel-name">${esc(name)}'s tree</p>
         <button class="soft-btn" onclick="saveTreePicture()">Save my tree</button></div>
       <div>
@@ -2058,7 +2013,7 @@ function renderResults(rec, lastKey) {
         </div>
       </div>
     </div>`;
-  if (lastKey) maple('results-tree', lastKey);
+  artStick($('results-tree'), loadKids()[kidId(name)]);
   // Their Health and Ability: one quiet card for the grown-up after the child's first check-in (kept once, in the child's vault).
   const lk = loadKids()[kidId(name)];
   if (window.GGLife && lk && lk.checkins.length === 1 && mpLifeUse(lk)) GGLife.offerCard($('mp-life-offer'), 'maple', { forChild: true, onChoose: () => GGLife.dialog('maple', { forChild: true, id: mpLifePid(lk) || undefined }) });
@@ -2082,12 +2037,31 @@ async function saveTreePicture() {
   x.fillStyle = '#5B6A73';
   x.font = '400 34px Fredoka, Barlow, sans-serif';
   x.fillText(fmtDate(rec.date), W / 2, 175);
-  const kidRec = loadKids()[kidId(S.name)];
-  const svg = treeSVG(rec.answers, { id: 'export', critters: kidRec ? { rings: (kidRec.checkins || []).length } : {} }).replace(/class="(piece|decor|critter)[^"]*"/g, '');
-  const img = new Image();
-  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-  await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; }).catch(() => {});
-  try { x.drawImage(img, 130, 210, 740, 777); } catch (e) {}
+  // The painting (the phone painting's crop) with each part's light, and the critters that came to visit.
+  const kidRec = loadKids()[kidId(S.name)], P = window.GGTreeArt && GGTreeArt.pos(ART_APP), V = P && P.phone;
+  const load = src => new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
+  const pic = V ? await load('/shared/heroes/maple-phone.webp') : null;
+  if (pic && V) {
+    const [cx, cy, cw, ch] = V.crop, sw = pic.naturalWidth * cw / 100, sh = pic.naturalHeight * ch / 100;
+    const dw = 740, dh = Math.round(dw * sh / sw), dx = 130, dy = 205;
+    x.save(); x.beginPath(); if (x.roundRect) x.roundRect(dx, dy, dw, dh, 28); else x.rect(dx, dy, dw, dh); x.clip();
+    x.drawImage(pic, pic.naturalWidth * cx / 100, pic.naturalHeight * cy / 100, sw, sh, dx, dy, dw, dh); x.restore();
+    const lv = artLevels(rec.answers), R = { s: 22, t: 17, g: 14, u: 11 };
+    const FILL = { s: '#F4C35A', t: 'rgba(244,195,90,.78)', g: '#B8D98A', u: 'rgba(255,255,255,.6)' }, GLOW = { s: 'rgba(255,214,120,.9)', t: 'rgba(255,214,120,.6)', g: 'rgba(190,230,150,.8)', u: 'rgba(255,255,255,.5)' };
+    PARTS.forEach(p => {
+      const at = V.at[p.key]; if (!at) return;
+      const px = dx + (at[0] - cx) / cw * dw, py = dy + (at[1] - cy) / ch * dh, L = lv[p.key], r = R[L];
+      const g = x.createRadialGradient(px, py, r * .6, px, py, r * 2.8); g.addColorStop(0, GLOW[L]); g.addColorStop(1, 'rgba(255,214,120,0)');
+      x.fillStyle = g; x.beginPath(); x.arc(px, py, r * 2.8, 0, Math.PI * 2); x.fill();
+      x.fillStyle = FILL[L]; x.strokeStyle = '#FFF6DC'; x.lineWidth = 4; x.beginPath(); x.arc(px, py, r, 0, Math.PI * 2); x.fill(); x.stroke();
+    });
+    const st = artStickers(kidRec);
+    if (st) {
+      const n = (st.match(/<svg/g) || []).length, svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${n * 64 + 16}" height="72"><rect width="100%" height="100%" rx="36" fill="#FFFCF6" opacity=".9"/>${st.replace(/<svg viewBox="-20 -30 40 44" aria-hidden="true">/g, (m, o) => '').split('</svg>').filter(Boolean).map((a, k) => `<g transform="translate(${40 + k * 64} 44) scale(1.3)">${a}</g>`).join('')}</svg>`;
+      const cim = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
+      if (cim) x.drawImage(cim, dx + 16, dy + dh - 88);
+    }
+  }
   x.fillStyle = '#8B5E1A';
   x.font = '700 30px "Barlow Condensed", Barlow, sans-serif';
   x.fillText('MAPLE\u2122  BY GROUNDED.', W / 2, 1110);
@@ -2301,6 +2275,7 @@ function renderTree() {
         <button class="danger-link" onclick="removeKid('${esc(S.kid)}')">Remove ${esc(kid.name)}</button>
       </div></div></details></div>`;
   if (window.GGTend) GGTend.render();
+  artStick($('tree-body'), kid);
   if (tab === 'plan') mpRenderPlan();
   if (tab === 'guides') mpRenderGuides();
 }
@@ -2852,178 +2827,8 @@ function mpGrownTending(kid) {
     <p><b>Thoughts ${esc(kid.name)} shared:</b> ${shared.length ? shared.slice(0, 3).map(x => `<br>&ldquo;${esc(x.refl)}&rdquo;`).join('') : `Nothing shared yet. The weekly thoughts ${esc(kid.name)} writes are theirs unless they choose to share one.`}</p>`;
 }
 
-function todayHTML(kid, landKey) {
-  const last = kid.checkins[kid.checkins.length - 1];
-  const answers = last ? last.answers : {};
-  const plan = kid.plan;
-  const cr = critterState(kid);
-  const treeBox = `<div class="today-tree" id="today-tree">${treeSVG(answers, { noDecor: true, critters: cr, land: landKey, label: kid.name + "'s tree" })}</div>`;
-  if (!plan) {
-    return `<div class="today">${treeBox}<div><div class="banner-note"><p>You don't have a growth plan yet. Pick a few things to practice and your tree will grow every day!</p>
-      <button class="big-btn" onclick="openPlan(false)">Make my growth plan</button></div></div></div>`;
-  }
-  if (planFinished(plan)) {
-    const allCr = { lady: true, butterfly: true, bird: true, bunny: true, rings: Math.max(1, cr.rings) };
-    return `<div class="today"><div class="today-tree">${treeSVG(answers, { noDecor: true, critters: allCr, land: 'bunny', label: kid.name + "'s tree with all the critters" })}</div>
-      <div><div class="banner-note"><p>You finished your growth plan! All the critters came to celebrate. Time to check on your tree and see how you've grown.</p>
-      <button class="big-btn" onclick="newCheckinFor('${esc(S.kid)}')">Start a new check-in</button></div>
-      <p class="progress-line">You practiced ${doneDays(plan)} full days. Way to grow!</p></div></div>`;
-  }
-  const today = dkey();
-  const yest = addDays(today, -1);
-  const canYest = daysBetween(plan.start, yest) >= 0;
-  if (S.dayView === 'yesterday' && !canYest) S.dayView = 'today';
-  const day = S.dayView === 'yesterday' ? yest : today;
-  const log = plan.log[day] || [];
-  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(actW);
-  const doneN = acts.filter(a => log.includes(a.id)).length;
-  return `<div class="today">${treeBox}
-    <div>
-      <p class="day-title"><b>${S.dayView === 'yesterday' ? 'Yesterday' : 'Today'}</b> ${fmtKey(day, { weekday: 'long', month: 'long', day: 'numeric' })}</p>
-      <div class="sun-track" id="sun-track">${sunTrackSVG(doneN / (acts.length || 1))}</div>
-      ${canYest ? `<div class="day-toggle" role="group" aria-label="Which day"><button aria-pressed="${S.dayView === 'today'}" onclick="setDay('today')">Today</button><button aria-pressed="${S.dayView === 'yesterday'}" onclick="setDay('yesterday')">Yesterday</button></div>` : ''}
-      <div class="do-list">${acts.map(a => { const p = partBy(a.part); const on = log.includes(a.id);
-        return `<div role="button" tabindex="0" class="do" style="--pc:${p.color}" aria-pressed="${on}" data-do="${a.id}" onclick="tapDo(event,'${a.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tapDo(event,'${a.id}')}">
-          <span class="ring">${ICONS.check}</span><span><span>${esc(a.title)}</span><small>${esc(isK2(S.grade) ? a.k2 : a.g35[0])}</small></span>
-          <button class="say" aria-label="Read ${esc(a.title)} aloud" onclick="event.stopPropagation();sayAct('${a.id}')">${ICONS.speaker}</button></div>`; }).join('')}</div>
-      <p class="progress-line" id="progress-line">${progressText(doneN, acts.length)}</p>
-      <div class="cheer-banner" id="cheer-banner"></div>
-      <div id="week-box">${weekHTML(plan)}</div>
-      <div class="critter-shelf" id="critter-shelf">${shelfHTML(cr)}</div>
-    </div></div>`;
-}
-function progressText(n, total) {
-  if (n >= total) return S.dayView === 'yesterday' ? 'All done for yesterday!' : 'All done today! You grew!';
-  return `${n} of ${total} done. Keep growing!`;
-}
-function sunPos(p) { return { left: `calc(${(4 + p * 66).toFixed(1)}% - ${Math.round(p * 20)}px)`, top: `${Math.round(44 - Math.sin(p * Math.PI / 2) * 38)}px` }; }
-function sunTrackSVG(p) {
-  const pos = sunPos(p);
-  return `<svg class="sun-hill" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 C100 12 200 16 400 8 L400 40 L0 40 Z" fill="#8EDB5E"/></svg>
-    <svg class="sun-dot" id="sun-dot" viewBox="-30 -30 60 60" style="left:${pos.left};top:${pos.top}" aria-hidden="true">
-      <g stroke="#FFD23F" stroke-width="4" stroke-linecap="round"><path d="M0 -27v7M0 20v7M-27 0h7M20 0h7M-19 -19l5 5M14 14l5 5M-19 19l5 -5M14 -14l5 -5"/></g>
-      <circle r="15" fill="#FFD23F"/></svg>`;
-}
-function weekHTML(plan) {
-  const today = dkey();
-  const idx = Math.max(0, Math.min(daysBetween(plan.start, today), plan.weeks * 7 - 1));
-  const w = Math.floor(idx / 7);
-  let out = `<p class="progress-line" style="font-size:17px;margin-bottom:0">Week ${w + 1} of ${plan.weeks}</p><div class="week">`;
-  for (let i = 0; i < 7; i++) {
-    const k = addDays(plan.start, w * 7 + i);
-    const l = plan.log[k] || [];
-    const n = plan.acts.filter(a => l.includes(a)).length;
-    const frac = plan.acts.length ? n / plan.acts.length : 0;
-    const full = frac >= 1;
-    out += `<div class="wk-day${full ? ' full' : ''}${k === today ? ' today-dot' : ''}"><i>${full ? '' : `<span style="height:${Math.round(frac * 100)}%"></span>`}</i>${fmtKey(k, { weekday: 'short' })}</div>`;
-  }
-  return out + '</div>';
-}
 function shelfHTML(cr) {
   return CRITTERS.map(c => `<span class="${cr[c.key] ? '' : 'locked'}" title="${esc(cr[c.key] ? c.name : c.need)}">${cr[c.key] ? critterIcon(c.key) + c.name : '<b class="mp-q" aria-hidden="true">?</b>' + c.need}</span>`).join('');
-}
-function sayAct(id) {
-  const a0 = ACTIVITIES.find(x => x.id === id), a = a0 && actW(a0);
-  if (a) say(`${a.title}. ${isK2(S.grade) ? a.k2 : a.g35.join(' ')}`);
-}
-function setDay(d) { S.dayView = d; renderTree(); }
-
-function tapDo(ev, actId) {
-  const kids = loadKids();
-  const kid = kids[S.kid];
-  if (!kid || !kid.plan) return;
-  const plan = kid.plan;
-  const day = S.dayView === 'yesterday' ? addDays(dkey(), -1) : dkey();
-  const before = critterState(kid);
-  const wasDone = dayDone(plan, day);
-  const log = plan.log[day] || [];
-  const on = !log.includes(actId);
-  plan.log[day] = on ? log.concat(actId) : log.filter(x => x !== actId);
-  if (!plan.log[day].length) delete plan.log[day];
-  saveKids(kids);
-  if (kid._pid && window.GGGrowth) { const act = ACTIVITIES.find(a => a.id === actId); GGGrowth.check(kid._pid, act ? act.title : actId, day, on); }
-  const btn = document.querySelector(`[data-do="${actId}"]`);
-  if (btn) btn.setAttribute('aria-pressed', on);
-  const total = plan.acts.length;
-  const n = plan.acts.filter(a => (plan.log[day] || []).includes(a)).length;
-  const pos = sunPos(n / total);
-  const sun = $('sun-dot');
-  if (sun) { sun.style.left = pos.left; sun.style.top = pos.top; }
-  $('progress-line').textContent = progressText(n, total);
-  $('week-box').innerHTML = weekHTML(plan);
-  if (on && btn) flyPiece(btn, ACTIVITIES.find(a => a.id === actId).part);
-  const after = critterState(kid);
-  const newCritter = ['lady', 'butterfly', 'bird'].find(k => after[k] && !before[k]);
-  const nowDone = dayDone(plan, day);
-  if (nowDone && !wasDone) {
-    setTimeout(() => {
-      if (newCritter || after.rings > before.rings) {
-        $('today-tree').innerHTML = treeSVG(kid.checkins.length ? kid.checkins[kid.checkins.length - 1].answers : {}, { noDecor: true, critters: after, land: newCritter, label: kid.name + "'s tree" });
-        $('critter-shelf').innerHTML = shelfHTML(after);
-      }
-      swayTree();
-      const cb = $('cheer-banner');
-      const msg = {
-        lady: 'You grew today! A ladybug came to visit!',
-        butterfly: 'Three whole days! A butterfly came to visit!',
-        bird: 'A whole week of growing! A bird built a nest, and your tree grew a new ring!'
-      }[newCritter] || (after.rings > before.rings ? 'Another whole week! Your tree grew a new ring!' : (S.dayView === 'yesterday' ? 'You caught up on yesterday! Great job!' : 'You grew today!'));
-      cb.textContent = msg;
-      cb.classList.remove('show'); void cb.offsetWidth; cb.classList.add('show');
-      if (S.readAloud) say(msg);
-    }, 650);
-  } else if (!on && wasDone) {
-    $('today-tree').innerHTML = treeSVG(kid.checkins.length ? kid.checkins[kid.checkins.length - 1].answers : {}, { noDecor: true, critters: after, label: kid.name + "'s tree" });
-    $('critter-shelf').innerHTML = shelfHTML(after);
-  }
-}
-function swayTree() {
-  const g = document.querySelector('#today-tree .sway-g');
-  if (!g) return;
-  g.classList.remove('sway'); void g.getBoundingClientRect(); g.classList.add('sway');
-}
-function flyPiece(btn, part) {
-  if (document.documentElement.classList.contains('gg-reduce-motion') || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
-  const tree = $('today-tree');
-  if (!tree || !btn.animate) return;
-  const art = part === 'fruit'
-    ? '<circle cx="17" cy="19" r="10" fill="#FF6B6B" stroke="#C0392B" stroke-width="1.5"/><circle cx="13" cy="15" r="3" fill="#fff" opacity=".8"/><path d="M17 9q2-6 7-7" stroke="#2B6B10" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
-    : (part === 'branches' || part === 'leaves')
-      ? '<path d="M17 32C9 26 7 12 17 2C27 12 25 26 17 32Z" fill="#6CCB3A" stroke="#2B6B10" stroke-width="1.8"/><path d="M17 30V10" stroke="#2B6B10" stroke-width="1.5"/>'
-      : '<path d="M17 3C17 3 6 16 6 22A11 11 0 0 0 28 22C28 16 17 3 17 3Z" fill="#00B4D8" stroke="#0077B6" stroke-width="1.8"/><ellipse cx="13" cy="21" rx="2.5" ry="4" fill="#fff" opacity=".7"/>';
-  const el = document.createElement('div');
-  el.className = 'flyer';
-  el.innerHTML = `<svg viewBox="0 0 34 34" width="34" height="34">${art}</svg>`;
-  document.body.appendChild(el);
-  const a = btn.getBoundingClientRect(), b = tree.getBoundingClientRect();
-  const x0 = a.left + 30, y0 = a.top + a.height / 2 - 17;
-  const x1 = b.left + b.width / 2 - 17, y1 = b.top + b.height * 0.35;
-  const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 80;
-  el.animate([
-    { transform: `translate(${x0}px,${y0}px) scale(.6)`, opacity: 0 },
-    { transform: `translate(${mx}px,${my}px) scale(1.3) rotate(-20deg)`, opacity: 1, offset: 0.5 },
-    { transform: `translate(${x1}px,${y1}px) scale(.8) rotate(10deg)`, opacity: 1, offset: 0.9 },
-    { transform: `translate(${x1}px,${y1 + 10}px) scale(.3)`, opacity: 0 }
-  ], { duration: 900, easing: 'ease-in-out' }).onfinish = () => { el.remove(); swayTreeSoft(); };
-}
-function swayTreeSoft() {
-  const g = document.querySelector('#today-tree .sway-g');
-  if (!g || !g.animate) return;
-  g.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.025)' }, { transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
-}
-
-function planTabHTML(kid) {
-  const plan = kid.plan;
-  if (!plan) return `<div class="banner-note"><p>No growth plan yet.</p><button class="big-btn" onclick="openPlan(false)">Make my growth plan</button></div>`;
-  const acts = plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(actW);
-  return `<div class="plan-summary">
-      <p class="kid-text" style="font-size:19px;margin:0">Practicing for ${plan.weeks} weeks, ${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Full days practiced: ${doneDays(plan)}.</p>
-      <ul>${acts.map(a => `<li>${dot(partBy(a.part))}${esc(a.title)}</li>`).join('')}</ul>
-    </div>
-    <div class="action-row">
-      <button class="big-btn" onclick="openPlan(true)">Change my activities</button>
-      <button class="soft-btn" onclick="showPrint()">Print my growth plan</button>
-    </div>`;
 }
 function checkinsTabHTML(kid) {
   const cs = kid.checkins.slice().reverse();
@@ -3031,8 +2836,10 @@ function checkinsTabHTML(kid) {
   if (!S.cuSel || !kid.checkins.find(c => c.id === S.cuSel)) S.cuSel = cs[0].id;
   const sel = kid.checkins.find(c => c.id === S.cuSel);
   const planActs = sel.plan && sel.plan.acts ? sel.plan.acts.map(id => ACTIVITIES.find(a => a.id === id)).filter(Boolean).map(shownTitle) : [];
-  return `<div class="cu-grid">${cs.map(c => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()">${treeSVG(c.answers, { label: 'Tree from ' + fmtDate(c.date) })}${fmtDate(c.date)}</button>`).join('')}</div>
+  // One growth ring for each check-in. Tap a ring to see that day's painting and words.
+  return `<div class="cu-grid">${cs.map((c, i) => `<button class="cu" aria-pressed="${c.id === S.cuSel}" onclick="S.cuSel='${c.id}';renderTree()"><span class="cu-ring" aria-hidden="true" style="--n:${Math.min(cs.length - i, 6)}"></span>${fmtDate(c.date)}</button>`).join('')}</div>
     <div class="cu-detail"><h3 class="kid" style="font-family:var(--kid);font-weight:500;font-size:24px;color:var(--sky);margin:0">${fmtDate(sel.date)}</h3>${sel.std ? '' : '<p class="kid-text" style="font-size:16px;margin:4px 0 0">An earlier check-in, from before the new questions.</p>'}
+      <div class="mp-art" style="margin-top:12px">${artResultsHtml(sel.answers, { legend: false, label: kid.name + "'s tree from " + fmtDate(sel.date) })}</div>
       <ul class="kind-list">${PARTS.map(p => { const a = sel.answers[p.key] || { w: 'skip' }; return `<li><span class="wx">${wxIcon(a.w)}</span><span><span class="part-name">${p.name}</span>${esc(kindLine(p, a.w))}</span></li>`; }).join('')}</ul>
       ${planActs.length ? `<p class="kid-text" style="font-size:18px;margin-top:14px">Growth plan from this check-in: ${planActs.map(esc).join(', ')}.</p>` : ''}
     </div>`;
@@ -3045,7 +2852,6 @@ function grownTabHTML(kid) {
   const crCount = CRITTERS.filter(c => critterState(kid)[c.key]).length;
   const table = `<div class="grow-wrap"><table class="grow-table"><thead><tr><th></th>${shown.map(c => `<th>${fmtShort(c.date)}</th>`).join('')}</tr></thead>
     <tbody>${PARTS.map(p => `<tr><th class="part"><span>${dot(p)}${p.name}</span></th>${shown.map(c => { const w = (c.answers[p.key] || { w: 'skip' }).w; return `<td title="${WX_LABEL[w]}">${wxIcon(w)}<span class="sr-only">${WX_LABEL[w]}</span></td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
-  const prev = cs.length > 1 && cs[cs.length - 2].std === cs[cs.length - 1].std ? cs[cs.length - 2] : null;
   return `<div class="stat-row">
       <div class="stat"><b>${cs.length}</b><span>check-in${cs.length === 1 ? '' : 's'}</span></div>
       <div class="stat"><b>${practiced}</b><span>day${practiced === 1 ? '' : 's'} tended</span></div>
@@ -3053,7 +2859,7 @@ function grownTabHTML(kid) {
     </div>
     <p class="kid-text" style="font-size:19px;margin:0 0 6px">Here's the weather for each part of your tree, from your first check-in to your newest.</p>
     ${table}
-    ${prev ? thenNowHTML(prev, cs[cs.length - 1], kid.name) : '<p class="kid-text" style="font-size:18px">After your next check-in, you will see your old and new trees side by side.</p>'}`;
+    <div class="mp-art mp-grow" id="mp-grow">${artGrowthHtml(kid)}</div>`;
 }
 function newCheckinFor(id) {
   const k = loadKids()[id];
@@ -3092,7 +2898,7 @@ function renderPrint(kid) {
       <button class="soft-btn" onclick="openTree('${esc(S.kid)}','tree')">Back to my tree</button>
     </div>
     <article class="sheet" aria-label="Growth Plan">
-      <div class="sheet-top">${last ? treeSVG(last.answers, { noDecor: true, critters: critterState(kid), label: kid.name + "'s tree" }) : ''}
+      <div class="sheet-top"><img class="sheet-art" src="/shared/heroes/maple-phone.webp" alt="" width="130" height="104">
         <div><h2 class="sheet-title">${esc(kid.name)}'s growth plan</h2>
         <p class="sheet-sub">${fmtKey(plan.start)} to ${fmtKey(plan.end)}. Color a box each day I do it!</p></div></div>
       ${days > 14 ? chunk(1, 14) + chunk(15, 28) : chunk(1, 14)}
@@ -3519,13 +3325,14 @@ function mpNavRead(e) {
 // popstate and hashchange can both fire for one Back, and older Safari fires only hashchange: read each address once.
 var mpNavRead_h = null, mpNavRead_t = 0;
 function mpNavReadOnce(e) { var h = location.hash, t = Date.now(); if (h === mpNavRead_h && t - mpNavRead_t < 400) return; mpNavRead_h = h; mpNavRead_t = t; mpNavRead(e && e.type === 'popstate' ? e : { state: history.state }); }
-window.addEventListener('popstate', mpNavReadOnce);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; mpNavReadOnce(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b780a" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780a';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b779t" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b779t';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b780';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b780a" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

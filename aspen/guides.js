@@ -197,7 +197,7 @@ T.compare = {
 };
 T.phone = {
   quick:["Write a phone agreement together.","Charge phones outside the bedroom at night.","Teach them how to leave a group chat, screenshot, and report.","Promise: telling you about something scary never costs them their phone."],
-  talk:["The AAP's Family Media Plan helps families set screen-free zones and times, like dinner, homework, and bedtime, and turn off autoplay and notifications. Making the plan together works better than rules handed down.","Group chats can be fun and brutal. Teach practical skills: muting, leaving, not forwarding cruel stuff, and coming to you when something feels wrong. Monitoring apps can't replace those talks."],
+  talk:["The AAP's Family Media Plan helps families set unplugged zones and times, like dinner, homework, and bedtime, and turn off autoplay and notifications. Making the plan together works better than rules handed down.","Group chats can be fun and brutal. Teach practical skills: muting, leaving, not forwarding cruel stuff, and coming to you when something feels wrong. Monitoring apps can't replace those talks."],
   say:["\"Let's make the rules together, including rules for me.\"","\"You can always leave a chat that makes you feel bad.\"","\"If you see something scary, tell me. You won't lose your phone.\""],
   avoid:["Using monitoring apps instead of conversations.","Taking the phone as punishment when they report a problem."],
   help:[L('AAP Family Media Plan','https://www.healthychildren.org/English/fmp/Pages/MediaPlan.aspx'),L('Common Sense Media','https://www.commonsensemedia.org/')],

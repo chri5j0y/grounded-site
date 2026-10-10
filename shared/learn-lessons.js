@@ -7480,7 +7480,7 @@ window.GG_LEARN = {
        "h": "Make a phone agreement together",
        "items": [
         [
-         "Screen-free times",
+         "Unplugged times",
          "Dinner, homework, and bedtime"
         ],
         [
@@ -7496,7 +7496,7 @@ window.GG_LEARN = {
          "Made together, kept together"
         ]
        ],
-       "say": "Next, write a phone agreement together. Choose screen-free times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night, yours included. Turn off autoplay and notifications. A plan made together works better than rules handed down. So invite them in, and include a few rules for yourself."
+       "say": "Next, write a phone agreement together. Choose unplugged times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night, yours included. Turn off autoplay and notifications. A plan made together works better than rules handed down. So invite them in, and include a few rules for yourself."
       },
       {
        "k": "points",
@@ -7565,7 +7565,7 @@ window.GG_LEARN = {
          "Charge your phone outside your bedroom"
         ]
        ],
-       "say": "Aspen has help ready. In When Life Changes, the guide called First phone and group chats has a quick card, words to use, and trusted links. Nearby are guides for friendship breakups and drama, being left out, and bullying, in person and online. And your student will find Leaves practices like charging the phone outside the bedroom, or asking a grown-up to help set up a screen-free time each day."
+       "say": "Aspen has help ready. In When Life Changes, the guide called First phone and group chats has a quick card, words to use, and trusted links. Nearby are guides for friendship breakups and drama, being left out, and bullying, in person and online. And your student will find Leaves practices like charging the phone outside the bedroom, or asking a grown-up to help set up an unplugged time each day."
       },
       {
        "k": "points",
@@ -9359,13 +9359,18 @@ window.GG_LEARN = {
     lessonsTitle: 'Learn Step by Step',
     tracks: [
       { id: 'oak-start', title: 'Start Here', who: 'For adults tending their own tree', lessons: [
-        { id: 'ok-welcome', n: 1, title: 'Welcome to Oak', mins: 2, scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Oak', h: 'Welcome to Oak', sub: 'Shelter for others. Strength for you.', say: 'Welcome to Oak. Oak is a check-in for the whole person, from root to fruit.' },
+        { id: 'ok-welcome', n: 1, title: 'Welcome to Oak', mins: 4, blurb: 'What Oak is, who it is for, what stays private, and where to begin.', scenes: [
+          { k: 'title', hero: 'oak', eyebrow: 'Start Here, Lesson 1', h: 'Welcome to Oak', sub: 'Shelter for others. Strength for you.', say: 'Welcome to Oak. Shelter for others, and strength for you. This short lesson shows you what Oak is, who it is for, and where to begin.' },
+          { k: 'big', h: 'An oak grows strong by growing slowly.', sub: 'Deep roots, a wide crown, and shelter for many.', say: 'An oak grows slowly, and that is where its strength comes from. Deep roots, a thick trunk, and a wide crown that shelters many. The adult years ask a lot of you. Oak is built to help you stay strong while you carry it.' },
+          { k: 'trees', h: 'Oak grows between Birch and Sequoia.', say: 'Grow With Grounded has a tree for every age. Pine is for high school, and Birch is for young adults. Sequoia is for older adults, sixty and up. Oak is built for adults, twenty six to sixty, right in the full middle of life.' },
           { k: 'parts', say: 'You are made of six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope.' },
-          { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs care deserves your attention too.' },
+          { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too.' },
           { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is a part to tend, not a grade.' },
-          { k: 'flow', h: 'How Oak works', steps: [['Check in', 'Eight questions for each part'], ['See your levels', 'Part by part'], ['Make a growth plan', 'Practices for your Growing Edge'], ['Tend today', 'Small steps, every day']], say: 'Here is how Oak works. Check in. See your levels, part by part. Make a growth plan with practices for your Growing Edge. Then tend a little, every day, in the Today tab.' },
-          { k: 'points', h: 'Always here', items: [['When Life Changes', "Guides for more than 50 of life's hardest seasons"], ['Private by design', 'No account. Answers stay on this device.'], ['Need to talk now?', 'Call or text 988, any time.']], say: "When Life Changes has guides for more than fifty of life's hardest seasons. Everything stays private on this device. And if you ever need to talk right now, call or text nine eight eight, any time." },
+          { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', "Guides for more than 50 of life's hardest seasons"], ['A tree that grows', 'From Acorn to Heritage Oak']], cue: { at: [1, 3, 4, 5] }, say: "Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than fifty of life's hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak." },
+          { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. There is no account. Your profile is locked with a passcode on this device, and nothing you enter is sent to Grounded or anyone else. And if you ever need to talk right now, call or text nine eight eight, any time.' },
+          { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Where to begin', p: 'Start a check-in. Your tree and your practices grow from there.' }, say: 'Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there.' },
+          { k: 'big', h: 'One part, one small step.', sub: 'One breath, and one way to tend a part today.', beats: ['Let us try a small practice now.', 'Sit however is comfortable.', 'Take one slow breath, in and out.', 'Think of one part of your life that has been carrying a lot lately.', { t: 'Now name one small thing that would tend it today.', w: 10 }], say: 'Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today.' },
+          { k: 'big', h: 'Small and steady is how an oak grows.', sub: 'One practice a day is enough to start.', say: 'Nice. That is the whole idea of Oak. Strong trees are not built in a day. Small and steady is how an oak grows, and one practice a day is enough to start.' },
           { k: 'quiz', q: 'Where does your daily tending happen?', opts: ['Only at your yearly check-in', 'In the Today tab, a little each day', 'Only with a chaplain'], right: 1, why: 'Oak is built for small steps every day, in the Today tab.', say: 'Quick question. Where does your daily tending happen?' }
         ] }
       ] },
@@ -32616,11 +32621,11 @@ window.GG_LEARN = {
          "Pause, three breaths, start again"
         ],
         [
-         "Screen-Free Hour",
+         "Unplugged Hour",
          "Every screen away, grown-ups too"
         ]
        ],
-       "say": "Here are a few ways families tend their bark. Breathe Together, five slow breaths, in through the nose and out like blowing on hot soup. A Worry Jar, where everyone writes or draws a worry, and you talk about one together. Family Reset. When things get loud, anyone says your reset word, everyone takes three breaths, and you start again. And a Screen-Free Hour, with every screen put away, grown-ups too. You will find them all on the Together tab, under Bark."
+       "say": "Here are a few ways families tend their bark. Breathe Together, five slow breaths, in through the nose and out like blowing on hot soup. A Worry Jar, where everyone writes or draws a worry, and you talk about one together. Family Reset. When things get loud, anyone says your reset word, everyone takes three breaths, and you start again. And an Unplugged Hour, with every screen put away, grown-ups too. You will find them all on the Together tab, under Bark."
       },
       {
        "k": "card",

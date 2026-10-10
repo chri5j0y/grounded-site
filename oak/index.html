@@ -3,7 +3,7 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b766"></script>
-<script src="/shared/gg-shelf.js?v=fd4"></script>
+<script src="/shared/gg-shelf.js?v=b780"></script>
 <script src="/shared/gg-sources.js?v=b777"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -1008,9 +1008,8 @@ html.ts-2 main{zoom:1.25;}
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Shelter for others. Strength for you.</p>
     <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 26 to 60.</p>
-    <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');scrollToViewTop('client-intro',true,true)">How it works</button></div>
+    <div class="gg-hero-actions"><!-- PAGE VIDEO (BLD 780) --><button type="button" class="gg-hero-btn gg-watch gg-watch-app" data-gg-watch="app-oak" hidden>Watch: Meet Oak</button><!-- /PAGE VIDEO --><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');scrollToViewTop('client-intro',true,true)">How it works</button></div>
     <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Grounded Field Guide.</p>
-    <div id="hero-tree-slot" hidden></div>
   </div>
   <div class="gg-hero-scene" aria-hidden="true"></div>
 </section>
@@ -1040,10 +1039,7 @@ html.ts-2 main{zoom:1.25;}
 
 
   <div class="section-title">The six parts of your tree</div>
-  <div class="parts-layout">
-    <div class="parts-tree"><div id="about-tree-slot"></div><p class="parts-tree-hint">Tap any part of the tree.</p></div>
-    <div id="about-part-cards"></div>
-  </div>
+  <div id="about-tree-slot" class="about-art"></div>
 
   <div class="section-title">One Rule</div>
   <p class="lead">Name each resource in only one part of your tree. If your family gives you hope, they still belong in the Branches, not the Fruit. This constraint reveals your true resources in each part, and where you may be leaning on one part of the tree to carry weight it was never meant to hold alone.</p>
@@ -1121,19 +1117,20 @@ html.ts-2 main{zoom:1.25;}
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js"></script>
-<script src="/oak/checkin.js?v=b756"></script>
+<script src="/oak/checkin.js?v=b780"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/shared/gg-profiles.js?v=b779n"></script>
+<script src="/shared/gg-profiles.js?v=b780"></script>
 <script src="/shared/gg-life.js?v=lf1"></script>
 <script src="/shared/gg-life-kit.js?v=lk1"></script>
 <script src="/shared/gg-journey.js?v=r6o"></script>
-<script src="/shared/gg-library.js?v=b765"></script>
-<script src="/shared/gg-tend.js?v=b770"></script>
+<script src="/shared/gg-library.js?v=b780"></script>
+<script src="/shared/gg-tend.js?v=b780"></script>
+<script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/oak/guides.js?v=b772"></script>
-<script src="/oak/practices.js?v=hl1"></script>
+<script src="/oak/practices.js?v=b780"></script>
 <script>
 // The six parts and the practice library live in oak/practices.js (moved there in GWG BLD 756,
 // every name and line unchanged, so saved plans keep working). Health and Ability tags are in its FLAGS.
@@ -1389,201 +1386,35 @@ function icon(name, size) {
 function partIcon(d, size) { return icon(d.icon, size); }
 
 // =====================================================================
-// THE SIX-PIECE PUZZLE TREE
-// variant: 'hero' (cream, on gold), 'color' (part colors), 'score' (shaded by score)
+// THE TREE ART (GWG BLD 780): the Oak painting with six glowing markers,
+// from shared/gg-treeart.js. It replaced the drawn puzzle tree in How it works,
+// Results, the progress view, and Season (Then and Now, growth rings, the level badge).
 // =====================================================================
-const TREE_SHAPES = {
-  roots: {
-    kind: 'taper', dx: 0, dy: 16, delay: 0,
-    paths: [
-      ['M200 299 C199 332 201 362 198 404', 11, 2],
-      ['M196 299 C180 323 156 341 120 358', 10, 2],
-      ['M204 299 C220 323 244 341 280 358', 10, 2],
-      ['M192 299 C160 306 124 313 82 328', 8, 1.6],
-      ['M208 299 C240 306 276 313 318 328', 8, 1.6],
-      ['M157.3 337.1 C148.6 353.4 145.0 370.0 134.0 388.0', 4.64, 1.2],
-      ['M242.7 337.1 C251.4 353.4 255.0 370.0 266.0 388.0', 4.64, 1.2],
-      ['M199.7 352.2 C189.4 366.1 183.0 380.0 175.0 394.0', 5, 1],
-      ['M199.7 360.0 C209.8 372.0 216.0 384.0 224.0 396.0', 4.92, 1],
-      ['M117.7 316.6 C105.8 328.2 96.0 336.0 84.0 346.0', 3.14, 1],
-      ['M282.3 316.6 C294.2 328.2 304.0 336.0 316.0 346.0', 3.14, 1],
-      ['M121.1 357.5 C111.0 363.3 105.0 371.0 99.0 382.0', 1.8, 0.5],
-      ['M278.9 357.5 C289.0 363.3 295.0 371.0 301.0 382.0', 1.8, 0.5],
-      ['M83.9 327.3 C73.9 329.2 66.0 334.0 57.0 341.0', 1.53, 0.5],
-      ['M316.1 327.3 C326.1 329.2 334.0 334.0 343.0 341.0', 1.53, 0.5],
-      ['M134.7 386.9 C130.8 395.0 129.0 402.0 125.0 410.0', 1.16, 0.5],
-      ['M265.3 386.9 C269.2 395.0 271.0 402.0 275.0 410.0', 1.16, 0.5],
-      ['M175.7 392.7 C170.8 398.8 167.0 403.0 161.0 407.0', 1.01, 0.5],
-      ['M223.3 394.9 C228.2 401.0 232.0 404.0 239.0 407.0', 1.01, 0.5],
-      ['M198.0 402.0 C196.0 408.0 193.0 412.0 188.0 415.0', 1.62, 0.5],
-      ['M198.0 402.0 C201.0 408.0 204.0 411.0 209.0 413.0', 1.62, 0.5],
-      ['M152.7 340.1 C141.6 341.5 133.0 344.0 126.0 350.0', 1.8, 0.5],
-      ['M247.3 340.1 C258.4 341.5 267.0 344.0 274.0 350.0', 1.8, 0.5],
-      ['M120.0 358.0 C112.0 362.0 106.0 367.0 100.0 372.0', 1.8, 0.3],
-      ['M280.0 358.0 C288.0 362.0 294.0 367.0 300.0 372.0', 1.8, 0.3],
-      ['M82.0 328.0 C74.0 331.0 68.0 336.0 63.0 343.0', 1.44, 0.3],
-      ['M318.0 328.0 C326.0 331.0 332.0 336.0 337.0 343.0', 1.44, 0.3],
-      ['M134.0 388.0 C130.0 392.0 125.0 395.0 119.0 397.0', 1.08, 0.3],
-      ['M266.0 388.0 C270.0 392.0 275.0 395.0 281.0 397.0', 1.08, 0.3],
-      ['M175.0 394.0 C178.0 400.0 179.0 405.0 178.0 411.0', 0.9, 0.3],
-      ['M224.0 396.0 C221.0 402.0 220.0 407.0 221.0 412.0', 0.9, 0.3],
-      ['M99.0 382.0 C94.0 386.0 90.0 388.0 85.0 389.0', 0.45, 0.3],
-      ['M301.0 382.0 C306.0 386.0 310.0 388.0 315.0 389.0', 0.45, 0.3],
-      ['M84.0 346.0 C80.0 351.0 78.0 356.0 77.0 362.0', 0.9, 0.3],
-      ['M316.0 346.0 C320.0 351.0 322.0 356.0 323.0 362.0', 0.9, 0.3],
-      ['M198.0 404.0 C197.0 410.0 198.0 414.0 200.0 419.0', 1.6, 0.3]
-    ]
-  },
-  trunk: { kind: 'fill', dx: 0, dy: 12, delay: 0.25, paths: ['M184 292 C189 262 191 232 192 196 L208 196 C209 232 211 262 216 292 Z'] },
-  bark: {
-    kind: 'fill', dx: 0, dy: 0, delay: 0.45,
-    paths: ['M170 292 C178 270 181 238 182 196 L188 196 C188 232 186 262 180 292 Z', 'M230 292 C222 270 219 238 218 196 L212 196 C212 232 214 262 220 292 Z'],
-    grain: ['M175.5 287 C180 266 183 238 185 202', 'M224.5 287 C220 266 217 238 215 202', 'M178 262 C179.5 256 180.5 251 181.5 246', 'M222 262 C220.5 256 219.5 251 218.5 246']
-  },
-  branches: {
-    kind: 'taper', dx: 0, dy: -8, delay: 0.65, seam: true, joints: true,
-    paths: [
-      ['M200 202 C201 176 197 150 202 104', 12, 3],
-      ['M196 208 C180 194 158 183 122 181', 11, 2.6],
-      ['M204 206 C221 192 244 182 278 176', 11, 2.6],
-      ['M198 192 C185 170 174 148 166 116', 8.5, 2.2],
-      ['M202 188 C215 166 226 144 236 114', 8.5, 2.2],
-      ['M165.0 189.4 C154.2 176.2 146.9 161.2 143.0 144.0', 5, 1.2],
-      ['M149.1 184.7 C141.8 171.3 132.2 159.9 120.0 150.0', 3.8, 1],
-      ['M236.1 187.4 C247.5 174.3 255.4 159.3 260.0 142.0', 5, 1.2],
-      ['M251.9 182.0 C259.5 168.2 269.5 156.3 282.0 146.0', 3.8, 1],
-      ['M199.5 162.3 C190.9 146.0 185.1 128.8 182.0 110.0', 4.5, 1.1],
-      ['M199.4 148.9 C209.3 133.6 216.4 117.1 221.0 99.0', 4.5, 1.1],
-      ['M182.8 163.5 C174.9 149.5 164.8 137.5 152.0 127.0', 3.8, 1],
-      ['M217.4 159.7 C225.2 146.0 235.3 134.2 248.0 124.0', 3.8, 1],
-      ['M175.2 145.6 C164.8 138.6 155.9 130.1 148.0 120.0', 3, 0.8],
-      ['M225.4 142.1 C235.5 135.7 244.3 127.7 252.0 118.0', 3, 0.8]
-    ]
-  },
-  leaves: { kind: 'canopy', dx: 0, dy: -12, delay: 0.85, circles: [[200,96,62],[144,124,48],[256,122,48],[166,78,44],[234,76,44],[112,156,34],[290,152,34],[200,144,54],[156,170,32],[246,168,32],[128,98,32],[272,96,32],[200,52,34]] },
-  fruit: { kind: 'fruit', dx: 0, dy: -18, delay: 1.1, circles: [[158,118],[238,100],[214,154],[126,160],[272,152],[184,72],[252,62]] }
-};
-const PIECE_FOR = { roots: 'roots', trunk: 'trunk', bark: 'bark', branches: 'branches', leaves: 'leaves', fruit: 'fruit' };
-const DRAW_ORDER = ['leaves', 'branches', 'fruit', 'bark', 'trunk', 'roots'];
-const HERO_COLORS = { roots: '#E8D6B6', trunk: '#F3E7D1', bark: '#DECAA9', branches: '#EEE0C6', leaves: '#FAF6EE', fruit: '#FFFFFF' };
-
-// Turns a single curve into a filled shape that tapers from w0 to w1
-function taperPath(d, w0, w1) {
-  const n = d.match(/-?\d+(\.\d+)?/g).map(Number);
-  const [x0, y0, x1, y1, x2, y2, x3, y3] = n;
-  const pt = t => { const u = 1 - t; return [u*u*u*x0 + 3*u*u*t*x1 + 3*u*t*t*x2 + t*t*t*x3, u*u*u*y0 + 3*u*u*t*y1 + 3*u*t*t*y2 + t*t*t*y3]; };
-  const der = t => { const u = 1 - t; return [3*u*u*(x1-x0) + 6*u*t*(x2-x1) + 3*t*t*(x3-x2), 3*u*u*(y1-y0) + 6*u*t*(y2-y1) + 3*t*t*(y3-y2)]; };
-  const N = 18, left = [], right = [];
-  for (let i = 0; i <= N; i++) {
-    const t = i / N, [px, py] = pt(t);
-    const [dx, dy] = der(t), L = Math.hypot(dx, dy) || 1;
-    const w = (w0 + (w1 - w0) * t) / 2;
-    left.push([px - dy / L * w, py + dx / L * w]);
-    right.push([px + dy / L * w, py - dx / L * w]);
-  }
-  const f = p => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
-  return 'M' + left.map(f).join(' L') + ' L' + f(pt(1)) + ' L' + right.reverse().map(f).join(' L') + ' Z';
+const ART_APP = 'oak';
+const ART_TEXT = k => ABOUT_TEXT[k];
+const ART_LEVEL = s => treeLevel(daysTended(s)).name;
+function artParts(withText) { return ALL_DOMAINS.map(d => ({ key: d.key, name: d.part, tag: d.name, text: withText ? ART_TEXT(d.key) : '' })); }
+// Scores to light: 8 and up Strong, 5 and up Steady, below 5 Growing Edge, unsure Not sure yet.
+function artLevels(scores, unsure) { const o = {}; ALL_DOMAINS.forEach(d => { o[d.key] = window.GGTreeArt ? GGTreeArt.level((scores || {})[d.key], (unsure || []).includes(d.key)) : 'u'; }); return o; }
+// Results: each part's marker by level, and the list in words. onPick makes the parts buttons.
+function artResults(id, scores, unsure, onPick) {
+  const el = document.getElementById(id); if (!el || !window.GGTreeArt) return;
+  GGTreeArt.results(el, { app: ART_APP, parts: artParts(), levels: artLevels(scores, unsure), onPick: onPick || null, pickLabel: onPick ? 'Open it in the growth plan' : '' });
 }
-
-// Leafy, scalloped canopy edge built around the outer circles
-function canopyCircles(circles) {
-  const out = circles.map(c => [c[0], c[1], c[2]]);
-  circles.forEach(([cx, cy, r]) => {
-    for (let a = 0; a < 360; a += 20) {
-      const rad = a * Math.PI / 180, px = cx + Math.cos(rad) * (r - 3), py = cy + Math.sin(rad) * (r - 3);
-      const covered = circles.some(o => o !== undefined && !(o[0] === cx && o[1] === cy) && Math.hypot(px - o[0], py - o[1]) < o[2] - 4);
-      if (!covered) out.push([px, py, 7 + r * 0.1]);
-    }
-  });
-  return out;
-}
-
-let TREE_UID = 0;
-function puzzleTreeSvg(opts) {
-  const o = Object.assign({ variant: 'color', scores: null, interactive: false, seam: '#2C1810', assemble: false, cls: '' }, opts);
-  const ground = o.variant === 'hero'
-    ? `<path d="M26 293.5 Q200 289 374 293.5 Q200 298 26 293.5 Z" fill="#FAF7F2" opacity="0.75"/>`
-    : `<path d="M26 293.5 Q200 290 374 293.5 Q200 297 26 293.5 Z" style="fill:var(--ink-soft);" opacity="0.35"/>`;
-  let pieces = '';
-  DRAW_ORDER.forEach(key => {
-    const d = DOMAIN_BY_KEY[key];
-    const shape = TREE_SHAPES[PIECE_FOR[key]];
-    const hero = o.variant === 'hero';
-    const color = hero ? HERO_COLORS[key] : d.color;
-    let pieceOpacity = 1;
-    if (o.variant === 'score' && o.scores) pieceOpacity = 0.2 + 0.8 * ((o.scores[key] || 5) / 10);
-    let inner = '';
-    if (shape.kind === 'taper') {
-      const ends = p => { const n = p[0].match(/-?\d+(\.\d+)?/g).map(Number); return [n[0], n[1], n[6], n[7]]; };
-      const caps = (p, add0, add1, fill) => { const e = ends(p); return `<circle cx="${e[0]}" cy="${e[1]}" r="${((p[1] + add0) / 2).toFixed(2)}" style="fill:${fill};"/><circle cx="${e[2]}" cy="${e[3]}" r="${((p[2] + add1) / 2).toFixed(2)}" style="fill:${fill};"/>`; };
-      if (shape.seam) inner += shape.paths.map(p => `<path d="${taperPath(p[0], p[1] + 3, p[2] + 2)}" style="fill:${o.seam};"/>` + (shape.joints ? caps(p, 3, 2, o.seam) : '')).join('');
-      inner += shape.paths.map(p => `<path d="${taperPath(p[0], p[1], p[2])}" style="fill:${color};"/>` + caps(p, 0, 0, color)).join('');
-    } else if (shape.kind === 'fill') {
-      inner += shape.paths.map(p => `<path d="${p}" style="fill:${color};stroke:${o.seam};paint-order:stroke;" stroke-width="2.5" stroke-linejoin="round"/>`).join('');
-      if (shape.grain) inner += shape.grain.map(p => `<path d="${p}" style="stroke:${o.seam};" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.8"/>`).join('');
-      if (!hero && key === 'bark') inner += `<path d="M173 280 C176 272 178 262 179 252M227 280 C224 272 222 262 221 252" stroke="#000" stroke-opacity="0.22" stroke-width="1.1" stroke-linecap="round" fill="none"/>`;
-      if (!hero && key === 'trunk') inner += `<g stroke="#000" stroke-opacity="0.25" stroke-width="1.2" stroke-linecap="round" fill="none"><path d="M196 286 C197 266 197.5 240 198 206M204 286 C203 266 202.5 240 202 206"/><ellipse cx="203" cy="248" rx="2.4" ry="4"/></g>`;
-    } else if (shape.kind === 'canopy') {
-      const cc = canopyCircles(shape.circles);
-      inner += cc.map(c => `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${(c[2] + 1.8).toFixed(1)}" style="fill:${o.seam};"/>`).join('');
-      inner += cc.map(c => `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="${c[2].toFixed(1)}" style="fill:${color};"/>`).join('');
-      if (!hero && o.variant !== 'score') inner += `<circle cx="170" cy="76" r="24" fill="#8FB070" opacity="0.35"/><circle cx="134" cy="118" r="16" fill="#8FB070" opacity="0.3"/><circle cx="226" cy="70" r="14" fill="#8FB070" opacity="0.22"/>`;
-    } else if (shape.kind === 'fruit') {
-      const gid = 'stf' + (++TREE_UID);
-      inner += `<defs><radialGradient id="${gid}" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FFF3D6" stop-opacity="0.55"/><stop offset="0.5" stop-color="${color}" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.3"/></radialGradient></defs>`;
-      inner += shape.circles.map(([x, y]) => `
-        <path d="M${x} ${y - 7} C${x + 1} ${y - 11} ${x + 3} ${y - 13} ${x + 6} ${y - 14}" style="stroke:${o.seam};" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <path d="M${x} ${y - 7} C${x + 1} ${y - 11} ${x + 3} ${y - 13} ${x + 6} ${y - 14}" style="stroke:${hero ? color : '#6B4226'};" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        ${hero ? '' : `<path d="M${x + 5} ${y - 13.5} C${x + 8} ${y - 18} ${x + 13} ${y - 18} ${x + 15} ${y - 15} C${x + 12} ${y - 12} ${x + 8} ${y - 12} ${x + 5} ${y - 13.5} Z" style="fill:var(--leaf-accent, #4E6A3B);stroke:${o.seam};" stroke-width="1"/>`}
-        <circle cx="${x}" cy="${y}" r="8" style="fill:${color};stroke:${o.seam};" stroke-width="3.5"/>
-        ${hero ? '' : `<circle cx="${x}" cy="${y}" r="8" fill="url(#${gid})"/><circle cx="${x - 2.6}" cy="${y - 2.6}" r="2" fill="#FFF3DD" opacity="0.85"/>`}`).join('');
-    }
-    const label = `${d.part}, ${d.name}${o.scores ? ', ' + o.scores[key] + ' of 10' : ''}`;
-    const attrs = o.interactive ? `tabindex="0" role="button" aria-label="${label}"` : '';
-    const anim = o.assemble ? `style="--dx:${shape.dx}px;--dy:${shape.dy}px;--delay:${shape.delay}s;"` : '';
-    const sway = (o.assemble && (key === 'leaves' || key === 'fruit')) ? ' sway' : '';
-    pieces += `<g class="piece-wrap${sway}" ${anim}><g class="piece${o.interactive ? ' interactive' : ''}" data-key="${key}" ${attrs} opacity="${pieceOpacity.toFixed(2)}"><title>${label}</title>${inner}</g></g>`;
-  });
-  return `<svg class="${o.cls}${o.assemble ? ' assemble' : ''}" viewBox="40 2 320 424" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oak with six parts">${ground}${pieces}</svg>`;
-}
-
-function mountTree(slotId, opts, onPiece) {
-  const slot = document.getElementById(slotId);
-  if (!slot) return;
-  slot.innerHTML = puzzleTreeSvg(opts);
-  if (onPiece) {
-    slot.querySelectorAll('.piece.interactive').forEach(el => {
-      const key = el.getAttribute('data-key');
-      el.addEventListener('click', () => onPiece(key));
-      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPiece(key); } });
-    });
-  }
-}
-
-// Kept for the history chart and older code paths
-function treeSvgMarkup(scores) {
-  return puzzleTreeSvg({ variant: 'score', scores, seam: '#2C1810' }).replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
+function artResultsHtml(entry) { return entry && window.GGTreeArt ? GGTreeArt.results(null, { app: ART_APP, parts: artParts(), levels: artLevels(entry.scores, entry.unsure), legend: false }) : ''; }
+// Season: Then and Now from this person's own full check-ins (never anyone else's), the rings, the level badge.
+function artGrowthHtml(s) {
+  if (!window.GGTreeArt) return '';
+  const hist = (personalHistory || []).filter(e => e && !e.from).filter(e => e.type !== 'quick' && e.scores).map(e => ({ date: e.date, levels: artLevels(e.scores, e.unsure) }));
+  return `<div class="gt-card gta-season"><p class="gt-kicker">Then and Now</p>${GGTreeArt.growth(null, { app: ART_APP, parts: artParts(), history: hist, levelName: s ? ART_LEVEL(s) : '', ladder: TREE_LEVELS.map(x => x[1]) })}</div>`;
 }
 
 // =====================================================================
 // ABOUT PAGE
 // =====================================================================
 function renderAboutParts() {
-  document.getElementById('about-part-cards').innerHTML = ALL_DOMAINS.map(d => `
-    <div class="part-card" id="about-part-${d.key}" style="--domain-color:${d.color};">
-      <div class="part-card-icon">${partIcon(d, 34)}</div>
-      <div>
-        <div class="part-card-name">${d.part}</div>
-        <div class="part-card-domain">${d.name}</div>
-        <p>${ABOUT_TEXT[d.key]}</p>
-      </div>
-    </div>`).join('');
-  mountTree('about-tree-slot', { variant: 'color', interactive: true, seam: 'var(--bg)' }, key => {
-    const card = document.getElementById('about-part-' + key);
-    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    card.classList.add('flash');
-    setTimeout(() => card.classList.remove('flash'), 1400);
-  });
+  const el = document.getElementById('about-tree-slot'); if (!el || !window.GGTreeArt) return;
+  GGTreeArt.howItWorks(el, { app: ART_APP, parts: artParts(true), label: 'The Oak painting with six glowing parts to tap' });
 }
 
 // =====================================================================
@@ -2071,11 +1902,8 @@ function calculateResults(mode) {
 
   const html = `
     <div class="results-summary">
-      <div class="tree-result-wrap"><div id="${prefix}-results-tree" style="width:100%;max-width:320px;"></div></div>
-      <p class="tree-caption">Each part of your tree is shaded by its score. The fuller the color, the healthier that part. Tap a part to work on it in your growth plan.</p>
-      <div class="lvl-list">
-        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">Your growing edge is where your next growth begins.</p>' : ''}</div>`).join('')}
-      </div>
+      <div id="${prefix}-results-tree" class="results-art" style="margin:16px 0 6px;"></div>
+      <p class="tree-caption">Each part of your tree shines with how it is doing. Tap a part to work on it in your growth plan.</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       <div class="interpretation">${interpretResults(scores)}</div>
       ${flagBoxHtml(flags)}
@@ -2113,7 +1941,7 @@ function calculateResults(mode) {
     renderSaveBox();
     renderProgress();
   }
-  mountTree(`${prefix}-results-tree`, { variant: 'score', scores, interactive: true, seam: '#2C1810', assemble: true }, goToGrowthPlanPart);
+  artResults(`${prefix}-results-tree`, scores, unsure, goToGrowthPlanPart);
 }
 
 // A check-in taken together: the person answers, a helper taps. It saves to the person's
@@ -2125,11 +1953,8 @@ function tappedResults(scores, unsure, reflections, flags) {
   document.getElementById('client-results-content').innerHTML = `
     <div class="results-summary">
       <p class="sq-who">${escapeHtml(CK.name)} answered, and ${escapeHtml(helperName)} tapped.</p>
-      <div class="tree-result-wrap"><div id="client-results-tree" style="width:100%;max-width:320px;"></div></div>
-      <p class="tree-caption">Each part of the tree is shaded by its score. The fuller the color, the healthier that part.</p>
-      <div class="lvl-list">
-        ${ALL_DOMAINS.map(d => `<div class="lvl-row" style="--domain-color:${d.color};">${partIcon(d, 20)}<b style="color:${d.color};">${d.part} <span style="font-weight:500;color:var(--ink-soft);">${d.name}</span></b><span class="lvl-pill">${stLevelLine(shown(d.key))}</span>${shown(d.key) != null && shown(d.key) < 5 ? '<p class="lvl-tend">This growing edge is where the next growth begins.</p>' : ''}</div>`).join('')}
-      </div>
+      <div id="client-results-tree" class="results-art" style="margin:16px 0 6px;"></div>
+      <p class="tree-caption">Each part of the tree shines with how it is doing.</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       <p class="gt-small">Help any time: call or text 988. In immediate danger, call 911. <button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p>
     </div>
@@ -2137,7 +1962,7 @@ function tappedResults(scores, unsure, reflections, flags) {
     <div class="btn-row"><button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button></div>`;
   showView('client-results');
   if (window.GGP && GGP.isOpen(CK.forId)) { const d = GGP.data(CK.forId, 'oak'); if (!Array.isArray(d.history)) d.history = []; d.history.push(entry); sortEntries(d.history); const nm = CK.name; GGP.save(CK.forId).then(() => showToast('Saved to ' + nm + '\'s tree.')); }
-  mountTree('client-results-tree', { variant: 'score', scores, interactive: false, seam: '#2C1810', assemble: true });
+  artResults('client-results-tree', scores, unsure);
 }
 
 // =====================================================================
@@ -2574,7 +2399,7 @@ function levelsGraphHtml(list) {
   return `<div class="sq-graph-box"><h4>Your Parts Over Time</h4><p class="gt-small">One point for each full Oak check-in, oldest on the left. The dashed lines mark Steady and Strong.${(list || []).some(e => e && e.from) ? ' Rings From Pine and From Birch stay in your history, apart from this graph.' : ''}</p>${rows}</div>`;
 }
 function graphCardHtml() { return `<div class="gt-card sq-graphs"><h3>Your Growth Over Time</h3>${daysGraphHtml()}${levelsGraphHtml(personalHistory)}</div>`; }
-function seasonExtraHtml(s) { return graphCardHtml() + (s ? milestonesHtml(s) : ''); }
+function seasonExtraHtml(s) { return artGrowthHtml(s) + graphCardHtml() + (s ? milestonesHtml(s) : ''); }
 
 // =====================================================================
 // A CARD FROM A Oak GUIDE VISIT (GWG BLD 746)
@@ -3275,7 +3100,7 @@ function renderHistoryChartAndTable(container, history, personal) {
 
   container.innerHTML = `
     <div class="chart-container">
-      ${last ? `<div class="section-title" style="margin-top:0;">Most Recent Tree</div><div style="max-width:260px;margin:0 auto;">${puzzleTreeSvg({ variant: 'score', scores: last.scores, seam: '#2C1810' })}</div>` : ''}
+      ${last ? `<div class="section-title" style="margin-top:0;">Most Recent Tree</div>${artResultsHtml(last)}` : ''}
       ${cmp}
     </div>
     <div class="chart-container">
@@ -3314,7 +3139,6 @@ function cycleTextSize() {
   applyTextSize();
 }
 applyTextSize();
-mountTree('hero-tree-slot', { variant: 'color', seam: 'var(--hero-seam)', assemble: true, cls: 'hero-tree' });
 renderAboutParts();
 renderCheckin();
 renderPracMoved();
@@ -3503,7 +3327,7 @@ function lcFromHash(e) {
   setTimeout(() => scrollToViewTop(document.getElementById(top || view) ? (top || view) : view, false, true), 60);
 }
 window.addEventListener('hashchange', lcFromHash);
-window.addEventListener('popstate', lcFromHash);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; lcFromHash(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 /* Deep links: #quick starts the quick check-in, #checkin the full one */
 function checkinFromHash() { const h = location.hash; if (h === '#quick' && typeof startQuick === 'function') startQuick(); else if ((h === '#checkin' || h === '#check' + 'up') && typeof startCheckin === 'function') startCheckin(); }
 setTimeout(checkinFromHash, 60);
@@ -3550,8 +3374,9 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b780a" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780a';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b779t" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b779t';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b780" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b780';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b780a" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

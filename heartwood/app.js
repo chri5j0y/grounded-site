@@ -25,6 +25,15 @@
    and code, or the open sample (heartwood/sample.js, window.HW_SAMPLE true), then loads this file. The globals:
    BTV_Q (the questions), GM_FAITH, GM_RESULTS, GM_WB (The Couple Workbook), GM_MONEY, GM_PR (Practices for Two),
    GM_AFTER, GG_LEARN_GM (Learn), GM_TOGETHER; core.js (GMCore) is code and loads first.
+   Root Words (GWG BLD 780): each partner's box has its own random key, locked twice: with the partner's passcode
+   (box.wrap, PBKDF2 with box.salt, then AES-GCM) and with that partner's 12 Root Words (box.rw {salt, iv, ct}, from
+   shared/gg-rootwords.js). The answers are sealed with that key. The words are kept only inside the partner's locked
+   box (rootWords), shown once when the passcode is chosen, and again in Names and Settings after the passcode.
+   A box from before (no wrap) still opens with its passcode, and is moved to the two-lock way right then.
+   Forgot your passcode: Use My Root Words sets a new passcode and keeps everything; or Start Fresh clears only that
+   partner's answers, and the other partner's stay. Clear Everything still clears both.
+   Save a Backup and Load a Backup use the one Grow With Grounded Backup (shared/gg-backup.js). A gentle note, once
+   each (st.ks), after a partner finishes Before the Vows and after a first After the Vows check-in.
    Saved on this device: gg_hw_v1 (gg_gm_v1 and the older gg_btv_v1 are read forward once, then removed); the sample
    keeps its own gg_hw_sample_v1, so sample answers never mix with Heartwood's. Learn progress: gg-learn:hw
    (gg-learn:gm and gg-learn:btv are read forward). A card made in the sample carries q 900 or more, and Heartwood
@@ -92,13 +101,13 @@
   var st = load(); if (!st || st.v !== 2) st = null;
   function fix() { if (!st || !st.s) return; var s = st.s; s.fb = s.fb || { a: '', b: '' }; s.fwp = s.fwp || { a: '', b: '' }; st.p = st.p || {}; }
   fix();
-  var KEYS = {}, DATA = {}, SAFE = {}, PARTNER_IN = null;
+  var KEYS = {}, DATA = {}, SAFE = {}, PARTNER_IN = null, RAWS = {};
   var V = { view: 'welcome', side: 'before', who: null, area: 0 };
   function setup() { return st && st.s; }
   function nm(w) { return setup() ? st.s[w] : ''; }
   function other(w) { return w === 'a' ? 'b' : 'a'; }
   function box(w) { return st && st.p && st.p[w]; }
-  function lockAll() { KEYS = {}; DATA = {}; SAFE = {}; }
+  function lockAll() { KEYS = {}; DATA = {}; SAFE = {}; RAWS = {}; }
   function oneDevice() { return st.s.mode === 'one'; }
   function twoOn() { var s = setup(); return !!(s && TWOQ.length && known(s.fb.a) && known(s.fb.b) && s.fb.a !== s.fb.b); }
   function areasFor() { return twoOn() ? AREAS.concat([TWO_AREA]) : AREAS; }
@@ -112,7 +121,9 @@
       var back = document.createElement('div'); back.className = 'btv-back';
       back.innerHTML = '<div class="btv-dlg" role="dialog" aria-modal="true" aria-labelledby="btv-dh"><h3 id="btv-dh">' + esc(o.title) + '</h3>' + (o.lead ? '<p>' + esc(o.lead) + '</p>' : '') +
         o.fields.map(function (f, i) { return '<label for="btv-f' + i + '">' + esc(f) + '</label><input type="password" id="btv-f' + i + '" autocomplete="new-password" autocapitalize="off" spellcheck="false">'; }).join('') +
-        '<p class="btv-err" role="alert"></p><div class="btv-drow"><button type="button" class="btn btn-secondary ff-sm" data-d="no">Cancel</button><button type="button" class="btn btn-primary ff-sm" data-d="ok">' + esc(o.ok) + '</button></div></div>';
+        '<p class="btv-err" role="alert"></p><div class="btv-drow">' + (o.forgot ? '<button type="button" class="btn btn-secondary ff-sm gm-forgot" data-d="forgot">Forgot your passcode?</button>' : '') +
+        (o.choices || []).map(function (c) { return '<button type="button" class="btn ' + (c[2] ? 'btn-primary' : 'btn-secondary') + ' ff-sm" data-d="c:' + esc(c[0]) + '">' + esc(c[1]) + '</button>'; }).join('') +
+        '<button type="button" class="btn btn-secondary ff-sm" data-d="no">Cancel</button>' + (o.ok ? '<button type="button" class="btn btn-primary ff-sm" data-d="ok">' + esc(o.ok) + '</button>' : '') + '</div></div>';
       document.body.appendChild(back);
       var err = back.querySelector('.btv-err'), busy = false, prev = document.activeElement;
       function close(v) { back.remove(); try { if (prev && prev.focus) prev.focus(); } catch (e) {} resolve(v); }
@@ -125,36 +136,147 @@
         o.verify(vals).then(function (r) { busy = false; if (r === true) close(vals); else { err.textContent = r || 'That did not work. Try again.'; var i = back.querySelector('input'); i.select(); } },
           function () { busy = false; err.textContent = 'That did not work. Try again.'; });
       }
-      back.addEventListener('click', function (e) { var d = e.target.getAttribute && e.target.getAttribute('data-d'); if (d === 'no') close(null); else if (d === 'ok') go(); });
-      back.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); else if (e.key === 'Escape') close(null); });
-      setTimeout(function () { var f = back.querySelector('input'); if (f) f.focus(); }, 30);
+      back.addEventListener('click', function (e) { var d = e.target.getAttribute && e.target.getAttribute('data-d'); if (d === 'no') close(null); else if (d === 'ok') go(); else if (d === 'forgot') close('forgot'); else if (d && d.indexOf('c:') === 0) close(d.slice(2)); });
+      back.addEventListener('keydown', function (e) { if (e.key === 'Enter' && o.fields.length) go(); else if (e.key === 'Escape') close(null); });
+      setTimeout(function () { var f = back.querySelector('input') || back.querySelector('[data-d^="c:"]'); if (f) f.focus(); }, 30);
     });
   }
-  var PASS_NOTE = 'Grow With Grounded never sees it and cannot recover it. If it is ever forgotten, Clear Everything starts fresh.';
+  var PASS_NOTE = 'Grow With Grounded never sees it and cannot recover it. Next you get 12 Root Words that open your answers if it is ever forgotten.';
+  /* ---------- Root Words (GWG BLD 780) ---------- */
+  var rootP = null;
+  function needRoot() {
+    if (window.GGRoot) return Promise.resolve(window.GGRoot);
+    if (!rootP) rootP = new Promise(function (ok, no) {
+      var s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b780';
+      s.onload = function () { if (window.GGRoot) ok(window.GGRoot); else { rootP = null; no(new Error('load')); } };
+      s.onerror = function () { rootP = null; s.remove(); no(new Error('load')); };
+      document.head.appendChild(s);
+    });
+    return rootP;
+  }
+  function rawKey(raw) { return subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']); }
+  // The passcode lock: a fresh salt, PBKDF2 to a key, then AES-GCM around the box's own key.
+  function passWrap(pass, raw) {
+    var salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+    return C.derive(pass, salt).then(function (pk) { return subtle.encrypt({ name: 'AES-GCM', iv: iv }, pk, raw); })
+      .then(function (ct) { return { salt: b64(salt), wrap: { iv: b64(iv), ct: b64(new Uint8Array(ct)) } }; });
+  }
+  // New Root Words for an open box: locked around its key, kept inside it. Resolves the words, or null if they cannot load.
+  function rootMake(w) {
+    if (!RAWS[w] || !DATA[w] || !st.p[w]) return Promise.resolve(null);
+    return needRoot().then(function (R) {
+      var words = R.make();
+      return R.wrap(RAWS[w], words).then(function (rw) { st.p[w].rw = rw; DATA[w].rootWords = words.join(' '); return save(w).then(function () { return words; }); });
+    }, function () { return null; });
+  }
+  function rootShow(w, words, again) {
+    return needRoot().then(function (R) {
+      return R.show({ words: words, who: nm(w), again: again, title: nm(w) + ', Your Root Words', lead: 'If you ever forget your Heartwood passcode, these 12 words open your answers again, so you can choose a new passcode. They are yours alone, so ' + nm(other(w)) + ' keeps their own.' });
+    }, function () {});
+  }
   function newPass(w) {
     return ask({ title: nm(w) + ', choose your passcode', lead: 'Your answers are locked with it, so only you can open them. ' + PASS_NOTE, fields: ['Passcode', 'Passcode again'], ok: 'Lock and Start',
       check: function (v) { return v[0].length < 6 ? 'Use at least 6 characters.' : v[0] !== v[1] ? 'The two passcodes are different.' : ''; } })
       .then(function (v) {
         if (!v) return false;
-        var salt = crypto.getRandomValues(new Uint8Array(16));
-        return C.derive(v[0], salt).then(function (k) {
-          KEYS[w] = k; DATA[w] = { ans: {}, fw: '', at: 0, partner: null, wb: {}, mo: {}, mp: {} };
-          st.p[w] = { salt: b64(salt), done: false };
+        var raw = crypto.getRandomValues(new Uint8Array(32));
+        return Promise.all([passWrap(v[0], raw), rawKey(raw)]).then(function (r) {
+          KEYS[w] = r[1]; RAWS[w] = raw; DATA[w] = { ans: {}, fw: '', at: 0, partner: null, wb: {}, mo: {}, mp: {} };
+          st.p[w] = { salt: r[0].salt, wrap: r[0].wrap, done: false };
           if (PARTNER_IN && st.s.mode === 'two' && w === st.s.me) { DATA[w].partner = PARTNER_IN; PARTNER_IN = null; delete st.inCard; st.p[w].got = 1; try { sessionStorage.removeItem(PEND); } catch (e) {} }
+          return save(w).then(function () { return rootMake(w); }).then(function (words) { return words ? rootShow(w, words, false) : null; }).then(function () { return true; });
+        });
+      });
+  }
+  // Opens a box with its passcode: the two-lock way (box.wrap), or a box from before, moved to the two-lock way now.
+  function openBox(w, pass) {
+    var bx = box(w), salt = unb64(bx.salt);
+    return C.derive(pass, salt).then(function (pk) {
+      if (bx.wrap) {
+        return subtle.decrypt({ name: 'AES-GCM', iv: unb64(bx.wrap.iv) }, pk, unb64(bx.wrap.ct)).then(function (raw) {
+          raw = new Uint8Array(raw);
+          return rawKey(raw).then(function (k) { return unseal(k, unb64(bx.iv), unb64(bx.ct)).then(function (d) { KEYS[w] = k; RAWS[w] = raw; DATA[w] = d; dataOf(w); return true; }); });
+        });
+      }
+      return unseal(pk, unb64(bx.iv), unb64(bx.ct)).then(function (d) {
+        var raw = crypto.getRandomValues(new Uint8Array(32));
+        return Promise.all([passWrap(pass, raw), rawKey(raw)]).then(function (r) {
+          KEYS[w] = r[1]; RAWS[w] = raw; DATA[w] = d; dataOf(w); bx.salt = r[0].salt; bx.wrap = r[0].wrap; delete bx.rw;
           return save(w).then(function () { return true; });
         });
       });
+    });
   }
   function unlock(w, why) {
     if (KEYS[w] && DATA[w]) return Promise.resolve(true);
     var bx = box(w); if (!bx) return newPass(w);
-    var salt = unb64(bx.salt);
-    return ask({ title: nm(w) + ', enter your passcode', lead: why || 'Only ' + nm(w) + ' should type here.', fields: ['Passcode'], ok: 'Open',
-      verify: function (v) {
-        return C.derive(v[0], salt).then(function (k) {
-          return unseal(k, unb64(bx.iv), unb64(bx.ct)).then(function (d) { KEYS[w] = k; DATA[w] = d; dataOf(w); return true; }, function () { return 'That passcode does not open ' + nm(w) + '’s answers. Try again.'; });
-        });
-      } }).then(function (v) { return !!v; });
+    return ask({ title: nm(w) + ', enter your passcode', lead: why || 'Only ' + nm(w) + ' should type here.', fields: ['Passcode'], ok: 'Open', forgot: true,
+      verify: function (v) { return openBox(w, v[0]).then(function () { return true; }, function () { return 'That passcode does not open ' + nm(w) + '’s answers. Try again.'; }); } })
+      .then(function (v) { if (v === 'forgot') return forgot(w, why); return !!v; });
+  }
+  // Forgot your passcode (GWG BLD 780): Root Words first; or a fresh start for this partner only.
+  function forgot(w, why) {
+    var bx = box(w), has = !!(bx && bx.rw && bx.wrap);
+    return ask({ title: 'Forgot your passcode, ' + nm(w) + '?', lead: (has ? 'Your Root Words open your answers again, with everything in them. Then you choose a new passcode. ' : 'Your answers are locked with a passcode only you know, so no one, including us, can open them without it. ') +
+      'Or start fresh: only ' + nm(w) + '’s answers, workbook, and check-ins are cleared. ' + nm(other(w)) + '’s stay just as they are.',
+      fields: [], ok: '', choices: (has ? [['root', 'Use My Root Words', true]] : []).concat([['fresh', 'Start Fresh for ' + nm(w) + ' Only', !has]]) })
+      .then(function (c) {
+        if (c === 'root') return rootOpen(w).then(function (ok) { return ok || unlock(w, why); });
+        if (c === 'fresh') {
+          if (!window.confirm('Start fresh for ' + nm(w) + ' only? ' + nm(w) + '’s answers, workbook, check-ins' + (st.s.mk === w ? ', The Money Map' : '') + (st.s.mode === 'two' ? ', and the card opened from ' + nm(other(w)) : '') + ' are cleared from this device. ' + nm(other(w)) + '’s stay. It cannot be undone.')) return false;
+          delete st.p[w]; if (st.s.mk === w) delete st.s.mk; delete KEYS[w]; delete DATA[w]; delete RAWS[w]; persist();
+          return newPass(w).then(function (ok) { if (ok) say('A fresh start for ' + nm(w) + '. ' + nm(other(w)) + '’s answers are still here.'); return ok; });
+        }
+        return false;
+      });
+  }
+  function rootOpen(w) {
+    var bx = box(w), raw = null;
+    return needRoot().then(function (R) {
+      return R.ask({ title: nm(w) + ', Use My Root Words', lead: 'Type your 12 Root Words in order. Capital letters and extra spaces do not matter, and the first four letters of each word are enough.',
+        verify: function (words) { return R.unwrap(bx.rw, words).then(function (r) { raw = r; return true; }, function () { return 'Those Root Words do not open ' + nm(w) + '’s answers. Check the order and try again.'; }); } });
+    }, function () { say('Root Words could not load. Check the connection and try again.'); return null; }).then(function (words) {
+      if (!words || !raw) return false;
+      return rawKey(raw).then(function (k) { return unseal(k, unb64(bx.iv), unb64(bx.ct)).then(function (d) { KEYS[w] = k; RAWS[w] = raw; DATA[w] = d; dataOf(w); }); }).then(function () {
+        return ask({ title: nm(w) + ', choose a new passcode', lead: 'Your Root Words opened your answers. Everything stays, your Root Words still work, and the old passcode stops working.', fields: ['New passcode', 'New passcode again'], ok: 'Save the New Passcode',
+          check: function (v) { return v[0].length < 6 ? 'Use at least 6 characters.' : v[0] !== v[1] ? 'The two passcodes are different.' : ''; } });
+      }).then(function (v) {
+        if (!v) { delete KEYS[w]; delete DATA[w]; delete RAWS[w]; return false; }
+        return passWrap(v[0], raw).then(function (r) { bx.salt = r.salt; bx.wrap = r.wrap; return save(w); }).then(function () { say('New passcode saved, ' + nm(w) + '. Your Root Words still work.'); return true; });
+      });
+    });
+  }
+  // Names and Settings: see (or make) a partner's Root Words, after their passcode.
+  function rootSee(w) {
+    if (!box(w)) { say(nm(w) + ' has not chosen a passcode yet. Root Words come with it.'); return; }
+    saveAll().then(function () {
+      lockAll();
+      return unlock(w, 'Type your passcode first, so only you see your Root Words.');
+    }).then(function (ok) {
+      if (!ok) return;
+      var have = DATA[w] && DATA[w].rootWords && box(w).rw;
+      return (have ? Promise.resolve(DATA[w].rootWords.split(' ')) : rootMake(w)).then(function (words) {
+        if (!words) { say('Root Words could not load. Check the connection and try again.'); return; }
+        return rootShow(w, words, !!have);
+      }).then(function () { return save(w); }).then(function () { lockAll(); render(); });
+    });
+  }
+  /* ---------- Save a Backup (the one Grow With Grounded Backup) and gentle reminders ---------- */
+  function backupGo(act) {
+    var run = function () { if (window.GGBackup) GGBackup[act]({}); };
+    saveAll().then(function () {
+      if (window.GGBackup) return run();
+      var s = document.createElement('script'); s.src = '/shared/gg-backup.js?v=b780'; s.onload = run;
+      s.onerror = function () { say('The backup could not load. Check the connection and try again.'); };
+      document.head.appendChild(s);
+    });
+  }
+  function remindOnce(moment, w, lead) {
+    if (!st) return; st.ks = st.ks || {}; var k = moment + ':' + w; if (st.ks[k]) return;
+    st.ks[k] = today(); persist();
+    setTimeout(function () {
+      needRoot().then(function (R) { R.remind({ lead: lead, wordsLabel: nm(w) + '’s Root Words', onBackup: function () { backupGo('make'); }, onWords: function () { rootSee(w); } }); }, function () {});
+    }, 600);
   }
   function unlockBoth(why) { return unlock('a', why).then(function (ok) { return ok && unlock('b', why); }); }
   var saveT = {};
@@ -273,7 +395,18 @@
       '<p>It is a conversation tool, not a test: there is nothing to pass and nothing to score. Every answer is simply a place to start talking.</p>' +
       '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays on this device. Nothing is sent anywhere.</span></p>' +
       (pc ? '<div class="btv-note"><p><b>A card from your partner is here.</b> Open it with the word the two of you chose.</p>' + btn('open-pending', 'Open the Card', { cls: 'btn-primary ff-sm' }) + '</div>' : '') +
-      '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div></div>';
+      '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div>' +
+      (setup() ? '' : '<p class="btv-small gm-newphone">New phone, or setting up again? ' + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</p>') + '</div>';
+  }
+  // Keep It Safe (GWG BLD 780): Save a Backup, Load a Backup, and each partner's Root Words.
+  function keepSafeHtml() {
+    var s = setup(); if (!s) return '';
+    var who = oneDevice() ? ['a', 'b'] : [s.me];
+    var rw = who.filter(function (w) { return box(w); }).map(function (w) { return btn('rw-see', esc(nm(w)) + '’s Root Words', { w: w, cls: 'btn-secondary ff-sm' }); }).join('');
+    return '<div class="gm-set" id="gm-keepsafe"><h3>Keep It Safe</h3><p class="btv-small">Save a Backup keeps a locked file of Heartwood, for a lost or broken phone: save it to this device, iCloud Drive, or another drive. Each partner’s answers stay locked inside it with their own passcode. Load it on a new phone, then type your code from Chris and Kayti.</p>' +
+      '<div class="ff-row">' + btn('hw-backup', 'Save a Backup', { cls: 'btn-primary ff-sm' }) + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</div>' +
+      '<p class="btv-small">Root Words are 12 plain words for each of you, made with your passcode. If a passcode is ever forgotten, they open those answers again. Only the person who knows the passcode sees them.</p>' +
+      (rw ? '<div class="ff-row">' + rw + '</div>' : '<p class="btv-small">Root Words come with each passcode, when you start your answers.</p>') + '</div>';
   }
   function faithSelect(w, val) {
     if (!F || !Array.isArray(F.list)) return '';
@@ -295,6 +428,7 @@
       (F ? '<div class="gm-set"><h3>Faith Backgrounds</h3><p class="btv-small">' + esc(F.lead || 'Optional, and you can change it any time.') + ' When your two backgrounds differ, a short set of questions for a home that honors both is added for each of you.</p><div class="ff-grid">' + faithSelect('a', s.fb.a) + faithSelect('b', s.fb.b) + '</div></div>' : '') +
       '<div class="gm-set"><h3>Your Wedding Day</h3><p class="btv-small">After the Vows opens on this date. Optional, and kept only on this device.</p><div class="ff-grid"><label class="ff-f"><span class="l">Wedding date</span><input type="date" id="gm-wd" value="' + esc(s.wd || '') + '"></label></div>' +
       '<label class="gm-check"><input type="checkbox" id="gm-wed"' + (s.wed ? ' checked' : '') + '><span>We’re married. Open After the Vows now.</span></label></div>' +
+      keepSafeHtml() +
       '<div class="ff-row">' + btn('setup-save', 'Save and Continue') + btn('welcome', 'Back', sec()) + '<span class="ff-status" id="btv-st" role="status" aria-live="polite"></span></div></div>';
   }
   function status(w) { var b = box(w); return !b ? 'Not started yet' : b.done ? 'Finished' : 'Started'; }
@@ -891,7 +1025,7 @@
   function finish() {
     var w = V.who; SAFE = {};
     st.p[w].done = true;
-    return save(w).then(function () { delete KEYS[w]; delete DATA[w]; go('handoff'); });
+    return save(w).then(function () { delete KEYS[w]; delete DATA[w]; delete RAWS[w]; go('handoff'); remindOnce('bv', w, 'Thank you, ' + nm(w) + '. Your Before the Vows answers are saved.'); });
   }
   // Talk About This and Strengths and Growing Edges both need both sets of answers open.
   function startTalk(view) {
@@ -1014,7 +1148,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('[data-mo]'), function (x) { rr[x.getAttribute('data-mo')] = x.value.slice(0, 600); });
       dd.mo[V.rk] = { r: rr, done: 1 }; markDone(V.who, V.rk);
       var wasK = V.rk, ww = V.who;
-      save(ww).then(function () { lockAll(); go('after'); say('Thank you, ' + nm(ww) + '. Your answers are locked.'); if (oneDevice() && rdone(other(ww), wasK)) say('You have both answered. Sit together and read them side by side.'); });
+      save(ww).then(function () { lockAll(); go('after'); say('Thank you, ' + nm(ww) + '. Your answers are locked.'); if (oneDevice() && rdone(other(ww), wasK)) say('You have both answered. Sit together and read them side by side.'); if (Object.keys(box(ww).r || {}).length === 1) remindOnce('first', ww, 'Your first check-in for two is saved.'); });
     }
     else if (a === 'round-away') { save(V.who).then(function () { lockAll(); go('after'); }); }
     else if (a === 'round-read') {
@@ -1040,6 +1174,9 @@
       wkOpen.then(function (ok) { if (ok) { V.wk = null; go('week'); } else { lockAll(); render(); } });
     }
     else if (a === 'wk-make') makeWeek();
+    else if (a === 'hw-backup') backupGo('make');
+    else if (a === 'hw-load') backupGo('pick');
+    else if (a === 'rw-see' && w) rootSee(w);
     else if (a === 'clear') {
       if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
       try { localStorage.removeItem(KEY); localStorage.removeItem(GMKEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}
@@ -1131,7 +1268,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b780', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b780a', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

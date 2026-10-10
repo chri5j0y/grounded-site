@@ -122,7 +122,7 @@ const TOPICS = [
   more: [M.cmi, M.aap, M.lifeline] },
 
 { id: 'bedtime', ring: 'inside', title: 'Bedtime fears and nightmares', keys: 'nightmares bedtime dark monsters sleep scared at night',
-  quick: ['Night fears are very common and usually pass with time.', 'Keep bedtime calm, predictable, and screen-free.', 'After a nightmare, comfort first and talk in the morning.', 'Take fears seriously without agreeing monsters are real.'],
+  quick: ['Night fears are very common and usually pass with time.', 'Keep bedtime calm, predictable, and unplugged.', 'After a nightmare, comfort first and talk in the morning.', 'Take fears seriously without agreeing monsters are real.'],
   rainy: 'Bark and Leaves', acts: ['screens-off', 'quiet-together', 'tomorrow-wish'],
   k2: 'Young kids mix pretend and real, so shadows become monsters and bad dreams feel true.',
   g35: 'Older kids may fear things they heard about: fires, break-ins, or news events, and may be embarrassed to admit it.',

@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln44';
+  var V = 'ln45';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -833,7 +833,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=b757', aspen: '/aspen/guide-videos.js?v=b757', maple: '/maple/guide-videos.js?v=b757', sequoia: '/sequoia/guide-videos.js?v=b757', pine: '/pine/guide-videos.js?v=b757', birch: '/birch/guide-videos.js?v=b757', grove: '/grove/guide-videos.js?v=b774' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=gv3', oak: '/oak/guide-videos.js?v=b757', aspen: '/aspen/guide-videos.js?v=b757', maple: '/maple/guide-videos.js?v=b780', sequoia: '/sequoia/guide-videos.js?v=b757', pine: '/pine/guide-videos.js?v=b757', birch: '/birch/guide-videos.js?v=b757', grove: '/grove/guide-videos.js?v=b774' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -868,12 +868,44 @@
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
   function needPrint() { return script(url('/shared/gg-print.js?v=b776'), function () { return !!window.GGPrint; }); }
 
-  var APP = null; // {app, root, view, lesson}
+  var APP = null; // {app, root, view, lesson, depth}
+  // Browser Back inside Learn (GWG BLD 780). Opening Learn adds one history entry (same address, so the apps' hash
+  // routing never sees a change) and opening a video from the Learn list adds a second. Back steps from the video to
+  // the list, then closes Learn. Each entry's state says what it shows: {ggLearn: 1 or 2, ggLesson: id or null}.
+  // Closing with the X (or Escape, or a guide link) goes back over these entries, so none is left behind.
+  // A popstate that belongs to Learn or a page video stops here when this listener runs first; the apps' own popstate
+  // handlers also ask GGHistOwn(e) first and step aside (a browser may run their listener before this one).
+  var HIST = { skip: false, after: null, t: 0 };
+  window.GGHistOwn = window.GGHistOwn || function (e) { if (!e || e.type !== 'popstate') return false; var st = e.state; return !!(window.GG_HIST_SKIP || (st && (st.ggLearn || st.ggPageVideo)) || document.querySelector('.ggl-app')); };
+  function hSkip() { HIST.skip = true; window.GG_HIST_SKIP = true; clearTimeout(HIST.t); HIST.t = setTimeout(hDone, 800); }
+  function hState(level, id) { var s = {}, h = history.state; if (h && typeof h === 'object') for (var k in h) if (k !== 'ggPageVideo') s[k] = h[k]; s.ggLearn = level; s.ggLesson = id || null; return s; }
+  function hPush(level, id) { try { history.pushState(hState(level, id), '', location.href); if (APP) APP.depth = level; } catch (e) {} }
+  function hSet(id) { if (!APP || !APP.depth) return; try { history.replaceState(hState(APP.depth, id), '', location.href); } catch (e) {} }
+  function hDone() { clearTimeout(HIST.t); HIST.skip = false; window.GG_HIST_SKIP = false; var f = HIST.after; HIST.after = null; if (f) f(); }
+  function onPop(e) {
+    var st = e.state || {}, lv = st.ggLearn || 0;
+    if (HIST.skip) { e.stopImmediatePropagation(); hDone(); return; }
+    if (!APP) { if (lv) { e.stopImmediatePropagation(); hSkip(); try { history.back(); } catch (x) { hDone(); } } return; } // Forward onto an old Learn entry: step off it
+    e.stopImmediatePropagation();
+    APP.depth = lv;
+    if (!lv) { close(false, true); return; }
+    if (st.ggLesson) lesson(st.ggLesson, true); else list(true);
+  }
+  window.addEventListener('popstate', onPop, true);
+  // Closes Learn, then runs then() once the browser has stepped back over Learn's entries.
+  function closeThen(then) { if (APP && APP.depth) { HIST.after = then; close(); } else { close(); if (then) then(); } }
+  // Back to the Learn list from a video: one step back in history when the video was opened from the list.
+  function goList() {
+    if (!APP) return;
+    if (APP.depth === 2) { try { history.back(); return; } catch (e) {} }
+    list();
+  }
   function open(app, lessonId, opts) {
     var meta = APPS[app]; if (!meta) return;
     css();
     script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () {
-      if (APP) close(true);
+      var keep = APP ? APP.depth : 0;
+      if (APP) close(true, true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
       var root = document.createElement('div');
       root.className = 'ggl ggl-app'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Learn ' + meta.name);
@@ -881,23 +913,31 @@
       root.style.setProperty('--ggl-lite', ({ maple: '#F2A06E', aspen: '#7FC8CC', pine: '#9CC795', birch: '#D9BE5C', oak: '#9DB8D0', sequoia: '#E8A48E', willow: '#C9C3DA', grove: '#9FCB9F' })[app]);
       root.innerHTML = '<div class="ggl-top"><img src="' + MARK(app + '-tab') + '" alt=""><b>Learn ' + esc(meta.name) + '</b><button class="ggl-x" data-l="close">' + esc(meta.back) + '</button></div><div class="ggl-in" id="ggl-in"></div>';
       document.body.appendChild(root);
-      APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide') };
+      APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide'), depth: keep };
       document.body.style.overflow = 'hidden';
       root.addEventListener('click', appClick);
       document.addEventListener('keydown', appKey);
+      if (!keep) hPush(1, lessonId);
       if (lessonId) lesson(lessonId); else list();
     });
   }
-  function close(quiet) {
+  // close(quiet, keepHistory): keepHistory when the browser already stepped back (Back), or Learn reopens in place.
+  function close(quiet, keepHistory) {
     if (!APP) return;
     if (CUR) CUR.stop();
     document.removeEventListener('keydown', appKey);
     APP.root.remove(); document.body.style.overflow = APP.overflow || '';
-    var f = APP.prevFocus; APP = null;
+    var f = APP.prevFocus, d = APP.depth; APP = null;
+    if (!keepHistory && d) { hSkip(); try { history.go(-d); } catch (e) { hDone(); } }
     if (!quiet && f && f.focus) try { f.focus(); } catch (e) {}
     try { window.dispatchEvent(new CustomEvent('gg-learn-close')); } catch (e) {} // pages can refresh watched marks
   }
-  function appKey(e) { if (e.key === 'Escape' && APP) { e.preventDefault(); close(); } }
+  // Escape steps back one level: a video to the Learn list (or back to the guide it came from), the list to closed.
+  function appKey(e) {
+    if (e.key !== 'Escape' || !APP || document.querySelector('.gg-vc')) return; // the Voice Check (read.js) keeps its own keys
+    e.preventDefault();
+    if (APP.view === 'lesson') { if (APP.gv && APP.fromGuide) close(); else goList(); } else close();
+  }
   function tracksFor(app) {
     var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
     var lt = lifeTracks(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
@@ -908,8 +948,9 @@
   // Who each video is for (GWG BLD 743): a small, quiet label from the lesson's 'for' key (shared/learn-lessons.js).
   var FOR_LABEL = { person: 'For the person in hospice', family: 'For family and caregivers', both: 'For both', you: 'For you', helper: 'For the helper', grownup: 'For the grown-up', kids: 'For kids' };
   function forTag(l, cls) { var t = l && FOR_LABEL[l['for']]; return t ? '<span class="' + cls + '">' + esc(t) + '</span>' : ''; }
-  function list() {
+  function list(fromPop) {
     if (CUR) CUR.stop();
+    APP.view = 'list'; if (!fromPop) hSet(null);
     var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app), D = load(app);
     var gd = every.filter(function (t) { return t.kind === 'guide'; }), tr = every.filter(function (t) { return t.kind !== 'support' && t.kind !== 'guide'; }), sup = every.filter(function (t) { return t.kind === 'support'; }), counted = tr.filter(function (t) { return t.kind !== 'setup'; });
     var all = counted.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = counted.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
@@ -951,8 +992,10 @@
     el.innerHTML = html;
     APP.root.scrollTop = 0; var h = $('h1', el); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
   }
-  function lesson(id) {
-    var app = APP.app, f = find(app, id); if (!f) return list();
+  function lesson(id, fromPop) {
+    var app = APP.app, f = find(app, id); if (!f) return list(fromPop);
+    if (!fromPop) { if (APP.view === 'list' && APP.depth === 1) hPush(2, id); else hSet(id); }
+    APP.view = 'lesson'; APP.gv = f.t.kind === 'guide';
     var D = load(app), el = $('#ggl-in', APP.root), meta = APPS[app];
     var sup = f.t.kind === 'support', gv = f.t.kind === 'guide', pair = gv && f.l.pairId ? (find(app, f.l.pairId) || {}).l : null;
     el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? esc(((window.GG_LEARN_GUIDES || {})[app] || {}).title || 'When Life Changes') + ', ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
@@ -960,11 +1003,11 @@
     player($('#ggl-host', el), {
       app: app, lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
       pair: pair, fromGuide: gv && APP.fromGuide,
-      guide: function (gid) { close(); var go = (window.GG_GUIDE_OPEN || {})[app]; if (typeof go === 'function') go(gid); else location.hash = '#guide=' + encodeURIComponent(gid); },
+      guide: function (gid) { closeThen(function () { var go = (window.GG_GUIDE_OPEN || {})[app]; if (typeof go === 'function') go(gid); else location.hash = '#guide=' + encodeURIComponent(gid); }); },
       onAt: function (i) { var d = load(app); d.at[f.l.id] = i; keep(app, d); },
       onDone: function (lid) { var d = load(app); if (!d.done[lid]) { d.done[lid] = today(); keep(app, d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { lesson(nid); },
-      home: function () { if (gv && APP && APP.fromGuide) close(); else list(); },
+      home: function () { if (gv && APP && APP.fromGuide) close(); else goList(); },
       cert: function (t) { cert(app, t); }
     });
   }
@@ -977,7 +1020,7 @@
     var b = e.target.closest('[data-l]'); if (!b || !APP) return;
     var a = b.getAttribute('data-l'), v = b.getAttribute('data-v');
     if (a === 'close') close();
-    else if (a === 'home') list();
+    else if (a === 'home') goList();
     else if (a === 'cats') { APP.cat = null; APP.ring = null; list(); }
     else if (a === 'cat') { APP.cat = v; APP.ring = null; if (v === 'sup') { var at = APP.app; needLife(at).then(function () { if (APP && APP.app === at && APP.cat === 'sup') list(); }); } else list(); }
     else if (a === 'ring') { APP.cat = 'gd'; APP.ring = v; list(); }

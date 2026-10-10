@@ -1833,7 +1833,7 @@
 "BD-001",
 "BD-008"
 ],
-"practice:Screen-Free Evening": [
+"practice:Unplugged Evening": [
 "BD-003",
 "BD-001",
 "BD-008"
@@ -2878,7 +2878,7 @@
 "practice:Move With Someone": "Move With Someone",
 "practice:Thank Your Body": "Thank Your Body",
 "practice:Sleep": "Sleep",
-"practice:Screen-Free Evening": "Screen-Free Evening",
+"practice:Unplugged Evening": "Unplugged Evening",
 "practice:Micro-Rest": "Micro-Rest",
 "practice:Same Wake Time": "Same Wake Time",
 "practice:Wind Down": "Wind Down",

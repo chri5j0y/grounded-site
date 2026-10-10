@@ -170,25 +170,29 @@ function needPart(r) {
   return ks[0] || null;
 }
 
-// The willow drawing: the mark's tree, with a ring for every check-in.
-function willowSVG(o) {
-  o = o || {};
-  const rings = Math.min(o.rings || 0, 24), soft = o.remembered;
-  let ring = '';
-  for (let i = 0; i < rings; i++) { const r = 4 + i * 1.6; ring += `<circle cx="50" cy="93.5" r="${r}" fill="none" stroke="${i % 2 ? '#B9977A' : '#8C6A4E'}" stroke-width=".7" transform="scale(1 .22) translate(0 ${(93.5 / .22 - 93.5).toFixed(1)})"/>`; }
-  return `<svg class="w-tree" viewBox="0 0 100 100" role="img" aria-label="${esc(o.label || 'A willow tree')}" ${soft ? 'style="opacity:.78"' : ''}>
-    <rect x="0" y="86" width="100" height="14" rx="3" fill="#846646"/>
-    <g transform="translate(7.5 6.5) scale(0.85)">
-      <path d="M43 90Q47 87 47.2 78L48 36H52L52.6 78Q53 87 57 90Z" fill="#5A3414"/>
-      <path d="M49 52Q40 44 32 40M51 48Q60 42 68 38" stroke="#5A3414" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-      <g fill="${soft ? '#7E8A74' : '#5F7350'}"><circle cx="58.3" cy="23.9" r="8.7"/><circle cx="24.8" cy="29.7" r="8.9"/><circle cx="33.6" cy="33.5" r="8"/><circle cx="44.5" cy="31.6" r="7"/><circle cx="52.7" cy="29.6" r="7.6"/><circle cx="66" cy="30.2" r="8.6"/><circle cx="23.6" cy="37" r="8.1"/><circle cx="35.1" cy="36" r="7.7"/><circle cx="51" cy="36.4" r="8.2"/><circle cx="60.9" cy="39.3" r="7.6"/><circle cx="71.2" cy="37.8" r="7.1"/><circle cx="76.5" cy="40.8" r="7"/><circle cx="27.9" cy="46.1" r="7.7"/><circle cx="41.3" cy="46.8" r="8.3"/><circle cx="50.2" cy="44.7" r="8.6"/><circle cx="60.5" cy="45.8" r="7.7"/><circle cx="76.7" cy="44.3" r="8.7"/><circle cx="43" cy="51.6" r="7.3"/><circle cx="60.6" cy="55.5" r="8.3"/></g>
-      <g fill="${soft ? '#A3AE97' : '#8BA071'}"><circle cx="56.9" cy="21.7" r="8"/><circle cx="23.4" cy="27.6" r="8.2"/><circle cx="32.2" cy="31.3" r="7.4"/><circle cx="43.1" cy="29.4" r="6.5"/><circle cx="51.3" cy="27.4" r="7"/><circle cx="64.6" cy="28.1" r="7.9"/><circle cx="22.2" cy="34.8" r="7.4"/><circle cx="41.2" cy="35.8" r="6.4"/><circle cx="59.5" cy="37.1" r="7"/><circle cx="69.8" cy="35.7" r="6.5"/><circle cx="26.5" cy="43.9" r="7"/><circle cx="48.8" cy="42.5" r="7.9"/><circle cx="66" cy="42.7" r="6.3"/><circle cx="48.7" cy="51.6" r="8.1"/></g>
-      <path d="M18 37.9Q18 50.7 18 64.9M22.2 33Q21.1 52.2 20.5 73M26.4 30.3Q26 57.5 25.7 86.2M30.6 28.4Q30.8 54.8 30.9 82.7M34.8 27.1Q34.2 52.8 33.9 80M39 26.1Q40.9 50.7 42.1 76.8M43.2 25.5Q42.2 47 41.7 70M47.4 25.1Q46.1 53.9 45.3 84.2M51.6 25Q52.7 49.8 53.4 76.1M55.8 25.2Q54.6 53.4 53.8 83.2M60 25.6Q61.3 50.7 62.2 77.4M64.2 26.3Q66.1 55.3 67.3 85.8M68.4 27.4Q69.7 55.1 70.4 84.4M72.6 28.9Q74.5 50 75.7 72.6M76.8 30.9Q76.5 49.6 76.4 69.8M81 34Q82.8 48.4 83.9 64.3" stroke="${soft ? '#7E8A74' : '#5F7350'}" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M17 37.9Q17 50.7 17 63.4M25.4 30.3Q25 57.5 24.7 84.7M33.8 27.1Q33.2 52.8 32.9 78.5M42.2 25.5Q41.2 47 40.7 68.5M50.6 25Q51.7 49.8 52.4 74.6M59 25.6Q60.3 50.7 61.2 75.9M67.4 27.4Q68.7 55.1 69.4 82.9M75.8 30.9Q75.5 49.6 75.4 68.3M80 34Q81.8 48.4 82.9 62.8" stroke="${soft ? '#A3AE97' : '#8BA071'}" stroke-width="3.4" fill="none" stroke-linecap="round"/>
-    </g>
-    ${ring}
-    ${soft ? '<g transform="translate(84 14)"><path d="M0-6L1.6-1.6 6 0 1.6 1.6 0 6-1.6 1.6-6 0-1.6-1.6Z" fill="#E8C27A"/></g>' : ''}
-  </svg>`;
+/* The tree art (GWG BLD 780): Willow's own painting with six soft markers (shared/gg-treeart.js,
+   spots in shared/gg-treeart-kids.js). It replaced the drawn willow in How it works, Results, Past
+   Check-ins, and a remembered tree. Gentle on purpose: no level badge, no game, and no line about
+   a part going down. Strong a full warm glow, Steady a soft glow, Growing Edge a new green light. */
+const ART_LV = { strong: 's', steady: 't', edge: 'g' };
+const ART_WORDS = { s: 'Strong', t: 'Steady', g: 'Growing Edge', u: 'Not sure today' };
+const ART_ON = () => !!window.GGTreeArt;
+function artParts(withText, role) { return PARTS.map(p => ({ key: p.key, name: p.part, tag: p.name, text: withText ? PART_WORDS[p.key][role === 'helper' ? 'helper' : 'person'] : '' })); }
+function artLevels(levels) { const o = {}; PARTS.forEach(p => { o[p.key] = ART_LV[(levels || {})[p.key]] || 'u'; }); return o; }
+// The painting with each part's light (the words sit beside it, in Willow's own sentences).
+function artTreeHtml(levels, label, cls) {
+  if (!ART_ON()) return `<img class="w-tree" src="/shared/heroes/willow-phone.webp" alt="${esc(label || 'The willow painting')}">`;
+  return `<div class="w-art ${cls || ''}">${GGTreeArt.results(null, { app: 'willow', parts: artParts(), levels: artLevels(levels), words: ART_WORDS, label: label || 'The willow painting', maxH: 340 })}</div>`;
+}
+// Then and Now from the person's own check-ins (never the observed ones), with growth rings.
+function artGrowthHtml(r, id, self) {
+  if (!ART_ON()) return '';
+  const own = ownCheckins(r).filter(c => c.levels); if (!own.length) return '';
+  const who = self ? 'Your' : nameOf(id) + '\'s';
+  return `<div class="w-card w-grow"><p class="w-eyebrow">Then and Now</p>${GGTreeArt.growth(null, { app: 'willow', parts: artParts(), words: ART_WORDS, maxH: 320,
+    history: own.map(c => ({ date: String(c.date).slice(0, 10), levels: artLevels(c.levels) })),
+    grewLine: who + ' {parts} grew since {date}.', steadyLine: 'Every part of a tree has seasons.',
+    oneLine: 'A first ring. The next check-in shows Then and Now.' })}</div>`;
 }
 
 /* ---------- The Grove: show my growth (on by default) ---------- */
@@ -402,7 +406,7 @@ function treeCard(r, id, role) {
   else words = `<p>${self ? 'Your' : esc(nameOf(id)) + '\'s'} tree is planted. A first check-in gives it words.</p>`;
   const sc = willowScene(r, self);
   return `<div class="w-card w-treecard w-treelive">
-    <div class="w-treewrap">${window.GGLiving ? GGLiving.html({ app: 'willow', light: sc.light, label: sc.line }) : willowSVG({ rings, label: 'A willow tree with ' + rings + ' rings' })}
+    <div class="w-treewrap">${window.GGLiving ? GGLiving.html({ app: 'willow', light: sc.light, label: sc.line }) : artTreeHtml(c && show ? c.levels : null, 'A willow tree with ' + rings + ' rings')}
       <p class="w-sceneline">${esc(sc.line)}</p><p class="w-rings">${rings ? rings + (rings === 1 ? ' ring' : ' rings') : 'No rings yet'}</p></div>
     <div class="w-treetext">
       <p class="w-eyebrow">${self ? 'Your tree' : who + ' tree'}</p>
@@ -483,7 +487,7 @@ function rememberedHtml(t) {
   const r = rec(t), m = remembered(t), n = esc(nameOf(t));
   const after = (RD.readings || []).find(x => x.id === 'gb-after');
   return `<div class="w-head w-remember"><p class="w-eyebrow">${icon('candle', 16)} Remembered</p><h2>Remembering ${n}</h2><p class="lead">${m.date ? 'Died ' + longDate(m.date) + '. ' : ''}Their tree stays here, just as it was. Nothing is taken away.</p></div>
-    <div class="w-card w-treecard"><div class="w-treewrap">${willowSVG({ rings: ringsOf(r), remembered: true, label: n + '\'s willow, remembered' })}</div>
+    <div class="w-card w-treecard"><div class="w-treewrap">${artTreeHtml(sees('tree') && lastOwn(r) ? lastOwn(r).levels : null, n + '\'s willow, remembered', 'w-remart')}<p class="w-rings">${ringsOf(r) ? ringsOf(r) + (ringsOf(r) === 1 ? ' ring' : ' rings') : 'Remembered'}</p></div>
       <div class="w-treetext">${r.matters && r.matters.who && sees('matters') ? `<p class="w-eyebrow">In their words</p><p class="w-quote">${esc(r.matters.who)}</p>` : ''}
       ${after ? `<div data-read="Read this aloud"><p class="w-eyebrow">${esc(after.title)}</p>${after.lines.map(l => `<p class="w-line-read">${esc(l)}</p>`).join('')}</div>` : ''}</div></div>
     <div class="w-card"><p class="w-eyebrow">The next few days</p>
@@ -502,7 +506,8 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <p class="lead">A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone.</p>
   <p class="lead">${esc(P.intro)}</p>
   <h3 class="section-title">The Six Parts</h3>
-  <div class="w-parts">${PARTS.map(p => `<div class="w-part" style="--pc:${p.color}"><b>${p.part}</b><span>${esc(p.name)}</span><p>${esc(PART_WORDS[p.key].person)}</p></div>`).join('')}</div>
+  ${ART_ON() ? `<div class="w-art w-how">${GGTreeArt.howItWorks(null, { app: 'willow', parts: artParts(true), maxH: 420, label: 'The Willow painting with six soft lights to tap', hint: 'Tap a soft light on the tree to read what that part holds.' })}</div>`
+    : `<div class="w-parts">${PARTS.map(p => `<div class="w-part" style="--pc:${p.color}"><b>${p.part}</b><span>${esc(p.name)}</span><p>${esc(PART_WORDS[p.key].person)}</p></div>`).join('')}</div>`}
   <h3 class="section-title">Built for two</h3>
   <p class="lead">Willow is the person's own tree. It's also built for the people who love them: a family member can set it up, tap answers while their person talks, and keep a log of what helped today. Helpers open it with their own passcode, and see only what the person chooses to share. Helpers have their own tree here too, because caregivers carry this as well.</p>
   <h3 class="section-title">Every answer says who answered</h3>
@@ -721,7 +726,7 @@ VIEWS.results = () => {
     ${urgent ? `<div class="w-card w-urgent"><p class="w-eyebrow">Please reach out now</p>${linesHtml()}</div>` : ''}
     ${self && sf.home && sf.home !== 'yes' ? `<div class="w-card w-never"><p class="w-eyebrow">Only you see this</p><p>${esc(C.safety.home.help)}</p>${homeLines()}</div>` : ''}
     ${tell ? `<div class="w-card"><p class="w-eyebrow">Let the hospice team know</p><p>${esc(tellText)}</p>${linesHtml(true)}</div>` : ''}
-    <div class="w-card w-treecard"><div class="w-treewrap">${willowSVG({ rings: ringsOf(r), label: 'The willow tree' })}<p class="w-rings">${seen ? 'No new ring' : ringsOf(r) === 1 ? 'A first ring' : ringsOf(r) + ' rings'}</p></div><div class="w-treetext">${words}</div></div>
+    <div class="w-card w-treecard"><div class="w-treewrap">${artTreeHtml(e.levels, (seen ? 'From what you see: ' : '') + 'the willow painting, each part in light', seen ? 'w-seen' : '')}<p class="w-rings">${seen ? 'No new ring' : ringsOf(r) === 1 ? 'A first ring' : ringsOf(r) + ' rings'}</p></div><div class="w-treetext">${words}</div></div>
     ${flags ? `<div class="w-card"><p class="w-eyebrow">Gently</p>${flags}</div>` : ''}
     ${need && !seen ? `<div class="w-card"><p class="w-eyebrow">One small thing</p><p>Today's practice in Today leans toward the ${esc(need.part.toLowerCase())}: ${esc(need.name.toLowerCase())}.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button>${!(r.matters || {}).who && ck.role === 'person' ? `<button type="button" class="btn btn-secondary" onclick="W.go('matters')">Write what matters</button>` : ''}</div></div>` : `<div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button></div>`}
     ${st ? `<div class="w-card w-story"><p class="w-eyebrow">A Grounded story</p><h3><a class="text-link" href="${storyUrl(st[0])}" target="_blank" rel="noopener">${esc(st[0])}</a></h3><p class="w-quote">${esc(st[1])}</p></div>` : ''}
@@ -736,6 +741,7 @@ VIEWS.history = () => {
   const own = ownCheckins(r).slice().reverse(), obs = seenCheckins(r).slice().reverse();
   return `<div class="w-head"><p class="w-eyebrow">${self ? 'Your' : esc(nameOf(t)) + '\'s'} check-ins</p><h2>Past Check-ins</h2></div>
     ${!show ? `<p class="lead">${esc(nameOf(t))} keeps how their tree is doing private.</p>` : ''}
+    ${show ? artGrowthHtml(r, t, self) : ''}
     <h3 class="section-title">${self ? 'Your own answers' : 'In their own words'} (${own.length})</h3><ul class="w-histlist">${own.map(row).join('') || '<li class="w-small">None yet.</li>'}</ul>
     ${obs.length ? `<h3 class="section-title">What helpers have seen (${obs.length})</h3><p class="w-small">Kept apart. These never add rings.</p><ul class="w-histlist">${obs.map(row).join('')}</ul>` : ''}
     <div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.go('today')">Back to Today</button></div>`;
@@ -1091,7 +1097,9 @@ function openSettings(focus) {
         : `<p class="w-small">When ${self ? 'you die, a helper' : n + ' dies, you'} can mark ${self ? 'your' : 'their'} tree as remembered. Nothing is erased. Check-ins stop, and The Grove shows a remembered willow.</p><label class="w-l" for="w-rd">Date</label><input type="date" id="w-rd" value="${today()}"><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.remember()">Remember ${self ? 'my' : esc(nameOf(t)) + '\'s'} tree</button></div>`}</section>`;
     }
   }
-  h += `<section><h3>Your Records</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('pick')">Load a backup</button></div><p class="w-small">One file with every profile on this device, each still locked. Load it on any device to bring it all back.</p></section>
+  // Root Words (GWG BLD 780): shown for the person who is unlocked, after their passcode (shared/gg-profiles.js).
+  const rs = a && GP() && GGP.rootState ? GGP.rootState(a.id) : '';
+  h += `<section><h3>Your Records</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('pick')">Load a backup</button>${rs ? `<button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGP.rootWords()">${rs === 'has' ? 'See My Root Words' : 'Make My Root Words'}</button>` : ''}</div><p class="w-small">One file with every profile on this device, each still locked, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Load it on any device to bring it all back.${rs ? ' Your Root Words open your profile if your passcode is ever forgotten.' : ''}</p></section>
   <section><h3>Reading and Text</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="cycleTextSize()">Change text size</button></div></section>
     <p class="w-small">Everything in Willow stays on this device, locked in each person's own profile. <a class="text-link" href="/privacy.html#willow">How Willow keeps things private</a></p></div>`;
   wrap.innerHTML = h;
@@ -1297,7 +1305,7 @@ function onPop() {
   S.ck = null; S.tab = 'today'; S.guide.open = null; S.read.open = null;
   render(); setTimeout(() => scrollTop(true), 80);
 }
-window.addEventListener('popstate', onPop);
+window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; onPop(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', () => { if (!location.hash || location.hash === HASH_SEEN) return; HASH_SEEN = location.hash; fromHash(); });
 window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'willow') { S.tab = 'today'; render(); } });
 
