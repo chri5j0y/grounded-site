@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b782';
+  var V = 'b784';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -864,7 +864,8 @@
   ] };
   var SETUP_TRACK = { id: 'gg-setup', title: 'Get Set Up', who: 'Watch this first, once on each device', kind: 'setup', lessons: [SETUP] };
   // The voice card at the top of every Learn tab: what voice is in use, and how it sounds.
-  function voiceCard() {
+  function voiceCard() { return ''; } // the Before You Watch card is retired (recorded voices everywhere), Chris, October 10, 2026
+  function voiceCardOld() {
     var I = window.GGRead && GGRead.voiceInfo ? GGRead.voiceInfo() : null;
     var col = I ? ({ great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' })[I.grade] : '#C07A26';
     var said = !I ? 'Open Voice Setup to get a good voice on this device.' : GGRead.saidText ? GGRead.saidText(I) : '';
@@ -1027,7 +1028,7 @@
     var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
     var lt = lifeTracks(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
     if (lt.length) sup = lifeFirst() ? lt.concat(sup) : sup.concat(lt);
-    return [SETUP_TRACK].concat(rest, sup, guideTracks(app));
+    return rest.concat(sup, guideTracks(app)); // Get Set Up (the device voice video) retired, Chris, October 10, 2026
   }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
   // Who each video is for (GWG BLD 743): a small, quiet label from the lesson's 'for' key (shared/learn-lessons.js).

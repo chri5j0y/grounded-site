@@ -11024,8 +11024,8 @@ window.GG_LEARN = {
       "h": "More inside every guide",
       "items": [
        [
-        "Read this guide aloud",
-        "Willow reads it to the room"
+        "Watch the two videos",
+        "Narrated aloud for the room"
        ],
        [
         "Save or print this guide",
@@ -11040,7 +11040,7 @@ window.GG_LEARN = {
         "On many guides, to read in full"
        ]
       ],
-      "say": "There is more inside. Read this guide aloud lets Willow read it to the whole room. Save or print this guide gives you a page to keep, or to hand to family. A short note for chaplains and doulas sits at the end. And many guides link to a Grounded story you can read in full."
+      "say": "There is more inside. The two videos can play aloud for the whole room. Save or print this guide gives you a page to keep, or to hand to family. A short note for chaplains and doulas sits at the end. And many guides link to a Grounded story you can read in full."
      },
      {
       "k": "big",
