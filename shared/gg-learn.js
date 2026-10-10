@@ -689,7 +689,7 @@
       // A recorded clip for this sentence, when a lesson has them: a page video's own folder (audio: 'pv', BLD 777),
       // or the recording round in this lesson's voice (BLD 778).
       function clip(i, fin) {
-        if (SK) { sealedAhead(i); return sealedPlay(B[i].t, t, fin); }
+        if (SK) { sealedPlay(B[i].t, t, fin); sealedAhead(i); return true; }
         var src = l.audio ? url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3') : rec ? clipUrl(rec, B[i].t) : '';
         return play(src, B[i].t, t, fin);
       }
