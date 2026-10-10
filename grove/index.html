@@ -601,16 +601,10 @@ label.lbl{font-family:'Barlow',sans-serif;font-size:calc(15px * var(--scale));fo
 .gv-rlist li{border-left:4px solid var(--pc);padding:4px 0 4px 12px;}
 .gv-rlist li b{display:block;}
 .gv-shape{font-style:italic;color:var(--ink-soft);margin-top:14px;}
-.gv-rscene{position:relative;border-radius:14px;overflow:hidden;margin:10px 0 6px;}
-.gv-rscene .gl-mini{border-radius:0;width:100%;height:clamp(160px,28vw,280px);display:block;}
-.gv-rmarks{list-style:none;margin:0;padding:10px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;background:var(--bg);}
-.gv-rmarks li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;font-size:calc(13px * var(--scale));}
-.gv-rmarks li span{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--pc);box-sizing:border-box;}
-.gv-rmarks li.lv-strength span{background:var(--pc);box-shadow:0 0 0 4px color-mix(in srgb,var(--pc) 30%,transparent),0 0 12px var(--pc);}
-.gv-rmarks li.lv-steady span{background:color-mix(in srgb,var(--pc) 45%,transparent);}
-.gv-rmarks li.lv-none span{border-style:dashed;opacity:.6;}
-.gv-rmarks li small{color:var(--ink-soft);line-height:1.15;}
-@media (max-width:560px){.gv-rmarks{grid-template-columns:repeat(3,minmax(0,1fr));}}
+/* The tree art (GWG BLD 780): markers on the grove painting (shared/gg-treeart.js). */
+.gv-rscene{margin:10px 0 6px;}
+.gv-howart .gta,.gv-grow .gta{margin-top:8px;}
+.gv-grow{margin:6px 0 16px;}
 .gv-rings,.gv-quicks{margin:0;padding-left:20px;display:grid;gap:8px;}
 .gv-rings li span,.gv-quicks li span{display:block;color:var(--ink-soft);}
 .gv-quicks{list-style:none;padding-left:0;}
@@ -697,7 +691,7 @@ select.gv-input{min-height:44px;}
     <p class="gg-hero-by"><a href="https://growwithgrounded.com/">by Grow With Grounded</a></p>
     <p class="gg-hero-tag">Where our trees grow together.</p>
     <p class="gg-hero-sub">Your tree is yours. The grove is ours.<br>For families, faith communities, small groups, and teams.</p>
-    <div class="gg-hero-actions"><button class="gg-hero-btn main" id="hero-cta" type="button">Visit our grove</button><a class="gg-hero-btn line" href="#app" data-tab="guide">How it works</a></div>
+    <div class="gg-hero-actions"><!-- PAGE VIDEO (BLD 780) --><button type="button" class="gg-hero-btn gg-watch gg-watch-app" data-gg-watch="app-grove" hidden>Watch: Meet The Grove</button><!-- /PAGE VIDEO --><button class="gg-hero-btn main" id="hero-cta" type="button">Visit our grove</button><a class="gg-hero-btn line" href="#app" data-tab="guide">How it works</a></div>
   </div>
   <div class="gg-hero-scene" aria-hidden="true"></div>
 </section>
@@ -731,7 +725,9 @@ select.gv-input{min-height:44px;}
 <script src="/grove/kinds.js?v=b780"></script>
 <script src="/grove/guides.js?v=b777"></script>
 <script src="/shared/gg-library.js?v=b780"></script>
-<script src="/grove/app.js?v=b780"></script>
+<script src="/shared/gg-treeart.js?v=b780"></script>
+<script src="/shared/gg-treeart-kids.js?v=b780"></script>
+<script src="/grove/app.js?v=b780a"></script>
 <script>
 /* Read aloud, built in like Maple */
 (function () {
@@ -758,5 +754,6 @@ select.gv-input{min-height:44px;}
 <script src="/shared/gg-learn.js?v=b780a" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b780a';document.head.appendChild(s)"></script>
 <script src="/read.js?v=vc3" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=vc3';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=b779t" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b779t';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b780a" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

@@ -48,7 +48,7 @@ html,body{overflow-x:clip;}
 .w-line span{display:block;font-size:14.5px;color:var(--ink-soft);margin-top:2px;}
 
 /* the tree */
-.w-treecard{display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:start;}
+.w-treecard{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:22px;align-items:start;}
 .w-treewrap{text-align:center;}
 .w-tree{width:100%;max-width:220px;height:auto;display:block;margin:0 auto;border-radius:18px;background:linear-gradient(#EDEAF0,#E4E7E2);}
 :root[data-theme="dark"] .w-tree{background:linear-gradient(#3A3846,#2E3329);}
@@ -206,3 +206,16 @@ html,body{overflow-x:clip;}
 .w-gv-w{font-size:13px;font-weight:600;margin-left:6px;padding:2px 8px;border-radius:999px;background:rgba(95,115,80,.16);}
 .w-gv .w-small{margin:10px 0 0;}
 @media (max-width:520px){.w-gv .btn-row .btn{width:100%;justify-content:center;}}
+
+/* The tree art (GWG BLD 780): Willow's painting with six soft markers (shared/gg-treeart.js). */
+.w-art{text-align:left;}
+.w-how{margin:6px 0 18px;}
+.w-treecard .w-art .gta-list{display:none;}
+.w-treecard .w-art .gta-grid{gap:10px;}
+.w-treecard .w-art .gta-legend{font-size:13px;}
+.w-seen .gta-mk{opacity:.78;filter:saturate(.6);}
+.w-remart .gta-list,.w-remart .gta-legend{display:none;}
+.w-remart .gta-art img{filter:saturate(.62) brightness(.98);}
+.w-remart .gta-art::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(240,236,246,.5),rgba(240,236,246,.16) 60%,rgba(240,236,246,.34));}
+.w-remart .gta-art::before{content:"";position:absolute;right:14px;top:14px;z-index:3;width:24px;height:24px;background:#E8C27A;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);}
+.w-grow{margin:0 0 18px;}

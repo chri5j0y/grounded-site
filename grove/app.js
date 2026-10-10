@@ -1165,10 +1165,20 @@ function resultsHtml(ci) {
   h += `<div class="tools-row" style="justify-content:flex-start">${!v.plan ? '<button class="btn btn-gold btn-sm" data-act="startplan">Make Our Growth Plan</button>' : ''}<button class="btn btn-line btn-sm" data-act="print" data-id="summary" data-ci="${esc(ci.id)}">${icon('print')} Print Our Check-in Summary</button></div>${srcFor('results')}</div>`;
   return h;
 }
-// The grove painting with a lit marker for each part: full light for a Shared Strength, soft light for Steady, an open ring for a Growing Edge.
+/* The tree art (GWG BLD 780): the grove painting with six glowing markers on the great oak in the
+   middle (shared/gg-treeart.js, spots in shared/gg-treeart-kids.js). A Shared Strength is a full warm
+   glow, Steady a soft glow, a Growing Edge a new green light, a part passed a faint light. Words only,
+   never numbers. Our Grove and Today keep their own paintings. No level badge in The Grove. */
+const ART_LV = { strength: 's', steady: 't', edge: 'g' };
+const ART_WORDS = { s: 'Shared Strength', t: 'Steady', g: 'Growing Edge', u: 'Passed' };
+const ART_TEXT = { roots: 'What grounds us, and what holds us up when the storms come.', trunk: 'What we live for together, and what we build along the way.',
+  bark: 'How we settle our thoughts and meet big feelings, together.', branches: 'How we reach toward each other, and toward the people around us.',
+  leaves: 'Rest, food, movement, and play: how our bodies are doing.', fruit: 'What we look forward to, and what we give.' };
+function artParts(withText) { return PARTS6.map(p => ({ key: p.key, name: p.name, tag: p.sub, text: withText ? ART_TEXT[p.key] : '' })); }
+function artLevels(L) { const o = {}; PARTS6.forEach(p => { o[p.key] = ART_LV[(L || {})[p.key]] || 'u'; }); return o; }
 function resultScene(L) {
-  const art = window.GGLiving ? GGLiving.svg('grove', .85, 'The grove painting').replace('<svg ', '<svg preserveAspectRatio="xMidYMax slice" ') : '';
-  return `<div class="gv-rscene">${art}<ul class="gv-rmarks" aria-label="Each part, in words">${PARTS6.map(p => `<li class="lv-${L[p.key] || 'none'}" style="--pc:${p.color}"><span aria-hidden="true"></span><b>${p.name}</b><small>${L[p.key] ? LEVEL[L[p.key]] : 'Passed'}</small></li>`).join('')}</ul></div>`;
+  if (!window.GGTreeArt) return '';
+  return `<div class="gv-rscene">${GGTreeArt.results(null, { app: 'grove', parts: artParts(), levels: artLevels(L), words: ART_WORDS, label: 'The grove painting, each part in light' })}</div>`;
 }
 function ideasHtml(part) {
   const list = joinOrder(kindPractices(part)).slice(0, 3); if (!list.length) return '';
@@ -1181,6 +1191,11 @@ function seasonsHtml() {
   if (!full.length && !quick.length) return '';
   const ring = W('seasons.ringLine', '{part} grew from {from} to {to}'), now = W('seasons.nowLine', '{part} is {level} this season');
   let h = `<div class="card gv-seasons"><h3>Our Seasons</h3>`;
+  // Then and Now on the grove painting, with a growth ring for each full check-in (tap one to compare).
+  if (full.length && window.GGTreeArt) h += `<div class="gv-grow">${GGTreeArt.growth(null, { app: 'grove', parts: artParts(), words: ART_WORDS,
+    history: full.map(c => ({ date: String(c.date).slice(0, 10), levels: artLevels(levelsOf(c)) })),
+    grewLine: 'Our {parts} grew since {date}.', steadyLine: 'Our grove held its shape since {date}.',
+    oneLine: 'Our first ring is here. The next full check-in shows Then and Now.' })}</div>`;
   if (full.length) h += `<ol class="gv-rings">${full.map((c, k) => {
     const L = levelsOf(c);
     if (!k) return `<li><b>Ring ${k + 1}, ${esc(longDate(c.date))}</b><span>${esc(W('seasons.firstRing', 'Our first ring.'))}</span></li>`;
@@ -1438,6 +1453,7 @@ function viewEarlier() {
 /* ---------- How it works ---------- */
 function viewHow() {
   return `<div class="section-head"><h2>How The Grove works</h2><p>Where our trees grow together.</p></div>
+  ${window.GGTreeArt ? `<div class="card gv-howart"><h3>The Six Parts</h3>${GGTreeArt.howItWorks(null, { app: 'grove', parts: artParts(true), label: 'The grove painting with six glowing parts to tap' })}</div>` : ''}
   <div class="card gv-how">
     <h3>Your tree is yours. The grove is ours.</h3>
     <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, and <a class="text-link" href="/maple/">Maple</a> for kids. Personal check-ins, practices, and journals live there, private to each person.</p>

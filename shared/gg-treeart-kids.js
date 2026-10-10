@@ -24,7 +24,7 @@
     phone: { size: P, crop: [14, 18, 62, 78], at: { roots: [43.5, 90.5], trunk: [43.5, 80.5], bark: [43.6, 70.5], branches: [51, 62], leaves: [31, 47], fruit: [44, 28] } }
   });
   GGTreeArt.add('willow', {
-    wide: { size: W, crop: [4, 16, 42, 70], at: { roots: [21, 75.5], trunk: [21.8, 68.5], bark: [23.2, 61.5], branches: [28, 48], leaves: [15, 42], fruit: [31, 30] } },
+    wide: { size: W, crop: [4, 16, 42, 70], at: { roots: [20.6, 77], trunk: [21.8, 68.5], bark: [24.2, 59.5], branches: [28, 48], leaves: [15, 42], fruit: [31, 30] } },
     phone: { size: P, crop: [6, 18, 70, 66], at: { roots: [33, 77], trunk: [34.6, 68.5], bark: [37.5, 58], branches: [47, 49], leaves: [19, 47], fruit: [52, 29] } }
   });
   GGTreeArt.add('grove', {
