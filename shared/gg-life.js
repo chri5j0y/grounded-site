@@ -280,7 +280,7 @@
         '<div class="gl-grid" role="group" aria-labelledby="gl-h-' + n + '">' + list.map(function (x) { return box(x.id, x.name, x.line, c.ids.indexOf(x.id) >= 0, 'id'); }).join('') + '</div>' +
         '<div class="gl-specials">' + box('none', CAT.none.words[tree], CAT.none.line[tree], c.none, 'sp') + box('rather', CAT.rather.words[tree], CAT.rather.line[tree], c.rather, 'sp') + '</div>' +
         sw('gentle', 'Show Gentler Ways First', 'Practices with a seated, lying down, short, or low-energy way come first, and show that way.' + (c.rather ? ' On while I\'d Rather Not Say is chosen.' : ''), c.gentle || c.rather) +
-        (helperOn ? sw('shareHelpers', 'Share My Health and Ability with my helpers', c.shareHelpers ? 'On. Helpers you added can see these choices, so they can help in ways that fit.' : 'Off. Helpers you added never see these choices unless you turn this on.', c.shareHelpers) : '') +
+        (helperOn ? sw('shareHelpers', 'Share My Health and Ability with my helpers', c.shareHelpers ? 'On. Helpers you added can see these choices, so they can help in ways that fit.' : 'Off. These choices stay private to you until you turn this on.', c.shareHelpers) : '') +
         '<div class="gl-foot"><button type="button" class="gl-link" data-gl="clear">Clear My Choices</button>' +
         (opt.onDone ? '<button type="button" class="gl-b gl-go" data-gl="done">Done</button>' : '') + '</div>' +
         '<p class="gl-status" role="status" aria-live="polite">' + esc(msg || (guest ? 'Kept for this visit only. Open a profile to keep it, locked on this device.' : (c.set ? 'Saved, locked on this device.' : ''))) + '</p>';

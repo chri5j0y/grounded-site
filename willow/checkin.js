@@ -114,7 +114,7 @@ const Q = {
   ],
   fruit: [
     { t: `Felt hopeful about something, even something small?`,
-      why: `Hope changes shape near the end. It doesn't have to disappear.`,
+      why: `Hope changes shape near the end. It can stay with you.`,
       tip: `Ask what they're hoping for now: peace, a visit, a good day, what comes after.` },
     { t: `Felt ready, or getting ready, for what's ahead?`,
       why: `Readiness grows a little at a time.`,
@@ -162,7 +162,7 @@ const HELPER = {
 // Flags are never lost. The person sees help right away; a guide sees the flag.
 const FLAGS = {
   struggle: { who: 'person', on: ['often', 'always'], title: `Spiritual struggle`,
-    note: `Feeling far from what you hold sacred is common, and you don't have to sort it out alone. A chaplain can sit with this.`,
+    note: `Feeling far from what you hold sacred is common, and others can help you sort it out. A chaplain can sit with this.`,
     guide: `Spiritual struggle. Use the struggle-type picker.` },
   regret: { who: 'person', on: ['often', 'always'], title: `Regret`,
     note: `Some regrets can still be repaired. Some can be set down. Both are possible here.`,

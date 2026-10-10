@@ -1715,7 +1715,7 @@
 "CP-003",
 "CP-011"
 ],
-"practice:Phone-Free Time": [
+"practice:Unplugged Time": [
 "CP-005",
 "CP-009",
 "PS-018"
@@ -2854,7 +2854,7 @@
 "practice:Peaceful Music": "Peaceful Music",
 "practice:One Reach-Out a Day": "One Reach-Out a Day",
 "practice:Active Listening": "Active Listening",
-"practice:Phone-Free Time": "Phone-Free Time",
+"practice:Unplugged Time": "Unplugged Time",
 "practice:Ask for Help": "Ask for Help",
 "practice:Real Time Together": "Real Time Together",
 "practice:Gratitude Letter": "Gratitude Letter",

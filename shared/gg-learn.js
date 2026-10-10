@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln46';
+  var V = 'b782';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -852,7 +852,7 @@
     { k: 'title', hero: 'grove', eyebrow: 'Get Set Up', h: 'A Good Voice', sub: 'A few minutes now, and every lesson sounds better.', say: 'Before you watch, let us make sure lessons sound good on this device. It takes a few minutes, and you only do it once.' },
     { k: 'big', h: 'Every lesson is read by your device\u2019s own voice.', sub: 'The voice lives on your phone or computer.', say: 'Every lesson, and every Read Aloud button, uses your device\u2019s own voice. Some devices start with a basic voice that sounds robotic. Many computers and Android phones have natural voices waiting to be downloaded.' },
     { k: 'levels', levels: [['Premium', 'Sounds like a person', '#5F7D48'], ['Enhanced', 'Clear and warm', '#8B5E1A'], ['Basic', 'Robotic', '#B8612F']], say: 'Look for a voice marked Premium. Enhanced is good too, and on Windows, Natural. A basic voice works, but it can make a lesson hard to enjoy.' },
-    { k: 'points', h: 'On an iPhone or iPad', items: [['Pick the clearest voice', 'In the Voice menu, under the video'], ['Try Slower', 'If the voice feels rushed'], ['Most natural of all', 'A computer, in Microsoft Edge']], say: 'On an iPhone or iPad, web pages can use only Apple\u2019s built-in voices for now, so there is nothing to download. Open the Voice menu under the video, and pick the voice that sounds clearest to you. If it feels rushed, choose Slower. And for the most natural voices of all, watch on a computer in Microsoft Edge.' },
+    { k: 'points', h: 'On an iPhone or iPad', items: [['Pick the clearest voice', 'In the Voice menu, under the video'], ['Try Slower', 'If the voice feels rushed'], ['Most natural of all', 'A computer, in Microsoft Edge']], say: 'On an iPhone or iPad, web pages use Apple\u2019s built-in voices for now, and they are already on your device. Open the Voice menu under the video, and pick the voice that sounds clearest to you. If it feels rushed, choose Slower. And for the most natural voices of all, watch on a computer in Microsoft Edge.' },
     { k: 'flow', h: 'On a Mac', steps: [['Best: Microsoft Edge', 'Its natural voices sound the most like a person'], ['Or System Settings', 'Accessibility, then Read & Speak'], ['Manage Voices', 'Download Premium or Enhanced']], say: 'On a Mac, the most natural voices are in Microsoft Edge. Or, open System Settings, then Accessibility. Open Read and Speak, then Manage Voices, and download a voice marked Premium or Enhanced.' },
     { k: 'points', h: 'On Windows', items: [['Open it in Microsoft Edge', 'Its natural voices sound the most like a person'], ['Pick a natural voice yourself', 'They read through the internet, so you choose them'], ['Or add a Windows voice', 'Settings, Time and language, Speech']], say: 'On Windows, open this page in Microsoft Edge. Its natural voices sound the most like a person. They read the words through the internet, so you pick one yourself in the Voice menu. Or, add a voice in Windows settings, under Time and language, then Speech.' },
     { k: 'flow', h: 'On Android', steps: [['Settings', 'Search Text-to-speech'], ['Google engine', 'Speech Services by Google'], ['Install voice data', 'English, then download']], say: 'On Android, open Settings and search for Text to speech. Choose Speech Services by Google. Then tap Install voice data, choose English, and download a voice you like.' },
@@ -930,11 +930,11 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=hl1', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b782', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
-      return script(url('/shared/gg-life.js?v=lf1'), function () { return !!window.GGLife; });
+      return script(url('/shared/gg-life.js?v=b782'), function () { return !!window.GGLife; });
     });
   }
   // The tracks of shared/learn-life.js (group: 'life'), with the videos that fit the person's choice first

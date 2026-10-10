@@ -184,7 +184,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Worry That Keeps Coming Back",
 "sub": "For the Grown-up",
-"say": "When a child you love has a worry that won't let go, this is for you. Worry is a feeling, not a fact, and you can help it shrink."
+"say": "When a child you love has a worry that keeps coming back, this is for you. Worry is a feeling, not a fact, and you can help it shrink."
 },
 {
 "k": "points",
@@ -1383,7 +1383,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "Everybody is one of a kind.",
 "sub": "Your differences are part of you.",
-"say": "Here is something true. Nobody is exactly like anybody else. Not one person in the whole world. Your differences are part of what makes you, you."
+"say": "Here is something true. Everybody is one of a kind. There is only one you in the whole world. Your differences are part of what makes you, you."
 },
 {
 "k": "words",
@@ -1507,7 +1507,7 @@ window.GG_LEARN_GUIDES.maple = {
 "\"You are exactly who you are meant to be.\"",
 "\"And you're still growing.\""
 ],
-"say": "If they ask, why am I not like the other kids, you can say, nobody is exactly like anybody else. Your differences are part of what makes you, you, and the right friends will love that. If they ask, is something wrong with me? No. You are exactly who you are meant to be, and you're still growing."
+"say": "If they ask, why am I not like the other kids, you can say, everybody is one of a kind. Your differences are part of what makes you, you, and the right friends will love that. If they ask, is something wrong with me? No. You are exactly who you are meant to be, and you're still growing."
 },
 {
 "k": "big",
@@ -5500,7 +5500,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "You can love them both.",
 "body": "You get to love both.",
-"say": "Grown-ups can stop living together. They don't stop being your parents. You can love both of them, and you never have to pick a side. Loving one never takes love away from the other."
+"say": "Grown-ups can stop living together. They don't stop being your parents. You can love both of them, always. Loving one leaves plenty of love for the other."
 },
 {
 "k": "points",
@@ -6567,7 +6567,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "You choose who to tell.",
 "body": "You can hold your head high.",
-"say": "You don't have to tell everyone. You can choose who to tell. And you never have to feel ashamed. This is not a secret you have to carry by yourself."
+"say": "You don't have to tell everyone. You can choose who to tell. And you can hold your head high. This is not a secret you have to carry by yourself."
 },
 {
 "k": "big",
@@ -9062,7 +9062,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "You are more than one test.",
 "sub": "Trying and learning is what counts.",
-"say": "One test doesn't decide who you are. You are loved for who you are, not for your grades. Keep trying, keep learning, and keep telling your grown-ups how you feel."
+"say": "You are more than one test. You are loved for who you are, not for your grades. Keep trying, keep learning, and keep telling your grown-ups how you feel."
 }
 ]
 },
@@ -9132,7 +9132,7 @@ window.GG_LEARN_GUIDES.maple = {
 "\"You don't know it yet.\"",
 "\"You are more than one test.\""
 ],
-"say": "Words that help. You seem stressed about the spelling test. What part feels hardest? Use the word yet: you don't know it yet. And if they ask what happens if they fail, try this: then we learn what to practice next. One test doesn't decide who you are."
+"say": "Words that help. You seem stressed about the spelling test. What part feels hardest? Use the word yet: you don't know it yet. And if they ask what happens if they fail, try this: then we learn what to practice next. You are more than one test."
 },
 {
 "k": "flow",

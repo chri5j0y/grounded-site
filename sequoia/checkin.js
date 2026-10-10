@@ -274,7 +274,7 @@ const Q = {
       why: 'Finding another way when blocked is the working heart of hope.' },
     { t: 'Felt that things will never get better?', r: 1, flag: 'hope',
       tip: 'Take this seriously. Ask gently how long they have felt this way, and listen for thoughts of not wanting to be alive. The safety step comes next.',
-      why: 'When hope runs low, you deserve support. You don\'t have to carry it alone.' },
+      why: 'When hope runs low, you deserve support. Others can help you carry it.' },
     { t: 'Felt like you had nothing to look forward to?', r: 1,
       tip: 'Help them find one small thing in the next few days, together.',
       why: 'Having nothing to look forward to drains hope. Small things count.',
@@ -420,7 +420,7 @@ const HELPER = {
   fruit: [
     { t: 'Felt hopeful about something, even something small?',
       tip: 'Ask what they are hoping for now, for {name} and for themselves.',
-      why: 'Hope changes shape in hard seasons. It doesn\'t have to disappear.' },
+      why: 'Hope changes shape in hard seasons. It can stay with you.' },
     { t: 'Shared a good moment or a laugh with {name}?',
       tip: 'Ask about the last one. Help them plan one more.',
       why: 'Good moments together are fruit, even in a hard season.' },
@@ -438,7 +438,7 @@ const HELPER = {
       why: 'A pace you can keep is a sign the load fits.' },
     { t: 'Felt hopeless, or like you can\'t go on?', r: 1, flag: 'hope',
       tip: 'Take this seriously. Ask gently whether they have thoughts of not wanting to go on themselves. The helper safety question comes next.',
-      why: 'When hope runs low, you deserve support. You don\'t have to carry it alone.' },
+      why: 'When hope runs low, you deserve support. Others can help you carry it.' },
     { t: 'Felt trapped by what helping asks of you?', r: 1,
       tip: 'Listen without judging. Feeling trapped is a burnout sign and a reason to bring in more help.',
       why: 'Feeling trapped is a sign you need more support, not a sign you love less.' }
@@ -455,7 +455,7 @@ const FLAGS = {
     helperNote: 'You said you have felt alone in this. You shouldn\'t carry it alone. Who could you call today? The Eldercare Locator (1-800-677-1116) can point you to support for helpers.',
     guide: 'They named loneliness or isolation. Talk together about one person they could reach toward, and consider a referral to a senior center, a faith community, a friendly visitor program, or grief support.' },
   hope: { on: ['often', 'always'], calm: ['always'], title: 'Losing hope',
-    note: 'You said things have felt like they will never get better. You don\'t have to carry that alone. Call or text 988 any time to talk with someone. Veterans, call 988 and press 1.',
+    note: 'You said things have felt like they will never get better. You can share that weight. Call or text 988 any time to talk with someone. Veterans, call 988 and press 1.',
     helperNote: 'You said you have felt hopeless. This is one of the hardest things a person does. Call or text 988 any time to talk with someone.',
     guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive. Older men are at the highest risk.' },
   home: { on: ['rarely', 'sometimes', 'unsure'], calm: ['rarely'], title: 'Safety at home',
@@ -473,10 +473,10 @@ const SAFETY = {
   directLead: 'Sometimes, when life has brought a lot of loss, people think about not wanting to be here anymore. Many older adults have had that thought. It is safe to say so here.',
   direct: 'In the past two weeks, have you wished you could go to sleep and not wake up, or thought about ending your life?',
   directOpts: [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', 'I\'d rather not say']],
-  yes: 'Thank you for telling me. You matter, and you don\'t have to carry this alone. Please reach out now. Someone will listen.',
+  yes: 'Thank you for telling me. You matter, and others can help you carry this. Please reach out now. Someone will listen.',
   means: 'If there are guns or a large supply of medicine at home, ask someone you trust to keep them for now.',
   burden: 'You matter to people, even when it is hard to see. Many older adults feel like a burden at times. Talking it over can help.',
-  title: 'You matter, and you don\'t have to carry this alone.',
+  title: 'You matter, and others can help you carry this.',
   intro: 'If you\'re thinking about suicide, feel unsafe, or someone is hurting you or taking your money, reach out now. Someone will listen.',
   // Crisis and help lines in the order shown. tel and sms are dialable;
   // first: 'home' moves a line to the top when the home flag shows.

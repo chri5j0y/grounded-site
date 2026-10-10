@@ -33,8 +33,8 @@ const G = [
       ['what', `Divine struggle. It's common, it hurts, and left alone it's linked to worse outcomes.`],
       ['say', `"That's a heavy question. Tell me more about you and God right now." "You're allowed to be angry at God. People in the Bible were."`],
       ['dont', `"God has a plan." "Everything happens for a reason." Don't defend God.`],
-      ['helps', `Lament. Psalm 13 and Psalm 22 say what they're feeling. Prayer doesn't have to be polite.`],
-      ['you', `If you're the one asking: people all through scripture asked God why, and asking is a way of being honest with God. Prayer doesn't have to be polite. Try your own words: "God, I'm angry. I don't understand. Stay with me." Tell someone you trust, ask your hospice to help reach your own faith leader, and let others pray for you on the days you can't.`],
+      ['helps', `Lament. Psalm 13 and Psalm 22 say what they're feeling. Prayer can be honest, even raw.`],
+      ['you', `If you're the one asking: people all through scripture asked God why, and asking is a way of being honest with God. Prayer can be honest, even raw. Try your own words: "God, I'm angry. I don't understand. Stay with me." Tell someone you trust, ask your hospice to help reach your own faith leader, and let others pray for you on the days you can't.`],
       ['pro', `Listen for whether it's punishment, abandonment, or anger. Each needs company more than answers.`],
       ['faith', `In Islam, illness can be a test and a purification. In Hindu and Buddhist families, watch that karma doesn't turn into blame.`]
     ] },

@@ -2823,7 +2823,7 @@ const TOPICS = [
     "Tell the school counselors right away about students who seem shaken, who were closest to the event, or who don't want to come back.",
     "Make sure families get the school's letter the same day. If a student tells you about a threat, report it at once through your school's plan."
    ],
-   "you": "Emergencies shake adults too. Find a colleague to talk with after school, and use your employee assistance program if your school has one. You don't need perfect words. A calm voice, a steady routine, and a path to the counselors is enough."
+   "you": "Emergencies shake adults too. Find a colleague to talk with after school, and use your employee assistance program if your school has one. Simple words are enough. A calm voice, a steady routine, and a path to the counselors is enough."
   },
   "byKind": {
    "classroom": "911 and your school's crisis plan come first. Use only the words the school has shared, and let the school counselors lead on any student who needs more."
@@ -3372,7 +3372,7 @@ const TOPICS = [
     "Use the time between leaders to remember the community's own story and purpose.",
     "Welcome the next or interim leader with a real welcome, and give them time."
    ],
-   "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor, a peer leader, or your faith body's support for leaders. You don't have to have answers. Steady and honest is enough."
+   "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor, a peer leader, or your faith body's support for leaders. Your presence matters more than answers. Steady and honest is enough."
   },
   "byKind": {
    "group": "For a support group or study group, plan the last meeting with the leader, and decide together whether the group continues, pauses, or chooses a new facilitator."
@@ -3439,7 +3439,7 @@ const TOPICS = [
      "Use the time between leaders to remember the group's own story and purpose.",
      "Welcome the next or interim leader with a real welcome, and give them time."
     ],
-    "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor or a peer leader. You don't have to have answers. Steady and honest is enough."
+    "you": "Whoever carries the group through a transition carries extra weight. Find your own place to talk it through, with a mentor or a peer leader. Your presence matters more than answers. Steady and honest is enough."
    }
   },
   "practices": [
@@ -4288,10 +4288,10 @@ const TOPICS = [
    "If a child tells you about danger at home, stay calm, thank them, and get help the same day."
   ],
   "leader": {
-   "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. You don't have to be a crisis expert. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
+   "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
    "say": [
     "“Are you thinking about suicide?”",
-    "“I'm glad you told me. You don't have to go through this alone.”",
+    "“I'm glad you told me. Others can walk through this with you.”",
     "“Let's call 988 together right now.”",
     "“What can our community do that would actually help?”",
     "“What would you like people here to know, and not know?”"
@@ -4311,7 +4311,7 @@ const TOPICS = [
     "Ask the person what they want shared, and protect their privacy in every announcement.",
     "Plan their return to the group: a quiet welcome, no questions, and an easy way to step out."
    ],
-   "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. You don't have to carry this alone, and you shouldn't."
+   "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. Let others help you carry this."
   },
   "byKind": {
    "group": "In a support group, if a member speaks of danger during a meeting, thank them, keep the group calm, and speak with that person privately right away while a co-leader holds the room."
@@ -4333,10 +4333,10 @@ const TOPICS = [
     "If a child tells you about danger at home, stay calm, thank them, and get help the same day."
    ],
    "leader": {
-    "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. You don't have to be a crisis expert. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
+    "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
     "say": [
      "“Are you thinking about suicide?”",
-     "“I'm glad you told me. You don't have to go through this alone.”",
+     "“I'm glad you told me. Others can walk through this with you.”",
      "“Let's call 988 together right now.”",
      "“What can our community do that would actually help?”",
      "“What would you like people here to know, and not know?”"
@@ -4356,7 +4356,7 @@ const TOPICS = [
      "Ask the person what they want shared, and protect their privacy in every announcement.",
      "Plan their return to the group: a quiet welcome, no questions, and an easy way to step out."
     ],
-    "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. You don't have to carry this alone, and you shouldn't."
+    "you": "Crisis support is heavy. After you respond, talk it through with a supervisor, a peer leader, or a mental health professional. Get your own support, and notice if you can't stop thinking about it. Let others help you carry this."
    }
   },
   "practices": [

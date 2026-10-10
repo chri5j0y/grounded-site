@@ -85,7 +85,7 @@
     });
     return out;
   }
-  // How many practices to suggest for one part of the tree. Suggestions only, never a limit.
+  // How many practices to suggest for one part of the tree. Suggestions only, with room for more.
   function suggest(level) { return level === 'edge' ? 5 : level === 'steady' ? 4 : 3; }
 
   /* ---------- small helpers ---------- */
@@ -660,7 +660,7 @@
     closeLib(); LIBQ = { part: part || '', q: '', open: '' };
     var html = '<div class="gt-sheet-back" id="gt-lib" role="dialog" aria-modal="true" aria-labelledby="gt-lib-title" onclick="if(event.target===this)GGTend.closeLib()"><div class="gt-sheet">'
       + '<div class="gt-sheet-head"><h2 id="gt-lib-title">Find more practices</h2><button type="button" class="gt-x" onclick="GGTend.closeLib()" aria-label="Close">&times;</button></div>'
-      + '<p class="gt-small">The Grounded practice library. Add any practice to your own, alongside the ones from your growth plan. Suggestions only, never a limit.</p>'
+      + '<p class="gt-small">The Grounded practice library. Add any practice to your own, alongside the ones from your growth plan. Suggestions only, with room for more.</p>'
       + '<label class="gt-small" for="gt-lib-q">Search practices, guides, and more</label><input id="gt-lib-q" class="gt-lib-q" type="search" placeholder="Try sleep, calm, or friends" enterkeyhint="search" oninput="GGTend.libFind(this.value)">'
       + '<div class="gt-lib-parts" id="gt-lib-parts"></div><div id="gt-lib-list"><p class="gt-small">Getting the library ready...</p></div></div></div>';
     document.body.insertAdjacentHTML('beforeend', html);

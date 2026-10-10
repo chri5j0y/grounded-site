@@ -56,7 +56,7 @@ T.moving = {
   sources:[["Military OneSource: Deployment support for teens","https://www.militaryonesource.mil/resources/millife-guides/military-deployment-support-for-teens/"]]
 };
 T.money = {
-  quick:["Be calm and simple: \"Things are tighter, and the grown-ups have a plan.\"","Don't share debt details or adult worries.","Point out free fun nearby.","Let them know it's not their job to fix it."],
+  quick:["Be calm and simple: \"Things are tighter, and the grown-ups have a plan.\"","Keep debt details and adult worries between grown-ups.","Point out free fun nearby.","Let them know it's not their job to fix it."],
   talk:["Kids notice money stress even when adults don't talk about it. A calm, honest sentence helps more than silence. Middle schoolers may feel embarrassed at school or worry about the family, so tell them what will stay the same.","Help is out there for food, housing, and bills. Using it is wise, not shameful, and you can say so."],
   say:["\"We're being careful with money right now. You're not in trouble, and we're okay.\"","\"If kids at school say something, you can come tell me.\"","\"What free things do you like doing?\""],
   avoid:["Making them feel responsible for adult money decisions.","Arguing about money in front of them."],
@@ -72,7 +72,7 @@ T.deployed = {
   sources:[["Military OneSource: Supporting military children through deployment","https://www.militaryonesource.mil/parenting/new-parents/supporting-your-military-children-through-the-deployment-cycle/"]]
 };
 T.baby = {
-  quick:["Keep one-on-one time on the calendar.","Invite them to help, and let them say no.","Expect mixed feelings: proud and pushed aside.","Don't make them the default babysitter."],
+  quick:["Keep one-on-one time on the calendar.","Invite them to help, and let them say no.","Expect mixed feelings: proud and pushed aside.","Let babysitting stay an occasional favor."],
   talk:["A new baby shifts attention fast. A middle schooler might love the baby and still feel invisible. Name both feelings as normal.","Small, protected time together tells them they still matter. Let them choose a way to be a big sibling that fits who they are."],
   say:["\"You'll always be my first kid in this spot.\"","\"It's okay if the baby gets on your nerves.\"","\"Want to pick something we do together this week?\""],
   avoid:["Assuming they'll babysit.","Comparing them to the baby or other siblings."],
@@ -138,7 +138,7 @@ T.leftout = {
   sources:[["Search Institute: Developmental relationships framework","https://searchinstitute.org/resources-hub/developmental-relationships-framework"]]
 };
 T.bullying = {
-  quick:["Believe them, and thank them for telling you.","Save screenshots and write down what happened.","Block and report online. Work with the school in writing.","Don't take their phone away for being bullied."],
+  quick:["Believe them, and thank them for telling you.","Save screenshots and write down what happened.","Block and report online. Work with the school in writing.","Let them keep their phone when they tell you about bullying."],
   talk:["Bullying is common. In a 2023 national survey, about 1 in 5 high school students was bullied at school, and girls were almost twice as likely as boys to be bullied online. Middle schoolers often don't tell because they fear it'll get worse or they'll lose their phone.","Make it clear that telling you never leads to punishment. Then act: document it, report it to the school, and follow up. Teach them to be an upstander for others too."],
   say:["\"This is not your fault.\"","\"You won't lose your phone for telling me.\"","\"We'll figure out the next step together.\""],
   avoid:["Telling them to fight back.","Taking away their phone.","Saying \"just ignore it.\""],
@@ -154,7 +154,7 @@ T.grades = {
   sources:[["Search Institute: Developmental relationships","https://searchinstitute.org/developmental-relationships"],["Greater Good in Education","https://ggie.berkeley.edu/student-well-being/gratitude-for-students/"]]
 };
 T.cut = {
-  quick:["Let them be sad first. Plans can wait.","Don't blame the coach in front of them.","Later, ask what they want to do next.","Look for other ways to keep playing."],
+  quick:["Let them be sad first. Plans can wait.","Speak respectfully about the coach in front of them.","Later, ask what they want to do next.","Look for other ways to keep playing."],
   talk:["Getting cut can feel like being told you're not good enough. Handled with support, it becomes a lesson in getting back up. Start with the feelings, not the fix.","When they're ready, talk about options: another team, a rec league, practicing for next year, or trying something new. Staying active and connected matters more than the specific team."],
   say:["\"I'm sorry. I know how much you wanted this.\"","\"I'm proud you tried out.\"","\"Want to think about what's next, or just be sad for now?\""],
   avoid:["Rushing to solutions.","Trashing the coach or other players."],
@@ -162,7 +162,7 @@ T.cut = {
   sources:[["Aspen Institute Project Play","https://projectplay.org/"]]
 };
 T.crush = {
-  quick:["Stay curious and calm. Crushes are normal at this age.","Don't tease or share it with the whole family.","Share your family's values without a lecture.","Teach that anyone pushing for photos or secrets is not safe."],
+  quick:["Stay curious and calm. Crushes are normal at this age.","Keep it private, and keep it kind.","Share your family's values without a lecture.","Teach that anyone pushing for photos or secrets is not safe."],
   talk:["First crushes are a normal part of growing up. How you react decides whether they keep talking to you. Calm curiosity keeps the door open.","This is a good age to start talking about healthy relationships: kindness, respect, and never feeling pressured. Make it clear that any adult showing romantic interest in a child is never okay, and they should tell you right away."],
   say:["\"What do you like about them?\"","\"Good relationships feel kind and safe, never pushy.\"","\"If anyone ever asks you for pictures or secrets, tell me.\""],
   avoid:["Mocking or teasing.","Panicking or forbidding all talk about it."],
@@ -244,7 +244,7 @@ T.looks = {
   sources:[["AAP: Concerning eating disorder content","https://www.aap.org/en/patient-care/media-and-children/center-of-excellence-on-social-media-and-youth-mental-health/qa-portal/qa-portal-library/qa-portal-library-questions/concerning-eating-disorder-content/"]]
 };
 T.wholike = {
-  quick:["Crushes and big feelings are a normal part of growing up. Stay calm and curious.","Keep the door open, so your child brings questions to you, not the internet.","Share your family's values about love, commitment, and marriage, in your own words.","Never shame or threaten. A child who feels safe keeps talking."],
+  quick:["Crushes and big feelings are a normal part of growing up. Stay calm and curious.","Keep the door open, so your child brings questions to you, not the internet.","Share your family's values about love, commitment, and marriage, in your own words.","Stay calm and kind. A child who feels safe keeps talking."],
   talk:["Pediatricians say crushes often begin in these years, and that it matters not to tease a child or brush off their feelings. To a middle schooler, those feelings are real, even when they pass quickly.","Many traditions see love as something sacred, worth patience, respect, and waiting until you're ready. Middle schoolers are still figuring out their feelings, and nothing needs to be decided or labeled now. Talk about what healthy love looks like: kindness, honesty, trust, and never pressure.","This is a good time to share what your family believes about love, commitment, and marriage between a man and a woman as something sacred to grow toward. Say it with warmth, not fear. Rules about dating are yours to set as a family, and it helps to explain the why behind them.","Keep them safe. Any adult who shows romantic interest in a child is never okay. Anyone asking for photos or secrets is not safe, and your child should know they can tell you without getting in trouble."],
   say:["\"Having a crush is normal. Thanks for telling me.\"","\"What do you like about them?\"","\"In our family, we believe love is worth waiting for, and here's why.\"","\"If anyone ever asks you for photos or to keep a secret, you can always tell me.\""],
   avoid:["Teasing, or telling them their feelings aren't real.","Shaming or threatening, which only teaches kids to stop telling you things.","Sharing their crush with others without their okay."],

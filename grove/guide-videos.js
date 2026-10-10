@@ -1304,7 +1304,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Steady is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't need to be perfect. Steady, honest, and present is enough. Look after your own rest and support too. The full guide has more, whenever you want it."
+      "say": "Good enough is plenty. Steady, honest, and present is enough. Look after your own rest and support too. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -1471,7 +1471,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Families get through this together.",
       "body": "Talk openly. Keep routines that bend. Lean on others.",
-      "say": "Families tend to come through hard seasons better when they talk openly, keep routines that can bend, and lean on others for help. You don't need to be strong all the time. You need a few anchors, and a circle."
+      "say": "Families tend to come through hard seasons better when they talk openly, keep routines that can bend, and lean on others for help. You can let others be strong for you sometimes. You need a few anchors, and a circle."
      },
      {
       "k": "big",
@@ -1508,7 +1508,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Steady and honest is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't do all of this alone, and you don't have to. Steady and honest is enough. The full guide has more, whenever you want it."
+      "say": "Others can share all of this with you. Steady and honest is enough. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -1822,7 +1822,7 @@ window.GG_LEARN_GUIDES.grove = {
        "I love you.",
        "Being here is enough."
       ],
-      "say": "Here are words we can say to the one we love. Thank you. I love you. And to each other, being here is enough. You don't need perfect words. Being close says a lot."
+      "say": "Here are words we can say to the one we love. Thank you. I love you. And to each other, being here is enough. Simple words are enough. Being close says a lot."
      },
      {
       "k": "big",
@@ -1936,7 +1936,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Presence is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to do this perfectly. Let hospice carry what it can, and take turns resting. Your presence is enough. Willow is there for the person in hospice and the people who love them. The full guide has more, whenever you want it."
+      "say": "Good enough is plenty. Let hospice carry what it can, and take turns resting. Your presence is enough. Willow is there for the person in hospice and the people who love them. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -2686,7 +2686,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "When Someone in Our Family Dies",
       "sub": "For the Leader",
-      "say": "If you are the grown-up helping your family through a death, this is for you. You don't need perfect words. You need true ones, and you need to stay close."
+      "say": "If you are the grown-up helping your family through a death, this is for you. Simple words are enough. You need true ones, and you need to stay close."
      },
      {
       "k": "big",
@@ -3041,7 +3041,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Find your own hour.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Find your own hour to grieve, with a friend who will let you talk about the person you miss. The holiday doesn't have to be perfect. It only has to be yours. The full guide has more, whenever you want it."
+      "say": "Find your own hour to grieve, with a friend who will let you talk about the person you miss. A simple holiday is a good holiday. It only has to be yours. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4436,7 +4436,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Calm voice. Steady routine. A path to help.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Emergencies shake adults too. Talk with a colleague after school. You don't need perfect words. A calm voice, a steady routine, and a path to the counselors is enough. The full guide has more, whenever you want it."
+      "say": "Emergencies shake adults too. Talk with a colleague after school. Simple words are enough. A calm voice, a steady routine, and a path to the counselors is enough. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -4663,7 +4663,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "If the illness grows very serious",
       "sub": "Your school's plan and counselors guide you.",
-      "say": "If the illness becomes very serious, your school's crisis plan and the school counselors will guide what comes next. You don't have to figure that out alone. Danger right now, call 911."
+      "say": "If the illness becomes very serious, your school's crisis plan and the school counselors will guide what comes next. Others can help you figure that out. Danger right now, call 911."
      },
      {
       "k": "big",
@@ -5853,7 +5853,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Grieving and leading.",
       "sub": "Often at the same time.",
-      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You don't have to carry all of it alone."
+      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You can share the weight of it."
      },
      {
       "k": "points",
@@ -5961,7 +5961,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Grieving and leading.",
       "sub": "Often at the same time.",
-      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You don't have to carry all of it alone."
+      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You can share the weight of it."
      },
      {
       "k": "points",
@@ -7546,9 +7546,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "You don't have to be an expert.",
+      "h": "Caring is enough to start.",
       "sub": "Know who to call. Ask directly. Protect privacy.",
-      "say": "You don't have to be a crisis expert. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
+      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
      },
      {
       "k": "points",
@@ -7609,7 +7609,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"Just pray more.\"",
        "Details in the prayer chain"
       ],
-      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. Just pray more, which can sound like the crisis is their fault. And details shared in the prayer chain without permission. Instead try, I'm glad you told me. You don't have to go through this alone."
+      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. Just pray more, which can sound like the crisis is their fault. And details shared in the prayer chain without permission. Instead try, I'm glad you told me. Others can walk through this with you."
      },
      {
       "k": "flow",
@@ -7647,7 +7647,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Get support for yourself too.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. You don't have to carry this alone, and you shouldn't. The full guide has more, whenever you want it."
+      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. Let others help you carry this. The full guide has more, whenever you want it."
      }
     ],
     "plainScenes": [
@@ -7661,9 +7661,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "You don't have to be an expert.",
+      "h": "Caring is enough to start.",
       "sub": "Know who to call. Ask directly. Protect privacy.",
-      "say": "You don't have to be a crisis expert. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
+      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
      },
      {
       "k": "points",
@@ -7724,7 +7724,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"You just need to try harder.\"",
        "Details in a group message"
       ],
-      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. You just need to try harder, which can sound like the crisis is their fault. And details shared in a group message without permission. Instead try, I'm glad you told me. You don't have to go through this alone."
+      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. You just need to try harder, which can sound like the crisis is their fault. And details shared in a group message without permission. Instead try, I'm glad you told me. Others can walk through this with you."
      },
      {
       "k": "flow",
@@ -7762,7 +7762,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Get support for yourself too.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. You don't have to carry this alone, and you shouldn't. The full guide has more, whenever you want it."
+      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. Let others help you carry this. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -8398,7 +8398,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Grieving and leading.",
       "sub": "One of the hardest things a lead does.",
-      "say": "You may be grieving, and also responsible for telling the team, talking with the family, handling the work, and answering leadership. Leading a team through a death is one of the hardest things a lead does. You don't have to do it perfectly. Do it with care and in person."
+      "say": "You may be grieving, and also responsible for telling the team, talking with the family, handling the work, and answering leadership. Leading a team through a death is one of the hardest things a lead does. Good enough is plenty. Do it with care and in person."
      },
      {
       "k": "flow",

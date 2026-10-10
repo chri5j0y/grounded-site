@@ -236,8 +236,8 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "Prayer doesn't have to be polite.",
-"say": "Prayer doesn't have to be polite. Psalm 13 asks God, how long will you forget me? Psalm 22 cries out, why have you forsaken me? These are prayers too. They are called lament, and they were kept for people who feel exactly like you.",
+"h": "Prayer can be honest, even raw.",
+"say": "Prayer can be honest, even raw. Psalm 13 asks God, how long will you forget me? Psalm 22 cries out, why have you forsaken me? These are prayers too. They are called lament, and they were kept for people who feel exactly like you.",
 "sub": "Psalm 13. Psalm 22."
 },
 {
@@ -584,7 +584,7 @@ window.GG_LEARN_GUIDES.willow = {
 "eyebrow": "When Life Changes",
 "h": "Afraid of What Comes After",
 "sub": "For You",
-"say": "If you are afraid of what comes after death, of judgment, or of nothing at all, this is for you. These are some of the oldest fears people carry, and you don't have to carry them alone."
+"say": "If you are afraid of what comes after death, of judgment, or of nothing at all, this is for you. These are some of the oldest fears people carry, and others can help you carry them."
 },
 {
 "k": "big",
@@ -655,9 +655,9 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "You don't have to face this alone.",
+"h": "Others can face this with you.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Tell someone what you are afraid of, a chaplain, your faith leader, or someone you love. You don't have to face this alone. The full guide has more."
+"say": "Tell someone what you are afraid of, a chaplain, your faith leader, or someone you love. Others can face this with you. The full guide has more."
 }
 ]
 },
@@ -1749,9 +1749,9 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "You don't have to solve it alone.",
+"h": "Others can help you solve it.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to solve it alone. Ask the hospice social worker or chaplain for a family meeting. The full guide has more."
+"say": "Others can help you solve it. Ask the hospice social worker or chaplain for a family meeting. The full guide has more."
 }
 ]
 }
@@ -2977,11 +2977,11 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "words",
 "h": "Words for the grown-up",
 "items": [
-"You don't have to have all the answers.",
+"Your presence matters more than answers.",
 "Short and honest is enough.",
 "You can say, I don't know."
 ],
-"say": "Here are words for the grown-up. You don't have to have all the answers. Short and honest is enough. You can say, I don't know."
+"say": "Here are words for the grown-up. Your presence matters more than answers. Short and honest is enough. You can say, I don't know."
 },
 {
 "k": "points",

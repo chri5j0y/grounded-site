@@ -173,7 +173,7 @@ const CHAPTERS = [
 
 const INTRO = [
   'Your Legacy Book is a place to keep the stories, lessons, recipes, and blessings you want the people you love to have.',
-  'Pick any chapter and any prompt. Skip whatever you like. There is no order you have to follow, and nothing is ever due.',
+  'Pick any chapter and any prompt. Skip whatever you like. Go in any order, at your own pace.',
   'Someone you trust can write while you tell. Mark it "told to," and it stays yours.',
   'Your book stays on this device, locked in your profile. You decide what to print or share, and with whom.',
   'Looking back can bring joy, and sometimes grief. Harder chapters stay closed until you choose to open them.'

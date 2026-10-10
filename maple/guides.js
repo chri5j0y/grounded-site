@@ -991,7 +991,7 @@ const TOPICS = [
   more: [M.cmi, M.aap] },
 
 { id: "bedwetting", ring: "health", title: "Bedwetting", keys: "bedwetting wetting the bed wet the bed pee peeing accidents at night nighttime accidents pull ups enuresis dry at night sleepover",
-  quick: ["Bedwetting is common and usually not a behavior problem. Kids are not doing it on purpose.", "Most kids outgrow it. It often runs in families.", "Never punish or tease. Keep cleanup calm and matter-of-fact.", "Talk with their doctor if it continues past about age 7, or if a child who was dry starts wetting again."],
+  quick: ["Bedwetting is common and usually not a behavior problem. Kids are not doing it on purpose.", "Most kids outgrow it. It often runs in families.", "Respond with kindness. Keep cleanup calm and matter-of-fact.", "Talk with their doctor if it continues past about age 7, or if a child who was dry starts wetting again."],
   rainy: "Leaves and Bark", acts: ["water-check", "screens-off", "strength-detective"],
   k2: "Many children in kindergarten and first grade still wet the bed. Their bodies are still learning to wake up for a full bladder or to hold it all night.",
   g35: "Older children may feel embarrassed, worry about sleepovers or camp, or hide wet sheets. The shame often hurts more than the wetting.",

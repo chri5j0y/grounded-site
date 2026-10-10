@@ -76,7 +76,7 @@ const LC_TOPICS = [
     avoid: ["“Just relax” or “Stop worrying.”", "Arguing with every fear point by point.", "Taking over everything so they never face the hard thing."],
     help: ["Breathe slowly with them.", "Offer a steady routine: a walk, a meal, a check-in call.", "Encourage professional help if it's lasting weeks."],
     you: "Their anxiety can stir your own. Keep your own practices, and remember you are a companion, not a cure." },
-  faith: "Many traditions hold words for anxious hearts: a breath prayer, a psalm, a practice of handing over what you can't control. You don't have to feel peaceful to reach for peace.",
+  faith: "Many traditions hold words for anxious hearts: a breath prayer, a psalm, a practice of handing over what you can't control. You can reach for peace from right where you are.",
   practices: ["leaves|Breathe", "bark|Meditation", "bark|Mindfulness", "leaves|Movement"],
   reach: ["Panic attacks, or anxiety that keeps you from work, sleep, or relationships for more than a few weeks.", "Any thoughts of harming yourself: call or text 988."],
   more: [L.nami, L.apa], kids: "worry" },
@@ -185,7 +185,7 @@ const LC_TOPICS = [
 
 /* ================= SAFETY ================= */
 { id: "suicidal-self", ring: "safety", title: "When you're thinking about suicide", keys: "suicide suicidal kill myself want to die end my life no reason to live 988", parts: ["fruit", "roots", "branches"],
-  quick: ["If you are in danger right now, call 911 or call or text 988.", "These thoughts are a sign of pain, not a plan you have to follow.", "Put distance between you and anything you could use to hurt yourself.", "Tell one person today. You don't have to carry this alone."],
+  quick: ["If you are in danger right now, call 911 or call or text 988.", "These thoughts are a sign of pain, not a plan you have to follow.", "Put distance between you and anything you could use to hurt yourself.", "Tell one person today. Others can help you carry this."],
   feel: "Unbearable pain, exhaustion, or numbness. A belief that things will never change, or that people would be better off without you. That belief is the pain talking, not the truth.",
   self: { first: ["Call or text 988 now, or text HOME to 741741.", "Move medications, firearms, or other dangers out of reach, or ask someone to hold them.", "Go where other people are."],
     helps: ["A written safety plan: warning signs, people to call, places to go.", "Getting care from a doctor or counselor, even if you've tried before.", "Getting through the next hour, then the next."],
@@ -204,9 +204,9 @@ const LC_TOPICS = [
 { id: "suicidal-other", ring: "safety", title: "When someone else is thinking about suicide", keys: "suicide friend family worried talk about dying warning signs 988", parts: ["branches", "fruit"],
   quick: ["Ask directly: “Are you thinking about killing yourself?” It doesn't plant the idea.", "Listen without arguing or judging.", "Help keep them safe: reduce access to medications and firearms.", "Connect them to help today, and stay with them."],
   feel: "You may feel scared, helpless, or afraid of saying the wrong thing. The fact that you are asking already helps.",
-  self: { first: ["Take a breath. You don't need to be an expert.", "Call or text 988 yourself for guidance on what to do."],
+  self: { first: ["Take a breath. Caring is enough to start.", "Call or text 988 yourself for guidance on what to do."],
     helps: ["Knowing the warning signs: talk of death, giving things away, saying goodbye, sudden calm after deep despair."],
-    tell: ["“I can't fix this alone, and I don't have to.”"],
+    tell: ["“I can lean on others to help with this.”"],
     people: "Bring in other trusted people so you are not the only lifeline." },
   helper: { feel: "They may feel like a burden and may test whether you really want to hear.",
     say: ["“Are you thinking about ending your life?”", "“Thank you for telling me. I want to help you stay safe.”", "“Let's call 988 together.”"],
@@ -423,7 +423,7 @@ const LC_TOPICS = [
   more: [L.wyg], kids: "pet-death" },
 /* ================= HEALTH AND THE END OF LIFE ================= */
 { id: "diagnosis", ring: "health", title: "A hard diagnosis", keys: "diagnosis cancer serious illness bad news test results sick", parts: ["leaves", "roots", "fruit"],
-  quick: ["The first days after hard news are a blur. You don't have to decide everything at once.", "Bring someone to appointments and write things down.", "Ask: what are my options, what matters most to me, and what are the tradeoffs?", "Hope can change shape. It doesn't have to disappear."],
+  quick: ["The first days after hard news are a blur. You don't have to decide everything at once.", "Bring someone to appointments and write things down.", "Ask: what are my options, what matters most to me, and what are the tradeoffs?", "Hope can change shape. It can stay with you."],
   feel: "Shock, fear, disbelief, or a strange calm. Your mind may race through worst cases, or go blank.",
   self: { first: ["Write your questions before each appointment.", "Bring a trusted person to listen with you.", "Limit late-night internet searching."],
     helps: ["One person who helps you keep track of information.", "Asking your care team about palliative care, which helps with symptoms and stress at any stage.", "Telling people what kind of support you want."],
@@ -495,7 +495,7 @@ const LC_TOPICS = [
   feel: "Awe, fear, exhaustion, tenderness. Time can feel strange at a bedside.",
   self: { first: ["Ask the nurse what to expect and how to help with comfort.", "Say what you want to say.", "Rotate with others so everyone rests."],
     helps: ["Soft music, familiar voices, gentle touch.", "Moistening lips and adjusting pillows with the nurse's guidance.", "Reading favorite words, prayers, or poems."],
-    tell: ["“I don't have to do this perfectly.”", "“If I'm not in the room at the end, my love was still there.”"],
+    tell: ["“Good enough is enough.”", "“If I'm not in the room at the end, my love was still there.”"],
     people: "Try: “We're keeping vigil tonight. Would you like to come say goodbye?”" },
   helper: { feel: "Families at a vigil may be exhausted and emotional.",
     say: ["“I'll sit with him so you can shower and eat.”"],
@@ -525,7 +525,7 @@ const LC_TOPICS = [
   more: [L.wyg, L.dougy], kids: "family-death" },
 
 { id: "addiction", ring: "health", title: "Addiction and recovery", keys: "addiction alcohol drugs drinking sober recovery relapse substance use", parts: ["leaves", "branches", "roots"],
-  quick: ["Addiction is a treatable illness, not a moral failure.", "Recovery is possible, and it often takes more than one try.", "Connection is the opposite of addiction. You don't have to do this alone.", "For families: you can't control someone else's recovery, but you can take care of yourself."],
+  quick: ["Addiction is a treatable illness, not a moral failure.", "Recovery is possible, and it often takes more than one try.", "Connection is the opposite of addiction. Others can walk this with you.", "For families: you can't control someone else's recovery, but you can take care of yourself."],
   feel: "Shame, cravings, denial, fear of change, or the exhausting hope and heartbreak of loving someone who uses.",
   self: { first: ["Call the SAMHSA National Helpline at 1-800-662-4357, free and confidential.", "Talk to your doctor honestly.", "Find a recovery meeting or support group."],
     helps: ["Treatment matched to your needs.", "Recovery communities and sponsors.", "New routines for high-risk times."],
@@ -785,13 +785,13 @@ const LC_TOPICS = [
   feel: "Unmoored, anxious, guilty, or strangely free. Old answers no longer fit what you've lived through.",
   self: { first: ["Write your questions down, honestly.", "Talk with a chaplain, spiritual director, or trusted mentor.", "Keep practices that still feel true, and rest from those that don't."],
     helps: ["Reading others who wrestled with doubt.", "Community that allows questions.", "Patience with yourself."],
-    tell: ["“My questions are welcome.”", "“I don't have to have it figured out today.”"],
+    tell: ["“My questions are welcome.”", "“I can figure it out over time.”"],
     people: "Try: “I'm wrestling with my faith right now. I'd love to talk with someone who won't try to fix it.”" },
   helper: { feel: "They may fear judgment from faith communities or family.",
     say: ["“Those are real questions. Thanks for sharing them.”"],
     avoid: ["Arguments, pressure, or quick answers."],
     help: ["Stay in relationship, whatever they conclude."],
-    you: "You don't have to resolve their questions to be a good companion." },
+    you: "A good companion walks with the questions." },
   faith: "Many traditions include deep doubt among their saints and teachers. Wrestling can be a form of faithfulness.",
   practices: ["roots|Scripture", "trunk|Journal Often", "trunk|Get Counseling", "roots|Prayer"],
   reach: ["Doubt tangled with depression or trauma."],
@@ -1110,7 +1110,7 @@ const LC_TOPICS = [
     avoid: ["Anger, panic, or ultimatums.", "Demanding a promise to stop.", "Calling it attention-seeking."],
     help: ["Stay calm and help care for wounds.", "Help them get an appointment this week.", "Secure medicines and sharp items at home, calmly.", "For parents: loop in the school counselor if school is part of the picture."],
     you: "It is frightening to love someone who hurts themselves. Get support for yourself too, from a counselor, a parent group, or a trusted friend." },
-  faith: "Many traditions teach that we are held and loved in our wounds, not only after they heal. Grace does not have to be earned by getting better first.",
+  faith: "Many traditions teach that we are held and loved in our wounds, not only after they heal. Grace comes first, before getting better.",
   practices: ["bark|Self-Compassion Break", "bark|Slow Exhale", "branches|Ask for Help", "trunk|Get Counseling"],
   reach: ["Call or text 988 any time, or text HOME to 741741.", "Call 911 for a serious injury, or if someone is in danger right now.", "See a doctor or counselor this week if self-harm has happened at all."],
   more: [L.lifeline, L.nami, ['Cornell Self-Injury and Recovery Resources', 'https://selfinjury.bctr.cornell.edu']], kids: "self-harm" },
@@ -1230,7 +1230,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "Fatigue from a health condition is real, and it is different from ordinary tiredness. A night of sleep may not fix it.",
    "Pacing means planning for energy, not just time: doing a little less on good days, so the hard days hit less hard.",
    "Flares come and go. A plan made on a good day makes a flare day easier.",
-   "Rest is part of living well, never a failure. You choose the words for what you live with, and how much you share."
+   "Rest is part of living well. You choose the words for what you live with, and how much you share."
   ],
   "feel": "Tired in a way sleep doesn't touch. Guilty for canceling again. Frustrated when one good day turns into three hard ones because you did too much. Unseen, when people say you look fine. Grieving the pace you used to keep, and still hoping for the good days.",
   "self": {
@@ -1525,7 +1525,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    ],
    "tell": [
     "“My grief and my love can both be true.”",
-    "“I don't have to do this alone.”"
+    "“Others can walk this with me.”"
    ],
    "people": "Try: “Our child has a lot of needs right now, and so do we. Would you be willing to bring a meal on Thursdays, or sit with the kids for an hour?”"
   },

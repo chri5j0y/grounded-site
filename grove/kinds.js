@@ -133,7 +133,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "classroom": [
@@ -171,7 +171,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "faith": [
@@ -205,7 +205,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "group": [
@@ -235,7 +235,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "team": [
@@ -265,7 +265,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ]
  },
@@ -1078,15 +1078,15 @@ window.GROVE_KINDS = {
  "results": {
   "intro": "Here is what you saw together today. Start with your Shared Strengths, then look at where you want to grow.",
   "oneShape": {
-   "family": "No family is strong in all six. Every grove has its own shape.",
-   "classroom": "No class is strong in all six. Every grove has its own shape.",
-   "faith": "No community is strong in all six. Every grove has its own shape.",
-   "group": "No group is strong in all six. Every grove has its own shape.",
-   "team": "No team is strong in all six. Every grove has its own shape."
+   "family": "Every family has parts still growing. Every grove has its own shape.",
+   "classroom": "Every class has parts still growing. Every grove has its own shape.",
+   "faith": "Every community has parts still growing. Every grove has its own shape.",
+   "group": "Every group has parts still growing. Every grove has its own shape.",
+   "team": "Every team has parts still growing. Every grove has its own shape."
   },
   "talkIntro": "You saw these differently. That is good news: it means everyone spoke. Pick one to talk about this week, gently, with no one needing to be right.",
   "talkLead": "Talk about: ",
-  "noEdges": "Nothing stood out as a Growing Edge today. Choose any part you would like to grow, or keep tending what is already working.",
+  "noEdges": "Every part looks steady today. Choose any part you would like to grow, or keep tending what is already working.",
   "quickLine": "A quick check-in is a short look. Your full check-in at week 12 shows the whole shape of your grove.",
   "strength": {
    "roots": {
@@ -2149,10 +2149,10 @@ window.GROVE_KINDS = {
     "group",
     "team"
    ],
-   "name": "Stop Doing List",
-   "text": "Name one thing to stop doing for a season, so what matters most has room.",
-   "kid": "Pick one thing we can stop doing so we have more time together.",
-   "steps": "List what fills your time together.|Ask: what could we stop for now?|Choose one thing to set down.|Notice what grows in its place.",
+   "name": "Set-Down List",
+   "text": "Name one thing to set down for a season, so what matters most has room.",
+   "kid": "Pick one thing we can set down so we have more time together.",
+   "steps": "List what fills your time together.|Ask: what could we set down for now?|Choose one thing to set down.|Notice what grows in its place.",
    "lever": "lighten"
   },
   {
@@ -2482,7 +2482,7 @@ window.GROVE_KINDS = {
    "name": "Feelings Check with Colors",
    "text": "Each student points to a color that shows how they're arriving today, with no explaining needed.",
    "kid": "Point to the color that shows how you feel.",
-   "steps": "Post four colors: blue, green, yellow, and red.|Each student points to one, or passes.|No one has to explain.|Notice the room and adjust the day.",
+   "steps": "Post four colors: blue, green, yellow, and red.|Each student points to one, or passes.|Everyone is welcome as they are.|Notice the room and adjust the day.",
    "life": [
     "autism",
     "hearing"
@@ -2546,7 +2546,7 @@ window.GROVE_KINDS = {
    "name": "Listening Round",
    "text": "One person shares, and everyone else listens without advice unless it's asked for.",
    "kid": "When someone talks, we just listen.",
-   "steps": "Choose one person to share.|Everyone else listens fully.|No advice unless they ask.|Thank them for sharing.",
+   "steps": "Choose one person to share.|Everyone else listens fully.|Save advice for when they ask.|Thank them for sharing.",
    "lever": "support"
   },
   {
@@ -3999,7 +3999,7 @@ window.GROVE_KINDS = {
    ],
    "name": "Team Lunch",
    "text": "Eat lunch together once a month.",
-   "steps": "Pick a day.|Bring lunch or order in.|Sit together.|No work talk for the first half."
+   "steps": "Pick a day.|Bring lunch or order in.|Sit together.|Save work talk for the second half."
   },
   {
    "id": "protect-days-off",

@@ -167,7 +167,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "Losing a role can feel like losing a piece of yourself. That grief is real.",
-   "Purpose doesn't need to be big. A reason to get up in the morning counts.",
+   "Purpose can be small. A reason to get up in the morning counts.",
    "Purpose is usually found in doing, one small step at a time, more than in thinking.",
    "Roles change shape. Your gifts, your love, and your know-how come with you."
   ],
@@ -186,7 +186,7 @@ const LC_TOPICS = [
     "Spending time with others who are also starting a new chapter."
    ],
    "tell": [
-    "“Purpose doesn't have to be big to be real.”",
+    "“Purpose can be small and still be real.”",
     "“Being needed can look different now and still count.”",
     "“I don't need the whole map to take the next step.”"
    ],
@@ -1973,7 +1973,7 @@ const LC_TOPICS = [
    "A diagnosis names an illness. It doesn't name you. Your history, humor, values, and love come with you.",
    "Many people live well for years after a diagnosis, especially when they stay active and connected.",
    "Now is the best time to plan, while you can say clearly what you want.",
-   "You don't have to figure this out alone. The Alzheimer's Association Helpline is there any time: 1-800-272-3900."
+   "Others can help you figure this out. The Alzheimer's Association Helpline is there any time: 1-800-272-3900."
   ],
   "feel": "Fear, grief, anger, or numbness. Some people feel relief at finally having a name for what they noticed. You may worry about becoming a burden, losing your independence, or how people will treat you now. Some days the news feels far away, and some days it is all you can think about. All of it is normal.",
   "self": {
@@ -2210,7 +2210,7 @@ const LC_TOPICS = [
    ],
    "you": "Their worry can stir up yours, especially when you live far away. Keep your own practices, and remember you can be steady without solving everything."
   },
-  "faith": "If faith is part of your life, many traditions hold words for anxious hearts: a breath prayer, a psalm or prayer known by heart, a practice of handing over what you can't control. You don't have to feel peaceful to reach for peace. If faith isn't part of your life, a quiet moment with music or nature can do the same steadying work.",
+  "faith": "If faith is part of your life, many traditions hold words for anxious hearts: a breath prayer, a psalm or prayer known by heart, a practice of handing over what you can't control. You can reach for peace from right where you are. If faith isn't part of your life, a quiet moment with music or nature can do the same steadying work.",
   "practices": [
    "bark|Worry Window",
    "bark|Five Senses Pause",
@@ -2280,7 +2280,7 @@ const LC_TOPICS = [
    "tell": [
     "“I am here, today, and I am safe right now.”",
     "“This is a memory. It is not happening now.”",
-    "“I carried this a long time. I don't have to carry it alone.”"
+    "“I carried this a long time. Others can help me carry it now.”"
    ],
    "people": "Try: “Some old memories have been coming back lately. I don't need to talk about the details. I just wanted you to know, and it helps to have you near.”"
   },
@@ -2745,7 +2745,7 @@ const LC_TOPICS = [
     "If money is gone or going: call your bank or card company right away, using the number on your card.",
     "Stop all contact with the scammer. Don't send more money, even to get money back.",
     "Call the National Elder Fraud Hotline, 1-833-372-8311, weekdays, for help with next steps and reporting.",
-    "Tell one person you trust. You don't have to sort it out alone."
+    "Tell one person you trust. Others can help you sort it out."
    ],
    "helps": [
     "A rule you keep every time: no money talk on a call you didn't make. Hang up, and call back on a number you know.",
@@ -3839,7 +3839,7 @@ const LC_TOPICS = [
     "Help with what makes going out hard: a ride, a hearing check, setting up video calls.",
     "Notice the moments that raise the risk: losing a spouse, giving up driving, a move, a hospital stay."
    ],
-   "you": "You can't be someone's only connection, and you don't need to be. Help them build more than one thread, and share the calls and visits with others. Your steady presence matters more than any single grand plan."
+   "you": "You can be one connection among many. Help them build more than one thread, and share the calls and visits with others. Your steady presence matters more than any single grand plan."
   },
   "faith": "For many people, a faith community is a ready circle of belonging: a coffee hour, a small group, a choir, a prayer chain, a visit from a chaplain. Many congregations offer rides or bring worship home for those who can't travel. If faith isn't part of your life, clubs, classes, and volunteer teams offer the same steady faces.",
   "practices": [
@@ -3938,7 +3938,7 @@ const LC_TOPICS = [
     "Ask about their friends by name, and remember the news.",
     "When their friend is ill, offer to drive them for a visit, and let them decide how long to stay."
    ],
-   "you": "You can't be their friend circle, and you don't need to be. Supporting their friendships takes some weight off you. Keep your own friends close too: they steady you for the long road."
+   "you": "You can be one friend among many. Supporting their friendships takes some weight off you. Keep your own friends close too: they steady you for the long road."
   },
   "faith": "For many people, a faith community is where friendships grow: a small group, a choir, a coffee hour, a visiting team. Many traditions honor visiting the sick and the homebound as a sacred act, and a friend's visit can be one of the most faithful things in a week. If faith isn't part of your life, any group that meets often and shares a purpose can hold the same kind of friendship.",
   "practices": [
@@ -4871,7 +4871,7 @@ const LC_TOPICS = [
    "bark"
   ],
   "quick": [
-   "“Who will help my child when I can't?” is one of the heaviest questions a parent can carry. You don't have to answer it alone, or all at once.",
+   "“Who will help my child when I can't?” is one of the heaviest questions a parent can carry. Others can help you answer it, a little at a time.",
    "Plan with your son or daughter, not only for them. Their wishes, likes, and voice come first.",
    "Write down what you know: routines, health, likes, fears, and the people who matter to them.",
    "Ask about planning help: The Arc's Center for Future Planning, your county case manager, and a lawyer who knows disability planning.",

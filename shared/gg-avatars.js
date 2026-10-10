@@ -111,7 +111,7 @@
       }).join('') +
       '<div class="gga-row">' + (o.photo === false ? '' : '<label class="gga-btn">Upload a photo<input type="file" accept="image/*" hidden></label>') +
       '<button type="button" class="gga-btn" data-v="">Use initials</button><span style="flex:1"></span><button type="button" class="gga-btn" data-close>Cancel</button></div>' +
-      (o.photo === false ? '<p class="gga-note">For privacy, the people you serve get avatars or initials, never photos.</p>' : '<p class="gga-note">Photos stay on this device. They are never uploaded anywhere.</p>') +
+      (o.photo === false ? '<p class="gga-note">For privacy, the people you serve get avatars or initials.</p>' : '<p class="gga-note">Photos stay on this device, private to you.</p>') +
       '</div>';
     function close() { back.remove(); document.removeEventListener('keydown', key); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
     function choose(v) { close(); if (o.onPick) o.onPick(v); }

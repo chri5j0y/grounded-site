@@ -59,7 +59,7 @@ window.PAGE_VIDEOS = {
   // On a tap, read.js and the shared player (shared/gg-learn.js) load, then the video plays in the player's own
   // overlay styles (ggl ggl-app), with GGLearn.player doing all the playing, the closing scene, and Sources.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=vc3', LEARN = '/shared/gg-learn.js?v=b781';
+  var READ = '/read.js?v=b782', LEARN = '/shared/gg-learn.js?v=b782';
   var PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
@@ -154,6 +154,19 @@ window.PAGE_VIDEOS = {
       b.addEventListener('click', function (e) { e.preventDefault(); open(k, b); });
     });
   }
+  // A link ending in #watch (the Take-Home Sheet's Meet the app code, GWG BLD 782) opens the page's own video, or
+  // #watch=<key> a named one. The video waits on its Play button, so sound starts only after a tap. The #watch comes off
+  // the address first, so Back and closing the video land on the page itself.
+  function fromLink() {
+    var m = /^#watch(?:=([a-z0-9-]+))?$/.exec(location.hash || ''), V = window.PAGE_VIDEOS || {};
+    if (!m) return;
+    var b = m[1] ? document.querySelector('[data-gg-watch="' + m[1] + '"]') : document.querySelector('[data-gg-watch]');
+    var k = m[1] && V[m[1]] ? m[1] : b ? b.getAttribute('data-gg-watch') : '';
+    try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {}
+    if (k && V[k]) open(k, b);
+  }
+  window.addEventListener('hashchange', fromLink);
   window.GGPageVideo = { open: open, close: close };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire); else wire();
+  function boot() { wire(); fromLink(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

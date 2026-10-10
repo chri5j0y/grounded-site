@@ -419,7 +419,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Your worth is bigger than a grade.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Keep caring. Keep resting. Your worth was never a grade. The full guide has more, whenever you want it."
+      "say": "Keep caring. Keep resting. Your worth is bigger than a grade. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -1030,7 +1030,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "So what's the plan?",
       "sub": "Still figuring it out is normal.",
-      "say": "So what's the plan? You'll hear that question a lot. Some classmates seem sure. You might not be. Or your idea might not be the one your family expects. Not knowing yet is normal, and so is changing your mind later."
+      "say": "So what's the plan? You'll hear that question a lot. Some classmates seem sure. You might not be. Or your idea might not be the one your family expects. Still figuring it out is normal, and so is changing your mind later."
      },
      {
       "k": "points",
@@ -2359,7 +2359,7 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Breakups",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the teen going through a breakup: this hurts because it mattered, and it will not always feel this heavy.",
+    "blurb": "For the teen going through a breakup: this hurts because it mattered, and this heaviness will ease.",
     "sources": [
      "monroe99"
     ],
@@ -2445,9 +2445,9 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        "This hurts because it mattered.",
        "I was me before this, and I'm still me.",
-       "It won't always feel this heavy."
+       "This heaviness will ease."
       ],
-      "say": "Here are words to keep. This hurts because it mattered. I was me before this relationship, and I'm still me. And, it won't always feel this heavy."
+      "say": "Here are words to keep. This hurts because it mattered. I was me before this relationship, and I'm still me. And, this heaviness will ease."
      },
      {
       "k": "card",
@@ -2465,7 +2465,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "This heaviness will ease.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hearts heal, slowly, with time, people, and small steps. It will not always feel this heavy. The full guide has more, whenever you want it."
+      "say": "Hearts heal, slowly, with time, people, and small steps. This heaviness will ease. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -2596,7 +2596,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Love feels safe.",
       "sub": "It is never your fault.",
-      "say": "Let's start here. Dating abuse is never your fault. It's a pattern where someone uses fear, guilt, pressure, or force to have power over you. You never have to earn kindness. And love doesn't come with fear."
+      "say": "Let's start here. Dating abuse is never your fault. It's a pattern where someone uses fear, guilt, pressure, or force to have power over you. You never have to earn kindness. And love feels safe."
      },
      {
       "k": "big",
@@ -12162,7 +12162,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "You get to rest from performing.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to perform all day. You get to be yourself, and the people worth having around will like that person. The full guide has more, whenever you want it."
+      "say": "You get to rest from performing. You get to be yourself, and the people worth having around will like that person. The full guide has more, whenever you want it."
      }
     ]
    },

@@ -342,9 +342,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Purpose doesn't have to be big.",
+      "h": "Purpose can be small.",
       "sub": "A reason to get up counts.",
-      "say": "Here is some good news. Research with older adults keeps finding that a sense of purpose goes with a longer, healthier life. And purpose doesn't have to be big. A friend who will call. A plant that needs water. A grandchild who wants your recipe. A reason to get up in the morning counts."
+      "say": "Here is some good news. Research with older adults keeps finding that a sense of purpose goes with a longer, healthier life. And purpose can be small. A friend who will call. A plant that needs water. A grandchild who wants your recipe. A reason to get up in the morning counts."
      },
      {
       "k": "big",
@@ -1305,7 +1305,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "eyebrow": "When Life Changes",
       "h": "Losing a Spouse or Partner",
       "sub": "For the Helper",
-      "say": "If someone you love has lost their husband, wife, or partner, this is for you. Maybe it's your mom or dad, a friend, or a neighbor. You don't need perfect words. You need to keep showing up."
+      "say": "If someone you love has lost their husband, wife, or partner, this is for you. Maybe it's your mom or dad, a friend, or a neighbor. Simple words are enough. You need to keep showing up."
      },
      {
       "k": "big",
@@ -1827,7 +1827,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "You may be grieving too.",
       "sub": "Find support of your own.",
-      "say": "If this was your brother, your sister, or your own child, you are grieving too. You do not have to be the strong one all the time. Find support of your own, and let more than one person share the walk."
+      "say": "If this was your brother, your sister, or your own child, you are grieving too. You can let others be strong for you sometimes. Find support of your own, and let more than one person share the walk."
      },
      {
       "k": "big",
@@ -4919,7 +4919,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "card",
-      "title": "You don't have to figure it out alone.",
+      "title": "Others can help you figure it out.",
       "body": "Alzheimer's Association Helpline: 1-800-272-3900, any time.",
       "say": "The Alzheimer's Association Helpline is there any time, day or night, at 1 800 272 3900. You can call for yourself, not only for your family. Many communities have groups for people who are newly diagnosed, where you can talk with others who understand. And if the news ever brings thoughts of not wanting to live, call or text 988."
      },
@@ -5034,7 +5034,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Walk beside them.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to have the answers. Walk beside them, keep them in their own life, and look after yourself along the way. The full guide has more, whenever you want it."
+      "say": "Your presence matters more than answers. Walk beside them, keep them in their own life, and look after yourself along the way. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -5643,8 +5643,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "You have carried this a long time.",
-      "sub": "You don't have to carry it alone.",
-      "say": "You have carried these memories a long time. You don't have to carry them alone now. The full guide has more, whenever you want it."
+      "sub": "Others can help you carry it.",
+      "say": "You have carried these memories a long time. Others can help you carry them now. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -8096,7 +8096,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "card",
       "title": "Your security matters too.",
       "body": "Pause before giving money you may need. Pressured or frightened: MAARC, 1-844-880-1574.",
-      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, you don't have to carry that alone. In Minnesota, call MAARC, at 1 844 880 1574, any time."
+      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, others can help you carry that. In Minnesota, call MAARC, at 1 844 880 1574, any time."
      },
      {
       "k": "card",
@@ -9376,7 +9376,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "You don't have to be their only thread.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't be someone's only connection, and you don't need to be. Help them build more than one thread, share the visits with others, and look after your own heart too. The full guide has more, whenever you want it."
+      "say": "You can be one connection among many. Help them build more than one thread, share the visits with others, and look after your own heart too. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -9594,7 +9594,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Keep your own friends close.",
       "sub": "They steady you too.",
-      "say": "You can't be their whole circle, and you don't need to be. Every friendship they keep shares the load. Keep your own friends close too. They steady you for the long road. If you notice them pulling away from everyone, with low mood that lasts, encourage a talk with their doctor."
+      "say": "You can be one part of their circle. Every friendship they keep shares the load. Keep your own friends close too. They steady you for the long road. If you notice them pulling away from everyone, with low mood that lasts, encourage a talk with their doctor."
      },
      {
       "k": "big",
@@ -9820,7 +9820,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Look after yourself, too.",
       "sub": "Veteran families can reach out for support.",
-      "say": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA and Vet Centers. You don't need the right words. Steady interest and respect are enough."
+      "say": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA and Vet Centers. Simple words are enough. Steady interest and respect are enough."
      },
      {
       "k": "big",
@@ -10810,7 +10810,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Your words can be a gift.",
       "sub": "For you, and for those who come after.",
-      "say": "Research with people near the end of life finds that telling their story, and shaping it into words for their family, felt meaningful to them. Their families treasured those words afterward. You do not need to be near the end to begin. You only need one story."
+      "say": "Research with people near the end of life finds that telling their story, and shaping it into words for their family, felt meaningful to them. Their families treasured those words afterward. You can begin at any time. You only need one story."
      },
      {
       "k": "big",
@@ -11706,7 +11706,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "One of the heaviest questions.",
       "sub": "You don't have to answer it all at once.",
-      "say": "Who will help my child when I can't? It's one of the heaviest questions a parent can carry. You may have carried it quietly for years. You don't have to answer it alone, and you don't have to answer it all at once."
+      "say": "Who will help my child when I can't? It's one of the heaviest questions a parent can carry. You may have carried it quietly for years. Others can help you answer it, a little at a time."
      },
      {
       "k": "words",

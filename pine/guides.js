@@ -1063,7 +1063,7 @@ const LC_TOPICS = [
     "“This hurts because it mattered. That's okay.”",
     "“I can miss them and still know it's over.”",
     "“I was me before this relationship, and I'm still me.”",
-    "“It won't always feel this heavy.”"
+    "“This heaviness will ease.”"
    ],
    "people": "To a friend: “I'm having a rough day about the breakup. Can we just hang out?” To a parent or trusted adult: “I don't need advice right now. I just need you to know it's been hard.” To your ex, if you need to: “I need some space for a while. Please don't text me for now.” If an ex threatens to hurt themselves if you don't come back, take it seriously and tell a trusted adult right away, but it is not your job to stay. Call or text 988 for them, or for you."
   },
@@ -2417,7 +2417,7 @@ const LC_TOPICS = [
    "helps": [
     "Writing your questions down and asking them, even the scary ones. Not knowing is often harder than knowing.",
     "Letting a teacher or counselor know. They can give you extra time or a quiet place when a day is too heavy.",
-    "Finding small ways to connect with the person who is sick: a playlist, a show you watch together, a text, sitting nearby while they rest.",
+    "Finding small ways to connect with the person who is sick: a playlist, a book you read together, a text, sitting nearby while they rest.",
     "Saying yes when someone offers a ride, a meal, or a night out. Help for your family includes help for you.",
     "Moving your body and sleeping when you can. Stress lives in the body too."
    ],

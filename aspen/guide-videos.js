@@ -1094,7 +1094,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "You can love both of them.",
 "sub": "You get to love both.",
-"say": "You can love both of your parents, out loud. You never have to pick a side or a home. If you get stuck in the middle, like carrying a message, it's okay to say, I'd rather not be in the middle. Can you tell them yourself?"
+"say": "You can love both of your parents, out loud. You get to keep loving both, in both homes. If you get stuck in the middle, like carrying a message, it's okay to say, I'd rather not be in the middle. Can you tell them yourself?"
 },
 {
 "k": "points",
@@ -1212,10 +1212,10 @@ window.GG_LEARN_GUIDES.aspen = {
 "h": "Words that help",
 "items": [
 "\"You can love both of us.\"",
-"\"You get to love both.\"",
+"\"You get to love us both, always.\"",
 "\"What are you most wondering about?\""
 ],
-"say": "Here are words that help. You can love both of us. You never have to pick. And, what are you most wondering about? Then listen. They may feel angry, relieved, sad, or all three. Let them love both parents out loud."
+"say": "Here are words that help. You can love both of us. You get to love us both, always. And, what are you most wondering about? Then listen. They may feel angry, relieved, sad, or all three. Let them love both parents out loud."
 },
 {
 "k": "points",
@@ -1246,13 +1246,13 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "big",
 "h": "Say it the way you would to them.",
-"say": "Let's practice. Say it out loud, the way you would to them. You can love both of us. You never have to pick.",
+"say": "Let's practice. Say it out loud, the way you would to them. You can love both of us. You get to love us both, always.",
 "beats": [
 "Let's practice.",
 "Say it out loud, the way you would to them.",
 "You can love both of us.",
 {
-"t": "You never have to pick.",
+"t": "You get to love us both, always.",
 "w": 10
 }
 ]
@@ -1326,7 +1326,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Love can grow slowly.",
 "body": "Being kind is enough for now.",
-"say": "Here's something true. You don't have to love them right away. Being kind is enough for now. Families like this grow close over years, not weeks. And you get a say in what you call a stepparent. Talk it over with your parent."
+"say": "Here's something true. Love can grow slowly. Being kind is enough for now. Families like this grow close over years, not weeks. And you get a say in what you call a stepparent. Talk it over with your parent."
 },
 {
 "k": "points",
@@ -1461,7 +1461,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "\"Our time together still matters to me.\"",
 "\"What's been the hardest part?\""
 ],
-"say": "Here are words that help. You don't have to love them right away. Being kind is enough for now. Our time together still matters to me. And, what's been the hardest part? Then listen, even if the answer is hard to hear."
+"say": "Here are words that help. Love can grow slowly. Being kind is enough for now. Our time together still matters to me. And, what's been the hardest part? Then listen, even if the answer is hard to hear."
 },
 {
 "k": "points",
@@ -1820,7 +1820,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Your worth is in who you are.",
 "sub": "You are more than what your family has.",
-"say": "Families go through tight seasons, and many come out the other side. Your worth was never about money. You are so much more than what your family has."
+"say": "Families go through tight seasons, and many come out the other side. Your worth is in who you are. You are so much more than what your family has."
 }
 ]
 },
@@ -6239,7 +6239,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Only you get to be you.",
 "sub": "And that isn't a contest.",
-"say": "There's only one you, with your own laugh, your own interests, and your own way of seeing things. Nobody else gets to be you. The full guide has more, whenever you want it."
+"say": "There's only one you, with your own laugh, your own interests, and your own way of seeing things. Only you get to be you. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -7963,7 +7963,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Teens need more sleep.",
 "sub": "9 to 12 hours up to age 12. 8 to 10 from 13 on.",
-"say": "Kids need 9 to 12 hours of sleep a night up to age 12, and 8 to 10 hours from 13 on. Teens need more sleep, not less, even as their body clocks start to run later. A tired middle schooler can look moody, foggy, or anxious, when what they really need is rest."
+"say": "Kids need 9 to 12 hours of sleep a night up to age 12, and 8 to 10 hours from 13 on. Teens need more sleep, even as their body clocks start to run later. A tired middle schooler can look moody, foggy, or anxious, when what they really need is rest."
 },
 {
 "k": "card",
@@ -8093,8 +8093,8 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "card",
 "title": "Your feed is a highlight reel.",
-"body": "Filters, angles, and best shots. Not real life.",
-"say": "A lot of what you see online is filtered, posed, or edited. People share their best angle on their best day. When you compare your real life to that, anyone would come up short. Your feed is not a mirror."
+"body": "Filters, angles, and best shots.",
+"say": "A lot of what you see online is filtered, posed, or edited. People share their best angle on their best day. When you compare your real life to that, anyone would come up short. Your feed is a highlight reel."
 },
 {
 "k": "points",
@@ -8658,7 +8658,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Some things always call for help.",
 "body": "An adult who flirts with you. Anyone asking for photos or secrets. Tell a grown-up.",
-"say": "Some things are never okay. An adult who shows romantic interest in you. Anyone who asks you for photos, or asks you to keep a secret. If that happens, tell a grown-up you trust. You won't be in trouble for telling."
+"say": "Some things always call for help. An adult who shows romantic interest in you. Anyone who asks you for photos, or asks you to keep a secret. If that happens, tell a grown-up you trust. You won't be in trouble for telling."
 },
 {
 "k": "big",
@@ -9108,7 +9108,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "It's okay to still be figuring it out.",
 "body": "Nobody your age does. Most grown-ups are still learning too.",
-"say": "You don't have to have it all figured out. Nobody your age does. Honestly, most grown-ups are still figuring out some of it too."
+"say": "It's okay to still be figuring it out. Nobody your age does. Honestly, most grown-ups are still figuring out some of it too."
 },
 {
 "k": "words",
@@ -9214,7 +9214,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "\"I love watching you discover what you're into.\"",
 "\"Here's something I've always admired about you.\""
 ],
-"say": "Words that help. You don't have to have it all figured out. I love watching you discover what you're into. Here's something I've always admired about you. Then name something real, like their kindness to a little brother, or how they keep at hard things."
+"say": "Words that help. It's okay to still be figuring it out. I love watching you discover what you're into. Here's something I've always admired about you. Then name something real, like their kindness to a little brother, or how they keep at hard things."
 },
 {
 "k": "card",
@@ -13026,7 +13026,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "You are just right as you are.",
 "sub": "You are you.",
-"say": "You are not too much, and you are not too little. You are you, with a brain that notices things others miss."
+"say": "You are just right as you are. You are you, with a brain that notices things others miss."
 }
 ]
 },

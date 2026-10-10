@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
-<script src="/shared/gg-app.js?v=b766"></script>
-<script src="/shared/gg-shelf.js?v=b780"></script>
+<script src="/shared/gg-app.js?v=b782"></script>
+<script src="/shared/gg-shelf.js?v=b782"></script>
 <script src="/shared/gg-sources.js?v=b777"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -454,24 +454,24 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
   </nav>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
   <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, any time.</p>
-  <p class="footer-privacy">Check-ins stay in this browser. Nothing a student enters here is sent to Grow With Grounded or anyone else.</p>
+  <p class="footer-privacy">Check-ins stay in this browser. Everything a student enters here stays on this device.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. The Grow With Grounded Aspen name, logo, six-part tree framework, questions, practices, illustrations, and guides are original works protected by copyright and may not be copied, adapted, or redistributed without written permission.</p>
 </footer>
 
 <div id="overlay-root"></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script src="/shared/gg-avatars.js"></script>
+<script src="/shared/gg-avatars.js?v=b782"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b766"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b780"></script>
-<script src="/shared/gg-life.js?v=lf1"></script>
+<script src="/shared/gg-profiles.js?v=b782"></script>
+<script src="/shared/gg-life.js?v=b782"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="checkin.js?v=b780"></script>
-<script src="/shared/gg-journey.js?v=r6o"></script>
+<script src="checkin.js?v=b782"></script>
+<script src="/shared/gg-journey.js?v=b782"></script>
 <script src="/shared/gg-library.js?v=b780"></script>
-<script src="/shared/gg-tend.js?v=b780"></script>
+<script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
 <script>
@@ -789,146 +789,146 @@ const PRACTICES = {
 /* Learn more cards. Same order as PRACTICES. Each: [why it helps, how to do it (steps split by |), if it's hard, try it with a grown-up] */
 const LEARN = {6:{}, 7:{}, 8:{}};
 LEARN[6].roots = [
-  ["Noticing things that amaze you, called awe, helps you feel part of something bigger. It calms your body and lifts your mood.", "Walk slowly, with no phone in your hand.|Look for three things that make you say wow: a cloud, a bird, a tiny bug, the light.|Stop and really look at each one for a few breaths.", "Can't find three? One wow still counts.", "Take the walk together and each find three. Compare what you noticed."],
-  ["Looking up and breathing slowly tells your body it's safe. It's a quick way to feel held by something bigger than your day.", "Step outside.|Look up at the sky for a moment.|Breathe in slowly, then out even more slowly. Do it three times.", "Can't go outside? Look out a window. It still works.", "Step out together after dinner and look up for one minute, no talking."],
-  ["Drawing a peaceful place helps you remember that calm is real, and you can go back to it in your mind.", "Close your eyes and picture a place where you feel peaceful.|Draw it with as much detail as you want.|Keep it where you'll see it.", "Not an artist? Stick figures and scribbles count. It's for you, not for a grade.", "Draw your peaceful places side by side and tell each other about them."],
+  ["Noticing things that amaze you, called awe, helps you feel part of something bigger. It calms your body and lifts your mood.", "Walk slowly, with no phone in your hand.|Look for three things that make you say wow: a cloud, a bird, a tiny bug, the light.|Stop and really look at each one for a few breaths.", "Found just one? One wow still counts.", "Take the walk together and each find three. Compare what you noticed."],
+  ["Looking up and breathing slowly tells your body it's safe. It's a quick way to feel held by something bigger than your day.", "Step outside.|Look up at the sky for a moment.|Breathe in slowly, then out even more slowly. Do it three times.", "Staying inside? Look out a window. It still works.", "Step out together after dinner and look up for one minute, no talking."],
+  ["Drawing a peaceful place helps you remember that calm is real, and you can go back to it in your mind.", "Close your eyes and picture a place where you feel peaceful.|Draw it with as much detail as you want.|Keep it where you'll see it.", "Any drawing counts, stick figures and scribbles too. It's just for you.", "Draw your peaceful places side by side and tell each other about them."],
   ["Writing down small good things trains your mind to notice them. Over time, you find more of them.", "At the end of the day, think back.|Find one thing that felt like a gift, even something small.|Write it down in a sentence or two.", "Hard day? It can be tiny, like a good snack or a funny moment.", "Share your gifts from the day at dinner or bedtime."],
   ["A few quiet minutes before bed help your body and mind settle, so you can rest. Many families pray. Others sit in silence.", "Get comfortable in bed.|Pray, or just sit quietly, in whatever way fits you and your family.|Breathe slowly for about two minutes.", "Mind racing? That's normal. Gently come back to your breath.", "Pray or sit quietly together at bedtime."],
   ["Music can calm a busy mind and help you notice what you're feeling inside.", "Pick one calm song.|Close your eyes and just listen.|When it ends, notice how you feel now.", "Hard to sit still? It's okay to sway or tap along.", "Take turns picking a calm song and listen together."],
   ["Hearing what helps other people gives you new ideas, and it helps you feel less alone.", "Pick a grown-up you trust.|Ask: \"What helps you feel peaceful?\"|Listen, and maybe try their idea.", "Feels awkward? Try asking in the car or on a walk.", "Grown-ups: answer honestly, and share something real."],
-  ["Traditions and prayers connect you to the people who came before you. That's a kind of root.", "Ask someone in your family about a tradition or prayer that matters to them.|Ask why it's special.|If you want, try it together.", "Not sure who to ask? Grandparents often love this question.", "Share a family tradition and the story behind it."]
+  ["Traditions and prayers connect you to the people who came before you. That's a kind of root.", "Ask someone in your family about a tradition or prayer that matters to them.|Ask why it's special.|If you want, try it together.", "Wondering who to ask? Grandparents often love this question.", "Share a family tradition and the story behind it."]
 ];
 LEARN[6].trunk = [
-  ["Doing what you love reminds you who you are, and gives you energy for the hard stuff.", "Pick something you love doing.|Set a timer for ten minutes.|Do it just for fun, not to be good at it.", "No time? Even five minutes counts.", "Join them in their favorite thing, and let them teach you."],
+  ["Doing what you love reminds you who you are, and gives you energy for the hard stuff.", "Pick something you love doing.|Set a timer for ten minutes.|Do it just for fun, not to be good at it.", "Short on time? Even five minutes counts.", "Join them in their favorite thing, and let them teach you."],
   ["Teaching someone helps you see what you're good at. It feels good to share it.", "Pick a move, trick, or game you're good at.|Find someone to teach.|Show them step by step, and be patient.", "Nervous? Start with a little brother, sister, or a pet.", "Be the student, and let them teach you something."],
   ["Knowing your strengths helps you feel steady when things get hard.", "Write down five things you're good at.|They can be big or small: kind, funny, good at drawing.|Ask someone to add one more.", "Stuck at two? Think about what friends come to you for.", "Add a strength you see in them, and tell them when you saw it."],
-  ["Remembering times you helped reminds you that you make a difference.", "Think of a time you helped someone.|Write what you did.|Write how it felt.", "Can't think of one? Helping at home counts.", "Tell them about a time you saw them help."],
+  ["Remembering times you helped reminds you that you make a difference.", "Think of a time you helped someone.|Write what you did.|Write how it felt.", "Need an idea? Helping at home counts.", "Tell them about a time you saw them help."],
   ["Thinking about who needs you reminds you that you matter to other people.", "Get quiet for a moment.|Think of one person who needs you.|Think about why they're glad you're here.", "Hard to think of anyone? Pets and little siblings count.", "Tell them one way you need them."],
   ["Picturing something you love can give you a lift, even on a slow day.", "Close your eyes.|Picture yourself doing something you love.|Notice how your body feels while you picture it.", "Mind wanders? Just come back to the picture.", "Share what you pictured with each other."],
-  ["Helping without being asked shows you're part of the family team, and it feels good.", "Look around for one small job that needs doing.|Do it without being asked.|Notice how it feels.", "Not sure what to do? Wipe the counter or take out the trash.", "Grown-ups: notice it and say thank you."],
+  ["Helping without being asked shows you're part of the family team, and it feels good.", "Look around for one small job that needs doing.|Do it without being asked.|Notice how it feels.", "Need an idea? Wipe the counter or take out the trash.", "Grown-ups: notice it and say thank you."],
   ["Saying thank you makes people feel seen, and it makes you happier too.", "Think of something someone does for you.|Tell them thank you, out loud or in a note.|Be specific about what you're thankful for.", "Shy? A note or a text works too.", "Take turns thanking each other at dinner."]
 ];
 LEARN[6].bark = [
   ["A longer breath out tells your body to calm down. It works even when feelings are big.", "Breathe in while you count to four.|Breathe out while you count to six.|Do it five times.", "Hard to count? Just make your breath out a little longer than your breath in.", "Breathe together, counting out loud."],
-  ["Stretching lets go of stress that hides in your muscles.", "Start at your head: roll your neck slowly.|Stretch your shoulders, arms, back, and legs.|End by reaching for your toes.", "Feel stiff? Go slowly. Stretching should never hurt.", "Stretch together and take turns picking the next stretch."],
+  ["Stretching lets go of stress that hides in your muscles.", "Start at your head: roll your neck slowly.|Stretch your shoulders, arms, back, and legs.|End by reaching for your toes.", "Feel stiff? Go slowly. Stretching should feel gentle.", "Stretch together and take turns picking the next stretch."],
   ["Noticing what you did well helps your inner voice get kinder.", "Think back over your day.|Find one thing you did well, even a small thing.|Write it down.", "Rough day? Getting through it counts.", "Share one thing you each did well today."],
   ["Talking to yourself like a friend helps you bounce back from mistakes.", "Think about something that was hard today.|Write yourself a note like you'd write to a friend.|Be kind and encouraging.", "Feels silly? It gets easier. Try just one sentence.", "Write each other kind notes instead."],
   ["Using your senses brings your mind back to right now when it's racing.", "Name five things you can see.|Name four things you can hear.|Name three things you can feel.", "Lose count? Just start over. It still helps.", "Do it together, taking turns naming things."],
   ["Watching your thoughts without chasing them helps your mind settle.", "Sit quietly and close your eyes.|When a thought comes, picture it as a cloud drifting by.|Let it float away and wait for the next one.", "Keep getting pulled into a thought? That's normal. Just notice and start again.", "Sit quietly together for five minutes."],
-  ["Telling someone about a hard thing makes it feel lighter.", "Pick a grown-up you trust.|Tell them about one thing that was hard today.|You don't have to fix it. Just share it.", "Don't know how to start? Try: \"Can I tell you something?\"", "Grown-ups: listen first. Ask before giving advice."],
+  ["Telling someone about a hard thing makes it feel lighter.", "Pick a grown-up you trust.|Tell them about one thing that was hard today.|Just share it. Sharing is enough.", "Need a start? Try: \"Can I tell you something?\"", "Grown-ups: listen first. Ask before giving advice."],
   ["Learning how others calm down gives you more tools to try.", "Ask someone: \"What helps you calm down?\"|Listen to their answer.|Try their idea next time you're upset.", "Feels awkward? Ask in the car or during a game.", "Share what helps you calm down, too."]
 ];
 LEARN[6].branches = [
-  ["Moving and playing with someone builds friendship, and it's good for your body too.", "Pick an activity: hoops, biking, or a walk.|Invite a friend or family member.|Play for about ten minutes.", "No one around? Ask a grown-up to join you.", "Say yes when they ask, and let them pick the activity."],
+  ["Moving and playing with someone builds friendship, and it's good for your body too.", "Pick an activity: hoops, biking, or a walk.|Invite a friend or family member.|Play for about ten minutes.", "On your own? Ask a grown-up to join you.", "Say yes when they ask, and let them pick the activity."],
   ["Playing together outside helps you feel connected and happy.", "Pick a game you both like.|Head outside.|Play and have fun.", "Bad weather? Play a game inside.", "Play their favorite game with them."],
-  ["Seeing all the people in your life helps you remember who is with you.", "Draw a tree.|Put family and close people in the roots.|Put friends and teachers on the branches.", "Can't think of many people? Pets, coaches, and neighbors count.", "Draw your people trees together and compare."],
-  ["Thanking someone makes both of you feel good and closer.", "Think of someone who helped you.|Write them a short thank you note.|Give it to them.", "Don't know what to say? Just say thanks and what they did.", "Help deliver the note together."],
-  ["Being thankful for people grows your connection to them, even quietly.", "Think of one person who helped you today.|Picture their face.|Thank them in your heart.", "Can't think of anyone? Who made your lunch or drove you somewhere?", "Share who you're each thankful for today."],
+  ["Seeing all the people in your life helps you remember who is with you.", "Draw a tree.|Put family and close people in the roots.|Put friends and teachers on the branches.", "Need more names? Pets, coaches, and neighbors count.", "Draw your people trees together and compare."],
+  ["Thanking someone makes both of you feel good and closer.", "Think of someone who helped you.|Write them a short thank you note.|Give it to them.", "Need words? Just say thanks and what they did.", "Help deliver the note together."],
+  ["Being thankful for people grows your connection to them, even quietly.", "Think of one person who helped you today.|Picture their face.|Thank them in your heart.", "Need an idea? Who made your lunch or drove you somewhere?", "Share who you're each thankful for today."],
   ["Wishing someone well helps you feel close to them, even when you're apart.", "Picture someone you love.|Silently wish them a good day.|Notice how it feels.", "Mind wanders? Come back to their face.", "Wish each other a good day out loud."],
   ["Reaching out to someone alone can change their day, and yours.", "Look for someone who seems alone.|Say hi, or sit near them at lunch.|Ask them a simple question.", "Nervous? Bring a friend with you.", "Grown-ups: ask how it went, and cheer them on."],
   ["Asking about someone's day and really listening makes them feel cared for.", "Ask a family member: \"How was your day?\"|Listen without looking at your phone.|Ask one more question about what they said.", "They say \"fine\"? Try: \"What was the best part?\"", "Take turns asking and listening at dinner."]
 ];
 LEARN[6].leaves = [
-  ["Dancing moves your body, lifts your mood, and lets off steam.", "Pick two songs you love.|Turn them up.|Dance any way you want.", "Feel silly? Close your door. No one has to watch.", "Have a family dance party."],
+  ["Dancing moves your body, lifts your mood, and lets off steam.", "Pick two songs you love.|Turn them up.|Dance any way you want.", "Feel silly? Close your door. This is just for you.", "Have a family dance party."],
   ["Short bursts of movement wake up your body and your brain.", "Do five jumping jacks.|Do five squats.|End with one big stretch.", "Tired? Do it slowly. Slow still counts.", "Do it together and cheer each other on."],
-  ["Seeing your body as strong helps you feel thankful for it.", "Draw your body as a tree.|Label what each part helps you do: legs to run, arms to hug.|Add as many labels as you want.", "Not sure what to write? Think about something you did today.", "Draw together and add a label for each other."],
-  ["Thanking your body helps you feel at home in it.", "Think about your day.|Write one thing your body did for you.|It can be simple, like carrying your backpack.", "Can't think of one? Your heart beat all day. That counts.", "Share one thing your body did today."],
+  ["Seeing your body as strong helps you feel thankful for it.", "Draw your body as a tree.|Label what each part helps you do: legs to run, arms to hug.|Add as many labels as you want.", "Need a start? Think about something you did today.", "Draw together and add a label for each other."],
+  ["Thanking your body helps you feel at home in it.", "Think about your day.|Write one thing your body did for you.|It can be simple, like carrying your backpack.", "Need an idea? Your heart beat all day. That counts.", "Share one thing your body did today."],
   ["Relaxing your body at bedtime helps you fall asleep and rest better.", "Lie down in bed.|Start at your toes and let them relax.|Move slowly up to your head, relaxing each part.", "Fall asleep before you finish? That means it worked.", "A grown-up can read the steps out loud slowly."],
   ["Screens before bed make it harder to fall asleep. Calm activities help your brain get ready to rest.", "Put screens away before bedtime.|Pick something calm: read, draw, or talk.|Keep the lights low.", "Hard to put the phone down? Charge it in another room.", "Grown-ups: put your screens away too."],
   ["Walking together is good for your body and gives you time to talk.", "Ask someone in your family to walk with you.|Walk around the block or somewhere nearby.|Talk, or just walk.", "Bad weather? Walk around the house or a store.", "Make it a regular walk, same time each week."],
-  ["Helping cook teaches you skills and gives you time with a grown-up.", "Ask a grown-up if you can help with a meal or snack.|Help with one part, like stirring or washing.|Enjoy it together.", "Not sure what to do? Ask for the easiest job.", "Give them a real job and let them own it."]
+  ["Helping cook teaches you skills and gives you time with a grown-up.", "Ask a grown-up if you can help with a meal or snack.|Help with one part, like stirring or washing.|Enjoy it together.", "Need an idea? Ask for the easiest job.", "Give them a real job and let them own it."]
 ];
 LEARN[6].fruit = [
-  ["Thinking about good things coming gives you hope and energy.", "Take a walk.|Think about something you're looking forward to.|Picture it happening.", "Nothing coming up? Plan something small with a grown-up.", "Walk together and share what you're each looking forward to."],
-  ["Watching something grow reminds you that change takes time, and good things come.", "Plant a seed, or pick a plant to care for.|Water it and check on it each day.|Notice small changes.", "Plant not growing? Keep trying. That's part of it.", "Plant something together and check on it together."],
+  ["Thinking about good things coming gives you hope and energy.", "Take a walk.|Think about something you're looking forward to.|Picture it happening.", "Quiet week ahead? Plan something small with a grown-up.", "Walk together and share what you're each looking forward to."],
+  ["Watching something grow reminds you that change takes time, and good things come.", "Plant a seed, or pick a plant to care for.|Water it and check on it each day.|Notice small changes.", "Plant slow to grow? Keep trying. That's part of it.", "Plant something together and check on it together."],
   ["Writing three good things helps your brain notice good stuff. Studies show kids feel happier doing it.", "At the end of the day, think back.|Write three good things that happened.|They can be tiny.", "Can only find one? Start there.", "Share your good things at dinner."],
-  ["Drawing what you hope for helps make it feel possible.", "Think about something you hope for.|Draw it.|Keep it somewhere you'll see it.", "Not sure what you hope for? Draw something that would make you smile.", "Draw your hopes together and share them."],
+  ["Drawing what you hope for helps make it feel possible.", "Think about something you hope for.|Draw it.|Keep it somewhere you'll see it.", "Wondering what you hope for? Draw something that would make you smile.", "Draw your hopes together and share them."],
   ["Picturing a good day gives your mind a break from worry.", "Close your eyes.|Picture a good day you're looking forward to.|Imagine the details.", "Hard to picture? Think of a good day you've already had.", "Tell each other about a good day you're looking forward to."],
   ["Thinking of what you're thankful for helps you end the day on a good note.", "Get cozy in bed.|Name one thing you're thankful for.|Say it out loud or in your head.", "Bad day? Something small works, like your pillow.", "Share one thankful thing at bedtime."],
-  ["Sharing excitement makes it even bigger, and connects you with people.", "Think of something you're excited about.|Tell someone about it.|Tell them why you're excited.", "Nothing exciting? Something small you like counts.", "Grown-ups: get excited with them."],
+  ["Sharing excitement makes it even bigger, and connects you with people.", "Think of something you're excited about.|Tell someone about it.|Tell them why you're excited.", "Quiet day? Something small you like counts.", "Grown-ups: get excited with them."],
   ["Hearing a grown-up's hopes helps you see that hope grows over a whole life.", "Pick a grown-up.|Ask: \"What did you hope for when you were my age?\"|Ask if it came true.", "Feels awkward? Ask during a car ride.", "Grown-ups: share honestly, including hopes that changed."]
 ];
 
 LEARN[7].roots = [
   ["A longer breath out calms your body before a busy day. It's a tool you can use anywhere, even in class.", "Before school, sit or stand still.|Breathe in for four, out for six.|Do it five times.", "Forget in the morning rush? Do it on the bus or in the car.", "Do it together on the way to school."],
-  ["Awe, that wow feeling, helps you feel part of something bigger, and it shrinks worries down to size.", "Head outside for a ten minute walk.|Look for something that amazes you: the sky, trees, water, light.|Stop and take it in.", "Don't feel awe right away? Just keep noticing. It sneaks up on you.", "Walk together and point out things that amaze you."],
+  ["Awe, that wow feeling, helps you feel part of something bigger, and it shrinks worries down to size.", "Head outside for a ten minute walk.|Look for something that amazes you: the sky, trees, water, light.|Stop and take it in.", "Awe slow to come? Just keep noticing. It sneaks up on you.", "Walk together and point out things that amaze you."],
   ["Writing what's true about you protects you from what others post or say.", "Think about who you really are.|Write one thing that's true about you no matter what anyone says online.|Keep it somewhere private.", "Hard to think of something? Start with something you care about.", "Tell them one true thing you see in them."],
-  ["A short prayer, wish, or blessing sets your heart for the day.", "In the morning, take a moment.|Write a short prayer, wish, or blessing for your day.|Read it once more before you go.", "Not sure what to write? Try: \"Help me be kind today.\"", "Share a blessing for each other's day."],
+  ["A short prayer, wish, or blessing sets your heart for the day.", "In the morning, take a moment.|Write a short prayer, wish, or blessing for your day.|Read it once more before you go.", "Need a start? Try: \"Help me be kind today.\"", "Share a blessing for each other's day."],
   ["Time outside without a phone gives your mind a real rest.", "Leave your phone inside.|Go outside for five minutes.|Just notice: sounds, colors, the air.", "Feel restless? That's normal at first. Try just two minutes.", "Go outside together, both phones left inside."],
   ["Peaceful music without scrolling lets your mind actually rest.", "Pick music that feels peaceful.|Put your phone face down or away.|Just listen.", "Hand keeps reaching for your phone? Put it in another room.", "Listen together, with no screens."],
   ["Learning how others got through hard times gives you hope and ideas.", "Pick someone older you trust.|Ask: \"What helps people get through hard times?\"|Listen, and ask a follow-up question.", "Nervous? Grandparents and coaches often love this question.", "Grown-ups: share a real story of your own."],
-  ["Traditions connect you to something bigger than yourself and your moment.", "Pick a family, faith, or cultural tradition this week.|Join in.|Notice how it feels.", "Not sure of any traditions? Ask a grown-up.", "Invite them into a tradition, and explain why it matters to you."]
+  ["Traditions connect you to something bigger than yourself and your moment.", "Pick a family, faith, or cultural tradition this week.|Join in.|Notice how it feels.", "Curious about traditions? Ask a grown-up.", "Invite them into a tradition, and explain why it matters to you."]
 ];
 LEARN[7].trunk = [
-  ["Time on a hobby you care about builds who you are, away from all the noise.", "Pick a hobby you care about.|Put your phone away.|Spend ten minutes on it.", "Can't focus? Start with five minutes.", "Ask them to show you their hobby."],
+  ["Time on a hobby you care about builds who you are, away from all the noise.", "Pick a hobby you care about.|Put your phone away.|Spend ten minutes on it.", "Hard to focus? Start with five minutes.", "Ask them to show you their hobby."],
   ["Practicing something you want to get better at builds confidence that lasts.", "Pick one skill you want to improve.|Practice for ten minutes.|Notice one thing you got better at.", "Frustrated? Getting better takes time. Every try counts.", "Practice together or cheer them on."],
   ["Knowing your values helps you make choices you feel good about.", "Think about what matters most to you.|Write your top three, like honesty, family, or kindness.|Keep the list somewhere you'll see it.", "Stuck? Think about what makes you mad when it's missing.", "Share your top three values with each other."],
   ["Picturing who you want to be helps you grow in that direction.", "Imagine yourself a year from now.|Write about who you want to be.|Include how you want to treat people.", "Hard to imagine? Start with one thing you'd like to be better at.", "Share your pictures of the future."],
   ["Noticing your good choices helps you see who you're becoming.", "At the end of the day, think back.|Find one choice that matched who you want to be.|Notice how it felt.", "Rough day? Choosing to try again tomorrow counts.", "Share one good choice you each made today."],
-  ["Thinking about someone you admire shows you the qualities you want to grow.", "Picture someone you look up to.|Think about what you admire about them.|Pick one thing you'd like to have too.", "Can't think of anyone? Characters in books and stories count too.", "Tell them about someone you look up to, and why."],
-  ["Secret kindness feels good, and it's all about the other person.", "Look for a way to help someone.|Do it without being asked.|Don't tell anyone.", "Can't think of something? Hold a door or pick up something someone dropped.", "Try a secret kindness challenge together this week."],
+  ["Thinking about someone you admire shows you the qualities you want to grow.", "Picture someone you look up to.|Think about what you admire about them.|Pick one thing you'd like to have too.", "Need an idea? Characters in books and stories count too.", "Tell them about someone you look up to, and why."],
+  ["Secret kindness feels good, and it's all about the other person.", "Look for a way to help someone.|Do it without being asked.|Keep it to yourself.", "Need an idea? Hold a door or pick up something someone dropped.", "Try a secret kindness challenge together this week."],
   ["Hearing what gave a grown-up's life meaning helps you find your own.", "Ask a grown-up: \"What gave your life meaning when you were my age?\"|Listen.|Ask what gives it meaning now.", "Feels big? Ask during a car ride or meal.", "Grown-ups: be honest, including what changed over time."]
 ];
 LEARN[7].bark = [
   ["Pressing your feet down and breathing brings you back to your body when feelings get big.", "When a big feeling hits, stop.|Press your feet into the floor.|Take three slow breaths.", "Feelings too big? Step away somewhere quiet first.", "Practice it together when things are calm."],
-  ["Walking helps your body burn off stress and clears your head.", "When you feel stressed, get up.|Take a short walk, even around the house.|Breathe as you walk.", "Can't leave? Walk to the water fountain and back.", "Go for a walk with them when they're stressed."],
-  ["Catching harsh thoughts and rewriting them teaches your inner voice to be kinder.", "Notice one harsh thought, like \"I'm so dumb.\"|Write it down.|Write a kinder way to say it, like \"I made a mistake, and I can learn.\"", "Can't think of a kinder way? Ask: what would I tell a friend?", "Share how you rewrite your own harsh thoughts."],
-  ["Naming what you feel and need helps you take care of yourself.", "Write down what you're feeling.|Next to it, write what you need.|Think about how you could get it.", "Not sure what you need? Rest, a hug, or a snack are good guesses.", "Help them figure out what they need, without fixing it for them."],
+  ["Walking helps your body burn off stress and clears your head.", "When you feel stressed, get up.|Take a short walk, even around the house.|Breathe as you walk.", "Staying put? Walk to the water fountain and back.", "Go for a walk with them when they're stressed."],
+  ["Catching harsh thoughts and rewriting them teaches your inner voice to be kinder.", "Notice one harsh thought, like \"I'm so dumb.\"|Write it down.|Write a kinder way to say it, like \"I made a mistake, and I can learn.\"", "Looking for a kinder way? Ask: what would I tell a friend?", "Share how you rewrite your own harsh thoughts."],
+  ["Naming what you feel and need helps you take care of yourself.", "Write down what you're feeling.|Next to it, write what you need.|Think about how you could get it.", "Wondering what you need? Rest, a hug, or a snack are good guesses.", "Help them figure out what they need, without fixing it for them."],
   ["A break from social media helps you notice how it really makes you feel.", "Pick an evening.|Stay off social media.|Notice how you feel afterward.", "Feel left out? That feeling usually fades fast.", "Take a family screen break together."],
-  ["Naming a feeling in one word helps it calm down.", "Stop for a moment.|Ask: what am I feeling right now?|Name it in one word, like sad, nervous, or happy.", "Not sure? Every answer is welcome. Take a guess.", "Share your one-word feelings at dinner."],
+  ["Naming a feeling in one word helps it calm down.", "Stop for a moment.|Ask: what am I feeling right now?|Name it in one word, like sad, nervous, or happy.", "Every answer is welcome. Take a guess.", "Share your one-word feelings at dinner."],
   ["Telling a friend what you like about them makes you both feel good.", "Pick a friend.|Tell them one specific thing you like about them.|Say it in person or send it.", "Feels awkward? A message works.", "Tell them one thing you like about them, too."],
-  ["Talking about what's on your mind helps you feel lighter and less alone.", "Pick a grown-up you trust.|Tell them something that's been on your mind.|You don't have to have it figured out.", "Not sure how to start? Try: \"Can I talk to you about something?\"", "Grown-ups: listen more than you talk."]
+  ["Talking about what's on your mind helps you feel lighter and less alone.", "Pick a grown-up you trust.|Tell them something that's been on your mind.|It's okay to still be figuring it out.", "Need a start? Try: \"Can I talk to you about something?\"", "Grown-ups: listen more than you talk."]
 ];
 LEARN[7].branches = [
   ["Playing together without phones builds real friendship.", "Invite a few people to play something active.|Put phones away.|Have fun for ten minutes or more.", "Everyone wants their phones? Make a phone pile, and whoever grabs first does a silly dare.", "Join the game or host it."],
-  ["Helping with a real job shows people they can count on you.", "Offer to help someone with a job, like cooking or cleaning up.|Work side by side.|Chat while you work.", "Not sure how to help? Ask what they need.", "Give them a real job and work alongside them."],
-  ["Thinking about good friends helps you notice what real friendship feels like.", "Think of a friend who helps you feel like yourself.|Write about them.|Write why they matter.", "Can't think of one? Write about the kind of friend you want.", "Tell them about a friend who helped you at their age."],
+  ["Helping with a real job shows people they can count on you.", "Offer to help someone with a job, like cooking or cleaning up.|Work side by side.|Chat while you work.", "Wondering how to help? Ask what they need.", "Give them a real job and work alongside them."],
+  ["Thinking about good friends helps you notice what real friendship feels like.", "Think of a friend who helps you feel like yourself.|Write about them.|Write why they matter.", "Need an idea? Write about the kind of friend you want.", "Tell them about a friend who helped you at their age."],
   ["Knowing who you can go to makes hard times less scary.", "Make a list of people you could go to if something went wrong.|Include family, school, and others.|Keep the list somewhere safe.", "Short list? That's okay. Ask a grown-up to help you add more.", "Make the list together."],
   ["Taking a break from group chats helps you notice how they make you feel.", "Pick a time, like ten minutes or an evening.|Mute or leave the group chats.|Notice how you feel afterward.", "Worried you'll miss something? You can catch up later.", "Talk about how group chats make each of you feel."],
-  ["Wishing someone well helps you notice people who might need a friend.", "Think of someone who might feel left out.|Wish them well in your mind.|Think about one small way to include them.", "Can't think of anyone? Look around at lunch tomorrow.", "Talk about someone who might need a friend."],
-  ["A kind message can change someone's whole day.", "Think of someone who might need a boost.|Send them a kind message.|Keep it simple.", "Don't know what to say? \"Thinking of you\" works.", "Send a kind message to someone together."],
+  ["Wishing someone well helps you notice people who might need a friend.", "Think of someone who might feel left out.|Wish them well in your mind.|Think about one small way to include them.", "Need an idea? Look around at lunch tomorrow.", "Talk about someone who might need a friend."],
+  ["A kind message can change someone's whole day.", "Think of someone who might need a boost.|Send them a kind message.|Keep it simple.", "Need words? \"Thinking of you\" works.", "Send a kind message to someone together."],
   ["Including someone new makes your world bigger and theirs brighter.", "Look for someone new or alone.|Invite them to sit with you or join a game.|Ask them a question.", "Nervous? Bring a friend along.", "Grown-ups: ask how it went, and celebrate it."]
 ];
 LEARN[7].leaves = [
   ["Moving outside is good for your body, mood, and sleep.", "Head outside.|Pick anything active: walk, bike, hoops.|Move for ten minutes.", "Bad weather? Move inside with stretches or a dance.", "Get outside and move together."],
-  ["Stretching to music relaxes your body and lifts your mood.", "Pick a song you love.|Stretch slowly while it plays.|Breathe deeply.", "Feel stiff? Stretch gently. It should never hurt.", "Stretch together to each other's songs."],
-  ["Thanking your body helps you feel at home in it, even while it changes.", "Think about your day.|Write one thing your body let you do.|Say thanks to it.", "Can't think of one? Breathing counts.", "Share one thing your body did today."],
+  ["Stretching to music relaxes your body and lifts your mood.", "Pick a song you love.|Stretch slowly while it plays.|Breathe deeply.", "Feel stiff? Stretch gently. It should feel gentle.", "Stretch together to each other's songs."],
+  ["Thanking your body helps you feel at home in it, even while it changes.", "Think about your day.|Write one thing your body let you do.|Say thanks to it.", "Need an idea? Breathing counts.", "Share one thing your body did today."],
   ["A bedtime plan helps you get the sleep you need to feel good.", "Write a calm bedtime plan.|Include what time screens go off.|Include something relaxing, like reading.", "Plan feels too strict? Start with one small change.", "Make the plan together and follow your own too."],
   ["Phones in the bedroom make it harder to sleep. Charging elsewhere helps you rest.", "Pick a spot outside your bedroom.|Charge your phone there tonight.|Use a regular alarm clock if you need one.", "Feel anxious without it? Try it for one night first.", "Grown-ups: charge yours there too."],
   ["Relaxing your body lets go of stress you didn't know you were holding.", "Lie down.|Breathe slowly.|Relax your shoulders, then your jaw, then your hands.", "Hard to relax? Squeeze each part tight first, then let go.", "A grown-up can read the steps out loud slowly."],
-  ["Active games with people you like are good for your body and your friendships.", "Invite a friend or family member.|Pick an active game.|Play for ten minutes or more.", "No one around? Ask a grown-up to play.", "Say yes to their game invite."],
+  ["Active games with people you like are good for your body and your friendships.", "Invite a friend or family member.|Pick an active game.|Play for ten minutes or more.", "On your own? Ask a grown-up to play.", "Say yes to their game invite."],
   ["An unplugged time each day gives your mind a break.", "Ask a grown-up to help you pick an unplugged time.|Decide what you'll do instead.|Try it each day.", "Hard to stick with? Start with just thirty minutes.", "Make it a family unplugged time."]
 ];
 LEARN[7].fruit = [
   ["Noticing growth and change reminds you that things don't stay stuck.", "Take a walk.|Look for three things that are growing or changing.|Notice how they're different from before.", "Hard to spot change? Look closely at plants or the sky.", "Walk together and find changes."],
   ["Cleaning one small space gives you a feeling of fresh start and control.", "Pick one small space, like your desk.|Clean it up.|Notice how it feels after.", "Too big a mess? Start with one corner.", "Clean a space together."],
   ["Writing good things and why they happened helps you see good in your life. Research shows it lifts your mood.", "At the end of the day, write three good things.|Next to each, write why it happened.|Keep your list going.", "Only one good thing? That's a start.", "Share your good things at dinner."],
-  ["Writing to your future self helps you believe in who you're becoming.", "Write a letter to yourself one year from now.|Share your hopes and worries.|Seal it and put a date on it to open.", "Not sure what to write? Start with: \"Right now I'm...\"", "Help them keep it safe until the date."],
+  ["Writing to your future self helps you believe in who you're becoming.", "Write a letter to yourself one year from now.|Share your hopes and worries.|Seal it and put a date on it to open.", "Need a start? Start with: \"Right now I'm...\"", "Help them keep it safe until the date."],
   ["Finding something to be thankful for, even on hard days, helps you hold on.", "At the end of a hard day, stop.|Think of one thing you're thankful for.|Say it quietly to yourself.", "Everything feels bad? Look for something tiny, like a warm blanket.", "Share one thankful thing, especially on hard days."],
   ["Picturing something good gives your hope a boost.", "Close your eyes.|Picture something good that could happen this week.|Imagine how it would feel.", "Hard to picture? Remember a good week you've already had.", "Share what you're each hoping for this week."],
-  ["Sharing what you look forward to makes good things feel closer.", "Think of something you're looking forward to.|Tell someone about it.|Tell them why.", "Nothing coming up? Plan something small.", "Plan something to look forward to together."],
-  ["Encouraging a friend helps them, and reminds you of your own strength.", "Think of a friend having a hard week.|Send them encouragement.|Keep it simple and real.", "Not sure what to say? \"I'm here for you\" is enough.", "Talk about who might need encouragement this week."]
+  ["Sharing what you look forward to makes good things feel closer.", "Think of something you're looking forward to.|Tell someone about it.|Tell them why.", "Quiet week ahead? Plan something small.", "Plan something to look forward to together."],
+  ["Encouraging a friend helps them, and reminds you of your own strength.", "Think of a friend having a hard week.|Send them encouragement.|Keep it simple and real.", "Need words? \"I'm here for you\" is enough.", "Talk about who might need encouragement this week."]
 ];
 
 LEARN[8].roots = [
-  ["Walking with a big question lets your mind work on it without pressure. Movement helps thinking.", "Pick one big question you're carrying.|Take a ten minute walk.|Let your mind wander around it. You don't need an answer.", "No question comes to mind? Ask yourself: what matters most to me?", "Walk together and talk about a big question you each have."],
+  ["Walking with a big question lets your mind work on it without pressure. Movement helps thinking.", "Pick one big question you're carrying.|Take a ten minute walk.|Let your mind wander around it. The question can stay open.", "Need a question? Ask yourself: what matters most to me?", "Walk together and talk about a big question you each have."],
   ["Watching the sky change without a phone fills you with awe and helps you feel part of something bigger.", "Find a spot to watch the sunrise or sunset.|Leave your phone behind or put it away.|Watch the colors change.", "Missed it? Watching clouds or stars works too.", "Watch a sunset together."],
   ["Writing down a hidden question helps you face it honestly. Questions are a sign of growing, not losing faith.", "Think about a question about faith or life you've never said out loud.|Write it down.|Keep it private, or share it when you're ready.", "Feel nervous writing it? It's just for you.", "Grown-ups: if they share it, thank them and wonder with them."],
-  ["Remembering times you felt part of something bigger shows you where your roots are.", "Think of a time you felt part of something bigger.|Write about what happened.|Write how it felt.", "Can't think of one? A team, a concert, a church service, or nature can all count.", "Share your own times with each other."],
-  ["Reading something sacred slowly lets the words sink in and speak to you.", "Pick a short sacred text, poem, or prayer.|Read it slowly, twice.|Notice which words stay with you.", "Words not landing? Try a different passage another day.", "Read one together and share what stood out."],
+  ["Remembering times you felt part of something bigger shows you where your roots are.", "Think of a time you felt part of something bigger.|Write about what happened.|Write how it felt.", "Need an idea? A team, a concert, a church service, or nature can all count.", "Share your own times with each other."],
+  ["Reading something sacred slowly lets the words sink in and speak to you.", "Pick a short sacred text, poem, or prayer.|Read it slowly, twice.|Notice which words stay with you.", "Words feel flat? Try a different passage another day.", "Read one together and share what stood out."],
   ["Sitting in silence lets your thoughts settle, like mud settling in water.", "Find a quiet spot.|Sit still for five minutes.|Let your thoughts come and go.", "Five minutes too long? Start with two.", "Sit in silence together."],
   ["Talking through a belief you're still figuring out helps you own your faith.", "Pick a grown-up you trust.|Share one belief you're still figuring out.|Talk it through together.", "Worried they'll be upset? Start with something small.", "Grown-ups: listen and wonder. Take your time with answers."],
   ["Hearing how others trust when life is hard gives you hope and tools.", "Pick an elder or someone in your faith community.|Ask: \"What helps you trust when life is hard?\"|Listen closely.", "Nervous to ask? A grown-up can help you set up the conversation.", "Help them connect with someone wise."]
 ];
 LEARN[8].trunk = [
-  ["Trying things you might do in the future helps you discover what you care about.", "Think of something you might want to do someday.|Spend ten minutes on it: research, practice, or try it.|Notice how it feels.", "Not sure what you want? Try something new.", "Help them explore it, maybe by finding someone who does it."],
-  ["Helping with a project in your community shows you that your gifts matter.", "Find a project in your neighborhood, school, or faith community.|Offer to help.|Notice the difference it makes.", "Can't find one? Ask a grown-up where help is needed.", "Help out together."],
+  ["Trying things you might do in the future helps you discover what you care about.", "Think of something you might want to do someday.|Spend ten minutes on it: research, practice, or try it.|Notice how it feels.", "Still exploring? Try something new.", "Help them explore it, maybe by finding someone who does it."],
+  ["Helping with a project in your community shows you that your gifts matter.", "Find a project in your neighborhood, school, or faith community.|Offer to help.|Notice the difference it makes.", "Looking for one? Ask a grown-up where help is needed.", "Help out together."],
   ["Picturing who you want to be in high school helps you grow toward it.", "Think about starting high school.|Write what kind of person you want to be there.|Include how you want to treat others.", "Hard to picture? Start with one quality you'd like to grow.", "Share who you hoped to be at their age."],
-  ["Knowing your gifts helps you find purpose.", "Pick one gift you have.|Write how it could help others.|Think of one way to start using it.", "Not sure of your gifts? Ask someone who knows you well.", "Tell them a gift you see in them."],
-  ["Thinking about hard choices shows you what you value most.", "Think of a hard choice you made.|Ask: what did it show about me?|Notice what you learned.", "Can't think of one? Small hard choices count.", "Share a hard choice you made at their age."],
-  ["Asking yourself what matters most keeps your day pointed the right way.", "In the morning, pause.|Ask: what matters most to me today?|Let it guide one choice.", "Nothing comes to mind? Pick one person to be kind to.", "Ask each other at breakfast."],
+  ["Knowing your gifts helps you find purpose.", "Pick one gift you have.|Write how it could help others.|Think of one way to start using it.", "Curious about your gifts? Ask someone who knows you well.", "Tell them a gift you see in them."],
+  ["Thinking about hard choices shows you what you value most.", "Think of a hard choice you made.|Ask: what did it show about me?|Notice what you learned.", "Need an idea? Small hard choices count.", "Share a hard choice you made at their age."],
+  ["Asking yourself what matters most keeps your day pointed the right way.", "In the morning, pause.|Ask: what matters most to me today?|Let it guide one choice.", "Need an idea? Pick one person to be kind to.", "Ask each other at breakfast."],
   ["Learning what makes work meaningful helps you imagine your own future.", "Pick a grown-up.|Ask about their work and what makes it meaningful.|Ask what they wish they knew at your age.", "Nervous? Grown-ups usually love talking about this.", "Grown-ups: share honestly, including the hard parts."],
-  ["Helping someone younger lets you use your gifts and feel useful.", "Find someone younger who needs help.|Help them with something you're good at.|Be patient and kind.", "No one younger around? Help a neighbor or classmate.", "Point out when you see them helping."]
+  ["Helping someone younger lets you use your gifts and feel useful.", "Find someone younger who needs help.|Help them with something you're good at.|Be patient and kind.", "Looking for someone to help? Help a neighbor or classmate.", "Point out when you see them helping."]
 ];
 LEARN[8].bark = [
   ["Moving your body burns off stress so your mind can think clearly.", "When stress builds, get up.|Take a quick walk or do some stretches.|Breathe deeply.", "Stuck in class? Stretch your hands and shoulders at your desk.", "Take a walk together when things are stressful."],
@@ -936,35 +936,35 @@ LEARN[8].bark = [
   ["Writing about a mistake helps you learn from it instead of beating yourself up.", "Think of a recent mistake.|Write what happened.|Write what it taught you.", "Still feel bad? That's normal. Learning takes time.", "Share a mistake you learned from."],
   ["Writing opposite feelings shows you that mixed feelings are normal.", "Notice how you feel right now.|Write two feelings that seem opposite, like excited and nervous.|Remember: both can be true.", "Only one feeling? That's okay too.", "Share your mixed feelings about something coming up."],
   ["Letting yourself just be gives your busy mind a rest.", "Put on calm music.|Sit or lie down.|Let yourself just be for five minutes.", "Feel like you should be doing something? Resting is doing something.", "Rest together to calm music."],
-  ["Checking whether a thought is true stops loud thoughts from running your day.", "Notice one thought that's bothering you.|Ask: is this true, or just loud?|Look for evidence either way.", "Can't tell? Ask someone you trust.", "Share how you handle loud thoughts."],
-  ["Talking through stress helps you see it more clearly and feel less alone.", "Pick someone you trust.|Tell them what's stressing you.|Talk it through.", "Not ready to talk? Write it down first.", "Grown-ups: listen first, advise later."],
+  ["Checking whether a thought is true stops loud thoughts from running your day.", "Notice one thought that's bothering you.|Ask: is this true, or just loud?|Look for evidence either way.", "Wondering? Ask someone you trust.", "Share how you handle loud thoughts."],
+  ["Talking through stress helps you see it more clearly and feel less alone.", "Pick someone you trust.|Tell them what's stressing you.|Talk it through.", "Talking feels big? Write it down first.", "Grown-ups: listen first, advise later."],
   ["Learning how others handle stress gives you more tools.", "Ask a grown-up how they handle stress.|Share one thing that helps you.|Try their idea.", "Feels awkward? Ask during a drive.", "Share your stress tools honestly."]
 ];
 LEARN[8].branches = [
-  ["Helping with hands-on work shows people they can count on you.", "Offer to help someone with a job, like groceries or yard work.|Work alongside them.|Chat as you go.", "Not sure who needs help? Ask a grown-up.", "Work on a job together."],
+  ["Helping with hands-on work shows people they can count on you.", "Offer to help someone with a job, like groceries or yard work.|Work alongside them.|Chat as you go.", "Wondering who needs help? Ask a grown-up.", "Work on a job together."],
   ["Being active with your group builds friendship and teamwork.", "Get your team, club, or friends together.|Do something active.|Have fun.", "Hard to organize? Start with one friend.", "Help them set it up."],
-  ["Picturing the friend you want to be helps you grow into it.", "Think about high school friendships.|Write about the kind of friend you want to be.|Include how you'll treat people.", "Not sure? Think about a great friend you've had.", "Share the kind of friend you want to be."],
+  ["Picturing the friend you want to be helps you grow into it.", "Think about high school friendships.|Write about the kind of friend you want to be.|Include how you'll treat people.", "Need an idea? Think about a great friend you've had.", "Share the kind of friend you want to be."],
   ["Knowing who you'd tell makes it easier to help a friend in trouble.", "Think about who you'd tell if a friend was in trouble.|Write down their names.|Remember: telling a grown-up is being a good friend.", "Short list? Ask a grown-up to help.", "Make the list together."],
   ["Thinking kindly about someone you don't get along with softens your heart.", "Think of someone you don't get along with.|Pray for them, or wish them well.|Notice how you feel.", "Too hard today? Try someone you're less upset with first.", "Share how you handle people you don't get along with."],
-  ["Wishing a friend well keeps you connected, even from a distance.", "Think of a friend who's had a hard week.|Wish them well.|Consider reaching out.", "Can't think of anyone? Wish your whole class a good week.", "Talk about friends who might need support."],
+  ["Wishing a friend well keeps you connected, even from a distance.", "Think of a friend who's had a hard week.|Wish them well.|Consider reaching out.", "Need an idea? Wish your whole class a good week.", "Talk about friends who might need support."],
   ["Really listening shows a friend you care.", "Ask a friend how they're really doing.|Put your phone away.|Listen without trying to fix it.", "They say \"fine\"? Ask a second time, gently.", "Grown-ups: model this by asking them."],
   ["Thanking someone in your group builds a stronger community.", "Pick someone in a group you belong to.|Thank them for something they do.|Be specific.", "Shy? A message works.", "Thank someone in your community together."]
 ];
 LEARN[8].leaves = [
-  ["Moving in a way you enjoy is good for your body, mood, and sleep.", "Pick a way to move that feels good.|Do it for ten minutes.|Notice how you feel after.", "Not in the mood? Start with five minutes.", "Move together."],
-  ["Stretching after school releases the tension of a long day.", "After school, find some space.|Do a short stretch routine.|Breathe slowly as you stretch.", "Not sure what stretches? Reach up, bend down, and twist gently.", "Stretch together after school."],
+  ["Moving in a way you enjoy is good for your body, mood, and sleep.", "Pick a way to move that feels good.|Do it for ten minutes.|Notice how you feel after.", "Low on energy? Start with five minutes.", "Move together."],
+  ["Stretching after school releases the tension of a long day.", "After school, find some space.|Do a short stretch routine.|Breathe slowly as you stretch.", "Wondering which stretches? Reach up, bend down, and twist gently.", "Stretch together after school."],
   ["Thanking your body helps you feel at home in it.", "Write three things you're thankful your body can do.|They can be simple, like laughing or walking.|Read them when you feel down about your body.", "Hard to think of three? Start with one.", "Share what you're thankful your bodies can do."],
   ["Having a plan to say no makes it easier when the moment comes.", "Think about what you might be offered, like a vape.|Write a line you could use to say no.|Practice it out loud.", "Worried it'll sound weird? You can always blame a grown-up.", "Practice saying no together."],
   ["Phones outside your room and a wind-down help you sleep. Teens need eight to ten hours.", "Charge your phone outside your room.|Wind down with something calm.|Keep lights low.", "Feel anxious without it? Try one night first.", "Grown-ups: charge yours outside your room too."],
   ["Slow breaths help you notice and settle your body.", "Take five slow breaths.|Notice how your body feels.|Let go of any tension you find.", "Mind wanders? That's normal. Come back to your breath.", "Breathe together."],
-  ["Moving with people you enjoy is good for body and friendship.", "Invite someone you like being around.|Go for a walk or play a game.|Have fun.", "No one free? Ask a family member.", "Join them for a walk or game."],
-  ["Telling a grown-up what you see keeps you safer and helps them understand.", "Think about what kids are being offered at school.|Tell a grown-up you trust.|You don't have to name names.", "Worried you'll get in trouble? You won't for being honest.", "Grown-ups: stay calm and thank them for telling you."]
+  ["Moving with people you enjoy is good for body and friendship.", "Invite someone you like being around.|Go for a walk or play a game.|Have fun.", "Everyone busy? Ask a family member.", "Join them for a walk or game."],
+  ["Telling a grown-up what you see keeps you safer and helps them understand.", "Think about what kids are being offered at school.|Tell a grown-up you trust.|You can leave names out.", "Worried you'll get in trouble? You won't for being honest.", "Grown-ups: stay calm and thank them for telling you."]
 ];
 LEARN[8].fruit = [
   ["Imagining good things ahead gives you hope for what's coming.", "Take a walk.|Imagine one good thing about next year.|Picture it clearly.", "Worried about next year? Picture one small good thing.", "Walk and share your hopes for next year."],
-  ["Doing something for your future self builds hope and confidence.", "Pick one small thing that will help future you.|Do it today.|Notice how it feels.", "Not sure what? Pack your bag or tidy your room.", "Help them think of something."],
-  ["Seeing how you've grown helps you believe you'll keep growing.", "Think back over the year.|Write three ways you've grown.|Be proud of them.", "Can't think of three? Ask someone who knows you.", "Tell them how you've seen them grow."],
-  ["Writing a hope makes it feel more real and possible.", "Think about a hope for your life.|Write it down.|Keep it somewhere safe.", "Not sure? Start with a hope for this year.", "Share your hopes for their life."],
+  ["Doing something for your future self builds hope and confidence.", "Pick one small thing that will help future you.|Do it today.|Notice how it feels.", "Need an idea? Pack your bag or tidy your room.", "Help them think of something."],
+  ["Seeing how you've grown helps you believe you'll keep growing.", "Think back over the year.|Write three ways you've grown.|Be proud of them.", "Need ideas? Ask someone who knows you.", "Tell them how you've seen them grow."],
+  ["Writing a hope makes it feel more real and possible.", "Think about a hope for your life.|Write it down.|Keep it somewhere safe.", "Need an idea? Start with a hope for this year.", "Share your hopes for their life."],
   ["Ending the day with thanks helps you rest with a lighter heart.", "Get cozy in bed.|Name one thing you're thankful for.|Let yourself feel it.", "Hard day? Something tiny counts.", "Share thankful things at bedtime."],
   ["Remembering hard times you got through reminds you that you're strong.", "Think of a hard time you got through.|Remember how you made it.|Remind yourself you can do it again.", "Still going through something hard? That's okay. Hold on to hope.", "Share a hard time you got through at their age."],
   ["Sharing a goal makes it more likely to happen.", "Think of a goal you have.|Tell someone about it.|Tell them one step you'll take.", "Nervous to share? Start with something small.", "Cheer them on and check in later."],
@@ -981,12 +981,12 @@ const PLAIN_PR = {
   '6:roots:7': {t:"Ask someone in your family about a tradition that means a lot to them.",
     L:["Traditions connect you to the people who came before you. That's a kind of root.", "Ask someone in your family about a tradition that matters to them.|Ask why it's special.|If you want, try it together.", null, null]},
   '7:roots:3': {t:"Write a short wish or hope for your day.",
-    L:["A short wish or hope for your day helps you start it on purpose.", "In the morning, take a moment.|Write a short wish or hope for your day.|Read it once more before you go.", "Not sure what to write? Try: \"Today I want to be kind.\"", "Share a hope for each other's day."]},
+    L:["A short wish or hope for your day helps you start it on purpose.", "In the morning, take a moment.|Write a short wish or hope for your day.|Read it once more before you go.", "Need a start? Try: \"Today I want to be kind.\"", "Share a hope for each other's day."]},
   '7:roots:7': {t:"Join in a family or cultural tradition this week and notice how it feels.",
     L:[null, "Pick a family or cultural tradition this week.|Join in.|Notice how it feels.", null, null]},
   '8:roots:2': {t:"Write down a big question about life you've never said out loud.",
     L:["Writing down a hidden question helps you face it honestly. Big questions are a sign of growing.", "Think about a big question about life you've never said out loud.|Write it down.|Keep it private, or share it when you're ready.", null, null]},
-  '8:roots:3': {L:[null, null, "Can't think of one? A team, a concert, a family gathering, or nature can all count.", null]},
+  '8:roots:3': {L:[null, null, "Need an idea? A team, a concert, a family gathering, or nature can all count.", null]},
   '8:roots:4': {t:"Read a short poem or a favorite passage slowly, twice. Notice what stays with you.",
     L:["Reading something meaningful slowly lets the words sink in and speak to you.", "Pick a short poem or a passage that means something to you.|Read it slowly, twice.|Notice which words stay with you.", null, null]},
   '8:roots:6': {t:"Talk with a trusted grown-up about one big question you're still figuring out.",
@@ -1000,8 +1000,8 @@ const PLAIN_PR = {
 };
 
 </script>
-<script src="guides.js?v=b780"></script>
-<script src="life.js?v=hl1"></script>
+<script src="guides.js?v=b782"></script>
+<script src="life.js?v=b782"></script>
 <script>
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1509,7 +1509,7 @@ function visitCheck(){
   VISIT_SHOWN = true;
   const intro = `<p>${v.n ? esc(v.n) + ', here' : 'Here'} is a card from your Aspen visit on ${fmtDate(v.d + 'T12:00')}: what's growing strong and what you want to try. It goes on your own tree, just for you.</p>
     <p class="ggx-small">If this phone is shared with family, anyone who can open your tree can see it. You can remove it any time.</p>${v.pl === 1 ? `<p class="ggx-small"><b>For grown-ups:</b> ${VISIT_PL_LINE}</p>` : ''}`;
-  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); toast('The card was not added.'); } };
+  const drop = { t: "Skip for Now", kind: 'quiet', fn: () => { GGApp.visit.clear(); toast('The card was set aside.'); } };
   const nm = (v.n || '').toLowerCase();
   const people = DB.students.slice().sort((a, b) => (b.name.toLowerCase().split(/\s+/)[0] === nm) - (a.name.toLowerCase().split(/\s+/)[0] === nm));
   if (!people.length){
@@ -1819,11 +1819,11 @@ function historyHTML(s){
   const sel = histDay[s.id] || today(), selList = (log[sel] || []).map(k => entryInfo(s, sel, k));
   const dname = d => d === today() ? 'Today' : new Date(d + 'T12:00').toLocaleDateString(undefined, {weekday:'short'});
   const pl = s.planLog || [];
-  return `<p class="muted">${total} ${total === 1 ? 'practice' : 'practices'} done, ${month} ${month === 1 ? 'day' : 'days'} this month. No streaks to break, just growth.</p>
+  return `<p class="muted">${total} ${total === 1 ? 'practice' : 'practices'} done, ${month} ${month === 1 ? 'day' : 'days'} this month. Just steady growth.</p>
     <div class="panel"><h3>This week</h3>
       <div class="hist-week">${days.map(d => `<button class="hist-day" aria-pressed="${d === sel}" onclick="pickHistDay('${d}')"><b style="background:${shade(count(d))};color:${count(d) ? '#fff' : 'var(--ink-soft)'}">${count(d) || ''}</b>${dname(d)}</button>`).join('')}</div>
       <p class="small" style="margin:12px 0 4px"><b>${sel === today() ? 'Today' : new Date(sel + 'T12:00').toLocaleDateString(undefined, {weekday:'long', month:'short', day:'numeric'})}</b></p>
-      ${selList.length ? `<ul class="hist-list">${selList.map(e => `<li>${e.part ? `<span style="color:${pcolor(e.part)};font-weight:700">${PART[e.part].name}</span> ` : ''}${esc(e.text)}</li>`).join('')}</ul>` : '<p class="muted small">No practices checked off this day.</p>'}
+      ${selList.length ? `<ul class="hist-list">${selList.map(e => `<li>${e.part ? `<span style="color:${pcolor(e.part)};font-weight:700">${PART[e.part].name}</span> ` : ''}${esc(e.text)}</li>`).join('')}</ul>` : '<p class="muted small">A rest day.</p>'}
     </div>
     <div class="panel"><h3>By part of your tree, last 30 days</h3>
       ${PARTS.map(p => `<div class="hist-bar"><span>${p.name}</span><i style="width:${Math.round(byPart[p.key]/maxP*100)}%;background:${pcolor(p.key)}"></i><b>${byPart[p.key]}</b></div>`).join('')}
@@ -1851,9 +1851,9 @@ function renderHelpPlan(){
     <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a growing edge. There's no limit, and you can write your own. After a check-in, Aspen points to two parts that could use some care, but you can choose any.</p></div>
     <div class="panel"><h3>Learn more</h3><p>Every practice has a <b>Learn more</b> button. It tells you why it helps, how to do it step by step, what to do if it's hard, and a way to try it with a grown-up.</p></div>
     <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
-    <div class="panel"><h3>No streaks</h3><p>Miss a few days and your tree rests in a soft mist, and nothing is taken away. One practice brings the light back, and a few days bring it all the way back.</p></div>
+    <div class="panel"><h3>Grow at your pace</h3><p>Miss a few days and your tree rests in a soft mist, and everything you grew stays. One practice brings the light back, and a few days bring it all the way back.</p></div>
     <div class="panel"><h3>Watch your tree grow up</h3><p>Every day you tend your tree moves it toward its next stage, from Seed to Golden Aspen. Practices you keep doing move from Tried to Building to Mine. Milestones mark firsts, like tending all six parts in one week, and new scenery opens as you go: new lakes to pick from in Season.</p></div>
-    <div class="panel"><h3>Steady or Hardy</h3><p>Your tree starts Steady: gentle, and nothing is ever lost. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble until one practice heals it. After a hard check-in, the tree holds still for two weeks either way.</p></div>
+    <div class="panel"><h3>Steady or Hardy</h3><p>Your tree starts Steady: gentle, and everything you grew stays. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble until one practice heals it. After a hard check-in, the tree holds still for two weeks either way.</p></div>
     <div class="panel"><h3>Easier today</h3><p>Hard day? Tap <b>Easier today</b> on a practice for a smaller version that still counts.</p></div>
     <div class="panel"><h3>Change it anytime</h3><p>Open <b>Growth Plan</b> to add or remove practices whenever you want.</p></div>
     <div class="help-strip"><div><b>Need to talk to someone?</b><br><span class="muted">Help is private and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
@@ -1923,7 +1923,7 @@ function renderRings(){
   $('view-rings').innerHTML = `<button class="back" onclick="aspTab('season')">&larr; Back to my tree</button><h2>Your Rings</h2>
     ${n ? `<p class="lede">Every check-in adds a ring. Darker lines mark a new school year. Tap a ring to see that check-in.</p>
       <div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}</button>`).join('')}</div></div><div>${ringDetail(s, sel, false)}</div></div>`
-      : `<p class="lede">No rings yet. Your first check-in adds your first ring.</p><button class="btn" onclick="startCheckin()">Start check-in</button>`}
+      : `<p class="lede">Your first check-in adds your first ring.</p><button class="btn" onclick="startCheckin()">Start check-in</button>`}
     ${n ? artGrowthHtml(s, sel) : ''}
     ${fromRingsHtml(s, false)}`;
 }
@@ -1938,7 +1938,7 @@ function renderGrown(){
       ${(()=>{ if (!window.GGP) return ''; const act = GGP.active(), locked = GGP.list().filter(p => p.age === 'aspen' && !GGP.isOpen(p.id));
         if (act && act.age === 'adult') return locked.length ? `<p class="muted">${locked.length} more student profile${locked.length===1?'':'s'} on this device ${locked.length===1?'is':'are'} locked. Only the grown-ups who agreed for a student can open them.</p>` : '';
         return `<p class="muted">Open your own grown-up profile (the button at the top of the page) to see every student you agreed for.</p>`; })()}
-      ${list.length ? `<div class="people">${list.map(s=>{const l=s.rings[s.rings.length-1];return `<button class="person" onclick="openG('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}${l?', last '+fmtDate(l.date):''}</span>${l&&l.flagged?'<span class="flagged">Worth a check-in</span>':''}</button>`;}).join('')}</div>` : '<p class="muted">No students yet. Students add themselves from the Students tab.</p>'}
+      ${list.length ? `<div class="people">${list.map(s=>{const l=s.rings[s.rings.length-1];return `<button class="person" onclick="openG('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}${l?', last '+fmtDate(l.date):''}</span>${l&&l.flagged?'<span class="flagged">Worth a check-in</span>':''}</button>`;}).join('')}</div>` : '<p class="muted">Students add themselves from the Students tab.</p>'}
       <div class="row"><button class="btn ghost small" onclick="exportFile()">Save to a file</button><label class="btn ghost small" style="cursor:pointer">Load from a file<input type="file" accept="application/json,.json" hidden onchange="importFile(this)"></label></div>
       <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it. Each file is locked with a passcode you choose.</p>
     </div>
@@ -2013,7 +2013,7 @@ function renderGStudent(){
       ${tendingParts.length ? `<p class="small" style="margin-top:12px"><b>Guides for these parts:</b></p>${tendingParts.map(p => guideLinks(p.key)).join('')}` : ''}
     </div>
     ${W ? `<div class="panel"><h3>This week in Aspen: ${esc(W.theme || '')}</h3>${kq ? `<p>${esc(s.name)}'s reflection question this week: "${esc(kq)}"</p>` : ''}${W.story ? `<p class="muted">For you, a story from Grounded: <a href="${esc(W.story.url)}" target="_blank" rel="noopener">${esc(W.story.title)}</a>. <i>${esc(W.story.line)}</i> Read it first, and share what fits in your own words.</p>` : ''}</div>` : ''}
-    <div class="panel"><h3>Reflections ${esc(s.name)} shared</h3>${shared.length ? shared.map(x => `<p style="margin:8px 0 0"><b>${fmtDate(x.date + 'T12:00')}</b><br>${esc(x.refl)}</p>`).join('') : `<p class="muted">Nothing shared yet. Weekly reflections are ${esc(s.name)}'s own unless they choose to share one with you.</p>`}</div>
+    <div class="panel"><h3>Reflections ${esc(s.name)} shared</h3>${shared.length ? shared.map(x => `<p style="margin:8px 0 0"><b>${fmtDate(x.date + 'T12:00')}</b><br>${esc(x.refl)}</p>`).join('') : `<p class="muted">Shared reflections show here. Weekly reflections are ${esc(s.name)}'s own to share with you when they choose.</p>`}</div>
     <div class="row"><button class="btn ghost small" onclick="removeStudent('${s.id}')">Remove this student from this device</button></div>`;
   asLifeMountG(s);
 }
@@ -2139,7 +2139,7 @@ function renderGuide(opts){
     ${t.quick ? `<div class="quick"><h3 style="margin-top:0">Quick Card</h3>${list(t.quick)}</div>` : ''}
     ${t.talk ? `<h3>Talking It Through</h3>${t.talk.map(p=>`<p>${p}</p>`).join('')}` : ''}
     ${t.say ? `<h3>Words you can use</h3>${list(t.say)}` : ''}
-    ${t.avoid ? `<h3>Try not to</h3>${list(t.avoid)}` : ''}
+    ${t.avoid ? `<h3>Leave these out</h3>${list(t.avoid)}` : ''}
     ${t.help ? `<h3>Where to get help</h3>${list(t.help)}` : ''}
     ${!t.quick && !t.talk ? '<p class="muted">This guide is being written.</p>' : ''}
     ${window.GGShelf ? GGShelf.html('aspen', t.id) : ''}
@@ -2315,14 +2315,14 @@ function asCheckMiles(t, quiet, ringsOnly){
 function asTodayExtra(t){
   const s = me(); if (!s || !t) return '';
   const n = window.GGTend ? GGTend.partsOn(today()) : 0, paused = asPause();
-  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Nothing will be lost.' : n ? asKind(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Everything you grew stays.' : n ? asKind(n) : 'One practice is enough to start. Your checkmark is waiting.';
   const days = asDays(t), L = asLevel(days), wk = asWeekParts(t, asMonday(today())), wn = Object.keys(wk).length;
   const trouble = PARTS.filter(p => asHardy(t, p.key));
   asCheckMiles(t, true, true); if (!Array.isArray(asRec(t).seen)) asSceneryCheck(s, t, true);
   return `<div class="gt-card as-kind"><p class="as-kind-line">${esc(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
     <div class="gt-card as-game"><div class="as-level"><span class="as-k">Your tree</span><b>${esc(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${esc(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
     <div class="as-level"><span class="as-k">This week</span><div class="as-dots" role="img" aria-label="${wn} of 6 parts tended this week">${PARTS.map(p => `<span class="as-dot${wk[p.key] ? ' on' : ''}" style="--pc:${pcolor(p.key)}" title="${p.name}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
-    <p class="gt-small as-wide">${asMode(t) === 'hardy' ? (paused ? 'Hardy is resting for now, and nothing shows trouble.' : 'Hardy is on: a part left untended for ' + AS_HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and nothing is ever lost.'} <button type="button" class="asp-link" onclick="GGTend.openSettings();reopenSettings('as-set-game')">Change</button></p>
+    <p class="gt-small as-wide">${asMode(t) === 'hardy' ? (paused ? 'Hardy is resting for now, and every part stays clear.' : 'Hardy is on: a part left untended for ' + AS_HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="asp-link" onclick="GGTend.openSettings();reopenSettings('as-set-game')">Change</button></p>
     ${trouble.length ? `<p class="as-trouble as-wide">${trouble.map(p => esc(p.name)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
     + movingOnHtml(true);
 }
@@ -2345,15 +2345,15 @@ function asOnCheck(done, key, t, parts){
 function setAsMode(m){
   const s = me(), t = aspTendGet(); if (!t){ toast('Open your tree first.'); return; }
   const R = asRec(t); R.mode = m === 'hardy' ? 'hardy' : 'steady'; if (R.mode === 'hardy') R.hardyFrom = today();
-  save(); toast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + AS_HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and nothing is lost.');
+  save(); toast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + AS_HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and everything you grew stays.');
   if (window.GGTend) GGTend.render(); reopenSettings('as-set-game');
 }
 function asGameSettings(){
   const t = me() ? aspTendGet() : null, mode = asMode(t), dis = t ? '' : ' disabled';
-  return `<section id="as-set-game"><h3>Your Tree: Steady or Hardy</h3>${asHardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and nothing is ever lost. Rest Week on Today holds your tree still any time.</p>' : ''}
-    <label class="gt-radio"><input type="radio" name="as-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${dis} onchange="setAsMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and nothing is ever lost.</span></label>
+  return `<section id="as-set-game"><h3>Your Tree: Steady or Hardy</h3>${asHardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and everything you grew stays. Rest Week on Today holds your tree still any time.</p>' : ''}
+    <label class="gt-radio"><input type="radio" name="as-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${dis} onchange="setAsMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and everything you grew stays.</span></label>
     <label class="gt-radio"><input type="radio" name="as-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${dis} onchange="setAsMode('hardy')"><span><b>Hardy</b>${asHardyRests() ? 'Here whenever you want it.' : 'A little more challenge.'} A part of your plan left untended for ${AS_HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
-    <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>`;
+    <p class="gt-small">Your tree grows at your own pace, just for you. After a hard check-in, the tree holds still for two weeks either way.</p></section>`;
 }
 
 /* ---------- Aspen's unlockable scenery ----------
@@ -2511,9 +2511,9 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<script src="/shared/gg-learn.js?v=b781" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b781';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b782" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b782';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b782" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b782';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=b782" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b782';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b781" defer></script><!-- /PAGE VIDEO -->
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b782" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

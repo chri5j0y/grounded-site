@@ -341,7 +341,7 @@
       function R(x, yy, w, h, fill) { ops.push(fill.join(' ') + ' rg ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' ' + w.toFixed(1) + ' ' + h.toFixed(1) + ' re f'); }
       function para(t, x, yy, w, f, size, col, lh, bold) { var ls = wrap(text(t), size, bold, w); ls.forEach(function (l, i) { T(l, x, yy - i * size * lh, f, size, col); }); return ls.length * size * lh; }
       function qrAt(url, x, top, size) {
-        var mx = null; try { mx = window.GGQR && GGQR.matrix ? GGQR.matrix(url) : null; } catch (e) { mx = null; }
+        var mx = null; try { mx = window.GGQR && GGQR.matrix ? GGQR.matrix(url, { ecc: url.length > 700 ? 'L' : '' }) : null; } catch (e) { mx = null; }
         if (!mx) return 0;
         var cnt = mx.length, cell = size / cnt;
         R(x - 4, top - size - 4, size + 8, size + 8, WHITE);
@@ -361,17 +361,17 @@
       function flow(t, x, w, f, size, col, lh, gap, bold) { var ls = wrap(text(t), size, bold, w); y -= gap + size; ls.forEach(function (l, i) { T(l, x, y - i * size * lh, f, size, col); }); y -= (ls.length - 1) * size * lh; return ls.length; }
       if (n.lead) flow(n.lead, X0, MW, 'F5', s(13), INK, 1.3, 0);
       if (n.kid) { var k0 = y; flow(n.kid, X0 + 12, MW - 14, 'F2', s(11), INK, 1.35, s(10), true); R(X0, y - s(4), 3, k0 - y - s(6), C); }
-      if (n.tree && n.tree.lights.length) {
-        y -= s(26); T(n.tree.title, X0, y, 'F4', s(15), C);
+      if (n.treeLights && n.treeLights.lights.length) {
+        y -= s(26); T(n.treeLights.title, X0, y, 'F4', s(15), C);
         var cw = MW / 3, rr = s(10.5), rowH = s(38);
-        n.tree.lights.forEach(function (L, i) {
+        n.treeLights.lights.forEach(function (L, i) {
           var cx = X0 + (i % 3) * cw, cy = y - s(10) - rr - Math.floor(i / 3) * rowH;
           glow(ops, cx + rr + 4, cy, rr, L.lv, rgb(L.color, null));
           T(fit(text(L.part), s(10.5), true, cw - rr * 2 - 16), cx + rr * 2 + 14, cy + (L.word ? s(2) : -s(3.5)), 'F2', s(10.5), INK);
           if (L.word) T(fit(text(L.word), s(9), false, cw - rr * 2 - 16), cx + rr * 2 + 14, cy - s(9.5), 'F1', s(9), SOFT);
         });
-        y -= s(10) + Math.ceil(n.tree.lights.length / 3) * rowH - s(6);
-        if (n.tree.key) flow(n.tree.key, X0, MW, 'F3', s(8.5), SOFT, 1.3, s(2));
+        y -= s(10) + Math.ceil(n.treeLights.lights.length / 3) * rowH - s(6);
+        if (n.treeLights.key) flow(n.treeLights.key, X0, MW, 'F3', s(8.5), SOFT, 1.3, s(2));
       }
       (n.sec || []).forEach(function (sc) {
         if (sc.h) { y -= s(24); T(sc.h, X0, y, 'F4', s(13.5), C); }

@@ -28,7 +28,7 @@ window.GG_LEARN = {
  "support": {
   "eyebrow": "Support",
   "title": "Support for Right Now",
-  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
@@ -166,7 +166,7 @@ window.GG_LEARN = {
          "Everything stays on this device"
         ]
        ],
-       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has guides for hard talks, from a pet dying to scary news. And everything stays on this device. Nothing is sent to Grounded or anyone else."
+       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has guides for hard talks, from a pet dying to scary news. And everything stays on this device, yours alone."
       },
       {
        "k": "big",
@@ -377,11 +377,11 @@ window.GG_LEARN = {
         ],
         [
          "Go with your first answer",
-         "No need to think too hard"
+         "Go with your first thought"
         ],
         [
          "Take your time",
-         "There is no rush"
+         "Take your time"
         ]
        ],
        "say": "A few tips. Find a cozy spot. A check-in takes about ten to fifteen minutes. Go with your first answer. And take your time. When you finish, tap See my tree."
@@ -586,7 +586,7 @@ window.GG_LEARN = {
          "Plus any part that was skipped"
         ],
         [
-         "Be curious, not worried",
+         "Be curious and calm",
          "\"Tell me about that rain cloud\""
         ]
        ],
@@ -1028,9 +1028,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You don't need perfect words.",
+       "h": "Simple words are enough.",
        "sub": "Being close and honest helps most.",
-       "say": "Now you know where to look. Find that guide when you're ready. You don't need perfect words. Being close and honest helps most."
+       "say": "Now you know where to look. Find that guide when you're ready. Simple words are enough. Being close and honest helps most."
       },
       {
        "k": "quiz",
@@ -1084,7 +1084,7 @@ window.GG_LEARN = {
        "items": [
         [
          "A gentle check-in",
-         "Not a test, and no wrong answers"
+         "Every answer welcome"
         ],
         [
          "Kids see weather",
@@ -1378,8 +1378,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Everything stays on this device.",
-       "sub": "Nothing is sent to Grounded or anyone else.",
-       "say": "Everything in Maple stays on this device. Nothing is sent to Grounded, or to anyone else."
+       "sub": "Everything stays on this device.",
+       "say": "Everything in Maple stays on this device. It is yours alone."
       },
       {
        "k": "points",
@@ -1447,7 +1447,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Roots hold a tree tight.",
-       "sub": "You can't see them. They are always working.",
+       "sub": "Out of sight, they are always working.",
        "say": "Roots hold a tree tight. They grow deep underground, where they find water. You can't see them, and they are always working. Your roots work the same way. They hold you when things feel wobbly."
       },
       {
@@ -1708,14 +1708,14 @@ window.GG_LEARN = {
         ],
         [
          "Praise the trying",
-         "Not only the result"
+         "The effort too"
         ],
         [
          "Give a small job",
          "And thank them for it"
         ]
        ],
-       "say": "For grown-ups. Name one strength you have really seen, like, you were kind when, or you did not give up when. Praise the trying, not only the result. And give them a small job that matters, then thank them for it. When a grown-up names a strength, a child starts to see it too."
+       "say": "For grown-ups. Name one strength you have really seen, like, you were kind when, or you did not give up when. Praise the trying as much as the result. And give them a small job that matters, then thank them for it. When a grown-up names a strength, a child starts to see it too."
       },
       {
        "k": "big",
@@ -1864,7 +1864,7 @@ window.GG_LEARN = {
         ],
         [
          "Practice when calm",
-         "So they are ready when things are not"
+         "So they are ready for hard moments"
         ],
         [
          "Listen before you fix",
@@ -2457,7 +2457,7 @@ window.GG_LEARN = {
        "h": "After the screen",
        "items": [
         [
-         "Be curious, not worried",
+         "Be curious and calm",
          "Tell me about that rain cloud"
         ],
         [
@@ -2473,7 +2473,7 @@ window.GG_LEARN = {
          "Everyone has rainy days"
         ]
        ],
-       "say": "A few things help. Be curious, not worried. Tell me about that rain cloud opens more doors than, what is wrong? Listen more than you fix. Kids often just need to be heard. Take their weather seriously, even if it seems small to you. And share a little of your own weather. It shows them everyone has rainy days."
+       "say": "A few things help. Be curious and calm. Tell me about that rain cloud opens more doors than, what is wrong? Listen more than you fix. Kids often just need to be heard. Take their weather seriously, even if it seems small to you. And share a little of your own weather. It shows them everyone has rainy days."
       },
       {
        "k": "points",
@@ -2484,7 +2484,7 @@ window.GG_LEARN = {
          "Bedtime, or a slow weekend morning"
         ],
         [
-         "Sit beside, not across",
+         "Sit beside them",
          "In the car, on a walk, while drawing"
         ],
         [
@@ -2492,7 +2492,7 @@ window.GG_LEARN = {
          "A few minutes, many times"
         ]
        ],
-       "say": "Little ones often talk best side by side. Pick an unhurried moment, like a quiet afternoon, bedtime, or a slow weekend morning. Sit beside them, not across from them. The car, a walk, or a table full of crayons can work wonders. And keep it short. A few minutes, many times, will carry you further than one big talk."
+       "say": "Little ones often talk best side by side. Pick an unhurried moment, like a quiet afternoon, bedtime, or a slow weekend morning. Sit beside them, side by side. The car, a walk, or a table full of crayons can work wonders. And keep it short. A few minutes, many times, will carry you further than one big talk."
       },
       {
        "k": "words",
@@ -2573,8 +2573,8 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Keep it light. A gift, not a test.",
-       "say": "And keep it light. Maple works best when it feels like a gift, not a test. A child who feels heard today is more ready to talk tomorrow."
+       "h": "Keep it light. A gift to enjoy.",
+       "say": "And keep it light. Maple works best when it feels like a gift. A child who feels heard today is more ready to talk tomorrow."
       },
       {
        "k": "quiz",
@@ -2857,7 +2857,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Let them wonder",
-         "No need to rush an answer"
+         "Take your time with an answer"
         ],
         [
          "Ask what they think",
@@ -2872,7 +2872,7 @@ window.GG_LEARN = {
          "In a book, or by asking someone"
         ]
        ],
-       "say": "When a big question comes, let them wonder. There is no need to rush to an answer. Ask what they think, or what made them wonder that. It is okay to say, I don't know everything, and then share what you do know. Some families say, I know love doesn't end. And you can find out together, in a book, or by asking someone you trust."
+       "say": "When a big question comes, let them wonder. Take your time with an answer. Ask what they think, or what made them wonder that. It is okay to say, I don't know everything, and then share what you do know. Some families say, I know love doesn't end. And you can find out together, in a book, or by asking someone you trust."
       },
       {
        "k": "big",
@@ -2965,7 +2965,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Wonder is a door. Walk through it together.",
-       "say": "Wonder is a door. You do not need every answer to walk through it together."
+       "say": "Wonder is a door. You can walk through it together, even while questions stay open."
       },
       {
        "k": "quiz",
@@ -3057,7 +3057,7 @@ window.GG_LEARN = {
          "A pastor, a teacher, a friend"
         ]
        ],
-       "say": "When you see those signs, reach out. Start with your child's doctor. Their pediatrician knows their body and their history, and can help you find the next step. Talk with the school counselor, who sees your child most days. And lean on someone you trust, like a pastor or a teacher. You do not have to figure this out alone."
+       "say": "When you see those signs, reach out. Start with your child's doctor. Their pediatrician knows their body and their history, and can help you find the next step. Talk with the school counselor, who sees your child most days. And lean on someone you trust, like a pastor or a teacher. We can figure this out together."
       },
       {
        "k": "card",
@@ -3238,7 +3238,7 @@ window.GG_LEARN = {
         ],
         [
          "Let them answer",
-         "Their words, not yours"
+         "In their own words"
         ],
         [
          "I don’t know is okay",
@@ -3287,7 +3287,7 @@ window.GG_LEARN = {
        "tap": 2,
        "panel": {
         "h": "Tell me about that rain cloud.",
-        "sub": "Curious, not worried.",
+        "sub": "Curious and calm.",
         "items": [
          "Listen more than you fix",
          "Take their weather seriously",
@@ -3343,7 +3343,7 @@ window.GG_LEARN = {
        "tap": 3,
        "note": {
         "h": "Growth Plan",
-        "p": "Pick things to practice. About 3 for each part is a good start. No limit, and add your own."
+        "p": "Pick things to practice. About 3 for each part is a good start. Add as many as you like, and add your own."
        },
        "say": "After the check-in, your child’s tree is ready to tend. Open the Growth Plan together. Maple suggests starting with the parts that had rain or clouds. About three for each part is a good start, and a few more for any part with clouds or rain. There is no limit, and you can add your own ideas."
       },
@@ -3411,7 +3411,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Keep it light. Maple works best as a gift.",
        "sub": "A few minutes, side by side.",
-       "say": "Keep it light. Maple works best when it feels like a gift, not a test. A few minutes, side by side, is how a tree grows."
+       "say": "Keep it light. Maple works best when it feels like a gift. A few minutes, side by side, is how a tree grows."
       },
       {
        "k": "quiz",
@@ -3422,7 +3422,7 @@ window.GG_LEARN = {
         "Skip that part next time"
        ],
        "right": 1,
-       "why": "Be curious, not worried. Listening opens the door.",
+       "why": "Be curious and calm. Listening opens the door.",
        "say": "Quick question. Your child’s Bark shows rain. What is a good first step?"
       }
      ]
@@ -3955,7 +3955,7 @@ window.GG_LEARN = {
     {
      "id": "mp-r-sleep",
      "n": 4,
-     "title": "When I Can’t Sleep",
+     "title": "When Sleep Is Hard",
      "mins": 3,
      "blurb": "A sleepy turtle, a heavy body, and slow breaths for bedtime.",
      "scenes": [
@@ -3963,7 +3963,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "maple",
        "eyebrow": "Support for Right Now",
-       "h": "When I Can’t Sleep",
+       "h": "When Sleep Is Hard",
        "sub": "Slow and sleepy, like a turtle.",
        "say": "Is it bedtime, and your eyes just will not close? Let us get slow and sleepy together. Snuggle in, and keep the sound soft."
       },
@@ -4376,7 +4376,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Stand up and make some room.",
-       "sub": "Arms out wide. Nothing to bump.",
+       "sub": "Arms out wide, with room all around.",
        "cue": {
         "p": {
          "1": 2
@@ -4687,7 +4687,7 @@ window.GG_LEARN = {
  "support": {
   "eyebrow": "Support",
   "title": "Support for Right Now",
-  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
@@ -4769,7 +4769,7 @@ window.GG_LEARN = {
          "Each full check-in"
         ]
        ],
-       "say": "Here is how Aspen works. Check in, with questions written for your grade. See how each part is doing: Strong, Steady, or Growing Edge. A Growing Edge is a part to tend, not a grade. Tend a little each day with small practices. And each full check-in adds a growth ring to your tree."
+       "say": "Here is how Aspen works. Check in, with questions written for your grade. See how each part is doing: Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend. Tend a little each day with small practices. And each full check-in adds a growth ring to your tree."
       },
       {
        "k": "tabs",
@@ -4808,7 +4808,7 @@ window.GG_LEARN = {
        "h": "Yours to keep",
        "items": [
         [
-         "No account",
+         "Everything stays on your device",
          "Your tree stays on this device"
         ],
         [
@@ -4850,7 +4850,7 @@ window.GG_LEARN = {
         "You need to start over"
        ],
        "right": 1,
-       "why": "A Growing Edge is a part to tend, not a grade.",
+       "why": "A Growing Edge is simply a part to tend.",
        "say": "Quick question. What does a Growing Edge mean?"
       }
      ]
@@ -5047,7 +5047,7 @@ window.GG_LEARN = {
         ],
         [
          "Go with your first honest answer",
-         "No need to overthink"
+         "Go with your first thought"
         ],
         [
          "Finish and add my ring",
@@ -5082,7 +5082,7 @@ window.GG_LEARN = {
        "hero": "aspen",
        "eyebrow": "Using Aspen, Lesson 2",
        "h": "Your Tree and Your Levels",
-       "sub": "A picture of right now, not a grade.",
+       "sub": "Just a picture of right now.",
        "say": "After a check-in, Aspen shows how each part of your tree is doing. This lesson is about reading it well, and about how your tree grows over time."
       },
       {
@@ -5109,7 +5109,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "A Growing Edge is a part to tend, not a grade.",
+       "h": "A Growing Edge is simply a part to tend.",
        "sub": "Everyone has one.",
        "say": "A Growing Edge is not a bad grade. It is a part to tend. Everyone has one, grown-ups too. And Aspen will help you tend it."
       },
@@ -5176,10 +5176,10 @@ window.GG_LEARN = {
         ],
         [
          "Pick one or two to start",
-         "Not all six at once"
+         "One or two parts at a time"
         ]
        ],
-       "say": "Read your results with kindness. Notice your strengths first. A strong part can help the others grow. Look for patterns. When you sleep badly, your feelings often feel it too. And pick one or two parts to start with, not all six at once."
+       "say": "Read your results with kindness. Notice your strengths first. A strong part can help the others grow. Look for patterns. When you sleep badly, your feelings often feel it too. And pick one or two parts to start with."
       },
       {
        "k": "points",
@@ -5262,7 +5262,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Steady",
-         "Gentle, and nothing is ever lost"
+         "Gentle, and everything you grow stays"
         ],
         [
          "Hardy",
@@ -5363,7 +5363,7 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Suggestions, never limits",
+       "h": "Suggestions, with room to grow",
        "items": [
         [
          "Strong: about 3",
@@ -5381,7 +5381,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Aspen suggests about three practices for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Pick as many or as few as fit your life."
+       "say": "Aspen suggests about three practices for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Pick as many or as few as fit your life."
       },
       {
        "k": "screen",
@@ -5523,7 +5523,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "No streaks to break. Growth only adds.",
+       "h": "Every day counts. Growth only adds.",
        "sub": "Missed a few days? Pick up today.",
        "say": "There are no streaks to break in Aspen. Growth only adds. If you miss a few days, just pick up today. Your tree is always glad to see you."
       },
@@ -5823,7 +5823,7 @@ window.GG_LEARN = {
        "items": [
         [
          "On my own",
-         "The student checks in alone"
+         "The student checks in on their own"
         ],
         [
          "With a grown-up",
@@ -5888,7 +5888,7 @@ window.GG_LEARN = {
         "h": "How to start the check-in",
         "sub": "Pick a calm, private moment.",
         "items": [
-         "Say what you noticed, without alarm",
+         "Say what you noticed, calmly",
          "Listen more than you talk",
          "Thank them for being honest"
         ]
@@ -6094,14 +6094,14 @@ window.GG_LEARN = {
        "h": "Some answers always show.",
        "sub": "So a safe grown-up can help.",
        "beats": [
-        "Those few answers always show because you matter, and nobody should carry something heavy alone.",
+        "Those few answers always show because you matter, and something heavy is meant to be shared.",
         "Think of two safe grown-ups you could tell, like a parent, a grandparent, a teacher, or a school counselor.",
         {
          "t": "Say their names, out loud or in your head.",
          "w": 10
         }
        ],
-       "say": "Those few answers always show because you matter, and nobody should carry something heavy alone. Think of two safe grown-ups you could tell, like a parent, a grandparent, a teacher, or a school counselor. Say their names, out loud or in your head."
+       "say": "Those few answers always show because you matter, and something heavy is meant to be shared. Think of two safe grown-ups you could tell, like a parent, a grandparent, a teacher, or a school counselor. Say their names, out loud or in your head."
       },
       {
        "k": "points",
@@ -6344,7 +6344,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Strong roots might mean you know what steadies you, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel empty inside, unsure, or weighed down. That is an honest place to be, and it is a part to tend, not a grade."
+       "say": "Strong roots might mean you know what steadies you, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel empty inside, unsure, or weighed down. That is an honest place to be, and it is simply a part to tend."
       },
       {
        "k": "points",
@@ -6397,7 +6397,7 @@ window.GG_LEARN = {
         "How often you go to services"
        ],
        "right": 1,
-       "why": "Roots asks about your experience, never what you believe.",
+       "why": "Roots asks about your experience, whatever you believe.",
        "say": "Quick question. What does Aspen ask about in Roots?"
       }
      ]
@@ -6448,8 +6448,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Every skill starts with a first try.",
-       "sub": "You do not have to be good at it yet.",
-       "say": "Trying things before you are good at them is how people find what they love. A new club, an instrument, a sport, a recipe. Your first try counts, even when it is wobbly. You do not have to be good at it yet."
+       "sub": "You can be a beginner.",
+       "say": "Trying things before you are good at them is how people find what they love. A new club, an instrument, a sport, a recipe. Your first try counts, even when it is wobbly. You can be a beginner."
       },
       {
        "k": "big",
@@ -6585,8 +6585,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Bark protects the tree, and stretches as it grows.",
-       "sub": "Healthy bark bends without breaking.",
-       "say": "Bark protects a tree from storms and sun. And it has to stretch as the tree grows. Your mind and feelings work the same way. Healthy bark bends without breaking."
+       "sub": "Healthy bark bends and holds.",
+       "say": "Bark protects a tree from storms and sun. And it has to stretch as the tree grows. Your mind and feelings work the same way. Healthy bark bends and holds."
       },
       {
        "k": "points",
@@ -6836,7 +6836,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Strong branches might mean you have people, and you reach for them. Steady might mean you have good people, with some lonely days. And a Growing Edge might mean you feel left out a lot, or someone is being unkind to you. A Growing Edge is a part to tend, not a grade."
+       "say": "Strong branches might mean you have people, and you reach for them. Steady might mean you have good people, with some lonely days. And a Growing Edge might mean you feel left out a lot, or someone is being unkind to you. A Growing Edge is simply a part to tend."
       },
       {
        "k": "big",
@@ -6999,7 +6999,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Strong leaves might mean you rest, move, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two, like late nights. And a Growing Edge might mean you feel tired a lot, or uneasy in your body. That is a part to tend, not a grade."
+       "say": "Strong leaves might mean you rest, move, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two, like late nights. And a Growing Edge might mean you feel tired a lot, or uneasy in your body. That is simply a part to tend."
       },
       {
        "k": "big",
@@ -7160,7 +7160,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "A bad moment is just a moment.",
-       "sub": "Name what went wrong, and what still went okay.",
+       "sub": "Name what was hard, and what still went okay.",
        "say": "Picture a day where a quiz goes badly in second period. By lunch, it can feel like the whole day is ruined. Try this. Name what went wrong. Then name what still went okay. A friend saved you a seat. Practice went well. A bad moment is just a moment, and hope lasts longer when you see it that way."
       },
       {
@@ -7309,7 +7309,7 @@ window.GG_LEARN = {
        "items": [
         [
          "In the car",
-         "Eyes on the road, not on them"
+         "Eyes on the road, side by side"
         ],
         [
          "On a walk",
@@ -7736,7 +7736,7 @@ window.GG_LEARN = {
          "Pray or sit in stillness, your way"
         ]
        ],
-       "say": "Remembering your own questions makes it easier to welcome theirs. Aspen's Roots practices give students ways in. Write down a question about faith or life you've never said out loud. Talk with a trusted grown-up about one belief you're still figuring out. Ask an elder what helps them trust when life is hard. Or pray, or sit in stillness, in whatever way fits you and your family. Each practice's Learn more card asks the same of grown-ups. Listen and wonder. Don't rush to answers."
+       "say": "Remembering your own questions makes it easier to welcome theirs. Aspen's Roots practices give students ways in. Write down a question about faith or life you've never said out loud. Talk with a trusted grown-up about one belief you're still figuring out. Ask an elder what helps them trust when life is hard. Or pray, or sit in stillness, in whatever way fits you and your family. Each practice's Learn more card asks the same of grown-ups. Listen and wonder. Take your time with answers."
       },
       {
        "k": "points",
@@ -7772,7 +7772,7 @@ window.GG_LEARN = {
         "How often they attend services"
        ],
        "right": 1,
-       "why": "Roots asks about experience, never belief, so every student can be strong there.",
+       "why": "Roots asks about experience, so every student, whatever they believe, can be strong there.",
        "say": "Quick question. What does Aspen ask about in Roots?"
       }
      ]
@@ -7848,7 +7848,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Asking directly about suicide is safe.",
        "sub": "It does not put the idea in their head. It opens the door.",
-       "say": "If you see these signs, ask directly. Asking a young person about suicide is safe. It does not put the idea in their head. It tells them you can handle the answer, and that they do not have to carry it alone."
+       "say": "If you see these signs, ask directly. Asking a young person about suicide is safe. It does not put the idea in their head. It tells them you can handle the answer, and that you will help them carry it."
       },
       {
        "k": "words",
@@ -7939,9 +7939,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You do not have to be the expert.",
+       "h": "Your presence matters more than expertise.",
        "sub": "Ask plainly. Stay close. Call for help.",
-       "say": "You do not have to be the expert. Ask plainly, stay close, and call for help. Getting help early is a strong and loving thing to do."
+       "say": "Your presence matters more than expertise. Ask plainly, stay close, and call for help. Getting help early is a strong and loving thing to do."
       },
       {
        "k": "quiz",
@@ -8234,7 +8234,7 @@ window.GG_LEARN = {
        "items": [
         [
          "You are one of their grown-ups",
-         "Not the only one"
+         "Many others too"
         ],
         [
          "Name their circle",
@@ -8398,7 +8398,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "You are here. And you have people.",
        "sub": "Tell a parent, grandparent, teacher, or school counselor. In Aspen, tap Need to talk to someone?",
-       "say": "If the big feeling stays, you do not have to handle it alone. Tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And in Aspen, the button that says Need to talk to someone shows people you can reach any time. You are here. And you have people."
+       "say": "If the big feeling stays, let someone help you with it. Tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And in Aspen, the button that says Need to talk to someone shows people you can reach any time. You are here. And you have people."
       }
      ]
     },
@@ -8505,9 +8505,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You don’t have to carry worry alone.",
+       "h": "Worry gets lighter when you share it.",
        "sub": "Tell a parent, teacher, or school counselor. Need to talk now? Call or text 988, or text HOME to 741741.",
-       "say": "You do not have to carry worry alone. If it keeps showing up, tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And if you need to talk to someone right now, call or text nine eight eight, or text HOME to seven four one seven four one."
+       "say": "Worry gets lighter when you share it. If it keeps showing up, tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And if you need to talk to someone right now, call or text nine eight eight, or text HOME to seven four one seven four one."
       }
      ]
     },
@@ -8738,7 +8738,7 @@ window.GG_LEARN = {
     {
      "id": "as-r-sleep",
      "n": 5,
-     "title": "When You Can’t Sleep",
+     "title": "When Sleep Is Hard",
      "mins": 3,
      "blurb": "Set your thoughts down and let your body rest.",
      "scenes": [
@@ -8746,7 +8746,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "aspen",
        "eyebrow": "Support for Right Now",
-       "h": "When You Can’t Sleep",
+       "h": "When Sleep Is Hard",
        "sub": "Set it down for tonight.",
        "say": "If it is late, and your mind will not slow down, this is for you. Keep the lights low and the volume soft."
       },
@@ -8760,7 +8760,7 @@ window.GG_LEARN = {
         ],
         [
          "Add one small step",
-         "For tomorrow, not tonight"
+         "Saved for tomorrow"
         ],
         [
          "Close it",
@@ -8930,8 +8930,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Waves rise, and waves pass.",
-       "sub": "You do not have to carry this alone.",
-       "say": "Waves rise, and waves pass. You do not have to carry this alone. Come back here whenever you need to."
+       "sub": "Let someone help you carry this.",
+       "say": "Waves rise, and waves pass. Let someone help you carry this. Come back here whenever you need to."
       }
      ]
     },
@@ -9027,7 +9027,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If it keeps happening, tell a grown-up.",
-       "sub": "Asking for backup is smart, not tattling.",
+       "sub": "Asking for backup is smart and brave.",
        "say": "If being left out keeps happening, or it turns into teasing or meanness, tell a grown-up you trust, like a parent, a teacher, or your school counselor. That is not tattling. It is asking for backup."
       },
       {
@@ -9121,8 +9121,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Telling is the brave, smart move.",
-       "sub": "You are not alone in this.",
-       "say": "You are not alone in this. Telling a grown-up is the bravest, smartest move. Come back here whenever you need to."
+       "sub": "We're with you in this.",
+       "say": "We're with you in this. Telling a grown-up is the bravest, smartest move. Come back here whenever you need to."
       }
      ]
     },
@@ -9238,7 +9238,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Some things are too big to carry alone.",
+       "h": "Some things are meant to be carried together.",
        "sub": "Grown-ups are there to help carry them.",
        "say": "Some things are too big for a kid to carry alone. That is not weakness. It is just true. Helping carry big things is a grown-up's job."
       },
@@ -9343,7 +9343,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Telling is brave. You deserve to be safe.",
-       "say": "Telling is brave. You are not in trouble, and you are not alone. You deserve to be safe."
+       "say": "Telling is brave. You are not in trouble, and you are held. You deserve to be safe."
       }
      ]
     }
@@ -9355,7 +9355,7 @@ window.GG_LEARN = {
     title: 'Learn Oak',
     intro: 'Short videos, narrated aloud. Watch them in any order, as often as you like.',
     supportFirst: true,
-    support: { eyebrow: 'Support', title: 'Support for Right Now', intro: 'Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish.' },
+    support: { eyebrow: 'Support', title: 'Support for Right Now', intro: 'Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace.' },
     lessonsTitle: 'Learn Step by Step',
     tracks: [
       { id: 'oak-start', title: 'Start Here', who: 'For adults tending their own tree', lessons: [
@@ -9365,7 +9365,7 @@ window.GG_LEARN = {
           { k: 'trees', h: 'Oak grows between Birch and Sequoia.', say: 'Grow With Grounded has a tree for every age. Pine is for high school, and Birch is for young adults. Sequoia is for older adults, sixty and up. Oak is built for adults, twenty six to sixty, right in the full middle of life.' },
           { k: 'parts', say: 'You are made of six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope.' },
           { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too.' },
-          { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is a part to tend, not a grade.' },
+          { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend.' },
           { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', "Guides for more than 50 of life's hardest seasons"], ['A tree that grows', 'From Acorn to Heritage Oak']], cue: { at: [1, 3, 4, 5] }, say: "Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than fifty of life's hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak." },
           { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. There is no account. Your profile is locked with a passcode on this device, and nothing you enter is sent to Grounded or anyone else. And if you ever need to talk right now, call or text nine eight eight, any time.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Where to begin', p: 'Start a check-in. Your tree and your practices grow from there.' }, say: 'Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there.' },
@@ -9378,34 +9378,34 @@ window.GG_LEARN = {
 
         { id: 'ok-u-checkin', n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
-          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Not Now'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. Nothing is sent anywhere.' },
+          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Not Now'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone.' },
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
-          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Never part of a score', 'They are only there to help'], ['One more question', 'Right now, today?'], ['Help is right there', '988 and 911, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. If you answer Sometimes or Often to the direct question, Oak asks one more: Right now, today, are those thoughts with you? A yes, or not sure, puts nine eight eight and nine one one first, so help is right there for you. The calm card also offers one more step: if there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.' },
-          { k: 'points', h: 'To take it well', items: [['Find a quiet moment', 'Fifteen minutes, if you can'], ['Go with your first honest answer', 'No need to overthink'], ['Take a break anytime', 'Oak keeps your place']], say: 'A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place.' },
+          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Kept apart from every score', 'They are only there to help'], ['One more question', 'Right now, today?'], ['Help is right there', '988 and 911, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. If you answer Sometimes or Often to the direct question, Oak asks one more: Right now, today, are those thoughts with you? A yes, or not sure, puts nine eight eight and nine one one first, so help is right there for you. The calm card also offers one more step: if there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.' },
+          { k: 'points', h: 'To take it well', items: [['Find a quiet moment', 'Fifteen minutes, if you can'], ['Go with your first honest answer', 'Go with your first thought'], ['Take a break anytime', 'Oak keeps your place']], say: 'A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place.' },
           { k: 'quiz', q: 'What does Not sure mean in a check-in?', opts: ['You did it wrong', 'An honest answer that is always okay', 'Your score goes down'], right: 1, why: 'Not sure is an honest answer, and it never counts against you.', say: 'Quick question. What does Not sure mean in a check-in?' }
         ] },
 
         { id: 'ok-u-levels', n: 2, title: 'Reading Your Levels', mins: 4, blurb: 'Strong, Steady, and Growing Edge, and what to do with them.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 2', h: 'Reading Your Levels', sub: 'A picture of right now, not a grade.', say: 'After a check-in, each part of your tree gets a level. This lesson is about reading them well.' },
+          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 2', h: 'Reading Your Levels', sub: 'Just a picture of right now.', say: 'After a check-in, each part of your tree gets a level. This lesson is about reading them well.' },
           { k: 'levels', say: 'There are three levels. Strong, from eight to ten. Steady, from five to seven. And Growing Edge, from one to four.' },
-          { k: 'big', h: 'A Growing Edge is where your next growth begins.', sub: 'It is a part to tend, not a grade.', say: 'A Growing Edge is not a failing grade. It is where your next growth begins. It is a part to tend, and Oak will help you tend it.' },
+          { k: 'big', h: 'A Growing Edge is where your next growth begins.', sub: 'It is simply a part to tend.', say: 'A Growing Edge is not a failing grade. It is where your next growth begins. It is a part to tend, and Oak will help you tend it.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Your Results', rows: [['Roots', 'Strong, 8 of 10', '#5F7D48'], ['Trunk', 'Steady, 6 of 10', '#8B5E1A'], ['Bark', 'Growing Edge, 4 of 10', '#B8612F'], ['Branches', 'Steady, 7 of 10', '#8B5E1A'], ['Leaves', 'Steady, 5 of 10', '#8B5E1A'], ['Fruit', 'Strong, 9 of 10', '#5F7D48']], tap: 2, say: 'Your results show each part, with its level and its score. Oak also names your biggest growing edge right now. That is a good place to start.' },
-          { k: 'points', h: 'Read it with kindness', items: [['Look for patterns', 'Which parts lean on each other?'], ['Notice your strengths', 'They can carry you while you grow'], ['Pick one part to start', 'Not all six at once']], say: 'Read your results with kindness. Look for patterns. When one part is hurting, another often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with, not all six at once.' },
+          { k: 'points', h: 'Read it with kindness', items: [['Look for patterns', 'Which parts lean on each other?'], ['Notice your strengths', 'They can carry you while you grow'], ['Pick one part to start', 'One or two parts at a time']], say: 'Read your results with kindness. Look for patterns. When one part is hurting, another often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with.' },
           { k: 'points', h: 'Rings and changes', items: [['Each full check-in adds a ring', 'Your tree grows with you'], ['Grew, Dipped, or Same', 'Compared with your last check-in'], ['Like with like', 'Full with full, quick with quick'], ['From Pine and From Birch', 'Rings that came along, shown apart']], cue: { at: [0, 1, 1, 2] }, say: 'Over time, every full check-in adds a growth ring to your tree. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one. Rings that came along from Pine or Birch are labeled From Pine or From Birch, and shown apart. And if you came from Birch, a Groundwork card opens your Groundwork notebook to read or print.' },
           { k: 'big', h: 'Every score is a starting point.', say: 'Remember, every score is a starting point. It tells you where you are, so you can choose where to grow.' },
-          { k: 'quiz', q: 'What is a Growing Edge?', opts: ['A failing grade', 'A part to tend, where your next growth begins', 'A part you should ignore'], right: 1, why: 'A Growing Edge is a part to tend, not a grade.', say: 'Quick question. What is a Growing Edge?' }
+          { k: 'quiz', q: 'What is a Growing Edge?', opts: ['A failing grade', 'A part to tend, where your next growth begins', 'A part you should ignore'], right: 1, why: 'A Growing Edge is simply a part to tend.', say: 'Quick question. What is a Growing Edge?' }
         ] },
 
         { id: 'ok-u-plan', n: 3, title: 'Building Your Growth Plan', mins: 4, blurb: 'Choosing practices that fit your life.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 3', h: 'Building Your Growth Plan', sub: 'Small practices for each part.', say: 'Your growth plan is a short list of practices for each part of your tree. This lesson shows you how to build one that fits your life.' },
-          { k: 'points', h: 'Suggestions, never limits', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Choose as many or as few as you like.' },
+          { k: 'points', h: 'Suggestions, with room to grow', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Growth Plan: Bark', rows: [['Slow Exhale', 'Chosen', '#5F7D48'], ['Name It', 'Chosen', '#5F7D48'], ['Worry Window', ''], ['Leaves on a Stream', ''], ['How to do this', '']], tap: 2, say: 'Tap any practice to choose it. Tap How to do this to see why it helps, the steps, and what to try if it is hard.' },
           { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Practices written for young adults are tagged For Young Adults. Then add what fits.' },
           { k: 'points', h: 'Practices born from stories', items: [['From the Bedside', 'Practices that grew out of real visits'], ['Linked to their story', 'Watch the lesson or read the story'], ['In the library', 'Ready to add to your plan']], say: 'Some practices are marked From the Bedside. They grew out of real stories from Chris’s work as a chaplain, like Lion’s Breath and One Woodpecker. Each one links to its story.' },
           { k: 'points', h: 'Make it yours', items: [['Write your own', 'Anything that tends a part counts'], ['Start small', 'Two minutes beats zero'], ['Change it anytime', 'Your plan grows with you']], say: 'Make it yours. Write your own practices. Anything that tends a part counts, like calling your sister or taking the long way home. Start small. Two minutes beats zero. And change your plan anytime.' },
-          { k: 'quiz', q: 'How many practices should you choose for a part?', opts: ['Exactly the number Oak suggests', 'As many or as few as fit your life', 'Only one'], right: 1, why: 'Oak’s numbers are suggestions, never limits.', say: 'Quick question. How many practices should you choose for a part?' }
+          { k: 'quiz', q: 'How many practices should you choose for a part?', opts: ['Exactly the number Oak suggests', 'As many or as few as fit your life', 'Only one'], right: 1, why: 'Oak’s numbers are suggestions, with room for more.', say: 'Quick question. How many practices should you choose for a part?' }
         ] },
 
         { id: 'ok-u-rhythm', n: 4, title: 'Today, Week, and Season', mins: 4, blurb: 'The rhythm that helps your tree grow.', scenes: [
@@ -9415,7 +9415,7 @@ window.GG_LEARN = {
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 1, note: { h: 'Week', p: 'A theme, a short check-in, and a question to sit with.' }, say: 'Each week brings a theme, a short check-in, and a question to sit with. The weekly check-in asks one question for each part, plus how you are moving, resting, and eating.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 2, note: { h: 'Season', p: 'Twelve weeks. It begins and ends with a full check-in, and each one adds a ring.' }, say: 'A season is twelve weeks. It begins with a full check-in, and the next full check-in closes it and adds a ring to your tree. The Season tab also has your Days Tended calendar.' },
           { k: 'points', h: 'Watch your tree grow', items: [['Tree levels', 'From Acorn to Heritage Oak'], ['Tried, Building, Mine', 'Practices you keep doing'], ['Milestones', 'And a balanced week'], ['Steady or Hardy', 'With two grace days a week']], cue: { at: [0, 1, 2, 3] }, say: 'Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all six parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support.' },
-          { k: 'big', h: 'No streaks to break. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours.' },
+          { k: 'big', h: 'Every day counts. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours.' },
           { k: 'quiz', q: 'What waters your tree for the day?', opts: ['Checking off any one practice', 'Finishing every practice', 'A full check-in'], right: 0, why: 'Any one practice waters your tree. One is enough.', say: 'Quick question. What waters your tree for the day?' }
         ] },
 
@@ -9434,7 +9434,7 @@ window.GG_LEARN = {
           { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine.' },
           { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back. Save to a File, and the practitioner backup, save locked files too, with a passcode you choose.' },
           { k: 'points', h: 'The Grove', items: [['Your tree is yours', 'Answers always stay private'], ['The grove is ours', 'Your family’s trees, side by side'], ['You choose', 'Show my growth on The Grove, on or off']], say: 'If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings.' },
-          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose, and safety answers stay yours'], ['Your Birthday (Optional)', 'On your 60th birthday, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. A helper never sees your safety answers. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
+          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose, and safety answers stay yours'], ['Your Birthday (Optional)', 'On your 60th birthday, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. Your safety answers stay yours alone. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
           { k: 'big', h: 'You know Oak now. Go tend your tree.', say: 'That is the whole tour. You know Oak now. Go tend your tree, a little at a time.' },
           { k: 'quiz', q: 'What does Back up everything save?', opts: ['Only your answers, unlocked', 'One file with every profile, still locked', 'Nothing, it sends your data online'], right: 1, why: 'One file holds every profile on the device, each still locked.', say: 'Last question. What does Back up everything save?' }
         ] }
@@ -9443,15 +9443,15 @@ window.GG_LEARN = {
 
         { id: 'ok-6-roots', n: 1, title: 'Roots: What Grounds You', mins: 6, blurb: 'What holds you up when life gets heavy.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 1', h: 'Roots', sub: 'What grounds you.', say: 'This lesson is about Roots, the part of you that holds you up when life gets heavy.' },
-          { k: 'big', h: 'Roots are what you lean on when the wind blows.', sub: 'You can’t always see them. You always need them.', say: 'Every tree stands on its roots. You cannot always see them, and you always need them. Your roots are what you lean on when the wind blows.' },
+          { k: 'big', h: 'Roots are what you lean on when the wind blows.', sub: 'Out of sight, and always needed.', say: 'Every tree stands on its roots. You cannot always see them, and you always need them. Your roots are what you lean on when the wind blows.' },
           { k: 'points', h: 'Roots can look like', items: [['Faith and prayer', 'God, the Sacred, the Divine, the Holy'], ['Nature and wonder', 'The sky, the woods, the water'], ['Traditions', 'The ways your people mark life'], ['Quiet and meaning', 'A sense of something bigger than you']], say: 'For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Traditions, the ways your people mark birth, marriage, and death. Or quiet, and a sense of something bigger than you. Oak is made for all faith traditions and everything in-between.' },
           { k: 'big', h: 'What grounds you can help you cope.', sub: 'Feeling abandoned, judged, or far from the sacred can weigh heavily too.', say: 'Research on spirituality and health often finds that what grounds people helps them cope with hard seasons. And the opposite is real too. Feeling abandoned, judged, or far from the sacred can weigh heavily.' },
           { k: 'points', h: 'How Roots can look', items: [['Strong', 'You know what holds you up, and you reach for it', '#5F7D48'], ['Steady', 'It is there, though you reach for it less lately', '#8B5E1A'], ['Growing Edge', 'You feel unmoored, or faith feels heavy right now', '#B8612F']], say: 'Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is a real and honest place to be.' },
-          { k: 'story', title: 'A Presence That Cannot Be Boxed', lines: ['The nurse warned me: not religious. The family sat with their arms crossed, ready to get through my visit politely.', 'Then the wife leaned forward. We are not religious, she said. But we are deeply spiritual. We believe in a presence that cannot be boxed or labeled or fully described.', 'We kept what felt true from each tradition and let the rest go. It is not neat or tidy. But it is ours.'], lesson: 'Roots don’t have to fit a box to hold you up.', note: 'From a Grounded story by Chris Joy', say: 'On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours. I told her she had just explained God better than most sermons I had ever heard. And the whole room laughed.' },
-          { k: 'big', h: 'Oak never asks what you believe.', sub: 'It asks whether your roots are holding you up.', say: 'That is why Oak never asks what you believe. It asks whether your roots are holding you up, or weighing you down. Your roots are yours.' },
+          { k: 'story', title: 'A Presence That Cannot Be Boxed', lines: ['The nurse warned me: not religious. The family sat with their arms crossed, ready to get through my visit politely.', 'Then the wife leaned forward. We are not religious, she said. But we are deeply spiritual. We believe in a presence that cannot be boxed or labeled or fully described.', 'We kept what felt true from each tradition and let the rest go. It is not neat or tidy. But it is ours.'], lesson: 'Roots of every shape can hold you up.', note: 'From a Grounded story by Chris Joy', say: 'On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours. I told her she had just explained God better than most sermons I had ever heard. And the whole room laughed.' },
+          { k: 'big', h: 'Oak asks what holds you up.', sub: 'It asks whether your roots are holding you up.', say: 'That is why Oak asks what holds you up. It asks whether your roots are holding you up, or weighing you down. Your roots are yours.' },
           { k: 'points', h: 'Practice: A Presence Check', items: [['Settle', 'Feet down, one slow breath'], ['What holds me up today?', 'A person, a prayer, a place, a word'], ['Where did I feel something bigger than me this week?', 'Even for a moment'], ['Name it', 'With a word, a prayer, or a thank-you']], cue: { w: { 1: 5, 2: 15, 3: 15, 4: 10 }, at: [1, 2, 3, 4] }, say: 'Let us practice. This one is called a Presence Check. Settle in, with your feet down, and take one slow breath. Now ask yourself, what holds me up today? Maybe a person, a prayer, a place, or a word. Next, where did I feel something bigger than me this week? Even for a moment. Last, name it. With a word, a prayer, or a simple thank you.' },
           { k: 'big', h: 'Tend your roots, and they will hold you.', sub: 'Presence Check is in the Practice Library, ready for your growth plan.', say: 'Tend your roots, and they will hold you. You will find the Presence Check in the Practice Library, ready to add to your growth plan.' },
-          { k: 'quiz', q: 'What does Oak look at in Roots?', opts: ['Which religion you belong to', 'Whether what grounds you holds you up or weighs you down', 'How often you attend services'], right: 1, why: 'Roots are about what holds you up, never about what you believe.', say: 'Quick question. What does Oak look at in Roots?' }
+          { k: 'quiz', q: 'What does Oak look at in Roots?', opts: ['Which religion you belong to', 'Whether what grounds you holds you up or weighs you down', 'How often you attend services'], right: 1, why: 'Roots are about what holds you up, whatever you believe.', say: 'Quick question. What does Oak look at in Roots?' }
         ] },
 
         { id: 'ok-6-trunk', n: 2, title: 'Trunk: Purpose', mins: 6, blurb: 'What you live for, and what you give.', scenes: [
@@ -9462,15 +9462,15 @@ window.GG_LEARN = {
           { k: 'points', h: 'How Trunk can look', items: [['Strong', 'You know what you are here for, and it fills you', '#5F7D48'], ['Steady', 'You have purpose, though some days feel flat', '#8B5E1A'], ['Growing Edge', 'You feel lost, or a role you loved has ended', '#B8612F']], say: 'A strong trunk might mean you know what you are here for, and it fills you. Steady might mean you have purpose, though some days feel flat. And a Growing Edge might mean you feel lost, or a role you loved has ended. That is often where the most growth begins.' },
           { k: 'story', title: 'Finding a New Purpose', lines: ['Sophia was twenty-eight, studying to be a physical trainer, when a rare bone disease changed everything. Everything I worked for is disappearing, she said.', 'I asked her: Even if your body changes, what part of you, the real you, can still strengthen others?', 'I can’t train people to run marathons anymore, she told me later. But maybe I can help them run their own race.'], lesson: 'Roles can change. Your gifts come with you.', note: 'From a Grounded reflection by Chris Joy', say: 'Let me tell you about Sophia. She was twenty eight, building a life as a physical trainer, when a rare bone disease changed everything. She told me she was scared she would become someone people had to take care of, instead of someone who lifts others up. I did not rush in with answers. I stayed and listened. Then, gently, I asked, even if your body changes, what part of you, the real you, can still strengthen others? Sophia had always been an encourager. That gift had not gone anywhere. One day she said, I cannot train people to run marathons anymore. But maybe I can help them run their own race.' },
           { k: 'big', h: 'Roles can change. Your gifts come with you.', say: 'Roles change. Jobs end. Kids grow up. Bodies change. But your gifts come with you, and they can find a new shape.' },
-          { k: 'points', h: 'Practice: The Real You', items: [['Name three gifts', 'Not job titles. Encouraging, fixing, noticing, making people laugh.'], ['Find who needs one', 'A person, a group, a cause'], ['Choose one way this week', 'Small is fine']], cue: { w: { 1: 20, 2: 15, 3: 12 }, at: [1, 2, 3] }, say: 'Let us practice. This one is called The Real You. First, name three of your gifts. Not job titles. Things like encouraging, fixing, noticing, or making people laugh. Now, who could use one of those gifts? A person, a group, or a cause. Last, choose one way to use it this week. Small is fine.' },
+          { k: 'points', h: 'Practice: The Real You', items: [['Name three gifts', 'Gifts like encouraging, fixing, noticing, making people laugh.'], ['Find who needs one', 'A person, a group, a cause'], ['Choose one way this week', 'Small is fine']], cue: { w: { 1: 20, 2: 15, 3: 12 }, at: [1, 2, 3] }, say: 'Let us practice. This one is called The Real You. First, name three of your gifts. Not job titles. Things like encouraging, fixing, noticing, or making people laugh. Now, who could use one of those gifts? A person, a group, or a cause. Last, choose one way to use it this week. Small is fine.' },
           { k: 'big', h: 'Purpose grows when you use it.', sub: 'The Real You is in the Practice Library.', say: 'Purpose grows when you use it, a little at a time. You will find The Real You in the Practice Library.' },
           { k: 'quiz', q: 'What does Sophia’s story show about purpose?', opts: ['When a role ends, purpose is gone', 'Your gifts can find a new shape', 'Only paid work counts'], right: 1, why: 'Roles change, and your gifts come with you.', say: 'Quick question. What does Sophia’s story show about purpose?' }
         ] },
 
         { id: 'ok-6-bark', n: 3, title: 'Bark: Mind and Feelings', mins: 6, blurb: 'Bending without breaking.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 3', h: 'Bark', sub: 'Mind and feelings.', say: 'This lesson is about Bark, your mind and your feelings.' },
-          { k: 'big', h: 'Bark protects the tree, and it flexes as the tree grows.', say: 'Bark protects a tree from storms and sun, and it has to flex as the tree grows. Your mind and feelings work the same way. Healthy bark bends without breaking.' },
-          { k: 'points', h: 'Healthy bark can look like', items: [['Thoughts that settle', 'Worry comes, and it also goes'], ['Feelings you can name', 'Sad, scared, angry, tired, glad'], ['Bouncing back', 'Hard days don’t take over the week'], ['Asking for help', 'Before it gets too heavy']], say: 'Healthy bark can look like thoughts that settle, so worry comes and also goes. Feelings you can name. Bouncing back, so a hard day does not take over the whole week. And asking for help before it gets too heavy.' },
+          { k: 'big', h: 'Bark protects the tree, and it flexes as the tree grows.', say: 'Bark protects a tree from storms and sun, and it has to flex as the tree grows. Your mind and feelings work the same way. Healthy bark bends and holds.' },
+          { k: 'points', h: 'Healthy bark can look like', items: [['Thoughts that settle', 'Worry comes, and it also goes'], ['Feelings you can name', 'Sad, scared, angry, tired, glad'], ['Bouncing back', 'Hard days stay in their place'], ['Asking for help', 'Before it gets too heavy']], say: 'Healthy bark can look like thoughts that settle, so worry comes and also goes. Feelings you can name. Bouncing back, so a hard day does not take over the whole week. And asking for help before it gets too heavy.' },
           { k: 'big', h: 'Putting a feeling into words can turn down the alarm.', sub: 'Name it to tame it.', say: 'Here is something researchers have found. Simply putting a feeling into words can turn down the body’s alarm. Some people call it, name it to tame it.' },
           { k: 'points', h: 'How Bark can look', items: [['Strong', 'You feel your feelings and find your way back', '#5F7D48'], ['Steady', 'Mostly steady, with some heavy stretches', '#8B5E1A'], ['Growing Edge', 'Worry, sadness, or stress is wearing you down', '#B8612F']], say: 'Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly steady, with some heavy stretches. And a Growing Edge might mean worry, sadness, or stress is wearing you down. That deserves tending, and sometimes more support.' },
           { k: 'story', title: 'Emotional Resilience', lines: ['I sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver.', 'I placed my hand lightly on the patient’s, breathed slowly, and reminded myself: this moment is sacred, and so is my capacity to stay rooted.', 'Resilience is not the absence of sorrow. It is bending without breaking, letting the waves move through us instead of pulling us under.'], lesson: 'Let the feeling move through you.', note: 'From a Grounded reflection by Chris Joy', say: 'I once sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver. So I placed my hand lightly on the patient’s hand, and breathed slowly. I did not push the feeling away. I made room for it. Resilience, I realized, is not the absence of sorrow. It is bending without breaking. Letting the waves move through us, instead of pulling us under.' },
@@ -9487,7 +9487,7 @@ window.GG_LEARN = {
           { k: 'points', h: 'How Branches can look', items: [['Strong', 'You have people, and you reach for them', '#5F7D48'], ['Steady', 'Good people, though some ties feel thin', '#8B5E1A'], ['Growing Edge', 'You feel alone, or a key relationship is hurting', '#B8612F']], say: 'Strong branches might mean you have people, and you reach for them. Steady might mean good people, though some ties feel thin. And a Growing Edge might mean you feel alone, or an important relationship is hurting.' },
           { k: 'story', title: 'The Recovery', lines: ['I broke a dying woman’s saucer. Antique china. She had just shown it to me, the one good thing in her hard day.', 'I dropped to my knees and said how sorry I was. Instead of anger, I got grace. Someone broke a special one on me once, she said. Didn’t even say sorry. At least you did.', 'That night I glued what I could, and found a nearly identical saucer. Not the mistake. The recovery.'], lesson: 'What happens after a break matters most.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/the-recovery', label: 'Read the Full Story: The Recovery' }, say: 'Let me tell you about Gail, who lives in memory care, and keeps her whole life in a china cabinet. One day she showed me a new cup and saucer. I picked it up, and the saucer let go and shattered on the floor. I dropped to my knees and told her how sorry I was. And instead of anger, she gave me grace. Someone broke a special one on me once, she said. Did not even say sorry. At least you did. We ended up laughing together. That night I glued what I could, and found a nearly identical saucer to bring back, with flowers. What stays, I have come to believe, is not the mistake. It is the recovery.' },
           { k: 'big', h: 'Every relationship has breaks.', sub: 'What happens after matters most.', say: 'Every relationship has breaks. Words we wish we could take back. Times we let someone down. What happens after matters most.' },
-          { k: 'points', h: 'Practice: Make the Repair', items: [['Own it plainly', 'I did that. I am sorry.'], ['Skip the but', 'No excuses, no explaining it away'], ['Ask what would help', 'What can I do to make this right?'], ['Follow through', 'Then do it']], cue: { w: { 1: 15, 7: 12 }, at: [2, 3, 5, 6] }, say: 'Let us practice. Think of one relationship that could use a repair, big or small. Take a moment. Here are the steps. Own it plainly. I did that, and I am sorry. Skip the but. No excuses, and no explaining it away. Ask, what can I do to make this right? Then follow through. Now picture your first step.' },
+          { k: 'points', h: 'Practice: Make the Repair', items: [['Own it plainly', 'I did that. I am sorry.'], ['Skip the but', 'Own it, plainly'], ['Ask what would help', 'What can I do to make this right?'], ['Follow through', 'Then do it']], cue: { w: { 1: 15, 7: 12 }, at: [2, 3, 5, 6] }, say: 'Let us practice. Think of one relationship that could use a repair, big or small. Take a moment. Here are the steps. Own it plainly. I did that, and I am sorry. Skip the but. No excuses, and no explaining it away. Ask, what can I do to make this right? Then follow through. Now picture your first step.' },
           { k: 'big', h: 'Repair takes courage, and it grows trust.', sub: 'Make the Repair is in the Practice Library.', say: 'Repair takes courage, and it grows trust. If a relationship is not safe for you, your safety comes first, and When Life Changes has a guide for that. You will find Make the Repair in the Practice Library.' },
           { k: 'quiz', q: 'In The Recovery, what mattered most?', opts: ['That the saucer never broke', 'What happened after the break', 'Who was to blame'], right: 1, why: 'Not the mistake. The recovery.', say: 'Quick question. In The Recovery, what mattered most?' }
         ] },
@@ -9512,7 +9512,7 @@ window.GG_LEARN = {
           { k: 'points', h: 'How Fruit can look', items: [['Strong', 'You look ahead with hope, even when it is hard', '#5F7D48'], ['Steady', 'Hope is there, though some days it fades', '#8B5E1A'], ['Growing Edge', 'It is hard to see anything good ahead', '#B8612F']], say: 'Strong fruit might mean you look ahead with hope, even when it is hard. Steady might mean hope is there, though some days it fades. And a Growing Edge might mean it is hard to see anything good ahead right now.' },
           { k: 'story', title: 'A Day of Contrasts', lines: ['At the end of a muddy dirt road, a woman who had lived on her farm for nearly eighty years set out orange juice and a plate of cookies.', 'She pointed out the window. Can you see that right there? A little woodpecker on the tree.', 'That’s the reason I’m here, she said. That’s all I need to be happy. I’m simple. It doesn’t take much.'], lesson: 'Hope often starts with noticing what is already good.', note: 'From a Grounded reflection by Chris Joy', say: 'One visit took me to the end of a muddy dirt road, to a woman who had lived on her farm for almost eighty years and raised nine children there. Over orange juice and cookies, she asked, can you see that right there? I spotted a little woodpecker, on the tree outside. That is the reason I am here, she said. That is all I need to be happy. I am simple. It does not take much. I left with my heart full.' },
           { k: 'points', h: 'Practice: One Woodpecker', items: [['Look around', 'Find one small good thing, right now'], ['Say it', 'Out loud, or write it down'], ['Look ahead', 'Name one small thing to look forward to']], cue: { w: { 1: 15, 2: 10, 3: 12 }, at: [1, 2, 3] }, say: 'Let us practice. This one is called One Woodpecker. Look around and find one small good thing, right now. Say it out loud, or write it down. Then name one small thing to look forward to, today or this week.' },
-          { k: 'big', h: 'Losing hope? You don’t have to hold it alone.', sub: 'Call or text 988, any time. In danger right now? Call 911.', say: 'If it is hard to see anything good ahead, you do not have to hold that alone. Call or text nine eight eight, any time. If you are in danger right now, call nine one one.' },
+          { k: 'big', h: 'Losing hope? Let someone help you hold it.', sub: 'Call or text 988, any time. In danger right now? Call 911.', say: 'If it is hard to see anything good ahead, let someone help you hold that. Call or text nine eight eight, any time. If you are in danger right now, call nine one one.' },
           { k: 'big', h: 'Tend the whole tree, and fruit will come.', sub: 'One Woodpecker is in the Practice Library.', say: 'Tend the whole tree, a little at a time, and fruit will come. One Woodpecker is in the Practice Library. That is all six parts. Well done.' },
           { k: 'quiz', q: 'Where does hope often start?', opts: ['With a big change', 'With noticing one small good thing', 'With having no problems'], right: 1, why: 'Hope often starts with noticing what is already good.', say: 'Last question. Where does hope often start?' }
         ] }
@@ -9523,19 +9523,19 @@ window.GG_LEARN = {
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 1', h: 'Being There Is the Gift', sub: 'Shelter for others. Strength for you.', say: 'This series is for anyone walking with someone through a hard time. A parent, a partner, a friend, a coworker, a caregiver. Let us start with the most important thing.' },
           { k: 'big', h: 'Hospice taught me this: hold space.', sub: 'Being there matters more than the perfect words.', say: 'When I think about hospice and what it means, it often comes down to two words. Hold space. Your being there matters more than finding the perfect words.' },
           { k: 'points', h: 'Holding space looks like', items: [['Showing up', 'In person, by phone, or by text'], ['Listening more than fixing', 'Let them finish'], ['Letting silence be', 'Quiet together is still company'], ['Following their lead', 'Their topic, their pace']], say: 'Holding space looks like showing up, in person, by phone, or even by text. Listening more than fixing. Let them finish. Letting silence be. Quiet together is still company. And following their lead, on their topic, at their pace.' },
-          { k: 'story', title: 'You Don’t Have to Know What to Say', lines: ['A husband sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail.', 'After he told me about their life, he reached over and adjusted her blanket. It had not slipped.', 'He kept holding her hand, like it was the only job left for him to do.'], lesson: 'Small, steady presence says what words can’t.', note: 'From a Grounded story by Chris Joy', say: 'I once visited a woman in her final hours. Her husband sat beside her, his chair so close his knee nearly touched the bed rail. After he told me about their life, he reached over and adjusted her blanket. It had not slipped. He kept holding her hand, like it was the only job left for him to do. Small, steady presence says what words cannot.' },
-          { k: 'points', h: 'Small things that say I am here', items: [['A text with no question', 'Thinking of you today. No need to reply.'], ['A specific offer', 'Can I bring dinner Thursday?'], ['Coming back', 'The second week matters as much as the first']], say: 'Small things say, I am here. A text with no question to answer. Thinking of you today, no need to reply. A specific offer, like, can I bring dinner Thursday? And coming back. The second week, and the second month, matter as much as the first day.' },
-          { k: 'big', h: 'You are not there to fix it. You are there so they are not alone in it.', say: 'You are not there to fix it. You are there so they are not alone in it.' },
-          { k: 'points', h: 'Practice: Sit, Don’t Fix', items: [['Pick one person', 'Someone going through something'], ['Reach out once this week', 'Ask how they are, really'], ['Listen to the end', 'Then say: Thank you for telling me.']], cue: { w: { 1: 12, 3: 6 }, at: [1, 2, 3] }, say: 'Let us practice. Think of one person going through something right now. Take a moment. This week, reach out once, and ask how they are, really. Then listen all the way to the end, without fixing. And say, thank you for telling me.' },
-          { k: 'quiz', q: 'What matters most when someone is going through something hard?', opts: ['Finding the perfect words', 'Being there, so they are not alone in it', 'Fixing the problem fast'], right: 1, why: 'Presence is the gift. Words are optional.', say: 'Quick question. What matters most when someone is going through something hard?' }
+          { k: 'story', title: 'Your Presence Is Enough', lines: ['A husband sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail.', 'After he told me about their life, he reached over and adjusted her blanket. It had not slipped.', 'He kept holding her hand, like it was the only job left for him to do.'], lesson: 'Small, steady presence speaks beyond words.', note: 'From a Grounded story by Chris Joy', say: 'I once visited a woman in her final hours. Her husband sat beside her, his chair so close his knee nearly touched the bed rail. After he told me about their life, he reached over and adjusted her blanket. It had not slipped. He kept holding her hand, like it was the only job left for him to do. Small, steady presence says what words cannot.' },
+          { k: 'points', h: 'Small things that say I am here', items: [['A text with no question', 'Thinking of you today, with love.'], ['A specific offer', 'Can I bring dinner Thursday?'], ['Coming back', 'The second week matters as much as the first']], say: 'Small things say, I am here. A text with no question to answer. Thinking of you today, with love. A specific offer, like, can I bring dinner Thursday? And coming back. The second week, and the second month, matter as much as the first day.' },
+          { k: 'big', h: 'Your job is to be with them in it.', say: 'Your job is to be with them in it.' },
+          { k: 'points', h: 'Practice: Sit and Listen', items: [['Pick one person', 'Someone going through something'], ['Reach out once this week', 'Ask how they are, really'], ['Listen to the end', 'Then say: Thank you for telling me.']], cue: { w: { 1: 12, 3: 6 }, at: [1, 2, 3] }, say: 'Let us practice. Think of one person going through something right now. Take a moment. This week, reach out once, and ask how they are, really. Then just listen, all the way to the end. And say, thank you for telling me.' },
+          { k: 'quiz', q: 'What matters most when someone is going through something hard?', opts: ['Finding the perfect words', 'Being there with them in it', 'Fixing the problem fast'], right: 1, why: 'Presence is the gift. Words are optional.', say: 'Quick question. What matters most when someone is going through something hard?' }
         ] },
 
-        { id: 'ok-s-listen', n: 2, title: 'Listening Beneath the Words', mins: 5, blurb: 'Hearing what someone means, not just what they say.', scenes: [
+        { id: 'ok-s-listen', n: 2, title: 'Listening Beneath the Words', mins: 5, blurb: 'Hearing what someone means, beneath what they say.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 2', h: 'Listening Beneath the Words', sub: 'Hear what they mean.', say: 'People often say one thing, and carry another. This lesson is about listening beneath the words.' },
           { k: 'story', title: 'Emotional Intelligence', lines: ['In a family meeting, a daughter’s words said one thing while her eyes and her tightly folded arms said another.', 'Instead of rushing to fill the space with comfort, I slowed down, met her gaze, and asked softly: What is this moment asking of you right now?', 'The room shifted. Tears came. Real connection followed.'], lesson: 'Our greatest gift is how deeply we are willing to see.', note: 'From a Grounded reflection by Chris Joy', say: 'I walked into a family meeting where a daughter’s words said one thing, while her eyes and her tightly folded arms said another. Instead of rushing to fill the space with comfort, I slowed down, met her gaze, and asked softly, what is this moment asking of you right now? The room shifted. Tears came. Real connection followed.' },
           { k: 'flow', h: 'Four steps', steps: [['Pause', 'One breath before you answer'], ['Reflect', 'Say back what you notice'], ['Name it', 'The feeling, without judging it'], ['Ask', 'One open question']], say: 'Here are four steps. Pause. Take one breath before you answer, and ask yourself what you are sensing beneath the words. Reflect. Say back what you notice. Name it. Name the feeling in the room, without judging it. And ask one open question.' },
           { k: 'words', h: 'Words that help people feel heard', items: ['It sounds like this is weighing on you.', 'I can see how much you love her.', 'That makes sense.', 'Tell me more.'], say: 'Here are words that help people feel heard. It sounds like this is weighing on you. I can see how much you love her. That makes sense. And, tell me more.' },
-          { k: 'points', h: 'Listen for', items: [['What they keep coming back to', 'That is often what matters most'], ['What their body says', 'Arms, eyes, voice, silence'], ['What they are not saying', 'Gently, when the time is right']], say: 'Listen for what they keep coming back to. That is often what matters most. Notice what their body says, their arms, eyes, voice, and silence. And, gently, when the time is right, notice what they are not saying.' },
+          { k: 'points', h: 'Listen for', items: [['What they keep coming back to', 'That is often what matters most'], ['What their body says', 'Arms, eyes, voice, silence'], ['What lies under their words', 'Gently, when the time is right']], say: 'Listen for what they keep coming back to. That is often what matters most. Notice what their body says, their arms, eyes, voice, and silence. And, gently, when the time is right, notice what they are not saying.' },
           { k: 'points', h: 'Practice: One Breath Before You Answer', items: [['In your next real conversation', 'With anyone'], ['Pause one breath', 'Before you respond'], ['Reflect one thing back', 'It sounds like...']], cue: { w: { 3: 8 } }, say: 'Let us practice. In your next real conversation, with anyone, pause for one breath before you respond. Then reflect one thing back. It sounds like. Try it now in your mind with someone you will talk to today.' },
           { k: 'quiz', q: 'What is the first of the four listening steps?', opts: ['Give advice', 'Pause for one breath', 'Share your own story'], right: 1, why: 'A pause opens the door to real understanding.', say: 'Quick question. What is the first of the four steps?' }
         ] },
@@ -9574,12 +9574,12 @@ window.GG_LEARN = {
         { id: 'ok-s-gates', n: 6, title: 'Caring for Yourself While You Care', mins: 6, blurb: 'Boundaries with gates, and refilling your own cup.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 6', h: 'Caring for Yourself While You Care', sub: 'Shelter for others. Strength for you.', say: 'This last lesson is about you. To be a shelter for others, you need strength of your own.' },
           { k: 'story', title: 'My Boundaries Have Gates', lines: ['He had endured a brutally hard life with almost no one in his corner. You promise you’ll come back? he asked. I never make promises in this work. I said yes anyway.', 'I picture my boundary as a white picket fence around my own home, with a gate in it.', 'Sometimes I choose to open that gate and let someone in. They stay with me longer. And that is not a bad thing. It just asks more of me.'], lesson: 'Boundaries can have gates. You choose when to open them.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/my-boundaries-have-gates', label: 'Read the Full Story: My Boundaries Have Gates' }, say: 'Let me tell you about a man who had lived a brutally hard life, with almost no one in his corner. He asked me, you promise you will come back? I never make promises in this work, and I said yes anyway. I picture my boundaries as a white picket fence around my own home, with a gate in it. Sometimes I choose to open that gate and let someone in. They stay with me longer, almost like friends. That is not a bad thing. It just asks more of me.' },
-          { k: 'big', h: 'Boundaries aren’t walls. They have gates.', sub: 'You choose who comes in, and you tend your own yard.', say: 'Boundaries are not walls. They have gates. You get to choose who comes in, and when. And you still have to tend your own yard.' },
+          { k: 'big', h: 'Good boundaries have gates.', sub: 'You choose who comes in, and you tend your own yard.', say: 'Boundaries are not walls. They have gates. You get to choose who comes in, and when. And you still have to tend your own yard.' },
           { k: 'points', h: 'Signs you need to refill', items: [['Running on empty', 'Tired, even after rest'], ['Short fuse', 'Small things set you off'], ['Numb', 'Hard to feel much at all'], ['Only me', 'Thinking no one else can do this']], say: 'Watch for signs that you need to refill. Running on empty, tired even after rest. A short fuse. Feeling numb. Or thinking, no one else can do this. Caregivers call this compassion fatigue, and it is common. It is a signal, not a failure.' },
           { k: 'points', h: 'Practice: Gate Check', items: [['Who is inside my gate right now?', 'Name them'], ['What does my own yard need?', 'Rest, help, a friend, a walk'], ['One gate to close gently', 'Or one person to invite in to help']], cue: { w: { 1: 12, 2: 12, 3: 12 }, at: [1, 2, 3] }, say: 'Let us do a gate check. Who is inside my gate right now? Name them. What does my own yard need? Rest, help, a friend, or a walk. And is there one gate to close gently for a while? Or one person to invite in, to help you carry this?' },
           { k: 'points', h: 'Refill, a little every day', items: [['Let others help', 'Give them something specific'], ['Pay down grief', 'Notice, name, express, unpack'], ['Keep your own tree', 'Your practices count too'], ['988', 'For you, any time']], say: 'Refill a little every day. Let others help, and give them something specific to do. Pay down your own grief as you go. Keep tending your own tree. Your practices count too. And if you are struggling, call or text nine eight eight. That line is for you too.' },
           { k: 'big', h: 'You can only give shelter if you have strength.', sub: 'Thank you for being a shelter for someone.', say: 'You can only give shelter if you have strength. Tend your own tree. And thank you, for being a shelter for someone. Gate Check is in the Practice Library.' },
-          { k: 'quiz', q: 'What does My Boundaries Have Gates teach?', opts: ['Never let anyone in', 'You choose when to open the gate, and you still tend your own yard', 'Always say yes'], right: 1, why: 'Boundaries are not walls. They have gates, and your own yard needs tending too.', say: 'Last question. What does My Boundaries Have Gates teach?' }
+          { k: 'quiz', q: 'What does My Boundaries Have Gates teach?', opts: ['Never let anyone in', 'You choose when to open the gate, and you still tend your own yard', 'Always say yes'], right: 1, why: 'Good boundaries have gates, and your own yard needs tending too.', say: 'Last question. What does My Boundaries Have Gates teach?' }
         ] }
       ] },
       { id: 'oak-support', kind: 'support', title: 'For the Hard Moments', who: 'Short videos to use right in the middle of it', lessons: [
@@ -9618,9 +9618,9 @@ window.GG_LEARN = {
           { k: 'big', h: 'If this is new, or you have chest pain, call 911 to be safe.', sub: 'Need to talk? Call or text 988, any time.', say: 'If this is the first time this has happened, or you have chest pain, call 911 to be safe. And if you need to talk to someone right now, call or text nine eight eight, any time.' }
         ] },
 
-        { id: 'ok-r-sleep', n: 5, title: 'When You Can’t Sleep', mins: 4, blurb: 'Set the worries down and let your body rest.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'When You Can’t Sleep', sub: 'Set it down for tonight.', say: 'If it is late, and your mind will not stop, this is for you. Keep the lights low, and the volume soft.' },
-          { k: 'points', h: 'Put it on paper', items: [['Write down what is spinning', 'Just a few words each'], ['Add one next step', 'For tomorrow, not tonight'], ['Close the notebook', 'It will keep until morning']], cue: { w: { 2: 30 }, p: { 3: 3 }, at: [1, 3, 4] }, say: 'First, put it on paper. Write down what is spinning in your mind, just a few words each. Take your time. Next to anything that needs doing, write one small step for tomorrow. Then close the notebook. It will keep until morning.' },
+        { id: 'ok-r-sleep', n: 5, title: 'When Sleep Is Hard', mins: 4, blurb: 'Set the worries down and let your body rest.', scenes: [
+          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'When Sleep Is Hard', sub: 'Set it down for tonight.', say: 'If it is late, and your mind will not stop, this is for you. Keep the lights low, and the volume soft.' },
+          { k: 'points', h: 'Put it on paper', items: [['Write down what is spinning', 'Just a few words each'], ['Add one next step', 'Saved for tomorrow'], ['Close the notebook', 'It will keep until morning']], cue: { w: { 2: 30 }, p: { 3: 3 }, at: [1, 3, 4] }, say: 'First, put it on paper. Write down what is spinning in your mind, just a few words each. Take your time. Next to anything that needs doing, write one small step for tomorrow. Then close the notebook. It will keep until morning.' },
           { k: 'points', h: 'Soften, from your feet up', items: [['Your feet and legs', 'Let them get heavy'], ['Your belly and chest', 'Let them rise and fall'], ['Your shoulders and hands', 'Let them drop'], ['Your jaw and forehead', 'Let them go soft']], cue: { w: { 1: 8, 2: 8, 3: 8, 4: 8 }, at: [1, 2, 3, 4] }, say: 'Now lie back. Let your feet and legs get heavy. Let your belly and chest rise and fall on their own. Let your shoulders and hands drop. And let your jaw and forehead go soft.' },
           { k: 'breathe', h: 'Slow breaths', hold: 40, say: 'Now just breathe. In for four, and out for six. If your mind wanders, that is okay. Come back to the next breath.' },
           { k: 'big', h: 'Still awake after about twenty minutes? Get up for a bit.', sub: 'Dim light, something calm, then back to bed when you feel sleepy.', say: 'If you are still wide awake after about twenty minutes, get up for a little while. Keep the light dim, do something calm, and go back to bed when you feel sleepy. Your bed is for rest, not for wrestling.' },
@@ -9640,7 +9640,7 @@ window.GG_LEARN = {
           { k: 'story', title: 'Grief Debt', lines: ['One week I caught myself walking around numb. Not sad, not angry. Just numb.', 'A few losses had stacked up quietly, and I kept telling myself I would feel them later.', 'Grief we put off piles up, like laundry we swear we will fold.'], lesson: 'Paying grief down a little at a time keeps it from piling up.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/grief-debt', label: 'Read the Full Story: Grief Debt' }, say: 'One week I caught myself walking around numb. A few losses had stacked up quietly, while I told myself I would feel them later. Grief we put off piles up, like laundry we swear we will fold. A wave like this one is a chance to pay a little of it down.' },
           { k: 'flow', h: 'Pay it down', steps: [['Notice it', 'Something is here'], ['Name it', 'Who or what you miss'], ['Express it', 'Cry, say it, write it'], ['Unpack it', 'Walk, stretch, breathe']], cue: { w: { 1: 5, 3: 10, 5: 15, 7: 8 }, at: [0, 2, 4, 6] }, say: 'Notice it. Something is here. Name it. Who, or what, do you miss right now? Express it. Let the tears come, say their name out loud, or write a line to them. Then unpack it with your body. Stretch, walk, or take a slow breath.' },
           { k: 'big', h: 'Grief is love with nowhere to go.', sub: 'The wave will pass. The love stays.', say: 'Grief is love with nowhere to go. The wave will pass. The love stays.' },
-          { k: 'big', h: 'You don’t have to carry it alone.', sub: 'When Life Changes has guides for many kinds of loss. Need to talk now? Call or text 988.', say: 'You do not have to carry it alone. When Life Changes in Oak has guides for many kinds of loss. And if you need to talk with someone right now, call or text nine eight eight.' }
+          { k: 'big', h: 'Let someone help you carry it.', sub: 'When Life Changes has guides for many kinds of loss. Need to talk now? Call or text 988.', say: 'Let someone help you carry it. When Life Changes in Oak has guides for many kinds of loss. And if you need to talk with someone right now, call or text nine eight eight.' }
         ] },
 
         { id: 'ok-r-talk', n: 8, title: 'Before a Hard Conversation', mins: 3, blurb: 'Steady yourself, and walk in ready to listen.', scenes: [
@@ -9653,8 +9653,8 @@ window.GG_LEARN = {
         ] },
 
         { id: 'ok-r-news', n: 9, title: 'After Bad News', mins: 3, blurb: 'The first few minutes after the call or the appointment.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'After Bad News', sub: 'Nothing has to be decided right now.', say: 'If you have just gotten hard news, I am sorry. Sit down if you can. Take a breath. You do not have to decide anything right this minute.' },
-          { k: 'big', h: 'Shock is your mind catching up.', sub: 'Numb, shaky, foggy, or strangely calm are all common.', say: 'Shock is your mind catching up with what it just heard. Feeling numb, shaky, foggy, or strangely calm are all common. There is no wrong way to feel this.' },
+          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'After Bad News', sub: 'Decisions can wait.', say: 'If you have just gotten hard news, I am sorry. Sit down if you can. Take a breath. You do not have to decide anything right this minute.' },
+          { k: 'big', h: 'Shock is your mind catching up.', sub: 'Numb, shaky, foggy, or strangely calm are all common.', say: 'Shock is your mind catching up with what it just heard. Feeling numb, shaky, foggy, or strangely calm are all common. Whatever you feel is welcome here.' },
           { k: 'breathe', h: 'Breathe first', hold: 24, say: 'Breathe with the circle for a moment. In for four. And out for six.' },
           { k: 'points', h: 'Three small steps', items: [['Reach one person', 'A call or a text: I just got hard news.'], ['Write down your questions', 'For the next conversation'], ['Eat or drink something', 'Your body is carrying this too']], cue: { w: { 3: 10 }, at: [1, 4, 5] }, say: 'Then, three small steps. Reach one person. A call or a text is enough. I just got hard news. Write down the questions you want to ask next time, while they are fresh. And drink some water, or eat something small. Your body is carrying this too.' },
           { k: 'big', h: 'One step at a time is enough.', sub: 'When Life Changes has guides for hard diagnoses, losses, and more.', say: 'One step at a time is enough. When you are ready, When Life Changes in Oak has guides for hard diagnoses, losses, and more. And if you need to talk right now, call or text nine eight eight.' }
@@ -9669,10 +9669,10 @@ window.GG_LEARN = {
         ] },
 
         { id: 'ok-r-alone', n: 11, title: 'Feeling Alone Tonight', mins: 3, blurb: 'One small step toward someone, and help any time.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'Feeling Alone Tonight', sub: 'You are not the only one.', say: 'If you feel alone tonight, I am glad you are here. Loneliness is one of the most common feelings there is. It is not a sign that something is wrong with you.' },
+          { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'Feeling Alone Tonight', sub: 'Many people feel this too.', say: 'If you feel alone tonight, I am glad you are here. Loneliness is one of the most common feelings there is. It is not a sign that something is wrong with you.' },
           { k: 'big', h: 'Loneliness is a signal, like hunger.', sub: 'It tells you that connection matters to you.', say: 'Loneliness is a signal, like hunger. It tells you that connection matters to you. And small steps toward people count.' },
           { k: 'points', h: 'One small reach', items: [['Text one person', 'Thinking of you. How are you?'], ['Hear a voice', 'A call, a voice message, or a radio show'], ['Go where people are', 'A coffee shop, a walk, a service']], cue: { w: { 3: 15 }, at: [1, 4, 5] }, say: 'Try one small reach. Text one person. It can be as simple as, thinking of you, how are you? Take a moment now, if you like. Or hear a voice, with a call or a voice message. Tomorrow, go where people are, even just a coffee shop or a walk.' },
-          { k: 'points', h: 'Be kind to yourself tonight', items: [['Something warm', 'Tea, a shower, a blanket'], ['Something gentle', 'A familiar show, music, a book'], ['Something for the morning', 'One small plan to look forward to']], say: 'And be kind to yourself tonight. Something warm, like tea or a blanket. Something gentle, like music you love. And one small plan for the morning, something to look forward to.' },
+          { k: 'points', h: 'Be kind to yourself tonight', items: [['Something warm', 'Tea, a shower, a blanket'], ['Something gentle', 'Music, a book, a gentle stretch'], ['Something for the morning', 'One small plan to look forward to']], say: 'And be kind to yourself tonight. Something warm, like tea or a blanket. Something gentle, like music you love. And one small plan for the morning, something to look forward to.' },
           { k: 'big', h: 'Call or text 988 any time.', sub: 'If you are thinking about ending your life, reach out now. In danger right now? Call 911.', say: 'If you want to talk to someone right now, call or text nine eight eight, any time, day or night. If you are thinking about ending your life, please reach out now. You matter. And if you are in danger right now, call nine one one.' }
         ] }
       ] }
@@ -9682,7 +9682,7 @@ window.GG_LEARN = {
     title: 'Learn Willow',
     intro: 'Gentle videos, narrated aloud. Watch alone or together, whenever there is time. Pause anytime.',
     supportFirst: true,
-    support: { eyebrow: 'Support', title: 'Support for Right Now', intro: 'Short videos for the hard hours. Open one anytime, as often as you need. Nothing to finish.' },
+    support: { eyebrow: 'Support', title: 'Support for Right Now', intro: 'Short videos for the hard hours. Open one anytime, as often as you need, at your own pace.' },
     lessonsTitle: 'Learn Step by Step',
     tracks: [
       /* ---------- Support for Right Now: no quiz, no certificate, gentle closing ---------- */
@@ -9698,14 +9698,14 @@ window.GG_LEARN = {
           { k: 'big', h: 'You can come back to this anytime.', sub: 'Day or night.', say: 'That is all it takes. Come back to this anytime, day or night. And if anything about their breathing worries you, call your hospice. They are there around the clock.' }
         ] },
 
-        { id: 'wl-s-say', n: 2, title: "When You Don't Know What to Say", mins: 2, blurb: 'Simple words that are always enough.', scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: "When You Don't Know What to Say", sub: 'Simple words are enough.', say: "If you are standing at the bedside and the words won't come, this is for you. Simple words are enough." },
+        { id: 'wl-s-say', n: 2, title: "When Words Are Hard to Find", mins: 2, blurb: 'Simple words that are always enough.', scenes: [
+          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: "When Words Are Hard to Find", sub: 'Simple words are enough.', say: "If you are standing at the bedside and the words won't come, this is for you. Simple words are enough." },
           { k: 'big', h: 'Your being there says the most.', say: 'First, the most important thing. Your being there already says the most. Holding a hand says, I am here, without a single word.' },
           { k: 'words', h: 'Words that are always enough', items: ["I'm here.", 'I love you.', 'Thank you.', "You don't have to talk. I'll sit with you."], say: "If you want words, these are always enough. I'm here. I love you. Thank you. You don't have to talk. I'll just sit with you." },
           { k: 'words', h: 'Four things many people want to say', items: ['Please forgive me.', 'I forgive you.', 'Thank you.', 'I love you.'], sub: 'Then, when it feels right: goodbye.', say: 'Many hospice teams teach four things people often want to say before a goodbye. Please forgive me. I forgive you. Thank you. I love you. And then, when it feels right, goodbye. Say the ones that are true for you.' },
           { k: 'words', h: 'Words that open a door', items: ['Tell me about the day we met.', 'What are you proudest of?', 'What do you want us to remember?', 'Is there anything you want me to do?'], say: 'If they are able to talk, a question can open a door. Tell me about the day we met. What are you proudest of. What do you want us to remember. Is there anything you want me to do.' },
           { k: 'big', h: 'Keep talking, even when they are quiet.', sub: 'Hearing may be one of the last senses to go.', say: 'If they can no longer answer, keep talking anyway. Hearing may be one of the last senses to go. Tell them who is in the room. Tell them what you want them to know.' },
-          { k: 'big', h: 'If it comes out wrong, love covers it.', say: 'And if your words come out clumsy, or you cry in the middle, that is okay. Love covers it. They know what you mean.' }
+          { k: 'big', h: 'If it comes out clumsy, love covers it.', say: 'And if your words come out clumsy, or you cry in the middle, that is okay. Love covers it. They know what you mean.' }
         ] },
 
         { id: 'wl-s-ground', n: 3, title: 'Ground Yourself Right Now', mins: 3, blurb: 'Five senses to bring you back when everything is too much.', scenes: [
@@ -9717,7 +9717,7 @@ window.GG_LEARN = {
         ] },
 
         { id: 'wl-s-before', n: 4, title: 'Grief Before the Goodbye', mins: 2, blurb: 'Why you may be grieving already, and what helps.', scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'Grief Before the Goodbye', sub: 'It has a name.', say: 'If you are grieving someone who is still here, you are not alone, and you are not doing anything wrong. It has a name.' },
+          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'Grief Before the Goodbye', sub: 'It has a name.', say: 'If you are grieving someone who is still here, many others are too, and your grief makes sense. It has a name.' },
           { k: 'big', h: 'Anticipatory grief', sub: 'Grieving a loss as you watch it coming.', say: 'It is called anticipatory grief. It is the grief of watching a loss come, a little at a time. Many families feel it for weeks or months before a death.' },
           { k: 'points', h: 'It can look like', items: [['Sadness that comes in waves', 'Strong one hour, gone the next'], ['Tired all the way through', 'Even after sleep'], ['Feeling numb', 'Or far away from it all'], ['Wishing it were over', 'And feeling guilty for it']], say: 'It can look like sadness that comes in waves. Being tired all the way through. Feeling numb. And sometimes wishing it were over, then feeling guilty for wishing it. All of these are common. All of them come from love.' },
           { k: 'flow', h: 'Notice. Name. Express. Unpack.', steps: [['Notice it', 'Something is there'], ['Name it', 'Sad, scared, angry, tired'], ['Express it', 'Talk, write, cry'], ['Unpack it', 'Walk, stretch, breathe']], say: 'Here is a simple way to move through it. Notice it. Name it, as clearly as you can. Express it, by talking, writing, or crying. Then unpack it with your body. Walk, stretch, breathe.' },
@@ -9727,14 +9727,14 @@ window.GG_LEARN = {
         { id: 'wl-s-vigil', n: 5, title: 'The Vigil Hours', mins: 2, blurb: 'Sitting with someone in their last hours or days.', scenes: [
           { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'The Vigil Hours', sub: 'Keeping watch, with love.', say: 'When someone is in their last hours or days, families often keep watch at the bedside. This is called a vigil. Here is what can help.' },
           { k: 'points', h: 'Make the room theirs', items: [['Their music', 'Softly, the songs they love'], ['Their words', 'Prayers, readings, or poems from their life'], ['Soft light', 'A lamp instead of overhead lights'], ['Familiar things', 'A blanket, a photo, a smell from home']], say: 'Make the room theirs. Their music, played softly. Prayers, readings, or poems from their life. A lamp instead of bright overhead lights. Familiar things, like a favorite blanket or photo.' },
-          { k: 'story', title: 'Drift Away', lines: ['Suzan had not spoken or opened her eyes in three days.', 'Then an old song came on, Drift Away. She knew every word. Under the sheet, her toes moved to the beat, and she smiled wider than I had ever seen a dying person smile.', 'She never woke again. She drifted away peacefully a short time later.'], lesson: 'Music can reach a person when words cannot.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/drift-away', label: 'Read the Full Story: Drift Away' }, say: "Let me tell you about Suzan, who had not spoken in three days. Then an old song came on, Drift Away, and under the sheet, her toes began to move to the beat. She lifted her chin and smiled. She drifted away peacefully a short time later. Music can reach a person when words cannot." },
-          { k: 'points', h: 'Take turns', items: [['Shifts, not marathons', 'Two to four hours, then rest'], ['Eat and sleep', 'They would want that for you'], ['Write it down', 'What Helped Today, for the next person'], ['Call the hospice', 'For any change that worries you']], say: 'Take turns. Shifts work better than marathons. Eat, and sleep when you can. They would want that for you. Use What Helped Today in Willow, so the next person knows what brought comfort. And call your hospice for any change that worries you.' },
+          { k: 'story', title: 'Drift Away', lines: ['Suzan had not spoken or opened her eyes in three days.', 'Then an old song came on, Drift Away. She knew every word. Under the sheet, her toes moved to the beat, and she smiled wider than I had ever seen a dying person smile.', 'She never woke again. She drifted away peacefully a short time later.'], lesson: 'Music can reach a person beyond words.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/drift-away', label: 'Read the Full Story: Drift Away' }, say: "Let me tell you about Suzan, who had not spoken in three days. Then an old song came on, Drift Away, and under the sheet, her toes began to move to the beat. She lifted her chin and smiled. She drifted away peacefully a short time later. Music can reach a person beyond words." },
+          { k: 'points', h: 'Take turns', items: [['Short shifts', 'Two to four hours, then rest'], ['Eat and sleep', 'They would want that for you'], ['Write it down', 'What Helped Today, for the next person'], ['Call the hospice', 'For any change that worries you']], say: 'Take turns. Short shifts work best. Eat, and sleep when you can. They would want that for you. Use What Helped Today in Willow, so the next person knows what brought comfort. And call your hospice for any change that worries you.' },
           { k: 'big', h: 'If they die while you stepped out, it is not your fault.', sub: 'Some people seem to wait until loved ones leave the room.', say: 'One more thing, and it matters. Some people die in the few minutes when everyone has stepped out. Bedside workers see it often. If that happens, it is not your fault. You were there for so much of it, and that is what they knew.' },
           { k: 'big', h: 'You are keeping watch with love.', say: 'You are keeping watch with love. That is a holy thing to do, whatever your faith. Take all the time you need.' }
         ] },
 
-        { id: 'wl-s-after', n: 6, title: 'The First Hour After', mins: 2, blurb: 'There is no rush. What to do, and what can wait.', scenes: [
-          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'The First Hour After', sub: 'There is no rush.', cue: { p: { 1: 3 } }, say: 'If the person you love has just died, I am so sorry. Take a breath. There is no rush. Nothing has to happen right away.' },
+        { id: 'wl-s-after', n: 6, title: 'The First Hour After', mins: 2, blurb: 'Take your time. What to do now, and what can wait.', scenes: [
+          { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'The First Hour After', sub: 'Take your time.', cue: { p: { 1: 3 } }, say: 'If the person you love has just died, I am so sorry. Take a breath. Take your time. Nothing has to happen right away.' },
           { k: 'points', h: 'What to do first', items: [['Call the hospice', 'Not 911. They will guide you.'], ['Take your time', 'Sit with them as long as you need'], ['Say goodbye', 'Hold their hand, speak to them'], ['Invite others in', 'Children too, if they want to come']], say: 'Call your hospice, not 911. The hospice will guide you, and a nurse will come to help with the next steps, including the funeral home. Then take your time. Sit with them. Hold their hand. Say goodbye. Invite others in, children too, if they want to come.' },
           { k: 'points', h: 'Your tradition matters now', items: [['Prayers or readings', 'From their faith, or their favorite words'], ['Rituals', 'Washing, anointing, chanting, keeping watch'], ['Their faith card', 'In Willow, on the Bedside tab'], ['Their clergy', 'Call them, if they would want that']], say: 'If they had a faith or tradition, this is the time for it. Prayers or readings. Rituals like washing, anointing, chanting, or keeping watch with the body. Their faith card in Willow can help. And you can call their clergy, if they would want that.' },
           { k: 'big', h: 'Whatever you feel is okay.', sub: 'Tears, numbness, relief, all of it.', say: 'Whatever you feel right now is okay. Tears. Numbness. Even relief, after a long road. All of it belongs.' },
@@ -9761,7 +9761,7 @@ window.GG_LEARN = {
         {"id": "wl-s-hear", "n": 9, "title": "Words They Can Still Hear", "mins": 4, "blurb": "Say what you want to say, even when they can no longer answer.", "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Words They Can Still Hear", "sub": "Even when they can no longer answer.", "say": "If the person you love can no longer answer you, this is for you. We'll practice a few words together."}, {"k": "big", "h": "Hearing may be one of the last senses to go.", "say": "Hearing may be one of the last senses to go. In a hospice study, unresponsive patients' brains still responded to sound in their last hours. So your words may reach them.", "sub": "Your words may reach them."}, {"k": "big", "h": "Start with your name.", "say": "Let us start simply. Say their name, and then, it's me, I'm here. Out loud if you are with them, quietly if you are not.", "beats": ["Let us start simply.", "Say their name, and then, it's me, I'm here.", {"t": "Out loud if you are with them, quietly if you are not.", "w": 8}]}, {"k": "big", "h": "Tell them who is here.", "say": "Now tell them who is in the room. Or who is thinking of them from far away. Names and voices are a comfort.", "beats": ["Now tell them who is in the room.", "Or who is thinking of them from far away.", {"t": "Names and voices are a comfort.", "w": 10}]}, {"k": "words", "h": "Say one thank-you.", "say": "Now one thank-you. Something only you would know to say. Take your time.", "beats": ["Now one thank-you.", "Something only you would know to say.", {"t": "Take your time.", "w": 14}], "items": ["Thank you for..."]}, {"k": "words", "h": "If you want more words", "items": ["I love you.", "We're going to be okay.", "You can rest when you are ready."], "say": "If you want more words, these are often enough. I love you. We're going to be okay. And, when it feels right, you can rest when you are ready."}, {"k": "big", "h": "Keep talking, as often as you like.", "say": "That's all it takes. Keep talking to them, as often as you like. Tell them stories, read to them, play their music softly. Love still reaches them."}]},
 
         /* Build B1: from the When Life Changes videos */
-        {"id": "wl-s-goodbye", "n": 10, "title": "Your Own Goodbye", "mins": 4, "blurb": "For when you missed the moment, or never got to say it.", "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Your Own Goodbye", "sub": "It is not too late.", "say": "If you didn't get to say goodbye the way you wanted, or you weren't there at the end, this is for you. It is not too late to say it."}, {"k": "big", "h": "Goodbyes can happen after.", "say": "A goodbye doesn't have to happen at the bedside to be real. People say goodbye in letters, at graves, on walks, and in their hearts, sometimes years later. Yours still counts.", "sub": "Yours still counts."}, {"k": "breathe", "h": "Settle first", "sub": "In for four. Out for six.", "say": "Let's settle first. Breathe in for four. And out for six. A few more, at your own pace.", "hold": 24}, {"k": "big", "h": "Picture them.", "say": "Picture their face. Their hands, their voice, the way they said your name. Stay with that for a moment.", "beats": ["Picture their face.", "Their hands, their voice, the way they said your name.", {"t": "Stay with that for a moment.", "w": 12}]}, {"k": "words", "h": "Say it now.", "say": "Now say what you wanted to say. Out loud, in a whisper, or in your heart. There is no wrong way to do this.", "beats": ["Now say what you wanted to say.", "Out loud, in a whisper, or in your heart.", {"t": "There is no wrong way to do this.", "w": 20}], "items": ["I was with you so many days.", "Thank you.", "I love you.", "Goodbye, for now."]}, {"k": "points", "h": "Ways to keep it", "items": [["Write it down", "A letter to them, today"], ["A ritual of your own", "A candle, a walk, a song"], ["Tell someone", "A friend, or hospice bereavement support"]], "say": "If you want to keep it, write it down, in a letter to them. Make a ritual of your own, a candle, a walk, a song. Or tell someone, a friend, or your hospice bereavement team."}, {"k": "big", "h": "You loved them. They knew.", "say": "You loved them, and they knew. Come back to this whenever you need it."}]},
+        {"id": "wl-s-goodbye", "n": 10, "title": "Your Own Goodbye", "mins": 4, "blurb": "For when you missed the moment, or never got to say it.", "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Your Own Goodbye", "sub": "It is not too late.", "say": "If you didn't get to say goodbye the way you wanted, or you weren't there at the end, this is for you. It is not too late to say it."}, {"k": "big", "h": "Goodbyes can happen after.", "say": "A goodbye doesn't have to happen at the bedside to be real. People say goodbye in letters, at graves, on walks, and in their hearts, sometimes years later. Yours still counts.", "sub": "Yours still counts."}, {"k": "breathe", "h": "Settle first", "sub": "In for four. Out for six.", "say": "Let's settle first. Breathe in for four. And out for six. A few more, at your own pace.", "hold": 24}, {"k": "big", "h": "Picture them.", "say": "Picture their face. Their hands, their voice, the way they said your name. Stay with that for a moment.", "beats": ["Picture their face.", "Their hands, their voice, the way they said your name.", {"t": "Stay with that for a moment.", "w": 12}]}, {"k": "words", "h": "Say it now.", "say": "Now say what you wanted to say. Out loud, in a whisper, or in your heart. Every way of doing this is welcome.", "beats": ["Now say what you wanted to say.", "Out loud, in a whisper, or in your heart.", {"t": "Every way of doing this is welcome.", "w": 20}], "items": ["I was with you so many days.", "Thank you.", "I love you.", "Goodbye, for now."]}, {"k": "points", "h": "Ways to keep it", "items": [["Write it down", "A letter to them, today"], ["A ritual of your own", "A candle, a walk, a song"], ["Tell someone", "A friend, or hospice bereavement support"]], "say": "If you want to keep it, write it down, in a letter to them. Make a ritual of your own, a candle, a walk, a song. Or tell someone, a friend, or your hospice bereavement team."}, {"k": "big", "h": "You loved them. They knew.", "say": "You loved them, and they knew. Come back to this whenever you need it."}]},
 
         /* Build B1: from the When Life Changes videos */
         {"id": "wl-s-hand", "n": 11, "title": "A Hand on Theirs", "mins": 4, "blurb": "A quiet minute of presence at the bedside.", "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "A Hand on Theirs", "sub": "A quiet minute of presence.", "say": "When you don't know what to do at the bedside, this is for you. Sometimes being there is the whole job."}, {"k": "story", "title": "The Blanket That Didn't Need Smoothing", "lines": ["A husband sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail.", "He told me about their life together. Then he reached over and adjusted her blanket. It had not slipped.", "He kept holding her hand, like it was the only job left for him to do."], "lesson": "Sometimes love just needs somewhere to put its hands.", "note": "Names and details changed", "say": "A husband once sat beside his wife in her final hours, his chair so close his knee nearly touched the bed rail. He told me about their life, and then he reached over and adjusted her blanket. It had not slipped. Sometimes love just needs somewhere to put its hands."}, {"k": "big", "h": "Rest your hand on theirs.", "say": "If you are beside them, rest your hand on theirs. If you are not, picture it. Notice the warmth, or the coolness, or the stillness.", "beats": ["If you are beside them, rest your hand on theirs.", "If you are not, picture it.", {"t": "Notice the warmth, or the coolness, or the stillness.", "w": 12}]}, {"k": "breathe", "h": "Breathe slowly beside them", "sub": "A calm body in the room helps everyone.", "say": "Now breathe slowly beside them. In for four. And out for six. If their breathing is hard, your slow, steady breath can be a quiet comfort in the room.", "hold": 30}, {"k": "big", "h": "Notice one good thing.", "say": "One more moment. Notice one good thing in this room. A face, a sound, a memory, the light.", "beats": ["One more moment.", "Notice one good thing in this room.", {"t": "A face, a sound, a memory, the light.", "w": 10}]}, {"k": "big", "h": "Being there is enough.", "say": "Being there is enough. If anything about their comfort worries you, call your hospice nurse, day or night."}]}
@@ -9770,32 +9770,32 @@ window.GG_LEARN = {
 
       /* ---------- W4 (GWG BLD 717): Support for Right Now, four more groups. Generated from patches/w4/source in grounded-workshop ---------- */
       {"id": "willow-sp-process", "kind": "support", "title": "Processing", "who": "Making sense of what you feel", "lessons": [
-        {"id": "wl-s-news", "n": 12, "title": "When the News Is New", "mins": 4, "blurb": "For the first days after hard news: one thing at a time.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the News Is New", "sub": "One thing at a time.", "say": "When you have just heard the word hospice, or been told that time is short, this is for you. You don't have to take it all in today."}, {"k": "big", "h": "Shock is how a mind takes in hard news.", "sub": "Numb, racing, or both.", "say": "Right after hard news, many people feel numb. Others feel their mind racing, making lists in the middle of the night. Some feel both in the same hour. This is common. Shock is how a mind takes in more than it can hold at once."}, {"k": "points", "h": "The first days can feel like", "items": [["Numb or far away", "Like watching from outside"], ["A racing mind", "Questions and what-ifs, over and over"], ["Forgetting things", "Keys, names, what the nurse just said"], ["Tears, or none at all", "Both are normal"]], "say": "The first days can feel strange. Numb, or far away, like you are watching from outside. A racing mind, with the same questions over and over. Forgetting things, even what the nurse just said. Tears, or no tears at all. Every one of these is normal."}, {"k": "breathe", "h": "Let your body catch up", "sub": "In for four. Out for six.", "hold": 24, "say": "Before anything else, let your body catch up with the news. Breathe in for four. And out for six. Again, slowly, at your own pace."}, {"k": "big", "h": "Name the one thing in front of you.", "sub": "Just one.", "say": "A racing mind tries to hold everything at once. Let's set most of it down. Ask yourself, what is the one thing in front of me right now? Name it, out loud or in your head.", "beats": ["A racing mind tries to hold everything at once.", "Let's set most of it down.", "Ask yourself, what is the one thing in front of me right now?", {"t": "Name it, out loud or in your head.", "w": 10}]}, {"k": "points", "h": "Much of it can wait", "items": [["Big decisions", "Ask your team what truly cannot wait"], ["Telling everyone", "Start with a few people"], ["Reading everything", "Your hospice team can answer"], ["Getting it right", "There is no right way to do this"]], "say": "Much of it can wait a few days. Most big decisions can wait, so ask your hospice team what truly cannot. Telling everyone can wait. Start with a few people, and let them help spread the word. Reading everything online can wait. Your hospice team can answer your questions. And getting it right can wait forever. There is no right way to do this."}, {"k": "words", "h": "Write the questions down", "items": ["What should we watch for?", "Who do I call, and when?", "What can wait?"], "sub": "Bring them to your hospice team.", "say": "Your mind may keep circling the same questions. Write them down, so you don't have to hold them. Good first questions are, what should we watch for, who do I call, and when, and what can wait. Write one now, on paper or in your phone.", "beats": ["Your mind may keep circling the same questions.", "Write them down, so you don't have to hold them.", "Good first questions are, what should we watch for, who do I call, and when, and what can wait.", {"t": "Write one now, on paper or in your phone.", "w": 12}]}, {"k": "flow", "h": "Today, just three things", "steps": [["Eat something", "Even a little"], ["Tell one person", "Someone who can help carry it"], ["Save the hospice number", "Day or night"]], "say": "For today, just three things. Eat something, even a little. Tell one person, someone who can help you carry this. And save your hospice number where you can find it fast. They are there day or night."}, {"k": "big", "h": "One thing, then the next.", "sub": "You do not have to understand it all today.", "say": "If the fear gets to be too much, call your hospice, day or night. If you are struggling yourself, call or text 988. If anyone is in danger right now, call 911. You don't have to understand all of this today. One thing, then the next. Come back to this whenever you need it."}]},
+        {"id": "wl-s-news", "n": 12, "title": "When the News Is New", "mins": 4, "blurb": "For the first days after hard news: one thing at a time.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the News Is New", "sub": "One thing at a time.", "say": "When you have just heard the word hospice, or been told that time is short, this is for you. You don't have to take it all in today."}, {"k": "big", "h": "Shock is how a mind takes in hard news.", "sub": "Numb, racing, or both.", "say": "Right after hard news, many people feel numb. Others feel their mind racing, making lists in the middle of the night. Some feel both in the same hour. This is common. Shock is how a mind takes in more than it can hold at once."}, {"k": "points", "h": "The first days can feel like", "items": [["Numb or far away", "Like watching from outside"], ["A racing mind", "Questions and what-ifs, over and over"], ["Forgetting things", "Keys, names, what the nurse just said"], ["Tears, or none at all", "Both are normal"]], "say": "The first days can feel strange. Numb, or far away, like you are watching from outside. A racing mind, with the same questions over and over. Forgetting things, even what the nurse just said. Tears, or no tears at all. Every one of these is normal."}, {"k": "breathe", "h": "Let your body catch up", "sub": "In for four. Out for six.", "hold": 24, "say": "Before anything else, let your body catch up with the news. Breathe in for four. And out for six. Again, slowly, at your own pace."}, {"k": "big", "h": "Name the one thing in front of you.", "sub": "Just one.", "say": "A racing mind tries to hold everything at once. Let's set most of it down. Ask yourself, what is the one thing in front of me right now? Name it, out loud or in your head.", "beats": ["A racing mind tries to hold everything at once.", "Let's set most of it down.", "Ask yourself, what is the one thing in front of me right now?", {"t": "Name it, out loud or in your head.", "w": 10}]}, {"k": "points", "h": "Much of it can wait", "items": [["Big decisions", "Ask your team what truly needs doing now"], ["Telling everyone", "Start with a few people"], ["Reading everything", "Your hospice team can answer"], ["Getting it right", "Do this your own way"]], "say": "Much of it can wait a few days. Most big decisions can wait, so ask your hospice team what truly cannot. Telling everyone can wait. Start with a few people, and let them help spread the word. Reading everything online can wait. Your hospice team can answer your questions. And getting it right can wait forever. Do this your own way."}, {"k": "words", "h": "Write the questions down", "items": ["What should we watch for?", "Who do I call, and when?", "What can wait?"], "sub": "Bring them to your hospice team.", "say": "Your mind may keep circling the same questions. Write them down, and let the page hold them. Good first questions are, what should we watch for, who do I call, and when, and what can wait. Write one now, on paper or in your phone.", "beats": ["Your mind may keep circling the same questions.", "Write them down, and let the page hold them.", "Good first questions are, what should we watch for, who do I call, and when, and what can wait.", {"t": "Write one now, on paper or in your phone.", "w": 12}]}, {"k": "flow", "h": "Today, just three things", "steps": [["Eat something", "Even a little"], ["Tell one person", "Someone who can help carry it"], ["Save the hospice number", "Day or night"]], "say": "For today, just three things. Eat something, even a little. Tell one person, someone who can help you carry this. And save your hospice number where you can find it fast. They are there day or night."}, {"k": "big", "h": "One thing, then the next.", "sub": "Understanding can come slowly.", "say": "If the fear gets to be too much, call your hospice, day or night. If you are struggling yourself, call or text 988. If anyone is in danger right now, call 911. You don't have to understand all of this today. One thing, then the next. Come back to this whenever you need it."}]},
         {"id": "wl-s-anger", "n": 13, "title": "Anger Has a Place", "mins": 4, "blurb": "Anger often comes from love. Safe ways to let it move.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Anger Has a Place", "sub": "It often comes from love.", "say": "If you are angry, and you aren't sure where to put it, this is for you. Anger belongs here too."}, {"k": "points", "h": "Anger can land anywhere", "items": [["The illness", "For taking so much"], ["The doctors", "For what they said, or didn't"], ["The family", "For what they do, or don't do"], ["The person, or yourself", "For choices made, or not doing more"]], "say": "Anger can land anywhere. On the illness, for taking so much. On the doctors, for what they said, or didn't say. On the family, for what they do, or don't do. On the person you love, for the choices they made. On yourself. Some people feel angry at God, and that belongs too."}, {"k": "big", "h": "Anger is often love with nowhere to go.", "sub": "It is common, and it makes sense.", "say": "Underneath, anger is often love with nowhere to go. You want to protect them, to fix this, to keep them, and you can't. That energy has to go somewhere. Feeling angry doesn't make you a bad person. It makes you a person who loves."}, {"k": "big", "h": "Where do you feel it?", "sub": "Jaw, chest, hands, stomach.", "say": "Let's notice it together. Where do you feel your anger in your body? Your jaw, your chest, your hands, your stomach. Put a hand there, and just notice.", "beats": ["Let's notice it together.", "Where do you feel your anger in your body?", "Your jaw, your chest, your hands, your stomach.", {"t": "Put a hand there, and just notice.", "w": 10}]}, {"k": "points", "h": "Safe ways to let it move", "items": [["Move your body", "Walk fast, climb stairs, squeeze a towel"], ["Write it out", "Then tear it up, or keep it"], ["Let your voice out", "Into a pillow, or alone in the car"], ["Talk to someone safe", "A friend, a chaplain, a counselor"]], "say": "Anger needs a way to move. Move your body. Walk fast, climb the stairs, shake out your hands. Squeeze something and let it go, a towel, a pillow, your own fists. Write it all out, then tear it up, or keep it. Let your voice out, into a pillow, or alone in the car. Or talk to someone safe, a friend, a chaplain, a counselor."}, {"k": "breathe", "h": "Let it settle", "sub": "A long breath out, like a sigh.", "hold": 20, "say": "Now let your body settle a little. Breathe in through your nose. And let a long breath out through your mouth, like a sigh. Again, as many times as you need."}, {"k": "words", "h": "Name it, then the love under it", "items": ["I am angry that...", "Because I love..."], "sub": "Out loud, quietly, or on paper.", "say": "Try finishing two sentences. I am angry that. And then, because I love. Say them quietly, or write them down.", "beats": ["Try finishing two sentences.", "I am angry that.", "And then, because I love.", {"t": "Say them quietly, or write them down.", "w": 14}]}, {"k": "card", "title": "If anger gets too big", "body": "Step away before words or hands can hurt. Call your hospice, day or night. For your own crisis, call or text 988. If anyone is in danger right now, call 911.", "say": "If anger ever feels too big, step away before words or hands can hurt someone. Call your hospice, day or night. They hear this often. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911."}, {"k": "big", "h": "Your anger has a place. So do you.", "say": "Your anger has a place here. It can move through you without taking over. When it passes, be gentle with yourself. Come back to this whenever you need it."}]},
-        {"id": "wl-s-guilt", "n": 14, "title": "The Guilt That Visits", "mins": 4, "blurb": "When guilt keeps visiting, and what it may be missing.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "The Guilt That Visits", "sub": "It often comes from love.", "say": "Guilt has a way of visiting when you are tired and grieving. If it has been visiting you, this is for you."}, {"k": "words", "h": "Thoughts that often visit", "items": ["I should have noticed sooner.", "I moved them to a facility.", "I lost my patience today.", "Part of me wishes it were over."], "say": "Many caregivers hear thoughts like these. I should have noticed sooner. I moved them to a facility. I lost my patience today. Part of me wishes it were over. If any of these are yours, you are in good company."}, {"k": "story", "title": "A Betrayal of the Mind", "lines": ["A woman in memory care told anyone who would listen that her children had stolen everything and dumped her there.", "Her family had tried home health, day programs, and live-in help first. They visited almost every day.", "My team and I helped them see her accusations as the illness, and gave them permission to set boundaries with their own guilt."], "lesson": "An illness can rewrite love as a crime story. The love is still true.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a family whose mother lived in memory care. She told anyone who would listen that her children had stolen everything and dumped her there. But she had been found outside, lost, more than once. They had tried every other option first, home health, day programs, live-in help. They visited almost every day. My team and I helped them see that her accusations were the illness, not their failure. We gave them permission to set boundaries with their own guilt. And they found some peace, knowing they were humans doing an impossible thing."}, {"k": "big", "h": "Guilt and shame are different.", "sub": "Guilt: I did something. Shame: I am something.", "say": "It helps to know the difference. Guilt says, I did something I regret. Shame says, I am bad. Guilt can point you toward making something right. Shame only weighs you down, and it is rarely telling the truth."}, {"k": "points", "h": "Look again at what you did", "items": [["The move to a facility", "Often a choice to keep them safe"], ["Losing your patience", "A tired body, not a lack of love"], ["Wishing it were over", "Often wishing their suffering would end"], ["I should have...", "You know now what you couldn't then"]], "say": "Look again at what guilt is pointing to. A move to a facility is often a choice to keep someone safe. Losing your patience usually means a tired body, not a lack of love. Wishing it were over is very common, and it often means wishing their suffering would end. And I should have, usually means you know now what you couldn't know then."}, {"k": "words", "h": "Say what you were trying to do.", "items": ["I was trying to keep them safe.", "I was so tired.", "I wanted the suffering to stop."], "sub": "Your own words are best.", "say": "Let's try something. Pick the guilt that visits you most. Now say what you were really trying to do, in your own words. Take your time.", "beats": ["Let's try something.", "Pick the guilt that visits you most.", "Now say what you were really trying to do, in your own words.", {"t": "Take your time.", "w": 14}]}, {"k": "words", "h": "If something needs repair", "items": ["I'm sorry I snapped.", "I was tired, and I love you.", "I forgive myself, too."], "say": "If something needs repair, keep it simple. I'm sorry I snapped. I was tired, and I love you. And then, the harder one, I forgive myself, too."}, {"k": "card", "title": "When guilt feels heavy", "body": "Tell your hospice team, day or night. Chaplains and social workers hear this often. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911.", "say": "If guilt feels too heavy to carry, tell your hospice team, day or night. Chaplains and social workers hear this often. If wishing it were over ever turns into thoughts of ending your own life, call or text 988. If anyone is in danger right now, call 911."}, {"k": "big", "h": "Guilt can visit. It doesn't have to stay.", "say": "Guilt may visit again. When it does, notice it, name what you were really trying to do, and let it go on its way. You are doing a hard thing, with love."}]},
-        {"id": "wl-s-relief", "n": 15, "title": "Relief and Grief Together", "mins": 4, "blurb": "Relief and grief can sit side by side. Both are true.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Relief and Grief Together", "sub": "Both can be true.", "say": "Some people feel relief and grief at the same time, and wonder if that is allowed. If that is you, this is for you."}, {"k": "big", "h": "Relief is a common part of grief.", "sub": "It doesn't cancel your love.", "say": "After a long road, many people feel relief. Relief that the suffering is ending, or has ended. Relief that the nights of worry are done. Relief often sits right next to grief, and it doesn't cancel your love."}, {"k": "points", "h": "Relief can sound like", "items": [["They aren't hurting anymore", "Their suffering is over"], ["I can sleep again", "The long watch is done"], ["A hard relationship eased", "Old tension can finally rest"], ["I can breathe", "Even while I cry"]], "say": "Relief can sound like, they aren't hurting anymore. Or, I can sleep again. Sometimes it comes when a hard relationship finally eases, and old tension can rest. Sometimes it is simply, I can breathe, even while I cry."}, {"k": "story", "title": "He Came to Collect", "lines": ["I visit Evelyn in memory care. Her son had stolen from her in the past.", "When he came back wanting money, she said no, and her family took steps to protect her.", "A couple of weeks later she told me, \"I am sad. He is my boy. But I feel safer. Like I can breathe.\""], "lesson": "Sadness and safety can sit side by side.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/he-came-to-collect", "label": "Read the Full Story: He Came to Collect"}, "say": "I visit a woman named Evelyn in memory care. Her son had stolen from her in the past, and when he came back wanting money, she said no. With help, her family took steps to protect her, and he left. A couple of weeks later, she told me, I am sad. He is my boy. But I feel safer. Like I can breathe."}, {"k": "big", "h": "Hold both.", "sub": "One hand for each.", "say": "Let's make room for both. Put one hand on your chest, for the grief. Put the other on your stomach, for the relief. Let both hands rest there, and breathe.", "beats": ["Let's make room for both.", "Put one hand on your chest, for the grief.", "Put the other on your stomach, for the relief.", {"t": "Let both hands rest there, and breathe.", "w": 12}]}, {"k": "words", "h": "Words for both", "items": ["I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard."], "sub": "And, not but.", "say": "Notice the little word and. I miss them, and I'm relieved. I'm sad, and I can breathe. I loved them, and it was hard. Say the one that fits, or make your own.", "beats": ["Notice the little word and.", "I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard.", {"t": "Say the one that fits, or make your own.", "w": 10}]}, {"k": "points", "h": "When others don't understand", "items": [["You don't owe an explanation", "Relief can stay private"], ["Find one safe listener", "A friend, a chaplain, a grief group"], ["Expect it to shift", "Relief and grief can trade places"]], "say": "Not everyone will understand. You don't owe anyone an explanation. Your relief can stay private if you want it to. Find one safe listener, a friend, a chaplain, a grief group. And expect it to shift. Some days relief is louder, and some days grief is."}, {"k": "big", "h": "Relief and grief can both be love.", "sub": "Let them sit side by side.", "say": "If you ever worry that a vulnerable adult in Minnesota is being harmed, you can call MAARC at 1 844 880 1574. For now, let relief and grief sit side by side, as long as they need. Both can be love. Come back to this whenever you need it."}]},
-        {"id": "wl-s-waves", "n": 16, "title": "Grief That Comes in Waves", "mins": 4, "blurb": "How to ride a wave of grief, wherever it finds you.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Grief That Comes in Waves", "sub": "You can ride it.", "say": "Grief often comes in waves. If one has been knocking you over, before a death or after, this is for you."}, {"k": "big", "h": "Waves rise, crest, and pass.", "sub": "Even the big ones.", "say": "A wave of grief can come out of nowhere. A song, a smell, an empty chair. It rises, it crests, and it passes. Fighting it often makes it bigger. Riding it lets it move through you."}, {"k": "points", "h": "Waves often come with", "items": [["Firsts", "Holidays, birthdays, the first spring"], ["Small things", "Their mug, their handwriting"], ["Quiet moments", "Bedtime, the drive home"], ["Good news", "Wanting to tell them"]], "say": "Waves often come with firsts, like holidays, birthdays, the first spring. With small things, like their mug or their handwriting. With quiet moments, at bedtime or on the drive home. Even with good news, when you reach for the phone to tell them."}, {"k": "flow", "h": "Riding a wave", "steps": [["Feel it come", "Here is a wave"], ["Let it crest", "Cry if you need to"], ["Breathe long", "Out longer than in"], ["Watch it go", "Waves pass"]], "say": "Here is how to ride one. Feel it come, and say to yourself, here is a wave. Let it crest. Cry if you need to. Breathe long, with your breath out longer than your breath in. Then watch it go. Waves pass."}, {"k": "breathe", "h": "Ride this one", "sub": "In for four. Out for six.", "hold": 30, "say": "If a wave is here right now, let's ride it together. Let it rise. Breathe in for four. And out for six. Let the tears come if they want to. Keep breathing as it passes."}, {"k": "points", "h": "If a wave hits in public", "items": [["Find a quiet spot", "A restroom, your car, a hallway"], ["Press your feet down", "Feel the floor hold you"], ["Have a line ready", "I'm having a grief moment. I'll be okay."], ["Tears are okay", "Most people understand"]], "say": "If a wave hits in public, find a quiet spot if you can, a restroom, your car, a hallway. Press your feet into the floor and feel it hold you. Have a line ready, like, I'm having a grief moment. I'll be okay. And know that tears are okay. Most people understand."}, {"k": "big", "h": "At the bedside, you can let it show.", "sub": "I'm sad because I love you.", "say": "If a wave hits at the bedside, you don't have to hide it. You can say, I'm sad because I love you. Or step out for a minute, and come back. Try those words now, quietly, so they are ready.", "beats": ["If a wave hits at the bedside, you don't have to hide it.", "You can say, I'm sad because I love you.", "Or step out for a minute, and come back.", {"t": "Try those words now, quietly, so they are ready.", "w": 10}]}, {"k": "words", "h": "A line to keep ready", "items": ["This is a wave. It will pass.", "I can feel this and still be okay."], "say": "Some people keep one line ready for when a wave hits. This is a wave. It will pass. Or, I can feel this and still be okay. Choose one, and say it slowly, three times.", "beats": ["Some people keep one line ready for when a wave hits.", "This is a wave.", "It will pass.", "Or, I can feel this and still be okay.", {"t": "Choose one, and say it slowly, three times.", "w": 12}]}, {"k": "big", "h": "Waves come, and waves go.", "sub": "You are still here.", "say": "If grief ever feels like more than you can carry, your hospice has people to talk with, before a death and after. And you can call or text 988 anytime. Waves come, and waves go. You are still here. Come back to this whenever you need it."}]}
+        {"id": "wl-s-guilt", "n": 14, "title": "The Guilt That Visits", "mins": 4, "blurb": "When guilt keeps visiting, and what it may be missing.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "The Guilt That Visits", "sub": "It often comes from love.", "say": "Guilt has a way of visiting when you are tired and grieving. If it has been visiting you, this is for you."}, {"k": "words", "h": "Thoughts that often visit", "items": ["I should have noticed sooner.", "I moved them to a facility.", "I lost my patience today.", "Part of me wishes it were over."], "say": "Many caregivers hear thoughts like these. I should have noticed sooner. I moved them to a facility. I lost my patience today. Part of me wishes it were over. If any of these are yours, you are in good company."}, {"k": "story", "title": "A Betrayal of the Mind", "lines": ["A woman in memory care told anyone who would listen that her children had stolen everything and dumped her there.", "Her family had tried home health, day programs, and live-in help first. They visited almost every day.", "My team and I helped them see her accusations as the illness, and gave them permission to set boundaries with their own guilt."], "lesson": "An illness can rewrite love as a crime story. The love is still true.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a family whose mother lived in memory care. She told anyone who would listen that her children had stolen everything and dumped her there. But she had been found outside, lost, more than once. They had tried every other option first, home health, day programs, live-in help. They visited almost every day. My team and I helped them see that her accusations were the illness, not their failure. We gave them permission to set boundaries with their own guilt. And they found some peace, knowing they were humans doing an impossible thing."}, {"k": "big", "h": "Guilt and shame are different.", "sub": "Guilt: I did something. Shame: I am something.", "say": "It helps to know the difference. Guilt says, I did something I regret. Shame says, I am bad. Guilt can point you toward making something right. Shame only weighs you down, and it is rarely telling the truth."}, {"k": "points", "h": "Look again at what you did", "items": [["The move to a facility", "Often a choice to keep them safe"], ["Losing your patience", "A tired body, with love still whole"], ["Wishing it were over", "Often wishing their suffering would end"], ["I should have...", "You know now what you couldn't then"]], "say": "Look again at what guilt is pointing to. A move to a facility is often a choice to keep someone safe. Losing your patience usually means a tired body, not a lack of love. Wishing it were over is very common, and it often means wishing their suffering would end. And I should have, usually means you know now what you couldn't know then."}, {"k": "words", "h": "Say what you were trying to do.", "items": ["I was trying to keep them safe.", "I was so tired.", "I wanted the suffering to stop."], "sub": "Your own words are best.", "say": "Let's try something. Pick the guilt that visits you most. Now say what you were really trying to do, in your own words. Take your time.", "beats": ["Let's try something.", "Pick the guilt that visits you most.", "Now say what you were really trying to do, in your own words.", {"t": "Take your time.", "w": 14}]}, {"k": "words", "h": "If something needs repair", "items": ["I'm sorry I snapped.", "I was tired, and I love you.", "I forgive myself, too."], "say": "If something needs repair, keep it simple. I'm sorry I snapped. I was tired, and I love you. And then, the harder one, I forgive myself, too."}, {"k": "card", "title": "When guilt feels heavy", "body": "Tell your hospice team, day or night. Chaplains and social workers hear this often. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911.", "say": "If guilt feels too heavy to carry, tell your hospice team, day or night. Chaplains and social workers hear this often. If wishing it were over ever turns into thoughts of ending your own life, call or text 988. If anyone is in danger right now, call 911."}, {"k": "big", "h": "Guilt can visit, and then move on.", "say": "Guilt may visit again. When it does, notice it, name what you were really trying to do, and let it go on its way. You are doing a hard thing, with love."}]},
+        {"id": "wl-s-relief", "n": 15, "title": "Relief and Grief Together", "mins": 4, "blurb": "Relief and grief can sit side by side. Both are true.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Relief and Grief Together", "sub": "Both can be true.", "say": "Some people feel relief and grief at the same time, and wonder if that is allowed. If that is you, this is for you."}, {"k": "big", "h": "Relief is a common part of grief.", "sub": "It doesn't cancel your love.", "say": "After a long road, many people feel relief. Relief that the suffering is ending, or has ended. Relief that the nights of worry are done. Relief often sits right next to grief, and it doesn't cancel your love."}, {"k": "points", "h": "Relief can sound like", "items": [["They aren't hurting anymore", "Their suffering is over"], ["I can sleep again", "The long watch is done"], ["A hard relationship eased", "Old tension can finally rest"], ["I can breathe", "Even while I cry"]], "say": "Relief can sound like, they aren't hurting anymore. Or, I can sleep again. Sometimes it comes when a hard relationship finally eases, and old tension can rest. Sometimes it is simply, I can breathe, even while I cry."}, {"k": "story", "title": "He Came to Collect", "lines": ["I visit Evelyn in memory care. Her son had stolen from her in the past.", "When he came back wanting money, she said no, and her family took steps to protect her.", "A couple of weeks later she told me, \"I am sad. He is my boy. But I feel safer. Like I can breathe.\""], "lesson": "Sadness and safety can sit side by side.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/he-came-to-collect", "label": "Read the Full Story: He Came to Collect"}, "say": "I visit a woman named Evelyn in memory care. Her son had stolen from her in the past, and when he came back wanting money, she said no. With help, her family took steps to protect her, and he left. A couple of weeks later, she told me, I am sad. He is my boy. But I feel safer. Like I can breathe."}, {"k": "big", "h": "Hold both.", "sub": "One hand for each.", "say": "Let's make room for both. Put one hand on your chest, for the grief. Put the other on your stomach, for the relief. Let both hands rest there, and breathe.", "beats": ["Let's make room for both.", "Put one hand on your chest, for the grief.", "Put the other on your stomach, for the relief.", {"t": "Let both hands rest there, and breathe.", "w": 12}]}, {"k": "words", "h": "Words for both", "items": ["I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard."], "sub": "And, not but.", "say": "Notice the little word and. I miss them, and I'm relieved. I'm sad, and I can breathe. I loved them, and it was hard. Say the one that fits, or make your own.", "beats": ["Notice the little word and.", "I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard.", {"t": "Say the one that fits, or make your own.", "w": 10}]}, {"k": "points", "h": "When others see it differently", "items": [["Your reasons are your own", "Relief can stay private"], ["Find one safe listener", "A friend, a chaplain, a grief group"], ["Expect it to shift", "Relief and grief can trade places"]], "say": "Not everyone will understand. You don't owe anyone an explanation. Your relief can stay private if you want it to. Find one safe listener, a friend, a chaplain, a grief group. And expect it to shift. Some days relief is louder, and some days grief is."}, {"k": "big", "h": "Relief and grief can both be love.", "sub": "Let them sit side by side.", "say": "If you ever worry that a vulnerable adult in Minnesota is being harmed, you can call MAARC at 1 844 880 1574. For now, let relief and grief sit side by side, as long as they need. Both can be love. Come back to this whenever you need it."}]},
+        {"id": "wl-s-waves", "n": 16, "title": "Grief That Comes in Waves", "mins": 4, "blurb": "How to ride a wave of grief, wherever it finds you.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Grief That Comes in Waves", "sub": "You can ride it.", "say": "Grief often comes in waves. If one has been knocking you over, before a death or after, this is for you."}, {"k": "big", "h": "Waves rise, crest, and pass.", "sub": "Even the big ones.", "say": "A wave of grief can come out of nowhere. A song, a smell, an empty chair. It rises, it crests, and it passes. Fighting it often makes it bigger. Riding it lets it move through you."}, {"k": "points", "h": "Waves often come with", "items": [["Firsts", "Holidays, birthdays, the first spring"], ["Small things", "Their mug, their handwriting"], ["Quiet moments", "Bedtime, the drive home"], ["Good news", "Wanting to tell them"]], "say": "Waves often come with firsts, like holidays, birthdays, the first spring. With small things, like their mug or their handwriting. With quiet moments, at bedtime or on the drive home. Even with good news, when you reach for the phone to tell them."}, {"k": "flow", "h": "Riding a wave", "steps": [["Feel it come", "Here is a wave"], ["Let it crest", "Cry if you need to"], ["Breathe long", "Out longer than in"], ["Watch it go", "Waves pass"]], "say": "Here is how to ride one. Feel it come, and say to yourself, here is a wave. Let it crest. Cry if you need to. Breathe long, with your breath out longer than your breath in. Then watch it go. Waves pass."}, {"k": "breathe", "h": "Ride this one", "sub": "In for four. Out for six.", "hold": 30, "say": "If a wave is here right now, let's ride it together. Let it rise. Breathe in for four. And out for six. Let the tears come if they want to. Keep breathing as it passes."}, {"k": "points", "h": "If a wave hits in public", "items": [["Find a quiet spot", "A restroom, your car, a hallway"], ["Press your feet down", "Feel the floor hold you"], ["Have a line ready", "I'm having a grief moment. I'll be okay."], ["Tears are okay", "Most people understand"]], "say": "If a wave hits in public, find a quiet spot if you can, a restroom, your car, a hallway. Press your feet into the floor and feel it hold you. Have a line ready, like, I'm having a grief moment. I'll be okay. And know that tears are okay. Most people understand."}, {"k": "big", "h": "At the bedside, you can let it show.", "sub": "I'm sad because I love you.", "say": "If a wave hits at the bedside, you can let it show. You can say, I'm sad because I love you. Or step out for a minute, and come back. Try those words now, quietly, so they are ready.", "beats": ["If a wave hits at the bedside, you can let it show.", "You can say, I'm sad because I love you.", "Or step out for a minute, and come back.", {"t": "Try those words now, quietly, so they are ready.", "w": 10}]}, {"k": "words", "h": "A line to keep ready", "items": ["This is a wave. It will pass.", "I can feel this and still be okay."], "say": "Some people keep one line ready for when a wave hits. This is a wave. It will pass. Or, I can feel this and still be okay. Choose one, and say it slowly, three times.", "beats": ["Some people keep one line ready for when a wave hits.", "This is a wave.", "It will pass.", "Or, I can feel this and still be okay.", {"t": "Choose one, and say it slowly, three times.", "w": 12}]}, {"k": "big", "h": "Waves come, and waves go.", "sub": "You are still here.", "say": "If grief ever feels like more than you can carry, your hospice has people to talk with, before a death and after. And you can call or text 988 anytime. Waves come, and waves go. You are still here. Come back to this whenever you need it."}]}
       ] },
       {"id": "willow-sp-calm", "kind": "support", "title": "Calming", "who": "When things heat up or panic rises", "lessons": [
         {"id": "wl-s-panic", "n": 17, "title": "When Panic Rises", "mins": 4, "blurb": "Steady your body when panic or a racing heart hits.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Panic Rises", "sub": "One breath, one step at a time.", "say": "When your heart is racing, your chest feels tight, or panic comes out of nowhere, this is for you. It helps whether you are keeping watch or you are the one in the bed. Stay with me for a few minutes."}, {"k": "big", "h": "Panic is a wave. Waves pass.", "sub": "Your body is working hard to protect you.", "say": "First, know this. Panic is a wave of alarm moving through the body. It feels huge, and it passes. It is common in hard seasons like this one, and it comes from a body working hard to protect you."}, {"k": "big", "h": "Feet on the floor.", "sub": "Let something hold you up.", "say": "Put both feet flat on the floor. Press down a little, and feel the floor press back. If you are lying down, feel the bed holding your whole weight. Let it hold you.", "beats": ["Put both feet flat on the floor.", "Press down a little, and feel the floor press back.", "If you are lying down, feel the bed holding your whole weight.", {"t": "Let it hold you.", "w": 8}]}, {"k": "words", "h": "Name it.", "items": ["This is panic.", "It feels big, and it will pass.", "I can breathe slowly."], "say": "Now give it a name, out loud or in your head. This is panic. It feels big, and it will pass. I can breathe slowly. Say those words once more, at your own pace.", "beats": ["Now give it a name, out loud or in your head.", "This is panic.", "It feels big, and it will pass.", "I can breathe slowly.", {"t": "Say those words once more, at your own pace.", "w": 10}]}, {"k": "big", "h": "A hand on your chest.", "sub": "Feel the warmth of your own hand.", "say": "Rest one hand flat on your chest. Notice it rise and fall. You can rest the other hand on your belly. Feel the warmth of your own hand, right there.", "beats": ["Rest one hand flat on your chest.", "Notice it rise and fall.", "You can rest the other hand on your belly.", {"t": "Feel the warmth of your own hand, right there.", "w": 10}]}, {"k": "breathe", "h": "A long, slow breath out", "sub": "Out like cooling a spoonful of soup.", "hold": 36, "say": "Now let your breath out grow longer than your breath in. Breathe in through your nose. Then let it out slowly through your lips, like cooling a spoonful of soup. Keep going on your own, hand on your chest, feet on the floor."}, {"k": "points", "h": "If the panic is theirs", "items": [["Sit close, at eye level", "Calm and unhurried"], ["Breathe slowly where they can see", "They may follow your rhythm"], ["Keep words few", "I'm here. Breathe with me."], ["Call the hospice nurse", "Day or night, for any distress"]], "say": "If the panic belongs to the person in the bed, sit close, at their eye level. Breathe slowly where they can see you, so they can follow your rhythm if they want to. Keep your words few. I'm here. Breathe with me. And call the hospice nurse. They have ways to ease breathlessness and fear."}, {"k": "card", "title": "Help is one call away", "body": "If they are struggling to breathe or in distress, call your hospice nurse, day or night. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "If the person in the bed is struggling to breathe or in distress, call your hospice nurse, day or night. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You rode the wave.", "sub": "Come back to this anytime.", "say": "You rode the wave. Feet on the floor, a name for it, a hand on your chest, a long breath out. Come back to this as often as you need. That is enough for right now."}]},
         {"id": "wl-s-arguing", "n": 18, "title": "When the Family Is Arguing", "mins": 4, "blurb": "Steps and words to cool a heated room at the bedside.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the Family Is Arguing", "sub": "Bring the room back to what matters.", "say": "When voices are rising around the bed, or every family talk turns into a fight, this is for you. Here are a few steps, and some words to say, to cool the room."}, {"k": "big", "h": "Strong feelings often come from love.", "sub": "Fear and grief can come out as anger.", "say": "First, this is common. When someone you all love is dying, fear and grief often come out sideways, as anger. A family arguing at the bedside is usually a family that loves the same person very much."}, {"k": "words", "h": "Take it out of the room.", "items": ["Let's step out and talk.", "Can we take this to the kitchen?", "Let's keep this room peaceful for Dad."], "say": "When voices rise, take the talk out of the room. The bedside is a place for gentle voices. You might say, let's step out and talk. Or, can we take this to the kitchen? Pick one, and say it out loud now, so it is ready when you need it.", "beats": ["When voices rise, take the talk out of the room.", "The bedside is a place for gentle voices.", "You might say, let's step out and talk.", "Or, can we take this to the kitchen?", {"t": "Pick one, and say it out loud now, so it is ready when you need it.", "w": 8}]}, {"k": "breathe", "h": "One breath before you answer", "sub": "A calmer voice lowers the whole room.", "hold": 14, "say": "Before you answer anyone, take one slow breath. In. And a long breath out. A calmer voice helps the whole room come down."}, {"k": "points", "h": "One voice at a time", "items": [["One person talks", "Everyone listens to the end"], ["Say it back", "What I hear you saying is..."], ["Start with I", "I'm scared, not you never help"], ["Take a break", "Ten minutes, then come back"]], "say": "Then try one voice at a time. One person talks, and everyone else listens to the end. Say back what you heard, starting with, what I hear you saying is. Start with I. I'm scared is easier to hear than you never help. And if it is still too hot, take a ten minute break, and come back."}, {"k": "words", "h": "Go back to what they want.", "items": ["What would Mom want right now?", "What has she told us matters most?", "Let's read What Matters together."], "say": "When you are stuck, turn back to the person in the bed. Ask, what would Mom want right now? What has she told us matters most? If their wishes are written in What Matters in Willow, read them together. Think of one thing you know matters to them.", "beats": ["When you are stuck, turn back to the person in the bed.", "Ask, what would Mom want right now?", "What has she told us matters most?", "If their wishes are written in What Matters in Willow, read them together.", {"t": "Think of one thing you know matters to them.", "w": 10}]}, {"k": "points", "h": "Ask your hospice to help", "items": [["The social worker", "Can help lead a family meeting"], ["The chaplain", "Can help hold hard talks"], ["One shared plan", "Written down, so all can see it"]], "say": "You don't have to referee this alone. Your hospice social worker or chaplain can help lead a family meeting. You can ask, could you help us talk this through as a family? A calm guide in the room helps everyone be heard. Then write down what you agree on, so everyone can see it."}, {"k": "card", "title": "If things get too heated", "body": "Your hospice team is there day or night, for them and for hard family moments. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "Your hospice team is there day or night, for the person in the bed and for hard family moments. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You can disagree and still love each other.", "sub": "The person in the bed is where you all meet.", "say": "You can disagree and still love each other. Come back to the person in the bed. That is where you all meet."}]},
-        {"id": "wl-s-restless", "n": 19, "title": "When They're Restless", "mins": 4, "blurb": "Calm presence when the person you love is restless or confused.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They're Restless", "sub": "Your calm can reach them.", "say": "When the person you love is restless, picking at the sheets, trying to get up, or confused about where they are, this is for you. Here is how to bring calm into the room."}, {"k": "big", "h": "Call the hospice nurse first.", "sub": "Day or night. The nurse can often ease it.", "say": "First, call your hospice nurse, right away, day or night. Restlessness near the end is common, and it can have causes the nurse can look into and ease. You are not bothering anyone. This is exactly what the line is for."}, {"k": "breathe", "h": "Steady yourself", "sub": "Your calm is something they can feel.", "hold": 16, "say": "While you wait, steady yourself. Your calm is something they can feel. Breathe in. And let a long, slow breath out."}, {"k": "points", "h": "Make the room calm", "items": [["Soft light", "A lamp, not the overhead light"], ["Quiet", "TV off, fewer voices at once"], ["Familiar music", "Low, the songs they know"], ["A gentle hand", "Only if it seems welcome"]], "say": "Then make the room calm. Soft light, a lamp instead of the overhead light. Quiet, with the TV off and fewer voices at once. Familiar music, played low. And a gentle hand on their arm or shoulder, only if it seems welcome. If they pull away, that is okay. Your presence nearby still helps."}, {"k": "words", "h": "A low, slow voice", "items": ["It's me. I'm right here.", "You're at home, in your own bed.", "You're safe. I'm staying with you."], "say": "Come close, where they can see you, and speak low and slow. Tell them who is here, and where they are. It's me, I'm right here. You're at home, in your own bed. You're safe, I'm staying with you. Try those words now, softly, the way you would say them to them.", "beats": ["Come close, where they can see you, and speak low and slow.", "Tell them who is here, and where they are.", "It's me, I'm right here.", "You're at home, in your own bed.", "You're safe, I'm staying with you.", {"t": "Try those words now, softly, the way you would say them to them.", "w": 10}]}, {"k": "points", "h": "If they try to get up", "items": [["Move slowly", "Calm hands, no sudden grabs"], ["Go with their feeling", "You want to go home. Tell me."], ["Stay beside them", "Sit close, hold a hand if welcome"], ["Ask the nurse", "How to keep them safe from falls"]], "say": "If they try to get up, move slowly, with calm hands. Go with their feeling instead of arguing with it. If they say they need to go home, you might say, you want to go home. Tell me about home. Stay beside them. And ask the nurse how to keep them safe from falls."}, {"k": "card", "title": "Who to call", "body": "Your hospice nurse, day or night, for restlessness, new confusion, or any change. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "Call your hospice nurse, day or night, for restlessness, new confusion, or any change that worries you. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "Your steady presence is a comfort.", "sub": "Even when they cannot say so.", "say": "You don't have to fix this alone. Call the nurse, soften the room, slow your voice, and stay close. Your steady presence is a comfort, even when they cannot say so."}]},
+        {"id": "wl-s-restless", "n": 19, "title": "When They're Restless", "mins": 4, "blurb": "Calm presence when the person you love is restless or confused.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They're Restless", "sub": "Your calm can reach them.", "say": "When the person you love is restless, picking at the sheets, trying to get up, or confused about where they are, this is for you. Here is how to bring calm into the room."}, {"k": "big", "h": "Call the hospice nurse first.", "sub": "Day or night. The nurse can often ease it.", "say": "First, call your hospice nurse, right away, day or night. Restlessness near the end is common, and it can have causes the nurse can look into and ease. You are not bothering anyone. This is exactly what the line is for."}, {"k": "breathe", "h": "Steady yourself", "sub": "Your calm is something they can feel.", "hold": 16, "say": "While you wait, steady yourself. Your calm is something they can feel. Breathe in. And let a long, slow breath out."}, {"k": "points", "h": "Make the room calm", "items": [["Soft light", "A lamp, soft and low"], ["Quiet", "TV off, fewer voices at once"], ["Familiar music", "Low, the songs they know"], ["A gentle hand", "Only if it seems welcome"]], "say": "Then make the room calm. Soft light, a lamp instead of the overhead light. Quiet, with the TV off and fewer voices at once. Familiar music, played low. And a gentle hand on their arm or shoulder, only if it seems welcome. If they pull away, that is okay. Your presence nearby still helps."}, {"k": "words", "h": "A low, slow voice", "items": ["It's me. I'm right here.", "You're at home, in your own bed.", "You're safe. I'm staying with you."], "say": "Come close, where they can see you, and speak low and slow. Tell them who is here, and where they are. It's me, I'm right here. You're at home, in your own bed. You're safe, I'm staying with you. Try those words now, softly, the way you would say them to them.", "beats": ["Come close, where they can see you, and speak low and slow.", "Tell them who is here, and where they are.", "It's me, I'm right here.", "You're at home, in your own bed.", "You're safe, I'm staying with you.", {"t": "Try those words now, softly, the way you would say them to them.", "w": 10}]}, {"k": "points", "h": "If they try to get up", "items": [["Move slowly", "Calm hands, slow and gentle"], ["Go with their feeling", "You want to go home. Tell me."], ["Stay beside them", "Sit close, hold a hand if welcome"], ["Ask the nurse", "How to keep them safe from falls"]], "say": "If they try to get up, move slowly, with calm hands. Go with their feeling instead of arguing with it. If they say they need to go home, you might say, you want to go home. Tell me about home. Stay beside them. And ask the nurse how to keep them safe from falls."}, {"k": "card", "title": "Who to call", "body": "Your hospice nurse, day or night, for restlessness, new confusion, or any change. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "Call your hospice nurse, day or night, for restlessness, new confusion, or any change that worries you. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "Your steady presence is a comfort.", "sub": "Even when they cannot say so.", "say": "You don't have to fix this alone. Call the nurse, soften the room, slow your voice, and stay close. Your steady presence is a comfort, even when they cannot say so."}]},
         {"id": "wl-s-snap", "n": 20, "title": "When You're About to Snap", "mins": 4, "blurb": "A pause, a safe step away, and a way back.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When You're About to Snap", "sub": "Find the pause.", "say": "If you are at the end of your rope, worn out, and one moment away from saying something you will regret, this is for you. Let's find the pause together."}, {"k": "big", "h": "This happens to loving caregivers.", "sub": "It is a sign you are carrying too much.", "say": "First, you are a good person having a hard moment. Many caregivers hit this wall. Feeling close to snapping comes from exhaustion and love stretched thin. It is a signal that you need something too."}, {"k": "big", "h": "Pause before words.", "sub": "One breath between the feeling and the words.", "say": "Let's practice the pause, so it is there when you need it. Close your lips. Let your shoulders drop. Take one long breath out before any word.", "beats": ["Let's practice the pause, so it is there when you need it.", "Close your lips.", "Let your shoulders drop.", {"t": "Take one long breath out before any word.", "w": 8}]}, {"k": "flow", "h": "Safe first, then step away", "steps": [["Make sure they are safe", "Settled in bed or a chair"], ["Step away", "Another room, a few minutes"], ["Cool down", "Let your body settle"], ["Come back", "When your voice is calm again"]], "say": "If the pause isn't enough, step away, safely. First make sure they are safe, settled in bed or in a chair. Then step into another room for a few minutes. Let your body cool down. Come back when your voice is calm again. Stepping away safely is a loving choice."}, {"k": "points", "h": "Cool your body", "items": [["Cold water", "On your wrists and face"], ["Unclench", "Jaw, hands, shoulders"], ["Move", "Walk, shake out your arms"], ["Breathe out long", "Longer out than in"]], "say": "While you are away, cool your body. Run cold water over your wrists, or splash your face. Unclench your jaw, your hands, your shoulders. Walk a little, or shake out your arms. And let each breath out run longer than the breath in."}, {"k": "breathe", "h": "Let it settle", "sub": "In. And a long breath out.", "hold": 20, "say": "Let's do a few together. Breathe in. And a long, slow breath out. Again, at your own pace."}, {"k": "words", "h": "Repair is possible.", "items": ["I'm sorry I raised my voice.", "I was worn out, and that wasn't fair to you.", "I love you."], "sub": "Guilt about a moment can lead to repair.", "say": "If the words already came out, repair is possible. Feeling bad about what you did can lead you back to make it right. It does not make you a bad person. Come back and say it simply. I'm sorry I raised my voice. I was worn out, and that wasn't fair to you. I love you. Say one of these quietly to yourself now, so it is ready.", "beats": ["If the words already came out, repair is possible.", "Feeling bad about what you did can lead you back to make it right.", "It does not make you a bad person.", "Come back and say it simply.", "I'm sorry I raised my voice.", "I was worn out, and that wasn't fair to you.", "I love you.", {"t": "Say one of these quietly to yourself now, so it is ready.", "w": 8}]}, {"k": "points", "h": "Ask for a break", "items": [["Name one person", "Who could sit with them for two hours?"], ["Ask your hospice", "About respite and volunteers"], ["Say it plainly", "I need a break. Can you help?"]], "say": "Then ask for a break. Name one person who could sit with them for two hours. Ask your hospice about respite and volunteers. And say it plainly. I need a break. Can you help? Rest helps you keep going."}, {"k": "card", "title": "If it feels like too much", "body": "Call your hospice, day or night. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "If it feels like too much, call your hospice, day or night. They can help. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You are allowed to be human.", "sub": "Pause. Step away. Come back.", "say": "You are carrying something heavy, and you are allowed to be human. Pause, step away, come back. That is how love keeps going."}]},
-        {"id": "wl-s-night", "n": 21, "title": "When Fear Comes at Night", "mins": 4, "blurb": "For the middle of the night, when fear gets loud.", "sources": ["kerr"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Fear Comes at Night", "sub": "You are not alone in the dark.", "say": "It's the middle of the night, and fear has you wide awake. Whether you are keeping watch or you are the one in the bed, this is for you."}, {"k": "big", "h": "Fear is louder at night.", "sub": "Many worries look smaller by daylight.", "say": "Fear often grows louder at night. The house is quiet, you are tired, and every worry feels bigger in the dark. That is common. Many things that feel huge at three in the morning look smaller by daylight."}, {"k": "big", "h": "Turn on a soft light.", "sub": "A lamp, a night light, something gentle.", "say": "Start with light. Turn on a lamp or a night light, something soft. Look around and notice the room as it is right now. Find one familiar thing, and rest your eyes on it.", "beats": ["Start with light.", "Turn on a lamp or a night light, something soft.", "Look around and notice the room as it is right now.", {"t": "Find one familiar thing, and rest your eyes on it.", "w": 8}]}, {"k": "breathe", "h": "Breathe with the quiet", "sub": "Slow in. Slower out.", "hold": 24, "say": "Now breathe with the quiet. Slowly in. And slower still on the way out. Let the night be still around you for a few breaths."}, {"k": "big", "h": "A hand, a voice.", "sub": "I'm here. We're together tonight.", "say": "Now a hand. Rest a hand on your own heart, or on theirs. If you are with them, let them hear your voice. Say softly, I'm here. We're together tonight.", "beats": ["Now a hand.", "Rest a hand on your own heart, or on theirs.", "If you are with them, let them hear your voice.", "Say softly, I'm here.", {"t": "We're together tonight.", "w": 10}]}, {"k": "words", "h": "This can wait until morning.", "items": ["Phone calls and decisions", "Paperwork and plans", "Big talks with family", "Figuring out what comes next"], "sub": "Write it on a scrap of paper by the bed.", "say": "Let's set a few things down for the night. Phone calls and decisions can wait until morning. So can paperwork, plans, and big talks with family. If a worry keeps circling, write it on a scrap of paper by the bed. Name one worry now, and tell it, you can wait until morning.", "beats": ["Let's set a few things down for the night.", "Phone calls and decisions can wait until morning.", "So can paperwork, plans, and big talks with family.", "If a worry keeps circling, write it on a scrap of paper by the bed.", {"t": "Name one worry now, and tell it, you can wait until morning.", "w": 12}]}, {"k": "big", "h": "Dreams of loved ones", "sub": "Many people find these dreams comforting.", "say": "Some people near the end see or dream of loved ones who have died, often at night. Many find these dreams and visions comforting. If the person you love tells you about one, you can simply listen, and ask, who did you see? If anything they see seems to frighten them, call the hospice nurse."}, {"k": "points", "h": "Through the night", "items": [["Your hospice line", "Answered day or night"], ["988", "Call or text, for your own crisis"], ["911", "For danger right now"]], "say": "You are not alone tonight. Your hospice line is answered through the night, for any change or worry about them, and for a frightened caregiver too. If you are in crisis yourself, call or text 988. And call 911 for danger right now."}, {"k": "big", "h": "Morning will come.", "sub": "This is enough for tonight.", "say": "Morning will come. For now, a soft light, a slow breath, a hand. Rest if you can. This is enough for tonight."}]}
+        {"id": "wl-s-night", "n": 21, "title": "When Fear Comes at Night", "mins": 4, "blurb": "For the middle of the night, when fear gets loud.", "sources": ["kerr"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Fear Comes at Night", "sub": "You are held, even in the dark.", "say": "It's the middle of the night, and fear has you wide awake. Whether you are keeping watch or you are the one in the bed, this is for you."}, {"k": "big", "h": "Fear is louder at night.", "sub": "Many worries look smaller by daylight.", "say": "Fear often grows louder at night. The house is quiet, you are tired, and every worry feels bigger in the dark. That is common. Many things that feel huge at three in the morning look smaller by daylight."}, {"k": "big", "h": "Turn on a soft light.", "sub": "A lamp, a night light, something gentle.", "say": "Start with light. Turn on a lamp or a night light, something soft. Look around and notice the room as it is right now. Find one familiar thing, and rest your eyes on it.", "beats": ["Start with light.", "Turn on a lamp or a night light, something soft.", "Look around and notice the room as it is right now.", {"t": "Find one familiar thing, and rest your eyes on it.", "w": 8}]}, {"k": "breathe", "h": "Breathe with the quiet", "sub": "Slow in. Slower out.", "hold": 24, "say": "Now breathe with the quiet. Slowly in. And slower still on the way out. Let the night be still around you for a few breaths."}, {"k": "big", "h": "A hand, a voice.", "sub": "I'm here. We're together tonight.", "say": "Now a hand. Rest a hand on your own heart, or on theirs. If you are with them, let them hear your voice. Say softly, I'm here. We're together tonight.", "beats": ["Now a hand.", "Rest a hand on your own heart, or on theirs.", "If you are with them, let them hear your voice.", "Say softly, I'm here.", {"t": "We're together tonight.", "w": 10}]}, {"k": "words", "h": "This can wait until morning.", "items": ["Phone calls and decisions", "Paperwork and plans", "Big talks with family", "Figuring out what comes next"], "sub": "Write it on a scrap of paper by the bed.", "say": "Let's set a few things down for the night. Phone calls and decisions can wait until morning. So can paperwork, plans, and big talks with family. If a worry keeps circling, write it on a scrap of paper by the bed. Name one worry now, and tell it, you can wait until morning.", "beats": ["Let's set a few things down for the night.", "Phone calls and decisions can wait until morning.", "So can paperwork, plans, and big talks with family.", "If a worry keeps circling, write it on a scrap of paper by the bed.", {"t": "Name one worry now, and tell it, you can wait until morning.", "w": 12}]}, {"k": "big", "h": "Dreams of loved ones", "sub": "Many people find these dreams comforting.", "say": "Some people near the end see or dream of loved ones who have died, often at night. Many find these dreams and visions comforting. If the person you love tells you about one, you can simply listen, and ask, who did you see? If anything they see seems to frighten them, call the hospice nurse."}, {"k": "points", "h": "Through the night", "items": [["Your hospice line", "Answered day or night"], ["988", "Call or text, for your own crisis"], ["911", "For danger right now"]], "say": "You are held tonight. Your hospice line is answered through the night, for any change or worry about them, and for a frightened caregiver too. If you are in crisis yourself, call or text 988. And call 911 for danger right now."}, {"k": "big", "h": "Morning will come.", "sub": "This is enough for tonight.", "say": "Morning will come. For now, a soft light, a slow breath, a hand. Rest if you can. This is enough for tonight."}]}
       ] },
       {"id": "willow-sp-meditate", "kind": "support", "title": "Meditation", "who": "Guided quiet, for the chair beside the bed or the bed itself", "lessons": [
-        {"id": "wl-s-resting", "n": 22, "title": "Resting Breath", "mins": 4, "blurb": "A slow, gentle rest for the person in the bed, and anyone beside them.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Resting Breath", "sub": "Nothing to do. Only rest.", "say": "This one is for resting. If you are lying in bed, it was made for you. And if you are sitting nearby, you are welcome to rest along with it."}, {"k": "big", "h": "There is nothing you need to do.", "sub": "You can simply rest.", "say": "There is nothing you need to do right now. Nothing to finish. Nothing to say. You can simply rest, and let these words keep you company."}, {"k": "big", "h": "Let the bed hold you.", "say": "Let the bed hold you. Feel the pillow under your head. Feel the blanket resting on you. Let your weight sink in, a little at a time.", "beats": ["Let the bed hold you.", "Feel the pillow under your head.", "Feel the blanket resting on you.", {"t": "Let your weight sink in, a little at a time.", "w": 12}]}, {"k": "breathe", "h": "Let your breath come on its own", "sub": "No counting. No effort.", "hold": 36, "say": "Now notice your breath. You don't need to change it. Let it come in on its own. And let it go out on its own. Each breath out can be a little softer."}, {"k": "big", "h": "Let your hands be heavy.", "say": "Let your hands rest right where they are. Let your shoulders soften into the bed. Let your face soften, around your eyes and around your mouth. Nothing to hold up now.", "beats": ["Let your hands rest right where they are.", "Let your shoulders soften into the bed.", "Let your face soften, around your eyes and around your mouth.", {"t": "Nothing to hold up now.", "w": 12}]}, {"k": "words", "h": "Words to rest in", "items": ["It is okay to rest.", "You are not alone.", "You are so loved."], "say": "Here are a few words to rest in. It is okay to rest. You are not alone. You are so loved. Let those words settle over you like a blanket.", "beats": ["Here are a few words to rest in.", "It is okay to rest.", "You are not alone.", "You are so loved.", {"t": "Let those words settle over you like a blanket.", "w": 12}]}, {"k": "breathe", "h": "Rest with the breath", "sub": "Softly in. Softly out.", "hold": 40, "say": "Rest here with your breath for a while. Softly in. Softly out. If your mind drifts, let it drift. If you fall asleep, that is fine too."}, {"k": "big", "h": "Rest as long as you like.", "sub": "You are held.", "say": "Rest as long as you like. You are held, by this bed, and by the people who love you. And if you are sitting nearby and anything about their comfort worries you, call your hospice nurse, day or night."}]},
-        {"id": "wl-s-kind", "n": 23, "title": "Kind Words to Send", "mins": 5, "blurb": "Send kind wishes to them, to yourself, and to everyone who loves them.", "sources": ["metta"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Kind Words to Send", "sub": "Simple wishes, sent with love.", "say": "When you want to give something and there is nothing left to fix, this is for you. We will send kind wishes, one person at a time."}, {"k": "big", "h": "Kind wishes are always yours to give.", "sub": "Near or far, awake or asleep.", "say": "This is an old and simple practice. You say a few kind lines, slowly, and mean them as much as you can. You can do it beside the bed, in the hallway, or miles away. It gives your love somewhere to go."}, {"k": "breathe", "h": "Settle first", "sub": "In softly. A longer breath out.", "hold": 20, "say": "First, let's settle. Let your breath slow down. Breathe in. And a longer breath out."}, {"k": "words", "h": "For the one in the bed", "items": ["May you be at peace.", "May you be comfortable.", "May you feel how loved you are."], "say": "Start with the person in the bed. Look at them gently, or picture their face. May you be at peace. May you be comfortable. May you feel how loved you are. Say them again, slowly, in your own heart.", "beats": ["Start with the person in the bed.", "Look at them gently, or picture their face.", "May you be at peace.", "May you be comfortable.", "May you feel how loved you are.", {"t": "Say them again, slowly, in your own heart.", "w": 14}]}, {"k": "words", "h": "For yourself", "items": ["May I be at peace.", "May I be gentle with myself.", "May I have the strength I need."], "say": "Now turn the same kindness toward yourself. This part can feel strange, and that is common. May I be at peace. May I be gentle with myself. May I have the strength I need. Let one of those land, even a little.", "beats": ["Now turn the same kindness toward yourself.", "This part can feel strange, and that is common.", "May I be at peace.", "May I be gentle with myself.", "May I have the strength I need.", {"t": "Let one of those land, even a little.", "w": 12}]}, {"k": "words", "h": "For the family", "items": ["May you be at peace.", "May you be gentle with each other.", "May you know you are not alone."], "say": "Now picture the family, everyone who loves this person. Include the ones who are easy to love, and the ones who are harder. May you be at peace. May you be gentle with each other. May you know you are not alone. Hold them all in mind for a moment.", "beats": ["Now picture the family, everyone who loves this person.", "Include the ones who are easy to love, and the ones who are harder.", "May you be at peace.", "May you be gentle with each other.", "May you know you are not alone.", {"t": "Hold them all in mind for a moment.", "w": 12}]}, {"k": "words", "h": "For someone far away", "items": ["May you be at peace.", "May you feel close, even from far away.", "May you know you are part of this."], "say": "Now someone far away. Someone who could not be here, or who is on the way. May you be at peace. May you feel close, even from far away. May you know you are part of this. Send it to them now, in your own words if you like.", "beats": ["Now someone far away.", "Someone who could not be here, or who is on the way.", "May you be at peace.", "May you feel close, even from far away.", "May you know you are part of this.", {"t": "Send it to them now, in your own words if you like.", "w": 12}]}, {"k": "breathe", "h": "Rest in the kindness", "sub": "Everyone, all at once.", "hold": 24, "say": "Now picture all of them together, and yourself in the middle. Breathe in. And breathe out kindness, to all of you."}, {"k": "big", "h": "You can send these anytime.", "sub": "Day or night, near or far.", "say": "That is the whole practice. A few quiet words, full of love. You can send them anytime, day or night, from anywhere. Come back to them whenever you need to."}]},
-        {"id": "wl-s-safe", "n": 24, "title": "A Safe Place in Your Mind", "mins": 5, "blurb": "Visit a calm place of your choosing, with all five senses.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "A Safe Place in Your Mind", "sub": "A few minutes somewhere calm.", "say": "When the room feels heavy and you need a few minutes of calm, this is for you. We will visit a peaceful place, right in your mind."}, {"k": "big", "h": "Your mind can take you somewhere calm.", "sub": "You stay in charge the whole time.", "say": "Your mind can take you somewhere calm, even while you stay right where you are. When you picture a peaceful place in detail, your body often settles too. You stay in charge the whole time, and you can open your eyes whenever you like."}, {"k": "breathe", "h": "Settle in", "sub": "Eyes closed, or resting on one spot.", "hold": 18, "say": "Let your eyes close, or rest them on one spot. Breathe in slowly. And let a long breath out."}, {"k": "points", "h": "Choose your place", "items": [["A porch", "Early morning, a warm cup in your hands"], ["A lake", "Water lapping at the shore"], ["A kitchen", "Something good in the oven"], ["Anywhere you feel at ease", "Real, or one you imagine"]], "say": "Choose a place where you feel at ease. Maybe a porch in the early morning. A lake, with water lapping at the shore. A kitchen, with something good in the oven. It can be real, or one you imagine. Choose one now, and picture yourself there.", "beats": ["Choose a place where you feel at ease.", "Maybe a porch in the early morning.", "A lake, with water lapping at the shore.", "A kitchen, with something good in the oven.", "It can be real, or one you imagine.", {"t": "Choose one now, and picture yourself there.", "w": 10}]}, {"k": "big", "h": "What do you see?", "say": "Look around your place. Notice the colors, and the light. What is close to you, and what is far away?", "beats": ["Look around your place.", "Notice the colors, and the light.", {"t": "What is close to you, and what is far away?", "w": 12}]}, {"k": "big", "h": "What do you hear?", "say": "Now listen. Maybe birds, or wind, or water, or a voice you love. Let the sounds come to you.", "beats": ["Now listen.", "Maybe birds, or wind, or water, or a voice you love.", {"t": "Let the sounds come to you.", "w": 12}]}, {"k": "big", "h": "What do you feel, smell, and taste?", "say": "Feel the air on your skin, warm or cool. Feel what is under your feet, or what you are sitting on. Breathe in the smell of this place. Maybe there is a taste too: coffee, fresh bread, clean air.", "beats": ["Feel the air on your skin, warm or cool.", "Feel what is under your feet, or what you are sitting on.", "Breathe in the smell of this place.", {"t": "Maybe there is a taste too: coffee, fresh bread, clean air.", "w": 12}]}, {"k": "breathe", "h": "Rest here", "sub": "Nothing to do. Just be here.", "hold": 36, "say": "Rest in your place for a little while. Breathe slowly. Let it hold you."}, {"k": "words", "h": "Bring one thing back", "items": ["A color.", "A sound.", "A word, like calm or home."], "say": "Before you leave, choose one thing to bring back with you. A color. A sound. Or a word, like calm, or home. Remembering it can take you back here anytime.", "beats": ["Before you leave, choose one thing to bring back with you.", "A color.", "A sound.", "Or a word, like calm, or home.", {"t": "Remembering it can take you back here anytime.", "w": 8}]}, {"k": "big", "h": "Come back gently.", "sub": "Your place will be there.", "say": "Now come back gently. Feel the chair or the bed under you. Wiggle your fingers and toes. Open your eyes when you are ready. Your place will be there whenever you need it."}]},
-        {"id": "wl-s-sleep", "n": 25, "title": "Rest for a Tired Body", "mins": 5, "blurb": "Let worries wait and let your body sink toward sleep.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Rest for a Tired Body", "sub": "Letting go into sleep.", "say": "Trying to sleep in a chair by the bed, or at home between shifts? This is for you. Let's help your body let go."}, {"k": "big", "h": "Your only job right now is rest.", "sub": "Tired body, watchful mind.", "say": "Sleep can be hard to find when someone you love is so sick. Your body is tired, and your mind keeps watch. That is common, and it comes from love. For the next few minutes, your only job is rest."}, {"k": "words", "h": "What can wait until morning", "items": ["The calls to make.", "The list of things to do.", "The questions for the team."], "sub": "Anything urgent: call your hospice, day or night.", "say": "First, set the worries down. Most of what is on your mind can wait until morning. The calls, the lists, the questions for the team. If something can't wait, call your hospice, day or night, then come back to rest. Picture writing each worry on a note, and setting it on the table. Name what can wait, and let it wait.", "beats": ["First, set the worries down.", "Most of what is on your mind can wait until morning.", "The calls, the lists, the questions for the team.", "If something can't wait, call your hospice, day or night, then come back to rest.", "Picture writing each worry on a note, and setting it on the table.", {"t": "Name what can wait, and let it wait.", "w": 14}]}, {"k": "breathe", "h": "Let your breath slow down", "sub": "A long, easy breath out.", "hold": 24, "say": "Get as comfortable as you can, in the chair or in your bed. Breathe in gently. And let a long, easy breath go out. Let each breath out be a little slower than the last."}, {"k": "big", "h": "Let your body grow heavy.", "say": "Now let your body grow heavy. Your legs, heavy and still. Your arms, heavy and loose. Let the chair or the bed take all your weight.", "beats": ["Now let your body grow heavy.", "Your legs, heavy and still.", "Your arms, heavy and loose.", {"t": "Let the chair or the bed take all your weight.", "w": 12}]}, {"k": "big", "h": "Let your face go soft.", "say": "Let your forehead smooth out. Let your jaw drop a little. Let your tongue rest. Let the space around your eyes go soft.", "beats": ["Let your forehead smooth out.", "Let your jaw drop a little.", "Let your tongue rest.", {"t": "Let the space around your eyes go soft.", "w": 10}]}, {"k": "words", "h": "If your mind wakes up", "items": ["Not now.", "That can wait.", "Back to rest."], "say": "If your mind wakes up with a worry, that is okay. Tell it kindly, not now. That can wait. Then come back to the heaviness of your body.", "beats": ["If your mind wakes up with a worry, that is okay.", "Tell it kindly, not now.", "That can wait.", {"t": "Then come back to the heaviness of your body.", "w": 8}]}, {"k": "breathe", "h": "Drift", "sub": "Nothing to do. Nowhere to be.", "hold": 40, "say": "Now just breathe and drift. You don't have to fall asleep. Resting with your eyes closed is good for you too. Let go a little more with each breath out."}, {"k": "big", "h": "You have done enough for today.", "sub": "Rest now.", "say": "You have done enough for today. Rest now. If you wake in the night, come back to this, or simply let your breath grow long and slow again."}]},
+        {"id": "wl-s-resting", "n": 22, "title": "Resting Breath", "mins": 4, "blurb": "A slow, gentle rest for the person in the bed, and anyone beside them.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Resting Breath", "sub": "Only rest.", "say": "This one is for resting. If you are lying in bed, it was made for you. And if you are sitting nearby, you are welcome to rest along with it."}, {"k": "big", "h": "There is nothing you need to do.", "sub": "You can simply rest.", "say": "There is nothing you need to do right now. Nothing to finish. Nothing to say. You can simply rest, and let these words keep you company."}, {"k": "big", "h": "Let the bed hold you.", "say": "Let the bed hold you. Feel the pillow under your head. Feel the blanket resting on you. Let your weight sink in, a little at a time.", "beats": ["Let the bed hold you.", "Feel the pillow under your head.", "Feel the blanket resting on you.", {"t": "Let your weight sink in, a little at a time.", "w": 12}]}, {"k": "breathe", "h": "Let your breath come on its own", "sub": "No counting. No effort.", "hold": 36, "say": "Now notice your breath. You don't need to change it. Let it come in on its own. And let it go out on its own. Each breath out can be a little softer."}, {"k": "big", "h": "Let your hands be heavy.", "say": "Let your hands rest right where they are. Let your shoulders soften into the bed. Let your face soften, around your eyes and around your mouth. Nothing to hold up now.", "beats": ["Let your hands rest right where they are.", "Let your shoulders soften into the bed.", "Let your face soften, around your eyes and around your mouth.", {"t": "Nothing to hold up now.", "w": 12}]}, {"k": "words", "h": "Words to rest in", "items": ["It is okay to rest.", "You are held.", "You are so loved."], "say": "Here are a few words to rest in. It is okay to rest. You are held. You are so loved. Let those words settle over you like a blanket.", "beats": ["Here are a few words to rest in.", "It is okay to rest.", "You are held.", "You are so loved.", {"t": "Let those words settle over you like a blanket.", "w": 12}]}, {"k": "breathe", "h": "Rest with the breath", "sub": "Softly in. Softly out.", "hold": 40, "say": "Rest here with your breath for a while. Softly in. Softly out. If your mind drifts, let it drift. If you fall asleep, that is fine too."}, {"k": "big", "h": "Rest as long as you like.", "sub": "You are held.", "say": "Rest as long as you like. You are held, by this bed, and by the people who love you. And if you are sitting nearby and anything about their comfort worries you, call your hospice nurse, day or night."}]},
+        {"id": "wl-s-kind", "n": 23, "title": "Kind Words to Send", "mins": 5, "blurb": "Send kind wishes to them, to yourself, and to everyone who loves them.", "sources": ["metta"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Kind Words to Send", "sub": "Simple wishes, sent with love.", "say": "When you want to give something and there is nothing left to fix, this is for you. We will send kind wishes, one person at a time."}, {"k": "big", "h": "Kind wishes are always yours to give.", "sub": "Near or far, awake or asleep.", "say": "This is an old and simple practice. You say a few kind lines, slowly, and mean them as much as you can. You can do it beside the bed, in the hallway, or miles away. It gives your love somewhere to go."}, {"k": "breathe", "h": "Settle first", "sub": "In softly. A longer breath out.", "hold": 20, "say": "First, let's settle. Let your breath slow down. Breathe in. And a longer breath out."}, {"k": "words", "h": "For the one in the bed", "items": ["May you be at peace.", "May you be comfortable.", "May you feel how loved you are."], "say": "Start with the person in the bed. Look at them gently, or picture their face. May you be at peace. May you be comfortable. May you feel how loved you are. Say them again, slowly, in your own heart.", "beats": ["Start with the person in the bed.", "Look at them gently, or picture their face.", "May you be at peace.", "May you be comfortable.", "May you feel how loved you are.", {"t": "Say them again, slowly, in your own heart.", "w": 14}]}, {"k": "words", "h": "For yourself", "items": ["May I be at peace.", "May I be gentle with myself.", "May I have the strength I need."], "say": "Now turn the same kindness toward yourself. This part can feel strange, and that is common. May I be at peace. May I be gentle with myself. May I have the strength I need. Let one of those land, even a little.", "beats": ["Now turn the same kindness toward yourself.", "This part can feel strange, and that is common.", "May I be at peace.", "May I be gentle with myself.", "May I have the strength I need.", {"t": "Let one of those land, even a little.", "w": 12}]}, {"k": "words", "h": "For the family", "items": ["May you be at peace.", "May you be gentle with each other.", "May you know you are held."], "say": "Now picture the family, everyone who loves this person. Include the ones who are easy to love, and the ones who are harder. May you be at peace. May you be gentle with each other. May you know you are held. Hold them all in mind for a moment.", "beats": ["Now picture the family, everyone who loves this person.", "Include the ones who are easy to love, and the ones who are harder.", "May you be at peace.", "May you be gentle with each other.", "May you know you are held.", {"t": "Hold them all in mind for a moment.", "w": 12}]}, {"k": "words", "h": "For someone far away", "items": ["May you be at peace.", "May you feel close, even from far away.", "May you know you are part of this."], "say": "Now someone far away. Someone who could not be here, or who is on the way. May you be at peace. May you feel close, even from far away. May you know you are part of this. Send it to them now, in your own words if you like.", "beats": ["Now someone far away.", "Someone who could not be here, or who is on the way.", "May you be at peace.", "May you feel close, even from far away.", "May you know you are part of this.", {"t": "Send it to them now, in your own words if you like.", "w": 12}]}, {"k": "breathe", "h": "Rest in the kindness", "sub": "Everyone, all at once.", "hold": 24, "say": "Now picture all of them together, and yourself in the middle. Breathe in. And breathe out kindness, to all of you."}, {"k": "big", "h": "You can send these anytime.", "sub": "Day or night, near or far.", "say": "That is the whole practice. A few quiet words, full of love. You can send them anytime, day or night, from anywhere. Come back to them whenever you need to."}]},
+        {"id": "wl-s-safe", "n": 24, "title": "A Safe Place in Your Mind", "mins": 5, "blurb": "Visit a calm place of your choosing, with all five senses.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "A Safe Place in Your Mind", "sub": "A few minutes somewhere calm.", "say": "When the room feels heavy and you need a few minutes of calm, this is for you. We will visit a peaceful place, right in your mind."}, {"k": "big", "h": "Your mind can take you somewhere calm.", "sub": "You stay in charge the whole time.", "say": "Your mind can take you somewhere calm, even while you stay right where you are. When you picture a peaceful place in detail, your body often settles too. You stay in charge the whole time, and you can open your eyes whenever you like."}, {"k": "breathe", "h": "Settle in", "sub": "Eyes closed, or resting on one spot.", "hold": 18, "say": "Let your eyes close, or rest them on one spot. Breathe in slowly. And let a long breath out."}, {"k": "points", "h": "Choose your place", "items": [["A porch", "Early morning, a warm cup in your hands"], ["A lake", "Water lapping at the shore"], ["A kitchen", "Something good in the oven"], ["Anywhere you feel at ease", "Real, or one you imagine"]], "say": "Choose a place where you feel at ease. Maybe a porch in the early morning. A lake, with water lapping at the shore. A kitchen, with something good in the oven. It can be real, or one you imagine. Choose one now, and picture yourself there.", "beats": ["Choose a place where you feel at ease.", "Maybe a porch in the early morning.", "A lake, with water lapping at the shore.", "A kitchen, with something good in the oven.", "It can be real, or one you imagine.", {"t": "Choose one now, and picture yourself there.", "w": 10}]}, {"k": "big", "h": "What do you see?", "say": "Look around your place. Notice the colors, and the light. What is close to you, and what is far away?", "beats": ["Look around your place.", "Notice the colors, and the light.", {"t": "What is close to you, and what is far away?", "w": 12}]}, {"k": "big", "h": "What do you hear?", "say": "Now listen. Maybe birds, or wind, or water, or a voice you love. Let the sounds come to you.", "beats": ["Now listen.", "Maybe birds, or wind, or water, or a voice you love.", {"t": "Let the sounds come to you.", "w": 12}]}, {"k": "big", "h": "What do you feel, smell, and taste?", "say": "Feel the air on your skin, warm or cool. Feel what is under your feet, or what you are sitting on. Breathe in the smell of this place. Maybe there is a taste too: coffee, fresh bread, clean air.", "beats": ["Feel the air on your skin, warm or cool.", "Feel what is under your feet, or what you are sitting on.", "Breathe in the smell of this place.", {"t": "Maybe there is a taste too: coffee, fresh bread, clean air.", "w": 12}]}, {"k": "breathe", "h": "Rest here", "sub": "Just be here.", "hold": 36, "say": "Rest in your place for a little while. Breathe slowly. Let it hold you."}, {"k": "words", "h": "Bring one thing back", "items": ["A color.", "A sound.", "A word, like calm or home."], "say": "Before you leave, choose one thing to bring back with you. A color. A sound. Or a word, like calm, or home. Remembering it can take you back here anytime.", "beats": ["Before you leave, choose one thing to bring back with you.", "A color.", "A sound.", "Or a word, like calm, or home.", {"t": "Remembering it can take you back here anytime.", "w": 8}]}, {"k": "big", "h": "Come back gently.", "sub": "Your place will be there.", "say": "Now come back gently. Feel the chair or the bed under you. Wiggle your fingers and toes. Open your eyes when you are ready. Your place will be there whenever you need it."}]},
+        {"id": "wl-s-sleep", "n": 25, "title": "Rest for a Tired Body", "mins": 5, "blurb": "Let worries wait and let your body sink toward sleep.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Rest for a Tired Body", "sub": "Letting go into sleep.", "say": "Trying to sleep in a chair by the bed, or at home between shifts? This is for you. Let's help your body let go."}, {"k": "big", "h": "Your only job right now is rest.", "sub": "Tired body, watchful mind.", "say": "Sleep can be hard to find when someone you love is so sick. Your body is tired, and your mind keeps watch. That is common, and it comes from love. For the next few minutes, your only job is rest."}, {"k": "words", "h": "What can wait until morning", "items": ["The calls to make.", "The list of things to do.", "The questions for the team."], "sub": "Anything urgent: call your hospice, day or night.", "say": "First, set the worries down. Most of what is on your mind can wait until morning. The calls, the lists, the questions for the team. If something can't wait, call your hospice, day or night, then come back to rest. Picture writing each worry on a note, and setting it on the table. Name what can wait, and let it wait.", "beats": ["First, set the worries down.", "Most of what is on your mind can wait until morning.", "The calls, the lists, the questions for the team.", "If something can't wait, call your hospice, day or night, then come back to rest.", "Picture writing each worry on a note, and setting it on the table.", {"t": "Name what can wait, and let it wait.", "w": 14}]}, {"k": "breathe", "h": "Let your breath slow down", "sub": "A long, easy breath out.", "hold": 24, "say": "Get as comfortable as you can, in the chair or in your bed. Breathe in gently. And let a long, easy breath go out. Let each breath out be a little slower than the last."}, {"k": "big", "h": "Let your body grow heavy.", "say": "Now let your body grow heavy. Your legs, heavy and still. Your arms, heavy and loose. Let the chair or the bed take all your weight.", "beats": ["Now let your body grow heavy.", "Your legs, heavy and still.", "Your arms, heavy and loose.", {"t": "Let the chair or the bed take all your weight.", "w": 12}]}, {"k": "big", "h": "Let your face go soft.", "say": "Let your forehead smooth out. Let your jaw drop a little. Let your tongue rest. Let the space around your eyes go soft.", "beats": ["Let your forehead smooth out.", "Let your jaw drop a little.", "Let your tongue rest.", {"t": "Let the space around your eyes go soft.", "w": 10}]}, {"k": "words", "h": "If your mind wakes up", "items": ["Not now.", "That can wait.", "Back to rest."], "say": "If your mind wakes up with a worry, that is okay. Tell it kindly, not now. That can wait. Then come back to the heaviness of your body.", "beats": ["If your mind wakes up with a worry, that is okay.", "Tell it kindly, not now.", "That can wait.", {"t": "Then come back to the heaviness of your body.", "w": 8}]}, {"k": "breathe", "h": "Drift", "sub": "Just this moment, right here.", "hold": 40, "say": "Now just breathe and drift. You don't have to fall asleep. Resting with your eyes closed is good for you too. Let go a little more with each breath out."}, {"k": "big", "h": "You have done enough for today.", "sub": "Rest now.", "say": "You have done enough for today. Rest now. If you wake in the night, come back to this, or simply let your breath grow long and slow again."}]},
         {"id": "wl-s-scan", "n": 26, "title": "A Body Scan in the Chair", "mins": 4, "blurb": "Notice your body part by part, and soften what is tight.", "sources": ["mbsr"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "A Body Scan in the Chair", "sub": "Noticing, from the ground up.", "say": "For the hours in the chair beside the bed, this one is for you. We will move slowly through your body, noticing as we go."}, {"k": "big", "h": "Notice, then soften.", "sub": "Whatever you find is okay.", "say": "This is a body scan. You move your attention slowly through your body, one part at a time. You notice what is there: tight, tired, warm, or nothing much at all. Whatever you find is okay. Where you can, you let it soften."}, {"k": "breathe", "h": "Settle into the chair", "sub": "In. And a longer breath out.", "hold": 18, "say": "Sit back in the chair. Let your breath slow down. Breathe in. And a longer breath out."}, {"k": "big", "h": "Your feet", "say": "Start with your feet. Feel them on the floor, or in your shoes. Notice warmth, or coolness, or pressure. Just notice, and let them rest.", "beats": ["Start with your feet.", "Feel them on the floor, or in your shoes.", "Notice warmth, or coolness, or pressure.", {"t": "Just notice, and let them rest.", "w": 10}]}, {"k": "big", "h": "Your legs", "say": "Now your legs. Feel the backs of your legs against the seat. If your knees or calves feel tight, let them soften.", "beats": ["Now your legs.", "Feel the backs of your legs against the seat.", {"t": "If your knees or calves feel tight, let them soften.", "w": 10}]}, {"k": "big", "h": "Your back", "say": "Move up to your back. Notice where it touches the chair, and where it doesn't. Long hours in a chair can leave it stiff. Breathe toward any tight place, and let it ease.", "beats": ["Move up to your back.", "Notice where it touches the chair, and where it doesn't.", "Long hours in a chair can leave it stiff.", {"t": "Breathe toward any tight place, and let it ease.", "w": 12}]}, {"k": "big", "h": "Your hands", "say": "Now your hands. They may be resting in your lap, or holding a hand on the bed. Notice them. Let your fingers loosen.", "beats": ["Now your hands.", "They may be resting in your lap, or holding a hand on the bed.", "Notice them.", {"t": "Let your fingers loosen.", "w": 10}]}, {"k": "big", "h": "Your shoulders and jaw", "say": "Now your shoulders. Many people carry worry here. Let them drop, just a little. And your jaw. Let your teeth part, and your jaw go loose.", "beats": ["Now your shoulders.", "Many people carry worry here.", "Let them drop, just a little.", "And your jaw.", {"t": "Let your teeth part, and your jaw go loose.", "w": 12}]}, {"k": "breathe", "h": "Your whole body", "sub": "Breathing here, beside them.", "hold": 30, "say": "Now feel your whole body at once, sitting here beside them. Breathing in. Breathing out. Let the softening spread."}, {"k": "big", "h": "Come back to this anytime.", "sub": "Your body is carrying a lot.", "say": "Your body is carrying a lot right now. A few minutes of noticing is a kind thing to give it. Come back to this whenever you sit down in that chair."}]}
       ] },
       {"id": "willow-sp-talk", "kind": "support", "title": "Talking Things Through", "who": "Words for the talks that matter most", "lessons": [
-        {"id": "wl-s-children", "n": 27, "title": "Talking with Children About Dying", "mins": 4, "blurb": "Honest, simple words for the children in your family.", "sources": ["dougy"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Talking with Children About Dying", "sub": "The truth, told gently.", "say": "When there are children in your family, and someone they love is dying, this is for you. Children do best with the truth, told gently."}, {"k": "big", "h": "Children notice more than we think.", "sub": "Simple truth helps them feel safe.", "say": "Children notice more than we think. They feel the hush in the house and see the tired faces. When no one explains, they often fill the gaps with something scarier, or decide it is somehow their fault. Simple, honest words help them feel safe."}, {"k": "words", "h": "Use the real words.", "items": ["Grandpa is very sick.", "His body can't get better.", "He is dying.", "When he dies, his body will stop working."], "sub": "Say dying and died.", "say": "Use the real words, even though they are hard to say. Grandpa is very sick. His body can't get better. He is dying. Words like sleeping, or lost, or gone away can confuse a child, or even make them afraid to fall asleep. Dying and died are clear, and clear is kind."}, {"k": "words", "h": "Practice your first sentence.", "items": ["I need to tell you something sad.", "Grandma is dying."], "say": "Let's practice. Think of the child you need to talk with. Say their name, and then one true, simple sentence, out loud or in your head.", "beats": ["Let's practice.", "Think of the child you need to talk with.", {"t": "Say their name, and then one true, simple sentence, out loud or in your head.", "w": 12}]}, {"k": "points", "h": "Short answers, and let them ask", "items": [["Answer what they ask", "Then pause and listen"], ["Ask what they think", "What have you noticed?"], ["I don't know is okay", "Honest is better than perfect"], ["They may ask again", "Repeating helps them understand"]], "say": "Keep your answers short, and let them ask. Answer what they ask, then pause and listen. Ask what they think, what have you noticed. It's okay to say, I don't know. And expect the same question again, and again. Repeating is how children make sense of big news."}, {"k": "points", "h": "Let them be part of it", "items": [["Visit, if they want to", "Tell them first what they will see"], ["Give them a way to help", "A drawing, a song, holding a hand"], ["A card counts too", "If they would rather not visit"]], "say": "Let them be part of it, if they want to be. Before a visit, tell them what they will see, the bed, the quiet breathing, any equipment in the room. Give them a way to help, a drawing for the wall, a song, a hand to hold. If they would rather not visit, a card or a message counts too. Let them choose."}, {"k": "points", "h": "Their grief comes in bursts", "items": [["Sad, then playing", "That is how children grieve"], ["Play helps them work it out", "Even playing hospital or funeral"], ["Questions at odd times", "Bedtime, the car, the bath"], ["Tell their school", "So teachers can watch and help"]], "say": "Children's grief often comes in bursts. They may cry, then run off to play a minute later. That is normal. Play is how they work things out, even playing hospital or funeral. Big questions come at odd times, at bedtime, in the car. And tell their school, so teachers can watch for hard days and help."}, {"k": "big", "h": "Your honesty and your arms are enough.", "sub": "It is okay to cry together.", "say": "You don't need perfect words. It's okay to cry in front of them. It shows them that sadness is what love feels like right now. Your honesty and your arms around them are enough. And your hospice team can help you find words for children. Just ask."}]},
+        {"id": "wl-s-children", "n": 27, "title": "Talking with Children About Dying", "mins": 4, "blurb": "Honest, simple words for the children in your family.", "sources": ["dougy"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Talking with Children About Dying", "sub": "The truth, told gently.", "say": "When there are children in your family, and someone they love is dying, this is for you. Children do best with the truth, told gently."}, {"k": "big", "h": "Children notice more than we think.", "sub": "Simple truth helps them feel safe.", "say": "Children notice more than we think. They feel the hush in the house and see the tired faces. When no one explains, they often fill the gaps with something scarier, or decide it is somehow their fault. Simple, honest words help them feel safe."}, {"k": "words", "h": "Use the real words.", "items": ["Grandpa is very sick.", "His body can't get better.", "He is dying.", "When he dies, his body will stop working."], "sub": "Say dying and died.", "say": "Use the real words, even though they are hard to say. Grandpa is very sick. His body can't get better. He is dying. Words like sleeping, or lost, or gone away can confuse a child, or even make them afraid to fall asleep. Dying and died are clear, and clear is kind."}, {"k": "words", "h": "Practice your first sentence.", "items": ["I need to tell you something sad.", "Grandma is dying."], "say": "Let's practice. Think of the child you need to talk with. Say their name, and then one true, simple sentence, out loud or in your head.", "beats": ["Let's practice.", "Think of the child you need to talk with.", {"t": "Say their name, and then one true, simple sentence, out loud or in your head.", "w": 12}]}, {"k": "points", "h": "Short answers, and let them ask", "items": [["Answer what they ask", "Then pause and listen"], ["Ask what they think", "What have you noticed?"], ["I don't know is okay", "Honest is better than perfect"], ["They may ask again", "Repeating helps them understand"]], "say": "Keep your answers short, and let them ask. Answer what they ask, then pause and listen. Ask what they think, what have you noticed. It's okay to say, I don't know. And expect the same question again, and again. Repeating is how children make sense of big news."}, {"k": "points", "h": "Let them be part of it", "items": [["Visit, if they want to", "Tell them first what they will see"], ["Give them a way to help", "A drawing, a song, holding a hand"], ["A card counts too", "If they would rather not visit"]], "say": "Let them be part of it, if they want to be. Before a visit, tell them what they will see, the bed, the quiet breathing, any equipment in the room. Give them a way to help, a drawing for the wall, a song, a hand to hold. If they would rather not visit, a card or a message counts too. Let them choose."}, {"k": "points", "h": "Their grief comes in bursts", "items": [["Sad, then playing", "That is how children grieve"], ["Play helps them work it out", "Even playing hospital or funeral"], ["Questions at odd times", "Bedtime, the car, the bath"], ["Tell their school", "So teachers can watch and help"]], "say": "Children's grief often comes in bursts. They may cry, then run off to play a minute later. That is normal. Play is how they work things out, even playing hospital or funeral. Big questions come at odd times, at bedtime, in the car. And tell their school, so teachers can watch for hard days and help."}, {"k": "big", "h": "Your honesty and your arms are enough.", "sub": "It is okay to cry together.", "say": "Simple words are enough. It's okay to cry in front of them. It shows them that sadness is what love feels like right now. Your honesty and your arms around them are enough. And your hospice team can help you find words for children. Just ask."}]},
         {"id": "wl-s-matters", "n": 28, "title": "Saying What Matters", "mins": 4, "blurb": "Four things worth saying, and how to say the ones that are true.", "sources": ["byock4"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Saying What Matters", "sub": "While there is still time.", "say": "When there are things you want to say before it's too late, this is for you. We'll go a little deeper than the words themselves."}, {"k": "words", "h": "The Four Things", "items": ["Please forgive me.", "I forgive you.", "Thank you.", "I love you."], "sub": "Then, when it feels right: goodbye.", "say": "Many people near the end of life, and the people who love them, find four things they want to say. Please forgive me. I forgive you. Thank you. I love you. And then, when it feels right, goodbye. Let's look at what each one carries."}, {"k": "points", "h": "What each one carries", "items": [["Please forgive me", "Owning your part, simply"], ["I forgive you", "Setting down what you carried"], ["Thank you", "Naming one real thing"], ["I love you", "Plain, and out loud"]], "say": "Please forgive me is about owning your part. It can be one sentence. I'm sorry for the years I stayed away. I forgive you sets down something you have carried, sometimes for a long time. Thank you is strongest when it names one real thing. And I love you needs nothing added."}, {"k": "big", "h": "Say the ones that are true.", "sub": "Every family is different.", "say": "You don't have to say all four. Say the ones that are true for you. If forgiveness isn't ready yet, that is honest, and it's okay. A true thank-you means more than a forced I forgive you."}, {"k": "story", "title": "The Wisdom They Share", "lines": ["Marcus had spent twenty-eight years in prison. In his final days, no one came to visit.", "He told me, Real strength is owning what you did. Asking forgiveness.", "Then: Tell the people you love that you love them while you still can. Don't wait until the end of the road like I did."], "lesson": "The words are worth saying while there is still time.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a man named Marcus in his final days. He had spent twenty-eight years in prison, and no one came to visit. He told me he used to think being tough was the only way to survive. Lying there, he saw how wrong he was. Real strength is owning what you did, he said. Asking forgiveness. Then he looked straight at me. Tell the people you love that you love them while you still can. Don't wait until the end of the road like I did."}, {"k": "words", "h": "Choose one to say.", "items": ["I'm sorry for...", "I forgive you for...", "Thank you for...", "I love you because..."], "say": "Now choose one of the four that is true for you. Finish the sentence, in your head or out loud. Take your time.", "beats": ["Now choose one of the four that is true for you.", "Finish the sentence, in your head or out loud.", {"t": "Take your time.", "w": 14}]}, {"k": "points", "h": "If speaking is hard", "items": [["Write it", "A letter, a card, a note"], ["Read it to them", "Or let them read it"], ["Say it in pieces", "One thing today, one tomorrow"], ["Ask for support", "A chaplain or social worker can sit with you"]], "say": "If the words won't come out loud, write them. A letter, a card, a few lines on a napkin. You can read it to them, or let them read it. You can say it in pieces, one thing today and another tomorrow. And your hospice chaplain or social worker can sit with you while you say it."}, {"k": "big", "h": "Goodbye comes when it feels right.", "sub": "A word, or a hand held a little longer.", "say": "Goodbye can come last, when it feels right. For some families it is a word. For others it is a hand held a little longer. Both count."}, {"k": "big", "h": "Say one true thing today.", "say": "There may never be a perfect moment. A true one is enough. Say one of them today, while you still can."}]},
-        {"id": "wl-s-dying", "n": 29, "title": "When They Want to Talk About Dying", "mins": 4, "blurb": "How to follow their lead when they bring it up.", "sources": ["convo"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They Want to Talk About Dying", "sub": "Follow their lead.", "say": "When the person you love starts talking about dying, and everything in you wants to change the subject, this is for you."}, {"k": "big", "h": "Changing the subject is a common reflex.", "sub": "It comes from love.", "say": "When they say, I don't think I'm getting better, it's common to jump in. Don't talk like that. You're going to be fine. That reflex comes from love. And it can close a door they just found the courage to open."}, {"k": "big", "h": "Talking about it is often a relief.", "sub": "You only have to stay.", "say": "Many people near the end already know. Carrying it alone, while everyone around them pretends, can be lonely. Talking about it is often a relief to them. You don't have to fix anything. You only have to stay in the conversation."}, {"k": "words", "h": "Words that keep the door open", "items": ["Tell me more.", "What are you thinking about?", "What has that been like?", "What worries you most?"], "say": "A few words can keep the door open. Tell me more. What are you thinking about. What has that been like for you. What worries you most. Then let them talk, and let the pauses be long."}, {"k": "big", "h": "Practice staying.", "say": "Let's practice. Picture them saying, I think I'm dying. Notice the urge to rush in with comfort. Take one slow breath instead. Then say it softly, tell me more.", "beats": ["Let's practice.", "Picture them saying, I think I'm dying.", "Notice the urge to rush in with comfort.", "Take one slow breath instead.", {"t": "Then say it softly, tell me more.", "w": 10}]}, {"k": "story", "title": "A Quiet Doorway", "lines": ["A retired engineer had banned the word hospice. For weeks we talked bridges and puzzles.", "One quiet evening he asked, They brought me here to die, didn't they? I answered honestly, but gently.", "He talked about his wife and his children. His family said it gave them back their father."], "lesson": "When they open the door, walk through it gently.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a retired engineer who had banned the word hospice. No talk of dying. So for weeks we talked bridges and puzzles, and trust came in layers. One quiet evening he looked straight at me and said, They brought me here to die, didn't they? There was no panic in his voice. I answered honestly, but gently. Over the next days he talked about the wife he had lost, and the children he hoped would remember his steady hands. His family later told me those conversations gave them back their father."}, {"k": "points", "h": "What can come next", "items": [["Listen more than you talk", "Silence is okay"], ["Ask what matters most now", "People, places, wishes"], ["It's okay to cry", "You can be sad together"], ["Bring in your hospice team", "They help with these talks"]], "say": "Listen more than you talk. Silence is okay. When it fits, ask what matters most to them now, the people they want near, the wishes they want kept. It's okay to cry. You can be sad together. And your hospice nurse, social worker, and chaplain are good company for these talks."}, {"k": "card", "title": "If they say they want to die", "body": "Being ready is common near the end. It is not the same as a plan to end their life. If they talk about ending their life, tell your hospice team. For your own crisis, call or text 988. For danger right now, call 911.", "say": "Sometimes they say, I just want to die. Being ready, or tired of waiting, is common near the end, and it is not the same as a plan to end their life. You can still say, tell me more. If they talk about ending their life, tell your hospice team, day or night. If you are struggling yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You do not need answers. Just stay close.", "say": "You don't need answers. Your willingness to stay in the conversation is the gift. Let them lead, and stay close."}]},
-        {"id": "wl-s-ask", "n": 30, "title": "Asking for What You Need", "mins": 4, "blurb": "Asking your hospice team, your people, and the one you love.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Asking for What You Need", "sub": "The ask is a gift.", "say": "If you have been carrying most of this on your own, this is for you. Asking is a strength, and it opens doors."}, {"k": "big", "h": "The ask is the gift.", "sub": "It shows people how to help.", "say": "Many caregivers wait until they are worn through before they ask. But the ask is a gift. It shows the people around you how to love you both. Your hospice team wants to know what you need."}, {"k": "points", "h": "Ask your hospice team", "items": [["An extra nurse visit", "When something changes or worries you"], ["A hospice aide", "Help with bathing and personal needs"], ["The chaplain or social worker", "Any faith or none; paperwork, family stress"], ["Respite or a volunteer", "So you can rest or step out"]], "say": "Your hospice team is more than the nurse. You can ask for an extra nurse visit when something changes. A hospice aide, to help with bathing. The chaplain, for anyone, of any faith or none. The social worker, for paperwork, money worries, and family stress. And ask about respite or a volunteer, so you can rest or step away for a while."}, {"k": "story", "title": "If She Is Still Here", "lines": ["On my day off, Jenny texted: It's mom. She's taken a turn. Can you come?", "I offered tomorrow. She wrote back: If she is still here.", "I came right away. Carol died peacefully a few hours after I left."], "lesson": "A plain ask lets people know it matters now.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/if-she-is-still-here", "label": "Read the Full Story: If She Is Still Here"}, "say": "On a day off, I got a text from Jenny, a daughter whose family I had been visiting for about a year. It's mom. She's taken a turn and not doing well. Can you come? I wrote back that I could come by tomorrow. She answered, Okay. If she is still here. My heart dropped. I wrote, I can come now if that's okay. I was out the door within minutes, and I stayed close to two hours. Carol died peacefully in her sleep a few hours after I left. I almost said tomorrow. I am so glad I did not."}, {"k": "big", "h": "Plain words help people say yes.", "sub": "You do not need to explain or apologize.", "say": "Jenny's ask was plain. Can you come. Plain words like that let people know it matters now. You don't need to explain, or apologize, or wait until you are sure."}, {"k": "words", "h": "Ask family and friends, specifically", "items": ["Can you call the pharmacy for me?", "Can you sit with Mom Saturday morning?", "Can you be the one who updates everyone?", "Can you come now?"], "say": "With family and friends, specific asks work best. Can you call the pharmacy for me. Can you sit with Mom on Saturday morning, so I can sleep. Can you be the one who updates everyone. And sometimes, simply, can you come now."}, {"k": "words", "h": "Name one ask.", "items": ["Can you...?"], "say": "Let's practice. Think of one thing that would help this week. Think of one person who could do it. Now say the ask to yourself, in one plain sentence.", "beats": ["Let's practice.", "Think of one thing that would help this week.", "Think of one person who could do it.", {"t": "Now say the ask to yourself, in one plain sentence.", "w": 12}]}, {"k": "words", "h": "Ask the one you love, too", "items": ["What would make today better?", "Who would you like to see?", "Would you like company, or quiet?", "What would you like to hear?"], "say": "And ask the person in the bed. Their wishes still lead. What would make today better. Who would you like to see. Would you like company, or quiet. What would you like to hear, music, a story, the news from home."}, {"k": "big", "h": "Send one ask today.", "sub": "Your hospice is there day or night.", "say": "Asking lets other people love you both. Send one ask today. And for anything about their comfort that worries you, call your hospice, day or night."}]},
-        {"id": "wl-s-far", "n": 31, "title": "When Family Is Far Away", "mins": 4, "blurb": "Ways to be there, and to say goodbye, from far away.", "sources": ["blundon"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Family Is Far Away", "sub": "Love can travel.", "say": "Whether you are the one far away, or the one at the bedside holding the phone, this is for you."}, {"k": "big", "h": "Being far away is common.", "sub": "It does not measure your love.", "say": "Families are spread out. Work, money, health, travel, or a heart that just can't face it can keep someone away. If that is you, you are not alone. Being far away does not measure your love."}, {"k": "points", "h": "Ways to be there from far away", "items": [["A phone to their ear", "Or a video call, held close"], ["A recorded message", "Played whenever it helps"], ["A letter, read aloud", "By someone at the bedside"], ["A photo", "Set where they can see it"]], "say": "Here are ways to be there. Ask someone at the bedside to hold the phone to their ear, or set up a video call. Hearing may be one of the last senses to go, so your voice can still reach them. Record a message that can be played again. Write a letter for someone to read aloud. Send a photo to set where they can see it."}, {"k": "points", "h": "For the ones at the bedside", "items": [["Offer the phone", "Would you like to talk to them?"], ["Read their words aloud", "Slowly, in your own voice"], ["Name them in the room", "Your son is thinking of you"], ["Leave room for their choice", "Everyone comes in their own way"]], "say": "If you are the one at the bedside, you are the bridge. Offer the phone. Read their letters aloud, slowly, in your own voice. Name them in the room. Your son is thinking of you. Your sister sends her love. And leave room for their choice. Everyone comes in their own way."}, {"k": "story", "title": "Please Help My Dad Die", "lines": ["A man was struggling to let go. His son would not come. He said he just couldn't do this.", "I told him, Your son loves you deeply, even if he can't be here right now.", "The next day he died peacefully, with his daughter at his side."], "lesson": "Love can reach them, even from far away.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/please-help-my-dad-die", "label": "Read the Full Story: Please Help My Dad Die"}, "say": "I was once called to the bedside of a man named Bob, who was struggling to let go. His son would not come. He said he just couldn't do this. Bob was in a deep sleep and could no longer respond. I placed a hand on his shoulder and told him his children would be alright, and that his son loved him deeply, even if he couldn't be here right now. The next day, Bob died peacefully, with his daughter at his side."}, {"k": "words", "h": "Say it from where you are.", "items": ["I love you.", "I'm with you from here.", "Thank you for...", "I'll carry you with me."], "say": "If you are far away, try it now. Picture their face. Say what you want them to know, out loud or in your heart.", "beats": ["If you are far away, try it now.", "Picture their face.", {"t": "Say what you want them to know, out loud or in your heart.", "w": 14}]}, {"k": "big", "h": "You can say goodbye from far away.", "sub": "It is a real goodbye.", "say": "Here is permission, if you need it. You can say goodbye from far away. A goodbye said on the phone, in a letter, or in your heart is a real goodbye."}, {"k": "big", "h": "Love travels farther than we think.", "say": "Love travels farther than we think. Send your words today, in whatever way you can. And if you need help setting up a call, ask your hospice team."}]}
+        {"id": "wl-s-dying", "n": 29, "title": "When They Want to Talk About Dying", "mins": 4, "blurb": "How to follow their lead when they bring it up.", "sources": ["convo"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They Want to Talk About Dying", "sub": "Follow their lead.", "say": "When the person you love starts talking about dying, and everything in you wants to change the subject, this is for you."}, {"k": "big", "h": "Changing the subject is a common reflex.", "sub": "It comes from love.", "say": "When they say, I don't think I'm getting better, it's common to jump in. Don't talk like that. You're going to be fine. That reflex comes from love. And it can close a door they just found the courage to open."}, {"k": "big", "h": "Talking about it is often a relief.", "sub": "You only have to stay.", "say": "Many people near the end already know. Carrying it alone, while everyone around them pretends, can be lonely. Talking about it is often a relief to them. You don't have to fix anything. You only have to stay in the conversation."}, {"k": "words", "h": "Words that keep the door open", "items": ["Tell me more.", "What are you thinking about?", "What has that been like?", "What worries you most?"], "say": "A few words can keep the door open. Tell me more. What are you thinking about. What has that been like for you. What worries you most. Then let them talk, and let the pauses be long."}, {"k": "big", "h": "Practice staying.", "say": "Let's practice. Picture them saying, I think I'm dying. Notice the urge to rush in with comfort. Take one slow breath instead. Then say it softly, tell me more.", "beats": ["Let's practice.", "Picture them saying, I think I'm dying.", "Notice the urge to rush in with comfort.", "Take one slow breath instead.", {"t": "Then say it softly, tell me more.", "w": 10}]}, {"k": "story", "title": "A Quiet Doorway", "lines": ["A retired engineer had banned the word hospice. For weeks we talked bridges and puzzles.", "One quiet evening he asked, They brought me here to die, didn't they? I answered honestly, but gently.", "He talked about his wife and his children. His family said it gave them back their father."], "lesson": "When they open the door, walk through it gently.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a retired engineer who had banned the word hospice. No talk of dying. So for weeks we talked bridges and puzzles, and trust came in layers. One quiet evening he looked straight at me and said, They brought me here to die, didn't they? There was no panic in his voice. I answered honestly, but gently. Over the next days he talked about the wife he had lost, and the children he hoped would remember his steady hands. His family later told me those conversations gave them back their father."}, {"k": "points", "h": "What can come next", "items": [["Listen more than you talk", "Silence is okay"], ["Ask what matters most now", "People, places, wishes"], ["It's okay to cry", "You can be sad together"], ["Bring in your hospice team", "They help with these talks"]], "say": "Listen more than you talk. Silence is okay. When it fits, ask what matters most to them now, the people they want near, the wishes they want kept. It's okay to cry. You can be sad together. And your hospice nurse, social worker, and chaplain are good company for these talks."}, {"k": "card", "title": "If they say they want to die", "body": "Being ready is common near the end. It is not the same as a plan to end their life. If they talk about ending their life, tell your hospice team. For your own crisis, call or text 988. For danger right now, call 911.", "say": "Sometimes they say, I just want to die. Being ready, or tired of waiting, is common near the end, and it is not the same as a plan to end their life. You can still say, tell me more. If they talk about ending their life, tell your hospice team, day or night. If you are struggling yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "Just stay close. Your presence speaks.", "say": "You don't need answers. Your willingness to stay in the conversation is the gift. Let them lead, and stay close."}]},
+        {"id": "wl-s-ask", "n": 30, "title": "Asking for What You Need", "mins": 4, "blurb": "Asking your hospice team, your people, and the one you love.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Asking for What You Need", "sub": "The ask is a gift.", "say": "If you have been carrying most of this on your own, this is for you. Asking is a strength, and it opens doors."}, {"k": "big", "h": "The ask is the gift.", "sub": "It shows people how to help.", "say": "Many caregivers wait until they are worn through before they ask. But the ask is a gift. It shows the people around you how to love you both. Your hospice team wants to know what you need."}, {"k": "points", "h": "Ask your hospice team", "items": [["An extra nurse visit", "When something changes or worries you"], ["A hospice aide", "Help with bathing and personal needs"], ["The chaplain or social worker", "Any faith or none; paperwork, family stress"], ["Respite or a volunteer", "So you can rest or step out"]], "say": "Your hospice team is more than the nurse. You can ask for an extra nurse visit when something changes. A hospice aide, to help with bathing. The chaplain, for anyone, of any faith or none. The social worker, for paperwork, money worries, and family stress. And ask about respite or a volunteer, so you can rest or step away for a while."}, {"k": "story", "title": "If She Is Still Here", "lines": ["On my day off, Jenny texted: It's mom. She's taken a turn. Can you come?", "I offered tomorrow. She wrote back: If she is still here.", "I came right away. Carol died peacefully a few hours after I left."], "lesson": "A plain ask lets people know it matters now.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/if-she-is-still-here", "label": "Read the Full Story: If She Is Still Here"}, "say": "On a day off, I got a text from Jenny, a daughter whose family I had been visiting for about a year. It's mom. She's taken a turn and not doing well. Can you come? I wrote back that I could come by tomorrow. She answered, Okay. If she is still here. My heart dropped. I wrote, I can come now if that's okay. I was out the door within minutes, and I stayed close to two hours. Carol died peacefully in her sleep a few hours after I left. I almost said tomorrow. I am so glad I did not."}, {"k": "big", "h": "Plain words help people say yes.", "sub": "You can simply say it.", "say": "Jenny's ask was plain. Can you come. Plain words like that let people know it matters now. You don't need to explain, or apologize, or wait until you are sure."}, {"k": "words", "h": "Ask family and friends, specifically", "items": ["Can you call the pharmacy for me?", "Can you sit with Mom Saturday morning?", "Can you be the one who updates everyone?", "Can you come now?"], "say": "With family and friends, specific asks work best. Can you call the pharmacy for me. Can you sit with Mom on Saturday morning, so I can sleep. Can you be the one who updates everyone. And sometimes, simply, can you come now."}, {"k": "words", "h": "Name one ask.", "items": ["Can you...?"], "say": "Let's practice. Think of one thing that would help this week. Think of one person who could do it. Now say the ask to yourself, in one plain sentence.", "beats": ["Let's practice.", "Think of one thing that would help this week.", "Think of one person who could do it.", {"t": "Now say the ask to yourself, in one plain sentence.", "w": 12}]}, {"k": "words", "h": "Ask the one you love, too", "items": ["What would make today better?", "Who would you like to see?", "Would you like company, or quiet?", "What would you like to hear?"], "say": "And ask the person in the bed. Their wishes still lead. What would make today better. Who would you like to see. Would you like company, or quiet. What would you like to hear, music, a story, the news from home."}, {"k": "big", "h": "Send one ask today.", "sub": "Your hospice is there day or night.", "say": "Asking lets other people love you both. Send one ask today. And for anything about their comfort that worries you, call your hospice, day or night."}]},
+        {"id": "wl-s-far", "n": 31, "title": "When Family Is Far Away", "mins": 4, "blurb": "Ways to be there, and to say goodbye, from far away.", "sources": ["blundon"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Family Is Far Away", "sub": "Love can travel.", "say": "Whether you are the one far away, or the one at the bedside holding the phone, this is for you."}, {"k": "big", "h": "Being far away is common.", "sub": "It does not measure your love.", "say": "Families are spread out. Work, money, health, travel, or a heart that just can't face it can keep someone away. If that is you, many people feel it too. Being far away does not measure your love."}, {"k": "points", "h": "Ways to be there from far away", "items": [["A phone to their ear", "Or a video call, held close"], ["A recorded message", "Played whenever it helps"], ["A letter, read aloud", "By someone at the bedside"], ["A photo", "Set where they can see it"]], "say": "Here are ways to be there. Ask someone at the bedside to hold the phone to their ear, or set up a video call. Hearing may be one of the last senses to go, so your voice can still reach them. Record a message that can be played again. Write a letter for someone to read aloud. Send a photo to set where they can see it."}, {"k": "points", "h": "For the ones at the bedside", "items": [["Offer the phone", "Would you like to talk to them?"], ["Read their words aloud", "Slowly, in your own voice"], ["Name them in the room", "Your son is thinking of you"], ["Leave room for their choice", "Everyone comes in their own way"]], "say": "If you are the one at the bedside, you are the bridge. Offer the phone. Read their letters aloud, slowly, in your own voice. Name them in the room. Your son is thinking of you. Your sister sends her love. And leave room for their choice. Everyone comes in their own way."}, {"k": "story", "title": "Please Help My Dad Die", "lines": ["A man was struggling to let go. His son would not come. He said he just couldn't do this.", "I told him, Your son loves you deeply, even if he can't be here right now.", "The next day he died peacefully, with his daughter at his side."], "lesson": "Love can reach them, even from far away.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/please-help-my-dad-die", "label": "Read the Full Story: Please Help My Dad Die"}, "say": "I was once called to the bedside of a man named Bob, who was struggling to let go. His son would not come. He said he just couldn't do this. Bob was in a deep sleep and could no longer respond. I placed a hand on his shoulder and told him his children would be alright, and that his son loved him deeply, even if he couldn't be here right now. The next day, Bob died peacefully, with his daughter at his side."}, {"k": "words", "h": "Say it from where you are.", "items": ["I love you.", "I'm with you from here.", "Thank you for...", "I'll carry you with me."], "say": "If you are far away, try it now. Picture their face. Say what you want them to know, out loud or in your heart.", "beats": ["If you are far away, try it now.", "Picture their face.", {"t": "Say what you want them to know, out loud or in your heart.", "w": 14}]}, {"k": "big", "h": "You can say goodbye from far away.", "sub": "It is a real goodbye.", "say": "Here is permission, if you need it. You can say goodbye from far away. A goodbye said on the phone, in a letter, or in your heart is a real goodbye."}, {"k": "big", "h": "Love travels farther than we think.", "say": "Love travels farther than we think. Send your words today, in whatever way you can. And if you need help setting up a call, ask your hospice team."}]}
       ] },
       /* ---------- end W4 ---------- */
       /* ---------- Start Here (unchanged from the Learn build) ---------- */
@@ -9823,7 +9823,7 @@ window.GG_LEARN = {
      },
      {
       "k": "big",
-      "h": "A willow bends, and it doesn't break.",
+      "h": "A willow bends, and it holds.",
       "sub": "Near the end of life, everyone in the room is bending.",
       "say": "A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone."
      },
@@ -9872,11 +9872,11 @@ window.GG_LEARN = {
         "Asked gently, every time"
        ],
        [
-        "Gentle words, not scores",
+        "Gentle words in place of scores",
         "Every part of a tree has seasons"
        ]
       ],
-      "say": "A check-in is how Willow listens. The Quick Check-in asks one question for each part. The Full Check-in asks three. Faith comes first, and every answer is welcome, including none. Afterward, Willow shows gentle words, not scores, and each check-in the person answers adds a ring to their tree."
+      "say": "A check-in is how Willow listens. The Quick Check-in asks one question for each part. The Full Check-in asks three. Faith comes first, and every answer is welcome, including none. Afterward, Willow shows gentle words in place of scores, and each check-in the person answers adds a ring to their tree."
      },
      {
       "k": "tabs",
@@ -10059,14 +10059,14 @@ window.GG_LEARN = {
       "tap": 4,
       "panel": {
        "h": "Gentle words",
-       "sub": "Never scores.",
+       "sub": "Gentle words only.",
        "items": [
         "Well tended right now",
         "Holding. A little tending could help.",
         "A growing edge, where new growth begins"
        ]
       },
-      "say": "Next comes the tree. After a check-in, each of the six parts shows a few gentle words, never a score. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins. Below the tree are two buttons. Quick Check-in, and Full Check-in."
+      "say": "Next comes the tree. After a check-in, each of the six parts shows a few gentle words in place of a score. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins. Below the tree are two buttons. Quick Check-in, and Full Check-in."
      },
      {
       "k": "flow",
@@ -10159,7 +10159,7 @@ window.GG_LEARN = {
      },
      {
       "k": "big",
-      "h": "No streaks here.",
+      "h": "Every day you tend counts.",
       "sub": "One a day is plenty, and none is okay.",
       "say": "There are no streaks in Willow. One a day is plenty, and none is okay. When a helper is on their own tree, the practice is for them. Five minutes for you counts. It helps them too."
      },
@@ -10257,7 +10257,7 @@ window.GG_LEARN = {
       "tap": 1,
       "note": {
        "h": "What Matters",
-       "p": "So the people caring for you know who you are, not just what you have."
+       "p": "So the people caring for you know who you are, beyond what you have."
       },
       "say": "What Matters is the second tab. It is there so the people caring for you know who you are, not just what you have. Write a little or a lot. A helper can type while you talk."
      },
@@ -10377,7 +10377,7 @@ window.GG_LEARN = {
       "h": "Writing it together",
       "items": [
        [
-        "Their words, not yours",
+        "In their own words",
         "Type while they talk"
        ],
        [
@@ -10611,7 +10611,7 @@ window.GG_LEARN = {
       "items": [
        [
         "Type while they talk",
-        "Use their words, not yours"
+        "Use their own words"
        ],
        [
         "Written down by",
@@ -10622,7 +10622,7 @@ window.GG_LEARN = {
         "One story is enough to start"
        ]
       ],
-      "say": "Many cuttings are typed by a helper while the person talks. Use their words, not yours. Willow notes who wrote it down, so it is always clear whose story it is. And short is fine. One story is enough to start."
+      "say": "Many cuttings are typed by a helper while the person talks. Use their own words. Willow notes who wrote it down, so it is always clear whose story it is. And short is fine. One story is enough to start."
      },
      {
       "k": "points",
@@ -10669,7 +10669,7 @@ window.GG_LEARN = {
       "hero": "willow",
       "eyebrow": "Using Willow, Lesson 4",
       "h": "Bedside",
-      "sub": "What to do when you don't know what to do.",
+      "sub": "What to do when you feel stuck.",
       "say": "Bedside is for the moments when you are in the room and don't know what to do. This lesson walks through everything on it."
      },
      {
@@ -10694,9 +10694,9 @@ window.GG_LEARN = {
      },
      {
       "k": "big",
-      "h": "You don't have to say the perfect thing.",
+      "h": "Simple words are enough.",
       "sub": "You only have to stay.",
-      "say": "The page opens with the most important thing. You don't have to say the perfect thing. You only have to stay."
+      "say": "The page opens with the most important thing. Simple words are enough. What matters is that you stay."
      },
      {
       "k": "points",
@@ -10812,7 +10812,7 @@ window.GG_LEARN = {
         "One real meal today"
        ],
        [
-        "Gates, not walls",
+        "Fences with gates",
         "Tag out for an hour"
        ],
        [
@@ -10888,7 +10888,7 @@ window.GG_LEARN = {
        "Know every tradition"
       ],
       "right": 1,
-      "why": "You don't have to say the perfect thing. You only have to stay.",
+      "why": "Simple words are enough. What matters is that you stay.",
       "say": "Quick question. What does Bedside say you have to do?"
      }
     ]
@@ -11181,7 +11181,7 @@ window.GG_LEARN = {
         "Written for Willow"
        ],
        [
-        "For when you can't find words",
+        "For when words are hard to find",
         "Written for Willow"
        ],
        [
@@ -11243,7 +11243,7 @@ window.GG_LEARN = {
      },
      {
       "k": "words",
-      "h": "For when you can't find words",
+      "h": "For when words are hard to find",
       "items": [
        "We're here.",
        "You are loved.",
@@ -11251,13 +11251,13 @@ window.GG_LEARN = {
       ],
       "beats": [
        "Let's read one together.",
-       "This blessing was written for Willow, for the moments when nothing else comes.",
+       "This blessing was written for Willow, for the moments when words run out.",
        {
         "t": "Read it out loud now, slowly, the way you would at the bedside.",
         "w": 12
        }
       ],
-      "say": "Let's read one together. This blessing was written for Willow, for the moments when nothing else comes. Read it out loud now, slowly, the way you would at the bedside."
+      "say": "Let's read one together. This blessing was written for Willow, for the moments when words run out. Read it out loud now, slowly, the way you would at the bedside."
      },
      {
       "k": "points",
@@ -11336,7 +11336,7 @@ window.GG_LEARN = {
       "k": "big",
       "h": "Everything stays on this device.",
       "sub": "Locked with a passcode, in each person's own profile.",
-      "say": "Everything saved in Willow stays on this device, locked with a passcode, in each person's own profile. Nothing is sent to Grounded, or anyone else."
+      "say": "Everything saved in Willow stays on this device, locked with a passcode, in each person's own profile. Each person's words stay private."
      },
      {
       "k": "card",
@@ -11523,7 +11523,7 @@ window.GG_LEARN = {
       "q": "A helper answers from what they see. What happens to that check-in?",
       "opts": [
        "It adds a ring to the tree",
-       "It is kept apart, and never speaks for the person",
+       "It is kept apart, and the person speaks for themselves",
        "It replaces the person's own answers"
       ],
       "right": 1,
@@ -11661,7 +11661,7 @@ window.GG_LEARN = {
      },
      {
       "k": "points",
-      "h": "Words, not scores",
+      "h": "Gentle words in place of scores",
       "items": [
        [
         "Strong",
@@ -11849,7 +11849,7 @@ window.GG_LEARN = {
      },
      {
       "k": "points",
-      "h": "Words, not scores",
+      "h": "Gentle words in place of scores",
       "items": [
        [
         "Strong",
@@ -12087,7 +12087,7 @@ window.GG_LEARN = {
      },
      {
       "k": "points",
-      "h": "Words, not scores",
+      "h": "Gentle words in place of scores",
       "items": [
        [
         "Strong",
@@ -12240,7 +12240,7 @@ window.GG_LEARN = {
      },
      {
       "k": "words",
-      "h": "Words that are never too late",
+      "h": "Words that are always in time",
       "items": [
        "Please forgive me.",
        "I forgive you.",
@@ -12248,7 +12248,7 @@ window.GG_LEARN = {
        "I love you.",
        "Goodbye."
       ],
-      "say": "The second question names the words that matter most near the end. Please forgive me. I forgive you. Thank you. I love you. And goodbye. These words are never too late. They can be said out loud, written down, or kept as a letter. Forgiveness is always a choice, and it is never owed to someone unsafe."
+      "say": "The second question names the words that matter most near the end. Please forgive me. I forgive you. Thank you. I love you. And goodbye. These words are always in time. They can be said out loud, written down, or kept as a letter. Forgiveness is always a choice, and it is never owed to someone unsafe."
      },
      {
       "k": "big",
@@ -12452,7 +12452,7 @@ window.GG_LEARN = {
        ],
        [
         "One small taste",
-        "A spoon of ice cream, the smell of coffee"
+        "A taste of ripe fruit, the smell of coffee"
        ],
        [
         "Air and light",
@@ -12467,7 +12467,7 @@ window.GG_LEARN = {
         6
        ]
       },
-      "say": "The third question is about the senses. Small joys are still joys. Here are a few from Willow's practices. Music you love, favorite songs or hymns. Gentle touch, like lotion on the hands, or hair brushed, if touch is welcome. One small taste, like a spoon of ice cream, or the smell of coffee. And air and light. A window open, and sun on your hands."
+      "say": "The third question is about the senses. Small joys are still joys. Here are a few from Willow's practices. Music you love, favorite songs or hymns. Gentle touch, like lotion on the hands, or hair brushed, if touch is welcome. One small taste, like a bite of ripe fruit, or the smell of coffee. And air and light. A window open, and sun on your hands."
      },
      {
       "k": "points",
@@ -12561,7 +12561,7 @@ window.GG_LEARN = {
      {
       "k": "card",
       "title": "One small taste",
-      "body": "A favorite flavor: a spoon of ice cream, the smell of coffee.",
+      "body": "A favorite flavor: a taste of ripe fruit, the smell of coffee.",
       "fields": [
        [
         "Leaves",
@@ -12970,7 +12970,7 @@ window.GG_LEARN = {
      },
      {
       "k": "points",
-      "h": "Words, never scores",
+      "h": "Gentle words in place of scores",
       "items": [
        [
         "Well tended",
@@ -12988,7 +12988,7 @@ window.GG_LEARN = {
         "#B8612F"
        ]
       ],
-      "say": "After a check-in, your tree shows gentle words, never scores. A part might feel well tended right now. It might be holding, where a little tending could help. Or it might be a growing edge, where new growth begins, and you can tend it with others beside you. Each check-in you answer adds a ring to your tree."
+      "say": "After a check-in, your tree shows gentle words in place of scores. A part might feel well tended right now. It might be holding, where a little tending could help. Or it might be a growing edge, where new growth begins, and you can tend it with others beside you. Each check-in you answer adds a ring to your tree."
      },
      {
       "k": "points",
@@ -13097,7 +13097,7 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Writing it down is a gift.",
-      "sub": "The people you love will not have to guess.",
+      "sub": "The people you love will know.",
       "say": "Writing down what matters is a gift to the people you love. When the time comes, they will not have to guess what you would want. And it helps everyone caring for you know who you are, not just what you have."
      },
      {
@@ -13192,7 +13192,7 @@ window.GG_LEARN = {
       "items": [
        [
         "Talk, and a helper types",
-        "Your words, not theirs"
+        "In your own words"
        ],
        [
         "Read it aloud",
@@ -13318,8 +13318,8 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Many people worry about being a burden.",
-      "sub": "If you feel that way, you are not alone.",
-      "say": "Many people near the end of life worry about being a burden. If you feel that way, you are not alone. Most people feel it sometimes, and it is one of the most common worries there is."
+      "sub": "If you feel that way, many people do, and help is close.",
+      "say": "Many people near the end of life worry about being a burden. If you feel that way, many people do, and help is close. Most people feel it sometimes, and it is one of the most common worries there is."
      },
      {
       "k": "big",
@@ -13837,9 +13837,9 @@ window.GG_LEARN = {
      },
      {
       "k": "big",
-      "h": "These words are never too late.",
+      "h": "These words are always in time.",
       "sub": "Today is a good day to say one.",
-      "say": "Near the end of life, many people find there are a few things they want to say, while there is time. These words are never too late. Today is a good day to say one."
+      "say": "Near the end of life, many people find there are a few things they want to say, while there is time. These words are always in time. Today is a good day to say one."
      },
      {
       "k": "words",
@@ -14008,7 +14008,7 @@ window.GG_LEARN = {
    {
     "id": "wl-h-present",
     "n": 1,
-    "title": "You Don't Have to Know What to Say",
+    "title": "Your Presence Is Enough",
     "mins": 7,
     "blurb": "Presence comes first: how to sit with someone you love near the end of life.",
     "scenes": [
@@ -14016,7 +14016,7 @@ window.GG_LEARN = {
       "k": "title",
       "hero": "willow",
       "eyebrow": "For the People Who Love Them, Lesson 1",
-      "h": "You Don't Have to Know What to Say",
+      "h": "Your Presence Is Enough",
       "sub": "Presence comes first.",
       "say": "Welcome. This series is for the people who love someone in hospice. A spouse, a daughter or son, a friend, a neighbor who keeps showing up. Let's start with the worry almost everyone carries into the room. I don't know what to say."
      },
@@ -14099,14 +14099,14 @@ window.GG_LEARN = {
        ],
        [
         "Listen more than you fix",
-        "You do not need every answer"
+        "Presence over answers"
        ],
        [
         "Let them rest",
         "Sleep is part of the visit too"
        ]
       ],
-      "say": "Let them lead. Follow their topic, even if it is the weather or the game or the old days. Let feelings be. Tears and laughter both belong in the room. Listen more than you fix. You do not need every answer. And if they drift off to sleep, let them rest. Sleep is part of the visit too."
+      "say": "Let them lead. Follow their topic, even if it is the weather or the game or the old days. Let feelings be. Tears and laughter both belong in the room. Listen more than you fix. Your presence matters more than answers. And if they drift off to sleep, let them rest. Sleep is part of the visit too."
      },
      {
       "k": "words",
@@ -14381,7 +14381,7 @@ window.GG_LEARN = {
         "You can tend it with others beside you"
        ]
       },
-      "say": "After a check-in, their tree shows gentle words for each part, never scores. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins, tended with others beside them. Today then offers one gentle thing to do, often for the part that needs it most."
+      "say": "After a check-in, their tree shows gentle words for each part, in place of scores. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins, tended with others beside them. Today then offers one gentle thing to do, often for the part that needs it most."
      },
      {
       "k": "points",
@@ -14684,7 +14684,7 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Hearing may be one of the last senses to go.",
-      "sub": "Speak to them, not about them.",
+      "sub": "Speak to them directly.",
       "say": "Hearing may be one of the last senses to go. In a hospice study, the brains of people who could no longer respond still answered to sound in their last hours. No one can know how much they understand. So speak to them, not about them."
      },
      {
@@ -14880,7 +14880,7 @@ window.GG_LEARN = {
    {
     "id": "wl-h-ready",
     "n": 5,
-    "title": "When They're Ready and You're Not",
+    "title": "When They're Ready Before You Are",
     "mins": 7,
     "blurb": "Holding on, letting go, and the hard space in between.",
     "scenes": [
@@ -14888,7 +14888,7 @@ window.GG_LEARN = {
       "k": "title",
       "hero": "willow",
       "eyebrow": "For the People Who Love Them, Lesson 5",
-      "h": "When They're Ready and You're Not",
+      "h": "When They're Ready Before You Are",
       "sub": "Holding on, and letting go.",
       "say": "Sometimes the person you love finds peace with dying before you do. They are ready, and you are not. Sometimes it is the other way around. This lesson is about that hard space in between."
      },
@@ -14919,7 +14919,7 @@ window.GG_LEARN = {
      },
      {
       "k": "points",
-      "h": "If you are not ready",
+      "h": "If you need more time",
       "items": [
        [
         "Say so, gently",
@@ -14938,11 +14938,11 @@ window.GG_LEARN = {
         "Step outside when it is too much"
        ]
       ],
-      "say": "If you are not ready, you can say so, gently. I am not ready to lose you, and I love you. Let both be true. Your grief and their peace can share a room. Talk with the hospice chaplain or social worker. And step outside when it is too much."
+      "say": "If you need more time, you can say so, gently. I am not ready to lose you, and I love you. Let both be true. Your grief and their peace can share a room. Talk with the hospice chaplain or social worker. And step outside when it is too much."
      },
      {
       "k": "words",
-      "h": "Words for when you are not ready",
+      "h": "Words for when you need more time",
       "items": [
        "I am not ready to lose you.",
        "And I love you.",
@@ -14979,7 +14979,7 @@ window.GG_LEARN = {
        "I held her hands and said, anyone in your shoes would be asking the same thing. Scripture is full of people asking it too.",
        "Something shifted. He has never left me, she said. Later she said, I'm ready for that, and closed her eyes."
       ],
-      "lesson": "You can honor the question without rushing to answer it.",
+      "lesson": "You can honor the question and take your time with an answer.",
       "note": "Names and details changed",
       "hold": 2,
       "say": "I once sat with a woman named Mary, whose arms shook with tremors she could not control. She asked me, why is God doing this to me? The nurse in the room looked at me as if to say, how do you even answer that? I was careful not to rush. I held both her hands, leaned in, and said, Mary, anyone in your shoes would be asking the same thing. Scripture is full of people shaking their fists at God and asking why. Something shifted in her. You're right, she said. He has never left me. Then, quietly, but when will this end? I told her I did not know when. But I knew her rest was coming. She said, I'm ready for that, and closed her eyes."
@@ -15253,7 +15253,7 @@ window.GG_LEARN = {
        "h": "Care for the one keeping watch",
        "p": "Small things for you: a long out-breath, a grief debt check, one real meal."
       },
-      "say": "On Bedside, scroll to Care for the one keeping watch. It has small things for you. One minute of long out-breaths before you walk in. A grief debt check. Gates, not walls, so someone else can take a shift. And one real meal today."
+      "say": "On Bedside, scroll to Care for the one keeping watch. It has small things for you. One minute of long out-breaths before you walk in. A grief debt check. Leave a gate open, so someone else can take a shift. And one real meal today."
      },
      {
       "k": "points",
@@ -15286,9 +15286,9 @@ window.GG_LEARN = {
      },
      {
       "k": "big",
-      "h": "You are bending, and you are not alone.",
+      "h": "You are bending, and you are held.",
       "sub": "Held gently, all the way home.",
-      "say": "A willow bends in the storm, so far you think it should break, and it does not. You are bending too. You are not alone. Thank you for walking with the person you love, all the way home."
+      "say": "A willow bends in the storm, so far you think it should break, and it does not. You are bending too. You are held. Thank you for walking with the person you love, all the way home."
      },
      {
       "k": "quiz",
@@ -15327,7 +15327,7 @@ window.GG_LEARN = {
       "k": "big",
       "h": "One small step at a time.",
       "sub": "Your drafts stay on this device.",
-      "say": "A farewell comes with many small tasks, often all at once. These helpers break them into small steps, and they keep what you type on this device only. Nothing is sent anywhere, and Clear takes it all away whenever you like. To share a draft, print it, save it, or copy it."
+      "say": "A farewell comes with many small tasks, often all at once. These helpers break them into small steps, and they keep what you type on this device only. It is yours alone, and Clear takes it all away whenever you like. To share a draft, print it, save it, or copy it."
      },
      {
       "k": "flow",
@@ -15452,13 +15452,13 @@ window.GG_LEARN = {
       "sub": "Any true sentence is a good start.",
       "beats": [
        "Every eulogy starts with one sentence.",
-       "It doesn't have to be perfect, just true.",
+       "Just true is enough.",
        {
         "t": "Try it now, out loud or in your head: they were the kind of person who, and finish it in your own words.",
         "w": 15
        }
       ],
-      "say": "Every eulogy starts with one sentence. It doesn't have to be perfect, just true. Try it now, out loud or in your head: they were the kind of person who, and finish it in your own words.",
+      "say": "Every eulogy starts with one sentence. Just true is enough. Try it now, out loud or in your head: they were the kind of person who, and finish it in your own words.",
       "cue": {
        "at": [
         2
@@ -15500,7 +15500,7 @@ window.GG_LEARN = {
  "support": {
   "eyebrow": "Support",
   "title": "Support for Right Now",
-  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
@@ -15572,7 +15572,7 @@ window.GG_LEARN = {
         ],
         [
          "One question on the screen at a time",
-         "Nothing is timed"
+         "Take all the time you need"
         ],
         [
          "Practices for every body",
@@ -15583,7 +15583,7 @@ window.GG_LEARN = {
          "For the stories you want to pass on"
         ]
        ],
-       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and nothing is timed. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide."
+       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and you can take all the time you need. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide."
       },
       {
        "k": "big",
@@ -15807,7 +15807,7 @@ window.GG_LEARN = {
         ],
         [
          "Answer, or I’d rather not say",
-         "Never part of a score"
+         "Kept apart from every score"
         ],
         [
          "Need to talk to someone now?",
@@ -15866,9 +15866,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "There are no wrong answers.",
+       "h": "Every answer is welcome.",
        "sub": "Tap See My Tree when you finish.",
-       "say": "There are no wrong answers in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
+       "say": "Every answer is welcome in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
       },
       {
        "k": "quiz",
@@ -15896,7 +15896,7 @@ window.GG_LEARN = {
        "hero": "sequoia",
        "eyebrow": "Using Sequoia, Lesson 2",
        "h": "Your Tree and Your Levels",
-       "sub": "A picture of right now, never a grade.",
+       "sub": "Just a picture of right now.",
        "say": "When you tap See My Tree, Sequoia shows you a picture of your life right now. This lesson shows you how to read it, and how to watch it grow."
       },
       {
@@ -15952,7 +15952,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "A Growing Edge is where your next growth begins.",
-       "sub": "A part to tend, never a grade.",
+       "sub": "A part to tend, a place to grow.",
        "say": "A Growing Edge is never a failing grade. It is simply the part that could use the most tending right now. A long life has many seasons, and every part of a tree has its turn."
       },
       {
@@ -16134,7 +16134,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part of your tree. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, never limits. Choose as many or as few as you like."
+       "say": "Your growth plan is a short list of practices for each part of your tree. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like."
       },
       {
        "k": "screen",
@@ -16243,9 +16243,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Your tree rests. It never dies.",
+       "h": "Your tree rests, and it keeps living.",
        "sub": "Tend it once, and watch it wake up.",
-       "say": "Your tree on Today is gentle. If a few days go by, it gets a little dry, then it droops, then it rests bare. It never dies, and it never loses a ring. Nothing is lost. Tend it once, and watch it wake up. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
+       "say": "Your tree on Today is gentle. If a few days go by, it gets a little dry, then it droops, then it rests bare. It keeps living, and it keeps every ring. Nothing is lost. Tend it once, and watch it wake up. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
       },
       {
        "k": "points",
@@ -16333,7 +16333,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "No streaks to break. Growth only adds.",
+       "h": "Every day counts. Growth only adds.",
        "sub": "Missed a few days? Pick up today.",
        "say": "There are no streaks to break in Sequoia. Growth only adds. If appointments, aches, or visitors fill a few days, just pick up today. Your tree waits for you."
       },
@@ -16343,7 +16343,7 @@ window.GG_LEARN = {
        "opts": [
         "It dies",
         "It loses its rings",
-        "It rests, and nothing is lost"
+        "It rests, and keeps everything"
        ],
        "right": 2,
        "why": "Your tree rests and waits. Tend it once, and it wakes up.",
@@ -16431,10 +16431,10 @@ window.GG_LEARN = {
        "items": [
         [
          "Skip any prompt",
-         "There is no order to follow"
+         "Start anywhere"
         ],
         [
-         "Nothing is ever due",
+         "Go at your own pace",
          "One story is enough to start"
         ],
         [
@@ -16442,7 +16442,7 @@ window.GG_LEARN = {
          "Mark who wrote it down"
         ]
        ],
-       "say": "Pick any chapter and any prompt. Skip whatever you like. There is no order you have to follow, and nothing is ever due. One story is enough to start. If someone you trust writes while you tell, add their name under Written down by, and the page is marked as told to them. The words stay yours."
+       "say": "Pick any chapter and any prompt. Skip whatever you like. Start anywhere, and go at your own pace. One story is enough to start. If someone you trust writes while you tell, add their name under Written down by, and the page is marked as told to them. The words stay yours."
       },
       {
        "k": "big",
@@ -16533,11 +16533,11 @@ window.GG_LEARN = {
          "Your pages come along into Cuttings"
         ],
         [
-         "Nothing is sent",
+         "Everything stays on this device",
          "Unless you print or share it"
         ]
        ],
-       "say": "A helper sees your Legacy Book only if you turn it on, and it starts turned off. And if you later use Willow, what you write here comes along into Willow’s Cuttings, so your words are never lost. Nothing is sent anywhere unless you print or share it."
+       "say": "A helper sees your Legacy Book only if you turn it on, and it starts turned off. And if you later use Willow, what you write here comes along into Willow’s Cuttings, so your words are never lost. Everything stays on this device until you print or share it."
       },
       {
        "k": "big",
@@ -16633,9 +16633,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Your safety answers are never shared.",
+       "h": "Your safety answers stay private.",
        "sub": "With anyone, ever.",
-       "say": "And one thing is firm. Your safety answers are never shared with a helper."
+       "say": "And one thing is firm. Your safety answers stay private from helpers."
       },
       {
        "k": "big",
@@ -16761,7 +16761,7 @@ window.GG_LEARN = {
         "Your growth plan, when you share it"
        ],
        "right": 0,
-       "why": "Your safety answers are never shared with a helper.",
+       "why": "Your safety answers stay private from helpers.",
        "say": "Quick question. What does a helper never see?"
       }
      ]
@@ -16784,7 +16784,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Everything stays on this device.",
-       "sub": "Nothing is sent to Grounded or anyone else.",
+       "sub": "Everything stays on this device.",
        "say": "Here is the heart of it. Everything you do in Sequoia stays on this device. Your answers, your notes, your growth plan, and your Legacy Book are never sent to Grounded or anyone else."
       },
       {
@@ -16988,7 +16988,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "A giant sequoia’s roots spread wide, not deep.",
+       "h": "A giant sequoia’s roots spread wide, close to the surface.",
        "sub": "What holds it up comes from many places.",
        "say": "A giant sequoia can stand for thousands of years, and its roots are surprisingly shallow. They spread wide instead, far out from the trunk. Your roots can be like that. What holds you up can come from many places, and after a long life, you may have more of them than you think."
       },
@@ -17064,9 +17064,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Sequoia never asks what you believe.",
+       "h": "Sequoia asks what holds you up.",
        "sub": "It asks whether your roots are holding you up.",
-       "say": "That is why Sequoia never asks what you believe. It asks whether your roots are holding you up, or weighing you down. Your roots are yours."
+       "say": "That is why Sequoia asks what holds you up. It asks whether your roots are holding you up, or weighing you down. Your roots are yours."
       },
       {
        "k": "big",
@@ -17124,7 +17124,7 @@ window.GG_LEARN = {
         "How often you attend services"
        ],
        "right": 1,
-       "why": "Roots are about what holds you up, never about what you believe.",
+       "why": "Roots are about what holds you up, whatever you believe.",
        "say": "Quick question. What does Sequoia look at in Roots?"
       }
      ]
@@ -17516,7 +17516,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Sequoias grow in groves, not alone.",
+       "h": "Sequoias grow together, in groves.",
        "sub": "Branches reach for the light, together.",
        "say": "Giant sequoias grow together, in groves. Their branches reach for the light, high above the ground. Your branches are your relationships. They are how you catch the light."
       },
@@ -17530,7 +17530,7 @@ window.GG_LEARN = {
         ],
         [
          "Someone who listens",
-         "Not to fix, just to hear"
+         "Just to hear"
         ],
         [
          "A circle",
@@ -17931,8 +17931,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Savoring holds on to joy, even when health is hard.",
-       "sub": "Small good things are not small.",
-       "say": "Older adults who savor, who slow down and soak in a good moment, tend to keep their satisfaction with life even when their health is poor. Small good things are not small."
+       "sub": "Small good things matter.",
+       "say": "Older adults who savor, who slow down and soak in a good moment, tend to keep their satisfaction with life even when their health is poor. Small good things matter."
       },
       {
        "k": "big",
@@ -17964,7 +17964,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Losing hope? You do not have to hold it alone.",
+       "h": "Losing hope? Let someone help you hold it.",
        "sub": "Call or text 988, any time. In danger? Call 911.",
        "say": "If it is hard to see anything good ahead, or you have thought about not wanting to be here, you do not have to hold that alone. Many people have felt that, and help is real. Call or text nine eight eight, any time. Veterans can call nine eight eight and press one. If you are in danger right now, call nine one one."
       },
@@ -18097,7 +18097,7 @@ window.GG_LEARN = {
         ],
         [
          "Ask open questions",
-         "Ones that need more than yes or no"
+         "Ones that open a real answer"
         ],
         [
          "Give it time",
@@ -18229,7 +18229,7 @@ window.GG_LEARN = {
      "n": 2,
      "title": "Help That Honors Independence",
      "mins": 6,
-     "blurb": "How to help without taking over, so the person you love stays in charge of their own life.",
+     "blurb": "How to help while the person you love stays in charge of their own life.",
      "sources": [
       "chochinov",
       "cdcfalls"
@@ -18240,7 +18240,7 @@ window.GG_LEARN = {
        "hero": "sequoia",
        "eyebrow": "For the Helper, Lesson 2",
        "h": "Help That Honors Independence",
-       "sub": "Doing with, not doing for.",
+       "sub": "Do it with them, side by side.",
        "say": "This lesson is about a balance every helper meets sooner or later. How to help someone you love while they stay in charge of their own life. Help that honors independence."
       },
       {
@@ -18270,7 +18270,7 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "Doing with, not doing for",
+       "h": "Doing it with them",
        "steps": [
         [
          "Ask",
@@ -18565,7 +18565,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You don't need answers. Your presence speaks.",
+       "h": "Your presence speaks.",
        "sub": "Listen for what holds them up.",
        "say": "You do not need answers to the big questions. Listen for what holds them up, and help them reach for it. Your steady presence often speaks louder than any answer."
       },
@@ -18861,7 +18861,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Any chapter, any prompt",
-         "Skip anything. Nothing is due."
+         "Skip anything. Go at your own pace."
         ],
         [
          "Told to",
@@ -18869,14 +18869,14 @@ window.GG_LEARN = {
         ],
         [
          "Their words, as they say them",
-         "Never polished or rewritten"
+         "Kept in their own words"
         ],
         [
          "Stays on their device",
          "They decide what to share"
         ]
        ],
-       "say": "If they use Sequoia, the Legacy Book is made for this. They can pick any chapter and any prompt, and skip whatever they like. Nothing is ever due. You can write while they tell, and mark it told to, so it stays theirs. Write their words as they say them. The book stays on their device, locked in their profile, and they decide what to print or share, and with whom."
+       "say": "If they use Sequoia, the Legacy Book is made for this. They can pick any chapter and any prompt, and skip whatever they like. Go at your own pace. You can write while they tell, and mark it told to, so it stays theirs. Write their words as they say them. The book stays on their device, locked in their profile, and they decide what to print or share, and with whom."
       },
       {
        "k": "points",
@@ -18925,7 +18925,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Try it now: one invitation",
-       "sub": "Warm, simple, and easy to say no to.",
+       "sub": "Warm, simple, and their choice.",
        "beats": [
         "Let's practice an invitation.",
         "Think of one thing you have always wondered about their life.",
@@ -19251,7 +19251,7 @@ window.GG_LEARN = {
        "items": [
         [
          "They’re too busy for me",
-         "A thought, not a fact"
+         "Just a thought"
         ],
         [
          "I’d only be a bother",
@@ -19337,7 +19337,7 @@ window.GG_LEARN = {
     {
      "id": "sq-r-night",
      "n": 3,
-     "title": "When You Can’t Sleep",
+     "title": "When Sleep Is Hard",
      "mins": 4,
      "blurb": "Set the day down, soften from your feet up, and let rest come.",
      "sources": [
@@ -19350,7 +19350,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When You Can’t Sleep",
+       "h": "When Sleep Is Hard",
        "sub": "Set the day down for tonight.",
        "say": "If it is late, and sleep will not come, this is for you. Keep the lights low and the volume soft. You can listen lying down."
       },
@@ -19370,7 +19370,7 @@ window.GG_LEARN = {
         ],
         [
          "Add one step for tomorrow",
-         "Not for tonight"
+         "Saved for tomorrow"
         ],
         [
          "Close the notebook",
@@ -19454,7 +19454,7 @@ window.GG_LEARN = {
     {
      "id": "sq-r-worry",
      "n": 4,
-     "title": "When Worry Won’t Let Go",
+     "title": "When Worry Holds On",
      "mins": 3,
      "blurb": "Step back from a circling worry, and give it its own time.",
      "sources": [
@@ -19467,7 +19467,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When Worry Won’t Let Go",
+       "h": "When Worry Holds On",
        "sub": "Let the thoughts float by.",
        "say": "If the same worry keeps circling, about your health, your money, or someone you love, this is for you. Settle in, and stay with me for a few minutes."
       },
@@ -19518,7 +19518,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Choose fifteen minutes",
-         "Not near bedtime"
+         "Earlier in the day"
         ],
         [
          "Jot worries down",
@@ -19536,7 +19536,7 @@ window.GG_LEARN = {
          3
         ]
        },
-       "say": "Another practice, Worry Window, gives worry its own time. Choose fifteen minutes in the day, not near bedtime. When a worry comes at other times, jot it down and save it for then. During your window, choose one worry you can act on, and take one small step."
+       "say": "Another practice, Worry Window, gives worry its own time. Choose fifteen minutes earlier in the day, well before bedtime. When a worry comes at other times, jot it down and save it for then. During your window, choose one worry you can act on, and take one small step."
       },
       {
        "k": "big",
@@ -19632,15 +19632,15 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "The wave will pass. The love stays.",
-       "sub": "You don’t have to carry it alone.",
-       "say": "The wave will pass. The love stays. You do not have to carry it alone."
+       "sub": "Let someone help you carry it.",
+       "say": "The wave will pass. The love stays. Let someone help you carry it."
       }
      ]
     },
     {
      "id": "sq-r-body",
      "n": 6,
-     "title": "When Your Body Won’t Do What It Used to",
+     "title": "When Your Body Changes",
      "mins": 3,
      "blurb": "Kindness for the body you have today, and small ways to honor it.",
      "sources": [
@@ -19651,7 +19651,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
-       "h": "When Your Body Won’t Do What It Used to",
+       "h": "When Your Body Changes",
        "sub": "Kindness for the body you have today.",
        "say": "Maybe the stairs are harder now, or your hands, or your balance. Maybe today you noticed a change you did not ask for. If that is where you are, stay with me for a few minutes."
       },
@@ -19754,7 +19754,7 @@ window.GG_LEARN = {
        "hero": "sequoia",
        "eyebrow": "Support for Right Now",
        "h": "When You’re Worried About Your Memory",
-       "sub": "A forgotten name is not a diagnosis.",
+       "sub": "A forgotten name happens to everyone.",
        "say": "You walked into a room and forgot why. A name you have known for years would not come. If that has you worried, you are in good company, and this is for you."
       },
       {
@@ -20136,9 +20136,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You matter, and you don’t have to carry this alone.",
+       "h": "You matter, and people are ready to help you carry this.",
        "sub": "Make one call today. Someone will listen.",
-       "say": "You matter, and you do not have to carry this alone. Make one call today. Someone will listen."
+       "say": "You matter, and people are ready to help you carry this. Make one call today. Someone will listen."
       }
      ]
     }
@@ -20155,7 +20155,7 @@ window.GG_LEARN = {
  "support": {
   "eyebrow": "Support",
   "title": "Support for Right Now",
-  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
@@ -20490,9 +20490,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "There are no wrong answers.",
+       "h": "Every answer is welcome.",
        "sub": "Tap See My Tree when you finish.",
-       "say": "There are no wrong answers in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
+       "say": "Every answer is welcome in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
       },
       {
        "k": "quiz",
@@ -20520,7 +20520,7 @@ window.GG_LEARN = {
        "hero": "pine",
        "eyebrow": "Using Pine, Lesson 2",
        "h": "Your Tree and Your Levels",
-       "sub": "A picture of right now, never a grade.",
+       "sub": "Just a picture of right now.",
        "say": "When you tap See My Tree, Pine shows you a picture of your life right now. This lesson shows you how to read it, and how to watch it grow."
       },
       {
@@ -20576,7 +20576,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "A Growing Edge is where your next growth begins.",
-       "sub": "A part to tend, never a failing grade.",
+       "sub": "A part to tend, a place to grow.",
        "say": "A Growing Edge is never a failing grade. It is the part that could use the most tending right now. Everyone has one, adults too. A low score is information, and it points to where you can grow next."
       },
       {
@@ -20708,7 +20708,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, never limits. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+       "say": "Your growth plan is a short list of practices for each part. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
       },
       {
        "k": "tabs",
@@ -20780,11 +20780,11 @@ window.GG_LEARN = {
          "All six parts tended in one week"
         ],
         [
-         "No leaderboards",
+         "Your own pace",
          "Your tree is only about you"
         ]
        ],
-       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Tend all six parts in one week, and you get a balanced week. And there are no leaderboards. Your tree is only about you."
+       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Tend all six parts in one week, and you get a balanced week. Your tree is all about you, and it grows at your own pace."
       },
       {
        "k": "points",
@@ -20851,7 +20851,7 @@ window.GG_LEARN = {
        "q": "What happens on Steady if you miss a few days?",
        "opts": [
         "Your tree loses its rings",
-        "Nothing is lost, and you pick up today",
+        "Everything stays, and you pick up today",
         "Your days tended reset to zero"
        ],
        "right": 1,
@@ -20961,7 +20961,7 @@ window.GG_LEARN = {
          "On this device"
         ],
         [
-         "Your grown-up never sees it",
+         "It stays yours alone",
          "Not even with Share to Family"
         ],
         [
@@ -20969,11 +20969,11 @@ window.GG_LEARN = {
          "Only the chapters you pick"
         ]
        ],
-       "say": "Nice. Next Steps is yours. It stays on this device, locked with your passcode. Your grown-up never sees it, and Share to Family never includes it. If you want to show someone, like a counselor or a parent, you can print or save just the chapters you pick."
+       "say": "Nice. Next Steps is yours. It stays on this device, locked with your passcode. It stays yours alone, and Share to Family never includes it. If you want to show someone, like a counselor or a parent, you can print or save just the chapters you pick."
       },
       {
        "k": "big",
-       "h": "Skip anything. Nothing is due.",
+       "h": "Skip anything. Go at your own pace.",
        "sub": "And when you move on from Pine, it comes with you.",
        "say": "Every prompt can be skipped, and nothing here is graded or due. When you move on from Pine after high school, your notebook comes with you, so what you write now keeps helping you later."
       },
@@ -21035,7 +21035,7 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "What your grown-up never sees",
+       "h": "What stays yours alone",
        "items": [
         [
          "Your answers and levels",
@@ -21171,10 +21171,10 @@ window.GG_LEARN = {
         ],
         [
          "Plain",
-         "The same questions, without religious words"
+         "The same questions, in plain words"
         ],
         [
-         "Your scores never change",
+         "Your scores mean the same",
          "Either way"
         ]
        ],
@@ -21202,7 +21202,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Optional answers stay with you.",
-       "sub": "Never a score, never shared, never sent to your grown-up.",
+       "sub": "Private, apart from every score, and yours alone.",
        "say": "If you turn them on, those answers never count toward a score, and they are never shared or sent to your grown-up. If an answer shows pressure, Pine shows you a note and people who can help, like Love Is Respect for a relationship that feels controlling."
       },
       {
@@ -21345,9 +21345,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "A pine’s roots never work alone.",
+       "h": "A pine’s roots always work together.",
        "sub": "Underground partners reach farther than the roots can.",
-       "say": "A pine's roots never work alone. Underground, they partner with tiny fungi that reach much farther than the roots could on their own, bringing back water and food. Your roots can be like that. What holds you steady often comes from more places than you would guess."
+       "say": "A pine's roots always work together. Underground, they partner with tiny fungi that reach much farther than the roots could on their own, bringing back water and food. Your roots can be like that. What holds you steady often comes from more places than you would guess."
       },
       {
        "k": "points",
@@ -21359,7 +21359,7 @@ window.GG_LEARN = {
         ],
         [
          "Quiet and reflection",
-         "A few minutes with nothing coming in"
+         "A few quiet minutes, unplugged"
         ],
         [
          "Nature, music, and wonder",
@@ -21384,18 +21384,18 @@ window.GG_LEARN = {
        "items": [
         [
          "Doubts are normal",
-         "A part of growing, not a problem"
+         "A normal part of growing"
         ],
         [
          "Faith can hurt too",
          "And that is worth talking about"
         ],
         [
-         "Pine never asks what you believe",
+         "Pine asks what holds you up",
          "It asks what holds you steady"
         ]
        ],
-       "say": "A large national study found that many teens find faith hard to put into words. That is normal. Honest questions and doubts are part of growing up. And sometimes faith, or rules from a family or a community, can leave someone feeling scared or not good enough. In teens, experiences like that go with heavier moods, so they are worth talking through with someone you trust. That is why Pine never asks what you believe. It asks whether your roots are holding you up."
+       "say": "A large national study found that many teens find faith hard to put into words. That is normal. Honest questions and doubts are part of growing up. And sometimes faith, or rules from a family or a community, can leave someone feeling scared or not good enough. In teens, experiences like that go with heavier moods, so they are worth talking through with someone you trust. That is why Pine asks what holds you up. It asks whether your roots are holding you up."
       },
       {
        "k": "points",
@@ -21476,7 +21476,7 @@ window.GG_LEARN = {
         "How often you go to services"
        ],
        "right": 1,
-       "why": "Roots are about what holds you steady, never about what you believe.",
+       "why": "Roots are about what holds you steady, whatever you believe.",
        "say": "Quick question. What does Pine look at in Roots?"
       }
      ]
@@ -21600,7 +21600,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your gifts point toward your purpose.",
-       "sub": "Not grades or titles. What you really bring.",
+       "sub": "What you really bring, beyond grades and titles.",
        "say": "One of the easiest ways into purpose is to notice your gifts. Not grades, and not titles. Things like noticing who is left out, making people laugh, fixing things, or staying calm when everyone else panics. That is today's practice."
       },
       {
@@ -21613,7 +21613,7 @@ window.GG_LEARN = {
         ],
         [
          "Gift two",
-         "Something you do well that isn’t a grade"
+         "Something you do well, beyond grades"
         ],
         [
          "Gift three",
@@ -21698,7 +21698,7 @@ window.GG_LEARN = {
         ],
         [
          "Learning from mistakes",
-         "Without being harsh with yourself"
+         "Gently, with yourself"
         ],
         [
          "Holding your ground",
@@ -21854,7 +21854,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Pines that grow together break the wind for each other.",
-       "sub": "No tree stands tall alone for long.",
+       "sub": "Trees stand tall together.",
        "say": "A pine standing alone in an open field takes the full force of every storm. Pines that grow together in a stand break the wind for each other. People are like that too. The ones around you help you stand tall, and you do the same for them."
       },
       {
@@ -22080,7 +22080,7 @@ window.GG_LEARN = {
          "Starting with breakfast"
         ],
         [
-         "Without guilt or strict rules",
+         "With kindness and easy rhythms",
          "Eat enough for your day"
         ],
         [
@@ -22094,7 +22094,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "How your body feels matters more than how it looks online.",
        "sub": "Strength, energy, and what your body can do.",
-       "say": "A lot of teens say social media makes them feel worse about their bodies. Here is a better question to ask. What can my body do, and how does it feel? Strength, energy, and health matter more than any filtered picture. And here is some good news. Most high schoolers do not vape, drink, or use drugs. Planning an easy way out ahead of time makes it simple to stay that way."
+       "say": "A lot of teens say social media makes them feel worse about their bodies. Here is a better question to ask. What can my body do, and how does it feel? Strength, energy, and health matter more than any filtered picture. And here is some good news. Most high schoolers stay clear of vaping, drinking, and drugs. Planning an easy way out ahead of time makes it simple to stay that way."
       },
       {
        "k": "points",
@@ -22156,7 +22156,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your body carries you through every season.",
        "sub": "Stretch Break is ready for your growth plan.",
-       "say": "Stretch Break works between classes, homework, or gaming, and it is ready for your growth plan. In Settings, choose your Movement Level, Gentle, Moderate, or Athletic, so your Leaves practices fit your body and your sport."
+       "say": "Stretch Break works between classes, homework, or any long stretch of sitting, and it is ready for your growth plan. In Settings, choose your Movement Level, Gentle, Moderate, or Athletic, so your Leaves practices fit your body and your sport."
       },
       {
        "k": "quiz",
@@ -22273,7 +22273,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Strong fruit might mean you can see a way forward, even on hard days. Steady might mean there is some light ahead, though it has been dimmer lately. And a Growing Edge might mean it feels like there is no point in trying. Please take that seriously, and tell someone. You don't have to carry it alone."
+       "say": "Strong fruit might mean you can see a way forward, even on hard days. Steady might mean there is some light ahead, though it has been dimmer lately. And a Growing Edge might mean it feels like there is no point in trying. Please take that seriously, and tell someone. Let someone help you carry it."
       },
       {
        "k": "big",
@@ -22413,7 +22413,7 @@ window.GG_LEARN = {
         ],
         [
          "Ask open questions",
-         "Ones that need more than yes or no"
+         "Ones that open a real answer"
         ],
         [
          "Let silence sit",
@@ -22802,7 +22802,7 @@ window.GG_LEARN = {
         ],
         [
          "Your teen can change it later",
-         "Scores never change"
+         "Scores mean the same"
         ],
         [
          "Roots asks about experience",
@@ -22810,7 +22810,7 @@ window.GG_LEARN = {
         ],
         [
          "Faith answers stay private",
-         "Never shared with you"
+         "Private to them"
         ]
        ],
        "say": "In Pine, you and your teen choose Faith or Plain wording together at setup, and your teen can change it later in settings. Plain asks the same things without religious words, so scores never change. In Faith wording, God is named as one door among several, like prayer, worship, quiet, nature, and family traditions, and never as a judge. The Roots part asks about experience, never belief, and a teen of any tradition, or none, can score Strong. Their faith answers are never shared."
@@ -22836,7 +22836,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You don't need every answer. Your presence speaks.",
+       "h": "Your presence speaks louder than answers.",
        "sub": "Listen for what holds them up.",
        "say": "You do not need answers to every big question. Listen for what holds your teen up, and help them reach for it. Your steady presence often speaks louder than any answer."
       },
@@ -22917,7 +22917,7 @@ window.GG_LEARN = {
         ],
         [
          "Stay calm, and ask gently",
-         "Without anger or shock"
+         "With calm and kindness"
         ],
         [
          "Get help together",
@@ -22931,7 +22931,7 @@ window.GG_LEARN = {
        "h": "Vaping, drinking, and drugs",
        "items": [
         [
-         "Most teens choose not to",
+         "Most teens stay clear",
          "A record high in recent years"
         ],
         [
@@ -22943,7 +22943,7 @@ window.GG_LEARN = {
          "Any time, from anywhere"
         ]
        ],
-       "say": "Here is good news. Most high schoolers do not vape, drink, or use drugs, and in recent years that share reached a record high. Talk about pressure, not just rules. Pine's practice Easy Ways Out helps teens plan what to say. And promise a no-questions ride home, any time. If you are worried about use, talk with their doctor. The SAMHSA National Helpline, 1 800 662 4357, can point you to help any time, in English and Spanish."
+       "say": "Here is good news. Most high schoolers stay clear of vaping, drinking, and drugs, and in recent years that share reached a record high. Talk about pressure, not just rules. Pine's practice Easy Ways Out helps teens plan what to say. And promise a no-questions ride home, any time. If you are worried about use, talk with their doctor. The SAMHSA National Helpline, 1 800 662 4357, can point you to help any time, in English and Spanish."
       },
       {
        "k": "points",
@@ -23155,7 +23155,7 @@ window.GG_LEARN = {
         ],
         [
          "Every path honored",
-         "No path assumed"
+         "Every path honored"
         ],
         [
          "It goes with them",
@@ -23167,17 +23167,17 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Try it now: one turn in your own path",
-       "sub": "Something you did not plan that turned out to matter.",
+       "sub": "Something unplanned that turned out to matter.",
        "beats": [
         "Let's try something.",
         "Think back to when you were seventeen or eighteen.",
-        "Bring to mind one turn in your path that you did not plan, and that turned out to matter.",
+        "Bring to mind one unplanned turn in your path that turned out to matter.",
         {
          "t": "Now say out loud one sentence you could share with your teen about it.",
          "w": 12
         }
        ],
-       "say": "Let's try something. Think back to when you were seventeen or eighteen. Bring to mind one turn in your path that you did not plan, and that turned out to matter. Now say out loud one sentence you could share with your teen about it."
+       "say": "Let's try something. Think back to when you were seventeen or eighteen. Bring to mind one unplanned turn in your path that turned out to matter. Now say out loud one sentence you could share with your teen about it."
       },
       {
        "k": "big",
@@ -23194,7 +23194,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your belief in them is a gift.",
-       "sub": "Believe in the person, not one path.",
+       "sub": "Believe in the person, on any path.",
        "say": "Above all, believe in the person, not one particular path. When an adult believes in their future, it is easier for a teen to believe in it too. Your steady belief is one of the biggest gifts you can give."
       },
       {
@@ -23258,8 +23258,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your steadiness helps them too.",
-       "sub": "You do not need to be perfect.",
-       "say": "Here is why tending yourself matters for your teen too. Teens notice how the adults around them handle stress. When you are steady, it is easier for them to bring you hard things. You do not need to be perfect. Repair after a hard moment, like saying, I'm sorry I snapped, teaches them a lot too."
+       "sub": "You only need to be real.",
+       "say": "Here is why tending yourself matters for your teen too. Teens notice how the adults around them handle stress. When you are steady, it is easier for them to bring you hard things. You only need to be real. Repair after a hard moment, like saying, I'm sorry I snapped, teaches them a lot too."
       },
       {
        "k": "points",
@@ -23505,7 +23505,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your first step is all you need to see.",
-       "sub": "You don't have to picture the whole thing.",
+       "sub": "Picture one small piece.",
        "say": "You don't have to picture the whole thing going perfectly. Just the first step. Once you start, your practice and preparation can take over."
       },
       {
@@ -23612,7 +23612,7 @@ window.GG_LEARN = {
     {
      "id": "pn-r-night",
      "n": 4,
-     "title": "When You Can't Sleep",
+     "title": "When Sleep Is Hard",
      "mins": 4,
      "blurb": "Set the day down, soften from your feet up, and let rest come.",
      "sources": [
@@ -23624,7 +23624,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "pine",
        "eyebrow": "Support for Right Now",
-       "h": "When You Can't Sleep",
+       "h": "When Sleep Is Hard",
        "sub": "Set the day down for tonight.",
        "say": "If it's late, and sleep won't come, this is for you. Turn your screen brightness down and the volume low. You can listen lying down."
       },
@@ -23644,7 +23644,7 @@ window.GG_LEARN = {
         ],
         [
          "Add one step for tomorrow",
-         "Not for tonight"
+         "Saved for tomorrow"
         ],
         [
          "Put the phone away",
@@ -23706,7 +23706,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Still awake after about twenty minutes?",
-       "sub": "Get up for a bit. Dim light, no screens.",
+       "sub": "Get up for a bit. Dim light, screens off.",
        "say": "If you're still wide awake after about twenty minutes, get up for a little while. Keep the light dim, skip the screens, and do something calm. Go back to bed when you feel sleepy."
       },
       {
@@ -23738,18 +23738,18 @@ window.GG_LEARN = {
        "hero": "pine",
        "eyebrow": "Support for Right Now",
        "h": "When You Feel Left Out or Alone",
-       "sub": "You're not the only one.",
+       "sub": "Many people feel this too.",
        "say": "Maybe you saw pictures from a night you weren't invited to. Maybe your friend group shifted, or you moved, or you're surrounded by people and still feel alone. If that's how it feels right now, this is for you."
       },
       {
        "k": "big",
        "h": "Lots of people your age feel this.",
-       "sub": "It's a signal, not a verdict.",
+       "sub": "It's a signal to listen to.",
        "say": "Feeling lonely is really common at your age. Young people are among the loneliest groups in the country right now. Loneliness is a signal, like hunger. It tells you that you need connection. It says nothing about whether you are worth knowing."
       },
       {
        "k": "big",
-       "h": "Feeds show highlights, not the whole story.",
+       "h": "Feeds show highlights. Your life is the whole story.",
        "sub": "Everyone leaves out the lonely parts.",
        "say": "If you're scrolling through what everyone else is doing, remember you're seeing highlights. Other people have nights alone on the couch too. They just don't post them."
       },
@@ -23796,9 +23796,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You can't control replies. You reached out.",
+       "h": "You reached out. That is the brave part.",
        "sub": "That took courage.",
-       "say": "If they don't answer right away, that's okay. You can't control replies, only that you reached out. That took courage, and it counts."
+       "say": "If they don't answer right away, that's okay. What you control is reaching out, and you did. That took courage, and it counts."
       },
       {
        "k": "big",
@@ -23808,9 +23808,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You matter, and you won't always feel this way.",
+       "h": "You matter, and this feeling can change.",
        "sub": "One small step at a time.",
-       "say": "You matter, and you won't always feel this way. Connection comes back one small step at a time."
+       "say": "You matter, and this feeling can change. Connection comes back one small step at a time."
       }
      ]
     },
@@ -23950,7 +23950,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeds are built to keep you scrolling.",
-       "sub": "Feeling worse isn't a personal failure.",
+       "sub": "Feeling worse is a signal to notice.",
        "say": "Apps are designed to keep you scrolling, so it's not a personal failure when it's hard to stop. And it's easy to compare your whole life to everyone else's best moments."
       },
       {
@@ -23986,14 +23986,14 @@ window.GG_LEARN = {
        "beats": [
         "This is a practice called Phone Check.",
         "Pick up your phone.",
-        "Turn off one notification you don't need.",
+        "Turn off one extra notification.",
         "Then move one app that leaves you feeling worse off your home screen.",
         {
          "t": "Go ahead and do it now.",
          "w": 12
         }
        ],
-       "say": "This is a practice called Phone Check. Pick up your phone. Turn off one notification you don't need. Then move one app that leaves you feeling worse off your home screen. Go ahead and do it now."
+       "say": "This is a practice called Phone Check. Pick up your phone. Turn off one extra notification. Then move one app that leaves you feeling worse off your home screen. Go ahead and do it now."
       },
       {
        "k": "points",
@@ -24085,8 +24085,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Being kind to yourself helps you heal.",
-       "sub": "It is not letting yourself off the hook.",
-       "say": "Being kind to yourself isn't letting yourself off the hook. Teens who treat themselves with that kind of kindness tend to have less stress and low mood. It is a skill, and it gets easier with practice."
+       "sub": "It helps you keep growing.",
+       "say": "Being kind to yourself helps you keep growing. Teens who treat themselves with that kind of kindness tend to have less stress and low mood. It is a skill, and it gets easier with practice."
       },
       {
        "k": "points",
@@ -24214,8 +24214,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "The wave will pass. The love stays.",
-       "sub": "You don't have to carry it alone.",
-       "say": "The wave will pass. The love stays. You don't have to carry it alone."
+       "sub": "Let someone help you carry it.",
+       "say": "The wave will pass. The love stays. Let someone help you carry it."
       }
      ]
     },
@@ -24349,9 +24349,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You matter, and you don't have to carry this alone.",
+       "h": "You matter, and people are ready to help you carry this.",
        "sub": "Reach out today. Someone will listen.",
-       "say": "You matter, and you don't have to carry this alone. Reach out today. Someone will listen. Later, Pine's practice My Safety Plan can help you plan for hard moments."
+       "say": "You matter, and people are ready to help you carry this. Reach out today. Someone will listen. Later, Pine's practice My Safety Plan can help you plan for hard moments."
       }
      ]
     }
@@ -24368,7 +24368,7 @@ window.GG_LEARN = {
  "support": {
   "eyebrow": "Support",
   "title": "Support for Right Now",
-  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need. Nothing to finish."
+  "intro": "Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
@@ -24452,7 +24452,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Nothing is sent to a parent or anyone else. If you want someone to walk with you, you can add a helper, and you choose what they see. If an answer shows you might not be safe, Birch shows you help right away, just for you."
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. If an answer shows you might not be safe, Birch shows you help right away, just for you."
       },
       {
        "k": "tabs",
@@ -24621,7 +24621,7 @@ window.GG_LEARN = {
          "Off unless you turn it on"
         ],
         [
-         "Never part of a score",
+         "Kept apart from every score",
          "And never shared"
         ],
         [
@@ -24679,7 +24679,7 @@ window.GG_LEARN = {
          "Or I’d rather not say"
         ],
         [
-         "Never part of a score",
+         "Kept apart from every score",
          "Only there to help"
         ]
        ],
@@ -24712,9 +24712,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "There are no wrong answers.",
+       "h": "Every answer is welcome.",
        "sub": "Tap See My Tree when you finish.",
-       "say": "There are no wrong answers in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
+       "say": "Every answer is welcome in a check-in. When you finish, tap See My Tree. The next lesson shows you how to read it."
       },
       {
        "k": "quiz",
@@ -24742,7 +24742,7 @@ window.GG_LEARN = {
        "hero": "birch",
        "eyebrow": "Using Birch, Lesson 2",
        "h": "Your Tree and Your Levels",
-       "sub": "A picture of right now, never a grade.",
+       "sub": "Just a picture of right now.",
        "say": "When you tap See My Tree, Birch shows you a picture of your life right now. This lesson shows you how to read it, and how to watch it grow."
       },
       {
@@ -24798,7 +24798,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "A Growing Edge is where your next growth begins.",
-       "sub": "A part to tend, never a failing grade.",
+       "sub": "A part to tend, a place to grow.",
        "say": "A Growing Edge is never a failing grade. It is the part that could use the most tending right now. Everyone has one, at every age. A low score is information, and it points to where you can grow next."
       },
       {
@@ -24815,10 +24815,10 @@ window.GG_LEARN = {
         ],
         [
          "Pick one part to start",
-         "Not all six at once"
+         "One or two parts at a time"
         ]
        ],
-       "say": "Below your levels, Birch writes a few words just for you, and names help if an answer needs it. Read it all with kindness. Look for patterns. When money stress climbs, sleep often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with, not all six at once."
+       "say": "Below your levels, Birch writes a few words just for you, and names help if an answer needs it. Read it all with kindness. Look for patterns. When money stress climbs, sleep often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with."
       },
       {
        "k": "big",
@@ -24869,7 +24869,7 @@ window.GG_LEARN = {
         ],
         [
          "Kept, never mixed in",
-         "Different questions, so no comparing"
+         "Different questions, each their own"
         ]
        ],
        "say": "If you tended a tree before, your rings can come with you. Rings from Pine are labeled From Pine, and rings from Oak are labeled From Oak. They stay on your tree as part of your story. Their questions were different, so Birch never mixes them into your charts or compares them with your Birch check-ins."
@@ -24929,7 +24929,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part. Birch suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, never limits. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+       "say": "Your growth plan is a short list of practices for each part. Birch suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
       },
       {
        "k": "tabs",
@@ -25005,11 +25005,11 @@ window.GG_LEARN = {
          "All six parts tended in one week"
         ],
         [
-         "No leaderboards",
+         "Your own pace",
          "Your tree is only about you"
         ]
        ],
-       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Marking a skill done in Groundwork, like reading a lease or setting up a budget, counts as a milestone too. Tend all six parts in one week, and you get a balanced week. And there are no leaderboards. Your tree is only about you."
+       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Marking a skill done in Groundwork, like reading a lease or setting up a budget, counts as a milestone too. Tend all six parts in one week, and you get a balanced week. Your tree is all about you, and it grows at your own pace."
       },
       {
        "k": "points",
@@ -25076,7 +25076,7 @@ window.GG_LEARN = {
        "q": "What happens on Steady if you miss a few days?",
        "opts": [
         "Your tree loses its rings",
-        "Nothing is lost, and you pick up today",
+        "Everything stays, and you pick up today",
         "Your days tended reset to zero"
        ],
        "right": 1,
@@ -25181,7 +25181,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Each skill you mark done is a milestone.",
-       "sub": "Start anywhere. Nobody has all of them yet.",
+       "sub": "Start anywhere. Everyone is still growing.",
        "say": "When you learn one, mark it done. Each skill you mark done is a milestone for your tree. Start with whichever one would help most right now. Nobody your age has all of them yet."
       },
       {
@@ -25244,7 +25244,7 @@ window.GG_LEARN = {
      "n": 5,
      "title": "Private, Saved, and Shared",
      "mins": 5,
-     "blurb": "Your passcode, helpers only if you choose, what they never see, and how to save and share by choice.",
+     "blurb": "Your passcode, helpers only if you choose, what stays yours alone, and how to save and share by choice.",
      "scenes": [
       {
        "k": "title",
@@ -25273,7 +25273,7 @@ window.GG_LEARN = {
         "Not Now"
        ],
        "tap": 0,
-       "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. Nothing is sent to a parent, a school, an employer, or anyone else. There is no alert to anyone."
+       "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. There is no alert to anyone."
       },
       {
        "k": "big",
@@ -25302,7 +25302,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "A helper never sees your safety answers.",
+       "h": "Your safety answers stay yours alone.",
        "sub": "And nothing you keep private.",
        "say": "Here is what a helper never sees. Your safety answers, ever. Your answers to each question. Your optional question. And anything you have not chosen to share. You can change what helpers see, or remove a helper, any time."
       },
@@ -25370,7 +25370,7 @@ window.GG_LEARN = {
        "q": "What can a helper see?",
        "opts": [
         "Everything, including safety answers",
-        "Only what you choose to share, never safety answers",
+        "Only what you choose to share; safety answers stay private",
         "Nothing, ever"
        ],
        "right": 1,
@@ -25411,7 +25411,7 @@ window.GG_LEARN = {
          "Pick any that fit"
         ],
         [
-         "Your questions never change",
+         "Your questions stay the same",
          "Only examples and tips"
         ]
        ],
@@ -25427,10 +25427,10 @@ window.GG_LEARN = {
         ],
         [
          "Plain",
-         "The same questions, without religious words"
+         "The same questions, in plain words"
         ],
         [
-         "Your scores never change",
+         "Your scores mean the same",
          "Either way"
         ]
        ],
@@ -25439,7 +25439,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "One optional question, only if you want it.",
-       "sub": "Betting and gambling. Never a score, never shared.",
+       "sub": "Betting and gambling. Private, and apart from every score.",
        "say": "Settings is also where you turn on the optional question about betting and gambling. It stays off unless you turn it on. Its answer never counts toward a score, and it is never shared with anyone, helpers included."
       },
       {
@@ -25576,7 +25576,7 @@ window.GG_LEARN = {
         ],
         [
          "Quiet and reflection",
-         "A few minutes with nothing coming in"
+         "A few quiet minutes, unplugged"
         ],
         [
          "Nature, music, and wonder",
@@ -25608,11 +25608,11 @@ window.GG_LEARN = {
          "And that is worth talking through"
         ],
         [
-         "Birch never asks what you believe",
+         "Birch asks what holds you up",
          "It asks what grounds you"
         ]
        ],
-       "say": "Honest questions and doubts are common in these years. And for some people, a faith or a community they grew up with has left them feeling ashamed, afraid, or pushed out. Research finds struggles like that weigh on people, so they are worth talking through with someone you trust. That is why Birch never asks what you believe. It asks whether your roots are holding you up, or weighing you down."
+       "say": "Honest questions and doubts are common in these years. And for some people, a faith or a community they grew up with has left them feeling ashamed, afraid, or pushed out. Research finds struggles like that weigh on people, so they are worth talking through with someone you trust. That is why Birch asks what holds you up. It asks whether your roots are holding you up, or weighing you down."
       },
       {
        "k": "points",
@@ -25693,7 +25693,7 @@ window.GG_LEARN = {
         "How often you go to services"
        ],
        "right": 1,
-       "why": "Roots are about what grounds you, never about what you believe.",
+       "why": "Roots are about what grounds you, whatever you believe.",
        "say": "Quick question. What does Birch look at in Roots?"
       }
      ]
@@ -25751,12 +25751,12 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Searching is part of these years.",
-       "sub": "Still looking is normal, and it never counts against you.",
+       "sub": "Still looking is normal, and it is part of growing.",
        "say": "If you do not have it all figured out, you are in good company. A five year study of young people up to age twenty six found only about one in five had a clear, engaged purpose. Researchers also find that searching for meaning is its own healthy thing, separate from having found it. Birch asks about your direction and your next step, never about having it all figured out."
       },
       {
        "k": "big",
-       "h": "Purpose does not need a degree.",
+       "h": "Purpose grows on every path.",
        "sub": "Every path can hold a real sense of purpose.",
        "say": "Here is something else worth knowing. Research comparing adults with and without college found similar levels of purpose. Education shaped what people's purpose was about, not whether they had it. A welder, a nursing student, a soldier, a new parent, and someone between jobs can each have a strong trunk."
       },
@@ -25881,7 +25881,7 @@ window.GG_LEARN = {
         ],
         [
          "Learning from mistakes",
-         "Without being harsh with yourself"
+         "Gently, with yourself"
         ],
         [
          "Handling life on your own",
@@ -25903,14 +25903,14 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Money stress is mind stress.",
-       "sub": "Birch asks how it feels, never what you earn or owe.",
+       "sub": "Birch asks only how it feels.",
        "say": "At this age, money worry often lives right here in Bark. Researchers who study financial well-being look at feeling in control of your day to day money, and being able to handle a surprise expense. When that feels shaky, it can crowd your thinking and keep you up at night. Birch asks how money stress feels, never what you earn or owe."
       },
       {
        "k": "big",
        "h": "Talk to yourself the way you would talk to a friend.",
        "sub": "Self-compassion is a skill, and it can be learned.",
-       "say": "One of the strongest tools for bark is how you talk to yourself. Being kind to yourself after a mistake goes with less distress. It is not letting yourself off the hook. It is how you get back up."
+       "say": "One of the strongest tools for bark is how you talk to yourself. Being kind to yourself after a mistake goes with less distress. It helps you keep growing. It is how you get back up."
       },
       {
        "k": "points",
@@ -26014,7 +26014,7 @@ window.GG_LEARN = {
         "How much debt you have"
        ],
        "right": 1,
-       "why": "Birch asks how money worry feels, never amounts.",
+       "why": "Birch asks only how money worry feels.",
        "say": "Quick question. What does Birch ask about money in Bark?"
       }
      ]
@@ -26042,7 +26042,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Birches grow in stands, not alone.",
+       "h": "Birches grow together, in stands.",
        "sub": "Together they take hold of open ground.",
        "say": "Birches rarely grow alone. When they take root in open ground, they come up together, a whole stand of them, sheltering each other from the wind. People are like that too. People grow best near others too, and these years often ask us to find our stand again."
       },
@@ -26169,7 +26169,7 @@ window.GG_LEARN = {
      "n": 5,
      "title": "Leaves: Move, Rest, and Nourish",
      "mins": 5,
-     "blurb": "Sleep on any schedule, movement you enjoy, meals without rules, and coping without substances.",
+     "blurb": "Sleep on any schedule, movement you enjoy, relaxed meals, and healthy ways to cope.",
      "sources": [
       "nsfsleep",
       "pag",
@@ -26224,15 +26224,15 @@ window.GG_LEARN = {
         ],
         [
          "Regular meals",
-         "Without guilt or strict rules"
+         "With kindness and easy rhythms"
         ]
        ],
-       "say": "Next, move. National guidelines suggest about a hundred fifty minutes of moderate movement a week, plus some strength work. Seated and gentle ways count, and any amount beats none. A large review found exercise helps adults with depression too. Then nourish. Regular meals, without guilt or strict rules. Birch asks about meals and how you feel, never weight."
+       "say": "Next, move. National guidelines suggest about a hundred fifty minutes of moderate movement a week, plus some strength work. Seated and gentle ways count, and any amount beats none. A large review found exercise helps adults with depression too. Then nourish. Regular meals, with kindness and easy rhythms. Birch asks about meals and how you feel, never weight."
       },
       {
        "k": "big",
        "h": "When something helps you cope, notice what it is.",
-       "sub": "Birch asks about coping, never amounts.",
+       "sub": "Birch asks only about coping.",
        "say": "Birch also asks whether you have used alcohol, cannabis, or other substances to get through hard feelings. In a national study, cannabis use among people nineteen to thirty reached record highs, while drinking went down. Birch asks about coping, never amounts, and never tells anyone. If it has been happening a lot, the SAMHSA National Helpline can help you find support. Call one eight hundred, six six two, four three five seven, any time."
       },
       {
@@ -26300,7 +26300,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Listen to your body.",
-       "sub": "Pain that won’t go away? Get it checked.",
+       "sub": "Pain that stays? Get it checked.",
        "say": "Nice work. Stretch Break is ready for your growth plan. Rest if you are hurt, and get pain that will not go away checked by a doctor. And if food, weight, or exercise ever starts to feel like rules you cannot break, tell someone you trust."
       },
       {
@@ -26312,7 +26312,7 @@ window.GG_LEARN = {
         "Nothing at all"
        ],
        "right": 1,
-       "why": "Birch asks about using substances to cope, never amounts, and never tells anyone.",
+       "why": "Birch asks only about using substances to cope, and keeps your answer private.",
        "say": "Quick question. What does Birch ask about substances?"
       }
      ]
@@ -26374,7 +26374,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Everyone else is not ahead of you.",
+       "h": "Your path has its own pace.",
        "sub": "Every timeline is different.",
        "say": "One thing that weighs on hope at this age is comparison. A feed full of other people's best moments can make it feel like everyone is ahead of you. Research on this stage of life finds many young adults hopeful about what is possible, even when life is unsettled. Your timeline is yours. Look at how far you have come, not only at where others seem to be."
       },
@@ -26543,7 +26543,7 @@ window.GG_LEARN = {
         ],
         [
          "Ask open questions",
-         "Ones that need more than yes or no"
+         "Ones that open a real answer"
         ],
         [
          "Let silence sit",
@@ -26622,7 +26622,7 @@ window.GG_LEARN = {
         ],
         [
          "You see only what they share",
-         "Never their safety answers"
+         "Their safety answers stay private"
         ],
         [
          "No alerts to anyone",
@@ -26688,15 +26688,15 @@ window.GG_LEARN = {
         ],
         [
          "Groundwork",
-         "Never shown to helpers"
+         "Private from helpers"
         ],
         [
          "Safety answers",
-         "Never shown to anyone"
+         "Kept private"
         ],
         [
          "No alerts",
-         "Nothing is sent to anyone"
+         "Everything stays on this device"
         ]
        ],
        "say": "Here is what stays theirs. Every check-in answer and every level, locked with their own passcode and kept on their own device. Groundwork, their private notebook for building a life, is never shown to a helper. Their safety answers and flags are never shown to anyone. And Birch never sends an alert to anyone, not to a parent, a partner, or a helper."
@@ -26777,7 +26777,7 @@ window.GG_LEARN = {
          "Even ones you would not make"
         ],
         [
-         "Offering, not insisting",
+         "Offering, gently",
          "A ride, a call, a meal"
         ],
         [
@@ -26804,7 +26804,7 @@ window.GG_LEARN = {
        "q": "You're a helper in their Birch, and you notice you can't see their safety answers. What does that mean?",
        "opts": [
         "Something is wrong with the app",
-        "It is by design: safety answers are never shown to anyone",
+        "It is by design: safety answers stay private",
         "You should ask them to share their passcode"
        ],
        "right": 1,
@@ -26967,7 +26967,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You don't need every answer. Your presence speaks.",
+       "h": "Your presence speaks louder than answers.",
        "sub": "Listen for what holds them up.",
        "say": "You do not need answers to every big question. Listen for what holds them up, and help them reach for it. Your steady, respectful presence often speaks louder than any answer."
       },
@@ -27042,7 +27042,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Marks they keep hidden",
-         "Ask gently, without shock"
+         "Ask gently and calmly"
         ],
         [
          "Using to get through feelings",
@@ -27148,7 +27148,7 @@ window.GG_LEARN = {
      "n": 5,
      "title": "Launching, Boomeranging, and Every Path",
      "mins": 6,
-     "blurb": "Moving out, moving back, work, school, service, and parenting: every path honored, and how to help without taking over.",
+     "blurb": "Moving out, moving back, work, school, service, and parenting: every path honored, and how to help while they lead.",
      "sources": [
       "arnett",
       "pewparents",
@@ -27186,7 +27186,7 @@ window.GG_LEARN = {
         ],
         [
          "Moving back is common",
-         "It is not going backward"
+         "It can be a step forward"
         ],
         [
          "Talk as adults",
@@ -27261,7 +27261,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your belief in them is a gift.",
-       "sub": "Believe in the person, not one path.",
+       "sub": "Believe in the person, on any path.",
        "say": "Above all, believe in the person, not one particular path. When someone they respect believes in their future, it is easier for them to believe in it too. Your steady belief is one of the biggest gifts you can give."
       },
       {
@@ -27273,7 +27273,7 @@ window.GG_LEARN = {
         "Let them stay with no conversation at all"
        ],
        "right": 1,
-       "why": "Moving back is not going backward. Respect, clear agreements, and one small step help them find their footing.",
+       "why": "Moving back can be a step forward. Respect, clear agreements, and one small step help them find their footing.",
        "say": "Quick question. They moved back home after a job fell through, and they feel like a failure. What helps most?"
       }
      ]
@@ -27596,7 +27596,7 @@ window.GG_LEARN = {
     {
      "id": "br-r-night",
      "n": 3,
-     "title": "When You Can't Sleep",
+     "title": "When Sleep Is Hard",
      "mins": 4,
      "blurb": "Set the day down, soften from your feet up, and let rest come.",
      "sources": [
@@ -27607,7 +27607,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "birch",
        "eyebrow": "Support for Right Now",
-       "h": "When You Can't Sleep",
+       "h": "When Sleep Is Hard",
        "sub": "Set the day down for tonight.",
        "say": "If it's late, or you just got off a shift, and sleep won't come, this is for you. Turn your screen brightness down and the volume low. You can listen lying down."
       },
@@ -27627,7 +27627,7 @@ window.GG_LEARN = {
         ],
         [
          "Add one step for tomorrow",
-         "Not for tonight"
+         "Saved for tomorrow"
         ],
         [
          "Put the phone away",
@@ -27689,7 +27689,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Still awake after about twenty minutes?",
-       "sub": "Get up for a bit. Dim light, no screens.",
+       "sub": "Get up for a bit. Dim light, screens off.",
        "say": "If you're still wide awake after about twenty minutes, get up for a little while. Keep the light dim and do something calm. Go back to bed when you feel sleepy."
       },
       {
@@ -27710,7 +27710,7 @@ window.GG_LEARN = {
      "n": 4,
      "title": "When You Feel Alone in a New Place",
      "mins": 3,
-     "blurb": "A new city, a new job, a new campus, and no one to call yet: one small step toward connection.",
+     "blurb": "A new city, a new job, a new campus, and people still to meet: one small step toward connection.",
      "sources": [
       "mcc21",
       "murthy"
@@ -27721,13 +27721,13 @@ window.GG_LEARN = {
        "hero": "birch",
        "eyebrow": "Support for Right Now",
        "h": "When You Feel Alone in a New Place",
-       "sub": "You're not the only one.",
+       "sub": "Many people feel this too.",
        "say": "Maybe you moved for school, a job, or a base. Maybe everyone you used to see every day is somewhere else now, or you're surrounded by people and still feel alone. If that's how it feels right now, this is for you."
       },
       {
        "k": "big",
        "h": "Lots of people your age feel this.",
-       "sub": "It's a signal, not a verdict.",
+       "sub": "It's a signal to listen to.",
        "say": "Feeling lonely is really common in these years. In one national survey, about six in ten young adults said they felt seriously lonely. Loneliness is a signal, like hunger. It tells you that you need connection. It says nothing about whether you are worth knowing."
       },
       {
@@ -27779,9 +27779,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You can't control replies. You reached out.",
+       "h": "You reached out. That is the brave part.",
        "sub": "That took courage.",
-       "say": "If they don't answer right away, that's okay. You can't control replies, only that you reached out. That took courage, and it counts."
+       "say": "If they don't answer right away, that's okay. What you control is reaching out, and you did. That took courage, and it counts."
       },
       {
        "k": "big",
@@ -27791,9 +27791,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You matter, and you won't always feel this way.",
+       "h": "You matter, and this feeling can change.",
        "sub": "One small step at a time.",
-       "say": "You matter, and you won't always feel this way. New places become home one small step at a time."
+       "say": "You matter, and this feeling can change. New places become home one small step at a time."
       }
      ]
     },
@@ -27818,9 +27818,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Money stress is common, and it is not a verdict.",
-       "sub": "It says nothing about your worth.",
-       "say": "You are far from the only one. In a recent national survey, more than a third of adults said they could not cover a surprise four hundred dollar expense with cash. And fewer than half of adults under thirty five said they were fully independent financially. Money stress at this stage is common. It says nothing about your worth."
+       "h": "Money stress is common, and it can change.",
+       "sub": "Your worth stays the same.",
+       "say": "You are far from the only one. In a recent national survey, more than a third of adults said they could not cover a surprise four hundred dollar expense with cash. And fewer than half of adults under thirty five said they were fully independent financially. Money stress at this stage is common. Your worth stays the same."
       },
       {
        "k": "breathe",
@@ -27953,9 +27953,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You don't need the whole map.",
+       "h": "One step at a time is enough.",
        "sub": "One step, then the next.",
-       "say": "You don't need the whole map today. Take the next step, and let it show you the one after that. And if the weight of it starts to feel hopeless, call or text nine eight eight, any time."
+       "say": "One step at a time is enough today. Take the next step, and let it show you the one after that. And if the weight of it starts to feel hopeless, call or text nine eight eight, any time."
       }
      ]
     },
@@ -27977,7 +27977,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeds are built to keep you scrolling.",
-       "sub": "Feeling worse isn't a personal failure.",
+       "sub": "Feeling worse is a signal to notice.",
        "say": "Apps are designed to keep you scrolling, so it's not a personal failure when it's hard to stop. And it's easy to compare your real life to everyone else's best moments. New jobs, engagements, apartments, trips. Nobody posts the rejection emails or the nights alone."
       },
       {
@@ -27993,14 +27993,14 @@ window.GG_LEARN = {
        "beats": [
         "This is a practice called Phone Check.",
         "Pick up your phone.",
-        "Turn off one notification you don't need.",
+        "Turn off one extra notification.",
         "Then move one app that leaves you feeling worse off your home screen.",
         {
          "t": "Go ahead and do it now.",
          "w": 12
         }
        ],
-       "say": "This is a practice called Phone Check. Pick up your phone. Turn off one notification you don't need. Then move one app that leaves you feeling worse off your home screen. Go ahead and do it now."
+       "say": "This is a practice called Phone Check. Pick up your phone. Turn off one extra notification. Then move one app that leaves you feeling worse off your home screen. Go ahead and do it now."
       },
       {
        "k": "points",
@@ -28091,8 +28091,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Being kind to yourself helps you heal.",
-       "sub": "It is not letting yourself off the hook.",
-       "say": "Being kind to yourself isn't letting yourself off the hook. Research on self-compassion finds that people who treat themselves with that kind of kindness tend to bounce back better from hard things. It is a skill, and it gets easier with practice."
+       "sub": "It helps you keep growing.",
+       "say": "Being kind to yourself helps you keep growing. Research on self-compassion finds that people who treat themselves with that kind of kindness tend to bounce back better from hard things. It is a skill, and it gets easier with practice."
       },
       {
        "k": "points",
@@ -28220,8 +28220,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "The wave will pass. The love stays.",
-       "sub": "You don't have to carry it alone.",
-       "say": "The wave will pass. The love stays. You don't have to carry it alone."
+       "sub": "Let someone help you carry it.",
+       "say": "The wave will pass. The love stays. Let someone help you carry it."
       }
      ]
     },
@@ -28355,9 +28355,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "You matter, and you don't have to carry this alone.",
+       "h": "You matter, and people are ready to help you carry this.",
        "sub": "Reach out today. Someone will listen.",
-       "say": "You matter, and you don't have to carry this alone. Reach out today. Someone will listen. Later, Birch's practice My Safety Plan can help you plan for hard moments."
+       "say": "You matter, and people are ready to help you carry this. Reach out today. Someone will listen. Later, Birch's practice My Safety Plan can help you plan for hard moments."
       }
      ]
     }
@@ -28375,7 +28375,7 @@ window.GG_LEARN = {
  "support": {
   "eyebrow": "Together",
   "title": "Do This Together",
-  "intro": "Short videos to do side by side, as a family, a class, a group, or a team. Pick one anytime, as often as you like. Nothing to finish."
+  "intro": "Short videos to do side by side, as a family, a class, a group, or a team. Pick one anytime, as often as you like, at your own pace."
  },
  "lessonsTitle": "Learn Step by Step",
  "tracks": [
@@ -28462,7 +28462,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Words only. Never scores.",
+       "h": "Words only, gentle and plain.",
        "sub": "No one’s own answer is ever asked for or kept.",
        "say": "Here is something important. The Grove never asks for one person’s answer, and never keeps one. The group talks it over and chooses one answer together. Results come in words, never numbers."
       },
@@ -28873,7 +28873,7 @@ window.GG_LEARN = {
          "Only their own passcode opens it"
         ],
         [
-         "So no child is alone",
+         "So every child has someone",
          "With something hard"
         ]
        ],
@@ -29037,11 +29037,11 @@ window.GG_LEARN = {
          "Roots, leaves, fruit, and more"
         ],
         [
-         "No one is ranked",
+         "Each at its own pace",
          "Each tree grows at its own pace"
         ]
        ],
-       "say": "Watch the trees closely. Each tree grows taller as its person tends it, day by day. The parts someone tended this week show brighter, like their roots, their leaves, or their fruit. And no one is ranked. Each tree grows at its own pace."
+       "say": "Watch the trees closely. Each tree grows taller as its person tends it, day by day. The parts someone tended this week show brighter, like their roots, their leaves, or their fruit. Each tree grows at its own pace."
       },
       {
        "k": "points",
@@ -29080,7 +29080,7 @@ window.GG_LEARN = {
         ],
         [
          "Never a contest",
-         "No one is ranked"
+         "Each at its own pace"
         ]
        ],
        "cue": {
@@ -29152,7 +29152,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Resting this week",
-         "A tree never dies"
+         "A tree rests and keeps living"
         ],
         [
          "Growing quietly",
@@ -29163,7 +29163,7 @@ window.GG_LEARN = {
          "A willow stays, just as it was"
         ]
        ],
-       "say": "Every tree keeps its place. If someone did not tend this week, their tree is resting. A tree never dies, and nothing is taken away. If someone turned their switch off, their tree is growing quietly, and it still stands in the grove. And when someone in the family has died, their willow stays in the grove, just as it was."
+       "say": "Every tree keeps its place. If someone did not tend this week, their tree is resting. A tree keeps living, and keeps everything it has grown. If someone turned their switch off, their tree is growing quietly, and it still stands in the grove. And when someone in the family has died, their willow stays in the grove, just as it was."
       },
       {
        "k": "points",
@@ -29221,19 +29221,19 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Growth only adds.",
-       "sub": "A quiet week never takes anything away.",
-       "say": "Remember, growth only adds. There are no streaks to break. A quiet week never takes anything away. Just pick up today, together."
+       "sub": "A quiet week keeps every ring you've grown.",
+       "say": "Remember, growth only adds. There are no streaks to break. A quiet week keeps every ring you've grown. Just pick up today, together."
       },
       {
        "k": "quiz",
        "q": "What happens to the grove after a quiet week?",
        "opts": [
         "The trees shrink",
-        "Nothing is taken away, growth only adds",
+        "Growth only adds",
         "The grove starts over"
        ],
        "right": 1,
-       "why": "Growth only adds. A resting tree keeps its place, and nothing is taken away.",
+       "why": "Growth only adds. A resting tree keeps its place and everything it has grown.",
        "say": "Quick question. What happens to the grove after a quiet week?"
       }
      ]
@@ -29280,7 +29280,7 @@ window.GG_LEARN = {
       {
        "k": "card",
        "title": "What’s Changed Lately?",
-       "body": "Tap any that fit. This helps choose practices, and never changes a result.",
+       "body": "Tap any that fit. This helps choose practices, and leaves every result as it is.",
        "tap": 3,
        "btns": [
         "A New Baby",
@@ -29334,7 +29334,7 @@ window.GG_LEARN = {
         ],
         [
          "Pass",
-         "Skip it, with nothing lost"
+         "Skip it, and keep everything"
         ]
        ],
        "say": "Two more answers keep it honest and gentle. When you do not agree, tap We See It Differently. It becomes a Thing to Talk About later, never who saw it which way. And anyone can say pass. Tap Pass, and the question is skipped with nothing lost."
@@ -29437,12 +29437,12 @@ window.GG_LEARN = {
        "hero": "grove",
        "eyebrow": "Using The Grove, Lesson 5",
        "h": "Reading Your Results Together",
-       "sub": "Words only, never scores.",
+       "sub": "Gentle words in place of scores.",
        "say": "After a check-in, your results appear right away. This lesson shows how to read them together, kindly, as a group."
       },
       {
        "k": "big",
-       "h": "Words only. No numbers, no bars.",
+       "h": "Words only, gentle and plain.",
        "sub": "On the screen, and on paper.",
        "say": "Results come in words only. There are no numbers, no bars, and no percentages, on the screen or on paper."
       },
@@ -29525,7 +29525,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "No family is strong in all six.",
+       "h": "Every family has a Growing Edge.",
        "sub": "Every grove has its own shape.",
        "say": "Every result ends with the same kind of line. No family, and no group, is strong in all six. Every grove has its own shape. Strong groups usually show a few clear strengths, not every one."
       },
@@ -29543,7 +29543,7 @@ window.GG_LEARN = {
         ],
         [
          "Now or another day",
-         "There is no rush"
+         "Take your time"
         ]
        ],
        "say": "Things to Talk About are gentle conversation starters. They show only the question, never who saw it which way. You can talk them over now, or another day."
@@ -29783,11 +29783,11 @@ window.GG_LEARN = {
          "Every check-off grows the grove"
         ],
         [
-         "Nothing counts against you",
+         "Every answer is safe",
          "Ever"
         ]
        ],
-       "say": "Your plan’s practices sit at the top of the Together tab, with the time you chose. When you do one, tap We did this today, and the grove grows. Nothing ever counts against you."
+       "say": "Your plan’s practices sit at the top of the Together tab, with the time you chose. When you do one, tap We did this today, and the grove grows. Every day you tend only adds."
       },
       {
        "k": "points",
@@ -30191,7 +30191,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "A quiet week takes nothing away.",
+       "h": "A quiet week keeps everything you've grown.",
        "sub": "Growth only adds. Pick up any day.",
        "say": "Some weeks are busy, and some are quiet. That is okay. A quiet week takes nothing away from the grove. Growth only adds, so you can pick up again any day."
       },
@@ -30238,11 +30238,11 @@ window.GG_LEARN = {
        "q": "What happens to the grove after a quiet week?",
        "opts": [
         "It shrinks",
-        "Nothing is taken away. Growth only adds.",
+        "Growth only adds.",
         "You have to start over"
        ],
        "right": 1,
-       "why": "Growth only adds. A quiet week never takes anything away.",
+       "why": "Growth only adds. A quiet week keeps every ring you've grown.",
        "say": "Quick question. What happens to the grove after a quiet week?"
       }
      ]
@@ -30373,7 +30373,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Reactions show who cheered you on.",
-       "sub": "Names, not numbers.",
+       "sub": "Names in place of numbers.",
        "say": "Reactions show the names of who cheered you on, never a running total. The wall is about people, so there is nothing to count and nothing to chase."
       },
       {
@@ -30818,7 +30818,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "No one has to carry something hard alone.",
+       "h": "Something hard is lighter when we share it.",
        "sub": "Tell a safe grown-up. They want to know.",
        "say": "Kids, that note is there so no one carries something hard alone. If you are not safe, or something feels too big, tell a safe grown-up. They want to know, and they will help."
       },
@@ -30927,7 +30927,7 @@ window.GG_LEARN = {
         ],
         [
          "Stays on this device",
-         "Never sent anywhere"
+         "Stays on this device"
         ],
         [
          "No one can recover it",
@@ -31135,11 +31135,11 @@ window.GG_LEARN = {
          "An answer or a feeling"
         ],
         [
-         "Invite, never push",
+         "Invite, and let them choose",
          "Next time is fine"
         ]
        ],
-       "say": "A child can pass any question, any time, and no one has to explain. Invite, and never push. A child who passes today often joins in next time."
+       "say": "A child can pass any question, any time, and no one has to explain. Invite, and let them choose. A child who passes today often joins in next time."
       },
       {
        "k": "points",
@@ -31201,7 +31201,7 @@ window.GG_LEARN = {
         ],
         [
          "Talk later, one on one",
-         "Never in front of the group"
+         "Always in private"
         ],
         [
          "Not safe?",
@@ -31254,7 +31254,7 @@ window.GG_LEARN = {
      "n": 2,
      "title": "Leading a Class Grove",
      "mins": 5,
-     "blurb": "Class life in a circle, about ten minutes, with no names and no student answers kept.",
+     "blurb": "Class life in a circle, about ten minutes, keeping only the class's shared answer.",
      "sources": [
       "rcmm",
       "pranis"
@@ -31594,7 +31594,7 @@ window.GG_LEARN = {
          "From their own tree app"
         ],
         [
-         "Never required",
+         "Always optional",
          "Ever"
         ],
         [
@@ -31629,7 +31629,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Listen, then talk privately",
-         "Never in front of the group"
+         "Always in private"
         ],
         [
          "Danger right now?",
@@ -32071,7 +32071,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "No one goes through a change alone.",
+       "h": "We go through changes together.",
        "sub": "A guide, two videos, and something to do together.",
        "say": "Changes are easier when no one goes through them alone. Open a guide, watch together, and do one small thing side by side."
       },
@@ -32115,8 +32115,8 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Roots hold a tree up, deep where no one sees.",
-       "sub": "You can’t always see them. You always need them.",
+       "h": "Roots hold a tree up, deep and quiet underground.",
+       "sub": "Out of sight, and always needed.",
        "say": "Every tree stands on its roots. They grow deep, where no one can see them. You can’t always see a family’s roots either. But when the wind blows, they are what hold everyone up."
       },
       {
@@ -32242,7 +32242,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your tree shows which parts you tended.",
-       "sub": "Tap a tree on Our Grove. Never answers, levels, or notes.",
+       "sub": "Tap a tree on Our Grove. Answers, levels, and notes stay private.",
        "say": "One more thing. On Our Grove, tap a person to see their tree. If their switch is on, you can see which parts they tended this week, like Roots. Never their answers, levels, or notes. Your tree is yours. The grove is ours."
       },
       {
@@ -32254,7 +32254,7 @@ window.GG_LEARN = {
         "Doing every practice every day"
        ],
        "right": 1,
-       "why": "Roots are about what holds your family up, never a test of what anyone believes.",
+       "why": "Roots are about what holds your family up, whatever anyone believes.",
        "say": "Quick question. What matters most in a family’s roots?"
       }
      ],
@@ -32269,8 +32269,8 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Roots hold a tree up, deep where no one sees.",
-       "sub": "You can’t always see them. You always need them.",
+       "h": "Roots hold a tree up, deep and quiet underground.",
+       "sub": "Out of sight, and always needed.",
        "say": "Every tree stands on its roots. They grow deep, where no one can see them. You can’t always see a family’s roots either. But when the wind blows, they are what hold everyone up."
       },
       {
@@ -32396,7 +32396,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your tree shows which parts you tended.",
-       "sub": "Tap a tree on Our Grove. Never answers, levels, or notes.",
+       "sub": "Tap a tree on Our Grove. Answers, levels, and notes stay private.",
        "say": "One more thing. On Our Grove, tap a person to see their tree. If their switch is on, you can see which parts they tended this week, like Roots. Never their answers, levels, or notes. Your tree is yours. The grove is ours."
       },
       {
@@ -32408,7 +32408,7 @@ window.GG_LEARN = {
         "Doing every practice every day"
        ],
        "right": 1,
-       "why": "Roots are about what holds your family up, never a test of what anyone believes.",
+       "why": "Roots are about what holds your family up, whatever anyone believes.",
        "say": "Quick question. What matters most in a family’s roots?"
       }
      ]
@@ -32573,7 +32573,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Bark protects the tree, and it stretches as it grows.",
-       "say": "Bark protects a tree from wind and sun. And it has to stretch as the tree grows. Feelings in a family work the same way. Healthy bark bends without breaking."
+       "say": "Bark protects a tree from wind and sun. And it has to stretch as the tree grows. Feelings in a family work the same way. Healthy bark bends and holds."
       },
       {
        "k": "points",
@@ -32584,7 +32584,7 @@ window.GG_LEARN = {
          "Sad, scared, mad, tired, glad"
         ],
         [
-         "Listening without fixing",
+         "Just listening",
          "Thanks for telling us"
         ],
         [
@@ -32593,10 +32593,10 @@ window.GG_LEARN = {
         ],
         [
          "Starting again, kinder",
-         "With no blame"
+         "Together, kindly"
         ]
        ],
-       "say": "Healthy bark in a family can look like this. Every feeling is welcome: sad, scared, mad, tired, and glad. Listening without fixing, and simply saying, thanks for telling us. Calm breaths, when things get loud. And starting again, kinder, with no blame."
+       "say": "Healthy bark in a family can look like this. Every feeling is welcome: sad, scared, mad, tired, and glad. Just listening, and simply saying, thanks for telling us. Calm breaths, when things get loud. And starting again, kinder, together."
       },
       {
        "k": "big",
@@ -32630,7 +32630,7 @@ window.GG_LEARN = {
       {
        "k": "card",
        "title": "Feelings Weather Report",
-       "body": "Everyone names their inside weather today: sunny, cloudy, rainy, or stormy. No fixing, just listening.",
+       "body": "Everyone names their inside weather today: sunny, cloudy, rainy, or stormy. Just listening.",
        "tap": 0,
        "btns": [
         "We did this today",
@@ -32672,12 +32672,12 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Every family has rainy days.",
        "sub": "Telling each other is how bark grows strong.",
-       "say": "Every family has rainy days, and stormy ones too. No fixing, and no advice unless someone asks. Telling each other, and being heard, is how bark grows strong."
+       "say": "Every family has rainy days, and stormy ones too. Just listen, and offer advice only when someone asks. Telling each other, and being heard, is how bark grows strong."
       },
       {
        "k": "big",
        "h": "Grown-ups may see a quiet alert.",
-       "sub": "Please check in. Never the answers.",
+       "sub": "Please check in. The answers stay private.",
        "say": "A note for grown-ups. When a kid or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet alert in The Grove. It never shows their answers. Find a quiet moment, ask how they are doing, and listen. And kids, you can always go to a grown-up yourself, any time."
       },
       {
@@ -32695,7 +32695,7 @@ window.GG_LEARN = {
         "Let’s fix it right now"
        ],
        "right": 1,
-       "why": "Listening without fixing helps a feeling settle, and helps the whole family feel safe to share.",
+       "why": "Just listening helps a feeling settle, and helps the whole family feel safe to share.",
        "say": "Quick question. Someone shares a stormy feeling. What can you say?"
       }
      ]
@@ -32730,7 +32730,7 @@ window.GG_LEARN = {
         ],
         [
          "Listening",
-         "Without rushing to fix"
+         "Slowly, before fixing"
         ],
         [
          "Reaching beyond the house",
@@ -32830,7 +32830,7 @@ window.GG_LEARN = {
         ],
         [
          "Say thank you",
-         "No fixing, just listening"
+         "Just listening"
         ]
        ],
        "cue": {
@@ -32845,7 +32845,7 @@ window.GG_LEARN = {
          5
         ]
        },
-       "say": "Let us try one together, right now. This one is called Rose and Thorn. Gather everyone who is watching. Go around once, and each person shares a rose, the best part of their day. Then go around again for a thorn, the hardest part of their day. Listen without fixing, and after each one, say, thanks for telling us."
+       "say": "Let us try one together, right now. This one is called Rose and Thorn. Gather everyone who is watching. Go around once, and each person shares a rose, the best part of their day. Then go around again for a thorn, the hardest part of their day. Just listen, and after each one, say, thanks for telling us."
       },
       {
        "k": "big",
@@ -32874,7 +32874,7 @@ window.GG_LEARN = {
         "Skip to the next person"
        ],
        "right": 1,
-       "why": "Listening without fixing helps people feel heard.",
+       "why": "Just listening helps people feel heard.",
        "say": "Quick question. In Rose and Thorn, what do you do when someone shares a thorn?"
       }
      ]
@@ -32956,9 +32956,9 @@ window.GG_LEARN = {
         "The meal takes longer than usual, and it is not perfect.",
         "When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them."
        ],
-       "lesson": "Nourish is about the table, not only the food.",
+       "lesson": "Nourish is about the table as much as the food.",
        "chris": false,
-       "say": "Picture a busy night. A family decides to cook together. One person washes. One stirs. The littlest sets the table, a little crooked. The meal takes longer than usual, and it is not perfect. When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them. Nourish is about the table, not only the food."
+       "say": "Picture a busy night. A family decides to cook together. One person washes. One stirs. The littlest sets the table, a little crooked. The meal takes longer than usual, and it is not perfect. When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them. Nourish is about the table as much as the food."
       },
       {
        "k": "big",
@@ -33160,7 +33160,7 @@ window.GG_LEARN = {
          "At 35 days"
         ]
        ],
-       "say": "You can see fruit in Our Grove too. Each day someone tends their tree, or the family does a practice together, the grove grows. Visitors arrive as the days add up. First a ladybug, then a butterfly, then a bluebird. And growth only adds. A quiet week never takes anything away."
+       "say": "You can see fruit in Our Grove too. Each day someone tends their tree, or the family does a practice together, the grove grows. Visitors arrive as the days add up. First a ladybug, then a butterfly, then a bluebird. And growth only adds. A quiet week keeps every ring you've grown."
       },
       {
        "k": "points",
@@ -33194,7 +33194,7 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "When hope feels far, you don’t have to hold it alone.",
+       "h": "When hope feels far, let someone help you hold it.",
        "sub": "Tell a safe grown-up. Call or text 988, any time. In danger right now? Call 911.",
        "say": "Some days, it is hard to see anything good ahead. If that is you, you do not have to hold it alone. Tell a safe grown-up. Call or text nine eight eight, any time. And if someone is in danger right now, call nine one one."
       },
@@ -33491,11 +33491,11 @@ window.GG_LEARN = {
          "Everyone gets a turn"
         ],
         [
-         "Listen without fixing",
+         "Just listen",
          "Thank each person for sharing"
         ]
        ],
-       "say": "First, set the table for talking. Phones go in another room, grown-ups too. Ask one question at a time, and give everyone a turn. And listen without fixing. Just thank each person for sharing."
+       "say": "First, set the table for talking. Phones go in another room, grown-ups too. Ask one question at a time, and give everyone a turn. And just listen. Just thank each person for sharing."
       },
       {
        "k": "words",
@@ -33647,7 +33647,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Try it now",
-       "sub": "No food needed. One thanks each.",
+       "sub": "Any time works. One thanks each.",
        "beats": [
         "Let us practice right now, even with no food in front of you.",
         "Take one slow breath together.",
@@ -33755,7 +33755,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Try it now",
-       "sub": "No food needed. One thanks each.",
+       "sub": "Any time works. One thanks each.",
        "beats": [
         "Let us practice right now, even with no food in front of you.",
         "Take one slow breath together.",
@@ -34040,10 +34040,10 @@ window.GG_LEARN = {
        "items": [
         "May today be kind to you.",
         "Go with our love.",
-        "You are brave, and you are not alone.",
+        "You are brave, and you are held.",
         "We are so glad you are ours."
        ],
-       "say": "Here are some words to borrow. May today be kind to you. Go with our love. You are brave, and you are not alone. Or, we are so glad you are ours. Change any of them to fit your family."
+       "say": "Here are some words to borrow. May today be kind to you. Go with our love. You are brave, and you are held. Or, we are so glad you are ours. Change any of them to fit your family."
       },
       {
        "k": "points",
@@ -34158,10 +34158,10 @@ window.GG_LEARN = {
        "items": [
         "May today be kind to you.",
         "Go with our love.",
-        "You are brave, and you are not alone.",
+        "You are brave, and you are held.",
         "May God go with you today."
        ],
-       "say": "Here are some words to borrow. May today be kind to you. Go with our love. You are brave, and you are not alone. Or, if your family prays, may God go with you today. Change any of them to fit your family."
+       "say": "Here are some words to borrow. May today be kind to you. Go with our love. You are brave, and you are held. Or, if your family prays, may God go with you today. Change any of them to fit your family."
       },
       {
        "k": "points",
@@ -34330,11 +34330,11 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "No fixing, just listening",
+       "h": "Just listening",
        "items": [
         [
          "Listen",
-         "You do not have to solve it"
+         "Just be with it"
         ],
         [
          "Stay close",
@@ -34352,7 +34352,7 @@ window.GG_LEARN = {
          4
         ]
        },
-       "say": "Here is the secret. No fixing, and no advice unless someone asks. Just listen. Stay close, with a hand, a hug, or a seat nearby. Then ask one gentle question. What do we need right now?"
+       "say": "Here is the secret. Just listen, and offer advice only when someone asks. Just listen. Stay close, with a hand, a hug, or a seat nearby. Then ask one gentle question. What do we need right now?"
       },
       {
        "k": "points",
@@ -34399,7 +34399,7 @@ window.GG_LEARN = {
        "hero": "grove",
        "eyebrow": "Do This Together",
        "h": "Making Up After a Fight",
-       "sub": "Repair, not blame.",
+       "sub": "Repair, together.",
        "say": "Every family argues sometimes. Voices get loud, doors close, and feelings get hurt. That does not mean something is broken. This is how a family makes up, together."
       },
       {
@@ -34465,7 +34465,7 @@ window.GG_LEARN = {
       },
       {
        "k": "words",
-       "h": "Repair, not blame",
+       "h": "Repair, together",
        "items": [
         "I’m sorry for my part.",
         "That hurt my feelings.",
@@ -34477,18 +34477,18 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Grown-ups first. Then anyone who is ready.",
-       "sub": "Nothing to make up today? Squeeze a hand and say: We’re okay.",
+       "sub": "All good today? Squeeze a hand and say: We’re okay.",
        "beats": [
         "If there is something to make right today, take turns now.",
         "Grown-ups first, then anyone who is ready.",
         "No one has to say sorry before they mean it.",
-        "If there is nothing to make up, just squeeze a hand and say, we are okay.",
+        "If all is well, just squeeze a hand and say, we are okay.",
         {
          "t": "Go ahead.",
          "w": 12
         }
        ],
-       "say": "If there is something to make right today, take turns now. Grown-ups first, then anyone who is ready. No one has to say sorry before they mean it. If there is nothing to make up, just squeeze a hand and say, we are okay. Go ahead."
+       "say": "If there is something to make right today, take turns now. Grown-ups first, then anyone who is ready. No one has to say sorry before they mean it. If all is well, just squeeze a hand and say, we are okay. Go ahead."
       },
       {
        "k": "big",
@@ -34541,7 +34541,7 @@ window.GG_LEARN = {
          "To end"
         ]
        ],
-       "say": "Here is the shape. Start with one thank you each. Then talk about one plan or one problem, and let everyone speak. Then end with something fun, like a game, a treat, or a dance."
+       "say": "Here is the shape. Start with one thank you each. Then talk about one plan or one problem, and let everyone speak. Then end with something fun, like a game, a song, or a dance."
       },
       {
        "k": "points",
@@ -35330,11 +35330,11 @@ window.GG_LEARN = {
          "To two other people"
         ],
         [
-         "Invite, never push",
+         "Invite, and let them choose",
          "They join at their own pace"
         ]
        ],
-       "say": "Small things matter most. Learn their name, and use it. Introduce them to two other people. And invite, never push. Let them join in at their own pace."
+       "say": "Small things matter most. Learn their name, and use it. Introduce them to two other people. And invite, and let them choose. Let them join in at their own pace."
       },
       {
        "k": "words",
@@ -35504,7 +35504,7 @@ window.GG_LEARN = {
         ],
         [
          "Just say thank you",
-         "No speeches"
+         "Short and simple"
         ],
         [
          "Back to work",

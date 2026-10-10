@@ -244,7 +244,7 @@ function render() {
 }
 function go(v, force) {
   if (window.GGRead && GGRead.stop) GGRead.stop();
-  if (v !== 'checkin' && S.ck && !S.ck.done && S.tab === 'checkin' && !confirm('Leave this check-in? Answers so far will not be saved.')) return;
+  if (v !== 'checkin' && S.ck && !S.ck.done && S.tab === 'checkin' && !confirm('Leave this check-in? Answers so far will be cleared.')) return;
   if (v !== 'checkin') S.ck = v === 'results' ? S.ck : null;
   S.tab = v; render(); scrollTop(force !== false); pushHash();
 }
@@ -407,7 +407,7 @@ function treeCard(r, id, role) {
   const sc = willowScene(r, self);
   return `<div class="w-card w-treecard w-treelive">
     <div class="w-treewrap">${window.GGLiving ? GGLiving.html({ app: 'willow', light: sc.light, label: sc.line }) : artTreeHtml(c && show ? c.levels : null, 'A willow tree with ' + rings + ' rings')}
-      <p class="w-sceneline">${esc(sc.line)}</p><p class="w-rings">${rings ? rings + (rings === 1 ? ' ring' : ' rings') : 'No rings yet'}</p></div>
+      <p class="w-sceneline">${esc(sc.line)}</p><p class="w-rings">${rings ? rings + (rings === 1 ? ' ring' : ' rings') : 'Rings grow with each check-in'}</p></div>
     <div class="w-treetext">
       <p class="w-eyebrow">${self ? 'Your tree' : who + ' tree'}</p>
       ${words}
@@ -805,7 +805,7 @@ function saveMatters() {
 function mattersBlocks() {
   const r = T(); if (!r) return '';
   const m = r.matters || {};
-  return MATTERS.concat(VIGIL).filter(x => m[x[0]]).map(x => `<h3>${esc(x[1])}</h3><p>${esc(m[x[0]]).replace(/\n/g, '<br>')}</p>`).join('') || '<p>Nothing written yet.</p>';
+  return MATTERS.concat(VIGIL).filter(x => m[x[0]]).map(x => `<h3>${esc(x[1])}</h3><p>${esc(m[x[0]]).replace(/\n/g, '<br>')}</p>`).join('') || '<p>Ready when you are.</p>';
 }
 function readMatters() {
   const R = window.GGRead; const div = document.createElement('div'); div.innerHTML = mattersBlocks();
@@ -892,7 +892,7 @@ const evTag = ev => `<span class="w-ev w-ev-${ev}">${esc(P.evidence[ev] || '')}<
 VIEWS.bedside = () => {
   const a = me(), t = target(), r = t ? rec(t) : null, n = t ? esc(nameOf(t)) : '';
   const person = r && r.started && roleOf(t) === 'person';
-  let h = `<div class="w-head"><p class="w-eyebrow">At the bedside</p><h2>What to do when you don't know what to do</h2><p class="lead">You don't have to say the perfect thing. You only have to stay. These are small, real things families and helpers can do, with how well each one is backed.</p></div>`;
+  let h = `<div class="w-head"><p class="w-eyebrow">At the bedside</p><h2>What to do when you don't know what to do</h2><p class="lead">A simple, kind word is enough. You only have to stay. These are small, real things families and helpers can do, with how well each one is backed.</p></div>`;
   h += lineHtml();
   if (person && r.faith && (r.faith.trad || r.faith.never) && sees('faith')) {
     h += `<h3 class="section-title">${a && t === a.id ? 'Your' : n + '\'s'} faith</h3>`;
@@ -1119,7 +1119,7 @@ function share(k, v) { const t = target(), r = rec(t); if (!r) return; r.share[k
 function addHelperNow() {
   const t = target(), hid = $('#w-hid').value, pass = $('#w-hpass').value;
   if (!pass) { toast('Your helper types their own passcode.'); return; }
-  GGP.addHelper(t, hid, pass).then(() => { toast(nameOf(hid) + ' is now a helper.'); openSettings('helpers'); render(); }).catch(e => toast(e && e.message ? e.message : 'That did not work. Try again.'));
+  GGP.addHelper(t, hid, pass).then(() => { toast(nameOf(hid) + ' is now a helper.'); openSettings('helpers'); render(); }).catch(e => toast(e && e.message ? e.message : 'Let\'s try that again.'));
 }
 function dropHelper(id) { if (!confirm('Remove ' + nameOf(id) + ' as a helper? They will no longer open your Willow.')) return; GGP.removeHelper(target(), id); openSettings('helpers'); render(); }
 function remember() {
@@ -1152,10 +1152,10 @@ VIEWS.share = () => {
   return `<div class="w-head"><p class="w-eyebrow">Your chaplain or doula</p><h2>Share with my chaplain or doula</h2>
     <p class="lead">${self ? 'Choose what goes.' : 'You can share only what ' + n + ' chose to share with helpers.'} They scan a code on this screen with their Field Guide, and you read them two words and a number, out loud. Nothing passes through Grow With Grounded.</p></div>
     <div class="w-card">
-      ${row('checkins', 'Check-ins', `The last ${cks.length === 1 ? 'one' : cks.length}, with answers. Your chaplain or doula sees how each part is doing.`, sees('tree') ? 'No check-ins yet.' : n + ' keeps this private.')}
+      ${row('checkins', 'Check-ins', `The last ${cks.length === 1 ? 'one' : cks.length}, with answers. Your chaplain or doula sees how each part is doing.`, sees('tree') ? 'Your first check-in will show here.' : n + ' keeps this private.')}
       ${row('faith', 'Faith answers', 'Tradition, how it\'s lived out, who to call, and anything never to do.', !sees('faith') ? n + ' keeps this private.' : 'Not answered yet.')}
-      ${row('matters', 'What Matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Nothing written yet.')}
-      ${row('notes', 'Notes from check-ins', 'Anything written at the end of a check-in.', !sees('answers') ? 'Kept private.' : 'No notes yet.')}
+      ${row('matters', 'What Matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Ready when you are.')}
+      ${row('notes', 'Notes from check-ins', 'Anything written at the end of a check-in.', !sees('answers') ? 'Kept private.' : 'Notes will show here.')}
       <p class="w-small">Never shared: the answer about feeling safe at home.</p>
       <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.shareMake()">Make the code</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button></div>
     </div>`;
@@ -1290,7 +1290,7 @@ function pushHash(st) {
   HASH_SEEN = location.hash;
 }
 function onPop() {
-  if (S.tab === 'checkin' && S.ck && !S.ck.done && !confirm('Leave this check-in? Answers so far will not be saved.')) {
+  if (S.tab === 'checkin' && S.ck && !S.ck.done && !confirm('Leave this check-in? Answers so far will be cleared.')) {
     try { history.pushState(null, '', HASH_SEEN || location.pathname + location.search); } catch (x) {} return;
   }
   HASH_SEEN = location.hash;

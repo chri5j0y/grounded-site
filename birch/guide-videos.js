@@ -1589,10 +1589,10 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Words that help",
       "items": [
        "What's the best part so far?",
-       "You don't have to have it figured out yet.",
+       "Figuring it out takes time.",
        "Want to think through how to ask?"
       ],
-      "say": "Here are words that help. What's the best part so far, and what's the hardest? You don't have to have it figured out in the first month. And, want to think through how to ask your manager about that? Practicing a hard ask with you makes it easier to say for real."
+      "say": "Here are words that help. What's the best part so far, and what's the hardest? Figuring it out takes more than a month. And, want to think through how to ask your manager about that? Practicing a hard ask with you makes it easier to say for real."
      },
      {
       "k": "points",
@@ -3910,7 +3910,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Steady help, honest limits.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't fix everything, and you don't have to. Steady, honest help matters more than big promises. The full guide has more, whenever you want it."
+      "say": "Do what you can. Steady, honest help matters more than big promises. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4352,7 +4352,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Steady contact is real connection.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't be their only connection, and you don't have to be. Your steady contact is real connection. Keep reaching out, even when they're slow to answer. The full guide has more, whenever you want it."
+      "say": "You can be one connection among many. Your steady contact is real connection. Keep reaching out, even when they're slow to answer. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4705,7 +4705,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "This heaviness will ease.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hearts heal, slowly, with time, people, and small steps. You were you before this relationship, and you're still you. It will not always feel this heavy. The full guide has more, whenever you want it."
+      "say": "Hearts heal, slowly, with time, people, and small steps. You were you before this relationship, and you're still you. This heaviness will ease. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -4980,9 +4980,9 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        "I believe you.",
        "This is not your fault.",
-       "You don't have to decide anything right now."
+       "Decisions can wait for now."
       ],
-      "say": "If they tell you, the first words matter most. I believe you. This is not your fault. And, you don't have to decide anything right now. I'm with you."
+      "say": "If they tell you, the first words matter most. I believe you. This is not your fault. And, decisions can wait for now. I'm with you."
      },
      {
       "k": "words",
@@ -5817,11 +5817,11 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "words",
       "h": "Words to keep",
       "items": [
-       "I don't have to know everything today.",
+       "Today, I only need the next step.",
        "All my feelings are allowed.",
        "I deserve support and honest answers."
       ],
-      "say": "Here are words to keep. I don't have to know everything today. All my feelings are allowed. And I deserve support and honest answers."
+      "say": "Here are words to keep. Today, I only need the next step. All my feelings are allowed. And I deserve support and honest answers."
      },
      {
       "k": "big",
@@ -5861,9 +5861,9 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        "Thank you for telling me.",
        "What do you need from me right now?",
-       "You don't have to figure it all out tonight."
+       "Tonight, one small step is enough."
       ],
-      "say": "Here are words that help. Thank you for telling me. I'm here, so what do you need from me right now? And, you don't have to figure it all out tonight."
+      "say": "Here are words that help. Thank you for telling me. I'm here, so what do you need from me right now? And, tonight, one small step is enough."
      },
      {
       "k": "words",
@@ -5986,7 +5986,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Friends, family, the other parent"
        ]
       ],
-      "say": "Young parents juggle a lot. Sleep, in short pieces. Money, for diapers, rent, and child care. Work or school, and plans that had to shift. And people. Friends whose lives look different now. Family with help and opinions. And a relationship with the baby's other parent that may be close, complicated, or over. You don't have to carry all of it alone."
+      "say": "Young parents juggle a lot. Sleep, in short pieces. Money, for diapers, rent, and child care. Work or school, and plans that had to shift. And people. Friends whose lives look different now. Family with help and opinions. And a relationship with the baby's other parent that may be close, complicated, or over. You can share the weight of it."
      },
      {
       "k": "flow",
@@ -6542,7 +6542,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Pregnancy or Infant Loss",
       "sub": "For the Helper",
-      "say": "This is for the partner, parent, friend, or mentor of a young adult who has lost a pregnancy or a baby. You don't need perfect words. You need to show up."
+      "say": "This is for the partner, parent, friend, or mentor of a young adult who has lost a pregnancy or a baby. Simple words are enough. You need to show up."
      },
      {
       "k": "big",
@@ -6759,7 +6759,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You can do hard things nervous.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to wait until you feel calm to live your life. You can do hard things nervous. The full guide has more, whenever you want it."
+      "say": "You can live your life before you feel calm. You can do hard things nervous. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -7739,13 +7739,13 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Speak to yourself like a friend.",
       "sub": "A hand on your chest, one kind line.",
-      "say": "Let's try something. Rest one hand on your chest, or wherever feels steady. Take one slow breath. Now say quietly to yourself: this is an illness, it's not my fault, and I don't have to fight it alone.",
+      "say": "Let's try something. Rest one hand on your chest, or wherever feels steady. Take one slow breath. Now say quietly to yourself: this is an illness, it's not my fault, and others can help me fight it.",
       "beats": [
        "Let's try something.",
        "Rest one hand on your chest, or wherever feels steady.",
        "Take one slow breath.",
        {
-        "t": "Now say quietly to yourself: this is an illness, it's not my fault, and I don't have to fight it alone.",
+        "t": "Now say quietly to yourself: this is an illness, it's not my fault, and others can help me fight it.",
         "w": 12
        }
       ]
@@ -7785,7 +7785,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Your body deserves to be fed.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Your body deserves to be fed, even when your thoughts say otherwise. You don't have to fight this alone. The full guide has more, whenever you want it."
+      "say": "Your body deserves to be fed, even when your thoughts say otherwise. Others can help you fight this. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -8463,7 +8463,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You are a lifeline.",
       "sub": "988 is there for you too.",
-      "say": "This is frightening, and you don't have to carry it alone. Call or text nine eight eight for guidance any time, for them or for you. You are a lifeline. Getting them to help is the work, and you're doing it."
+      "say": "This is frightening, and others can help you carry it. Call or text nine eight eight for guidance any time, for them or for you. You are a lifeline. Getting them to help is the work, and you're doing it."
      }
     ],
     "crisis": [
@@ -8497,7 +8497,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "When a Friend Is Thinking About Suicide",
       "sub": "For You",
-      "say": "If you're worried a friend, a roommate, a partner, or a coworker may be thinking about suicide, this is for you. You don't need to be an expert to help."
+      "say": "If you're worried a friend, a roommate, a partner, or a coworker may be thinking about suicide, this is for you. Anyone who cares can help."
      },
      {
       "k": "card",
@@ -8682,10 +8682,10 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "words",
       "h": "Words that help",
       "items": [
-       "You don't have to carry this by yourself.",
+       "Others can help you carry this.",
        "How are you doing with all of this?"
       ],
-      "say": "Some words help. You don't have to carry this by yourself. And then, later, how are you doing with all of this? Leave out stay out of it, and that's not your problem. And leave out blame, if things got harder. They did what they could."
+      "say": "Some words help. Others can help you carry this. And then, later, how are you doing with all of this? Leave out stay out of it, and that's not your problem. And leave out blame, if things got harder. They did what they could."
      },
      {
       "k": "big",
@@ -8711,7 +8711,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Steady presence helps most.",
       "sub": "988 is there for you, too.",
-      "say": "You don't need the right words for every moment. Staying close, sharing the weight, and pointing toward help is most of what helps. Call or text nine eight eight any time, for them, or for you."
+      "say": "Simple words are enough. Staying close, sharing the weight, and pointing toward help is most of what helps. Call or text nine eight eight any time, for them, or for you."
      }
     ],
     "crisis": [
@@ -9217,7 +9217,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Believing them comes first.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't need perfect words. Believing them is the most important thing you'll do. The full guide has more, whenever you want it."
+      "say": "Simple words are enough. Believing them is the most important thing you'll do. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -9356,9 +9356,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "One bad night does not decide your life.",
+      "h": "Your life is bigger than one bad night.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "One bad night online does not get to decide your life. You are the one being harmed, and people are ready to help. The full guide has more, whenever you want it."
+      "say": "Your life is bigger than one bad night online. You are the one being harmed, and people are ready to help. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -9761,7 +9761,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Honest, kind, and steady.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to fix this, and you're not their monitor. Being honest, kind, and steady is what helps most. The full guide has more, whenever you want it."
+      "say": "Your role is to be honest, kind, and steady, and that is what helps most. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -9873,7 +9873,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Hard weeks pass.",
       "sub": "One week is not the whole story.",
-      "say": "Training and the first year are built to stretch you. A hard week doesn't mean you chose wrong, and it doesn't have to be carried alone. Keep at least one person, inside or outside your unit, you can be honest with."
+      "say": "Training and the first year are built to stretch you. A hard week doesn't mean you chose wrong, and others can help carry it. Keep at least one person, inside or outside your unit, you can be honest with."
      },
      {
       "k": "big",
@@ -9988,7 +9988,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Coming Home From Service",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For a young veteran or service member coming home: it's a real change, and you don't have to figure it out alone.",
+    "blurb": "For a young veteran or service member coming home: it's a real change, and others can help you figure it out.",
     "sources": [
      "pewvets11",
      "litz"
@@ -10290,7 +10290,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
       "sub": "For the Helper",
-      "say": "If a young adult you love is grieving a parent, a friend, or someone their age, this is for you. You don't need perfect words. You need to show up, and keep showing up."
+      "say": "If a young adult you love is grieving a parent, a friend, or someone their age, this is for you. Simple words are enough. You need to show up, and keep showing up."
      },
      {
       "k": "big",
@@ -10583,7 +10583,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Stay close, whatever they conclude.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to settle their questions to be a good companion. Stay close, whatever they conclude. The full guide has more, whenever you want it."
+      "say": "A good companion walks with the questions. Stay close, whatever they conclude. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -10894,7 +10894,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "A season, not a sentence.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "This is a season, not a sentence. You don't need the whole map to take the next step. The full guide has more, whenever you want it."
+      "say": "This is a season, not a sentence. The next step is enough to start. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -11333,7 +11333,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Your worth is not your output.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Planning around your body is wise, not weak. Your worth isn't measured by pushing through pain. The full guide has more, whenever you want it."
+      "say": "Planning around your body is wise, not weak. Your worth is in who you are. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -12318,7 +12318,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Ask. Remember. Make room.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to get it perfect. Asking how they like to communicate, and remembering, says a lot. The full guide has more, whenever you want it."
+      "say": "Good enough is plenty. Asking how they like to communicate, and remembering, says a lot. The full guide has more, whenever you want it."
      }
     ]
    }

@@ -138,7 +138,7 @@
   // =====================================================================
   const GUIDES = {
    "roots|Prayer": {
-    "why": "Prayer is honest conversation with the sacred. You don't have to get the words right. Saying the true thing out loud loosens its grip on you.",
+    "why": "Prayer is honest conversation with the sacred. Simple words are enough. Saying the true thing out loud loosens its grip on you.",
     "today": "Find two quiet minutes. Say, or write, three sentences: what you're thankful for, what you're carrying, and what you need. That's a whole prayer.",
     "build": "Pick one anchor in your day, like your first coffee or the drive home, and pray there daily for two weeks. Keep a short list of what you pray for, and notice what changes.",
     "hard": "If you don't know who you're talking to anymore, say so. \"I don't know if you're there, but here's what's true\" is a real prayer. Silence counts too.",
@@ -154,7 +154,7 @@
     "why": "Teaching deepens what you believe. You understand something differently once you've tried to pass it on, and the person you teach becomes part of your roots.",
     "today": "Think of one thing that has held you up in a hard season. Write down how you'd explain it to someone younger or newer to the path.",
     "build": "Offer to mentor one person, lead one small group, or share one reflection a month with someone who's asking. Show up regularly rather than perfectly.",
-    "hard": "You don't need to be an expert. Most people want a fellow traveler who's a few steps ahead, not someone with every answer."
+    "hard": "Caring is enough to start. Most people want a fellow traveler who's a few steps ahead, not someone with every answer."
    },
    "roots|Tithe": {
     "why": "Giving away part of what you have loosens money's grip and connects you to something larger than your own needs. It's trust you can practice with your hands.",
@@ -361,7 +361,7 @@
     "why": "Being the reason someone else feels hope has a way of refilling your own. Hope multiplies when it's shared.",
     "today": "Tell one person something specific you believe about their future, or share a story of something that turned out better than expected.",
     "build": "Look for one chance each week to encourage someone who's struggling. Share good news as readily as bad.",
-    "hard": "You don't need to feel hopeful to offer hope. Sometimes speaking it out loud is how it comes back to you.",
+    "hard": "You can offer hope even on a heavy day. Sometimes speaking it out loud is how it comes back to you.",
     "story": "He Was Praying Too"
    },
    "fruit|Make Peace": {

@@ -91,7 +91,7 @@
       mind: 'Keep using the tools your counselor or doctor gave you, and add one calming practice from your plan.',
       autism: 'Plan a quiet reset for after busy or loud times.',
       learning: 'Use a timer or a list to make room for one calm pause each day.',
-      close: 'Give yourself a few minutes each day that are not about caring for anyone.'
+      close: 'Give yourself a few minutes each day that are just for you.'
     },
     branches: {
       hearing: 'Ask people to face you, turn on captions, or text, and look for a Deaf or hard of hearing group if that fits you.',
@@ -107,8 +107,8 @@
       pain: 'A short practice in the time of day you feel best counts fully.'
     },
     trunk: {
-      health: 'Name one way you matter that has nothing to do with what your body can do today.',
-      pain: 'Name one way you matter that has nothing to do with what your body can do today.',
+      health: 'Name one way you matter, beyond what your body can do today.',
+      pain: 'Name one way you matter, beyond what your body can do today.',
       serious: 'One small act that matters to you counts, even from a chair or a bed.'
     },
     fruit: {

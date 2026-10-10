@@ -197,6 +197,27 @@
     else if (a === 'gate' && started) { try { sessionStorage.setItem('gg-hw-gate', '1'); } catch (er) {} location.reload(); }
   });
 
+  /* ---------- After the Vows on screen (GWG BLD 782) ----------
+     The page title, the hero, the tabs (Before the Vows hides), and the cards below the app, for an After the Vows
+     invite. Called by the code page (from the link's hint) and by app.js (from the mode inside the lock), with the
+     wording from GM_AFTER.atv when the content is open. */
+  window.HWChrome = function (mode, av) {
+    if (mode !== 'atv') return;
+    av = av && typeof av === 'object' ? av : {};
+    var t = function (k, d) { return typeof av[k] === 'string' && av[k] ? av[k] : d; };
+    var title = t('title', 'After the Vows'), q = function (s) { return document.querySelector(s); };
+    document.title = title + ' | Grow With Grounded';
+    var h = $('gm-title'); if (h) h.textContent = title;
+    var eb = q('.gm-eb'); if (eb) eb.textContent = t('eyebrow', 'Heartwood');
+    var sub = q('.gm-sub'); if (sub) sub.textContent = t('sub', 'Your private app for your first year together: Practices for Two, check-ins for two, and short videos to watch side by side.');
+    var way = q('.gm-way'); if (way) way.innerHTML = '<a href="/weddings.html">' + esc(t('way', 'After the Vows comes with every wedding, elopement, and vow renewal with Chris and Kayti.')) + '</a>';
+    var tabs = $('gm-tabs');
+    if (tabs) { tabs.setAttribute('aria-label', title); var bv = tabs.querySelector('[data-tab="before"]'); if (bv) bv.hidden = true; }
+    var app = $('gm-app'); if (app) app.setAttribute('aria-label', title);
+    var more = $('hw-more'); if (more) more.innerHTML = 'Chris and Kayti offer ceremonies and The Grounded Marriage for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello to Chris and Kayti</a>.';
+    var cl = $('hw-clear-p'); if (cl) cl.textContent = 'Done, or using a shared device? Clear Everything removes both partners’ check-ins, any card, and the key to After the Vows from this device.';
+  };
+
   window.HWOpen = {
     // Clear Everything: the key and the invite leave this device.
     forget: function () { try { localStorage.removeItem(INV); localStorage.removeItem(INVM); } catch (e) {} return dropKey(); },

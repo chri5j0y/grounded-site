@@ -136,14 +136,14 @@ const KDEF = {
 };
 function KW(kind) { const k = kind || (G && G.kind) || 'family'; return Object.assign({}, KDEF[k] || KDEF.family, ((GK.kinds || {})[k]) || {}); }
 const CHANGES_DEF = {
-  family: ['A New Baby', 'A Move', 'An Illness', 'A Death', 'A New School', 'A Job Change', 'Someone New Joined Us', 'Money Is Tight', 'Nothing Big'],
-  classroom: ['Someone New Joined Our Class', 'Someone Left', 'A Hard Week', 'A Loss in Our School', 'A Big Change in Routine', 'Nothing Big'],
-  faith: ['Someone New Joined', 'Someone Left', 'A Loss', 'An Illness', 'A Change in Leaders', 'A Disagreement', 'Nothing Big'],
-  group: ['Someone New Joined', 'Someone Left', 'A Loss', 'An Illness', 'A Change in Leaders', 'A Disagreement', 'Nothing Big'],
-  team: ['A Hard Death', 'A Change in Leaders', 'Someone New Joined', 'Someone Left', 'A Heavy Season of Work', 'Nothing Big']
+  family: ['A New Baby', 'A Move', 'An Illness', 'A Death', 'A New School', 'A Job Change', 'Someone New Joined Us', 'Money Is Tight', 'A Steady Season'],
+  classroom: ['Someone New Joined Our Class', 'Someone Left', 'A Hard Week', 'A Loss in Our School', 'A Big Change in Routine', 'A Steady Season'],
+  faith: ['Someone New Joined', 'Someone Left', 'A Loss', 'An Illness', 'A Change in Leaders', 'A Disagreement', 'A Steady Season'],
+  group: ['Someone New Joined', 'Someone Left', 'A Loss', 'An Illness', 'A Change in Leaders', 'A Disagreement', 'A Steady Season'],
+  team: ['A Hard Death', 'A Change in Leaders', 'Someone New Joined', 'Someone Left', 'A Heavy Season of Work', 'A Steady Season']
 };
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 24);
-function changesFor(kind) { const g = (GK.changes || {})[kind]; return Array.isArray(g) && g.length ? g : CHANGES_DEF[kind].map(l => ({ id: l === 'Nothing Big' ? 'none' : slug(l), label: l })); }
+function changesFor(kind) { const g = (GK.changes || {})[kind]; return Array.isArray(g) && g.length ? g : CHANGES_DEF[kind].map(l => ({ id: l === 'A Steady Season' ? 'none' : slug(l), label: l })); }
 
 /* Questions: four per part, question 1 is the quick one and never reverse, question 4 is the one gentle reverse.
    These Family drafts are the plan's (docs/grove-plan.md Section 3); grove/kinds.js gives each kind its own. */
@@ -334,7 +334,7 @@ function choosePass(reason, keep) {
 let rootP = null;
 function needRoot() {
   if (window.GGRoot) return Promise.resolve(window.GGRoot);
-  if (!rootP) rootP = new Promise((ok, no) => { const s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b780'; s.onload = () => window.GGRoot ? ok(window.GGRoot) : (rootP = null, no(new Error('load'))); s.onerror = () => { rootP = null; s.remove(); no(new Error('load')); }; document.head.appendChild(s); });
+  if (!rootP) rootP = new Promise((ok, no) => { const s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b782'; s.onload = () => window.GGRoot ? ok(window.GGRoot) : (rootP = null, no(new Error('load'))); s.onerror = () => { rootP = null; s.remove(); no(new Error('load')); }; document.head.appendChild(s); });
   return rootP;
 }
 function rootShowG(g, words, again) {
@@ -660,7 +660,7 @@ function viewGrove() {
   h += nextStepHtml();
   h += lcHomeHtml();
   if (hasTrees()) {
-    const lead = isFamily() ? (ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'No trees yet. Start with your own.')
+    const lead = isFamily() ? (ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'Start with your own tree.')
       : (fam.length ? 'Trees shared by members from their own tree apps, side by side.' : 'Members can share their own tree here from their tree app, if they choose. It is never required.');
     h += `<div class="section-head"><h2>Our Grove</h2><p>${lead}</p></div>`;
     h += `<div class="gv-scene">${window.GGGroveRow ? GGGroveRow.html({ trees: trees.length ? trees : [{ stage: 'adult', g: .05, kind: 'grove', private: true }], sky: skyNow(), scenery: scen, visitors: vis, fresh, pick: isFamily(), label: 'Our grove' }) : ''}</div>`;
@@ -1154,11 +1154,11 @@ function resultsHtml(ci) {
   if (st.length) h += `<h4>Our Shared Strengths</h4><ul class="gv-rlist">${st.map(p => `<li style="--pc:${p.color}"><b>${p.name}</b> <span>${esc(line('strength', p.key) || DEF.strength(p))}</span></li>`).join('')}</ul>`;
   if (sd.length) h += `<h4>Steady</h4><p>${esc(list3(sd.map(p => p.name)))}. ${esc(sd.length === 1 ? (line('steady', sd[0].key) || 'Steady ground to grow from.') : 'Steady ground to grow from.')}</p>`;
   if (ed.length) h += `<h4>Our Growing Edges</h4><ul class="gv-rlist">${ed.map(p => `<li style="--pc:${p.color}"><b>${p.name}</b> <span>${esc(line('edge', p.key) || DEF.edge(p))}</span>${ideasHtml(p.key)}</li>`).join('')}</ul>`;
-  else h += `<p>${esc(Wk(W('results.noEdges'), G.kind) || 'No Growing Edges this time. Pick any part to grow in your plan, or keep a Shared Strength going.')}</p>`;
+  else h += `<p>${esc(Wk(W('results.noEdges'), G.kind) || 'Every part is strong this time. Pick any part to grow in your plan, or keep a Shared Strength going.')}</p>`;
   if (none.length) h += `<p class="muted">${esc(list3(none.map(p => p.name)))}: passed this time.</p>`;
   const talk = []; PARTS6.forEach(p => (Q[p.key] || []).forEach((q, i) => { if ((ci.ans || {})[p.key + '.' + i] === 'd') talk.push(qText(q)); }));
   if (talk.length) h += `<h4>Things to Talk About</h4><p class="muted">${esc(Wk(W('results.talkIntro'), G.kind) || 'You saw these differently. That is good to know. Talk them over gently, never about who saw it which way.')}</p><ul>${talk.map(t => `<li>${esc(Wk(W('results.talkLead'), G.kind) || '')}${esc(t)}</li>`).join('')}</ul>`;
-  h += `<p class="gv-shape">${esc(Wk(W('results.oneShape'), G.kind) || (isFamily() ? 'No family is strong in all six. Every grove has its own shape.' : 'No group is strong in all six. Every grove has its own shape.'))}</p>`;
+  h += `<p class="gv-shape">${esc(Wk(W('results.oneShape'), G.kind) || (isFamily() ? 'Every family has parts still growing. Every grove has its own shape.' : 'Every group has parts still growing. Every grove has its own shape.'))}</p>`;
   if (ci.quick) h += `<p class="muted">${esc(Wk(W('results.quickLine'), G.kind) || 'A quick check-in is a snapshot of this week. The full check-in adds a ring to the grove.')}</p>`;
   h += lcAfterCheckin(ci);
   const v = V();
@@ -1618,7 +1618,7 @@ document.addEventListener('click', e => {
   else if (act === 'cinext') { S.ci.step = 'q'; render(); focusQ(); }
   else if (act === 'cians') ciAnswer(id);
   else if (act === 'ciprev') { S.ci.i = Math.max(0, S.ci.i - 1); render(); focusQ(); }
-  else if (act === 'cistop') { if (Object.keys(S.ci.ans).length && !confirm('Stop this check-in? Answers so far are not kept.')) return; S.ci = null; render(); }
+  else if (act === 'cistop') { if (Object.keys(S.ci.ans).length && !confirm('Leave this check-in? Answers so far will be cleared.')) return; S.ci = null; render(); }
   else if (act === 'ciread') readAloud();
   else if (act === 'ciview') { S.view = id; render(); }
   else if (act === 'ciback') { S.view = ''; render(); }

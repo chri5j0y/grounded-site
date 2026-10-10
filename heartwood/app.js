@@ -159,7 +159,7 @@
   function needRoot() {
     if (window.GGRoot) return Promise.resolve(window.GGRoot);
     if (!rootP) rootP = new Promise(function (ok, no) {
-      var s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b780';
+      var s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b782';
       s.onload = function () { if (window.GGRoot) ok(window.GGRoot); else { rootP = null; no(new Error('load')); } };
       s.onerror = function () { rootP = null; s.remove(); no(new Error('load')); };
       document.head.appendChild(s);
@@ -245,7 +245,7 @@
   function rootOpen(w) {
     var bx = box(w), raw = null;
     return needRoot().then(function (R) {
-      return R.ask({ title: nm(w) + ', Use My Root Words', lead: 'Type your 12 Root Words in order. Capital letters and extra spaces do not matter, and the first four letters of each word are enough.',
+      return R.ask({ title: nm(w) + ', Use My Root Words', lead: 'Type your 12 Root Words in order. Capital or small letters and extra spaces all work, and the first four letters of each word are enough.',
         verify: function (words) { return R.unwrap(bx.rw, words).then(function (r) { raw = r; return true; }, function () { return 'Those Root Words do not open ' + nm(w) + '’s answers. Check the order and try again.'; }); } });
     }, function () { say('Root Words could not load. Check the connection and try again.'); return null; }).then(function (words) {
       if (!words || !raw) return false;
@@ -260,7 +260,7 @@
   }
   // Names and Settings: see (or make) a partner's Root Words, after their passcode.
   function rootSee(w) {
-    if (!box(w)) { say(nm(w) + ' has not chosen a passcode yet. Root Words come with it.'); return; }
+    if (!box(w)) { say(nm(w) + '’s Root Words arrive with their passcode, when they start.'); return; }
     saveAll().then(function () {
       lockAll();
       return unlock(w, 'Type your passcode first, so only you see your Root Words.');
@@ -278,7 +278,7 @@
     var run = function () { if (window.GGBackup) GGBackup[act]({}); };
     saveAll().then(function () {
       if (window.GGBackup) return run();
-      var s = document.createElement('script'); s.src = '/shared/gg-backup.js?v=b780'; s.onload = run;
+      var s = document.createElement('script'); s.src = '/shared/gg-backup.js?v=b782'; s.onload = run;
       s.onerror = function () { say('The backup could not load. Check the connection and try again.'); };
       document.head.appendChild(s);
     });
@@ -300,7 +300,7 @@
   function saveSoon(w) { clearTimeout(saveT[w]); saveT[w] = setTimeout(function () { save(w); }, 300); }
   function saveAll() { return Promise.all(['a', 'b'].map(function (w) { return KEYS[w] ? save(w) : null; })); }
   function wordAsk(theirs, what) {
-    return ask({ title: 'Choose a shared word', lead: 'The ' + what + ' is locked with a word or short phrase only the two of you know. ' + theirs + ' types it to open the ' + what + '. Capital letters do not matter.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
+    return ask({ title: 'Choose a shared word', lead: 'The ' + what + ' is locked with a word or short phrase only the two of you know. ' + theirs + ' types it to open the ' + what + '. Capital or small letters both work.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
       check: function (v) { return v[0].trim().length < 4 ? 'Use at least 4 letters. Longer is safer.' : v[0].trim().toLowerCase() !== v[1].trim().toLowerCase() ? 'The two words are different.' : ''; } });
   }
 
@@ -601,7 +601,7 @@
     var c = compareNow(), X = c.X, Y = c.Y, R = c.R;
     var nd = R.reduce(function (n, r) { return n + r.diff.length; }, 0), na = R.reduce(function (n, r) { return n + r.agree.length; }, 0);
     var h = '<div class="ff-card gold"><h2>Talk About This</h2><p class="ff-sub">' + esc(X.name) + ' and ' + esc(Y.name) + ': ' + nd + (nd === 1 ? ' place' : ' places') + ' to talk about, and ' + na + (na === 1 ? ' place' : ' places') + ' you already agree.</p>' +
-      '<ul class="ff-tips"><li>Pick one or two a week. Set aside calm time, not the middle of a disagreement.</li><li>Take turns: one of you shares while the other listens and says back what they heard.</li><li>The goal is understanding each other. Some differences you will settle, and some you will simply understand and live with well.</li></ul>' +
+      '<ul class="ff-tips"><li>Pick one or two a week. Set aside a calm time, well apart from any disagreement.</li><li>Take turns: one of you shares while the other listens and says back what they heard.</li><li>The goal is understanding each other. Some differences you will settle, and some you will simply understand and live with well.</li></ul>' +
       '<div class="ff-row">' + btn('print', 'Save or Print the List', { cls: 'btn-primary ff-sm' }) + (RS ? btn('results-open', 'Strengths and Growing Edges', sec()) : '') + btn('leave-talk', 'Lock and Close', sec()) + '</div></div>';
     R.forEach(function (r) {
       if (!r.diff.length && !r.agree.length && !r.grow.length) return;
@@ -629,7 +629,7 @@
   }
   function printPage(h) {
     var r = $('gg-print'); if (!r) return;
-    r.innerHTML = h + '<p class="p-foot">Made on this device with Heartwood, Grow With Grounded, growwithgrounded.com. Nothing was sent anywhere.</p>';
+    r.innerHTML = h + '<p class="p-foot">Made on this device with Heartwood, Grow With Grounded, growwithgrounded.com. Everything stayed on this device.</p>';
     window.print();
     setTimeout(function () { r.innerHTML = ''; }, 1500);
   }
@@ -1012,7 +1012,7 @@
       vid: pick(I.vids, on('vid')).map(function (x) { return x.title; }), pr: pick(I.prs, on('pr')).map(function (x) { return x.title; }),
       wb: pick(I.wbs, on('wb')).map(function (x) { return { w: x.w, t: x.t, a: x.a.slice(0, W.LIM.ans) }; }).slice(0, W.LIM.wb), q: String(($('gm-wk-q') || {}).value || '').trim().slice(0, W.LIM.q) };
     if (!card.vid.length && !card.pr.length && !card.wb.length && !card.q) { if (msg) msg.textContent = 'Choose at least one thing to share, or write your question.'; return; }
-    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. ' + (ATV ? 'When you meet, you type it into Chris and Kayti’s Field Guide to open the card.' : 'At your session, you type it into your leaders’ Field Guide to open the card.') + ' Capital letters do not matter.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
+    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. ' + (ATV ? 'When you meet, you type it into Chris and Kayti’s Field Guide to open the card.' : 'At your session, you type it into your leaders’ Field Guide to open the card.') + ' Capital or small letters both work.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
       check: function (v) { return v[0].trim().length < 4 ? 'Use at least 4 letters. Longer is safer.' : v[0].trim().toLowerCase() !== v[1].trim().toLowerCase() ? 'The two words are different.' : ''; } })
       .then(function (v) { if (!v) return; return W.make(card, v[0]).then(function (code) { go('wcard', { code: code }); }); })
       .catch(function () { if (msg) msg.textContent = 'The card could not be made. Try again.'; });
@@ -1321,7 +1321,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b782', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b781', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b782', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b782', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
