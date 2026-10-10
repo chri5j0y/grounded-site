@@ -256,7 +256,7 @@
      The Voice Setup video, the Field Guide, and every sealed video keep device voices (no app, or not opened here).
      VOICES: each app's voice, with the tracks and the guide side (helper: For the Grown-up, For the Helper, For the
      Leader) that take the other voice. A lesson can name its own (voice: 'brian' or 'jenny'). */
-  var REC = { base: 'https://audio.growwithgrounded.com/', round: '' };
+  var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
   var VOICES = {
     maple: { all: 'jenny', helper: 'brian', tracks: { 'maple-grownups': 'brian' } },
     aspen: { all: 'jenny', helper: 'brian', tracks: { 'aspen-grownups': 'brian' } },
