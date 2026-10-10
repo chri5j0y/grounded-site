@@ -764,7 +764,7 @@
       P.tick = setInterval(function () {
         if (t !== P.tok) return clearInterval(P.tick);
         var busy = spoke === 'rec' ? !said : spoke && window.speechSynthesis && speechSynthesis.speaking;
-        if (!busy && Date.now() - start > (spoke ? 1500 : 4000)) { clearInterval(P.tick); P.nx = setTimeout(function () { if (t === P.tok) show(Math.min(P.i + 1, N - 1)); }, 1100); }
+        if (!busy && Date.now() - start > (spoke ? 1500 : 4000)) { clearInterval(P.tick); P.nx = setTimeout(function () { if (t === P.tok) { setPlay(true); show(Math.min(P.i + 1, N - 1)); } }, 1100); }
       }, 200);
     }
     /* Read Instead: the full script as text (every sentence, the pause-and-do moments, the question, and the sources) */
