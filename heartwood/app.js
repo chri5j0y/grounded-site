@@ -1353,7 +1353,8 @@
   render();
   tabsSetup(); tabMark();
   var src = $('gm-src');
-  if (src && window.GGSources && Q.sources && Q.sources.length) src.innerHTML = GGSources.line(Q.sources);
+  // The check-in's sources belong with the check-in, so After the Vows leaves them off.
+  if (src && !ATV && window.GGSources && Q.sources && Q.sources.length) src.innerHTML = GGSources.line(Q.sources);
   if (wk0) setTimeout(function () { say(WEEK_HERE); }, 60);
   if (pc0) setTimeout(function () { openCard(pendingCard() || pc0); }, 200);
   else if (pm0) setTimeout(function () { openM(pendingM() || pm0); }, 200);
